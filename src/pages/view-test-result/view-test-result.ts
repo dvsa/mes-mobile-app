@@ -34,16 +34,18 @@ import {
 import { get } from 'lodash';
 import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
 import {
-  getManoeuvreFaults,
-  getVehicleCheckSeriousFaults,
   getSeriousFaults,
   getDangerousFaults,
-  getVehicleCheckDangerousFaults,
   getDrivingFaults,
-  getVehicleCheckDrivingFaults,
-  getControlledStopFaultAndComment,
   getEyesightTestSeriousFaultAndComment,
 } from '../debrief/debrief.selector';
+import {
+  getManoeuvreFaults,
+  getVehicleCheckSeriousFaults,
+  getVehicleCheckDangerousFaults,
+  getVehicleCheckDrivingFaults,
+  getControlledStopFaultAndComment,
+} from '../debrief/cat-b/debrief.cat-b.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';

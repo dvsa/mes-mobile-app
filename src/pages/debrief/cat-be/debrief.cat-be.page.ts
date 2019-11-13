@@ -6,7 +6,7 @@ import { getCurrentTest } from '../../../modules/tests/tests.selector';
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
+import { getTestData } from '../../../modules/tests/test-data/test-data.cat-be.reducer';
 import {
   getETA,
   getEco,
@@ -18,15 +18,17 @@ import { merge } from 'rxjs/observable/merge';
 import {
   getSeriousOrDangerousFaults,
   getDrivingFaults,
-  getManoeuvreFaults,
   getTestOutcome,
-  getControlledStopFault,
+  getEyesightTestSeriousFault,
+} from '../debrief.selector';
+import {
+  getManoeuvreFaults,
+  getUncoupleRecoupleFault,
   getVehicleCheckSeriousFaults,
   getVehicleCheckDangerousFaults,
   getVehicleCheckDrivingFaults,
-  getControlledStopFaultAndComment,
-  getEyesightTestSeriousFault,
-} from '../debrief.selector';
+  getUncoupleRecoupleFaultAndComment,
+} from '../cat-be/debrief.cat-be.selector';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import {
   MultiFaultAssignableCompetency,
@@ -105,7 +107,7 @@ export class DebriefCatBEPage extends BasePageComponent {
           return [
             ...getSeriousOrDangerousFaults(data.seriousFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
-            ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
+            ...getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.S),
             ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
             ...getEyesightTestSeriousFault(data.eyesightTest),
           ];
@@ -117,7 +119,7 @@ export class DebriefCatBEPage extends BasePageComponent {
           return [
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
-            ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
+            ...getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.D),
             ...getVehicleCheckDangerousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
           ];
         }),
@@ -134,7 +136,7 @@ export class DebriefCatBEPage extends BasePageComponent {
                 competencyIdentifier: result.competencyIdentifier,
                 source: result.source,
               })),
-            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.DF).map(
+            ...getUncoupleRecoupleFaultAndComment(data.uncoupleRecouple, CompetencyOutcome.DF).map(
               (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
                 faultCount: 1,
                 competencyDisplayName: result.competencyDisplayName,

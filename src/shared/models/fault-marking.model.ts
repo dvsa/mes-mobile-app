@@ -18,4 +18,5 @@ export enum CommentSource {
   CONTROLLED_STOP = 'controlledStop',
   MANOEUVRES = 'Manoeuvres',
   EYESIGHT_TEST = 'eyesightTest',
+  UNCOUPLE_RECOUPLE = 'uncoupleRecouple',
 }
