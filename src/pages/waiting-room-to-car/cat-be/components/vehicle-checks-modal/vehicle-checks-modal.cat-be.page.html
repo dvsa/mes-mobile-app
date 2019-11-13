@@ -32,7 +32,14 @@
       <ion-card-title>Tell me questions</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>Some tell me stuff!!</p>
+      <vehicle-checks-question *ngFor="let question of tellMeQuestionsNumberArray; let i = index" [formGroup]="formGroup"
+                               [questionResult]="(pageState.tellMeQuestions$ | async)[i]"
+                               [questions]="tellMeQuestions"
+                               [questionsToDisable]="pageState.tellMeQuestions$ | async"
+                               [index]="i"
+                               (vehicleChecksQuestionChange)="tellMeQuestionChanged($event, i)"
+                               (vehicleChecksQuestionOutcomeChange)="tellMeQuestionOutcomeChanged($event, i)">
+      </vehicle-checks-question>
     </ion-card-content>
   </ion-card>
 </ion-content>
