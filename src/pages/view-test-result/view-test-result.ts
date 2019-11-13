@@ -155,7 +155,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
       applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
-      category: this.testResult.category,
+      category: this.testResult.category as TestCategory,
       specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
       entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
       slotType: this.testResult.journalData.testSlotAttributes.slotType,
@@ -261,7 +261,10 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       dangerousFaults: this.getDangerousFaults(),
       seriousFaults: this.getSeriousFaults(),
       drivingFaults: this.getDrivingFaults(),
-      drivingFaultCount: this.faultCountProvider.getDrivingFaultSummaryCount(this.testResult.testData),
+      drivingFaultCount:this.faultCountProvider.getDrivingFaultSumCount(
+        this.testResult.category as TestCategory,
+        this.testResult.testData,
+      ),
     };
   }
 

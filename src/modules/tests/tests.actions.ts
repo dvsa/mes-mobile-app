@@ -45,17 +45,17 @@ export class TestOutcomeChanged implements Action {
 
 export class StartTest implements Action {
   readonly type = START_TEST;
-  constructor(public slotId: number, public category: string, public rekey: boolean = false) { }
+  constructor(public slotId: number, public category: TestCategory, public rekey: boolean = false) { }
 }
 
 export class ActivateTest implements Action {
   readonly type = ACTIVATE_TEST;
-  constructor(public slotId: number, public category: string, public rekey: boolean = false) { }
+  constructor(public slotId: number, public category: TestCategory, public rekey: boolean = false) { }
 }
 
 export class StartTestReportPracticeTest implements Action {
   readonly type = START_TEST_REPORT_PRACTICE_TEST;
-  constructor(public slotId: string, public category: string = TestCategory.B) { }
+  constructor(public slotId: string, public category: TestCategory = TestCategory.B) { }
 }
 
 export class StartSendingCompletedTests implements Action {

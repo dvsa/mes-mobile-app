@@ -69,9 +69,7 @@ describe('VehicleChecksQuestionComponent', () => {
 
         component.vehicleChecksPassSelected();
 
-        expect(component.vehicleChecksQuestionOutcomeChange.emit).toHaveBeenCalledWith({
-          outcome: 'P',
-        });
+        expect(component.vehicleChecksQuestionOutcomeChange.emit).toHaveBeenCalledWith('P');
       });
     });
     describe('vehicleChecksDrivingFaultSelected', () => {
@@ -81,9 +79,7 @@ describe('VehicleChecksQuestionComponent', () => {
 
         component.vehicleChecksDrivingFaultSelected();
 
-        expect(component.vehicleChecksQuestionOutcomeChange.emit).toHaveBeenCalledWith({
-          outcome: 'DF',
-        });
+        expect(component.vehicleChecksQuestionOutcomeChange.emit).toHaveBeenCalledWith('DF');
       });
     });
     describe('findQuestion', () => {

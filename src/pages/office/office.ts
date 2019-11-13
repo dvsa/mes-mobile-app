@@ -121,6 +121,7 @@ import { SetActivityCode } from '../../modules/tests/activity-code/activity-code
 import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '../../shared/models/test-category';
 import { FaultCountProvider } from '../../providers/fault-count/fault-count';
+import { getTestCategory } from '../../modules/tests/category/category.reducer';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -212,7 +213,9 @@ export class OfficePage extends PracticeableBasePageComponent {
       select(getTests),
       select(getCurrentTest),
     );
-
+    const category$ = currentTest$.pipe(
+      select(getTestCategory),
+    );
     this.pageState = {
       activityCode$: currentTest$.pipe(
         select(getActivityCode),
@@ -434,7 +437,10 @@ export class OfficePage extends PracticeableBasePageComponent {
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        select(this.faultCountProvider.getDrivingFaultSummaryCount),
+        withLatestFrom(category$),
+        map(([testData, category]) => {
+          return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
+        }),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),

@@ -17,12 +17,13 @@
       <ion-card-title>Show me questions</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <vehicle-checks-question [formGroup]="formGroup"
-        [questionResult]="vehicleChecksQuestionResults"
-        [questions]="showMeQuestions"
-        [questionsToDisable]="questionsToDisable"
-        (vehicleChecksQuestionChange)="vehicleChecksQuestionChanged($event)"
-        (vehicleChecksQuestionOutcomeChange)="vehicleChecksQuestionOutcomeChanged($event)">
+      <vehicle-checks-question *ngFor="let question of showMeQuestionsNumberArray; let i = index" [formGroup]="formGroup"
+                               [questionResult]="(pageState.showMeQuestions$ | async)[i]"
+                               [questions]="showMeQuestions"
+                               [questionsToDisable]="pageState.showMeQuestions$ | async"
+                               [index]="i"
+                               (vehicleChecksQuestionChange)="showMeQuestionChanged($event, i)"
+                               (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event, i)">
       </vehicle-checks-question>
     </ion-card-content>
   </ion-card>
