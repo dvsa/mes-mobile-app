@@ -61,24 +61,22 @@ export class VehicleChecksCatBEModal {
   }
 
   ngOnInit(): void {
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    )
     this.pageState = {
-      candidateName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
-      showMeQuestions$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      showMeQuestions$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatBe),
         select(getSelectedShowMeQuestions),
       ),
-      tellMeQuestions$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      tellMeQuestions$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatBe),
         select(getSelectedTellMeQuestions),

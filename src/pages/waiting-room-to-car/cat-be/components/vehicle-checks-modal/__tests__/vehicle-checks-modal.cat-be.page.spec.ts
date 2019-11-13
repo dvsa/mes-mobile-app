@@ -15,6 +15,8 @@ import { StoreModel } from '../../../../../../shared/models/store.model';
 import {
   ShowMeQuestionOutcomeChanged,
   ShowMeQuestionSelected,
+  TellMeQuestionSelected,
+  TellMeQuestionOutcomeChanged,
 } from '../../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
 
 describe('VehicleChecksCatBEModal', () => {
@@ -76,6 +78,30 @@ describe('VehicleChecksCatBEModal', () => {
       });
     });
 
+    describe('tellMeQuestionChanged()', () => {
+      it('should dispatch a new TellMeQuestionSelected action', () => {
+        const tellMeQuestionPayload: QuestionResult = {
+          code: 'T01',
+          description: 'desc',
+          outcome: 'DF',
+        };
+        const index = 1;
+        component.tellMeQuestionChanged(tellMeQuestionPayload, index);
+        expect(component.store$.dispatch)
+          .toHaveBeenCalledWith(new TellMeQuestionSelected(tellMeQuestionPayload, index));
+      });
+    });
+
+
+    describe('tellMeQuestionOutcomeChanged()', () => {
+      it('should dispatch a new TellMeQuestionOutcomeChanged action', () => {
+        const tellMeQuestionOutcomePayload: QuestionOutcome = 'P';
+        const index = 1;
+        component.tellMeQuestionOutcomeChanged(tellMeQuestionOutcomePayload, index);
+        expect(component.store$.dispatch)
+          .toHaveBeenCalledWith(new TellMeQuestionOutcomeChanged(tellMeQuestionOutcomePayload, index));
+      });
+    });
   });
 
   describe('DOM', () => {

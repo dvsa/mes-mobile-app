@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core
 import { FormGroup, FormControl } from '@angular/forms';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 import { QuestionOutcome, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
-import * as _ from 'lodash';
+import { uniqueId } from 'lodash';
 
 @Component({
   selector: 'vehicle-checks-question',
@@ -31,7 +31,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   private questionFormControl: FormControl;
   private questionOutcomeFormControl: FormControl;
 
-  readonly questionId: string = _.uniqueId();
+  readonly questionId: string = uniqueId();
   readonly questionOutcomeFieldName: string = `vehicleChecksQuestionOutcome_${this.questionId}`;
   readonly questionFieldName: string = `vehicleChecksQuestion_${this.questionId}`;
 
@@ -54,7 +54,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
 
   isOptionDisabled(question: VehicleChecksQuestion): boolean {
     const doesQuestionExist: QuestionResult =
-      this.questionsToDisable.find(questionToDisable => questionToDisable.code === question.code);
+      this.questionsToDisable.find(questionToDisable => questionToDisable.code === question.code && questionToDisable.code !== this.questionResult.code);
     return doesQuestionExist !== undefined;
   }
 
