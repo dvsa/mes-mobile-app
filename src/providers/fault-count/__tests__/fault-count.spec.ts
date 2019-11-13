@@ -2,8 +2,8 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { FaultCountProvider } from '../fault-count';
 import { TestBed } from '@angular/core/testing';
-import { catBTestDataStateObject } from '../__mocks__/catBTestDataStateObject';
-import { catBETestDataStateObject } from '../__mocks__/catBETestDataStateObject';
+import { catBTestDataStateObject } from '../__mocks__/cat-B-test-data-state-object';
+import { catBETestDataStateObject } from '../__mocks__/cat-BE-test-data-state-object';
 import { TestCategory } from '../../../shared/models/test-category';
 
 describe('FaultCountProvider', () => {
