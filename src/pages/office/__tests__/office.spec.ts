@@ -65,6 +65,7 @@ import { NavigationStateProvider } from '../../../providers/navigation-state/nav
 import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -97,6 +98,7 @@ describe('OfficePage', () => {
             testStatus: {},
             startedTests: {
               123: {
+                category: TestCategory.B,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {

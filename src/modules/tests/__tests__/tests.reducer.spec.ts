@@ -121,7 +121,7 @@ describe('testsReducer', () => {
     const slotId = testReportPracticeSlotId;
     const action = new testsActions.StartTestReportPracticeTest(slotId);
 
-    const output = testsReducer(state, { ...action, category: 'B' });
+    const output = testsReducer(state, { ...action, category: TestCategory.B });
 
     expect(output.startedTests[testReportPracticeSlotId].testData.seriousFaults.positioningNormalDriving)
       .toBeUndefined();

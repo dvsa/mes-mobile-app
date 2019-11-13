@@ -32,6 +32,7 @@ import { TestSlot } from '@dvsa/mes-journal-schema';
 import { SpecialNeedsCode } from '../../../../shared/helpers/get-slot-type';
 import { LocationComponent } from '../../location/location';
 import { SlotProvider } from '../../../../providers/slot/slot';
+import { TestCategory } from '../../../../shared/models/test-category';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -294,7 +295,8 @@ describe('TestSlotComponent', () => {
 
       it('should pass test status decided to the test-outcome component when the outcome observable changes', () => {
         fixture.detectChanges();
-        store$.dispatch(new StartTest(mockSlot.slotDetail.slotId, mockSlot.booking.application.testCategory));
+        store$.dispatch(
+          new StartTest(mockSlot.slotDetail.slotId, mockSlot.booking.application.testCategory as TestCategory));
         store$.dispatch(new SetTestStatusDecided(mockSlot.slotDetail.slotId.toString()));
         fixture.detectChanges();
 

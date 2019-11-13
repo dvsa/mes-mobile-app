@@ -274,7 +274,7 @@ describe('Tests Effects', () => {
       const staffNumber = '654321';
       store$.dispatch(new rekeySearchActions.SearchBookedTestSuccess(testSlot, staffNumber));
       // ACT
-      actions$.next(new testsActions.StartTest(1001, testSlot.booking.application.testCategory, true));
+      actions$.next(new testsActions.StartTest(1001, testSlot.booking.application.testCategory as TestCategory, true));
       // ASSERT
       effects.startTestEffect$
       .pipe(

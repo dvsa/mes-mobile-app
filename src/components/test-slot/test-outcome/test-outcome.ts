@@ -51,7 +51,7 @@ export class TestOutcomeComponent implements OnInit {
   isRekey: boolean;
 
   @Input()
-  category: string;
+  category: TestCategory;
 
   modal: Modal;
   startTestAsRekey: boolean = false;

@@ -8,7 +8,7 @@ import { testsCatBReducer } from './tests.cat-b.reducer';
 import { testsCatBEReducer } from './tests.cat-be.reducer';
 
 export function testsReducerFactory(
-  category: string | null, action: Action, state: TestResultSchemasUnion,
+  category: TestCategory | null, action: Action, state: TestResultSchemasUnion,
 ): TestResultSchemasUnion {
   switch (category) {
     case TestCategory.B:

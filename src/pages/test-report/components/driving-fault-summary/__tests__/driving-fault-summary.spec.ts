@@ -13,6 +13,7 @@ import { AddDrivingFault } from '../../../../../modules/tests/test-data/driving-
 import { Competencies } from '../../../../../modules/tests/test-data/test-data.constants';
 import { TestCategory } from '../../../../../shared/models/test-category';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
+import { PopulateTestCategory } from '../../../../../modules/tests/category/category.actions';
 
 describe('DrivingFaultSummary', () => {
   let fixture: ComponentFixture<DrivingFaultSummaryComponent>;
@@ -49,6 +50,7 @@ describe('DrivingFaultSummary', () => {
       componentEl = fixture.debugElement;
 
       store$.dispatch(new StartTest(103, TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
     });
 
     it('should display 0 driving faults for a new test', () => {
