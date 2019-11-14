@@ -12,12 +12,6 @@ import tellMeQuestionsCatBEConstants
 // tslint:disable-next-line: import-name
 import showMeQuestionsCatBEConstants
   from '../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
-import {
-  getCatBeVehicleChecks4Faults,
-  generateVehicleChecksScoring,
-  getCatBeVehicleChecks5Faults,
-  getCatBeVehicleChecksNoFaults,
-} from '../__mocks__/question.mock';
 
 describe('question provider', () => {
 
@@ -53,21 +47,6 @@ describe('question provider', () => {
     });
     it('should return no questions for a non-supported category', () => {
       expect(questionProvider.getShowMeQuestions(TestCategory.B1)).toEqual([]);
-    });
-  });
-
-  describe('calculateFaults', () => {
-    it('should return 4 dangerous faults if only 4 are failed', () => {
-      expect(questionProvider.calculateFaults(getCatBeVehicleChecks4Faults()))
-        .toEqual(generateVehicleChecksScoring(4, 0));
-    });
-    it('should return 4 dangerous faults and 1 serious if only 5 are failed', () => {
-      expect(questionProvider.calculateFaults(getCatBeVehicleChecks5Faults()))
-        .toEqual(generateVehicleChecksScoring(4, 1));
-    });
-    it('should return 0 dangerous faults if all passed', () => {
-      expect(questionProvider.calculateFaults(getCatBeVehicleChecksNoFaults()))
-        .toEqual(generateVehicleChecksScoring(0, 0));
     });
   });
 });

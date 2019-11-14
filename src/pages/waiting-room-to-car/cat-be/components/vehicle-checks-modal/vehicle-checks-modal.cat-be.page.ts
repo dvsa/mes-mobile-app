@@ -31,6 +31,8 @@ import {
   NUMBER_OF_SHOW_ME_QUESTIONS,
 } from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
 import { VehicleChecksScore } from '../../../../../providers/question/vehicle-checks-score.model';
+import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
+import { map } from 'rxjs/operators';
 
 interface VehicleChecksModalCatBEState {
   candidateName$: Observable<string>;
@@ -55,7 +57,8 @@ export class VehicleChecksCatBEModal {
 
   constructor(
     public store$: Store<StoreModel>,
-    private questionProvider: QuestionProvider,
+    private faultCountProvider: FaultCountProvider,
+    questionProvider: QuestionProvider,
   ) {
     this.formGroup = new FormGroup({});
     this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.BE);
@@ -88,7 +91,9 @@ export class VehicleChecksCatBEModal {
         select(getCurrentTest),
         select(getTestData),
         select(getVehicleChecksCatBe),
-        select(this.questionProvider.calculateFaults),
+        map((vehicleChecks) => {
+          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+        }),
       ),
     };
   }

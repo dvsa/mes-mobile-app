@@ -70,6 +70,7 @@ import { VehicleChecksQuestion } from '../../../providers/question/vehicle-check
 import { TestCategory } from '../../../shared/models/test-category';
 import { VehicleChecksScore } from '../../../providers/question/vehicle-checks-score.model';
 import { getVehicleChecksCatBe } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
+import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -118,6 +119,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    public faultCountProvider: FaultCountProvider,
     public questionProvider: QuestionProvider,
   ) {
     super(platform, navController, authenticationProvider);
@@ -211,12 +213,12 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
         select(getVehicleChecks),
         map(getTellMeQuestion),
       ),
-      vehicleChecksScore$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatBe),
-        select(this.questionProvider.calculateFaults),
+        map((vehicleChecks) => {
+          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+        }),
       ),
     };
   }
