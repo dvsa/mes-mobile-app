@@ -6,7 +6,7 @@ import { catBTestDataStateObject } from '../__mocks__/cat-B-test-data-state-obje
 import { catBETestDataStateObject } from '../__mocks__/cat-BE-test-data-state-object';
 import { TestCategory } from '../../../shared/models/test-category';
 
-fdescribe('FaultCountProvider', () => {
+describe('FaultCountProvider', () => {
 
   let faultCountProvider: FaultCountProvider;
 
