@@ -5,7 +5,7 @@ import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { TestCategory } from '../../shared/models/test-category';
-import { VehicleChecksScore } from '../question/vehicle-checks-score.model';
+import { VehicleChecksScore } from '../../shared/models/vehicle-checks-score.model';
 
 @Injectable()
 export class FaultCountProvider {

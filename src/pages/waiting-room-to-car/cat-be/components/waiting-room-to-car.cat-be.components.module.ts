@@ -5,9 +5,6 @@ import { VehicleChecksModalCatBEModule } from './vehicle-checks-modal/vehicle-ch
 import { VehicleChecksCatBEModule } from './vehicle-checks/vehicle-checks.module';
 
 @NgModule({
-  // declarations: [
-  //   VehicleChecksCatBEComponent,
-  // ],
   imports: [
     IonicModule,
     VehicleChecksModalCatBEModule,

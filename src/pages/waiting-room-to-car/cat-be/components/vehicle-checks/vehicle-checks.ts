@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CAT_BE } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
 import { App } from '../../../../../app/app.component';
-import { VehicleChecksScore } from '../../../../../providers/question/vehicle-checks-score.model';
+import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
 
 @Component({
   selector: 'vehicle-checks-cat-be',
@@ -12,9 +12,10 @@ export class VehicleChecksCatBEComponent {
 
   @Input() public vehicleChecksScore: VehicleChecksScore;
 
-  constructor(public modalController: ModalController, private app: App) {
-    console.log(this.vehicleChecksScore);
-  }
+  constructor(
+    public modalController: ModalController,
+    private app: App,
+  ) { }
 
   isInvalid(): boolean {
     // TODO - need to implment validation + unit test

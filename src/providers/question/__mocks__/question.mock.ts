@@ -2,7 +2,7 @@ import { VehicleChecksQuestion } from '../vehicle-checks-question.model';
 import { TestCategory } from '../../../shared/models/test-category';
 import { VehicleChecks } from '@dvsa/mes-test-schema/categories/BE/partial';
 import { QuestionOutcome } from '@dvsa/mes-test-schema/categories/Common';
-import { VehicleChecksScore } from '../vehicle-checks-score.model';
+import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
 export class QuestionProviderMock {

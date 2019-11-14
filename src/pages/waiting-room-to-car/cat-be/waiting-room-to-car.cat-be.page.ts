@@ -68,7 +68,7 @@ import { CAT_BE } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '../../../shared/models/test-category';
-import { VehicleChecksScore } from '../../../providers/question/vehicle-checks-score.model';
+import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import { getVehicleChecksCatBe } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 

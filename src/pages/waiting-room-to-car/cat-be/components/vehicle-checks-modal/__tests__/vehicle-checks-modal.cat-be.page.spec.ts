@@ -103,6 +103,26 @@ describe('VehicleChecksCatBEModal', () => {
           .toHaveBeenCalledWith(new TellMeQuestionOutcomeChanged(tellMeQuestionOutcomePayload, index));
       });
     });
+
+    describe('shouldDisplayBanner', () => {
+      it('should return false if there are no 4 driving faults and 1 serious', () => {
+        component.vehicleChecksScore = {
+          drivingFaults: 3,
+          seriousFaults: 0,
+        };
+
+        expect(component.shouldDisplayBanner()).toBeFalsy();
+      });
+
+      it('should return true if there are 4 driving faults and 1 serious', () => {
+        component.vehicleChecksScore = {
+          drivingFaults: 4,
+          seriousFaults: 1,
+        };
+
+        expect(component.shouldDisplayBanner()).toBeTruthy();
+      });
+    });
   });
 
   describe('DOM', () => {

@@ -10,4 +10,8 @@ export class DrivingFaultsBadgeComponent {
 
   @Input()
   showOnZero: boolean = false;
+
+  shouldDisplay = () => {
+    return this.showOnZero || this.count > 0;
+  }
 }

@@ -27,7 +27,7 @@ export function vehicleChecksCatBEReducer(
       };
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
       return {
-        ...initialState,
+        ...state,
         showMeQuestions: state.showMeQuestions.map((item, index) => index === action.index ? {
           ...item,
           outcome: action.showMeQuestionOutcome,
