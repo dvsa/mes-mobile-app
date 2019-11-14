@@ -7,7 +7,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest, isTestReportPracticeTest } from '../../modules/tests/tests.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
-import { getCatBLegalRequirements } from '../../modules/tests/test-data/test-data.selector';
+import { getCatBLegalRequirements } from '../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import * as testReportActions from './test-report.actions';
 import * as testsActions from '../../modules/tests/tests.actions';
 import * as testRequirementsActions from '../../modules/tests/test-data/test-requirements/test-requirements.actions';

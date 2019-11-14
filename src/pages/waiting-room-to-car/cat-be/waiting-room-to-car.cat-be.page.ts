@@ -53,15 +53,17 @@ import {
   QuestionOutcomes,
 } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
 import {
+  hasEyesightTestBeenCompleted,
+} from '../../../modules/tests/test-data/test-data.selector';
+import {
   isTellMeQuestionSelected,
   isTellMeQuestionDrivingFault,
   isTellMeQuestionCorrect,
   tellMeQuestionOutcome,
   getVehicleChecks,
   getTellMeQuestion,
-  hasEyesightTestBeenCompleted,
   hasEyesightTestGotSeriousFault,
-} from '../../../modules/tests/test-data/test-data.selector';
+} from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_BE } from '../../page-names.constants';

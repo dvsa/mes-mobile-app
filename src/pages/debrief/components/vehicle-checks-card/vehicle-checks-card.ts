@@ -7,7 +7,8 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
-import { getVehicleChecks } from '../../../../modules/tests/test-data/test-data.selector';
+// TODO: update import for category specific component
+import { getVehicleChecks } from '../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import {
   tellMeQuestionHasFault,
   hasVehicleChecksFault,
