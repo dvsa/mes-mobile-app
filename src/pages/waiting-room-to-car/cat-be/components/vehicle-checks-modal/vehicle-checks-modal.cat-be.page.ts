@@ -15,19 +15,26 @@ import { TestCategory } from '../../../../../shared/models/test-category';
 import {
   getVehicleChecksCatBe,
   getSelectedShowMeQuestions,
+  getSelectedTellMeQuestions,
 } from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/test-data.cat-be.reducer';
 import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
+  TellMeQuestionSelected,
+  TellMeQuestionOutcomeChanged,
 } from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
 import {
-  NUMBER_OF_SHOW_ME_QUESTIONS,
+ NUMBER_OF_TELL_ME_QUESTIONS,
 } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+import {
+  NUMBER_OF_SHOW_ME_QUESTIONS,
+} from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
 
 interface VehicleChecksModalCatBEState {
   candidateName$: Observable<string>;
   showMeQuestions$: Observable<QuestionResult[]>;
+  tellMeQuestions$: Observable<QuestionResult[]>;
 }
 
 @IonicPage()
@@ -42,6 +49,7 @@ export class VehicleChecksCatBEModal {
   showMeQuestions: VehicleChecksQuestion[];
   tellMeQuestions: VehicleChecksQuestion[];
   readonly showMeQuestionsNumberArray: number[] = Array(NUMBER_OF_SHOW_ME_QUESTIONS);
+  readonly tellMeQuestionsNumberArray: number[] = Array(NUMBER_OF_TELL_ME_QUESTIONS);
 
   constructor(
     public store$: Store<StoreModel>,
@@ -53,20 +61,25 @@ export class VehicleChecksCatBEModal {
   }
 
   ngOnInit(): void {
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
     this.pageState = {
-      candidateName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
-      showMeQuestions$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      showMeQuestions$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatBe),
         select(getSelectedShowMeQuestions),
+      ),
+      tellMeQuestions$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatBe),
+        select(getSelectedTellMeQuestions),
       ),
     };
   }
@@ -77,5 +90,13 @@ export class VehicleChecksCatBEModal {
 
   showMeQuestionOutcomeChanged(result: QuestionOutcome, index: number): void {
     this.store$.dispatch(new ShowMeQuestionOutcomeChanged(result, index));
+  }
+
+  tellMeQuestionChanged(result: QuestionResult, index: number): void {
+    this.store$.dispatch(new TellMeQuestionSelected(result, index));
+  }
+
+  tellMeQuestionOutcomeChanged(result: QuestionOutcome, index: number): void {
+    this.store$.dispatch(new TellMeQuestionOutcomeChanged(result, index));
   }
 }

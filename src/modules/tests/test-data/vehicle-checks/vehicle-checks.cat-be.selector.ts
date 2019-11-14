@@ -8,5 +8,11 @@ export const getSelectedShowMeQuestions = (
   return vehicleChecksCatBEReducer.showMeQuestions;
 };
 
+export const getSelectedTellMeQuestions = (
+  vehicleChecksCatBEReducer: CatBEUniqueTypes.VehicleChecks,
+): QuestionResult[] => {
+  return vehicleChecksCatBEReducer.tellMeQuestions;
+};
+
 export const getVehicleChecksCatBe =
   createFeatureSelector<CatBEUniqueTypes.VehicleChecks>('vehicleChecks');

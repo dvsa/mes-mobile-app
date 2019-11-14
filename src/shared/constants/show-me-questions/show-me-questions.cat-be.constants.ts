@@ -48,3 +48,5 @@ export default [
     shortName: 'Brake lights',
   },
 ] as VehicleChecksQuestion[];
+
+export const NUMBER_OF_SHOW_ME_QUESTIONS = 3;
