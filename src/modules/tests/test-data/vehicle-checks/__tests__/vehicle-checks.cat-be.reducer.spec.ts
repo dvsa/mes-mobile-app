@@ -4,7 +4,9 @@ import {
 } from '../vehicle-checks.cat-be.reducer';
 import {
   ShowMeQuestionSelected,
-  ShowMeQuestionOutcomeChanged }
+  ShowMeQuestionOutcomeChanged,
+  TellMeQuestionSelected,
+  TellMeQuestionOutcomeChanged}
   from '../vehicle-checks.cat-be.action';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
@@ -37,4 +39,29 @@ describe('Vehicle Checks Cat B+E Reducer', () => {
     });
   });
 
+  describe('TELL_ME_QUESTION_SELECTED' , () => {
+    it('should add the tell me question in the payload to the array at the specified index', () => {
+      const newQuestionPayload: QuestionResult = {
+        code: 'T01',
+        description: 'desc',
+      };
+      const state: CatBEUniqueTypes.VehicleChecks = initialState;
+      const result = vehicleChecksCatBEReducer(state, new TellMeQuestionSelected(newQuestionPayload, 1));
+      expect(result.tellMeQuestions[1].code).toEqual('T01');
+      expect(result.tellMeQuestions[1].description).toEqual('desc');
+    });
+  });
+
+  describe('TELL_ME_QUESTION_OUTCOME_CHANGED' , () => {
+    it('should update the outcome property for the object at the specified index', () => {
+      const state: CatBEUniqueTypes.VehicleChecks = initialState;
+      state.tellMeQuestions[1] = {
+        code: 'T01',
+        description: 'desc',
+        outcome: 'P',
+      };
+      const result = vehicleChecksCatBEReducer(state, new TellMeQuestionOutcomeChanged('DF', 1));
+      expect(result.tellMeQuestions[1].outcome).toEqual('DF');
+    });
+  });
 });

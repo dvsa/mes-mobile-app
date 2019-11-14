@@ -2,8 +2,11 @@
   <ion-row align-items-center class="mes-validated-row mes-row-separator" id="vehicle-checks-question-row" [formGroup]="formGroup" nowrap>
     <ion-col col-40>
       <ion-row>
-        <ion-select id="vehicle-checks-question-selector" placeholder="Select a question" okText="Submit"
-                    cancelText="Cancel" formControlName="{{questionFieldName}}_{{index}}"
+        <ion-select id="vehicle-checks-question-selector" 
+                    placeholder="Select a question" 
+                    okText="Submit"
+                    cancelText="Cancel" 
+                    [formControlName]="questionFieldName"
                     (ionChange)="vehicleChecksQuestionChanged($event)"
                     [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}">
           <ion-option *ngFor="let question of questions" [value]="question" [disabled]="isOptionDisabled(question)">
@@ -15,25 +18,25 @@
     <ion-col col-28 *ngIf="shouldShowOutcomeFields()">
       <ion-row>
         <input type="radio"
-               [attr.name]="questionOutcomeFieldName+'_'+index"
-               [attr.id]="'vehicleChecksCorrect_'+index"
+               [attr.name]="questionOutcomeFieldName"
+               [attr.id]="'vehicleChecksCorrect_'+questionId"
                class="gds-radio-button"
                value="P"
-               [formControlName]="questionOutcomeFieldName+'_'+index"
+               [formControlName]="questionOutcomeFieldName"
                (change)="vehicleChecksPassSelected()">
-        <label [for]="'vehicleChecksCorrect_'+index" class="radio-label">Correct</label>
+        <label [for]="'vehicleChecksCorrect_'+questionId" class="radio-label">Correct</label>
       </ion-row>
     </ion-col>
     <ion-col col-28 *ngIf="shouldShowOutcomeFields()">
       <ion-row>
         <input type="radio"
-               [attr.name]="questionOutcomeFieldName+'_'+index"
-               [attr.id]="'vehicleChecksFault_'+index"
+               [attr.name]="questionOutcomeFieldName"
+               [attr.id]="'vehicleChecksFault_'+questionId"
                class="gds-radio-button"
                value="DF"
-               [formControlName]="questionOutcomeFieldName+'_'+index"
+               [formControlName]="questionOutcomeFieldName"
                (change)="vehicleChecksDrivingFaultSelected()">
-        <label [for]="'vehicleChecksFault_'+index" class="radio-label">1 driving fault</label>
+        <label [for]="'vehicleChecksFault_'+questionId" class="radio-label">1 driving fault</label>
       </ion-row>
     </ion-col>
   </ion-row>

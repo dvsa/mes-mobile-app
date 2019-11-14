@@ -1,12 +1,16 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import * as vehicleChecksCatBeActionTypes from './vehicle-checks.cat-be.action';
 import {
-  NUMBER_OF_SHOW_ME_QUESTIONS as numberOfShowMeQuestions,
+  NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestions,
 }
   from '../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+import {
+  NUMBER_OF_SHOW_ME_QUESTIONS as numberOfShowMeQuestions,
+}
+  from '../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
 
 export const initialState: CatBEUniqueTypes.VehicleChecks = {
-  tellMeQuestions: [{}, {}],
+  tellMeQuestions: Array(numberOfTellMeQuestions).fill({}),
   showMeQuestions: Array(numberOfShowMeQuestions).fill({}),
 };
 
@@ -27,6 +31,21 @@ export function vehicleChecksCatBEReducer(
         showMeQuestions: state.showMeQuestions.map((item, index) => index === action.index ? {
           ...item,
           outcome: action.showMeQuestionOutcome,
+        } : item),
+      };
+    case vehicleChecksCatBeActionTypes.TELL_ME_QUESTION_SELECTED:
+      return {
+        ...state,
+        tellMeQuestions: state.tellMeQuestions.map(
+          (item, index) => index === action.index ? action.tellMeQuestion : item,
+        ),
+      };
+    case vehicleChecksCatBeActionTypes.TELL_ME_QUESTION_OUTCOME_CHANGED:
+      return {
+        ...state,
+        tellMeQuestions: state.tellMeQuestions.map((item, index) => index === action.index ? {
+          ...item,
+          outcome: action.tellMeQuestionOutcome,
         } : item),
       };
     default:

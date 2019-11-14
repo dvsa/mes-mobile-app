@@ -21,7 +21,6 @@
                                [questionResult]="(pageState.showMeQuestions$ | async)[i]"
                                [questions]="showMeQuestions"
                                [questionsToDisable]="pageState.showMeQuestions$ | async"
-                               [index]="i"
                                (vehicleChecksQuestionChange)="showMeQuestionChanged($event, i)"
                                (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event, i)">
       </vehicle-checks-question>
@@ -32,7 +31,13 @@
       <ion-card-title>Tell me questions</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>Some tell me stuff!!</p>
+      <vehicle-checks-question *ngFor="let question of tellMeQuestionsNumberArray; let i = index" [formGroup]="formGroup"
+                               [questionResult]="(pageState.tellMeQuestions$ | async)[i]"
+                               [questions]="tellMeQuestions"
+                               [questionsToDisable]="pageState.tellMeQuestions$ | async"
+                               (vehicleChecksQuestionChange)="tellMeQuestionChanged($event, i)"
+                               (vehicleChecksQuestionOutcomeChange)="tellMeQuestionOutcomeChanged($event, i)">
+      </vehicle-checks-question>
     </ion-card-content>
   </ion-card>
 </ion-content>
