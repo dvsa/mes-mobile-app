@@ -28,7 +28,10 @@ export function vehicleChecksCatBEReducer(
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
       return {
         ...initialState,
-        // showMeQuestions: setQuestionOutcome(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome),
+        showMeQuestions: state.showMeQuestions.map((item, index) => index === action.index ? {
+          ...item,
+          outcome: action.showMeQuestionOutcome,
+        } : item),
       };
     case vehicleChecksCatBeActionTypes.TELL_ME_QUESTION_SELECTED:
       return {
@@ -49,14 +52,3 @@ export function vehicleChecksCatBEReducer(
       return state;
   }
 }
-
-function setQuestionResult(questions: QuestionResult[], index: number, outcome: QuestionResult) {
-  console.log(`show me question at index[${index}] is now:- ${JSON.stringify(outcome)}`);
-  questions[index] = outcome;
-  return questions;
-}
-
-// function setQuestionOutcome(questions: QuestionResult[], index: 0|1|2, outcome: QuestionResult) {
-//   questions[index] = outcome
-//   return questions
-// }
