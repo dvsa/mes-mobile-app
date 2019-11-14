@@ -19,7 +19,6 @@ import { of } from 'rxjs/observable/of';
 import { QuestionProvider } from '../../../../providers/question/question';
 import { QuestionProviderMock } from '../../../../providers/question/__mocks__/question.mock';
 import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';
-import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { VehicleRegistrationComponent } from '../../components/vehicle-registration/vehicle-registration';
 import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
@@ -70,11 +69,8 @@ describe('WaitingRoomToCarCatBEPage', () => {
                 accompaniment: {},
                 testData: {
                   vehicleChecks: {
-                    tellMeQuestion: {
-                      code: 'T1',
-                      description: 'desc',
-                      outcome: CompetencyOutcome.P,
-                    },
+                    tellMeQuestions: [],
+                    showMeQuestions: [],
                   },
                   seriousFaults: [],
                   eyesightTest: {},

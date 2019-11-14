@@ -30,7 +30,7 @@ export class FaultCountProvider {
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
-  public getManoeuvreFaultCount = (category: TestCategory, data: Object, faultType: CompetencyOutcome) => {
+  public getManoeuvreFaultCount = (category: TestCategory, data: Object, faultType: CompetencyOutcome): number => {
     if (category === TestCategory.B) return this.sumManoeuvreFaults(data, faultType);
     if (category === TestCategory.BE) return this.sumManoeuvreFaults(data, faultType);
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
@@ -85,7 +85,7 @@ export class FaultCountProvider {
     const result =
       drivingFaultSumOfSimpleCompetencies +
       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-      this.getVehicleChecksFaultCountCatBE(vehicleChecks) +
+      this.getVehicleChecksFaultCountCatB(vehicleChecks) +
       controlledStopHasDrivingFault;
 
     return result;
@@ -143,7 +143,7 @@ export class FaultCountProvider {
     const result =
       drivingFaultSumOfSimpleCompetencies +
       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-      this.getVehicleChecksFaultCountCatBE(vehicleChecks);
+      this.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults;
 
     return result;
   }
