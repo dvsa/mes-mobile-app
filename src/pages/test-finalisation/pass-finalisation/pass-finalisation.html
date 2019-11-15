@@ -115,7 +115,7 @@
 
         <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
           (d255Change)="d255Changed($event)"></d255>
-        <warning-banner *ngIf="pageState.d255$ | async" warningText="You have selected yes to having a D255 form."></warning-banner>
+        <warning-banner *ngIf="pageState.d255$ | async" warningText="By selecting Yes you are confirming a D255 is required."></warning-banner>
 
         <language-preferences [formGroup]="form" [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"
           (welshChanged)="isWelshChanged($event)"></language-preferences>
