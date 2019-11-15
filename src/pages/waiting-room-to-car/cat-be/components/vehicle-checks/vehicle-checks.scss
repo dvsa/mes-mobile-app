@@ -3,4 +3,12 @@ vehicle-checks-cat-be {
     min-width: 250px;
     margin-bottom: 0;
   }
+
+  .vehicle-check-score {
+    margin-left: 10px;
+
+    .badge {
+      margin-right: 5px;
+    }
+  }
 }

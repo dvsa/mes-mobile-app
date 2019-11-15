@@ -5,6 +5,7 @@ import { ActivityCodes } from '../../shared/models/activity-codes';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { FaultCountProvider } from '../fault-count/fault-count';
+import { TestCategory } from '../../shared/models/test-category';
 
 @Injectable()
 export class TestResultProvider {
@@ -15,15 +16,15 @@ export class TestResultProvider {
 
   calculateCatBTestResult = (testData: CatBUniqueTypes.TestData): Observable<ActivityCode> => {
 
-    if (this.faultCountProvider.getDangerousFaultSumCountCatB(testData) > 0) {
+    if (this.faultCountProvider.getDangerousFaultSumCount(TestCategory.B, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
 
-    if (this.faultCountProvider.getSeriousFaultSumCountCatB(testData) > 0) {
+    if (this.faultCountProvider.getSeriousFaultSumCount(TestCategory.B, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
 
-    if (this.faultCountProvider.getDrivingFaultSumCountCatB(testData) > 15) {
+    if (this.faultCountProvider.getDrivingFaultSumCount(TestCategory.B, testData) > 15) {
       return of(ActivityCodes.FAIL);
     }
 
