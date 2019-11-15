@@ -73,16 +73,20 @@ import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import {
   getDrivingFaults,
-  displayDrivingFaultComments,
   getDangerousFaults,
   getSeriousFaults,
+  getEyesightTestSeriousFaultAndComment,
+} from '../debrief/debrief.selector';
+
+import {
+  displayDrivingFaultComments,
   getManoeuvreFaults,
   getVehicleCheckDrivingFaults,
   getControlledStopFaultAndComment,
   getVehicleCheckSeriousFaults,
   getVehicleCheckDangerousFaults,
-  getEyesightTestSeriousFaultAndComment,
-} from '../debrief/debrief.selector';
+} from '../debrief/cat-b/debrief.cat-b.selector';
+
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
 import {

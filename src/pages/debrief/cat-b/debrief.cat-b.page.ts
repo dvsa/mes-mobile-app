@@ -19,15 +19,17 @@ import { merge } from 'rxjs/observable/merge';
 import {
   getSeriousOrDangerousFaults,
   getDrivingFaults,
-  getManoeuvreFaults,
   getTestOutcome,
+  getEyesightTestSeriousFault,
+} from '../debrief.selector';
+import {
+  getManoeuvreFaults,
   getControlledStopFault,
   getVehicleCheckSeriousFaults,
   getVehicleCheckDangerousFaults,
   getVehicleCheckDrivingFaults,
   getControlledStopFaultAndComment,
-  getEyesightTestSeriousFault,
-} from '../debrief.selector';
+} from '../cat-b/debrief.cat-b.selector';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import {
   MultiFaultAssignableCompetency,
