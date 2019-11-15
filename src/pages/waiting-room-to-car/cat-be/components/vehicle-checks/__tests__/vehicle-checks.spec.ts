@@ -7,6 +7,10 @@ import { CAT_BE } from '../../../../../page-names.constants';
 import { App } from '../../../../../../app/app.component';
 import { Store } from '@ngrx/store';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
+import { SeriousFaultBadgeComponent }
+  from '../../../../../../components/common/serious-fault-badge/serious-fault-badge';
+import { DrivingFaultsBadgeComponent }
+  from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
 
 class MockStore { }
 
@@ -19,6 +23,8 @@ describe('VehicleChecksCatBEComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksCatBEComponent,
+        SeriousFaultBadgeComponent,
+        DrivingFaultsBadgeComponent,
       ],
       imports: [
         IonicModule,

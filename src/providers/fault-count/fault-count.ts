@@ -5,6 +5,7 @@ import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { TestCategory } from '../../shared/models/test-category';
+import { VehicleChecksScore } from '../../shared/models/vehicle-checks-score.model';
 
 @Injectable()
 export class FaultCountProvider {
@@ -29,7 +30,49 @@ export class FaultCountProvider {
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
-  public getDrivingFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
+  public getManoeuvreFaultCount = (category: TestCategory, data: Object, faultType: CompetencyOutcome): number => {
+    if (category === TestCategory.B) return this.sumManoeuvreFaults(data, faultType);
+    if (category === TestCategory.BE) return this.sumManoeuvreFaults(data, faultType);
+    throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
+  }
+
+  public getVehicleChecksFaultCountCatB = (vehicleChecks: CatBUniqueTypes.VehicleChecks): number => {
+    const { showMeQuestion, tellMeQuestion } = vehicleChecks;
+
+    if (showMeQuestion.outcome === CompetencyOutcome.S || showMeQuestion.outcome === CompetencyOutcome.D) {
+      return 0;
+    }
+
+    if (showMeQuestion.outcome === CompetencyOutcome.DF || tellMeQuestion.outcome === CompetencyOutcome.DF) {
+      return 1;
+    }
+
+    return 0;
+  }
+
+  public getVehicleChecksFaultCountCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): VehicleChecksScore => {
+    const numberOfShowMeFaults: number = vehicleChecks.showMeQuestions.filter((showMeQuestion) => {
+      return showMeQuestion.outcome === 'DF';
+    }).length;
+    const numberOfTellMeFaults: number = vehicleChecks.tellMeQuestions.filter((tellMeQuestion) => {
+      return tellMeQuestion.outcome === 'DF';
+    }).length;
+
+    const totalFaultCount: number = numberOfShowMeFaults + numberOfTellMeFaults;
+
+    if (totalFaultCount === 5) {
+      return {
+        drivingFaults: 4,
+        seriousFaults: 1,
+      };
+    }
+    return {
+      drivingFaults: totalFaultCount,
+      seriousFaults: 0,
+    };
+  }
+
+  private getDrivingFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -42,13 +85,13 @@ export class FaultCountProvider {
     const result =
       drivingFaultSumOfSimpleCompetencies +
       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-      this.sumVehicleCheckFaultsCatB(vehicleChecks) +
+      this.getVehicleChecksFaultCountCatB(vehicleChecks) +
       controlledStopHasDrivingFault;
 
     return result;
   }
 
-  public getSeriousFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
+  private getSeriousFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -69,7 +112,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public getDangerousFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
+  private getDangerousFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -88,26 +131,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  private sumVehicleCheckFaultsCatB = (vehicleChecks: CatBUniqueTypes.VehicleChecks): number => {
-    const { showMeQuestion, tellMeQuestion } = vehicleChecks;
-
-    if (showMeQuestion.outcome === CompetencyOutcome.S || showMeQuestion.outcome === CompetencyOutcome.D) {
-      return 0;
-    }
-
-    if (showMeQuestion.outcome === CompetencyOutcome.DF || tellMeQuestion.outcome === CompetencyOutcome.DF) {
-      return 1;
-    }
-
-    return 0;
-  }
-
-  public sumVehicleCheckFaultsCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): number => {
-    // TODO: Use the Vechicle checks scoring logic provider, to be done in MES-3737
-    return 0;
-  }
-
-  public getDrivingFaultSumCountCatBE = (data: CatBEUniqueTypes.TestData): number => {
+  private getDrivingFaultSumCountCatBE = (data: CatBEUniqueTypes.TestData): number => {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -119,12 +143,12 @@ export class FaultCountProvider {
     const result =
       drivingFaultSumOfSimpleCompetencies +
       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-      this.sumVehicleCheckFaultsCatBE(vehicleChecks);
+      this.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults;
 
     return result;
   }
 
-  public getSeriousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
+  private getSeriousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -143,7 +167,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public getDangerousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
+  private getDangerousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -160,7 +184,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public sumManoeuvreFaults(manoeuvres: Object, faultType: CompetencyOutcome): number {
+  private sumManoeuvreFaults(manoeuvres: Object, faultType: CompetencyOutcome): number {
     const manoeuvresCollection = Object.values(manoeuvres);
     return sumBy(manoeuvresCollection, (manoeuvre) => {
       if (manoeuvre.selected) {

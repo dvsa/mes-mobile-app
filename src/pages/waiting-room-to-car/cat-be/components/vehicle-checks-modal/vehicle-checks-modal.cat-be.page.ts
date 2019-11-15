@@ -30,11 +30,17 @@ import {
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS,
 } from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
+import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
+import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
+import { map } from 'rxjs/operators';
+import { merge } from 'rxjs/observable/merge';
+import { Subscription } from 'rxjs/Subscription';
 
 interface VehicleChecksModalCatBEState {
   candidateName$: Observable<string>;
   showMeQuestions$: Observable<QuestionResult[]>;
   tellMeQuestions$: Observable<QuestionResult[]>;
+  vehicleChecksScore$: Observable<VehicleChecksScore>;
 }
 
 @IonicPage()
@@ -46,13 +52,19 @@ export class VehicleChecksCatBEModal {
 
   pageState: VehicleChecksModalCatBEState;
   formGroup: FormGroup;
+
   showMeQuestions: VehicleChecksQuestion[];
   tellMeQuestions: VehicleChecksQuestion[];
   readonly showMeQuestionsNumberArray: number[] = Array(NUMBER_OF_SHOW_ME_QUESTIONS);
   readonly tellMeQuestionsNumberArray: number[] = Array(NUMBER_OF_TELL_ME_QUESTIONS);
 
+  vehicleChecksScore: VehicleChecksScore;
+
+  subscription: Subscription;
+
   constructor(
     public store$: Store<StoreModel>,
+    private faultCountProvider: FaultCountProvider,
     questionProvider: QuestionProvider,
   ) {
     this.formGroup = new FormGroup({});
@@ -81,7 +93,30 @@ export class VehicleChecksCatBEModal {
         select(getVehicleChecksCatBe),
         select(getSelectedTellMeQuestions),
       ),
+      vehicleChecksScore$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatBe),
+        map((vehicleChecks) => {
+          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+        }),
+      ),
     };
+
+    const { vehicleChecksScore$ } = this.pageState;
+
+    const merged$ = merge(
+      vehicleChecksScore$.pipe(
+        map(score => this.vehicleChecksScore = score),
+      ),
+    );
+
+    this.subscription = merged$.subscribe();
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   showMeQuestionChanged(result: QuestionResult, index: number): void {
@@ -98,5 +133,9 @@ export class VehicleChecksCatBEModal {
 
   tellMeQuestionOutcomeChanged(result: QuestionOutcome, index: number): void {
     this.store$.dispatch(new TellMeQuestionOutcomeChanged(result, index));
+  }
+
+  shouldDisplayBanner = (): boolean => {
+    return this.vehicleChecksScore.drivingFaults === 4 && this.vehicleChecksScore.seriousFaults === 1;
   }
 }

@@ -106,7 +106,7 @@ describe('VehicleChecksQuestionComponent', () => {
         expect(component.findQuestion()).toEqual(undefined);
       });
     });
-    describe('shouldShowOutcomeFields' , () => {
+    describe('shouldShowOutcomeFields', () => {
       it('should return true if all the required data is present', () => {
         component.questionResult = {
           code: 'S04',

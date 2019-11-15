@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { FaultCountProvider } from '../fault-count/fault-count';
+import { TestCategory } from '../../shared/models/test-category';
 
 @Injectable()
 // TODO: This provider has tight coupling to category B
@@ -27,8 +28,8 @@ export class TestReportValidatorProvider {
 
     return of(
       noEtaFaults ||
-      this.faultCountProvider.getDangerousFaultSumCountCatB(testData) !== 0 ||
-      this.faultCountProvider.getSeriousFaultSumCountCatB(testData) !== 0,
+      this.faultCountProvider.getDangerousFaultSumCount(TestCategory.B, testData) !== 0 ||
+      this.faultCountProvider.getSeriousFaultSumCount(TestCategory.B, testData) !== 0,
     );
   }
 }

@@ -3,9 +3,9 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
 import { createFeatureSelector } from '@ngrx/store';
 
 export const getSelectedShowMeQuestions = (
-  vehicleChecksCatBEReducer: CatBEUniqueTypes.VehicleChecks,
+  vehicleChecks: CatBEUniqueTypes.VehicleChecks,
 ): QuestionResult[] => {
-  return vehicleChecksCatBEReducer.showMeQuestions;
+  return vehicleChecks.showMeQuestions;
 };
 
 export const getSelectedTellMeQuestions = (
