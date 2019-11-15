@@ -11,7 +11,7 @@ import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/test-data.reducer';
 import {
   hasControlledStopBeenCompleted,
-} from '../../../../../modules/tests/test-data/test-data.selector';
+} from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import {
   ToggleControlledStop,
   ControlledStopAddDangerousFault,

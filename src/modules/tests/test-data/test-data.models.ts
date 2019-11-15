@@ -16,3 +16,14 @@ export type CatBLegalRequirements = {
   vehicleChecks: boolean,
   eco: boolean,
 };
+
+export type CatBELegalRequirements = {
+  normalStart1: boolean,
+  normalStart2: boolean,
+  angledStartControlledStop: boolean,
+  uphillStart: boolean,
+  downhillStart: boolean,
+  manoeuvre: boolean,
+  vehicleChecks: boolean,
+  eco: boolean,
+};

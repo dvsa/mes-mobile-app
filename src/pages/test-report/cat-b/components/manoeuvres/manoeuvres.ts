@@ -3,7 +3,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTestData } from '../../../../../modules/tests/test-data/test-data.reducer';
-import { getManoeuvres } from '../../../../../modules/tests/test-data/test-data.selector';
+import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';

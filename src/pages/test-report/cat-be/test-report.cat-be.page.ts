@@ -42,7 +42,7 @@ import { TestReportValidatorProvider } from '../../../providers/test-report-vali
 import { CatBLegalRequirements } from '../../../modules/tests/test-data/test-data.models';
 import {
   hasManoeuvreBeenCompleted,
-} from '../../../modules/tests/test-data/test-data.selector';
+} from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { ModalEvent } from '../test-report.constants';
 import { CAT_BE } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';

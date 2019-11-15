@@ -63,12 +63,15 @@ import {
   getETAFaultText,
   getEco,
   getEcoFaultText,
+  getShowMeQuestionOptions,
+} from '../../modules/tests/test-data/test-data.selector';
+// TODO: update import for category specific page version
+import {
+  getVehicleChecks,
   getSelectedTellMeQuestionText,
   getShowMeQuestion,
-  getVehicleChecks,
-  getShowMeQuestionOptions,
   getTellMeQuestion,
-} from '../../modules/tests/test-data/test-data.selector';
+} from '../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import {

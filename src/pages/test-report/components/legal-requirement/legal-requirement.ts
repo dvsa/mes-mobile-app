@@ -8,8 +8,10 @@ import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
 import {
   getTestRequirements,
-  hasLegalRequirementBeenCompleted,
 } from '../../../../modules/tests/test-data/test-data.selector';
+import {
+  hasLegalRequirementBeenCompleted,
+} from '../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import {
   ToggleLegalRequirement,
 } from '../../../../modules/tests/test-data/test-requirements/test-requirements.actions';

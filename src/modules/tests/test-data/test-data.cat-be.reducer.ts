@@ -11,6 +11,21 @@ import { seriousFaultsReducer } from './serious-faults/serious-faults.reducer';
 import { vehicleChecksCatBEReducer } from './vehicle-checks/vehicle-checks.cat-be.reducer';
 import { testRequirementsCatBEReducer } from './test-requirements/test-requirements.cat-be.reducer';
 
+export const initialState: CatBEUniqueTypes.TestData = {
+  dangerousFaults: {},
+  drivingFaults: {},
+  manoeuvres: {},
+  seriousFaults: {},
+  testRequirements: {},
+  ETA: {},
+  eco: {},
+  eyesightTest: {},
+  vehicleChecks: {
+    tellMeQuestions: [],
+    showMeQuestions: [],
+  },
+};
+
 export function testDataCatBEReducer(
   state: CatBEUniqueTypes.TestData,
   action: Action,

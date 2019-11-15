@@ -23,10 +23,10 @@ import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import {
-  getDrivingFaultCount,
   hasSeriousFault,
   hasDangerousFault,
 } from '../../../../modules/tests/test-data/test-data.selector';
+import { getDrivingFaultCount } from '../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';

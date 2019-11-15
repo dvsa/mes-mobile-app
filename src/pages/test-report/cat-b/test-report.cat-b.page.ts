@@ -47,7 +47,7 @@ import { CatBLegalRequirements } from '../../../modules/tests/test-data/test-dat
 import {
   getCatBLegalRequirements,
   hasManoeuvreBeenCompleted,
-} from '../../../modules/tests/test-data/test-data.selector';
+} from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { ModalEvent } from '../test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
