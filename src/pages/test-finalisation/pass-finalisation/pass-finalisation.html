@@ -87,6 +87,7 @@
             </ion-row>
           </ion-col>
         </ion-row>
+        <warning-banner *ngIf="pageState.transmissionAutomaticRadioChecked$ | async" warningText="An automatic licence will be issued."></warning-banner>
 
         <ion-row class="mes-validated-row mes-row-separator" id="provisional-license-card">
           <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl') ||
@@ -114,6 +115,7 @@
 
         <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
           (d255Change)="d255Changed($event)"></d255>
+        <warning-banner *ngIf="pageState.d255$ | async" warningText="By selecting Yes you are confirming a D255 is required."></warning-banner>
 
         <language-preferences [formGroup]="form" [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"
           (welshChanged)="isWelshChanged($event)"></language-preferences>

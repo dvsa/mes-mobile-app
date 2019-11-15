@@ -14,6 +14,7 @@ import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { TestFinalisationComponentsModule } from '../../components/test-finalisation.module';
+import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 
 describe('PassFinalisationPage', () => {
   let fixture: ComponentFixture<PassFinalisationPage>;
@@ -25,6 +26,7 @@ describe('PassFinalisationPage', () => {
       declarations: [
         PassFinalisationPage,
         MockComponent(PracticeModeBanner),
+        MockComponent(WarningBannerComponent),
       ],
       imports: [IonicModule, AppModule, TestFinalisationComponentsModule],
       providers: [
