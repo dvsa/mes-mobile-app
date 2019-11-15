@@ -21,27 +21,43 @@ export const getManoeuvreFaults = (
 ): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
   const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
   forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
-    let competencyComment = '';
     const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
+
       if (endsWith(key, 'Fault') && value === faultType) {
-        if (key === 'controlFault') {
-          competencyComment = manoeuvre.controlFaultComments || '';
-        } else {
-          competencyComment = manoeuvre.observationFaultComments || '';
-        }
-        const manoeuvreFaultSummary: CommentedCompetency & MultiFaultAssignableCompetency = {
-          comment: competencyComment || '',
-          competencyIdentifier: `${type}${manoeuvreCompetencyLabels[key]}` ,
-          competencyDisplayName: [manoeuvreTypeLabels[type], manoeuvreCompetencyLabels[key]].join(' - '),
-          source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabels[key]}`,
-          faultCount: 1,
-        };
-        result.push(manoeuvreFaultSummary);
+
+        const competencyComment = getCompetencyComment(
+          key,
+          manoeuvre.controlFaultComments,
+          manoeuvre.observationFaultComments);
+
+        result.push(createManoeuvreFault(key, type, competencyComment));
       }
     }, []);
     faultsEncountered.push(...faults);
   });
   return faultsEncountered;
+};
+
+const getCompetencyComment = (key: string,
+                              controlFaultComments: string,
+                              observationFaultComments: string) => {
+  if (key === 'controlFault') {
+    return controlFaultComments || '';
+  }
+  return observationFaultComments || '';
+};
+
+const createManoeuvreFault = (key: string,
+                              type: ManoeuvreTypes,
+                              competencyComment: string): CommentedCompetency & MultiFaultAssignableCompetency => {
+  const manoeuvreFaultSummary : CommentedCompetency & MultiFaultAssignableCompetency = {
+    comment: competencyComment || '',
+    competencyIdentifier: `${type}${manoeuvreCompetencyLabels[key]}` ,
+    competencyDisplayName:`${manoeuvreTypeLabels[type]} - ${manoeuvreCompetencyLabels[key]}`,
+    source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabels[key]}`,
+    faultCount: 1,
+  };
+  return manoeuvreFaultSummary;
 };
 
 export const getManoeuvreFaultsCount = (
