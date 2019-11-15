@@ -9,7 +9,7 @@
   <div class="tickwrapper">
     <tick-indicator [ticked]="componentState.ticked$ | async"></tick-indicator>
   </div>
-  <div [ngClass]="legalRequirement.indexOf('normalStart') >= 0 ? 'normalStartLabel' : 'label'">  
+  <div [ngClass]="legalRequirement.indexOf('normalStart') >= 0 ? 'normal-start-label' : 'label'">  
     <span class='competency-label'>{{ getLabel() }}</span>
   </div>
 </competency-button>
