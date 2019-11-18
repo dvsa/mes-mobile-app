@@ -7,16 +7,16 @@ import {
   Toast, Keyboard, AlertController,
 } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
+import { StoreModel } from '../../../shared/models/store.model';
 import {
   OfficeViewDidEnter,
   CompleteTest,
   SavingWriteUpForLater,
   ValidationError,
-} from './office.actions';
+} from '../office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
 import {
@@ -27,8 +27,8 @@ import {
   getTestOutcomeText,
   getActivityCode,
   getJournalData,
-} from '../../modules/tests/tests.selector';
-import { getTests } from '../../modules/tests/tests.reducer';
+} from '../../../modules/tests/tests.selector';
+import { getTests } from '../../../modules/tests/tests.reducer';
 import {
   getRouteNumber,
   getCandidateDescription,
@@ -36,8 +36,8 @@ import {
   getWeatherConditions,
   getIdentification,
   getIndependentDriving,
-} from '../../modules/tests/test-summary/test-summary.selector';
-import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
+} from '../../../modules/tests/test-summary/test-summary.selector';
+import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { map, withLatestFrom } from 'rxjs/operators';
 import {
   RouteNumberChanged,
@@ -46,40 +46,40 @@ import {
   CandidateDescriptionChanged,
   WeatherConditionsChanged,
   AdditionalInformationChanged,
-} from '../../modules/tests/test-summary/test-summary.actions';
-import { getCandidate } from '../../modules/tests/journal-data/candidate/candidate.reducer';
+} from '../../../modules/tests/test-summary/test-summary.actions';
+import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
 import {
   getCandidateName,
   getCandidateDriverNumber,
   formatDriverNumber,
-} from '../../modules/tests/journal-data/candidate/candidate.selector';
-import { QuestionProvider } from '../../providers/question/question';
+} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { QuestionProvider } from '../../../providers/question/question';
 import {
   getTestSlotAttributes,
-} from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
-import { getTestTime } from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
+} from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
+import { getTestTime } from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
 import {
   getETA,
   getETAFaultText,
   getEco,
   getEcoFaultText,
   getShowMeQuestionOptions,
-} from '../../modules/tests/test-data/test-data.selector';
+} from '../../../modules/tests/test-data/test-data.selector';
 // TODO: update import for category specific page version
 import {
   getVehicleChecks,
   getSelectedTellMeQuestionText,
   getShowMeQuestion,
   getTellMeQuestion,
-} from '../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
-import { PersistTests } from '../../modules/tests/tests.actions';
+} from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
+import { PersistTests } from '../../../modules/tests/tests.actions';
 import {
   getDrivingFaults,
   getDangerousFaults,
   getSeriousFaults,
   getEyesightTestSeriousFaultAndComment,
-} from '../debrief/debrief.selector';
+} from '../../debrief/debrief.selector';
 
 import {
   displayDrivingFaultComments,
@@ -88,43 +88,43 @@ import {
   getControlledStopFaultAndComment,
   getVehicleCheckSeriousFaults,
   getVehicleCheckDangerousFaults,
-} from '../debrief/cat-b/debrief.cat-b.selector';
+} from '../../debrief/cat-b/debrief.cat-b.selector';
 
-import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
-import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
+import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
+import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
 import {
   WeatherConditions,
   Identification,
   IndependentDriving,
 } from '@dvsa/mes-test-schema/categories/Common';
-import { AddDangerousFaultComment } from '../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
-import { AddSeriousFaultComment } from '../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import { AddDrivingFaultComment } from '../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import { AddDangerousFaultComment } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import { AddSeriousFaultComment } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import { AddDrivingFaultComment } from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
 import {
   ShowMeQuestionSelected,
   AddShowMeTellMeComment,
-} from '../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
-import { AddControlledStopComment } from '../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
-import { AddManoeuvreComment } from '../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
-import { EyesightTestAddComment } from '../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
+} from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import { AddControlledStopComment } from '../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
+import { AddManoeuvreComment } from '../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
+import { EyesightTestAddComment } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import {
   MultiFaultAssignableCompetency,
   CommentedCompetency,
   CommentSource,
-} from '../../shared/models/fault-marking.model';
-import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from './office-behaviour-map';
-import { ActivityCodeModel, activityCodeModelList } from './components/activity-code/activity-code.constants';
-import { CompetencyOutcome } from '../../shared/models/competency-outcome';
+} from '../../../shared/models/fault-marking.model';
+import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { behaviourMap } from '../office-behaviour-map';
+import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
-import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
-import { isRekey } from '../../modules/tests/rekey/rekey.selector';
-import { CAT_B , JOURNAL_PAGE } from '../page-names.constants';
-import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
-import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
-import { TestCategory } from '../../shared/models/test-category';
-import { FaultCountProvider } from '../../providers/fault-count/fault-count';
-import { getTestCategory } from '../../modules/tests/category/category.reducer';
+import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
+import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
+import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
+import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
+import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
+import { TestCategory } from '../../../shared/models/test-category';
+import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -170,9 +170,9 @@ interface OfficePageState {
 @IonicPage()
 @Component({
   selector: 'page-office',
-  templateUrl: 'office.html',
+  templateUrl: 'office.cat-be.page.html',
 })
-export class OfficePage extends PracticeableBasePageComponent {
+export class OfficeCatBEPage extends PracticeableBasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
   toast: Toast;
@@ -624,7 +624,7 @@ export class OfficePage extends PracticeableBasePageComponent {
 
   goToReasonForRekey() {
     if (this.isFormValid()) {
-      this.navController.push(CAT_B.REKEY_REASON_PAGE);
+      this.navController.push(CAT_BE.REKEY_REASON_PAGE);
     }
   }
 
