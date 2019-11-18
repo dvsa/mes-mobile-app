@@ -5,144 +5,16 @@
       <button ion-button (click)="logout()">Sign Out</button>
     </ion-buttons>
   </ion-navbar>
-  <div id="test-outcome-background" [ngSwitch]="outcome">
-    <div class="test-outcome-container passed" *ngSwitchCase="'Pass'">
-      <h4>{{ 'debrief.outcomeHeader' | translate }}</h4>
-      <h1>{{ 'debrief.passStatus' | translate }}</h1>
-    </div>
-    <div class="test-outcome-container failed" *ngSwitchCase="'Fail'">
-      <h4>{{ 'debrief.outcomeHeader' | translate }}</h4>
-      <h1>{{ 'debrief.failStatus' | translate }}</h1>
-    </div>
-    <div class="test-outcome-container terminated" *ngSwitchCase="'Terminated'">
-      <h4>{{ 'debrief.outcomeHeader' | translate }}</h4>
-      <h1>{{ 'debrief.terminatedStatus' | translate }}</h1>
-    </div>
-  </div>
+  <test-outcome-debrief-card [outcome]="outcome"></test-outcome-debrief-card>
 </ion-header>
 
 <ion-content>
-
-  <ion-card id="ETA" *ngIf="hasPhysicalEta || hasVerbalEta">
-    <ion-card-content>
-      <ion-grid>
-        <ion-row align-items-start class="mes-data">
-          <ion-col col-3></ion-col>
-          <ion-col col-34>
-            <h4 class="fault-heading">{{ 'debrief.etaHeader' | translate }}</h4>
-          </ion-col>
-          <ion-col align-self-start>
-            <span id="etaFaults" *ngIf="hasPhysicalEta && !hasVerbalEta">{{ 'debrief.etaPhysical' | translate }}</span>
-            <span id="etaFaults" *ngIf="!hasPhysicalEta && hasVerbalEta">{{ 'debrief.etaVerbal' | translate }}</span>
-            <span id="etaFaults" *ngIf="hasPhysicalEta && hasVerbalEta">{{ 'debrief.etaBoth' | translate }}</span>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card id="dangerous-fault" *ngIf="(pageState.dangerousFaults$ | async).length > 0">
-    <ion-card-header>
-      <ion-card-title>
-        <h1 class="fault-heading">{{(pageState.dangerousFaults$ | async).length}}</h1>
-        <h4 class="fault-heading">{{ 'debrief.dangerousFaultsCardDescription' | translate }}</h4>
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row align-items-center *ngFor="let dangerousFault of (pageState.dangerousFaults$ | async)" class="mes-data">
-          <ion-col col-32 no-padding></ion-col>
-          <ion-col col-2 no-padding align-self-start>
-            <div class="counter-icon">
-              <dangerous-fault-badge [showBadge]="true"></dangerous-fault-badge>
-            </div>
-          </ion-col>
-          <ion-col col-3 no-padding></ion-col>
-          <ion-col no-padding>
-            <div class="counter-label">{{ 'debrief.competencies.' + dangerousFault | translate }}</div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card id="serious-fault" *ngIf="(pageState.seriousFaults$ | async).length > 0">
-    <ion-card-header>
-      <ion-card-title>
-        <h1 class="fault-heading">{{(pageState.seriousFaults$ | async).length}}</h1>
-        <h4 class="fault-heading">{{ 'debrief.seriousFaultsCardDescription' | translate }}</h4>
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row align-items-center *ngFor="let seriousFault of (pageState.seriousFaults$ | async)" class="mes-data">
-          <ion-col col-32 no-padding></ion-col>
-          <ion-col col-2 no-padding align-self-start>
-            <div class="counter-icon">
-              <serious-fault-badge [showBadge]="true"></serious-fault-badge>
-            </div>
-          </ion-col>
-          <ion-col col-3 no-padding></ion-col>
-          <ion-col no-padding>
-            <div class="counter-label">{{ 'debrief.competencies.' + seriousFault | translate }}</div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card id="driving-fault" *ngIf="(pageState.drivingFaultCount$ | async) > 0 || (pageState.drivingFaults$ | async).length > 0">
-    <ion-card-header>
-      <ion-card-title>
-        <h1 class="fault-heading">{{pageState.drivingFaultCount$ | async}}</h1>
-        <h4 class="fault-heading">{{ 'debrief.drivingFaultsCardDescription' | translate }}</h4>
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row align-items-center *ngFor="let drivingFault of (pageState.drivingFaults$ | async)" class="mes-data">
-          <ion-col col-32 no-padding></ion-col>
-          <ion-col col-2 no-padding align-self-start>
-            <div class="counter-icon">
-              <driving-faults-badge class="counter driving-faults" [count]="drivingFault.faultCount">
-              </driving-faults-badge>
-            </div>
-          </ion-col>
-          <ion-col col-3 no-padding></ion-col>
-          <ion-col no-padding>
-            <div class="counter-label">{{'debrief.competencies.' + drivingFault.competencyIdentifier | translate}}</div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card id="eco" *ngIf="adviceGivenControl || adviceGivenPlanning">
-    <ion-card-content>
-      <ion-grid>
-        <ion-row align-items-start class="mes-data">
-          <ion-col col-3></ion-col>
-          <ion-col col-34>
-            <h4 class="fault-heading">{{ 'debrief.ecoHeader' | translate }}</h4>
-          </ion-col>
-          <ion-col align-self-start>
-            <div id="ecoFaults" *ngIf="adviceGivenControl && !adviceGivenPlanning">
-              {{ 'debrief.ecoControl' | translate }}
-            </div>
-            <div id="ecoFaults" *ngIf="!adviceGivenControl && adviceGivenPlanning">
-              {{ 'debrief.ecoPlanning' | translate }}
-            </div>
-            <div id="ecoFaults" *ngIf="adviceGivenControl && adviceGivenPlanning">
-              {{ 'debrief.ecoBoth' | translate }}
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-
+  <eta-debrief-card [hasPhysicalEta]="hasPhysicalEta" [hasVerbalEta]="hasVerbalEta"></eta-debrief-card>
+  <dangerous-faults-debrief-card [dangerousFaults]="pageState.dangerousFaults$ | async"></dangerous-faults-debrief-card>
+  <serious-faults-debrief-card [seriousFaults]="pageState.seriousFaults$ | async"></serious-faults-debrief-card>
+  <driving-faults-debrief-card [drivingFaults]="pageState.drivingFaults$ | async" [drivingFaultCount]="pageState.drivingFaultCount$ | async"></driving-faults-debrief-card>
+  <eco-debrief-card [adviceGivenControl]="adviceGivenControl" [adviceGivenPlanning]="adviceGivenPlanning"></eco-debrief-card>
   <vehicle-checks-card></vehicle-checks-card>
-
 </ion-content>
 <ion-footer>
   <div id="end-debrief-background">

@@ -131,7 +131,8 @@ export class DebriefCatBEPage extends BasePageComponent {
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
+        withLatestFrom(category$),
+        map(([data, category]) => {
           return [
             ...getDrivingFaults(data.drivingFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(
@@ -149,8 +150,8 @@ export class DebriefCatBEPage extends BasePageComponent {
                 source: result.source,
               })),
             ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(
-              (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
-                faultCount: 1,
+              (result: CommentedCompetency & MultiFaultAssignableCompetency): MultiFaultAssignableCompetency => ({
+                faultCount: this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, data),
                 competencyDisplayName: result.competencyDisplayName,
                 competencyIdentifier: result.competencyIdentifier,
                 source: result.source,
