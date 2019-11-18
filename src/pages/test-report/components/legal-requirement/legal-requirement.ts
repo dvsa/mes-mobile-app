@@ -13,8 +13,8 @@ import {
 import {
   ToggleLegalRequirement,
 } from '../../../../modules/tests/test-data/test-requirements/test-requirements.actions';
-import { LegalRequirements } from '../../../../modules/tests/test-data/test-data.constants';
-import { legalRequirementLabels } from './legal-requirement.constants';
+import { LegalRequirements, CatBeLegalRequirements } from '../../../../modules/tests/test-data/test-data.constants';
+import { catBlegalRequirementLabels, catBelegalRequirementLabels } from './legal-requirement.constants';
 
 interface LegalRequirementComponentState {
   ticked$: Observable<boolean>;
@@ -27,7 +27,7 @@ interface LegalRequirementComponentState {
 export class LegalRequirementComponent {
 
   @Input()
-  legalRequirement: LegalRequirements;
+  legalRequirement: LegalRequirements | CatBeLegalRequirements;
 
   componentState: LegalRequirementComponentState;
   subscription: Subscription;
@@ -49,7 +49,8 @@ export class LegalRequirementComponent {
     };
   }
 
-  getLabel = (): string => legalRequirementLabels[this.legalRequirement];
+  getLabel = (): string =>
+  catBlegalRequirementLabels[this.legalRequirement] || catBelegalRequirementLabels[this.legalRequirement]
 
   toggleLegalRequirement = (): void => {
     this.store$.dispatch(new ToggleLegalRequirement(this.legalRequirement));
@@ -58,9 +59,9 @@ export class LegalRequirementComponent {
   /**
    * Function to check if a legal requirement should use the normal-start-label class
    */
-  applyNormalStartClass(): string {
+  getLegalRequirementClass(): string {
     let cssClass: string = 'label';
-    if(this.legalRequirement.indexOf('normalStart') >= 0) {
+    if (this.legalRequirement.indexOf('normalStart') >= 0) {
       cssClass = 'normal-start-label';
     }
 

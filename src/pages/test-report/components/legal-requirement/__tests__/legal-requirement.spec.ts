@@ -10,11 +10,11 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import {
   ToggleLegalRequirement,
 } from '../../../../../modules/tests/test-data/test-requirements/test-requirements.actions';
-import { LegalRequirements } from '../../../../../modules/tests/test-data/test-data.constants';
+import { LegalRequirements, CatBeLegalRequirements } from '../../../../../modules/tests/test-data/test-data.constants';
 import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
-describe('LegalRequirementComponent', () => {
+fdescribe('LegalRequirementComponent', () => {
   let fixture: ComponentFixture<LegalRequirementComponent>;
   let component: LegalRequirementComponent;
   let store$: Store<StoreModel>;
@@ -46,14 +46,14 @@ describe('LegalRequirementComponent', () => {
 
   describe('Class', () => {
     it('should dispatch a TOGGLE_NORMAL_START_1 action', () => {
-      component.legalRequirement = LegalRequirements.normalStart1;
+      component.legalRequirement = CatBeLegalRequirements.normalStart1;
       component.toggleLegalRequirement();
 
       expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.normalStart1));
     });
 
     it('should dispatch a TOGGLE_NORMAL_START_2 action', () => {
-      component.legalRequirement = LegalRequirements.normalStart2;
+      component.legalRequirement = CatBeLegalRequirements.normalStart2;
       component.toggleLegalRequirement();
 
       expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.normalStart2));
@@ -71,6 +71,20 @@ describe('LegalRequirementComponent', () => {
       component.toggleLegalRequirement();
 
       expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.hillStart));
+    });
+
+    describe('getLegalRequirementClass', () => {
+      it('should return \'normal-start-class\' if component.legalRequirement value contains \'normalStart\'', () => {
+        component.legalRequirement = CatBeLegalRequirements.normalStart1;
+
+        expect(component.getLegalRequirementClass()).toEqual('normal-start-label');
+      });
+
+      it('should return \'label\' if component.legalRequirement value does not contain \'normalStart\'', () => {
+        component.legalRequirement = CatBeLegalRequirements.uphillStart;
+
+        expect(component.getLegalRequirementClass()).toEqual('label');
+      });
     });
   });
 });

@@ -1,7 +1,7 @@
 
 import { ETA, Eco, TestData } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { Competencies, LegalRequirements, ExaminerActions } from './test-data.constants';
+import { Competencies, LegalRequirements, ExaminerActions, CatBeLegalRequirements } from './test-data.constants';
 import { get } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
@@ -63,7 +63,7 @@ export const hasEyesightTestBeenCompleted = (data: TestData) => data.eyesightTes
 export const hasEyesightTestGotSeriousFault = (data: CatBUniqueTypes.TestData) => data.eyesightTest.seriousFault;
 
 export const hasLegalRequirementBeenCompleted = (
-  data: CatBUniqueTypes.TestRequirements, legalRequirement: LegalRequirements) => {
+  data: CatBUniqueTypes.TestRequirements, legalRequirement: LegalRequirements | CatBeLegalRequirements) => {
   return data[legalRequirement];
 };
 

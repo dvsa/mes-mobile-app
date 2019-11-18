@@ -1,10 +1,10 @@
 import { Action } from '@ngrx/store';
-import { LegalRequirements } from '../test-data.constants';
+import { LegalRequirements, CatBeLegalRequirements } from '../test-data.constants';
 
 export const TOGGLE_LEGAL_REQUIREMENT = '[Legal Requirements] Toggle Legal Requirement';
 
 export class ToggleLegalRequirement implements Action {
-  constructor(public payload: LegalRequirements) { }
+  constructor(public payload: LegalRequirements | CatBeLegalRequirements) { }
   readonly type = TOGGLE_LEGAL_REQUIREMENT;
 }
 
