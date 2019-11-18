@@ -3,7 +3,7 @@ import { EndTestLinkComponent } from '../end-test-link';
 import { IonicModule, ModalController, NavController } from 'ionic-angular';
 import { ModalControllerMock, NavControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
-import { CAT_B } from '../../../../pages/page-names.constants';
+import { CAT_B, CAT_BE } from '../../../../pages/page-names.constants';
 
 describe('EndTestLinkComponent', () => {
   let fixture: ComponentFixture<EndTestLinkComponent>;
@@ -50,13 +50,23 @@ describe('EndTestLinkComponent', () => {
 
   describe('Class', () => {
     describe('onTerminate', () => {
-      it('should dismiss the dialog termination confirmation dialog and navigate to the debrief', () => {
+      it('should dismiss the dialog termination confirmation dialog and navigate to CAT B debrief', () => {
+        component.category = 'B';
         component.terminateTestModal = jasmine.createSpyObj('terminateTestModal', ['dismiss']);
         component.onTerminate();
         expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(CAT_B.DEBRIEF_PAGE);
       });
+      it('should dismiss the dialog termination confirmation dialog and navigate to CAT BE debrief', () => {
+        component.category = 'B+E';
+        component.terminateTestModal = jasmine.createSpyObj('terminateTestModal', ['dismiss']);
+        component.onTerminate();
+        expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe(CAT_BE.DEBRIEF_PAGE);
+      });
+
     });
   });
 });

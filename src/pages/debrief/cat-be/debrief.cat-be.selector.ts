@@ -77,6 +77,7 @@ export const getManoeuvreFaultsCount = (
   return faultCount;
 };
 
+// TODO move methods that return a count and comments into a FaultSummaryProvider
 export const getVehicleCheckDangerousFaults =
   (vehicleChecks: CatBEUniqueTypes.VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
@@ -145,7 +146,6 @@ export const getVehicleCheckDrivingFaults =
         competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
         source: CommentSource.VEHICLE_CHECKS,
         faultCount: showMeDFFault.length + tellMeDFFault.length,
-        // TODO REVIEW LOGIC AND CALCULATE FAULT COUNT from show me tell me colletcions
       };
       result.push(competency);
     }
@@ -226,16 +226,15 @@ export const displayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): bo
     drivingFaultCount = drivingFaultCount + 1;
   }
   if (data.vehicleChecks) {
-      // TODO may need to sum up the driving fault counts.... plus look at logic of serious fault
     const checks = data.vehicleChecks;
-    if (checks.showMeQuestions &&
-        checks.showMeQuestions.findIndex(fault => fault.outcome === CompetencyOutcome.DF) >= 0) {
-      drivingFaultCount = drivingFaultCount + 1;
-    }
-    if (checks.tellMeQuestions &&
-        checks.tellMeQuestions.findIndex(fault => fault.outcome === CompetencyOutcome.DF) >= 0) {
-      drivingFaultCount = drivingFaultCount + 1;
-    }
+    const showMeFaultCount = checks.showMeQuestions.filter((check) => {
+      check.outcome === CompetencyOutcome.DF;
+    });
+    const tellMeFaultCount = checks.tellMeQuestions.filter((check) => {
+      check.outcome === CompetencyOutcome.DF;
+    });
+
+    drivingFaultCount = drivingFaultCount + showMeFaultCount.length + tellMeFaultCount.length;
   }
 
   drivingFaultCount = drivingFaultCount + getManoeuvreFaultsCount(data.manoeuvres, CompetencyOutcome.DF);

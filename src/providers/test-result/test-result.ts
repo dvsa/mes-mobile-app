@@ -17,11 +17,12 @@ export class TestResultProvider {
 
   calculateTestResult = (category: string,
                          testData: CatBUniqueTypes.TestData| CatBEUniqueTypes.TestData): Observable<ActivityCode> => {
-    if (category === TestCategory.B) {
-      return this.calculateCatBTestResult(testData as CatBUniqueTypes.TestData);
-    }
-    if (category === TestCategory.BE) {
-      return this.calculateCatBETestResult(testData as CatBEUniqueTypes.TestData);
+
+    switch (category) {
+      case TestCategory.B:
+        return this.calculateCatBTestResult(testData as CatBUniqueTypes.TestData);
+      case TestCategory.BE:
+        return this.calculateCatBETestResult(testData as CatBEUniqueTypes.TestData);
     }
   }
 

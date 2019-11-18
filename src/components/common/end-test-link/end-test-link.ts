@@ -33,11 +33,13 @@ export class EndTestLinkComponent {
 
   onTerminate = () => {
     this.terminateTestModal.dismiss();
-    if (this.category === TestCategory.BE) {
-      this.navController.push(CAT_BE.DEBRIEF_PAGE);
-    } else {
-      this.navController.push(CAT_B.DEBRIEF_PAGE);
+    switch (this.category) {
+      case TestCategory.BE:
+        this.navController.push(CAT_BE.DEBRIEF_PAGE);
+        break;
+      case TestCategory.B:
+        this.navController.push(CAT_B.DEBRIEF_PAGE);
+        break;
     }
-
   }
 }
