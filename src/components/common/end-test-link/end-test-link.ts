@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModalController, Modal, NavController } from 'ionic-angular';
-import { CAT_B } from '../../../pages/page-names.constants';
+import { CAT_BE, CAT_B } from '../../../pages/page-names.constants';
+import { TestCategory } from '../../../shared/models/test-category';
 
 @Component({
   selector: 'end-test-link',
   templateUrl: 'end-test-link.html',
 })
 export class EndTestLinkComponent {
+
+  @Input()
+  category: string;
+
   constructor(
     public modalController: ModalController,
     public navController: NavController,
@@ -28,6 +33,13 @@ export class EndTestLinkComponent {
 
   onTerminate = () => {
     this.terminateTestModal.dismiss();
-    this.navController.push(CAT_B.DEBRIEF_PAGE);
+    switch (this.category) {
+      case TestCategory.BE:
+        this.navController.push(CAT_BE.DEBRIEF_PAGE);
+        break;
+      case TestCategory.B:
+        this.navController.push(CAT_B.DEBRIEF_PAGE);
+        break;
+    }
   }
 }

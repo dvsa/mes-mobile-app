@@ -29,7 +29,7 @@ import {
   LegalRequirements,
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
-import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
+import { getTestData } from '../../../modules/tests/test-data/test-data.cat-be.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import {
@@ -42,7 +42,7 @@ import { TestReportValidatorProvider } from '../../../providers/test-report-vali
 import { CatBLegalRequirements } from '../../../modules/tests/test-data/test-data.models';
 import {
   hasManoeuvreBeenCompleted,
-} from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+} from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ModalEvent } from '../test-report.constants';
 import { CAT_BE } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';

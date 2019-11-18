@@ -30,6 +30,7 @@ import {
 } from '../../../modules/tests/test-data/test-data.constants';
 import { TestCategory } from '../../../shared/models/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 
 export class TestActions extends Actions {
   constructor() {
@@ -307,6 +308,7 @@ describe('Test Report Effects', () => {
 
     beforeEach(() => {
       store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
     });
 
     it('should dispatch an action containing the correct result for a test', (done) => {

@@ -141,21 +141,23 @@ export class FaultCountProvider {
       Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0);
 
     const result =
-      drivingFaultSumOfSimpleCompetencies +
-      this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-      this.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults;
+       drivingFaultSumOfSimpleCompetencies +
+       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
+       this.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults;
 
     return result;
   }
 
-  private getSeriousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
+  private getSeriousFaultSumCountCatBE = (data: CatBEUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
     const { seriousFaults, manoeuvres, vehicleChecks, eyesightTest } = data;
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
-    const vehicleCheckSeriousFaults = vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S ? 1 : 0;
+    const vehicleCheckSeriousFaults = vehicleChecks.showMeQuestions.filter((check) => {
+      check.outcome === CompetencyOutcome.S;
+    }).length;
     const eyesightTestSeriousFaults = (eyesightTest && eyesightTest.seriousFault) ? 1 : 0;
 
     const result =
@@ -167,14 +169,16 @@ export class FaultCountProvider {
     return result;
   }
 
-  private getDangerousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
+  private getDangerousFaultSumCountCatBE = (data: CatBEUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
     const { dangerousFaults, manoeuvres, vehicleChecks } = data;
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
-    const vehicleCheckDangerousFaults = vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D ? 1 : 0;
+    const vehicleCheckDangerousFaults = vehicleChecks.showMeQuestions.filter((check) => {
+      check.outcome === CompetencyOutcome.D;
+    }).length;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
@@ -191,6 +195,7 @@ export class FaultCountProvider {
         const dFkeys = pickBy(manoeuvre, (val, key) => endsWith(key, 'Fault') && val === faultType);
         return Object.keys(dFkeys).length;
       }
+      return 0;
     });
   }
 

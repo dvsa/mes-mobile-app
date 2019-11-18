@@ -77,27 +77,7 @@ export const getManoeuvreFaultsCount = (
   return faultCount;
 };
 
-export const getVehicleCheckDangerousFaults =
-  (vehicleChecks: CatBEUniqueTypes.VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
-    const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
-
-    if (!vehicleChecks) {
-      return result;
-    }
-    const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
-      comment: vehicleChecks.showMeTellMeComments || '',
-      competencyIdentifier: CommentSource.VEHICLE_CHECKS,
-      competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
-      source: CommentSource.VEHICLE_CHECKS,
-      faultCount: 1,
-
-    };
-    const faultIndex = vehicleChecks.showMeQuestions.findIndex(fault => fault.outcome === CompetencyOutcome.D);
-    faultIndex >= 0  && result.push(competency);
-
-    return result;
-  };
-
+// TODO move methods that return a count and comments into a FaultSummaryProvider
 export const getVehicleCheckSeriousFaults =
   (vehicleChecks: CatBEUniqueTypes.VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
@@ -105,42 +85,45 @@ export const getVehicleCheckSeriousFaults =
     if (!vehicleChecks) {
       return result;
     }
+    const showMeFaults = vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+    const tellMeFaults = vehicleChecks.tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+
+    const seriousFaultCount = showMeFaults.length + tellMeFaults.length === 5 ? 1 : 0;
     const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
       comment: vehicleChecks.showMeTellMeComments || '',
       competencyIdentifier: CommentSource.VEHICLE_CHECKS,
       competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
       source: CommentSource.VEHICLE_CHECKS,
-      faultCount: 1,
+      faultCount: seriousFaultCount,
     };
-    const faultIndex = vehicleChecks.showMeQuestions.findIndex(fault => fault.outcome === CompetencyOutcome.S);
-    faultIndex >= 0  && result.push(competency);
+    seriousFaultCount > 0  && result.push(competency);
 
     return result;
   };
-
 export const getVehicleCheckDrivingFaults =
   (vehicleChecks: CatBEUniqueTypes.VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
     if (!vehicleChecks || !vehicleChecks.showMeQuestions || !vehicleChecks.tellMeQuestions) {
       return result;
     }
-    const dangerousFaultIndex = vehicleChecks.showMeQuestions.findIndex(fault => fault.outcome === CompetencyOutcome.D);
-    const seriousFaultIndex = vehicleChecks.showMeQuestions.findIndex(fault => fault.outcome === CompetencyOutcome.S);
 
-    if (dangerousFaultIndex >= 0 || seriousFaultIndex >= 0) {
+    const dangerousFaults = vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.D);
+    const seriousFaults = vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.S);
+
+    if (dangerousFaults.length > 0 || seriousFaults.length > 0) {
       return result;
     }
 
-    const showMeDFFault = vehicleChecks.showMeQuestions.findIndex(fault => fault.outcome === CompetencyOutcome.DF);
-    const tellMeDFFault = vehicleChecks.tellMeQuestions.findIndex(fault => fault.outcome === CompetencyOutcome.DF);
-    if (showMeDFFault >= 0
-      || tellMeDFFault >= 0) {
+    const showMeDFFault = vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+    const tellMeDFFault = vehicleChecks.tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+    if (showMeDFFault.length > 0
+      || tellMeDFFault.length > 0) {
       const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
         comment: vehicleChecks.showMeTellMeComments || '',
         competencyIdentifier: CommentSource.VEHICLE_CHECKS,
         competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
         source: CommentSource.VEHICLE_CHECKS,
-        faultCount: 1, // TODO REVIEW LOGIC AND CALCULATE FAULT COUNT from show me tell me colletcions
+        faultCount: showMeDFFault.length + tellMeDFFault.length,
       };
       result.push(competency);
     }
@@ -195,10 +178,6 @@ export const anyDangerousFaults = (data: CatBEUniqueTypes.TestData): boolean => 
   if (dangerousFaults.length > 0) {
     return true;
   }
-  const vehicleCheckDangerousFaults = getVehicleCheckDangerousFaults(data.vehicleChecks);
-  if (vehicleCheckDangerousFaults.length > 0) {
-    return true;
-  }
   const uncoupleRecoupleDangerousFault = getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.D);
   if (uncoupleRecoupleDangerousFault.length > 0) {
     return true;
@@ -221,16 +200,15 @@ export const displayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): bo
     drivingFaultCount = drivingFaultCount + 1;
   }
   if (data.vehicleChecks) {
-      // TODO may need to sum up the driving fault counts.... plus look at logic of serious fault
     const checks = data.vehicleChecks;
-    if (checks.showMeQuestions &&
-        checks.showMeQuestions.findIndex(fault => fault.outcome === CompetencyOutcome.DF) >= 0) {
-      drivingFaultCount = drivingFaultCount + 1;
-    }
-    if (checks.tellMeQuestions &&
-        checks.tellMeQuestions.findIndex(fault => fault.outcome === CompetencyOutcome.DF) >= 0) {
-      drivingFaultCount = drivingFaultCount + 1;
-    }
+    const showMeFaultCount = checks.showMeQuestions.filter((check) => {
+      check.outcome === CompetencyOutcome.DF;
+    });
+    const tellMeFaultCount = checks.tellMeQuestions.filter((check) => {
+      check.outcome === CompetencyOutcome.DF;
+    });
+
+    drivingFaultCount = drivingFaultCount + showMeFaultCount.length + tellMeFaultCount.length;
   }
 
   drivingFaultCount = drivingFaultCount + getManoeuvreFaultsCount(data.manoeuvres, CompetencyOutcome.DF);
