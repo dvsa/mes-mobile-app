@@ -25,7 +25,6 @@ import {
   getManoeuvreFaults,
   getUncoupleRecoupleFault,
   getVehicleCheckSeriousFaults,
-  getVehicleCheckDangerousFaults,
   getVehicleCheckDrivingFaults,
   getUncoupleRecoupleFaultAndComment,
 } from '../cat-be/debrief.cat-be.selector';
@@ -125,7 +124,6 @@ export class DebriefCatBEPage extends BasePageComponent {
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
             ...getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.D),
-            ...getVehicleCheckDangerousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
           ];
         }),
       ),
