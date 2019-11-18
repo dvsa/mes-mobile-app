@@ -309,7 +309,6 @@ describe('Test Report Effects', () => {
     beforeEach(() => {
       store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       store$.dispatch(new PopulateTestCategory(TestCategory.B));
-      console.log('dispatched start test');
     });
 
     it('should dispatch an action containing the correct result for a test', (done) => {
