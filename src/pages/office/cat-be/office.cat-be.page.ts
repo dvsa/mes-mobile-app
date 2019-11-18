@@ -7,7 +7,7 @@ import {
   Toast, Keyboard, AlertController,
 } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
+import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -169,10 +169,10 @@ interface OfficePageState {
 
 @IonicPage()
 @Component({
-  selector: 'page-office',
+  selector: 'office-cat-be-page',
   templateUrl: 'office.cat-be.page.html',
 })
-export class OfficeCatBEPage extends PracticeableBasePageComponent {
+export class OfficeCatBEPage extends BasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
   toast: Toast;
@@ -185,7 +185,7 @@ export class OfficeCatBEPage extends PracticeableBasePageComponent {
   activityCodeOptions: ActivityCodeModel[];
 
   constructor(
-    store$: Store<StoreModel>,
+    private store$: Store<StoreModel>,
     public toastController: ToastController,
     public navController: NavController,
     public navParams: NavParams,
@@ -198,7 +198,7 @@ export class OfficeCatBEPage extends PracticeableBasePageComponent {
     public alertController: AlertController,
     private faultCountProvider: FaultCountProvider,
   ) {
-    super(platform, navController, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.B);
@@ -211,7 +211,6 @@ export class OfficeCatBEPage extends PracticeableBasePageComponent {
   }
 
   ngOnInit(): void {
-    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -457,10 +456,6 @@ export class OfficeCatBEPage extends PracticeableBasePageComponent {
   }
 
   popToRoot() {
-    if (this.isPracticeMode) {
-      this.exitPracticeMode();
-      return;
-    }
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
     this.navController.popTo(journalPage);
   }
@@ -644,9 +639,7 @@ export class OfficeCatBEPage extends PracticeableBasePageComponent {
   }
 
   completeTest() {
-    if (!this.isPracticeMode) {
-      this.store$.dispatch(new CompleteTest());
-    }
+    this.store$.dispatch(new CompleteTest());
     this.popToRoot();
   }
 

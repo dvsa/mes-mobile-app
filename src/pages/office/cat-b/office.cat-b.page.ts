@@ -169,7 +169,7 @@ interface OfficePageState {
 
 @IonicPage()
 @Component({
-  selector: 'page-office',
+  selector: 'office-cat-b-page',
   templateUrl: 'office.cat-b.page.html',
 })
 export class OfficeCatBPage extends PracticeableBasePageComponent {
