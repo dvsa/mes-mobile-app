@@ -43,7 +43,7 @@ import {
 } from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from
   '../../../modules/tests/communication-preferences/communication-preferences.selector';
-import { CAT_B } from '../../page-names.constants';
+import { CAT_BE } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { BasePageComponent } from '../../../shared/classes/base-page';
@@ -218,15 +218,15 @@ export class DebriefCatBEPage extends BasePageComponent {
   endDebrief(): void {
     this.store$.dispatch(new EndDebrief());
     if (this.outcome === 'Pass') {
-      this.navController.push(CAT_B.PASS_FINALISATION_PAGE);
+      this.navController.push(CAT_BE.PASS_FINALISATION_PAGE);
       return;
     }
-    this.navController.push(CAT_B.POST_DEBRIEF_HOLDING_PAGE).then(() => {
-      const testReportPage = this.navController.getViews().find(view => view.id === CAT_B.TEST_REPORT_PAGE);
+    this.navController.push(CAT_BE.POST_DEBRIEF_HOLDING_PAGE).then(() => {
+      const testReportPage = this.navController.getViews().find(view => view.id === CAT_BE.TEST_REPORT_PAGE);
       if (testReportPage) {
         this.navController.removeView(testReportPage);
       }
-      const debriefPage = this.navController.getViews().find(view => view.id === CAT_B.DEBRIEF_PAGE);
+      const debriefPage = this.navController.getViews().find(view => view.id === CAT_BE.DEBRIEF_PAGE);
       if (debriefPage) {
         this.navController.removeView(debriefPage);
       }

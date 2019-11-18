@@ -106,16 +106,18 @@ export const getVehicleCheckSeriousFaults =
     if (!vehicleChecks) {
       return result;
     }
-    const faults = vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.S);
+    const showMeFaults = vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+    const tellMeFaults = vehicleChecks.tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
 
+    const seriousFaultCount = showMeFaults.length + tellMeFaults.length === 5 ? 1 : 0;
     const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
       comment: vehicleChecks.showMeTellMeComments || '',
       competencyIdentifier: CommentSource.VEHICLE_CHECKS,
       competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
       source: CommentSource.VEHICLE_CHECKS,
-      faultCount: faults.length,
+      faultCount: seriousFaultCount,
     };
-    faults.length > 0  && result.push(competency);
+    seriousFaultCount > 0  && result.push(competency);
 
     return result;
   };
