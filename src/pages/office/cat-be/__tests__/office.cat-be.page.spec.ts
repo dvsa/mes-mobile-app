@@ -190,12 +190,6 @@ describe('OfficePage', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new CompleteTest());
       });
-      it('should not dispatch complete test if in practice mode', () => {
-        component.isPracticeMode = true;
-        component.completeTest();
-
-        expect(store$.dispatch).not.toHaveBeenCalledWith(new CompleteTest());
-      });
     });
   });
 
@@ -345,11 +339,6 @@ describe('OfficePage', () => {
 
   describe('popToRoot', () => {
     it('should call the popTo method in the navcontroller if not in practice mode', () => {
-      component.popToRoot();
-      expect(navController.popTo).toHaveBeenCalled();
-    });
-    it('should call the popTo method in the navcontroller if in practice mode.', () => {
-      component.isPracticeMode = true;
       component.popToRoot();
       expect(navController.popTo).toHaveBeenCalled();
     });
