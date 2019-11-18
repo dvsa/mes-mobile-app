@@ -14,7 +14,7 @@ import { LegalRequirements, CatBeLegalRequirements } from '../../../../../module
 import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
-fdescribe('LegalRequirementComponent', () => {
+describe('LegalRequirementComponent', () => {
   let fixture: ComponentFixture<LegalRequirementComponent>;
   let component: LegalRequirementComponent;
   let store$: Store<StoreModel>;
