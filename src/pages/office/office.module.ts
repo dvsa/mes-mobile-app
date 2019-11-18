@@ -1,24 +1,11 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { OfficePage } from './office';
-import { EffectsModule } from '@ngrx/effects';
-import { OfficeAnalyticsEffects } from './office.analytics.effects';
-import { ComponentsModule } from '../../components/common/common-components.module';
-import { OfficeComponentsModule } from './components/office.components.module';
-import { OfficeEffects } from './office.effects';
+import { OfficeCatBEPageModule } from './cat-be/office.cat-be.page.module';
+import { OfficeCatBPageModule } from './cat-b/office.cat-b.page.module';
 
 @NgModule({
-  declarations: [
-    OfficePage,
-  ],
   imports: [
-    IonicPageModule.forChild(OfficePage),
-    EffectsModule.forFeature([
-      OfficeAnalyticsEffects,
-      OfficeEffects,
-    ]),
-    ComponentsModule,
-    OfficeComponentsModule,
+    OfficeCatBEPageModule,
+    OfficeCatBPageModule,
   ],
 })
 export class OfficePageModule { }

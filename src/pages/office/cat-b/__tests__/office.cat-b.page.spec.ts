@@ -15,68 +15,68 @@ import {
   PlatformMock,
   AlertControllerMock,
 } from 'ionic-mocks';
-import { ComponentsModule } from '../../../components/common/common-components.module';
-import { AppModule } from '../../../app/app.module';
-import { OfficePage } from '../office';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { DateTimeProvider } from '../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { ComponentsModule } from '../../../../components/common/common-components.module';
+import { AppModule } from '../../../../app/app.module';
+import { OfficeCatBPage } from '../office.cat-b.page';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { Store, StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
-import { ToggleETA } from '../../../modules/tests/test-data/eta/eta.actions';
-import { TogglePlanningEco } from '../../../modules/tests/test-data/eco/eco.actions';
-import { AddDangerousFault } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
-import { AddSeriousFault } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import { ShowMeQuestionSelected } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
-import { EyesightTestFailed } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
-import { ExaminerActions, Competencies } from '../../../modules/tests/test-data/test-data.constants';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { ToggleETA } from '../../../../modules/tests/test-data/eta/eta.actions';
+import { TogglePlanningEco } from '../../../../modules/tests/test-data/eco/eco.actions';
+import { AddDangerousFault } from '../../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import { AddSeriousFault } from '../../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import { ShowMeQuestionSelected } from '../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import { EyesightTestFailed } from '../../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
+import { ExaminerActions, Competencies } from '../../../../modules/tests/test-data/test-data.constants';
 import { By } from '@angular/platform-browser';
-import { PersistTests } from '../../../modules/tests/tests.actions';
+import { PersistTests } from '../../../../modules/tests/tests.actions';
 import {
   WeatherConditionsChanged,
-} from '../../../modules/tests/test-summary/test-summary.actions';
+} from '../../../../modules/tests/test-summary/test-summary.actions';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/Common';
 import { of } from 'rxjs/observable/of';
 import { MockComponent } from 'ng-mocks';
-import { RouteNumberComponent } from '../components/route-number/route-number';
-import { CandidateDescriptionComponent } from '../components/candidate-description/candidate-description';
-import { ShowMeQuestionComponent } from '../components/show-me-question/show-me-question';
-import { WeatherConditionsComponent } from '../components/weather-conditions/weather-conditions';
-import { AdditionalInformationComponent } from '../components/additional-information/additional-information';
-import { IdentificationComponent } from '../components/identification/identification';
-import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
-import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
+import { RouteNumberComponent } from '../../components/route-number/route-number';
+import { CandidateDescriptionComponent } from '../../components/candidate-description/candidate-description';
+import { ShowMeQuestionComponent } from '../../components/show-me-question/show-me-question';
+import { WeatherConditionsComponent } from '../../components/weather-conditions/weather-conditions';
+import { AdditionalInformationComponent } from '../../components/additional-information/additional-information';
+import { IdentificationComponent } from '../../components/identification/identification';
+import { IndependentDrivingComponent } from '../../components/independent-driving/independent-driving';
+import { FaultCommentCardComponent } from '../../components/fault-comment-card/fault-comment-card';
 import {
   CommentedCompetency,
   MultiFaultAssignableCompetency,
-} from '../../../shared/models/fault-marking.model';
-import { ActivityCodeComponent } from '../components/activity-code/activity-code';
+} from '../../../../shared/models/fault-marking.model';
+import { ActivityCodeComponent } from '../../components/activity-code/activity-code';
 import {
   ActivityCodeModel,
   activityCodeModelList,
   ActivityCodeDescription,
-} from '../components/activity-code/activity-code.constants';
-import { ActivityCodes } from '../../../shared/models/activity-codes';
-import { CompleteTest, ValidationError } from '../office.actions';
+} from '../../components/activity-code/activity-code.constants';
+import { ActivityCodes } from '../../../../shared/models/activity-codes';
+import { CompleteTest, ValidationError } from '../../office.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ToastControllerMock } from '../__mocks__/toast-controller-mock';
-import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
-import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
-import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
-import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
-import { TestCategory } from '../../../shared/models/test-category';
+import { ToastControllerMock } from '../../__mocks__/toast-controller-mock';
+import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
+import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
+import { TestCategory } from '../../../../shared/models/test-category';
 
 describe('OfficePage', () => {
-  let fixture: ComponentFixture<OfficePage>;
-  let component: OfficePage;
+  let fixture: ComponentFixture<OfficeCatBPage>;
+  let component: OfficeCatBPage;
   let navController: NavController;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        OfficePage,
+        OfficeCatBPage,
         MockComponent(RouteNumberComponent),
         MockComponent(CandidateDescriptionComponent),
         MockComponent(IdentificationComponent),
@@ -150,7 +150,7 @@ describe('OfficePage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(OfficePage);
+        fixture = TestBed.createComponent(OfficeCatBPage);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
       });
