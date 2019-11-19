@@ -1,7 +1,16 @@
 legal-requirement {
   competency-button {
-    
+    position: relative;
+
     .label {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .normal-start-label {
+      position: absolute;
+      padding-right: 10%;
       width: 100%;
       display: flex;
       justify-content: center;

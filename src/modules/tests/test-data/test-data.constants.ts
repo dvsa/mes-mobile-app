@@ -58,6 +58,9 @@ export enum LegalRequirements {
   normalStart2 = 'normalStart2',
   angledStart = 'angledStart',
   hillStart = 'hillStart',
+  angledStartControlledStop = 'angledStartControlledStop',
+  uphillStart = 'uphillStart',
+  downhillStart = 'downhillStart',
 }
 
 export enum ExaminerActions {
