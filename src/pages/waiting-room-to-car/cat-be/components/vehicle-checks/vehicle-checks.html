@@ -1,20 +1,17 @@
 <ion-row class="mes-validated-row mes-row-separator" id="vehicle-checks">
   <div class="validation-bar" [class.ng-invalid]="isInvalid()"></div>
-  <ion-col class="component-label" col-32 [ngClass]="everyQuestionIsSelected() && 'small-top-margin'"
-    [attr.align-self-center]="everyQuestionIsSelected() ? null : true">
+  <ion-col col-32 align-self-center class="component-label">
     <label>Vehicle checks</label>
   </ion-col>
-  <ion-col padding-left
-    [attr.align-self-center]="everyQuestionIsSelected() ? null : true">
-    <ion-row *ngIf="!everyQuestionIsSelected()" class="spacing-row"></ion-row>
+  <ion-col padding-left align-self-center>
+    <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col col-48 *ngIf="!everyQuestionIsSelected()">
         <button type="button" class="mes-return-button" (click)="openVehicleChecksModal()" ion-button>
           <h3>Select questions</h3>
         </button>
       </ion-col>
-      <ion-col col-48 class="vehicle-check-score" *ngIf="everyQuestionIsSelected()"
-        [ngClass]="everyQuestionIsSelected() && 'small-top-margin'">
+      <ion-col col-48 align-self-center class="vehicle-check-score" *ngIf="everyQuestionIsSelected()">
         <ion-row class="vehicle-checks-result" *ngIf="!hasDrivingFault() && !hasSeriousFault()">
           <tick-indicator class="badge" [ticked]="true"></tick-indicator>Correct
         </ion-row>
