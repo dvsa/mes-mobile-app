@@ -26,7 +26,7 @@ import {
 } from '../../../modules/tests/tests.selector';
 import {
   Competencies,
-  CatBeLegalRequirements,
+  LegalRequirements,
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
 import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
@@ -71,7 +71,7 @@ export class TestReportCatBEPage extends BasePageComponent {
   pageState: TestReportPageState;
   subscription: Subscription;
   competencies = Competencies;
-  legalRequirements = CatBeLegalRequirements;
+  legalRequirements = LegalRequirements;
   eta = ExaminerActions;
   displayOverlay: boolean;
 

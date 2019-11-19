@@ -57,11 +57,6 @@ export enum LegalRequirements {
   normalStart2 = 'normalStart2',
   angledStart = 'angledStart',
   hillStart = 'hillStart',
-}
-
-export enum CatBeLegalRequirements {
-  normalStart1 = 'normalStart1',
-  normalStart2 = 'normalStart2',
   angledStartControlledStop = 'angledStartControlledStop',
   uphillStart = 'uphillStart',
   downhillStart = 'downhillStart',
