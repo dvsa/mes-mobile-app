@@ -28,7 +28,6 @@ import { ToggleETA } from '../../../../modules/tests/test-data/eta/eta.actions';
 import { TogglePlanningEco } from '../../../../modules/tests/test-data/eco/eco.actions';
 import { AddDangerousFault } from '../../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFault } from '../../../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import { ShowMeQuestionSelected } from '../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
 import { EyesightTestFailed } from '../../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import { ExaminerActions, Competencies } from '../../../../modules/tests/test-data/test-data.constants';
 import { By } from '@angular/platform-browser';
@@ -64,7 +63,6 @@ import { ToastControllerMock } from '../../__mocks__/toast-controller-mock';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
-import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '../../../../shared/models/test-category';
 
 describe('OfficePage', () => {
@@ -165,17 +163,6 @@ describe('OfficePage', () => {
         const conditions: WeatherConditions[] = ['Showers'];
         component.weatherConditionsChanged(conditions);
         expect(store$.dispatch).toHaveBeenCalledWith(new WeatherConditionsChanged(conditions));
-      });
-    });
-    describe('selecting a show me question', () => {
-      it('should dispatch an action when show me question change handler is called', () => {
-        const question: VehicleChecksQuestion = {
-          code: 'S1',
-          description: 'desc',
-          shortName: 'name',
-        };
-        component.showMeQuestionChanged(question);
-        expect(store$.dispatch).toHaveBeenCalledWith(new ShowMeQuestionSelected(question));
       });
     });
     describe('selecting a activity code', () => {

@@ -83,6 +83,7 @@ import {
   getVehicleCheckDrivingFaults,
   getUncoupleRecoupleFaultAndComment,
   getVehicleCheckSeriousFaults,
+  displayDrivingFaultComments,
 } from '../../debrief/cat-be/debrief.cat-be.selector';
 
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
@@ -96,7 +97,6 @@ import { AddDangerousFaultComment } from '../../../modules/tests/test-data/dange
 import { AddSeriousFaultComment } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
 import {
-  ShowMeQuestionSelected,
   AddShowMeTellMeComment,
 } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
 import { AddControlledStopComment } from '../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
@@ -116,7 +116,6 @@ import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
-import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '../../../shared/models/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
@@ -171,7 +170,6 @@ export class OfficeCatBEPage extends BasePageComponent {
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
 
   weatherConditions: WeatherConditionSelection[];
-  showMeQuestions: VehicleChecksQuestion[];
   activityCodeOptions: ActivityCodeModel[];
 
   constructor(
@@ -191,7 +189,6 @@ export class OfficeCatBEPage extends BasePageComponent {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
-    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.B);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
     this.activityCodeOptions = activityCodeModelList;
   }
@@ -411,8 +408,7 @@ export class OfficeCatBEPage extends BasePageComponent {
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
-        // TODO - needs to be refactored
-        map(data => true),
+        map(data => displayDrivingFaultComments(data)),
       ),
       weatherConditions$: currentTest$.pipe(
         select(getTestSummary),
@@ -436,10 +432,6 @@ export class OfficeCatBEPage extends BasePageComponent {
     if (this.isFormValid()) {
       this.showFinishTestModal();
     }
-  }
-
-  showMeQuestionChanged(showMeQuestion: VehicleChecksQuestion): void {
-    this.store$.dispatch(new ShowMeQuestionSelected(showMeQuestion));
   }
 
   identificationChanged(identification: Identification): void {
@@ -508,9 +500,11 @@ export class OfficeCatBEPage extends BasePageComponent {
           seriousFaultComment.comment),
       );
 
-    } else if (seriousFaultComment.source === CommentSource.CONTROLLED_STOP) {
-      this.store$.dispatch(new AddControlledStopComment(seriousFaultComment.comment));
+    } else if (seriousFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
+      // TODO add new action for uncouple recouple
+      // this.store$.dispatch(new AddUncoupleRecoupleStopComment(drivingFaultComment.comment));
     } else if (seriousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
+      // TODO make show me tell me comment actions category aware. Currently won't save
       this.store$.dispatch(new AddShowMeTellMeComment(seriousFaultComment.comment));
     } else if (seriousFaultComment.source === CommentSource.EYESIGHT_TEST) {
       this.store$.dispatch(new EyesightTestAddComment(seriousFaultComment.comment));
@@ -534,10 +528,12 @@ export class OfficeCatBEPage extends BasePageComponent {
           drivingFaultComment.comment),
       );
 
-    } else if (drivingFaultComment.source === CommentSource.CONTROLLED_STOP) {
-      this.store$.dispatch(new AddControlledStopComment(drivingFaultComment.comment));
+    } else if (drivingFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
+      // TODO add new action for uncouple recouple
+      // this.store$.dispatch(new AddUncoupleRecoupleStopComment(drivingFaultComment.comment));
 
     } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
+      // TODO make show me tell me comment actions category aware. Currently won't save
       this.store$.dispatch(new AddShowMeTellMeComment(drivingFaultComment.comment));
     }
 

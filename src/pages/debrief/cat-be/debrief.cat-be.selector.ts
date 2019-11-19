@@ -196,28 +196,17 @@ export const displayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): bo
       drivingFaultCount = drivingFaultCount + value;
     }
   });
-  console.log(`stage 1 ${drivingFaultCount} `);
   if (data.uncoupleRecouple && data.uncoupleRecouple.selected && data.uncoupleRecouple.fault === CompetencyOutcome.DF) {
     drivingFaultCount = drivingFaultCount + 1;
   }
 
-  console.log(`stage 2 ${drivingFaultCount}`);
-
   if (data.vehicleChecks) {
-    const checks = data.vehicleChecks;
-    const showMeFaultCount = checks.showMeQuestions.filter((check) => {
-      check.outcome === CompetencyOutcome.DF;
-    });
-    const tellMeFaultCount = checks.tellMeQuestions.filter((check) => {
-      check.outcome === CompetencyOutcome.DF;
-    });
-
-    drivingFaultCount = drivingFaultCount + showMeFaultCount.length + tellMeFaultCount.length;
+    const showMeFault = data.vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+    const tellMeFault = data.vehicleChecks.tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+    drivingFaultCount = drivingFaultCount + showMeFault.length + tellMeFault.length;
   }
-  console.log(`stage 3 ${drivingFaultCount}`);
 
   drivingFaultCount = drivingFaultCount + getManoeuvreFaultsCount(data.manoeuvres, CompetencyOutcome.DF);
 
-  console.log(`driving fault count ${drivingFaultCount}`);
   return drivingFaultCount > 15;
 };
