@@ -66,7 +66,7 @@ import { NavigationStateProviderMock } from '../../../../providers/navigation-st
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '../../../../shared/models/test-category';
-import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import { FaultCountProvider } from '../../../../providers/fault-count/fault-count';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatBPage>;
