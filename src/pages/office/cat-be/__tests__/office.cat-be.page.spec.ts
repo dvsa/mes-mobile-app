@@ -65,7 +65,7 @@ import { NavigationStateProviderMock } from '../../../../providers/navigation-st
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '../../../../shared/models/test-category';
 
-describe('OfficePage', () => {
+xdescribe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatBEPage>;
   let component: OfficeCatBEPage;
   let navController: NavController;
