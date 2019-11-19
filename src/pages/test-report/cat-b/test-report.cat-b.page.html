@@ -30,21 +30,21 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <legal-requirement [legalRequirement]="legalRequirements.normalStart1">
+            <legal-requirement [legalRequirement]="legalRequirements.normalStart1" [ticked]="isLegalRequirementTicked(legalRequirements.normalStart1, (pageState.catBLegalRequirements$ | async))">
             </legal-requirement>
           </ion-col>
           <ion-col>
-            <legal-requirement [legalRequirement]="legalRequirements.normalStart2">
+            <legal-requirement [legalRequirement]="legalRequirements.normalStart2" [ticked]="isLegalRequirementTicked(legalRequirements.normalStart2, (pageState.catBLegalRequirements$ | async))">
             </legal-requirement>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <legal-requirement [legalRequirement]="legalRequirements.angledStart">
+            <legal-requirement [legalRequirement]="legalRequirements.angledStart" [ticked]="isLegalRequirementTicked(legalRequirements.angledStart, (pageState.catBLegalRequirements$ | async))">
             </legal-requirement>
           </ion-col>
           <ion-col>
-            <legal-requirement [legalRequirement]="legalRequirements.hillStart">
+            <legal-requirement [legalRequirement]="legalRequirements.hillStart" [ticked]="isLegalRequirementTicked(legalRequirements.hillStart, (pageState.catBLegalRequirements$ | async))">
             </legal-requirement>
           </ion-col>
         </ion-row>

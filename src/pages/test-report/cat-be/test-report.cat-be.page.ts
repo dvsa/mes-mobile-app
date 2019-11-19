@@ -39,9 +39,8 @@ import {
   isEtaValid,
 } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
-import { CatBLegalRequirements } from '../../../modules/tests/test-data/test-data.models';
 import {
-  hasManoeuvreBeenCompleted,
+  hasManoeuvreBeenCompleted, getCatBELegalRequirements,
 } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ModalEvent } from '../test-report.constants';
 import { CAT_BE } from '../../page-names.constants';
@@ -50,6 +49,8 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AddDrivingFault } from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
 import { AddSeriousFault } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
 import { AddDangerousFault } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -59,7 +60,7 @@ interface TestReportPageState {
   manoeuvres$: Observable<boolean>;
   // isLegalRequirementsValid$: Observable<boolean>;
   isEtaValid$: Observable<boolean>;
-  // catBLegalRequirements$: Observable<CatBLegalRequirements>;
+  catBELegalRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
 }
 
 @IonicPage()
@@ -74,7 +75,6 @@ export class TestReportCatBEPage extends BasePageComponent {
   legalRequirements = LegalRequirements;
   eta = ExaminerActions;
   displayOverlay: boolean;
-
   isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
@@ -83,7 +83,7 @@ export class TestReportCatBEPage extends BasePageComponent {
   isEtaValid: boolean = true;
 
   modal: Modal;
-  catBLegalRequirements: CatBLegalRequirements;
+  catBELegalRequirements: CatBUniqueTypes.TestRequirements;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -106,10 +106,14 @@ export class TestReportCatBEPage extends BasePageComponent {
     };
   }
   ngOnInit(): void {
+
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+
     this.pageState = {
-      candidateUntitledName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateUntitledName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
@@ -126,9 +130,7 @@ export class TestReportCatBEPage extends BasePageComponent {
         select(getTestReportState),
         select(isDangerousMode),
       ),
-      manoeuvres$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      manoeuvres$: currentTest$.pipe(
         select(getTestData),
         select(hasManoeuvreBeenCompleted),
       ),
@@ -140,12 +142,10 @@ export class TestReportCatBEPage extends BasePageComponent {
         select(getTestReportState),
         select(isEtaValid),
       ),
-      // catBLegalRequirements$: this.store$.pipe(
-      //   select(getTests),
-      //   select(getCurrentTest),
-      //   select(getTestData),
-      //   select(getCatBLegalRequirements),
-      // ),
+      catBELegalRequirements$: currentTest$.pipe(
+        select(getTestData),
+        select(getCatBELegalRequirements),
+      ),
     };
     this.setupSubscription();
 
@@ -163,12 +163,20 @@ export class TestReportCatBEPage extends BasePageComponent {
   toggleReportOverlay(): void {
     this.displayOverlay = !this.displayOverlay;
   }
+  // TODO: Needs unit tests
+  isLegalRequirementTicked(
+    legalRequirement: LegalRequirements,
+    catBELegalRequirements: CatBEUniqueTypes.TestRequirements,
+  ): boolean {
+    return catBELegalRequirements[legalRequirement];
+  }
 
   ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
+
   setupSubscription() {
     const {
       candidateUntitledName$,
@@ -178,7 +186,7 @@ export class TestReportCatBEPage extends BasePageComponent {
       manoeuvres$,
       // isLegalRequirementsValid$,
       isEtaValid$,
-      // catBLegalRequirements$,
+      catBELegalRequirements$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -191,9 +199,9 @@ export class TestReportCatBEPage extends BasePageComponent {
       //   map(result => (this.isLegalRequirementsValid = result)),
       // ),
       isEtaValid$.pipe(map(result => (this.isEtaValid = result))),
-      // catBLegalRequirements$.pipe(
-      //   map(result => (this.catBLegalRequirements = result)),
-      // ),
+      catBELegalRequirements$.pipe(
+        map(result => (this.catBELegalRequirements = result)),
+      ),
     ).subscribe();
   }
 
@@ -203,7 +211,7 @@ export class TestReportCatBEPage extends BasePageComponent {
       this.modal = this.modalController.create(
         'LegalRequirementsModal',
         {
-          legalRequirements: this.catBLegalRequirements,
+          legalRequirements: this.catBELegalRequirements,
         },
         options,
       );

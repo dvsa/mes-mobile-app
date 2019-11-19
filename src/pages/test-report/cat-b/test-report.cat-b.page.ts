@@ -54,6 +54,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { StatusBar } from '@ionic-native/status-bar';
 import { CAT_B } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -87,7 +88,7 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
   isEtaValid: boolean = true;
 
   modal: Modal;
-  catBLegalRequirements: CatBLegalRequirements;
+  catBLegalRequirements: CatBUniqueTypes.TestRequirements;
 
   constructor(
     store$: Store<StoreModel>,
@@ -224,6 +225,13 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
         map(result => (this.catBLegalRequirements = result)),
       ),
     ).subscribe();
+  }
+  // TODO: Needs unit tests
+  isLegalRequirementTicked(
+    legalRequirement: LegalRequirements,
+    catBLegalRequirements: CatBUniqueTypes.TestRequirements,
+  ): boolean {
+    return catBLegalRequirements[legalRequirement];
   }
 
   onEndTestClick = (): void => {
