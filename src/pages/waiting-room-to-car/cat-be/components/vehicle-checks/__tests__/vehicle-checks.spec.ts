@@ -1,7 +1,7 @@
 
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, ModalController, Config, NavController } from 'ionic-angular';
-import { ModalControllerMock, ConfigMock, NavControllerMock } from 'ionic-mocks';
+import { IonicModule, ModalController, Config } from 'ionic-angular';
+import { ModalControllerMock, ConfigMock } from 'ionic-mocks';
 import { VehicleChecksCatBEComponent } from '../vehicle-checks';
 import { CAT_BE } from '../../../../../page-names.constants';
 import { App } from '../../../../../../app/app.component';
@@ -36,7 +36,6 @@ describe('VehicleChecksCatBEComponent', () => {
         { provide: App, useClass: MockAppComponent },
         { provide: Store, useClass: MockStore },
         { provide: Config, useFactory: () => ConfigMock.instance() },
-        { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
     })
       .compileComponents()
