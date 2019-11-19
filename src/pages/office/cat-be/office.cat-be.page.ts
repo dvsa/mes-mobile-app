@@ -79,7 +79,6 @@ import {
 } from '../../debrief/debrief.selector';
 
 import {
-  displayDrivingFaultComments,
   getManoeuvreFaults,
   getVehicleCheckDrivingFaults,
   getUncoupleRecoupleFaultAndComment,
@@ -412,7 +411,8 @@ export class OfficeCatBEPage extends BasePageComponent {
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
-        map(data => displayDrivingFaultComments(data)),
+        // TODO - needs to be refactored
+        map(data => true),
       ),
       weatherConditions$: currentTest$.pipe(
         select(getTestSummary),

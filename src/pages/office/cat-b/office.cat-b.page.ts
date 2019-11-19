@@ -82,7 +82,6 @@ import {
 } from '../../debrief/debrief.selector';
 
 import {
-  displayDrivingFaultComments,
   getManoeuvreFaults,
   getVehicleCheckDrivingFaults,
   getControlledStopFaultAndComment,
@@ -125,6 +124,7 @@ import { VehicleChecksQuestion } from '../../../providers/question/vehicle-check
 import { TestCategory } from '../../../shared/models/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -447,7 +447,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
-        map(data => displayDrivingFaultComments(data)),
+        map(data => this.shouldDisplayDrivingFaultComments(data)),
       ),
       weatherConditions$: currentTest$.pipe(
         select(getTestSummary),
@@ -658,4 +658,12 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
       source: result.source,
       comment: result.comment,
     })
+
+  shouldDisplayDrivingFaultComments = (data: CatBUniqueTypes.TestData): boolean => {
+    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.B, data);
+    const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.B, data);
+    const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.B, data);
+
+    return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
+  }
 }

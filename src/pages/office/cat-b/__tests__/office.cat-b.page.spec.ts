@@ -66,12 +66,14 @@ import { NavigationStateProviderMock } from '../../../../providers/navigation-st
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '../../../../shared/models/test-category';
+import { FaultCountProvider } from '../../../../providers/fault-count/fault-count';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatBPage>;
   let component: OfficeCatBPage;
   let navController: NavController;
   let store$: Store<StoreModel>;
+  let faultCountProvider: FaultCountProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -146,6 +148,7 @@ describe('OfficePage', () => {
         { provide: AlertController, useClass: AlertControllerMock },
         { provide: ToastController, useClass: ToastControllerMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
+        { provide: FaultCountProvider, useClass: FaultCountProvider },
       ],
     })
       .compileComponents()
@@ -156,6 +159,7 @@ describe('OfficePage', () => {
       });
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
+    faultCountProvider = TestBed.get(FaultCountProvider);
   }));
 
   describe('Class', () => {
@@ -195,6 +199,41 @@ describe('OfficePage', () => {
         component.completeTest();
 
         expect(store$.dispatch).not.toHaveBeenCalledWith(new CompleteTest());
+      });
+    });
+
+    describe('shouldDisplayDrivingFaultComments', () => {
+      it('should return false if there are less than 16 driving faults', () => {
+        spyOn(faultCountProvider, 'getDrivingFaultSumCount').and.returnValue(15);
+        spyOn(faultCountProvider, 'getSeriousFaultSumCount').and.returnValue(0);
+        spyOn(faultCountProvider, 'getDangerousFaultSumCount').and.returnValue(0);
+
+        const result = component.shouldDisplayDrivingFaultComments({});
+        expect(result).toEqual(false);
+      });
+      it('should return true if there are more than 15 driving faults and no serious or dangerous faults', () => {
+        spyOn(faultCountProvider, 'getDrivingFaultSumCount').and.returnValue(16);
+        spyOn(faultCountProvider, 'getSeriousFaultSumCount').and.returnValue(0);
+        spyOn(faultCountProvider, 'getDangerousFaultSumCount').and.returnValue(0);
+
+        const result = component.shouldDisplayDrivingFaultComments({});
+        expect(result).toEqual(true);
+      });
+      it('should return false if there are more than 15 driving faults and a serious fault', () => {
+        spyOn(faultCountProvider, 'getDrivingFaultSumCount').and.returnValue(16);
+        spyOn(faultCountProvider, 'getSeriousFaultSumCount').and.returnValue(1);
+        spyOn(faultCountProvider, 'getDangerousFaultSumCount').and.returnValue(0);
+
+        const result = component.shouldDisplayDrivingFaultComments({});
+        expect(result).toEqual(false);
+      });
+      it('should return false if there are more than 15 driving faults and a dangerous fault', () => {
+        spyOn(faultCountProvider, 'getDrivingFaultSumCount').and.returnValue(16);
+        spyOn(faultCountProvider, 'getSeriousFaultSumCount').and.returnValue(0);
+        spyOn(faultCountProvider, 'getDangerousFaultSumCount').and.returnValue(1);
+
+        const result = component.shouldDisplayDrivingFaultComments({});
+        expect(result).toEqual(false);
       });
     });
   });
