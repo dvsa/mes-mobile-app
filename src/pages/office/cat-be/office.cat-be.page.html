@@ -59,25 +59,6 @@
               [outcome]="pageState.testOutcome$ | async" (identificationChange)="identificationChanged($event)">
             </identification>
 
-            <ion-row *ngIf="pageState.displayTellMeQuestion$ | async" class="mes-validated-row mes-row-separator" id="tell-me-question-card">
-              <div class="validation-bar"></div>
-              <ion-col class="component-label" col-32 align-self-center>
-                <label>Tell me question</label>
-              </ion-col>
-              <ion-col align-self-center padding-left>
-                <ion-row class="spacing-row"></ion-row>
-                <ion-row>
-                  <ion-col col-64 class="mes-data" id="tell-me-question-text">{{pageState.tellMeQuestionText$ | async}}</ion-col>
-                </ion-row>
-                <ion-row class="spacing-row"></ion-row>
-              </ion-col>
-            </ion-row>
-
-            <show-me-question [display]="pageState.displayShowMeQuestion$ | async" [formGroup]="form" [showMeQuestion]="pageState.showMeQuestion$ | async"
-              [outcome]="pageState.testOutcome$ | async" [showMeQuestionOptions]="pageState.showMeQuestionOptions$ | async"
-              (showMeQuestionChange)="showMeQuestionChanged($event)">
-            </show-me-question>
-
             <weather-conditions [display]="pageState.displayWeatherConditions$ | async" [weatherConditions]="pageState.weatherConditions$ | async"
               [formGroup]="form" [outcome]="pageState.testOutcome$ | async" [weatherConditionsOptions]="weatherConditions"
               (weatherConditionsChange)="weatherConditionsChanged($event)">

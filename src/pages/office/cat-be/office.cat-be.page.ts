@@ -63,16 +63,13 @@ import {
   getETAFaultText,
   getEco,
   getEcoFaultText,
-  getShowMeQuestionOptions,
 } from '../../../modules/tests/test-data/test-data.selector';
 // TODO: update import for category specific page version
-import {
-  getVehicleChecks,
-  getSelectedTellMeQuestionText,
-  getShowMeQuestion,
-  getTellMeQuestion,
-} from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
+// import {
+//   getVehicleChecks,
+//   getTellMeQuestion,
+// } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { getTestData } from '../../../modules/tests/test-data/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import {
   getDrivingFaults,
@@ -85,10 +82,9 @@ import {
   displayDrivingFaultComments,
   getManoeuvreFaults,
   getVehicleCheckDrivingFaults,
-  getControlledStopFaultAndComment,
+  getUncoupleRecoupleFaultAndComment,
   getVehicleCheckSeriousFaults,
-  getVehicleCheckDangerousFaults,
-} from '../../debrief/cat-b/debrief.cat-b.selector';
+} from '../../debrief/cat-be/debrief.cat-be.selector';
 
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
@@ -140,8 +136,6 @@ interface OfficePageState {
   displayIndependentDriving$: Observable<boolean>;
   displayCandidateDescription$: Observable<boolean>;
   displayIdentification$: Observable<boolean>;
-  displayShowMeQuestion$: Observable<boolean>;
-  displayTellMeQuestion$: Observable<boolean>;
   displayWeatherConditions$: Observable<boolean>;
   displayAdditionalInformation$: Observable<boolean>;
   displayEco$: Observable<boolean>;
@@ -153,9 +147,6 @@ interface OfficePageState {
   independentDriving$: Observable<IndependentDriving>;
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
-  showMeQuestion$: Observable<VehicleChecksQuestion>;
-  showMeQuestionOptions$: Observable<VehicleChecksQuestion[]>;
-  tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
   drivingFaults$: Observable<MultiFaultAssignableCompetency[]>;
@@ -289,24 +280,6 @@ export class OfficeCatBEPage extends BasePageComponent {
         map(([outcome, identification]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'identification', identification)),
       ),
-      displayShowMeQuestion$: currentTest$.pipe(
-        select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestData),
-          select(getVehicleChecks),
-          select(getShowMeQuestion))),
-        map(([outcome, question]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'showMeQuestion', question)),
-      ),
-      displayTellMeQuestion$: currentTest$.pipe(
-        select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestData),
-          select(getVehicleChecks),
-          select(getTellMeQuestion))),
-        map(([outcome, question]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'tellMeQuestion', question)),
-      ),
       displayWeatherConditions$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
@@ -379,20 +352,6 @@ export class OfficeCatBEPage extends BasePageComponent {
         select(getTestSummary),
         select(getAdditionalInformation),
       ),
-      showMeQuestion$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecks),
-        select(getShowMeQuestion),
-      ),
-      showMeQuestionOptions$: currentTest$.pipe(
-        select(getTestOutcome),
-        map(outcome => getShowMeQuestionOptions(this.showMeQuestions, outcome, this.outcomeBehaviourProvider)),
-      ),
-      tellMeQuestionText$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecks),
-        select(getSelectedTellMeQuestionText),
-      ),
       etaFaults$: currentTest$.pipe(
         select(getTestData),
         select(getETA),
@@ -409,8 +368,7 @@ export class OfficeCatBEPage extends BasePageComponent {
           return [
             ...getDangerousFaults(data.dangerousFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(this.parseCompetency),
-            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.D).map(this.parseCompetency),
-            ...getVehicleCheckDangerousFaults(data.vehicleChecks).map(this.parseCompetency),
+            ...getUncoupleRecoupleFaultAndComment(data.uncoupleRecouple, CompetencyOutcome.D).map(this.parseCompetency),
           ];
         }),
       ),
@@ -420,7 +378,7 @@ export class OfficeCatBEPage extends BasePageComponent {
           return [
             ...getSeriousFaults(data.seriousFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(this.parseCompetency),
-            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.S).map(this.parseCompetency),
+            ...getUncoupleRecoupleFaultAndComment(data.uncoupleRecouple, CompetencyOutcome.S).map(this.parseCompetency),
             ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(this.parseCompetency),
             ...getEyesightTestSeriousFaultAndComment(data.eyesightTest).map(this.parseCompetency),
           ];
@@ -432,8 +390,16 @@ export class OfficeCatBEPage extends BasePageComponent {
           return [
             ...getDrivingFaults(data.drivingFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(this.parseCompetency),
-            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.DF).map(this.parseCompetency),
-            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(this.parseCompetency),
+            ...getUncoupleRecoupleFaultAndComment(
+              data.uncoupleRecouple,
+              CompetencyOutcome.DF).map(this.parseCompetency),
+            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(
+                (result: CommentedCompetency & MultiFaultAssignableCompetency): MultiFaultAssignableCompetency => ({
+                  faultCount: this.faultCountProvider.getVehicleChecksFaultCountCatBE(data.vehicleChecks).drivingFaults,
+                  competencyDisplayName: result.competencyDisplayName,
+                  competencyIdentifier: result.competencyIdentifier,
+                  source: result.source,
+                })),
           ];
         }),
       ),
@@ -644,8 +610,9 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   private parseCompetency =
-    (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-      faultCount: 1,
+    (result: CommentedCompetency & MultiFaultAssignableCompetency):
+    (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+      faultCount: result.faultCount | 1,
       competencyDisplayName: result.competencyDisplayName,
       competencyIdentifier: result.competencyIdentifier,
       source: result.source,

@@ -116,14 +116,14 @@ export const getVehicleCheckDrivingFaults =
 
     const showMeDFFault = vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
     const tellMeDFFault = vehicleChecks.tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
-    if (showMeDFFault.length > 0
-      || tellMeDFFault.length > 0) {
+    const totalFaults = showMeDFFault.length + tellMeDFFault.length;
+    if (totalFaults > 0) {
       const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
         comment: vehicleChecks.showMeTellMeComments || '',
         competencyIdentifier: CommentSource.VEHICLE_CHECKS,
         competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
         source: CommentSource.VEHICLE_CHECKS,
-        faultCount: showMeDFFault.length + tellMeDFFault.length,
+        faultCount: totalFaults === 5 ? 4 : totalFaults,
       };
       result.push(competency);
     }
@@ -196,9 +196,13 @@ export const displayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): bo
       drivingFaultCount = drivingFaultCount + value;
     }
   });
+  console.log(`stage 1 ${drivingFaultCount} `);
   if (data.uncoupleRecouple && data.uncoupleRecouple.selected && data.uncoupleRecouple.fault === CompetencyOutcome.DF) {
     drivingFaultCount = drivingFaultCount + 1;
   }
+
+  console.log(`stage 2 ${drivingFaultCount}`);
+
   if (data.vehicleChecks) {
     const checks = data.vehicleChecks;
     const showMeFaultCount = checks.showMeQuestions.filter((check) => {
@@ -210,8 +214,10 @@ export const displayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): bo
 
     drivingFaultCount = drivingFaultCount + showMeFaultCount.length + tellMeFaultCount.length;
   }
+  console.log(`stage 3 ${drivingFaultCount}`);
 
   drivingFaultCount = drivingFaultCount + getManoeuvreFaultsCount(data.manoeuvres, CompetencyOutcome.DF);
 
+  console.log(`driving fault count ${drivingFaultCount}`);
   return drivingFaultCount > 15;
 };

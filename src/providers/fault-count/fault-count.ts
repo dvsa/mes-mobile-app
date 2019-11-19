@@ -135,15 +135,18 @@ export class FaultCountProvider {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { drivingFaults, manoeuvres, vehicleChecks } = data;
+    const { drivingFaults, manoeuvres,  vehicleChecks, uncoupleRecouple } = data;
 
     const drivingFaultSumOfSimpleCompetencies =
       Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0);
+    const uncoupleRecoupleHasDrivingFault =
+      (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.DF) ? 1 : 0;
 
     const result =
        drivingFaultSumOfSimpleCompetencies +
        this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-       this.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults;
+       this.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults +
+       uncoupleRecoupleHasDrivingFault;
 
     return result;
   }
@@ -152,19 +155,22 @@ export class FaultCountProvider {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { seriousFaults, manoeuvres, vehicleChecks, eyesightTest } = data;
+    const { seriousFaults, manoeuvres, vehicleChecks, uncoupleRecouple, eyesightTest } = data;
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
     const vehicleCheckSeriousFaults = vehicleChecks.showMeQuestions.filter((check) => {
       check.outcome === CompetencyOutcome.S;
     }).length;
+    const uncoupleRecoupleSeriousFaults =
+      (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.S) ? 1 : 0;
     const eyesightTestSeriousFaults = (eyesightTest && eyesightTest.seriousFault) ? 1 : 0;
 
     const result =
       seriousFaultSumOfSimpleCompetencies +
       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) +
       vehicleCheckSeriousFaults +
-      eyesightTestSeriousFaults;
+      eyesightTestSeriousFaults +
+      uncoupleRecoupleSeriousFaults;
 
     return result;
   }
@@ -173,17 +179,20 @@ export class FaultCountProvider {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { dangerousFaults, manoeuvres, vehicleChecks } = data;
+    const { dangerousFaults, manoeuvres, vehicleChecks, uncoupleRecouple } = data;
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
     const vehicleCheckDangerousFaults = vehicleChecks.showMeQuestions.filter((check) => {
       check.outcome === CompetencyOutcome.D;
     }).length;
+    const uncoupleRecoupleDangerousFaults =
+      (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.D) ? 1 : 0;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) +
-      vehicleCheckDangerousFaults;
+      vehicleCheckDangerousFaults +
+      uncoupleRecoupleDangerousFaults;
 
     return result;
   }
