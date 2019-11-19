@@ -116,14 +116,14 @@ export const getVehicleCheckDrivingFaults =
 
     const showMeDFFault = vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
     const tellMeDFFault = vehicleChecks.tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
-    if (showMeDFFault.length > 0
-      || tellMeDFFault.length > 0) {
+    const totalFaults = showMeDFFault.length + tellMeDFFault.length;
+    if (totalFaults > 0) {
       const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
         comment: vehicleChecks.showMeTellMeComments || '',
         competencyIdentifier: CommentSource.VEHICLE_CHECKS,
         competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
         source: CommentSource.VEHICLE_CHECKS,
-        faultCount: showMeDFFault.length + tellMeDFFault.length,
+        faultCount: totalFaults === 5 ? 4 : totalFaults,
       };
       result.push(competency);
     }
@@ -199,16 +199,11 @@ export const displayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): bo
   if (data.uncoupleRecouple && data.uncoupleRecouple.selected && data.uncoupleRecouple.fault === CompetencyOutcome.DF) {
     drivingFaultCount = drivingFaultCount + 1;
   }
-  if (data.vehicleChecks) {
-    const checks = data.vehicleChecks;
-    const showMeFaultCount = checks.showMeQuestions.filter((check) => {
-      check.outcome === CompetencyOutcome.DF;
-    });
-    const tellMeFaultCount = checks.tellMeQuestions.filter((check) => {
-      check.outcome === CompetencyOutcome.DF;
-    });
 
-    drivingFaultCount = drivingFaultCount + showMeFaultCount.length + tellMeFaultCount.length;
+  if (data.vehicleChecks) {
+    const showMeFault = data.vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+    const tellMeFault = data.vehicleChecks.tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+    drivingFaultCount = drivingFaultCount + showMeFault.length + tellMeFault.length;
   }
 
   drivingFaultCount = drivingFaultCount + getManoeuvreFaultsCount(data.manoeuvres, CompetencyOutcome.DF);

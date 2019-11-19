@@ -149,7 +149,7 @@ export class DebriefCatBEPage extends BasePageComponent {
               })),
             ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(
               (result: CommentedCompetency & MultiFaultAssignableCompetency): MultiFaultAssignableCompetency => ({
-                faultCount: this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, data),
+                faultCount: this.faultCountProvider.getVehicleChecksFaultCountCatBE(data.vehicleChecks).drivingFaults,
                 competencyDisplayName: result.competencyDisplayName,
                 competencyIdentifier: result.competencyIdentifier,
                 source: result.source,
