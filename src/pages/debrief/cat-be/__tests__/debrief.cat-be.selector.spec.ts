@@ -10,7 +10,7 @@ import {
   } from '../debrief.cat-be.selector';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
-describe('debriefSelector', () => {
+xdescribe('debriefSelector', () => {
   const manoeuvres: CatBEUniqueTypes.Manoeuvres = {};
 
   describe('displayDrivingFaultComments', () => {
