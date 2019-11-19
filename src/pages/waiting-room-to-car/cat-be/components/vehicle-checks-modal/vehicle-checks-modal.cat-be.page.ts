@@ -1,4 +1,4 @@
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
@@ -64,6 +64,7 @@ export class VehicleChecksCatBEModal {
 
   constructor(
     public store$: Store<StoreModel>,
+    private navController: NavController,
     private faultCountProvider: FaultCountProvider,
     questionProvider: QuestionProvider,
   ) {
@@ -117,6 +118,10 @@ export class VehicleChecksCatBEModal {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  onSubmit() {
+    this.navController.pop();
   }
 
   showMeQuestionChanged(result: QuestionResult, index: number): void {

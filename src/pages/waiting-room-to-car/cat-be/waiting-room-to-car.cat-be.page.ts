@@ -73,6 +73,7 @@ import { TestCategory } from '../../../shared/models/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import { getVehicleChecksCatBe } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -94,6 +95,7 @@ interface WaitingRoomToCarPageState {
   tellMeQuestionOutcome$: Observable<string>;
   tellMeQuestion$: Observable<VehicleChecksQuestion>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
+  vehicleChecks$: Observable<CatBEUniqueTypes.VehicleChecks>;
 }
 
 @IonicPage()
@@ -221,6 +223,10 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
         map((vehicleChecks) => {
           return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
         }),
+      ),
+      vehicleChecks$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatBe),
       ),
     };
   }

@@ -1,26 +1,39 @@
 <ion-row class="mes-validated-row mes-row-separator" id="vehicle-checks">
   <div class="validation-bar" [class.ng-invalid]="isInvalid()"></div>
-  <ion-col class="component-label" col-32 align-self-center>
+  <ion-col class="component-label" col-32 [ngClass]="everyQuestionIsSelected() && 'small-top-margin'"
+    [attr.align-self-center]="everyQuestionIsSelected() ? null : true">
     <label>Vehicle checks</label>
   </ion-col>
-  <ion-col align-self-center padding-left>
-    <ion-row class="spacing-row"></ion-row>
+  <ion-col padding-left
+    [attr.align-self-center]="everyQuestionIsSelected() ? null : true">
+    <ion-row *ngIf="!everyQuestionIsSelected()" class="spacing-row"></ion-row>
     <ion-row>
-      <ion-col>
+      <ion-col col-48 *ngIf="!everyQuestionIsSelected()">
         <button type="button" class="mes-return-button" (click)="openVehicleChecksModal()" ion-button>
           <h3>Select questions</h3>
         </button>
-
       </ion-col>
-      <ion-col class="vehicle-check-score">
-        <ion-row>
-          <serious-fault-badge class="badge" [showBadge]="true"></serious-fault-badge>
-          {{ vehicleChecksScore.seriousFaults }} serious fault
+      <ion-col col-48 class="vehicle-check-score" *ngIf="everyQuestionIsSelected()"
+        [ngClass]="everyQuestionIsSelected() && 'small-top-margin'">
+        <ion-row class="vehicle-checks-result" *ngIf="!hasDrivingFault() && !hasSeriousFault()">
+          <tick-indicator class="badge" [ticked]="true"></tick-indicator>Correct
         </ion-row>
-        <ion-row>
+        <ion-row class="vehicle-checks-result serious-fault-row" *ngIf="hasSeriousFault()">
+          <serious-fault-badge class="badge" [showBadge]="true"></serious-fault-badge>
+          serious fault
+        </ion-row>
+        <ion-row class="vehicle-checks-result" *ngIf="hasDrivingFault()">
           <driving-faults-badge class="badge" showOnZero=true [count]='vehicleChecksScore.drivingFaults'></driving-faults-badge>
           driving faults
         </ion-row>
+      </ion-col>
+      <ion-col col-47 padding-right *ngIf="everyQuestionIsSelected()" class="see-answer-link-container">
+        <button type="button" class="mes-link-button see-answer-link" (click)="openVehicleChecksModal()" ion-button>
+          <span>
+            See answers 
+            <ion-icon name="arrow-forward"></ion-icon>
+          </span>
+        </button>
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>
