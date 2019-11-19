@@ -73,4 +73,18 @@ describe('LegalRequirementComponent', () => {
       expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.hillStart));
     });
   });
+
+  describe('getLegalRequirementClass', () => {
+    it('should return \'normal-start-class\' if component.legalRequirement value contains \'normalStart\'', () => {
+      component.legalRequirement = LegalRequirements.normalStart1;
+
+      expect(component.getLegalRequirementClass()).toEqual('normal-start-label');
+    });
+
+    it('should return \'label\' if component.legalRequirement value does not contain \'normalStart\'', () => {
+      component.legalRequirement = LegalRequirements.uphillStart;
+
+      expect(component.getLegalRequirementClass()).toEqual('label');
+    });
+  });
 });

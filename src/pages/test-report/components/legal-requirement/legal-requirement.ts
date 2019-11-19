@@ -19,7 +19,10 @@ import { legalRequirementLabels } from './legal-requirement.constants';
 interface LegalRequirementComponentState {
   ticked$: Observable<boolean>;
 }
-
+// TODO: Look into making this component category agnostic by using @Input's to pass down
+// the data it is interested in, instead of using selectors that are category specific.
+// The parent page (test-report) should be responsible for passing down the correct info
+// and it is already aware of the category of the current test.
 @Component({
   selector: 'legal-requirement',
   templateUrl: 'legal-requirement.html',
@@ -58,9 +61,9 @@ export class LegalRequirementComponent {
   /**
    * Function to check if a legal requirement should use the normal-start-label class
    */
-  applyNormalStartClass(): string {
+  getLegalRequirementClass(): string {
     let cssClass: string = 'label';
-    if(this.legalRequirement.indexOf('normalStart') >= 0) {
+    if (this.legalRequirement.indexOf('normalStart') >= 0) {
       cssClass = 'normal-start-label';
     }
 
