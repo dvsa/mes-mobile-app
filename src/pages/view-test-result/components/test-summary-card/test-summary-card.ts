@@ -31,4 +31,10 @@ export class TestSummaryCardComponent {
 
   getFlattenArray = (data: string[]): string => flattenArray(data);
 
+  /**
+   * Check the value passed in is true/false - used to suppress field in HTML only when undefined.
+   * @param {boolean} data
+   * @return {boolean}
+   */
+  isBoolean = (data: boolean): boolean => typeof data === 'boolean';
 }
