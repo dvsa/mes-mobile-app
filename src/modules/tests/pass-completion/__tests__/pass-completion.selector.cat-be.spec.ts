@@ -1,12 +1,12 @@
-import { isCode78Present, getPassCertificateNumber, isProvisionalLicenseProvided, isProvisionalLicenseNotProvided, isCode78NotPresent }
-from '../pass-completion.cat-be.selector';
+import { isCode78Present, getPassCertificateNumber, isProvisionalLicenseProvided,
+  isProvisionalLicenseNotProvided, isCode78NotPresent } from '../pass-completion.cat-be.selector';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
 describe('pass completion selector', () => {
   const state: CatBEUniqueTypes.PassCompletion = {
     provisionalLicenceProvided: true,
     passCertificateNumber: 'ABC123',
-    code78Present: true, 
+    code78Present: true,
   };
 
   describe('getPassCertificateNumber', () => {
