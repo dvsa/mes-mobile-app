@@ -131,6 +131,21 @@ export const getVehicleCheckDrivingFaults =
     return result;
   };
 
+export const vehicleChecksExist = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): boolean => {
+  if (!vehicleChecks || (!vehicleChecks.showMeQuestions && !vehicleChecks.tellMeQuestions)) {
+    return false;
+  }
+
+  const showMeQuestionsWithAnswers = vehicleChecks.showMeQuestions.filter(fault => fault.outcome != null);
+  const tellMeQuestionsWithAnswers = vehicleChecks.tellMeQuestions.filter(fault => fault.outcome != null);
+
+  if (showMeQuestionsWithAnswers.length > 0 || tellMeQuestionsWithAnswers.length > 0) {
+    return true;
+  }
+
+  return false;
+};
+
 export const getUncoupleRecoupleFault = (
   uncoupleRecouple: CatBEUniqueTypes.UncoupleRecouple, faultType: CompetencyOutcome): string[] => {
   const result: string[] = [];

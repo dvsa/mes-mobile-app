@@ -84,6 +84,7 @@ import {
   getUncoupleRecoupleFaultAndComment,
   getVehicleCheckSeriousFaults,
   displayDrivingFaultComments,
+  vehicleChecksExist,
 } from '../../debrief/cat-be/debrief.cat-be.selector';
 
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
@@ -107,7 +108,7 @@ import {
   CommentSource,
 } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../office-behaviour-map';
+import { behaviourMap } from '../office.cat-be.behaviour-map';
 import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
@@ -143,6 +144,7 @@ interface OfficePageState {
   displayDrivingFault$: Observable<boolean>;
   displaySeriousFault$: Observable<boolean>;
   displayDangerousFault$: Observable<boolean>;
+  displayVehicleChecks$: Observable<boolean>;
   identification$: Observable<Identification>;
   independentDriving$: Observable<IndependentDriving>;
   candidateDescription$: Observable<string>;
@@ -333,6 +335,15 @@ export class OfficeCatBEPage extends BasePageComponent {
           select(getDangerousFaults))),
         map(([outcome, dangerousFault]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'faultComment', dangerousFault)),
+      ),
+      displayVehicleChecks$: currentTest$.pipe(
+          select(getTestOutcome),
+          withLatestFrom(currentTest$.pipe(
+            select(getTestData))),
+            map(([outcome, data]) =>
+            this.outcomeBehaviourProvider.isVisible(outcome,
+              'vehicleChecks',
+              vehicleChecksExist(data.vehicleChecks))),
       ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
