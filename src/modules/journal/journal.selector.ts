@@ -1,6 +1,5 @@
-
 import { JournalModel } from './journal.model';
-import { isNil, flatten } from 'lodash';
+import { flatten, isNil } from 'lodash';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
@@ -28,6 +27,23 @@ export const canNavigateToPreviousDay = (journal: JournalModel, today: DateTime)
   return selectedDate > lookbackLimit;
 };
 
+/**
+ * Function to check if there is data after selected date in the journal slots, and to
+ * return a true signifying that the user can navigate back a day if that is the case.
+ * @param {JournalModel} journal
+ * @return {boolean}
+ */
+export const hasSlotsAfterSelectedDate = (journal: JournalModel): boolean => {
+  const maxDateWithSlots: string =
+    Object.keys(journal.slots)
+      .reduce((previousDate: string, currentDate: string) => {
+        return (new Date(currentDate) > new Date(previousDate) && journal.slots[currentDate].length > 0) ?
+          currentDate : previousDate;
+      }, null);
+
+  return maxDateWithSlots && (new Date(maxDateWithSlots) > new Date(journal.selectedDate));
+};
+
 export const canNavigateToNextDay = (journal: JournalModel): boolean => {
   let traverseWeekend = false;
   const nextDayAsDate = DateTime.at(journal.selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
@@ -39,7 +55,7 @@ export const canNavigateToNextDay = (journal: JournalModel): boolean => {
     traverseWeekend = true;
   }
 
-  return nextDayAsDate < dayAfterTomorrowAsDate || traverseWeekend;
+  return nextDayAsDate < dayAfterTomorrowAsDate || traverseWeekend || hasSlotsAfterSelectedDate(journal);
 };
 
 export const getAllSlots = (journal: JournalModel): SlotItem[] => {
