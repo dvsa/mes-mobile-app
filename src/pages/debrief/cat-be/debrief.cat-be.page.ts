@@ -147,9 +147,9 @@ export class DebriefCatBEPage extends BasePageComponent {
                 competencyIdentifier: result.competencyIdentifier,
                 source: result.source,
               })),
-            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(
+            ...getVehicleCheckDrivingFaults(data.vehicleChecks, this.faultCountProvider).map(
               (result: CommentedCompetency & MultiFaultAssignableCompetency): MultiFaultAssignableCompetency => ({
-                faultCount: this.faultCountProvider.getVehicleChecksFaultCountCatBE(data.vehicleChecks).drivingFaults,
+                faultCount: result.faultCount,
                 competencyDisplayName: result.competencyDisplayName,
                 competencyIdentifier: result.competencyIdentifier,
                 source: result.source,

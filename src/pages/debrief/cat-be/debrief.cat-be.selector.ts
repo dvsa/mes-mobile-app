@@ -13,6 +13,7 @@ import {
 } from '../../../shared/models/fault-marking.model';
 import { CompetencyDisplayName } from '../../../shared/models/competency-display-name';
 import { getSeriousOrDangerousFaults } from '../debrief.selector';
+import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 // TODO - A lot of these are used in multiple places (Debrief, View Test Result, Office),
 // should be refactored into a more common area.
 export const getManoeuvreFaults = (
@@ -101,7 +102,8 @@ export const getVehicleCheckSeriousFaults =
     return result;
   };
 export const getVehicleCheckDrivingFaults =
-  (vehicleChecks: CatBEUniqueTypes.VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+  (vehicleChecks: CatBEUniqueTypes.VehicleChecks,
+   faultCountProvider: FaultCountProvider): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
     if (!vehicleChecks || !vehicleChecks.showMeQuestions || !vehicleChecks.tellMeQuestions) {
       return result;
@@ -114,16 +116,15 @@ export const getVehicleCheckDrivingFaults =
       return result;
     }
 
-    const showMeDFFault = vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
-    const tellMeDFFault = vehicleChecks.tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
-    const totalFaults = showMeDFFault.length + tellMeDFFault.length;
-    if (totalFaults > 0) {
+    const vehicleCheckFaults = faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+
+    if (vehicleCheckFaults.drivingFaults > 0) {
       const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
         comment: vehicleChecks.showMeTellMeComments || '',
         competencyIdentifier: CommentSource.VEHICLE_CHECKS,
         competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
         source: CommentSource.VEHICLE_CHECKS,
-        faultCount: totalFaults === 5 ? 4 : totalFaults,
+        faultCount: vehicleCheckFaults.drivingFaults,
       };
       result.push(competency);
     }

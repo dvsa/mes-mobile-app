@@ -48,7 +48,11 @@ export function vehicleChecksCatBEReducer(
           outcome: action.tellMeQuestionOutcome,
         } : item),
       };
-    default:
+    case vehicleChecksCatBeActionTypes.ADD_SHOW_ME_TELL_ME_COMMENT:
+      return {
+        ...state,
+        showMeTellMeComments: action.comment,
+      };    default:
       return state;
   }
 }

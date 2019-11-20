@@ -5,6 +5,7 @@ export const SHOW_ME_QUESTION_SELECTED = '[VehicleChecksPage] [CatBE] Show Me Qu
 export const SHOW_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] [CatBE] Show Me Question Outcome Changed';
 export const TELL_ME_QUESTION_SELECTED = '[VehicleChecksPage] [CatBE] Tell Me Question Selected';
 export const TELL_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] [CatBE] Tell Me Question Outcome Changed';
+export const ADD_SHOW_ME_TELL_ME_COMMENT = '[Vehicle Checks] [CatBE] Add Show me Tell me comment';
 
 export class ShowMeQuestionSelected implements Action {
   readonly type = SHOW_ME_QUESTION_SELECTED;
@@ -25,9 +26,13 @@ export class TellMeQuestionOutcomeChanged implements Action {
   readonly type = TELL_ME_QUESTION_OUTCOME_CHANGED;
   constructor(public tellMeQuestionOutcome: QuestionOutcome, public index: number) {}
 }
-
+export class AddShowMeTellMeComment implements Action {
+  constructor(public comment: string) { }
+  readonly type = ADD_SHOW_ME_TELL_ME_COMMENT;
+}
 export type Types =
   | ShowMeQuestionSelected
   | ShowMeQuestionOutcomeChanged
   | TellMeQuestionSelected
-  | TellMeQuestionOutcomeChanged;
+  | TellMeQuestionOutcomeChanged
+  | AddShowMeTellMeComment;

@@ -14,6 +14,7 @@ import { getTests } from '../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../modules/tests/tests.selector';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
+import { CAT_BE } from '../../../pages/page-names.constants';
 
 interface BackToOfficePageState {
   isRekey$: Observable<boolean>;
@@ -74,5 +75,9 @@ export class BackToOfficeCatBEPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new DeferWriteUp());
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
     this.navController.popTo(journalPage);
+  }
+
+  goToOfficePage() {
+    this.navController.push(CAT_BE.OFFICE_PAGE);
   }
 }
