@@ -40,8 +40,21 @@ describe('TestSummaryCardComponent', () => {
     });
   });
 
-  describe('DOM', () => {
+  describe('isBoolean', () => {
+    it('should return a true when data supplied has a value of true', () => {
+      const result: boolean = component.isBoolean(true);
+      expect(result).toBeTruthy();
+    });
 
+    it('should return a true when data supplied has a value of false', () => {
+      const result: boolean = component.isBoolean(false);
+      expect(result).toBeTruthy();
+    });
+
+    it('should return a false when data passed in is not a boolean', () => {
+      const result: boolean = component.isBoolean(undefined);
+      expect(result).toBeFalsy();
+    });
   });
 
 });
