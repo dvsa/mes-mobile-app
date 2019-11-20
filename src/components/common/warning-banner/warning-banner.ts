@@ -6,7 +6,6 @@ import { Component, Input } from '@angular/core';
 })
 
 export class WarningBannerComponent {
-
   @Input()
   warningText: string;
 
