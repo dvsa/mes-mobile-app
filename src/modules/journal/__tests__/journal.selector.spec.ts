@@ -1,8 +1,14 @@
 import { JournalModel } from '../journal.model';
 import {
-  getSlotsOnSelectedDate, getLastRefreshed, getIsLoading,
-  getError, getLastRefreshedTime,
-  canNavigateToNextDay, canNavigateToPreviousDay, getPermittedSlotIdsBeforeToday,
+  getSlotsOnSelectedDate,
+  getLastRefreshed,
+  getIsLoading,
+  getError,
+  getLastRefreshedTime,
+  canNavigateToNextDay,
+  canNavigateToPreviousDay,
+  getPermittedSlotIdsBeforeToday,
+  hasSlotsAfterSelectedDate,
 } from '../journal.selector';
 import { MesError } from '../../../shared/models/mes-error.model';
 import { DateTime } from '../../../shared/helpers/date-time';
@@ -13,6 +19,7 @@ import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/a
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { Store } from '@ngrx/store';
+import { cloneDeep } from 'lodash';
 
 class MockStore { }
 
@@ -53,6 +60,105 @@ describe('JournalSelector', () => {
       statusText: 'HTTP 404',
     },
     selectedDate: '2019-01-17',
+    examiner: { staffNumber: '123', individualId: 456 },
+  };
+
+  const baseJournalData: JournalModel = {
+    isLoading: true,
+    lastRefreshed: new Date(0),
+    slots: {
+      ['2019-01-01']: [
+        {
+          hasSlotChanged: false,
+          hasSeenCandidateDetails: false,
+          slotData: {
+            slotDetail: {
+              slotId: 1001,
+              start: '2019-01-12T09:14:00',
+            },
+            booking: {
+              application: {
+                applicationId: 1234561,
+                bookingSequence: 1,
+                checkDigit: 4,
+                welshTest: false,
+                extendedTest: false,
+                meetingPlace: '',
+                progressiveAccess: false,
+                specialNeeds: '',
+                entitlementCheck: false,
+                testCategory: 'B',
+                vehicleGearbox: 'Manual',
+              },
+              candidate: null,
+              previousCancellation: null,
+              business: null,
+            },
+          },
+        },
+      ],
+      ['2019-01-02']: [
+        {
+          hasSlotChanged: false,
+          hasSeenCandidateDetails: false,
+          slotData: {
+            slotDetail: {
+              slotId: 2001,
+              start: '2019-01-13T09:14:00',
+            },
+            booking: {
+              application: {
+                applicationId: 1234561,
+                bookingSequence: 1,
+                checkDigit: 4,
+                welshTest: false,
+                extendedTest: false,
+                meetingPlace: '',
+                progressiveAccess: false,
+                specialNeeds: '',
+                entitlementCheck: false,
+                testCategory: 'B',
+                vehicleGearbox: 'Manual',
+              },
+              candidate: null,
+              previousCancellation: null,
+              business: null,
+            },
+          },
+        },
+      ],
+      ['2019-01-03']: [
+        {
+          hasSlotChanged: false,
+          hasSeenCandidateDetails: false,
+          slotData: {
+            slotDetail: {
+              slotId: 3001,
+              start: '2019-01-14T09:14:00',
+            },
+            booking: {
+              application: {
+                applicationId: 1234561,
+                bookingSequence: 1,
+                checkDigit: 4,
+                welshTest: false,
+                extendedTest: false,
+                meetingPlace: '',
+                progressiveAccess: false,
+                specialNeeds: '',
+                entitlementCheck: false,
+                testCategory: 'B',
+                vehicleGearbox: 'Manual',
+              },
+              candidate: null,
+              previousCancellation: null,
+              business: null,
+            },
+          },
+        },
+      ],
+    },
+    selectedDate: '2019-01-02',
     examiner: { staffNumber: '123', individualId: 456 },
   };
 
@@ -346,6 +452,18 @@ describe('JournalSelector', () => {
 
       expect(slotIds.length).toBe(2);
       expect(slotIds).toEqual([1001, 2001]);
+    });
+  });
+
+  describe('hasSlotsAfterSelectedDate', () => {
+    it('should return TRUE if slots DO EXIST after journal selected date', () => {
+      expect(hasSlotsAfterSelectedDate(baseJournalData)).toEqual(true);
+    });
+
+    it('should return FALSE if slots DO EXIST after journal selected date', () => {
+      const journalWithoutSlotsAfterSelectedDate = cloneDeep(baseJournalData);
+      journalWithoutSlotsAfterSelectedDate.slots['2019-01-03'] = [];
+      expect(hasSlotsAfterSelectedDate(journalWithoutSlotsAfterSelectedDate)).toEqual(false);
     });
   });
 
