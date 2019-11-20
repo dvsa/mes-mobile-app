@@ -96,7 +96,7 @@ describe('OfficePage', () => {
             testStatus: {},
             startedTests: {
               123: {
-                category: TestCategory.B,
+                category: TestCategory.BE,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
@@ -108,16 +108,16 @@ describe('OfficePage', () => {
                   ETA: {},
                   eco: {},
                   vehicleChecks: {
-                    showMeQuestion: {
+                    showMeQuestions: [{
                       code: 'S3',
                       description: '',
                       outcome: '',
-                    },
-                    tellMeQuestion: {
+                    }],
+                    tellMeQuestions: [{
                       code: '',
                       description: '',
                       outcome: '',
-                    },
+                    }],
                   },
                   eyesightTest: {},
                 },
@@ -181,12 +181,6 @@ describe('OfficePage', () => {
   });
 
   describe('DOM', () => {
-    it('should pass the selected show me question code to the show me subcomponent', () => {
-      fixture.detectChanges();
-      const showMeElement = fixture.debugElement.query(By.css('show-me-question'))
-        .componentInstance as ShowMeQuestionComponent;
-      expect(showMeElement.showMeQuestion.code).toEqual('S3');
-    });
     it('should pass the selected activity code to the activity code subcomponent', () => {
       const activityCodeModel: ActivityCodeModel = {
         activityCode: ActivityCodes.ACCIDENT,

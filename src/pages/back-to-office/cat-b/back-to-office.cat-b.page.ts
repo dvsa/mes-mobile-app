@@ -8,7 +8,7 @@ import { BackToOfficeViewDidEnter, DeferWriteUp } from '../back-to-office.action
 import { DeviceProvider } from '../../../providers/device/device';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
-import { JOURNAL_PAGE } from '../../page-names.constants';
+import { JOURNAL_PAGE, CAT_B } from '../../page-names.constants';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../modules/tests/tests.selector';
@@ -74,5 +74,9 @@ export class BackToOfficeCatBPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new DeferWriteUp());
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
     this.navController.popTo(journalPage);
+  }
+
+  goToOfficePage() {
+    this.navController.push(CAT_B.OFFICE_PAGE);
   }
 }

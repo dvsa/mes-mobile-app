@@ -98,8 +98,7 @@ import { AddSeriousFaultComment } from '../../../modules/tests/test-data/serious
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
 import {
   AddShowMeTellMeComment,
-} from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
-import { AddControlledStopComment } from '../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
+} from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import {
@@ -119,6 +118,9 @@ import { SetActivityCode } from '../../../modules/tests/activity-code/activity-c
 import { TestCategory } from '../../../shared/models/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import {
+  AddUncoupleRecoupleComment,
+} from '../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -389,13 +391,7 @@ export class OfficeCatBEPage extends BasePageComponent {
             ...getUncoupleRecoupleFaultAndComment(
               data.uncoupleRecouple,
               CompetencyOutcome.DF).map(this.parseCompetency),
-            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(
-                (result: CommentedCompetency & MultiFaultAssignableCompetency): MultiFaultAssignableCompetency => ({
-                  faultCount: this.faultCountProvider.getVehicleChecksFaultCountCatBE(data.vehicleChecks).drivingFaults,
-                  competencyDisplayName: result.competencyDisplayName,
-                  competencyIdentifier: result.competencyIdentifier,
-                  source: result.source,
-                })),
+            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(this.parseCompetency),
           ];
         }),
       ),
@@ -475,8 +471,8 @@ export class OfficeCatBEPage extends BasePageComponent {
           dangerousFaultComment.comment),
       );
 
-    } else if (dangerousFaultComment.source === CommentSource.CONTROLLED_STOP) {
-      this.store$.dispatch(new AddControlledStopComment(dangerousFaultComment.comment));
+    } else if (dangerousFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
+      this.store$.dispatch(new AddUncoupleRecoupleComment(dangerousFaultComment.comment));
 
     } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
@@ -501,10 +497,8 @@ export class OfficeCatBEPage extends BasePageComponent {
       );
 
     } else if (seriousFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
-      // TODO add new action for uncouple recouple
-      // this.store$.dispatch(new AddUncoupleRecoupleStopComment(drivingFaultComment.comment));
+      this.store$.dispatch(new AddUncoupleRecoupleComment(seriousFaultComment.comment));
     } else if (seriousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
-      // TODO make show me tell me comment actions category aware. Currently won't save
       this.store$.dispatch(new AddShowMeTellMeComment(seriousFaultComment.comment));
     } else if (seriousFaultComment.source === CommentSource.EYESIGHT_TEST) {
       this.store$.dispatch(new EyesightTestAddComment(seriousFaultComment.comment));
@@ -529,11 +523,8 @@ export class OfficeCatBEPage extends BasePageComponent {
       );
 
     } else if (drivingFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
-      // TODO add new action for uncouple recouple
-      // this.store$.dispatch(new AddUncoupleRecoupleStopComment(drivingFaultComment.comment));
-
+      this.store$.dispatch(new AddUncoupleRecoupleComment(drivingFaultComment.comment));
     } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
-      // TODO make show me tell me comment actions category aware. Currently won't save
       this.store$.dispatch(new AddShowMeTellMeComment(drivingFaultComment.comment));
     }
 
@@ -608,7 +599,7 @@ export class OfficeCatBEPage extends BasePageComponent {
   private parseCompetency =
     (result: CommentedCompetency & MultiFaultAssignableCompetency):
     (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-      faultCount: result.faultCount | 1,
+      faultCount: result.faultCount || 1,
       competencyDisplayName: result.competencyDisplayName,
       competencyIdentifier: result.competencyIdentifier,
       source: result.source,

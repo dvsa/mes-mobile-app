@@ -118,6 +118,7 @@ export const getVehicleCheckDrivingFaults =
     const tellMeDFFault = vehicleChecks.tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
     const totalFaults = showMeDFFault.length + tellMeDFFault.length;
     if (totalFaults > 0) {
+      // TODO refactor fault count to use faultcount provider if possible
       const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
         comment: vehicleChecks.showMeTellMeComments || '',
         competencyIdentifier: CommentSource.VEHICLE_CHECKS,
