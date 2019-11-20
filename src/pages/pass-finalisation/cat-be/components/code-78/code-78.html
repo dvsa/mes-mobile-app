@@ -25,7 +25,7 @@
     </ion-row>
   </ion-col>
 </ion-row>
-<warning-banner *ngIf="shouldShowManualBanner()" [warningText]='manualMessage'>
+<warning-banner *ngIf="shouldShowManualBanner()" [warningText]="manualMessage">
 </warning-banner>
-<warning-banner *ngIf="shouldShowAutomaticBanner()" [warningText]='automaticMessage'>
+<warning-banner *ngIf="shouldShowAutomaticBanner()" [warningText]="automaticMessage">
 </warning-banner>

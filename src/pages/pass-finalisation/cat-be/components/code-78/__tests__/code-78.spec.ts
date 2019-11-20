@@ -4,6 +4,8 @@ import { FormGroup } from '@angular/forms';
 import { Code78Component } from '../code-78';
 import { MockComponent } from 'ng-mocks';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
+import { TestCategory } from '../../../../../../shared/models/test-category';
+import { TransmissionType } from '../../../../../../shared/models/transmission-type';
 
 describe('code78Component', () => {
   let fixture: ComponentFixture<Code78Component>;
@@ -67,8 +69,8 @@ describe('code78Component', () => {
     describe('showAutomaticBanner', () => {
       it('should show the automatic banner when it is valid', () => {
         component.ngOnChanges();
-        component.category = 'B+E';
-        component.transmission = 'Automatic';
+        component.category = TestCategory.BE;
+        component.transmission = TransmissionType.Automatic;
         component.form.get(Code78Component.fieldName).setValue('yes');
         fixture.detectChanges();
         expect(component.shouldShowAutomaticBanner()).toEqual(true);
@@ -78,8 +80,8 @@ describe('code78Component', () => {
     describe('should show manual banner', () => {
       it('should show the manual banner when it is valid', () => {
         component.ngOnChanges();
-        component.category = 'B+E';
-        component.transmission = 'Manual';
+        component.category = TestCategory.BE;
+        component.transmission = TransmissionType.Manual;
         component.form.get(Code78Component.fieldName).setValue('yes');
         fixture.detectChanges();
         expect(component.shouldShowManualBanner()).toEqual(true);
@@ -89,7 +91,7 @@ describe('code78Component', () => {
     describe('shouldHideBanner', () => {
       it('should hide banner when only transmission is selected', () => {
         component.ngOnChanges();
-        component.transmission = 'Manual';
+        component.transmission = TransmissionType.Manual;
         fixture.detectChanges();
         expect(component.shouldHideBanner()).toEqual(true);
       });

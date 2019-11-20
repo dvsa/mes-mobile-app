@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TestCategory } from '../../../../../shared/models/test-category';
 import { Code78Present, Code78NotPresent } from '../../../../../modules/tests/pass-completion/pass-completion.actions';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { TransmissionType } from '../../../../../shared/models/transmission-type';
 
 @Component({
   selector: 'code-78',
@@ -14,10 +14,10 @@ export class Code78Component implements OnChanges {
   form: FormGroup;
 
   @Input()
-  category: String;
+  category: TestCategory;
 
   @Input()
-  transmission: GearboxCategory;
+  transmission: TransmissionType;
 
   @Output()
   code78Present = new EventEmitter<Code78Present>();
@@ -51,7 +51,7 @@ export class Code78Component implements OnChanges {
     if (!this.shouldHideBanner()) {
       switch (this.category as TestCategory) {
         case TestCategory.BE:
-          return this.transmission === 'Manual';
+          return this.transmission === TransmissionType.Manual;
       }
     }
     return false;
@@ -61,7 +61,7 @@ export class Code78Component implements OnChanges {
     if (!this.shouldHideBanner()) {
       switch (this.category as TestCategory) {
         case TestCategory.BE:
-          return this.transmission === 'Automatic';
+          return this.transmission === TransmissionType.Automatic;
       }
     }
     return false;

@@ -27,7 +27,7 @@
 
         <transmission [form]="form" (gearBoxCategoryChange)="transmissionChanged($event)"></transmission>
 
-        <code-78 [form]="form" [category]="'B+E'" [transmission]="pageState.transmission$ | async" (code78Present)="code78IsPresent()" (code78NotPresent)="code78IsNotPresent()"></code-78>
+        <code-78 [form]="form" [category]="category" [transmission]="pageState.transmission$ | async" (code78Present)="code78IsPresent()" (code78NotPresent)="code78IsNotPresent()"></code-78>
 
         <pass-certificate-number [form]="form" (passCertificateNumberChange)="passCertificateNumberChanged($event)"></pass-certificate-number>
 

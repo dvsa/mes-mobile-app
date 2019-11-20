@@ -70,6 +70,7 @@ import {
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { TestCategory } from '../../../shared/models/test-category';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -104,6 +105,7 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
   testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
   code78Present: boolean;
+  category: TestCategory = TestCategory.BE;
 
   constructor(
     public store$: Store<StoreModel>,
