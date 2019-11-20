@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { TestSummaryCardModel } from './test-summary-card-model';
 import { convertBooleanToString, flattenArray } from '../../view-test-result-helpers';
+import { isBoolean } from 'lodash';
 
 @Component({
   selector: 'test-summary-card',
@@ -31,10 +32,5 @@ export class TestSummaryCardComponent {
 
   getFlattenArray = (data: string[]): string => flattenArray(data);
 
-  /**
-   * Check the value passed in is true/false - used to suppress field in HTML only when undefined.
-   * @param {boolean} data
-   * @return {boolean}
-   */
-  isBoolean = (data: boolean): boolean => typeof data === 'boolean';
+  shouldDisplayLicenceProvided = (data: boolean): boolean => isBoolean(data);
 }

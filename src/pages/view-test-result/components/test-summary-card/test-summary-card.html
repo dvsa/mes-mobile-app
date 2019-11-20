@@ -13,7 +13,7 @@
           <span class="mes-data">{{ getFlattenArray(data.accompaniment) }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mes-data-row-with-separator" *ngIf="isBoolean(data.provisionalLicenceProvided)">
+      <ion-row class="mes-data-row-with-separator" *ngIf="shouldDisplayLicenceProvided(data.provisionalLicenceProvided)">
         <ion-col col-40>
           <label>Licence provided</label>
         </ion-col>
