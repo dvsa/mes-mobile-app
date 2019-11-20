@@ -1,9 +1,9 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
-import { Code78Component } from './code-78';
+import { Code78Component } from '../code-78';
 import { MockComponent } from 'ng-mocks';
-import { WarningBannerComponent } from '../../../../../components/common/warning-banner/warning-banner';
+import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 
 describe('code78Component', () => {
   let fixture: ComponentFixture<Code78Component>;
@@ -61,6 +61,51 @@ describe('code78Component', () => {
         fixture.detectChanges();
         const result: boolean = component.isInvalid();
         expect(result).toEqual(true);
+      });
+    });
+
+    describe('showAutomaticBanner', () => {
+      it('should show the automatic banner when it is valid', () => {
+        component.ngOnChanges();
+        component.category = 'B+E';
+        component.transmission = 'Automatic';
+        component.form.get(Code78Component.fieldName).setValue('yes');
+        fixture.detectChanges();
+        expect(component.shouldShowAutomaticBanner()).toEqual(true);
+      });
+    });
+
+    describe('should show manual banner', () => {
+      it('should show the manual banner when it is valid', () => {
+        component.ngOnChanges();
+        component.category = 'B+E';
+        component.transmission = 'Manual';
+        component.form.get(Code78Component.fieldName).setValue('yes');
+        fixture.detectChanges();
+        expect(component.shouldShowManualBanner()).toEqual(true);
+      });
+    });
+
+    describe('shouldHideBanner', () => {
+      it('should hide banner when only transmission is selected', () => {
+        component.ngOnChanges();
+        component.transmission = 'Manual';
+        fixture.detectChanges();
+        expect(component.shouldHideBanner()).toEqual(true);
+      });
+
+      it('should hide banner when only code78 is selected', () => {
+        component.ngOnChanges();
+        component.form.get(Code78Component.fieldName).setValue('yes');
+        fixture.detectChanges();
+        expect(component.shouldHideBanner()).toEqual(true);
+      });
+
+      it('should hide banner nothing is selected', () => {
+        component.ngOnChanges();
+        component.formControl.markAsDirty();
+        fixture.detectChanges();
+        expect(component.shouldHideBanner()).toEqual(true);
       });
     });
   });
