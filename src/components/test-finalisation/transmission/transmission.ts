@@ -32,5 +32,4 @@ export class TransmissionComponent implements OnChanges {
   transmissionChanged(transmission: GearboxCategory): void {
     this.gearBoxCategoryChange.emit(transmission);
   }
-  
 }
