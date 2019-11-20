@@ -391,7 +391,7 @@ export class OfficeCatBEPage extends BasePageComponent {
             ...getUncoupleRecoupleFaultAndComment(
               data.uncoupleRecouple,
               CompetencyOutcome.DF).map(this.parseCompetency),
-            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(this.parseCompetency),
+            ...getVehicleCheckDrivingFaults(data.vehicleChecks, this.faultCountProvider).map(this.parseCompetency),
           ];
         }),
       ),
