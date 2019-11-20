@@ -50,7 +50,6 @@ import { AddDrivingFault } from '../../../modules/tests/test-data/driving-faults
 import { AddSeriousFault } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
 import { AddDangerousFault } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -83,7 +82,7 @@ export class TestReportCatBEPage extends BasePageComponent {
   isEtaValid: boolean = true;
 
   modal: Modal;
-  catBELegalRequirements: CatBUniqueTypes.TestRequirements;
+  catBELegalRequirements: CatBEUniqueTypes.TestRequirements;
 
   constructor(
     public store$: Store<StoreModel>,
