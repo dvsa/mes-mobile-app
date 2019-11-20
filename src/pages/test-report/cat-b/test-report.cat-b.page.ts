@@ -226,13 +226,6 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
       ),
     ).subscribe();
   }
-  // TODO: Needs unit tests
-  isLegalRequirementTicked(
-    legalRequirement: LegalRequirements,
-    catBLegalRequirements: CatBUniqueTypes.TestRequirements,
-  ): boolean {
-    return catBLegalRequirements[legalRequirement];
-  }
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };

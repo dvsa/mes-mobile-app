@@ -33,14 +33,14 @@
           <ion-col>
             <legal-requirement 
               [legalRequirement]="legalRequirements.normalStart1"
-              [ticked]="isLegalRequirementTicked(legalRequirements.normalStart1, (pageState.catBELegalRequirements$ | async))"
+              [ticked]="(pageState.catBELegalRequirements$ | async)[legalRequirements.normalStart1]"
             >
             </legal-requirement>
           </ion-col>
           <ion-col>
             <legal-requirement 
               [legalRequirement]="legalRequirements.normalStart2"
-              [ticked]="isLegalRequirementTicked(legalRequirements.normalStart2, (pageState.catBELegalRequirements$ | async))"
+              [ticked]="(pageState.catBELegalRequirements$ | async)[legalRequirements.normalStart2]"
             >
             </legal-requirement>
           </ion-col>
@@ -49,21 +49,21 @@
           <ion-col col-28>
             <legal-requirement 
               [legalRequirement]="legalRequirements.uphillStart"
-              [ticked]="isLegalRequirementTicked(legalRequirements.uphillStart, (pageState.catBELegalRequirements$ | async))"
+              [ticked]="(pageState.catBELegalRequirements$ | async)[legalRequirements.uphillStart]"
             >
             </legal-requirement>
           </ion-col>
           <ion-col col-28>
             <legal-requirement 
               [legalRequirement]="legalRequirements.downhillStart"
-              [ticked]="isLegalRequirementTicked(legalRequirements.downhillStart, (pageState.catBELegalRequirements$ | async))"
+              [ticked]="(pageState.catBELegalRequirements$ | async)[legalRequirements.downhillStart]"
             >
             </legal-requirement>
           </ion-col>
           <ion-col col-40>
             <legal-requirement 
               [legalRequirement]="legalRequirements.angledStartControlledStop"
-              [ticked]="isLegalRequirementTicked(legalRequirements.angledStartControlledStop, (pageState.catBELegalRequirements$ | async))"
+              [ticked]="(pageState.catBELegalRequirements$ | async)[legalRequirements.angledStartControlledStop]"
             >
             </legal-requirement>
           </ion-col>

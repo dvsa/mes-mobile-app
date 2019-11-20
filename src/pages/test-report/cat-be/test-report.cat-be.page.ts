@@ -163,13 +163,6 @@ export class TestReportCatBEPage extends BasePageComponent {
   toggleReportOverlay(): void {
     this.displayOverlay = !this.displayOverlay;
   }
-  // TODO: Needs unit tests
-  isLegalRequirementTicked(
-    legalRequirement: LegalRequirements,
-    catBELegalRequirements: CatBEUniqueTypes.TestRequirements,
-  ): boolean {
-    return catBELegalRequirements[legalRequirement];
-  }
 
   ionViewDidLeave(): void {
     if (this.subscription) {
