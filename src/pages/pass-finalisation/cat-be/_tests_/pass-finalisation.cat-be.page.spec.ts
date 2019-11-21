@@ -31,6 +31,7 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
   '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PassFinalisationCatBEPage } from '../pass-finalisation.cat-be.page';
 import { Code78Component } from '../components/code-78/code-78';
+import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 
 describe('PassFinalisationCatBEPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBEPage>;
@@ -50,6 +51,7 @@ describe('PassFinalisationCatBEPage', () => {
         MockComponent(FinalisationHeaderComponent),
         MockComponent(LanguagePreferencesComponent),
         MockComponent(Code78Component),
+        MockComponent(WarningBannerComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [

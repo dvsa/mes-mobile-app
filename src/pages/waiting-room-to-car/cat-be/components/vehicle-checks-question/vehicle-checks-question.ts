@@ -22,6 +22,9 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   @Input()
   formGroup: FormGroup;
 
+  @Input()
+  isLastQuestion: boolean;
+
   @Output()
   vehicleChecksQuestionChange = new EventEmitter<QuestionResult>();
 

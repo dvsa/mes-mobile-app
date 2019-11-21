@@ -77,6 +77,21 @@
   }
 }
 
+.mes-link-button {
+  background: map-get($colors, mes-white);
+  color: map-get($colors-gds, gds-black);
+  border-radius: 4px;
+  padding: 0 0.8rem;
+  margin: 0 0.2rem;
+  line-height: 2.6rem;
+  &.activated {
+    background: map-get($colors, mes-white);
+    span {
+      color: map-get($colors-gds, gds-light-blue);
+    }
+  }
+}
+
 .mes-warning-button {
   background: map-get($colors-gds, gds-yellow);
   color: map-get($colors-gds, gds-black);
