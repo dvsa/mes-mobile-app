@@ -1,5 +1,5 @@
 import { JournalModel } from './journal.model';
-import { flatten, isNil } from 'lodash';
+import { flatten, isEmpty, isNil } from 'lodash';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
@@ -28,14 +28,15 @@ export const canNavigateToPreviousDay = (journal: JournalModel, today: DateTime)
 };
 
 export const hasSlotsAfterSelectedDate = (journal: JournalModel): boolean => {
-  const maxDateWithSlots: string =
-    Object.keys(journal.slots)
-      .reduce((previousDate: string, currentDate: string) => {
-        return (new Date(currentDate) > new Date(previousDate) && journal.slots[currentDate].length > 0) ?
-          currentDate : previousDate;
-      }, null);
+  let allowNavigationToFutureDate: boolean = false;
 
-  return maxDateWithSlots && (new Date(maxDateWithSlots) > new Date(journal.selectedDate));
+  Object.keys(journal.slots)
+    .forEach((slot: string) => {
+      if (new Date(journal.selectedDate) < new Date(slot) && !isEmpty(journal.slots[slot])) {
+        allowNavigationToFutureDate = true;
+      }
+    });
+  return allowNavigationToFutureDate;
 };
 
 export const canNavigateToNextDay = (journal: JournalModel): boolean => {
