@@ -71,12 +71,6 @@ import {
 // } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { getTestData } from '../../../modules/tests/test-data/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import {
-  getDrivingFaults,
-  getDangerousFaults,
-  getSeriousFaults,
-  getEyesightTestSeriousFaultAndComment,
-} from '../../debrief/debrief.selector';
 
 import {
   getManoeuvreFaults,
@@ -84,6 +78,10 @@ import {
   getUncoupleRecoupleFaultAndComment,
   getVehicleCheckSeriousFaults,
   displayDrivingFaultComments,
+  getDrivingFaults,
+  getEyesightTestSeriousFaultAndComment,
+  getDangerousFaults,
+  getSeriousFaults,
 } from '../../debrief/cat-be/debrief.cat-be.selector';
 
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
