@@ -3,9 +3,7 @@ import { forOwn, transform, endsWith, isBoolean, isNumber } from 'lodash';
 import { SeriousFaults, DangerousFaults, EyesightTest, DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
 import { competencyLabels } from '../../pages/test-report/components/competency/competency.constants';
 import {
-  CommentedCompetency,
-  CommentSource,
-  MultiFaultAssignableCompetency,
+  FaultSummary, CommentSource,
 } from '../../shared/models/fault-marking.model';
 import { CompetencyDisplayName } from '../../shared/models/competency-display-name';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
@@ -18,8 +16,7 @@ import { TestCategory } from '../../shared/models/test-category';
 @Injectable()
 export class FaultListProvider {
 
-  public getDrivingFaultsList(data: Object, category: TestCategory)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  public getDrivingFaultsList(data: Object, category: TestCategory): FaultSummary[] {
     switch (category) {
       case TestCategory.B:
         return this.getDrivingFaultsCatB(data);
@@ -28,8 +25,7 @@ export class FaultListProvider {
     }
   }
 
-  public getSeriousFaultsList(data: Object, category: TestCategory)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  public getSeriousFaultsList(data: Object, category: TestCategory): FaultSummary[] {
     switch (category) {
       case TestCategory.B:
         return this.getSeriousFaultsCatB(data);
@@ -38,8 +34,7 @@ export class FaultListProvider {
     }
   }
 
-  public getDangerousFaultsList(data: Object, category: TestCategory)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  public getDangerousFaultsList(data: Object, category: TestCategory): FaultSummary[] {
     switch (category) {
       case TestCategory.B:
         return this.getDangerousFaultsCatB(data);
@@ -48,10 +43,7 @@ export class FaultListProvider {
     }
   }
 
-  // Get Category B Faults
-
-  private getDrivingFaultsCatB (data: CatBUniqueTypes.TestData)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  private getDrivingFaultsCatB (data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
       ...this.getComptencyFaults(data.drivingFaults),
       ...this.getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF),
@@ -60,8 +52,7 @@ export class FaultListProvider {
     ];
   }
 
-  private getSeriousFaultsCatB (data: CatBUniqueTypes.TestData)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  private getSeriousFaultsCatB (data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
       ...this.getComptencyFaults(data.seriousFaults),
       ...this.getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S),
@@ -71,8 +62,7 @@ export class FaultListProvider {
     ];
   }
 
-  private getDangerousFaultsCatB(data: CatBUniqueTypes.TestData)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  private getDangerousFaultsCatB(data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
       ...this.getComptencyFaults(data.dangerousFaults),
       ...this.getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D),
@@ -81,17 +71,15 @@ export class FaultListProvider {
     ];
   }
 
-  // Generic Fault Getters
-
-  private getComptencyFaults(faults: DrivingFaults | SeriousFaults | DangerousFaults) {
-    const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+  private getComptencyFaults(faults: DrivingFaults | SeriousFaults | DangerousFaults): FaultSummary[] {
+    const faultsEncountered: FaultSummary[] = [];
 
     forOwn(faults, (value: number, key: string, obj: DrivingFaults| SeriousFaults | DangerousFaults) => {
       const faultCount = this.calculateFaultCount(value);
       if (faultCount > 0  && !key.endsWith('Comments')) {
         const label = key as keyof typeof competencyLabels;
         const comment = obj[`${key}Comments`] || null;
-        const faultSummary: CommentedCompetency & MultiFaultAssignableCompetency = {
+        const faultSummary: FaultSummary = {
           comment,
           faultCount,
           competencyIdentifier: key,
@@ -115,8 +103,7 @@ export class FaultListProvider {
     return 0;
   }
 
-  private getEyesightTestSeriousFault (eyesightTest: EyesightTest)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  private getEyesightTestSeriousFault (eyesightTest: EyesightTest): FaultSummary[] {
     if (!eyesightTest || !eyesightTest.seriousFault) {
       return [];
     }
@@ -129,12 +116,9 @@ export class FaultListProvider {
     }];
   }
 
-  // Category B Specifc Fault Getters
-
-  private getVehicleCheckFaultsCatB
-  (vehicleChecks: CatBUniqueTypes.VehicleChecks, faultType: CompetencyOutcome)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+  private getVehicleCheckFaultsCatB(vehicleChecks: CatBUniqueTypes.VehicleChecks, faultType: CompetencyOutcome)
+  : FaultSummary[] {
+    const result: FaultSummary[] = [];
 
     if (!vehicleChecks) {
       return result;
@@ -156,7 +140,7 @@ export class FaultListProvider {
       );
 
     if (isValidDangerousFault || isValidSeriousFault || isValidDrivingFault) {
-      const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
+      const competency: FaultSummary = {
         comment: vehicleChecks.showMeTellMeComments || '',
         competencyIdentifier: CommentSource.VEHICLE_CHECKS,
         competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
@@ -170,12 +154,12 @@ export class FaultListProvider {
   }
 
   private getControlledStopFault(controlledStop: CatBUniqueTypes.ControlledStop, faultType: CompetencyOutcome)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const returnCompetencies: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+  : FaultSummary[] {
+    const returnCompetencies: FaultSummary[] = [];
     if (!controlledStop || controlledStop.fault !== faultType) {
       return returnCompetencies;
     }
-    const result: (CommentedCompetency & MultiFaultAssignableCompetency) = {
+    const result: FaultSummary = {
       competencyDisplayName: CompetencyDisplayName.CONTROLLED_STOP,
       competencyIdentifier: 'controlledStop',
       comment: controlledStop.faultComments || '',
@@ -186,9 +170,8 @@ export class FaultListProvider {
     return returnCompetencies;
   }
 
-  private getManoeuvreFaults (manoeuvres: CatBUniqueTypes.Manoeuvres, faultType: CompetencyOutcome)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+  private getManoeuvreFaults (manoeuvres: CatBUniqueTypes.Manoeuvres, faultType: CompetencyOutcome): FaultSummary[] {
+    const faultsEncountered: FaultSummary[] = [];
     forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
       const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
 
@@ -207,16 +190,15 @@ export class FaultListProvider {
     return faultsEncountered;
   }
 
-  private getCompetencyComment(key: string, controlFaultComments: string, observationFaultComments: string) {
+  private getCompetencyComment(key: string, controlFaultComments: string, observationFaultComments: string): string {
     if (key === 'controlFault') {
       return controlFaultComments || '';
     }
     return observationFaultComments || '';
   }
 
-  private createManoeuvreFault(key: string, type: ManoeuvreTypes, competencyComment: string)
-  : CommentedCompetency & MultiFaultAssignableCompetency {
-    const manoeuvreFaultSummary : CommentedCompetency & MultiFaultAssignableCompetency = {
+  private createManoeuvreFault(key: string, type: ManoeuvreTypes, competencyComment: string): FaultSummary {
+    const manoeuvreFaultSummary : FaultSummary = {
       comment: competencyComment || '',
       competencyIdentifier: `${type}${manoeuvreCompetencyLabels[key]}` ,
       competencyDisplayName:`${manoeuvreTypeLabels[type]} - ${manoeuvreCompetencyLabels[key]}`,

@@ -20,3 +20,5 @@ export enum CommentSource {
   EYESIGHT_TEST = 'eyesightTest',
   UNCOUPLE_RECOUPLE = 'uncoupleRecouple',
 }
+
+export type FaultSummary = Competency & MultiFaultAssignableCompetency & CommentedCompetency;

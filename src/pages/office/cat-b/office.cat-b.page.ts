@@ -92,9 +92,9 @@ import { AddControlledStopComment } from '../../../modules/tests/test-data/contr
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import {
-  MultiFaultAssignableCompetency,
   CommentedCompetency,
   CommentSource,
+  FaultSummary,
 } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map';
@@ -144,12 +144,12 @@ interface OfficePageState {
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
-  drivingFaults$: Observable<(MultiFaultAssignableCompetency & CommentedCompetency)[]>;
+  drivingFaults$: Observable<FaultSummary[]>;
   drivingFaultCount$: Observable<number>;
   displayDrivingFaultComments$: Observable<boolean>;
   weatherConditions$: Observable<WeatherConditions[]>;
-  dangerousFaults$: Observable<(MultiFaultAssignableCompetency & CommentedCompetency)[]>;
-  seriousFaults$: Observable<(MultiFaultAssignableCompetency & CommentedCompetency)[]>;
+  dangerousFaults$: Observable<FaultSummary[]>;
+  seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
 }
 
