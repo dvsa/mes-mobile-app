@@ -30,6 +30,7 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
 import { PassCertificateNumberComponent } from '../../components/pass-certificate-number/pass-certificate-number';
 import { LicenseProvidedComponent } from '../../components/license-provided/license-provided';
 import { TransmissionComponent } from '../../../../components/test-finalisation/transmission/transmission';
+import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 
 describe('PassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;
@@ -48,6 +49,7 @@ describe('PassFinalisationCatBPage', () => {
         MockComponent(DebriefWitnessedComponent),
         MockComponent(FinalisationHeaderComponent),
         MockComponent(LanguagePreferencesComponent),
+        MockComponent(WarningBannerComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
