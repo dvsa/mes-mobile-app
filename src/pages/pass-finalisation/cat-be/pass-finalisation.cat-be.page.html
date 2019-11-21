@@ -25,7 +25,9 @@
         <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()"
           (licenseNotReceived)="provisionalLicenseNotReceived()"> </license-provided>
 
-        <transmission [form]="form" (transmissionChanged)="transmissionChanged(transmission)"></transmission>
+        <transmission [form]="form" (gearBoxCategoryChange)="transmissionChanged($event)"></transmission>
+
+        <code-78 [form]="form" [category]="category" [transmission]="pageState.transmission$ | async" (code78Present)="code78IsPresent()" (code78NotPresent)="code78IsNotPresent()"></code-78>
 
         <pass-certificate-number [form]="form" (passCertificateNumberChange)="passCertificateNumberChanged($event)"></pass-certificate-number>
 
@@ -38,7 +40,7 @@
         <debrief-witnessed [display]=true [formGroup]="form" [debriefWitnessed]="pageState.debriefWitnessed$ | async"
           [outcome]="testOutcome" (debriefWitnessedChange)="debriefWitnessedChanged($event)">
         </debrief-witnessed>
-
+        
       </ion-grid>
     </form>
   </div>

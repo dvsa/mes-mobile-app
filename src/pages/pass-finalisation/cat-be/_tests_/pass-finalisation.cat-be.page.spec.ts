@@ -22,14 +22,15 @@ import { FinalisationHeaderComponent } from
   '../../../../components/test-finalisation/finalisation-header/finalisation-header';
 import { TransmissionComponent } from '../../../../components/test-finalisation/transmission/transmission';
 import { PassFinalisationViewDidEnter } from '../../pass-finalisation.actions';
-import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged } from
-  '../../../../modules/tests/pass-completion/pass-completion.actions';
+import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged, Code78Present,
+  Code78NotPresent } from '../../../../modules/tests/pass-completion/pass-completion.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
   '../../../../modules/tests/test-summary/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
   '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PassFinalisationCatBEPage } from '../pass-finalisation.cat-be.page';
+import { Code78Component } from '../components/code-78/code-78';
 
 describe('PassFinalisationCatBEPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBEPage>;
@@ -48,6 +49,7 @@ describe('PassFinalisationCatBEPage', () => {
         MockComponent(DebriefWitnessedComponent),
         MockComponent(FinalisationHeaderComponent),
         MockComponent(LanguagePreferencesComponent),
+        MockComponent(Code78Component),
       ],
       imports: [IonicModule, AppModule],
       providers: [
@@ -87,6 +89,20 @@ describe('PassFinalisationCatBEPage', () => {
       it('should dispatch the correct action when called', () => {
         component.provisionalLicenseNotReceived();
         expect(store$.dispatch).toHaveBeenCalledWith(new ProvisionalLicenseNotReceived());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('Code78', () => {
+      it('should dispatch the correct action when called', () => {
+        component.code78IsPresent();
+        expect(store$.dispatch).toHaveBeenCalledWith(new Code78Present());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('Code78NotPresent', () => {
+      it('should dispatch the correct action when called', () => {
+        component.code78IsNotPresent();
+        expect(store$.dispatch).toHaveBeenCalledWith(new Code78NotPresent());
         expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });

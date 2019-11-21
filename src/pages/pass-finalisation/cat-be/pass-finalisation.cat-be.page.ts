@@ -11,13 +11,17 @@ import {
   ProvisionalLicenseNotReceived,
   PopulatePassCompletion,
   PassCertificateNumberChanged,
+  Code78Present,
+  Code78NotPresent,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
-import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
+import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.cat-be.reducer';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
   isProvisionalLicenseNotProvided,
-} from '../../../modules/tests/pass-completion/pass-completion.selector';
+  isCode78Present,
+  isCode78NotPresent,
+} from '../../../modules/tests/pass-completion/pass-completion.cat-be.selector';
 import { Observable } from 'rxjs/Observable';
 import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
 import {
@@ -34,7 +38,7 @@ import { map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.cat-be.reducer';
 import {
   getGearboxCategory,
   isAutomatic,
@@ -64,8 +68,9 @@ import {
   getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { TestCategory } from '../../../shared/models/test-category';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -75,6 +80,8 @@ interface PassFinalisationPageState {
   applicationNumber$: Observable<string>;
   provisionalLicenseProvidedRadioChecked$: Observable<boolean>;
   provisionalLicenseNotProvidedRadioChecked$: Observable<boolean>;
+  code78PresentRadioChecked$: Observable<boolean>;
+  code78NotPresentRadioChecked$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
   transmissionAutomaticRadioChecked$: Observable<boolean>;
@@ -97,6 +104,8 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
   inputSubscriptions: Subscription[] = [];
   testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
+  code78Present: boolean;
+  category: TestCategory = TestCategory.BE;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -157,6 +166,20 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
           if (val) this.form.controls['provisionalLicenseProvidedCtrl'].setValue('no');
         }),
       ),
+      code78PresentRadioChecked$: currentTest$.pipe(
+        select(getPassCompletion),
+        map(isCode78Present),
+        tap((val) => {
+          if (val) this.form.controls['code78Ctrl'].setValue('yes');
+        }),
+      ),
+      code78NotPresentRadioChecked$: currentTest$.pipe(
+        select(getPassCompletion),
+        map(isCode78NotPresent),
+        tap((val) => {
+          if (val) this.form.controls['code78Ctrl'].setValue('no');
+        }),
+      ),
       passCertificateNumber$: currentTest$.pipe(
         select(getPassCompletion),
         select(getPassCertificateNumber),
@@ -212,6 +235,14 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
 
   provisionalLicenseNotReceived(): void {
     this.store$.dispatch(new ProvisionalLicenseNotReceived());
+  }
+
+  code78IsPresent(): void {
+    this.store$.dispatch(new Code78Present());
+  }
+
+  code78IsNotPresent(): void {
+    this.store$.dispatch(new Code78NotPresent());
   }
 
   transmissionChanged(transmission: GearboxCategory): void {

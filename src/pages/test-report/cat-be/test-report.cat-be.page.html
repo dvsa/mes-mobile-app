@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content no-padding no-bounce>
-  <!-- <toolbar></toolbar> -->
+  <toolbar></toolbar>
   <ion-grid no-padding class="grid-layout" [ngClass]="{
       'remove-mode': isRemoveFaultMode,
       'add-mode': !isRemoveFaultMode,
@@ -31,25 +31,40 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <legal-requirement [legalRequirement]="legalRequirements.normalStart1">
+            <legal-requirement 
+              [legalRequirement]="legalRequirements.normalStart1"
+              [ticked]="(pageState.catBELegalRequirements$ | async)[legalRequirements.normalStart1]"
+            >
             </legal-requirement>
           </ion-col>
           <ion-col>
-            <legal-requirement [legalRequirement]="legalRequirements.normalStart2">
+            <legal-requirement 
+              [legalRequirement]="legalRequirements.normalStart2"
+              [ticked]="(pageState.catBELegalRequirements$ | async)[legalRequirements.normalStart2]"
+            >
             </legal-requirement>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col col-28>
-            <legal-requirement [legalRequirement]="legalRequirements.uphillStart">
+            <legal-requirement 
+              [legalRequirement]="legalRequirements.uphillStart"
+              [ticked]="(pageState.catBELegalRequirements$ | async)[legalRequirements.uphillStart]"
+            >
             </legal-requirement>
           </ion-col>
           <ion-col col-28>
-            <legal-requirement [legalRequirement]="legalRequirements.downhillStart">
+            <legal-requirement 
+              [legalRequirement]="legalRequirements.downhillStart"
+              [ticked]="(pageState.catBELegalRequirements$ | async)[legalRequirements.downhillStart]"
+            >
             </legal-requirement>
           </ion-col>
           <ion-col col-40>
-            <legal-requirement [legalRequirement]="legalRequirements.angledStartControlledStop">
+            <legal-requirement 
+              [legalRequirement]="legalRequirements.angledStartControlledStop"
+              [ticked]="(pageState.catBELegalRequirements$ | async)[legalRequirements.angledStartControlledStop]"
+            >
             </legal-requirement>
           </ion-col>
         </ion-row>

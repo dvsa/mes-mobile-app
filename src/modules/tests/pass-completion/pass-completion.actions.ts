@@ -4,6 +4,8 @@ export const POPULATE_PASS_COMPLETION = '[Pass Completion] Populate with default
 export const PASS_CERTIFICATE_NUMBER_CHANGED = '[Pass Completion] Pass certificate number changed';
 export const PROVISIONAL_LICENSE_RECEIVED = '[Pass Completion] Provisional license received';
 export const PROVISIONAL_LICENSE_NOT_RECEIVED = '[Pass Completion] Provisional license not received';
+export const CODE_78_PRESENT = '[Pass Completion] Code 78 present';
+export const CODE_78_NOT_PRESENT = '[Pass Completion] Code 78 not present';
 
 export class PopulatePassCompletion implements Action {
   readonly type = POPULATE_PASS_COMPLETION;
@@ -22,8 +24,18 @@ export class ProvisionalLicenseNotReceived implements Action {
   readonly type = PROVISIONAL_LICENSE_NOT_RECEIVED;
 }
 
+export class Code78Present implements Action {
+  readonly type = CODE_78_PRESENT;
+}
+
+export class Code78NotPresent implements Action {
+  readonly type = CODE_78_NOT_PRESENT;
+}
+
 export type Types =
   | PopulatePassCompletion
   | PassCertificateNumberChanged
   | ProvisionalLicenseReceived
-  | ProvisionalLicenseNotReceived;
+  | ProvisionalLicenseNotReceived
+  | Code78Present
+  | Code78NotPresent;
