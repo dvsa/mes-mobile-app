@@ -52,6 +52,7 @@ describe('VehicleChecksCatBEComponent', () => {
         expect(component.isInvalid()).toEqual(false);
       });
     });
+
     describe('openVehicleChecksModal', () => {
       it('should create the correct model', () => {
         component.openVehicleChecksModal();
@@ -61,6 +62,84 @@ describe('VehicleChecksCatBEComponent', () => {
           {},
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );
+      });
+    });
+
+    describe('hasSeriousFault', () => {
+      it('should return true if vehicle checks score has serious fault', () => {
+        component.vehicleChecksScore = {
+          seriousFaults: 1,
+          drivingFaults: 4,
+        };
+
+        expect(component.hasSeriousFault()).toBeTruthy();
+      });
+
+      it('should return false if vehicle checks score does not have serious fault', () => {
+        component.vehicleChecksScore = {
+          seriousFaults: 0,
+          drivingFaults: 3,
+        };
+
+        expect(component.hasSeriousFault()).toBeFalsy();
+      });
+    });
+
+    describe('hasDrivingFault', () => {
+      it('should return true if vehicle checks score has driving fault', () => {
+        component.vehicleChecksScore = {
+          seriousFaults: 0,
+          drivingFaults: 1,
+        };
+
+        expect(component.hasDrivingFault()).toBeTruthy();
+      });
+
+      it('should return false if vehicle checks score does not have driving fault', () => {
+        component.vehicleChecksScore = {
+          seriousFaults: 0,
+          drivingFaults: 0,
+        };
+
+        expect(component.hasDrivingFault()).toBeFalsy();
+      });
+    });
+
+    describe('everyQuestionHasOutcome', () => {
+      it('should return false when not all show me and tell me questions have outcome', () => {
+        component.vehicleChecks = {
+          showMeQuestions: [{}, {}, {}],
+          tellMeQuestions: [{}, {}],
+        };
+
+        expect(component.everyQuestionHasOutcome()).toBeFalsy();
+      });
+
+      it('should return false when not all show me questions have outcome', () => {
+        component.vehicleChecks = {
+          showMeQuestions: [{}, {}, {}],
+          tellMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }],
+        };
+
+        expect(component.everyQuestionHasOutcome()).toBeFalsy();
+      });
+
+      it('should return false when not all tell me questions have outcome', () => {
+        component.vehicleChecks = {
+          showMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }, { outcome: 'P' }],
+          tellMeQuestions: [{}, {}],
+        };
+
+        expect(component.everyQuestionHasOutcome()).toBeFalsy();
+      });
+
+      it('should return true when all show / tell me questions have outcome', () => {
+        component.vehicleChecks = {
+          showMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }, { outcome: 'P' }],
+          tellMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }],
+        };
+
+        expect(component.everyQuestionHasOutcome()).toBeTruthy();
       });
     });
   });

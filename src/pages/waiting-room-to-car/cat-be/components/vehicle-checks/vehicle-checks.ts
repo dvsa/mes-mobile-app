@@ -36,7 +36,7 @@ export class VehicleChecksCatBEComponent {
     modal.present();
   }
 
-  everyQuestionIsSelected(): boolean {
+  everyQuestionHasOutcome(): boolean {
     const hasOutcome = (question: QuestionResult): boolean => {
       const outcome = get(question, 'outcome', undefined);
       return outcome !== undefined;

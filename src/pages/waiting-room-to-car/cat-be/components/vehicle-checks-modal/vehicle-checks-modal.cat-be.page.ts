@@ -13,7 +13,7 @@ import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle
 import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '../../../../../shared/models/test-category';
 import {
-  getVehicleChecksCatBe,
+  getVehicleChecksCatBE,
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
 } from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
@@ -86,17 +86,17 @@ export class VehicleChecksCatBEModal {
       ),
       showMeQuestions$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecksCatBe),
+        select(getVehicleChecksCatBE),
         select(getSelectedShowMeQuestions),
       ),
       tellMeQuestions$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecksCatBe),
+        select(getVehicleChecksCatBE),
         select(getSelectedTellMeQuestions),
       ),
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecksCatBe),
+        select(getVehicleChecksCatBE),
         map((vehicleChecks) => {
           return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
         }),

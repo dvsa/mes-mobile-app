@@ -6,12 +6,12 @@
   <ion-col padding-left align-self-center>
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
-      <ion-col col-48 *ngIf="!everyQuestionIsSelected()">
+      <ion-col col-48 *ngIf="!everyQuestionHasOutcome()">
         <button type="button" class="mes-return-button" (click)="openVehicleChecksModal()" ion-button>
           <h3>Select questions</h3>
         </button>
       </ion-col>
-      <ion-col col-48 align-self-center class="vehicle-check-score" *ngIf="everyQuestionIsSelected()">
+      <ion-col col-48 align-self-center class="vehicle-check-score" *ngIf="everyQuestionHasOutcome()">
         <ion-row class="vehicle-checks-result" *ngIf="!hasDrivingFault() && !hasSeriousFault()">
           <tick-indicator class="badge" [ticked]="true"></tick-indicator>Correct
         </ion-row>
@@ -24,7 +24,7 @@
           driving faults
         </ion-row>
       </ion-col>
-      <ion-col col-47 padding-right *ngIf="everyQuestionIsSelected()" class="see-answer-link-container">
+      <ion-col col-47 padding-right *ngIf="everyQuestionHasOutcome()" class="see-answer-link-container">
         <button type="button" class="mes-link-button see-answer-link" (click)="openVehicleChecksModal()" ion-button>
           <span>
             See answers 
