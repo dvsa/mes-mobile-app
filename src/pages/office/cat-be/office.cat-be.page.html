@@ -103,8 +103,6 @@
         </ion-card-content>
       </ion-card>
 
-      <p *ngIf="pageState.displayVehicleChecks$ | async">Should display vehicle checks</p>
-
       <fault-comment-card [formGroup]="form" [faultComments]="pageState.dangerousFaults$ | async" [shouldRender]="(pageState.dangerousFaults$ | async).length > 0 && pageState.displayDangerousFault$ | async"
         [outcome]="pageState.testOutcome$ | async" faultType="dangerous" header="Dangerous faults"
         (faultCommentsChange)="dangerousFaultCommentChanged($event)">
