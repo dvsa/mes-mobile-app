@@ -27,12 +27,6 @@ export const canNavigateToPreviousDay = (journal: JournalModel, today: DateTime)
   return selectedDate > lookbackLimit;
 };
 
-/**
- * Function to check if there is data after selected date in the journal slots, and to
- * return a true signifying that the user can navigate back a day if that is the case.
- * @param {JournalModel} journal
- * @return {boolean}
- */
 export const hasSlotsAfterSelectedDate = (journal: JournalModel): boolean => {
   const maxDateWithSlots: string =
     Object.keys(journal.slots)
