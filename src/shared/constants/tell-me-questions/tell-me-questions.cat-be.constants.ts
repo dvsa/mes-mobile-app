@@ -20,7 +20,7 @@ export default [
   {
     code: 'T04',
     description: 'Tell me how you would check the tyres to ensure that they have sufficient tread depth and that their general condition is safe to use on the road.',
-    shortName: 'Sufficient thread'
+    shortName: 'Sufficient tread'
   },
   {
     code: 'T05',
