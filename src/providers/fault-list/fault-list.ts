@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { forOwn, transform, endsWith } from 'lodash';
+import { forOwn, transform, endsWith, isBoolean, isNumber } from 'lodash';
 import { SeriousFaults, DangerousFaults, EyesightTest, DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
 import { competencyLabels } from '../../pages/test-report/components/competency/competency.constants';
 import {
@@ -53,20 +53,20 @@ export class FaultListProvider {
   private getDrivingFaultsCatB (data: CatBUniqueTypes.TestData)
   : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
     return [
-      ...this.getDrivingFaults(data.drivingFaults),
+      ...this.getComptencyFaults(data.drivingFaults),
       ...this.getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.DF),
-      ...this.getVehicleCheckDrivingFaults(data.vehicleChecks),
+      ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.DF),
     ];
   }
 
   private getSeriousFaultsCatB (data: CatBUniqueTypes.TestData)
   : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
     return [
-      ...this.getSeriousFaults(data.seriousFaults),
+      ...this.getComptencyFaults(data.seriousFaults),
       ...this.getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
-      ...this.getVehicleCheckSeriousFaults(data.vehicleChecks),
+      ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.S),
       ...this.getEyesightTestSeriousFault(data.eyesightTest),
     ];
   }
@@ -74,70 +74,45 @@ export class FaultListProvider {
   private getDangerousFaultsCatB(data: CatBUniqueTypes.TestData)
   : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
     return [
-      ...this.getDangerousFaults(data.dangerousFaults),
+      ...this.getComptencyFaults(data.dangerousFaults),
       ...this.getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
-      ...this.getVehicleCheckDangerousFaults(data.vehicleChecks),
+      ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.D),
     ];
   }
 
   // Generic Fault Getters
 
-  private getDrivingFaults (faults: DrivingFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  private getComptencyFaults(faults: DrivingFaults | SeriousFaults | DangerousFaults) {
     const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
-    forOwn(faults, (value: number, key, obj) => {
-      if (value > 0 && !key.endsWith('Comments')) {
-        const label = key as keyof typeof competencyLabels;
-        const comment = obj[`${key}Comments`] || null;
-        const drivingFaultSummary: CommentedCompetency & MultiFaultAssignableCompetency = {
-          comment,
-          competencyIdentifier: key,
-          competencyDisplayName: fullCompetencyLabels[label],
-          faultCount: value,
-          source: CommentSource.SIMPLE,
-        };
-        faultsEncountered.push(drivingFaultSummary);
-      }
-    });
-    return faultsEncountered.sort((a, b) => b.faultCount - a.faultCount);
-  }
 
-  private getDangerousFaults(faults: DangerousFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
-    forOwn(faults, (value, key, obj) => {
-      if (value && !key.endsWith('Comments')) {
+    forOwn(faults, (value: number, key: string, obj: DrivingFaults| SeriousFaults | DangerousFaults) => {
+      const faultCount = this.calculateFaultCount(value);
+      if (faultCount > 0  && !key.endsWith('Comments')) {
         const label = key as keyof typeof competencyLabels;
         const comment = obj[`${key}Comments`] || null;
-        const dangerousFault: CommentedCompetency & MultiFaultAssignableCompetency = {
+        const faultSummary: CommentedCompetency & MultiFaultAssignableCompetency = {
           comment,
+          faultCount,
           competencyIdentifier: key,
           competencyDisplayName: fullCompetencyLabels[label],
           source: CommentSource.SIMPLE,
-          faultCount: 1,
         };
-        faultsEncountered.push(dangerousFault);
+        faultsEncountered.push(faultSummary);
       }
     });
+
     return faultsEncountered;
   }
 
-  private getSeriousFaults (faults: SeriousFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
-    forOwn(faults, (value, key, obj) => {
-      if (value && !key.endsWith('Comments')) {
-        const label = key as keyof typeof competencyLabels;
-        const comment = obj[`${key}Comments`] || null;
-        const seriousFault: CommentedCompetency & MultiFaultAssignableCompetency = {
-          comment,
-          competencyIdentifier: key,
-          competencyDisplayName: fullCompetencyLabels[label],
-          source: CommentSource.SIMPLE,
-          faultCount: 1,
-        };
-        faultsEncountered.push(seriousFault);
-      }
-    });
-    return faultsEncountered;
+  private calculateFaultCount(value: number | boolean) : number {
+    if (isBoolean(value)) {
+      return value ? 1 : 0;
+    }
+    if (isNumber(value)) {
+      return value;
+    }
+    return 0;
   }
 
   private getEyesightTestSeriousFault (eyesightTest: EyesightTest)
@@ -156,58 +131,31 @@ export class FaultListProvider {
 
   // Category B Specifc Fault Getters
 
-  private getVehicleCheckDangerousFaults(vehicleChecks: CatBUniqueTypes.VehicleChecks)
+  private getVehicleCheckFaultsCatB
+  (vehicleChecks: CatBUniqueTypes.VehicleChecks, faultType: CompetencyOutcome)
   : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
     const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
 
     if (!vehicleChecks) {
       return result;
     }
-    const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
-      comment: vehicleChecks.showMeTellMeComments || '',
-      competencyIdentifier: CommentSource.VEHICLE_CHECKS,
-      competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
-      source: CommentSource.VEHICLE_CHECKS,
-      faultCount: 1,
 
-    };
-    vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D && result.push(competency);
+    const isValidDangerousFault: boolean =
+      faultType === CompetencyOutcome.D &&
+      vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D;
 
-    return result;
-  }
+    const isValidSeriousFault: boolean =
+      faultType === CompetencyOutcome.S &&
+      vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S;
 
-  private getVehicleCheckSeriousFaults(vehicleChecks: CatBUniqueTypes.VehicleChecks)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+    const isValidDrivingFault: boolean =
+      faultType === CompetencyOutcome.DF &&
+      (
+        vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.DF ||
+        vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF
+      );
 
-    if (!vehicleChecks) {
-      return result;
-    }
-    const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
-      comment: vehicleChecks.showMeTellMeComments || '',
-      competencyIdentifier: CommentSource.VEHICLE_CHECKS,
-      competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
-      source: CommentSource.VEHICLE_CHECKS,
-      faultCount: 1,
-    };
-    vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S && result.push(competency);
-
-    return result;
-  }
-
-  private getVehicleCheckDrivingFaults(vehicleChecks: CatBUniqueTypes.VehicleChecks)
-  : (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
-    if (!vehicleChecks || !vehicleChecks.showMeQuestion || !vehicleChecks.tellMeQuestion) {
-      return result;
-    }
-    if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D
-        || vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S) {
-      return result;
-    }
-
-    if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.DF
-        || vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
+    if (isValidDangerousFault || isValidSeriousFault || isValidDrivingFault) {
       const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
         comment: vehicleChecks.showMeTellMeComments || '',
         competencyIdentifier: CommentSource.VEHICLE_CHECKS,
@@ -215,6 +163,7 @@ export class FaultListProvider {
         source: CommentSource.VEHICLE_CHECKS,
         faultCount: 1,
       };
+
       result.push(competency);
     }
     return result;
