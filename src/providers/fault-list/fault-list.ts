@@ -88,7 +88,7 @@ export class FaultListProvider {
       }
     });
 
-    return faultsEncountered;
+    return faultsEncountered.sort((a, b) => b.faultCount - a.faultCount);
   }
 
   private calculateFaultCount(value: number | boolean) : number {
