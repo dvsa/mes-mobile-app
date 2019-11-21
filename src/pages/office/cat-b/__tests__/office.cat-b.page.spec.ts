@@ -67,6 +67,7 @@ import { SetActivityCode } from '../../../../modules/tests/activity-code/activit
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '../../../../shared/models/test-category';
 import { FaultCountProvider } from '../../../../providers/fault-count/fault-count';
+import { FaultListProvider } from '../../../../providers/fault-list/fault-list';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatBPage>;
@@ -149,6 +150,7 @@ describe('OfficePage', () => {
         { provide: ToastController, useClass: ToastControllerMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
         { provide: FaultCountProvider, useClass: FaultCountProvider },
+        { provide: FaultListProvider, useClass: FaultListProvider },
       ],
     })
       .compileComponents()

@@ -16,10 +16,7 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import {
-  getSeriousOrDangerousFaults,
-  getDrivingFaults,
   getTestOutcome,
-  getEyesightTestSeriousFault,
 } from '../debrief.selector';
 import {
   getManoeuvreFaults,
@@ -27,6 +24,9 @@ import {
   getVehicleCheckSeriousFaults,
   getVehicleCheckDrivingFaults,
   getUncoupleRecoupleFaultAndComment,
+  getEyesightTestSeriousFault,
+  getSeriousOrDangerousFaults,
+  getDrivingFaults,
 } from '../cat-be/debrief.cat-be.selector';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import {

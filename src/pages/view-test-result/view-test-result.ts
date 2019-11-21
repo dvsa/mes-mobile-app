@@ -10,7 +10,7 @@ import {
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { SearchProvider } from '../../providers/search/search';
-import { EyesightTest, IpadIssue } from '@dvsa/mes-test-schema/categories/Common';
+import { IpadIssue } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
@@ -33,20 +33,6 @@ import {
 } from '../../shared/constants/competencies/catb-manoeuvres';
 import { get } from 'lodash';
 import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
-import {
-  getSeriousFaults,
-  getDangerousFaults,
-  getDrivingFaults,
-  getEyesightTestSeriousFaultAndComment,
-} from '../debrief/debrief.selector';
-import {
-  getManoeuvreFaults,
-  getVehicleCheckSeriousFaults,
-  getVehicleCheckDangerousFaults,
-  getVehicleCheckDrivingFaults,
-  getControlledStopFaultAndComment,
-} from '../debrief/cat-b/debrief.cat-b.selector';
-import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { ErrorTypes } from '../../shared/models/error-message';
@@ -58,6 +44,7 @@ import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-q
 import { QuestionProvider } from '../../providers/question/question';
 import { TestCategory } from '../../shared/models/test-category';
 import { FaultCountProvider } from '../../providers/fault-count/fault-count';
+import { FaultListProvider } from '../../providers/fault-list/fault-list';
 
 @IonicPage()
 @Component({
@@ -91,6 +78,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     private logHelper: LogHelper,
     public questionProvider: QuestionProvider,
     private faultCountProvider: FaultCountProvider,
+    private faultListProvider: FaultListProvider,
   ) {
     super(platform, navController, authenticationProvider);
 
@@ -322,45 +310,17 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
   getDangerousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
     const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
-    return [
-      ...getDangerousFaults(testData.dangerousFaults),
-      ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.D),
-      ...this.getControlledStopFault(CompetencyOutcome.D),
-      ...getVehicleCheckDangerousFaults(testData.vehicleChecks).map(result => this.updateVehicleChecksLabel(result)),
-    ];
+    return this.faultListProvider.getDangerousFaultsList(testData, TestCategory.B);
   }
 
   getSeriousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
     const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
-    return [
-      ...getSeriousFaults(testData.seriousFaults),
-      ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.S),
-      ...this.getControlledStopFault(CompetencyOutcome.S),
-      ...getVehicleCheckSeriousFaults(testData.vehicleChecks).map(result => this.updateVehicleChecksLabel(result)),
-      ...this.getEyesightTestSeriousFault(testData.eyesightTest),
-    ];
+    return this.faultListProvider.getSeriousFaultsList(testData, TestCategory.B);
   }
 
   getDrivingFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
     const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
-    return [
-      ...getDrivingFaults(testData.drivingFaults),
-      ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.DF),
-      ...this.getControlledStopFault(CompetencyOutcome.DF),
-      ...getVehicleCheckDrivingFaults(testData.vehicleChecks).map(result => this.updateVehicleChecksLabel(result)),
-    ];
-  }
-
-  getControlledStopFault(competencyOutcome: CompetencyOutcome):
-    (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
-
-    return getControlledStopFaultAndComment(testData.controlledStop, competencyOutcome)
-      .map(this.parseResult);
-  }
-
-  getEyesightTestSeriousFault(eyesightTest: EyesightTest) {
-    return getEyesightTestSeriousFaultAndComment(eyesightTest).map(this.parseResult);
+    return this.faultListProvider.getDrivingFaultsList(testData, TestCategory.B);
   }
 
   getRekeyDetails(): RekeyDetailsModel {
@@ -416,27 +376,6 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       ipadIssue: isIpadIssueSelected ? getIpadIssueDisplayText(get(this.testResult, 'rekeyReason.ipadIssue')) : 'None',
       transfer: isTransferSelected ? 'Yes' : 'No',
       other: isOtherSelected ? get(this.testResult, 'rekeyReason.other.reason') : 'N/A',
-    };
-  }
-
-  parseResult(result: CommentedCompetency) {
-    return {
-      faultCount: 1,
-      competencyDisplayName: result.competencyDisplayName,
-      competencyIdentifier: result.competencyIdentifier,
-      source: result.source,
-      comment: result.comment,
-    };
-  }
-
-  updateVehicleChecksLabel(vehicleCheck: CommentedCompetency & MultiFaultAssignableCompetency)
-    : (CommentedCompetency & MultiFaultAssignableCompetency) {
-    return {
-      faultCount: vehicleCheck.faultCount,
-      competencyDisplayName: 'Vehicle checks',
-      competencyIdentifier: vehicleCheck.competencyIdentifier,
-      source: vehicleCheck.source,
-      comment: vehicleCheck.comment,
     };
   }
 

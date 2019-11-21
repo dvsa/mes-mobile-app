@@ -17,23 +17,7 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import {
-  getSeriousOrDangerousFaults,
-  getDrivingFaults,
-  getTestOutcome,
-  getEyesightTestSeriousFault,
-} from '../debrief.selector';
-import {
-  getManoeuvreFaults,
-  getControlledStopFault,
-  getVehicleCheckSeriousFaults,
-  getVehicleCheckDangerousFaults,
-  getVehicleCheckDrivingFaults,
-  getControlledStopFaultAndComment,
-} from '../cat-b/debrief.cat-b.selector';
-import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
-import {
-  MultiFaultAssignableCompetency,
-  CommentedCompetency,
+  MultiFaultAssignableCompetency, CommentedCompetency,
 } from '../../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
@@ -50,11 +34,13 @@ import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { TestCategory } from '../../../shared/models/test-category';
+import { FaultListProvider } from '../../../providers/fault-list/fault-list';
+import { getTestOutcome } from '../debrief.selector';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
   dangerousFaults$: Observable<string[]>;
-  drivingFaults$: Observable<MultiFaultAssignableCompetency[]>;
+  drivingFaults$: Observable<(CommentedCompetency & MultiFaultAssignableCompetency)[]>;
   drivingFaultCount$: Observable<number>;
   etaFaults$: Observable<ETA>;
   ecoFaults$: Observable<Eco>;
@@ -93,6 +79,7 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
     public insomnia: Insomnia,
     private translate: TranslateService,
     private faultCountProvider: FaultCountProvider,
+    private faultListProvider: FaultListProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
   }
@@ -109,56 +96,19 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
     this.pageState = {
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          return [
-            ...getSeriousOrDangerousFaults(data.seriousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
-            ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
-            ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
-            ...getEyesightTestSeriousFault(data.eyesightTest),
-          ];
-        }),
+        map(data =>
+          this.faultListProvider.getSeriousFaultsList(data, TestCategory.B)
+          .map(fault => fault.competencyIdentifier)),
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          return [
-            ...getSeriousOrDangerousFaults(data.dangerousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
-            ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
-            ...getVehicleCheckDangerousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
-          ];
-        }),
+        map(data =>
+          this.faultListProvider.getDangerousFaultsList(data, TestCategory.B)
+          .map(fault => fault.competencyIdentifier)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          return [
-            ...getDrivingFaults(data.drivingFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(
-              (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
-                faultCount: 1,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-              })),
-            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.DF).map(
-              (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
-                faultCount: 1,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-              })),
-            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(
-              (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
-                faultCount: 1,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-              }),
-            ),
-          ];
-        }),
+        map(data => this.faultListProvider.getDrivingFaultsList(data, TestCategory.B)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
