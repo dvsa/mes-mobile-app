@@ -2,6 +2,7 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
 import { TransmissionComponent } from '../transmission';
+import { TransmissionType } from '../../../../shared/models/transmission-type';
 
 describe('transmissionComponent', () => {
   let fixture: ComponentFixture<TransmissionComponent>;
@@ -22,31 +23,31 @@ describe('transmissionComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(TransmissionComponent);
           component = fixture.componentInstance;
-          component.form = new FormGroup({});
+          component.formGroup = new FormGroup({});
         });
   }));
 
   describe('Class', () => {
     describe('TransmissionChanged', () => {
       it('should emit manual if manual transmission selected', () => {
-        spyOn(component.gearBoxCategoryChange, 'emit');
-        const transmission = 'Manual';
+        spyOn(component.transmissionChange, 'emit');
+        const transmission = TransmissionType.Manual;
         component.transmissionChanged(transmission);
-        expect(component.gearBoxCategoryChange.emit).toHaveBeenCalledWith(transmission);
+        expect(component.transmissionChange.emit).toHaveBeenCalledWith(transmission);
       });
 
       it('should emit automatic if automatic transmission selected', () => {
-        spyOn(component.gearBoxCategoryChange, 'emit');
-        const transmission = 'Automatic';
+        spyOn(component.transmissionChange, 'emit');
+        const transmission = TransmissionType.Automatic;
         component.transmissionChanged(transmission);
-        expect(component.gearBoxCategoryChange.emit).toHaveBeenCalledWith(transmission);
+        expect(component.transmissionChange.emit).toHaveBeenCalledWith(transmission);
       });
     });
 
     describe('isInvalid', () => {
       it('should validate the field when it is valid', () => {
         component.ngOnChanges();
-        component.form.get(TransmissionComponent.fieldName).setValue('Manual');
+        component.formGroup.get(TransmissionComponent.fieldName).setValue(TransmissionType.Manual);
         fixture.detectChanges();
         const result: boolean = component.isInvalid();
         expect(result).toEqual(false);

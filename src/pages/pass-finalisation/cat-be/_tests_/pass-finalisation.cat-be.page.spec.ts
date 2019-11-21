@@ -20,7 +20,6 @@ import { LanguagePreferencesComponent } from
   '../../../../components/test-finalisation/language-preference/language-preferences';
 import { FinalisationHeaderComponent } from
   '../../../../components/test-finalisation/finalisation-header/finalisation-header';
-import { TransmissionComponent } from '../../../../components/test-finalisation/transmission/transmission';
 import { PassFinalisationViewDidEnter } from '../../pass-finalisation.actions';
 import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged, Code78Present,
   Code78NotPresent } from '../../../../modules/tests/pass-completion/pass-completion.actions';
@@ -32,6 +31,7 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
 import { PassFinalisationCatBEPage } from '../pass-finalisation.cat-be.page';
 import { Code78Component } from '../components/code-78/code-78';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
+import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 
 describe('PassFinalisationCatBEPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBEPage>;
