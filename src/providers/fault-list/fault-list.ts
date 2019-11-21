@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { forOwn, transform, endsWith, isBoolean, isNumber } from 'lodash';
 import { SeriousFaults, DangerousFaults, EyesightTest, DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
 import { competencyLabels } from '../../pages/test-report/components/competency/competency.constants';
-import {
-  FaultSummary, CommentSource,
-} from '../../shared/models/fault-marking.model';
+import { FaultSummary, CommentSource } from '../../shared/models/fault-marking.model';
 import { CompetencyDisplayName } from '../../shared/models/competency-display-name';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
@@ -46,7 +44,7 @@ export class FaultListProvider {
   private getDrivingFaultsCatB (data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
       ...this.getComptencyFaults(data.drivingFaults),
-      ...this.getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF),
+      ...this.getManoeuvreFaultsCatB(data.manoeuvres, CompetencyOutcome.DF),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.DF),
       ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.DF),
     ];
@@ -55,7 +53,7 @@ export class FaultListProvider {
   private getSeriousFaultsCatB (data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
       ...this.getComptencyFaults(data.seriousFaults),
-      ...this.getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S),
+      ...this.getManoeuvreFaultsCatB(data.manoeuvres, CompetencyOutcome.S),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
       ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.S),
       ...this.getEyesightTestSeriousFault(data.eyesightTest),
@@ -65,7 +63,7 @@ export class FaultListProvider {
   private getDangerousFaultsCatB(data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
       ...this.getComptencyFaults(data.dangerousFaults),
-      ...this.getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D),
+      ...this.getManoeuvreFaultsCatB(data.manoeuvres, CompetencyOutcome.D),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
       ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.D),
     ];
@@ -116,6 +114,41 @@ export class FaultListProvider {
     }];
   }
 
+  private getControlledStopFault(controlledStop: CatBUniqueTypes.ControlledStop, faultType: CompetencyOutcome)
+  : FaultSummary[] {
+    const returnCompetencies: FaultSummary[] = [];
+    if (!controlledStop || controlledStop.fault !== faultType) {
+      return returnCompetencies;
+    }
+    const result: FaultSummary = {
+      competencyDisplayName: CompetencyDisplayName.CONTROLLED_STOP,
+      competencyIdentifier: 'controlledStop',
+      comment: controlledStop.faultComments || '',
+      source: CommentSource.CONTROLLED_STOP,
+      faultCount: 1,
+    };
+    returnCompetencies.push(result);
+    return returnCompetencies;
+  }
+
+  private getCompetencyComment(key: string, controlFaultComments: string, observationFaultComments: string): string {
+    if (key === 'controlFault') {
+      return controlFaultComments || '';
+    }
+    return observationFaultComments || '';
+  }
+
+  private createManoeuvreFault(key: string, type: ManoeuvreTypes, competencyComment: string): FaultSummary {
+    const manoeuvreFaultSummary : FaultSummary = {
+      comment: competencyComment || '',
+      competencyIdentifier: `${type}${manoeuvreCompetencyLabels[key]}` ,
+      competencyDisplayName:`${manoeuvreTypeLabels[type]} - ${manoeuvreCompetencyLabels[key]}`,
+      source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabels[key]}`,
+      faultCount: 1,
+    };
+    return manoeuvreFaultSummary;
+  }
+
   private getVehicleCheckFaultsCatB(vehicleChecks: CatBUniqueTypes.VehicleChecks, faultType: CompetencyOutcome)
   : FaultSummary[] {
     const result: FaultSummary[] = [];
@@ -153,24 +186,8 @@ export class FaultListProvider {
     return result;
   }
 
-  private getControlledStopFault(controlledStop: CatBUniqueTypes.ControlledStop, faultType: CompetencyOutcome)
+  private getManoeuvreFaultsCatB (manoeuvres: CatBUniqueTypes.Manoeuvres, faultType: CompetencyOutcome)
   : FaultSummary[] {
-    const returnCompetencies: FaultSummary[] = [];
-    if (!controlledStop || controlledStop.fault !== faultType) {
-      return returnCompetencies;
-    }
-    const result: FaultSummary = {
-      competencyDisplayName: CompetencyDisplayName.CONTROLLED_STOP,
-      competencyIdentifier: 'controlledStop',
-      comment: controlledStop.faultComments || '',
-      source: CommentSource.CONTROLLED_STOP,
-      faultCount: 1,
-    };
-    returnCompetencies.push(result);
-    return returnCompetencies;
-  }
-
-  private getManoeuvreFaults (manoeuvres: CatBUniqueTypes.Manoeuvres, faultType: CompetencyOutcome): FaultSummary[] {
     const faultsEncountered: FaultSummary[] = [];
     forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
       const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
@@ -188,23 +205,5 @@ export class FaultListProvider {
       faultsEncountered.push(...faults);
     });
     return faultsEncountered;
-  }
-
-  private getCompetencyComment(key: string, controlFaultComments: string, observationFaultComments: string): string {
-    if (key === 'controlFault') {
-      return controlFaultComments || '';
-    }
-    return observationFaultComments || '';
-  }
-
-  private createManoeuvreFault(key: string, type: ManoeuvreTypes, competencyComment: string): FaultSummary {
-    const manoeuvreFaultSummary : FaultSummary = {
-      comment: competencyComment || '',
-      competencyIdentifier: `${type}${manoeuvreCompetencyLabels[key]}` ,
-      competencyDisplayName:`${manoeuvreTypeLabels[type]} - ${manoeuvreCompetencyLabels[key]}`,
-      source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabels[key]}`,
-      faultCount: 1,
-    };
-    return manoeuvreFaultSummary;
   }
 }
