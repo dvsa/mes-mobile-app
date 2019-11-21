@@ -1,4 +1,4 @@
-import { forOwn, transform, endsWith } from 'lodash';
+import { forOwn, transform, endsWith, some } from 'lodash';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import {
   manoeuvreTypeLabels,
@@ -132,18 +132,8 @@ export const getVehicleCheckDrivingFaults =
   };
 
 export const vehicleChecksExist = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): boolean => {
-  if (!vehicleChecks || (!vehicleChecks.showMeQuestions && !vehicleChecks.tellMeQuestions)) {
-    return false;
-  }
-
-  const showMeQuestionsWithAnswers = vehicleChecks.showMeQuestions.filter(fault => fault.outcome != null);
-  const tellMeQuestionsWithAnswers = vehicleChecks.tellMeQuestions.filter(fault => fault.outcome != null);
-
-  if (showMeQuestionsWithAnswers.length > 0 || tellMeQuestionsWithAnswers.length > 0) {
-    return true;
-  }
-
-  return false;
+  const questions = [...vehicleChecks.showMeQuestions, ... vehicleChecks.tellMeQuestions];
+  return some(questions, fault => fault.outcome != null);
 };
 
 export const getUncoupleRecoupleFault = (

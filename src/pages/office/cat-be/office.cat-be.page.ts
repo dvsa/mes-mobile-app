@@ -108,7 +108,7 @@ import {
   CommentSource,
 } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../office.cat-be.behaviour-map';
+import { behaviourMap } from '../office-behaviour-map.cat-be';
 import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
