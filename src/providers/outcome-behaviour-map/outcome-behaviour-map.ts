@@ -38,7 +38,6 @@ export class OutcomeBehaviourMapProvider {
       return false;
     }
     if (field.display === VisibilityType.VisibleIfPresent && value) {
-      console.log(`value is ${value}`);
       return true;
     }
     return field.display === VisibilityType.Visible;
