@@ -20,6 +20,7 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { Store } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
+import { baseJournalData } from '../__mocks__/journal-slots-data.mock';
 
 class MockStore { }
 
@@ -60,105 +61,6 @@ describe('JournalSelector', () => {
       statusText: 'HTTP 404',
     },
     selectedDate: '2019-01-17',
-    examiner: { staffNumber: '123', individualId: 456 },
-  };
-
-  const baseJournalData: JournalModel = {
-    isLoading: true,
-    lastRefreshed: new Date(0),
-    slots: {
-      ['2019-01-01']: [
-        {
-          hasSlotChanged: false,
-          hasSeenCandidateDetails: false,
-          slotData: {
-            slotDetail: {
-              slotId: 1001,
-              start: '2019-01-12T09:14:00',
-            },
-            booking: {
-              application: {
-                applicationId: 1234561,
-                bookingSequence: 1,
-                checkDigit: 4,
-                welshTest: false,
-                extendedTest: false,
-                meetingPlace: '',
-                progressiveAccess: false,
-                specialNeeds: '',
-                entitlementCheck: false,
-                testCategory: 'B',
-                vehicleGearbox: 'Manual',
-              },
-              candidate: null,
-              previousCancellation: null,
-              business: null,
-            },
-          },
-        },
-      ],
-      ['2019-01-02']: [
-        {
-          hasSlotChanged: false,
-          hasSeenCandidateDetails: false,
-          slotData: {
-            slotDetail: {
-              slotId: 2001,
-              start: '2019-01-13T09:14:00',
-            },
-            booking: {
-              application: {
-                applicationId: 1234561,
-                bookingSequence: 1,
-                checkDigit: 4,
-                welshTest: false,
-                extendedTest: false,
-                meetingPlace: '',
-                progressiveAccess: false,
-                specialNeeds: '',
-                entitlementCheck: false,
-                testCategory: 'B',
-                vehicleGearbox: 'Manual',
-              },
-              candidate: null,
-              previousCancellation: null,
-              business: null,
-            },
-          },
-        },
-      ],
-      ['2019-01-03']: [
-        {
-          hasSlotChanged: false,
-          hasSeenCandidateDetails: false,
-          slotData: {
-            slotDetail: {
-              slotId: 3001,
-              start: '2019-01-14T09:14:00',
-            },
-            booking: {
-              application: {
-                applicationId: 1234561,
-                bookingSequence: 1,
-                checkDigit: 4,
-                welshTest: false,
-                extendedTest: false,
-                meetingPlace: '',
-                progressiveAccess: false,
-                specialNeeds: '',
-                entitlementCheck: false,
-                testCategory: 'B',
-                vehicleGearbox: 'Manual',
-              },
-              candidate: null,
-              previousCancellation: null,
-              business: null,
-            },
-          },
-        },
-      ],
-    },
-    selectedDate: '2019-01-02',
     examiner: { staffNumber: '123', individualId: 456 },
   };
 
