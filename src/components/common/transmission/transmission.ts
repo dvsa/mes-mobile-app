@@ -30,7 +30,7 @@ export class TransmissionComponent implements OnChanges {
   }
 
   transmissionChanged(transmission: GearboxCategory): void {
-      this.transmissionChange.emit(transmission);
+    this.transmissionChange.emit(transmission);
   }
 
   isInvalid(): boolean {

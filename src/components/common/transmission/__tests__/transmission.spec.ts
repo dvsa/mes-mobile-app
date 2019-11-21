@@ -19,12 +19,12 @@ describe('transmissionComponent', () => {
       providers: [
       ],
     })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(TransmissionComponent);
-          component = fixture.componentInstance;
-          component.formGroup = new FormGroup({});
-        });
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(TransmissionComponent);
+        component = fixture.componentInstance;
+        component.formGroup = new FormGroup({});
+      });
   }));
 
   describe('Class', () => {
