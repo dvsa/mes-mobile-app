@@ -26,7 +26,7 @@
         <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()"
           (licenseNotReceived)="provisionalLicenseNotReceived()"> </license-provided>
 
-        <transmission [form]="form" (transmissionChanged)="transmissionChanged(transmission)"></transmission>
+        <transmission [form]="form" (gearBoxCategoryChange)="transmissionChanged($event)"></transmission>
 
         <pass-certificate-number [form]="form" (passCertificateNumberChange)="passCertificateNumberChanged($event)"></pass-certificate-number>
 
