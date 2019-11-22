@@ -19,7 +19,7 @@
 
       <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
 
-        <transmission [form]="form" (transmissionChanged)="transmissionChanged(transmission)"></transmission> 
+        <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission> 
 
         <d255 [display]="pageState.displayD255$ | async" [d255]="pageState.d255$ | async"
           [outcome]="pageState.testOutcome$ | async" [formGroup]="form" (d255Change)="d255Changed($event)"></d255>

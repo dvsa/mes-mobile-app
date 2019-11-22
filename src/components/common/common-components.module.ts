@@ -22,6 +22,7 @@ import { TabsComponent } from './tabs/tabs';
 import { ActivityCodeComponent } from '../../pages/office/components/activity-code/activity-code';
 import { IncompleteTestsBanner } from './incomplete-tests-banner/incomplete-tests-banner';
 import { WarningBannerComponent } from './warning-banner/warning-banner';
+import { TransmissionComponent } from './transmission/transmission';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { WarningBannerComponent } from './warning-banner/warning-banner';
     ActivityCodeComponent,
     IncompleteTestsBanner,
     WarningBannerComponent,
+    TransmissionComponent,
   ],
   imports: [
     SignaturePadModule,
@@ -70,6 +72,7 @@ import { WarningBannerComponent } from './warning-banner/warning-banner';
     ActivityCodeComponent,
     IncompleteTestsBanner,
     WarningBannerComponent,
+    TransmissionComponent,
   ],
 })
 export class ComponentsModule { }

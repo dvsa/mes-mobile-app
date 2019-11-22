@@ -5,7 +5,6 @@ import { D255Component } from './d255/d255';
 import { DebriefWitnessedComponent } from './debrief-witnessed/debrief-witnessed';
 import { LanguagePreferencesComponent } from './language-preference/language-preferences';
 import { FinalisationHeaderComponent } from './finalisation-header/finalisation-header';
-import { TransmissionComponent } from './transmission/transmission';
 
 @NgModule({
   declarations: [
@@ -13,7 +12,6 @@ import { TransmissionComponent } from './transmission/transmission';
     D255Component,
     DebriefWitnessedComponent,
     FinalisationHeaderComponent,
-    TransmissionComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +22,6 @@ import { TransmissionComponent } from './transmission/transmission';
     D255Component,
     DebriefWitnessedComponent,
     FinalisationHeaderComponent,
-    TransmissionComponent,
   ],
 })
 export class TestFinalisationComponentsModule { }

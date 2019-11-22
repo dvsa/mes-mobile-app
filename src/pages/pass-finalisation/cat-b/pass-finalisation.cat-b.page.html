@@ -26,7 +26,7 @@
         <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()"
           (licenseNotReceived)="provisionalLicenseNotReceived()"> </license-provided>
 
-        <transmission [form]="form" (gearBoxCategoryChange)="transmissionChanged($event)"></transmission>
+        <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission>
         <warning-banner *ngIf="pageState.transmissionAutomaticRadioChecked$ | async" warningText="An automatic licence will be issued."></warning-banner>
 
         <pass-certificate-number [form]="form" (passCertificateNumberChange)="passCertificateNumberChanged($event)"></pass-certificate-number>
