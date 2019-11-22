@@ -68,7 +68,10 @@
       "forwardParkObservation": "Parcio Ymlaen - gwyliadwriaeth",
       "vehicleChecks": "Gwirio’r cerbyd",
       "controlledStop": "Stopio dan Reolaeth",
-      "eyesightTest": "Prawf Golwg"
+      "eyesightTest": "Prawf Golwg",
+      "uncoupleRecouple": "[CY] Uncouple/Recouple",
+      "reverseLeftControl": "[CY] Reverse left - Control",
+      "reverseLeftObservation": "[CY] Reverse left - Observation"
     },
     "dangerousFault": "Nam peryglus",
     "dangerousFaultsCardDescription": "Namau peryglus",
