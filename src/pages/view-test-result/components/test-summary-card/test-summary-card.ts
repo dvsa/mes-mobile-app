@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { TestSummaryCardModel } from './test-summary-card-model';
 import { convertBooleanToString, flattenArray } from '../../view-test-result-helpers';
+import { isBoolean } from 'lodash';
 
 @Component({
   selector: 'test-summary-card',
@@ -31,4 +32,5 @@ export class TestSummaryCardComponent {
 
   getFlattenArray = (data: string[]): string => flattenArray(data);
 
+  shouldDisplayLicenceProvided = (data: boolean): boolean => isBoolean(data);
 }
