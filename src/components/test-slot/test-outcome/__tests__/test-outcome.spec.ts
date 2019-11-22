@@ -16,7 +16,7 @@ import { LogHelper } from '../../../../providers/logs/logsHelper';
 import { LogHelperMock } from '../../../../providers/logs/__mocks__/logsHelper.mock';
 import { TestCategory } from '../../../../shared/models/test-category';
 
-fdescribe('Test Outcome', () => {
+describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
   let component: TestOutcomeComponent;
   let store$: Store<StoreModel>;
