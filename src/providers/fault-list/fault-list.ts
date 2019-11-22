@@ -74,9 +74,9 @@ export class FaultListProvider {
 
     forOwn(faults, (value: number, key: string, obj: DrivingFaults| SeriousFaults | DangerousFaults) => {
       const faultCount = this.calculateFaultCount(value);
-      if (faultCount > 0  && !key.endsWith(CompetencyIdentifiers.COMMENTS)) {
+      if (faultCount > 0  && !key.endsWith(CompetencyIdentifiers.COMMENTS_SUFFIX)) {
         const label = key as keyof typeof competencyLabels;
-        const comment = obj[`${key}${CompetencyIdentifiers.COMMENTS}`] || null;
+        const comment = obj[`${key}${CompetencyIdentifiers.COMMENTS_SUFFIX}`] || null;
         const faultSummary: FaultSummary = {
           comment,
           faultCount,
@@ -192,7 +192,7 @@ export class FaultListProvider {
     forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
       const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
 
-        if (endsWith(key, CompetencyIdentifiers.FAULT) && value === faultType) {
+        if (endsWith(key, CompetencyIdentifiers.FAULT_SUFFIX) && value === faultType) {
 
           const competencyComment = this.getCompetencyComment(
             key,

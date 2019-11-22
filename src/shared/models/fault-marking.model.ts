@@ -24,8 +24,8 @@ export enum CommentSource {
 export type FaultSummary = Competency & MultiFaultAssignableCompetency & CommentedCompetency;
 
 export enum CompetencyIdentifiers {
-  COMMENTS = 'Comments',
-  FAULT = 'Fault',
+  COMMENTS_SUFFIX = 'Comments',
+  FAULT_SUFFIX = 'Fault',
   EYESIGHT_TEST = 'eyesightTest',
   CONTROLLED_STOP = 'controlledStop',
   CONTROL_FAULT = 'controlFault',
