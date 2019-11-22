@@ -35,6 +35,7 @@ import { FaultCountProvider } from '../../../../../providers/fault-count/fault-c
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
+import * as vehicleChecksModalActions from './vehicle-checks-modal.cat-be.actions';
 
 interface VehicleChecksModalCatBEState {
   candidateName$: Observable<string>;
@@ -122,6 +123,10 @@ export class VehicleChecksCatBEModal {
 
   onSubmit() {
     this.navController.pop();
+  }
+
+  ionViewDidEnter() {
+    this.store$.dispatch(new vehicleChecksModalActions.VehicleChecksViewDidEnter());
   }
 
   showMeQuestionChanged(result: QuestionResult, index: number): void {
