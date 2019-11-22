@@ -214,7 +214,7 @@ describe('Tests Effects', () => {
       .subscribe(([res1, res2, res3, res4, res5, res6, res7, res8, res9, res10]) => {
         expect(res1).toEqual(new PopulateExaminer(examiner)),
         expect(res8).toEqual(new SetExaminerBooked(parseInt(examiner.staffNumber, 10))),
-        expect(res9).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res9).toEqual(new SetExaminerConducted(parseInt(examiner.staffNumber, 10))),
         expect(res10).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
         done();
       });
@@ -242,7 +242,7 @@ describe('Tests Effects', () => {
       .subscribe(([res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13]) => {
         expect(res1).toEqual(new PopulateExaminer(examiner)),
         expect(res8).toEqual(new SetExaminerBooked(parseInt(examiner.staffNumber, 10))),
-        expect(res9).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res9).toEqual(new SetExaminerConducted(parseInt(examiner.staffNumber, 10))),
         expect(res10).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
         expect(res13).toEqual(new rekeyActions.MarkAsRekey()),
         done();
@@ -282,7 +282,7 @@ describe('Tests Effects', () => {
         expect(res2).toEqual(new PopulateApplicationReference(testSlot.booking.application)),
         expect(res3).toEqual(new PopulateCandidateDetails(testSlot.booking.candidate)),
         expect(res8).toEqual(new SetExaminerBooked(parseInt(staffNumber, 10))),
-        expect(res9).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res9).toEqual(new SetExaminerConducted(parseInt(staffNumber, 10))),
         expect(res10).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
         expect(res13).toEqual(new rekeyActions.MarkAsRekey()),
         done();
