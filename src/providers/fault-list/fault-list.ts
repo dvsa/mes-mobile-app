@@ -43,7 +43,7 @@ export class FaultListProvider {
 
   private getDrivingFaultsCatB (data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
-      ...this.getComptencyFaults(data.drivingFaults),
+      ...this.getCompetencyFaults(data.drivingFaults),
       ...this.getManoeuvreFaultsCatB(data.manoeuvres, CompetencyOutcome.DF),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.DF),
       ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.DF),
@@ -52,7 +52,7 @@ export class FaultListProvider {
 
   private getSeriousFaultsCatB (data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
-      ...this.getComptencyFaults(data.seriousFaults),
+      ...this.getCompetencyFaults(data.seriousFaults),
       ...this.getManoeuvreFaultsCatB(data.manoeuvres, CompetencyOutcome.S),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
       ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.S),
@@ -62,14 +62,14 @@ export class FaultListProvider {
 
   private getDangerousFaultsCatB(data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
-      ...this.getComptencyFaults(data.dangerousFaults),
+      ...this.getCompetencyFaults(data.dangerousFaults),
       ...this.getManoeuvreFaultsCatB(data.manoeuvres, CompetencyOutcome.D),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
       ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.D),
     ];
   }
 
-  private getComptencyFaults(faults: DrivingFaults | SeriousFaults | DangerousFaults): FaultSummary[] {
+  private getCompetencyFaults(faults: DrivingFaults | SeriousFaults | DangerousFaults): FaultSummary[] {
     const faultsEncountered: FaultSummary[] = [];
 
     forOwn(faults, (value: number, key: string, obj: DrivingFaults| SeriousFaults | DangerousFaults) => {
