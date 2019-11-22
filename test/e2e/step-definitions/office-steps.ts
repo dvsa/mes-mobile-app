@@ -48,7 +48,7 @@ When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel
 
 Then('the office activity code should be {string}', (activityCode) => {
   const activityCodeField = getElement(
-    by.xpath('//page-office//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]'));
+    by.xpath('//office-cat-b-page//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]'));
   return expect(activityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
@@ -106,7 +106,7 @@ const uploadTest = () => {
 };
 
 const completeRekey = () => {
-  const continueButton = getElement(by.xpath('//page-office//button//h3[text()="Continue"]'));
+  const continueButton = getElement(by.xpath('//office-cat-b-page//button//h3[text()="Continue"]'));
   clickElement(continueButton);
 
   const iPadIssueCheckbox = getElement(by.id('ipadIssueSelected'));
