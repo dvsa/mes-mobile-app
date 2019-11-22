@@ -40,6 +40,7 @@ export enum AnalyticsScreenNames {
   REKEY_REASON = 'rekey reason screen',
   REKEY_UPLOADED = 'rekey uploaded screen',
   DASHBOARD = 'dashboard screen',
+  VEHICLE_CHECKS = 'vehicle checks screen',
 }
 
 export enum AnalyticsEventCategories {
@@ -57,6 +58,7 @@ export enum AnalyticsEventCategories {
   TEST_RESULTS_SEARCH = 'test results search',
   REKEY_SEARCH = 'rekey search',
   REKEY = 'rekey',
+  VEHICLE_CHECKS = 'vehicle checks',
 }
 
 export enum AnalyticsEvents {
