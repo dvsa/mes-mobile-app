@@ -40,8 +40,21 @@ describe('TestSummaryCardComponent', () => {
     });
   });
 
-  describe('DOM', () => {
+  describe('shouldDisplayLicenceProvided', () => {
+    it('should return a true when data supplied has a value of true', () => {
+      const result: boolean = component.shouldDisplayLicenceProvided(true);
+      expect(result).toBeTruthy();
+    });
 
+    it('should return a true when data supplied has a value of false', () => {
+      const result: boolean = component.shouldDisplayLicenceProvided(false);
+      expect(result).toBeTruthy();
+    });
+
+    it('should return a false when data passed in is not a boolean', () => {
+      const result: boolean = component.shouldDisplayLicenceProvided(undefined);
+      expect(result).toBeFalsy();
+    });
   });
 
 });
