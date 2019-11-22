@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RekeySearchError } from './rekey-search-error-model';
 
 export const REKEY_SEARCH_VIEW_DID_ENTER = '[RekeySearch] Rekey Search Did Enter';
 
@@ -24,7 +25,7 @@ export class SearchBookedTestSuccess implements Action {
 
 export class SearchBookedTestFailure implements Action {
   readonly type = SEARCH_BOOKED_TEST_FAILURE;
-  constructor(public err: HttpErrorResponse) {}
+  constructor(public err: HttpErrorResponse | RekeySearchError) {}
 }
 
 export type Types =

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { UrlProvider } from '../url/url';
 import { Observable } from 'rxjs/Observable';
 import { AdvancedSearchParams } from './search.models';
@@ -51,9 +51,10 @@ export class SearchProvider {
     ).pipe(timeout(this.appConfig.getAppConfig().requestTimeout));
   }
 
-  getTestResult(applicationReference: string, staffNumber: string): Observable<any> {
+  getTestResult(applicationReference: string, staffNumber: string): Observable<HttpResponse<any>> {
     return this.http.get(
       this.urlProvider.getTestResultServiceUrl().concat(`/${applicationReference}/${staffNumber}`),
+      { observe: 'response' },
     ).pipe(timeout(this.appConfig.getAppConfig().requestTimeout));
   }
 }
