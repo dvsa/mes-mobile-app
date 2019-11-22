@@ -50,10 +50,6 @@ import { AddDrivingFault } from '../../../modules/tests/test-data/driving-faults
 import { AddSeriousFault } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
 import { AddDangerousFault } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import {
-  UncoupleRecoupleAddSeriousFault,
-  UncoupleRecoupleAddDrivingFault,
-} from '../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -261,7 +257,6 @@ export class TestReportCatBEPage extends BasePageComponent {
 
     this.store$.dispatch(new AddSeriousFault(Competencies.signalsTimed));
     this.store$.dispatch(new AddDangerousFault(Competencies.useOfSpeed));
-    this.store$.dispatch(new UncoupleRecoupleAddSeriousFault());
     this.store$.dispatch(new CalculateTestResult());
     this.navController.push(CAT_BE.DEBRIEF_PAGE);
   }
@@ -279,7 +274,6 @@ export class TestReportCatBEPage extends BasePageComponent {
         newFaultCount: 3,
       },
     ));
-    this.store$.dispatch(new UncoupleRecoupleAddDrivingFault());
     this.store$.dispatch(new CalculateTestResult());
     this.navController.push(CAT_BE.DEBRIEF_PAGE);
   }
