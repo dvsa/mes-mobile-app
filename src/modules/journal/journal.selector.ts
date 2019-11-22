@@ -32,8 +32,9 @@ export const hasSlotsAfterSelectedDate = (journal: JournalModel): boolean => {
 
   Object.keys(journal.slots)
     .forEach((slot: string) => {
-      if (new Date(journal.selectedDate) < new Date(slot) && !isEmpty(journal.slots[slot])) {
+      if (DateTime.at(journal.selectedDate).isBefore(DateTime.at(slot)) && !isEmpty(journal.slots[slot])) {
         allowNavigationToFutureDate = true;
+        return;
       }
     });
   return allowNavigationToFutureDate;
