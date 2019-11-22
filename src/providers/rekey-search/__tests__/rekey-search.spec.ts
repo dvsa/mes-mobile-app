@@ -34,7 +34,7 @@ describe('RekeySearchProvider', () => {
         staffNumber: '654321',
       };
 
-      rekeySearchProvider.getTest(rekeySearchParams).subscribe();
+      rekeySearchProvider.getBooking(rekeySearchParams).subscribe();
       httpMock.expectOne('https://www.example.com/api/v1/journals/654321/search?appRef=123456');
     });
   });

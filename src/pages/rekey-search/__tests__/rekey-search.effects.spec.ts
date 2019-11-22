@@ -45,12 +45,12 @@ describe('Rekey Search Effects', () => {
 
   it('should dispatch the SearchBookedTestSuccess action when searched with success', (done) => {
 
-    spyOn(rekeySearchProvider, 'getTest').and.callThrough();
+    spyOn(rekeySearchProvider, 'getBooking').and.callThrough();
     spyOn(compressionProvider, 'extractTestSlotResult');
 
     actions$.next(new rekeySearchActions.SearchBookedTest(appRef, staffNumber));
 
-    effects.getTest$.subscribe((result) => {
+    effects.getBooking$.subscribe((result) => {
       expect(compressionProvider.extractTestSlotResult).toHaveBeenCalled();
       expect(result instanceof rekeySearchActions.SearchBookedTestSuccess).toBeTruthy();
       done();
@@ -60,7 +60,7 @@ describe('Rekey Search Effects', () => {
 
   it('should dispatch the SearchBookedTestFailure action when searched with failure', (done) => {
 
-    spyOn(rekeySearchProvider, 'getTest').and.returnValue(asyncError(new HttpErrorResponse({
+    spyOn(rekeySearchProvider, 'getBooking').and.returnValue(asyncError(new HttpErrorResponse({
       error: 'Error message',
       status: 403,
       statusText: 'Forbidden',
@@ -68,7 +68,7 @@ describe('Rekey Search Effects', () => {
 
     actions$.next(new rekeySearchActions.SearchBookedTest(appRef, staffNumber));
 
-    effects.getTest$.subscribe((result) => {
+    effects.getBooking$.subscribe((result) => {
       expect(result instanceof rekeySearchActions.SearchBookedTestFailure).toBeTruthy();
       done();
     });
