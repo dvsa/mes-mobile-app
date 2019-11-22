@@ -14,5 +14,5 @@ export const getSelectedTellMeQuestions = (
   return vehicleChecksCatBEReducer.tellMeQuestions;
 };
 
-export const getVehicleChecksCatBe =
+export const getVehicleChecksCatBE =
   createFeatureSelector<CatBEUniqueTypes.VehicleChecks>('vehicleChecks');

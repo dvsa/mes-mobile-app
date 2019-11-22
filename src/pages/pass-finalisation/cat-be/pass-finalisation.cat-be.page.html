@@ -25,12 +25,15 @@
         <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()"
           (licenseNotReceived)="provisionalLicenseNotReceived()"> </license-provided>
 
-        <transmission [form]="form" (transmissionChanged)="transmissionChanged(transmission)"></transmission>
+        <transmission [form]="form" (gearBoxCategoryChange)="transmissionChanged($event)"></transmission>
+
+        <code-78 [form]="form" [category]="category" [transmission]="pageState.transmission$ | async" (code78Present)="code78IsPresent()" (code78NotPresent)="code78IsNotPresent()"></code-78>
 
         <pass-certificate-number [form]="form" (passCertificateNumberChange)="passCertificateNumberChanged($event)"></pass-certificate-number>
 
         <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
           (d255Change)="d255Changed($event)"></d255>
+        <warning-banner *ngIf="pageState.d255$ | async" warningText="By selecting Yes you are confirming a D255 is required."></warning-banner>
 
         <language-preferences [formGroup]="form" [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"
           (welshChanged)="isWelshChanged($event)"></language-preferences>
@@ -38,7 +41,7 @@
         <debrief-witnessed [display]=true [formGroup]="form" [debriefWitnessed]="pageState.debriefWitnessed$ | async"
           [outcome]="testOutcome" (debriefWitnessedChange)="debriefWitnessedChanged($event)">
         </debrief-witnessed>
-
+        
       </ion-grid>
     </form>
   </div>

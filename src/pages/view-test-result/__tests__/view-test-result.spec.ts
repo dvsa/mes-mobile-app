@@ -41,9 +41,9 @@ import { TestOutcome } from '../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 import { manoeuvreTypeLabels } from '../../../shared/constants/competencies/catb-manoeuvres';
 import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
-import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { ErrorMessageComponent } from '../../../components/common/error-message/error-message';
 import { TestCategory } from '../../../shared/models/test-category';
+import { FaultListProvider } from '../../../providers/fault-list/fault-list';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -82,6 +82,7 @@ describe('ViewTestResultPage', () => {
         },
         { provide: SearchProvider, useClass: SearchProviderMock },
         { provide: CompressionProvider, useClass: CompressionProviderMock },
+        FaultListProvider,
       ],
     })
       .compileComponents()
@@ -376,43 +377,6 @@ describe('ViewTestResultPage', () => {
           faultCount: 2,
           source: 'simple',
         }]);
-      });
-    });
-    describe('getControlledStopFault', () => {
-      it('should find a controlled stop fault if there is one avalible', () => {
-        component.testResult = categoryBTestResultMock;
-
-        const result = component.getControlledStopFault(CompetencyOutcome.S);
-
-        expect(result).toEqual([{
-          faultCount: 1,
-          competencyDisplayName: 'Controlled Stop',
-          competencyIdentifier: 'controlledStop',
-          source: 'controlledStop',
-          comment: 'mock-controlled-stop-comments',
-        }]);
-      });
-      it('should return an empty array if there is no fault for that fault type', () => {
-        component.testResult = categoryBTestResultMock;
-
-        const result = component.getControlledStopFault(CompetencyOutcome.DF);
-
-        expect(result).toEqual([]);
-      });
-    });
-    describe('updateVehicleChecksLabel', () => {
-      it('should update the label to Vehicle checks', () => {
-        const mockFault = {
-          faultCount: 1,
-          competencyDisplayName: 'vehicleChecks',
-          competencyIdentifier: 'vehicleChecks',
-          source: 'vehicleChecks',
-          comment: 'mock-vehicle-checks-comments',
-        };
-
-        const result = component.updateVehicleChecksLabel(mockFault);
-
-        expect(result.competencyDisplayName).toEqual('Vehicle checks');
       });
     });
 

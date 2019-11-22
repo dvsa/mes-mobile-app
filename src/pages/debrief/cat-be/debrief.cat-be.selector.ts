@@ -1,4 +1,4 @@
-import { forOwn, transform, endsWith } from 'lodash';
+import { forOwn, transform, endsWith, some } from 'lodash';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import {
   manoeuvreTypeLabels,
@@ -12,8 +12,10 @@ import {
   CommentSource,
 } from '../../../shared/models/fault-marking.model';
 import { CompetencyDisplayName } from '../../../shared/models/competency-display-name';
-import { getSeriousOrDangerousFaults } from '../debrief.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import { SeriousFaults, DangerousFaults, EyesightTest, DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
+import { competencyLabels } from '../../test-report/components/competency/competency.constants';
+import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
 // TODO - A lot of these are used in multiple places (Debrief, View Test Result, Office),
 // should be refactored into a more common area.
 export const getManoeuvreFaults = (
@@ -131,6 +133,11 @@ export const getVehicleCheckDrivingFaults =
     return result;
   };
 
+export const vehicleChecksExist = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): boolean => {
+  const questions = [...vehicleChecks.showMeQuestions, ... vehicleChecks.tellMeQuestions];
+  return some(questions, fault => fault.outcome != null);
+};
+
 export const getUncoupleRecoupleFault = (
   uncoupleRecouple: CatBEUniqueTypes.UncoupleRecouple, faultType: CompetencyOutcome): string[] => {
   const result: string[] = [];
@@ -211,3 +218,92 @@ export const displayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): bo
 
   return drivingFaultCount > 15;
 };
+
+// TODO - remove below this line once we refactor this provider to use the fault summary list provider
+
+export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFaults): string[] => {
+  const faultsEncountered: string[] = [];
+  forOwn(faults, (value, key) => {
+    if (value) {
+      const label = key as keyof typeof competencyLabels;
+      faultsEncountered.push(label);
+    }
+  });
+  return faultsEncountered;
+};
+
+export const getEyesightTestSeriousFault = (eyesightTest: EyesightTest) => {
+  return eyesightTest && eyesightTest.seriousFault ? ['eyesightTest'] : [];
+};
+
+export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+  const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+  forOwn(faults, (value: number, key, obj) => {
+    if (value > 0 && !key.endsWith('Comments')) {
+      const label = key as keyof typeof competencyLabels;
+      const comment = obj[`${key}Comments`] || null;
+      const drivingFaultSummary: CommentedCompetency & MultiFaultAssignableCompetency = {
+        comment,
+        competencyIdentifier: key,
+        competencyDisplayName: fullCompetencyLabels[label],
+        faultCount: value,
+        source: CommentSource.SIMPLE,
+      };
+      faultsEncountered.push(drivingFaultSummary);
+    }
+  });
+  return faultsEncountered.sort((a, b) => b.faultCount - a.faultCount);
+};
+
+export const getDangerousFaults =
+  (faults: DangerousFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+    const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+    forOwn(faults, (value, key, obj) => {
+      if (value && !key.endsWith('Comments')) {
+        const label = key as keyof typeof competencyLabels;
+        const comment = obj[`${key}Comments`] || null;
+        const dangerousFault: CommentedCompetency & MultiFaultAssignableCompetency = {
+          comment,
+          competencyIdentifier: key,
+          competencyDisplayName: fullCompetencyLabels[label],
+          source: CommentSource.SIMPLE,
+          faultCount: 1,
+        };
+        faultsEncountered.push(dangerousFault);
+      }
+    });
+    return faultsEncountered;
+  };
+
+export const getSeriousFaults =
+  (faults: SeriousFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+    const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+    forOwn(faults, (value, key, obj) => {
+      if (value && !key.endsWith('Comments')) {
+        const label = key as keyof typeof competencyLabels;
+        const comment = obj[`${key}Comments`] || null;
+        const seriousFault: CommentedCompetency & MultiFaultAssignableCompetency = {
+          comment,
+          competencyIdentifier: key,
+          competencyDisplayName: fullCompetencyLabels[label],
+          source: CommentSource.SIMPLE,
+          faultCount: 1,
+        };
+        faultsEncountered.push(seriousFault);
+      }
+    });
+    return faultsEncountered;
+  };
+
+export const getEyesightTestSeriousFaultAndComment =
+  (eyesightTest: EyesightTest): CommentedCompetency[] => {
+    if (!eyesightTest || !eyesightTest.seriousFault) {
+      return [];
+    }
+    return [{
+      competencyDisplayName: CompetencyDisplayName.EYESIGHT_TEST,
+      competencyIdentifier: 'eyesightTest',
+      comment: eyesightTest.faultComments || '',
+      source: CommentSource.EYESIGHT_TEST,
+    }];
+  };

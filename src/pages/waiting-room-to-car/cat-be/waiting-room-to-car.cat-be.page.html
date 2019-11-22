@@ -24,7 +24,10 @@
             <vehicle-registration [formGroup]="form" [vehicleRegistration]="pageState.registrationNumber$ | async"
               (vehicleRegistrationChange)="vehicleRegistrationChanged($event)"></vehicle-registration>
 
-            <vehicle-checks-cat-be [vehicleChecksScore]="pageState.vehicleChecksScore$ | async"></vehicle-checks-cat-be>
+            <vehicle-checks-cat-be
+              [vehicleChecksScore]="pageState.vehicleChecksScore$ | async"
+              [vehicleChecks]="pageState.vehicleChecks$ | async"
+            ></vehicle-checks-cat-be>
 
             <accompaniment-card [formGroup]="form" [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"
               [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async" [otherAccompaniment]="pageState.otherAccompaniment$ | async"

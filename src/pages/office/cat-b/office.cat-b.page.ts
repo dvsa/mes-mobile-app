@@ -74,21 +74,6 @@ import {
 } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import {
-  getDrivingFaults,
-  getDangerousFaults,
-  getSeriousFaults,
-  getEyesightTestSeriousFaultAndComment,
-} from '../../debrief/debrief.selector';
-
-import {
-  getManoeuvreFaults,
-  getVehicleCheckDrivingFaults,
-  getControlledStopFaultAndComment,
-  getVehicleCheckSeriousFaults,
-  getVehicleCheckDangerousFaults,
-} from '../../debrief/cat-b/debrief.cat-b.selector';
-
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
 import {
@@ -125,6 +110,7 @@ import { TestCategory } from '../../../shared/models/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { FaultListProvider } from '../../../providers/fault-list/fault-list';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -158,12 +144,12 @@ interface OfficePageState {
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
-  drivingFaults$: Observable<MultiFaultAssignableCompetency[]>;
+  drivingFaults$: Observable<(MultiFaultAssignableCompetency & CommentedCompetency)[]>;
   drivingFaultCount$: Observable<number>;
   displayDrivingFaultComments$: Observable<boolean>;
   weatherConditions$: Observable<WeatherConditions[]>;
-  dangerousFaults$: Observable<(MultiFaultAssignableCompetency | CommentedCompetency)[]>;
-  seriousFaults$: Observable<(MultiFaultAssignableCompetency | CommentedCompetency)[]>;
+  dangerousFaults$: Observable<(MultiFaultAssignableCompetency & CommentedCompetency)[]>;
+  seriousFaults$: Observable<(MultiFaultAssignableCompetency & CommentedCompetency)[]>;
   isRekey$: Observable<boolean>;
 }
 
@@ -197,6 +183,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public alertController: AlertController,
     private faultCountProvider: FaultCountProvider,
+    private faultListProvider: FaultListProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
@@ -343,26 +330,38 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
       displayDrivingFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getDrivingFaults))),
-        map(([outcome, drivingFault]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'faultComment', drivingFault)),
+          select(getTestData),
+        )),
+        map(([outcome, testData]) =>
+          this.outcomeBehaviourProvider.isVisible(
+            outcome,
+            'faultComment',
+            this.faultListProvider.getDrivingFaultsList(testData, TestCategory.B),
+          )),
       ),
       displaySeriousFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getSeriousFaults))),
-        map(([outcome, seriousFault]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'faultComment', seriousFault)),
+          select(getTestData),
+        )),
+        map(([outcome, testData]) =>
+          this.outcomeBehaviourProvider.isVisible(
+            outcome,
+            'faultComment',
+            this.faultListProvider.getSeriousFaultsList(testData, TestCategory.B),
+          )),
       ),
       displayDangerousFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getDangerousFaults))),
-        map(([outcome, dangerousFault]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'faultComment', dangerousFault)),
+          select(getTestData),
+        )),
+        map(([outcome, testData]) =>
+          this.outcomeBehaviourProvider.isVisible(
+            outcome,
+            'faultComment',
+            this.faultListProvider.getDangerousFaultsList(testData, TestCategory.B),
+          )),
       ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
@@ -406,37 +405,15 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          return [
-            ...getDangerousFaults(data.dangerousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(this.parseCompetency),
-            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.D).map(this.parseCompetency),
-            ...getVehicleCheckDangerousFaults(data.vehicleChecks).map(this.parseCompetency),
-          ];
-        }),
+        map(data => this.faultListProvider.getDangerousFaultsList(data, TestCategory.B)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          return [
-            ...getSeriousFaults(data.seriousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(this.parseCompetency),
-            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.S).map(this.parseCompetency),
-            ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(this.parseCompetency),
-            ...getEyesightTestSeriousFaultAndComment(data.eyesightTest).map(this.parseCompetency),
-          ];
-        }),
+        map(data => this.faultListProvider.getSeriousFaultsList(data, TestCategory.B)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          return [
-            ...getDrivingFaults(data.drivingFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(this.parseCompetency),
-            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.DF).map(this.parseCompetency),
-            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(this.parseCompetency),
-          ];
-        }),
+        map(data => this.faultListProvider.getDrivingFaultsList(data, TestCategory.B)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
@@ -649,15 +626,6 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
     }
     this.popToRoot();
   }
-
-  private parseCompetency =
-    (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-      faultCount: 1,
-      competencyDisplayName: result.competencyDisplayName,
-      competencyIdentifier: result.competencyIdentifier,
-      source: result.source,
-      comment: result.comment,
-    })
 
   shouldDisplayDrivingFaultComments = (data: CatBUniqueTypes.TestData): boolean => {
     const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.B, data);
