@@ -1,10 +1,10 @@
 <ion-row>
   <ion-col col-20 no-padding>
     <competency-button class="uncouple-recouple-tick"
-                       [onTap]="toggleUncoupleRecouple"
-                       [onPress]="toggleUncoupleRecouple"
-                       [ripple]="false"
-                       [ngClass]="{
+      [onTap]="toggleUncoupleRecouple"
+      [onPress]="toggleUncoupleRecouple"
+      [ripple]="false"
+      [ngClass]="{
         'checked': selectedUncoupleRecouple
       }"
     >
@@ -15,10 +15,10 @@
   </ion-col>
   <ion-col no-padding>
     <competency-button class="uncouple-recouple-competency"
-                       [onTap]="onTap"
-                       [onPress]="onPress"
-                       [ripple]="canButtonRipple()"
-                       [ngClass]="{
+     [onTap]="onTap"
+     [onPress]="onPress"
+     [ripple]="canButtonRipple()"
+     [ngClass]="{
         'checked': selectedUncoupleRecouple,
         'fault': faultCount() > 0,
         'serious-fault': hasSeriousFault(),
