@@ -117,6 +117,15 @@ When(/^I start marking a practice test (with|without) a driving fault$/, (drivin
   clickElement(withDriverFault);
 });
 
+Given(/^I start full practice mode$/, () => {
+  const practiceMarking = getElement(by.xpath('//button/span/h3[text() = "Practice marking a full test (cat B)"]'));
+  clickElement(practiceMarking);
+
+  const practiceModeBanner = element(by.className('practice-mode-top-banner'));
+  browser.wait(ExpectedConditions.presenceOf(practiceModeBanner));
+  return expect(practiceModeBanner.isPresent()).to.eventually.be.true;
+});
+
 When('I log in to the application as {string}', (username) => {
   logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
 
