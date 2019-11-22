@@ -129,3 +129,18 @@ Feature: Practice mode
     And I complete the weather conditions
     And I upload the test
     Then I should see the "Journal" page
+
+  Scenario: Examiner can terminate full practice mode midway through journey
+    Given I am on the landing page as "mobexaminer1"
+    And I start full practice mode
+    When I start the test for "Captain Jeremy Craig"
+    And the candidate completes the declaration page
+    And the candidate confirms their declaration
+    Then I should see the "Declaration - Jeremy Craig" page
+    And the candidate enters a new email address
+    And I proceed to the car
+    Then I should see the "Jeremy Craig" page
+    And I complete the waiting room to car page
+    Then I should see the "Test report - Jeremy Craig" page
+    When I exit practice mode
+    Then I should see the "My dashboard" page

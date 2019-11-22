@@ -179,6 +179,11 @@ When('I terminate the test', () => {
   enterPasscode();
 });
 
+When('I exit practice mode', () => {
+  const lastExitPracticeButton = element.all(by.className('exit-text')).last();
+  clickElement(lastExitPracticeButton);
+});
+
 Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be \"(.+)\"$/, (
   pageName: string, candidateName: string) => {
   const candidateNameElement = getElement(by.xpath(`//${getPageType(pageName)}//h2[@id = 'candidate-name']`));
