@@ -5,18 +5,21 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { RekeySearchViewDidEnter, SearchBookedTest } from './rekey-search.actions';
+import { RekeySearchViewDidEnter, SearchBookedTest, RekeySearchClearState } from './rekey-search.actions';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-import { getIsLoading, getHasSearched, getBookedTestSlot } from './rekey-search.selector';
+import { getIsLoading, getHasSearched, getBookedTestSlot, getRekeySearchError } from './rekey-search.selector';
 import { getRekeySearchState } from './rekey-search.reducer';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { isEmpty } from 'lodash';
+import { RekeySearchError, RekeySearchErrorMessages } from './rekey-search-error-model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface RekeySearchPageState {
   isLoading$: Observable<boolean>;
   hasSearched$: Observable<boolean>;
   bookedTestSlot$: Observable<TestSlot>;
+  rekeySearchErr$: Observable<RekeySearchError | HttpErrorResponse>;
 }
 
 @IonicPage()
@@ -45,18 +48,22 @@ export class RekeySearchPage extends BasePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store$.dispatch(new RekeySearchClearState());
+    const rekeySearch$ = this.store$.pipe(
+      select(getRekeySearchState),
+    );
     this.pageState = {
-      isLoading$: this.store$.pipe(
-        select(getRekeySearchState),
+      isLoading$: rekeySearch$.pipe(
         map(getIsLoading),
       ),
-      hasSearched$: this.store$.pipe(
-        select(getRekeySearchState),
+      hasSearched$: rekeySearch$.pipe(
         map(getHasSearched),
       ),
-      bookedTestSlot$: this.store$.pipe(
-        select(getRekeySearchState),
+      bookedTestSlot$: rekeySearch$.pipe(
         map(getBookedTestSlot),
+      ),
+      rekeySearchErr$: rekeySearch$.pipe(
+        map(getRekeySearchError),
       ),
     };
   }
@@ -85,6 +92,10 @@ export class RekeySearchPage extends BasePageComponent implements OnInit {
 
   isBookedTestSlotEmpty(bookedTestsSlot: TestSlot) {
     return isEmpty(bookedTestsSlot);
+  }
+
+  hasBookingAlreadyBeenCompleted(rekeySearchErr: HttpErrorResponse | RekeySearchError) {
+    return rekeySearchErr.message === RekeySearchErrorMessages.BookingAlreadyCompleted;
   }
 
 }
