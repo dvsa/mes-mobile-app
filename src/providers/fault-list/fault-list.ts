@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { forOwn, transform, endsWith, isBoolean, isNumber } from 'lodash';
 import { SeriousFaults, DangerousFaults, EyesightTest, DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
 import { competencyLabels } from '../../pages/test-report/components/competency/competency.constants';
-import { FaultSummary, CommentSource } from '../../shared/models/fault-marking.model';
+import { FaultSummary, CommentSource, CompetencyIdentifiers } from '../../shared/models/fault-marking.model';
 import { CompetencyDisplayName } from '../../shared/models/competency-display-name';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
@@ -74,9 +74,9 @@ export class FaultListProvider {
 
     forOwn(faults, (value: number, key: string, obj: DrivingFaults| SeriousFaults | DangerousFaults) => {
       const faultCount = this.calculateFaultCount(value);
-      if (faultCount > 0  && !key.endsWith('Comments')) {
+      if (faultCount > 0  && !key.endsWith(CompetencyIdentifiers.COMMENTS)) {
         const label = key as keyof typeof competencyLabels;
-        const comment = obj[`${key}Comments`] || null;
+        const comment = obj[`${key}${CompetencyIdentifiers.COMMENTS}`] || null;
         const faultSummary: FaultSummary = {
           comment,
           faultCount,
@@ -107,7 +107,7 @@ export class FaultListProvider {
     }
     return [{
       competencyDisplayName: CompetencyDisplayName.EYESIGHT_TEST,
-      competencyIdentifier: 'eyesightTest',
+      competencyIdentifier: CompetencyIdentifiers.EYESIGHT_TEST,
       comment: eyesightTest.faultComments || '',
       source: CommentSource.EYESIGHT_TEST,
       faultCount: 1,
@@ -122,7 +122,7 @@ export class FaultListProvider {
     }
     const result: FaultSummary = {
       competencyDisplayName: CompetencyDisplayName.CONTROLLED_STOP,
-      competencyIdentifier: 'controlledStop',
+      competencyIdentifier: CompetencyIdentifiers.CONTROLLED_STOP,
       comment: controlledStop.faultComments || '',
       source: CommentSource.CONTROLLED_STOP,
       faultCount: 1,
@@ -132,7 +132,7 @@ export class FaultListProvider {
   }
 
   private getCompetencyComment(key: string, controlFaultComments: string, observationFaultComments: string): string {
-    if (key === 'controlFault') {
+    if (key === CompetencyIdentifiers.CONTROL_FAULT) {
       return controlFaultComments || '';
     }
     return observationFaultComments || '';
@@ -192,7 +192,7 @@ export class FaultListProvider {
     forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
       const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
 
-        if (endsWith(key, 'Fault') && value === faultType) {
+        if (endsWith(key, CompetencyIdentifiers.FAULT) && value === faultType) {
 
           const competencyComment = this.getCompetencyComment(
             key,

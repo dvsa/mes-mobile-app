@@ -22,3 +22,11 @@ export enum CommentSource {
 }
 
 export type FaultSummary = Competency & MultiFaultAssignableCompetency & CommentedCompetency;
+
+export enum CompetencyIdentifiers {
+  COMMENTS = 'Comments',
+  FAULT = 'Fault',
+  EYESIGHT_TEST = 'eyesightTest',
+  CONTROLLED_STOP = 'controlledStop',
+  CONTROL_FAULT = 'controlFault',
+}
