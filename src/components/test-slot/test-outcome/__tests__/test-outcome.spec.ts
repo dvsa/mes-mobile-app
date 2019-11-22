@@ -16,7 +16,7 @@ import { LogHelper } from '../../../../providers/logs/logsHelper';
 import { LogHelperMock } from '../../../../providers/logs/__mocks__/logsHelper.mock';
 import { TestCategory } from '../../../../shared/models/test-category';
 
-describe('Test Outcome', () => {
+fdescribe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
   let component: TestOutcomeComponent;
   let store$: Store<StoreModel>;
@@ -85,7 +85,7 @@ describe('Test Outcome', () => {
     });
 
     describe('writeUpTest', () => {
-      it('should dispatch an ActivateTest action and navigate to the Office page', () => {
+      it('should dispatch an ActivateTest action and navigate to the Office Cat B page', () => {
         component.slotDetail = testSlotDetail;
         component.category = TestCategory.B;
         component.writeUpTest();
@@ -93,6 +93,15 @@ describe('Test Outcome', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(CAT_B.OFFICE_PAGE);
+      });
+      it('should dispatch an ActivateTest action and navigate to the Office Cat BE page', () => {
+        component.slotDetail = testSlotDetail;
+        component.category = TestCategory.BE;
+        component.writeUpTest();
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe(CAT_BE.OFFICE_PAGE);
       });
     });
 
