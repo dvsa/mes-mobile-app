@@ -37,6 +37,7 @@ import { CAT_BE } from '../../../page-names.constants';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
+import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/uncouple-recouple'
 
 describe('TestReportCatBEPage', () => {
   let fixture: ComponentFixture<TestReportCatBEPage>;
@@ -54,6 +55,7 @@ describe('TestReportCatBEPage', () => {
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),
         MockComponent(EcoComponent),
+        MockComponent(UncoupleRecoupleComponent),
       ],
       imports: [
         IonicModule,
