@@ -25,7 +25,7 @@
         <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()"
           (licenseNotReceived)="provisionalLicenseNotReceived()"> </license-provided>
 
-        <transmission [form]="form" (gearBoxCategoryChange)="transmissionChanged($event)"></transmission>
+        <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission>
 
         <code-78 [form]="form" [category]="category" [transmission]="pageState.transmission$ | async" (code78Present)="code78IsPresent()" (code78NotPresent)="code78IsNotPresent()"></code-78>
 

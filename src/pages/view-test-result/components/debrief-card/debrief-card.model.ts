@@ -1,5 +1,5 @@
 import { TestRequirements } from '@dvsa/mes-test-schema/categories/Common';
-import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../../shared/models/fault-marking.model';
+import { FaultSummary } from '../../../../shared/models/fault-marking.model';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 
 export interface DebriefCardModel {
@@ -11,8 +11,8 @@ export interface DebriefCardModel {
   eta?: string[];
   showMeQuestion?: VehicleChecksQuestion;
   tellMeQuestion?: VehicleChecksQuestion;
-  dangerousFaults?: (CommentedCompetency & MultiFaultAssignableCompetency)[];
-  seriousFaults?: (CommentedCompetency & MultiFaultAssignableCompetency)[];
-  drivingFaults?: (CommentedCompetency & MultiFaultAssignableCompetency)[];
+  dangerousFaults?: FaultSummary[];
+  seriousFaults?: FaultSummary[];
+  drivingFaults?: FaultSummary[];
   drivingFaultCount?: number;
 }

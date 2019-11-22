@@ -16,9 +16,7 @@ import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import {
-  MultiFaultAssignableCompetency, CommentedCompetency,
-} from '../../../shared/models/fault-marking.model';
+import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
@@ -40,14 +38,13 @@ import { getTestOutcome } from '../debrief.selector';
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
   dangerousFaults$: Observable<string[]>;
-  drivingFaults$: Observable<(CommentedCompetency & MultiFaultAssignableCompetency)[]>;
+  drivingFaults$: Observable<(FaultSummary)[]>;
   drivingFaultCount$: Observable<number>;
   etaFaults$: Observable<ETA>;
   ecoFaults$: Observable<Eco>;
   testResult$: Observable<string>;
   conductedLanguage$: Observable<string>;
 }
-
 @IonicPage()
 @Component({
   selector: 'debrief-cat-b-page',

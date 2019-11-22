@@ -32,7 +32,7 @@ import {
   manoeuvreTypeLabels,
 } from '../../shared/constants/competencies/catb-manoeuvres';
 import { get } from 'lodash';
-import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
+import { FaultSummary } from '../../shared/models/fault-marking.model';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { ErrorTypes } from '../../shared/models/error-message';
@@ -308,17 +308,17 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     .find(question => question.code === tellMeQuestionCode);
   }
 
-  getDangerousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  getDangerousFaults(): FaultSummary[] {
     const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
     return this.faultListProvider.getDangerousFaultsList(testData, TestCategory.B);
   }
 
-  getSeriousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  getSeriousFaults(): FaultSummary[] {
     const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
     return this.faultListProvider.getSeriousFaultsList(testData, TestCategory.B);
   }
 
-  getDrivingFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  getDrivingFaults(): FaultSummary[] {
     const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
     return this.faultListProvider.getDrivingFaultsList(testData, TestCategory.B);
   }

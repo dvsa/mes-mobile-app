@@ -35,7 +35,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TellMeQuestionCardComponent } from '../components/tell-me-question-card/tell-me-question-card';
 import { TellMeQuestionComponent } from '../components/tell-me-question/tell-me-question';
 import { TellMeQuestionOutcomeComponent } from '../components/tell-me-question-outcome/tell-me-question-outcome';
-import { TransmissionComponent } from '../components/transmission/transmission';
+import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { InstructorRegistrationComponent } from '../components/instructor-registration/instructor-registration';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 

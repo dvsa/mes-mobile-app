@@ -6,7 +6,6 @@ import { TellMeQuestionComponent } from './tell-me-question/tell-me-question';
 import { TellMeQuestionOutcomeComponent } from './tell-me-question-outcome/tell-me-question-outcome';
 import { DirectivesModule } from '../../../../directives/directives.module';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
-import { TransmissionComponent } from './transmission/transmission';
 import { InstructorRegistrationComponent } from './instructor-registration/instructor-registration';
 
 @NgModule({
@@ -14,7 +13,6 @@ import { InstructorRegistrationComponent } from './instructor-registration/instr
     TellMeQuestionCardComponent,
     TellMeQuestionComponent,
     TellMeQuestionOutcomeComponent,
-    TransmissionComponent,
     InstructorRegistrationComponent,
   ],
   imports: [
@@ -27,7 +25,6 @@ import { InstructorRegistrationComponent } from './instructor-registration/instr
     TellMeQuestionCardComponent,
     TellMeQuestionComponent,
     TellMeQuestionOutcomeComponent,
-    TransmissionComponent,
     InstructorRegistrationComponent,
   ],
 })

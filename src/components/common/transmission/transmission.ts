@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { TransmissionType } from '../../../shared/models/transmission-type';
 
 @Component({
   selector: 'transmission',
@@ -10,7 +10,7 @@ import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
 export class TransmissionComponent implements OnChanges {
 
   @Input()
-  transmission: GearboxCategory;
+  transmission: TransmissionType;
 
   @Input()
   formGroup: FormGroup;
@@ -18,23 +18,22 @@ export class TransmissionComponent implements OnChanges {
   @Output()
   transmissionChange = new EventEmitter<GearboxCategory>();
 
-  private formControl: FormControl;
+  formControl: FormControl;
+  static readonly fieldName: string = 'transmissionCtrl';
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl('Transmission', [Validators.required]);
-      this.formGroup.addControl('transmission', this.formControl);
+      this.formGroup.addControl(TransmissionComponent.fieldName, this.formControl);
     }
     this.formControl.patchValue(this.transmission);
   }
 
   transmissionChanged(transmission: GearboxCategory): void {
-    if (this.formControl.valid) {
-      this.transmissionChange.emit(transmission);
-    }
+    this.transmissionChange.emit(transmission);
   }
 
-  get invalid(): boolean {
+  isInvalid(): boolean {
     return !this.formControl.valid && this.formControl.dirty;
   }
 

@@ -21,12 +21,12 @@ import { DebriefWitnessedComponent } from
 '../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
 import { FinalisationHeaderComponent } from
 '../../../../components/test-finalisation/finalisation-header/finalisation-header';
-import { TransmissionComponent } from '../../../../components/test-finalisation/transmission/transmission';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
 '../../../../modules/tests/test-summary/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
 '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
+import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 
 describe('NonPassFinalisationCatBEPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatBEPage>;
