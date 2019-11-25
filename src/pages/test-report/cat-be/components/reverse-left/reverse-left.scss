@@ -1,7 +1,22 @@
-manoeuvres {
+reverse-left {
+  .reverse-left-tick {
+    .competency-button {
+      padding: 1px 7px 2px;
+
+      .tickwrapper {
+        margin: auto;
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    &.checked .competency-button {
+      border: 2px solid map-get($colors-gds, "gds-dark-green");
+    }
+  }
   button {
-    width: 254px;
     height: 44px;
+    width: 194px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,6 +25,8 @@ manoeuvres {
     box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
     border-radius: 10px;
     position: relative;
+    margin-left: 8px;
+    // margin-right: 8px;
 
     &.promoted {
       position: relative;
@@ -47,16 +64,12 @@ manoeuvres {
         box-shadow: 0 0 5px 7px rgba(65, 60, 60, 0);
       }
     }
-    .tickwrapper {
-      display: flex;
-      justify-content: center;
-    }
     .label-wrapper {
       display: flex;
       justify-content: center;
       width: 100%;
       color: map-get($colors-gds, gds-blue);
-      margin-right: 20px;
+      // margin-right: 20px;
       .popover-arrow {
         -webkit-transition: 0.3s ease-in-out;
         -moz-transition: 0.3s ease-in-out;
@@ -86,10 +99,6 @@ manoeuvres {
     }
     .fault-wrapper {
       display: flex;
-    }
-    
-    .tickwrapper {
-      margin-right: 5px;
     }
 
     serious-fault-badge {

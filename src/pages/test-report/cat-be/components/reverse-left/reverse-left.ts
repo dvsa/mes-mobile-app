@@ -12,13 +12,21 @@ import { TestCategory } from '../../../../../shared/models/test-category';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 @Component({
-  selector: 'referse-left',
-  templateUrl: 'referse-left.html',
+  selector: 'reverse-left',
+  templateUrl: 'reverse-left.html',
 })
 export class ReverseLeftComponent implements OnInit, OnDestroy  {
 
   @Input()
   completed: boolean;
+
+  @Input()
+  controlLabel: string;
+
+  @Input()
+  clickCallback: () => {};
+
+  selectedReverseLeft: boolean;
 
   drivingFaults: number = 0;
   hasSeriousFault: boolean = false;
@@ -48,12 +56,20 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
         this.faultCountProvider.getManoeuvreFaultCount(TestCategory.BE, manoeuvres, CompetencyOutcome.S) > 0;
       this.hasDangerousFault =
         this.faultCountProvider.getManoeuvreFaultCount(TestCategory.BE, manoeuvres, CompetencyOutcome.D) > 0;
-    })
+    });
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  toggleReverseLeft = (): void => {
+    return;
+  }
+
+  togglePopoverDisplay = (): void => {
+    console.log('should display popover');
   }
 }
