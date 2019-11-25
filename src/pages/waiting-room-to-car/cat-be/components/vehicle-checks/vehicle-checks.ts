@@ -66,7 +66,7 @@ export class VehicleChecksCatBEComponent implements OnChanges {
         disabled: false,
       },
       [this.everyQuestionHasOutcome() ? null : this.invalidVehicleChecks]);
-      this.formGroup.addControl('vehicleChecksSelect', this.formControl);
+      this.formGroup.addControl('vehicleChecksSelectQuestions', this.formControl);
     }
   }
 
