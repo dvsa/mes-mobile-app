@@ -158,9 +158,7 @@ export class FaultCountProvider {
     const { seriousFaults, manoeuvres, vehicleChecks, uncoupleRecouple, eyesightTest } = data;
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
-    const vehicleCheckSeriousFaults = vehicleChecks.showMeQuestions.filter((check) => {
-      check.outcome === CompetencyOutcome.S;
-    }).length;
+    const vehicleCheckSeriousFaults = this.getVehicleChecksFaultCountCatBE(vehicleChecks).seriousFaults;
     const uncoupleRecoupleSeriousFaults =
       (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.S) ? 1 : 0;
     const eyesightTestSeriousFaults = (eyesightTest && eyesightTest.seriousFault) ? 1 : 0;

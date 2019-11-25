@@ -56,15 +56,9 @@ import {
   hasEyesightTestBeenCompleted,
 } from '../../../modules/tests/test-data/test-data.selector';
 import {
-  isTellMeQuestionSelected,
-  isTellMeQuestionDrivingFault,
-  isTellMeQuestionCorrect,
-  tellMeQuestionOutcome,
-  getVehicleChecks,
-  getTellMeQuestion,
   hasEyesightTestGotSeriousFault,
-} from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
+} from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { getTestData } from '../../../modules/tests/test-data/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_BE } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
@@ -89,11 +83,6 @@ interface WaitingRoomToCarPageState {
   eyesightTestFailed$: Observable<boolean>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
-  tellMeQuestionSelected$: Observable<boolean>;
-  tellMeQuestionCorrect$: Observable<boolean>;
-  tellMeQuestionDrivingFault$: Observable<boolean>;
-  tellMeQuestionOutcome$: Observable<string>;
-  tellMeQuestion$: Observable<VehicleChecksQuestion>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
   vehicleChecks$: Observable<CatBEUniqueTypes.VehicleChecks>;
 }
@@ -191,31 +180,6 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
       gearboxManualRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
         map(isManual),
-      ),
-      tellMeQuestionSelected$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecks),
-        map(isTellMeQuestionSelected),
-      ),
-      tellMeQuestionOutcome$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecks),
-        map(tellMeQuestionOutcome),
-      ),
-      tellMeQuestionCorrect$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecks),
-        map(isTellMeQuestionCorrect),
-      ),
-      tellMeQuestionDrivingFault$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecks),
-        map(isTellMeQuestionDrivingFault),
-      ),
-      tellMeQuestion$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecks),
-        map(getTellMeQuestion),
       ),
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),

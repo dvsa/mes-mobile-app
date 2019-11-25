@@ -274,7 +274,6 @@ export class TestReportCatBEPage extends BasePageComponent {
         newFaultCount: 3,
       },
     ));
-
     this.store$.dispatch(new CalculateTestResult());
     this.navController.push(CAT_BE.DEBRIEF_PAGE);
   }
