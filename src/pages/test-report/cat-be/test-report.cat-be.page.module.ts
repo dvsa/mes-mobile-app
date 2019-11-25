@@ -11,6 +11,7 @@ import { TestReportValidatorProvider } from '../../../providers/test-report-vali
 import { TestReportEffects } from '../test-report.effects';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { TestReportCatBEPage } from './test-report.cat-be.page';
+import { TestReportCatBEComponentsModule } from './components/test-report.cat-be.components.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TestReportCatBEPage } from './test-report.cat-be.page';
       TestReportEffects,
     ]),
     ComponentsModule,
+    TestReportCatBEComponentsModule,
   ],
   providers: [
     TestReportValidatorProvider,
