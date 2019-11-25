@@ -295,7 +295,7 @@ export class FaultSummaryProvider {
     const competency: FaultSummary = {
       comment: vehicleChecks.showMeTellMeComments || '',
       competencyIdentifier: CommentSource.VEHICLE_CHECKS,
-      competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
+      competencyDisplayName: CompetencyDisplayName.VEHICLE_CHECKS,
       source: CommentSource.VEHICLE_CHECKS,
       faultCount: seriousFaultCount,
     };
@@ -323,7 +323,7 @@ export class FaultSummaryProvider {
       const competency: FaultSummary = {
         comment: vehicleChecks.showMeTellMeComments || '',
         competencyIdentifier: CommentSource.VEHICLE_CHECKS,
-        competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
+        competencyDisplayName: CompetencyDisplayName.VEHICLE_CHECKS,
         source: CommentSource.VEHICLE_CHECKS,
         faultCount: vehicleCheckFaults.drivingFaults,
       };
