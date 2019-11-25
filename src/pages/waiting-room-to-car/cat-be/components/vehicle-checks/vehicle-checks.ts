@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { CAT_BE } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
 import { App } from '../../../../../app/app.component';
@@ -11,20 +12,20 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
   selector: 'vehicle-checks-cat-be',
   templateUrl: 'vehicle-checks.html',
 })
-export class VehicleChecksCatBEComponent {
+export class VehicleChecksCatBEComponent implements OnChanges {
 
   @Input() vehicleChecksScore: VehicleChecksScore;
   @Input() vehicleChecks: CatBEUniqueTypes.VehicleChecks;
+
+  @Input()
+  formGroup: FormGroup;
+
+  formControl: FormControl;
 
   constructor(
     private modalController: ModalController,
     private app: App,
   ) { }
-
-  isInvalid(): boolean {
-    // TODO - need to implment validation + unit test
-    return false;
-  }
 
   openVehicleChecksModal(): void {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
@@ -52,5 +53,28 @@ export class VehicleChecksCatBEComponent {
 
   hasDrivingFault(): boolean {
     return this.vehicleChecksScore.drivingFaults > 0;
+  }
+
+  invalidVehicleChecks(c: FormControl): { vehicleChecks: boolean } {
+    return { vehicleChecks: false };
+  }
+
+  validateVehicleChecks() {
+    if (!this.formControl) {
+      this.formControl = new FormControl({
+        value: 'Select questions',
+        disabled: false,
+      },
+      [this.everyQuestionHasOutcome() ? null : this.invalidVehicleChecks]);
+      this.formGroup.addControl('vehicleChecksSelect', this.formControl);
+    }
+  }
+
+  ngOnChanges(): void {
+    this.validateVehicleChecks();
+  }
+
+  get invalid(): boolean {
+    return !this.everyQuestionHasOutcome() && this.formControl.dirty;
   }
 }
