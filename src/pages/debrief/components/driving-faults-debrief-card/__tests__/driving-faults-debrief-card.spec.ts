@@ -8,7 +8,7 @@ import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import { DrivingFaultsDebriefCardComponent } from '../driving-faults-debrief-card';
-import { MultiFaultAssignableCompetency } from '../../../../../shared/models/fault-marking.model';
+import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { configureI18N } from '../../../../../shared/helpers/translation.helpers';
 import { Language } from '../../../../../modules/tests/communication-preferences/communication-preferences.model';
 
@@ -40,16 +40,18 @@ describe('DrivingFaultsDebriefCardComponent', () => {
 
   describe('DOM', () => {
     it('correct driving faults showing', () => {
-      const drivingFaults: MultiFaultAssignableCompetency[] = [
+      const drivingFaults: FaultSummary[] = [
         {
           competencyIdentifier: 'useOfSpeed',
           competencyDisplayName: 'Use of speed',
           faultCount: 1,
+          comment: '',
         },
         {
           competencyIdentifier: 'signalsTimed',
           competencyDisplayName: 'Signals - Timed',
           faultCount: 1,
+          comment: '',
         },
       ];
 
@@ -65,16 +67,18 @@ describe('DrivingFaultsDebriefCardComponent', () => {
 
     it('correct driving faults showing in welsh', (done) => {
       configureI18N(Language.CYMRAEG, translate);
-      const drivingFaults: MultiFaultAssignableCompetency[] = [
+      const drivingFaults: FaultSummary[] = [
         {
           competencyIdentifier: 'useOfSpeed',
           competencyDisplayName: 'Use of speed',
           faultCount: 1,
+          comment: '',
         },
         {
           competencyIdentifier: 'signalsTimed',
           competencyDisplayName: 'Signals - Timed',
           faultCount: 1,
+          comment: '',
         },
       ];
       component.drivingFaults = drivingFaults;

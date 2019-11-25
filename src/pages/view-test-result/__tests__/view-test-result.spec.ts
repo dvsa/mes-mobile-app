@@ -43,7 +43,7 @@ import { manoeuvreTypeLabels } from '../../../shared/constants/competencies/catb
 import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
 import { ErrorMessageComponent } from '../../../components/common/error-message/error-message';
 import { TestCategory } from '../../../shared/models/test-category';
-import { FaultListProvider } from '../../../providers/fault-list/fault-list';
+import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -82,7 +82,7 @@ describe('ViewTestResultPage', () => {
         },
         { provide: SearchProvider, useClass: SearchProviderMock },
         { provide: CompressionProvider, useClass: CompressionProviderMock },
-        FaultListProvider,
+        FaultSummaryProvider,
       ],
     })
       .compileComponents()

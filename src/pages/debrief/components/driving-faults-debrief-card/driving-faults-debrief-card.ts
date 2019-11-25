@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MultiFaultAssignableCompetency } from '../../../../shared/models/fault-marking.model';
+import { FaultSummary } from '../../../../shared/models/fault-marking.model';
 
 @Component({
   selector: 'driving-faults-debrief-card',
@@ -8,7 +8,7 @@ import { MultiFaultAssignableCompetency } from '../../../../shared/models/fault-
 export class DrivingFaultsDebriefCardComponent {
 
   @Input()
-  public drivingFaults: MultiFaultAssignableCompetency[];
+  public drivingFaults: FaultSummary[];
 
   @Input()
   public drivingFaultCount: number;

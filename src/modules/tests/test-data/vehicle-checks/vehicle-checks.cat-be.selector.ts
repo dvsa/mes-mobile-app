@@ -1,6 +1,7 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
 import { createFeatureSelector } from '@ngrx/store';
+import { some } from 'lodash';
 
 export const getSelectedShowMeQuestions = (
   vehicleChecks: CatBEUniqueTypes.VehicleChecks,
@@ -12,6 +13,11 @@ export const getSelectedTellMeQuestions = (
   vehicleChecksCatBEReducer: CatBEUniqueTypes.VehicleChecks,
 ): QuestionResult[] => {
   return vehicleChecksCatBEReducer.tellMeQuestions;
+};
+
+export const vehicleChecksExist = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): boolean => {
+  const questions = [...vehicleChecks.showMeQuestions, ... vehicleChecks.tellMeQuestions];
+  return some(questions, fault => fault.outcome != null);
 };
 
 export const getVehicleChecksCatBE =

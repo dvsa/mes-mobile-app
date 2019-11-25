@@ -46,10 +46,7 @@ import { AdditionalInformationComponent } from '../../components/additional-info
 import { IdentificationComponent } from '../../components/identification/identification';
 import { IndependentDrivingComponent } from '../../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../../components/fault-comment-card/fault-comment-card';
-import {
-  CommentedCompetency,
-  MultiFaultAssignableCompetency,
-} from '../../../../shared/models/fault-marking.model';
+import { FaultSummary } from '../../../../shared/models/fault-marking.model';
 import { ActivityCodeComponent } from '../../components/activity-code/activity-code';
 import {
   ActivityCodeModel,
@@ -64,6 +61,7 @@ import { NavigationStateProvider } from '../../../../providers/navigation-state/
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '../../../../shared/models/test-category';
+import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatBEPage>;
@@ -144,6 +142,7 @@ describe('OfficePage', () => {
         { provide: AlertController, useClass: AlertControllerMock },
         { provide: ToastController, useClass: ToastControllerMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
+        { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
     })
       .compileComponents()
@@ -273,7 +272,7 @@ describe('OfficePage', () => {
     });
 
     describe('driving fault overview', () => {
-      const drivingFaults: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [
+      const drivingFaults: FaultSummary[] = [
         {
           competencyIdentifier: 'signalsTimed',
           competencyDisplayName: 'Signals - Timed',

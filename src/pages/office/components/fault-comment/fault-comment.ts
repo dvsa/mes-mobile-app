@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../../shared/models/fault-marking.model';
+import { FaultSummary } from '../../../../shared/models/fault-marking.model';
 import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
@@ -26,7 +26,7 @@ export class FaultCommentComponent implements OnChanges {
   parentForm: FormGroup;
 
   @Input()
-  faultComment: CommentedCompetency | (CommentedCompetency & MultiFaultAssignableCompetency);
+  faultComment: FaultSummary;
 
   @Input()
   faultType: string;
@@ -38,7 +38,7 @@ export class FaultCommentComponent implements OnChanges {
   shouldRender: boolean;
 
   @Output()
-  faultCommentChange = new EventEmitter<CommentedCompetency>();
+  faultCommentChange = new EventEmitter<FaultSummary>();
 
   faultCommentCharsRemaining: number = null;
   static readonly fieldName: string = 'faultComment';
@@ -72,7 +72,7 @@ export class FaultCommentComponent implements OnChanges {
 
   faultCommentChanged(newComment: string): void {
     const { comment, ...commentedCompetencyWithoutComment } = this.faultComment;
-    const commentedCompetency: CommentedCompetency | (CommentedCompetency & MultiFaultAssignableCompetency) = {
+    const commentedCompetency: FaultSummary = {
       comment: newComment,
       ...commentedCompetencyWithoutComment,
     };

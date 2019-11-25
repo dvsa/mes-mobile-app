@@ -45,8 +45,8 @@ describe('FaultCommentCardComponent', () => {
     it('should pass the faultComment and type to the fault-comment component', () => {
       component.shouldRender = true;
       component.faultComments = [
-        { comment: 'c1', competencyIdentifier: 'id1', competencyDisplayName: 'display1' },
-        { comment: 'c2', competencyIdentifier: 'id2', competencyDisplayName: 'display2' },
+        { comment: 'c1', competencyIdentifier: 'id1', competencyDisplayName: 'display1', faultCount: 1 },
+        { comment: 'c2', competencyIdentifier: 'id2', competencyDisplayName: 'display2', faultCount: 1 },
       ];
       component.faultType = 'drivingFault';
       fixture.detectChanges();

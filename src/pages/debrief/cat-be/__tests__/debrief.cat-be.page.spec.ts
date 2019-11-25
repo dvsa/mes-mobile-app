@@ -37,6 +37,7 @@ import { Language } from '../../../../modules/tests/communication-preferences/co
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '../../../../shared/models/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 
 describe('DebriefCatBEPage', () => {
   let fixture: ComponentFixture<DebriefCatBEPage>;
@@ -116,6 +117,7 @@ describe('DebriefCatBEPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
+        { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
     })
       .compileComponents()

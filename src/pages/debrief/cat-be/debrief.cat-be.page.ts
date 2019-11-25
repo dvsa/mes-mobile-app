@@ -7,32 +7,13 @@ import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestData } from '../../../modules/tests/test-data/test-data.cat-be.reducer';
-import {
-  getETA,
-  getEco,
-} from '../../../modules/tests/test-data/test-data.selector';
+import { getETA, getEco } from '../../../modules/tests/test-data/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import {
-  getTestOutcome,
-} from '../debrief.selector';
-import {
-  getManoeuvreFaults,
-  getUncoupleRecoupleFault,
-  getVehicleCheckSeriousFaults,
-  getVehicleCheckDrivingFaults,
-  getUncoupleRecoupleFaultAndComment,
-  getEyesightTestSeriousFault,
-  getSeriousOrDangerousFaults,
-  getDrivingFaults,
-} from '../cat-be/debrief.cat-be.selector';
-import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
-import {
-  MultiFaultAssignableCompetency,
-  CommentedCompetency,
-} from '../../../shared/models/fault-marking.model';
+import { getTestOutcome } from '../debrief.selector';
+import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
@@ -49,11 +30,12 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { TestCategory } from '../../../shared/models/test-category';
+import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
   dangerousFaults$: Observable<string[]>;
-  drivingFaults$: Observable<MultiFaultAssignableCompetency[]>;
+  drivingFaults$: Observable<FaultSummary[]>;
   drivingFaultCount$: Observable<number>;
   etaFaults$: Observable<ETA>;
   ecoFaults$: Observable<Eco>;
@@ -92,6 +74,7 @@ export class DebriefCatBEPage extends BasePageComponent {
     public insomnia: Insomnia,
     private translate: TranslateService,
     private faultCountProvider: FaultCountProvider,
+    private faultSummaryProvider: FaultSummaryProvider,
   ) {
     super(platform, navController, authenticationProvider);
   }
@@ -107,56 +90,19 @@ export class DebriefCatBEPage extends BasePageComponent {
     this.pageState = {
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          return [
-            ...getSeriousOrDangerousFaults(data.seriousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
-            ...getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.S),
-            ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
-            ...getEyesightTestSeriousFault(data.eyesightTest),
-          ];
-        }),
+        map(data =>
+          this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)
+          .map(fault => fault.competencyIdentifier)),
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          return [
-            ...getSeriousOrDangerousFaults(data.dangerousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
-            ...getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.D),
-          ];
-        }),
+        map(data =>
+          this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)
+          .map(fault => fault.competencyIdentifier)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(category$),
-        map(([data, category]) => {
-          return [
-            ...getDrivingFaults(data.drivingFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(
-              (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
-                faultCount: 1,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-              })),
-            ...getUncoupleRecoupleFaultAndComment(data.uncoupleRecouple, CompetencyOutcome.DF).map(
-              (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
-                faultCount: 1,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-              })),
-            ...getVehicleCheckDrivingFaults(data.vehicleChecks, this.faultCountProvider).map(
-              (result: CommentedCompetency & MultiFaultAssignableCompetency): MultiFaultAssignableCompetency => ({
-                faultCount: result.faultCount,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-              }),
-            ),
-          ];
-        }),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),

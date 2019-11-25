@@ -91,11 +91,7 @@ import {
 import { AddControlledStopComment } from '../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
-import {
-  CommentedCompetency,
-  CommentSource,
-  FaultSummary,
-} from '../../../shared/models/fault-marking.model';
+import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map';
 import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
@@ -110,7 +106,7 @@ import { TestCategory } from '../../../shared/models/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { FaultListProvider } from '../../../providers/fault-list/fault-list';
+import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -183,7 +179,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public alertController: AlertController,
     private faultCountProvider: FaultCountProvider,
-    private faultListProvider: FaultListProvider,
+    private faultSummaryProvider: FaultSummaryProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
@@ -314,7 +310,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
       displayEco$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
+          select(getTestData),
           select(getEco))),
         map(([outcome, eco]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'eco', eco)),
@@ -322,7 +318,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
       displayEta$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
+          select(getTestData),
           select(getETA))),
         map(([outcome, eta]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'eta', eta)),
@@ -336,7 +332,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultListProvider.getDrivingFaultsList(testData, TestCategory.B),
+            this.faultSummaryProvider.getDrivingFaultsList(testData, TestCategory.B),
           )),
       ),
       displaySeriousFault$: currentTest$.pipe(
@@ -348,7 +344,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultListProvider.getSeriousFaultsList(testData, TestCategory.B),
+            this.faultSummaryProvider.getSeriousFaultsList(testData, TestCategory.B),
           )),
       ),
       displayDangerousFault$: currentTest$.pipe(
@@ -360,7 +356,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultListProvider.getDangerousFaultsList(testData, TestCategory.B),
+            this.faultSummaryProvider.getDangerousFaultsList(testData, TestCategory.B),
           )),
       ),
       candidateDescription$: currentTest$.pipe(
@@ -405,15 +401,15 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultListProvider.getDangerousFaultsList(data, TestCategory.B)),
+        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.B)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultListProvider.getSeriousFaultsList(data, TestCategory.B)),
+        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.B)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultListProvider.getDrivingFaultsList(data, TestCategory.B)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.B)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
@@ -482,7 +478,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new AdditionalInformationChanged(additionalInformation));
   }
 
-  dangerousFaultCommentChanged(dangerousFaultComment: CommentedCompetency) {
+  dangerousFaultCommentChanged(dangerousFaultComment: FaultSummary) {
     if (dangerousFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
@@ -507,7 +503,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
     }
   }
 
-  seriousFaultCommentChanged(seriousFaultComment: CommentedCompetency) {
+  seriousFaultCommentChanged(seriousFaultComment: FaultSummary) {
     if (seriousFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
@@ -533,7 +529,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
     }
   }
 
-  drivingFaultCommentChanged(drivingFaultComment: CommentedCompetency) {
+  drivingFaultCommentChanged(drivingFaultComment: FaultSummary) {
     if (drivingFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),

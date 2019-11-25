@@ -36,7 +36,7 @@ import { CAT_B } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '../../../../shared/models/test-category';
-import { FaultListProvider } from '../../../../providers/fault-list/fault-list';
+import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 
 describe('DebriefCatBPage', () => {
   let fixture: ComponentFixture<DebriefCatBPage>;
@@ -116,7 +116,7 @@ describe('DebriefCatBPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
-        { provide: FaultListProvider, useClass: FaultListProvider },
+        { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
     })
       .compileComponents()

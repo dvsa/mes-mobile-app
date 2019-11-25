@@ -56,6 +56,7 @@ describe('FaultCommentComponent', () => {
         competencyDisplayName: 'display',
         competencyIdentifier: 'id',
         source: CommentSource.SIMPLE,
+        faultCount: 1,
       };
       component.faultType = 'driving';
       component.ngOnChanges();
@@ -155,6 +156,7 @@ describe('FaultCommentComponent', () => {
         competencyDisplayName: 'display',
         competencyIdentifier: 'id',
         source: CommentSource.SIMPLE,
+        faultCount: 1,
       };
       component.faultType = 'driving';
       component.faultCommentChanged(faultComment);
