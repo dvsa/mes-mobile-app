@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { TestData } from '@dvsa/mes-test-schema/categories/Common';
 import { TestCategory } from '../../../shared/models/test-category';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { FaultCountProvider } from '../../fault-count/fault-count';
 
 describe('faultListProvider', () => {
 
@@ -12,6 +13,7 @@ describe('faultListProvider', () => {
     TestBed.configureTestingModule({
       providers: [
         FaultListProvider,
+        FaultCountProvider,
       ],
     });
 

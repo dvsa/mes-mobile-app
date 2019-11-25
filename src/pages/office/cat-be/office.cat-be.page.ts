@@ -64,27 +64,8 @@ import {
   getEco,
   getEcoFaultText,
 } from '../../../modules/tests/test-data/test-data.selector';
-// TODO: update import for category specific page version
-// import {
-//   getVehicleChecks,
-//   getTellMeQuestion,
-// } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { getTestData } from '../../../modules/tests/test-data/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-
-import {
-  getManoeuvreFaults,
-  getVehicleCheckDrivingFaults,
-  getUncoupleRecoupleFaultAndComment,
-  getVehicleCheckSeriousFaults,
-  displayDrivingFaultComments,
-  vehicleChecksExist,
-  getDrivingFaults,
-  getEyesightTestSeriousFaultAndComment,
-  getDangerousFaults,
-  getSeriousFaults,
-} from '../../debrief/cat-be/debrief.cat-be.selector';
-
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
 import {
@@ -101,9 +82,9 @@ import {
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import {
-  MultiFaultAssignableCompetency,
   CommentedCompetency,
   CommentSource,
+  FaultSummary,
 } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map.cat-be';
@@ -116,10 +97,12 @@ import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '../../../shared/models/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
-import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import {
   AddUncoupleRecoupleComment,
 } from '../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
+import { FaultListProvider } from '../../../providers/fault-list/fault-list';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { vehicleChecksExist } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -149,12 +132,12 @@ interface OfficePageState {
   additionalInformation$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
-  drivingFaults$: Observable<MultiFaultAssignableCompetency[]>;
+  drivingFaults$: Observable<FaultSummary[]>;
   drivingFaultCount$: Observable<number>;
   displayDrivingFaultComments$: Observable<boolean>;
   weatherConditions$: Observable<WeatherConditions[]>;
-  dangerousFaults$: Observable<(MultiFaultAssignableCompetency | CommentedCompetency)[]>;
-  seriousFaults$: Observable<(MultiFaultAssignableCompetency | CommentedCompetency)[]>;
+  dangerousFaults$: Observable<FaultSummary[]>;
+  seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
 }
 
@@ -187,6 +170,7 @@ export class OfficeCatBEPage extends BasePageComponent {
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public alertController: AlertController,
     private faultCountProvider: FaultCountProvider,
+    private faultListProvider: FaultListProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
@@ -203,9 +187,6 @@ export class OfficeCatBEPage extends BasePageComponent {
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
-    );
-    const category$ = currentTest$.pipe(
-      select(getTestCategory),
     );
     this.pageState = {
       activityCode$: currentTest$.pipe(
@@ -297,7 +278,7 @@ export class OfficeCatBEPage extends BasePageComponent {
       displayEco$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
+          select(getTestData),
           select(getEco))),
         map(([outcome, eco]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'eco', eco)),
@@ -305,7 +286,7 @@ export class OfficeCatBEPage extends BasePageComponent {
       displayEta$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
+          select(getTestData),
           select(getETA))),
         map(([outcome, eta]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'eta', eta)),
@@ -313,26 +294,38 @@ export class OfficeCatBEPage extends BasePageComponent {
       displayDrivingFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getDrivingFaults))),
-        map(([outcome, drivingFault]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'faultComment', drivingFault)),
+          select(getTestData),
+        )),
+        map(([outcome, data]) =>
+          this.outcomeBehaviourProvider.isVisible(
+            outcome,
+            'faultComment',
+            this.faultListProvider.getDrivingFaultsList(data, TestCategory.BE),
+          )),
       ),
       displaySeriousFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getSeriousFaults))),
-        map(([outcome, seriousFault]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'faultComment', seriousFault)),
+          select(getTestData),
+        )),
+        map(([outcome, data]) =>
+          this.outcomeBehaviourProvider.isVisible(
+            outcome,
+            'faultComment',
+            this.faultListProvider.getSeriousFaultsList(data, TestCategory.BE),
+          )),
       ),
       displayDangerousFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getDangerousFaults))),
-        map(([outcome, dangerousFault]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'faultComment', dangerousFault)),
+          select(getTestData),
+        )),
+        map(([outcome, data]) =>
+          this.outcomeBehaviourProvider.isVisible(
+            outcome,
+            'faultComment',
+            this.faultListProvider.getDrivingFaultsList(data, TestCategory.BE),
+          )),
       ),
       displayVehicleChecks$: currentTest$.pipe(
           select(getTestOutcome),
@@ -371,49 +364,23 @@ export class OfficeCatBEPage extends BasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          return [
-            ...getDangerousFaults(data.dangerousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(this.parseCompetency),
-            ...getUncoupleRecoupleFaultAndComment(data.uncoupleRecouple, CompetencyOutcome.D).map(this.parseCompetency),
-          ];
-        }),
+        map(data => this.faultListProvider.getDangerousFaultsList(data, TestCategory.BE)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          return [
-            ...getSeriousFaults(data.seriousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(this.parseCompetency),
-            ...getUncoupleRecoupleFaultAndComment(data.uncoupleRecouple, CompetencyOutcome.S).map(this.parseCompetency),
-            ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(this.parseCompetency),
-            ...getEyesightTestSeriousFaultAndComment(data.eyesightTest).map(this.parseCompetency),
-          ];
-        }),
+        map(data => this.faultListProvider.getSeriousFaultsList(data, TestCategory.BE)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          return [
-            ...getDrivingFaults(data.drivingFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(this.parseCompetency),
-            ...getUncoupleRecoupleFaultAndComment(
-              data.uncoupleRecouple,
-              CompetencyOutcome.DF).map(this.parseCompetency),
-            ...getVehicleCheckDrivingFaults(data.vehicleChecks, this.faultCountProvider).map(this.parseCompetency),
-          ];
-        }),
+        map(data => this.faultListProvider.getDrivingFaultsList(data, TestCategory.BE)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(category$),
-        map(([testData, category]) => {
-          return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
-        }),
+        map(data => this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
-        map(data => displayDrivingFaultComments(data)),
+        map(data => this.shouldDisplayDrivingFaultComments(data)),
       ),
       weatherConditions$: currentTest$.pipe(
         select(getTestSummary),
@@ -605,13 +572,12 @@ export class OfficeCatBEPage extends BasePageComponent {
     this.popToRoot();
   }
 
-  private parseCompetency =
-    (result: CommentedCompetency & MultiFaultAssignableCompetency):
-    (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-      faultCount: result.faultCount || 1,
-      competencyDisplayName: result.competencyDisplayName,
-      competencyIdentifier: result.competencyIdentifier,
-      source: result.source,
-      comment: result.comment,
-    })
+  shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {
+    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data);
+    const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, data);
+    const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data);
+
+    return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
+  }
+
 }

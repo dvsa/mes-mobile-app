@@ -314,7 +314,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
       displayEco$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
+          select(getTestData),
           select(getEco))),
         map(([outcome, eco]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'eco', eco)),
@@ -322,7 +322,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
       displayEta$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
+          select(getTestData),
           select(getETA))),
         map(([outcome, eta]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'eta', eta)),
