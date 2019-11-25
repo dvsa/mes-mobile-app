@@ -91,11 +91,7 @@ import {
 import { AddControlledStopComment } from '../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
-import {
-  CommentedCompetency,
-  CommentSource,
-  FaultSummary,
-} from '../../../shared/models/fault-marking.model';
+import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map';
 import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
@@ -482,7 +478,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new AdditionalInformationChanged(additionalInformation));
   }
 
-  dangerousFaultCommentChanged(dangerousFaultComment: CommentedCompetency) {
+  dangerousFaultCommentChanged(dangerousFaultComment: FaultSummary) {
     if (dangerousFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
@@ -507,7 +503,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
     }
   }
 
-  seriousFaultCommentChanged(seriousFaultComment: CommentedCompetency) {
+  seriousFaultCommentChanged(seriousFaultComment: FaultSummary) {
     if (seriousFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
@@ -533,7 +529,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
     }
   }
 
-  drivingFaultCommentChanged(drivingFaultComment: CommentedCompetency) {
+  drivingFaultCommentChanged(drivingFaultComment: FaultSummary) {
     if (drivingFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
