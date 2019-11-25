@@ -1,3 +1,4 @@
+
 import { JournalModel } from './journal.model';
 import { flatten, isEmpty, isNil } from 'lodash';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
