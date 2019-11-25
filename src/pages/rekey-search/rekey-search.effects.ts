@@ -6,11 +6,12 @@ import { of } from 'rxjs/observable/of';
 import { CompressionProvider } from '../../providers/compression/compression';
 import { SearchProvider } from '../../providers/search/search';
 import {
-  SEARCH_BOOKED_TEST, SearchBookedTest, SearchBookedTestSuccess, SearchBookedTestFailure,
+  SEARCH_BOOKED_TEST, SearchBookedTest, SearchBookedTestSuccess, SearchBookedTestFailure, RekeySearchActionTypes,
 } from './rekey-search.actions';
 import { RekeySearchErrorMessages } from './rekey-search-error-model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RekeySearchEffects {
@@ -28,12 +29,12 @@ export class RekeySearchEffects {
     ofType(SEARCH_BOOKED_TEST),
     switchMap((action: SearchBookedTest) => {
       return this.testSearchProvider.getTestResult(action.appRef, action.staffNumber).pipe(
-        switchMap((response: HttpResponse<any>) => {
+        switchMap((response: HttpResponse<any>): Observable<RekeySearchActionTypes> => {
           return of(new SearchBookedTestFailure({
             message: RekeySearchErrorMessages.BookingAlreadyCompleted,
           }));
         }),
-        catchError((err: HttpErrorResponse) => {
+        catchError((err: HttpErrorResponse): Observable<RekeySearchActionTypes> => {
           if (err.status === HttpStatusCodes.BAD_REQUEST) {
             const rekeySearchParams = {
               applicationReference: action.appRef,
