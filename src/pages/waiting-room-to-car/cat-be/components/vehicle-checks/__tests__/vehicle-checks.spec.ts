@@ -139,23 +139,33 @@ describe('VehicleChecksCatBEComponent', () => {
     });
   });
 
-  describe('invalidVehicleChecks', () => {
+  describe('incompleteVehicleChecks', () => {
     it('should return vehicle checks as false', () => {
-      const result = component.invalidVehicleChecks(null);
+      const result = component.incompleteVehicleChecks();
       expect(result).toEqual({ vehicleChecks: false });
     });
   });
 
   describe('validateVehicleChecks', () => {
-    it('should call invalidVehicleChecks() if all questions have not been answered', () => {
+    beforeEach(() => {
       const formBuilder: FormBuilder = new FormBuilder();
       component.formGroup = formBuilder.group({
         vehicleChecksSelectQuestions: null,
       });
+    });
+
+    it('should call incompleteVehicleChecks() if all questions have NOT been answered', () => {
       spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
-      spyOn(component, 'invalidVehicleChecks');
-      component.validateVehicleChecks();
-      expect(component.invalidVehicleChecks).toHaveBeenCalled();
+      spyOn(component, 'incompleteVehicleChecks');
+      component.validateVehicleChecks(null);
+      expect(component.incompleteVehicleChecks).toHaveBeenCalled();
+    });
+
+    it('should return null if all questions have been answered', () => {
+      spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
+      spyOn(component, 'incompleteVehicleChecks');
+      const result = component.validateVehicleChecks(null);
+      expect(result).toEqual(null);
     });
   });
 
@@ -195,7 +205,7 @@ describe('VehicleChecksCatBEComponent', () => {
   });
 
   describe('ngOnChanges', () => {
-    it('should set dirty to true', () => {
+    it('should validate the vehicle checks', () => {
       spyOn(component, 'validateVehicleChecks');
       component.ngOnChanges();
       expect(component.validateVehicleChecks).toHaveBeenCalled();

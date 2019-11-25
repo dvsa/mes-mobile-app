@@ -55,23 +55,23 @@ export class VehicleChecksCatBEComponent implements OnChanges {
     return this.vehicleChecksScore.drivingFaults > 0;
   }
 
-  invalidVehicleChecks(c: FormControl): { vehicleChecks: boolean } {
+  incompleteVehicleChecks(): { vehicleChecks: boolean } {
     return { vehicleChecks: false };
   }
 
-  validateVehicleChecks() {
+  validateVehicleChecks(c: FormControl) {
+    return this.everyQuestionHasOutcome() ? null : this.incompleteVehicleChecks();
+  }
+
+  ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl({
         value: 'Select questions',
         disabled: false,
       },
-      [this.everyQuestionHasOutcome() ? null : this.invalidVehicleChecks]);
+      [this.validateVehicleChecks.bind(this)]);
       this.formGroup.addControl('vehicleChecksSelectQuestions', this.formControl);
     }
-  }
-
-  ngOnChanges(): void {
-    this.validateVehicleChecks();
   }
 
   get invalid(): boolean {
