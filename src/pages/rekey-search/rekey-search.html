@@ -48,9 +48,18 @@
       </tab>
     </tabs>
 
-    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async)">
+    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async) && !(hasBookingAlreadyBeenCompleted(pageState.rekeySearchErr$ | async))">
       <p class="error-text">
         There were no results found for your search.
+      </p>
+      <p class="error-text">
+        Please check and try again.
+      </p>
+    </div>
+
+    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && (hasBookingAlreadyBeenCompleted(pageState.rekeySearchErr$ | async))">
+      <p class="error-text">
+        You can't rekey this test as it has already been submitted.
       </p>
       <p class="error-text">
         Please check and try again.

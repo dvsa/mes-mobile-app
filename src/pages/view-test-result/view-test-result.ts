@@ -54,6 +54,7 @@ import { ViewTestResultViewDidEnter } from './view-test-result.actions';
 import { LogType } from '../../shared/models/log.model';
 import { SaveLog } from '../../modules/logs/logs.actions';
 import { LogHelper } from '../../providers/logs/logsHelper';
+import { HttpResponse } from '@angular/common/http';
 
 @IonicPage()
 @Component({
@@ -95,6 +96,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     this.subscription = this.searchProvider
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
+        map((response: HttpResponse<any>): string => response.body),
         map(data => this.testResult = this.compressionProvider.extractCatBTestResult(data)),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
