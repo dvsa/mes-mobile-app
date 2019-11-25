@@ -30,7 +30,7 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { TestCategory } from '../../../shared/models/test-category';
-import { FaultListProvider } from '../../../providers/fault-list/fault-list';
+import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -74,7 +74,7 @@ export class DebriefCatBEPage extends BasePageComponent {
     public insomnia: Insomnia,
     private translate: TranslateService,
     private faultCountProvider: FaultCountProvider,
-    private faultListProvider: FaultListProvider,
+    private faultSummaryProvider: FaultSummaryProvider,
   ) {
     super(platform, navController, authenticationProvider);
   }
@@ -91,18 +91,18 @@ export class DebriefCatBEPage extends BasePageComponent {
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          this.faultListProvider.getSeriousFaultsList(data, TestCategory.BE)
+          this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)
           .map(fault => fault.competencyIdentifier)),
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          this.faultListProvider.getDangerousFaultsList(data, TestCategory.BE)
+          this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)
           .map(fault => fault.competencyIdentifier)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultListProvider.getDrivingFaultsList(data, TestCategory.BE)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),

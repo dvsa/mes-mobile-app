@@ -14,7 +14,7 @@ import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../fault-count/fault-count';
 
 @Injectable()
-export class FaultListProvider {
+export class FaultSummaryProvider {
 
   constructor(private faultCountProvider: FaultCountProvider) {}
 

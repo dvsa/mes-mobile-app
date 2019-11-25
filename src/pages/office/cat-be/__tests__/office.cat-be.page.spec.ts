@@ -61,7 +61,7 @@ import { NavigationStateProvider } from '../../../../providers/navigation-state/
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '../../../../shared/models/test-category';
-import { FaultListProvider } from '../../../../providers/fault-list/fault-list';
+import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatBEPage>;
@@ -142,7 +142,7 @@ describe('OfficePage', () => {
         { provide: AlertController, useClass: AlertControllerMock },
         { provide: ToastController, useClass: ToastControllerMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
-        { provide: FaultListProvider, useClass: FaultListProvider },
+        { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
     })
       .compileComponents()

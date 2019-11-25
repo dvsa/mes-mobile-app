@@ -1,4 +1,4 @@
-import { FaultListProvider } from '../fault-list';
+import { FaultSummaryProvider } from '../fault-summary';
 import { TestBed } from '@angular/core/testing';
 import { TestData } from '@dvsa/mes-test-schema/categories/Common';
 import { TestCategory } from '../../../shared/models/test-category';
@@ -6,25 +6,25 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { FaultCountProvider } from '../../fault-count/fault-count';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
-describe('faultListProvider', () => {
+describe('faultSummaryProvider', () => {
 
-  let faultListProvider: FaultListProvider;
+  let faultSummaryProvider: FaultSummaryProvider;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        FaultListProvider,
+        FaultSummaryProvider,
         FaultCountProvider,
       ],
     });
 
-    faultListProvider = TestBed.get(FaultListProvider);
+    faultSummaryProvider = TestBed.get(FaultSummaryProvider);
   });
 
   describe('getDrivingFaultsList', () => {
     describe('Category B', () => {
       it('should return an empty array if there are no driving faults', () => {
-        const result = faultListProvider.getDrivingFaultsList({}, TestCategory.B);
+        const result = faultSummaryProvider.getDrivingFaultsList({}, TestCategory.B);
         expect(result.length).toEqual(0);
       });
       it('should return an array matching the number of driving faults > 0', () => {
@@ -34,7 +34,7 @@ describe('faultListProvider', () => {
             useOfMirrorsSignalling: 2,
           },
         };
-        const result = faultListProvider.getDrivingFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(2);
       });
       it('should return faults in reverse order of fault count', () => {
@@ -45,7 +45,7 @@ describe('faultListProvider', () => {
             junctionsObservation: 5,
           },
         };
-        const result = faultListProvider.getDrivingFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.B);
         expect(result[0].faultCount).toEqual(5);
         expect(result[1].faultCount).toEqual(2);
         expect(result[2].faultCount).toEqual(1);
@@ -60,7 +60,7 @@ describe('faultListProvider', () => {
             },
           },
         };
-        const result = faultListProvider.getDrivingFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(2);
       });
       it('should correctly return any controlled stop faults', () => {
@@ -70,7 +70,7 @@ describe('faultListProvider', () => {
             selected: true,
           },
         };
-        const result = faultListProvider.getDrivingFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(1);
       });
       it('should correctly return any vehicle checks faults', () => {
@@ -84,13 +84,13 @@ describe('faultListProvider', () => {
             },
           },
         };
-        const result = faultListProvider.getDrivingFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(1);
       });
     });
     describe('Category B+E', () => {
       it('should return an empty array if there are no driving faults', () => {
-        const result = faultListProvider.getDrivingFaultsList({}, TestCategory.BE);
+        const result = faultSummaryProvider.getDrivingFaultsList({}, TestCategory.BE);
         expect(result.length).toEqual(0);
       });
       it('should return an array matching the number of driving faults > 0', () => {
@@ -100,7 +100,7 @@ describe('faultListProvider', () => {
             useOfMirrorsSignalling: 2,
           },
         };
-        const result = faultListProvider.getDrivingFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(2);
       });
       it('should correctly return any manoeuvre faults', () => {
@@ -113,7 +113,7 @@ describe('faultListProvider', () => {
             },
           },
         };
-        const result = faultListProvider.getDrivingFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(2);
       });
       it('should correctly return any uncouple recouple faults ', () => {
@@ -123,7 +123,7 @@ describe('faultListProvider', () => {
             fault: 'DF',
           },
         };
-        const result = faultListProvider.getDrivingFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(1);
       });
       it('should correctly return any vehicle checks faults when there are 4 driving faults', () => {
@@ -139,7 +139,7 @@ describe('faultListProvider', () => {
             ],
           },
         };
-        const result = faultListProvider.getDrivingFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(1);
         expect(result[0].faultCount).toEqual(4);
       });
@@ -157,7 +157,7 @@ describe('faultListProvider', () => {
             ],
           },
         };
-        const result = faultListProvider.getDrivingFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(1);
         expect(result[0].faultCount).toEqual(4);
       });
@@ -167,7 +167,7 @@ describe('faultListProvider', () => {
   describe('getSeriousFaultsList', () => {
     describe('Category B', () => {
       it('should return an empty array if there are no serious faults', () => {
-        const result = faultListProvider.getSeriousFaultsList({}, TestCategory.B);
+        const result = faultSummaryProvider.getSeriousFaultsList({}, TestCategory.B);
         expect(result.length).toEqual(0);
       });
       it('should return an array matching the number of serious faults set to true', () => {
@@ -177,7 +177,7 @@ describe('faultListProvider', () => {
             awarenessPlanning: true,
           },
         };
-        const result = faultListProvider.getSeriousFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(2);
       });
       it('should return an eyesight fail fault if one exists', () => {
@@ -188,7 +188,7 @@ describe('faultListProvider', () => {
             faultComments: 'test-fault-comment',
           },
         };
-        const result = faultListProvider.getSeriousFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.B);
         expect(result[0].competencyIdentifier).toEqual('eyesightTest');
         expect(result[0].comment).toEqual('test-fault-comment');
       });
@@ -200,7 +200,7 @@ describe('faultListProvider', () => {
             },
           },
         };
-        const result = faultListProvider.getSeriousFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(1);
       });
       it('should correctly return any controlled stop faults', () => {
@@ -210,7 +210,7 @@ describe('faultListProvider', () => {
             selected: true,
           },
         };
-        const result = faultListProvider.getSeriousFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(1);
       });
       it('should return an array length matching the number of manoeuvre driving faults', () => {
@@ -223,13 +223,13 @@ describe('faultListProvider', () => {
             },
           },
         };
-        const result = faultListProvider.getSeriousFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(2);
       });
     });
     describe('Category B+E', () => {
       it('should return an empty array if there are no serious faults', () => {
-        const result = faultListProvider.getSeriousFaultsList({}, TestCategory.BE);
+        const result = faultSummaryProvider.getSeriousFaultsList({}, TestCategory.BE);
         expect(result.length).toEqual(0);
       });
       it('should return an array matching the number of serious faults set to true', () => {
@@ -239,7 +239,7 @@ describe('faultListProvider', () => {
             awarenessPlanning: true,
           },
         };
-        const result = faultListProvider.getSeriousFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(2);
       });
       it('should return an eyesight fail fault if one exists', () => {
@@ -250,7 +250,7 @@ describe('faultListProvider', () => {
             faultComments: 'test-fault-comment',
           },
         };
-        const result = faultListProvider.getSeriousFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE);
         expect(result[0].competencyIdentifier).toEqual('eyesightTest');
         expect(result[0].comment).toEqual('test-fault-comment');
       });
@@ -264,7 +264,7 @@ describe('faultListProvider', () => {
             },
           },
         };
-        const result = faultListProvider.getSeriousFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(2);
       });
       it('should correctly return any uncouple recouple faults ', () => {
@@ -274,7 +274,7 @@ describe('faultListProvider', () => {
             fault: 'S',
           },
         };
-        const result = faultListProvider.getSeriousFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(1);
       });
       it('should correctly return any vehicle checks faults ', () => {
@@ -291,7 +291,7 @@ describe('faultListProvider', () => {
             ],
           },
         };
-        const result = faultListProvider.getSeriousFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(1);
         expect(result[0].faultCount).toEqual(1);
       });
@@ -301,7 +301,7 @@ describe('faultListProvider', () => {
   describe('getDangerousFaultsList', () => {
     describe('Category B', () => {
       it('should return an empty array if there are no serious faults', () => {
-        const result = faultListProvider.getDangerousFaultsList({}, TestCategory.B);
+        const result = faultSummaryProvider.getDangerousFaultsList({}, TestCategory.B);
         expect(result.length).toEqual(0);
       });
       it('should return an array matching the number of serious faults set to true', () => {
@@ -311,7 +311,7 @@ describe('faultListProvider', () => {
             awarenessPlanning: true,
           },
         };
-        const result = faultListProvider.getDangerousFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getDangerousFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(2);
       });
       it('should return an array length matching the number of manoeuvre driving faults', () => {
@@ -324,7 +324,7 @@ describe('faultListProvider', () => {
             },
           },
         };
-        const result = faultListProvider.getDangerousFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getDangerousFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(2);
       });
       it('should correctly return any vehicle checks faults', () => {
@@ -335,7 +335,7 @@ describe('faultListProvider', () => {
             },
           },
         };
-        const result = faultListProvider.getDangerousFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getDangerousFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(1);
       });
       it('should correctly return any controlled stop faults', () => {
@@ -345,13 +345,13 @@ describe('faultListProvider', () => {
             selected: true,
           },
         };
-        const result = faultListProvider.getDangerousFaultsList(data, TestCategory.B);
+        const result = faultSummaryProvider.getDangerousFaultsList(data, TestCategory.B);
         expect(result.length).toEqual(1);
       });
     });
     describe('Category B+E', () => {
       it('should return an empty array if there are no serious faults', () => {
-        const result = faultListProvider.getDangerousFaultsList({}, TestCategory.BE);
+        const result = faultSummaryProvider.getDangerousFaultsList({}, TestCategory.BE);
         expect(result.length).toEqual(0);
       });
       it('should return an array matching the number of serious faults set to true', () => {
@@ -361,7 +361,7 @@ describe('faultListProvider', () => {
             awarenessPlanning: true,
           },
         };
-        const result = faultListProvider.getDangerousFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(2);
       });
       it('should correctly return any manoeuvre faults', () => {
@@ -374,7 +374,7 @@ describe('faultListProvider', () => {
             },
           },
         };
-        const result = faultListProvider.getDangerousFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(2);
       });
       it('should correctly return any uncouple recouple faults ', () => {
@@ -384,7 +384,7 @@ describe('faultListProvider', () => {
             fault: 'D',
           },
         };
-        const result = faultListProvider.getDangerousFaultsList(data, TestCategory.BE);
+        const result = faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(1);
       });
     });

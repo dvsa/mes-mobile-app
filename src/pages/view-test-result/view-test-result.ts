@@ -44,7 +44,7 @@ import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-q
 import { QuestionProvider } from '../../providers/question/question';
 import { TestCategory } from '../../shared/models/test-category';
 import { FaultCountProvider } from '../../providers/fault-count/fault-count';
-import { FaultListProvider } from '../../providers/fault-list/fault-list';
+import { FaultSummaryProvider } from '../../providers/fault-summary/fault-summary';
 
 @IonicPage()
 @Component({
@@ -78,7 +78,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     private logHelper: LogHelper,
     public questionProvider: QuestionProvider,
     private faultCountProvider: FaultCountProvider,
-    private faultListProvider: FaultListProvider,
+    private faultSummaryProvider: FaultSummaryProvider,
   ) {
     super(platform, navController, authenticationProvider);
 
@@ -310,17 +310,17 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
   getDangerousFaults(): FaultSummary[] {
     const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultListProvider.getDangerousFaultsList(testData, TestCategory.B);
+    return this.faultSummaryProvider.getDangerousFaultsList(testData, TestCategory.B);
   }
 
   getSeriousFaults(): FaultSummary[] {
     const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultListProvider.getSeriousFaultsList(testData, TestCategory.B);
+    return this.faultSummaryProvider.getSeriousFaultsList(testData, TestCategory.B);
   }
 
   getDrivingFaults(): FaultSummary[] {
     const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultListProvider.getDrivingFaultsList(testData, TestCategory.B);
+    return this.faultSummaryProvider.getDrivingFaultsList(testData, TestCategory.B);
   }
 
   getRekeyDetails(): RekeyDetailsModel {

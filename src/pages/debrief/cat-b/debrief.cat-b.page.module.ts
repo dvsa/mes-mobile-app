@@ -7,7 +7,7 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { DebriefComponentsModule } from '../components/debrief-components.module';
 import { TranslateModule } from 'ng2-translate';
 import { DebriefEffects } from '../debrief.effects';
-import { FaultListProvider } from '../../../providers/fault-list/fault-list';
+import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { FaultListProvider } from '../../../providers/fault-list/fault-list';
     TranslateModule,
   ],
   providers: [
-    FaultListProvider,
+    FaultSummaryProvider,
   ],
 })
 export class DebriefCatBPageModule { }

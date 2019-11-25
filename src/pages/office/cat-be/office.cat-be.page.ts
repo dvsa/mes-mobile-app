@@ -96,7 +96,7 @@ import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import {
   AddUncoupleRecoupleComment,
 } from '../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
-import { FaultListProvider } from '../../../providers/fault-list/fault-list';
+import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { vehicleChecksExist } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
 
@@ -166,7 +166,7 @@ export class OfficeCatBEPage extends BasePageComponent {
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public alertController: AlertController,
     private faultCountProvider: FaultCountProvider,
-    private faultListProvider: FaultListProvider,
+    private faultSummaryProvider: FaultSummaryProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
@@ -296,7 +296,7 @@ export class OfficeCatBEPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultListProvider.getDrivingFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
           )),
       ),
       displaySeriousFault$: currentTest$.pipe(
@@ -308,7 +308,7 @@ export class OfficeCatBEPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultListProvider.getSeriousFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE),
           )),
       ),
       displayDangerousFault$: currentTest$.pipe(
@@ -320,7 +320,7 @@ export class OfficeCatBEPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultListProvider.getDrivingFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
           )),
       ),
       displayVehicleChecks$: currentTest$.pipe(
@@ -360,15 +360,15 @@ export class OfficeCatBEPage extends BasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultListProvider.getDangerousFaultsList(data, TestCategory.BE)),
+        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultListProvider.getSeriousFaultsList(data, TestCategory.BE)),
+        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultListProvider.getDrivingFaultsList(data, TestCategory.BE)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),

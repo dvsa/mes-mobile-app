@@ -32,7 +32,7 @@ import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { TestCategory } from '../../../shared/models/test-category';
-import { FaultListProvider } from '../../../providers/fault-list/fault-list';
+import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { getTestOutcome } from '../debrief.selector';
 
 interface DebriefPageState {
@@ -76,7 +76,7 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
     public insomnia: Insomnia,
     private translate: TranslateService,
     private faultCountProvider: FaultCountProvider,
-    private faultListProvider: FaultListProvider,
+    private faultSummaryProvider: FaultSummaryProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
   }
@@ -94,18 +94,18 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          this.faultListProvider.getSeriousFaultsList(data, TestCategory.B)
+          this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.B)
           .map(fault => fault.competencyIdentifier)),
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          this.faultListProvider.getDangerousFaultsList(data, TestCategory.B)
+          this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.B)
           .map(fault => fault.competencyIdentifier)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultListProvider.getDrivingFaultsList(data, TestCategory.B)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.B)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),

@@ -106,7 +106,7 @@ import { TestCategory } from '../../../shared/models/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { FaultListProvider } from '../../../providers/fault-list/fault-list';
+import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -179,7 +179,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public alertController: AlertController,
     private faultCountProvider: FaultCountProvider,
-    private faultListProvider: FaultListProvider,
+    private faultSummaryProvider: FaultSummaryProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
@@ -332,7 +332,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultListProvider.getDrivingFaultsList(testData, TestCategory.B),
+            this.faultSummaryProvider.getDrivingFaultsList(testData, TestCategory.B),
           )),
       ),
       displaySeriousFault$: currentTest$.pipe(
@@ -344,7 +344,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultListProvider.getSeriousFaultsList(testData, TestCategory.B),
+            this.faultSummaryProvider.getSeriousFaultsList(testData, TestCategory.B),
           )),
       ),
       displayDangerousFault$: currentTest$.pipe(
@@ -356,7 +356,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultListProvider.getDangerousFaultsList(testData, TestCategory.B),
+            this.faultSummaryProvider.getDangerousFaultsList(testData, TestCategory.B),
           )),
       ),
       candidateDescription$: currentTest$.pipe(
@@ -401,15 +401,15 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultListProvider.getDangerousFaultsList(data, TestCategory.B)),
+        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.B)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultListProvider.getSeriousFaultsList(data, TestCategory.B)),
+        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.B)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultListProvider.getDrivingFaultsList(data, TestCategory.B)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.B)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
