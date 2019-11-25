@@ -24,9 +24,8 @@ import {
 } from '../../../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
 import { ToggleSeriousFaultMode } from '../../../test-report.actions';
 import { By } from '@angular/platform-browser';
-import * as lodash from 'lodash';
 
-fdescribe('UncoupleRecoupleComponent', () => {
+describe('UncoupleRecoupleComponent', () => {
   let fixture: ComponentFixture<UncoupleRecoupleComponent>;
   let component: UncoupleRecoupleComponent;
   let store$: Store<StoreModel>;
@@ -43,7 +42,7 @@ fdescribe('UncoupleRecoupleComponent', () => {
       ],
       imports: [
         IonicModule,
-        StoreModule.forRoot({tests: testsReducer, testReport: testReportReducer}),
+        StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
       ],
     })
       .compileComponents()
@@ -199,8 +198,8 @@ fdescribe('UncoupleRecoupleComponent', () => {
       });
 
       it('should have added a checked class to the tick button', () => {
-        spyOn(lodash, 'get').and.returnValue(true);
-        component.toggleUncoupleRecouple();
+        fixture.detectChanges();
+        component.selectedUncoupleRecouple = true;
         const tickButton = fixture.debugElement.query(By.css('competency-button.uncouple-recouple-tick'));
         fixture.detectChanges();
         expect(tickButton.nativeElement.className).toEqual('uncouple-recouple-tick checked');
