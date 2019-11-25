@@ -38,6 +38,7 @@ import { NavigationStateProvider } from '../../../../providers/navigation-state/
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/uncouple-recouple';
+import { ReverseLeftComponent } from '../components/reverse-left/reverse-left';
 
 describe('TestReportCatBEPage', () => {
   let fixture: ComponentFixture<TestReportCatBEPage>;
@@ -56,6 +57,7 @@ describe('TestReportCatBEPage', () => {
         MockComponent(ToolbarComponent),
         MockComponent(EcoComponent),
         MockComponent(UncoupleRecoupleComponent),
+        MockComponent(ReverseLeftComponent),
       ],
       imports: [
         IonicModule,
