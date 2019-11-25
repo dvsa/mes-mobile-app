@@ -10,10 +10,16 @@ reverse-left {
       }
     }
 
+    &.promoted .competency-button {
+      position: relative;
+      z-index: 270;
+    }
+
     &.checked .competency-button {
       border: 2px solid map-get($colors-gds, "gds-dark-green");
     }
   }
+
   button {
     height: 44px;
     width: 194px;
@@ -26,7 +32,6 @@ reverse-left {
     border-radius: 10px;
     position: relative;
     margin-left: 8px;
-    // margin-right: 8px;
 
     &.promoted {
       position: relative;
@@ -69,7 +74,6 @@ reverse-left {
       justify-content: center;
       width: 100%;
       color: map-get($colors-gds, gds-blue);
-      // margin-right: 20px;
       .popover-arrow {
         -webkit-transition: 0.3s ease-in-out;
         -moz-transition: 0.3s ease-in-out;
