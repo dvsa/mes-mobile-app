@@ -150,7 +150,7 @@ describe('VehicleChecksCatBEComponent', () => {
     it('should call invalidVehicleChecks() if all questions have not been answered', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       component.formGroup = formBuilder.group({
-        vehicleChecksSelect: null,
+        vehicleChecksSelectQuestions: null,
       });
       spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
       spyOn(component, 'invalidVehicleChecks');
@@ -163,7 +163,7 @@ describe('VehicleChecksCatBEComponent', () => {
     beforeEach(() => {
       const formBuilder: FormBuilder = new FormBuilder();
       component.formGroup = formBuilder.group({
-        vehicleChecksSelect: null,
+        vehicleChecksSelectQuestions: null,
       });
       component.formControl = formBuilder.control({});
     });
