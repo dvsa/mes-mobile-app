@@ -1,6 +1,5 @@
-
 import { JournalModel } from './journal.model';
-import { isNil, flatten } from 'lodash';
+import { flatten, isEmpty, isNil } from 'lodash';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
@@ -28,6 +27,19 @@ export const canNavigateToPreviousDay = (journal: JournalModel, today: DateTime)
   return selectedDate > lookbackLimit;
 };
 
+export const hasSlotsAfterSelectedDate = (journal: JournalModel): boolean => {
+  let allowNavigationToFutureDate: boolean = false;
+
+  Object.keys(journal.slots)
+    .forEach((slot: string) => {
+      if (DateTime.at(journal.selectedDate).isBefore(DateTime.at(slot)) && !isEmpty(journal.slots[slot])) {
+        allowNavigationToFutureDate = true;
+        return;
+      }
+    });
+  return allowNavigationToFutureDate;
+};
+
 export const canNavigateToNextDay = (journal: JournalModel): boolean => {
   let traverseWeekend = false;
   const nextDayAsDate = DateTime.at(journal.selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
@@ -39,7 +51,7 @@ export const canNavigateToNextDay = (journal: JournalModel): boolean => {
     traverseWeekend = true;
   }
 
-  return nextDayAsDate < dayAfterTomorrowAsDate || traverseWeekend;
+  return nextDayAsDate < dayAfterTomorrowAsDate || traverseWeekend || hasSlotsAfterSelectedDate(journal);
 };
 
 export const getAllSlots = (journal: JournalModel): SlotItem[] => {
