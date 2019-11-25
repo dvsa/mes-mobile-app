@@ -51,7 +51,7 @@ export const canNavigateToNextDay = (journal: JournalModel): boolean => {
     traverseWeekend = true;
   }
 
-  return nextDayAsDate < dayAfterTomorrowAsDate || traverseWeekend || hasSlotsAfterSelectedDate(journal);
+  return (nextDayAsDate < dayAfterTomorrowAsDate) || traverseWeekend || hasSlotsAfterSelectedDate(journal);
 };
 
 export const getAllSlots = (journal: JournalModel): SlotItem[] => {

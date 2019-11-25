@@ -356,7 +356,7 @@ describe('JournalSelector', () => {
       expect(hasSlotsAfterSelectedDate(baseJournalData)).toEqual(true);
     });
 
-    it('should return FALSE if slots DO EXIST after journal selected date', () => {
+    it('should return FALSE if slots DO NOT EXIST after journal selected date', () => {
       const journalWithoutSlotsAfterSelectedDate = cloneDeep(baseJournalData);
       journalWithoutSlotsAfterSelectedDate.slots['2019-01-03'] = [];
       expect(hasSlotsAfterSelectedDate(journalWithoutSlotsAfterSelectedDate)).toEqual(false);
