@@ -35,7 +35,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../../office/office-behaviour-map';
+import { behaviourMap } from '../../office/office-behaviour-map.cat-be';
 import {
   DebriefWitnessed,
   DebriefUnwitnessed,
