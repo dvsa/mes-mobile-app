@@ -14,6 +14,7 @@ import { CompressionProviderMock } from '../../../providers/compression/__mocks_
 import { SearchProvider } from '../../../providers/search/search';
 import { SearchProviderMock } from '../../../providers/search/__mocks__/search.mock';
 import { RekeySearchErrorMessages } from '../rekey-search-error-model';
+import { HttpStatusCodes } from '../../../shared/models/http-status-codes';
 
 describe('Rekey Search Effects', () => {
 
@@ -26,11 +27,13 @@ describe('Rekey Search Effects', () => {
   const appRef = '123456';
   const staffNumber = '654321';
 
-  const getTestResultHttpErrorResponse = new HttpErrorResponse({
-    error: 'Error message',
-    status: 400,
-    statusText: 'Bad request',
-  });
+  const getTestResultHttpErrorResponse = (status: HttpStatusCodes = 400): HttpErrorResponse => {
+    return new HttpErrorResponse({
+      status,
+      error: 'Error message',
+      statusText: 'Bad request',
+    });
+  };
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -57,7 +60,8 @@ describe('Rekey Search Effects', () => {
 
   it('should dispatch the SearchBookedTestSuccess action when searched with success', (done) => {
 
-    spyOn(testSearchProvider, 'getTestResult').and.returnValue(asyncError(getTestResultHttpErrorResponse));
+    spyOn(testSearchProvider, 'getTestResult')
+      .and.returnValue(asyncError(getTestResultHttpErrorResponse(HttpStatusCodes.BAD_REQUEST)));
     spyOn(rekeySearchProvider, 'getBooking').and.callThrough();
     spyOn(compressionProvider, 'extractTestSlotResult');
 
@@ -73,7 +77,8 @@ describe('Rekey Search Effects', () => {
 
   it('should dispatch the SearchBookedTestFailure action when searched with failure', (done) => {
 
-    spyOn(testSearchProvider, 'getTestResult').and.returnValue(asyncError(getTestResultHttpErrorResponse));
+    spyOn(testSearchProvider, 'getTestResult')
+      .and.returnValue(asyncError(getTestResultHttpErrorResponse(HttpStatusCodes.BAD_REQUEST)));
     spyOn(rekeySearchProvider, 'getBooking').and.returnValue(asyncError(new HttpErrorResponse({
       error: 'Error message',
       status: 403,
@@ -120,9 +125,10 @@ describe('Rekey Search Effects', () => {
 
   });
 
-  it('should call getBooking if getTestResult fails', (done) => {
+  it('should call getBooking if getTestResult fails with a 400 status code', (done) => {
 
-    spyOn(testSearchProvider, 'getTestResult').and.returnValue(asyncError(getTestResultHttpErrorResponse));
+    spyOn(testSearchProvider, 'getTestResult')
+      .and.returnValue(asyncError(getTestResultHttpErrorResponse(HttpStatusCodes.BAD_REQUEST)));
     spyOn(rekeySearchProvider, 'getBooking').and.callThrough();
 
     actions$.next(new rekeySearchActions.SearchBookedTest(appRef, staffNumber));
@@ -133,6 +139,22 @@ describe('Rekey Search Effects', () => {
         applicationReference: appRef,
       });
       expect(result instanceof rekeySearchActions.SearchBookedTestSuccess).toBeTruthy();
+      done();
+    });
+
+  });
+
+  it('should dispatch a SearchBookedTestFailure action if getTestResult fails with a 500 status code', (done) => {
+
+    spyOn(testSearchProvider, 'getTestResult')
+      .and.returnValue(asyncError(getTestResultHttpErrorResponse(HttpStatusCodes.INTERNAL_SERVER_ERROR)));
+    spyOn(rekeySearchProvider, 'getBooking').and.callThrough();
+
+    actions$.next(new rekeySearchActions.SearchBookedTest(appRef, staffNumber));
+
+    effects.getBooking$.subscribe((result) => {
+      expect(rekeySearchProvider.getBooking).not.toHaveBeenCalled();
+      expect(result instanceof rekeySearchActions.SearchBookedTestFailure).toBeTruthy();
       done();
     });
 

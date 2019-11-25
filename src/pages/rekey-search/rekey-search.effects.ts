@@ -9,7 +9,7 @@ import {
   SEARCH_BOOKED_TEST, SearchBookedTest, SearchBookedTestSuccess, SearchBookedTestFailure,
 } from './rekey-search.actions';
 import { RekeySearchErrorMessages } from './rekey-search-error-model';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 
 @Injectable()
@@ -29,24 +29,25 @@ export class RekeySearchEffects {
     switchMap((action: SearchBookedTest) => {
       return this.testSearchProvider.getTestResult(action.appRef, action.staffNumber).pipe(
         switchMap((response: HttpResponse<any>) => {
-          if (response.status === HttpStatusCodes.OK) {
-            return of(new SearchBookedTestFailure({
-              message: RekeySearchErrorMessages.BookingAlreadyCompleted,
-            }));
-          }
+          return of(new SearchBookedTestFailure({
+            message: RekeySearchErrorMessages.BookingAlreadyCompleted,
+          }));
         }),
-        catchError((err: any) => {
-          const rekeySearchParams = {
-            applicationReference: action.appRef,
-            staffNumber: action.staffNumber,
-          };
-          return this.rekeySearchProvider.getBooking(rekeySearchParams).pipe(
-            map(response => this.compressionProvider.extractTestSlotResult(response.toString())),
-            map((testSlot: any) => new SearchBookedTestSuccess(testSlot, action.staffNumber)),
-            catchError((err: any) => {
-              return of(new SearchBookedTestFailure(err));
-            }),
-          );
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === HttpStatusCodes.BAD_REQUEST) {
+            const rekeySearchParams = {
+              applicationReference: action.appRef,
+              staffNumber: action.staffNumber,
+            };
+            return this.rekeySearchProvider.getBooking(rekeySearchParams).pipe(
+              map(response => this.compressionProvider.extractTestSlotResult(response.toString())),
+              map((testSlot: any) => new SearchBookedTestSuccess(testSlot, action.staffNumber)),
+              catchError((err: any) => {
+                return of(new SearchBookedTestFailure(err));
+              }),
+            );
+          }
+          return of(new SearchBookedTestFailure(err));
         }),
       );
     }),
