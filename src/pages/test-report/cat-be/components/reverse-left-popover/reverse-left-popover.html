@@ -4,19 +4,17 @@
       <ion-col col-36>
       </ion-col>
       <ion-col class="manoeuvre-competencies-container">
-        <div>Control</div>
-        <div>Observation</div>
-        <!-- <manoeuvre-competency 
-          [manoeuvre]="manoeuvreTypes.reverseRight"
+        <manoeuvre-competency 
+          [manoeuvre]="manoeuvreTypes.reverseLeft"
           [competency]="competencies.controlFault"
-          [attr.id]="getId(manoeuvreTypes.reverseRight, competencies.controlFault)"
+          [attr.id]="getId(competencies.controlFault)"
         ></manoeuvre-competency>
         <manoeuvre-competency
           class="second"
-          [attr.id]="getId(manoeuvreTypes.reverseRight, competencies.observationFault)"
-          [manoeuvre]="manoeuvreTypes.reverseRight"
+          [attr.id]="getId(competencies.observationFault)"
+          [manoeuvre]="manoeuvreTypes.reverseLeft"
           [competency]="competencies.observationFault"
-          ></manoeuvre-competency> -->
+          ></manoeuvre-competency>
       </ion-col>
     </ion-row>
   </ion-grid>
