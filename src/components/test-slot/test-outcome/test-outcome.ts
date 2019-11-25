@@ -137,7 +137,7 @@ export class TestOutcomeComponent implements OnInit {
   writeUpTest() {
     this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.category));
     this.store$.dispatch(new ResumingWriteUp(this.slotDetail.slotId.toString()));
-    this.navController.push(CAT_B.OFFICE_PAGE);
+    this.navController.push(this.getOfficePage());
   }
 
   resumeTest() {
@@ -269,6 +269,15 @@ export class TestOutcomeComponent implements OnInit {
         return CAT_B.NON_PASS_FINALISATION_PAGE;
       case TestCategory.BE:
         return CAT_BE.NON_PASS_FINALISATION_PAGE;
+    }
+  }
+
+  getOfficePage(): string {
+    switch (this.category as TestCategory) {
+      case TestCategory.B:
+        return CAT_B.OFFICE_PAGE;
+      case TestCategory.BE:
+        return CAT_BE.OFFICE_PAGE;
     }
   }
 }
