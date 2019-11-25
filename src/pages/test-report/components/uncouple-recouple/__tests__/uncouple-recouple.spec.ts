@@ -23,7 +23,8 @@ import {
   UncoupleRecoupleRemoveFault,
 } from '../../../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
 import { ToggleSeriousFaultMode } from '../../../test-report.actions';
-import { By } from '@angular/platform-browser'
+import { By } from '@angular/platform-browser';
+import * as lodash from 'lodash';
 
 fdescribe('UncoupleRecoupleComponent', () => {
   let fixture: ComponentFixture<UncoupleRecoupleComponent>;
@@ -198,9 +199,10 @@ fdescribe('UncoupleRecoupleComponent', () => {
       });
 
       it('should have added a checked class to the tick button', () => {
-        fixture.detectChanges();
+        spyOn(lodash, 'get').and.returnValue(true);
         component.toggleUncoupleRecouple();
         const tickButton = fixture.debugElement.query(By.css('competency-button.uncouple-recouple-tick'));
+        fixture.detectChanges();
         expect(tickButton.nativeElement.className).toEqual('uncouple-recouple-tick checked');
       });
 
