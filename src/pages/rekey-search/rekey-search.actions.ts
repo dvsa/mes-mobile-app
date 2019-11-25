@@ -33,7 +33,7 @@ export class RekeySearchClearState implements Action {
   readonly type = REKEY_SEARCH_CLEAR_STATE;
 }
 
-export type Types =
+export type RekeySearchActionTypes =
   | RekeySearchViewDidEnter
   | RekeySearchClearState
   | SearchBookedTest

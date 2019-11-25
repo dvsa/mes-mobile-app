@@ -23,7 +23,7 @@ export const initialState: RekeySearchModel = {
   },
 };
 
-export function rekeySearchReducer(state = initialState, action: rekeySearchActions.Types) {
+export function rekeySearchReducer(state = initialState, action: rekeySearchActions.RekeySearchActionTypes) {
   switch (action.type) {
     case rekeySearchActions.REKEY_SEARCH_CLEAR_STATE:
       return initialState;
