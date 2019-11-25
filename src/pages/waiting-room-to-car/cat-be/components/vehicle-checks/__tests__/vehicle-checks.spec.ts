@@ -1,4 +1,3 @@
-
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { IonicModule, ModalController, Config } from 'ionic-angular';
@@ -137,82 +136,93 @@ describe('VehicleChecksCatBEComponent', () => {
         expect(component.everyQuestionHasOutcome()).toBeTruthy();
       });
     });
-  });
 
-  describe('incompleteVehicleChecks', () => {
-    it('should return vehicle checks as false', () => {
-      const result = component.incompleteVehicleChecks();
-      expect(result).toEqual({ vehicleChecks: false });
-    });
-  });
-
-  describe('validateVehicleChecks', () => {
-    beforeEach(() => {
-      const formBuilder: FormBuilder = new FormBuilder();
-      component.formGroup = formBuilder.group({
-        vehicleChecksSelectQuestions: null,
+    describe('incompleteVehicleChecks', () => {
+      it('should return vehicle checks as false', () => {
+        const result = component.incompleteVehicleChecks();
+        expect(result).toEqual({ vehicleChecks: false });
       });
     });
 
-    it('should call incompleteVehicleChecks() if all questions have NOT been answered', () => {
-      spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
-      spyOn(component, 'incompleteVehicleChecks');
-      component.validateVehicleChecks(null);
-      expect(component.incompleteVehicleChecks).toHaveBeenCalled();
-    });
-
-    it('should return null if all questions have been answered', () => {
-      spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
-      spyOn(component, 'incompleteVehicleChecks');
-      const result = component.validateVehicleChecks(null);
-      expect(result).toEqual(null);
-    });
-  });
-
-  describe('invalid', () => {
-    beforeEach(() => {
-      const formBuilder: FormBuilder = new FormBuilder();
-      component.formGroup = formBuilder.group({
-        vehicleChecksSelectQuestions: null,
-      });
-      component.formControl = formBuilder.control({});
-    });
-
-    describe('when form is dirty', () => {
-      it('should return TRUE if all questions are NOT answered', () => {
-        component.formControl.markAsDirty();
+    describe('validateVehicleChecks', () => {
+      it('should call incompleteVehicleChecks() if all questions have NOT been answered', () => {
         spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
-        const result = component.invalid;
+        spyOn(component, 'incompleteVehicleChecks');
+        component.validateVehicleChecks(null);
+        expect(component.incompleteVehicleChecks).toHaveBeenCalled();
+      });
+
+      it('should return null if all questions have been answered', () => {
+        spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
+        spyOn(component, 'incompleteVehicleChecks');
+        const result = component.validateVehicleChecks(null);
+        expect(result).toEqual(null);
+      });
+    });
+
+    describe('invalid', () => {
+
+      beforeEach(() => {
+        const formBuilder: FormBuilder = new FormBuilder();
+        component.formGroup = formBuilder.group({
+          vehicleChecksSelectQuestions: null,
+        });
+        component.formControl = formBuilder.control({});
+      });
+
+      describe('when form is dirty', () => {
+        it('should return TRUE if all questions are NOT answered', () => {
+          component.formControl.markAsDirty();
+          spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
+          const result = component.invalid;
+          expect(result).toEqual(true);
+        });
+
+        it('should return FALSE if all questions are answered', () => {
+          component.formControl.markAsDirty();
+          spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
+          const result = component.invalid;
+          expect(result).toEqual(false);
+        });
+      });
+
+      describe('when form is NOT dirty', () => {
+        it('should return FALSE if all questions are NOT answered', () => {
+          component.formControl.markAsPristine();
+          spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
+          const result = component.invalid;
+          expect(result).toEqual(false);
+        });
+      });
+    });
+
+    describe('ngOnChanges', () => {
+      it('should add the form control', () => {
+        const formBuilder: FormBuilder = new FormBuilder();
+        component.formGroup = formBuilder.group({
+          vehicleChecksSelectQuestions: null,
+        });
+        spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
+        component.ngOnChanges();
+        const result = component.formGroup.contains('vehicleChecksSelectQuestions');
         expect(result).toEqual(true);
       });
 
-      it('should return FALSE if all questions are answered', () => {
-        component.formControl.markAsDirty();
+      it('should validate the vehicle checks', () => {
+        const formBuilder: FormBuilder = new FormBuilder();
+        component.formGroup = formBuilder.group({
+          vehicleChecksSelectQuestions: null,
+        });
         spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
-        const result = component.invalid;
-        expect(result).toEqual(false);
+        spyOn(component, 'validateVehicleChecks');
+        component.ngOnChanges();
+        expect(component.validateVehicleChecks).toHaveBeenCalled();
       });
     });
 
-    describe('when form is NOT dirty', () => {
-      it('should return FALSE if all questions are NOT answered', () => {
-        component.formControl.markAsPristine();
-        spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
-        const result = component.invalid;
-        expect(result).toEqual(false);
-      });
-    });
-  });
+    describe('DOM', () => {
 
-  describe('ngOnChanges', () => {
-    it('should validate the vehicle checks', () => {
-      spyOn(component, 'validateVehicleChecks');
-      component.ngOnChanges();
-      expect(component.validateVehicleChecks).toHaveBeenCalled();
     });
-  });
-
-  describe('DOM', () => {
 
   });
 });
