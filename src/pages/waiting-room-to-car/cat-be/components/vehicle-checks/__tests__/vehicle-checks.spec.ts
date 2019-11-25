@@ -1,5 +1,6 @@
 
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 import { IonicModule, ModalController, Config } from 'ionic-angular';
 import { ModalControllerMock, ConfigMock } from 'ionic-mocks';
 import { VehicleChecksCatBEComponent } from '../vehicle-checks';
@@ -47,12 +48,6 @@ describe('VehicleChecksCatBEComponent', () => {
   }));
 
   describe('Class', () => {
-    describe('isInvalid', () => {
-      it('should return the correct value', () => {
-        expect(component.isInvalid()).toEqual(false);
-      });
-    });
-
     describe('openVehicleChecksModal', () => {
       it('should create the correct model', () => {
         component.openVehicleChecksModal();
@@ -141,6 +136,69 @@ describe('VehicleChecksCatBEComponent', () => {
 
         expect(component.everyQuestionHasOutcome()).toBeTruthy();
       });
+    });
+  });
+
+  describe('invalidVehicleChecks', () => {
+    it('should return vehicle checks as false', () => {
+      const result = component.invalidVehicleChecks(null);
+      expect(result).toEqual({ vehicleChecks: false });
+    });
+  });
+
+  describe('validateVehicleChecks', () => {
+    it('should call invalidVehicleChecks() if all questions have not been answered', () => {
+      const formBuilder: FormBuilder = new FormBuilder();
+      component.formGroup = formBuilder.group({
+        vehicleChecksSelect: null,
+      });
+      spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
+      spyOn(component, 'invalidVehicleChecks');
+      component.validateVehicleChecks();
+      expect(component.invalidVehicleChecks).toHaveBeenCalled();
+    });
+  });
+
+  describe('invalid', () => {
+    beforeEach(() => {
+      const formBuilder: FormBuilder = new FormBuilder();
+      component.formGroup = formBuilder.group({
+        vehicleChecksSelect: null,
+      });
+      component.formControl = formBuilder.control({});
+    });
+
+    describe('when form is dirty', () => {
+      it('should return TRUE if all questions are NOT answered', () => {
+        component.formControl.markAsDirty();
+        spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
+        const result = component.invalid;
+        expect(result).toEqual(true);
+      });
+
+      it('should return FALSE if all questions are answered', () => {
+        component.formControl.markAsDirty();
+        spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
+        const result = component.invalid;
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when form is NOT dirty', () => {
+      it('should return FALSE if all questions are NOT answered', () => {
+        component.formControl.markAsPristine();
+        spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
+        const result = component.invalid;
+        expect(result).toEqual(false);
+      });
+    });
+  });
+
+  describe('ngOnChanges', () => {
+    it('should set dirty to true', () => {
+      spyOn(component, 'validateVehicleChecks');
+      component.ngOnChanges();
+      expect(component.validateVehicleChecks).toHaveBeenCalled();
     });
   });
 

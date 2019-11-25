@@ -1,5 +1,5 @@
-<ion-row class="mes-validated-row mes-row-separator" id="vehicle-checks">
-  <div class="validation-bar" [class.ng-invalid]="isInvalid()"></div>
+<ion-row class="mes-validated-row mes-row-separator" id="vehicle-checks" [formGroup]="formGroup">
+  <div class="validation-bar" [class.ng-invalid]="invalid"></div>
   <ion-col col-32 align-self-center class="component-label">
     <label>Vehicle checks</label>
   </ion-col>
@@ -7,9 +7,13 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col col-48 *ngIf="!everyQuestionHasOutcome()">
-        <button type="button" class="mes-return-button" (click)="openVehicleChecksModal()" ion-button>
-          <h3>Select questions</h3>
-        </button>
+        <ion-input 
+          type="button"
+          formControlName="vehicleChecksSelect"
+          class="mes-return-button"
+          (click)="openVehicleChecksModal()"
+          value="Select questions"
+        ></ion-input>
       </ion-col>
       <ion-col col-48 align-self-center class="vehicle-check-score" *ngIf="everyQuestionHasOutcome()">
         <ion-row class="vehicle-checks-result" *ngIf="!hasDrivingFault() && !hasSeriousFault()">
@@ -34,7 +38,7 @@
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>
-      <div class="validation-text" [class.ng-invalid]="isInvalid()" id="waiting-room-to-car-vehicle-checks-validation-text">
+      <div class="validation-text" [class.ng-invalid]="invalid" id="waiting-room-to-car-vehicle-checks-validation-text">
         Please complete vehicle checks
       </div>
     </ion-row>
