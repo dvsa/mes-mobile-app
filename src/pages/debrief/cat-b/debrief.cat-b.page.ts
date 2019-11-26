@@ -47,7 +47,7 @@ interface DebriefPageState {
 }
 @IonicPage()
 @Component({
-  selector: 'debrief-cat-b-page',
+  selector: '.debrief-cat-b-page',
   templateUrl: 'debrief.cat-b.page.html',
 })
 

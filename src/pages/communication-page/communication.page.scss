@@ -1,4 +1,4 @@
-communication-cat-be-page {
+div[class^="communication-cat-"] {
   ion-content>div {
     background-color: map-get($colors, "mes-white");
   }
