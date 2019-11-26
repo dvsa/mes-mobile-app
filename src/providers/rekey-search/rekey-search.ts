@@ -12,7 +12,7 @@ export class RekeySearchProvider {
     private urlProvider: UrlProvider,
   ) { }
 
-  getTest(rekeySearchParams: RekeySearchParams): Observable<Object> {
+  getBooking(rekeySearchParams: RekeySearchParams): Observable<Object> {
     return this.httpClient.get(
       this.urlProvider.getRekeySearchUrl(rekeySearchParams.staffNumber),
       {

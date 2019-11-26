@@ -2,15 +2,15 @@
 import * as rekeySearchActions from './rekey-search.actions';
 import { createFeatureSelector } from '@ngrx/store';
 import { TestSlot } from '@dvsa/mes-journal-schema';
+import { RekeySearchError, RekeySearchErrorMessages } from './rekey-search-error-model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export type RekeySearchModel = {
   isLoading: boolean,
   hasSearched: boolean,
   staffNumber: string,
   bookedTestSlot: TestSlot,
-  err: {
-    message: string,
-  },
+  err: RekeySearchError | HttpErrorResponse,
 };
 
 export const initialState: RekeySearchModel = {
@@ -19,12 +19,14 @@ export const initialState: RekeySearchModel = {
   staffNumber: '',
   bookedTestSlot: {},
   err: {
-    message: '',
+    message: '' as RekeySearchErrorMessages,
   },
 };
 
-export function rekeySearchReducer(state = initialState, action: rekeySearchActions.Types) {
+export function rekeySearchReducer(state = initialState, action: rekeySearchActions.RekeySearchActionTypes) {
   switch (action.type) {
+    case rekeySearchActions.REKEY_SEARCH_CLEAR_STATE:
+      return initialState;
     case rekeySearchActions.SEARCH_BOOKED_TEST:
       return {
         ...state,
