@@ -12,6 +12,7 @@ import { RekeySearchProvider } from '../../providers/rekey-search/rekey-search';
 import { CompressionProvider } from '../../providers/compression/compression';
 import { TestSlotComponentsModule } from '../../components/test-slot/test-slot-components.module';
 import { SlotProvider } from '../../providers/slot/slot';
+import { SearchProvider } from '../../providers/search/search';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { SlotProvider } from '../../providers/slot/slot';
   ],
   providers: [
     RekeySearchProvider,
+    SearchProvider,
     CompressionProvider,
     SlotProvider,
   ],

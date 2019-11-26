@@ -7,6 +7,8 @@ export const getHasSearched = (rekeySearch: RekeySearchModel) => rekeySearch.has
 
 export const getStaffNumber = (rekeySearch: RekeySearchModel) => rekeySearch.staffNumber;
 
+export const getRekeySearchError = (rekeySearch: RekeySearchModel) => rekeySearch.err;
+
 export const getBookedTestSlot = (rekeySearch: RekeySearchModel) => {
 
   // The reason why we are null checking in a selector is that

@@ -45,6 +45,7 @@ import { QuestionProvider } from '../../providers/question/question';
 import { TestCategory } from '../../shared/models/test-category';
 import { FaultCountProvider } from '../../providers/fault-count/fault-count';
 import { FaultSummaryProvider } from '../../providers/fault-summary/fault-summary';
+import { HttpResponse } from '@angular/common/http';
 
 @IonicPage()
 @Component({
@@ -91,6 +92,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     this.subscription = this.searchProvider
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
+        map((response: HttpResponse<any>): string => response.body),
         map(data => this.testResult = this.compressionProvider.extractTestResult(data)),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
