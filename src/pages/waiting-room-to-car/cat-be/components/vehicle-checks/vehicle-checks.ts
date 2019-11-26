@@ -59,7 +59,7 @@ export class VehicleChecksCatBEComponent implements OnChanges {
     return { vehicleChecks: false };
   }
 
-  validateVehicleChecks(c: FormControl) {
+  validateVehicleChecks(c: FormControl): null | { vehicleChecks: boolean } {
     return this.everyQuestionHasOutcome() ? null : this.incompleteVehicleChecks();
   }
 

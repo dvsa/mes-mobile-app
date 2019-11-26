@@ -98,7 +98,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
   form: FormGroup;
 
   @ViewChild(VehicleChecksCatBEComponent)
-  child: VehicleChecksCatBEComponent;
+  vehicleChecks: VehicleChecksCatBEComponent;
 
   showEyesightFailureConfirmation: boolean = false;
 
@@ -235,7 +235,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
 
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
-    if (this.form.valid && this.child.everyQuestionHasOutcome()) {
+    if (this.form.valid && this.vehicleChecks.everyQuestionHasOutcome()) {
       this.navController.push(CAT_BE.TEST_REPORT_PAGE).then(() => {
         // remove Waiting Room To Car Page
         const view = this.navController.getViews().find(view => view.id === CAT_BE.WAITING_ROOM_TO_CAR_PAGE);
