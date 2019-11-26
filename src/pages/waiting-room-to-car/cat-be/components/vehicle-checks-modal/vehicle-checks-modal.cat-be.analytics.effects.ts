@@ -88,7 +88,7 @@ export class VehicleChecksModalAnalyticsEffects {
     )),
     switchMap(([action, tests]: [ShowMeQuestionOutcomeChanged, TestsModel]) => {
       const eventText = `show me question ${action.index + 1} outcome changed`;
-      const outComeText = action.showMeQuestionOutcome === 'P' ? 'pass' : 'driving fault';
+      const outComeText = action.showMeQuestionOutcome === 'P' ? 'correct' : 'driving fault';
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.VEHICLE_CHECKS, tests),
         eventText,
@@ -131,7 +131,7 @@ export class VehicleChecksModalAnalyticsEffects {
     )),
     switchMap(([action, tests]: [TellMeQuestionOutcomeChanged, TestsModel]) => {
       const eventText = `tell me question ${action.index + 1} outcome changed`;
-      const outComeText = action.tellMeQuestionOutcome === 'P' ? 'pass' : 'driving fault';
+      const outComeText = action.tellMeQuestionOutcome === 'P' ? 'correct' : 'driving fault';
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.VEHICLE_CHECKS, tests),
         eventText,
