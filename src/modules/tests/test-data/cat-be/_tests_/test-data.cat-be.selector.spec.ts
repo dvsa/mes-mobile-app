@@ -461,6 +461,9 @@ describe('TestDataSelectors', () => {
               },
             ],
           },
+          uncoupleRecouple: {
+            selected: true,
+          },
         } as CatBEUniqueTypes.TestData;
 
         expect(getCatBELegalRequirements(state)).toEqual({
@@ -472,6 +475,7 @@ describe('TestDataSelectors', () => {
           manoeuvre: true,
           vehicleChecks: true,
           eco: true,
+          uncoupleRecouple: true,
         } as CatBELegalRequirements);
       });
       it('should return false for the data if it is not in the state', () => {
@@ -484,6 +488,7 @@ describe('TestDataSelectors', () => {
           manoeuvre: false,
           vehicleChecks: false,
           eco: false,
+          uncoupleRecouple: false,
         } as CatBELegalRequirements);
       });
     });

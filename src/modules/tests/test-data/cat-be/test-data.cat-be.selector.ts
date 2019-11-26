@@ -69,7 +69,7 @@ export const getCatBELegalRequirements = (data: CatBEUniqueTypes.TestData): CatB
     manoeuvre: hasManoeuvreBeenCompleted(data) || false,
     vehicleChecks: hasVehicleChecksBeenCompleted(data) || false,
     eco: data.eco.completed || false,
-    uncoupleRecouple: data.uncoupleRecouple.selected || false,
+    uncoupleRecouple: get(data , 'uncoupleRecouple.selected', false),
   };
 };
 
