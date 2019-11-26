@@ -1,0 +1,16 @@
+<ng-container>
+  <div class="popover-content">
+    <div class="manoeuvre-competencies-container">
+      <manoeuvre-competency 
+        [attr.id]="getId(competencies.controlFault)"
+        [manoeuvre]="manoeuvreTypes.reverseLeft"
+        [competency]="competencies.controlFault"
+      ></manoeuvre-competency>
+      <manoeuvre-competency
+        [attr.id]="getId(competencies.observationFault)"
+        [manoeuvre]="manoeuvreTypes.reverseLeft"
+        [competency]="competencies.observationFault"
+        ></manoeuvre-competency>
+    </div>
+  </div>
+</ng-container>

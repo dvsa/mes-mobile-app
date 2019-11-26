@@ -50,12 +50,12 @@ export class CompetencyButtonComponent {
     clearTimeout(this.rippleTimeout);
   }
 
-  onTouchStart():void {
+  onTouchStart(): void {
     clearTimeout(this.touchTimeout);
     this.touchState = true;
   }
 
-  onTouchEnd():void {
+  onTouchEnd(): void {
     // defer the removal of the touch state to allow the page to render
     this.touchTimeout = setTimeout(() => this.touchState = false, this.touchStateDelay);
   }

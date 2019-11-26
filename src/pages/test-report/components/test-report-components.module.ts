@@ -17,12 +17,14 @@ import { EndTestModalModule } from './end-test-modal/end-test-modal.module';
 import { LegalRequirementsModalModule } from './legal-requirements-modal/legal-requirements-modal.module';
 import { EtaInvalidModalModule } from './eta-invalid-modal/eta-invalid-modal.module';
 import { UncoupleRecoupleComponent } from './uncouple-recouple/uncouple-recouple';
+import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-competency';
 
 @NgModule({
   declarations: [
     EtaComponent,
     CompetencyComponent,
     CompetencyButtonComponent,
+    ManoeuvreCompetencyComponent,
     DrivingFaultSummaryComponent,
     ToolbarComponent,
     SeriousTooltipComponent,
@@ -44,6 +46,7 @@ import { UncoupleRecoupleComponent } from './uncouple-recouple/uncouple-recouple
     EtaComponent,
     CompetencyComponent,
     CompetencyButtonComponent,
+    ManoeuvreCompetencyComponent,
     DrivingFaultSummaryComponent,
     ToolbarComponent,
     SeriousTooltipComponent,

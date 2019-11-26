@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { ControlledStopComponent } from './controlled-stop/controlled-stop';
 import { ManoeuvresComponent } from './manoeuvres/manoeuvres';
 import { VehicleCheckComponent } from './vehicle-check/vehicle-check';
-import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-competency';
 import { ManoeuvresPopoverComponent } from './manoeuvres-popover/manoeuvres-popover';
 import { IonicModule } from 'ionic-angular';
 import { CommonModule } from '@angular/common';
@@ -13,7 +12,6 @@ import { TestReportComponentsModule } from '../../components/test-report-compone
   declarations: [
     ControlledStopComponent,
     ManoeuvresComponent,
-    ManoeuvreCompetencyComponent,
     ManoeuvresPopoverComponent,
     VehicleCheckComponent,
   ],
@@ -26,7 +24,6 @@ import { TestReportComponentsModule } from '../../components/test-report-compone
   exports:[
     ControlledStopComponent,
     ManoeuvresComponent,
-    ManoeuvreCompetencyComponent,
     ManoeuvresPopoverComponent,
     VehicleCheckComponent,
   ],
