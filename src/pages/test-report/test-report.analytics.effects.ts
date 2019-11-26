@@ -32,6 +32,7 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getEco, getTestRequirements } from '../../modules/tests/test-data/test-data.selector';
 import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/Common';
+import * as uncoupleRecoupleActions from '../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -678,6 +679,75 @@ export class TestReportAnalyticsEffects {
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
         `${legalRequirementsLabels['vehicleChecks']} - ${legalRequirementToggleValues.uncompleted}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  uncoupleRecoupleAddDrivingFault$ = this.actions$.pipe(
+    ofType(
+      uncoupleRecoupleActions.UNCOUPLE_RECOUPLE_ADD_DRIVING_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [uncoupleRecoupleActions.UncoupleRecoupleAddDrivingFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
+        'Uncouple recouple',
+        1,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  uncoupleRecoupleAddSeriousFault$ = this.actions$.pipe(
+    ofType(
+      uncoupleRecoupleActions.UNCOUPLE_RECOUPLE_ADD_SERIOUS_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [uncoupleRecoupleActions.UncoupleRecoupleAddSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
+        'Uncouple recouple',
+        1,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  uncoupleRecoupleAddDangerousFault$ = this.actions$.pipe(
+    ofType(
+      uncoupleRecoupleActions.UNCOUPLE_RECOUPLE_ADD_DANGEROUS_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [uncoupleRecoupleActions.UncoupleRecoupleAddDangerousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
+        'Uncouple recouple',
+        1,
       );
       return of(new AnalyticRecorded());
     }),

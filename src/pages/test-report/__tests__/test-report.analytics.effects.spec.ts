@@ -39,8 +39,9 @@ import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions
 import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../../shared/constants/legal-requirements/catb-legal-requirements';
 import { TestCategory } from '../../../shared/models/test-category';
+import * as uncoupleRecoupleActions from '../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
 
-describe('Test Report Analytics Effects', () => {
+fdescribe('Test Report Analytics Effects', () => {
 
   let effects: TestReportAnalyticsEffects;
   let actions$: ReplaySubject<any>;
@@ -1131,6 +1132,123 @@ describe('Test Report Analytics Effects', () => {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
           `${legalRequirementsLabels['vehicleChecks']} - ${legalRequirementToggleValues.uncompleted}`,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('uncoupleRecoupleAddDrivingFault', () => {
+    it('should call logEvent for this competency', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.BE));
+      // ACT
+      actions$.next(new uncoupleRecoupleActions.UncoupleRecoupleAddDrivingFault());
+      // ASSERT
+      effects.uncoupleRecoupleAddDrivingFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_DRIVING_FAULT,
+          'Uncouple recouple',
+          1,
+        );
+        done();
+      });
+    });
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new uncoupleRecoupleActions.UncoupleRecoupleAddDrivingFault());
+      // ASSERT
+      effects.uncoupleRecoupleAddDrivingFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_DRIVING_FAULT}`,
+          'Uncouple recouple',
+          1,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('uncoupleRecoupleAddSeriousFault', () => {
+    it('should call logEvent for this competency', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.BE));
+      // ACT
+      actions$.next(new uncoupleRecoupleActions.UncoupleRecoupleAddSeriousFault());
+      // ASSERT
+      effects.uncoupleRecoupleAddSeriousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_SERIOUS_FAULT,
+          'Uncouple recouple',
+          1,
+        );
+        done();
+      });
+    });
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new uncoupleRecoupleActions.UncoupleRecoupleAddSeriousFault());
+      // ASSERT
+      effects.uncoupleRecoupleAddSeriousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_SERIOUS_FAULT}`,
+          'Uncouple recouple',
+          1,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('uncoupleRecoupleAddDangerousFault', () => {
+    it('should call logEvent for this competency', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.BE));
+      // ACT
+      actions$.next(new uncoupleRecoupleActions.UncoupleRecoupleAddDangerousFault());
+      // ASSERT
+      effects.uncoupleRecoupleAddDangerousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_DANGEROUS_FAULT,
+          'Uncouple recouple',
+          1,
+        );
+        done();
+      });
+    });
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new uncoupleRecoupleActions.UncoupleRecoupleAddDangerousFault());
+      // ASSERT
+      effects.uncoupleRecoupleAddDangerousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_DANGEROUS_FAULT}`,
+          'Uncouple recouple',
+          1,
         );
         done();
       });
