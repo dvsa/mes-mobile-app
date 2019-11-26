@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/test-data.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
 import { getVehicleChecks } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
@@ -14,7 +14,7 @@ import {
   ShowMeQuestionDrivingFault,
   ShowMeQuestionPassed,
   ShowMeQuestionRemoveFault,
-} from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+} from '../../../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
 import { getTestReportState } from '../../../test-report.reducer';
 import { isSeriousMode, isDangerousMode, isRemoveFaultMode } from '../../../test-report.selector';

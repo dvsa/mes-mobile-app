@@ -63,8 +63,8 @@ import {
   getETAFaultText,
   getEco,
   getEcoFaultText,
-} from '../../../modules/tests/test-data/test-data.selector';
-import { getTestData } from '../../../modules/tests/test-data/test-data.cat-be.reducer';
+} from '../../../modules/tests/test-data/common/test-data.selector';
+import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
@@ -73,14 +73,16 @@ import {
   Identification,
   IndependentDriving,
 } from '@dvsa/mes-test-schema/categories/Common';
-import { AddDangerousFaultComment } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
-import { AddSeriousFaultComment } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import { AddDrivingFaultComment } from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import {
+  AddDangerousFaultComment,
+} from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
+import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
+import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import {
   AddShowMeTellMeComment,
-} from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
-import { AddManoeuvreComment } from '../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
-import { EyesightTestAddComment } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
+} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+import { AddManoeuvreComment } from '../../../modules/tests/test-data/cat-b/manoeuvres/manoeuvres.actions';
+import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map.cat-be';
@@ -92,13 +94,15 @@ import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '../../../shared/models/test-category';
-import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import {
   AddUncoupleRecoupleComment,
-} from '../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
+} from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { vehicleChecksExist } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
+import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import {
+  vehicleChecksExist,
+} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;

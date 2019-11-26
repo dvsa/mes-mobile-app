@@ -12,13 +12,15 @@ import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { StoreModule, Store } from '@ngrx/store';
-import { AddDangerousFault } from '../../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
-import { AddSeriousFault } from '../../../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import { AddDrivingFault } from '../../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import {
+  AddDangerousFault,
+} from '../../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
+import { AddSeriousFault } from '../../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
+import { AddDrivingFault } from '../../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import {
   EyesightTestFailed,
   EyesightTestPassed,
-} from '../../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
+} from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
 import { DebriefComponentsModule } from '../../components/debrief-components.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';

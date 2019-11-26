@@ -5,7 +5,7 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/test-data.cat-be.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { TestCategory } from '../../../../../shared/models/test-category';

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { map, switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 
-import * as dangerousFaultsActions from '../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
-import * as seriousFaultsActions from '../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import * as drivingFaultsActions from '../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import * as dangerousFaultsActions
+  from '../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
+import * as seriousFaultsActions from '../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
+import * as drivingFaultsActions from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import * as testSummaryActions from '../../modules/tests/test-summary/test-summary.actions';
 import * as officeActions from './office.actions';
 import * as testStatusActions from '../../modules/tests/test-status/test-status.actions';

@@ -6,11 +6,13 @@ import { DirectivesModule } from '../../../../directives/directives.module';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { TestReportComponentsModule } from '../../components/test-report-components.module';
 import { ReverseLeftPopoverComponent } from './reverse-left-popover/reverse-left-popover';
+import { UncoupleRecoupleComponent } from './uncouple-recouple/uncouple-recouple';
 
 @NgModule({
   declarations: [
     ReverseLeftComponent,
     ReverseLeftPopoverComponent,
+    UncoupleRecoupleComponent,
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,7 @@ import { ReverseLeftPopoverComponent } from './reverse-left-popover/reverse-left
   exports: [
     ReverseLeftComponent,
     ReverseLeftPopoverComponent,
+    UncoupleRecoupleComponent,
   ],
 })
 export class TestReportCatBEComponentsModule { }
