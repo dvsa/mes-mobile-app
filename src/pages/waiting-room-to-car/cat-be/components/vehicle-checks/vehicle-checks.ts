@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { CAT_BE } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
 import { App } from '../../../../../app/app.component';
@@ -11,20 +12,23 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
   selector: 'vehicle-checks-cat-be',
   templateUrl: 'vehicle-checks.html',
 })
-export class VehicleChecksCatBEComponent {
+export class VehicleChecksCatBEComponent implements OnChanges {
 
   @Input() vehicleChecksScore: VehicleChecksScore;
   @Input() vehicleChecks: CatBEUniqueTypes.VehicleChecks;
+
+  @Input()
+  vehicleChecksSelectQuestions: string;
+
+  @Input()
+  formGroup: FormGroup;
+
+  formControl: FormControl;
 
   constructor(
     private modalController: ModalController,
     private app: App,
   ) { }
-
-  isInvalid(): boolean {
-    // TODO - need to implment validation + unit test
-    return false;
-  }
 
   openVehicleChecksModal(): void {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
@@ -52,5 +56,29 @@ export class VehicleChecksCatBEComponent {
 
   hasDrivingFault(): boolean {
     return this.vehicleChecksScore.drivingFaults > 0;
+  }
+
+  incompleteVehicleChecks(): { vehicleChecks: boolean } {
+    return { vehicleChecks: false };
+  }
+
+  validateVehicleChecks(c: FormControl): null | { vehicleChecks: boolean } {
+    return this.everyQuestionHasOutcome() ? null : this.incompleteVehicleChecks();
+  }
+
+  ngOnChanges(): void {
+    if (!this.formControl) {
+      this.formControl = new FormControl({
+        value: 'Select questions',
+        disabled: false,
+      },
+      [this.validateVehicleChecks.bind(this)]);
+      this.formGroup.addControl('vehicleChecksSelectQuestions', this.formControl);
+    }
+    this.formControl.patchValue('Select questions');
+  }
+
+  get invalid(): boolean {
+    return !this.formControl.valid && this.formControl.dirty;
   }
 }

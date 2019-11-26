@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
@@ -68,6 +68,7 @@ import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.
 import { getVehicleChecksCatBE } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { VehicleChecksCatBEComponent } from './components/vehicle-checks/vehicle-checks';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -96,11 +97,8 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
 
-  @ViewChild('registrationInput')
-  regisrationInput: ElementRef;
-
-  @ViewChild('instructorRegistrationInput')
-  instructorRegistrationInput: ElementRef;
+  @ViewChild(VehicleChecksCatBEComponent)
+  vehicleChecks: VehicleChecksCatBEComponent;
 
   showEyesightFailureConfirmation: boolean = false;
 
