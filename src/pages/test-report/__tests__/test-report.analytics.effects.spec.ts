@@ -41,7 +41,7 @@ import { legalRequirementsLabels, legalRequirementToggleValues }
 import { TestCategory } from '../../../shared/models/test-category';
 import * as uncoupleRecoupleActions from '../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
 
-fdescribe('Test Report Analytics Effects', () => {
+describe('Test Report Analytics Effects', () => {
 
   let effects: TestReportAnalyticsEffects;
   let actions$: ReplaySubject<any>;
