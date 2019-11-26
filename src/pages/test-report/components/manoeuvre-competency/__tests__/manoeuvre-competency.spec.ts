@@ -1,40 +1,40 @@
-import { AppModule } from '../../../../../../app/app.module';
-import { StoreModel } from '../../../../../../shared/models/store.model';
-import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../../modules/tests/test-data/test-data.constants';
+import { AppModule } from '../../../../../app/app.module';
+import { StoreModel } from '../../../../../shared/models/store.model';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
 import {
   DrivingFaultsBadgeComponent,
-} from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
-import { DateTimeProvider } from '../../../../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../../../../providers/date-time/__mocks__/date-time.mock';
+} from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
+import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 import {
   SeriousFaultBadgeComponent,
-} from '../../../../../../components/common/serious-fault-badge/serious-fault-badge';
+} from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
 import {
   DangerousFaultBadgeComponent,
-} from '../../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
-import { testReportReducer } from '../../../../test-report.reducer';
+} from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
+import { testReportReducer } from '../../../test-report.reducer';
 import { ManoeuvreCompetencyComponent } from '../manoeuvre-competency';
 import {
   AddManoeuvreDrivingFault,
   AddManoeuvreDangerousFault,
   AddManoeuvreSeriousFault,
   RemoveManoeuvreFault,
-} from '../../../../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
+} from '../../../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
 import { By } from '@angular/platform-browser';
 import { IonicModule } from 'ionic-angular';
 import { MockComponent } from 'ng-mocks';
 import { StoreModule, Store } from '@ngrx/store';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import {
   ToggleDangerousFaultMode,
   ToggleSeriousFaultMode,
   ToggleRemoveFaultMode,
-} from '../../../../test-report.actions';
-import { NavigationStateProvider } from '../../../../../../providers/navigation-state/navigation-state';
+} from '../../../test-report.actions';
+import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
 import {
   NavigationStateProviderMock,
-} from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+} from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('ManoeuvreCompetencyComponent', () => {
   let fixture: ComponentFixture<ManoeuvreCompetencyComponent>;

@@ -1,0 +1,20 @@
+reverse-left-popover {
+  background-color: map-get($colors, "mes-light-grey");
+  height: 220px;
+  width: calc(100% - 12px);
+  left: 6px;
+  margin-top: 9px;
+  z-index: 270;
+
+  .popover-content {
+    margin-left: 68px;
+    border: 0 none map-get($colors, "mes-white");
+  }
+
+  .manoeuvre-competencies-container {
+    margin-top: 40px;
+    .manoeuvre-competency-button {
+      margin-bottom: 10px;
+    }
+  }
+}

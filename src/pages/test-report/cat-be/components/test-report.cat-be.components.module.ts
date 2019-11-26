@@ -5,10 +5,12 @@ import { ReverseLeftComponent } from './reverse-left/reverse-left';
 import { DirectivesModule } from '../../../../directives/directives.module';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { TestReportComponentsModule } from '../../components/test-report-components.module';
+import { ReverseLeftPopoverComponent } from './reverse-left-popover/reverse-left-popover';
 
 @NgModule({
   declarations: [
     ReverseLeftComponent,
+    ReverseLeftPopoverComponent,
   ],
   imports: [
     CommonModule,
@@ -19,6 +21,7 @@ import { TestReportComponentsModule } from '../../components/test-report-compone
   ],
   exports: [
     ReverseLeftComponent,
+    ReverseLeftPopoverComponent,
   ],
 })
 export class TestReportCatBEComponentsModule { }
