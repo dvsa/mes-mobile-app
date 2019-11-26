@@ -171,25 +171,23 @@ describe('VehicleChecksCatBEComponent', () => {
       });
 
       describe('when form is dirty', () => {
-        it('should return TRUE if all questions are NOT answered', () => {
+        it('should return TRUE if the form control is invalid', () => {
           component.formControl.markAsDirty();
-          spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
+          component.formControl.setErrors({ vehicleChecks: false });
           const result = component.invalid;
           expect(result).toEqual(true);
         });
 
-        it('should return FALSE if all questions are answered', () => {
+        it('should return FALSE if the form control is valid', () => {
           component.formControl.markAsDirty();
-          spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
           const result = component.invalid;
           expect(result).toEqual(false);
         });
       });
 
       describe('when form is NOT dirty', () => {
-        it('should return FALSE if all questions are NOT answered', () => {
+        it('should return FALSE if the form control is invalid', () => {
           component.formControl.markAsPristine();
-          spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
           const result = component.invalid;
           expect(result).toEqual(false);
         });
@@ -217,6 +215,16 @@ describe('VehicleChecksCatBEComponent', () => {
         spyOn(component, 'validateVehicleChecks');
         component.ngOnChanges();
         expect(component.validateVehicleChecks).toHaveBeenCalled();
+      });
+
+      it('should patch the form control value', () => {
+        const formBuilder: FormBuilder = new FormBuilder();
+        component.formGroup = formBuilder.group({
+          vehicleChecksSelectQuestions: null,
+        });
+        component.formControl = formBuilder.control({});
+        component.ngOnChanges();
+        expect(component.formControl.value).toEqual('Select questions');
       });
     });
 

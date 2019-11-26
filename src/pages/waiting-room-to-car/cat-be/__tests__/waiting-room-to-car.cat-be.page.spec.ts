@@ -167,5 +167,19 @@ describe('WaitingRoomToCarCatBEPage', () => {
         .not
         .toHaveBeenCalledWith(new WaitingRoomToCarValidationError('notRequiredControl is blank'));
     }));
+
+    it('should navigate to the test report page', fakeAsync(() => {
+      fixture.detectChanges();
+
+      component.form = new FormGroup({
+        requiredControl1: new FormControl({ value: 1, disabled: false }, [Validators.required]),
+        requiredControl2: new FormControl({ value: 1, disabled: false }, [Validators.required]),
+        notRequiredControl: new FormControl(null),
+      });
+
+      component.onSubmit();
+      tick();
+      expect(component.navController.push).toHaveBeenCalledWith('TestReportCatBEPage');
+    }));
   });
 });

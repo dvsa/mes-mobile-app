@@ -7,13 +7,19 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col col-48 *ngIf="!everyQuestionHasOutcome()">
-        <ion-input 
+        <!--<ion-input 
           type="button"
           formControlName="vehicleChecksSelectQuestions"
           class="mes-return-button"
           (click)="openVehicleChecksModal()"
           value="Select questions"
-        ></ion-input>
+        ></ion-input>-->
+        <input
+          type="button"
+          formControlName="vehicleChecksSelectQuestions"
+          class="mes-return-button"
+          (click)="openVehicleChecksModal()"
+        >
       </ion-col>
       <ion-col col-48 align-self-center class="vehicle-check-score" *ngIf="everyQuestionHasOutcome()">
         <ion-row class="vehicle-checks-result" *ngIf="!hasDrivingFault() && !hasSeriousFault()">

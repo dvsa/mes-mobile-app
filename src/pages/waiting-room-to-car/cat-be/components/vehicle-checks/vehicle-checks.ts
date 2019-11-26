@@ -18,6 +18,9 @@ export class VehicleChecksCatBEComponent implements OnChanges {
   @Input() vehicleChecks: CatBEUniqueTypes.VehicleChecks;
 
   @Input()
+  vehicleChecksSelectQuestions: string;
+
+  @Input()
   formGroup: FormGroup;
 
   formControl: FormControl;
@@ -72,9 +75,10 @@ export class VehicleChecksCatBEComponent implements OnChanges {
       [this.validateVehicleChecks.bind(this)]);
       this.formGroup.addControl('vehicleChecksSelectQuestions', this.formControl);
     }
+    this.formControl.patchValue('Select questions');
   }
 
   get invalid(): boolean {
-    return !this.everyQuestionHasOutcome() && this.formControl.dirty;
+    return !this.formControl.valid && this.formControl.dirty;
   }
 }
