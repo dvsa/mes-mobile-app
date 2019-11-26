@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
-import { CatBLegalRequirements } from '../../../../modules/tests/test-data/test-data.models';
-import { legalRequirementsLabels } from '../../../../shared/constants/legal-requirements/catb-legal-requirements';
+import { LegalRequirements } from '../../../../modules/tests/test-data/test-data.models';
+import { legalRequirementsLabels } from '../../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { ModalEvent } from '../../test-report.constants';
 
 @IonicPage()
@@ -11,8 +11,7 @@ import { ModalEvent } from '../../test-report.constants';
 })
 export class LegalRequirementsModal {
 
-  // TODO - Change the type to make this generic for other test categories
-  legalRequirements: CatBLegalRequirements;
+  legalRequirements: LegalRequirements;
 
   constructor(
     private viewCtrl: ViewController,

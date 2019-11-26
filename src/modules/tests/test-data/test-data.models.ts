@@ -5,8 +5,8 @@ export type FaultPayload = {
   newFaultCount: number,
 };
 
-// This type is used for test report validation
-// TODO: Delete this type and use the one from the api-definitions
+export type LegalRequirements = CatBLegalRequirements | CatBELegalRequirements;
+
 export type CatBLegalRequirements = {
   normalStart1: boolean,
   normalStart2: boolean,
@@ -26,4 +26,5 @@ export type CatBELegalRequirements = {
   manoeuvre: boolean,
   vehicleChecks: boolean,
   eco: boolean,
+  uncoupleRecouple: boolean,
 };
