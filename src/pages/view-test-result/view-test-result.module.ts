@@ -7,6 +7,7 @@ import { CompressionProvider } from '../../providers/compression/compression';
 import { EffectsModule } from '@ngrx/effects';
 import { ViewTestResultAnalyticsEffects } from './view-test-result.analytics.effects';
 import { ComponentsModule } from '../../components/common/common-components.module';
+import { FaultSummaryProvider } from '../../providers/fault-summary/fault-summary';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ComponentsModule } from '../../components/common/common-components.modu
   providers: [
     SearchProvider,
     CompressionProvider,
+    FaultSummaryProvider,
   ],
 })
 export class ViewTestResultPageModule { }
