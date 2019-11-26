@@ -31,7 +31,7 @@ import { LegalRequirementComponent } from '../../components/legal-requirement/le
 import { EtaComponent } from '../../components/examiner-takes-action/eta';
 import { initialState } from '../../../../modules/tests/test-data/test-data.reducer';
 import { ControlledStopComponent } from '../components/controlled-stop/controlled-stop';
-import { ManoeuvreCompetencyComponent } from '../components/manoeuvre-competency/manoeuvre-competency';
+import { ManoeuvreCompetencyComponent } from '../../components/manoeuvre-competency/manoeuvre-competency';
 import { VehicleCheckComponent } from '../components/vehicle-check/vehicle-check';
 import { EcoComponent } from '../../components/eco/eco';
 import { TestReportValidatorProvider } from '../../../../providers/test-report-validator/test-report-validator';

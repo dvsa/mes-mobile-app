@@ -1,20 +1,20 @@
 import { Observable } from 'rxjs/Observable';
-import { StoreModel } from '../../../../../shared/models/store.model';
-import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../modules/tests/test-data/test-data.constants';
 import {
   AddManoeuvreDrivingFault,
   AddManoeuvreSeriousFault,
   AddManoeuvreDangerousFault,
   RemoveManoeuvreFault,
-} from '../../../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
-import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/test-data.reducer';
-import { getTests } from '../../../../../modules/tests/tests.reducer';
-import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-import { getTestReportState } from '../../../test-report.reducer';
-import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../../test-report.selector';
-import { manoeuvreCompetencyLabels } from '../../../../../shared/constants/competencies/catb-manoeuvres';
-import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+} from '../../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
+import { getCurrentTest } from '../../../../modules/tests/tests.selector';
+import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { getManoeuvres } from '../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+import { getTestReportState } from '../../test-report.reducer';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
+import { manoeuvreCompetencyLabels } from '../../../../shared/constants/competencies/catb-manoeuvres';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
@@ -22,7 +22,7 @@ import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
+import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../test-report.actions';
 
 interface ManoeuvreCompetencyComponentState {
   isRemoveFaultMode$: Observable<boolean>;

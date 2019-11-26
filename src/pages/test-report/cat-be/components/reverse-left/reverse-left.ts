@@ -10,6 +10,7 @@ import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-be/tes
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { TestCategory } from '../../../../../shared/models/test-category';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import { OverlayCallback } from '../../../test-report.model';
 
 @Component({
   selector: 'reverse-left',
@@ -24,7 +25,7 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
   controlLabel: string;
 
   @Input()
-  clickCallback: () => {};
+  clickCallback: OverlayCallback;
 
   selectedReverseLeft: boolean;
 
@@ -70,6 +71,13 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
   }
 
   togglePopoverDisplay = (): void => {
-    console.log('should display popover');
+    this.displayPopover = !this.displayPopover;
+    this.toggleOverlay();
+  }
+
+  toggleOverlay(): void {
+    if (this.clickCallback) {
+      this.clickCallback.callbackMethod();
+    }
   }
 }

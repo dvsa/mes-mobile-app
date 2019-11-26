@@ -11,7 +11,7 @@ import { StoreModel } from '../../../../../../shared/models/store.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { By } from '@angular/platform-browser';
-import { ManoeuvreCompetencyComponent } from '../../manoeuvre-competency/manoeuvre-competency';
+import { ManoeuvreCompetencyComponent } from '../../../../components/manoeuvre-competency/manoeuvre-competency';
 import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../../modules/tests/test-data/test-data.constants';
 import {
   DrivingFaultsBadgeComponent,
