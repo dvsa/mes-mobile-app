@@ -166,7 +166,10 @@ export class TestOutcomeComponent implements OnInit {
     } else {
       this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.category, true));
     }
-    this.navController.push(CAT_B.WAITING_ROOM_PAGE);
+    switch (this.category) {
+      case TestCategory.B: this.navController.push(CAT_B.WAITING_ROOM_PAGE);
+      case TestCategory.BE: this.navController.push(CAT_BE.WAITING_ROOM_PAGE);
+    }
   }
 
   displayRekeyModal = (): void => {
