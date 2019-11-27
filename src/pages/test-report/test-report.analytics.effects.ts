@@ -36,6 +36,7 @@ import { getEco, getTestRequirements } from '../../modules/tests/test-data/commo
 import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/Common';
 import * as uncoupleRecoupleActions
   from '../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
+import * as reverseLeftActions from './cat-be/components/reverse-left/reverse-left.actions';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -752,6 +753,24 @@ export class TestReportAnalyticsEffects {
         'Uncouple recouple',
         1,
       );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  reverseLeftPopoverOpened$ = this.actions$.pipe(
+    ofType(reverseLeftActions.REVERSE_LEFT_POPOVER_OPENED),
+    concatMap((action: reverseLeftActions.ReverseLeftPopoverOpened) => {
+      this.analytics.logEvent(AnalyticsEventCategories.TEST_REPORT, AnalyticsEvents.REVERSE_LEFT_POPOVER_OPENED);
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  reverseLeftPopoverClosed$ = this.actions$.pipe(
+    ofType(reverseLeftActions.REVERSE_LEFT_POPOVER_CLOSED),
+    concatMap((action: reverseLeftActions.ReverseLeftPopoverClosed) => {
+      this.analytics.logEvent(AnalyticsEventCategories.TEST_REPORT, AnalyticsEvents.REVERSE_LEFT_POPOVER_CLOSED);
       return of(new AnalyticRecorded());
     }),
   );
