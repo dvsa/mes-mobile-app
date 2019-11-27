@@ -167,8 +167,12 @@ export class TestOutcomeComponent implements OnInit {
       this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.category, true));
     }
     switch (this.category) {
-      case TestCategory.B: this.navController.push(CAT_B.WAITING_ROOM_PAGE);
-      case TestCategory.BE: this.navController.push(CAT_BE.WAITING_ROOM_PAGE);
+      case TestCategory.B:
+        this.navController.push(CAT_B.WAITING_ROOM_PAGE);
+        break;
+      case TestCategory.BE:
+        this.navController.push(CAT_BE.WAITING_ROOM_PAGE);
+        break;
     }
   }
 
