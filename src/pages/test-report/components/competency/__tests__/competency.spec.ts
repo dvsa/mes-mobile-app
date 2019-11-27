@@ -9,15 +9,15 @@ import {
   AddDrivingFault,
   RemoveDrivingFault,
   ThrottleAddDrivingFault,
-} from '../../../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+} from '../../../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import {
   AddSeriousFault,
   RemoveSeriousFault,
-} from '../../../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+} from '../../../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import {
   AddDangerousFault,
   RemoveDangerousFault,
-} from '../../../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+} from '../../../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { MockComponent } from 'ng-mocks';
 import { CompetencyButtonComponent } from '../../../components/competency-button/competency-button';
 import {

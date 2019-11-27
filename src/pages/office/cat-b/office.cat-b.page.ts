@@ -64,7 +64,7 @@ import {
   getEco,
   getEcoFaultText,
   getShowMeQuestionOptions,
-} from '../../../modules/tests/test-data/test-data.selector';
+} from '../../../modules/tests/test-data/common/test-data.selector';
 // TODO: update import for category specific page version
 import {
   getVehicleChecks,
@@ -72,7 +72,7 @@ import {
   getShowMeQuestion,
   getTellMeQuestion,
 } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
@@ -81,16 +81,20 @@ import {
   Identification,
   IndependentDriving,
 } from '@dvsa/mes-test-schema/categories/Common';
-import { AddDangerousFaultComment } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
-import { AddSeriousFaultComment } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import { AddDrivingFaultComment } from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import {
+  AddDangerousFaultComment,
+} from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
+import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
+import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import {
   ShowMeQuestionSelected,
   AddShowMeTellMeComment,
-} from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
-import { AddControlledStopComment } from '../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
-import { AddManoeuvreComment } from '../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
-import { EyesightTestAddComment } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
+} from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
+import {
+  AddControlledStopComment,
+} from '../../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
+import { AddManoeuvreComment } from '../../../modules/tests/test-data/cat-b/manoeuvres/manoeuvres.actions';
+import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map';

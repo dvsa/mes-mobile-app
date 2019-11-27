@@ -9,23 +9,23 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import {
   ThrottleAddDrivingFault,
   RemoveDrivingFault,
-} from '../../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+} from '../../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import {
   AddSeriousFault,
   RemoveSeriousFault,
-} from '../../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+} from '../../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import {
   AddDangerousFault,
   RemoveDangerousFault,
-} from '../../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+} from '../../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
+import { getTestData } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import {
   hasSeriousFault,
   hasDangerousFault,
-} from '../../../../modules/tests/test-data/test-data.selector';
+} from '../../../../modules/tests/test-data/common/test-data.selector';
 import { getDrivingFaultCount } from '../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';

@@ -7,11 +7,11 @@ import { getCurrentTest } from '../../../modules/tests/tests.selector';
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
 import {
   getETA,
   getEco,
-} from '../../../modules/tests/test-data/test-data.selector';
+} from '../../../modules/tests/test-data/common/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';

@@ -13,7 +13,7 @@ import { VehicleChecksViewDidEnter } from '../vehicle-checks-modal.cat-be.action
 import { AnalyticRecorded } from '../../../../../../providers/analytics/analytics.actions';
 import { AnalyticsEventCategories, AnalyticsScreenNames } from '../../../../../../providers/analytics/analytics.model';
 import * as VehicleChecksActions
-  from '../../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
+  from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 
 import {
   QuestionOutcome,

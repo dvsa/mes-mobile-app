@@ -8,7 +8,7 @@ import {
   getEcoFaultText,
   getShowMeQuestionOptions,
   hasEyesightTestBeenCompleted,
-} from '../../test-data.selector';
+} from '../../common/test-data.selector';
 import {
   getDrivingFaultCount,
   getManoeuvres,
@@ -23,7 +23,7 @@ import {
 import { Competencies } from '../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { CatBLegalRequirements } from '../../test-data.models';
-import { initialState } from '../../test-data.reducer';
+import { initialState } from '../test-data.reducer';
 import { OutcomeBehaviourMapProvider } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../../../../../pages/office/office-behaviour-map';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';

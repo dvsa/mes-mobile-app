@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { StartTestReportPracticeTest } from '../../../../modules/tests/tests.actions';
 import { TellMeQuestionDrivingFault, TellMeQuestionCorrect }
-  from '../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+  from '../../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import { ModalEvent } from '../practice-test-modal/practice-test-modal.constants';
 import { testReportPracticeModeSlot } from '../../../../modules/tests/__mocks__/tests.mock';
 import { CAT_B } from '../../../page-names.constants';

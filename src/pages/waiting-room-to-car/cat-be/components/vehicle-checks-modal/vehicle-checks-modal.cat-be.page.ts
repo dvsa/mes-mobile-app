@@ -16,14 +16,14 @@ import {
   getVehicleChecksCatBE,
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
-} from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/test-data.cat-be.reducer';
+} from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
-} from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
+} from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 import {
  NUMBER_OF_TELL_ME_QUESTIONS,
 } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';

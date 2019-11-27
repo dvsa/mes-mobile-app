@@ -27,7 +27,7 @@ import {
   ShowMeQuestionDrivingFault,
   ShowMeQuestionPassed,
   ShowMeQuestionRemoveFault,
-} from '../../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+} from '../../../../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 import { TestCategory } from '../../../../../../shared/models/test-category';
 

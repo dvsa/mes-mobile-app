@@ -14,7 +14,7 @@ import {
   TogglePlanningEco,
   ToggleControlEco,
 }
-from '../../../../../modules/tests/test-data/eco/eco.actions';
+from '../../../../../modules/tests/test-data/common/eco/eco.actions';
 import { TestCategory } from '../../../../../shared/models/test-category';
 
 describe('Eco component', () => {

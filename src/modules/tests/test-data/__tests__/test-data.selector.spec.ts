@@ -1,6 +1,6 @@
 import {
   getShowMeQuestionOptions,
-} from '../test-data.selector';
+} from '../common/test-data.selector';
 import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../../../../pages/office/office-behaviour-map';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';

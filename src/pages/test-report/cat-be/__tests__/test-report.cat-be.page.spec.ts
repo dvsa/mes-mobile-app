@@ -26,7 +26,7 @@ import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from '../../test-report.reducer';
 import { LegalRequirementComponent } from '../../components/legal-requirement/legal-requirement';
 import { EtaComponent } from '../../components/examiner-takes-action/eta';
-import { initialState } from '../../../../modules/tests/test-data/test-data.reducer';
+import { initialState } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
 import { EcoComponent } from '../../components/eco/eco';
 import { TestReportValidatorProvider } from '../../../../providers/test-report-validator/test-report-validator';
 import {
@@ -37,7 +37,7 @@ import { CAT_BE } from '../../../page-names.constants';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
-import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/uncouple-recouple';
+import { UncoupleRecoupleComponent } from '../components/uncouple-recouple/uncouple-recouple';
 import { ReverseLeftComponent } from '../components/reverse-left/reverse-left';
 import { ReverseLeftPopoverComponent } from '../components/reverse-left-popover/reverse-left-popover';
 
