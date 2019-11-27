@@ -65,7 +65,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
     const showMeQuestion: QuestionResult = {
       code: 'S01',
     };
-    it('should log an analyics event with show me question info', () => {
+    it('should log an analyics event with show me question info', (done) => {
       store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
       actions$.next(new VehicleChecksActions.ShowMeQuestionSelected(showMeQuestion, questionNumber));
       effects.showMeQuestionChanged$.subscribe((result) => {
@@ -75,6 +75,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
           `show me question ${questionNumber + 1} changed`,
           showMeQuestion.code,
           );
+        done();
       });
     });
   });
@@ -82,7 +83,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
   describe('showMeQuestionOutComeChanged$', () => {
     const questionOutcome: QuestionOutcome = 'P';
     const questionNumber: number = 1;
-    it('should log an analytics event with show me question outcome info', () => {
+    it('should log an analytics event with show me question outcome info', (done) => {
       store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
       actions$.next(new VehicleChecksActions.ShowMeQuestionOutcomeChanged(questionOutcome, questionNumber));
       effects.showMeQuestionOutComeChanged$.subscribe((result) => {
@@ -92,6 +93,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
           `show me question ${questionNumber + 1} outcome changed`,
           'correct',
         );
+        done();
       });
     });
   });
@@ -101,7 +103,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
     const tellMeQuestion: QuestionResult = {
       code: 'T01',
     };
-    it('should log an analyics event with tell me question info', () => {
+    it('should log an analyics event with tell me question info', (done) => {
       store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
       actions$.next(new VehicleChecksActions.TellMeQuestionSelected(tellMeQuestion, questionNumber));
       effects.tellMeQuestionChanged$.subscribe((result) => {
@@ -111,6 +113,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
           `tell me question ${questionNumber + 1} changed`,
           tellMeQuestion.code,
         );
+        done();
       });
     });
   });
@@ -118,7 +121,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
   describe('tellMeQuestionOutComeChanged$', () => {
     const questionOutcome: QuestionOutcome = 'DF';
     const questionNumber: number = 1;
-    it('should log an analytics event with tell me question outcome info', () => {
+    it('should log an analytics event with tell me question outcome info', (done) => {
       store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
       actions$.next(new VehicleChecksActions.TellMeQuestionOutcomeChanged(questionOutcome, questionNumber));
       effects.tellMeQuestionOutComeChanged$.subscribe((result) => {
@@ -128,6 +131,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
           `tell me question ${questionNumber + 1} outcome changed`,
           'driving fault',
         );
+        done();
       });
     });
   });
