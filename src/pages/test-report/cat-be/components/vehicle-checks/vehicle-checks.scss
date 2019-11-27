@@ -1,0 +1,32 @@
+vehicle-checks {
+  competency-button {
+    position: relative;
+  }
+  competency-button.vehicle-checks-competency {
+    display: flex;       // this styling is neccessary to ensure z-index
+    flex-flow: column;   // works on competency buttons
+    .competency-button {
+      padding-left: 5px;
+      padding-right: 5px;
+      border: 0;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+
+
+      driving-faults-badge {
+        width: 30px;
+      }
+
+      .fault-wrapper {
+        display: flex;
+        width: 30px;
+        justify-content: flex-end;
+        align-items: center;
+
+        dangerous-fault-badge {
+          margin-left: -22px;
+        }
+      }
+    }
+  }
+}

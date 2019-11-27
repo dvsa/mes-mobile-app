@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<competency-button class="vehicle-checks-competency"   [ripple]="false" >
+  <driving-faults-badge class="driving-faults" [count]="2"></driving-faults-badge>
+  <div class='competency-label'>Show me / Tell me</div>
+  <div class="fault-wrapper">
+    <serious-fault-badge [showBadge]="true"></serious-fault-badge>
+  </div>
+</competency-button>
