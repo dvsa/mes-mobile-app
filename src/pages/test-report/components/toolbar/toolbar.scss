@@ -18,6 +18,13 @@ toolbar {
     background-color: map-get($colors, "mes-white");
     margin: 0;
     align-self: center;
+    .button-inner {
+      font-size: 19px;
+      font-weight: 500;
+      text-align: center;
+      letter-spacing: 0.32px;
+      line-height: 25px;
+    }
     &.inactive {
       background-color: map-get($colors, "mes-white");
       color: map-get($colors-gds, "gds-black");
@@ -26,14 +33,6 @@ toolbar {
     &.active {
       background-color: map-get($colors-gds, "gds-black");
       color: map-get($colors, "mes-white");
-    }
-    span {
-      font-size: 19px;
-      font-weight: 500;
-      text-align: center;
-      letter-spacing: 0.32px;
-      line-height: 25px;
-      color: map-get($colors-gds, "gds-black");
     }
   }
   #serious-button {
