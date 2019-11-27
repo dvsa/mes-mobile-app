@@ -1,5 +1,5 @@
-
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 import { IonicModule, ModalController, Config } from 'ionic-angular';
 import { ModalControllerMock, ConfigMock } from 'ionic-mocks';
 import { VehicleChecksCatBEComponent } from '../vehicle-checks';
@@ -47,12 +47,6 @@ describe('VehicleChecksCatBEComponent', () => {
   }));
 
   describe('Class', () => {
-    describe('isInvalid', () => {
-      it('should return the correct value', () => {
-        expect(component.isInvalid()).toEqual(false);
-      });
-    });
-
     describe('openVehicleChecksModal', () => {
       it('should create the correct model', () => {
         component.openVehicleChecksModal();
@@ -142,9 +136,101 @@ describe('VehicleChecksCatBEComponent', () => {
         expect(component.everyQuestionHasOutcome()).toBeTruthy();
       });
     });
-  });
 
-  describe('DOM', () => {
+    describe('incompleteVehicleChecks', () => {
+      it('should return vehicle checks as false', () => {
+        const result = component.incompleteVehicleChecks();
+        expect(result).toEqual({ vehicleChecks: false });
+      });
+    });
+
+    describe('validateVehicleChecks', () => {
+      it('should call incompleteVehicleChecks() if all questions have NOT been answered', () => {
+        spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
+        spyOn(component, 'incompleteVehicleChecks');
+        component.validateVehicleChecks(null);
+        expect(component.incompleteVehicleChecks).toHaveBeenCalled();
+      });
+
+      it('should return null if all questions have been answered', () => {
+        spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
+        spyOn(component, 'incompleteVehicleChecks');
+        const result = component.validateVehicleChecks(null);
+        expect(result).toEqual(null);
+      });
+    });
+
+    describe('invalid', () => {
+
+      beforeEach(() => {
+        const formBuilder: FormBuilder = new FormBuilder();
+        component.formGroup = formBuilder.group({
+          vehicleChecksSelectQuestions: null,
+        });
+        component.formControl = formBuilder.control({});
+      });
+
+      describe('when form is dirty', () => {
+        it('should return TRUE if the form control is invalid', () => {
+          component.formControl.markAsDirty();
+          component.formControl.setErrors({ vehicleChecks: false });
+          const result = component.invalid;
+          expect(result).toEqual(true);
+        });
+
+        it('should return FALSE if the form control is valid', () => {
+          component.formControl.markAsDirty();
+          const result = component.invalid;
+          expect(result).toEqual(false);
+        });
+      });
+
+      describe('when form is NOT dirty', () => {
+        it('should return FALSE if the form control is invalid', () => {
+          component.formControl.markAsPristine();
+          const result = component.invalid;
+          expect(result).toEqual(false);
+        });
+      });
+    });
+
+    describe('ngOnChanges', () => {
+      it('should add the form control', () => {
+        const formBuilder: FormBuilder = new FormBuilder();
+        component.formGroup = formBuilder.group({
+          vehicleChecksSelectQuestions: null,
+        });
+        spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
+        component.ngOnChanges();
+        const result = component.formGroup.contains('vehicleChecksSelectQuestions');
+        expect(result).toEqual(true);
+      });
+
+      it('should validate the vehicle checks', () => {
+        const formBuilder: FormBuilder = new FormBuilder();
+        component.formGroup = formBuilder.group({
+          vehicleChecksSelectQuestions: null,
+        });
+        spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
+        spyOn(component, 'validateVehicleChecks');
+        component.ngOnChanges();
+        expect(component.validateVehicleChecks).toHaveBeenCalled();
+      });
+
+      it('should patch the form control value', () => {
+        const formBuilder: FormBuilder = new FormBuilder();
+        component.formGroup = formBuilder.group({
+          vehicleChecksSelectQuestions: null,
+        });
+        component.formControl = formBuilder.control({});
+        component.ngOnChanges();
+        expect(component.formControl.value).toEqual('Select questions');
+      });
+    });
+
+    describe('DOM', () => {
+
+    });
 
   });
 });

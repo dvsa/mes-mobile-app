@@ -106,7 +106,7 @@
   margin-bottom: 36px;
   width: 100%;
   height: 56px;
-  &.activated {
+  &.activated, &:active {
     background:  map-get($colors-gds, gds-grey-2);
   }
   h3 {
