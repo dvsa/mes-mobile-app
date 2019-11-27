@@ -78,6 +78,12 @@ describe('JournalNavigationComponent', () => {
         const subHeader: HTMLElement = componentEl.query(By.css('h3')).nativeElement;
         expect(subHeader.textContent).toBe(dateTimeProvider.now().format('dddd D MMMM YYYY'));
       });
+
+      it('shows next day button', () => {
+        fixture.detectChanges();
+        const nextDayContainer: DebugElement = componentEl.query(By.css('#next-day-container'));
+        expect(nextDayContainer).not.toBeNull();
+      });
     });
 
     describe('selected date is day in the middle', () => {
@@ -103,6 +109,12 @@ describe('JournalNavigationComponent', () => {
         fixture.detectChanges();
         const subHeader: HTMLElement = componentEl.query(By.css('h3')).nativeElement;
         expect(subHeader.textContent).toBe(DateTime.at(nextDay).format('D MMMM YYYY'));
+      });
+
+      it('shows next day button', () => {
+        fixture.detectChanges();
+        const nextDayContainer: DebugElement = componentEl.query(By.css('#next-day-container'));
+        expect(nextDayContainer).not.toBeNull();
       });
     });
 
