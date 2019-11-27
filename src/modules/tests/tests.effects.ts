@@ -138,9 +138,9 @@ export class TestsEffects {
       let slot: TestSlot;
       let examiner: Examiner;
 
-      let examinerBooked: string;
-      const examinerConducted: string = employeeId;
       const examinerKeyed: string = employeeId;
+
+      let examinerBooked: string;
 
       if (isRekeySearch) {
         examinerBooked = getStaffNumber(rekeySearch);
@@ -169,7 +169,7 @@ export class TestsEffects {
         new PopulateTestCentre(extractTestCentre(slot)),
         new testStatusActions.SetTestStatusBooked(startTestAction.slotId.toString()),
         new SetExaminerBooked(parseInt(examinerBooked, 10) ? parseInt(examinerBooked, 10) : null),
-        new SetExaminerConducted(parseInt(examinerConducted, 10) ? parseInt(examinerConducted, 10) : null),
+        new SetExaminerConducted(parseInt(examinerBooked, 10) ? parseInt(examinerBooked, 10) : null),
         new SetExaminerKeyed(parseInt(examinerKeyed, 10) ? parseInt(examinerKeyed, 10) : null),
         new PopulateConductedLanguage(conductedLanguage),
         new PopulateTestSchemaVersion(version),
