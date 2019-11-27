@@ -110,7 +110,7 @@ export class TestReportValidatorProvider {
     !data.testRequirements.normalStart1 && result.push(legalRequirementsLabels.normalStart1);
     !data.testRequirements.normalStart2 && result.push(legalRequirementsLabels.normalStart2);
     !data.testRequirements.downhillStart && result.push(legalRequirementsLabels.downhillStart);
-    !data.testRequirements.uphillStart && result.push(legalRequirementsLabels.downhillStart);
+    !data.testRequirements.uphillStart && result.push(legalRequirementsLabels.uphillStart);
     !data.testRequirements.angledStartControlledStop && result.push(legalRequirementsLabels.angledStartControlledStop);
     !hasManoeuvreBeenCompletedCatBE(data) && result.push(legalRequirementsLabels.manoeuvre);
     !hasVehicleChecksBeenCompletedCatBE(data) && result.push(legalRequirementsLabels.vehicleChecks);

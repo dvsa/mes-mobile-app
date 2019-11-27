@@ -49,6 +49,9 @@ import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious
 import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { TestCategory } from '../../../shared/models/test-category';
+import {
+  getTestRequirementsCatBE,
+} from '../../../modules/tests/test-data/cat-be/test-requirements/test-requirements.cat-be.reducer';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -58,6 +61,7 @@ interface TestReportPageState {
   manoeuvres$: Observable<boolean>;
   isEtaValid$: Observable<boolean>;
   testData$: Observable<CatBEUniqueTypes.TestData>;
+  testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
 }
 
 @IonicPage()
@@ -137,6 +141,10 @@ export class TestReportCatBEPage extends BasePageComponent {
       ),
       testData$: currentTest$.pipe(
         select(getTestData),
+      ),
+      testRequirements$: currentTest$.pipe(
+        select(getTestData),
+        select(getTestRequirementsCatBE),
       ),
     };
     this.setupSubscription();

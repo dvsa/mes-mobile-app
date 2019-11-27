@@ -46,6 +46,9 @@ import { OverlayCallback } from '../test-report.model';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { hasManoeuvreBeenCompletedCatB } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { TestCategory } from '../../../shared/models/test-category';
+import {
+  getTestRequirementsCatB,
+} from '../../../modules/tests/test-data/cat-b/test-requirements/test-requirements.reducer';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -55,6 +58,7 @@ interface TestReportPageState {
   manoeuvres$: Observable<boolean>;
   isEtaValid$: Observable<boolean>;
   testData$: Observable<CatBUniqueTypes.TestData>;
+  testRequirements$: Observable<CatBUniqueTypes.TestRequirements>;
 }
 
 @IonicPage()
@@ -139,6 +143,12 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
+      ),
+      testRequirements$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getTestRequirementsCatB),
       ),
     };
     this.setupSubscription();
