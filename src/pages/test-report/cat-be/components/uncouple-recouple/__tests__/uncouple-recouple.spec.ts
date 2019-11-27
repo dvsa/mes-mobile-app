@@ -1,28 +1,30 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../../../shared/models/store.model';
+import { StoreModel } from '../../../../../../shared/models/store.model';
 import { IonicModule } from 'ionic-angular';
-import { TestCategory } from '../../../../../shared/models/test-category';
-import { TickIndicatorComponent } from '../../../../../components/common/tick-indicator/tick-indicator';
+import { TestCategory } from '../../../../../../shared/models/test-category';
+import { TickIndicatorComponent } from '../../../../../../components/common/tick-indicator/tick-indicator';
 import {
   DrivingFaultsBadgeComponent,
-} from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
-import { testsReducer } from '../../../../../modules/tests/tests.reducer';
+} from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
+import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import {
   DangerousFaultBadgeComponent,
-} from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
-import { CompetencyButtonComponent } from '../../competency-button/competency-button';
-import { testReportReducer } from '../../../test-report.reducer';
+} from '../../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
+import { CompetencyButtonComponent } from '../../../../components/competency-button/competency-button';
+import { testReportReducer } from '../../../../test-report.reducer';
 import { MockComponent } from 'ng-mocks';
-import { SeriousFaultBadgeComponent } from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
-import { StartTest } from '../../../../../modules/tests/tests.actions';
+import {
+  SeriousFaultBadgeComponent,
+} from '../../../../../../components/common/serious-fault-badge/serious-fault-badge';
+import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { UncoupleRecoupleComponent } from '../uncouple-recouple';
-import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 import {
   UncoupleRecoupleAddDrivingFault,
   UncoupleRecoupleRemoveFault,
-} from '../../../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
-import { ToggleSeriousFaultMode } from '../../../test-report.actions';
+} from '../../../../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
+import { ToggleSeriousFaultMode } from '../../../../test-report.actions';
 import { By } from '@angular/platform-browser';
 
 describe('UncoupleRecoupleComponent', () => {

@@ -41,7 +41,8 @@ import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions
 import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../../shared/constants/legal-requirements/catb-legal-requirements';
 import { TestCategory } from '../../../shared/models/test-category';
-import * as uncoupleRecoupleActions from '../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
+import * as uncoupleRecoupleActions
+  from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
 
 describe('Test Report Analytics Effects', () => {
 
