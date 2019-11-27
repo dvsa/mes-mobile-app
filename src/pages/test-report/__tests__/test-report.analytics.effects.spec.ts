@@ -4,14 +4,16 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule, Store } from '@ngrx/store';
 import { TestReportAnalyticsEffects } from '../test-report.analytics.effects';
 import * as testsActions from '../../../modules/tests/tests.actions';
-import * as controlledStopActions from '../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
-import * as dangerousFaultsActions from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
-import * as drivingFaultsActions from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
-import * as seriousFaultsActions from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import * as manoeuvresActions from '../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
-import * as vehicleChecksActions from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
-import * as testRequirementsActions from '../../../modules/tests/test-data/test-requirements/test-requirements.actions';
-import * as ecoActions from '../../../modules/tests/test-data/eco/eco.actions';
+import * as controlledStopActions from '../../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
+import * as dangerousFaultsActions
+  from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
+import * as drivingFaultsActions from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
+import * as seriousFaultsActions from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
+import * as manoeuvresActions from '../../../modules/tests/test-data/cat-b/manoeuvres/manoeuvres.actions';
+import * as vehicleChecksActions from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
+import * as testRequirementsActions
+  from '../../../modules/tests/test-data/cat-b/test-requirements/test-requirements.actions';
+import * as ecoActions from '../../../modules/tests/test-data/common/eco/eco.actions';
 import * as testReportActions from '../test-report.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
@@ -39,7 +41,8 @@ import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions
 import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../../shared/constants/legal-requirements/catb-legal-requirements';
 import { TestCategory } from '../../../shared/models/test-category';
-import * as uncoupleRecoupleActions from '../../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
+import * as uncoupleRecoupleActions
+  from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
 
 describe('Test Report Analytics Effects', () => {
 

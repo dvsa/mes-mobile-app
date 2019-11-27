@@ -9,14 +9,16 @@ import {
   AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents, AnalyticsLabels,
 } from '../../providers/analytics/analytics.model';
 import * as testReportActions from '../../pages/test-report/test-report.actions';
-import * as controlledStopActions from '../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
-import * as dangerousFaultsActions from '../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
-import * as drivingFaultsActions from '../../modules/tests/test-data/driving-faults/driving-faults.actions';
-import * as seriousFaultsActions from '../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import * as manoeuvresActions from '../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
-import * as vehicleChecksActions from '../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
-import * as testRequirementsActions from '../../modules/tests/test-data/test-requirements/test-requirements.actions';
-import * as ecoActions from '../../modules/tests/test-data/eco/eco.actions';
+import * as controlledStopActions from '../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
+import * as dangerousFaultsActions
+  from '../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
+import * as drivingFaultsActions from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
+import * as seriousFaultsActions from '../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
+import * as manoeuvresActions from '../../modules/tests/test-data/cat-b/manoeuvres/manoeuvres.actions';
+import * as vehicleChecksActions from '../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
+import * as testRequirementsActions
+  from '../../modules/tests/test-data/cat-b/test-requirements/test-requirements.actions';
+import * as ecoActions from '../../modules/tests/test-data/common/eco/eco.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
 import {
@@ -29,10 +31,11 @@ import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text'
 import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../shared/constants/legal-requirements/catb-legal-requirements';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
-import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
-import { getEco, getTestRequirements } from '../../modules/tests/test-data/test-data.selector';
+import { getTestData } from '../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getEco, getTestRequirements } from '../../modules/tests/test-data/common/test-data.selector';
 import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/Common';
-import * as uncoupleRecoupleActions from '../../modules/tests/test-data/uncouple-recouple/uncouple-recouple.actions';
+import * as uncoupleRecoupleActions
+  from '../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
 
 @Injectable()
 export class TestReportAnalyticsEffects {

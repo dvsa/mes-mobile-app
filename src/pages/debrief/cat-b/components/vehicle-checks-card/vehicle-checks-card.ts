@@ -1,17 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { StoreModel } from '../../../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { QuestionOutcome } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { getTests } from '../../../../../modules/tests/tests.reducer';
-import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/test-data.reducer';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { getCurrentTest } from '../../../../modules/tests/tests.selector';
+import { getTestData } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
 // TODO: update import for category specific component
-import { getVehicleChecks } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+import { getVehicleChecks } from '../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+import {
+  tellMeQuestionHasFault,
+  hasVehicleChecksFault,
+  getShowMeQuestionOutcome,
+} from './vehicle-checks-card.selector';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { map } from 'rxjs/operators';
 
 interface VehicleChecksCardComponentState {
@@ -44,13 +49,13 @@ export class VehicleChecksCardComponent implements OnInit, OnDestroy {
 
     this.componentState = {
       showMeQuestionOutcome$: vehicleChecks$.pipe(
-        select(VehicleChecksCardComponent.getShowMeQuestionOutcome),
+        select(getShowMeQuestionOutcome),
       ),
       tellMeQuestionHasFault$: vehicleChecks$.pipe(
-        select(VehicleChecksCardComponent.tellMeQuestionHasFault),
+        select(tellMeQuestionHasFault),
       ),
       hasVehicleChecksFault$: vehicleChecks$.pipe(
-        select(VehicleChecksCardComponent.hasVehicleChecksFault),
+        select(hasVehicleChecksFault),
       ),
     };
 
@@ -62,16 +67,6 @@ export class VehicleChecksCardComponent implements OnInit, OnDestroy {
     ).subscribe();
 
   }
-
-  static tellMeQuestionHasFault = (vehicleChecks: CatBUniqueTypes.VehicleChecks): boolean =>
-    vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF
-
-  static getShowMeQuestionOutcome = (vehicleChecks: CatBUniqueTypes.VehicleChecks): QuestionOutcome =>
-    vehicleChecks.showMeQuestion.outcome
-
-  static hasVehicleChecksFault = (vehicleChecks: CatBUniqueTypes.VehicleChecks): boolean =>
-  (vehicleChecks.tellMeQuestion.outcome && vehicleChecks.tellMeQuestion.outcome !== CompetencyOutcome.P)
-      || vehicleChecks.showMeQuestion.outcome && vehicleChecks.showMeQuestion.outcome !== CompetencyOutcome.P
 
   ngOnDestroy(): void {
     if (this.subscription) {

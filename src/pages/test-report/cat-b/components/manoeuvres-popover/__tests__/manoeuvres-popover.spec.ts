@@ -6,7 +6,7 @@ import { ManoeuvresPopoverComponent } from '../manoeuvres-popover';
 import { AppModule } from '../../../../../../app/app.module';
 import {
   RecordManoeuvresSelection, AddManoeuvreDrivingFault, AddManoeuvreSeriousFault, AddManoeuvreDangerousFault,
-} from '../../../../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
+} from '../../../../../../modules/tests/test-data/cat-b/manoeuvres/manoeuvres.actions';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';

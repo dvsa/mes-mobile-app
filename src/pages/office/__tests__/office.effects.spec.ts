@@ -3,9 +3,11 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
-import { AddDrivingFaultComment } from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
-import { AddSeriousFaultComment } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import { AddDangerousFaultComment } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
+import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
+import {
+  AddDangerousFaultComment,
+} from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import * as testActions  from '../../../modules/tests/tests.actions';
 import * as testStatusActions from '../../../modules/tests/test-status/test-status.actions';
 import * as officeActions from '../office.actions';

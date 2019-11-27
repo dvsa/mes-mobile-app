@@ -45,27 +45,29 @@ import {
   EyesightTestReset,
   EyesightTestPassed,
   EyesightTestFailed,
-} from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
+} from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
   QuestionOutcomes,
-} from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+} from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import {
   hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/test-data.selector';
+} from '../../../modules/tests/test-data/common/test-data.selector';
 import {
   hasEyesightTestGotSeriousFault,
 } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
-import { getTestData } from '../../../modules/tests/test-data/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_BE } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '../../../shared/models/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
-import { getVehicleChecksCatBE } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
+import {
+  getVehicleChecksCatBE,
+} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { VehicleChecksCatBEComponent } from './components/vehicle-checks/vehicle-checks';

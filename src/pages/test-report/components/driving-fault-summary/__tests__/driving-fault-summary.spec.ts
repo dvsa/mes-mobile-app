@@ -9,7 +9,7 @@ import { ConfigMock } from 'ionic-mocks';
 import { Subscription } from 'rxjs/Subscription';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StartTest } from '../../../../../modules/tests/tests.actions';
-import { AddDrivingFault } from '../../../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import { AddDrivingFault } from '../../../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import { Competencies } from '../../../../../modules/tests/test-data/test-data.constants';
 import { TestCategory } from '../../../../../shared/models/test-category';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';

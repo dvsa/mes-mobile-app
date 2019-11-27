@@ -17,7 +17,7 @@ import {
   ShowMeQuestionSelected,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
-} from '../../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
+} from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 
 describe('VehicleChecksCatBEModal', () => {

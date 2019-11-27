@@ -29,7 +29,7 @@ import {
   LegalRequirements,
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
-import { getTestData } from '../../../modules/tests/test-data/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import {
@@ -46,9 +46,9 @@ import { ModalEvent } from '../test-report.constants';
 import { CAT_BE } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { AddDrivingFault } from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
-import { AddSeriousFault } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import { AddDangerousFault } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
+import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
+import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
 interface TestReportPageState {

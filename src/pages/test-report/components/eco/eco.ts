@@ -4,13 +4,13 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
-import { getEco } from '../../../../modules/tests/test-data/test-data.selector';
+import { getTestData } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getEco } from '../../../../modules/tests/test-data/common/test-data.selector';
 import {
   ToggleEco,
   ToggleControlEco,
   TogglePlanningEco,
-} from '../../../../modules/tests/test-data/eco/eco.actions';
+} from '../../../../modules/tests/test-data/common/eco/eco.actions';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
