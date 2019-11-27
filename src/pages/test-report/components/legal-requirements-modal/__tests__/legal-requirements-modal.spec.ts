@@ -39,6 +39,7 @@ describe('LegalRequirementsModal', () => {
 
   describe('DOM', () => {
     it('should call onCancel when the Return to test button is clicked', () => {
+      component.legalRequirements = [];
       fixture.detectChanges();
       spyOn(component, 'onCancel');
       const button = fixture.debugElement.query(By.css('button.modal-return-button'));
@@ -49,6 +50,7 @@ describe('LegalRequirementsModal', () => {
     });
 
     it('should call onTerminate when the Terminate test button is clicked', () => {
+      component.legalRequirements = [];
       fixture.detectChanges();
       spyOn(component, 'onTerminate');
       const button = fixture.debugElement.query(By.css('button.terminate-button'));

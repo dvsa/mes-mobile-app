@@ -2,7 +2,7 @@ import { of } from 'rxjs/observable/of';
 
 export class TestReportValidatorProviderMock {
 
-  validateCatBTestReport =
-    jasmine.createSpy('validateCatBTestReport').and.returnValue(of(true));
+  isTestReportValid =
+    jasmine.createSpy('isTestReportValid').and.returnValue(of(true));
 
 }
