@@ -10,7 +10,6 @@ export enum legalRequirementsLabels {
   eco = 'Eco (control and planning)',
   vehicleChecks = 'Show me / Tell me',
   uncoupleRecouple = 'Uncouple / Recouple',
-
 }
 
 export enum legalRequirementToggleValues {

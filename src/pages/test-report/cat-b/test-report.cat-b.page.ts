@@ -35,19 +35,8 @@ import {
 import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
-import {
-  isRemoveFaultMode,
-  isSeriousMode,
-  isDangerousMode,
-  isLegalRequirementsValid,
-  isEtaValid,
-} from '../test-report.selector';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode, isEtaValid } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
-import { CatBLegalRequirements } from '../../../modules/tests/test-data/test-data.models';
-import {
-  getCatBLegalRequirements,
-  hasManoeuvreBeenCompleted,
-} from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { ModalEvent } from '../test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
@@ -55,6 +44,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { CAT_B } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { hasManoeuvreBeenCompletedCatB } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+import { TestCategory } from '../../../shared/models/test-category';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -62,9 +53,8 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  isLegalRequirementsValid$: Observable<boolean>;
   isEtaValid$: Observable<boolean>;
-  catBLegalRequirements$: Observable<CatBLegalRequirements>;
+  testData$: Observable<CatBUniqueTypes.TestData>;
 }
 
 @IonicPage()
@@ -84,11 +74,11 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
-  isLegalRequirementsValid: boolean = false;
+  isTestReportValid: boolean = false;
   isEtaValid: boolean = true;
 
   modal: Modal;
-  catBLegalRequirements: CatBUniqueTypes.TestRequirements;
+  missingLegalRequirements: string[] = [];
 
   constructor(
     store$: Store<StoreModel>,
@@ -139,21 +129,16 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
-        select(hasManoeuvreBeenCompleted),
-      ),
-      isLegalRequirementsValid$: this.store$.pipe(
-        select(getTestReportState),
-        select(isLegalRequirementsValid),
+        select(hasManoeuvreBeenCompletedCatB),
       ),
       isEtaValid$: this.store$.pipe(
         select(getTestReportState),
         select(isEtaValid),
       ),
-      catBLegalRequirements$: this.store$.pipe(
+      testData$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
-        select(getCatBLegalRequirements),
       ),
     };
     this.setupSubscription();
@@ -206,9 +191,7 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
       isSeriousMode$,
       isDangerousMode$,
       manoeuvres$,
-      isLegalRequirementsValid$,
-      isEtaValid$,
-      catBLegalRequirements$,
+      testData$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -217,23 +200,23 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
-      isLegalRequirementsValid$.pipe(
-        map(result => (this.isLegalRequirementsValid = result)),
-      ),
-      isEtaValid$.pipe(map(result => (this.isEtaValid = result))),
-      catBLegalRequirements$.pipe(
-        map(result => (this.catBLegalRequirements = result)),
+      testData$.pipe(map((data) => {
+        this.isTestReportValid =
+          this.testReportValidatorProvider.isTestReportValid(data, TestCategory.B);
+        this.missingLegalRequirements =
+          this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.B);
+      }),
       ),
     ).subscribe();
   }
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    if (!this.isLegalRequirementsValid) {
+    if (!this.isTestReportValid) {
       this.modal = this.modalController.create(
         'LegalRequirementsModal',
         {
-          legalRequirements: this.catBLegalRequirements,
+          legalRequirements: this.missingLegalRequirements,
         },
         options,
       );

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
-import { LegalRequirements } from '../../../../modules/tests/test-data/test-data.models';
-import { legalRequirementsLabels } from '../../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { ModalEvent } from '../../test-report.constants';
 
 @IonicPage()
@@ -11,19 +9,13 @@ import { ModalEvent } from '../../test-report.constants';
 })
 export class LegalRequirementsModal {
 
-  legalRequirements: LegalRequirements;
+  legalRequirements: string[];
 
   constructor(
     private viewCtrl: ViewController,
     private navParams: NavParams,
   ) {
     this.legalRequirements = this.navParams.get('legalRequirements');
-  }
-
-  getLegalRequirementsText(): string[] {
-    return Object.keys(this.legalRequirements)
-      .map(req => !this.legalRequirements[req] ? legalRequirementsLabels[req] : null)
-      .filter((val, i, arr) => arr.indexOf(val) === i && val !== null);
   }
 
   onCancel() {

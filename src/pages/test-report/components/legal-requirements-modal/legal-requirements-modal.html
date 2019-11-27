@@ -4,8 +4,8 @@
     <ion-col no-padding col-80>
       <div class="modal-alert-message mes-data">
         <div class="mes-data">To end this test, complete:</div>
-        <ul *ngIf="getLegalRequirementsText().length > 0">
-          <li *ngFor="let requirement of getLegalRequirementsText()">{{requirement}}</li>
+        <ul *ngIf="legalRequirements.length > 0">
+          <li *ngFor="let requirement of legalRequirements">{{requirement}}</li>
         </ul>
       </div>
     </ion-col>
