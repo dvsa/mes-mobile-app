@@ -760,8 +760,18 @@ export class TestReportAnalyticsEffects {
   @Effect()
   reverseLeftPopoverOpened$ = this.actions$.pipe(
     ofType(reverseLeftActions.REVERSE_LEFT_POPOVER_OPENED),
-    concatMap((action: reverseLeftActions.ReverseLeftPopoverOpened) => {
-      this.analytics.logEvent(AnalyticsEventCategories.TEST_REPORT, AnalyticsEvents.REVERSE_LEFT_POPOVER_OPENED);
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [reverseLeftActions.ReverseLeftPopoverOpened, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REVERSE_LEFT_POPOVER_OPENED, tests),
+        );
       return of(new AnalyticRecorded());
     }),
   );
@@ -769,8 +779,18 @@ export class TestReportAnalyticsEffects {
   @Effect()
   reverseLeftPopoverClosed$ = this.actions$.pipe(
     ofType(reverseLeftActions.REVERSE_LEFT_POPOVER_CLOSED),
-    concatMap((action: reverseLeftActions.ReverseLeftPopoverClosed) => {
-      this.analytics.logEvent(AnalyticsEventCategories.TEST_REPORT, AnalyticsEvents.REVERSE_LEFT_POPOVER_CLOSED);
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [reverseLeftActions.ReverseLeftPopoverClosed, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REVERSE_LEFT_POPOVER_CLOSED, tests),
+      );
       return of(new AnalyticRecorded());
     }),
   );
