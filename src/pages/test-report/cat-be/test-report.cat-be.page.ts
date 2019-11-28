@@ -32,12 +32,7 @@ import {
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
-import {
-  isRemoveFaultMode,
-  isSeriousMode,
-  isDangerousMode,
-  isEtaValid,
-} from '../test-report.selector';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 import { hasManoeuvreBeenCompletedCatBE } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ModalEvent } from '../test-report.constants';
@@ -59,7 +54,6 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  isEtaValid$: Observable<boolean>;
   testData$: Observable<CatBEUniqueTypes.TestData>;
   testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
 }
@@ -135,10 +129,6 @@ export class TestReportCatBEPage extends BasePageComponent {
         select(getTestData),
         select(hasManoeuvreBeenCompletedCatBE),
       ),
-      isEtaValid$: this.store$.pipe(
-        select(getTestReportState),
-        select(isEtaValid),
-      ),
       testData$: currentTest$.pipe(
         select(getTestData),
       ),
@@ -177,7 +167,6 @@ export class TestReportCatBEPage extends BasePageComponent {
       isSeriousMode$,
       isDangerousMode$,
       manoeuvres$,
-      isEtaValid$,
       testData$,
     } = this.pageState;
 
@@ -187,13 +176,13 @@ export class TestReportCatBEPage extends BasePageComponent {
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
-      isEtaValid$.pipe(map(result => (this.isEtaValid = result))),
       testData$.pipe(
         map((data) => {
           this.isTestReportValid =
             this.testReportValidatorProvider.isTestReportValid(data, TestCategory.BE);
           this.missingLegalRequirements =
             this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.BE);
+          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.BE);
         }),
       ),
     ).subscribe();

@@ -6,4 +6,7 @@ export class TestReportValidatorProviderMock {
   getMissingLegalRequirements =
     jasmine.createSpy('getMissingLegalRequirements').and.returnValue([]);
 
+  isETAValid =
+    jasmine.createSpy('isETAValid').and.returnValue(true);
+
 }

@@ -35,7 +35,7 @@ import {
 import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
-import { isRemoveFaultMode, isSeriousMode, isDangerousMode, isEtaValid } from '../test-report.selector';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode  } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 import { ModalEvent } from '../test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -56,7 +56,6 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  isEtaValid$: Observable<boolean>;
   testData$: Observable<CatBUniqueTypes.TestData>;
   testRequirements$: Observable<CatBUniqueTypes.TestRequirements>;
 }
@@ -135,10 +134,6 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
         select(getTestData),
         select(hasManoeuvreBeenCompletedCatB),
       ),
-      isEtaValid$: this.store$.pipe(
-        select(getTestReportState),
-        select(isEtaValid),
-      ),
       testData$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
@@ -215,6 +210,7 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
           this.testReportValidatorProvider.isTestReportValid(data, TestCategory.B);
         this.missingLegalRequirements =
           this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.B);
+        this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.B);
       }),
       ),
     ).subscribe();

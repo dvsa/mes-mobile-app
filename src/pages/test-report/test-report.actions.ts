@@ -23,12 +23,6 @@ export class ToggleDangerousFaultMode implements Action {
   readonly type = TOGGLE_DANGEROUS_FAULT_MODE;
 }
 
-export class ValidateEta implements Action {
-  constructor(public isValid: boolean) {}
-
-  readonly type = VALIDATE_ETA;
-}
-
 export class CalculateTestResult implements Action {
   readonly type = CALCULATE_TEST_RESULT;
 }
@@ -42,6 +36,5 @@ export type Types =
   | ToggleSeriousFaultMode
   | ToggleDangerousFaultMode
   | ToggleRemoveFaultMode
-  | ValidateEta
   | CalculateTestResult
   | TerminateTestFromTestReport;

@@ -6,5 +6,3 @@ export const isRemoveFaultMode = (testReport: TestReportModel) => testReport.rem
 export const isSeriousMode = (testReport: TestReportModel) => testReport.seriousMode;
 
 export const isDangerousMode = (testReport: TestReportModel) => testReport.dangerousMode;
-
-export const isEtaValid = (testReport: TestReportModel) => testReport.isEtaValid;
