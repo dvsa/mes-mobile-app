@@ -321,6 +321,40 @@ describe('Test Outcome', () => {
       });
     });
 
+    describe('rekey a test', () => {
+      it('should call the rekeyTest method when `Rekey` is clicked', () => {
+        component.slotDetail = testSlotDetail;
+        component.category = TestCategory.B;
+        component.testStatus = TestStatus.Booked;
+        const dateTime = new DateTime();
+        dateTime.subtract(1, Duration.DAY);
+        component.slotDetail.start = dateTime.toString();
+        fixture.detectChanges();
+        spyOn(component, 'rekeyTest');
+
+        const rekeyButton = fixture.debugElement.query(By.css('.mes-rekey-button'));
+        rekeyButton.triggerEventHandler('click', null);
+
+        expect(component.rekeyTest).toHaveBeenCalled();
+      });
+
+      it('should navigate to cat B waiting room page when `Rekey` is clicked', () => {
+        component.slotDetail = testSlotDetail;
+        component.category = TestCategory.B;
+        component.rekeyTest();
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe(CAT_B.WAITING_ROOM_PAGE);
+      });
+
+      it('should navigate to cat BE waiting room page when `Rekey` is clicked', () => {
+        component.slotDetail = testSlotDetail;
+        component.category = TestCategory.BE;
+        component.rekeyTest();
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe(CAT_BE.WAITING_ROOM_PAGE);
+      });
+    });
+
     describe('debrief a test', () => {
       it('should call the resumeTest method when `Resume` is clicked', () => {
         component.slotDetail = testSlotDetail;
