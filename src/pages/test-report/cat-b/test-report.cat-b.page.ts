@@ -41,7 +41,7 @@ import { ModalEvent } from '../test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { StatusBar } from '@ionic-native/status-bar';
-import { CAT_B } from '../../page-names.constants';
+import { CAT_B, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { hasManoeuvreBeenCompletedCatB } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
@@ -49,6 +49,7 @@ import { TestCategory } from '../../../shared/models/test-category';
 import {
   getTestRequirementsCatB,
 } from '../../../modules/tests/test-data/cat-b/test-requirements/test-requirements.reducer';
+import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -81,7 +82,7 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
   isEtaValid: boolean = true;
 
   modal: Modal;
-  missingLegalRequirements: string[] = [];
+  missingLegalRequirements: legalRequirementsLabels[] = [];
 
   constructor(
     store$: Store<StoreModel>,
@@ -108,10 +109,14 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
   }
   ngOnInit(): void {
     super.ngOnInit();
+
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+
     this.pageState = {
-      candidateUntitledName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateUntitledName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
@@ -128,20 +133,14 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
         select(getTestReportState),
         select(isDangerousMode),
       ),
-      manoeuvres$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      manoeuvres$: currentTest$.pipe(
         select(getTestData),
         select(hasManoeuvreBeenCompletedCatB),
       ),
-      testData$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      testData$: currentTest$.pipe(
         select(getTestData),
       ),
-      testRequirements$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      testRequirements$: currentTest$.pipe(
         select(getTestData),
         select(getTestRequirementsCatB),
       ),
@@ -220,7 +219,7 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     if (!this.isTestReportValid) {
       this.modal = this.modalController.create(
-        'LegalRequirementsModal',
+        LEGAL_REQUIREMENTS_MODAL,
         {
           legalRequirements: this.missingLegalRequirements,
         },

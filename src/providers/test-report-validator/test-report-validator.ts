@@ -29,7 +29,7 @@ export class TestReportValidatorProvider {
     }
   }
 
-  public getMissingLegalRequirements(data: object, category: TestCategory) : string[] {
+  public getMissingLegalRequirements(data: object, category: TestCategory) : legalRequirementsLabels[] {
     switch (category) {
       case TestCategory.B:
         return this.getMissingLegalRequirementsCatB(data);
@@ -60,8 +60,8 @@ export class TestReportValidatorProvider {
     return normalStart1 && normalStart2 && angledStart && hillStart && manoeuvre && vehicleChecks && eco;
   }
 
-  private getMissingLegalRequirementsCatB (data: CatBUniqueTypes.TestData): string[] {
-    const result: string[] = [];
+  private getMissingLegalRequirementsCatB (data: CatBUniqueTypes.TestData): legalRequirementsLabels[] {
+    const result: legalRequirementsLabels[] = [];
 
     !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
     !get(data, 'testRequirements.normalStart2' , false) && result.push(legalRequirementsLabels.normalStart2);
@@ -98,8 +98,8 @@ export class TestReportValidatorProvider {
     );
   }
 
-  private getMissingLegalRequirementsCatBE (data: CatBEUniqueTypes.TestData): string[] {
-    const result: string[] = [];
+  private getMissingLegalRequirementsCatBE (data: CatBEUniqueTypes.TestData): legalRequirementsLabels[] {
+    const result: legalRequirementsLabels[] = [];
 
     !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
     !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);

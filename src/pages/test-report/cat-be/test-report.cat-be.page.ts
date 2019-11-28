@@ -36,7 +36,7 @@ import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-repor
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 import { hasManoeuvreBeenCompletedCatBE } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ModalEvent } from '../test-report.constants';
-import { CAT_BE } from '../../page-names.constants';
+import { CAT_BE, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
@@ -47,6 +47,7 @@ import { TestCategory } from '../../../shared/models/test-category';
 import {
   getTestRequirementsCatBE,
 } from '../../../modules/tests/test-data/cat-be/test-requirements/test-requirements.cat-be.reducer';
+import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -78,7 +79,7 @@ export class TestReportCatBEPage extends BasePageComponent {
   isEtaValid: boolean = true;
 
   modal: Modal;
-  missingLegalRequirements: string[] = [];
+  missingLegalRequirements: legalRequirementsLabels[] = [];
 
   constructor(
     public store$: Store<StoreModel>,
@@ -192,7 +193,7 @@ export class TestReportCatBEPage extends BasePageComponent {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     if (!this.isTestReportValid) {
       this.modal = this.modalController.create(
-        'LegalRequirementsModal',
+        LEGAL_REQUIREMENTS_MODAL,
         {
           legalRequirements: this.missingLegalRequirements,
         },

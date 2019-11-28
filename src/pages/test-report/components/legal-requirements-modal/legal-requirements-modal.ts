@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 import { ModalEvent } from '../../test-report.constants';
+import { legalRequirementsLabels } from '../../../../shared/constants/legal-requirements/legal-requirements.constants';
 
 @IonicPage()
 @Component({
@@ -9,7 +10,7 @@ import { ModalEvent } from '../../test-report.constants';
 })
 export class LegalRequirementsModal {
 
-  legalRequirements: string[];
+  legalRequirements: legalRequirementsLabels[];
 
   constructor(
     private viewCtrl: ViewController,
