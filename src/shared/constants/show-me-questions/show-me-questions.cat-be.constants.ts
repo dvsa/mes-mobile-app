@@ -40,7 +40,7 @@ export default [
   {
     code: 'S08',
     description: 'Show me how you switch your headlight from dipped to main beam and explain how you would know the main beam is on whilst inside the car.',
-    shortName: 'Dipped to main beam ',
+    shortName: 'Dipped to main beam',
   },
   {
     code: 'S09',
