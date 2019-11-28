@@ -23,7 +23,8 @@ When('I complete the health declaration', () => {
   clickElement(healthDeclarationCheckbox);
   const receiptDeclarationCheckbox = getElement(by.id('receipt-declaration-checkbox'));
   clickElement(receiptDeclarationCheckbox);
-  const healthSignatureField = getElement(by.xpath('//health-declaration-cat-b-page//signature-pad/canvas'));
+  const healthSignatureField = getElement(
+    by.xpath('//div[contains(@class, "health-declaration-cat-b-page")]//signature-pad/canvas'));
   clickElement(healthSignatureField);
 
   // Examiner clicks continue button then enters passcode - Note button has same id as another on page
@@ -32,6 +33,7 @@ When('I complete the health declaration', () => {
 });
 
 const confirmHealthDeclaration = () => {
-  const buttonElement = getElement(by.xpath('//health-declaration-cat-b-page//button[@id="continue-button"]'));
+  const buttonElement = getElement(
+    by.xpath('//div[contains(@class, "health-declaration-cat-b-page")]//button[@id="continue-button"]'));
   clickElement(buttonElement);
 };

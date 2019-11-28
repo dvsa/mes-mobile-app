@@ -21,7 +21,8 @@ When('the candidate requests to receive results by post', () => {
 
 When(/^the candidate confirms their (communication preference|declaration)$/, (pageName) => {
   const pageType = (pageName === 'communication preference' ? 'communication-cat-b-page' : 'waiting-room-cat-b-page');
-  const continueButton = getElement(by.xpath(`//${pageType}//button[@id = 'continue-button']`));
+  const continueButton = getElement(
+    by.xpath(`//div[contains(@class, '${pageType}')]//button[@id = 'continue-button']`));
   clickElement(continueButton);
 });
 
@@ -36,7 +37,8 @@ When('the candidate completes the declaration page', () => {
 
 When('I proceed to the car', () => {
   // Examiner clicks continue button then enters passcode
-  const continueButton = getElement(by.xpath('//communication-cat-b-page//button[@id = "continue-button"]'));
+  const continueButton = getElement(
+    by.xpath('//div[contains(@class, "communication-cat-b-page")]//button[@id = "continue-button"]'));
   clickElement(continueButton);
   enterPasscode();
 });

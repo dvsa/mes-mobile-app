@@ -22,6 +22,7 @@ browser.ignoreSynchronization = true;
 Given('I am not logged in', () => {
 
   // Wait for app to be ready
+  browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
   browser.waitForAngular();
 
   // Log out if we are logged in
@@ -186,14 +187,15 @@ When('I exit practice mode', () => {
 
 Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be \"(.+)\"$/, (
   pageName: string, candidateName: string) => {
-  const candidateNameElement = getElement(by.xpath(`//${getPageType(pageName)}//h2[@id = 'candidate-name']`));
+  const candidateNameElement = getElement(
+    by.xpath(`//div[contains(@class, '${getPageType(pageName)}')]//h2[@id = 'candidate-name']`));
   return expect(candidateNameElement.getText()).to.eventually.equal(candidateName);
 });
 
 Then(/^the (communication page|waiting room|debrief|health declaration) candidate driver number should be \"(.+)\"$/, (
   pageName: string, driverNumber: string) => {
   const candidateDriverNumberElement = getElement(
-    by.xpath(`//${getPageType(pageName)}//h3[@id = 'candidate-driver-number']`));
+    by.xpath(`//div[contains(@class, '${getPageType(pageName)}')]//h3[@id = 'candidate-driver-number']`));
   return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
 });
 
