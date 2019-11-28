@@ -17,7 +17,7 @@ import { map } from 'rxjs/operators';
 export class VehicleChecksCardCatBEComponent implements OnInit {
 
   tellMeShowMeQuestions$: Observable<QuestionResult[]>;
-  
+
   constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
