@@ -51,12 +51,11 @@ export class FaultCountProvider {
   }
 
   public getVehicleChecksFaultCountCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): VehicleChecksScore => {
-
     const numberOfShowMeFaults: number = vehicleChecks.showMeQuestions.filter((showMeQuestion) => {
-      return showMeQuestion.outcome === 'DF';
+      return showMeQuestion.outcome === CompetencyOutcome.DF;
     }).length;
     const numberOfTellMeFaults: number = vehicleChecks.tellMeQuestions.filter((tellMeQuestion) => {
-      return tellMeQuestion.outcome === 'DF';
+      return tellMeQuestion.outcome === CompetencyOutcome.DF;
     }).length;
 
     const totalFaultCount: number = numberOfShowMeFaults + numberOfTellMeFaults;
