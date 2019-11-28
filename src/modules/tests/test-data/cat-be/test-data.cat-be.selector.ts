@@ -15,6 +15,7 @@ export const getDrivingFaultCount = (
 
 export const getManoeuvres = (data: CatBEUniqueTypes.TestData): CatBEUniqueTypes.Manoeuvres => data.manoeuvres;
 
+// TODO - We should pass a Manoeuvre object here instead of TestData
 export const hasManoeuvreBeenCompletedCatBE = (data: CatBEUniqueTypes.TestData) => {
   return (
     get(data.manoeuvres, 'reverseLeft.selected')
@@ -58,12 +59,13 @@ export const areTellMeQuestionsCorrect = (state: CatBEUniqueTypes.VehicleChecks)
   return correct;
 };
 
+// TODO - We should really pass a Vehicle Checks object here and not Test Data
 export const hasVehicleChecksBeenCompletedCatBE = (data: CatBEUniqueTypes.TestData): boolean => {
   let showMeQuestionComplete = true;
   let tellMeQuestionComplete = true;
 
   if (
-    !(data.vehicleChecks.showMeQuestions instanceof Array) ||
+    !(data.vehicleChecks && data.vehicleChecks.showMeQuestions instanceof Array) ||
     data.vehicleChecks.showMeQuestions.length !== NUMBER_OF_SHOW_ME_QUESTIONS
    ) {
     showMeQuestionComplete = false;
@@ -76,7 +78,7 @@ export const hasVehicleChecksBeenCompletedCatBE = (data: CatBEUniqueTypes.TestDa
   }
 
   if (
-    !(data.vehicleChecks.tellMeQuestions instanceof Array) ||
+    !(data.vehicleChecks && data.vehicleChecks.tellMeQuestions instanceof Array) ||
     data.vehicleChecks.tellMeQuestions.length !== NUMBER_OF_TELL_ME_QUESTIONS
     ) {
     tellMeQuestionComplete = false;
