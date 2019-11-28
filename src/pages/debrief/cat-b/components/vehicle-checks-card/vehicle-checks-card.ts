@@ -63,14 +63,14 @@ export class VehicleChecksCardComponent implements OnInit, OnDestroy {
   }
 
   static tellMeQuestionHasFault = (vehicleChecks: CatBUniqueTypes.VehicleChecks): boolean =>
-    vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF
+    vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF;
 
   static getShowMeQuestionOutcome = (vehicleChecks: CatBUniqueTypes.VehicleChecks): QuestionOutcome =>
-    vehicleChecks.showMeQuestion.outcome
+    vehicleChecks.showMeQuestion.outcome;
 
-  static hasVehicleChecksFault = (vehicleChecks: CatBUniqueTypes.VehicleChecks): boolean =>
+  static hasVehicleChecksFault = (vehicleChecks: CatBUniqueTypes.VehicleChecks): boolean => 
   (vehicleChecks.tellMeQuestion.outcome && vehicleChecks.tellMeQuestion.outcome !== CompetencyOutcome.P)
-      || vehicleChecks.showMeQuestion.outcome && vehicleChecks.showMeQuestion.outcome !== CompetencyOutcome.P
+      || vehicleChecks.showMeQuestion.outcome && vehicleChecks.showMeQuestion.outcome !== CompetencyOutcome.P;
 
   ngOnDestroy(): void {
     if (this.subscription) {

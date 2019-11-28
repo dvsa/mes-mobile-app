@@ -1,12 +1,3 @@
-// import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-// import { VehicleChecksCardCatBEComponent } from '../vehicle-checks-card.cat-be';
-// import { IonicModule, Config } from 'ionic-angular';
-// import { StoreModule, Store } from '@ngrx/store';
-// import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
-// import { StoreModel } from '../../../../../../shared/models/store.model';
-// import { StartTest } from '../../../../../../modules/tests/tests.actions';
-// import {
-
 // } from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 // import { By } from '@angular/platform-browser';
 // import { ConfigMock } from 'ionic-mocks';
