@@ -29,7 +29,7 @@ import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { legalRequirementsLabels, legalRequirementToggleValues }
-  from '../../shared/constants/legal-requirements/catb-legal-requirements';
+  from '../../shared/constants/legal-requirements/legal-requirements.constants';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { getTestData } from '../../modules/tests/test-data/cat-b/test-data.reducer';
 import { getEco, getTestRequirements } from '../../modules/tests/test-data/common/test-data.selector';

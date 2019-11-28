@@ -35,26 +35,21 @@ import {
 import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
-import {
-  isRemoveFaultMode,
-  isSeriousMode,
-  isDangerousMode,
-  isLegalRequirementsValid,
-  isEtaValid,
-} from '../test-report.selector';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode  } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
-import { CatBLegalRequirements } from '../../../modules/tests/test-data/test-data.models';
-import {
-  getCatBLegalRequirements,
-  hasManoeuvreBeenCompleted,
-} from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { ModalEvent } from '../test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { StatusBar } from '@ionic-native/status-bar';
-import { CAT_B } from '../../page-names.constants';
+import { CAT_B, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { hasManoeuvreBeenCompletedCatB } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+import { TestCategory } from '../../../shared/models/test-category';
+import {
+  getTestRequirementsCatB,
+} from '../../../modules/tests/test-data/cat-b/test-requirements/test-requirements.reducer';
+import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -62,9 +57,8 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  isLegalRequirementsValid$: Observable<boolean>;
-  isEtaValid$: Observable<boolean>;
-  catBLegalRequirements$: Observable<CatBLegalRequirements>;
+  testData$: Observable<CatBUniqueTypes.TestData>;
+  testRequirements$: Observable<CatBUniqueTypes.TestRequirements>;
 }
 
 @IonicPage()
@@ -84,11 +78,11 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
-  isLegalRequirementsValid: boolean = false;
+  isTestReportValid: boolean = false;
   isEtaValid: boolean = true;
 
   modal: Modal;
-  catBLegalRequirements: CatBUniqueTypes.TestRequirements;
+  missingLegalRequirements: legalRequirementsLabels[] = [];
 
   constructor(
     store$: Store<StoreModel>,
@@ -115,10 +109,14 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
   }
   ngOnInit(): void {
     super.ngOnInit();
+
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+
     this.pageState = {
-      candidateUntitledName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateUntitledName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
@@ -135,25 +133,16 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
         select(getTestReportState),
         select(isDangerousMode),
       ),
-      manoeuvres$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      manoeuvres$: currentTest$.pipe(
         select(getTestData),
-        select(hasManoeuvreBeenCompleted),
+        select(hasManoeuvreBeenCompletedCatB),
       ),
-      isLegalRequirementsValid$: this.store$.pipe(
-        select(getTestReportState),
-        select(isLegalRequirementsValid),
-      ),
-      isEtaValid$: this.store$.pipe(
-        select(getTestReportState),
-        select(isEtaValid),
-      ),
-      catBLegalRequirements$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      testData$: currentTest$.pipe(
         select(getTestData),
-        select(getCatBLegalRequirements),
+      ),
+      testRequirements$: currentTest$.pipe(
+        select(getTestData),
+        select(getTestRequirementsCatB),
       ),
     };
     this.setupSubscription();
@@ -206,9 +195,7 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
       isSeriousMode$,
       isDangerousMode$,
       manoeuvres$,
-      isLegalRequirementsValid$,
-      isEtaValid$,
-      catBLegalRequirements$,
+      testData$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -217,23 +204,24 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
-      isLegalRequirementsValid$.pipe(
-        map(result => (this.isLegalRequirementsValid = result)),
-      ),
-      isEtaValid$.pipe(map(result => (this.isEtaValid = result))),
-      catBLegalRequirements$.pipe(
-        map(result => (this.catBLegalRequirements = result)),
+      testData$.pipe(map((data) => {
+        this.isTestReportValid =
+          this.testReportValidatorProvider.isTestReportValid(data, TestCategory.B);
+        this.missingLegalRequirements =
+          this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.B);
+        this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.B);
+      }),
       ),
     ).subscribe();
   }
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    if (!this.isLegalRequirementsValid) {
+    if (!this.isTestReportValid) {
       this.modal = this.modalController.create(
-        'LegalRequirementsModal',
+        LEGAL_REQUIREMENTS_MODAL,
         {
-          legalRequirements: this.catBLegalRequirements,
+          legalRequirements: this.missingLegalRequirements,
         },
         options,
       );

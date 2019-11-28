@@ -39,7 +39,7 @@ import {
 } from '../../../shared/constants/competencies/catb-manoeuvres';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { legalRequirementsLabels, legalRequirementToggleValues }
-  from '../../../shared/constants/legal-requirements/catb-legal-requirements';
+  from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { TestCategory } from '../../../shared/models/test-category';
 import * as uncoupleRecoupleActions
   from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';

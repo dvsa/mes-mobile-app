@@ -32,24 +32,22 @@ import {
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
-import {
-  isRemoveFaultMode,
-  isSeriousMode,
-  isDangerousMode,
-  isEtaValid,
-} from '../test-report.selector';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
-import {
-  hasManoeuvreBeenCompleted, getCatBELegalRequirements,
-} from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { hasManoeuvreBeenCompletedCatBE } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ModalEvent } from '../test-report.constants';
-import { CAT_BE } from '../../page-names.constants';
+import { CAT_BE, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { TestCategory } from '../../../shared/models/test-category';
+import {
+  getTestRequirementsCatBE,
+} from '../../../modules/tests/test-data/cat-be/test-requirements/test-requirements.cat-be.reducer';
+import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -57,9 +55,8 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  // isLegalRequirementsValid$: Observable<boolean>;
-  isEtaValid$: Observable<boolean>;
-  catBELegalRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
+  testData$: Observable<CatBEUniqueTypes.TestData>;
+  testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
 }
 
 @IonicPage()
@@ -78,11 +75,11 @@ export class TestReportCatBEPage extends BasePageComponent {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
-  isLegalRequirementsValid: boolean = false;
+  isTestReportValid: boolean = false;
   isEtaValid: boolean = true;
 
   modal: Modal;
-  catBELegalRequirements: CatBEUniqueTypes.TestRequirements;
+  missingLegalRequirements: legalRequirementsLabels[] = [];
 
   constructor(
     public store$: Store<StoreModel>,
@@ -131,19 +128,14 @@ export class TestReportCatBEPage extends BasePageComponent {
       ),
       manoeuvres$: currentTest$.pipe(
         select(getTestData),
-        select(hasManoeuvreBeenCompleted),
+        select(hasManoeuvreBeenCompletedCatBE),
       ),
-      // isLegalRequirementsValid$: this.store$.pipe(
-      //   select(getTestReportState),
-      //   select(isLegalRequirementsValid),
-      // ),
-      isEtaValid$: this.store$.pipe(
-        select(getTestReportState),
-        select(isEtaValid),
-      ),
-      catBELegalRequirements$: currentTest$.pipe(
+      testData$: currentTest$.pipe(
         select(getTestData),
-        select(getCatBELegalRequirements),
+      ),
+      testRequirements$: currentTest$.pipe(
+        select(getTestData),
+        select(getTestRequirementsCatBE),
       ),
     };
     this.setupSubscription();
@@ -176,9 +168,7 @@ export class TestReportCatBEPage extends BasePageComponent {
       isSeriousMode$,
       isDangerousMode$,
       manoeuvres$,
-      // isLegalRequirementsValid$,
-      isEtaValid$,
-      catBELegalRequirements$,
+      testData$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -187,23 +177,25 @@ export class TestReportCatBEPage extends BasePageComponent {
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
-      // isLegalRequirementsValid$.pipe(
-      //   map(result => (this.isLegalRequirementsValid = result)),
-      // ),
-      isEtaValid$.pipe(map(result => (this.isEtaValid = result))),
-      catBELegalRequirements$.pipe(
-        map(result => (this.catBELegalRequirements = result)),
+      testData$.pipe(
+        map((data) => {
+          this.isTestReportValid =
+            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.BE);
+          this.missingLegalRequirements =
+            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.BE);
+          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.BE);
+        }),
       ),
     ).subscribe();
   }
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    if (!this.isLegalRequirementsValid) {
+    if (!this.isTestReportValid) {
       this.modal = this.modalController.create(
-        'LegalRequirementsModal',
+        LEGAL_REQUIREMENTS_MODAL,
         {
-          legalRequirements: this.catBELegalRequirements,
+          legalRequirements: this.missingLegalRequirements,
         },
         options,
       );

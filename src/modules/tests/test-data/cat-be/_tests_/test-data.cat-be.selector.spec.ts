@@ -1,7 +1,6 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import {
   hasSeriousFault,
-  getTestRequirements,
   hasDangerousFault,
   getETAFaultText,
   getEcoFaultText,
@@ -11,17 +10,14 @@ import {
 import {
   getDrivingFaultCount,
   getManoeuvres,
-  hasManoeuvreBeenCompleted,
+  hasManoeuvreBeenCompletedCatBE,
   areTellMeQuestionsSelected,
   areTellMeQuestionsCorrect,
-  hasVehicleChecksBeenCompleted,
-  getCatBELegalRequirements,
+  hasVehicleChecksBeenCompletedCatBE,
   hasEyesightTestGotSeriousFault,
 } from '../test-data.cat-be.selector';
 import { Competencies } from '../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
-import { CatBELegalRequirements } from '../../test-data.models';
-import { initialState } from '../test-data.cat-be.reducer';
 import { OutcomeBehaviourMapProvider } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../../../../../pages/office/office-behaviour-map';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
@@ -162,18 +158,6 @@ describe('TestDataSelectors', () => {
     });
   });
 
-  describe('getTestRequirements', () => {
-    it('should return all the properties of testRequirements', () => {
-      const result = getTestRequirements(state) as CatBEUniqueTypes.TestRequirements;
-
-      expect(result.normalStart1).toEqual(true);
-      expect(result.normalStart2).toEqual(true);
-      expect(result.angledStartControlledStop).toEqual(true);
-      expect(result.uphillStart).toEqual(true);
-      expect(result.downhillStart).toEqual(true);
-    });
-  });
-
   describe('getETAFaultText', () => {
     it('should return null if no ETA faults', () => {
       const result = getETAFaultText(state.ETA);
@@ -236,7 +220,7 @@ describe('TestDataSelectors', () => {
       const state: CatBEUniqueTypes.TestData = {
         manoeuvres: {},
       };
-      expect(hasManoeuvreBeenCompleted(state)).toBeFalsy();
+      expect(hasManoeuvreBeenCompletedCatBE(state)).toBeFalsy();
     });
     it('should return true when a manoeuvre has been completed', () => {
       const state: CatBEUniqueTypes.TestData = {
@@ -244,7 +228,7 @@ describe('TestDataSelectors', () => {
           reverseLeft: { selected: true },
         },
       };
-      expect(hasManoeuvreBeenCompleted(state)).toEqual(true);
+      expect(hasManoeuvreBeenCompletedCatBE(state)).toEqual(true);
     });
   });
 
@@ -320,7 +304,7 @@ describe('TestDataSelectors', () => {
           },
         } as CatBEUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a driving fault', () => {
         const state = {
@@ -347,7 +331,7 @@ describe('TestDataSelectors', () => {
           },
         } as CatBEUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a serious fault', () => {
         const state = {
@@ -374,7 +358,7 @@ describe('TestDataSelectors', () => {
           },
         } as CatBEUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a dangerous fault', () => {
         const state = {
@@ -401,7 +385,7 @@ describe('TestDataSelectors', () => {
           },
         } as CatBEUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
       });
       it('should return false if show me question outcome is not defined', () => {
         const state = {
@@ -419,72 +403,7 @@ describe('TestDataSelectors', () => {
           },
         } as CatBEUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompleted(state)).toEqual(false);
-      });
-    });
-    describe('getCatBELegalRequirements', () => {
-      it('should return all the data when it exists in test data', () => {
-        const state = {
-          testRequirements: {
-            angledStartControlledStop: true,
-            uphillStart: true,
-            downhillStart: true,
-            normalStart1: true,
-            normalStart2: true,
-          },
-          manoeuvres: {
-            reverseLeft: {
-              selected: true,
-            },
-          },
-          eco: {
-            completed: true,
-          },
-          vehicleChecks: {
-            showMeQuestions: [
-              {
-                outcome: CompetencyOutcome.S,
-              },
-              {
-                outcome: CompetencyOutcome.S,
-              },
-              {
-                outcome: CompetencyOutcome.S,
-              },
-            ],
-            tellMeQuestions: [
-              {
-                outcome: CompetencyOutcome.P,
-              },
-              {
-                outcome: CompetencyOutcome.S,
-              },
-            ],
-          },
-        } as CatBEUniqueTypes.TestData;
-
-        expect(getCatBELegalRequirements(state)).toEqual({
-          normalStart1: true,
-          normalStart2: true,
-          angledStartControlledStop: true,
-          uphillStart: true,
-          downhillStart: true,
-          manoeuvre: true,
-          vehicleChecks: true,
-          eco: true,
-        } as CatBELegalRequirements);
-      });
-      it('should return false for the data if it is not in the state', () => {
-        expect(getCatBELegalRequirements(initialState)).toEqual({
-          normalStart1: false,
-          normalStart2: false,
-          angledStartControlledStop: false,
-          uphillStart: false,
-          downhillStart: false,
-          manoeuvre: false,
-          vehicleChecks: false,
-          eco: false,
-        } as CatBELegalRequirements);
+        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(false);
       });
     });
   });
