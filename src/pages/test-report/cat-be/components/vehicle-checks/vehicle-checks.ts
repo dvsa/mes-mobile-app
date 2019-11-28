@@ -3,9 +3,9 @@ import { select, Store } from '@ngrx/store'
 import { getTests } from '../../../../../modules/tests/tests.reducer'
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { StoreModel } from '../../../../../shared/models/store.model'
-import { getTestData } from '../../../../../modules/tests/test-data/test-data.cat-be.reducer'
+import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer'
 import { map } from 'rxjs/operators'
-import { getVehicleChecksCatBE } from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector'
+import { getVehicleChecksCatBE } from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector'
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count'
 import { Observable } from 'rxjs/Observable'
 
