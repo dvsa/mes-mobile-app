@@ -11,6 +11,7 @@ import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { TestCategory } from '../../../../../shared/models/test-category';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { OverlayCallback } from '../../../test-report.model';
+import { ReverseLeftPopoverOpened, ReverseLeftPopoverClosed } from './reverse-left.actions';
 
 @Component({
   selector: 'reverse-left',
@@ -71,7 +72,13 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
   }
 
   togglePopoverDisplay = (): void => {
-    this.displayPopover = !this.displayPopover;
+    if (this.displayPopover) {
+      this.store$.dispatch(new ReverseLeftPopoverClosed());
+      this.displayPopover = false;
+    } else {
+      this.store$.dispatch(new ReverseLeftPopoverOpened());
+      this.displayPopover = true;
+    }
     this.toggleOverlay();
   }
 

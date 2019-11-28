@@ -43,6 +43,8 @@ import { legalRequirementsLabels, legalRequirementToggleValues }
 import { TestCategory } from '../../../shared/models/test-category';
 import * as uncoupleRecoupleActions
   from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
+import * as reverseLeftActions
+  from '../cat-be/components/reverse-left/reverse-left.actions';
 
 describe('Test Report Analytics Effects', () => {
 
@@ -1252,6 +1254,44 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_DANGEROUS_FAULT}`,
           'Uncouple recouple',
           1,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('reverseLeftPopoverOpened', () => {
+    it('should call logEvent with the correct parameters', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new reverseLeftActions.ReverseLeftPopoverOpened());
+      // ASSERT
+      effects.reverseLeftPopoverOpened$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REVERSE_LEFT_POPOVER_OPENED}`,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('reverseLeftPopoverClosed', () => {
+    it('should call logEvent with the correct parameters', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new reverseLeftActions.ReverseLeftPopoverClosed());
+      // ASSERT
+      effects.reverseLeftPopoverClosed$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REVERSE_LEFT_POPOVER_CLOSED}`,
         );
         done();
       });
