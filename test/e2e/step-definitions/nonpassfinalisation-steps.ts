@@ -61,6 +61,6 @@ Then('the nonpassfinalisation page test outcome is {string}', (testOutcome : str
 
 const clickContinue = () => {
   const continueToBackToOfficeButton = getElement(
-    by.xpath('//non-pass-finalisation-cat-b-page//button[@id = "continue-button"]'));
+    by.xpath('//div[contains(@class, "non-pass-finalisation-cat-b-page")]//button[@id = "continue-button"]'));
   clickElement(continueToBackToOfficeButton);
 };
