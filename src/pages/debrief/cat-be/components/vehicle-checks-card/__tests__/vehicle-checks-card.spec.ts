@@ -12,13 +12,14 @@ import {
   TellMeQuestionDrivingFault,
   ShowMeQuestionSeriousFault,
   ShowMeQuestionDangerousFault,
-} from '../../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+} from '../../../../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
 import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
 import { createTranslateLoader } from '../../../../../../app/app.module';
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
+
 import { TestCategory } from '../../../../../../shared/models/test-category';
 
 describe('VehicleChecksCardComponent', () => {
