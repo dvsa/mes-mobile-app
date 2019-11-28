@@ -64,7 +64,7 @@ interface TestReportPageState {
 
 @IonicPage()
 @Component({
-  selector: 'test-report-cat-be-page',
+  selector: '.test-report-cat-be-page',
   templateUrl: 'test-report.cat-be.page.html',
 })
 export class TestReportCatBEPage extends BasePageComponent {

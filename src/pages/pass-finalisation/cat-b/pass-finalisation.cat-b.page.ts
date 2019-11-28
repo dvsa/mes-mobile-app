@@ -86,7 +86,7 @@ interface PassFinalisationPageState {
 
 @IonicPage()
 @Component({
-  selector: 'pass-finalisation-cat-b-page',
+  selector: '.pass-finalisation-cat-b-page',
   templateUrl: 'pass-finalisation.cat-b.page.html',
 })
 export class PassFinalisationCatBPage extends PracticeableBasePageComponent {

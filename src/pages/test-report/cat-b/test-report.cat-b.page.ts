@@ -69,7 +69,7 @@ interface TestReportPageState {
 
 @IonicPage()
 @Component({
-  selector: 'test-report-cat-b-page',
+  selector: '.test-report-cat-b-page',
   templateUrl: 'test-report.cat-b.page.html',
 })
 export class TestReportCatBPage extends PracticeableBasePageComponent {

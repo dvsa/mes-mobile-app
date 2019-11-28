@@ -22,7 +22,7 @@ interface BackToOfficePageState {
 
 @IonicPage()
 @Component({
-  selector: 'back-to-office-cat-be-page',
+  selector: '.back-to-office-cat-be-page',
   templateUrl: 'back-to-office.cat-be.page.html',
 })
 export class BackToOfficeCatBEPage extends PracticeableBasePageComponent {
