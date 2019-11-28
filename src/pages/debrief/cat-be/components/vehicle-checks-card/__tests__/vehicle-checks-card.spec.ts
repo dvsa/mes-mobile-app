@@ -6,23 +6,22 @@ import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import {
-  ShowMeQuestionSelected,
-  ShowMeQuestionOutcomeChanged,
-} from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+  TellMeQuestionCorrect,
+  ShowMeQuestionPassed,
+  ShowMeQuestionDrivingFault,
+  TellMeQuestionDrivingFault,
+  ShowMeQuestionSeriousFault,
+  ShowMeQuestionDangerousFault,
+} from '../../../../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
 import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
 import { createTranslateLoader } from '../../../../../../app/app.module';
 import { Http } from '@angular/http';
-import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
-import * as englishTranslations from '../../../../../../assets/i18n/en.json';
+import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import { TestCategory } from '../../../../../../shared/models/test-category';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
-import { PopulateTestCategory } from '../../../../../../modules/tests/category/category.actions';
-import { PopulateCandidateDetails } from '../../../../../../modules/tests/journal-data/candidate/candidate.actions';
-import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 
-fdescribe('VehicleChecksCardComponent', () => {
+describe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatBEComponent>;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
@@ -49,56 +48,136 @@ fdescribe('VehicleChecksCardComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(VehicleChecksCardCatBEComponent);
         store$ = TestBed.get(Store);
-
-        store$.dispatch(new StartTest(105, TestCategory.BE));
-        store$.dispatch(new PopulateTestCategory(TestCategory.BE));
-        store$.dispatch(new PopulateCandidateDetails(candidateMock));
-
+        store$.dispatch(new StartTest(105, TestCategory.B));
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
       });
   }));
 
   describe('DOM', () => {
+    it('should not display the card when no fault marked', () => {
+      store$.dispatch(new TellMeQuestionCorrect());
+      store$.dispatch(new ShowMeQuestionPassed());
+      fixture.detectChanges();
+      const vehicleChecksCard = fixture.debugElement.query(By.css('#vehicle-checks'));
+      expect(vehicleChecksCard).toBeNull();
+    });
+
+    it('should display the card when show me has a fault', () => {
+      store$.dispatch(new TellMeQuestionCorrect());
+      store$.dispatch(new ShowMeQuestionDrivingFault());
+      fixture.detectChanges();
+      const vehicleChecksCard = fixture.debugElement.query(By.css('#vehicle-checks'));
+      expect(vehicleChecksCard).not.toBeNull();
+    });
+
+    it('should display the card when tell me has a fault', () => {
+      store$.dispatch(new TellMeQuestionDrivingFault());
+      store$.dispatch(new ShowMeQuestionPassed());
+      fixture.detectChanges();
+      const vehicleChecksCard = fixture.debugElement.query(By.css('#vehicle-checks'));
+      expect(vehicleChecksCard).not.toBeNull();
+    });
+
+    it('should display tell me question div, when there is a tell me fault', () => {
+      store$.dispatch(new TellMeQuestionDrivingFault());
+      store$.dispatch(new ShowMeQuestionPassed());
+      fixture.detectChanges();
+      const vehicleChecksCard = fixture.debugElement.query(By.css('#tell-me-question'));
+      expect(vehicleChecksCard).not.toBeNull();
+    });
+
+    it('should display show me question div, when there is a show me fault', () => {
+      store$.dispatch(new TellMeQuestionCorrect());
+      store$.dispatch(new ShowMeQuestionDrivingFault());
+      fixture.detectChanges();
+      const vehicleChecksCard = fixture.debugElement.query(By.css('#show-me-question'));
+      expect(vehicleChecksCard).not.toBeNull();
+    });
+
     describe('Vehicle check reporting', () => {
-      it('should show results', () => {
-        const showMeQuestion: QuestionResult = {
-          code: 'S01',
-          description: 'Show me how you would check that the direction indicators are working.',
-        };
-        // Configure show me/tell me questions
-        store$.dispatch(new ShowMeQuestionSelected(showMeQuestion, 1));
-        store$.dispatch(new ShowMeQuestionOutcomeChanged('P', 1));
-
-        fixture.detectChanges();
-
-        const tellMeQuestionText = fixture.debugElement
-          .query(By.css('#vehicle-checks .counter-label')).nativeElement;
-
-        expect(tellMeQuestionText.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions.S01);
-      });
-
-      it('should show results in Welsh for a Welsh test', (done) => {
-        const showMeQuestion: QuestionResult = {
-          code: 'S01',
-          description: 'Show me how you would check that the direction indicators are working.',
-        };
-        // Configure show me/tell me questions
-        store$.dispatch(new ShowMeQuestionSelected(showMeQuestion, 1));
-        store$.dispatch(new ShowMeQuestionOutcomeChanged('P', 1));
-
-        fixture.detectChanges();
-
-        // Language change handled by parent page component, force the switch
-        translate.use('cy').subscribe(() => {
+      describe('Tell me question reporting', () => {
+        it('should indicate when there was a driving fault on the tell me question', () => {
+          store$.dispatch(new TellMeQuestionDrivingFault());
           fixture.detectChanges();
-          const tellMeQuestionText = fixture.debugElement
-            .query(By.css('#vehicle-checks .counter-label')).nativeElement;
-
-          expect(tellMeQuestionText.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions.S01);
-          done();
+          const tellMeQuestionText = fixture.debugElement.query(By.css('#tell-me-question')).nativeElement;
+          expect(tellMeQuestionText.innerHTML.trim()).toBe('Tell me question - Driving fault');
+        });
+        it('should indicate a tell me fault in Welsh for a Welsh test', (done) => {
+          fixture.detectChanges();
+          store$.dispatch(new TellMeQuestionDrivingFault());
+          // Language change handled by parent page component, force the switch
+          translate.use('cy').subscribe(() => {
+            fixture.detectChanges();
+            const tellMeQuestionText = fixture.debugElement.query(By.css('#tell-me-question')).nativeElement;
+            const questionText = (<any>welshTranslations).debrief.tellMeQuestion;
+            const drvingFaultText = (<any>welshTranslations).debrief.drivingFault;
+            expect(tellMeQuestionText.innerHTML.trim())
+              .toBe(`${questionText} - ${drvingFaultText}`);
+            done();
+          });
+        });
+      });
+      describe('Show me question reporting', () => {
+        it('should indicate when there was a driving fault on the show me question', () => {
+          fixture.detectChanges();
+          store$.dispatch(new ShowMeQuestionDrivingFault());
+          fixture.detectChanges();
+          const showMeQuestionText = fixture.debugElement.query(By.css('#show-me-question-outcome')).nativeElement;
+          expect(showMeQuestionText.innerHTML.trim()).toBe('Show me question - Driving fault');
+        });
+        it('should indicate a show me driving fault in Welsh for a Welsh test', (done) => {
+          fixture.detectChanges();
+          store$.dispatch(new ShowMeQuestionDrivingFault());
+          // Language change handled by parent page component, force the switch
+          translate.use('cy').subscribe(() => {
+            fixture.detectChanges();
+            const showMeQuestionText = fixture.debugElement.query(By.css('#show-me-question-outcome')).nativeElement;
+            const { showMeQuestion, drivingFault } = (<any>welshTranslations).debrief;
+            const expectedTranslation = `${showMeQuestion} - ${drivingFault}`;
+            expect(showMeQuestionText.innerHTML.trim()).toBe(expectedTranslation);
+            done();
+          });
+        });
+        it('should indicate when there was a serious fault on the show me question', () => {
+          fixture.detectChanges();
+          store$.dispatch(new ShowMeQuestionSeriousFault());
+          fixture.detectChanges();
+          const showMeQuestionText = fixture.debugElement.query(By.css('#show-me-question-outcome')).nativeElement;
+          expect(showMeQuestionText.innerHTML.trim()).toBe('Show me question - Serious fault');
+        });
+        it('should indicate a show me serious fault in Welsh for a Welsh test', (done) => {
+          fixture.detectChanges();
+          store$.dispatch(new ShowMeQuestionSeriousFault());
+          // Language change handled by parent page component, force the switch
+          translate.use('cy').subscribe(() => {
+            fixture.detectChanges();
+            const showMeQuestionText = fixture.debugElement.query(By.css('#show-me-question-outcome')).nativeElement;
+            const { showMeQuestion, seriousFault } = (<any>welshTranslations).debrief;
+            const expectedTranslation = `${showMeQuestion} - ${seriousFault}`;
+            expect(showMeQuestionText.innerHTML.trim()).toBe(expectedTranslation);
+            done();
+          });
+        });
+        it('should indicate when there was a dangerous fault on the show me question', () => {
+          fixture.detectChanges();
+          store$.dispatch(new ShowMeQuestionDangerousFault());
+          fixture.detectChanges();
+          const showMeQuestionText = fixture.debugElement.query(By.css('#show-me-question-outcome')).nativeElement;
+          expect(showMeQuestionText.innerHTML.trim()).toBe('Show me question - Dangerous fault');
+        });
+        it('should indicate a tell me dangerous fault in Welsh for a Welsh test', (done) => {
+          fixture.detectChanges();
+          store$.dispatch(new ShowMeQuestionDangerousFault());
+          // Language change handled by parent page component, force the switch
+          translate.use('cy').subscribe(() => {
+            fixture.detectChanges();
+            const showMeQuestionText = fixture.debugElement.query(By.css('#show-me-question-outcome')).nativeElement;
+            const { showMeQuestion, dangerousFault } = (<any>welshTranslations).debrief;
+            const expectedTranslation = `${showMeQuestion} - ${dangerousFault}`;
+            expect(showMeQuestionText.innerHTML.trim()).toBe(expectedTranslation);
+            done();
+          });
         });
       });
     });

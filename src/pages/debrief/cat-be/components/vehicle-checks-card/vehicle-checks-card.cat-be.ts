@@ -17,16 +17,16 @@ import { map } from 'rxjs/operators';
 export class VehicleChecksCardCatBEComponent implements OnInit {
 
   tellMeShowMeQuestions$: Observable<QuestionResult[]>;
+
   constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
-    this.tellMeShowMeQuestions$ = this.store$.pipe(
+    this.tellMeShowMeQuestions$  = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
       select(getTestData),
       select(getVehicleChecks),
       map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
-      map(checks => checks.filter(c => c.code !== undefined)),
     );
   }
 
