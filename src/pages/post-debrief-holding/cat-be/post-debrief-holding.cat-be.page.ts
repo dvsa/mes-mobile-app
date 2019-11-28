@@ -8,7 +8,7 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 
 @IonicPage()
 @Component({
-  selector: 'post-debrief-holding-cat-be-page',
+  selector: '.post-debrief-holding-cat-be-page',
   templateUrl: 'post-debrief-holding.cat-be.page.html',
 })
 export class PostDebriefHoldingCatBEPage extends BasePageComponent {

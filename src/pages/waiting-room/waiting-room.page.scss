@@ -1,4 +1,4 @@
-waiting-room-cat-be-page {
+div[class^="waiting-room-cat-"] {
 
   ion-content > div {
     background-color: map-get($colors, "mes-white");

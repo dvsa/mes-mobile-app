@@ -8,7 +8,7 @@ import { PostDebriefHoldingViewDidEnter } from '../post-debrief-holding.actions'
 
 @IonicPage()
 @Component({
-  selector: 'post-debrief-holding-cat-b-page',
+  selector: '.post-debrief-holding-cat-b-page',
   templateUrl: 'post-debrief-holding.cat-b.page.html',
 })
 export class PostDebriefHoldingCatBPage extends PracticeableBasePageComponent {

@@ -56,7 +56,7 @@ interface HealthDeclarationPageState {
 }
 @IonicPage()
 @Component({
-  selector: 'health-declaration-cat-be-page',
+  selector: '.health-declaration-cat-be-page',
   templateUrl: 'health-declaration.cat-be.page.html',
 })
 export class HealthDeclarationCatBEPage extends BasePageComponent {

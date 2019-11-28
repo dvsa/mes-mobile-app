@@ -1,4 +1,4 @@
-pass-finalisation-cat-be-page {
+div[class^="pass-finalisation-cat-"] {
   ion-content > div {
     background-color: map-get($colors, "mes-white");
   }

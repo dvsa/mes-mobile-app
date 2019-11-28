@@ -64,7 +64,7 @@ interface WaitingRoomPageState {
 
 @IonicPage()
 @Component({
-  selector: 'waiting-room-cat-b-page',
+  selector: '.waiting-room-cat-b-page',
   templateUrl: 'waiting-room.cat-b.page.html',
 })
 export class WaitingRoomCatBPage extends PracticeableBasePageComponent implements OnInit {

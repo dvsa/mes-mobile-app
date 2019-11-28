@@ -66,7 +66,7 @@ interface NonPassFinalisationPageState {
 
 @IonicPage()
 @Component({
-  selector: 'non-pass-finalisation-cat-b-page',
+  selector: '.non-pass-finalisation-cat-b-page',
   templateUrl: 'non-pass-finalisation.cat-b.page.html',
 })
 export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
