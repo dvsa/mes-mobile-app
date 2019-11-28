@@ -1,5 +1,6 @@
 import * as testRequirementsActions from '../../cat-b/test-requirements/test-requirements.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { createFeatureSelector } from '@ngrx/store';
 
 export const initialState: CatBEUniqueTypes.TestRequirements = {};
 
@@ -17,3 +18,6 @@ export function testRequirementsCatBEReducer(
       return state;
   }
 }
+
+export const getTestRequirementsCatBE =
+  createFeatureSelector<CatBEUniqueTypes.TestRequirements>('testRequirements');

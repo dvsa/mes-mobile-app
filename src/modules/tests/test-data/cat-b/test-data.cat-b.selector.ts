@@ -2,7 +2,6 @@ import { Competencies, LegalRequirements } from '../test-data.constants';
 import { get } from 'lodash';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { CatBLegalRequirements } from '../test-data.models';
 import { QuestionProvider } from '../../../../providers/question/question';
 import { TestCategory } from '../../../../shared/models/test-category';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
@@ -12,7 +11,8 @@ export const getDrivingFaultCount = (
 
 export const getManoeuvres = (data: CatBUniqueTypes.TestData): CatBUniqueTypes.Manoeuvres => data.manoeuvres;
 
-export const hasManoeuvreBeenCompleted = (data: CatBUniqueTypes.TestData) => {
+// TODO - We should pass a Manoeuvre object here instead of TestData
+export const hasManoeuvreBeenCompletedCatB = (data: CatBUniqueTypes.TestData) => {
   return (
     get(data.manoeuvres, 'forwardPark.selected') ||
     get(data.manoeuvres, 'reverseParkCarpark.selected') ||
@@ -70,21 +70,10 @@ export const getShowMeQuestion = (state: CatBUniqueTypes.VehicleChecks) => {
     .find(question => question.code === get(state, 'showMeQuestion.code'));
 };
 
-export const getCatBLegalRequirements = (data: CatBUniqueTypes.TestData): CatBLegalRequirements => {
-  return {
-    normalStart1: data.testRequirements.normalStart1 || false,
-    normalStart2: data.testRequirements.normalStart2 || false,
-    angledStart: data.testRequirements.angledStart || false,
-    hillStart: data.testRequirements.hillStart || false,
-    manoeuvre: hasManoeuvreBeenCompleted(data) || false,
-    vehicleChecks: hasVehicleChecksBeenCompleted(data) || false,
-    eco: data.eco.completed || false,
-  };
-};
-
-export const hasVehicleChecksBeenCompleted = (data: CatBUniqueTypes.TestData): boolean => {
-  const showMeQuestionOutcome = data.vehicleChecks.showMeQuestion.outcome;
-  const tellMeQuestionOutcome = data.vehicleChecks.tellMeQuestion.outcome;
+// TODO - We should really pass a Vehicle Checks object here and not Test Data
+export const hasVehicleChecksBeenCompletedCatB = (data: CatBUniqueTypes.TestData): boolean => {
+  const showMeQuestionOutcome = get(data, 'vehicleChecks.showMeQuestion.outcome', null);
+  const tellMeQuestionOutcome = get(data, 'vehicleChecks.tellMeQuestion.outcome', null);
 
   return (showMeQuestionOutcome != null && tellMeQuestionOutcome != null);
 };

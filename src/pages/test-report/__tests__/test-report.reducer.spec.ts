@@ -1,9 +1,5 @@
 import { testReportReducer, initialState } from '../test-report.reducer';
-import {
-  ToggleSeriousFaultMode,
-  ToggleDangerousFaultMode,
-  ValidateLegalRequirements,
-  ValidateEta} from '../test-report.actions';
+import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../test-report.actions';
 
 describe('TestReportReducer reducer', () => {
   describe('TOGGLE_SERIOUS_FAULT_MODE', () => {
@@ -32,18 +28,6 @@ describe('TestReportReducer reducer', () => {
       };
       const result = testReportReducer(state, new ToggleDangerousFaultMode());
       expect(result.dangerousMode).toEqual(false);
-    });
-  });
-  describe('VALIDATE_TEST', () => {
-    it('should update isLegalRequirementsValid based on the value of a ValidateLegalRequirements payload', () => {
-      const result = testReportReducer(initialState, new ValidateLegalRequirements(true));
-      expect(result.isLegalRequirementsValid).toEqual(true);
-    });
-  });
-  describe('VALIDATE_ETA', () => {
-    it('should update isEtaValid based on the value of a ValidateEta payload', () => {
-      const result = testReportReducer(initialState, new ValidateEta(true));
-      expect(result.isEtaValid).toEqual(true);
     });
   });
 });
