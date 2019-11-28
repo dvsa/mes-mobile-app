@@ -1,9 +1,7 @@
 import {
-  getShowMeQuestionOutcome,
-  tellMeQuestionHasFault,
-  hasVehicleChecksFault,
-} from '../vehicle-checks-card.selector';
-import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+  VehicleChecksCardComponent
+} from '../vehicle-checks-card';
+import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
 describe('vehicleChecksCardSelector', () => {
@@ -17,7 +15,7 @@ describe('vehicleChecksCardSelector', () => {
         tellMeQuestion: {},
       };
 
-      let result = getShowMeQuestionOutcome(vehicleChecks);
+      let result = VehicleChecksCardComponent.getShowMeQuestionOutcome(vehicleChecks);
 
       expect(result).toBe(CompetencyOutcome.D);
       vehicleChecks = {
@@ -27,7 +25,7 @@ describe('vehicleChecksCardSelector', () => {
         },
       };
 
-      result = getShowMeQuestionOutcome(vehicleChecks);
+      result = VehicleChecksCardComponent.getShowMeQuestionOutcome(vehicleChecks);
       expect(result).toBe(CompetencyOutcome.DF);
     });
   });
@@ -42,7 +40,7 @@ describe('vehicleChecksCardSelector', () => {
         },
       };
 
-      const result = tellMeQuestionHasFault(vehicleChecks);
+      const result = VehicleChecksCardComponent.tellMeQuestionHasFault(vehicleChecks);
 
       expect(result).toBe(true);
     });
@@ -55,7 +53,7 @@ describe('vehicleChecksCardSelector', () => {
         },
       };
 
-      const result = tellMeQuestionHasFault(vehicleChecks);
+      const result = VehicleChecksCardComponent.tellMeQuestionHasFault(vehicleChecks);
 
       expect(result).toBe(false);
     });
@@ -72,7 +70,7 @@ describe('vehicleChecksCardSelector', () => {
         tellMeQuestion: {},
       };
 
-      const result = hasVehicleChecksFault(vehicleChecks);
+      const result = VehicleChecksCardComponent.hasVehicleChecksFault(vehicleChecks);
 
       expect(result).toBe(true);
     });
@@ -85,7 +83,7 @@ describe('vehicleChecksCardSelector', () => {
         },
       };
 
-      const result = hasVehicleChecksFault(vehicleChecks);
+      const result = VehicleChecksCardComponent.hasVehicleChecksFault(vehicleChecks);
 
       expect(result).toBe(true);
     });
@@ -100,7 +98,7 @@ describe('vehicleChecksCardSelector', () => {
         },
       };
 
-      const result = hasVehicleChecksFault(vehicleChecks);
+      const result = VehicleChecksCardComponent.hasVehicleChecksFault(vehicleChecks);
 
       expect(result).toBe(false);
     });

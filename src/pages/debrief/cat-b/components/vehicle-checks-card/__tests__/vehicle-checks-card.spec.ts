@@ -2,9 +2,9 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { VehicleChecksCardComponent } from '../vehicle-checks-card';
 import { IonicModule, Config } from 'ionic-angular';
 import { StoreModule, Store } from '@ngrx/store';
-import { testsReducer } from '../../../../../modules/tests/tests.reducer';
-import { StoreModel } from '../../../../../shared/models/store.model';
-import { StartTest } from '../../../../../modules/tests/tests.actions';
+import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
+import { StoreModel } from '../../../../../../shared/models/store.model';
+import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import {
   TellMeQuestionCorrect,
   ShowMeQuestionPassed,
@@ -12,14 +12,14 @@ import {
   TellMeQuestionDrivingFault,
   ShowMeQuestionSeriousFault,
   ShowMeQuestionDangerousFault,
-} from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+} from '../../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
 import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
-import { createTranslateLoader } from '../../../../../app/app.module';
+import { createTranslateLoader } from '../../../../../../app/app.module';
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
-import { TestCategory } from '../../../../../shared/models/test-category';
+import { TestCategory } from '../../../../../../shared/models/test-category';
 
 describe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardComponent>;
