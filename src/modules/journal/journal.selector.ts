@@ -1,6 +1,6 @@
 
 import { JournalModel } from './journal.model';
-import { isNil, flatten } from 'lodash';
+import { flatten, isEmpty, isNil } from 'lodash';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
@@ -28,18 +28,24 @@ export const canNavigateToPreviousDay = (journal: JournalModel, today: DateTime)
   return selectedDate > lookbackLimit;
 };
 
+export const hasSlotsAfterSelectedDate = (journal: JournalModel): boolean => {
+  let allowNavigationToFutureDate: boolean = false;
+
+  Object.keys(journal.slots)
+    .forEach((slot: string) => {
+      if (DateTime.at(journal.selectedDate).isBefore(DateTime.at(slot)) && !isEmpty(journal.slots[slot])) {
+        allowNavigationToFutureDate = true;
+        return;
+      }
+    });
+  return allowNavigationToFutureDate;
+};
+
 export const canNavigateToNextDay = (journal: JournalModel): boolean => {
-  let traverseWeekend = false;
   const nextDayAsDate = DateTime.at(journal.selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
   const dayAfterTomorrowAsDate = DateTime.at(DateTime.today()).add(2, Duration.DAY).format('YYYY-MM-DD');
-  const nextDayAsDay = DateTime.at(journal.selectedDate).add(1, Duration.DAY).day();
 
-  // if the current day is a Friday(5) or Saturday(6), allow navigation to the Monday.
-  if ((DateTime.at(DateTime.today()).day() === 5 || DateTime.at(DateTime.today()).day() === 6) && nextDayAsDay !== 2) {
-    traverseWeekend = true;
-  }
-
-  return nextDayAsDate < dayAfterTomorrowAsDate || traverseWeekend;
+  return (nextDayAsDate < dayAfterTomorrowAsDate) || hasSlotsAfterSelectedDate(journal);
 };
 
 export const getAllSlots = (journal: JournalModel): SlotItem[] => {
