@@ -36,6 +36,7 @@ import { getEco, getTestRequirements } from '../../modules/tests/test-data/commo
 import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/Common';
 import * as uncoupleRecoupleActions
   from '../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
+import * as reverseLeftActions from './cat-be/components/reverse-left/reverse-left.actions';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -751,6 +752,44 @@ export class TestReportAnalyticsEffects {
         formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
         'Uncouple recouple',
         1,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  reverseLeftPopoverOpened$ = this.actions$.pipe(
+    ofType(reverseLeftActions.REVERSE_LEFT_POPOVER_OPENED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [reverseLeftActions.ReverseLeftPopoverOpened, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REVERSE_LEFT_POPOVER_OPENED, tests),
+        );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  reverseLeftPopoverClosed$ = this.actions$.pipe(
+    ofType(reverseLeftActions.REVERSE_LEFT_POPOVER_CLOSED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [reverseLeftActions.ReverseLeftPopoverClosed, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REVERSE_LEFT_POPOVER_CLOSED, tests),
       );
       return of(new AnalyticRecorded());
     }),

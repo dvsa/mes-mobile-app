@@ -94,6 +94,8 @@ export enum AnalyticsEvents {
   TOGGLE_LEGAL_REQUIREMENT = 'toggle legal requirement',
   TEST_OUTCOME_CHANGED = 'test outcome changed',
   TEST_BOOKING_SEARCH = 'perform test booking search',
+  REVERSE_LEFT_POPOVER_OPENED = 'open reversing manoeuvre',
+  REVERSE_LEFT_POPOVER_CLOSED = 'close reversing manoevure',
 }
 
 export enum AnalyticsLabels {
