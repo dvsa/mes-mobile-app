@@ -1,7 +1,7 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { getReverseLeftSelected } from '../manoeuvres.cat-be.selectors';
 
-fdescribe('Manoeuvres CatBE Selectors', () => {
+describe('Manoeuvres CatBE Selectors', () => {
   describe('getReverseLeftSelected', () => {
     it('should return true when reverse left is selected', () => {
       const manoeuvres: CatBEUniqueTypes.Manoeuvres = {
