@@ -37,6 +37,11 @@ export class FaultCountProvider {
   }
 
   public getVehicleChecksFaultCountCatB = (vehicleChecks: CatBUniqueTypes.VehicleChecks): number => {
+
+    if (!vehicleChecks) {
+      return 0;
+    }
+
     const { showMeQuestion, tellMeQuestion } = vehicleChecks;
 
     if (showMeQuestion.outcome === CompetencyOutcome.S || showMeQuestion.outcome === CompetencyOutcome.D) {
@@ -51,6 +56,11 @@ export class FaultCountProvider {
   }
 
   public getVehicleChecksFaultCountCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): VehicleChecksScore => {
+
+    if (!vehicleChecks) {
+      return { seriousFaults: 0, drivingFaults: 0 };
+    }
+
     const numberOfShowMeFaults: number = vehicleChecks.showMeQuestions.filter((showMeQuestion) => {
       return showMeQuestion.outcome === CompetencyOutcome.DF;
     }).length;
@@ -78,8 +88,9 @@ export class FaultCountProvider {
     // Because of this we need to pay extra attention on summing up all of them
     const { drivingFaults, manoeuvres, controlledStop, vehicleChecks } = data;
 
-    const drivingFaultSumOfSimpleCompetencies =
-      Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0);
+    const drivingFaultSumOfSimpleCompetencies = drivingFaults ?
+      Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0) : 0;
+
     const controlledStopHasDrivingFault = (controlledStop && controlledStop.fault === CompetencyOutcome.DF) ? 1 : 0;
 
     const result =
@@ -139,8 +150,8 @@ export class FaultCountProvider {
     // Because of this we need to pay extra attention on summing up all of them
     const { drivingFaults, manoeuvres,  vehicleChecks, uncoupleRecouple } = data;
 
-    const drivingFaultSumOfSimpleCompetencies =
-      Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0);
+    const drivingFaultSumOfSimpleCompetencies = drivingFaults ?
+      Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0) : 0;
     const uncoupleRecoupleHasDrivingFault =
       (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.DF) ? 1 : 0;
 

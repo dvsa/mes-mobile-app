@@ -39,9 +39,6 @@ import { ModalEvent } from '../test-report.constants';
 import { CAT_BE, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
-import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { TestCategory } from '../../../shared/models/test-category';
 import {
@@ -232,42 +229,4 @@ export class TestReportCatBEPage extends BasePageComponent {
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_BE.DEBRIEF_PAGE));
   }
-
-  onFailTest = (): void => {
-    this.store$.dispatch(new AddDrivingFault(
-      {
-        competency: Competencies.clearance,
-        newFaultCount: 3,
-      },
-    ));
-    this.store$.dispatch(new AddDrivingFault(
-      {
-        competency: Competencies.moveOffControl,
-        newFaultCount: 6,
-      },
-    ));
-
-    this.store$.dispatch(new AddSeriousFault(Competencies.signalsTimed));
-    this.store$.dispatch(new AddDangerousFault(Competencies.useOfSpeed));
-    this.store$.dispatch(new CalculateTestResult());
-    this.navController.push(CAT_BE.DEBRIEF_PAGE);
-  }
-
-  onPassTest = (): void => {
-    this.store$.dispatch(new AddDrivingFault(
-      {
-        competency: Competencies.clearance,
-        newFaultCount: 3,
-      },
-    ));
-    this.store$.dispatch(new AddDrivingFault(
-      {
-        competency: Competencies.moveOffControl,
-        newFaultCount: 3,
-      },
-    ));
-    this.store$.dispatch(new CalculateTestResult());
-    this.navController.push(CAT_BE.DEBRIEF_PAGE);
-  }
-
 }

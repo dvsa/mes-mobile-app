@@ -67,12 +67,12 @@ describe('Test Report Effects', () => {
 
     it('should dispatch an action containing the correct result for a test', (done) => {
        // ARRANGE
-      spyOn(testResultProvider, 'calculateCatBTestResult').and.returnValue(of(ActivityCodes.PASS));
+      spyOn(testResultProvider, 'calculateTestResult').and.returnValue(of(ActivityCodes.PASS));
        // ACT
       actions$.next(new testReportActions.CalculateTestResult());
        // ASSERT
       effects.calculateTestResult$.subscribe((result) => {
-        expect(testResultProvider.calculateCatBTestResult).toHaveBeenCalled();
+        expect(testResultProvider.calculateTestResult).toHaveBeenCalled();
         expect(result).toEqual(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
         done();
       });

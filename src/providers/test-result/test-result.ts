@@ -11,22 +11,20 @@ import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 @Injectable()
 export class TestResultProvider {
 
-  constructor(
-    private faultCountProvider: FaultCountProvider,
-  ) {}
+  constructor(private faultCountProvider: FaultCountProvider) {}
 
-  calculateTestResult = (category: string,
-                         testData: CatBUniqueTypes.TestData| CatBEUniqueTypes.TestData): Observable<ActivityCode> => {
-
+  public calculateTestResult(category: string, testData: object): Observable<ActivityCode> {
     switch (category) {
       case TestCategory.B:
         return this.calculateCatBTestResult(testData as CatBUniqueTypes.TestData);
       case TestCategory.BE:
         return this.calculateCatBETestResult(testData as CatBEUniqueTypes.TestData);
+      default:
+        throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }
   }
 
-  calculateCatBTestResult = (testData: CatBUniqueTypes.TestData |
+  private calculateCatBTestResult = (testData: CatBUniqueTypes.TestData |
     CatBEUniqueTypes.TestData): Observable<ActivityCode> => {
 
     if (this.faultCountProvider.getDangerousFaultSumCount(TestCategory.B, testData) > 0) {
@@ -43,7 +41,8 @@ export class TestResultProvider {
 
     return of(ActivityCodes.PASS);
   }
-  calculateCatBETestResult = (testData: CatBEUniqueTypes.TestData): Observable<ActivityCode> => {
+
+  private calculateCatBETestResult = (testData: CatBEUniqueTypes.TestData): Observable<ActivityCode> => {
 
     if (this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, testData) > 0) {
       return of(ActivityCodes.FAIL);
