@@ -40,6 +40,7 @@ import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { UncoupleRecoupleComponent } from '../components/uncouple-recouple/uncouple-recouple';
 import { ReverseLeftComponent } from '../components/reverse-left/reverse-left';
 import { ReverseLeftPopoverComponent } from '../components/reverse-left-popover/reverse-left-popover';
+import { VehicleChecksComponent } from '../components/vehicle-checks/vehicle-checks'
 
 describe('TestReportCatBEPage', () => {
   let fixture: ComponentFixture<TestReportCatBEPage>;
@@ -60,6 +61,7 @@ describe('TestReportCatBEPage', () => {
         MockComponent(UncoupleRecoupleComponent),
         MockComponent(ReverseLeftComponent),
         MockComponent(ReverseLeftPopoverComponent),
+        MockComponent(VehicleChecksComponent),
       ],
       imports: [
         IonicModule,
