@@ -1,5 +1,5 @@
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import * as manoeuvresActions from './manoeuvres.actions';
+import * as manoeuvresActions from '../../common/manoeuvres/manoeuvres.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 export const initialState: CatBUniqueTypes.Manoeuvres = {};

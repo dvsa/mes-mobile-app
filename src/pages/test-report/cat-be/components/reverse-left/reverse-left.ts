@@ -12,6 +12,12 @@ import { TestCategory } from '../../../../../shared/models/test-category';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { OverlayCallback } from '../../../test-report.model';
 import { ReverseLeftPopoverOpened, ReverseLeftPopoverClosed } from './reverse-left.actions';
+import { RecordManoeuvresSelection } from '../../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+import { ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
+import { getReverseLeftSelected }
+  from '../../../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.selectors';
+import { DeselectReverseLeftManoeuvre }
+  from '../../../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 
 @Component({
   selector: 'reverse-left',
@@ -28,7 +34,7 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
   @Input()
   clickCallback: OverlayCallback;
 
-  selectedReverseLeft: boolean;
+  completedReverseLeft: boolean = false;
 
   drivingFaults: number = 0;
   hasSeriousFault: boolean = false;
@@ -58,6 +64,7 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
         this.faultCountProvider.getManoeuvreFaultCount(TestCategory.BE, manoeuvres, CompetencyOutcome.S) > 0;
       this.hasDangerousFault =
         this.faultCountProvider.getManoeuvreFaultCount(TestCategory.BE, manoeuvres, CompetencyOutcome.D) > 0;
+      this.completedReverseLeft = getReverseLeftSelected(manoeuvres);
     });
   }
 
@@ -68,7 +75,15 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
   }
 
   toggleReverseLeft = (): void => {
-    return;
+    if (this.completedReverseLeft && !this.hasFaults()) {
+      this.store$.dispatch(new DeselectReverseLeftManoeuvre());
+      return;
+    }
+    this.store$.dispatch(new RecordManoeuvresSelection(ManoeuvreTypes.reverseLeft));
+  }
+
+  hasFaults = (): boolean => {
+    return this.drivingFaults > 0 || this.hasSeriousFault || this.hasDangerousFault;
   }
 
   togglePopoverDisplay = (): void => {

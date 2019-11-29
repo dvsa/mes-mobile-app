@@ -7,7 +7,7 @@ import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-d
 import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { RecordManoeuvresSelection } from '../../../../../modules/tests/test-data/cat-b/manoeuvres/manoeuvres.actions';
+import { RecordManoeuvresSelection } from '../../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
 import { map } from 'rxjs/operators';
 import { some } from 'lodash';

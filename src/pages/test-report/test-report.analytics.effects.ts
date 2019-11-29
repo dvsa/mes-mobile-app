@@ -14,7 +14,7 @@ import * as dangerousFaultsActions
   from '../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import * as drivingFaultsActions from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import * as seriousFaultsActions from '../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
-import * as manoeuvresActions from '../../modules/tests/test-data/cat-b/manoeuvres/manoeuvres.actions';
+import * as manoeuvresActions from '../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import * as vehicleChecksActions from '../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import * as testRequirementsActions
   from '../../modules/tests/test-data/cat-b/test-requirements/test-requirements.actions';

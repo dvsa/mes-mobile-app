@@ -8,10 +8,10 @@ import {
   AddManoeuvreDangerousFault,
   AddManoeuvreComment,
   RemoveManoeuvreFault,
-} from '../../../cat-b/manoeuvres/manoeuvres.actions';
+} from '../../../common/manoeuvres/manoeuvres.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 
-describe('Manoeuvres Reducer', () => {
+describe('Manoeuvres CatBE Reducer', () => {
 
   describe('RECORD_MANOEUVRES_SELECTION', () => {
     it('should add selected manoeuvre', () => {
