@@ -2,7 +2,7 @@ import { NavController, NavParams, Platform, IonicPage } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { getCurrentTest } from '../../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
@@ -31,6 +31,8 @@ import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { TestCategory } from '../../../shared/models/test-category';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
+import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer'
+import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector'
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -41,6 +43,7 @@ interface DebriefPageState {
   ecoFaults$: Observable<Eco>;
   testResult$: Observable<string>;
   conductedLanguage$: Observable<string>;
+  candidateName$: Observable<string>;
 }
 
 @IonicPage()
@@ -125,6 +128,11 @@ export class DebriefCatBEPage extends BasePageComponent {
       conductedLanguage$: currentTest$.pipe(
         select(getCommunicationPreference),
         select(getConductedLanguage),
+      ),
+      candidateName$: currentTest$.pipe(
+        select(getJournalData),
+        select(getCandidate),
+        select(getUntitledCandidateName),
       ),
     };
 

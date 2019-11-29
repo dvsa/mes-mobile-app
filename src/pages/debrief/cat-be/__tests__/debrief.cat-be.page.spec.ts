@@ -40,6 +40,7 @@ import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '../../../../shared/models/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
+import { of } from 'rxjs/observable/of'
 
 describe('DebriefCatBEPage', () => {
   let fixture: ComponentFixture<DebriefCatBEPage>;
@@ -161,6 +162,14 @@ describe('DebriefCatBEPage', () => {
       expect(fixture.debugElement.query(By.css('.terminated'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
       expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
+    });
+
+    it('should display the candidate name in the title', () => {
+      fixture.detectChanges();
+      component.pageState.candidateName$ = of('John Doe');
+      fixture.detectChanges();
+      const title = fixture.debugElement.query(By.css('ion-title'))
+      expect(title.nativeElement.textContent).toEqual('Debrief - John Doe');
     });
 
   });
