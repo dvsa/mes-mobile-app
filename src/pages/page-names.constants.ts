@@ -21,7 +21,7 @@ export const CAT_B = {
   WAITING_ROOM_PAGE: 'WaitingRoomCatBPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatBPage',
-  REKEY_REASON_PAGE: 'RekeyReasonPage',
+  REKEY_REASON_PAGE: 'RekeyReasonCatBPage',
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBPage',
 };
@@ -37,7 +37,7 @@ export const CAT_BE = {
   WAITING_ROOM_PAGE: 'WaitingRoomCatBEPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBEPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatBEPage',
-  REKEY_REASON_PAGE: 'RekeyReasonPage',
+  REKEY_REASON_PAGE: 'RekeyReasonCatBEPage',
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBEPage',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatBEModal',

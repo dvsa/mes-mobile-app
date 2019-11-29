@@ -8,16 +8,16 @@ import {
   LoadingController,
   Loading,
 } from 'ionic-angular';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { BasePageComponent } from '../../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
+import { StoreModel } from '../../../shared/models/store.model';
 import {
   RekeyReasonViewDidEnter,
   ValidateTransferRekey,
   ResetStaffNumberValidationError,
-} from './rekey-reason.actions';
-import { UploadRekeyModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
+} from '../rekey-reason.actions';
+import { UploadRekeyModalEvent } from '../components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import {
   IpadIssueSelected,
@@ -28,31 +28,31 @@ import {
   OtherSelected,
   OtherReasonUpdated,
   TransferSelected,
-} from '../../modules/tests/rekey-reason/rekey-reason.actions';
+} from '../../../modules/tests/rekey-reason/rekey-reason.actions';
 import { Subscription } from 'rxjs/Subscription';
-import { CAT_B, REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../page-names.constants';
-import { getRekeyReasonState } from './rekey-reason.reducer';
+import { CAT_B, REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../../page-names.constants';
+import { getRekeyReasonState } from '../rekey-reason.reducer';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
-import { SendCurrentTest } from '../../modules/tests/tests.actions';
-import { RekeyReasonUploadModel } from './rekey-reason.model';
-import { getUploadStatus } from './rekey-reason.selector';
+import { SendCurrentTest } from '../../../modules/tests/tests.actions';
+import { RekeyReasonUploadModel } from '../rekey-reason.model';
+import { getUploadStatus } from '../rekey-reason.selector';
 import { FormGroup } from '@angular/forms';
 import {
   getReasonForRekey,
   getRekeyIpadIssue,
   getRekeyTransfer,
   getRekeyOther,
-} from '../../modules/tests/rekey-reason/rekey-reason.selector';
-import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+} from '../../../modules/tests/rekey-reason/rekey-reason.selector';
+import { getTests } from '../../../modules/tests/tests.reducer';
+import { getCurrentTest } from '../../../modules/tests/tests.selector';
 import { IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/Common';
-import { EndRekey } from '../../modules/tests/rekey/rekey.actions';
-import { ExitRekeyModalEvent } from './components/exit-rekey-modal/exit-rekey-modal.constants';
-import { SetExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.actions';
-import { SetRekeyDate } from '../../modules/tests/rekey-date/rekey-date.actions';
-import { getExaminerKeyed } from '../../modules/tests/examiner-keyed/examiner-keyed.reducer';
-import { getExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.reducer';
+import { EndRekey } from '../../../modules/tests/rekey/rekey.actions';
+import { ExitRekeyModalEvent } from '../components/exit-rekey-modal/exit-rekey-modal.constants';
+import { SetExaminerConducted } from '../../../modules/tests/examiner-conducted/examiner-conducted.actions';
+import { SetRekeyDate } from '../../../modules/tests/rekey-date/rekey-date.actions';
+import { getExaminerKeyed } from '../../../modules/tests/examiner-keyed/examiner-keyed.reducer';
+import { getExaminerConducted } from '../../../modules/tests/examiner-conducted/examiner-conducted.reducer';
 
 interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
@@ -65,10 +65,10 @@ interface RekeyReasonPageState {
 
 @IonicPage()
 @Component({
-  selector: 'page-rekey-reason',
-  templateUrl: 'rekey-reason.html',
+  selector: '.rekey-reason-cat-be-page',
+  templateUrl: 'rekey-reason.cat-be.page.html',
 })
-export class RekeyReasonPage extends BasePageComponent {
+export class RekeyReasonCatBEPage extends BasePageComponent {
 
   formGroup: FormGroup;
 

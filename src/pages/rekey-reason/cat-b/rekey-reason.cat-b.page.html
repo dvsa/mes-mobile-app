@@ -16,21 +16,14 @@
     </ion-card-header>
     <div [formGroup]="formGroup">
       <ion-grid no-padding>
-        
-        <ipad-issue [formGroup]="formGroup" [selected]="(pageState.ipadIssue$ | async).selected" 
-          [technicalFault]="(pageState.ipadIssue$ | async).technicalFault"
-          [lost]="(pageState.ipadIssue$ | async).lost"
-          [stolen]="(pageState.ipadIssue$ | async).stolen"
-          [broken]="(pageState.ipadIssue$ | async).broken"
-          (selectedChange)="ipadIssueSelected($event)"
-          (technicalFaultChange)="ipadIssueTechnicalFaultChanged($event)"
-          (lostChange)="ipadIssueLostChanged($event)"
-          (stolenChange)="ipadIssueStolenChanged($event)"
-          (brokenChange)="ipadIssueBrokenChanged($event)"></ipad-issue>
 
-        <transfer [formGroup]="formGroup" [selected]="(pageState.transfer$ | async).selected"
-          [staffNumber]="examinerConducted" [isStaffNumberInvalid]="isStaffNumberInvalid" 
-          (selectedChange)="transferSelected($event)" (staffNumberChange)="staffNumberChanged($event)"></transfer>
+        <ipad-issue [formGroup]="formGroup" [selected]="(pageState.ipadIssue$ | async).selected" [technicalFault]="(pageState.ipadIssue$ | async).technicalFault"
+          [lost]="(pageState.ipadIssue$ | async).lost" [stolen]="(pageState.ipadIssue$ | async).stolen" [broken]="(pageState.ipadIssue$ | async).broken"
+          (selectedChange)="ipadIssueSelected($event)" (technicalFaultChange)="ipadIssueTechnicalFaultChanged($event)"
+          (lostChange)="ipadIssueLostChanged($event)" (stolenChange)="ipadIssueStolenChanged($event)" (brokenChange)="ipadIssueBrokenChanged($event)"></ipad-issue>
+
+        <transfer [formGroup]="formGroup" [selected]="(pageState.transfer$ | async).selected" [staffNumber]="examinerConducted"
+          [isStaffNumberInvalid]="isStaffNumberInvalid" (selectedChange)="transferSelected($event)" (staffNumberChange)="staffNumberChanged($event)"></transfer>
 
         <other-reason [formGroup]="formGroup" [selected]="(pageState.other$ | async).selected" [reason]="(pageState.other$ | async).reason"
           (selectedChange)="otherSelected($event)" (reasonChange)="otherReasonChanged($event)"></other-reason>

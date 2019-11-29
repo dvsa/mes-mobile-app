@@ -1,42 +1,42 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, Platform, Config, LoadingController, ModalController } from 'ionic-angular';
 import { NavControllerMock, PlatformMock, ConfigMock, LoadingControllerMock, ModalControllerMock } from 'ionic-mocks';
-import { RekeyReasonPage } from '../rekey-reason';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { RekeyReasonCatBPage } from '../rekey-reason.cat-b.page';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { Store, StoreModule } from '@ngrx/store';
-import { AppModule } from '../../../app/app.module';
-import { RekeyReasonModel } from '../rekey-reason.model';
-import { getUploadStatus } from '../rekey-reason.selector';
+import { AppModule } from '../../../../app/app.module';
+import { RekeyReasonModel } from '../../rekey-reason.model';
+import { getUploadStatus } from '../../rekey-reason.selector';
 import {
   SendCurrentTest,
   SendCurrentTestSuccess,
   SendCurrentTestFailure,
-} from '../../../modules/tests/tests.actions';
-import { rekeyReasonReducer } from '../rekey-reason.reducer';
-import { CAT_B } from '../../page-names.constants';
-import { AppInfoModel } from '../../../modules/app-info/app-info.model';
+} from '../../../../modules/tests/tests.actions';
+import { rekeyReasonReducer } from '../../rekey-reason.reducer';
+import { CAT_B } from '../../../page-names.constants';
+import { AppInfoModel } from '../../../../modules/app-info/app-info.model';
 import {
   IpadIssueSelected,
   OtherSelected,
   OtherReasonUpdated,
   TransferSelected,
   IpadIssueLostSelected,
-} from '../../../modules/tests/rekey-reason/rekey-reason.actions';
+} from '../../../../modules/tests/rekey-reason/rekey-reason.actions';
 import { By } from '@angular/platform-browser';
-import { SetExaminerConducted } from '../../../modules/tests/examiner-conducted/examiner-conducted.actions';
+import { SetExaminerConducted } from '../../../../modules/tests/examiner-conducted/examiner-conducted.actions';
 import { MockComponent } from 'ng-mocks';
-import { FindUserProvider } from '../../../providers/find-user/find-user';
-import { FindUserProviderMock } from '../../../providers/find-user/__mocks__/find-user.mock';
-import { IpadIssueComponent } from '../components/ipad-issue/ipad-issue';
-import { TransferComponent } from '../components/transfer/transfer';
-import { OtherReasonComponent } from '../components/other-reason/other-reason';
-import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
-import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { FindUserProvider } from '../../../../providers/find-user/find-user';
+import { FindUserProviderMock } from '../../../../providers/find-user/__mocks__/find-user.mock';
+import { IpadIssueComponent } from '../../components/ipad-issue/ipad-issue';
+import { TransferComponent } from '../../components/transfer/transfer';
+import { OtherReasonComponent } from '../../components/other-reason/other-reason';
+import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
-describe('RekeyReasonPage', () => {
-  let fixture: ComponentFixture<RekeyReasonPage>;
-  let component: RekeyReasonPage;
+describe('RekeyReasonCatBPage', () => {
+  let fixture: ComponentFixture<RekeyReasonCatBPage>;
+  let component: RekeyReasonCatBPage;
   let loadingController: LoadingController;
   let navContoller: NavController;
   let modalController: ModalController;
@@ -45,7 +45,7 @@ describe('RekeyReasonPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        RekeyReasonPage,
+        RekeyReasonCatBPage,
         MockComponent(IpadIssueComponent),
         MockComponent(TransferComponent),
         MockComponent(OtherReasonComponent),
@@ -122,7 +122,7 @@ describe('RekeyReasonPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(RekeyReasonPage);
+        fixture = TestBed.createComponent(RekeyReasonCatBPage);
         component = fixture.componentInstance;
         loadingController = TestBed.get(LoadingController);
         navContoller = TestBed.get(NavController);
