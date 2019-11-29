@@ -9,6 +9,8 @@ export const DASHBOARD_PAGE = 'DashboardPage';
 export const REKEY_SEARCH_PAGE = 'RekeySearchPage';
 export const TEST_RESULTS_SEARCH_PAGE = 'TestResultsSearchPage';
 export const LEGAL_REQUIREMENTS_MODAL = 'LegalRequirementsModal';
+export const VIEW_TEST_RESULT_PAGE = 'ViewTestResultPage';
+export const DEV_SCREEN_NAVIGATION_PAGE = 'DevScreenNavigationPage';
 
 export const CAT_B = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBPage',
