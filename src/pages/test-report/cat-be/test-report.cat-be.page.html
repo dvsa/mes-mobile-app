@@ -1,10 +1,5 @@
 <ion-header>
   <ion-navbar hideBackButton>
-    <!-- TODO - Remove once the end test button works -->
-    <ion-buttons start>
-      <button ion-button (click)="onPassTest()" id="pass-test-button">Pass Test</button>
-      <button ion-button (click)="onFailTest()" id="fail-test-button">Fail Test</button>
-    </ion-buttons>
     <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end>
       <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>
