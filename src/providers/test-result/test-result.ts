@@ -19,6 +19,8 @@ export class TestResultProvider {
         return this.calculateCatBTestResult(testData as CatBUniqueTypes.TestData);
       case TestCategory.BE:
         return this.calculateCatBETestResult(testData as CatBEUniqueTypes.TestData);
+      default:
+        throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }
   }
 
