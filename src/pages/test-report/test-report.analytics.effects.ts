@@ -37,6 +37,8 @@ import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/Common';
 import * as uncoupleRecoupleActions
   from '../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
 import * as reverseLeftActions from './cat-be/components/reverse-left/reverse-left.actions';
+import * as catBEManoeuversActions
+  from '../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -636,6 +638,26 @@ export class TestReportAnalyticsEffects {
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
         `${legalRequirementsLabels['manoeuvre']} - ${legalRequirementToggleValues.completed}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  deselectReverseLeftManoeuvreEffect$ = this.actions$.pipe(
+    ofType(catBEManoeuversActions.DESELECT_REVERSE_LEFT_MANOEUVRE),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    switchMap(([action, tests]: [catBEManoeuversActions.DeselectReverseLeftManoeuvre, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+        `${legalRequirementsLabels['manoeuvre']} - ${legalRequirementToggleValues.uncompleted}`,
       );
       return of(new AnalyticRecorded());
     }),
