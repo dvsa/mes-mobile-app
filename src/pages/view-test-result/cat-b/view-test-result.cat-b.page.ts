@@ -7,52 +7,52 @@ import {
   Loading,
   LoadingController,
 } from 'ionic-angular';
-import { BasePageComponent } from '../../shared/classes/base-page';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { SearchProvider } from '../../providers/search/search';
+import { BasePageComponent } from '../../../shared/classes/base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { SearchProvider } from '../../../providers/search/search';
 import { IpadIssue } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { TestDetailsModel } from './components/test-details-card/test-details-card.model';
 import { Subscription } from 'rxjs/Subscription';
-import { DateTime } from '../../shared/helpers/date-time';
+import { DateTime } from '../../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from './components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
 import { RekeyDetailsModel } from './components/rekey-details-card/rekey-details-card.model';
 import { RekeyReasonModel } from './components/rekey-reason-card/rekey-reason-card.model';
-import { CompressionProvider } from '../../providers/compression/compression';
-import { formatApplicationReference } from '../../shared/helpers/formatters';
+import { CompressionProvider } from '../../../providers/compression/compression';
+import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { TestSummaryCardModel } from './components/test-summary-card/test-summary-card-model';
 import { ViewTestHeaderModel } from './components/view-test-header/view-test-header.model';
-import { getCandidateName } from '../../modules/tests/journal-data/candidate/candidate.selector';
-import { getTestOutcomeText } from '../../modules/tests/tests.selector';
+import { getCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { DebriefCardModel } from './components/debrief-card/debrief-card.model';
 import {
   manoeuvreTypeLabels,
-} from '../../shared/constants/competencies/catb-manoeuvres';
+} from '../../../shared/constants/competencies/catb-manoeuvres';
 import { get } from 'lodash';
-import { FaultSummary } from '../../shared/models/fault-marking.model';
+import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { Store } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
-import { ErrorTypes } from '../../shared/models/error-message';
-import { ViewTestResultViewDidEnter } from './view-test-result.actions';
-import { LogType } from '../../shared/models/log.model';
-import { SaveLog } from '../../modules/logs/logs.actions';
-import { LogHelper } from '../../providers/logs/logsHelper';
-import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
-import { QuestionProvider } from '../../providers/question/question';
-import { TestCategory } from '../../shared/models/test-category';
-import { FaultCountProvider } from '../../providers/fault-count/fault-count';
-import { FaultSummaryProvider } from '../../providers/fault-summary/fault-summary';
+import { StoreModel } from '../../../shared/models/store.model';
+import { ErrorTypes } from '../../../shared/models/error-message';
+import { ViewTestResultViewDidEnter } from '../view-test-result.actions';
+import { LogType } from '../../../shared/models/log.model';
+import { SaveLog } from '../../../modules/logs/logs.actions';
+import { LogHelper } from '../../../providers/logs/logsHelper';
+import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
+import { QuestionProvider } from '../../../providers/question/question';
+import { TestCategory } from '../../../shared/models/test-category';
+import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { HttpResponse } from '@angular/common/http';
 
 @IonicPage()
 @Component({
-  selector: 'page-view-test-result',
-  templateUrl: 'view-test-result.html',
+  selector: '.view-test-result-cat-b-page',
+  templateUrl: 'view-test-result.cat-b.page.html',
 })
-export class ViewTestResultPage extends BasePageComponent implements OnInit {
+export class ViewTestResultCatBPage extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
   // TODO: currently this page is tightly couple to category B,
