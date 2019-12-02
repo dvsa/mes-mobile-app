@@ -14,7 +14,7 @@ import * as dangerousFaultsActions
   from '../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import * as drivingFaultsActions from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import * as seriousFaultsActions from '../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
-import * as manoeuvresActions from '../../modules/tests/test-data/cat-b/manoeuvres/manoeuvres.actions';
+import * as manoeuvresActions from '../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import * as vehicleChecksActions from '../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import * as testRequirementsActions
   from '../../modules/tests/test-data/cat-b/test-requirements/test-requirements.actions';
@@ -204,7 +204,7 @@ export class TestReportAnalyticsEffects {
     )),
     concatMap(([action, tests]: [manoeuvresActions.AddManoeuvreDrivingFault, TestsModel]) => {
       this.analytics.logEvent(
-          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
         `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
         1,

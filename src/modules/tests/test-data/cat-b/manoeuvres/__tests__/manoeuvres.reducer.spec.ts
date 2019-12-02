@@ -8,7 +8,7 @@ import {
   AddManoeuvreDangerousFault,
   AddManoeuvreComment,
   RemoveManoeuvreFault,
-} from '../manoeuvres.actions';
+} from '../../../common/manoeuvres/manoeuvres.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 
 describe('Manoeuvres Reducer', () => {

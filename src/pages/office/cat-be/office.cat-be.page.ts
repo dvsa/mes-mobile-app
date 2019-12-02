@@ -81,7 +81,7 @@ import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/
 import {
   AddShowMeTellMeComment,
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
-import { AddManoeuvreComment } from '../../../modules/tests/test-data/cat-b/manoeuvres/manoeuvres.actions';
+import { AddManoeuvreComment } from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';

@@ -1,6 +1,8 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import * as manoeuvresActions from '../../cat-b/manoeuvres/manoeuvres.actions';
+import * as manoeuvresActions from '../../common/manoeuvres/manoeuvres.actions';
+import * as catBEManoeuvresActions from './manoeuvres.cat-be.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import { ManoeuvreTypes } from '../../test-data.constants';
 
 export const initialState: CatBEUniqueTypes.Manoeuvres = {
   reverseLeft: {},
@@ -8,7 +10,7 @@ export const initialState: CatBEUniqueTypes.Manoeuvres = {
 
 export function manoeuvresCatBEReducer(
   state = initialState,
-  action: manoeuvresActions.Types,
+  action: manoeuvresActions.Types | catBEManoeuvresActions.Types,
 ): CatBEUniqueTypes.Manoeuvres {
   switch (action.type) {
     case manoeuvresActions.RECORD_MANOEUVRES_SELECTION:
@@ -23,7 +25,26 @@ export function manoeuvresCatBEReducer(
         ...state,
         [action.payload.manoeuvre]: {
           ...state[action.payload.manoeuvre],
+          selected: true,
           [action.payload.competency]: CompetencyOutcome.DF,
+        },
+      };
+    case manoeuvresActions.ADD_MANOEUVRE_SERIOUS_FAULT:
+      return {
+        ...state,
+        [action.payload.manoeuvre]: {
+          ...state[action.payload.manoeuvre],
+          selected: true,
+          [action.payload.competency]: CompetencyOutcome.S,
+        },
+      };
+    case manoeuvresActions.ADD_MANOEUVRE_DANGEROUS_FAULT:
+      return {
+        ...state,
+        [action.payload.manoeuvre]: {
+          ...state[action.payload.manoeuvre],
+          selected: true,
+          [action.payload.competency]: CompetencyOutcome.D,
         },
       };
     case manoeuvresActions.ADD_MANOEUVRE_COMMENT:
@@ -34,22 +55,6 @@ export function manoeuvresCatBEReducer(
           [`${action.controlOrObservation.toLocaleLowerCase()}FaultComments`]: action.comment,
         },
       };
-    case manoeuvresActions.ADD_MANOEUVRE_SERIOUS_FAULT:
-      return {
-        ...state,
-        [action.payload.manoeuvre]: {
-          ...state[action.payload.manoeuvre],
-          [action.payload.competency]: CompetencyOutcome.S,
-        },
-      };
-    case manoeuvresActions.ADD_MANOEUVRE_DANGEROUS_FAULT:
-      return {
-        ...state,
-        [action.payload.manoeuvre]: {
-          ...state[action.payload.manoeuvre],
-          [action.payload.competency]: CompetencyOutcome.D,
-        },
-      };
     case manoeuvresActions.REMOVE_MANOEUVRE_FAULT:
       const {
         [action.payload.competency]: competencyToOmit, ...stateToPreserve
@@ -57,6 +62,14 @@ export function manoeuvresCatBEReducer(
       return {
         ...state,
         [action.payload.manoeuvre]: stateToPreserve,
+      };
+    case catBEManoeuvresActions.DESELECT_REVERSE_LEFT_MANOEUVRE:
+      return {
+        ...state,
+        [ManoeuvreTypes.reverseLeft]: {
+          ...state[ManoeuvreTypes.reverseLeft],
+          selected: false,
+        },
       };
     default:
       return state;

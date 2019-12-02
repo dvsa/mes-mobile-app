@@ -5,12 +5,12 @@
       [onPress]="toggleReverseLeft"
       [ripple]="false"
       [ngClass]="{
-        'checked': selectedReverseLeft
+        'checked': completedReverseLeft
       }"
       [class.promoted]="displayPopover"
     >
       <span class='tickwrapper'>
-        <tick-indicator [ticked]="selectedReverseLeft"></tick-indicator>
+        <tick-indicator [ticked]="completedReverseLeft"></tick-indicator>
       </span>
     </competency-button>
   </ion-col>

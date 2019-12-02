@@ -4,17 +4,19 @@ reverse-left-popover {
   width: calc(100% - 12px);
   left: 6px;
   margin-top: 9px;
+  position: fixed;
   z-index: 270;
 
   .popover-content {
-    margin-left: 68px;
+    width: calc(100% - 12px);
     border: 0 none map-get($colors, "mes-white");
   }
-
+  
   .manoeuvre-competencies-container {
-    margin-top: 40px;
-    .manoeuvre-competency-button {
-      margin-bottom: 10px;
+    margin: 40px auto;
+
+    .first-manoeuvre-competency-button {
+      margin-bottom: 24px;
     }
   }
 }

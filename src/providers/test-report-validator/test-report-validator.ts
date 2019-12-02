@@ -9,8 +9,7 @@ import {
   hasManoeuvreBeenCompletedCatB,
   hasVehicleChecksBeenCompletedCatB,
 } from '../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-// TODO - MES-609 Put back in when manoeuvre is completed on test report
-// import { hasManoeuvreBeenCompletedCatBE } from '../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { hasManoeuvreBeenCompletedCatBE } from '../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { legalRequirementsLabels } from '../../shared/constants/legal-requirements/legal-requirements.constants';
 
 @Injectable()
@@ -80,8 +79,7 @@ export class TestReportValidatorProvider {
     const downhillStart:boolean =  get(data, 'testRequirements.downhillStart', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
     const angledStartControlledStop:boolean =  get(data, 'testRequirements.angledStartControlledStop', false);
-    // TODO - MES-609 Put back in when manoeuvre is completed on test report
-    // const manoeuvre: boolean = hasManoeuvreBeenCompletedCatBE(data) || false ;
+    const manoeuvre: boolean = hasManoeuvreBeenCompletedCatBE(data) || false ;
     const eco: boolean =  get(data, 'eco.completed', false);
     const uncoupleRecouple: boolean =  get(data, 'uncoupleRecouple.selected', false) ;
 
@@ -91,8 +89,7 @@ export class TestReportValidatorProvider {
       downhillStart &&
       uphillStart &&
       angledStartControlledStop &&
-      // TODO - MES-609 Put back in when manoeuvre is completed on test report
-      // manoeuvre &&
+      manoeuvre &&
       eco &&
       uncoupleRecouple
     );
@@ -107,8 +104,7 @@ export class TestReportValidatorProvider {
     !get(data, 'testRequirements.uphillStart' , false) && result.push(legalRequirementsLabels.uphillStart);
     !get(data, 'testRequirements.angledStartControlledStop', false)
       && result.push(legalRequirementsLabels.angledStartControlledStop);
-    // TODO -  MES-609 Put back in when manoeuvre is completed on test report
-    // !hasManoeuvreBeenCompletedCatBE(data) && result.push(legalRequirementsLabels.manoeuvre);
+    !hasManoeuvreBeenCompletedCatBE(data) && result.push(legalRequirementsLabels.manoeuvre);
     !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
     !get(data , 'uncoupleRecouple.selected', false) && result.push(legalRequirementsLabels.uncoupleRecouple);
 
