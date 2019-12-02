@@ -1,5 +1,4 @@
-page-rekey-reason {
-
+div[class^="rekey-reason-cat-"] {
   .transferInfo {
     color: map-get($colors-gds, gds-grey-1);
     font-weight: initial;
