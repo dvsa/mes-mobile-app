@@ -6,6 +6,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import * as communicationActions from '../communication.actions';
 import * as testStatusActions from '../../../modules/tests/test-status/test-status.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('Communication Effects', () => {
 
@@ -14,8 +15,7 @@ describe('Communication Effects', () => {
 
   const currentSlotId = '1234';
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -34,6 +34,10 @@ describe('Communication Effects', () => {
         Store,
       ],
     });
+  })
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(CommunicationEffects);
   });
 

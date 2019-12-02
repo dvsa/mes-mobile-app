@@ -12,12 +12,13 @@ import { journalReducer } from '../../../../modules/journal/journal.reducer';
 import { SlotProvider } from '../../../../providers/slot/slot';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('IncompleteTestsBanner', () => {
   let fixture: ComponentFixture<IncompleteTestsBanner>;
   let component: IncompleteTestsBanner;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [IncompleteTestsBanner],
       imports: [
@@ -34,11 +35,11 @@ describe('IncompleteTestsBanner', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  });
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(IncompleteTestsBanner);
         component = fixture.componentInstance;
-      });
   }));
 
   describe('DOM', () => {

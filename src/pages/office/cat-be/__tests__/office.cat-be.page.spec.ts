@@ -64,6 +64,7 @@ import { NavigationStateProviderMock } from '../../../../providers/navigation-st
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
+import { configureTestSuite } from 'ng-bullet'
 import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
 
 describe('OfficePage', () => {
@@ -72,7 +73,7 @@ describe('OfficePage', () => {
   let navController: NavController;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         OfficeCatBEPage,
@@ -149,12 +150,12 @@ describe('OfficePage', () => {
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  })
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(OfficeCatBEPage);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
-      });
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));

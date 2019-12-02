@@ -14,17 +14,22 @@ import { catC1TestDataStateObject } from '../__mocks__/cat-C1-test-data-state-ob
 import { FaultCountBHelper } from '../cat-b/fault-count.cat-b';
 import { FaultCountBEHelper } from '../cat-be/fault-count.cat-be';
 import { FaultCountCHelper } from '../cat-c/fault-count.cat-c';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('FaultCountProvider', () => {
 
   let faultCountProvider: FaultCountProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         FaultCountProvider,
       ],
     });
+  })
+
+  beforeEach(() => {
+
 
     faultCountProvider = TestBed.get(FaultCountProvider);
 

@@ -5,12 +5,13 @@ import { AppModule } from '../../../../../app/app.module';
 import { EtaInvalidModal } from '../eta-invalid-modal';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('LegalRequirementsModal', () => {
   let fixture: ComponentFixture<EtaInvalidModal>;
   let component: EtaInvalidModal;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         EtaInvalidModal,
@@ -25,12 +26,12 @@ describe('LegalRequirementsModal', () => {
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  })
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(EtaInvalidModal);
         component = fixture.componentInstance;
         component.onCancel = () => {};
-      });
   }));
 
   describe('DOM', () => {

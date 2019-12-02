@@ -5,12 +5,13 @@ import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../app/app.module';
 import { UploadRekeyModal } from '../upload-rekey-modal';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('UploadRekeyModal', () => {
   let fixture: ComponentFixture<UploadRekeyModal>;
   let component: UploadRekeyModal;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [UploadRekeyModal],
       imports: [IonicModule, AppModule],
@@ -19,13 +20,13 @@ describe('UploadRekeyModal', () => {
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  });
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(UploadRekeyModal);
         component = fixture.componentInstance;
         component.onCancel = () => {};
         component.onUpload = () => {};
-      });
   }));
 
   describe('DOM', () => {

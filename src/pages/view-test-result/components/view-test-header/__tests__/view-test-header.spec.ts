@@ -4,12 +4,13 @@ import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
 import { ViewTestHeaderComponent } from '../view-test-header';
 import { TestOutcome } from '../../../../../modules/tests/tests.constants';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ViewTestHeaderComponent', () => {
   let fixture: ComponentFixture<ViewTestHeaderComponent>;
   let component: ViewTestHeaderComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ViewTestHeaderComponent,
@@ -21,11 +22,11 @@ describe('ViewTestHeaderComponent', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  })
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(ViewTestHeaderComponent);
         component = fixture.componentInstance;
-      });
   }));
 
   describe('Class', () => {

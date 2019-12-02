@@ -22,6 +22,7 @@ import { of } from 'rxjs/observable/of';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { configureTestSuite } from 'ng-bullet'
 
 export class TestActions extends Actions {
   constructor() {
@@ -41,9 +42,7 @@ describe('Logs Effects', () => {
   let appConfigProviderMock: AppConfigProvider;
   let dataStoreMock: DataStoreProvider;
 
-  beforeEach(() => {
-    // ARRANGE
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -61,6 +60,11 @@ describe('Logs Effects', () => {
         Store,
       ],
     });
+  })
+
+  beforeEach(() => {
+    // ARRANGE
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(LogsEffects);
     appConfigProviderMock = TestBed.get(AppConfigProvider);
     cacheDays = appConfigProviderMock.getAppConfig().daysToCacheLogs;

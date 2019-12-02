@@ -5,11 +5,13 @@ import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { IonicModule } from 'ionic-angular';
+import { configureTestSuite } from 'ng-bullet'
 class TestStore { }
 describe('SignatureAreaComponent', () => {
   let fixture: ComponentFixture<SignatureAreaComponent>;
   let component: SignatureAreaComponent;
-  beforeEach(async(() => {
+
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         SignatureAreaComponent,
@@ -21,10 +23,12 @@ describe('SignatureAreaComponent', () => {
       providers: [
         { provide: Store, useClass: TestStore },
       ],
-    }).compileComponents().then(() => {
+    })
+  })
+
+  beforeEach(async(() => {
       fixture = TestBed.createComponent(SignatureAreaComponent);
       component = fixture.componentInstance;
-    });
   }));
   describe('Class', () => {
     describe('signature', () => {

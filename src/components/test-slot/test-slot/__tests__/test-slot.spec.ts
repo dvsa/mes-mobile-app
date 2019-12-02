@@ -33,6 +33,7 @@ import { SpecialNeedsCode } from '../../../../shared/helpers/get-slot-type';
 import { LocationComponent } from '../../location/location';
 import { SlotProvider } from '../../../../providers/slot/slot';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -97,7 +98,7 @@ describe('TestSlotComponent', () => {
     },
   };
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         TestSlotComponent,
@@ -125,13 +126,15 @@ describe('TestSlotComponent', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: SlotProvider, useClass: SlotProvider },
       ],
-    }).compileComponents().then(() => {
+    })
+  })
+
+  beforeEach(async(() => {
       fixture = TestBed.createComponent(TestSlotComponent);
       component = fixture.componentInstance;
       component.slot = cloneDeep(mockSlot);
       component.showLocation = true;
       store$ = TestBed.get(Store);
-    });
   }));
 
   describe('Class', () => {

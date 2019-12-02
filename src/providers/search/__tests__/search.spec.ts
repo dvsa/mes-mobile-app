@@ -6,13 +6,14 @@ import { SearchProvider } from '../search';
 import { AdvancedSearchParams } from '../search.models';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('SearchProvider', () => {
 
   let searchProvider: SearchProvider;
   let httpMock: HttpTestingController;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -23,7 +24,9 @@ describe('SearchProvider', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     });
+  });
 
+  beforeEach(() => {
     httpMock = TestBed.get(HttpTestingController);
     searchProvider = TestBed.get(SearchProvider);
   });

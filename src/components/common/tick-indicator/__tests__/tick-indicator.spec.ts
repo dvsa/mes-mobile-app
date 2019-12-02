@@ -3,12 +3,13 @@ import { Config, IonicModule } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('TickIndicatorComponent', () => {
   let fixture: ComponentFixture<TickIndicatorComponent>;
   let component: TickIndicatorComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         TickIndicatorComponent,
@@ -20,11 +21,11 @@ describe('TickIndicatorComponent', () => {
         IonicModule,
       ],
     })
-      .compileComponents()
-      .then(() => {
+  })
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(TickIndicatorComponent);
         component = fixture.componentInstance;
-      });
   }));
 
   describe('DOM', () => {

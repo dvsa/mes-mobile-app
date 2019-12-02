@@ -10,13 +10,14 @@ import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
+import { configureTestSuite } from 'ng-bullet'
 
 class MockStore { }
 
 describe('IncompleteTestsBannerSelector', () => {
   let slotProvider: SlotProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         { provide: SlotProvider, useClass: SlotProvider },

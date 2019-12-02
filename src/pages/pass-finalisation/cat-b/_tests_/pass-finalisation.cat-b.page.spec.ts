@@ -37,6 +37,7 @@ import { TransmissionComponent } from '../../../../components/common/transmissio
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
+import { configureTestSuite } from 'ng-bullet';
 import { Subscription } from 'rxjs/Subscription';
 
 describe('PassFinalisationCatBPage', () => {
@@ -44,7 +45,7 @@ describe('PassFinalisationCatBPage', () => {
   let component: PassFinalisationCatBPage;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PassFinalisationCatBPage,
@@ -68,14 +69,14 @@ describe('PassFinalisationCatBPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  });
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(PassFinalisationCatBPage);
         component = fixture.componentInstance;
         component.subscription = new Subscription();
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
-      });
   }));
 
   describe('Class', () => {
