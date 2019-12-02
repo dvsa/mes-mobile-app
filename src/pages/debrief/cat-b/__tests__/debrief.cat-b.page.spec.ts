@@ -39,7 +39,7 @@ import { Language } from '../../../../modules/tests/communication-preferences/co
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '../../../../shared/models/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
-import { of } from 'rxjs/observable/of'
+import { of } from 'rxjs/observable/of';
 
 describe('DebriefCatBPage', () => {
   let fixture: ComponentFixture<DebriefCatBPage>;
@@ -158,7 +158,7 @@ describe('DebriefCatBPage', () => {
       fixture.detectChanges();
       component.pageState.candidateName$ = of('John Doe');
       fixture.detectChanges();
-      const title = fixture.debugElement.query(By.css('ion-title'))
+      const title = fixture.debugElement.query(By.css('ion-title'));
       expect(title.nativeElement.textContent).toEqual('Debrief - John Doe');
     });
     it('should display passed container if outcome is `passed`', () => {
