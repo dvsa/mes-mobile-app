@@ -19,7 +19,7 @@ import {
   AddManoeuvreDangerousFault,
   AddManoeuvreSeriousFault,
   RemoveManoeuvreFault,
-} from '../../../../../modules/tests/test-data/cat-b/manoeuvres/manoeuvres.actions';
+} from '../../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { By } from '@angular/platform-browser';
 import { IonicModule } from 'ionic-angular';
 import { MockComponent } from 'ng-mocks';
