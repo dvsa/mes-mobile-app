@@ -14,7 +14,7 @@ import {
   SendCurrentTestFailure,
 } from '../../../../modules/tests/tests.actions';
 import { rekeyReasonReducer } from '../../rekey-reason.reducer';
-import { CAT_B } from '../../../page-names.constants';
+import { CAT_BE } from '../../../page-names.constants';
 import { AppInfoModel } from '../../../../modules/app-info/app-info.model';
 import {
   IpadIssueSelected,
@@ -197,7 +197,7 @@ describe('RekeyReasonCatBEPage', () => {
         component.handleUploadOutcome(uploadStatus);
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
-        expect(navContoller.push).toHaveBeenCalledWith(CAT_B.REKEY_UPLOAD_OUTCOME_PAGE);
+        expect(navContoller.push).toHaveBeenCalledWith(CAT_BE.REKEY_UPLOAD_OUTCOME_PAGE);
         expect(component.onShowUploadRekeyModal).not.toHaveBeenCalled();
 
       });
@@ -209,7 +209,7 @@ describe('RekeyReasonCatBEPage', () => {
         component.handleUploadOutcome(uploadStatus);
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
-        expect(navContoller.push).toHaveBeenCalledWith(CAT_B.REKEY_UPLOAD_OUTCOME_PAGE);
+        expect(navContoller.push).toHaveBeenCalledWith(CAT_BE.REKEY_UPLOAD_OUTCOME_PAGE);
         expect(component.onShowUploadRekeyModal).not.toHaveBeenCalled();
       });
     });
