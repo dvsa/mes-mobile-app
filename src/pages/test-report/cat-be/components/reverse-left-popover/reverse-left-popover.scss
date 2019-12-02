@@ -5,12 +5,6 @@ reverse-left-popover {
     border: 0 none map-get($colors, "mes-white");
     position: relative;
   }
-
-  .link {
-    text-align: right;
-    color: map-get($colors-gds, "gds-blue");
-    text-decoration: underline;
-  }
   
   .manoeuvre-competencies-container {
     margin-top: 40px;

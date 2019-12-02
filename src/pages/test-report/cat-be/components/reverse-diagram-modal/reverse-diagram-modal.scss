@@ -1,0 +1,22 @@
+reverse-diagram-modal {
+  .exclamation-indicator {
+    width: 26px;
+    height: 26px;
+    float: right;
+  }
+
+  .nav-close ion-icon {
+    margin: -1px 0 0;
+    display: inherit;
+    min-width: 28px;
+    font-size: 3.4rem;
+  }
+
+  .grid{
+    padding: 0;
+  }
+
+  h2{
+    padding: 0 28px;
+  }
+}

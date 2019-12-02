@@ -1,0 +1,7 @@
+  reverse-diagram-link {
+    .link {
+      float: right;
+      color: map-get($colors-gds, "gds-blue");
+      text-decoration: underline;
+    }
+  }
