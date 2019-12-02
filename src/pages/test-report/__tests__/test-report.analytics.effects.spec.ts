@@ -45,6 +45,8 @@ import * as uncoupleRecoupleActions
   from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
 import * as reverseLeftActions
   from '../cat-be/components/reverse-left/reverse-left.actions';
+import * as catBEManoeuversActions
+  from '../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 
 describe('Test Report Analytics Effects', () => {
 
@@ -1046,6 +1048,7 @@ describe('Test Report Analytics Effects', () => {
         done();
       });
     });
+
     it('should call logEvent for selected manoeuvre', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
@@ -1059,6 +1062,25 @@ describe('Test Report Analytics Effects', () => {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
           `${legalRequirementsLabels['manoeuvre']} - ${legalRequirementToggleValues.completed}`,
+        );
+        done();
+      });
+    });
+
+    it('should call logEvent for deselected manoeuvre', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      actions$.next(new manoeuvresActions.RecordManoeuvresSelection(ManoeuvreTypes.reverseParkRoad));
+      // ACT
+      actions$.next(new catBEManoeuversActions.DeselectReverseLeftManoeuvre());
+      // ASSERT
+      effects.deselectReverseLeftManoeuvreEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+          `${legalRequirementsLabels['manoeuvre']} - ${legalRequirementToggleValues.uncompleted}`,
         );
         done();
       });
