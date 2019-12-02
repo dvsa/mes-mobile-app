@@ -61,15 +61,13 @@ describe('TestReportValidator', () => {
     });
     it('should return any missing legal requirements for a Cat BE test', () => {
       const result = testReportValidatorProvider.getMissingLegalRequirements({}, TestCategory.BE);
-      // TODO - MES-609 Change to 8
-      expect(result.length).toEqual(7);
+      expect(result.length).toEqual(8);
       expect(result).toContain(legalRequirementsLabels.normalStart1);
       expect(result).toContain(legalRequirementsLabels.normalStart2);
       expect(result).toContain(legalRequirementsLabels.downhillStart);
       expect(result).toContain(legalRequirementsLabels.uphillStart);
       expect(result).toContain(legalRequirementsLabels.angledStartControlledStop);
-      // TODO - MES-609 Put back in when manoeuvre is completed on test report
-      // expect(result).toContain(legalRequirementsLabels.manoeuvre);
+      expect(result).toContain(legalRequirementsLabels.manoeuvre);
       expect(result).toContain(legalRequirementsLabels.eco);
       expect(result).toContain(legalRequirementsLabels.uncoupleRecouple);
     });
