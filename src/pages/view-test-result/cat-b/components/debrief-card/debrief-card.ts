@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DebriefCardModel } from './debrief-card.model';
-import { flattenArray } from '../../view-test-result-helpers';
+import { flattenArray } from '../../../view-test-result-helpers';
 
 @Component({
   selector: 'debrief-card',

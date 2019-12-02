@@ -1,4 +1,4 @@
-import { TestCategory } from '../../../../shared/models/test-category';
+import { TestCategory } from '../../../../../shared/models/test-category';
 
 export interface TestDetailsModel {
   date: string;
