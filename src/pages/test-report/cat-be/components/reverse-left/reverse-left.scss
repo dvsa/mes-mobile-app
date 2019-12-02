@@ -1,4 +1,5 @@
 reverse-left {
+
   .reverse-left-tick {
     .competency-button {
       padding: 1px 7px 2px;
@@ -126,4 +127,15 @@ reverse-left {
       }
     }
   }
+
+  .popover {
+    background-color: map-get($colors, "mes-light-grey");
+    height: 220px;
+    width: calc(100% - 12px);
+    left: 6px;
+    margin-top: 9px;
+    position: fixed;
+    z-index: 270;
+  }
+
 }

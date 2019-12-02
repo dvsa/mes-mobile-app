@@ -1,22 +1,24 @@
 reverse-left-popover {
-  background-color: map-get($colors, "mes-light-grey");
-  height: 220px;
-  width: calc(100% - 12px);
-  left: 6px;
-  margin-top: 9px;
-  position: fixed;
-  z-index: 270;
 
   .popover-content {
     width: calc(100% - 12px);
     border: 0 none map-get($colors, "mes-white");
+    position: relative;
+  }
+
+  .link {
+    text-align: right;
+    color: map-get($colors-gds, "gds-blue");
+    text-decoration: underline;
   }
   
   .manoeuvre-competencies-container {
-    margin: 40px auto;
-
+    margin-top: 40px;
+    margin-right: auto;
+    margin-left: auto;
+    
     .first-manoeuvre-competency-button {
-      margin-bottom: 24px;
+      margin-bottom: 10px;
     }
   }
 }
