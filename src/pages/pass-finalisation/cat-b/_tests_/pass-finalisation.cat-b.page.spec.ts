@@ -31,13 +31,14 @@ import { PassCertificateNumberComponent } from '../../components/pass-certificat
 import { LicenseProvidedComponent } from '../../components/license-provided/license-provided';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;
   let component: PassFinalisationCatBPage;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PassFinalisationCatBPage,
@@ -61,13 +62,13 @@ describe('PassFinalisationCatBPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  });
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(PassFinalisationCatBPage);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
-      });
   }));
 
   describe('Class', () => {

@@ -25,6 +25,7 @@ import * as applicationReferenceActions
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '../../../shared/models/test-category';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('Waiting Room Analytics Effects', () => {
 
@@ -40,8 +41,7 @@ describe('Waiting Room Analytics Effects', () => {
     checkDigit: 9,
   };
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -55,6 +55,10 @@ describe('Waiting Room Analytics Effects', () => {
         Store,
       ],
     });
+  })
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(WaitingRoomAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);

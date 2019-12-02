@@ -26,6 +26,7 @@ import * as applicationReferenceActions
 import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '../../../shared/models/test-category';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('Back To Office Analytics Effects', () => {
 
@@ -41,8 +42,7 @@ describe('Back To Office Analytics Effects', () => {
     checkDigit: 9,
   };
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -56,6 +56,10 @@ describe('Back To Office Analytics Effects', () => {
         Store,
       ],
     });
+  })
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(BackToOfficeAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);

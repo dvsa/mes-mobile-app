@@ -3,24 +3,27 @@ import { IonicModule, NavController } from 'ionic-angular';
 import { GoToJournalCardComponent } from '../go-to-journal-card';
 import { NavControllerMock } from 'ionic-mocks';
 import { JOURNAL_PAGE } from '../../../../page-names.constants';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('GoToJournalCard ', () => {
   let component: GoToJournalCardComponent;
   let fixture: ComponentFixture<GoToJournalCardComponent>;
   let navContoller: NavController;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [GoToJournalCardComponent],
       imports: [IonicModule.forRoot(GoToJournalCardComponent)],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
-    }).compileComponents().then(() => {
+    })
+  });
+
+  beforeEach(async(() => {
       fixture = TestBed.createComponent(GoToJournalCardComponent);
       component = fixture.componentInstance;
       navContoller = TestBed.get(NavController);
-    });
   }));
 
   describe('Class', () => {

@@ -10,6 +10,7 @@ import { SetChangeMarker } from '../../change-marker/change-marker.actions';
 import { StartTest } from '../../tests.actions';
 import { SetExaminerConducted } from '../../examiner-conducted/examiner-conducted.actions';
 import { TestCategory } from '../../../../shared/models/test-category';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('Examiner Booked Effects', () => {
 
@@ -17,8 +18,7 @@ describe('Examiner Booked Effects', () => {
   let actions$: any;
   let store$: Store<StoreModel>;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -31,6 +31,10 @@ describe('Examiner Booked Effects', () => {
         Store,
       ],
     });
+  })
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(ExaminerBookedEffects);
     store$ = TestBed.get(Store);
   });

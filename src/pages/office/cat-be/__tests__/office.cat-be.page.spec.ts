@@ -64,6 +64,7 @@ import { NavigationStateProviderMock } from '../../../../providers/navigation-st
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '../../../../shared/models/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatBEPage>;
@@ -71,7 +72,7 @@ describe('OfficePage', () => {
   let navController: NavController;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         OfficeCatBEPage,
@@ -147,12 +148,12 @@ describe('OfficePage', () => {
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  })
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(OfficeCatBEPage);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
-      });
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));

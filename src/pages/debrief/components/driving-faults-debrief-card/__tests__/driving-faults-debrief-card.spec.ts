@@ -11,13 +11,14 @@ import { DrivingFaultsDebriefCardComponent } from '../driving-faults-debrief-car
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { configureI18N } from '../../../../../shared/helpers/translation.helpers';
 import { Language } from '../../../../../modules/tests/communication-preferences/communication-preferences.model';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('DrivingFaultsDebriefCardComponent', () => {
   let fixture: ComponentFixture<DrivingFaultsDebriefCardComponent>;
   let component: DrivingFaultsDebriefCardComponent;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [DrivingFaultsDebriefCardComponent],
       imports: [
@@ -29,13 +30,13 @@ describe('DrivingFaultsDebriefCardComponent', () => {
         TranslateModule,
       ],
     })
-      .compileComponents()
-      .then(() => {
+  })
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(DrivingFaultsDebriefCardComponent);
         component = fixture.componentInstance;
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
-      });
   }));
 
   describe('DOM', () => {

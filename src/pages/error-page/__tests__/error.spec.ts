@@ -7,12 +7,13 @@ import { MockComponent } from 'ng-mocks';
 import { ErrorPage } from './../error';
 import { ErrorMessageComponent } from '../../../components/common/error-message/error-message';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ErrorPage', () => {
   let fixture: ComponentFixture<ErrorPage>;
   let component: ErrorPage;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ErrorPage,
@@ -29,11 +30,11 @@ describe('ErrorPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  });
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(ErrorPage);
         component = fixture.componentInstance;
-      });
   }));
 
   it('should navigation back to the last page in the stack', () => {
