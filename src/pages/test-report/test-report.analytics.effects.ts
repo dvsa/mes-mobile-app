@@ -204,7 +204,7 @@ export class TestReportAnalyticsEffects {
     )),
     concatMap(([action, tests]: [manoeuvresActions.AddManoeuvreDrivingFault, TestsModel]) => {
       this.analytics.logEvent(
-          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
         `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
         1,
