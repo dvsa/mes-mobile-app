@@ -12,12 +12,12 @@ import {
   PlatformMock,
   LoadingControllerMock,
 } from 'ionic-mocks';
-import { AppModule } from '../../../app/app.module';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { ViewTestResultPage } from '../view-test-result';
-import { SearchProvider } from '../../../providers/search/search';
-import { SearchProviderMock } from '../../../providers/search/__mocks__/search.mock';
+import { AppModule } from '../../../../app/app.module';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
+import { ViewTestResultCatBPage } from '../view-test-result.cat-b.page';
+import { SearchProvider } from '../../../../providers/search/search';
+import { SearchProviderMock } from '../../../../providers/search/__mocks__/search.mock';
 import { MockComponent } from 'ng-mocks';
 import { TestDetailsCardComponent } from '../components/test-details-card/test-details-card';
 import { RekeyDetailsCardComponent } from '../components/rekey-details-card/rekey-details';
@@ -30,30 +30,30 @@ import { ExaminerDetailsModel } from '../components/examiner-details-card/examin
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { VehicleDetailsModel } from '../components/vehicle-details-card/vehicle-details-card.model';
 import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
-import { categoryBTestResultMock } from '../../../shared/mocks/cat-b-test-result.mock';
-import { CompressionProvider } from '../../../providers/compression/compression';
-import { CompressionProviderMock } from '../../../providers/compression/__mocks__/compression.mock';
+import { categoryBTestResultMock } from '../../../../shared/mocks/cat-b-test-result.mock';
+import { CompressionProvider } from '../../../../providers/compression/compression';
+import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
 import { TestSummaryCardModel } from '../components/test-summary-card/test-summary-card-model';
 import { TestSummaryCardComponent } from '../components/test-summary-card/test-summary-card';
 import { ViewTestHeaderComponent } from '../components/view-test-header/view-test-header';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-import { TestOutcome } from '../../../modules/tests/tests.constants';
+import { TestOutcome } from '../../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
-import { manoeuvreTypeLabels } from '../../../shared/constants/competencies/catb-manoeuvres';
+import { manoeuvreTypeLabels } from '../../../../shared/constants/competencies/catb-manoeuvres';
 import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
-import { ErrorMessageComponent } from '../../../components/common/error-message/error-message';
-import { TestCategory } from '../../../shared/models/test-category';
-import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
+import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
+import { TestCategory } from '../../../../shared/models/test-category';
+import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 
 describe('ViewTestResultPage', () => {
-  let fixture: ComponentFixture<ViewTestResultPage>;
-  let component: ViewTestResultPage;
+  let fixture: ComponentFixture<ViewTestResultCatBPage>;
+  let component: ViewTestResultCatBPage;
   let loadingController: LoadingController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ViewTestResultPage,
+        ViewTestResultCatBPage,
         MockComponent(TestDetailsCardComponent),
         MockComponent(RekeyDetailsCardComponent),
         MockComponent(RekeyReasonCardComponent),
@@ -87,7 +87,7 @@ describe('ViewTestResultPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(ViewTestResultPage);
+        fixture = TestBed.createComponent(ViewTestResultCatBPage);
         component = fixture.componentInstance;
         loadingController = TestBed.get(LoadingController);
       });

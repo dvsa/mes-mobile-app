@@ -8,7 +8,6 @@ export const ERROR_PAGE = 'ErrorPage';
 export const DASHBOARD_PAGE = 'DashboardPage';
 export const REKEY_SEARCH_PAGE = 'RekeySearchPage';
 export const TEST_RESULTS_SEARCH_PAGE = 'TestResultsSearchPage';
-export const VIEW_TEST_RESULT_PAGE = 'ViewTestResultPage';
 export const LEGAL_REQUIREMENTS_MODAL = 'LegalRequirementsModal';
 
 export const CAT_B = {
@@ -25,6 +24,7 @@ export const CAT_B = {
   REKEY_REASON_PAGE: 'RekeyReasonCatBPage',
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBPage',
+  VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatBPage',
 };
 
 export const CAT_BE = {
@@ -42,4 +42,5 @@ export const CAT_BE = {
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBEPage',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatBEModal',
+  VIEW_TEST_RESULT_PAGE:'ViewTestResultCatBPage',
 };
