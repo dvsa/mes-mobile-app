@@ -5,13 +5,14 @@ import { UrlProvider } from '../../url/url';
 import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('RekeySearchProvider', () => {
 
   let rekeySearchProvider: RekeySearchProvider;
   let httpMock: HttpTestingController;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -22,7 +23,9 @@ describe('RekeySearchProvider', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     });
+  });
 
+  beforeEach(() => {
     httpMock = TestBed.get(HttpTestingController);
     rekeySearchProvider = TestBed.get(RekeySearchProvider);
   });

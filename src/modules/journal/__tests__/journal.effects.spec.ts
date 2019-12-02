@@ -31,6 +31,7 @@ import { Device } from '@ionic-native/device';
 import { LogHelperMock } from '../../../providers/logs/__mocks__/logsHelper.mock';
 import { HttpErrorResponse } from '@angular/common/http';
 import { defer } from 'rxjs/observable/defer';
+import { configureTestSuite } from 'ng-bullet'
 
 export class TestActions extends Actions {
   constructor() {
@@ -52,9 +53,7 @@ describe('Journal Effects', () => {
   let networkStateProvider: NetworkStateProvider;
   let appConfigProvider: AppConfigProvider;
 
-  beforeEach(() => {
-    // ARRANGE
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -79,6 +78,11 @@ describe('Journal Effects', () => {
         Device,
       ],
     });
+  });
+
+  beforeEach(() => {
+    // ARRANGE
+    actions$ = new ReplaySubject(1);
     journalProvider = TestBed.get(JournalProvider);
     effects = TestBed.get(JournalEffects);
     slotProvider = TestBed.get(SlotProvider);

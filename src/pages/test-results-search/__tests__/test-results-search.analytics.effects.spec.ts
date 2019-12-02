@@ -11,6 +11,7 @@ import {
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { TestResultsSearchAnalyticsEffects } from '../test-results-search.analytics.effects';
 import * as testResultSearchActions from '../test-results-search.actions';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Test Results Search Analytics Effects', () => {
 
@@ -19,8 +20,7 @@ describe('Test Results Search Analytics Effects', () => {
   let actions$: any;
   const screenName = AnalyticsScreenNames.TEST_RESULTS_SEARCH;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         TestResultsSearchAnalyticsEffects,
@@ -28,6 +28,10 @@ describe('Test Results Search Analytics Effects', () => {
         provideMockActions(() => actions$),
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(TestResultsSearchAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
   });

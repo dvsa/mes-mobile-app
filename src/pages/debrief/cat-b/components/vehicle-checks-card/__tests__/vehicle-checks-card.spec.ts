@@ -20,13 +20,14 @@ import { createTranslateLoader } from '../../../../../../app/app.module';
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardComponent>;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksCardComponent,
@@ -44,14 +45,14 @@ describe('VehicleChecksCardComponent', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  })
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(VehicleChecksCardComponent);
         store$ = TestBed.get(Store);
         store$.dispatch(new StartTest(105, TestCategory.B));
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
-      });
   }));
 
   describe('DOM', () => {

@@ -28,6 +28,7 @@ import * as applicationReferenceActions
 import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('Office Analytics Effects', () => {
 
@@ -47,8 +48,7 @@ describe('Office Analytics Effects', () => {
     checkDigit: 9,
   };
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -62,6 +62,10 @@ describe('Office Analytics Effects', () => {
         Store,
       ],
     });
+  })
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(OfficeAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);

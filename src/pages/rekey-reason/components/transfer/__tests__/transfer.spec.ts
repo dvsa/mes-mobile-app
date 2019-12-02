@@ -4,11 +4,13 @@ import { IonicModule } from 'ionic-angular';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { FormGroup } from '@angular/forms';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('TransferComponent', () => {
   let fixture: ComponentFixture<TransferComponent>;
   let component: TransferComponent;
-  beforeEach(async(() => {
+
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         TransferComponent,
@@ -19,13 +21,13 @@ describe('TransferComponent', () => {
       ],
       providers: [],
     })
-      .compileComponents()
-      .then(() => {
+  });
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(TransferComponent);
         component = fixture.componentInstance;
         component.formGroup = new FormGroup({});
         component.ngOnChanges();
-      });
   }));
 
   describe('class', () => {

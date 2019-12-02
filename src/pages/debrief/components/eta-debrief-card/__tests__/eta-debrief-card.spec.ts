@@ -7,13 +7,14 @@ import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
 import { EtaDebriefCardComponent } from '../eta-debrief-card';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('EtaDebriefCardComponent', () => {
   let fixture: ComponentFixture<EtaDebriefCardComponent>;
   let component: EtaDebriefCardComponent;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [EtaDebriefCardComponent],
       imports: [
@@ -25,13 +26,13 @@ describe('EtaDebriefCardComponent', () => {
         TranslateModule,
       ],
     })
-      .compileComponents()
-      .then(() => {
+  })
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(EtaDebriefCardComponent);
         component = fixture.componentInstance;
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
-      });
   }));
 
   describe('DOM', () => {

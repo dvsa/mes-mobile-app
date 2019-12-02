@@ -9,13 +9,14 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Platform } from 'ionic-angular';
 import { DeviceProvider } from '../../device/device';
 import { AuthenticationProvider } from '../../authentication/authentication';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Analytics Provider', () => {
 
   let analyticsProvider: AnalyticsProvider;
   let googleAnalyticsMock: GoogleAnalyticsMock;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         AnalyticsProvider,
@@ -26,7 +27,9 @@ describe('Analytics Provider', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ],
     });
+  });
 
+  beforeEach(() => {
     analyticsProvider = TestBed.get(AnalyticsProvider);
     googleAnalyticsMock = TestBed.get(GoogleAnalytics);
 

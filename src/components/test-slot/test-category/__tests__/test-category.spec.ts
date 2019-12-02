@@ -1,22 +1,25 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { TestCategoryComponent } from '../test-category';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('TestCategoryComponent', () => {
   let fixture: ComponentFixture<TestCategoryComponent>;
   let component: TestCategoryComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         TestCategoryComponent,
       ],
       imports: [IonicModule],
 
-    }).compileComponents().then(() => {
+    })
+  })
+
+  beforeEach(async(() => {
       fixture = TestBed.createComponent(TestCategoryComponent);
       component = fixture.componentInstance;
-    });
   }));
 
   describe('Class', () => {

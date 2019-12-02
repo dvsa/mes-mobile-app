@@ -4,12 +4,14 @@ import { IonicModule } from 'ionic-angular';
 import { AppModule } from '../../../../../app/app.module';
 import { OutcomeBehaviourMapProvider } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../../../../../pages/office/office-behaviour-map';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('CandidateDescriptionComponent', () => {
   let fixture: ComponentFixture<CandidateDescriptionComponent>;
   let component: CandidateDescriptionComponent;
   let behaviourMapProvider: OutcomeBehaviourMapProvider;
-  beforeEach(async(() => {
+
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         CandidateDescriptionComponent,
@@ -22,13 +24,13 @@ describe('CandidateDescriptionComponent', () => {
         { provide: OutcomeBehaviourMapProvider, useClass: OutcomeBehaviourMapProvider },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  });
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(CandidateDescriptionComponent);
         behaviourMapProvider = TestBed.get(OutcomeBehaviourMapProvider);
         behaviourMapProvider.setBehaviourMap(behaviourMap);
         component = fixture.componentInstance;
-      });
   }));
 
   describe('class', () => {

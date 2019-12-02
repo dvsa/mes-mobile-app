@@ -16,6 +16,7 @@ import { PostDebriefHoldingAnalyticsEffects } from '../post-debrief-holding.anal
 import * as postDebriefHoldingActions from '../post-debrief-holding.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Post Debrief Holding Analytics Effects', () => {
 
@@ -26,8 +27,7 @@ describe('Post Debrief Holding Analytics Effects', () => {
   const screenName = AnalyticsScreenNames.POST_DEBRIEF_HOLDING;
   const practiceScreenName = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.POST_DEBRIEF_HOLDING}`;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -41,6 +41,10 @@ describe('Post Debrief Holding Analytics Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(PostDebriefHoldingAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);

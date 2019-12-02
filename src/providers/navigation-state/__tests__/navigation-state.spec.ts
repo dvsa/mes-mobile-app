@@ -5,13 +5,14 @@ import { REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../../../pages/page-names.const
 import { MockAppComponent } from '../../../app/__mocks__/app.component.mock';
 import { NavigationProvider } from '../../navigation/navigation';
 import { NavigationProviderMock } from '../../navigation/__mocks__/navigation.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('NavigationStateProvider', () => {
   describe('isRekeySearch', () => {
     let navigationStateProvider: NavigationStateProvider;
     let navigation: NavigationProvider;
 
-    beforeEach(() => {
+    configureTestSuite(() => {
       TestBed.configureTestingModule({
         providers: [
           NavigationStateProvider,
@@ -19,7 +20,9 @@ describe('NavigationStateProvider', () => {
           { provide: NavigationProvider, useClass: NavigationProviderMock },
         ],
       });
+    });
 
+    beforeEach(() => {
       navigationStateProvider = TestBed.get(NavigationStateProvider);
       navigation = TestBed.get(NavigationProvider);
     });

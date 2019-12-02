@@ -16,6 +16,7 @@ import * as testsActions from '../../../modules/tests/tests.actions';
 import * as candidateActions from '../../../modules/tests/journal-data/candidate/candidate.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('Rekey Reason Analytics Effects', () => {
 
@@ -25,8 +26,7 @@ describe('Rekey Reason Analytics Effects', () => {
   const screenName = AnalyticsScreenNames.REKEY_REASON;
   let store$: Store<StoreModel>;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -40,6 +40,10 @@ describe('Rekey Reason Analytics Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(RekeyReasonAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);

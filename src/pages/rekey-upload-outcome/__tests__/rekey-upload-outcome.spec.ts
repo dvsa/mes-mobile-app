@@ -20,6 +20,7 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { rekeyReasonReducer } from '../../rekey-reason/rekey-reason.reducer';
 import { of } from 'rxjs/observable/of';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('RekeyUploadOutcomePage', () => {
   let fixture: ComponentFixture<RekeyUploadOutcomePage>;
@@ -30,7 +31,7 @@ describe('RekeyUploadOutcomePage', () => {
   let insomnia: Insomnia;
   let deviceProvider: DeviceProvider;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         RekeyUploadOutcomePage,
@@ -55,8 +56,9 @@ describe('RekeyUploadOutcomePage', () => {
         { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  });
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(RekeyUploadOutcomePage);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
@@ -65,7 +67,6 @@ describe('RekeyUploadOutcomePage', () => {
         deviceProvider = TestBed.get(DeviceProvider);
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
-      });
   }));
 
   describe('Class', () => {

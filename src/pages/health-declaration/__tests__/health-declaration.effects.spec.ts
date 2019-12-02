@@ -6,6 +6,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import * as healthDeclarationActions from '../health-declaration.actions';
 import * as testStatusActions from '../../../modules/tests/test-status/test-status.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('Health Declaration Effects', () => {
 
@@ -14,8 +15,7 @@ describe('Health Declaration Effects', () => {
 
   const currentSlotId = '1234';
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -34,6 +34,10 @@ describe('Health Declaration Effects', () => {
         Store,
       ],
     });
+  })
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(HealthDeclarationEffects);
   });
 

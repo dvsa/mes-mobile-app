@@ -4,6 +4,7 @@ import { IonicModule, ModalController, NavController } from 'ionic-angular';
 import { ModalControllerMock, NavControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
 import { CAT_B, CAT_BE } from '../../../../pages/page-names.constants';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('EndTestLinkComponent', () => {
   let fixture: ComponentFixture<EndTestLinkComponent>;
@@ -11,7 +12,7 @@ describe('EndTestLinkComponent', () => {
   let modalController: ModalController;
   let navController: NavController;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [EndTestLinkComponent],
       imports: [IonicModule, AppModule],
@@ -20,13 +21,13 @@ describe('EndTestLinkComponent', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  })
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(EndTestLinkComponent);
         component = fixture.componentInstance;
         modalController = TestBed.get(ModalController);
         navController = TestBed.get(NavController);
-      });
   }));
 
   describe('DOM', () => {

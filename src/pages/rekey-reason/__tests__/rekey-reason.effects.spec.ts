@@ -16,6 +16,7 @@ import { SetExaminerConducted } from '../../../modules/tests/examiner-conducted/
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { defer } from 'rxjs/observable/defer';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('Rekey Reason Effects', () => {
   let effects: RekeyReasonEffects;
@@ -23,8 +24,7 @@ describe('Rekey Reason Effects', () => {
   let findUserProvider: FindUserProvider;
   let store$: Store<StoreModel>;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -40,6 +40,10 @@ describe('Rekey Reason Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(RekeyReasonEffects);
     store$ = TestBed.get(Store);
     findUserProvider = TestBed.get(FindUserProvider);

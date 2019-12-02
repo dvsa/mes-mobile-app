@@ -2,21 +2,24 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LocationComponent } from '../location';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('LocationComponent', () => {
   let component: LocationComponent;
   let fixture: ComponentFixture<LocationComponent>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [LocationComponent],
       imports: [IonicModule.forRoot(LocationComponent)],
       providers: [],
-    }).compileComponents().then(() => {
+    })
+  })
+
+  beforeEach(async(() => {
       fixture = TestBed.createComponent(LocationComponent);
       component = fixture.componentInstance;
       component.location = 'Example Test Centre';
-    });
   }));
 
   describe('DOM', () => {

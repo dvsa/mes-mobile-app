@@ -2,13 +2,14 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { PracticeModeBanner } from '../practice-mode-banner';
 import { NavController, IonicModule, Config } from 'ionic-angular';
 import { NavControllerMock, ConfigMock } from 'ionic-mocks';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('PracticeModeBanner', () => {
   let fixture: ComponentFixture<PracticeModeBanner>;
   let component: PracticeModeBanner;
   let navController: NavController;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [PracticeModeBanner],
       imports: [IonicModule],
@@ -17,13 +18,14 @@ describe('PracticeModeBanner', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
     })
-      .compileComponents()
-      .then(() => {
+  });
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(PracticeModeBanner);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
-      });
   }));
+
   describe('Class', () => {
     describe('exitPracticeMode', () => {
       it('should take the user back to the root page', () => {

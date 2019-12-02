@@ -4,11 +4,13 @@ import { IonicModule } from 'ionic-angular';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { FormGroup } from '@angular/forms';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('IpadIssueComponent', () => {
   let fixture: ComponentFixture<IpadIssueComponent>;
   let component: IpadIssueComponent;
-  beforeEach(async(() => {
+
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         IpadIssueComponent,
@@ -19,13 +21,13 @@ describe('IpadIssueComponent', () => {
       ],
       providers: [],
     })
-      .compileComponents()
-      .then(() => {
+  });
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(IpadIssueComponent);
         component = fixture.componentInstance;
         component.formGroup = new FormGroup({});
         component.ngOnChanges();
-      });
   }));
 
   describe('class', () => {

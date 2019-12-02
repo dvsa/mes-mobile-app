@@ -11,13 +11,14 @@ import { Language } from '../../../../../modules/tests/communication-preferences
 import { configureI18N } from '../../../../../shared/helpers/translation.helpers';
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import { Competencies } from '../../../../../modules/tests/test-data/test-data.constants';
+import { configureTestSuite } from 'ng-bullet'
 
 describe('DangerousFaultsDebriefCardComponent', () => {
   let fixture: ComponentFixture<DangerousFaultsDebriefCardComponent>;
   let component: DangerousFaultsDebriefCardComponent;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [DangerousFaultsDebriefCardComponent],
       imports: [
@@ -29,13 +30,13 @@ describe('DangerousFaultsDebriefCardComponent', () => {
         TranslateModule,
       ],
     })
-      .compileComponents()
-      .then(() => {
+  })
+
+  beforeEach(async(() => {
         fixture = TestBed.createComponent(DangerousFaultsDebriefCardComponent);
         component = fixture.componentInstance;
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
-      });
   }));
 
   describe('DOM', () => {
