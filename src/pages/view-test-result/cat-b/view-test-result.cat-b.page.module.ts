@@ -8,6 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ViewTestResultAnalyticsEffects } from '../view-test-result.analytics.effects';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
+import { ViewTestResultComponentsModule } from '../components/view-test-result.components.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
   imports: [
     ComponentsModule,
     IonicPageModule.forChild(ViewTestResultCatBPage),
+    ViewTestResultComponentsModule,
     ViewTestResultCatBComponentsModule,
     EffectsModule.forFeature([ViewTestResultAnalyticsEffects]),
   ],
