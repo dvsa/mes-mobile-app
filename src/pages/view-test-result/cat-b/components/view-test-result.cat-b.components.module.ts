@@ -10,6 +10,7 @@ import { TestSummaryCardComponent } from './test-summary-card/test-summary-card'
 import { ViewTestHeaderComponent } from './view-test-header/view-test-header';
 import { DebriefCardComponent } from './debrief-card/debrief-card';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
+import { ViewTestResultComponentsModule } from '../../components/view-test-result.components.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ComponentsModule } from '../../../../components/common/common-component
     CommonModule,
     IonicModule,
     ComponentsModule,
+    ViewTestResultComponentsModule,
   ],
   exports: [
     TestDetailsCardComponent,
