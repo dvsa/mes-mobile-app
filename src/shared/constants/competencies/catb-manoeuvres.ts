@@ -1,4 +1,5 @@
 export enum manoeuvreTypeLabels {
+  reverseLeft = 'Reverse left',
   reverseRight = 'Reverse right',
   reverseParkRoad = 'Reverse park (road)',
   reverseParkCarpark = 'Reverse park (car park)',
