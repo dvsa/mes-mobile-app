@@ -81,7 +81,7 @@ describe('DebriefCatBEPage', () => {
         IonicModule,
         AppModule,
         ComponentsModule,
-        DebriefComponentsModule,,
+        DebriefComponentsModule,
         StoreModule.forRoot({
           tests: () => ({
             currentTest: {
