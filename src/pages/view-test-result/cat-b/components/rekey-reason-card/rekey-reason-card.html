@@ -4,30 +4,9 @@
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-        <ion-row class="mes-data-row-with-separator">
-          <ion-col col-40>
-            <label>IPad issue</label>
-          </ion-col>
-          <ion-col col-56>
-            <span class="mes-data">{{ rekeyReason.ipadIssue }}</span>
-          </ion-col>
-        </ion-row>
-        <ion-row class="mes-data-row-with-separator">
-          <ion-col col-40>
-            <label>Transfer</label>
-          </ion-col>
-          <ion-col col-56>
-            <span class="mes-data">{{ rekeyReason.transfer }}</span>
-          </ion-col>
-        </ion-row>
-        <ion-row class="mes-data-row">
-          <ion-col col-40>
-            <label>Other (specify reason)</label>
-          </ion-col>
-          <ion-col col-56>
-            <span class="mes-data">{{ rekeyReason.other }}</span>
-          </ion-col>
-        </ion-row>
+          <data-row [label]="'IPad issue'" [value]="rekeyReason.ipadIssue"></data-row>
+          <data-row [label]="'Transfer'" [value]="rekeyReason.transfer"></data-row>
+          <data-row [label]="'Other (specify reason)'" [value]="rekeyReason.other" [shouldHaveSeperator]="false"></data-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>

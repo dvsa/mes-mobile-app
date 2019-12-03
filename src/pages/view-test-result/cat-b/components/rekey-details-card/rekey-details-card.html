@@ -4,46 +4,11 @@
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-        <ion-row class="mes-data-row-with-separator">
-          <ion-col col-40>
-            <label>Scheduled for</label>
-          </ion-col>
-          <ion-col col-56>
-            <span class="mes-data">{{ rekeyDetails.scheduledStaffNumber }}</span>
-          </ion-col>
-        </ion-row>
-        <ion-row class="mes-data-row-with-separator">
-          <ion-col col-40>
-            <label>Conducted by</label>
-          </ion-col>
-          <ion-col col-56>
-            <span class="mes-data">{{ rekeyDetails.conductedStaffNumber }}</span>
-          </ion-col>
-        </ion-row>
-        <ion-row class="mes-data-row-with-separator">
-          <ion-col col-40>
-            <label>Date of test</label>
-          </ion-col>
-          <ion-col col-56>
-            <span class="mes-data">{{ rekeyDetails.testDate }}</span>
-          </ion-col>
-        </ion-row>
-        <ion-row class="mes-data-row-with-separator">
-          <ion-col col-40>
-            <label>Rekeyed by</label>
-          </ion-col>
-          <ion-col col-56>
-            <span class="mes-data">{{ rekeyDetails.rekeyedStaffNumber }}</span>
-          </ion-col>
-        </ion-row>
-        <ion-row class="mes-data-row">
-          <ion-col col-40>
-            <label>Date of rekey</label>
-          </ion-col>
-          <ion-col col-56>
-            <span class="mes-data">{{ rekeyDetails.rekeyDate }}</span>
-          </ion-col>
-        </ion-row>
+          <data-row [label]="'Scheduled for'" [value]="rekeyDetails.scheduledStaffNumber"></data-row>
+          <data-row [label]="'Conducted by'" [value]="rekeyDetails.conductedStaffNumber"></data-row>
+          <data-row [label]="'Date of test'" [value]="rekeyDetails.testDate"></data-row>
+          <data-row [label]="'Rekeyed by'" [value]="rekeyDetails.rekeyedStaffNumber"></data-row>
+          <data-row [label]="'Date of rekey'" [value]="rekeyDetails.rekeyDate" [shouldHaveSeperator]="false"></data-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>

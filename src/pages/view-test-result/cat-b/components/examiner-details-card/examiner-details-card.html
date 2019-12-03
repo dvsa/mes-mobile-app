@@ -4,30 +4,9 @@
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-        <ion-row class="mes-data-row-with-separator">
-          <ion-col col-40>
-            <label>Examiner number</label>
-          </ion-col>
-          <ion-col col-56>
-            <span class="mes-data">{{ data.staffNumber }}</span>
-          </ion-col>
-        </ion-row>
-        <ion-row class="mes-data-row-with-separator">
-          <ion-col col-40>
-            <label>Test centre</label>
-          </ion-col>
-          <ion-col col-56>
-            <span class="mes-data">{{ data.costCode }}</span>
-          </ion-col>
-        </ion-row>
-        <ion-row class="mes-data-row">
-          <ion-col col-40>
-            <label>Test centre name</label>
-          </ion-col>
-          <ion-col col-56>
-            <span class="mes-data">{{ data.testCentreName }}</span>
-          </ion-col>
-        </ion-row>
+        <data-row [label]="'Examiner number'" [value]="data.staffNumber"></data-row>
+        <data-row [label]="'Test centre'" [value]="data.costCode"></data-row>
+        <data-row [label]="'Test centre name'" [value]="data.testCentreName" [shouldHaveSeperator]="false"></data-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
