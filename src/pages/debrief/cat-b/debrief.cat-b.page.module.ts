@@ -8,9 +8,11 @@ import { DebriefComponentsModule } from '../components/debrief-components.module
 import { TranslateModule } from 'ng2-translate';
 import { DebriefEffects } from '../debrief.effects';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
+import { VehicleChecksCardComponent } from './components/vehicle-checks-card/vehicle-checks-card';
 
 @NgModule({
   declarations: [
+    VehicleChecksCardComponent,
     DebriefCatBPage,
   ],
   imports: [

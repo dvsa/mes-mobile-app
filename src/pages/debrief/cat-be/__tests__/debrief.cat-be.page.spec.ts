@@ -41,6 +41,7 @@ import { TestCategory } from '../../../../shared/models/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
+import { VehicleChecksCardCatBEComponent } from '../components/vehicle-checks-card/vehicle-checks-card.cat-be';
 
 describe('DebriefCatBEPage', () => {
   let fixture: ComponentFixture<DebriefCatBEPage>;
@@ -75,12 +76,12 @@ describe('DebriefCatBEPage', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [DebriefCatBEPage],
+      declarations: [DebriefCatBEPage, VehicleChecksCardCatBEComponent],
       imports: [
         IonicModule,
         AppModule,
         ComponentsModule,
-        DebriefComponentsModule,
+        DebriefComponentsModule,,
         StoreModule.forRoot({
           tests: () => ({
             currentTest: {

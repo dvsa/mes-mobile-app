@@ -2,7 +2,6 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
-import { VehicleChecksCardComponent } from '../cat-b/components/vehicle-checks-card/vehicle-checks-card';
 import { TranslateModule } from 'ng2-translate';
 import { EtaDebriefCardComponent } from './eta-debrief-card/eta-debrief-card';
 import { DangerousFaultsDebriefCardComponent } from './dangerous-faults-debrief-card/dangerous-faults-debrief-card';
@@ -13,7 +12,6 @@ import { TestOutcomeDebriefCardComponent } from './test-outcome-debrief-card/tes
 
 @NgModule({
   declarations: [
-    VehicleChecksCardComponent,
     EtaDebriefCardComponent,
     DangerousFaultsDebriefCardComponent,
     SeriousFaultsDebriefCardComponent,
@@ -28,7 +26,6 @@ import { TestOutcomeDebriefCardComponent } from './test-outcome-debrief-card/tes
     TranslateModule,
   ],
   exports: [
-    VehicleChecksCardComponent,
     EtaDebriefCardComponent,
     DangerousFaultsDebriefCardComponent,
     SeriousFaultsDebriefCardComponent,

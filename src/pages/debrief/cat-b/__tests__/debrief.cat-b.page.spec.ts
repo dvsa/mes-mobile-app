@@ -40,6 +40,8 @@ import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '../../../../shared/models/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
+import { VehicleChecksCardComponent } from '../components/vehicle-checks-card/vehicle-checks-card';
+
 
 describe('DebriefCatBPage', () => {
   let fixture: ComponentFixture<DebriefCatBPage>;
@@ -61,7 +63,7 @@ describe('DebriefCatBPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DebriefCatBPage],
+      declarations: [DebriefCatBPage, VehicleChecksCardComponent],
       imports: [
         IonicModule,
         AppModule,
