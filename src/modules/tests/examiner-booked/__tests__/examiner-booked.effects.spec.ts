@@ -10,7 +10,7 @@ import { SetChangeMarker } from '../../change-marker/change-marker.actions';
 import { StartTest } from '../../tests.actions';
 import { SetExaminerConducted } from '../../examiner-conducted/examiner-conducted.actions';
 import { TestCategory } from '../../../../shared/models/test-category';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Examiner Booked Effects', () => {
 
@@ -31,7 +31,7 @@ describe('Examiner Booked Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);

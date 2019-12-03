@@ -25,7 +25,7 @@ import * as applicationReferenceActions
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '../../../shared/models/test-category';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Waiting Room Analytics Effects', () => {
 
@@ -55,7 +55,7 @@ describe('Waiting Room Analytics Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);

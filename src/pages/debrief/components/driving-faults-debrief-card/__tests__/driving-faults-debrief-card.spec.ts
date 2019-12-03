@@ -11,7 +11,7 @@ import { DrivingFaultsDebriefCardComponent } from '../driving-faults-debrief-car
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { configureI18N } from '../../../../../shared/helpers/translation.helpers';
 import { Language } from '../../../../../modules/tests/communication-preferences/communication-preferences.model';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DrivingFaultsDebriefCardComponent', () => {
   let fixture: ComponentFixture<DrivingFaultsDebriefCardComponent>;
@@ -29,8 +29,8 @@ describe('DrivingFaultsDebriefCardComponent', () => {
         }),
         TranslateModule,
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(DrivingFaultsDebriefCardComponent);

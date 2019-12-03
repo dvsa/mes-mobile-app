@@ -31,7 +31,7 @@ import { Device } from '@ionic-native/device';
 import { LogHelperMock } from '../../../providers/logs/__mocks__/logsHelper.mock';
 import { HttpErrorResponse } from '@angular/common/http';
 import { defer } from 'rxjs/observable/defer';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 export class TestActions extends Actions {
   constructor() {

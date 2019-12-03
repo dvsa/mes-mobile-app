@@ -17,7 +17,7 @@ describe('RekeySearchCard ', () => {
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

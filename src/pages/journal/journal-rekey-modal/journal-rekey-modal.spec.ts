@@ -31,7 +31,7 @@ describe('JournalRekeyModal', () => {
         { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: LogHelper, useClass: LogHelperMock },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

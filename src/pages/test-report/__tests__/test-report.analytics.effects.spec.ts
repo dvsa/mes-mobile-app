@@ -45,6 +45,7 @@ import * as uncoupleRecoupleActions
   from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
 import * as reverseLeftActions
   from '../cat-be/components/reverse-left/reverse-left.actions';
+import { configureTestSuite } from 'ng-bullet';
 import { configureTestSuite } from 'ng-bullet'
 import * as catBEManoeuversActions
   from '../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
@@ -70,7 +71,7 @@ describe('Test Report Analytics Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);

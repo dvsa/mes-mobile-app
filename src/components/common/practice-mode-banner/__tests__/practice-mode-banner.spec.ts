@@ -2,7 +2,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { PracticeModeBanner } from '../practice-mode-banner';
 import { NavController, IonicModule, Config } from 'ionic-angular';
 import { NavControllerMock, ConfigMock } from 'ionic-mocks';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PracticeModeBanner', () => {
   let fixture: ComponentFixture<PracticeModeBanner>;
@@ -17,7 +17,7 @@ describe('PracticeModeBanner', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

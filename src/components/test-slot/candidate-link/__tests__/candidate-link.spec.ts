@@ -22,7 +22,7 @@ import { CANDIDATE_DETAILS_PAGE, FAKE_CANDIDATE_DETAILS_PAGE } from '../../../..
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 import { bookedTestSlotMock } from '../../../../shared/mocks/test-slot-data.mock';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 class MockStore { }
 
@@ -45,8 +45,8 @@ describe('CandidateLinkComponent', () => {
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: TranslateService, useValue: translateServiceMock },
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(CandidateLinkComponent);

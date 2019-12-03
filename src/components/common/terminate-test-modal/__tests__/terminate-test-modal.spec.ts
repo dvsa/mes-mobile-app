@@ -12,7 +12,7 @@ import { By } from '@angular/platform-browser';
 import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
 // tslint:disable-next-line:max-line-length
 import { DeviceAuthenticationProviderMock } from '../../../../providers/device-authentication/__mocks__/device-authentication.mock';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TerminateTestModal', () => {
   let fixture: ComponentFixture<TerminateTestModal>;
@@ -32,7 +32,7 @@ describe('TerminateTestModal', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

@@ -3,7 +3,7 @@ import { IndicatorsComponent } from '../indicators';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('IndicatorsComponent', () => {
   let component: IndicatorsComponent;
@@ -13,8 +13,8 @@ describe('IndicatorsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [IndicatorsComponent],
       imports: [IonicModule],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
       fixture = TestBed.createComponent(IndicatorsComponent);

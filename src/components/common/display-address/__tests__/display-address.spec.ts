@@ -1,7 +1,7 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DisplayAddressComponent } from '../display-address';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DisplayAddressComponent', () => {
   let fixture: ComponentFixture<DisplayAddressComponent>;
@@ -12,8 +12,8 @@ describe('DisplayAddressComponent', () => {
       declarations: [
         DisplayAddressComponent,
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(DisplayAddressComponent);

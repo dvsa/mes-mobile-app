@@ -16,7 +16,7 @@ import * as testsActions from '../../../modules/tests/tests.actions';
 import * as candidateActions from '../../../modules/tests/journal-data/candidate/candidate.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '../../../shared/models/test-category';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Rekey Reason Analytics Effects', () => {
 

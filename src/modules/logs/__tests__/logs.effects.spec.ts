@@ -22,7 +22,7 @@ import { of } from 'rxjs/observable/of';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 export class TestActions extends Actions {
   constructor() {
@@ -60,7 +60,7 @@ describe('Logs Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     // ARRANGE

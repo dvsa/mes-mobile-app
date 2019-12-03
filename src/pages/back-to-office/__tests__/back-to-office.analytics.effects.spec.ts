@@ -26,7 +26,7 @@ import * as applicationReferenceActions
 import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '../../../shared/models/test-category';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Back To Office Analytics Effects', () => {
 
@@ -56,7 +56,7 @@ describe('Back To Office Analytics Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
