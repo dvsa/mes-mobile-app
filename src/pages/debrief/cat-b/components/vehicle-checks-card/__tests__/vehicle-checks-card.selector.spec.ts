@@ -1,5 +1,5 @@
 import {
-  VehicleChecksCardComponent
+  VehicleChecksCardComponent,
 } from '../vehicle-checks-card';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
