@@ -15,7 +15,7 @@ import { JournalModel } from '../../../../modules/journal/journal.model';
 import { LogHelper } from '../../../../providers/logs/logsHelper';
 import { LogHelperMock } from '../../../../providers/logs/__mocks__/logsHelper.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -63,15 +63,15 @@ describe('Test Outcome', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: LogHelper, useClass: LogHelperMock },
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(TestOutcomeComponent);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
-    store$ = TestBed.get(Store);
-    spyOn(store$, 'dispatch');
+        store$ = TestBed.get(Store);
+        spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

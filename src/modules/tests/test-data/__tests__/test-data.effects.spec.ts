@@ -11,7 +11,7 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { Competencies } from '../test-data.constants';
 import { FaultPayload } from '../test-data.models';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Test Data Effects', () => {
 
@@ -32,7 +32,7 @@ describe('Test Data Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);

@@ -21,8 +21,8 @@ describe('ViewTestHeaderComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(ViewTestHeaderComponent);

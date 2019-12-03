@@ -1,7 +1,7 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DangerousFaultBadgeComponent } from '../dangerous-fault-badge';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DangerousFaultBadgeComponenet', () => {
   let fixture: ComponentFixture<DangerousFaultBadgeComponent>;
@@ -12,7 +12,7 @@ describe('DangerousFaultBadgeComponenet', () => {
       declarations: [
         DangerousFaultBadgeComponent,
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

@@ -22,7 +22,7 @@ describe('SearchResultComponent', () => {
       providers: [
         { provide: App, useClass: MockAppComponent },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

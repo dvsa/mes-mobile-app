@@ -20,7 +20,7 @@ import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/co
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Health Declaration Analytics Effects', () => {
 
@@ -46,7 +46,7 @@ describe('Health Declaration Analytics Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);

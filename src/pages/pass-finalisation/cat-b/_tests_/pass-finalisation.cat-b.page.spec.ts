@@ -68,7 +68,7 @@ describe('PassFinalisationCatBPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

@@ -12,7 +12,7 @@ import { SeriousFaultBadgeComponent }
 import { DrivingFaultsBadgeComponent }
   from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { TickIndicatorComponent } from '../../../../../../components/common/tick-indicator/tick-indicator';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 class MockStore { }
 
@@ -38,8 +38,8 @@ describe('VehicleChecksCatBEComponent', () => {
         { provide: Store, useClass: MockStore },
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(VehicleChecksCatBEComponent);

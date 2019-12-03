@@ -4,7 +4,7 @@ import { IonicModule } from 'ionic-angular';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { FormGroup } from '@angular/forms';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('IpadIssueComponent', () => {
   let fixture: ComponentFixture<IpadIssueComponent>;
@@ -20,7 +20,7 @@ describe('IpadIssueComponent', () => {
         AppModule,
       ],
       providers: [],
-    })
+    });
   });
 
   beforeEach(async(() => {

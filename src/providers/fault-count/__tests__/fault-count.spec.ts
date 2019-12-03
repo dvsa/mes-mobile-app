@@ -26,10 +26,9 @@ describe('FaultCountProvider', () => {
         FaultCountProvider,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
-
 
     faultCountProvider = TestBed.get(FaultCountProvider);
 

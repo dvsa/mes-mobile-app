@@ -59,7 +59,7 @@ describe('DashboardPage', () => {
         { provide: App, useClass: MockAppComponent },
         { provide: SlotProvider, useClass: SlotProvider },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

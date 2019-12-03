@@ -36,7 +36,7 @@ describe('PersonalCommitmentSlotComponent', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
       imports: [IonicModule],
-    })
+    });
   });
 
   beforeEach(async(() => {

@@ -24,7 +24,7 @@ describe('PracticeTestReportCard ', () => {
         { provide: AlertController, useFactory: () => AlertControllerMock.instance() },
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

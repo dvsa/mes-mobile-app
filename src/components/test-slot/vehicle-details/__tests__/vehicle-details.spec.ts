@@ -2,7 +2,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { VehicleDetailsComponent } from '../vehicle-details';
 import { By } from '@angular/platform-browser';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleDetailsComponent', () => {
   let fixture: ComponentFixture<VehicleDetailsComponent>;
@@ -14,8 +14,8 @@ describe('VehicleDetailsComponent', () => {
         VehicleDetailsComponent,
       ],
       imports: [IonicModule],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
       fixture = TestBed.createComponent(VehicleDetailsComponent);

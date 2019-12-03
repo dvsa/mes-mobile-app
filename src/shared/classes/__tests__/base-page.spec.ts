@@ -5,7 +5,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { BasePageComponent } from '../base-page';
 import { LOGIN_PAGE } from '../../../pages/page-names.constants';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Base Page', () => {
 
@@ -22,8 +22,8 @@ describe('Base Page', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async () => {
 

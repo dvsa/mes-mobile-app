@@ -20,7 +20,7 @@ import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('BackToOfficePage', () => {
   let fixture: ComponentFixture<BackToOfficeCatBEPage>;
@@ -96,8 +96,8 @@ describe('BackToOfficePage', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(BackToOfficeCatBEPage);

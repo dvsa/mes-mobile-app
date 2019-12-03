@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LanguageComponent } from '../language';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('LanguageComponent', () => {
   let component: LanguageComponent;
@@ -12,8 +12,8 @@ describe('LanguageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [LanguageComponent],
       imports: [IonicModule],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
       fixture = TestBed.createComponent(LanguageComponent);

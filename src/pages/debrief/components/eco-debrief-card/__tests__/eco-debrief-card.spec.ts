@@ -7,7 +7,7 @@ import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
 import { EcoDebriefCardComponent } from '../eco-debrief-card';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('EcoDebriefCardComponent', () => {
   let fixture: ComponentFixture<EcoDebriefCardComponent>;
@@ -25,8 +25,8 @@ describe('EcoDebriefCardComponent', () => {
         }),
         TranslateModule,
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(EcoDebriefCardComponent);

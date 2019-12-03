@@ -27,7 +27,7 @@ import { NavigationStateProviderMock } from '../../../providers/navigation-state
 import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
 import { candidateMock } from '../__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Tests Analytics Effects', () => {
 
@@ -57,7 +57,7 @@ describe('Tests Analytics Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
