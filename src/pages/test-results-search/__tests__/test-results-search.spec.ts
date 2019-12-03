@@ -45,7 +45,7 @@ describe('TestResultsSearchPage', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: App, useClass: MockAppComponent },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

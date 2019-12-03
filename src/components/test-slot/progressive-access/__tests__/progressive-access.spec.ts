@@ -2,7 +2,7 @@ import { ProgressiveAccessComponent } from '../progressive-access';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ProgressiveAccessComponent', () => {
   let component: ProgressiveAccessComponent;
@@ -12,8 +12,8 @@ describe('ProgressiveAccessComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ProgressiveAccessComponent],
       imports: [IonicModule],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
       fixture = TestBed.createComponent(ProgressiveAccessComponent);

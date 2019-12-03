@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LocationComponent } from '../location';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('LocationComponent', () => {
   let component: LocationComponent;
@@ -13,8 +13,8 @@ describe('LocationComponent', () => {
       declarations: [LocationComponent],
       imports: [IonicModule.forRoot(LocationComponent)],
       providers: [],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
       fixture = TestBed.createComponent(LocationComponent);

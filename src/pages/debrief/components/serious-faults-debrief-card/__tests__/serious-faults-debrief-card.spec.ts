@@ -11,7 +11,7 @@ import { configureI18N } from '../../../../../shared/helpers/translation.helpers
 import { Language } from '../../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { SeriousFaultsDebriefCardComponent } from '../serious-faults-debrief-card';
 import { Competencies } from '../../../../../modules/tests/test-data/test-data.constants';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('SeriousFaultsDebriefCardComponent', () => {
   let fixture: ComponentFixture<SeriousFaultsDebriefCardComponent>;
@@ -29,8 +29,8 @@ describe('SeriousFaultsDebriefCardComponent', () => {
         }),
         TranslateModule,
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(SeriousFaultsDebriefCardComponent);

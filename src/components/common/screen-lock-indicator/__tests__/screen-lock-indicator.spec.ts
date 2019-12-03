@@ -2,7 +2,7 @@ import { LockScreenIndicator } from '../lock-screen-indicator';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { translateServiceMock } from '../../../../shared/__mocks__/translate';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('LockScreenIndicator', () => {
   let fixture: ComponentFixture<LockScreenIndicator>;
@@ -19,7 +19,7 @@ describe('LockScreenIndicator', () => {
       providers: [
         { provide: TranslateService, useValue: translateServiceMock },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

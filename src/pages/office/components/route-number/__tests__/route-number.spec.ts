@@ -23,7 +23,7 @@ describe('RouteNumberComponent', () => {
       providers: [
         { provide: OutcomeBehaviourMapProvider, useClass: OutcomeBehaviourMapProvider },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

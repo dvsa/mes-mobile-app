@@ -25,8 +25,8 @@ describe('LegalRequirementsModal', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(EtaInvalidModal);

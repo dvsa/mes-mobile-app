@@ -17,7 +17,7 @@ describe('PracticeEndToEndCard ', () => {
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

@@ -9,7 +9,7 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { SetChangeMarker } from '../../change-marker/change-marker.actions';
 import { StartTest } from '../../tests.actions';
 import { SetExaminerConducted } from '../../examiner-conducted/examiner-conducted.actions';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 describe('Examiner Booked Effects', () => {
@@ -31,7 +31,7 @@ describe('Examiner Booked Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);

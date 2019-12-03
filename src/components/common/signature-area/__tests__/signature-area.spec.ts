@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { IonicModule } from 'ionic-angular';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 class TestStore { }
 describe('SignatureAreaComponent', () => {
   let fixture: ComponentFixture<SignatureAreaComponent>;
@@ -23,8 +23,8 @@ describe('SignatureAreaComponent', () => {
       providers: [
         { provide: Store, useClass: TestStore },
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
       fixture = TestBed.createComponent(SignatureAreaComponent);

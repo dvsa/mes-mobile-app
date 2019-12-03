@@ -20,7 +20,7 @@ import { createTranslateLoader } from '../../../../../../app/app.module';
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardComponent>;
@@ -44,8 +44,8 @@ describe('VehicleChecksCardComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(VehicleChecksCardComponent);

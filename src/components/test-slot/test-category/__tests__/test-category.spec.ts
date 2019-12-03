@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { TestCategoryComponent } from '../test-category';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestCategoryComponent', () => {
   let fixture: ComponentFixture<TestCategoryComponent>;
@@ -14,8 +14,8 @@ describe('TestCategoryComponent', () => {
       ],
       imports: [IonicModule],
 
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
       fixture = TestBed.createComponent(TestCategoryComponent);

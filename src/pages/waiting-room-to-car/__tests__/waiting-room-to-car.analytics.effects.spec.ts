@@ -25,7 +25,7 @@ import * as applicationReferenceActions
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Waiting Room To Car Analytics Effects', () => {
 
@@ -56,7 +56,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);

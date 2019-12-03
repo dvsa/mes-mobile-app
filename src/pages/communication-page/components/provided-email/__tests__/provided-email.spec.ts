@@ -7,7 +7,7 @@ import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translat
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import { createTranslateLoader } from '../../../../../app/app.module';
 import { Http } from '@angular/http';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ProvidedEmailComponent', () => {
   let fixture: ComponentFixture<ProvidedEmailComponent>;
@@ -27,8 +27,8 @@ describe('ProvidedEmailComponent', () => {
           deps: [Http],
         }),
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(ProvidedEmailComponent);

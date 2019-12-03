@@ -29,7 +29,7 @@ describe('ErrorPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

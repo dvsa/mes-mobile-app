@@ -23,7 +23,7 @@ describe('CandidateDescriptionComponent', () => {
       providers: [
         { provide: OutcomeBehaviourMapProvider, useClass: OutcomeBehaviourMapProvider },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

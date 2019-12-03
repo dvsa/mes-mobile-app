@@ -16,7 +16,7 @@ import * as journalActions from '../../../modules/journal/journal.actions';
 import { Store, StoreModule } from '@ngrx/store';
 import { journalReducer } from '../../../modules/journal/journal.reducer';
 import * as slotActions from '../../../providers/slot/slot.actions';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Journal Analytics Effects', () => {
 
@@ -39,7 +39,7 @@ describe('Journal Analytics Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);

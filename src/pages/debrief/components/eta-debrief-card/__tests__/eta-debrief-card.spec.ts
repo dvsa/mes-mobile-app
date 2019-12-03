@@ -7,7 +7,7 @@ import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
 import { EtaDebriefCardComponent } from '../eta-debrief-card';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('EtaDebriefCardComponent', () => {
   let fixture: ComponentFixture<EtaDebriefCardComponent>;
@@ -25,8 +25,8 @@ describe('EtaDebriefCardComponent', () => {
         }),
         TranslateModule,
       ],
-    })
-  })
+    });
+  });
 
   beforeEach(async(() => {
         fixture = TestBed.createComponent(EtaDebriefCardComponent);

@@ -6,7 +6,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import * as communicationActions from '../communication.actions';
 import * as testStatusActions from '../../../modules/tests/test-status/test-status.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Communication Effects', () => {
 
@@ -34,7 +34,7 @@ describe('Communication Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);

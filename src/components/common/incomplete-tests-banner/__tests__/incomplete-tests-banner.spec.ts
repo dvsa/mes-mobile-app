@@ -12,7 +12,7 @@ import { journalReducer } from '../../../../modules/journal/journal.reducer';
 import { SlotProvider } from '../../../../providers/slot/slot';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('IncompleteTestsBanner', () => {
   let fixture: ComponentFixture<IncompleteTestsBanner>;
@@ -34,7 +34,7 @@ describe('IncompleteTestsBanner', () => {
         { provide: SlotProvider, useClass: SlotProvider },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

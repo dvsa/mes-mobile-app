@@ -15,7 +15,7 @@ import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/dat
 import { Store } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
 import { baseJournalData } from '../__mocks__/journal-slots-data.mock';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 class MockStore { }
 

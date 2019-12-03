@@ -19,7 +19,7 @@ import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Debrief Analytics Effects', () => {
 
@@ -46,7 +46,7 @@ describe('Debrief Analytics Effects', () => {
         Store,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);

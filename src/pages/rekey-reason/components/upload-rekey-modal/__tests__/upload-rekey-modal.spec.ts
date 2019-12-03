@@ -19,7 +19,7 @@ describe('UploadRekeyModal', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

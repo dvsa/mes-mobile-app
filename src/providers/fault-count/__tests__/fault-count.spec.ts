@@ -5,7 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { catBTestDataStateObject } from '../__mocks__/cat-B-test-data-state-object';
 import { catBETestDataStateObject } from '../__mocks__/cat-BE-test-data-state-object';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
-import { configureTestSuite } from 'ng-bullet'
+import { configureTestSuite } from 'ng-bullet';
 
 describe('FaultCountProvider', () => {
 
@@ -17,10 +17,9 @@ describe('FaultCountProvider', () => {
         FaultCountProvider,
       ],
     });
-  })
+  });
 
   beforeEach(() => {
-
 
     faultCountProvider = TestBed.get(FaultCountProvider);
 
