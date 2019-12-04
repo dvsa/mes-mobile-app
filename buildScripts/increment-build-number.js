@@ -4,6 +4,7 @@
 // a branch named "release-3.1.2" will yield the version "3.1.2"
 
 const branchName = require('current-git-branch')();
+const semver = require('semver');
 
 var fs = require('fs');
 var xml2js = require('xml2js');
@@ -30,6 +31,11 @@ fs.readFile(configFile, 'utf8', (err, xml) => {
     }
 
     const newVersion = branchName.substring(branchName.length - 5, branchName.length);
+    const isSemver = semver.valid(newVersion);
+
+    if (isSemver == null) {
+      return console.error('Invalid semantic version format in release branch name, needs to be like \"release-3.1.2\"');
+    }
 
     obj.widget['$'].version = newVersion;
 

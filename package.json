@@ -162,6 +162,7 @@
     "protractor-cucumber-framework": "^6.1.1",
     "request": "^2.88.0",
     "rxjs-tslint-rules": "^4.14.3",
+    "semver": "^6.3.0",
     "stylelint": "^9.9.0",
     "stylelint-config-standard": "^18.2.0",
     "ts-loader": "^3.5.0",
