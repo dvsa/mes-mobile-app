@@ -27,8 +27,8 @@ export class Code78Component implements OnChanges {
 
   formControl: FormControl;
   static readonly fieldName: string = 'code78Ctrl';
-  manualMessage: string = 'A <b><em>manual</em></b> license will be issued';
-  automaticMessage: string = 'An <b><em>automatic</em></b> license will be issued';
+  manualMessage: string = 'A <b><em>manual</em></b> licence will be issued';
+  automaticMessage: string = 'An <b><em>automatic</em></b> licence will be issued';
 
   ngOnChanges(): void {
     if (!this.formControl) {
