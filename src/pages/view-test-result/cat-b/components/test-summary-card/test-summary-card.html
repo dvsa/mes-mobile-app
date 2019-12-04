@@ -13,7 +13,11 @@
         [value]="getConvertBooleanToString(data.provisionalLicenceProvided)"
         *ngIf="shouldDisplayLicenceProvided(data.provisionalLicenceProvided)">
       </data-row>
-      <data-row [label]="'Certificate number'" [value]="data.passCertificateNumber" *ngIf="data.passCertificateNumber"></data-row>
+      <data-row
+        [label]="'Certificate number'"
+        [value]="data.passCertificateNumber"
+        *ngIf="data.passCertificateNumber">
+      </data-row>
       <data-row-custom [label]="'Route number'">
         <span class="mes-data" *ngIf="!data.routeNumber">None</span>
         <span class="mes-data">{{ data.routeNumber }}</span>

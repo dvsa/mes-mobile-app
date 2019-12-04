@@ -8,7 +8,7 @@
         [label]="'Transmission'"
         [value]="data.transmission"
         *ngIf="data.transmission"
-        [shouldHaveSeperator]="data.registrationNumber || data.vehicleDetails || data.instructorRegistrationNumber  ? true: false">
+        [shouldHaveSeperator]="data.registrationNumber || data.vehicleDetails || data.instructorRegistrationNumber  ? true : false">
       </data-row>
       <data-row
         [label]="'Vehicle registration number'"
@@ -19,7 +19,7 @@
       <data-row-custom
         [label]="'Vehicle details'"
         *ngIf="data.vehicleDetails"
-        [shouldHaveSeperator]="data.instructorRegistrationNumber ? true: false">
+        [shouldHaveSeperator]="data.instructorRegistrationNumber ? true : false">
           <span class=mes-data *ngIf="data.vehicleDetails.length === 0">None</span>
           <span class="mes-data">{{ getFlattenArray(data.vehicleDetails) }}</span>
       </data-row-custom>
