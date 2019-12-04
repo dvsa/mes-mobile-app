@@ -70,7 +70,6 @@ export class ReverseDiagramCatBEPage implements OnInit {
   }
 
   vehicleLengthChanged(vehicleLength: number): void {
-    console.log(vehicleLength);
     const aAndA1 = vehicleLength * 4;
     const b = vehicleLength * 2;
     this.b = Math.round(b * 100) / 100;
