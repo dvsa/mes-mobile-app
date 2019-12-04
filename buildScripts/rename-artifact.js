@@ -22,7 +22,7 @@ fs.readFile(configFile, 'utf8', (err, xml) => {
     const currentVersion = obj.widget['$'].version;
     const artifactDir = 'build';
     const defaultArtifactName = 'DrivingExaminerService.ipa';
-    const newArtifactName = `DrivingExaminerService-${currentVersion}-${git.short()}.ipa`;
+    const newArtifactName = `DrivingExaminerService-${currentVersion}-${Math.floor(Date.now() / 1000)}-${git.short()}.ipa`;
 
     const oldArtifactPath = `${artifactDir}/${defaultArtifactName}`;
     const newArtifactPath = `${artifactDir}/${newArtifactName}`;
