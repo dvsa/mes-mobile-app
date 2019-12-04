@@ -21,18 +21,17 @@ describe('EtaDebriefCardComponent', () => {
         IonicModule,
         AppModule,
         ComponentsModule,
-        StoreModule.forRoot({
-        }),
+        StoreModule.forRoot({}),
         TranslateModule,
       ],
     });
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(EtaDebriefCardComponent);
-        component = fixture.componentInstance;
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
+    fixture = TestBed.createComponent(EtaDebriefCardComponent);
+    component = fixture.componentInstance;
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {

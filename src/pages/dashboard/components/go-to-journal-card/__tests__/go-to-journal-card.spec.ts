@@ -21,9 +21,9 @@ describe('GoToJournalCard ', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(GoToJournalCardComponent);
-      component = fixture.componentInstance;
-      navContoller = TestBed.get(NavController);
+    fixture = TestBed.createComponent(GoToJournalCardComponent);
+    component = fixture.componentInstance;
+    navContoller = TestBed.get(NavController);
   }));
 
   describe('Class', () => {

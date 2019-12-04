@@ -22,10 +22,10 @@ describe('TimeComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(TimeComponent);
-        component = fixture.componentInstance;
-        component.time =  '2018-12-10T10:04:00+00:00';
-        component.testComplete = true;
+    fixture = TestBed.createComponent(TimeComponent);
+    component = fixture.componentInstance;
+    component.time = '2018-12-10T10:04:00+00:00';
+    component.testComplete = true;
   }));
 
   describe('DOM', () => {

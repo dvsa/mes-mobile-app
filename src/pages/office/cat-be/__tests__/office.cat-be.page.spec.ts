@@ -151,11 +151,11 @@ describe('OfficePage', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(OfficeCatBEPage);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
+    fixture = TestBed.createComponent(OfficeCatBEPage);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

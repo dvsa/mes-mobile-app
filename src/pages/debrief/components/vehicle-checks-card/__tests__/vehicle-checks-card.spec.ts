@@ -48,11 +48,11 @@ describe('VehicleChecksCardComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(VehicleChecksCardComponent);
-        store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(105, TestCategory.B));
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
+    fixture = TestBed.createComponent(VehicleChecksCardComponent);
+    store$ = TestBed.get(Store);
+    store$.dispatch(new StartTest(105, TestCategory.B));
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {

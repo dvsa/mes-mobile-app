@@ -24,8 +24,8 @@ describe('TickIndicatorComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(TickIndicatorComponent);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(TickIndicatorComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

@@ -28,8 +28,8 @@ describe('PracticeTestReportCard ', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(PracticeTestReportCardComponent);
-      component = fixture.componentInstance;
+    fixture = TestBed.createComponent(PracticeTestReportCardComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

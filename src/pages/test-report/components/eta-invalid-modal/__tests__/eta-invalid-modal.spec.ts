@@ -29,9 +29,10 @@ describe('LegalRequirementsModal', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(EtaInvalidModal);
-        component = fixture.componentInstance;
-        component.onCancel = () => {};
+    fixture = TestBed.createComponent(EtaInvalidModal);
+    component = fixture.componentInstance;
+    component.onCancel = () => {
+    };
   }));
 
   describe('DOM', () => {

@@ -33,8 +33,8 @@ describe('ErrorPage', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(ErrorPage);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(ErrorPage);
+    component = fixture.componentInstance;
   }));
 
   it('should navigation back to the last page in the stack', () => {

@@ -35,11 +35,14 @@ describe('JournalRekeyModal', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(JournalRekeyModal);
-        component = fixture.componentInstance;
-        component.onStartTest = () => { };
-        component.onRekeyTest = () => { };
-        component.onCancel = () => { };
+    fixture = TestBed.createComponent(JournalRekeyModal);
+    component = fixture.componentInstance;
+    component.onStartTest = () => {
+    };
+    component.onRekeyTest = () => {
+    };
+    component.onCancel = () => {
+    };
   }));
 
   describe('DOM', () => {

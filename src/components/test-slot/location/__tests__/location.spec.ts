@@ -17,9 +17,9 @@ describe('LocationComponent', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(LocationComponent);
-      component = fixture.componentInstance;
-      component.location = 'Example Test Centre';
+    fixture = TestBed.createComponent(LocationComponent);
+    component = fixture.componentInstance;
+    component.location = 'Example Test Centre';
   }));
 
   describe('DOM', () => {

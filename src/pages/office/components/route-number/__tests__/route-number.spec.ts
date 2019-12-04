@@ -27,10 +27,10 @@ describe('RouteNumberComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(RouteNumberComponent);
-        behaviourMapProvider = TestBed.get(OutcomeBehaviourMapProvider);
-        behaviourMapProvider.setBehaviourMap(behaviourMap);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(RouteNumberComponent);
+    behaviourMapProvider = TestBed.get(OutcomeBehaviourMapProvider);
+    behaviourMapProvider.setBehaviourMap(behaviourMap);
+    component = fixture.componentInstance;
   }));
 
   describe('class', () => {

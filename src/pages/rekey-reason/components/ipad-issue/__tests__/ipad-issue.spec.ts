@@ -24,10 +24,10 @@ describe('IpadIssueComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(IpadIssueComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-        component.ngOnChanges();
+    fixture = TestBed.createComponent(IpadIssueComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
+    component.ngOnChanges();
   }));
 
   describe('class', () => {

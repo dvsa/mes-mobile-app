@@ -1,4 +1,3 @@
-
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { DebriefCardComponent } from '../debrief-card';
@@ -16,12 +15,13 @@ import {
 } from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { DataRowComponent } from '../../../../components/data-row/data-row';
 import { DataRowCustomComponent } from '../../../../components/data-row-custom/data-row-custom';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DebriefCardComponent', () => {
   let fixture: ComponentFixture<DebriefCardComponent>;
   let component: DebriefCardComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         DebriefCardComponent,
@@ -38,12 +38,12 @@ describe('DebriefCardComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(DebriefCardComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DebriefCardComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {
