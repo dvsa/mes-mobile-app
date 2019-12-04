@@ -1,9 +1,9 @@
-import { TestRequirements } from '@dvsa/mes-test-schema/categories/Common';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
 export interface DebriefCardModel {
-  legalRequirements?: TestRequirements;
+  legalRequirements?: CatBUniqueTypes.TestRequirements;
   manoeuvres?: string[];
   controlledStop?: boolean;
   ecoControl?: boolean;

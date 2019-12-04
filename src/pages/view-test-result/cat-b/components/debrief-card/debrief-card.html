@@ -4,216 +4,172 @@
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Legal requirements</label>
-        </ion-col>
-        <ion-col col-56>
-          <ion-grid>
-            <ion-row>
-              <ion-col col-7>
-                <div class="checked-badge-container">
-                  <tick-indicator [ticked]='data.legalRequirements.normalStart1'></tick-indicator>
-                </div>
-              </ion-col>
-              <ion-col>
-                <span class="mes-data">Normal start (NS)</span>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col col-7>
-                <div class="checked-badge-container">
-                  <tick-indicator [ticked]='data.legalRequirements.normalStart2'></tick-indicator>
-                </div>
-              </ion-col>
-              <ion-col>
-                <span class="mes-data">Normal start (NS)</span>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col col-7>
-                <div class="checked-badge-container">
-                  <tick-indicator [ticked]='data.legalRequirements.angledStart'></tick-indicator>
-                </div>
-              </ion-col>
-              <ion-col>
-                <span class="mes-data">Angled start (AS)</span>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col col-7>
-                <div class="checked-badge-container">
-                  <tick-indicator [ticked]='data.legalRequirements.hillStart'></tick-indicator>
-                </div>
-              </ion-col>
-              <ion-col>
-                <span class="mes-data">Hill Start (HS) / Designated Start (DS)</span>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Manoeuvre(s)</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{getFlattenArray(data.manoeuvres)}}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Controlled Stop</label>
-        </ion-col>
-        <ion-col col-56>
-          <ion-grid>
-            <ion-row>
-              <ion-col col-7>
-                <div class="checked-badge-container">
-                  <tick-indicator [ticked]='data.controlledStop'></tick-indicator>
-                </div>
-              </ion-col>
-              <ion-col>
-                <span class="mes-data" *ngIf="data.controlledStop">Completed</span>
-                <span class="mes-data" *ngIf="!data.controlledStop">Not completed</span>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>ECO</label>
-        </ion-col>
-        <ion-col col-56>
-          <ion-grid>
-            <ion-row>
-              <ion-col col-7>
-                <div class="checked-badge-container">
-                  <tick-indicator [ticked]='data.ecoControl'></tick-indicator>
-                </div>
-              </ion-col>
-              <ion-col>
-                <span class="mes-data">Control</span>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col col-7>
-                <div class="checked-badge-container">
-                  <tick-indicator [ticked]='data.ecoPlanning'></tick-indicator>
-                </div>
-              </ion-col>
-              <ion-col>
-                <span class="mes-data">Planning</span>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Fault descriptions</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data" *ngIf="showNoFaultsMessage()"> No faults recorded</span>
-          <ion-grid>
-            <ion-row *ngIf="data.dangerousFaults.length !== 0">
-              <ion-col><span class='mes-data bold'>{{data.dangerousFaults.length}} dangerous faults</span></ion-col>
-            </ion-row>
-            <ion-row *ngFor="let dangerousFault of data.dangerousFaults">
-              <ion-col col-7>
-                <div class="badge-container">
-                  <dangerous-fault-badge [showBadge]="true"></dangerous-fault-badge>
-                </div>
-              </ion-col>
-              <ion-col>
-                <ion-row>
-                  <ion-col>
-                    <span class="mes-data">{{dangerousFault.competencyDisplayName}}</span>
-                  </ion-col>
-                </ion-row>
-                <ion-row *ngIf="dangerousFault.comment">
-                  <ion-col>
-                    <span class="mes-data">- {{dangerousFault.comment}}</span>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-            <ion-row *ngIf="data.seriousFaults.length !== 0">
-              <ion-col><span class='mes-data bold'>{{data.seriousFaults.length}} serious faults</span></ion-col>
-            </ion-row>
-            <ion-row *ngFor="let seriousFault of data.seriousFaults" >
-              <ion-col col-7>
-                <div class="badge-container">
-                  <serious-fault-badge [showBadge]="true"></serious-fault-badge>
-                </div>
-              </ion-col>
-              <ion-col>
-                <ion-row>
-                  <ion-col>
-                    <span class="mes-data">{{seriousFault.competencyDisplayName}}</span>
-                  </ion-col>
-                </ion-row>
-                <ion-row *ngIf="seriousFault.comment">
-                  <ion-col>
-                    <span class="mes-data">- {{seriousFault.comment}}</span>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-            <ion-row *ngIf="data.drivingFaultCount !== 0">
-              <ion-col><span class='mes-data bold'>{{data.drivingFaultCount}} driving faults</span></ion-col>
-            </ion-row>
-            <ion-row *ngFor="let drivingFault of data.drivingFaults">
-              <ion-col col-7>
-                <div class="badge-container">
-                  <driving-faults-badge [count]='drivingFault.faultCount'></driving-faults-badge>
-                </div>
-              </ion-col>
-              <ion-col>
-                <ion-row>
-                  <ion-col>
-                    <span class="mes-data">{{drivingFault.competencyDisplayName}}</span>
-                  </ion-col>
-                </ion-row>
-                <ion-row *ngIf="data.drivingFaultCount > 15 && drivingFault.comment">
-                  <ion-col>
-                    <span class="mes-data">- {{drivingFault.comment}}</span>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>ETA</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{getFlattenArray(data.eta)}}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Tell me question(s)</label>
-        </ion-col>
-        <ion-col col-56>
-            <span class="mes-data" *ngIf="!data.tellMeQuestion">None</span>
-          <span class="mes-data" *ngIf="data.tellMeQuestion">
-            <span class="mes-data bold">{{data.tellMeQuestion.code}}</span> - {{data.tellMeQuestion.shortName}}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row">
-        <ion-col col-40>
-          <label>Show me question(s)</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data" *ngIf="!data.showMeQuestion">None</span>
-          <span class="mes-data" *ngIf="data.showMeQuestion">
-            <span class="mes-data bold">{{data.showMeQuestion.code}}</span> - {{data.showMeQuestion.shortName}}</span>
-        </ion-col>
-      </ion-row>
+      <data-row-custom [label]="'Legal requirements'">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-7>
+              <div class="checked-badge-container">
+                <tick-indicator [ticked]='data.legalRequirements.normalStart1'></tick-indicator>
+              </div>
+            </ion-col>
+            <ion-col>
+              <span class="mes-data">Normal start (NS)</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-7>
+              <div class="checked-badge-container">
+                <tick-indicator [ticked]='data.legalRequirements.normalStart2'></tick-indicator>
+              </div>
+            </ion-col>
+            <ion-col>
+              <span class="mes-data">Normal start (NS)</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-7>
+              <div class="checked-badge-container">
+                <tick-indicator [ticked]='data.legalRequirements.angledStart'></tick-indicator>
+              </div>
+            </ion-col>
+            <ion-col>
+              <span class="mes-data">Angled start (AS)</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-7>
+              <div class="checked-badge-container">
+                <tick-indicator [ticked]='data.legalRequirements.hillStart'></tick-indicator>
+              </div>
+            </ion-col>
+            <ion-col>
+              <span class="mes-data">Hill Start (HS) / Designated Start (DS)</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </data-row-custom>
+      <data-row [label]="'Manoeuvre(s)'" [value]="getFlattenArray(data.manoeuvres)"></data-row>
+      <data-row-custom [label]="'Controlled Stop'">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-7>
+              <div class="checked-badge-container">
+                <tick-indicator [ticked]='data.controlledStop'></tick-indicator>
+              </div>
+            </ion-col>
+            <ion-col>
+              <span class="mes-data" *ngIf="data.controlledStop">Completed</span>
+              <span class="mes-data" *ngIf="!data.controlledStop">Not completed</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </data-row-custom>
+      <data-row-custom [label]="'ECO'">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-7>
+              <div class="checked-badge-container">
+                <tick-indicator [ticked]='data.ecoControl'></tick-indicator>
+              </div>
+            </ion-col>
+            <ion-col>
+              <span class="mes-data">Control</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-7>
+              <div class="checked-badge-container">
+                <tick-indicator [ticked]='data.ecoPlanning'></tick-indicator>
+              </div>
+            </ion-col>
+            <ion-col>
+              <span class="mes-data">Planning</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </data-row-custom>
+      <data-row-custom [label]="'Fault descriptions'">
+        <span class="mes-data" *ngIf="showNoFaultsMessage()"> No faults recorded</span>
+        <ion-grid>
+          <ion-row *ngIf="data.dangerousFaults.length !== 0">
+            <ion-col><span class='mes-data bold'>{{data.dangerousFaults.length}} dangerous faults</span></ion-col>
+          </ion-row>
+          <ion-row *ngFor="let dangerousFault of data.dangerousFaults">
+            <ion-col col-7>
+              <div class="badge-container">
+                <dangerous-fault-badge [showBadge]="true"></dangerous-fault-badge>
+              </div>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <ion-col>
+                  <span class="mes-data">{{dangerousFault.competencyDisplayName}}</span>
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="dangerousFault.comment">
+                <ion-col>
+                  <span class="mes-data">- {{dangerousFault.comment}}</span>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="data.seriousFaults.length !== 0">
+            <ion-col><span class='mes-data bold'>{{data.seriousFaults.length}} serious faults</span></ion-col>
+          </ion-row>
+          <ion-row *ngFor="let seriousFault of data.seriousFaults">
+            <ion-col col-7>
+              <div class="badge-container">
+                <serious-fault-badge [showBadge]="true"></serious-fault-badge>
+              </div>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <ion-col>
+                  <span class="mes-data">{{seriousFault.competencyDisplayName}}</span>
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="seriousFault.comment">
+                <ion-col>
+                  <span class="mes-data">- {{seriousFault.comment}}</span>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="data.drivingFaultCount !== 0">
+            <ion-col><span class='mes-data bold'>{{data.drivingFaultCount}} driving faults</span></ion-col>
+          </ion-row>
+          <ion-row *ngFor="let drivingFault of data.drivingFaults">
+            <ion-col col-7>
+              <div class="badge-container">
+                <driving-faults-badge [count]='drivingFault.faultCount'></driving-faults-badge>
+              </div>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <ion-col>
+                  <span class="mes-data">{{drivingFault.competencyDisplayName}}</span>
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="data.drivingFaultCount > 15 && drivingFault.comment">
+                <ion-col>
+                  <span class="mes-data">- {{drivingFault.comment}}</span>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </data-row-custom>
+      <data-row [label]="'ETA'" [value]="getFlattenArray(data.eta)"></data-row>
+      <data-row-custom [label]="'Tell me question(s)'">
+        <span class="mes-data" *ngIf="!data.tellMeQuestion">None</span>
+        <span class="mes-data" *ngIf="data.tellMeQuestion">
+          <span class="mes-data bold">{{data.tellMeQuestion.code}}</span> - {{data.tellMeQuestion.shortName}}</span>
+      </data-row-custom>
+      <data-row-custom [label]="'Show me question(s)'" [shouldHaveSeperator]="false">
+        <span class="mes-data" *ngIf="!data.showMeQuestion">None</span>
+        <span class="mes-data" *ngIf="data.showMeQuestion">
+          <span class="mes-data bold">{{data.showMeQuestion.code}}</span> - {{data.showMeQuestion.shortName}}</span>
+      </data-row-custom>
     </ion-grid>
   </ion-card-content>
 </ion-card>
