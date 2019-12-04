@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { Name } from '@dvsa/mes-journal-schema';
+import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 import { App } from '../../../../../app/app.component';
 import { CAT_BE } from '../../../../page-names.constants';
@@ -9,20 +8,6 @@ import { CAT_BE } from '../../../../page-names.constants';
   templateUrl: 'reverse-diagram-link.html',
 })
 export class ReverseDiagramLinkComponent {
-  @Input()
-  slot: any;
-
-  @Input()
-  slotChanged: boolean;
-
-  @Input()
-  name: Name;
-
-  @Input()
-  testComplete: boolean;
-
-  @Input()
-  isPortrait: boolean;
 
   constructor(public modalController: ModalController, private app: App) {
   }
