@@ -138,6 +138,7 @@
     "current-git-branch": "^1.1.0",
     "dotenv-safe": "^6.1.0",
     "enjoi": "^6.0.0",
+    "fork-ts-checker-webpack-plugin": "^3.1.1",
     "git-rev-sync": "^1.12.0",
     "html-loader": "^0.5.1",
     "husky": "^1.2.0",
