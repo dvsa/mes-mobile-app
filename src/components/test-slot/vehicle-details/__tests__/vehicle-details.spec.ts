@@ -18,8 +18,8 @@ describe('VehicleDetailsComponent', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(VehicleDetailsComponent);
-      component = fixture.componentInstance;
+    fixture = TestBed.createComponent(VehicleDetailsComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

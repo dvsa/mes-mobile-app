@@ -42,9 +42,9 @@ describe('VehicleChecksCatBEComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(VehicleChecksCatBEComponent);
-        component = fixture.componentInstance;
-        modalController = TestBed.get(ModalController);
+    fixture = TestBed.createComponent(VehicleChecksCatBEComponent);
+    component = fixture.componentInstance;
+    modalController = TestBed.get(ModalController);
   }));
 
   describe('Class', () => {

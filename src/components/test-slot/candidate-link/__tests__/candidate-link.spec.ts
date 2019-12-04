@@ -24,7 +24,8 @@ import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 import { bookedTestSlotMock } from '../../../../shared/mocks/test-slot-data.mock';
 import { configureTestSuite } from 'ng-bullet';
 
-class MockStore { }
+class MockStore {
+}
 
 describe('CandidateLinkComponent', () => {
   let component: CandidateLinkComponent;
@@ -49,15 +50,15 @@ describe('CandidateLinkComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(CandidateLinkComponent);
-        component = fixture.componentInstance;
-        component.name = { title: '', firstName: '', lastName: '' };
-        component.name.title = 'Mr';
-        component.name.firstName = 'Joe';
-        component.name.lastName = 'Bloggs';
-        component.slot = bookedTestSlotMock;
-        component.slotChanged = false;
-        component.isPortrait = true;
+    fixture = TestBed.createComponent(CandidateLinkComponent);
+    component = fixture.componentInstance;
+    component.name = { title: '', firstName: '', lastName: '' };
+    component.name.title = 'Mr';
+    component.name.firstName = 'Joe';
+    component.name.lastName = 'Bloggs';
+    component.slot = bookedTestSlotMock;
+    component.slotChanged = false;
+    component.isPortrait = true;
   }));
 
   describe('Class', () => {

@@ -18,8 +18,8 @@ describe('TestCategoryComponent', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(TestCategoryComponent);
-      component = fixture.componentInstance;
+    fixture = TestBed.createComponent(TestCategoryComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

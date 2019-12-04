@@ -27,10 +27,10 @@ describe('CandidateDescriptionComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(CandidateDescriptionComponent);
-        behaviourMapProvider = TestBed.get(OutcomeBehaviourMapProvider);
-        behaviourMapProvider.setBehaviourMap(behaviourMap);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(CandidateDescriptionComponent);
+    behaviourMapProvider = TestBed.get(OutcomeBehaviourMapProvider);
+    behaviourMapProvider.setBehaviourMap(behaviourMap);
+    component = fixture.componentInstance;
   }));
 
   describe('class', () => {

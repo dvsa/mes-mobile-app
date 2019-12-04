@@ -23,8 +23,8 @@ describe('LockScreenIndicator', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(LockScreenIndicator);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(LockScreenIndicator);
+    component = fixture.componentInstance;
   }));
   describe('Class', () => {
     // Unit tests for the components TypeScript class

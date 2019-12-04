@@ -100,14 +100,14 @@ describe('BackToOfficePage', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(BackToOfficeCatBEPage);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        screenOrientation = TestBed.get(ScreenOrientation);
-        insomnia = TestBed.get(Insomnia);
-        deviceProvider = TestBed.get(DeviceProvider);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
+    fixture = TestBed.createComponent(BackToOfficeCatBEPage);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    screenOrientation = TestBed.get(ScreenOrientation);
+    insomnia = TestBed.get(Insomnia);
+    deviceProvider = TestBed.get(DeviceProvider);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

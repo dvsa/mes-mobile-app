@@ -130,11 +130,11 @@ describe('TestSlotComponent', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(TestSlotComponent);
-      component = fixture.componentInstance;
-      component.slot = cloneDeep(mockSlot);
-      component.showLocation = true;
-      store$ = TestBed.get(Store);
+    fixture = TestBed.createComponent(TestSlotComponent);
+    component = fixture.componentInstance;
+    component.slot = cloneDeep(mockSlot);
+    component.showLocation = true;
+    store$ = TestBed.get(Store);
   }));
 
   describe('Class', () => {

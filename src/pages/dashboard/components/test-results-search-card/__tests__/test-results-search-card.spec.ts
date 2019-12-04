@@ -21,9 +21,9 @@ describe('TestResultsSearchCard ', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(TestResultsSearchCardComponent);
-      component = fixture.componentInstance;
-      navContoller = TestBed.get(NavController);
+    fixture = TestBed.createComponent(TestResultsSearchCardComponent);
+    component = fixture.componentInstance;
+    navContoller = TestBed.get(NavController);
   }));
 
   describe('Class', () => {

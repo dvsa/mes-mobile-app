@@ -40,8 +40,8 @@ describe('PersonalCommitmentSlotComponent', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(PersonalCommitmentSlotComponent);
-      component = fixture.componentInstance;
+    fixture = TestBed.createComponent(PersonalCommitmentSlotComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

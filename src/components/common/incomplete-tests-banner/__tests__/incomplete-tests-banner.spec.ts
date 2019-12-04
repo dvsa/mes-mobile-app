@@ -38,8 +38,8 @@ describe('IncompleteTestsBanner', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(IncompleteTestsBanner);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(IncompleteTestsBanner);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

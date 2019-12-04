@@ -59,14 +59,14 @@ describe('RekeyUploadOutcomePage', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(RekeyUploadOutcomePage);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        screenOrientation = TestBed.get(ScreenOrientation);
-        insomnia = TestBed.get(Insomnia);
-        deviceProvider = TestBed.get(DeviceProvider);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
+    fixture = TestBed.createComponent(RekeyUploadOutcomePage);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    screenOrientation = TestBed.get(ScreenOrientation);
+    insomnia = TestBed.get(Insomnia);
+    deviceProvider = TestBed.get(DeviceProvider);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

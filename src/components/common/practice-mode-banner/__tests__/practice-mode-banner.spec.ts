@@ -21,9 +21,9 @@ describe('PracticeModeBanner', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(PracticeModeBanner);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
+    fixture = TestBed.createComponent(PracticeModeBanner);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
   }));
 
   describe('Class', () => {

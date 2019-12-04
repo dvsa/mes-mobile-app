@@ -23,10 +23,12 @@ describe('UploadRekeyModal', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(UploadRekeyModal);
-        component = fixture.componentInstance;
-        component.onCancel = () => {};
-        component.onUpload = () => {};
+    fixture = TestBed.createComponent(UploadRekeyModal);
+    component = fixture.componentInstance;
+    component.onCancel = () => {
+    };
+    component.onUpload = () => {
+    };
   }));
 
   describe('DOM', () => {

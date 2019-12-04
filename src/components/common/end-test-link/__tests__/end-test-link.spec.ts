@@ -24,10 +24,10 @@ describe('EndTestLinkComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(EndTestLinkComponent);
-        component = fixture.componentInstance;
-        modalController = TestBed.get(ModalController);
-        navController = TestBed.get(NavController);
+    fixture = TestBed.createComponent(EndTestLinkComponent);
+    component = fixture.componentInstance;
+    modalController = TestBed.get(ModalController);
+    navController = TestBed.get(NavController);
   }));
 
   describe('DOM', () => {

@@ -16,8 +16,8 @@ describe('LanguageComponent', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(LanguageComponent);
-      component = fixture.componentInstance;
+    fixture = TestBed.createComponent(LanguageComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

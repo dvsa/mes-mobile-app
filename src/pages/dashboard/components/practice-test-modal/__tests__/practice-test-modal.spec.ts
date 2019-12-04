@@ -27,11 +27,14 @@ describe('PracticeTestModal', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(PracticeTestModal);
-        component = fixture.componentInstance;
-        component.onCancel = () => {};
-        component.onNoFault = () => {};
-        component.onFault = () => {};
+    fixture = TestBed.createComponent(PracticeTestModal);
+    component = fixture.componentInstance;
+    component.onCancel = () => {
+    };
+    component.onNoFault = () => {
+    };
+    component.onFault = () => {
+    };
   }));
 
   describe('DOM', () => {
