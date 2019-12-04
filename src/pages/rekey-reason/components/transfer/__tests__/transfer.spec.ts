@@ -24,10 +24,10 @@ describe('TransferComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(TransferComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-        component.ngOnChanges();
+    fixture = TestBed.createComponent(TransferComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
+    component.ngOnChanges();
   }));
 
   describe('class', () => {

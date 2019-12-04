@@ -21,9 +21,9 @@ describe('RekeySearchCard ', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(RekeySearchCardComponent);
-      component = fixture.componentInstance;
-      navContoller = TestBed.get(NavController);
+    fixture = TestBed.createComponent(RekeySearchCardComponent);
+    component = fixture.componentInstance;
+    navContoller = TestBed.get(NavController);
   }));
 
   describe('Class', () => {

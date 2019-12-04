@@ -12,7 +12,8 @@ import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { configureTestSuite } from 'ng-bullet';
 
-class MockStore { }
+class MockStore {
+}
 
 describe('IncompleteTestsBannerSelector', () => {
   let slotProvider: SlotProvider;
@@ -63,7 +64,7 @@ describe('IncompleteTestsBannerSelector', () => {
                   },
                   candidate: null,
                   previousCancellation: null,
-                  business:null,
+                  business: null,
                 },
               },
             },
@@ -91,7 +92,7 @@ describe('IncompleteTestsBannerSelector', () => {
                   },
                   candidate: null,
                   previousCancellation: null,
-                  business:null,
+                  business: null,
                 },
               },
             },
@@ -121,7 +122,7 @@ describe('IncompleteTestsBannerSelector', () => {
                   },
                   candidate: null,
                   previousCancellation: null,
-                  business:null,
+                  business: null,
                 },
               },
             },
@@ -151,7 +152,7 @@ describe('IncompleteTestsBannerSelector', () => {
                   },
                   candidate: null,
                   previousCancellation: null,
-                  business:null,
+                  business: null,
                 },
               },
             },

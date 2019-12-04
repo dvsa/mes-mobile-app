@@ -26,8 +26,8 @@ describe('SearchResultComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(SearchResultComponent);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(SearchResultComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

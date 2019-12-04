@@ -17,8 +17,8 @@ describe('IndicatorsComponent', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(IndicatorsComponent);
-      component = fixture.componentInstance;
+    fixture = TestBed.createComponent(IndicatorsComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

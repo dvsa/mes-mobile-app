@@ -6,7 +6,10 @@ import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { IonicModule } from 'ionic-angular';
 import { configureTestSuite } from 'ng-bullet';
-class TestStore { }
+
+class TestStore {
+}
+
 describe('SignatureAreaComponent', () => {
   let fixture: ComponentFixture<SignatureAreaComponent>;
   let component: SignatureAreaComponent;
@@ -27,8 +30,8 @@ describe('SignatureAreaComponent', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(SignatureAreaComponent);
-      component = fixture.componentInstance;
+    fixture = TestBed.createComponent(SignatureAreaComponent);
+    component = fixture.componentInstance;
   }));
   describe('Class', () => {
     describe('signature', () => {

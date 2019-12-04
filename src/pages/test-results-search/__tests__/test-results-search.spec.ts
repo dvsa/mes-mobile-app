@@ -49,10 +49,10 @@ describe('TestResultsSearchPage', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(TestResultsSearchPage);
-        component = fixture.componentInstance;
-        modalController = TestBed.get(ModalController);
-        appConfigProviderMock = TestBed.get(AppConfigProvider);
+    fixture = TestBed.createComponent(TestResultsSearchPage);
+    component = fixture.componentInstance;
+    modalController = TestBed.get(ModalController);
+    appConfigProviderMock = TestBed.get(AppConfigProvider);
   }));
 
   describe('DOM', () => {

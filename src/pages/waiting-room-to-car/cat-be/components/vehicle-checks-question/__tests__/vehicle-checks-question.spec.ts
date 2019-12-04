@@ -1,4 +1,3 @@
-
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { VehicleChecksQuestionComponent } from '../vehicle-checks-question';
@@ -31,22 +30,22 @@ describe('VehicleChecksQuestionComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(VehicleChecksQuestionComponent);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(VehicleChecksQuestionComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {
     describe('isOptionDisabled', () => {
       it(`should return true if the question is in the list of questions to disable
           and not equal to the currently selected question`,
-      () => {
-        component.questionResult = { code: 'S03' };
-        component.questionsToDisable = [
-          vehicleChecksQuestion,
-        ];
-        const result = component.isOptionDisabled({ code: 'S04', description: '', shortName: '' });
-        expect(result).toEqual(true);
-      });
+        () => {
+          component.questionResult = { code: 'S03' };
+          component.questionsToDisable = [
+            vehicleChecksQuestion,
+          ];
+          const result = component.isOptionDisabled({ code: 'S04', description: '', shortName: '' });
+          expect(result).toEqual(true);
+        });
       it('should return false if the question is not in the list of questions to disable', () => {
         component.questionResult = { code: 'S04' };
         component.questionsToDisable = [];
@@ -55,12 +54,12 @@ describe('VehicleChecksQuestionComponent', () => {
       });
       it(`should return false if the question is not in the list of questions to disable
           and is equal to the currently selected question`,
-       () => {
-         component.questionResult = { code: 'S05' };
-         component.questionsToDisable = [{ code: 'S04' }];
-         const result = component.isOptionDisabled({ code: 'S05', description: '', shortName: '' });
-         expect(result).toEqual(false);
-       });
+        () => {
+          component.questionResult = { code: 'S05' };
+          component.questionsToDisable = [{ code: 'S04' }];
+          const result = component.isOptionDisabled({ code: 'S05', description: '', shortName: '' });
+          expect(result).toEqual(false);
+        });
     });
     describe('vehicleChecksQuestionChanged', () => {
       it('should emit the correct event', () => {

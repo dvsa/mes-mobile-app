@@ -29,9 +29,10 @@ describe('JournalForceCheckModal', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(JournalForceCheckModal);
-        component = fixture.componentInstance;
-        component.onCancel = () => { };
+    fixture = TestBed.createComponent(JournalForceCheckModal);
+    component = fixture.componentInstance;
+    component.onCancel = () => {
+    };
   }));
 
   describe('Class', () => {

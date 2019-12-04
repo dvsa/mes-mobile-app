@@ -16,8 +16,8 @@ describe('DisplayAddressComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(DisplayAddressComponent);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(DisplayAddressComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

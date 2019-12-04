@@ -63,11 +63,11 @@ describe('DashboardPage', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(DashboardPage);
-        component = fixture.componentInstance;
-        component.subscription = new Subscription();
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
+    fixture = TestBed.createComponent(DashboardPage);
+    component = fixture.componentInstance;
+    component.subscription = new Subscription();
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('DOM', () => {

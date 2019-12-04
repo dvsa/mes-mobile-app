@@ -21,18 +21,17 @@ describe('EcoDebriefCardComponent', () => {
         IonicModule,
         AppModule,
         ComponentsModule,
-        StoreModule.forRoot({
-        }),
+        StoreModule.forRoot({}),
         TranslateModule,
       ],
     });
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(EcoDebriefCardComponent);
-        component = fixture.componentInstance;
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
+    fixture = TestBed.createComponent(EcoDebriefCardComponent);
+    component = fixture.componentInstance;
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {

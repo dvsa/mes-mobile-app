@@ -16,8 +16,8 @@ describe('DangerousFaultBadgeComponenet', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(DangerousFaultBadgeComponent);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(DangerousFaultBadgeComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

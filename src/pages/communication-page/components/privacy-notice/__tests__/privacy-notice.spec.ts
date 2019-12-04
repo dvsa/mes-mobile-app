@@ -27,8 +27,8 @@ describe('PrivacyNoticeComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(PrivacyNoticeComponent);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(PrivacyNoticeComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

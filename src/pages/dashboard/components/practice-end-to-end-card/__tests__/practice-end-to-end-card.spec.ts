@@ -21,9 +21,9 @@ describe('PracticeEndToEndCard ', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(PracticeEndToEndCardComponent);
-      component = fixture.componentInstance;
-      navContoller = TestBed.get(NavController);
+    fixture = TestBed.createComponent(PracticeEndToEndCardComponent);
+    component = fixture.componentInstance;
+    navContoller = TestBed.get(NavController);
   }));
 
   describe('Class', () => {

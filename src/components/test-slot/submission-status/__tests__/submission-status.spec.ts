@@ -22,8 +22,8 @@ describe('PracticeTestModal', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(SubmissionStatusComponent);
-        component = fixture.componentInstance;
+    fixture = TestBed.createComponent(SubmissionStatusComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

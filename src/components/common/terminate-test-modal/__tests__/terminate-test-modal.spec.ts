@@ -36,11 +36,11 @@ describe('TerminateTestModal', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(TerminateTestModal);
-        component = fixture.componentInstance;
-        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
-        component.onTerminate = jasmine.createSpy('onTerminate');
-        component.onCancel = jasmine.createSpy('onCancel');
+    fixture = TestBed.createComponent(TerminateTestModal);
+    component = fixture.componentInstance;
+    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+    component.onTerminate = jasmine.createSpy('onTerminate');
+    component.onCancel = jasmine.createSpy('onCancel');
   }));
 
   describe('DOM', () => {

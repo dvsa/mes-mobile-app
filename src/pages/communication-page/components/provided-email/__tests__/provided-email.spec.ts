@@ -31,14 +31,14 @@ describe('ProvidedEmailComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(ProvidedEmailComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-        component.formGroup.addControl('radioCtrl', new FormControl());
-        component.shouldRender = true;
-        component.isProvidedEmailAddressChosen = true;
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
+    fixture = TestBed.createComponent(ProvidedEmailComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
+    component.formGroup.addControl('radioCtrl', new FormControl());
+    component.shouldRender = true;
+    component.isProvidedEmailAddressChosen = true;
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {

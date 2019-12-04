@@ -16,8 +16,8 @@ describe('ProgressiveAccessComponent', () => {
   });
 
   beforeEach(async(() => {
-      fixture = TestBed.createComponent(ProgressiveAccessComponent);
-      component = fixture.componentInstance;
+    fixture = TestBed.createComponent(ProgressiveAccessComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

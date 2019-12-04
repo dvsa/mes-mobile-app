@@ -24,10 +24,10 @@ describe('OtherReasonComponent', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(OtherReasonComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-        component.ngOnChanges();
+    fixture = TestBed.createComponent(OtherReasonComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
+    component.ngOnChanges();
   }));
 
   describe('class', () => {
