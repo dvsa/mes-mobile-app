@@ -135,6 +135,7 @@
     "cucumber": "^5.0.2",
     "cucumber-html-reporter": "^4.0.4",
     "cucumber-pretty": "^1.5.0",
+    "current-git-branch": "^1.1.0",
     "dotenv-safe": "^6.1.0",
     "enjoi": "^6.0.0",
     "git-rev-sync": "^1.12.0",
