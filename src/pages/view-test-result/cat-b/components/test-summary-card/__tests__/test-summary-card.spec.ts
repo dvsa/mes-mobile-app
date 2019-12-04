@@ -3,6 +3,9 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
 import { TestSummaryCardComponent } from '../test-summary-card';
+import { MockComponent } from 'ng-mocks';
+import { DataRowComponent } from '../../../../components/data-row/data-row';
+import { DataRowCustomComponent } from '../../../../components/data-row-custom/data-row-custom';
 
 describe('TestSummaryCardComponent', () => {
   let fixture: ComponentFixture<TestSummaryCardComponent>;
@@ -12,6 +15,8 @@ describe('TestSummaryCardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         TestSummaryCardComponent,
+        MockComponent(DataRowComponent),
+        MockComponent(DataRowCustomComponent),
       ],
       imports: [
         IonicModule,

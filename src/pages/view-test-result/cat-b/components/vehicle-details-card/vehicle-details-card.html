@@ -4,39 +4,31 @@
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
-      <ion-row [ngClass]="calculateClass(data.registrationNumber)" *ngIf="data.transmission">
-        <ion-col col-40>
-          <label>Transmission</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ data.transmission }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row [ngClass]="calculateClass(data.vehicleDetails)" *ngIf="data.registrationNumber">
-        <ion-col col-40>
-          <label>Vehicle registration number</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ data.registrationNumber }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row [ngClass]="calculateClass(data.instructorRegistrationNumber)" *ngIf="data.vehicleDetails">
-        <ion-col col-40>
-          <label>Vehicle details</label>
-        </ion-col>
-        <ion-col col-56>
+      <data-row
+        [label]="'Transmission'"
+        [value]="data.transmission"
+        *ngIf="data.transmission"
+        [shouldHaveSeperator]="data.registrationNumber || data.vehicleDetails || data.instructorRegistrationNumber  ? true : false">
+      </data-row>
+      <data-row
+        [label]="'Vehicle registration number'"
+        [value]="data.registrationNumber"
+        *ngIf="data.registrationNumber"
+        [shouldHaveSeperator]="data.vehicleDetails ? true: false">
+      </data-row>
+      <data-row-custom
+        [label]="'Vehicle details'"
+        *ngIf="data.vehicleDetails"
+        [shouldHaveSeperator]="data.instructorRegistrationNumber ? true : false">
           <span class=mes-data *ngIf="data.vehicleDetails.length === 0">None</span>
           <span class="mes-data">{{ getFlattenArray(data.vehicleDetails) }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row" *ngIf="data.instructorRegistrationNumber">
-        <ion-col col-40>
-          <label>Instructor registration number</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ data.instructorRegistrationNumber }}</span>
-        </ion-col>
-      </ion-row>
+      </data-row-custom>
+      <data-row
+        [label]="'Instructor registration number'"
+        [value]="data.instructorRegistrationNumber"
+        *ngIf="data.instructorRegistrationNumber"
+        [shouldHaveSeperator]="false">
+      </data-row>
     </ion-grid>
   </ion-card-content>
 </ion-card>

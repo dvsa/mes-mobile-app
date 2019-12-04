@@ -4,91 +4,39 @@
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Accompanied by</label>
-        </ion-col>
-        <ion-col col-56>
+      <data-row-custom [label]="'Accompanied by'">
           <span class=mes-data *ngIf="data.accompaniment.length === 0">None</span>
           <span class="mes-data">{{ getFlattenArray(data.accompaniment) }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator" *ngIf="shouldDisplayLicenceProvided(data.provisionalLicenceProvided)">
-        <ion-col col-40>
-          <label>Licence provided</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ getConvertBooleanToString(data.provisionalLicenceProvided) }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator" *ngIf="data.passCertificateNumber">
-        <ion-col col-40>
-          <label>Certificate number</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ data.passCertificateNumber }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Route number</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data" *ngIf="!data.routeNumber">None</span>
-          <span class="mes-data">{{ data.routeNumber }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Independent driving</label>
-        </ion-col>
-        <ion-col col-56>
-            <span class="mes-data" *ngIf="!data.independentDriving">None</span>
-          <span class="mes-data">{{ data.independentDriving }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Physical description of candidate</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data" *ngIf="!data.candidateDescription">None</span>
-          <span class="mes-data">{{ data.candidateDescription }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Debrief witnessed</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ getConvertBooleanToString(data.debriefWitnessed) }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Weather conditions</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data" *ngIf="data.weatherConditions.length === 0">None</span>
-          <span class="mes-data">{{ getFlattenArray(data.weatherConditions) }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>D255</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ getConvertBooleanToString(data.D255) }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row">
-        <ion-col col-40>
-          <label>Additional information</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ data.additionalInformation }}</span>
-        </ion-col>
-      </ion-row>
+      </data-row-custom>
+      <data-row
+        [label]="'Licence provided'"
+        [value]="getConvertBooleanToString(data.provisionalLicenceProvided)"
+        *ngIf="shouldDisplayLicenceProvided(data.provisionalLicenceProvided)">
+      </data-row>
+      <data-row
+        [label]="'Certificate number'"
+        [value]="data.passCertificateNumber"
+        *ngIf="data.passCertificateNumber">
+      </data-row>
+      <data-row-custom [label]="'Route number'">
+        <span class="mes-data" *ngIf="!data.routeNumber">None</span>
+        <span class="mes-data">{{ data.routeNumber }}</span>
+      </data-row-custom>
+      <data-row-custom [label]="'Independent driving'">
+        <span class="mes-data" *ngIf="!data.independentDriving">None</span>
+        <span class="mes-data">{{ data.independentDriving }}</span>
+      </data-row-custom>
+      <data-row-custom [label]="'Physical description of candidate'">
+        <span class="mes-data" *ngIf="!data.candidateDescription">None</span>
+        <span class="mes-data">{{ data.candidateDescription }}</span>
+      </data-row-custom>
+      <data-row [label]="'Debrief witnessed'" [value]="getConvertBooleanToString(data.debriefWitnessed)"></data-row>
+      <data-row-custom [label]="'Weather conditions'">
+        <span class="mes-data" *ngIf="data.weatherConditions.length === 0">None</span>
+        <span class="mes-data">{{ getFlattenArray(data.weatherConditions) }}</span>
+      </data-row-custom>
+      <data-row [label]="'D255'" [value]="getConvertBooleanToString(data.D255)"></data-row>
+      <data-row [label]="'Additional information'" [value]="data.additionalInformation"></data-row>
     </ion-grid>
   </ion-card-content>
 </ion-card>

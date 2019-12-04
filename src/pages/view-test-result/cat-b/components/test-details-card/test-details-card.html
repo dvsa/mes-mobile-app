@@ -4,82 +4,31 @@
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Date</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ data.date }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Time</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ data.time }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Application reference</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ data.applicationReference }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Test category</label>
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ data.category }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Slot type</label>
-          <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
-            class="exclamation-indicator"
-            *ngIf="data.slotType !== 'Standard Test'" />
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">{{ data.slotType }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Special requirements</label>
-          <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
-            class="exclamation-indicator"
-            *ngIf="specialNeedsIsPopulated(data.specialNeeds)" />
-        </ion-col>
-        <ion-col col-56>
-          <div *ngFor="let specialNeed of data.specialNeeds" class="mes-data">
-            - {{specialNeed}}
-          </div>
-        </ion-col>        
-      </ion-row>
-      <ion-row *ngIf="data.entitlementCheck" class="mes-data-row-with-separator">
-        <ion-col col-40>
-          <label>Entitlement check</label>
-          <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
-            class="exclamation-indicator" />
-        </ion-col>
-        <ion-col col-56>
-          <span class="mes-data">Entitlement check is required.</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mes-data-row">
-        <ion-col col-40>
-          <label>Additional information</label>
-        </ion-col>
-        <ion-col col-56>
-          <div *ngFor="let previousCancellation of data.previousCancellations" class="mes-data">
-            - {{previousCancellation}}
-          </div>
-        </ion-col>        
-      </ion-row>
+      <data-row [label]="'Date'" [value]="data.date"></data-row>
+      <data-row [label]="'Time'" [value]="data.time"></data-row>
+      <data-row [label]="'Application reference'" [value]="data.applicationReference"></data-row>
+      <data-row [label]="'Test category'" [value]="data.category"></data-row>
+      <data-row
+        [label]="'Slot type'"
+        [value]="data.slotType"
+        [shouldShowIndicator]="data.slotType !== 'Standard Test'">
+      </data-row>
+      <data-row-custom [label]="'Special requirements'" [shouldShowIndicator]="specialNeedsIsPopulated(data.specialNeeds)">
+        <div *ngFor="let specialNeed of data.specialNeeds" class="mes-data">
+          - {{specialNeed}}
+        </div>
+      </data-row-custom>
+      <data-row
+        *ngIf="data.entitlementCheck"
+        [label]="'Entitlement check'"
+        [value]="'Entitlement check is required.'"
+        [shouldShowIndicator]="true">
+      </data-row>
+      <data-row-custom [label]="'Additional information'">
+        <div *ngFor="let previousCancellation of data.previousCancellations" class="mes-data">
+          - {{previousCancellation}}
+        </div>
+      </data-row-custom>
     </ion-grid>
   </ion-card-content>
 </ion-card>
