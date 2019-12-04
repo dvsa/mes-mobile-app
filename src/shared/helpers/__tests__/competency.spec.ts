@@ -1,7 +1,10 @@
 import { DrivingFaults, SeriousFaults, DangerousFaults } from '@dvsa/mes-test-schema/categories/Common';
 import { getCompetencyFaults, calculateFaultCount } from '../competency';
-// Driving Faults/ Serious Faults/ Dangerous faults
+import { Competencies } from '../../../modules/tests/test-data/test-data.constants';
+import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
 
+// note: although competency labels come from a file called catb-competencies, these are in fact
+// common to all competencies
 describe('calculateFaultCount', () => {
   it('should return count of 1 if boolean is passed', () => {
     const result = calculateFaultCount(true);
@@ -53,24 +56,24 @@ describe('getCompetencyFaults', () => {
       {
         comment: null,
         faultCount: 4,
-        competencyIdentifier: 'controlsAccelerator',
-        competencyDisplayName:'Controls - Accelerator',
+        competencyIdentifier: Competencies.controlsAccelerator,
+        competencyDisplayName: fullCompetencyLabels.controlsAccelerator,
         source: 'simple',
       });
     expect(result).toContain(
       {
         comment: null,
         faultCount: 3,
-        competencyIdentifier: 'controlsClutch',
-        competencyDisplayName:'Controls - Clutch',
+        competencyIdentifier: Competencies.controlsClutch,
+        competencyDisplayName: fullCompetencyLabels.controlsClutch,
         source: 'simple',
       });
     expect(result).toContain(
       {
         comment: null,
         faultCount: 2,
-        competencyIdentifier: 'ancillaryControls',
-        competencyDisplayName:'Ancillary Controls',
+        competencyIdentifier: Competencies.ancillaryControls,
+        competencyDisplayName: fullCompetencyLabels.ancillaryControls,
         source: 'simple',
       });
   });
@@ -89,24 +92,24 @@ describe('getCompetencyFaults', () => {
       {
         comment: null,
         faultCount: 1,
-        competencyIdentifier: 'controlsAccelerator',
-        competencyDisplayName:'Controls - Accelerator',
+        competencyIdentifier: Competencies.controlsAccelerator,
+        competencyDisplayName: fullCompetencyLabels.controlsAccelerator,
         source: 'simple',
       });
     expect(result).toContain(
       {
         comment: null,
         faultCount: 1,
-        competencyIdentifier: 'controlsClutch',
-        competencyDisplayName:'Controls - Clutch',
+        competencyIdentifier: Competencies.controlsClutch,
+        competencyDisplayName:fullCompetencyLabels.controlsClutch,
         source: 'simple',
       });
     expect(result).toContain(
       {
         comment: null,
         faultCount: 1,
-        competencyIdentifier: 'ancillaryControls',
-        competencyDisplayName:'Ancillary Controls',
+        competencyIdentifier: Competencies.ancillaryControls,
+        competencyDisplayName: fullCompetencyLabels.ancillaryControls,
         source: 'simple',
       });
   });
@@ -125,24 +128,24 @@ describe('getCompetencyFaults', () => {
       {
         comment: null,
         faultCount: 1,
-        competencyIdentifier: 'controlsAccelerator',
-        competencyDisplayName:'Controls - Accelerator',
+        competencyIdentifier: Competencies.controlsAccelerator,
+        competencyDisplayName: fullCompetencyLabels.controlsAccelerator,
         source: 'simple',
       });
     expect(result).toContain(
       {
         comment: null,
         faultCount: 1,
-        competencyIdentifier: 'controlsClutch',
-        competencyDisplayName:'Controls - Clutch',
+        competencyIdentifier: Competencies.controlsClutch,
+        competencyDisplayName: fullCompetencyLabels.controlsClutch,
         source: 'simple',
       });
     expect(result).toContain(
       {
         comment: null,
         faultCount: 1,
-        competencyIdentifier: 'ancillaryControls',
-        competencyDisplayName:'Ancillary Controls',
+        competencyIdentifier: Competencies.ancillaryControls,
+        competencyDisplayName: fullCompetencyLabels.ancillaryControls,
         source: 'simple',
       });
   });
