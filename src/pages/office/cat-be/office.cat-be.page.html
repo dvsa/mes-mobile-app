@@ -113,7 +113,7 @@
       </fault-comment-card>
 
       <fault-comment-card id="driving-fault-comment-card" [formGroup]="form" [faultComments]="pageState.drivingFaults$ | async"
-        [shouldRender]="(pageState.displayDrivingFaultComments$ | async) && pageState.displayDrivingFault$ | async"
+        [shouldRender]="(pageState.displayDrivingFaultComments$ | async) && (pageState.displayDrivingFault$ | async)"
         [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults" [faultCount]="pageState.drivingFaultCount$ | async"
         (faultCommentsChange)="drivingFaultCommentChanged($event)">
       </fault-comment-card>

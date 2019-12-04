@@ -6,6 +6,7 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { TestCategory } from '../../shared/models/test-category';
 import { VehicleChecksScore } from '../../shared/models/vehicle-checks-score.model';
+import { getCompetencyFaults } from '../../shared/helpers/competency';
 
 @Injectable()
 export class FaultCountProvider {
@@ -87,14 +88,13 @@ export class FaultCountProvider {
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
     const { drivingFaults, manoeuvres, controlledStop, vehicleChecks } = data;
-
-    const drivingFaultSumOfSimpleCompetencies = drivingFaults ?
-      Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0) : 0;
+    let faultTotal: number = 0;
+    getCompetencyFaults(drivingFaults).forEach(fault => faultTotal = faultTotal + fault.faultCount);
 
     const controlledStopHasDrivingFault = (controlledStop && controlledStop.fault === CompetencyOutcome.DF) ? 1 : 0;
 
     const result =
-      drivingFaultSumOfSimpleCompetencies +
+      faultTotal +
       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
       this.getVehicleChecksFaultCountCatB(vehicleChecks) +
       controlledStopHasDrivingFault;
@@ -150,17 +150,18 @@ export class FaultCountProvider {
     // Because of this we need to pay extra attention on summing up all of them
     const { drivingFaults, manoeuvres,  vehicleChecks, uncoupleRecouple } = data;
 
-    const drivingFaultSumOfSimpleCompetencies = drivingFaults ?
-      Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0) : 0;
+    let faultTotal: number = 0;
+    getCompetencyFaults(drivingFaults).forEach(fault => faultTotal = faultTotal + fault.faultCount);
     const uncoupleRecoupleHasDrivingFault =
       (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.DF) ? 1 : 0;
 
     const result =
-       drivingFaultSumOfSimpleCompetencies +
+       faultTotal +
        this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
        this.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults +
        uncoupleRecoupleHasDrivingFault;
 
+    console.log(`get driving fault sum count cat be ${result}`);
     return result;
   }
 

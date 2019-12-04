@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { forOwn, transform, endsWith, isBoolean, isNumber } from 'lodash';
-import { SeriousFaults, DangerousFaults, EyesightTest, DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
-import { competencyLabels } from '../../pages/test-report/components/competency/competency.constants';
+import { forOwn, transform, endsWith } from 'lodash';
+import { EyesightTest } from '@dvsa/mes-test-schema/categories/Common';
 import { FaultSummary, CommentSource, CompetencyIdentifiers } from '../../shared/models/fault-marking.model';
 import { CompetencyDisplayName } from '../../shared/models/competency-display-name';
-import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { ManoeuvreTypes } from '../../modules/tests/test-data/test-data.constants';
@@ -12,6 +10,7 @@ import { manoeuvreCompetencyLabels, manoeuvreTypeLabels } from '../../shared/con
 import { TestCategory } from '../../shared/models/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../fault-count/fault-count';
+import { getCompetencyFaults } from '../../shared/helpers/competency';
 
 @Injectable()
 export class FaultSummaryProvider {
@@ -53,7 +52,7 @@ export class FaultSummaryProvider {
 
   private getDrivingFaultsCatB (data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
-      ...this.getCompetencyFaults(data.drivingFaults),
+      ...getCompetencyFaults(data.drivingFaults),
       ...this.getManoeuvreFaultsCatB(data.manoeuvres, CompetencyOutcome.DF),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.DF),
       ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.DF),
@@ -62,7 +61,7 @@ export class FaultSummaryProvider {
 
   private getSeriousFaultsCatB (data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
-      ...this.getCompetencyFaults(data.seriousFaults),
+      ...getCompetencyFaults(data.seriousFaults),
       ...this.getManoeuvreFaultsCatB(data.manoeuvres, CompetencyOutcome.S),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
       ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.S),
@@ -72,7 +71,7 @@ export class FaultSummaryProvider {
 
   private getDangerousFaultsCatB(data: CatBUniqueTypes.TestData): FaultSummary[] {
     return [
-      ...this.getCompetencyFaults(data.dangerousFaults),
+      ...getCompetencyFaults(data.dangerousFaults),
       ...this.getManoeuvreFaultsCatB(data.manoeuvres, CompetencyOutcome.D),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
       ...this.getVehicleCheckFaultsCatB(data.vehicleChecks, CompetencyOutcome.D),
@@ -81,7 +80,7 @@ export class FaultSummaryProvider {
 
   private getDrivingFaultsCatBE(data: CatBEUniqueTypes.TestData): FaultSummary[] {
     return [
-      ...this.getCompetencyFaults(data.drivingFaults),
+      ...getCompetencyFaults(data.drivingFaults),
       ...this.getManoeuvreFaultsCatBE(data.manoeuvres, CompetencyOutcome.DF),
       ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.DF),
       ...this.getVehicleCheckDrivingFaultsCatBE(data.vehicleChecks),
@@ -90,7 +89,7 @@ export class FaultSummaryProvider {
 
   private getSeriousFaultsCatBE(data: CatBEUniqueTypes.TestData): FaultSummary[] {
     return [
-      ...this.getCompetencyFaults(data.seriousFaults),
+      ...getCompetencyFaults(data.seriousFaults),
       ...this.getManoeuvreFaultsCatBE(data.manoeuvres, CompetencyOutcome.S),
       ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.S),
       ...this.getVehicleCheckSeriousFaultsCatBE(data.vehicleChecks),
@@ -100,42 +99,10 @@ export class FaultSummaryProvider {
 
   private getDangerousFaultsCatBE(data: CatBEUniqueTypes.TestData): FaultSummary[] {
     return [
-      ...this.getCompetencyFaults(data.dangerousFaults),
+      ...getCompetencyFaults(data.dangerousFaults),
       ...this.getManoeuvreFaultsCatBE(data.manoeuvres, CompetencyOutcome.D),
       ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.D),
     ];
-  }
-
-  private getCompetencyFaults(faults: DrivingFaults | SeriousFaults | DangerousFaults): FaultSummary[] {
-    const faultsEncountered: FaultSummary[] = [];
-
-    forOwn(faults, (value: number, key: string, obj: DrivingFaults| SeriousFaults | DangerousFaults) => {
-      const faultCount = this.calculateFaultCount(value);
-      if (faultCount > 0  && !key.endsWith(CompetencyIdentifiers.COMMENTS_SUFFIX)) {
-        const label = key as keyof typeof competencyLabels;
-        const comment = obj[`${key}${CompetencyIdentifiers.COMMENTS_SUFFIX}`] || null;
-        const faultSummary: FaultSummary = {
-          comment,
-          faultCount,
-          competencyIdentifier: key,
-          competencyDisplayName: fullCompetencyLabels[label],
-          source: CommentSource.SIMPLE,
-        };
-        faultsEncountered.push(faultSummary);
-      }
-    });
-
-    return faultsEncountered.sort((a, b) => b.faultCount - a.faultCount);
-  }
-
-  private calculateFaultCount(value: number | boolean) : number {
-    if (isBoolean(value)) {
-      return value ? 1 : 0;
-    }
-    if (isNumber(value)) {
-      return value;
-    }
-    return 0;
   }
 
   private getEyesightTestSeriousFault (eyesightTest: EyesightTest): FaultSummary[] {
@@ -318,7 +285,6 @@ export class FaultSummaryProvider {
     }
 
     const vehicleCheckFaults = this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
-
     if (vehicleCheckFaults.drivingFaults > 0) {
       const competency: FaultSummary = {
         comment: vehicleChecks.showMeTellMeComments || '',
