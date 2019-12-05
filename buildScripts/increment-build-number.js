@@ -30,7 +30,7 @@ fs.readFile(configFile, 'utf8', (err, xml) => {
       return console.error(err);
     }
 
-    const newVersion = branchName.substring(branchName.length - 5, branchName.length);
+    const newVersion = branchName.substring(branchName.indexOf('-') + 1, branchName.length);
     const isSemver = semver.valid(newVersion);
 
     if (isSemver == null) {
