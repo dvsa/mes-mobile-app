@@ -14,7 +14,7 @@ import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
 
-fdescribe('reverseDiagramModal', () => {
+describe('reverseDiagramModal', () => {
   let fixture: ComponentFixture<ReverseDiagramCatBEPage>;
   let component: ReverseDiagramCatBEPage;
   let store$: Store<StoreModel>;
