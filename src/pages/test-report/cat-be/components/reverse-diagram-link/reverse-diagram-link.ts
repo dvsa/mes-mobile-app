@@ -20,7 +20,7 @@ export class ReverseDiagramLinkComponent {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const distancesModal = this.modalController.create(
       pageToOpen,
-      { length: 10.0, width: 3.0 },
+      {},
       { cssClass: zoomClass });
     distancesModal.present();
   }
