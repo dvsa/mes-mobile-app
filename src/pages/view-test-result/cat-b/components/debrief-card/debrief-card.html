@@ -4,90 +4,11 @@
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
-      <data-row-custom [label]="'Legal requirements'">
-        <ion-grid>
-          <ion-row>
-            <ion-col col-7>
-              <div class="checked-badge-container">
-                <tick-indicator [ticked]='data.legalRequirements.normalStart1'></tick-indicator>
-              </div>
-            </ion-col>
-            <ion-col>
-              <span class="mes-data">Normal start (NS)</span>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-7>
-              <div class="checked-badge-container">
-                <tick-indicator [ticked]='data.legalRequirements.normalStart2'></tick-indicator>
-              </div>
-            </ion-col>
-            <ion-col>
-              <span class="mes-data">Normal start (NS)</span>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-7>
-              <div class="checked-badge-container">
-                <tick-indicator [ticked]='data.legalRequirements.angledStart'></tick-indicator>
-              </div>
-            </ion-col>
-            <ion-col>
-              <span class="mes-data">Angled start (AS)</span>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-7>
-              <div class="checked-badge-container">
-                <tick-indicator [ticked]='data.legalRequirements.hillStart'></tick-indicator>
-              </div>
-            </ion-col>
-            <ion-col>
-              <span class="mes-data">Hill Start (HS) / Designated Start (DS)</span>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </data-row-custom>
+      <data-row-with-list [label]="'Test Requirements'" [data]="getTestRequirements()"></data-row-with-list>
       <data-row [label]="'Manoeuvre(s)'" [value]="getFlattenArray(data.manoeuvres)"></data-row>
-      <data-row-custom [label]="'Controlled Stop'">
-        <ion-grid>
-          <ion-row>
-            <ion-col col-7>
-              <div class="checked-badge-container">
-                <tick-indicator [ticked]='data.controlledStop'></tick-indicator>
-              </div>
-            </ion-col>
-            <ion-col>
-              <span class="mes-data" *ngIf="data.controlledStop">Completed</span>
-              <span class="mes-data" *ngIf="!data.controlledStop">Not completed</span>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </data-row-custom>
-      <data-row-custom [label]="'ECO'">
-        <ion-grid>
-          <ion-row>
-            <ion-col col-7>
-              <div class="checked-badge-container">
-                <tick-indicator [ticked]='data.ecoControl'></tick-indicator>
-              </div>
-            </ion-col>
-            <ion-col>
-              <span class="mes-data">Control</span>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-7>
-              <div class="checked-badge-container">
-                <tick-indicator [ticked]='data.ecoPlanning'></tick-indicator>
-              </div>
-            </ion-col>
-            <ion-col>
-              <span class="mes-data">Planning</span>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </data-row-custom>
+      <data-row-with-list [label]="'Controlled Stop'" [data]="getControlledStop()"></data-row-with-list>
+      <data-row-with-list [label]="'ECO'" [data]="getEco()"></data-row-with-list>
+
       <data-row-custom [label]="'Fault descriptions'">
         <span class="mes-data" *ngIf="showNoFaultsMessage()"> No faults recorded</span>
         <ion-grid>

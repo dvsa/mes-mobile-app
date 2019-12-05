@@ -16,6 +16,7 @@ import {
 } from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { DataRowComponent } from '../../../../components/data-row/data-row';
 import { DataRowCustomComponent } from '../../../../components/data-row-custom/data-row-custom';
+import { DataRowWithListComponent } from '../../../../components/data-row-with-list/data-list-with-row';
 
 describe('DebriefCardComponent', () => {
   let fixture: ComponentFixture<DebriefCardComponent>;
@@ -31,6 +32,7 @@ describe('DebriefCardComponent', () => {
         MockComponent(DrivingFaultsBadgeComponent),
         MockComponent(DataRowComponent),
         MockComponent(DataRowCustomComponent),
+        MockComponent(DataRowWithListComponent),
       ],
       imports: [
         IonicModule,
