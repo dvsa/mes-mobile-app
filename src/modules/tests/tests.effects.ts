@@ -39,7 +39,7 @@ import { SetExaminerKeyed } from './examiner-keyed/examiner-keyed.actions';
 import { MarkAsRekey } from './rekey/rekey.actions';
 import { getRekeySearchState, RekeySearchModel } from '../../pages/rekey-search/rekey-search.reducer';
 import { getBookedTestSlot, getStaffNumber } from '../../pages/rekey-search/rekey-search.selector';
-import { Examiner, TestSlotAttributes, ConductedLanguage } from '@dvsa/mes-test-schema/categories/Common';
+import { Examiner, TestSlotAttributes, ConductedLanguage, CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
 import { JournalModel } from '../journal/journal.model';
@@ -47,7 +47,7 @@ import { PopulateConductedLanguage } from './communication-preferences/communica
 import { Language } from './communication-preferences/communication-preferences.model';
 import { version } from '../../environment/test-schema-version';
 import { createPopulateCandidateDetailsAction } from './journal-data/candidate/candidate.action-creator';
-import { TestCategory } from '../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { PopulateVehicleDimensions } from './vehicle-details/vehicle-details.actions';
 
 @Injectable()
@@ -211,7 +211,7 @@ export class TestsEffects {
       };
 
       return [
-        new PopulateTestCategory(slotData.booking.application.testCategory),
+        new PopulateTestCategory(slotData.booking.application.testCategory as CategoryCode),
         new PopulateApplicationReference(slotData.booking.application),
         new PopulateCandidateDetails(slotData.booking.candidate),
       ];

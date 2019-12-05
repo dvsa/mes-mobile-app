@@ -19,7 +19,7 @@ import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translat
 import { createTranslateLoader } from '../../../../../app/app.module';
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
-import { TestCategory } from '../../../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 describe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardComponent>;

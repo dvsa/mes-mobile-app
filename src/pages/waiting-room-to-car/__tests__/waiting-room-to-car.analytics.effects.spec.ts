@@ -23,7 +23,7 @@ import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock'
 import * as applicationReferenceActions
   from '../../../modules/tests/journal-data/application-reference/application-reference.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
-import { TestCategory } from '../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 
 describe('Waiting Room To Car Analytics Effects', () => {

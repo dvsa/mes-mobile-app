@@ -93,7 +93,7 @@ import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
-import { TestCategory } from '../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import {
   AddUncoupleRecoupleComment,
 } from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';

@@ -1,7 +1,7 @@
 import { FaultSummaryProvider } from '../fault-summary';
 import { TestBed } from '@angular/core/testing';
 import { TestData } from '@dvsa/mes-test-schema/categories/Common';
-import { TestCategory } from '../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { FaultCountProvider } from '../../fault-count/fault-count';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';

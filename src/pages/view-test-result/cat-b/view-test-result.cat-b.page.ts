@@ -42,7 +42,7 @@ import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogHelper } from '../../../providers/logs/logsHelper';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { QuestionProvider } from '../../../providers/question/question';
-import { TestCategory } from '../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { HttpResponse } from '@angular/common/http';

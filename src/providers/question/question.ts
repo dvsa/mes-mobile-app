@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { VehicleChecksQuestion } from './vehicle-checks-question.model';
-import { TestCategory } from '../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 import tellMeQuestionsCatBConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-b.constants';
 import showMeQuestionsCatBConstants from '../../shared/constants/show-me-questions/show-me-questions.cat-b.constants';

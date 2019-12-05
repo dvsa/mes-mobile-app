@@ -30,6 +30,7 @@ import {
   getApplicationNumber,
 } from '../../modules/tests/journal-data/application-reference/application-reference.selector';
 import { getTestCategory } from '../../modules/tests/category/category.reducer';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
 
 @Injectable()
 export class WaitingRoomAnalyticsEffects {
@@ -72,7 +73,7 @@ export class WaitingRoomAnalyticsEffects {
     )),
     switchMap((
       [action, tests, applicationReference, candidateId, category]:
-      [WaitingRoomViewDidEnter, TestsModel, string, number, string],
+      [WaitingRoomViewDidEnter, TestsModel, string, number, CategoryCode],
     ) => {
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
@@ -99,7 +100,7 @@ export class WaitingRoomAnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests, category]: [WaitingRoomValidationError, TestsModel, string]) => {
+    switchMap(([action, tests, category]: [WaitingRoomValidationError, TestsModel, CategoryCode]) => {
       const screenName = formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM, tests);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,

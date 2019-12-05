@@ -40,8 +40,9 @@ import { SetExaminerBooked } from '../examiner-booked/examiner-booked.actions';
 import { bufferCount } from 'rxjs/operators';
 import { SetExaminerConducted } from '../examiner-conducted/examiner-conducted.actions';
 import { SetExaminerKeyed } from '../examiner-keyed/examiner-keyed.actions';
-import { TestCategory } from '../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { PopulateTestCategory } from '../category/category.actions';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
 
 describe('Tests Effects', () => {
 
@@ -281,7 +282,7 @@ describe('Tests Effects', () => {
         bufferCount(13),
       )
       .subscribe(([res0, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12]) => {
-        expect(res0).toEqual(new PopulateTestCategory(testSlot.booking.application.testCategory));
+        expect(res0).toEqual(new PopulateTestCategory(testSlot.booking.application.testCategory as CategoryCode));
         expect(res1).toEqual(new PopulateExaminer({ staffNumber })),
         expect(res2).toEqual(new PopulateApplicationReference(testSlot.booking.application)),
         expect(res3).toEqual(new PopulateCandidateDetails(testSlot.booking.candidate)),

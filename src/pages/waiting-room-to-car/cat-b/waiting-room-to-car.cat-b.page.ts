@@ -74,7 +74,7 @@ import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.re
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_B } from '../../page-names.constants';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
-import { TestCategory } from '../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;

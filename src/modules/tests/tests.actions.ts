@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { TestsModel } from './tests.model';
-import { TestCategory } from '../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 export const START_SENDING_COMPLETED_TESTS = '[TestsEffects] Start Sending Completed Test';
 export const SEND_COMPLETED_TESTS = '[TestsEffects] Send Completed Tests';

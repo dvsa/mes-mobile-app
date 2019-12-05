@@ -7,10 +7,11 @@ import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { ManoeuvreTypes } from '../../modules/tests/test-data/test-data.constants';
 import { manoeuvreCompetencyLabels, manoeuvreTypeLabels } from '../../shared/constants/competencies/catb-manoeuvres';
-import { TestCategory } from '../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../fault-count/fault-count';
 import { getCompetencyFaults } from '../../shared/helpers/competency';
+// import { Manoeuvre } from '@dvsa/mes-test-schema/categories/B/partial';
 
 @Injectable()
 export class FaultSummaryProvider {
@@ -210,7 +211,9 @@ export class FaultSummaryProvider {
   private getManoeuvreFaultsCatB (manoeuvres: CatBUniqueTypes.Manoeuvres, faultType: CompetencyOutcome)
   : FaultSummary[] {
     const faultsEncountered: FaultSummary[] = [];
-    forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
+
+    // TODO: Replace any with Manoeuvres and change the transform function
+    forOwn(manoeuvres, (manoeuvre: any, type: ManoeuvreTypes) => {
       const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
 
         if (endsWith(key, CompetencyIdentifiers.FAULT_SUFFIX) && value === faultType) {
@@ -231,7 +234,9 @@ export class FaultSummaryProvider {
   private getManoeuvreFaultsCatBE (manoeuvres: CatBEUniqueTypes.Manoeuvres, faultType: CompetencyOutcome)
   : FaultSummary[] {
     const faultsEncountered: FaultSummary[] = [];
-    forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
+
+    // TODO: Replace any with Manoeuvres and change the transform function
+    forOwn(manoeuvres, (manoeuvre: any, type: ManoeuvreTypes) => {
       const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
 
         if (endsWith(key, 'Fault') && value === faultType) {

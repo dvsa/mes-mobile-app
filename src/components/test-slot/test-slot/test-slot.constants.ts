@@ -1,4 +1,4 @@
-import { TestCategory } from '../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 export const vehicleDetails = {
   [TestCategory.A]: false,
