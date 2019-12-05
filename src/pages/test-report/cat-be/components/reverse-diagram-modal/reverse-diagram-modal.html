@@ -14,7 +14,7 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        Diagram goes here
+        <img src="assets/imgs/reverse-diagram.png" alt="Reversing diagram" />
       </ion-col>
       <ion-col>
         <h2>Distances</h2>
@@ -29,7 +29,7 @@
                 <ion-col col-42>
                   <input type="number" step="0.01" id="vehicleLength" class="vehicle-length-input"
                   [value]="vehicleLength"
-                  (change)="vehicleLengthChanged($event.target.value)">
+                  (change)="calculateDistanceLength($event.target.value)">
                 </ion-col>
               </ion-row>
             </ion-col>
@@ -41,7 +41,7 @@
                 <ion-col col-42>
                   <input type="number" step="0.01" id="vehicleWidth" class="vehicle-width-input"
                   [value]="vehicleWidth"
-                  (change)="vehicleWidthChanged($event.target.value)">
+                  (change)="calculateDistanceWidth($event.target.value)">
                 </ion-col>
               </ion-row>
             </ion-col>

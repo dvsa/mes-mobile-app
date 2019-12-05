@@ -69,14 +69,14 @@ export class ReverseDiagramCatBEPage implements OnInit {
     );
   }
 
-  vehicleLengthChanged(vehicleLength: number): void {
+  calculateDistanceLength(vehicleLength: number): void {
     const aAndA1 = vehicleLength * 4;
     const b = vehicleLength * 2;
     this.b = Math.round(b * 100) / 100;
     this.aAndA1 = Math.round(aAndA1 * 100) / 100;
   }
 
-  vehicleWidthChanged(vehicleWidth: number): void {
+  calculateDistanceWidth(vehicleWidth: number): void {
     const aToA1 = vehicleWidth * 1.5;
     this.aToA1 = Math.round(aToA1 * 100) / 100;
   }
@@ -84,8 +84,8 @@ export class ReverseDiagramCatBEPage implements OnInit {
   ionViewWillEnter(): boolean {
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
-      this.vehicleLengthChanged(this.vehicleLength);
-      this.vehicleWidthChanged(this.vehicleWidth);
+      this.calculateDistanceLength(this.vehicleLength);
+      this.calculateDistanceWidth(this.vehicleWidth);
     }
 
     return true;
