@@ -5,12 +5,14 @@ import { DataRowComponent } from './data-row/data-row';
 import { DataRowCustomComponent } from './data-row-custom/data-row-custom';
 import { DataRowWithListComponent } from './data-row-with-list/data-list-with-row';
 import { ComponentsModule } from '../../../components/common/common-components.module';
+import { FaultsDataRowComponent } from './faults-data-row/faults-data-row';
 
 @NgModule({
   declarations: [
     DataRowComponent,
     DataRowCustomComponent,
     DataRowWithListComponent,
+    FaultsDataRowComponent,
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { ComponentsModule } from '../../../components/common/common-components.m
     DataRowComponent,
     DataRowCustomComponent,
     DataRowWithListComponent,
+    FaultsDataRowComponent,
   ],
 })
 export class ViewTestResultComponentsModule {}

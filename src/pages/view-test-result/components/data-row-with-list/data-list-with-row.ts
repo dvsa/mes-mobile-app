@@ -12,7 +12,4 @@ export class DataRowWithListComponent {
 
   @Input()
   data: DataRowListItem[];
-
-  constructor() {
-  }
 }
