@@ -32,6 +32,7 @@ import {
   getApplicationNumber,
 } from '../../modules/tests/journal-data/application-reference/application-reference.selector';
 import { getTestCategory } from '../../modules/tests/category/category.reducer';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
 
 @Injectable()
 export class WaitingRoomToCarAnalyticsEffects {
@@ -74,7 +75,7 @@ export class WaitingRoomToCarAnalyticsEffects {
     )),
     switchMap((
       [action, tests, applicationReference, candidateId, category]:
-        [WaitingRoomToCarViewDidEnter, TestsModel, string, number, string],
+        [WaitingRoomToCarViewDidEnter, TestsModel, string, number, CategoryCode],
     ) => {
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, applicationReference);
@@ -101,7 +102,7 @@ export class WaitingRoomToCarAnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests, category]: [WaitingRoomToCarError, TestsModel, string]) => {
+    switchMap(([action, tests, category]: [WaitingRoomToCarError, TestsModel, CategoryCode]) => {
       const screenName = formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM_TO_CAR, tests);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.logError(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
@@ -125,7 +126,7 @@ export class WaitingRoomToCarAnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests, category]: [WaitingRoomToCarValidationError, TestsModel, string]) => {
+    switchMap(([action, tests, category]: [WaitingRoomToCarValidationError, TestsModel, CategoryCode]) => {
       const screenName = formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM_TO_CAR, tests);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,

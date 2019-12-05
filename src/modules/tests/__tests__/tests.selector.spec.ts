@@ -24,6 +24,7 @@ import {
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { TestOutcome } from '../tests.constants';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
 
 describe('testsSelector', () => {
   describe('getCurrentTest', () => {
@@ -113,7 +114,7 @@ describe('testsSelector', () => {
     const testState: TestResultSchemasUnion = {
       activityCode: ActivityCodes.PASS,
       version: '0.0.1',
-      category: 'x',
+      category: 'x' as CategoryCode,
       journalData: {
         examiner: { staffNumber: '12345' },
         testCentre: { centreId: 1, costCode: '12345' },
@@ -159,7 +160,7 @@ describe('testsSelector', () => {
     const testState: TestResultSchemasUnion = {
       activityCode: ActivityCodes.PASS,
       version: '0.0.1',
-      category: 'x',
+      category: 'x' as CategoryCode,
       journalData: {
         examiner: { staffNumber: '12345' },
         testCentre: { centreId: 1, costCode: '12345' },
@@ -205,7 +206,7 @@ describe('testsSelector', () => {
       // DVSA_RADIO_FAILURE = '25'
       activityCode: ActivityCodes.DVSA_RADIO_FAILURE,
       version: '0.0.1',
-      category: 'x',
+      category: 'x' as CategoryCode,
       journalData: {
         examiner: { staffNumber: '12345' },
         testCentre: { centreId: 1, costCode: '12345' },

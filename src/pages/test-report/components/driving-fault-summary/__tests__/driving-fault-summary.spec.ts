@@ -11,7 +11,7 @@ import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StartTest } from '../../../../../modules/tests/tests.actions';
 import { AddDrivingFault } from '../../../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import { Competencies } from '../../../../../modules/tests/test-data/test-data.constants';
-import { TestCategory } from '../../../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { PopulateTestCategory } from '../../../../../modules/tests/category/category.actions';
 

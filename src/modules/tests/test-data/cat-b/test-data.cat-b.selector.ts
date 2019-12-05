@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { QuestionProvider } from '../../../../providers/question/question';
-import { TestCategory } from '../../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 
 export const getDrivingFaultCount = (

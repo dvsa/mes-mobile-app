@@ -25,7 +25,7 @@ import { Application } from '@dvsa/mes-journal-schema';
 import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
 import { candidateMock } from '../__mocks__/tests.mock';
-import { TestCategory } from '../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 describe('Tests Analytics Effects', () => {
 

@@ -28,6 +28,7 @@ import {
    getApplicationNumber,
 } from '../../modules/tests/journal-data/application-reference/application-reference.selector';
 import { getTestCategory } from '../../modules/tests/category/category.reducer';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
 
 @Injectable()
 export class CommunicationAnalyticsEffects {
@@ -70,7 +71,7 @@ export class CommunicationAnalyticsEffects {
     )),
     switchMap((
       [action, tests, applicationReference, candidateId, category]:
-      [CommunicationViewDidEnter, TestsModel, string, number, string],
+      [CommunicationViewDidEnter, TestsModel, string, number, CategoryCode],
     ) => {
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
@@ -97,7 +98,7 @@ export class CommunicationAnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests, category]: [CommunicationValidationError, TestsModel, string]) => {
+    switchMap(([action, tests, category]: [CommunicationValidationError, TestsModel, CategoryCode]) => {
       const screenName = formatAnalyticsText(AnalyticsScreenNames.COMMUNICATION, tests);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,

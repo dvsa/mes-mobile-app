@@ -1,9 +1,10 @@
 import { categoryReducer } from '../category.reducer';
 import { PopulateTestCategory } from '../category.actions';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
 
 describe('category reducer', () => {
   it('should return the test category for a test', () => {
-    const mockTestCategory: string = 'B';
+    const mockTestCategory: CategoryCode = 'B';
     const result = categoryReducer(null, new PopulateTestCategory(mockTestCategory));
 
     expect(result).toBe(mockTestCategory);

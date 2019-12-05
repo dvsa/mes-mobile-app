@@ -3,12 +3,12 @@ import { get } from 'lodash';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { QuestionProvider } from '../../../../providers/question/question';
-import { TestCategory } from '../../../../shared/models/test-category';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 import { NUMBER_OF_SHOW_ME_QUESTIONS }
   from '../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
 import { NUMBER_OF_TELL_ME_QUESTIONS }
   from '../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 export const getDrivingFaultCount = (
     data: CatBEUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];

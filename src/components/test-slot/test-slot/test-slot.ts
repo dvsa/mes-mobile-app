@@ -3,7 +3,6 @@ import { get, isNil } from 'lodash';
 import { SlotComponent } from '../slot/slot';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { vehicleDetails } from './test-slot.constants';
-import { TestCategory } from '../../../shared/models/test-category';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
@@ -20,6 +19,7 @@ import { getSlotType } from '../../../shared/helpers/get-slot-type';
 import { SlotProvider } from '../../../providers/slot/slot';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;

@@ -23,7 +23,7 @@ import {
   ControlledStopRemoveFault,
 } from '../../../../../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
-import { TestCategory } from '../../../../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 describe('ControlledStopComponent', () => {
   let fixture: ComponentFixture<ControlledStopComponent>;

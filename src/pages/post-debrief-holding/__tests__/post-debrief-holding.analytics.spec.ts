@@ -15,7 +15,7 @@ import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock'
 import { PostDebriefHoldingAnalyticsEffects } from '../post-debrief-holding.analytics.effects';
 import * as postDebriefHoldingActions from '../post-debrief-holding.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
-import { TestCategory } from '../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 describe('Post Debrief Holding Analytics Effects', () => {
 

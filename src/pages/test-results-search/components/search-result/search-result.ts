@@ -5,7 +5,7 @@ import { Name } from '@dvsa/mes-test-schema/categories/Common';
 import { ModalController } from 'ionic-angular';
 import { CAT_B, CAT_BE } from '../../../page-names.constants';
 import { App } from '../../../../app/app.component';
-import { TestCategory } from '../../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 @Component({
   selector: 'search-result',

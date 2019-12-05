@@ -42,7 +42,7 @@ import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 import { manoeuvreTypeLabels } from '../../../../shared/constants/competencies/catb-manoeuvres';
 import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
 import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
-import { TestCategory } from '../../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 
 describe('ViewTestResultPage', () => {

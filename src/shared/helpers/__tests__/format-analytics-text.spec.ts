@@ -5,7 +5,7 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { formatAnalyticsText } from '../format-analytics-text';
 import { AnalyticsEventCategories } from '../../../providers/analytics/analytics.model';
-import { TestCategory } from '../../models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 describe('formatAnalyticsText', () => {
   const initialState = {

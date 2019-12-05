@@ -10,7 +10,7 @@ import * as activityCodeActions from '../../../modules/tests/activity-code/activ
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import { TestCategory } from '../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 describe('Debrief Effects', () => {
 
