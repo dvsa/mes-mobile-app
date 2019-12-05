@@ -76,7 +76,6 @@ export class TestReportValidatorProvider {
   private validateLegalRequirementsCatBE (data: CatBEUniqueTypes.TestData): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
     const normalStart2: boolean =  get(data, 'testRequirements.normalStart2', false);
-    const downhillStart:boolean =  get(data, 'testRequirements.downhillStart', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
     const angledStartControlledStop:boolean =  get(data, 'testRequirements.angledStartControlledStop', false);
     const manoeuvre: boolean = hasManoeuvreBeenCompletedCatBE(data) || false ;
@@ -84,9 +83,7 @@ export class TestReportValidatorProvider {
     const uncoupleRecouple: boolean =  get(data, 'uncoupleRecouple.selected', false) ;
 
     return (
-      normalStart1 &&
-      normalStart2 &&
-      downhillStart &&
+      (normalStart1 || normalStart2) &&
       uphillStart &&
       angledStartControlledStop &&
       manoeuvre &&
@@ -95,18 +92,17 @@ export class TestReportValidatorProvider {
     );
   }
 
-  private getMissingLegalRequirementsCatBE (data: CatBEUniqueTypes.TestData): legalRequirementsLabels[] {
+  private getMissingLegalRequirementsCatBE(data: CatBEUniqueTypes.TestData): legalRequirementsLabels[] {
     const result: legalRequirementsLabels[] = [];
 
-    !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
-    !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);
-    !get(data, 'testRequirements.downhillStart', false) && result.push(legalRequirementsLabels.downhillStart);
-    !get(data, 'testRequirements.uphillStart' , false) && result.push(legalRequirementsLabels.uphillStart);
+    (!get(data, 'testRequirements.normalStart1', false) && !get(data, 'testRequirements.normalStart2', false))
+    && result.push(legalRequirementsLabels.normalStart1);
+    !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
     !get(data, 'testRequirements.angledStartControlledStop', false)
-      && result.push(legalRequirementsLabels.angledStartControlledStop);
+    && result.push(legalRequirementsLabels.angledStartControlledStop);
     !hasManoeuvreBeenCompletedCatBE(data) && result.push(legalRequirementsLabels.manoeuvre);
     !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
-    !get(data , 'uncoupleRecouple.selected', false) && result.push(legalRequirementsLabels.uncoupleRecouple);
+    !get(data, 'uncoupleRecouple.selected', false) && result.push(legalRequirementsLabels.uncoupleRecouple);
 
     return result;
   }

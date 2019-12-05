@@ -61,10 +61,8 @@ describe('TestReportValidator', () => {
     });
     it('should return any missing legal requirements for a Cat BE test', () => {
       const result = testReportValidatorProvider.getMissingLegalRequirements({}, TestCategory.BE);
-      expect(result.length).toEqual(8);
+      expect(result.length).toEqual(6);
       expect(result).toContain(legalRequirementsLabels.normalStart1);
-      expect(result).toContain(legalRequirementsLabels.normalStart2);
-      expect(result).toContain(legalRequirementsLabels.downhillStart);
       expect(result).toContain(legalRequirementsLabels.uphillStart);
       expect(result).toContain(legalRequirementsLabels.angledStartControlledStop);
       expect(result).toContain(legalRequirementsLabels.manoeuvre);

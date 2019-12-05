@@ -30,8 +30,6 @@ export const validTestCatB: CatBUniqueTypes.TestData = {
 export const validTestCatBE: CatBEUniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
-    downhillStart: true,
-    normalStart1: true,
     normalStart2: true,
     uphillStart: true,
   },
