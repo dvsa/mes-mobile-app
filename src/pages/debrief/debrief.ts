@@ -3,7 +3,7 @@ import { PracticeableBasePageComponent } from '../../shared/classes/practiceable
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { DebriefViewDidEnter, EndDebrief } from '../../pages/debrief/debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -50,6 +50,8 @@ import {
   DASHBOARD_PAGE,
 } from '../page-names.constants';
 import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
+import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -60,6 +62,7 @@ interface DebriefPageState {
   ecoFaults$: Observable<Eco>;
   testResult$: Observable<string>;
   conductedLanguage$: Observable<string>;
+  candidateName$: Observable<string>;
 }
 
 @IonicPage()
@@ -174,6 +177,11 @@ export class DebriefPage extends PracticeableBasePageComponent {
       conductedLanguage$: currentTest$.pipe(
         select(getCommunicationPreference),
         select(getConductedLanguage),
+      ),
+      candidateName$: currentTest$.pipe(
+        select(getJournalData),
+        select(getCandidate),
+        select(getUntitledCandidateName),
       ),
     };
 

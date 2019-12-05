@@ -36,6 +36,7 @@ import { EndDebrief } from '../debrief.actions';
 import * as welshTranslations from '../../../assets/i18n/cy.json';
 import { PASS_FINALISATION_PAGE, POST_DEBRIEF_HOLDING_PAGE } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { of } from 'rxjs/observable/of';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -148,6 +149,13 @@ describe('DebriefPage', () => {
   });
 
   describe('DOM', () => {
+    it('should display the candidate name in the title', () => {
+      fixture.detectChanges();
+      component.pageState.candidateName$ = of('John Doe');
+      fixture.detectChanges();
+      const title = fixture.debugElement.query(By.css('ion-title'));
+      expect(title.nativeElement.textContent).toEqual('Debrief - John Doe');
+    });
     it('should display passed container if outcome is `passed`', () => {
       fixture.detectChanges();
       component.outcome = 'Pass';
