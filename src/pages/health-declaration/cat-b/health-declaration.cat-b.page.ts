@@ -4,7 +4,11 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { HealthDeclarationViewDidEnter, ContinueFromDeclaration } from '../health-declaration.actions';
+import {
+  HealthDeclarationViewDidEnter,
+  ContinueFromDeclaration,
+  ValidationError,
+} from '../health-declaration.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
@@ -202,7 +206,13 @@ export class HealthDeclarationCatBPage extends PracticeableBasePageComponent {
       } else {
         this.persistAndNavigate(false);
       }
+      return;
     }
+    Object.keys(this.form.controls).forEach((controlName) => {
+      if (this.form.controls[controlName].invalid) {
+        this.store$.dispatch(new ValidationError(`${controlName} is blank`));
+      }
+    });
   }
 
   showConfirmHealthDeclarationModal() {

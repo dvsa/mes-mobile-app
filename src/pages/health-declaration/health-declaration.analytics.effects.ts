@@ -4,12 +4,9 @@ import { of } from 'rxjs/observable/of';
 import { switchMap, concatMap, withLatestFrom } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames,
+  AnalyticsScreenNames, AnalyticsErrorTypes,
 } from '../../providers/analytics/analytics.model';
-import {
-  HEALTH_DECLARATION_VIEW_DID_ENTER,
-  HealthDeclarationViewDidEnter,
-} from './health-declaration.actions';
+import * as healthDeclarationActions from './health-declaration.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -29,7 +26,7 @@ export class HealthDeclarationAnalyticsEffects {
 
   @Effect()
   healthDeclarationViewDidEnter$ = this.actions$.pipe(
-    ofType(HEALTH_DECLARATION_VIEW_DID_ENTER),
+    ofType(healthDeclarationActions.HEALTH_DECLARATION_VIEW_DID_ENTER),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -37,9 +34,29 @@ export class HealthDeclarationAnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests]: [HealthDeclarationViewDidEnter, TestsModel]) => {
+    switchMap(([action, tests]: [healthDeclarationActions.HealthDeclarationViewDidEnter, TestsModel]) => {
       const screenName = formatAnalyticsText(AnalyticsScreenNames.HEALTH_DECLARATION, tests);
       this.analytics.setCurrentPage(screenName);
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  validationErrorEffect$ = this.actions$.pipe(
+    ofType(healthDeclarationActions.VALIDATION_ERROR),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      )),
+    ),
+    switchMap(([action, tests]: [healthDeclarationActions.ValidationError, TestsModel]) => {
+      const formattedScreenName = formatAnalyticsText(AnalyticsScreenNames.HEALTH_DECLARATION, tests);
+      this.analytics.logError(
+        `${AnalyticsErrorTypes.VALIDATION_ERROR} (${formattedScreenName})`,
+        action.errorMessage,
+      );
       return of(new AnalyticRecorded());
     }),
   );

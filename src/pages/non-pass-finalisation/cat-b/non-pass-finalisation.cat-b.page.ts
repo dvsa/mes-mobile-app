@@ -21,7 +21,7 @@ import {
   getCandidateDriverNumber,
   formatDriverNumber,
 } from '../../../modules/tests/journal-data/candidate/candidate.selector';
-import { NonPassFinalisationViewDidEnter } from '../non-pass-finalisation.actions';
+import { NonPassFinalisationViewDidEnter, ValidationError } from '../non-pass-finalisation.actions';
 import { map, withLatestFrom } from 'rxjs/operators';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
@@ -165,7 +165,13 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_B.BACK_TO_OFFICE_PAGE);
+      return;
     }
+    Object.keys(this.form.controls).forEach((controlName) => {
+      if (this.form.controls[controlName].invalid) {
+        this.store$.dispatch(new ValidationError(`${controlName} is blank`));
+      }
+    });
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {

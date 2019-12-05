@@ -5,6 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
   PassFinalisationViewDidEnter,
+  ValidationError,
 } from './../pass-finalisation.actions';
 import {
   ProvisionalLicenseReceived,
@@ -66,6 +67,7 @@ import {
 import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -224,7 +226,16 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
     if (this.form.valid) {
       this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_B.HEALTH_DECLARATION_PAGE);
+      return;
     }
+    Object.keys(this.form.controls).forEach((controlName) => {
+      if (this.form.controls[controlName].invalid) {
+        if (controlName === PASS_CERTIFICATE_NUMBER_CTRL) {
+          this.store$.dispatch(new ValidationError(`${controlName} is invalid`));
+        }
+        this.store$.dispatch(new ValidationError(`${controlName} is blank`));
+      }
+    });
   }
 
   passCertificateNumberChanged(passCertificateNumber: string): void {
