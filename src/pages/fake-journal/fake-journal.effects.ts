@@ -17,7 +17,7 @@ import {
   extractTestSlotAttributes,
 } from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
 import { PopulateTestCategory } from '../../modules/tests/category/category.actions';
-import { Examiner } from '@dvsa/mes-test-schema/categories/Common';
+import { Examiner, CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
 import { PopulateExaminer } from '../../modules/tests/journal-data/examiner/examiner.actions';
 
 @Injectable()
@@ -39,7 +39,7 @@ export class FakeJournalEffects {
 
       return [
         new PopulateExaminer(examiner),
-        new PopulateTestCategory(slot.booking.application.testCategory),
+        new PopulateTestCategory(slot.booking.application.testCategory as CategoryCode),
         new PopulateApplicationReference(slot.booking.application as Application),
         new PopulateCandidateDetails(slot.booking.candidate),
         new PopulateTestSlotAttributes(extractTestSlotAttributes(slot)),

@@ -8,7 +8,7 @@ import * as fakeJournalActions from '../../pages/fake-journal/fake-journal.actio
 import { testReportPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { get } from 'lodash';
 import { testsReducerFactory } from './tests-reducer-factory';
-import { TestCategory } from '../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },

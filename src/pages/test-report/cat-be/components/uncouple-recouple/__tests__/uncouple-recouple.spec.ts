@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { IonicModule } from 'ionic-angular';
-import { TestCategory } from '../../../../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { TickIndicatorComponent } from '../../../../../../components/common/tick-indicator/tick-indicator';
 import {
   DrivingFaultsBadgeComponent,

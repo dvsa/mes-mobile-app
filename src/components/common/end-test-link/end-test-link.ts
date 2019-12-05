@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ModalController, Modal, NavController } from 'ionic-angular';
 import { CAT_BE, CAT_B } from '../../../pages/page-names.constants';
-import { TestCategory } from '../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 @Component({
   selector: 'end-test-link',

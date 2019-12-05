@@ -1,5 +1,5 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { TestCategory } from '../../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { PopulateCandidateDetails } from './candidate.actions';
 import { PopulateCandidateDetailsCatBE } from './candidate.cat-be.actions';
 import { Booking } from '@dvsa/mes-journal-schema';

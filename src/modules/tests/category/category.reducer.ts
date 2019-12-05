@@ -1,12 +1,13 @@
 import  * as categoryActions from './category.actions';
 import { createFeatureSelector } from '@ngrx/store';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
 
-export const initialState: string = '';
+export const initialState: CategoryCode = null;
 
 export const categoryReducer = (
   state = initialState,
   action: categoryActions.Types,
-): string => {
+): CategoryCode => {
   switch (action.type) {
     case categoryActions.POPULATE_TEST_CATEGORY:
       return action.payload;
@@ -15,4 +16,4 @@ export const categoryReducer = (
   }
 };
 
-export const getTestCategory = createFeatureSelector<string>('category');
+export const getTestCategory = createFeatureSelector<CategoryCode>('category');

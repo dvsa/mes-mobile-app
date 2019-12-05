@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { get } from 'lodash';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { FaultCountProvider } from '../fault-count/fault-count';
-import { TestCategory } from '../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { TestData } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import {

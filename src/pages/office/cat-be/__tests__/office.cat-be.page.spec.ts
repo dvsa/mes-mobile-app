@@ -62,7 +62,7 @@ import { ToastControllerMock } from '../../__mocks__/toast-controller-mock';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
-import { TestCategory } from '../../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 
 describe('OfficePage', () => {
