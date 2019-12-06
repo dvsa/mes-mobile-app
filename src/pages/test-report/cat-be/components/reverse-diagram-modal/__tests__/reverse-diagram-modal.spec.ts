@@ -1,12 +1,13 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, Config, Platform } from 'ionic-angular';
+import { IonicModule, NavParams, Config, Platform } from 'ionic-angular';
 import {
   ConfigMock,
   PlatformMock,
+  NavParamsMock,
 } from 'ionic-mocks';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { Store, StoreModule } from '@ngrx/store';
-import { TestCategory } from '../../../../../../shared/models/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { ReverseDiagramCatBEPage } from '../reverse-diagram-modal';
@@ -77,6 +78,7 @@ describe('reverseDiagramModal', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
+        { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: App, useClass: MockAppComponent },
       ],
     })

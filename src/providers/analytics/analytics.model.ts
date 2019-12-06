@@ -41,6 +41,7 @@ export enum AnalyticsScreenNames {
   REKEY_UPLOADED = 'rekey uploaded screen',
   DASHBOARD = 'dashboard screen',
   VEHICLE_CHECKS = 'vehicle checks screen',
+  REVERSE_DIAGRAM = 'reverse diagram screen',
 }
 
 export enum AnalyticsEventCategories {
@@ -101,6 +102,8 @@ export enum AnalyticsEvents {
   TEST_BOOKING_SEARCH = 'perform test booking search',
   REVERSE_LEFT_POPOVER_OPENED = 'open reversing manoeuvre',
   REVERSE_LEFT_POPOVER_CLOSED = 'close reversing manoevure',
+  REVERSE_DIAGRAM_OPENED = 'open reversing diagram',
+  REVERSE_DIAGRAM_CLOSED = 'close reversing diagram',
 }
 
 export enum AnalyticsLabels {

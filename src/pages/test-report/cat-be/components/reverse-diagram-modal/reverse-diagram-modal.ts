@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
 import { map } from 'rxjs/operators';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavParams } from 'ionic-angular';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.reducer';
@@ -32,6 +32,8 @@ export class ReverseDiagramCatBEPage implements OnInit {
   @Input()
   vehicleWidth: number;
 
+  onClose: Function;
+
   componentState: ReverseDiagramPageState;
   subscription: Subscription;
   merged$: Observable<number>;
@@ -40,8 +42,11 @@ export class ReverseDiagramCatBEPage implements OnInit {
   b: number;
 
   constructor(
+    private navParams: NavParams,
     public store$: Store<StoreModel>,
-  ) {}
+  ) {
+    this.onClose = this.navParams.get('onClose');
+  }
 
   ngOnInit(): void {
 
@@ -95,5 +100,10 @@ export class ReverseDiagramCatBEPage implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  closeModal(): void {
+    console.log('CLOSE');
+    this.onClose();
   }
 }
