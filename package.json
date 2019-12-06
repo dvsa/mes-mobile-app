@@ -114,7 +114,7 @@
     "@angular/cli": "1.4.8",
     "@angular/compiler-cli": "^5.2.11",
     "@dvsa/mes-config-schema": "1.0.5",
-    "@dvsa/mes-journal-schema": "1.1.0",
+    "@dvsa/mes-journal-schema": "1.2.0",
     "@dvsa/mes-search-schema": "1.1.0",
     "@dvsa/mes-test-schema": "3.2.12",
     "@hapi/joi": "^15.1.0",

@@ -1,7 +1,7 @@
-import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema/Journal';
+import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 import * as enjoi from 'enjoi';
 import * as joi from '@hapi/joi';
-const journalSchema = require('@dvsa/mes-journal-schema/schema-examiner-work-schedule.json');
+const journalSchema = require('@dvsa/mes-journal-schema/index.json');
 import { writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { getTodayAsIsoDate, getNextWorkingDayAsIsoDate, getPreviousWorkingDayAsIsoDate } from './mock-date-utils';
