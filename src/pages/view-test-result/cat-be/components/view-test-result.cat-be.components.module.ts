@@ -25,4 +25,4 @@ import { ViewTestResultComponentsModule } from '../../components/view-test-resul
     DebriefCardComponent,
   ],
 })
-export class ViewTestResultCatBComponentsModule {}
+export class ViewTestResultCatBEComponentsModule {}

@@ -15,7 +15,6 @@ import {
 import { AppModule } from '../../../../app/app.module';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
-import { ViewTestResultCatBPage } from '../view-test-result.cat-b.page';
 import { SearchProvider } from '../../../../providers/search/search';
 import { SearchProviderMock } from '../../../../providers/search/__mocks__/search.mock';
 import { MockComponent } from 'ng-mocks';
@@ -30,7 +29,7 @@ import { ExaminerDetailsModel } from '../../components/examiner-details-card/exa
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
 import { VehicleDetailsModel } from '../components/vehicle-details-card/vehicle-details-card.model';
 import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
-import { categoryBTestResultMock } from '../../../../shared/mocks/cat-b-test-result.mock';
+import { categoryBETestResultMock } from '../../../../shared/mocks/cat-be-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
 import { TestSummaryCardModel } from '../components/test-summary-card/test-summary-card-model';
@@ -44,16 +43,17 @@ import { DebriefCardModel } from '../components/debrief-card/debrief-card.model'
 import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
+import { ViewTestResultCatBEPage } from '../view-test-result.cat-be.page';
 
-describe('ViewTestResultCatBPage', () => {
-  let fixture: ComponentFixture<ViewTestResultCatBPage>;
-  let component: ViewTestResultCatBPage;
+describe('ViewTestResultCatBEPage', () => {
+  let fixture: ComponentFixture<ViewTestResultCatBEPage>;
+  let component: ViewTestResultCatBEPage;
   let loadingController: LoadingController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ViewTestResultCatBPage,
+        ViewTestResultCatBEPage,
         MockComponent(TestDetailsCardComponent),
         MockComponent(RekeyDetailsCardComponent),
         MockComponent(RekeyReasonCardComponent),
@@ -87,7 +87,7 @@ describe('ViewTestResultCatBPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(ViewTestResultCatBPage);
+        fixture = TestBed.createComponent(ViewTestResultCatBEPage);
         component = fixture.componentInstance;
         loadingController = TestBed.get(LoadingController);
       });
@@ -112,7 +112,7 @@ describe('ViewTestResultCatBPage', () => {
     });
     describe('getTestDetails', () => {
       it('should correctly generate the data', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
 
         const result: TestDetailsModel = component.getTestDetails();
 
@@ -132,7 +132,7 @@ describe('ViewTestResultCatBPage', () => {
     });
     describe('getRekeyDetails', () => {
       it('should correctly generate the data', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
 
         const result: RekeyDetailsModel = component.getRekeyDetails();
 
@@ -149,7 +149,7 @@ describe('ViewTestResultCatBPage', () => {
     });
     describe('getRekeyReason', () => {
       it('should correctly generate the data', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
 
         const result: RekeyReasonModel = component.getRekeyReason();
 
@@ -164,7 +164,7 @@ describe('ViewTestResultCatBPage', () => {
     });
     describe('getExaminerDetails', () => {
       it('should correctly generate the data', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
 
         const result: ExaminerDetailsModel = component.getExaminerDetails();
 
@@ -179,7 +179,7 @@ describe('ViewTestResultCatBPage', () => {
     });
     describe('getVehicleDetails', () => {
       it('should correctly generate the data', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
 
         const result: VehicleDetailsModel = component.getVehicleDetails();
 
@@ -196,7 +196,7 @@ describe('ViewTestResultCatBPage', () => {
     });
     describe('getTestSummary', () => {
       it('should return the correct data', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
         const result: TestSummaryCardModel = component.getTestSummary();
         expect(result.D255).toEqual(false);
         expect(result.accompaniment).toEqual(['ADI', 'Interpreter']);
@@ -215,7 +215,7 @@ describe('ViewTestResultCatBPage', () => {
     });
     describe('getHeaderDetails', () => {
       it('should return the correct data', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
         const result: ViewTestHeaderModel = component.getHeaderDetails();
 
         expect(result.activityCode).toBe('2');
@@ -230,7 +230,7 @@ describe('ViewTestResultCatBPage', () => {
     });
     describe('getDebrief', () => {
       it('should return the correct data', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
         const result: DebriefCardModel = component.getDebrief();
 
         expect(result.legalRequirements).toEqual({
@@ -254,7 +254,7 @@ describe('ViewTestResultCatBPage', () => {
         expect(component.getManoeuvres()).toEqual(['None']);
       });
       it('should return the correct values for the manoeuvres', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
         expect(component.getManoeuvres()).toEqual([
           manoeuvreTypeLabels.forwardPark,
           manoeuvreTypeLabels.reverseRight,
@@ -266,7 +266,7 @@ describe('ViewTestResultCatBPage', () => {
         expect(component.getETA()).toEqual(['None']);
       });
       it('should return the correct values for the ETAs', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
         expect(component.getETA()).toEqual(['Verbal']);
       });
     });
@@ -286,7 +286,7 @@ describe('ViewTestResultCatBPage', () => {
         expect(component.getShowMeQuestion()).toBeUndefined();
       });
       it('should return the correct value for a show me question', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
         const result = component.getShowMeQuestion();
 
         expect(result).toEqual({
@@ -313,7 +313,7 @@ describe('ViewTestResultCatBPage', () => {
         expect(component.getTellMeQuestion()).toBeUndefined();
       });
       it('should return the correct value for the tell me question', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
         const result = component.getTellMeQuestion();
 
         expect(result).toEqual({
@@ -327,7 +327,7 @@ describe('ViewTestResultCatBPage', () => {
     });
     describe('getDangerousFaults', () => {
       it('should return the correct data', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
 
         const result = component.getDangerousFaults();
 
@@ -342,7 +342,7 @@ describe('ViewTestResultCatBPage', () => {
     });
     describe('getSeriousFaults', () => {
       it('should return the correct data', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
 
         const result = component.getSeriousFaults();
 
@@ -366,7 +366,7 @@ describe('ViewTestResultCatBPage', () => {
     });
     describe('getDrivingFaults', () => {
       it('should return the correct data', () => {
-        component.testResult = categoryBTestResultMock;
+        component.testResult = categoryBETestResultMock;
 
         const result = component.getDrivingFaults();
 
@@ -446,7 +446,7 @@ describe('ViewTestResultCatBPage', () => {
 
     it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
-      component.testResult = categoryBTestResultMock;
+      component.testResult = categoryBETestResultMock;
 
       fixture.detectChanges();
 
@@ -479,7 +479,7 @@ describe('ViewTestResultCatBPage', () => {
 
   it('should show rekey cards only when rekey is true', () => {
     component.isLoading = false;
-    component.testResult = categoryBTestResultMock;
+    component.testResult = categoryBETestResultMock;
 
     fixture.detectChanges();
 

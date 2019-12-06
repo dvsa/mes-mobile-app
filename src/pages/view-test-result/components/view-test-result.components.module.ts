@@ -6,6 +6,11 @@ import { DataRowCustomComponent } from './data-row-custom/data-row-custom';
 import { DataRowWithListComponent } from './data-row-with-list/data-list-with-row';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { FaultsDataRowComponent } from './faults-data-row/faults-data-row';
+import { TestDetailsCardComponent } from './test-details-card/test-details-card';
+import { ViewTestHeaderComponent } from './view-test-header/view-test-header';
+import { ExaminerDetailsCardComponent } from './examiner-details-card/examiner-details';
+import { RekeyDetailsCardComponent } from './rekey-details-card/rekey-details';
+import { RekeyReasonCardComponent } from './rekey-reason-card/rekey-reason';
 
 @NgModule({
   declarations: [
@@ -13,6 +18,12 @@ import { FaultsDataRowComponent } from './faults-data-row/faults-data-row';
     DataRowCustomComponent,
     DataRowWithListComponent,
     FaultsDataRowComponent,
+    ViewTestHeaderComponent,
+    TestDetailsCardComponent,
+    ExaminerDetailsCardComponent,
+    RekeyDetailsCardComponent,
+    RekeyReasonCardComponent,
+
   ],
   imports: [
     CommonModule,
@@ -24,6 +35,11 @@ import { FaultsDataRowComponent } from './faults-data-row/faults-data-row';
     DataRowCustomComponent,
     DataRowWithListComponent,
     FaultsDataRowComponent,
+    ViewTestHeaderComponent,
+    TestDetailsCardComponent,
+    ExaminerDetailsCardComponent,
+    RekeyDetailsCardComponent,
+    RekeyReasonCardComponent,
   ],
 })
 export class ViewTestResultComponentsModule {}

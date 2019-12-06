@@ -3,7 +3,7 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
 import { ViewTestHeaderComponent } from '../view-test-header';
-import { TestOutcome } from '../../../../../../modules/tests/tests.constants';
+import { TestOutcome } from '../../../../../modules/tests/tests.constants';
 
 describe('ViewTestHeaderComponent', () => {
   let fixture: ComponentFixture<ViewTestHeaderComponent>;

@@ -37,15 +37,15 @@ import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-categ
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { HttpResponse } from '@angular/common/http';
-import { TestDetailsModel } from '../cat-b/components/test-details-card/test-details-card.model';
-import { ExaminerDetailsModel } from '../cat-b/components/examiner-details-card/examiner-details-card.model';
+import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
+import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from '../cat-b/components/vehicle-details-card/vehicle-details-card.model';
 import { TestSummaryCardModel } from '../cat-b/components/test-summary-card/test-summary-card-model';
-import { ViewTestHeaderModel } from '../cat-b/components/view-test-header/view-test-header.model';
+import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { DebriefCardModel } from '../cat-b/components/debrief-card/debrief-card.model';
-import { RekeyDetailsModel } from '../cat-b/components/rekey-details-card/rekey-details-card.model';
+import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { RekeyReasonModel } from '../cat-b/components/rekey-reason-card/rekey-reason-card.model';
+import { RekeyReasonModel } from '../components/rekey-reason-card/rekey-reason-card.model';
 
 @IonicPage()
 @Component({

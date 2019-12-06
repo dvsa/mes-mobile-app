@@ -1,19 +1,19 @@
 
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
-import { RekeyReasonCardComponent } from '../rekey-reason';
+import { RekeyDetailsCardComponent } from '../rekey-details';
 import { ConfigMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
-import { DataRowComponent } from '../../../../components/data-row/data-row';
+import { DataRowComponent } from '../../data-row/data-row';
 
 describe('ExaminerDetailsCardComponent', () => {
-  let fixture: ComponentFixture<RekeyReasonCardComponent>;
-  let component: RekeyReasonCardComponent;
+  let fixture: ComponentFixture<RekeyDetailsCardComponent>;
+  let component: RekeyDetailsCardComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        RekeyReasonCardComponent,
+        RekeyDetailsCardComponent,
         MockComponent(DataRowComponent),
       ],
       imports: [
@@ -25,7 +25,7 @@ describe('ExaminerDetailsCardComponent', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(RekeyReasonCardComponent);
+        fixture = TestBed.createComponent(RekeyDetailsCardComponent);
         component = fixture.componentInstance;
       });
   }));
