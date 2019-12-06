@@ -50,7 +50,7 @@ export class NonPassFinalisationAnalyticsEffects {
       )),
     ),
     switchMap(([action, tests]: [nonPassFinalisationActions.ValidationError, TestsModel]) => {
-      const formattedScreenName = formatAnalyticsText(AnalyticsScreenNames.PASS_FINALISATION, tests);
+      const formattedScreenName = formatAnalyticsText(AnalyticsScreenNames.NON_PASS_FINALISATION, tests);
       this.analytics.logError(
         `${AnalyticsErrorTypes.VALIDATION_ERROR} (${formattedScreenName})`,
         action.errorMessage,
