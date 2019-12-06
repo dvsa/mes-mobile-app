@@ -9,10 +9,10 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col align-self-center>
-        <input type="radio" id="independent-driving-satnav" class="gds-radio-button"
+        <input type="radio" id="independent-driving-diagram" class="gds-radio-button"
           formControlName="independentDriving" name="independentDriving" value='Diagram' [class.ng-invalid]="invalid"
-          [checked]="independentDriving === 'Sat nav'" (change)="independentDrivingChanged($event.target.value)">
-        <label for="independent-driving-satnav" class="radio-label">Diagram</label>
+          [checked]="independentDriving === 'Diagram'" (change)="independentDrivingChanged($event.target.value)">
+        <label for="independent-driving-diagram" class="radio-label">Diagram</label>
       </ion-col>
       <ion-col align-self-center>
         <input type="radio" id="independent-driving-trafficsigns" class="gds-radio-button"
