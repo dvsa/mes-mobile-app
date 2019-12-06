@@ -12,8 +12,12 @@ reverse-diagram-modal {
     font-size: 3.4rem;
   }
 
-  .grid {
-    padding: 0;
+  .diagram {
+    background: #ffffff;
+
+    img {
+      height: 1060px;
+    }
   }
 
   .content-container  {
@@ -80,8 +84,33 @@ reverse-diagram-modal {
   .markers {
     margin-top: 80px;
 
-    div {
+    .marker {
+      width: 100%;
       margin-bottom: 30px;
+
+      .marker-text {
+        float: left;
+        width: 80%;
+      }
+
+      .icon-cone-marker, .icon-cone-marker-pole {
+        float: left;
+        margin-right: 20px;
+      }
+
+      .icon-cone-marker {
+        img {
+          width: 23px;
+          height: 23px;
+        }
+      }
+
+      .icon-cone-marker-pole {
+        img {
+          width: 23px;
+          height: 53px;
+        }
+      }
     }
   }
 

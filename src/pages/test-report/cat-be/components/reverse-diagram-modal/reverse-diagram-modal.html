@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons ion-buttons start navPop>
-      <button ion-button center class="nav-close" id="closeReverseDiagramModal">
+      <button ion-button center class="nav-close" (click)="closeModal()" id="closeReverseDiagramModal">
         <ion-icon name="md-close"></ion-icon>Close
       </button>
     </ion-buttons>
@@ -13,7 +13,7 @@
 <ion-content>
   <ion-grid no-padding>
     <ion-row>
-      <ion-col col-40>
+      <ion-col col-40 class="diagram">
         <img src="assets/imgs/reverse-diagram.png" alt="Reversing diagram" />
       </ion-col>
       <ion-col col-56>
@@ -93,8 +93,18 @@
           </div>
           <div class="markers">
             <ion-row>
-              <div><span class="icon-marker-cone"></span>indicates a 46cm marker cone</div>
-              <div><span class="icon-marker-cone-pole"></span>indicates a 46cm marker cone with a 1.5m coloured pole</div>
+              <div class="marker">
+                <span class="icon-cone-marker">
+                  <img src="/assets/imgs/cone-marker.png" />
+                </span>
+                <span class="marker-text">indicates a 46cm marker cone</span>
+              </div>
+              <div class="marker">
+                <span class="icon-cone-marker-pole">
+                  <img src="/assets/imgs/cone-marker-pole.png" />
+                </span>
+                <span class="marker-text">indicates a 46cm marker cone with a 1.5m coloured pole</span>
+              </div>
             </ion-row>
           </div>
         </div>
