@@ -36,7 +36,6 @@ describe('VehicleDetailsCardComponent', () => {
     describe('shouldHideCard', () => {
       it('should return true if valid data is not provided', () => {
         component.data = {
-          instructorRegistrationNumber: null,
           registrationNumber: null,
           transmission: undefined,
         };

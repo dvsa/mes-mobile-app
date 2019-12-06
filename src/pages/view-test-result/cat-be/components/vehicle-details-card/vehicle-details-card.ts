@@ -15,7 +15,6 @@ export class VehicleDetailsCardComponent {
 
   shouldHideCard() : boolean {
     return (
-      !this.data.instructorRegistrationNumber &&
       !this.data.registrationNumber &&
       !this.data.transmission
     );

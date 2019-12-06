@@ -6,7 +6,6 @@
     <ion-grid>
       <data-row-with-list [label]="'Test Requirements'" [data]="getTestRequirements()"></data-row-with-list>
       <data-row [label]="'Manoeuvre(s)'" [value]="getFlattenArray(data.manoeuvres)"></data-row>
-      <data-row-with-list [label]="'Controlled Stop'" [data]="getControlledStop()"></data-row-with-list>
       <data-row-with-list [label]="'ECO'" [data]="getEco()"></data-row-with-list>
       <faults-data-row
         [label]="'Fault descriptions'"

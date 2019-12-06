@@ -238,13 +238,15 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
 
     return {
       legalRequirements: get(this.testResult, 'testData.testRequirements'),
-      manoeuvres: this.getManoeuvres(),
+      // TODO - Need to add these back in
+      // manoeuvres: this.getManoeuvres(),
       controlledStop: get(this.testResult, 'testData.controlledStop.selected'),
       ecoControl: get(this.testResult, 'testData.eco.adviceGivenControl'),
       ecoPlanning: get(this.testResult, 'testData.eco.adviceGivenPlanning'),
       eta: this.getETA(),
-      showMeQuestion: this.getShowMeQuestion(),
-      tellMeQuestion: this.getTellMeQuestion(),
+      // TODO - Need to add these back in
+      // showMeQuestion: null,
+      // tellMeQuestion: null ,
       dangerousFaults: this.getDangerousFaults(),
       seriousFaults: this.getSeriousFaults(),
       drivingFaults: this.getDrivingFaults(),
@@ -255,6 +257,7 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
     };
   }
 
+  // TODO - This needs to be refactored for B+E
   getManoeuvres(): string[] {
     const manoeuvres = [];
 
@@ -293,6 +296,7 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
     return eta;
   }
 
+  // TODO - Needs to be refactored
   getShowMeQuestion(): VehicleChecksQuestion {
     const showMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.showMeQuestion.code');
     return this.questionProvider
@@ -300,6 +304,7 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
       .find(question => question.code === showMeQuestionCode);
   }
 
+  // TODO - Needs to be refactored
   getTellMeQuestion(): VehicleChecksQuestion {
     const tellMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.tellMeQuestion.code');
     return this.questionProvider
@@ -309,17 +314,17 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
 
   getDangerousFaults(): FaultSummary[] {
     const testData: CatBEUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getDangerousFaultsList(testData, TestCategory.B);
+    return this.faultSummaryProvider.getDangerousFaultsList(testData, TestCategory.BE);
   }
 
   getSeriousFaults(): FaultSummary[] {
     const testData: CatBEUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getSeriousFaultsList(testData, TestCategory.B);
+    return this.faultSummaryProvider.getSeriousFaultsList(testData, TestCategory.BE);
   }
 
   getDrivingFaults(): FaultSummary[] {
     const testData: CatBEUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getDrivingFaultsList(testData, TestCategory.B);
+    return this.faultSummaryProvider.getDrivingFaultsList(testData, TestCategory.BE);
   }
 
   getRekeyDetails(): RekeyDetailsModel {

@@ -2,7 +2,7 @@ import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
 export const categoryBETestResultMock : CatBEUniqueTypes.TestResult = {
   version: '0.0.1',
-  category: 'B',
+  category: 'B+E',
   activityCode: '2',
   rekey: true,
   rekeyDate: '2019-08-05T09:00:00',
@@ -79,6 +79,8 @@ export const categoryBETestResultMock : CatBEUniqueTypes.TestResult = {
   vehicleDetails: {
     gearboxCategory: 'Manual',
     registrationNumber: 'mock-vehicle-registration-number',
+    dualControls: true,
+    schoolCar: true,
   },
   accompaniment: {
     ADI: true,

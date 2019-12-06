@@ -3,7 +3,6 @@ import { DebriefCardModel } from './debrief-card.model';
 import { flattenArray } from '../../../view-test-result-helpers';
 import {
   DataRowListItem,
-  TestRequirementsLabels,
   ViewTestResultLabels,
 } from '../../../components/data-row-with-list/data-list-with-row.model';
 
@@ -27,31 +26,7 @@ export class DebriefCardComponent {
 
   getTestRequirements = (): DataRowListItem[] => {
     return [
-      {
-        label: TestRequirementsLabels.normalStart1,
-        checked: this.data.legalRequirements.normalStart1,
-      },
-      {
-        label: TestRequirementsLabels.normalStart2,
-        checked: this.data.legalRequirements.normalStart2,
-      },
-      {
-        label: TestRequirementsLabels.angledStart,
-        checked: this.data.legalRequirements.angledStart,
-      },
-      {
-        label: TestRequirementsLabels.hillStart,
-        checked: this.data.legalRequirements.hillStart,
-      },
-    ];
-  }
-
-  getControlledStop = (): DataRowListItem[] => {
-    return [
-      {
-        label: this.data.controlledStop ? ViewTestResultLabels.completed : ViewTestResultLabels.notCompleted,
-        checked: this.data.controlledStop,
-      },
+      // TODO - need to update
     ];
   }
 
