@@ -9,7 +9,7 @@ import { StartTest, ActivateTest } from '../../../../modules/tests/tests.actions
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { CAT_B, CAT_BE } from '../../../../pages/page-names.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
-import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
+import { SlotDetail } from '@dvsa/mes-journal-schema';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
 import { JournalModel } from '../../../../modules/journal/journal.model';
 import { LogHelper } from '../../../../providers/logs/logsHelper';
