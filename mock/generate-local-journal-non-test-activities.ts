@@ -1,6 +1,6 @@
 import * as enjoi from 'enjoi';
 import * as joi from '@hapi/joi';
-const journalSchema = require('@dvsa/mes-journal-schema/schema-examiner-work-schedule.json');
+const journalSchema = require('@dvsa/mes-journal-schema/index.json');
 import { writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { getTodayAsIsoDate, getIsoDateDaysInFuture } from './mock-date-utils';
