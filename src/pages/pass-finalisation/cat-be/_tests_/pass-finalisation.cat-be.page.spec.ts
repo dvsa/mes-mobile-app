@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
@@ -20,9 +20,9 @@ import { LanguagePreferencesComponent } from
   '../../../../components/test-finalisation/language-preference/language-preferences';
 import { FinalisationHeaderComponent } from
   '../../../../components/test-finalisation/finalisation-header/finalisation-header';
-import { PassFinalisationViewDidEnter } from '../../pass-finalisation.actions';
 import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged } from
   '../../../../modules/tests/pass-completion/pass-completion.actions';
+import { PassFinalisationViewDidEnter, ValidationError } from '../../pass-finalisation.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
   '../../../../modules/tests/test-summary/test-summary.actions';
@@ -31,6 +31,7 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
 import { PassFinalisationCatBEPage } from '../pass-finalisation.cat-be.page';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 describe('PassFinalisationCatBEPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBEPage>;
@@ -148,6 +149,24 @@ describe('PassFinalisationCatBEPage', () => {
         component.onSubmit();
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
       });
+
+      it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
+        component.form = new FormGroup({
+          requiredControl1: new FormControl(null, [Validators.required]),
+          requiredControl2: new FormControl(null, [Validators.required]),
+          notRequiredControl: new FormControl(null),
+        });
+
+        component.onSubmit();
+        tick();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new ValidationError('requiredControl1 is blank'));
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new ValidationError('requiredControl2 is blank'));
+        expect(store$.dispatch)
+          .not
+          .toHaveBeenCalledWith(new ValidationError('notRequiredControl is blank'));
+      }));
     });
   });
 });
