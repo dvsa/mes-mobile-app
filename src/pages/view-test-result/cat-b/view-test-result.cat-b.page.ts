@@ -21,7 +21,7 @@ import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-d
 import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
-import { TestSummaryCardModel } from './components/test-summary-card/test-summary-card-model';
+import { TestSummaryCardModel } from '../components/test-summary-card/test-summary-card-model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { getCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';

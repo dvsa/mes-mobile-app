@@ -32,7 +32,7 @@ import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from '../cat-b/components/vehicle-details-card/vehicle-details-card.model';
-import { TestSummaryCardModel } from '../cat-b/components/test-summary-card/test-summary-card-model';
+import { TestSummaryCardModel } from '../components/test-summary-card/test-summary-card-model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TestSummaryCardModel } from './test-summary-card-model';
-import { convertBooleanToString, flattenArray } from '../../../view-test-result-helpers';
+import { convertBooleanToString, flattenArray } from '../../view-test-result-helpers';
 import { isBoolean } from 'lodash';
 
 @Component({

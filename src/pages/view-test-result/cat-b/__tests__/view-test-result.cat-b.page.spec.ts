@@ -32,8 +32,8 @@ import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/
 import { categoryBTestResultMock } from '../../../../shared/mocks/cat-b-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
-import { TestSummaryCardModel } from '../components/test-summary-card/test-summary-card-model';
-import { TestSummaryCardComponent } from '../components/test-summary-card/test-summary-card';
+import { TestSummaryCardModel } from '../../components/test-summary-card/test-summary-card-model';
+import { TestSummaryCardComponent } from '../../components/test-summary-card/test-summary-card';
 import { ViewTestHeaderComponent } from '../../components/view-test-header/view-test-header';
 import { ViewTestHeaderModel } from '../../components/view-test-header/view-test-header.model';
 import { TestOutcome } from '../../../../modules/tests/tests.constants';
