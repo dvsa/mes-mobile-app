@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
   PassFinalisationViewDidEnter,
-  ValidationError,
+  PassFinalisationValidationError,
 } from './../pass-finalisation.actions';
 import {
   ProvisionalLicenseReceived,
@@ -232,9 +232,9 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
     Object.keys(this.form.controls).forEach((controlName) => {
       if (this.form.controls[controlName].invalid) {
         if (controlName === PASS_CERTIFICATE_NUMBER_CTRL) {
-          this.store$.dispatch(new ValidationError(`${controlName} is invalid`));
+          this.store$.dispatch(new PassFinalisationValidationError(`${controlName} is invalid`));
         }
-        this.store$.dispatch(new ValidationError(`${controlName} is blank`));
+        this.store$.dispatch(new PassFinalisationValidationError(`${controlName} is blank`));
       }
     });
   }

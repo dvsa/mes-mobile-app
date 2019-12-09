@@ -88,7 +88,7 @@ describe('Health Declaration Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       // ACT
-      actions$.next(new healthDeclarationActions.ValidationError('error message'));
+      actions$.next(new healthDeclarationActions.HealthDeclarationValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -105,7 +105,7 @@ describe('Health Declaration Analytics Effects', () => {
       const practiceScreenName =
         `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.HEALTH_DECLARATION}`;
       // ACT
-      actions$.next(new healthDeclarationActions.ValidationError('error message'));
+      actions$.next(new healthDeclarationActions.HealthDeclarationValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);

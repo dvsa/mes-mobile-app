@@ -19,7 +19,10 @@ import { LanguagePreferencesComponent } from
   '../../../../components/test-finalisation/language-preference/language-preferences';
 import { FinalisationHeaderComponent } from
   '../../../../components/test-finalisation/finalisation-header/finalisation-header';
-import { PassFinalisationViewDidEnter, ValidationError } from '../../pass-finalisation.actions';
+import {
+  PassFinalisationViewDidEnter,
+  PassFinalisationValidationError,
+} from '../../pass-finalisation.actions';
 import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged } from
   '../../../../modules/tests/pass-completion/pass-completion.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
@@ -160,12 +163,12 @@ describe('PassFinalisationCatBPage', () => {
         component.onSubmit();
         tick();
         expect(store$.dispatch)
-          .toHaveBeenCalledWith(new ValidationError('requiredControl1 is blank'));
+          .toHaveBeenCalledWith(new PassFinalisationValidationError('requiredControl1 is blank'));
         expect(store$.dispatch)
-          .toHaveBeenCalledWith(new ValidationError('requiredControl2 is blank'));
+          .toHaveBeenCalledWith(new PassFinalisationValidationError('requiredControl2 is blank'));
         expect(store$.dispatch)
           .not
-          .toHaveBeenCalledWith(new ValidationError('notRequiredControl is blank'));
+          .toHaveBeenCalledWith(new PassFinalisationValidationError('notRequiredControl is blank'));
       }));
     });
   });

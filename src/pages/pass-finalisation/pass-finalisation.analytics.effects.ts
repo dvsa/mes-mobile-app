@@ -10,8 +10,8 @@ import {
 import {
   PASS_FINALISTATION_VIEW_DID_ENTER,
   PassFinalisationViewDidEnter,
-  VALIDATION_ERROR,
-  ValidationError,
+  PASS_FINALISTATION_VALIDATION_ERROR,
+  PassFinalisationValidationError,
 } from './pass-finalisation.actions';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { StoreModel } from '../../shared/models/store.model';
@@ -49,7 +49,7 @@ export class PassFinalisationAnalyticsEffects {
 
   @Effect()
   validationErrorEffect$ = this.actions$.pipe(
-    ofType(VALIDATION_ERROR),
+    ofType(PASS_FINALISTATION_VALIDATION_ERROR),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -57,7 +57,7 @@ export class PassFinalisationAnalyticsEffects {
         ),
       )),
     ),
-    switchMap(([action, tests]: [ValidationError, TestsModel]) => {
+    switchMap(([action, tests]: [PassFinalisationValidationError, TestsModel]) => {
       const formattedScreenName = formatAnalyticsText(AnalyticsScreenNames.PASS_FINALISATION, tests);
       this.analytics.logError(
         `${AnalyticsErrorTypes.VALIDATION_ERROR} (${formattedScreenName})`,

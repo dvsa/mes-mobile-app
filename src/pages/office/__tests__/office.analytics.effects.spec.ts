@@ -257,7 +257,7 @@ describe('Office Analytics Effects', () => {
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
-      actions$.next(new officeActions.ValidationError('error message'));
+      actions$.next(new officeActions.OfficeValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -273,7 +273,7 @@ describe('Office Analytics Effects', () => {
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
-      actions$.next(new officeActions.ValidationError('error message'));
+      actions$.next(new officeActions.OfficeValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -289,7 +289,7 @@ describe('Office Analytics Effects', () => {
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
-      actions$.next(new officeActions.ValidationError('error message'));
+      actions$.next(new officeActions.OfficeValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -305,7 +305,7 @@ describe('Office Analytics Effects', () => {
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
-      actions$.next(new officeActions.ValidationError('error message'));
+      actions$.next(new officeActions.OfficeValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);

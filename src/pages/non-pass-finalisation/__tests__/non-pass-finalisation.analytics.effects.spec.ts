@@ -87,7 +87,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       // ACT
-      actions$.next(new nonPassFinalisationActions.ValidationError('error message'));
+      actions$.next(new nonPassFinalisationActions.NonPassFinalisationValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -105,7 +105,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
       const practiceScreenName =
         `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.NON_PASS_FINALISATION}`;
       // ACT
-      actions$.next(new nonPassFinalisationActions.ValidationError('error message'));
+      actions$.next(new nonPassFinalisationActions.NonPassFinalisationValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);

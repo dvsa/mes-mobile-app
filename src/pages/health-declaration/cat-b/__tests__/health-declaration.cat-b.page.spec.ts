@@ -11,7 +11,10 @@ import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { HealthDeclarationViewDidEnter, ValidationError } from '../../health-declaration.actions';
+import {
+  HealthDeclarationViewDidEnter,
+  HealthDeclarationValidationError,
+} from '../../health-declaration.actions';
 import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
 import {
   DeviceAuthenticationProviderMock,
@@ -184,12 +187,12 @@ describe('HealthDeclarationCatBPage', () => {
         component.onSubmit();
         tick();
         expect(store$.dispatch)
-          .toHaveBeenCalledWith(new ValidationError('requiredControl1 is blank'));
+          .toHaveBeenCalledWith(new HealthDeclarationValidationError('requiredControl1 is blank'));
         expect(store$.dispatch)
-          .toHaveBeenCalledWith(new ValidationError('requiredControl2 is blank'));
+          .toHaveBeenCalledWith(new HealthDeclarationValidationError('requiredControl2 is blank'));
         expect(store$.dispatch)
           .not
-          .toHaveBeenCalledWith(new ValidationError('notRequiredControl is blank'));
+          .toHaveBeenCalledWith(new HealthDeclarationValidationError('notRequiredControl is blank'));
       }));
     });
   });

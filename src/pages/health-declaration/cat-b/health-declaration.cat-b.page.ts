@@ -7,7 +7,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import {
   HealthDeclarationViewDidEnter,
   ContinueFromDeclaration,
-  ValidationError,
+  HealthDeclarationValidationError,
 } from '../health-declaration.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
@@ -210,7 +210,7 @@ export class HealthDeclarationCatBPage extends PracticeableBasePageComponent {
     }
     Object.keys(this.form.controls).forEach((controlName) => {
       if (this.form.controls[controlName].invalid) {
-        this.store$.dispatch(new ValidationError(`${controlName} is blank`));
+        this.store$.dispatch(new HealthDeclarationValidationError(`${controlName} is blank`));
       }
     });
   }

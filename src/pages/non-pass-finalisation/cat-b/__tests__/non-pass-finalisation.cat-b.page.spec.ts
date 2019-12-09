@@ -9,7 +9,10 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { NonPassFinalisationCatBPage } from '../non-pass-finalisation.cat-b.page';
-import { NonPassFinalisationViewDidEnter, ValidationError } from '../../non-pass-finalisation.actions';
+import {
+  NonPassFinalisationViewDidEnter,
+  NonPassFinalisationValidationError,
+} from '../../non-pass-finalisation.actions';
 import { ActivityCodeComponent } from '../../../office/components/activity-code/activity-code';
 import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
 import * as testActions from '../../../../modules/tests/tests.actions';
@@ -129,12 +132,12 @@ describe('NonPassFinalisationCatBPage', () => {
         component.continue();
         tick();
         expect(store$.dispatch)
-          .toHaveBeenCalledWith(new ValidationError('requiredControl1 is blank'));
+          .toHaveBeenCalledWith(new NonPassFinalisationValidationError('requiredControl1 is blank'));
         expect(store$.dispatch)
-          .toHaveBeenCalledWith(new ValidationError('requiredControl2 is blank'));
+          .toHaveBeenCalledWith(new NonPassFinalisationValidationError('requiredControl2 is blank'));
         expect(store$.dispatch)
           .not
-          .toHaveBeenCalledWith(new ValidationError('notRequiredControl is blank'));
+          .toHaveBeenCalledWith(new NonPassFinalisationValidationError('notRequiredControl is blank'));
       }));
     });
   });

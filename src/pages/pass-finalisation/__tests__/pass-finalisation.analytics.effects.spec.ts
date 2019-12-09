@@ -88,7 +88,7 @@ describe('Pass Finalisation Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       // ACT
-      actions$.next(new passFinalisationActions.ValidationError('error message'));
+      actions$.next(new passFinalisationActions.PassFinalisationValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -105,7 +105,7 @@ describe('Pass Finalisation Analytics Effects', () => {
       const practiceScreenName =
         `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.PASS_FINALISATION}`;
       // ACT
-      actions$.next(new passFinalisationActions.ValidationError('error message'));
+      actions$.next(new passFinalisationActions.PassFinalisationValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);

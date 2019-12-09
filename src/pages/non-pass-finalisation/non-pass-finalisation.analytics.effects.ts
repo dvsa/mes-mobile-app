@@ -41,7 +41,7 @@ export class NonPassFinalisationAnalyticsEffects {
 
   @Effect()
   validationErrorEffect$ = this.actions$.pipe(
-    ofType(nonPassFinalisationActions.VALIDATION_ERROR),
+    ofType(nonPassFinalisationActions.NON_PASS_FINALISATION_VALIDATION_ERROR),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -49,7 +49,7 @@ export class NonPassFinalisationAnalyticsEffects {
         ),
       )),
     ),
-    switchMap(([action, tests]: [nonPassFinalisationActions.ValidationError, TestsModel]) => {
+    switchMap(([action, tests]: [nonPassFinalisationActions.NonPassFinalisationValidationError, TestsModel]) => {
       const formattedScreenName = formatAnalyticsText(AnalyticsScreenNames.NON_PASS_FINALISATION, tests);
       this.analytics.logError(
         `${AnalyticsErrorTypes.VALIDATION_ERROR} (${formattedScreenName})`,

@@ -20,7 +20,10 @@ import {
   getCandidateDriverNumber,
   formatDriverNumber,
 } from '../../../modules/tests/journal-data/candidate/candidate.selector';
-import { NonPassFinalisationViewDidEnter, ValidationError } from '../non-pass-finalisation.actions';
+import {
+  NonPassFinalisationViewDidEnter,
+  NonPassFinalisationValidationError,
+} from '../non-pass-finalisation.actions';
 import { map, withLatestFrom, tap } from 'rxjs/operators';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
@@ -195,7 +198,7 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
     }
     Object.keys(this.form.controls).forEach((controlName) => {
       if (this.form.controls[controlName].invalid) {
-        this.store$.dispatch(new ValidationError(`${controlName} is blank`));
+        this.store$.dispatch(new NonPassFinalisationValidationError(`${controlName} is blank`));
       }
     });
   }

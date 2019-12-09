@@ -43,7 +43,7 @@ export class HealthDeclarationAnalyticsEffects {
 
   @Effect()
   validationErrorEffect$ = this.actions$.pipe(
-    ofType(healthDeclarationActions.VALIDATION_ERROR),
+    ofType(healthDeclarationActions.HEALTH_DECLARATION_VALIDATION_ERROR),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -51,7 +51,7 @@ export class HealthDeclarationAnalyticsEffects {
         ),
       )),
     ),
-    switchMap(([action, tests]: [healthDeclarationActions.ValidationError, TestsModel]) => {
+    switchMap(([action, tests]: [healthDeclarationActions.HealthDeclarationValidationError, TestsModel]) => {
       const formattedScreenName = formatAnalyticsText(AnalyticsScreenNames.HEALTH_DECLARATION, tests);
       this.analytics.logError(
         `${AnalyticsErrorTypes.VALIDATION_ERROR} (${formattedScreenName})`,
