@@ -103,7 +103,6 @@ export class ReverseDiagramCatBEPage implements OnInit {
   }
 
   closeModal(): void {
-    console.log('CLOSE');
     this.onClose();
   }
 }
