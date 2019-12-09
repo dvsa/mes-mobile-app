@@ -1,7 +1,7 @@
 reverse-left-popover {
 
   .popover-content {
-    width: calc(100% - 12px);
+    padding: 21px;
     border: 0 none map-get($colors, "mes-white");
     position: relative;
   }
@@ -9,10 +9,11 @@ reverse-left-popover {
   .manoeuvre-competencies-container {
     margin-top: 40px;
     margin-right: auto;
+    margin-bottom: 40px;
     margin-left: auto;
     
     .first-manoeuvre-competency-button {
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
   }
 }
