@@ -27,6 +27,10 @@ export class VehicleChecksCardCatBEComponent implements OnInit {
       select(getVehicleChecks),
       map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
     );
+
+    this.tellMeShowMeQuestions$.subscribe(results => {
+      console.log(results.map(c => c.code));
+    });
   }
 
   questionHasFault = (result: QuestionResult): boolean => result.outcome !== CompetencyOutcome.P;
