@@ -17,8 +17,8 @@ import { Http } from '@angular/http';
 // import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import * as englishTranslations from '../../../../../../assets/i18n/en.json';
 import { TestCategory } from '../../../../../../shared/models/test-category';
-import showMeQuestions from '../../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
-import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/Common';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
+
 
 fdescribe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatBEComponent>;
