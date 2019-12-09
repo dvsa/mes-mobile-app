@@ -35,6 +35,8 @@ import { LicenseProvidedComponent } from '../../components/license-provided/lice
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PASS_CERTIFICATE_NUMBER_CTRL }
+  from '../../components/pass-certificate-number/pass-certificate-number.constants';
 
 describe('PassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;
@@ -157,6 +159,7 @@ describe('PassFinalisationCatBPage', () => {
         component.form = new FormGroup({
           requiredControl1: new FormControl(null, [Validators.required]),
           requiredControl2: new FormControl(null, [Validators.required]),
+          [PASS_CERTIFICATE_NUMBER_CTRL]: new FormControl(null, [Validators.required]),
           notRequiredControl: new FormControl(null),
         });
 
@@ -166,6 +169,8 @@ describe('PassFinalisationCatBPage', () => {
           .toHaveBeenCalledWith(new PassFinalisationValidationError('requiredControl1 is blank'));
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new PassFinalisationValidationError('requiredControl2 is blank'));
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new PassFinalisationValidationError(`${PASS_CERTIFICATE_NUMBER_CTRL} is invalid`));
         expect(store$.dispatch)
           .not
           .toHaveBeenCalledWith(new PassFinalisationValidationError('notRequiredControl is blank'));
