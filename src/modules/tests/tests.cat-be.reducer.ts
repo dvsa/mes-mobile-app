@@ -5,7 +5,7 @@ import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
-import { passCompletionCatBEReducer } from './pass-completion/pass-completion.cat-be.reducer';
+import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';
@@ -33,7 +33,7 @@ export function testsCatBEReducer(
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatBEReducer,
       testData: testDataCatBEReducer,
-      passCompletion: passCompletionCatBEReducer,
+      passCompletion: passCompletionReducer,
       postTestDeclarations: postTestDeclarationsReducer,
       testSummary: testSummaryReducer,
       communicationPreferences: communicationPreferencesReducer,
