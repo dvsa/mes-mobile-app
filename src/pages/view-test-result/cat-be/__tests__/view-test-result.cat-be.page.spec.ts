@@ -357,7 +357,7 @@ describe('ViewTestResultCatBEPage', () => {
           },
           {
             faultCount: 1,
-            competencyDisplayName: 'Reverse left - Observation',
+            competencyDisplayName: 'Reverse - Observation',
             competencyIdentifier: 'reverseLeftObservation',
             source: 'Manoeuvres-reverseLeft-Observation',
             comment: 'mock-observation-fault-comments',
