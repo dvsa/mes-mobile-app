@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { pickBy, endsWith, sumBy } from 'lodash';
+import { pickBy, endsWith, sumBy, get } from 'lodash';
 
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
@@ -7,6 +7,7 @@ import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { VehicleChecksScore } from '../../shared/models/vehicle-checks-score.model';
 import { getCompetencyFaults } from '../../shared/helpers/competency';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
 
 @Injectable()
 export class FaultCountProvider {
@@ -62,10 +63,13 @@ export class FaultCountProvider {
       return { seriousFaults: 0, drivingFaults: 0 };
     }
 
-    const numberOfShowMeFaults: number = vehicleChecks.showMeQuestions.filter((showMeQuestion) => {
+    const showMeQuestions: QuestionResult[] = get(vehicleChecks, 'showMeQuestions', []);
+    const tellMeQuestions: QuestionResult[] = get(vehicleChecks, 'tellMeQuestions', []);
+
+    const numberOfShowMeFaults: number = showMeQuestions.filter((showMeQuestion) => {
       return showMeQuestion.outcome === CompetencyOutcome.DF;
     }).length;
-    const numberOfTellMeFaults: number = vehicleChecks.tellMeQuestions.filter((tellMeQuestion) => {
+    const numberOfTellMeFaults: number = tellMeQuestions.filter((tellMeQuestion) => {
       return tellMeQuestion.outcome === CompetencyOutcome.DF;
     }).length;
 

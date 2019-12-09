@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { forOwn, transform, endsWith } from 'lodash';
-import { EyesightTest } from '@dvsa/mes-test-schema/categories/Common';
+import { forOwn, transform, endsWith, get } from 'lodash';
+import { EyesightTest, QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
 import { FaultSummary, CommentSource, CompetencyIdentifiers } from '../../shared/models/fault-marking.model';
 import { CompetencyDisplayName } from '../../shared/models/competency-display-name';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
@@ -260,8 +260,12 @@ export class FaultSummaryProvider {
     if (!vehicleChecks) {
       return result;
     }
-    const showMeFaults = vehicleChecks.showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
-    const tellMeFaults = vehicleChecks.tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+
+    const showMeQuestions: QuestionResult[] = get(vehicleChecks, 'showMeQuestions', []);
+    const tellMeQuestions: QuestionResult[] = get(vehicleChecks, 'tellMeQuestions', []);
+
+    const showMeFaults = showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+    const tellMeFaults = tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
 
     const seriousFaultCount = showMeFaults.length + tellMeFaults.length === 5 ? 1 : 0;
     const competency: FaultSummary = {
