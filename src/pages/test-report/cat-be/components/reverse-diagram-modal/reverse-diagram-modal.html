@@ -30,7 +30,7 @@
                   <ion-col col-42>
                     <input type="number" step="0.01" id="vehicleLength" class="vehicle-length-input"
                     [value]="vehicleLength"
-                    (change)="calculateDistanceLength($event.target.value)">
+                    (keyup)="calculateDistanceLength($event.target.value)">
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -42,7 +42,7 @@
                   <ion-col col-42>
                     <input type="number" step="0.01" id="vehicleWidth" class="vehicle-width-input"
                     [value]="vehicleWidth"
-                    (change)="calculateDistanceWidth($event.target.value)">
+                    (keyup)="calculateDistanceWidth($event.target.value)">
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -55,7 +55,7 @@
                       <div class="label">A&A1:</div>
                     </ion-col>
                     <ion-col align-self-center>
-                      <div id="aAndA1" class="result">{{aAndA1}}</div>
+                      <div id="distance-from-start" class="result">{{distanceFromStart}}</div>
                     </ion-col>
                   </ion-row>
                   <ion-row class="padding-top-18">
@@ -63,7 +63,7 @@
                       <div class="label">B:</div>
                     </ion-col>
                     <ion-col align-self-center>
-                      <div id="aToA1" class="result">{{b}}</div>
+                      <div id="distance-from-middle" class="result">{{distanceFromMiddle}}</div>
                     </ion-col>
                   </ion-row>
                 </ion-col>
@@ -73,7 +73,7 @@
                       <div class="label">A to A1:</div>
                     </ion-col>
                     <ion-col align-self-center>
-                      <div id="b" class="result">{{aToA1}}</div>
+                      <div id="distance-of-lane-width" class="result">{{distanceOfBayWidth}}</div>
                     </ion-col>
                   </ion-row>
                   <ion-row>
