@@ -28,7 +28,7 @@ import { LoadPersistedTests, StartSendingCompletedTests } from '../../modules/te
 import { AppConfigError } from '../../providers/app-config/app-config.constants';
 import { LogsProvider } from '../../providers/logs/logs';
 import { LogType } from '../../shared/models/log.model';
-import { DASHBOARD_PAGE, DEV_SCREEN_NAVIGATION_PAGE } from '../page-names.constants';
+import { DASHBOARD_PAGE } from '../page-names.constants';
 import { LogHelper } from '../../providers/logs/logsHelper';
 
 @IonicPage()
@@ -74,17 +74,22 @@ export class LoginPage extends BasePageComponent {
       this.login();
     }
     if (!this.isIos()) {
-      this.appConfigProvider.initialiseAppConfig()
-        .then(() => {
-          const { enableLogoutButton } = this.appConfigProvider.getAppConfig().journal;
-          if (enableLogoutButton) {
-            this.navController.setRoot(DEV_SCREEN_NAVIGATION_PAGE);
-            this.splashScreen.hide();
-            return;
-          }
-          this.navController.setRoot(DASHBOARD_PAGE);
-          this.splashScreen.hide();
-        });
+
+      this.appConfigProvider.initialiseAppConfig();
+      this.navController.setRoot(DASHBOARD_PAGE);
+      this.splashScreen.hide();
+
+      // this.appConfigProvider.initialiseAppConfig()
+      //   .then(() => {
+      //     const { enableLogoutButton } = this.appConfigProvider.getAppConfig().journal;
+      //     if (enableLogoutButton) {
+      //       this.navController.setRoot(DEV_SCREEN_NAVIGATION_PAGE);
+      //       this.splashScreen.hide();
+      //       return;
+      //     }
+      //     this.navController.setRoot(DASHBOARD_PAGE);
+      //     this.splashScreen.hide();
+      //   });
     }
   }
 

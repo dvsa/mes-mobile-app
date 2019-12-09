@@ -4,11 +4,149 @@
   </ion-navbar>
 </ion-header>
 <ion-content no-bounce>
-  <button ion-button class="mes-primary-button" (click)="goToDashboard()">
-    Dashboard
-  </button>
-  <button ion-button class="mes-primary-button" (click)="goToJournal()">
-    Journal
-  </button>
+
+  <ion-card>
+    <input [checked]="false" id="set-rekey" type="checkbox" class="gds-checkbox" (change)="setRekey($event.target.checked)">
+    <label for="set-rekey">Rekeyed Test</label>
+
+    <ion-row>
+      <ion-col>
+        <ion-select value="selectedCategory" id="activity-code-selector" placeholder="Category" okText="Select"
+          cancelText="Cancel" (ionChange)="categorySelected($event)">
+          <ion-option [value]="category" *ngFor="let category of categories">
+            {{category}}
+          </ion-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
+  <ion-card>
+    <h2>General Pages</h2>
+    <button ion-button class="mes-primary-button" (click)="goToDashboard()">
+      Dashboard
+    </button>
+    <button ion-button class="mes-primary-button" (click)="goToJournal()">
+      Journal
+    </button>
+  </ion-card>
+  <ion-card>
+    <h2>Waiting Room Page</h2>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToWaitingRoomCatB()">
+      Pass
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToWaitingRoomCatBE()">
+      Pass
+    </button>
+  </ion-card>
+  <ion-card>
+    <h2>Communication Page</h2>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToCommunicationPageCatB()">
+      Pass
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToCommunicationPageCatBE()">
+      Pass
+    </button>
+  </ion-card>
+  <ion-card>
+    <h2>Waiting Room To Car Page</h2>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToWaitingRoomToCarCatBPage()">
+      Pass
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToWaitingRoomToCarCatBEPage()">
+      Pass
+    </button>
+  </ion-card>
+  <ion-card>
+    <h2>Test Report Page</h2>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToTestReportCatBPage()">
+      Pass
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToTestReportCatBEPage()">
+      Pass
+    </button>
+  </ion-card>
+  <ion-card>
+    <h2>Debrief Page</h2>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToDebriefPagePassCatBPage()">
+      Pass
+    </button>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToDebriefPageFail1SeriousCatBPage()">
+      Fail 1 Serious
+    </button>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToDebriefPageFail1DangerousCatBPage()">
+      Fail 1 Dangerous
+    </button>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToDebriefPageFail16FaultsCatBPage()">
+      Fail 16 Faults
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToDebriefPagePassCatBEPage()">
+      Pass
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToDebriefPageFail1SeriousCatBEPage()">
+      Fail 1 Serious
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToDebriefPageFail1DangerousCatBEPage()">
+      Fail 1 Dangerous
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToDebriefPageFail16FaultsCatBEPage()">
+      Fail 16 Faults
+    </button>
+  </ion-card>
+  <ion-card>
+    <h2>Pass Finalisation Page</h2>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToPassFinalisationCatBPage()">
+      Pass
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToPassFinalisationCatBEPage()">
+      Pass
+    </button>
+  </ion-card>
+  <ion-card>
+    <h2>Non Pass Finalisation Page</h2>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToNonPassFinalisationCatBPage()">
+      Fail 1 Serious
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToNonPassFinalisationCatBEPage()">
+      Fail 1 Serious
+    </button>
+  </ion-card>
+  <ion-card>
+    <h2>Health Declaration Page</h2>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToHealthDeclarationCatBPage()">
+      Pass
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToHealthDeclarationCatBEPage()">
+      Pass
+    </button>
+  </ion-card>
+  <ion-card>
+    <h2>Back to Office Page</h2>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToBackToOfficeCatBPage()">
+      Pass
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToBackToOfficeCatBEPage()">
+      Pass
+    </button>
+  </ion-card>
+  <ion-card>
+    <h2>Office Page</h2>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToOfficeCatBPage()">
+      Pass
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToOfficeCatBEPage()">
+      Pass
+    </button>
+  </ion-card>
+  <ion-card *ngIf="this.storePreparations.isRekey()">
+    <h2>Rekey Reason Page</h2>
+    <button *ngIf="selectedCategory === 'B'" ion-button class="mes-primary-button" (click)="goToRekeyReasonCatBPage()">
+      Pass
+    </button>
+    <button *ngIf="selectedCategory === 'BE'" ion-button class="mes-primary-button" (click)="goToRekeyReasonCatBEPage()">
+      Pass
+    </button>
+  </ion-card>
 
 </ion-content>

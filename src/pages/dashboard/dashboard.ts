@@ -20,6 +20,7 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
 import * as journalActions from './../../modules/journal/journal.actions';
 import { DateTime } from '../../shared/helpers/date-time';
+import { DEV_SCREEN_NAVIGATION_PAGE } from '../page-names.constants';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
@@ -119,6 +120,10 @@ export class DashboardPage extends BasePageComponent {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  devScreen() {
+    this.navController.push(DEV_SCREEN_NAVIGATION_PAGE);
   }
 
   showTestReportPracticeMode = (): boolean =>

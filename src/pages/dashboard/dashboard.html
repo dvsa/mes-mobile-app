@@ -5,6 +5,9 @@
         <span>Sign Out</span>
         <h6 class="version-number">Version {{pageState.appVersion$ | async}}</h6>
       </button>
+      <button ion-button (click)="devScreen()" *ngIf="isLogoutEnabled()">
+        <span>Dev Screen</span>
+      </button>
       <h6 *ngIf="!isLogoutEnabled()" class="version-number">Version {{pageState.appVersion$
         | async}}</h6>
       <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}" />
