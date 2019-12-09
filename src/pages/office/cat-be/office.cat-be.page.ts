@@ -15,7 +15,7 @@ import {
   OfficeViewDidEnter,
   CompleteTest,
   SavingWriteUpForLater,
-  ValidationError,
+  OfficeValidationError,
 } from '../office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
@@ -559,7 +559,7 @@ export class OfficeCatBEPage extends BasePageComponent {
     }
     Object.keys(this.form.controls).forEach((controlName) => {
       if (this.form.controls[controlName].invalid) {
-        this.store$.dispatch(new ValidationError(`${controlName} is blank`));
+        this.store$.dispatch(new OfficeValidationError(`${controlName} is blank`));
       }
     });
     this.createToast('Fill all mandatory fields');

@@ -9,6 +9,7 @@ import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/an
 import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
+  AnalyticsErrorTypes,
 } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -80,6 +81,40 @@ describe('Health Declaration Analytics Effects', () => {
       });
     });
 
+  });
+
+  describe('validationErrorEffect', () => {
+    it('should call logError', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
+      // ACT
+      actions$.next(new healthDeclarationActions.HealthDeclarationValidationError('error message'));
+      // ASSERT
+      effects.validationErrorEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logError)
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${AnalyticsScreenNames.HEALTH_DECLARATION})`,
+          'error message');
+        done();
+      });
+    });
+
+    it('should call logError with pass, prefixed with practice mode', (done) => {
+      // ARRANGE
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      const practiceScreenName =
+        `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.HEALTH_DECLARATION}`;
+      // ACT
+      actions$.next(new healthDeclarationActions.HealthDeclarationValidationError('error message'));
+      // ASSERT
+      effects.validationErrorEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logError)
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${practiceScreenName})`,
+          'error message');
+        done();
+      });
+    });
   });
 
 });

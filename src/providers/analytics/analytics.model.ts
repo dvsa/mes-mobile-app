@@ -45,7 +45,7 @@ export enum AnalyticsScreenNames {
 
 export enum AnalyticsEventCategories {
   CLICK = 'click',
-  LIFECYCLE = 'lifecycle',
+  TEST_LIFECYCLE = 'test lifecycle',
   ERROR = 'error',
   JOURNAL = 'journal',
   AUTHENTICATION = 'authentication',
@@ -59,6 +59,7 @@ export enum AnalyticsEventCategories {
   REKEY_SEARCH = 'rekey search',
   REKEY = 'rekey',
   VEHICLE_CHECKS = 'vehicle checks',
+
 }
 
 export enum AnalyticsEvents {
@@ -74,6 +75,10 @@ export enum AnalyticsEvents {
   DEFER_WRITE_UP = 'defer write-up',
   SAVE_WRITE_UP = 'save write-up',
   COMPLETE_TEST = 'complete test',
+  TEST_DECIDED = 'test decided',
+  TEST_IN_WRITE_UP = 'test in write up',
+  TEST_AUTOSAVED = 'test autosaved',
+  TEST_SUBMITTED = 'test submitted',
   COMPLETE_REKEY_TEST = 'complete rekey test',
   SUBMIT_TEST = 'submit test',
   SUBMIT_REKEY_TEST = 'submit rekey test',

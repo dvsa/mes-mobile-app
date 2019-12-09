@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, Platform } from 'ionic-angular';
 import { NavControllerMock, PlatformMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
@@ -9,7 +9,10 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { NonPassFinalisationCatBEPage } from '../non-pass-finalisation.cat-be.page';
-import { NonPassFinalisationViewDidEnter } from '../../non-pass-finalisation.actions';
+import {
+  NonPassFinalisationViewDidEnter,
+  NonPassFinalisationValidationError,
+} from '../../non-pass-finalisation.actions';
 import { ActivityCodeComponent } from '../../../office/components/activity-code/activity-code';
 import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
 import * as testActions from '../../../../modules/tests/tests.actions';
@@ -27,6 +30,7 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
 '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 describe('NonPassFinalisationCatBEPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatBEPage>;
@@ -126,6 +130,24 @@ describe('NonPassFinalisationCatBEPage', () => {
         // Assert
         expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
+
+      it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
+        component.form = new FormGroup({
+          requiredControl1: new FormControl(null, [Validators.required]),
+          requiredControl2: new FormControl(null, [Validators.required]),
+          notRequiredControl: new FormControl(null),
+        });
+
+        component.continue();
+        tick();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new NonPassFinalisationValidationError('requiredControl1 is blank'));
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new NonPassFinalisationValidationError('requiredControl2 is blank'));
+        expect(store$.dispatch)
+          .not
+          .toHaveBeenCalledWith(new NonPassFinalisationValidationError('notRequiredControl is blank'));
+      }));
     });
   });
 });

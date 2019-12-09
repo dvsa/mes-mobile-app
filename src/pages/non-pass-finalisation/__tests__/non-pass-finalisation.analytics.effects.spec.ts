@@ -4,7 +4,11 @@ import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
-import { AnalyticsScreenNames, AnalyticsEventCategories } from '../../../providers/analytics/analytics.model';
+import {
+  AnalyticsScreenNames,
+  AnalyticsEventCategories,
+  AnalyticsErrorTypes,
+} from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as testsActions from '../../../modules/tests/tests.actions';
@@ -73,6 +77,41 @@ describe('Non Pass Finalisation Analytics Effects', () => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.setCurrentPage)
           .toHaveBeenCalledWith(practiceScreenName);
+        done();
+      });
+    });
+  });
+
+  describe('validationErrorEffect', () => {
+    it('should call logError', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
+      // ACT
+      actions$.next(new nonPassFinalisationActions.NonPassFinalisationValidationError('error message'));
+      // ASSERT
+      effects.validationErrorEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logError)
+          .toHaveBeenCalledWith(
+            `${AnalyticsErrorTypes.VALIDATION_ERROR} (${AnalyticsScreenNames.NON_PASS_FINALISATION})`,
+          'error message');
+        done();
+      });
+    });
+
+    it('should call logError with pass, prefixed with practice mode', (done) => {
+      // ARRANGE
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      const practiceScreenName =
+        `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.NON_PASS_FINALISATION}`;
+      // ACT
+      actions$.next(new nonPassFinalisationActions.NonPassFinalisationValidationError('error message'));
+      // ASSERT
+      effects.validationErrorEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logError)
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${practiceScreenName})`,
+          'error message');
         done();
       });
     });
