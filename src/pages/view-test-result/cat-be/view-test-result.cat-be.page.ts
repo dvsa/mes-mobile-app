@@ -11,23 +11,14 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { SearchProvider } from '../../../providers/search/search';
 import { IpadIssue } from '@dvsa/mes-test-schema/categories/Common';
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { Subscription } from 'rxjs/Subscription';
 import { DateTime } from '../../../shared/helpers/date-time';
-import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
-import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
-import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
-import { RekeyReasonModel } from '../components/rekey-reason-card/rekey-reason-card.model';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
-import { TestSummaryCardModel } from './components/test-summary-card/test-summary-card-model';
-import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { getCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
-import { DebriefCardModel } from './components/debrief-card/debrief-card.model';
 import {
   manoeuvreTypeLabels,
 } from '../../../shared/constants/competencies/catb-manoeuvres';
@@ -46,19 +37,25 @@ import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-categ
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { HttpResponse } from '@angular/common/http';
+import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
+import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
+import { VehicleDetailsModel } from '../cat-b/components/vehicle-details-card/vehicle-details-card.model';
+import { TestSummaryCardModel } from '../cat-b/components/test-summary-card/test-summary-card-model';
+import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
+import { DebriefCardModel } from '../cat-b/components/debrief-card/debrief-card.model';
+import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { RekeyReasonModel } from '../components/rekey-reason-card/rekey-reason-card.model';
 
 @IonicPage()
 @Component({
-  selector: '.view-test-result-cat-b-page',
-  templateUrl: 'view-test-result.cat-b.page.html',
+  selector: '.view-test-result-cat-be-page',
+  templateUrl: 'view-test-result.cat-be.page.html',
 })
-export class ViewTestResultCatBPage extends BasePageComponent implements OnInit {
+export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
-  // TODO: currently this page is tightly couple to category B,
-  // when we introduce B+E we will need to refactor this to
-  // use the TestResultCommonSchema interface
-  testResult: CatBUniqueTypes.TestResult;
+  testResult: CatBEUniqueTypes.TestResult;
 
   isLoading: boolean;
   loadingSpinner: Loading;
@@ -93,7 +90,7 @@ export class ViewTestResultCatBPage extends BasePageComponent implements OnInit 
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
         map((response: HttpResponse<any>): string => response.body),
-        map(data => this.testResult = this.compressionProvider.extractTestResult(data) as CatBUniqueTypes.TestResult),
+        map(data => this.testResult = this.compressionProvider.extractTestResult(data) as CatBEUniqueTypes.TestResult),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
           this.store$.dispatch(new SaveLog(this.logHelper
@@ -241,13 +238,15 @@ export class ViewTestResultCatBPage extends BasePageComponent implements OnInit 
 
     return {
       legalRequirements: get(this.testResult, 'testData.testRequirements'),
-      manoeuvres: this.getManoeuvres(),
+      // TODO - Need to add these back in
+      // manoeuvres: this.getManoeuvres(),
       controlledStop: get(this.testResult, 'testData.controlledStop.selected'),
       ecoControl: get(this.testResult, 'testData.eco.adviceGivenControl'),
       ecoPlanning: get(this.testResult, 'testData.eco.adviceGivenPlanning'),
       eta: this.getETA(),
-      showMeQuestion: this.getShowMeQuestion(),
-      tellMeQuestion: this.getTellMeQuestion(),
+      // TODO - Need to add these back in
+      // showMeQuestion: null,
+      // tellMeQuestion: null ,
       dangerousFaults: this.getDangerousFaults(),
       seriousFaults: this.getSeriousFaults(),
       drivingFaults: this.getDrivingFaults(),
@@ -258,6 +257,7 @@ export class ViewTestResultCatBPage extends BasePageComponent implements OnInit 
     };
   }
 
+  // TODO - This needs to be refactored for B+E
   getManoeuvres(): string[] {
     const manoeuvres = [];
 
@@ -296,6 +296,7 @@ export class ViewTestResultCatBPage extends BasePageComponent implements OnInit 
     return eta;
   }
 
+  // TODO - Needs to be refactored
   getShowMeQuestion(): VehicleChecksQuestion {
     const showMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.showMeQuestion.code');
     return this.questionProvider
@@ -303,6 +304,7 @@ export class ViewTestResultCatBPage extends BasePageComponent implements OnInit 
       .find(question => question.code === showMeQuestionCode);
   }
 
+  // TODO - Needs to be refactored
   getTellMeQuestion(): VehicleChecksQuestion {
     const tellMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.tellMeQuestion.code');
     return this.questionProvider
@@ -311,18 +313,18 @@ export class ViewTestResultCatBPage extends BasePageComponent implements OnInit 
   }
 
   getDangerousFaults(): FaultSummary[] {
-    const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getDangerousFaultsList(testData, TestCategory.B);
+    const testData: CatBEUniqueTypes.TestData = get(this.testResult, 'testData');
+    return this.faultSummaryProvider.getDangerousFaultsList(testData, TestCategory.BE);
   }
 
   getSeriousFaults(): FaultSummary[] {
-    const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getSeriousFaultsList(testData, TestCategory.B);
+    const testData: CatBEUniqueTypes.TestData = get(this.testResult, 'testData');
+    return this.faultSummaryProvider.getSeriousFaultsList(testData, TestCategory.BE);
   }
 
   getDrivingFaults(): FaultSummary[] {
-    const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getDrivingFaultsList(testData, TestCategory.B);
+    const testData: CatBEUniqueTypes.TestData = get(this.testResult, 'testData');
+    return this.faultSummaryProvider.getDrivingFaultsList(testData, TestCategory.BE);
   }
 
   getRekeyDetails(): RekeyDetailsModel {

@@ -1,0 +1,42 @@
+<ion-card *ngIf="!shouldHideCard()">
+  <ion-card-header>
+    <h4>Test summary</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <data-row-custom [label]="'Accompanied by'">
+          <span class=mes-data *ngIf="data.accompaniment.length === 0">None</span>
+          <span class="mes-data">{{ getFlattenArray(data.accompaniment) }}</span>
+      </data-row-custom>
+      <data-row
+        [label]="'Licence provided'"
+        [value]="getConvertBooleanToString(data.provisionalLicenceProvided)"
+        *ngIf="shouldDisplayLicenceProvided(data.provisionalLicenceProvided)">
+      </data-row>
+      <data-row
+        [label]="'Certificate number'"
+        [value]="data.passCertificateNumber"
+        *ngIf="data.passCertificateNumber">
+      </data-row>
+      <data-row-custom [label]="'Route number'">
+        <span class="mes-data" *ngIf="!data.routeNumber">None</span>
+        <span class="mes-data">{{ data.routeNumber }}</span>
+      </data-row-custom>
+      <data-row-custom [label]="'Independent driving'">
+        <span class="mes-data" *ngIf="!data.independentDriving">None</span>
+        <span class="mes-data">{{ data.independentDriving }}</span>
+      </data-row-custom>
+      <data-row-custom [label]="'Physical description of candidate'">
+        <span class="mes-data" *ngIf="!data.candidateDescription">None</span>
+        <span class="mes-data">{{ data.candidateDescription }}</span>
+      </data-row-custom>
+      <data-row [label]="'Debrief witnessed'" [value]="getConvertBooleanToString(data.debriefWitnessed)"></data-row>
+      <data-row-custom [label]="'Weather conditions'">
+        <span class="mes-data" *ngIf="data.weatherConditions.length === 0">None</span>
+        <span class="mes-data">{{ getFlattenArray(data.weatherConditions) }}</span>
+      </data-row-custom>
+      <data-row [label]="'D255'" [value]="getConvertBooleanToString(data.D255)"></data-row>
+      <data-row [label]="'Additional information'" [value]="data.additionalInformation"></data-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

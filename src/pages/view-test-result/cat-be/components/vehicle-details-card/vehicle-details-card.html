@@ -1,0 +1,28 @@
+<ion-card *ngIf="!shouldHideCard()">
+  <ion-card-header>
+    <h4>Vehicle details</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <data-row
+        [label]="'Transmission'"
+        [value]="data.transmission"
+        *ngIf="data.transmission"
+        [shouldHaveSeperator]="data.registrationNumber || data.vehicleDetails  ? true : false">
+      </data-row>
+      <data-row
+        [label]="'Vehicle registration number'"
+        [value]="data.registrationNumber"
+        *ngIf="data.registrationNumber"
+        [shouldHaveSeperator]="data.vehicleDetails ? true: false">
+      </data-row>
+      <data-row-custom
+        [label]="'Vehicle details'"
+        *ngIf="data.vehicleDetails"
+        [shouldHaveSeperator]="false">
+          <span class=mes-data *ngIf="data.vehicleDetails.length === 0">None</span>
+          <span class="mes-data">{{ getFlattenArray(data.vehicleDetails) }}</span>
+      </data-row-custom>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
