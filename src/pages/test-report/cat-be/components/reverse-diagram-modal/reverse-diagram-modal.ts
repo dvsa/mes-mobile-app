@@ -19,6 +19,8 @@ interface ReverseDiagramPageState {
   vehicleWidth$: Observable<number>;
 }
 
+type OnCloseFunc = () => void;
+
 @IonicPage()
 @Component({
   selector: 'reverse-diagram-modal',
@@ -32,14 +34,14 @@ export class ReverseDiagramCatBEPage implements OnInit {
   @Input()
   vehicleWidth: number;
 
-  onClose: Function;
+  onClose: OnCloseFunc;
 
   componentState: ReverseDiagramPageState;
   subscription: Subscription;
   merged$: Observable<number>;
-  aAndA1: number;
-  aToA1: number;
-  b: number;
+  distanceFromStart: number;
+  distanceFromMiddle: number;
+  distanceOfBayWidth: number;
 
   constructor(
     private navParams: NavParams,
@@ -75,15 +77,15 @@ export class ReverseDiagramCatBEPage implements OnInit {
   }
 
   calculateDistanceLength(vehicleLength: number): void {
-    const aAndA1 = vehicleLength * 4;
-    const b = vehicleLength * 2;
-    this.b = Math.round(b * 100) / 100;
-    this.aAndA1 = Math.round(aAndA1 * 100) / 100;
+    const distanceFromStart = vehicleLength * 4;
+    const distanceFromMiddle = vehicleLength * 2;
+    this.distanceFromMiddle = Math.round(distanceFromMiddle * 100) / 100;
+    this.distanceFromStart = Math.round(distanceFromStart * 100) / 100;
   }
 
   calculateDistanceWidth(vehicleWidth: number): void {
-    const aToA1 = vehicleWidth * 1.5;
-    this.aToA1 = Math.round(aToA1 * 100) / 100;
+    const distanceOfBayWidth = vehicleWidth * 1.5;
+    this.distanceOfBayWidth = Math.round(distanceOfBayWidth * 100) / 100;
   }
 
   ionViewWillEnter(): boolean {

@@ -63,17 +63,17 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
   describe('reverseDiagramViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.BE));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
-      store$.dispatch(new PopulateTestCategory(TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.BE));
       // ACT
       actions$.next(new reverseDiagramModalActions.ReverseDiagramViewDidEnter());
       // ASSERT
       effects.reverseDiagramViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-        .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
+        .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B+E');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
@@ -88,14 +88,14 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
-      store$.dispatch(new PopulateTestCategory(TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.BE));
       // ACT
       actions$.next(new reverseDiagramModalActions.ReverseDiagramViewDidEnter());
       // ASSERT
       effects.reverseDiagramViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-        .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
+        .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B+E');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)

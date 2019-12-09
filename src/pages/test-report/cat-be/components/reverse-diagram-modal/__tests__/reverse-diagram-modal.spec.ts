@@ -122,13 +122,13 @@ describe('reverseDiagramModal', () => {
     describe('calculateDistanceLength', () => {
       it('should set the correct value for aAndA1', () => {
         component.calculateDistanceLength(vehicleDetails.vehicleLength);
-        const result = component.aAndA1;
+        const result = component.distanceFromStart;
         expect(result).toEqual(40);
       });
 
       it('should set the correct value for b', () => {
         component.calculateDistanceLength(vehicleDetails.vehicleLength);
-        const result = component.b;
+        const result = component.distanceFromMiddle;
         expect(result).toEqual(20);
       });
     });
@@ -136,7 +136,7 @@ describe('reverseDiagramModal', () => {
     describe('calculateDistanceWidth', () => {
       it('should set the correct value for aToA1', () => {
         component.calculateDistanceWidth(vehicleDetails.vehicleWidth);
-        const result = component.aToA1;
+        const result = component.distanceOfBayWidth;
         expect(result).toEqual(4.13);
       });
     });
