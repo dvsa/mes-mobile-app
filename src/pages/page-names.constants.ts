@@ -42,5 +42,5 @@ export const CAT_BE = {
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBEPage',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatBEModal',
-  VIEW_TEST_RESULT_PAGE:'ViewTestResultCatBPage',
+  VIEW_TEST_RESULT_PAGE:'ViewTestResultCatBEPage',
 };
