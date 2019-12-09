@@ -10,7 +10,6 @@ import {
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { SearchProvider } from '../../../providers/search/search';
-import { IpadIssue } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
@@ -20,7 +19,6 @@ import { DateTime } from '../../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
 import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
-import { RekeyReasonModel } from '../components/rekey-reason-card/rekey-reason-card.model';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { TestSummaryCardModel } from './components/test-summary-card/test-summary-card-model';
@@ -339,45 +337,6 @@ export class ViewTestResultCatBPage extends BasePageComponent implements OnInit 
       testDate: testDate.format('dddd Do MMMM YYYY'),
       rekeyedStaffNumber: this.testResult.examinerKeyed,
       rekeyDate: rekeyDate.format('dddd Do MMMM YYYY'),
-    };
-  }
-
-  getRekeyReason(): RekeyReasonModel {
-    if (!this.testResult || !this.testResult.rekey) {
-      return null;
-    }
-
-    const isIpadIssueSelected:boolean = get(this.testResult, 'rekeyReason.ipadIssue.selected', false);
-    const isTransferSelected: boolean = get(this.testResult, 'rekeyReason.transfer.selected', false);
-    const isOtherSelected: boolean = get(this.testResult, 'rekeyReason.other.selected', false);
-
-    const getIpadIssueDisplayText = (reasonType: IpadIssue): string => {
-
-      let value = '';
-
-      if (reasonType.broken) {
-        value = 'Broken';
-      }
-
-      if (reasonType.lost) {
-        value = 'Lost';
-      }
-
-      if (reasonType.technicalFault) {
-        value = 'Technical fault';
-      }
-
-      if (reasonType.stolen) {
-        value = 'Stolen';
-      }
-
-      return value;
-    };
-
-    return {
-      ipadIssue: isIpadIssueSelected ? getIpadIssueDisplayText(get(this.testResult, 'rekeyReason.ipadIssue')) : 'None',
-      transfer: isTransferSelected ? 'Yes' : 'No',
-      other: isOtherSelected ? get(this.testResult, 'rekeyReason.other.reason') : 'N/A',
     };
   }
 

@@ -22,7 +22,6 @@ import { TestDetailsCardComponent } from '../../components/test-details-card/tes
 import { RekeyDetailsCardComponent } from '../../components/rekey-details-card/rekey-details';
 import { RekeyDetailsModel } from '../../components/rekey-details-card/rekey-details-card.model';
 import { RekeyReasonCardComponent } from '../../components/rekey-reason-card/rekey-reason';
-import { RekeyReasonModel } from '../../components/rekey-reason-card/rekey-reason-card.model';
 import { ExaminerDetailsCardComponent } from '../../components/examiner-details-card/examiner-details';
 import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
@@ -142,21 +141,6 @@ describe('ViewTestResultCatBEPage', () => {
         expect(result.testDate).toBe('Friday 5th July 2019');
         expect(result.rekeyedStaffNumber).toBe(1);
         expect(result.rekeyDate).toBe('Monday 5th August 2019');
-      });
-      it('should return null when there is no test result', () => {
-        const result: RekeyDetailsModel = component.getRekeyDetails();
-        expect(result).toBeNull();
-      });
-    });
-    describe('getRekeyReason', () => {
-      it('should correctly generate the data', () => {
-        component.testResult = categoryBETestResultMock;
-
-        const result: RekeyReasonModel = component.getRekeyReason();
-
-        expect(result.ipadIssue).toBe('Lost');
-        expect(result.transfer).toBe('No');
-        expect(result.other).toBe('mock reason');
       });
       it('should return null when there is no test result', () => {
         const result: RekeyDetailsModel = component.getRekeyDetails();

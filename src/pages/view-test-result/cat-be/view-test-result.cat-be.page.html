@@ -17,7 +17,7 @@
     <test-details-card [data]="getTestDetails()"></test-details-card>
     <div *ngIf="testResult.rekey">
       <rekey-details-card [rekeyDetails]='getRekeyDetails()'></rekey-details-card>
-      <rekey-reason-card [rekeyReason]='getRekeyReason()'></rekey-reason-card>
+      <rekey-reason-card [data]='testResult.rekeyReason'></rekey-reason-card>
     </div>
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
     <vehicle-details-card [data]='getVehicleDetails()'></vehicle-details-card>

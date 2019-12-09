@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { RekeyReason } from '@dvsa/mes-test-schema/categories/Common';
+import { RekeyReason, IpadIssue } from '@dvsa/mes-test-schema/categories/Common';
+import { get } from 'lodash';
 
 @Component({
   selector: 'rekey-reason-card',
@@ -8,8 +9,46 @@ import { RekeyReason } from '@dvsa/mes-test-schema/categories/Common';
 export class RekeyReasonCardComponent {
 
   @Input()
-  rekeyReason: RekeyReason;
+  data: RekeyReason;
 
   constructor() {}
+
+  public getIPadIssue(): string {
+    const isIpadIssueSelected:boolean = get(this.data, 'ipadIssue.selected', false);
+    return isIpadIssueSelected ? this.getIpadIssueDisplayText(get(this.data, 'ipadIssue')) : 'None';
+  }
+
+  public getTransfer (): string {
+    const isTransferSelected: boolean = get(this.data, 'transfer.selected', false);
+    return isTransferSelected ? 'Yes' : 'No';
+  }
+
+  public getOther (): string {
+    const isOtherSelected: boolean = get(this.data, 'other.selected', false);
+    return isOtherSelected ? get(this.data, 'other.reason') : 'N/A';
+  }
+
+  private getIpadIssueDisplayText (reasonType: IpadIssue): string {
+
+    let value = '';
+
+    if (reasonType.broken) {
+      value = 'Broken';
+    }
+
+    if (reasonType.lost) {
+      value = 'Lost';
+    }
+
+    if (reasonType.technicalFault) {
+      value = 'Technical fault';
+    }
+
+    if (reasonType.stolen) {
+      value = 'Stolen';
+    }
+
+    return value;
+  }
 
 }
