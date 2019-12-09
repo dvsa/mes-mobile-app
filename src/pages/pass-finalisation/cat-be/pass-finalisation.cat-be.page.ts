@@ -94,7 +94,7 @@ interface PassFinalisationPageState {
 })
 export class PassFinalisationCatBEPage extends BasePageComponent {
   pageState: PassFinalisationPageState;
-  passCertificateCtrl: string = 'passCertificateNumberCtrl';
+  passCertificateCtrl: string = PASS_CERTIFICATE_NUMBER_CTRL;
   @ViewChild('passCertificateNumberInput')
   passCertificateNumberInput: ElementRef;
   inputSubscriptions: Subscription[] = [];
@@ -164,7 +164,7 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
       passCertificateNumber$: currentTest$.pipe(
         select(getPassCompletion),
         select(getPassCertificateNumber),
-        tap(val => this.form.controls['passCertificateNumberCtrl'].setValue(val)),
+        tap(val => this.form.controls[this.passCertificateCtrl].setValue(val)),
       ),
       transmission$: currentTest$.pipe(
         select(getVehicleDetails),

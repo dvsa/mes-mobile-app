@@ -6,6 +6,7 @@ import {
 import {
   PASS_CERTIFICATE_LENGTH,
 } from '../../../../providers/pass-certificate-validation/pass-certificate-validation.constants';
+import { PASS_CERTIFICATE_NUMBER_CTRL } from './pass-certificate-number.constants';
 
 @Component({
   selector: 'pass-certificate-number',
@@ -26,7 +27,7 @@ export class PassCertificateNumberComponent implements OnChanges {
   passCertificateNumberChange = new EventEmitter<string>();
 
   formControl: FormControl;
-  static readonly fieldName: string = 'passCertificateNumberCtrl';
+  static readonly fieldName: string = PASS_CERTIFICATE_NUMBER_CTRL;
 
   ngOnChanges(): void {
     if (!this.formControl) {
