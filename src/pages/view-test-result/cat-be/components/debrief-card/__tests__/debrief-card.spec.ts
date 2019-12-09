@@ -18,6 +18,9 @@ import { DataRowComponent } from '../../../../components/data-row/data-row';
 import { DataRowCustomComponent } from '../../../../components/data-row-custom/data-row-custom';
 import { DataRowWithListComponent } from '../../../../components/data-row-with-list/data-list-with-row';
 import { FaultsDataRowComponent } from '../../../../components/faults-data-row/faults-data-row';
+import { VehicleChecksDataRowComponent } from '../../../../components/vehicle-checks-data-row/vehicle-checks-data-row';
+import { FaultSummaryProvider } from '../../../../../../providers/fault-summary/fault-summary';
+import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 
 describe('DebriefCardComponent', () => {
   let fixture: ComponentFixture<DebriefCardComponent>;
@@ -35,12 +38,15 @@ describe('DebriefCardComponent', () => {
         MockComponent(DataRowCustomComponent),
         MockComponent(DataRowWithListComponent),
         MockComponent(FaultsDataRowComponent),
+        MockComponent(VehicleChecksDataRowComponent),
       ],
       imports: [
         IonicModule,
       ],
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
+        FaultSummaryProvider,
+        FaultCountProvider,
       ],
     })
       .compileComponents()
