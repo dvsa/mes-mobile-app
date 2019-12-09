@@ -56,7 +56,7 @@ import {
   ActivityCodeDescription,
 } from '../../components/activity-code/activity-code.constants';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
-import { CompleteTest, ValidationError } from '../../office.actions';
+import { CompleteTest, OfficeValidationError } from '../../office.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastControllerMock } from '../../__mocks__/toast-controller-mock';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
@@ -337,12 +337,12 @@ describe('OfficePage', () => {
       component.onSubmit();
       tick();
       expect(store$.dispatch)
-        .toHaveBeenCalledWith(new ValidationError('requiredControl1 is blank'));
+        .toHaveBeenCalledWith(new OfficeValidationError('requiredControl1 is blank'));
       expect(store$.dispatch)
-        .toHaveBeenCalledWith(new ValidationError('requiredControl2 is blank'));
+        .toHaveBeenCalledWith(new OfficeValidationError('requiredControl2 is blank'));
       expect(store$.dispatch)
         .not
-        .toHaveBeenCalledWith(new ValidationError('notRequiredControl is blank'));
+        .toHaveBeenCalledWith(new OfficeValidationError('notRequiredControl is blank'));
     }));
   });
 });

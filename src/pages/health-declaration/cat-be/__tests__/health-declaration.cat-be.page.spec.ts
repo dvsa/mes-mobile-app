@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform, AlertController } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, AlertControllerMock } from 'ionic-mocks';
 
@@ -11,7 +11,10 @@ import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { HealthDeclarationViewDidEnter } from '../../health-declaration.actions';
+import {
+  HealthDeclarationViewDidEnter,
+  HealthDeclarationValidationError,
+} from '../../health-declaration.actions';
 import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
 import {
   DeviceAuthenticationProviderMock,
@@ -33,6 +36,7 @@ import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { SignatureComponent } from '../../components/signature/signature';
 import { HealthDeclarationComponent } from '../../components/health-declaration/health-declaration';
 import { ReceiptDeclarationComponent } from '../../components/receipt-declaration/receipt-declaration';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 describe('HealthDeclarationCatBEPage', () => {
   let fixture: ComponentFixture<HealthDeclarationCatBEPage>;
@@ -173,6 +177,23 @@ describe('HealthDeclarationCatBEPage', () => {
         expect(component.showConfirmHealthDeclarationModal).toHaveBeenCalled();
       }));
 
+      it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
+        component.form = new FormGroup({
+          requiredControl1: new FormControl(null, [Validators.required]),
+          requiredControl2: new FormControl(null, [Validators.required]),
+          notRequiredControl: new FormControl(null),
+        });
+
+        component.onSubmit();
+        tick();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new HealthDeclarationValidationError('requiredControl1 is blank'));
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new HealthDeclarationValidationError('requiredControl2 is blank'));
+        expect(store$.dispatch)
+          .not
+          .toHaveBeenCalledWith(new HealthDeclarationValidationError('notRequiredControl is blank'));
+      }));
     });
   });
 

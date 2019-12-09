@@ -5,6 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
   PassFinalisationViewDidEnter,
+  PassFinalisationValidationError,
 } from './../pass-finalisation.actions';
 import {
   ProvisionalLicenseReceived,
@@ -67,6 +68,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -92,7 +94,7 @@ interface PassFinalisationPageState {
 })
 export class PassFinalisationCatBEPage extends BasePageComponent {
   pageState: PassFinalisationPageState;
-  passCertificateCtrl: string = 'passCertificateNumberCtrl';
+  passCertificateCtrl: string = PASS_CERTIFICATE_NUMBER_CTRL;
   @ViewChild('passCertificateNumberInput')
   passCertificateNumberInput: ElementRef;
   inputSubscriptions: Subscription[] = [];
@@ -162,7 +164,7 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
       passCertificateNumber$: currentTest$.pipe(
         select(getPassCompletion),
         select(getPassCertificateNumber),
-        tap(val => this.form.controls['passCertificateNumberCtrl'].setValue(val)),
+        tap(val => this.form.controls[this.passCertificateCtrl].setValue(val)),
       ),
       transmission$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -225,7 +227,16 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
     if (this.form.valid) {
       this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_BE.HEALTH_DECLARATION_PAGE);
+      return;
     }
+    Object.keys(this.form.controls).forEach((controlName) => {
+      if (this.form.controls[controlName].invalid) {
+        if (controlName === PASS_CERTIFICATE_NUMBER_CTRL) {
+          this.store$.dispatch(new PassFinalisationValidationError(`${controlName} is invalid`));
+        }
+        this.store$.dispatch(new PassFinalisationValidationError(`${controlName} is blank`));
+      }
+    });
   }
 
   passCertificateNumberChanged(passCertificateNumber: string): void {

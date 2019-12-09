@@ -5,10 +5,13 @@ import { switchMap, concatMap, withLatestFrom } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsScreenNames,
+  AnalyticsErrorTypes,
 } from '../../providers/analytics/analytics.model';
 import {
   PASS_FINALISTATION_VIEW_DID_ENTER,
   PassFinalisationViewDidEnter,
+  PASS_FINALISTATION_VALIDATION_ERROR,
+  PassFinalisationValidationError,
 } from './pass-finalisation.actions';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { StoreModel } from '../../shared/models/store.model';
@@ -38,8 +41,27 @@ export class PassFinalisationAnalyticsEffects {
       )),
     ),
     switchMap(([action, tests]: [PassFinalisationViewDidEnter, TestsModel]) => {
-      this.analytics.setCurrentPage(
-        formatAnalyticsText(AnalyticsScreenNames.PASS_FINALISATION, tests),
+      const screenName = formatAnalyticsText(AnalyticsScreenNames.PASS_FINALISATION, tests);
+      this.analytics.setCurrentPage(screenName);
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  validationErrorEffect$ = this.actions$.pipe(
+    ofType(PASS_FINALISTATION_VALIDATION_ERROR),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      )),
+    ),
+    switchMap(([action, tests]: [PassFinalisationValidationError, TestsModel]) => {
+      const formattedScreenName = formatAnalyticsText(AnalyticsScreenNames.PASS_FINALISATION, tests);
+      this.analytics.logError(
+        `${AnalyticsErrorTypes.VALIDATION_ERROR} (${formattedScreenName})`,
+        action.errorMessage,
       );
       return of(new AnalyticRecorded());
     }),

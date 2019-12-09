@@ -8,8 +8,8 @@ import {
 import {
   OFFICE_VIEW_DID_ENTER,
   SAVING_WRITE_UP_FOR_LATER,
-  VALIDATION_ERROR,
-  ValidationError,
+  OFFICE_VALIDATION_ERROR,
+  OfficeValidationError,
   SavingWriteUpForLater,
   OfficeViewDidEnter,
   COMPLETE_TEST,
@@ -132,7 +132,7 @@ export class OfficeAnalyticsEffects {
 
   @Effect()
   validationErrorEffect$ = this.actions$.pipe(
-    ofType(VALIDATION_ERROR),
+    ofType(OFFICE_VALIDATION_ERROR),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -145,7 +145,7 @@ export class OfficeAnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests, isPassed]: [ValidationError, TestsModel, boolean]) => {
+    switchMap(([action, tests, isPassed]: [OfficeValidationError, TestsModel, boolean]) => {
       const screenName = isPassed ? AnalyticsScreenNames.PASS_TEST_SUMMARY : AnalyticsScreenNames.FAIL_TEST_SUMMARY;
       const formattedScreenName = formatAnalyticsText(screenName, tests);
       this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${formattedScreenName})`,
