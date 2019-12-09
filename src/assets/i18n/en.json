@@ -69,8 +69,8 @@
       "controlledStop": "Controlled stop",
       "eyesightTest": "Eyesight test",
       "uncoupleRecouple": "Uncouple / Recouple",
-      "reverseLeftControl": "Reverse left - Control",
-      "reverseLeftObservation": "Reverse left - Observation"
+      "reverseLeftControl": "Reverse - Control",
+      "reverseLeftObservation": "Reverse - Observation"
     },
     "dangerousFault": "Dangerous fault",
     "dangerousFaultsCardDescription": "dangerous faults",
