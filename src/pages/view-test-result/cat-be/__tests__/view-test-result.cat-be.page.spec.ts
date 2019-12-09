@@ -37,11 +37,7 @@ import { ViewTestHeaderComponent } from '../../components/view-test-header/view-
 import { ViewTestHeaderModel } from '../../components/view-test-header/view-test-header.model';
 import { TestOutcome } from '../../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
-import { manoeuvreTypeLabels } from '../../../../shared/constants/competencies/catb-manoeuvres';
-import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
 import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
-import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { ViewTestResultCatBEPage } from '../view-test-result.cat-be.page';
 
 describe('ViewTestResultCatBEPage', () => {
@@ -81,7 +77,6 @@ describe('ViewTestResultCatBEPage', () => {
         },
         { provide: SearchProvider, useClass: SearchProviderMock },
         { provide: CompressionProvider, useClass: CompressionProviderMock },
-        FaultSummaryProvider,
       ],
     })
       .compileComponents()
@@ -215,180 +210,6 @@ describe('ViewTestResultCatBEPage', () => {
         expect(result).toBeNull();
       });
     });
-    describe('getDebrief', () => {
-      // TODO - Need to update test
-      xit('should return the correct data', () => {
-        component.testResult = categoryBETestResultMock;
-        const result: DebriefCardModel = component.getDebrief();
-
-        expect(result.legalRequirements).toEqual([]);
-
-        expect(result.ecoControl).toEqual(true);
-        expect(result.ecoPlanning).toEqual(false);
-      });
-      it('should return null when there is no test result', () => {
-        const result: DebriefCardModel = component.getDebrief();
-        expect(result).toBeNull();
-      });
-    });
-    describe('getManoeuvres', () => {
-      // TODO - need to rewrite
-      xit('should return None where no manoeuvre has been completed', () => {
-        expect(component.getManoeuvres()).toEqual(['None']);
-      });
-      xit('should return the correct values for the manoeuvres', () => {
-        component.testResult = categoryBETestResultMock;
-        expect(component.getManoeuvres()).toEqual([
-          manoeuvreTypeLabels.forwardPark,
-          manoeuvreTypeLabels.reverseRight,
-        ]);
-      });
-    });
-    describe('getETA', () => {
-      it('should return None when there have been no ETAs', () => {
-        expect(component.getETA()).toEqual(['None']);
-      });
-      it('should return the correct values for the ETAs', () => {
-        component.testResult = categoryBETestResultMock;
-        expect(component.getETA()).toEqual(['Verbal']);
-      });
-    });
-    describe('getShowMeQuestion', () => {
-      // TODO - need to rewrite
-      xit('should return undefined if there is no show me question', () => {
-        component.testResult = {
-          category: TestCategory.B,
-          journalData: null,
-          activityCode: null,
-          version: null,
-          rekey: false,
-          changeMarker: false,
-          examinerBooked: null,
-          examinerConducted: null,
-          examinerKeyed: null,
-        };
-        expect(component.getShowMeQuestion()).toBeUndefined();
-      });
-      xit('should return the correct value for a show me question', () => {
-        component.testResult = categoryBETestResultMock;
-        const result = component.getShowMeQuestion();
-
-        expect(result).toEqual({
-          code: 'S1',
-          description:
-            'When it is safe to do so can you show me how you wash and clean the rear windscreen.',
-          shortName: 'Rear windscreen',
-        });
-      });
-    });
-    describe('getTellMeQuestion', () => {
-      // TODO - need to rewrite
-      xit('should return undefined if there is no tell me question', () => {
-        component.testResult = {
-          category: TestCategory.B,
-          journalData: null,
-          activityCode: null,
-          version: null,
-          rekey: false,
-          changeMarker: false,
-          examinerBooked: null,
-          examinerConducted: null,
-          examinerKeyed: null,
-        };
-        expect(component.getTellMeQuestion()).toBeUndefined();
-      });
-      xit('should return the correct value for the tell me question', () => {
-        component.testResult = categoryBETestResultMock;
-        const result = component.getTellMeQuestion();
-
-        expect(result).toEqual({
-          code: 'T2',
-          description:
-            // tslint:disable-next-line:max-line-length
-            'Tell me where you would find the information for the recommended tyre pressures for this car and how tyre pressures should be checked.',
-          shortName: 'Tyre pressures',
-        });
-      });
-    });
-    describe('getDangerousFaults', () => {
-      it('should return the correct data', () => {
-        component.testResult = categoryBETestResultMock;
-
-        const result = component.getDangerousFaults();
-
-        expect(result).toEqual([{
-          comment: 'mock-ancillary-controls-comment',
-          competencyIdentifier: 'ancillaryControls',
-          competencyDisplayName: 'Ancillary Controls',
-          source: 'simple',
-          faultCount: 1,
-        }]);
-      });
-    });
-    describe('getSeriousFaults', () => {
-      it('should return the correct data', () => {
-        component.testResult = categoryBETestResultMock;
-
-        const result = component.getSeriousFaults();
-
-        expect(result).toEqual([
-          {
-            comment: 'mock-clearance-comments',
-            competencyIdentifier: 'clearance',
-            competencyDisplayName: 'Clearance',
-            source: 'simple',
-            faultCount: 1,
-          },
-          {
-            faultCount: 1,
-            competencyDisplayName: 'Reverse left - Observation',
-            competencyIdentifier: 'reverseLeftObservation',
-            source: 'Manoeuvres-reverseLeft-Observation',
-            comment: 'mock-observation-fault-comments',
-          },
-          {
-            faultCount: 1,
-            competencyDisplayName: 'Uncouple Recouple',
-            competencyIdentifier: 'uncoupleRecouple',
-            source: 'uncoupleRecouple',
-            comment: 'mock uncouple-recouple comments',
-          },
-        ]);
-      });
-    });
-    describe('getDrivingFaults', () => {
-      // TODO - Need to fix
-      xit('should return the correct data', () => {
-        component.testResult = categoryBETestResultMock;
-
-        const result = component.getDrivingFaults();
-
-        expect(result).toEqual([
-          {
-            comment: '',
-            competencyIdentifier: 'reverseLeftControl',
-            competencyDisplayName: 'Reverse left - Control',
-            faultCount: 1,
-            source: 'Manoeuvres-reverseLeft-Control',
-          },
-          {
-            comment: '',
-            competencyIdentifier: 'vehicleChecks',
-            competencyDisplayName: 'Vehicle Checks',
-            faultCount: 1,
-            source: 'vehicleChecks',
-          },
-          {
-            comment: 'mock-awareness-planning-comment',
-            competencyIdentifier: 'awarenessPlanning',
-            competencyDisplayName: 'Awareness planning',
-            faultCount: 2,
-            source: 'simple',
-          },
-        ]);
-      });
-    });
-
     describe('goBack', () => {
       it('should navigation the user back to the last page', () => {
         component.goBack();

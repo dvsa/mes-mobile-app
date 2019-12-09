@@ -18,11 +18,7 @@ import { CompressionProvider } from '../../../providers/compression/compression'
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { getCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
-import {
-  manoeuvreTypeLabels,
-} from '../../../shared/constants/competencies/catb-manoeuvres';
 import { get } from 'lodash';
-import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ErrorTypes } from '../../../shared/models/error-message';
@@ -30,20 +26,17 @@ import { ViewTestResultViewDidEnter } from '../view-test-result.actions';
 import { LogType } from '../../../shared/models/log.model';
 import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogHelper } from '../../../providers/logs/logsHelper';
-import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { QuestionProvider } from '../../../providers/question/question';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
-import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
-import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from '../cat-b/components/vehicle-details-card/vehicle-details-card.model';
 import { TestSummaryCardModel } from '../cat-b/components/test-summary-card/test-summary-card-model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-import { DebriefCardModel } from '../cat-b/components/debrief-card/debrief-card.model';
 import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { categoryBETestResultMock } from '../../../shared/mocks/cat-be-test-result.mock';
 
 @IonicPage()
 @Component({
@@ -73,8 +66,6 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
     private store$: Store<StoreModel>,
     private logHelper: LogHelper,
     public questionProvider: QuestionProvider,
-    private faultCountProvider: FaultCountProvider,
-    private faultSummaryProvider: FaultSummaryProvider,
   ) {
     super(platform, navController, authenticationProvider);
 
@@ -91,6 +82,7 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
         map(data => this.testResult = this.compressionProvider.extractTestResult(data) as CatBEUniqueTypes.TestResult),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
+          this.testResult = categoryBETestResultMock;
           this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
           this.errorLink = ErrorTypes.SEARCH_RESULT;
@@ -140,7 +132,7 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
       applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
-      category: this.testResult.category as TestCategory,
+      category: TestCategory.BE,
       specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
       entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
       slotType: this.testResult.journalData.testSlotAttributes.slotType,
@@ -227,102 +219,6 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
       activityCode: this.testResult.activityCode,
       testOutcome: getTestOutcomeText(this.testResult),
     };
-  }
-
-  getDebrief(): DebriefCardModel {
-    if (!this.testResult) {
-      return null;
-    }
-
-    return {
-      legalRequirements: get(this.testResult, 'testData.testRequirements'),
-      // TODO - Need to add these back in
-      // manoeuvres: this.getManoeuvres(),
-      controlledStop: get(this.testResult, 'testData.controlledStop.selected'),
-      ecoControl: get(this.testResult, 'testData.eco.adviceGivenControl'),
-      ecoPlanning: get(this.testResult, 'testData.eco.adviceGivenPlanning'),
-      eta: this.getETA(),
-      // TODO - Need to add these back in
-      // showMeQuestion: null,
-      // tellMeQuestion: null ,
-      dangerousFaults: this.getDangerousFaults(),
-      seriousFaults: this.getSeriousFaults(),
-      drivingFaults: this.getDrivingFaults(),
-      drivingFaultCount:this.faultCountProvider.getDrivingFaultSumCount(
-        this.testResult.category as TestCategory,
-        this.testResult.testData,
-      ),
-    };
-  }
-
-  // TODO - This needs to be refactored for B+E
-  getManoeuvres(): string[] {
-    const manoeuvres = [];
-
-    if (get(this.testResult, 'testData.manoeuvres.forwardPark.selected')) {
-      manoeuvres.push(manoeuvreTypeLabels.forwardPark);
-    }
-    if (get(this.testResult, 'testData.manoeuvres.reverseParkCarpark.selected')) {
-      manoeuvres.push(manoeuvreTypeLabels.reverseParkCarpark);
-    }
-    if (get(this.testResult, 'testData.manoeuvres.reverseParkRoad.selected')) {
-      manoeuvres.push(manoeuvreTypeLabels.reverseParkRoad);
-    }
-    if (get(this.testResult, 'testData.manoeuvres.reverseRight.selected')) {
-      manoeuvres.push(manoeuvreTypeLabels.reverseRight);
-    }
-
-    if (manoeuvres.length === 0) {
-      manoeuvres.push('None');
-    }
-
-    return manoeuvres;
-  }
-
-  getETA(): string[] {
-    const eta: string[] = [];
-
-    if (get(this.testResult, 'testData.ETA.physical')) {
-      eta.push('Physical');
-    }
-    if (get(this.testResult, 'testData.ETA.verbal')) {
-      eta.push('Verbal');
-    }
-    if (eta.length === 0) {
-      eta.push('None');
-    }
-    return eta;
-  }
-
-  // TODO - Needs to be refactored
-  getShowMeQuestion(): VehicleChecksQuestion {
-    const showMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.showMeQuestion.code');
-    return this.questionProvider
-      .getShowMeQuestions(this.testResult.category as TestCategory)
-      .find(question => question.code === showMeQuestionCode);
-  }
-
-  // TODO - Needs to be refactored
-  getTellMeQuestion(): VehicleChecksQuestion {
-    const tellMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.tellMeQuestion.code');
-    return this.questionProvider
-    .getTellMeQuestions(this.testResult.category as TestCategory)
-    .find(question => question.code === tellMeQuestionCode);
-  }
-
-  getDangerousFaults(): FaultSummary[] {
-    const testData: CatBEUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getDangerousFaultsList(testData, TestCategory.BE);
-  }
-
-  getSeriousFaults(): FaultSummary[] {
-    const testData: CatBEUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getSeriousFaultsList(testData, TestCategory.BE);
-  }
-
-  getDrivingFaults(): FaultSummary[] {
-    const testData: CatBEUniqueTypes.TestData = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getDrivingFaultsList(testData, TestCategory.BE);
   }
 
   getRekeyDetails(): RekeyDetailsModel {
