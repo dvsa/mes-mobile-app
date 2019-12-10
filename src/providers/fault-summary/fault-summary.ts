@@ -185,7 +185,7 @@ export class FaultSummaryProvider {
       comment: competencyComment || '',
       competencyIdentifier: `${type}${manoeuvreCompetencyLabelsCatBe[key]}` ,
       competencyDisplayName:`${manoeuvreTypeLabelsCatBe[type]} - ${manoeuvreCompetencyLabelsCatBe[key]}`,
-      source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabelsCatB[key]}`,
+      source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabelsCatBe[key]}`,
       faultCount: 1,
     };
     return manoeuvreFaultSummary;
