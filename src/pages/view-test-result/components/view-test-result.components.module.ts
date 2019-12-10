@@ -11,6 +11,7 @@ import { ViewTestHeaderComponent } from './view-test-header/view-test-header';
 import { ExaminerDetailsCardComponent } from './examiner-details-card/examiner-details';
 import { RekeyDetailsCardComponent } from './rekey-details-card/rekey-details';
 import { RekeyReasonCardComponent } from './rekey-reason-card/rekey-reason';
+import { VehicleChecksDataRowComponent } from './vehicle-checks-data-row/vehicle-checks-data-row';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { RekeyReasonCardComponent } from './rekey-reason-card/rekey-reason';
     ExaminerDetailsCardComponent,
     RekeyDetailsCardComponent,
     RekeyReasonCardComponent,
+    VehicleChecksDataRowComponent,
 
   ],
   imports: [
@@ -40,6 +42,7 @@ import { RekeyReasonCardComponent } from './rekey-reason-card/rekey-reason';
     ExaminerDetailsCardComponent,
     RekeyDetailsCardComponent,
     RekeyReasonCardComponent,
+    VehicleChecksDataRowComponent,
   ],
 })
 export class ViewTestResultComponentsModule {}
