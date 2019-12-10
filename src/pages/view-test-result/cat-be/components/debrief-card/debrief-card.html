@@ -4,27 +4,27 @@
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
-      <data-row-with-list [label]="'Test Requirements'" [data]="getTestRequirements()"></data-row-with-list>
-      <data-row [label]="'Manoeuvre(s)'" [value]="getFlattenArray(data.manoeuvres)"></data-row>
+      <data-row-with-list [label]="'Test requirements'" [data]="getTestRequirements()"></data-row-with-list>
+      <data-row-with-list [label]="'Uncouple / recouple'" [data]="getUncoupleRecouple()"></data-row-with-list>
+      <data-row [label]="'Manoeuvre'" [value]="getManoeuvre()"></data-row>
       <data-row-with-list [label]="'ECO'" [data]="getEco()"></data-row-with-list>
       <faults-data-row
         [label]="'Fault descriptions'"
-        [drivingFaults]="data.drivingFaults"
-        [seriousFaults]="data.seriousFaults"
-        [dangerousFaults]="data.dangerousFaults"
-        [drivingFaultCount]="data.drivingFaultCount">
+        [drivingFaults]="getDrivingFaults()"
+        [seriousFaults]="getSeriousFaults()"
+        [dangerousFaults]="getDangerousFaults()"
+        [drivingFaultCount]="getDrivingFaultCount()">
     </faults-data-row>
-      <data-row [label]="'ETA'" [value]="getFlattenArray(data.eta)"></data-row>
-      <data-row-custom [label]="'Tell me question(s)'">
-        <span class="mes-data" *ngIf="!data.tellMeQuestion">None</span>
-        <span class="mes-data" *ngIf="data.tellMeQuestion">
-          <span class="mes-data bold">{{data.tellMeQuestion.code}}</span> - {{data.tellMeQuestion.shortName}}</span>
-      </data-row-custom>
-      <data-row-custom [label]="'Show me question(s)'" [shouldHaveSeperator]="false">
-        <span class="mes-data" *ngIf="!data.showMeQuestion">None</span>
-        <span class="mes-data" *ngIf="data.showMeQuestion">
-          <span class="mes-data bold">{{data.showMeQuestion.code}}</span> - {{data.showMeQuestion.shortName}}</span>
-      </data-row-custom>
+      <data-row [label]="'ETA'" [value]="getETA()"></data-row>
+      <vehicle-checks-data-row
+        [label]="'Tell me question(s)'"
+        [data]="getTellMeQuestions()">
+      </vehicle-checks-data-row>
+      <vehicle-checks-data-row
+        [label]="'Show me question(s)'"
+        [data]="getShowMeQuestions()"
+        [shouldHaveSeperator]="false">
+      </vehicle-checks-data-row>
     </ion-grid>
   </ion-card-content>
 </ion-card>
