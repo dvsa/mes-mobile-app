@@ -8,7 +8,7 @@ import {
   ViewTestResultLabels,
   TestRequirementsLabels,
 } from '../../../components/data-row-with-list/data-list-with-row.model';
-import { manoeuvreTypeLabels } from '../../../../../shared/constants/competencies/catb-manoeuvres';
+import { manoeuvreTypeLabels } from '../../../../../shared/constants/competencies/catbe-manoeuvres'
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { FaultSummaryProvider } from '../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
