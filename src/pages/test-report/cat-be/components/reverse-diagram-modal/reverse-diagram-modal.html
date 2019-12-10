@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons ion-buttons start navPop>
+      <button ion-button center class="nav-close" (click)="closeModal()" id="closeReverseDiagramModal">
+        <ion-icon name="md-close"></ion-icon>Close
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Reversing diagram - articulated vehicle
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col col-40 class="diagram">
+        <img src="assets/imgs/reverse-diagram.png" alt="Reversing diagram" />
+      </ion-col>
+      <ion-col col-56>
+        <div class="content-container">
+          <h2>Distances</h2>
+          <h3 class="sub-header">All dimensions in metres</h3>
+          <div class="distances">
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                  <ion-col col-50 class="input-label" align-self-center>
+                    <label>Length:</label>
+                  </ion-col>
+                  <ion-col col-42>
+                    <input type="number" step="0.01" id="vehicleLength" class="vehicle-length-input"
+                    [value]="vehicleLength"
+                    (keyup)="calculateDistanceLength($event.target.value)">
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <ion-col>
+                <ion-row>
+                  <ion-col col-44 class="input-label" align-self-center>
+                    <label>Width:</label>
+                  </ion-col>
+                  <ion-col col-42>
+                    <input type="number" step="0.01" id="vehicleWidth" class="vehicle-width-input"
+                    [value]="vehicleWidth"
+                    (keyup)="calculateDistanceWidth($event.target.value)">
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <div class="calculations">
+              <ion-row>
+                <ion-col>
+                  <ion-row>
+                    <ion-col align-self-center>
+                      <div class="label">A&A1:</div>
+                    </ion-col>
+                    <ion-col align-self-center>
+                      <div id="distance-from-start" class="result">{{distanceFromStart}}</div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row class="padding-top-18">
+                    <ion-col align-self-center>
+                      <div class="label">B:</div>
+                    </ion-col>
+                    <ion-col align-self-center>
+                      <div id="distance-from-middle" class="result">{{distanceFromMiddle}}</div>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+                <ion-col>
+                  <ion-row>
+                    <ion-col align-self-center>
+                      <div class="label">A to A1:</div>
+                    </ion-col>
+                    <ion-col align-self-center>
+                      <div id="distance-of-lane-width" class="result">{{distanceOfBayWidth}}</div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </div>
+          </div>
+          <div class="cones">
+            <ion-row>
+              <h2 class="cones-header">Bay cones C</h2>
+              <ul>
+                <li>All vehicles 12 metres or more in overall length, set at 12 metres</li>
+                <li>Vehicles less than 12 metres, set to actual vehicle length</li>
+              </ul>
+            </ion-row>
+          </div>
+          <div class="markers">
+            <ion-row>
+              <div class="marker">
+                <span class="icon-cone-marker">
+                  <img src="/assets/imgs/cone-marker.png" />
+                </span>
+                <span class="marker-text">indicates a 46cm marker cone</span>
+              </div>
+              <div class="marker">
+                <span class="icon-cone-marker-pole">
+                  <img src="/assets/imgs/cone-marker-pole.png" />
+                </span>
+                <span class="marker-text">indicates a 46cm marker cone with a 1.5m coloured pole</span>
+              </div>
+            </ion-row>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
