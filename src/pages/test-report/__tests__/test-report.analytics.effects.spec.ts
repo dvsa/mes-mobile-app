@@ -85,7 +85,7 @@ describe('Test Report Analytics Effects', () => {
       effects.testReportViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.setCurrentPage).toHaveBeenCalledTimes(1);
-        expect(analyticsProviderMock.setCurrentPage).toHaveBeenCalledWith(AnalyticsScreenNames.TEST);
+        expect(analyticsProviderMock.setCurrentPage).toHaveBeenCalledWith(AnalyticsScreenNames.TEST_REPORT);
         done();
       });
     });

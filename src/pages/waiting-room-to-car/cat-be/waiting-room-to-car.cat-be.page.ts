@@ -235,6 +235,10 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
     this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
   }
 
+  closeVehicleChecksModal = () => {
+    this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
+  }
+
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
