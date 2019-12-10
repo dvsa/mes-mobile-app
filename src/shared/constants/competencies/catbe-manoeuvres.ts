@@ -1,5 +1,5 @@
 export enum manoeuvreTypeLabels {
-    reverseLeft = 'Reverse left',
+    reverseLeft = 'Reverse',
   }
 
 interface ManoeuvreCompetencyLabel {

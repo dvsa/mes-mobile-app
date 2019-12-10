@@ -6,7 +6,16 @@ import { CompetencyDisplayName } from '../../shared/models/competency-display-na
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { ManoeuvreTypes } from '../../modules/tests/test-data/test-data.constants';
-import { manoeuvreCompetencyLabels, manoeuvreTypeLabels } from '../../shared/constants/competencies/catb-manoeuvres';
+import {
+  manoeuvreCompetencyLabels as manoeuvreCompetencyLabelsCatB,
+  manoeuvreTypeLabels as manoeuvreTypeLabelsCatB,
+}
+  from '../../shared/constants/competencies/catb-manoeuvres';
+import {
+  manoeuvreCompetencyLabels as manoeuvreCompetencyLabelsCatBe,
+  manoeuvreTypeLabels as manoeuvreTypeLabelsCatBe,
+}
+  from '../../shared/constants/competencies/catbe-manoeuvres';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../fault-count/fault-count';
@@ -160,12 +169,23 @@ export class FaultSummaryProvider {
     return observationFaultComments || '';
   }
 
-  private createManoeuvreFault(key: string, type: ManoeuvreTypes, competencyComment: string): FaultSummary {
+  private createManoeuvreFaultCatB(key: string, type: ManoeuvreTypes, competencyComment: string): FaultSummary {
     const manoeuvreFaultSummary : FaultSummary = {
       comment: competencyComment || '',
-      competencyIdentifier: `${type}${manoeuvreCompetencyLabels[key]}` ,
-      competencyDisplayName:`${manoeuvreTypeLabels[type]} - ${manoeuvreCompetencyLabels[key]}`,
-      source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabels[key]}`,
+      competencyIdentifier: `${type}${manoeuvreCompetencyLabelsCatB[key]}` ,
+      competencyDisplayName:`${manoeuvreTypeLabelsCatB[type]} - ${manoeuvreCompetencyLabelsCatB[key]}`,
+      source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabelsCatB[key]}`,
+      faultCount: 1,
+    };
+    return manoeuvreFaultSummary;
+  }
+
+  private createManoeuvreFaultCatBe(key: string, type: ManoeuvreTypes, competencyComment: string): FaultSummary {
+    const manoeuvreFaultSummary : FaultSummary = {
+      comment: competencyComment || '',
+      competencyIdentifier: `${type}${manoeuvreCompetencyLabelsCatBe[key]}` ,
+      competencyDisplayName:`${manoeuvreTypeLabelsCatBe[type]} - ${manoeuvreCompetencyLabelsCatBe[key]}`,
+      source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabelsCatBe[key]}`,
       faultCount: 1,
     };
     return manoeuvreFaultSummary;
@@ -223,7 +243,7 @@ export class FaultSummaryProvider {
             manoeuvre.controlFaultComments,
             manoeuvre.observationFaultComments);
 
-          result.push(this.createManoeuvreFault(key, type, competencyComment));
+          result.push(this.createManoeuvreFaultCatB(key, type, competencyComment));
         }
       }, []);
       faultsEncountered.push(...faults);
@@ -246,7 +266,7 @@ export class FaultSummaryProvider {
             manoeuvre.controlFaultComments,
             manoeuvre.observationFaultComments);
 
-          result.push(this.createManoeuvreFault(key, type, competencyComment));
+          result.push(this.createManoeuvreFaultCatBe(key, type, competencyComment));
         }
       }, []);
       faultsEncountered.push(...faults);
