@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { convertBooleanToString, flattenArray } from '../../view-test-result-helpers';
 import { isBoolean, get } from 'lodash';
-import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { flattenArray, convertBooleanToString } from '../../view-test-result-helpers';
 
 @Component({
   selector: 'test-summary-card',
@@ -10,11 +11,11 @@ import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
 export class TestSummaryCardComponent {
 
   @Input()
-  data: TestResultSchemasUnion;
+  data: CatBEUniqueTypes.TestResult | CatBUniqueTypes.TestResult;
 
   constructor() {}
 
-  public getAccompaniedBy(): string {
+  public getAccompaniedBy() : string {
     const accompaniedBy: string[] = [];
 
     if (get(this.data, 'accompaniment.ADI')) {
@@ -36,11 +37,11 @@ export class TestSummaryCardComponent {
     return flattenArray(accompaniedBy);
   }
 
-  public getProvisionalLicenceProvided (): string {
+  public getProvisionalLicenceProvided() : string {
     return convertBooleanToString(get(this.data, 'passCompletion.provisionalLicenceProvided'));
   }
 
-  public getPassCertificateNumber(): string {
+  public getPassCertificateNumber() : string {
     return get(this.data, 'passCompletion.passCertificateNumber');
   }
 
@@ -48,7 +49,7 @@ export class TestSummaryCardComponent {
     return get(this.data, 'testSummary.routeNumber', 'None');
   }
 
-  public getIndependentDriving(): string {
+  public getIndependentDriving() : string {
     return get(this.data, 'testSummary.independentDriving', 'None');
   }
 
@@ -60,19 +61,19 @@ export class TestSummaryCardComponent {
     return convertBooleanToString(get(this.data, 'testSummary.debriefWitnessed'));
   }
 
-  public getWeatherConditions(): string {
+  public getWeatherConditions() : string {
     return flattenArray(get(this.data, 'testSummary.weatherConditions', ['None']));
   }
 
-  public getD255(): string {
+  public getD255() : string {
     return convertBooleanToString(get(this.data, 'testSummary.D255'));
   }
 
-  public getAdditionalInformation(): string {
+  public getAdditionalInformation() : string {
     return get(this.data, 'testSummary.additionalInformation', 'None');
   }
 
-  public shouldDisplayLicenceProvided(data: boolean): boolean {
+  public shouldDisplayLicenceProvided(data: boolean) : boolean {
     return isBoolean(data);
   }
 }
