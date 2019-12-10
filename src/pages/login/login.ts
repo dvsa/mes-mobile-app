@@ -74,22 +74,9 @@ export class LoginPage extends BasePageComponent {
       this.login();
     }
     if (!this.isIos()) {
-
       this.appConfigProvider.initialiseAppConfig();
       this.navController.setRoot(DASHBOARD_PAGE);
       this.splashScreen.hide();
-
-      // this.appConfigProvider.initialiseAppConfig()
-      //   .then(() => {
-      //     const { enableLogoutButton } = this.appConfigProvider.getAppConfig().journal;
-      //     if (enableLogoutButton) {
-      //       this.navController.setRoot(DEV_SCREEN_NAVIGATION_PAGE);
-      //       this.splashScreen.hide();
-      //       return;
-      //     }
-      //     this.navController.setRoot(DASHBOARD_PAGE);
-      //     this.splashScreen.hide();
-      //   });
     }
   }
 

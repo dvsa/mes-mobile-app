@@ -1,7 +1,6 @@
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { StartTest, PersistTests } from '../../modules/tests/tests.actions';
-import { TestCategory } from '../../shared/models/test-category';
 import { PopulateCandidateDetails } from '../../modules/tests/journal-data/candidate/candidate.actions';
 import { candidateMock } from '../../modules/tests/__mocks__/tests.mock';
 import { PopulateTestCategory } from '../../modules/tests/category/category.actions';
@@ -40,8 +39,6 @@ import { LegalRequirements, ManoeuvreTypes, ManoeuvreCompetencies, Competencies,
   '../../modules/tests/test-data/test-data.constants';
 import { ToggleEco } from '../../modules/tests/test-data/common/eco/eco.actions';
 import { ToggleControlledStop } from '../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
-import { RecordManoeuvresSelection, AddManoeuvreDrivingFault } from
-  '../../modules/tests/test-data/cat-b/manoeuvres/manoeuvres.actions';
 import { AddDrivingFault } from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import { CalculateTestResult } from '../test-report/test-report.actions';
 import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
@@ -71,6 +68,8 @@ import { ToggleETA } from '../../modules/tests/test-data/common/eta/eta.actions'
 import { AddDangerousFault } from '../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { RecordManoeuvresSelection, AddManoeuvreDrivingFault } from '../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 // TODO, more work for specific CAT BE pages, after the waiting room to car page
 @Injectable()
