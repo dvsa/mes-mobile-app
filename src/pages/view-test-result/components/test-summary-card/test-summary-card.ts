@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { TestSummaryCardModel } from './test-summary-card-model';
 import { convertBooleanToString, flattenArray } from '../../view-test-result-helpers';
-import { isBoolean } from 'lodash';
+import { isBoolean, get } from 'lodash';
+import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
 
 @Component({
   selector: 'test-summary-card',
@@ -10,27 +10,69 @@ import { isBoolean } from 'lodash';
 export class TestSummaryCardComponent {
 
   @Input()
-  data: TestSummaryCardModel;
+  data: TestResultSchemasUnion;
 
   constructor() {}
 
-  shouldHideCard() : boolean {
-    return (
-      !this.data.accompaniment &&
-      !this.data.provisionalLicenceProvided &&
-      !this.data.passCertificateNumber &&
-      !this.data.routeNumber &&
-      !this.data.independentDriving &&
-      !this.data.candidateDescription &&
-      !this.data.debriefWitnessed &&
-      !this.data.weatherConditions &&
-      !this.data.D255
-    );
+  public getAccompaniedBy(): string {
+    const accompaniedBy: string[] = [];
+
+    if (get(this.data, 'accompaniment.ADI')) {
+      accompaniedBy.push('ADI');
+    }
+    if (get(this.data, 'accompaniment.interpreter')) {
+      accompaniedBy.push('Interpreter');
+    }
+    if (get(this.data, 'accompaniment.supervisor')) {
+      accompaniedBy.push('Supervisor');
+    }
+    if (get(this.data, 'accompaniment.other')) {
+      accompaniedBy.push('Other');
+    }
+    if (accompaniedBy.length === 0) {
+      accompaniedBy.push('None');
+    }
+
+    return flattenArray(accompaniedBy);
   }
 
-  getConvertBooleanToString = (data: boolean): string => convertBooleanToString(data);
+  public getProvisionalLicenceProvided (): string {
+    return convertBooleanToString(get(this.data, 'passCompletion.provisionalLicenceProvided'));
+  }
 
-  getFlattenArray = (data: string[]): string => flattenArray(data);
+  public getPassCertificateNumber(): string {
+    return get(this.data, 'passCompletion.passCertificateNumber');
+  }
 
-  shouldDisplayLicenceProvided = (data: boolean): boolean => isBoolean(data);
+  public getRouteNumber(): string {
+    return get(this.data, 'testSummary.routeNumber', 'None');
+  }
+
+  public getIndependentDriving(): string {
+    return get(this.data, 'testSummary.independentDriving', 'None');
+  }
+
+  public getCandidateDescription(): string {
+    return get(this.data, 'testSummary.candidateDescription', 'None');
+  }
+
+  public getDebriefWitnessed(): string {
+    return convertBooleanToString(get(this.data, 'testSummary.debriefWitnessed'));
+  }
+
+  public getWeatherConditions(): string {
+    return flattenArray(get(this.data, 'testSummary.weatherConditions', ['None']));
+  }
+
+  public getD255(): string {
+    return convertBooleanToString(get(this.data, 'testSummary.D255'));
+  }
+
+  public getAdditionalInformation(): string {
+    return get(this.data, 'testSummary.additionalInformation', 'None');
+  }
+
+  public shouldDisplayLicenceProvided(data: boolean): boolean {
+    return isBoolean(data);
+  }
 }

@@ -32,7 +32,6 @@ import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from '../cat-b/components/vehicle-details-card/vehicle-details-card.model';
-import { TestSummaryCardModel } from '../components/test-summary-card/test-summary-card-model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
@@ -172,40 +171,6 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
       registrationNumber: get(this.testResult, 'vehicleDetails.registrationNumber'),
       instructorRegistrationNumber: get(this.testResult, 'instructorDetails.registrationNumber'),
       vehicleDetails: vehicleInfomation,
-    };
-  }
-
-  getTestSummary(): TestSummaryCardModel {
-    if (!this.testResult) {
-      return null;
-    }
-
-    const accompaniedBy: string[] = [];
-
-    if (get(this.testResult, 'accompaniment.ADI')) {
-      accompaniedBy.push('ADI');
-    }
-    if (get(this.testResult, 'accompaniment.interpreter')) {
-      accompaniedBy.push('Interpreter');
-    }
-    if (get(this.testResult, 'accompaniment.supervisor')) {
-      accompaniedBy.push('Supervisor');
-    }
-    if (get(this.testResult, 'accompaniment.other')) {
-      accompaniedBy.push('Other');
-    }
-
-    return {
-      accompaniment: accompaniedBy,
-      provisionalLicenceProvided: get(this.testResult, 'passCompletion.provisionalLicenceProvided'),
-      passCertificateNumber: get(this.testResult, 'passCompletion.passCertificateNumber'),
-      routeNumber: get(this.testResult, 'testSummary.routeNumber'),
-      independentDriving: get(this.testResult, 'testSummary.independentDriving'),
-      candidateDescription: get(this.testResult, 'testSummary.candidateDescription'),
-      debriefWitnessed: get(this.testResult, 'testSummary.debriefWitnessed'),
-      weatherConditions: get(this.testResult, 'testSummary.weatherConditions'),
-      D255: get(this.testResult, 'testSummary.D255'),
-      additionalInformation: get(this.testResult, 'testSummary.additionalInformation'),
     };
   }
 
