@@ -68,7 +68,8 @@ import { ToggleETA } from '../../modules/tests/test-data/common/eta/eta.actions'
 import { AddDangerousFault } from '../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { RecordManoeuvresSelection, AddManoeuvreDrivingFault } from '../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+import { RecordManoeuvresSelection, AddManoeuvreDrivingFault } from
+  '../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 // TODO, more work for specific CAT BE pages, after the waiting room to car page
