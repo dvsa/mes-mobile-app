@@ -70,8 +70,8 @@
       "controlledStop": "Stopio dan Reolaeth",
       "eyesightTest": "Prawf Golwg",
       "uncoupleRecouple": "Uncouple / Adennill",
-      "reverseLeftControl": "[CY] Reverse left - Control",
-      "reverseLeftObservation": "[CY] Reverse left - Observation"
+      "reverseLeftControl": "Bacio – dan reolaeth",
+      "reverseLeftObservation": "Bacio – gwyliadwriaeth"
     },
     "dangerousFault": "Nam peryglus",
     "dangerousFaultsCardDescription": "Namau peryglus",

@@ -115,6 +115,8 @@ describe('faultSummaryProvider', () => {
         };
         const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(2);
+        expect(result[0].competencyDisplayName).toEqual('Reverse - Control');
+        expect(result[1].competencyDisplayName).toEqual('Reverse - Observation');
       });
       it('should correctly return any uncouple recouple faults ', () => {
         const data: CatBEUniqueTypes.TestData = {
