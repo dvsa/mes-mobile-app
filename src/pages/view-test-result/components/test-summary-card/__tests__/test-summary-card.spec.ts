@@ -8,7 +8,7 @@ import { DataRowComponent } from '../../data-row/data-row';
 import { DataRowCustomComponent } from '../../data-row-custom/data-row-custom';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
 
-fdescribe('TestSummaryCardComponent', () => {
+describe('TestSummaryCardComponent', () => {
   let fixture: ComponentFixture<TestSummaryCardComponent>;
   let component: TestSummaryCardComponent;
 
@@ -160,6 +160,65 @@ fdescribe('TestSummaryCardComponent', () => {
       });
       it('should return no if the data is missing', () => {
         expect(component.getDebriefWitnessed()).toEqual('No');
+      });
+    });
+    describe('getWeatherConditions', () => {
+      it('should return the correct data', () => {
+        const data = {
+          testSummary: {
+            weatherConditions: [
+              'Icy',
+              'Showers',
+              'Windy',
+            ],
+          },
+        };
+        component.data = data as TestResultSchemasUnion;
+        fixture.detectChanges();
+        expect(component.getWeatherConditions()).toEqual('Icy, Showers and Windy');
+      });
+      it('should return None if the data is missing', () => {
+        expect(component.getWeatherConditions()).toEqual('None');
+      });
+    });
+    describe('getD255', () => {
+      it('should return yes if a D255 was needed ', () => {
+        const data = {
+          testSummary: {
+            D255: true,
+          },
+        };
+        component.data = data as TestResultSchemasUnion;
+        fixture.detectChanges();
+        expect(component.getD255()).toEqual('Yes');
+      });
+      it('should return no if a D255 was not needed ', () => {
+        const data = {
+          testSummary: {
+            D255: false,
+          },
+        };
+        component.data = data as TestResultSchemasUnion;
+        fixture.detectChanges();
+        expect(component.getDebriefWitnessed()).toEqual('No');
+      });
+      it('should return no if the data is missing', () => {
+        expect(component.getDebriefWitnessed()).toEqual('No');
+      });
+    });
+    describe('getAdditionalInformation', () => {
+      it('should return the correct data', () => {
+        const data = {
+          testSummary: {
+            additionalInformation: 'Test Additional Information',
+          },
+        };
+        component.data = data as TestResultSchemasUnion;
+        fixture.detectChanges();
+        expect(component.getAdditionalInformation()).toEqual('Test Additional Information');
+      });
+      it('should return None if the data is missing', () => {
+        expect(component.getAdditionalInformation()).toEqual('None');
       });
     });
   });
