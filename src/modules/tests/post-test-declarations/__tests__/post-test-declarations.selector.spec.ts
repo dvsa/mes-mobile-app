@@ -19,7 +19,7 @@ describe('PostTestDeclarations selector', () => {
   });
 
   describe('getReceiptDeclarationStatus', () => {
-    it('should return the pass reciept declaration status', () => {
+    it('should return the pass receipt declaration status', () => {
       expect(getReceiptDeclarationStatus(state)).toBe(false);
     });
   });

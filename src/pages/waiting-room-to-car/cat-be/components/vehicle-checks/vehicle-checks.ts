@@ -14,6 +14,8 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
 })
 export class VehicleChecksCatBEComponent implements OnChanges {
 
+  @Input() onCloseVehicleChecksModal: () => {};
+
   @Input() vehicleChecksScore: VehicleChecksScore;
   @Input() vehicleChecks: CatBEUniqueTypes.VehicleChecks;
 
@@ -37,6 +39,9 @@ export class VehicleChecksCatBEComponent implements OnChanges {
       {},
       { cssClass: zoomClass },
     );
+    modal.onDidDismiss(() => {
+      this.onCloseVehicleChecksModal();
+    });
     modal.present();
   }
 

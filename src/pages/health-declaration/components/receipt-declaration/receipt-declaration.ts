@@ -20,7 +20,7 @@ export class ReceiptDeclarationComponent implements OnChanges {
   receiptDeclarationChange = new EventEmitter();
 
   formControl: FormControl;
-  static readonly fieldName: string = 'recieptCheckbox';
+  static readonly fieldName: string = 'receiptCheckbox';
 
   ngOnChanges(): void {
     if (!this.formControl) {

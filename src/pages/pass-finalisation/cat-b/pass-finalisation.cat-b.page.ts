@@ -232,6 +232,7 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
       if (this.form.controls[controlName].invalid) {
         if (controlName === PASS_CERTIFICATE_NUMBER_CTRL) {
           this.store$.dispatch(new PassFinalisationValidationError(`${controlName} is invalid`));
+          return;
         }
         this.store$.dispatch(new PassFinalisationValidationError(`${controlName} is blank`));
       }
