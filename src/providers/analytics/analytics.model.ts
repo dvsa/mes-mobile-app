@@ -22,7 +22,7 @@ export enum AnalyticsScreenNames {
   PASS_TEST_SUMMARY = 'pass test summary screen',
   FAIL_TEST_SUMMARY = 'fail test summary screen',
   PASS_FINALISATION = 'pass finalisation screen',
-  TEST = 'test report screen',
+  TEST_REPORT = 'test report screen',
   TERMINATE_TEST = 'terminate test screen',
   WAITING_ROOM = 'waiting room screen',
   WAITING_ROOM_TO_CAR = 'waiting room to car screen',

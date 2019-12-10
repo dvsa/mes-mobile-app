@@ -61,7 +61,7 @@ export class TestReportAnalyticsEffects {
       ),
     )),
     concatMap(([action, tests]: [testReportActions.TestReportViewDidEnter, TestsModel]) => {
-      this.analytics.setCurrentPage(formatAnalyticsText(AnalyticsScreenNames.TEST, tests));
+      this.analytics.setCurrentPage(formatAnalyticsText(AnalyticsScreenNames.TEST_REPORT, tests));
       return of(new AnalyticRecorded());
     }),
   );

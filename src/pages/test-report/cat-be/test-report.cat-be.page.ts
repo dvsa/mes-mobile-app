@@ -19,6 +19,7 @@ import { getCandidate } from '../../../modules/tests/journal-data/candidate/cand
 import {
   CalculateTestResult,
   TerminateTestFromTestReport,
+  TestReportViewDidEnter,
 } from '../test-report.actions';
 import {
   getCurrentTest,
@@ -145,7 +146,7 @@ export class TestReportCatBEPage extends BasePageComponent {
     if (!this.subscription || this.subscription.closed) {
       this.setupSubscription();
     }
-    // this.store$.dispatch(new TestReportViewDidEnter());
+    this.store$.dispatch(new TestReportViewDidEnter());
   }
 
   toggleReportOverlay(): void {
