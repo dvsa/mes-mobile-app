@@ -38,6 +38,7 @@ import { TestOutcome } from '../../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
 import { ViewTestResultCatBEPage } from '../view-test-result.cat-be.page';
+import { BusinessDetailsCardComponent } from '../components/business-details-card/business-details-card';
 
 describe('ViewTestResultCatBEPage', () => {
   let fixture: ComponentFixture<ViewTestResultCatBEPage>;
@@ -57,6 +58,7 @@ describe('ViewTestResultCatBEPage', () => {
         MockComponent(ViewTestHeaderComponent),
         MockComponent(DebriefCardComponent),
         MockComponent(ErrorMessageComponent),
+        MockComponent(BusinessDetailsCardComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
@@ -130,10 +132,10 @@ describe('ViewTestResultCatBEPage', () => {
 
         const result: RekeyDetailsModel = component.getRekeyDetails();
 
-        expect(result.scheduledStaffNumber).toBe(1);
-        expect(result.conductedStaffNumber).toBe(1);
+        expect(result.scheduledStaffNumber).toBe(12345678);
+        expect(result.conductedStaffNumber).toBe(12345678);
         expect(result.testDate).toBe('Friday 5th July 2019');
-        expect(result.rekeyedStaffNumber).toBe(1);
+        expect(result.rekeyedStaffNumber).toBe(12345678);
         expect(result.rekeyDate).toBe('Monday 5th August 2019');
       });
       it('should return null when there is no test result', () => {
@@ -147,9 +149,9 @@ describe('ViewTestResultCatBEPage', () => {
 
         const result: ExaminerDetailsModel = component.getExaminerDetails();
 
-        expect(result.staffNumber).toBe('mock-staff-number');
-        expect(result.costCode).toBe('mock-cost-code');
-        expect(result.testCentreName).toBe('mock-centre-name');
+        expect(result.staffNumber).toBe('12345678');
+        expect(result.costCode).toBe('EXTC1');
+        expect(result.testCentreName).toBe('Example Test Centre');
       });
       it('should return null when there is no test result', () => {
         const result: ExaminerDetailsModel = component.getExaminerDetails();
@@ -163,9 +165,7 @@ describe('ViewTestResultCatBEPage', () => {
         const result: VehicleDetailsModel = component.getVehicleDetails();
 
         expect(result.transmission).toBe('Manual');
-        expect(result.registrationNumber).toBe(
-          'mock-vehicle-registration-number',
-        );
+        expect(result.registrationNumber).toBe('AB12 XYZ');
         expect(result.vehicleDetails.length).toEqual(2);
         expect(result.vehicleDetails).toContain('Dual controls');
         expect(result.vehicleDetails).toContain('School car');
@@ -181,8 +181,8 @@ describe('ViewTestResultCatBEPage', () => {
         const result: ViewTestHeaderModel = component.getHeaderDetails();
 
         expect(result.activityCode).toBe('2');
-        expect(result.candidateName).toBe('Miss Doris Pearson');
-        expect(result.candidateDriverNumber).toBe('mock-driver-number');
+        expect(result.candidateName).toBe('Miss Florence Pearson');
+        expect(result.candidateDriverNumber).toBe('PEARSL6767655777BN');
         expect(result.testOutcome).toBe(TestOutcome.Failed);
       });
       it('should return null when there is no test result', () => {

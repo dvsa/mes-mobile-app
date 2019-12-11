@@ -5,11 +5,13 @@ import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-deta
 import { DebriefCardComponent } from './debrief-card/debrief-card';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { ViewTestResultComponentsModule } from '../../components/view-test-result.components.module';
+import { BusinessDetailsCardComponent } from './business-details-card/business-details-card';
 
 @NgModule({
   declarations: [
     VehicleDetailsCardComponent,
     DebriefCardComponent,
+    BusinessDetailsCardComponent,
   ],
   imports: [
     CommonModule,
@@ -20,6 +22,7 @@ import { ViewTestResultComponentsModule } from '../../components/view-test-resul
   exports: [
     VehicleDetailsCardComponent,
     DebriefCardComponent,
+    BusinessDetailsCardComponent,
   ],
 })
 export class ViewTestResultCatBEComponentsModule {}
