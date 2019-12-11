@@ -38,6 +38,7 @@ import { TestOutcome } from '../../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
 import { ViewTestResultCatBEPage } from '../view-test-result.cat-be.page';
+import { BusinessDetailsCardComponent } from '../components/business-details-card/business-details-card';
 
 describe('ViewTestResultCatBEPage', () => {
   let fixture: ComponentFixture<ViewTestResultCatBEPage>;
@@ -57,6 +58,7 @@ describe('ViewTestResultCatBEPage', () => {
         MockComponent(ViewTestHeaderComponent),
         MockComponent(DebriefCardComponent),
         MockComponent(ErrorMessageComponent),
+        MockComponent(BusinessDetailsCardComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
