@@ -64,6 +64,7 @@ import {
   getEco,
   getEcoFaultText,
 } from '../../../modules/tests/test-data/common/test-data.selector';
+// TODO: MES-4287 use Cat C reducer
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
@@ -78,6 +79,7 @@ import {
 } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
+// TODO: MES-4287 use Cat C vehicle checks action
 import {
   AddShowMeTellMeComment,
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
@@ -91,6 +93,7 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
+// TODO: MES-4287 Import Cat C page names
 import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
@@ -98,8 +101,10 @@ import {
   AddUncoupleRecoupleComment,
 } from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
+// TODO: MES-4287 Import Cat C category
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+// TODO: MES-4287 use Cat C vehicle checks selector
 import {
   vehicleChecksExist,
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
@@ -312,6 +317,7 @@ export class OfficeCatCPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
+            // TODO: MES-4287 Use category C
             this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE),
           )),
       ),
@@ -324,6 +330,7 @@ export class OfficeCatCPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
+            // TODO: MES-4287 Use category C
             this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
           )),
       ),
@@ -364,18 +371,22 @@ export class OfficeCatCPage extends BasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
+        // TODO: MES-4287 Use category C
         map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
+        // TODO: MES-4287 Use category C
         map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
+        // TODO: MES-4287 Use category C
         map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
+        // TODO: MES-4287 Use category C
         map(data => this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
@@ -548,6 +559,7 @@ export class OfficeCatCPage extends BasePageComponent {
 
   goToReasonForRekey() {
     if (this.isFormValid()) {
+      // TODO: MES-4287 Redirect to CAT_C rekey reason page
       this.navController.push(CAT_BE.REKEY_REASON_PAGE);
     }
   }
@@ -573,8 +585,11 @@ export class OfficeCatCPage extends BasePageComponent {
   }
 
   shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {
+    // TODO: MES-4287 Use category C
     const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data);
+    // TODO: MES-4287 Use category C
     const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, data);
+    // TODO: MES-4287 Use category C
     const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data);
 
     return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;

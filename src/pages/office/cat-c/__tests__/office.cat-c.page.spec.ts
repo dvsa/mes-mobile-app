@@ -96,6 +96,7 @@ describe('OfficePage', () => {
             testStatus: {},
             startedTests: {
               123: {
+                // TODO: MES-4287 Use category C
                 category: TestCategory.BE,
                 vehicleDetails: {},
                 accompaniment: {},
