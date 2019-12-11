@@ -44,6 +44,12 @@ export const categoryBETestResultMock : CatBEUniqueTypes.TestResult = {
       gender: 'F',
       primaryTelephone: '1234567890',
       mobileTelephone: '2345678901',
+      candidateAddress: {
+        addressLine1: '999 Letsby Avenue',
+        addressLine2: 'Someplace',
+        addressLine3: 'Sometown',
+        postcode: 'AB67 8CD',
+      },
       businessName: 'Logistic and Distribution Training Limited',
       businessAddress: {
         addressLine1: '18 Bridge Street',
@@ -75,6 +81,11 @@ export const categoryBETestResultMock : CatBEUniqueTypes.TestResult = {
       examinerVisiting: false,
       vehicleTypeCode: 'mock-vehicle-type-code',
     },
+  },
+  communicationPreferences: {
+    communicationMethod: 'Email',
+    conductedLanguage: 'English',
+    updatedEmail: 'candidate@updated-candidate.com',
   },
   vehicleDetails: {
     gearboxCategory: 'Manual',
