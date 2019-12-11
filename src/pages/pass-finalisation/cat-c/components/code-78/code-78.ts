@@ -50,8 +50,7 @@ export class Code78Component implements OnChanges {
   shouldShowManualBanner(): boolean {
     if (!this.shouldHideBanner()) {
       switch (this.category as TestCategory) {
-        // TODO: MES-4287 Use category C
-        case TestCategory.BE:
+        case TestCategory.C:
           return this.transmission === TransmissionType.Manual;
       }
     }
@@ -61,8 +60,7 @@ export class Code78Component implements OnChanges {
   shouldShowAutomaticBanner(): boolean {
     if (!this.shouldHideBanner()) {
       switch (this.category as TestCategory) {
-        // TODO: MES-4287 Use category C
-        case TestCategory.BE:
+        case TestCategory.C:
           return this.transmission === TransmissionType.Automatic;
       }
     }

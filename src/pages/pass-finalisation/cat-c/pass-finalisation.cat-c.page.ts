@@ -103,8 +103,7 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   inputSubscriptions: Subscription[] = [];
   testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
-  // TODO: MES-4287 Use test category C
-  category: TestCategory = TestCategory.BE;
+  category: TestCategory = TestCategory.C;
 
   constructor(
     public store$: Store<StoreModel>,

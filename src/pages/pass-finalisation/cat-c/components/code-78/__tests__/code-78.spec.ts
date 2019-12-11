@@ -69,8 +69,7 @@ describe('code78Component', () => {
     describe('showAutomaticBanner', () => {
       it('should show the automatic banner when it is valid', () => {
         component.ngOnChanges();
-        // TODO: MES-4287 Use category C
-        component.category = TestCategory.BE;
+        component.category = TestCategory.C;
         component.transmission = TransmissionType.Automatic;
         component.form.get(Code78Component.fieldName).setValue('yes');
         fixture.detectChanges();
@@ -81,8 +80,7 @@ describe('code78Component', () => {
     describe('should show manual banner', () => {
       it('should show the manual banner when it is valid', () => {
         component.ngOnChanges();
-        // TODO: MES-4287 Use category C
-        component.category = TestCategory.BE;
+        component.category = TestCategory.C;
         component.transmission = TransmissionType.Manual;
         component.form.get(Code78Component.fieldName).setValue('yes');
         fixture.detectChanges();
