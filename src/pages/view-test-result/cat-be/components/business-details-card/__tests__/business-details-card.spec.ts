@@ -69,7 +69,7 @@ describe('BusinessDetailsCardComponent', () => {
         fixture.detectChanges();
         expect(component.shouldHideCard()).toEqual(false);
       });
-      it('should return false if only bussies address has been provided', () => {
+      it('should return false if only business address has been provided', () => {
         const data: CatBEUniqueTypes.Candidate = {
           businessAddress: {
             addressLine1: 'Address Line 1',
