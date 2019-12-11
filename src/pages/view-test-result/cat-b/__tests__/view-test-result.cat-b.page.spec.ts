@@ -42,6 +42,7 @@ import { DebriefCardModel } from '../components/debrief-card/debrief-card.model'
 import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
+import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
 
 describe('ViewTestResultCatBPage', () => {
   let fixture: ComponentFixture<ViewTestResultCatBPage>;
@@ -61,6 +62,7 @@ describe('ViewTestResultCatBPage', () => {
         MockComponent(ViewTestHeaderComponent),
         MockComponent(DebriefCardComponent),
         MockComponent(ErrorMessageComponent),
+        MockComponent(ContactDetailsCardComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [

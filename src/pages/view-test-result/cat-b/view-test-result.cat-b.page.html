@@ -15,6 +15,10 @@
   <div *ngIf="!isLoading && !showErrorMessage">
     <view-test-header [data]="getHeaderDetails()"></view-test-header>
     <test-details-card [data]="getTestDetails()"></test-details-card>
+    <contact-details-card
+      [candidateData]="testResult.journalData.candidate"
+      [communicationPreferencesData]="testResult.communicationPreferences">
+    </contact-details-card>
     <div *ngIf="testResult.rekey">
       <rekey-details-card [rekeyDetails]='getRekeyDetails()'></rekey-details-card>
       <rekey-reason-card [data]='testResult.rekeyReason'></rekey-reason-card>
