@@ -31,8 +31,7 @@ import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/
 import { categoryBETestResultMock } from '../../../../shared/mocks/cat-be-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
-import { TestSummaryCardModel } from '../components/test-summary-card/test-summary-card-model';
-import { TestSummaryCardComponent } from '../components/test-summary-card/test-summary-card';
+import { TestSummaryCardComponent } from '../../components/test-summary-card/test-summary-card';
 import { ViewTestHeaderComponent } from '../../components/view-test-header/view-test-header';
 import { ViewTestHeaderModel } from '../../components/view-test-header/view-test-header.model';
 import { TestOutcome } from '../../../../modules/tests/tests.constants';
@@ -173,25 +172,6 @@ describe('ViewTestResultCatBEPage', () => {
       });
       it('should return null when there is no test result', () => {
         const result: VehicleDetailsModel = component.getVehicleDetails();
-        expect(result).toBeNull();
-      });
-    });
-    describe('getTestSummary', () => {
-      it('should return the correct data', () => {
-        component.testResult = categoryBETestResultMock;
-        const result: TestSummaryCardModel = component.getTestSummary();
-        expect(result.D255).toEqual(false);
-        expect(result.accompaniment).toEqual(['ADI', 'Interpreter']);
-        expect(result.candidateDescription).toBe('mock-candidate-description');
-        expect(result.debriefWitnessed).toBe(true);
-        expect(result.independentDriving).toBe('Sat nav');
-        expect(result.passCertificateNumber).toBe('mock-pass-cert-number');
-        expect(result.provisionalLicenceProvided).toBe(true);
-        expect(result.routeNumber).toBe(12345);
-        expect(result.weatherConditions).toEqual(['Bright / dry roads', 'Icy']);
-      });
-      it('should return null when there is no test result', () => {
-        const result: TestSummaryCardModel = component.getTestSummary();
         expect(result).toBeNull();
       });
     });
