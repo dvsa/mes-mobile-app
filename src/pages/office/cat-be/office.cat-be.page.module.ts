@@ -7,6 +7,7 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { OfficeComponentsModule } from '../components/office.components.module';
 import { OfficeEffects } from '../office.effects';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
+import { OfficeCatBEComponentsModule } from './components/office.cat-be.components.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
       OfficeEffects,
     ]),
     ComponentsModule,
+    OfficeCatBEComponentsModule,
     OfficeComponentsModule,
   ],
   providers: [
