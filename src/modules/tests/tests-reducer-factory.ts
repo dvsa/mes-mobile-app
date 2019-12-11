@@ -15,6 +15,8 @@ export function testsReducerFactory(
       return testsCatBReducer(action, state as Required<CatBUniqueTypes.TestResult>);
     case TestCategory.BE:
       return testsCatBEReducer(action, state as Required<CatBEUniqueTypes.TestResult>);
+    case TestCategory.C:
+      return testsCatBEReducer(action, state as Required<CatBEUniqueTypes.TestResult>);
     default:
       return testsCatBReducer(action, state as Required<CatBUniqueTypes.TestResult>);
   }

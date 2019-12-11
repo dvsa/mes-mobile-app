@@ -8,7 +8,7 @@ import { TestStatus } from '../../../modules/tests/test-status/test-status.model
 import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
 import { startsWith, isEmpty } from 'lodash';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
-import { JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE } from '../../../pages/page-names.constants';
+import { JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE, CAT_C } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
@@ -173,6 +173,9 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.BE:
         this.navController.push(CAT_BE.WAITING_ROOM_PAGE);
         break;
+      case TestCategory.C:
+        this.navController.push(CAT_C.WAITING_ROOM_PAGE);
+        break;
     }
   }
 
@@ -258,6 +261,8 @@ export class TestOutcomeComponent implements OnInit {
         return CAT_B.WAITING_ROOM_PAGE;
       case TestCategory.BE:
         return CAT_BE.WAITING_ROOM_PAGE;
+      case TestCategory.C:
+        return CAT_C.WAITING_ROOM_PAGE;
     }
   }
 
