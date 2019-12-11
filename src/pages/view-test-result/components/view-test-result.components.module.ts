@@ -13,6 +13,7 @@ import { RekeyDetailsCardComponent } from './rekey-details-card/rekey-details';
 import { RekeyReasonCardComponent } from './rekey-reason-card/rekey-reason';
 import { VehicleChecksDataRowComponent } from './vehicle-checks-data-row/vehicle-checks-data-row';
 import { TestSummaryCardComponent } from './test-summary-card/test-summary-card';
+import { ContactDetailsCardComponent } from './contact-details-card/contact-details-card';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { TestSummaryCardComponent } from './test-summary-card/test-summary-card'
     RekeyReasonCardComponent,
     VehicleChecksDataRowComponent,
     TestSummaryCardComponent,
+    ContactDetailsCardComponent,
 
   ],
   imports: [
@@ -46,6 +48,7 @@ import { TestSummaryCardComponent } from './test-summary-card/test-summary-card'
     RekeyReasonCardComponent,
     VehicleChecksDataRowComponent,
     TestSummaryCardComponent,
+    ContactDetailsCardComponent,
   ],
 })
 export class ViewTestResultComponentsModule {}
