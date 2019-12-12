@@ -4,24 +4,23 @@
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
-      <data-row
-        [label]="'Transmission'"
-        [value]="data.transmission"
-        *ngIf="data.transmission"
-        [shouldHaveSeperator]="data.registrationNumber || data.vehicleDetails  ? true : false">
-      </data-row>
+      <data-row [label]="'Transmission'" [value]="getTransmission()" *ngIf="getTransmission()"></data-row>
       <data-row
         [label]="'Vehicle registration number'"
-        [value]="data.registrationNumber"
-        *ngIf="data.registrationNumber"
-        [shouldHaveSeperator]="data.vehicleDetails ? true: false">
+        [value]="getRegistrationNumber()"
+        *ngIf="getRegistrationNumber()">
       </data-row>
-      <data-row-custom
-        [label]="'Vehicle details'"
-        *ngIf="data.vehicleDetails"
-        [shouldHaveSeperator]="false">
-          <span class=mes-data *ngIf="data.vehicleDetails.length === 0">None</span>
-          <span class="mes-data">{{ getFlattenArray(data.vehicleDetails) }}</span>
+      <data-row-custom [label]="'Vehicle dimensions'" >
+        <ion-grid>
+          <ion-row>
+            <ion-col col-32>
+              <span class="mes-data"><span class="mes-data bold">L:</span> {{ getVehicleLength() }}</span>
+            </ion-col>
+            <ion-col col-32>
+                <span class="mes-data"><span class="mes-data bold">W:</span> {{ getVehicleWidth() }}</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </data-row-custom>
     </ion-grid>
   </ion-card-content>

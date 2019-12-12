@@ -18,7 +18,6 @@ import { CompressionProvider } from '../../../providers/compression/compression'
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { getCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
-import { get } from 'lodash';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ErrorTypes } from '../../../shared/models/error-message';
@@ -31,7 +30,6 @@ import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-categ
 import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
-import { VehicleDetailsModel } from '../cat-b/components/vehicle-details-card/vehicle-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
@@ -148,29 +146,6 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
       staffNumber: this.testResult.journalData.examiner.staffNumber,
       costCode: this.testResult.journalData.testCentre.costCode,
       testCentreName: this.testResult.journalData.testCentre.centreName,
-    };
-  }
-
-  getVehicleDetails(): VehicleDetailsModel {
-    if (!this.testResult) {
-      return null;
-    }
-
-    const vehicleInfomation: string[] = [];
-
-    if (get(this.testResult, 'vehicleDetails.dualControls')) {
-      vehicleInfomation.push('Dual controls');
-    }
-
-    if (get(this.testResult, 'vehicleDetails.schoolCar')) {
-      vehicleInfomation.push('School car');
-    }
-
-    return {
-      transmission: get(this.testResult, 'vehicleDetails.gearboxCategory'),
-      registrationNumber: get(this.testResult, 'vehicleDetails.registrationNumber'),
-      instructorRegistrationNumber: get(this.testResult, 'instructorDetails.registrationNumber'),
-      vehicleDetails: vehicleInfomation,
     };
   }
 

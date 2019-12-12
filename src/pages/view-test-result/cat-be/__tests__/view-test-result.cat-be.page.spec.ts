@@ -26,7 +26,6 @@ import { ExaminerDetailsCardComponent } from '../../components/examiner-details-
 import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
-import { VehicleDetailsModel } from '../components/vehicle-details-card/vehicle-details-card.model';
 import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
 import { categoryBETestResultMock } from '../../../../shared/mocks/cat-be-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
@@ -157,23 +156,6 @@ describe('ViewTestResultCatBEPage', () => {
       });
       it('should return null when there is no test result', () => {
         const result: ExaminerDetailsModel = component.getExaminerDetails();
-        expect(result).toBeNull();
-      });
-    });
-    describe('getVehicleDetails', () => {
-      it('should correctly generate the data', () => {
-        component.testResult = categoryBETestResultMock;
-
-        const result: VehicleDetailsModel = component.getVehicleDetails();
-
-        expect(result.transmission).toBe('Manual');
-        expect(result.registrationNumber).toBe('AB12 XYZ');
-        expect(result.vehicleDetails.length).toEqual(2);
-        expect(result.vehicleDetails).toContain('Dual controls');
-        expect(result.vehicleDetails).toContain('School car');
-      });
-      it('should return null when there is no test result', () => {
-        const result: VehicleDetailsModel = component.getVehicleDetails();
         expect(result).toBeNull();
       });
     });
