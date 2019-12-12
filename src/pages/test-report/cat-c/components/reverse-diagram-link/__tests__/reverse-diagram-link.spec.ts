@@ -40,6 +40,8 @@ describe('reverseDiagramLink', () => {
         component = fixture.componentInstance;
         modalController = TestBed.get(ModalController);
         store$ = TestBed.get(Store);
+
+        // // TODO: MES-4287 Change category to C
         store$.dispatch(new StartTest(105, TestCategory.BE));
       });
   }));
@@ -61,7 +63,7 @@ describe('reverseDiagramLink', () => {
       it('should create an instance of the modal with the correct properties', () => {
         component.openReverseDiagramModal();
         expect(modalController.create).toHaveBeenCalledWith(
-          'ReverseDiagramCatBEPage',
+          'ReverseDiagramCatCPage',
           { onClose: component.closeReverseDiagramModal },
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );
