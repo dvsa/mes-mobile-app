@@ -119,31 +119,6 @@ describe('DebriefCardComponent', () => {
         expect(component.getManoeuvre()).toEqual('None');
       });
     });
-    describe('getUncoupleRecouple', () => {
-      it('should return the correct object if uncouple/recouple is selected', () => {
-        const data: CatBEUniqueTypes.TestData = {
-          uncoupleRecouple: {
-            selected: true,
-          },
-        };
-        component.data = data;
-        fixture.detectChanges();
-        expect(component.getUncoupleRecouple()).toEqual([{ label: ViewTestResultLabels.completed, checked: true }]);
-      });
-      it('should return the correct object if uncouple/recouple is not selected', () => {
-        const data: CatBEUniqueTypes.TestData = {
-          uncoupleRecouple: {
-            selected: false,
-          },
-        };
-        component.data = data;
-        fixture.detectChanges();
-        expect(component.getUncoupleRecouple()).toEqual([{ label: ViewTestResultLabels.notCompleted, checked: false }]);
-      });
-      it('should return the correct object if there is no data for uncouple/recouple', () => {
-        expect(component.getUncoupleRecouple()).toEqual([{ label: ViewTestResultLabels.notCompleted, checked: false }]);
-      });
-    });
     describe('getEco', () => {
       it('should return the correct data for eco', () => {
         const data: CatBEUniqueTypes.TestData = {
