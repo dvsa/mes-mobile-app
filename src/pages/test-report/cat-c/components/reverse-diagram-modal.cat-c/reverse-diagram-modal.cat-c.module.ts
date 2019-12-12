@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { ReverseDiagramCatCPage } from './reverse-diagram-modal';
+import { ReverseDiagramCatCPage } from './reverse-diagram-modal.cat-c';
 
 @NgModule({
   declarations: [
@@ -10,4 +10,4 @@ import { ReverseDiagramCatCPage } from './reverse-diagram-modal';
     IonicPageModule.forChild(ReverseDiagramCatCPage),
   ],
 })
-export class ReverseDiagramPageModule { }
+export class ReverseDiagramCatCPageModule { }

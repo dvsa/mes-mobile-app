@@ -10,7 +10,10 @@ import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
-import { ReverseDiagramOpened, ReverseDiagramClosed } from '../../reverse-diagram-modal/reverse-diagram-modal.actions';
+import {
+  ReverseDiagramOpened,
+  ReverseDiagramClosed,
+} from '../../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 describe('reverseDiagramLink', () => {

@@ -10,7 +10,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { ReverseDiagramCatCPage } from '../reverse-diagram-modal';
+import { ReverseDiagramCatCPage } from '../reverse-diagram-modal.cat-c';
 import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';

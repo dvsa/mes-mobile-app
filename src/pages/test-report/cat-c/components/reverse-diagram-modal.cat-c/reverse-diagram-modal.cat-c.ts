@@ -27,8 +27,10 @@ type OnCloseFunc = () => void;
 
 @IonicPage()
 @Component({
-  selector: 'reverse-diagram-modal',
-  templateUrl: 'reverse-diagram-modal.html',
+
+  // TODO: MES-4287 Think we should name the file with cat c?
+  selector: 'reverse-diagram-modal-cat-c',
+  templateUrl: 'reverse-diagram-modal.cat-c.html',
 })
 
 export class ReverseDiagramCatCPage implements OnInit {
