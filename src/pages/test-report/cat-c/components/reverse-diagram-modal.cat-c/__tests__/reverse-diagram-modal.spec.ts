@@ -100,6 +100,8 @@ describe('reverseDiagramModal', () => {
   });
 
   describe('Class', () => {
+
+    // TODO: MES-4287 namespace has to come from cat C
     const vehicleDetails: CatBEUniqueTypes.VehicleDetails = {
       vehicleLength: 10,
       vehicleWidth: 2.75,
