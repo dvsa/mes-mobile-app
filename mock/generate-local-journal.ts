@@ -251,7 +251,7 @@ const localJournal: ExaminerWorkSchedule = {
           entitlementCheck: false,
           extendedTest: false,
           progressiveAccess: false,
-          testCategory: 'D+E',
+          testCategory: 'C',
           vehicleGearbox: 'Manual',
           vehicleHeight: 5,
           vehicleLength: 15,

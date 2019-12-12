@@ -61,7 +61,7 @@ export class TestsEffects {
     private store$: Store<StoreModel>,
     public authenticationProvider: AuthenticationProvider,
     private navigationStateProvider: NavigationStateProvider,
-  ) {}
+  ) { }
 
   @Effect({ dispatch: false })
   persistTestsEffect$ = this.actions$.pipe(
@@ -286,7 +286,7 @@ export class TestsEffects {
   );
 
   @Effect()
-sendPartialTestSuccessEffect$ = this.actions$.pipe(
+  sendPartialTestSuccessEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_PARTIAL_TEST_SUCCESS),
     switchMap((action: testActions.SendPartialTestSuccess) => {
       return [
