@@ -5,7 +5,6 @@ search-result {
     border-left: 8px solid #9b9b9b;
   }
   .grid {
-    margin-left: 40px;
     padding: 13px 0;
   }
   .top-row {
@@ -13,5 +12,8 @@ search-result {
   }
   .bottom-row {
     letter-spacing: -0.48px;
+  }
+  .first-col {
+    padding-left: 40px;
   }
 }
