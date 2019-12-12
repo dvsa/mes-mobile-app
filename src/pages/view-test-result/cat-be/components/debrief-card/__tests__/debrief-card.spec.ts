@@ -82,12 +82,13 @@ describe('DebriefCardComponent', () => {
         fixture.detectChanges();
         const result: DataRowListItem[] = component.getTestRequirements();
 
-        expect(result.length).toEqual(5);
+        expect(result.length).toEqual(6);
         expect(result).toContain({ label: TestRequirementsLabels.normalStart1, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.normalStart2, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.uphillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
+        expect(result).toContain({ label: TestRequirementsLabels.uncoupleRecouple, checked: false });
       });
     });
     describe('getManoeuvre', () => {
