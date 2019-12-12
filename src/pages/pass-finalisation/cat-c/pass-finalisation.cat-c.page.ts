@@ -228,7 +228,12 @@ export class PassFinalisationCatCPage extends BasePageComponent {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.store$.dispatch(new PersistTests());
+<<<<<<< HEAD
       this.navController.push(CAT_C.HEALTH_DECLARATION_PAGE);
+=======
+      // TODO: MES-4287 Redirect to CAT_C health declaration page
+      this.navController.push(CAT_BE.HEALTH_DECLARATION_PAGE);
+>>>>>>> mes-4254: Add test pass finalisation page (#1019)
       return;
     }
     Object.keys(this.form.controls).forEach((controlName) => {
