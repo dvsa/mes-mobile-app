@@ -34,6 +34,7 @@ import { ViewTestHeaderModel } from '../components/view-test-header/view-test-he
 import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { categoryBETestResultMock } from '../../../shared/mocks/cat-be-test-result.mock';
+import { get } from 'lodash';
 
 @IonicPage()
 @Component({
@@ -133,7 +134,7 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
       specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
       entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
       slotType: this.testResult.journalData.testSlotAttributes.slotType,
-      previousCancellations: this.testResult.journalData.testSlotAttributes.previousCancellation,
+      previousCancellations: get(this.testResult, 'journalData.testSlotAttributes.previousCancellation', []),
     };
   }
 
