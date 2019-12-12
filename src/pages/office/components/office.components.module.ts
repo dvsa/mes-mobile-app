@@ -10,7 +10,6 @@ import { IdentificationComponent } from './identification/identification';
 import { ShowMeQuestionComponent } from './show-me-question/show-me-question';
 import { WeatherConditionsComponent } from './weather-conditions/weather-conditions';
 import { AdditionalInformationComponent } from './additional-information/additional-information';
-import { IndependentDrivingComponent } from './independent-driving/independent-driving';
 import { DirectivesModule } from '../../../directives/directives.module';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { DirectivesModule } from '../../../directives/directives.module';
     ShowMeQuestionComponent,
     WeatherConditionsComponent,
     AdditionalInformationComponent,
-    IndependentDrivingComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +38,6 @@ import { DirectivesModule } from '../../../directives/directives.module';
     ShowMeQuestionComponent,
     WeatherConditionsComponent,
     AdditionalInformationComponent,
-    IndependentDrivingComponent,
   ],
 })
 export class OfficeComponentsModule { }

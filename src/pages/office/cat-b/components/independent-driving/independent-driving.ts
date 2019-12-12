@@ -4,7 +4,7 @@ import { IndependentDriving } from '@dvsa/mes-test-schema/categories/Common';
 import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
-} from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+} from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 @Component({
   selector: 'independent-driving',
