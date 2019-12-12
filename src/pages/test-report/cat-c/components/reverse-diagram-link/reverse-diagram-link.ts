@@ -3,7 +3,7 @@ import { ModalController } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { App } from '../../../../../app/app.component';
-import { CAT_BE } from '../../../../page-names.constants';
+import { CAT_C } from '../../../../page-names.constants';
 import {
   ReverseDiagramOpened,
   ReverseDiagramClosed,
@@ -22,7 +22,7 @@ export class ReverseDiagramLinkComponent {
   ) {}
 
   openReverseDiagramModal() {
-    const pageToOpen = CAT_BE.REVERSE_DIAGRAM_PAGE;
+    const pageToOpen = CAT_C.REVERSE_DIAGRAM_PAGE;
     this.store$.dispatch(new ReverseDiagramOpened());
     // Modals are at the same level as the ion-nav so are not getting the zoom level class,
     // this needs to be passed in the create options.
