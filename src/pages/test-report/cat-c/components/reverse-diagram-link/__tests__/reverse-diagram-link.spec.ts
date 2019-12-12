@@ -9,16 +9,12 @@ import { ReverseDiagramLinkComponent } from '../reverse-diagram-link';
 import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
-import { NavigationProvider } from '../../../../../../providers/navigation/navigation';
-import { NavigationProviderMock } from '../../../../../../providers/navigation/__mocks__/navigation.mock';
-import { NavigationStateProvider } from '../../../../../../providers/navigation-state/navigation-state';
-import {
-  NavigationStateProviderMock,
-} from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import {
   ReverseDiagramOpened,
   ReverseDiagramClosed,
 } from '../../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 describe('reverseDiagramLink', () => {
   let fixture: ComponentFixture<ReverseDiagramLinkComponent>;
@@ -36,8 +32,6 @@ describe('reverseDiagramLink', () => {
       providers: [
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
         { provide: App, useClass: MockAppComponent },
-        { provide: NavigationProvider, useClass: NavigationProviderMock },
-        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
     })
       .compileComponents()
@@ -46,6 +40,9 @@ describe('reverseDiagramLink', () => {
         component = fixture.componentInstance;
         modalController = TestBed.get(ModalController);
         store$ = TestBed.get(Store);
+
+        // // TODO: MES-4287 Change category to C
+        store$.dispatch(new StartTest(105, TestCategory.BE));
       });
   }));
 
@@ -66,7 +63,7 @@ describe('reverseDiagramLink', () => {
       it('should create an instance of the modal with the correct properties', () => {
         component.openReverseDiagramModal();
         expect(modalController.create).toHaveBeenCalledWith(
-          'ReverseDiagramCatBEPage',
+          'ReverseDiagramCatCPage',
           { onClose: component.closeReverseDiagramModal },
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );
