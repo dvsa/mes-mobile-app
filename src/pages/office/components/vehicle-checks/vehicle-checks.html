@@ -4,13 +4,13 @@
     </ion-col>
     <ion-col col-63 align-self-center padding-left>
         <ion-row class="spacing-row"></ion-row>
-        <ion-row *ngFor="let check of checks">
-            <ion-col col-2 align-self-start>
+        <ion-row *ngFor="let check of checks" class="check-row">
+            <ion-col col-6 align-self-start>
                 <div class="counter-icon">
                     <img *ngIf="!questionHasFault(check)" src="assets/imgs/greenCorrectAnswer.png" alt="Correct Answer"
-                        class="correct-icon" />
+                        class="correct-icon icon-image" />
                     <img *ngIf="questionHasFault(check)" src="assets/imgs/redWrongAnswer.png" alt="Wrong Answer"
-                        class="wrong-icon" />
+                        class="wrong-icon icon-image" />
                 </div>
             </ion-col>
             <ion-col col-3 no-padding></ion-col>
