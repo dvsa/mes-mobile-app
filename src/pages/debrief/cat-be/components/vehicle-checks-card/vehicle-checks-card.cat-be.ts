@@ -20,17 +20,14 @@ export class VehicleChecksCardCatBEComponent implements OnInit {
   constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
-    this.tellMeShowMeQuestions$  = this.store$.pipe(
+    this.tellMeShowMeQuestions$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
       select(getTestData),
       select(getVehicleChecks),
       map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
+      map(checks => checks.filter(c => c.code !== undefined)),
     );
-
-    this.tellMeShowMeQuestions$.subscribe(results => {
-      console.log(results.map(c => c.code));
-    });
   }
 
   questionHasFault = (result: QuestionResult): boolean => result.outcome !== CompetencyOutcome.P;

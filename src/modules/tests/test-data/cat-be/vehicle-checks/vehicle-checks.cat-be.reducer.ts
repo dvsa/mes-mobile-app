@@ -19,8 +19,6 @@ export function vehicleChecksCatBEReducer(
   action: vehicleChecksCatBeActionTypes.Types): CatBEUniqueTypes.VehicleChecks {
   switch (action.type) {
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_SELECTED:
-        console.log(action) 
-
       return {
         ...state,
         showMeQuestions: state.showMeQuestions.map(
@@ -28,7 +26,6 @@ export function vehicleChecksCatBEReducer(
         ),
       };
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
-      console.log(action) 
       return {
         ...state,
         showMeQuestions: state.showMeQuestions.map((item, index) => index === action.index ? {
