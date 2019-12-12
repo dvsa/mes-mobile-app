@@ -16,11 +16,11 @@ import { createTranslateLoader } from '../../../../../../app/app.module';
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import * as englishTranslations from '../../../../../../assets/i18n/en.json';
-import { TestCategory } from '../../../../../../shared/models/test-category';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
 import { PopulateTestCategory } from '../../../../../../modules/tests/category/category.actions';
 import { PopulateCandidateDetails } from '../../../../../../modules/tests/journal-data/candidate/candidate.actions';
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 fdescribe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatBEComponent>;
