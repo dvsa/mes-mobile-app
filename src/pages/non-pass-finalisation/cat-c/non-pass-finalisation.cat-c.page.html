@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Finalise outcome BE - {{ pageState.candidateName$ | async }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <finalisation-header [candidateName]="pageState.candidateName$ | async"
+    [candidateDriverNumber]="pageState.candidateDriverNumber$ | async"
+    [outcomeText]="pageState.testOutcomeText$ | async"></finalisation-header>
+
+  <form [formGroup]="form">
+    <ion-grid class="grid">
+
+      <activity-code id="activity-code-card" [formGroup]="form" [activityCodeModel]="pageState.activityCode$ | async"
+        [activityCodeOptions]="activityCodeOptions" (activityCodeChange)="activityCodeChanged($event)"
+        [disabled]="false">
+      </activity-code>
+
+      <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
+
+        <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission> 
+
+        <d255 [display]="pageState.displayD255$ | async" [d255]="pageState.d255$ | async"
+          [outcome]="pageState.testOutcome$ | async" [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
+
+        <language-preferences [formGroup]="form" [isWelsh]="pageState.isWelshTest$ | async"
+          (welshChanged)="isWelshChanged($event)"></language-preferences>
+
+        <debrief-witnessed [display]="pageState.displayDebriefWitnessed$ | async" [formGroup]="form"
+          [debriefWitnessed]="pageState.debriefWitnessed$ | async" [outcome]="pageState.testOutcome$ | async"
+          (debriefWitnessedChange)="debriefWitnessedChanged($event)"></debrief-witnessed>
+
+      </div>
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <div id="footer-background">
+    <button ion-button id="continue-button" class="mes-primary-button" (click)="continue()">
+      <h3>Submit</h3>
+    </button>
+  </div>
+</ion-footer>
