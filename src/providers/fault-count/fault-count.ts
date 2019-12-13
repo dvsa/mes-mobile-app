@@ -165,7 +165,6 @@ export class FaultCountProvider {
        this.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults +
        uncoupleRecoupleHasDrivingFault;
 
-    console.log(`get driving fault sum count cat be ${result}`);
     return result;
   }
 
