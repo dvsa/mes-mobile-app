@@ -11,6 +11,7 @@ export enum TestRequirementsLabels {
   uphillStart = 'Uphill start (US)',
   downhillStart = 'Downhill start (DS)',
   angledStartControlledStop = 'Angled start (AS) / Controlled stop (CS)',
+  uncoupleRecouple = 'Uncouple / recouple',
 }
 
 export enum ViewTestResultLabels {

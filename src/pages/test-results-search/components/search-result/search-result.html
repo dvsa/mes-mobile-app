@@ -1,7 +1,7 @@
 <ion-card (click)='openTestResult()'>
   <ion-grid>
     <ion-row class='top-row'>
-      <ion-col col-20 no-padding>
+      <ion-col col-24 class="first-col">
         <div>{{searchResult.costCode}}</div>
       </ion-col>
       <ion-col no-padding>
@@ -9,7 +9,7 @@
       </ion-col>
     </ion-row>
     <ion-row class='middle-row' align-items-center>
-      <ion-col col-20 no-padding>
+      <ion-col col-24 class="first-col">
         <h2>{{getTime()}}</h2>
       </ion-col>
       <ion-col no-padding>
@@ -18,12 +18,12 @@
       <ion-col col-8 no-padding>
         <h2>{{searchResult.category}}</h2>
       </ion-col>
-      <ion-col col-16 no-padding>
-        <h2>{{searchResult.activityCode}}</h2>
+      <ion-col col-16 no-padding padding-right>
+        <h2 float-right>{{searchResult.activityCode}}</h2>
       </ion-col>
     </ion-row>
     <ion-row class='bottom-row'>
-        <ion-col col-20 no-padding>
+        <ion-col col-24 class="first-col">
           <div>{{getDate()}}</div>
         </ion-col>
         <ion-col no-padding>

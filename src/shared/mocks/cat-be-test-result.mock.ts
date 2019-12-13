@@ -92,6 +92,8 @@ export const categoryBETestResultMock : CatBEUniqueTypes.TestResult = {
     registrationNumber: 'AB12 XYZ',
     dualControls: true,
     schoolCar: true,
+    vehicleWidth: 3,
+    vehicleLength: 10,
   },
   accompaniment: {
     ADI: true,

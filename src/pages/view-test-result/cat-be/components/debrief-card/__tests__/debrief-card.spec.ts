@@ -82,12 +82,13 @@ describe('DebriefCardComponent', () => {
         fixture.detectChanges();
         const result: DataRowListItem[] = component.getTestRequirements();
 
-        expect(result.length).toEqual(5);
+        expect(result.length).toEqual(6);
         expect(result).toContain({ label: TestRequirementsLabels.normalStart1, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.normalStart2, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.uphillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
+        expect(result).toContain({ label: TestRequirementsLabels.uncoupleRecouple, checked: false });
       });
     });
     describe('getManoeuvre', () => {
@@ -117,31 +118,6 @@ describe('DebriefCardComponent', () => {
       });
       it('should return None if the data does not exist', () => {
         expect(component.getManoeuvre()).toEqual('None');
-      });
-    });
-    describe('getUncoupleRecouple', () => {
-      it('should return the correct object if uncouple/recouple is selected', () => {
-        const data: CatBEUniqueTypes.TestData = {
-          uncoupleRecouple: {
-            selected: true,
-          },
-        };
-        component.data = data;
-        fixture.detectChanges();
-        expect(component.getUncoupleRecouple()).toEqual([{ label: ViewTestResultLabels.completed, checked: true }]);
-      });
-      it('should return the correct object if uncouple/recouple is not selected', () => {
-        const data: CatBEUniqueTypes.TestData = {
-          uncoupleRecouple: {
-            selected: false,
-          },
-        };
-        component.data = data;
-        fixture.detectChanges();
-        expect(component.getUncoupleRecouple()).toEqual([{ label: ViewTestResultLabels.notCompleted, checked: false }]);
-      });
-      it('should return the correct object if there is no data for uncouple/recouple', () => {
-        expect(component.getUncoupleRecouple()).toEqual([{ label: ViewTestResultLabels.notCompleted, checked: false }]);
       });
     });
     describe('getEco', () => {

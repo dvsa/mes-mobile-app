@@ -146,7 +146,7 @@ export class ViewTestResultCatBPage extends BasePageComponent implements OnInit 
       specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
       entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
       slotType: this.testResult.journalData.testSlotAttributes.slotType,
-      previousCancellations: this.testResult.journalData.testSlotAttributes.previousCancellation,
+      previousCancellations: get(this.testResult, 'journalData.testSlotAttributes.previousCancellation', []),
     };
   }
 

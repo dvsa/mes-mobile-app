@@ -50,22 +50,16 @@ export class DebriefCardComponent {
         label: TestRequirementsLabels.angledStartControlledStop,
         checked: get(this.data, 'testRequirements.angledStartControlledStop', false),
       },
+      {
+        label: TestRequirementsLabels.uncoupleRecouple,
+        checked: get(this.data, 'uncoupleRecouple.selected', false),
+      },
     ];
   }
 
   public getManoeuvre(): string {
     const isReverseLeftSelected = get(this.data, 'manoeuvres.reverseLeft.selected', false);
     return isReverseLeftSelected ? manoeuvreTypeLabels.reverseLeft : 'None' ;
-  }
-
-  public getUncoupleRecouple(): DataRowListItem[] {
-    const isUncoupleRecoupleCompleted = get(this.data, 'uncoupleRecouple.selected', false);
-    return [
-      {
-        label: isUncoupleRecoupleCompleted ? ViewTestResultLabels.completed : ViewTestResultLabels.notCompleted,
-        checked: isUncoupleRecoupleCompleted,
-      },
-    ];
   }
 
   public getEco(): DataRowListItem[] {
