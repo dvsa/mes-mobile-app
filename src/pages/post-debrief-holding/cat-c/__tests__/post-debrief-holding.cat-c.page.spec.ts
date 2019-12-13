@@ -9,17 +9,17 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { PostDebriefHoldingViewDidEnter } from '../../post-debrief-holding.actions';
-import { PostDebriefHoldingCatBEPage } from '../post-debrief-holding.cat-be.page';
+import { PostDebriefHoldingCatCPage } from '../post-debrief-holding.cat-c.page';
 
-describe('PostDebriefHoldingCatBEPage', () => {
-  let fixture: ComponentFixture<PostDebriefHoldingCatBEPage>;
-  let component: PostDebriefHoldingCatBEPage;
+describe('PostDebriefHoldingCatCPage', () => {
+  let fixture: ComponentFixture<PostDebriefHoldingCatCPage>;
+  let component: PostDebriefHoldingCatCPage;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        PostDebriefHoldingCatBEPage,
+        PostDebriefHoldingCatCPage,
         MockComponent(PracticeModeBanner),
       ],
       imports: [
@@ -35,7 +35,7 @@ describe('PostDebriefHoldingCatBEPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(PostDebriefHoldingCatBEPage);
+        fixture = TestBed.createComponent(PostDebriefHoldingCatCPage);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
