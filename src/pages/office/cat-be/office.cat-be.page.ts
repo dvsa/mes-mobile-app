@@ -72,6 +72,7 @@ import {
   WeatherConditions,
   Identification,
   IndependentDriving,
+  QuestionResult,
 } from '@dvsa/mes-test-schema/categories/Common';
 import {
   AddDangerousFaultComment,
@@ -103,6 +104,7 @@ import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import {
   vehicleChecksExist,
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
+import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -139,6 +141,7 @@ interface OfficePageState {
   dangerousFaults$: Observable<FaultSummary[]>;
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
+  vehicleChecks$: Observable<QuestionResult[]>;
 }
 
 @IonicPage()
@@ -385,6 +388,11 @@ export class OfficeCatBEPage extends BasePageComponent {
       weatherConditions$: currentTest$.pipe(
         select(getTestSummary),
         select(getWeatherConditions),
+      ),
+      vehicleChecks$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecks),
+        map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
     };
   }
