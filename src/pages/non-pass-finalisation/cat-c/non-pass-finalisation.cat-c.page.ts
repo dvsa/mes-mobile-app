@@ -3,8 +3,7 @@ import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-// TODO: MES-4287 Import Cat C page names
-import { CAT_BE } from '../../page-names.constants';
+import { CAT_C } from '../../page-names.constants';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
@@ -195,8 +194,7 @@ export class NonPassFinalisationCatCPage extends BasePageComponent implements On
     if (this.form.valid) {
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
-      // TODO: MES-4287 Redirect to CAT_C office page
-      this.navController.push(CAT_BE.BACK_TO_OFFICE_PAGE);
+      this.navController.push(CAT_C.BACK_TO_OFFICE_PAGE);
       return;
     }
     Object.keys(this.form.controls).forEach((controlName) => {
