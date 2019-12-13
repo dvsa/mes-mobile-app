@@ -23,6 +23,8 @@ import { ActivityCodeComponent } from '../../pages/office/components/activity-co
 import { IncompleteTestsBanner } from './incomplete-tests-banner/incomplete-tests-banner';
 import { WarningBannerComponent } from './warning-banner/warning-banner';
 import { TransmissionComponent } from './transmission/transmission';
+import { DataRowComponent } from './data-row/data-row';
+import { DataRowCustomComponent } from '../../pages/view-test-result/components/data-row-custom/data-row-custom';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { TransmissionComponent } from './transmission/transmission';
     IncompleteTestsBanner,
     WarningBannerComponent,
     TransmissionComponent,
+    DataRowComponent,
+    DataRowCustomComponent,
   ],
   imports: [
     SignaturePadModule,
@@ -73,6 +77,8 @@ import { TransmissionComponent } from './transmission/transmission';
     IncompleteTestsBanner,
     WarningBannerComponent,
     TransmissionComponent,
+    DataRowComponent,
+    DataRowCustomComponent,
   ],
 })
 export class ComponentsModule { }

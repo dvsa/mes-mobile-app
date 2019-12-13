@@ -10,6 +10,8 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { MockComponent } from 'ng-mocks';
 import { DisplayAddressComponent } from '../../../components/common/display-address/display-address';
+import { DataRowComponent } from '../../../components/common/data-row/data-row';
+import { DataRowCustomComponent } from '../../view-test-result/components/data-row-custom/data-row-custom';
 
 describe('CandidateDetailsPage', () => {
   let fixture: ComponentFixture<CandidateDetailsPage>;
@@ -20,6 +22,8 @@ describe('CandidateDetailsPage', () => {
       declarations: [
         CandidateDetailsPage,
         MockComponent(DisplayAddressComponent),
+        MockComponent(DataRowComponent),
+        MockComponent(DataRowCustomComponent),
       ],
       imports: [
         IonicModule,

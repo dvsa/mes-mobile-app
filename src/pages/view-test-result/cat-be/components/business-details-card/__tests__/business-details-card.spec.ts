@@ -3,7 +3,7 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config, Platform } from 'ionic-angular';
 import { ConfigMock, PlatformMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
-import { DataRowComponent } from '../../../../components/data-row/data-row';
+import { DataRowComponent } from '../../../../../../components/common/data-row/data-row';
 import { DataRowCustomComponent } from '../../../../components/data-row-custom/data-row-custom';
 import { BusinessDetailsCardComponent } from '../business-details-card';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
