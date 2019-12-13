@@ -1,7 +1,7 @@
 
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
-import { VehicleChecksQuestionComponent } from '../vehicle-checks-question';
+import { VehicleChecksQuestionCatCComponent } from '../vehicle-checks-question.cat-c';
 import { AppModule } from '../../../../../../app/app.module';
 import { VehicleChecksQuestion } from '../../../../../../providers/question/vehicle-checks-question.model';
 import { EventEmitter } from '@angular/core';
@@ -14,13 +14,13 @@ const vehicleChecksQuestion: VehicleChecksQuestion = {
 };
 
 describe('VehicleChecksQuestionComponent', () => {
-  let fixture: ComponentFixture<VehicleChecksQuestionComponent>;
-  let component: VehicleChecksQuestionComponent;
+  let fixture: ComponentFixture<VehicleChecksQuestionCatCComponent>;
+  let component: VehicleChecksQuestionCatCComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        VehicleChecksQuestionComponent,
+        VehicleChecksQuestionCatCComponent,
       ],
       imports: [
         IonicModule,
@@ -29,7 +29,7 @@ describe('VehicleChecksQuestionComponent', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(VehicleChecksQuestionComponent);
+        fixture = TestBed.createComponent(VehicleChecksQuestionCatCComponent);
         component = fixture.componentInstance;
       });
   }));
