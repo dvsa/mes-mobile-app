@@ -34,8 +34,7 @@ import { PopulateTestSlotAttributes }
   from '../../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.actions';
 import { EndDebrief } from '../../debrief.actions';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
-// TODO: MES-4287 Import Cat C page names
-import { CAT_BE } from '../../../page-names.constants';
+import { CAT_C } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
@@ -219,20 +218,17 @@ describe('DebriefCatCPage', () => {
     it('should navigate to PassFinalisationPage when outcome = pass', () => {
       component.outcome = 'Pass';
       component.endDebrief();
-      // TODO: MES-4287 Use Cat C page names
-      expect(navController.push).toHaveBeenCalledWith(CAT_BE.PASS_FINALISATION_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_C.PASS_FINALISATION_PAGE);
     });
     it('should navigate to BackToOfficePage when outcome = fail', () => {
       component.outcome = 'Fail';
       component.endDebrief();
-      // TODO: MES-4287 Use Cat C page names
-      expect(navController.push).toHaveBeenCalledWith(CAT_BE.POST_DEBRIEF_HOLDING_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_C.POST_DEBRIEF_HOLDING_PAGE);
     });
     it('should navigate to the BackToOfficePage when outcomes = terminated', () => {
       component.outcome = 'Terminated';
       component.endDebrief();
-      // TODO: MES-4287 Use Cat C page names
-      expect(navController.push).toHaveBeenCalledWith(CAT_BE.POST_DEBRIEF_HOLDING_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_C.POST_DEBRIEF_HOLDING_PAGE);
     });
   });
 

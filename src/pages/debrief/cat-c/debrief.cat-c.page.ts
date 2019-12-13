@@ -24,8 +24,7 @@ import {
 } from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from
   '../../../modules/tests/communication-preferences/communication-preferences.selector';
-// TODO: MES-4287 Import Cat C page names
-import { CAT_BE } from '../../page-names.constants';
+import { CAT_C } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { BasePageComponent } from '../../../shared/classes/base-page';
@@ -175,18 +174,15 @@ export class DebriefCatCPage extends BasePageComponent {
   endDebrief(): void {
     this.store$.dispatch(new EndDebrief());
     if (this.outcome === 'Pass') {
-      // TODO: MES-4287 Redirect to CAT_C pass finalisation page
-      this.navController.push(CAT_BE.PASS_FINALISATION_PAGE);
+      this.navController.push(CAT_C.PASS_FINALISATION_PAGE);
       return;
     }
-    this.navController.push(CAT_BE.POST_DEBRIEF_HOLDING_PAGE).then(() => {
-      // TODO: MES-4287 Get view for CAT_C test report page
-      const testReportPage = this.navController.getViews().find(view => view.id === CAT_BE.TEST_REPORT_PAGE);
+    this.navController.push(CAT_C.POST_DEBRIEF_HOLDING_PAGE).then(() => {
+      const testReportPage = this.navController.getViews().find(view => view.id === CAT_C.TEST_REPORT_PAGE);
       if (testReportPage) {
         this.navController.removeView(testReportPage);
       }
-      // TODO: MES-4287 Get view for CAT_C debrief page
-      const debriefPage = this.navController.getViews().find(view => view.id === CAT_BE.DEBRIEF_PAGE);
+      const debriefPage = this.navController.getViews().find(view => view.id === CAT_C.DEBRIEF_PAGE);
       if (debriefPage) {
         this.navController.removeView(debriefPage);
       }
