@@ -1,4 +1,4 @@
-import { Then, When } from 'cucumber';
+import { Then, When, Before } from 'cucumber';
 import { getElement, clickElement, enterPasscode } from './generic-steps';
 import { by } from 'protractor';
 
@@ -6,6 +6,14 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
+
+// Set default category to be cat b
+this.testCategory = 'b';
+
+Before({ tags: '@catbe' }, () => {
+  // This hook will be executed before scenarios tagged with @catbe
+  this.testCategory = 'be';
+});
 
 When('the candidate enters a new email address', () => {
   const newEmailRadio = getElement(by.id('newEmail'));
@@ -20,7 +28,8 @@ When('the candidate requests to receive results by post', () => {
 });
 
 When(/^the candidate confirms their (communication preference|declaration)$/, (pageName) => {
-  const pageType = (pageName === 'communication preference' ? 'communication-cat-b-page' : 'waiting-room-cat-b-page');
+  const pageType = (pageName === 'communication preference' ? `communication-cat-${this.testCategory}-page`
+  : `waiting-room-cat-${this.testCategory}-page`);
   const continueButton = getElement(
     by.xpath(`//div[contains(@class, '${pageType}')]//button[@id = 'continue-button']`));
   clickElement(continueButton);
@@ -37,8 +46,8 @@ When('the candidate completes the declaration page', () => {
 
 When('I proceed to the car', () => {
   // Examiner clicks continue button then enters passcode
-  const continueButton = getElement(
-    by.xpath('//div[contains(@class, "communication-cat-b-page")]//button[@id = "continue-button"]'));
+  const continueButton = getElement(by.xpath(
+    `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
   clickElement(continueButton);
   enterPasscode();
 });

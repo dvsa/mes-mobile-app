@@ -1,3 +1,4 @@
+@catb
 Feature: Full end to end journey
 
    @smoke

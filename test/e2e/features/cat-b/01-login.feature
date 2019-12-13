@@ -1,3 +1,4 @@
+@catb
 Feature: Login
 
    Scenario: User presented login screen

@@ -93,6 +93,39 @@ Then('the test result for {string} is {string}', (candidateName, testResult) => 
   return expect(testResultElement.getText()).to.eventually.equal(testResult);
 });
 
+Then('I should have a category {string} test for {string}', (category, candidateName) => {
+  const testCategory = getElement(by.xpath(`//test-category/h2[ancestor::ion-row/ion-col/ion-grid/ion-row/
+    ion-col/candidate-link/div/button/span/h3[text() = "${candidateName}"]]`));
+  return expect(testCategory.getText()).to.eventually.equal(category);
+});
+
+Then('The vehicle for {string} has length {string}, width {string}, height {string} and seats {string}',
+(candidateName, length, width, height, seats) => {
+  const lengthValue = getElement(
+    by.xpath(`//vehicle-details/div/span/span[text()= 'L: ']/following-sibling::span
+    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
+      [text() = "${candidateName}"]]`));
+  expect(lengthValue.getText()).to.eventually.equal(length);
+
+  const widthValue = getElement(
+    by.xpath(`//vehicle-details/div/span/span[text()= 'W: ']/following-sibling::span
+    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
+      [text() = "${candidateName}"]]`));
+  expect(widthValue.getText()).to.eventually.equal(width);
+
+  const heightValue = getElement(
+    by.xpath(`//vehicle-details/div/span/span[text()= 'H: ']/following-sibling::span
+    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
+      [text() = "${candidateName}"]]`));
+  expect(heightValue.getText()).to.eventually.equal(height);
+
+  const seatValue = getElement(
+    by.xpath(`//vehicle-details/div/span/span[text() = 'Seats: ']/following-sibling::span
+    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
+      [text() = "${candidateName}"]]`));
+  return expect(seatValue.getText()).to.eventually.equal(seats);
+});
+
 const viewCandidateDetails = (candidateName) => {
   const buttonElement = getElement(by.xpath(`//h3[text()[normalize-space(.) = "${candidateName}"]]`));
   return clickElement(buttonElement);

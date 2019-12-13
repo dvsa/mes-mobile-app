@@ -1,3 +1,4 @@
+@catb
 Feature: Waiting Room to Car
 
    @smoke
