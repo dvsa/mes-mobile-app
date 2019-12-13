@@ -126,6 +126,8 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
     public questionProvider: QuestionProvider,
   ) {
     super(platform, navController, authenticationProvider);
+
+    // TODO: MES-4254 Use category C
     this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
     this.form = new FormGroup({});
   }

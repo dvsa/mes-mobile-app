@@ -15,7 +15,7 @@ import { TickIndicatorComponent } from '../../../../../../components/common/tick
 
 class MockStore { }
 
-describe('VehicleChecksCatBEComponent', () => {
+describe('VehicleChecksCatCComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCatCComponent>;
   let component: VehicleChecksCatCComponent;
   let modalController: ModalController;
