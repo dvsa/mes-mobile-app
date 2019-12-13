@@ -3,7 +3,7 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 @Component({
-  selector: 'vehicle-checks',
+  selector: 'vehicle-checks-office',
   templateUrl: 'vehicle-checks.html',
 })
 export class VehicleChecksComponent {

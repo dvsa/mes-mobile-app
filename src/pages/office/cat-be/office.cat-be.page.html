@@ -64,8 +64,8 @@
               (identificationChange)="identificationChanged($event)">
             </identification>
 
-            <vehicle-checks [display]="pageState.displayVehicleChecks$ | async"
-              [checks]="pageState.vehicleChecks$ | async"></vehicle-checks>
+            <vehicle-checks-office [display]="pageState.displayVehicleChecks$ | async"
+              [checks]="pageState.vehicleChecks$ | async"></vehicle-checks-office>
 
             <weather-conditions [display]="pageState.displayWeatherConditions$ | async"
               [weatherConditions]="pageState.weatherConditions$ | async" [formGroup]="form"
