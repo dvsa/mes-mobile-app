@@ -93,8 +93,7 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
-// TODO: MES-4287 Import Cat C page names
-import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
+import { CAT_C, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import {
@@ -559,8 +558,7 @@ export class OfficeCatCPage extends BasePageComponent {
 
   goToReasonForRekey() {
     if (this.isFormValid()) {
-      // TODO: MES-4287 Redirect to CAT_C rekey reason page
-      this.navController.push(CAT_BE.REKEY_REASON_PAGE);
+      this.navController.push(CAT_C.REKEY_REASON_PAGE);
     }
   }
 
