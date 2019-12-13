@@ -12,6 +12,8 @@ import {
   QuestionResult,
 } from '@dvsa/mes-test-schema/categories/common';
 import { StoreModel } from '../../../../../../shared/models/store.model';
+
+// TODO: MES-4254 Import cat c actions
 import {
   ShowMeQuestionOutcomeChanged,
   ShowMeQuestionSelected,
@@ -20,7 +22,7 @@ import {
 } from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 
-describe('VehicleChecksCatBEModal', () => {
+describe('VehicleChecksCatCModal', () => {
   let fixture: ComponentFixture<VehicleChecksCatCModal>;
   let component: VehicleChecksCatCModal;
   let store$: Store<StoreModel>;
