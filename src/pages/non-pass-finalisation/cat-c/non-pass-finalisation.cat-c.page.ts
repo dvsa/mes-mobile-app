@@ -194,12 +194,7 @@ export class NonPassFinalisationCatCPage extends BasePageComponent implements On
     if (this.form.valid) {
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
-<<<<<<< HEAD
       this.navController.push(CAT_C.BACK_TO_OFFICE_PAGE);
-=======
-      // TODO: MES-4287 Redirect to CAT_C office page
-      this.navController.push(CAT_BE.BACK_TO_OFFICE_PAGE);
->>>>>>> mes-4254: Add test non-pass finalisation page (#1021)
       return;
     }
     Object.keys(this.form.controls).forEach((controlName) => {
