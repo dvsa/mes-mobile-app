@@ -5,7 +5,7 @@ import { ConfigMock } from 'ionic-mocks';
 import { TestSummaryCardComponent } from '../test-summary-card';
 import { MockComponent } from 'ng-mocks';
 import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
-import { DataRowCustomComponent } from '../../data-row-custom/data-row-custom';
+import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
 
 describe('TestSummaryCardComponent', () => {

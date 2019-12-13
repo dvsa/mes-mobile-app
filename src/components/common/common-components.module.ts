@@ -24,7 +24,7 @@ import { IncompleteTestsBanner } from './incomplete-tests-banner/incomplete-test
 import { WarningBannerComponent } from './warning-banner/warning-banner';
 import { TransmissionComponent } from './transmission/transmission';
 import { DataRowComponent } from './data-row/data-row';
-import { DataRowCustomComponent } from '../../pages/view-test-result/components/data-row-custom/data-row-custom';
+import { DataRowCustomComponent } from './data-row-custom/data-row-custom';
 
 @NgModule({
   declarations: [

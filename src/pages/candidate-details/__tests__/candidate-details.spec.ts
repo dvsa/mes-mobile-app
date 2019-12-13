@@ -11,7 +11,7 @@ import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/dat
 import { MockComponent } from 'ng-mocks';
 import { DisplayAddressComponent } from '../../../components/common/display-address/display-address';
 import { DataRowComponent } from '../../../components/common/data-row/data-row';
-import { DataRowCustomComponent } from '../../view-test-result/components/data-row-custom/data-row-custom';
+import { DataRowCustomComponent } from '../../../components/common/data-row-custom/data-row-custom';
 
 describe('CandidateDetailsPage', () => {
   let fixture: ComponentFixture<CandidateDetailsPage>;

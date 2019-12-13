@@ -4,7 +4,7 @@ import { IonicModule, Config } from 'ionic-angular';
 import { TestDetailsCardComponent } from '../test-details-card';
 import { ConfigMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
-import { DataRowCustomComponent } from '../../../components/data-row-custom/data-row-custom';
+import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
 import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
 
 describe('TestDetailsCardComponent', () => {
