@@ -43,8 +43,7 @@ import {
   isManual,
 } from '../../../modules/tests/vehicle-details/vehicle-details.selector';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
-// TODO: MES-4287 Import Cat C page names
-import { CAT_BE } from '../../page-names.constants';
+import { CAT_C } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
 import {
@@ -229,8 +228,7 @@ export class PassFinalisationCatCPage extends BasePageComponent {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.store$.dispatch(new PersistTests());
-      // TODO: MES-4287 Redirect to CAT_C health declaration page
-      this.navController.push(CAT_BE.HEALTH_DECLARATION_PAGE);
+      this.navController.push(CAT_C.HEALTH_DECLARATION_PAGE);
       return;
     }
     Object.keys(this.form.controls).forEach((controlName) => {

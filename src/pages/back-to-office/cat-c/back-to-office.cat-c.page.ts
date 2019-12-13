@@ -14,8 +14,7 @@ import { getTests } from '../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../modules/tests/tests.selector';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
-// TODO: MES-4287 Import Cat C page names
-import { CAT_BE } from '../../../pages/page-names.constants';
+import { CAT_C } from '../../../pages/page-names.constants';
 
 interface BackToOfficePageState {
   isRekey$: Observable<boolean>;
@@ -79,7 +78,6 @@ export class BackToOfficeCatCPage extends PracticeableBasePageComponent {
   }
 
   goToOfficePage() {
-     // TODO: MES-4287 Redirect to CAT_C office page
-    this.navController.push(CAT_BE.OFFICE_PAGE);
+    this.navController.push(CAT_C.OFFICE_PAGE);
   }
 }
