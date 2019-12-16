@@ -45,7 +45,7 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { of } from 'rxjs/observable/of';
 import { VehicleChecksCardCatCComponent } from '../components/vehicle-checks-card/vehicle-checks-card.cat-c';
 
-fdescribe('DebriefCatCPage', () => {
+describe('DebriefCatCPage', () => {
   let fixture: ComponentFixture<DebriefCatCPage>;
   let component: DebriefCatCPage;
   let navController: NavController;
