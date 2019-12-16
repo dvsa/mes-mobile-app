@@ -62,6 +62,7 @@ describe('RekeyReasonCatCPage', () => {
               staffNumber: '1234567',
             },
           }),
+          // TODO - Update to use Cat C Schema
           tests: () => ({
             currentTest: {
               slotId: '123',
