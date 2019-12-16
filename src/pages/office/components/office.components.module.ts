@@ -11,7 +11,7 @@ import { ShowMeQuestionComponent } from './show-me-question/show-me-question';
 import { WeatherConditionsComponent } from './weather-conditions/weather-conditions';
 import { AdditionalInformationComponent } from './additional-information/additional-information';
 import { DirectivesModule } from '../../../directives/directives.module';
-import { VehicleChecksComponent } from './vehicle-checks/vehicle-checks';
+import { VehicleChecksOfficeCardComponent } from './vehicle-checks/vehicle-checks-office-card';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { VehicleChecksComponent } from './vehicle-checks/vehicle-checks';
     ShowMeQuestionComponent,
     WeatherConditionsComponent,
     AdditionalInformationComponent,
-    VehicleChecksComponent,
+    VehicleChecksOfficeCardComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +40,7 @@ import { VehicleChecksComponent } from './vehicle-checks/vehicle-checks';
     ShowMeQuestionComponent,
     WeatherConditionsComponent,
     AdditionalInformationComponent,
-    VehicleChecksComponent,
+    VehicleChecksOfficeCardComponent,
   ],
 })
 export class OfficeComponentsModule { }
