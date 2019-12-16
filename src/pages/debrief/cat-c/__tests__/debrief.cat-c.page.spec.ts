@@ -43,8 +43,7 @@ import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
 
-// TODO - These need to be fixed
-xdescribe('DebriefCatCPage', () => {
+describe('DebriefCatCPage', () => {
   let fixture: ComponentFixture<DebriefCatCPage>;
   let component: DebriefCatCPage;
   let navController: NavController;
