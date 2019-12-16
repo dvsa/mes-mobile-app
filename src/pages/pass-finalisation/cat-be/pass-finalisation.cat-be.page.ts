@@ -69,6 +69,8 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
+import { merge } from 'rxjs/observable/merge';
+import { TransmissionType } from '../../../shared/models/transmission-type';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -97,10 +99,12 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
   passCertificateCtrl: string = PASS_CERTIFICATE_NUMBER_CTRL;
   @ViewChild('passCertificateNumberInput')
   passCertificateNumberInput: ElementRef;
-  inputSubscriptions: Subscription[] = [];
   testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
   category: TestCategory = TestCategory.BE;
+  merged$: Observable<string>;
+  transmission: GearboxCategory;
+  subscription: Subscription;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -197,16 +201,25 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
         select(getConductedLanguage),
       ),
     };
+    const { transmission$ } = this.pageState;
+
+    this.merged$ = merge(
+      transmission$.pipe(map(value => this.transmission = value)),
+    );
+    this.subscription = this.merged$.subscribe();
     this.store$.dispatch(new PopulatePassCompletion());
   }
 
   ionViewDidLeave(): void {
-    if (this.inputSubscriptions) {
-      this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 
   ionViewDidEnter(): void {
+    if (this.subscription.closed && this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
     this.store$.dispatch(new PassFinalisationViewDidEnter());
   }
 
@@ -257,5 +270,9 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
         new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
         : new CandidateChoseToProceedWithTestInEnglish('English'),
     );
+  }
+
+  displayTransmissionBanner(): boolean {
+    return !this.form.controls['transmissionCtrl'].pristine && this.transmission === TransmissionType.Automatic;
   }
 }
