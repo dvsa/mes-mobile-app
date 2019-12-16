@@ -37,6 +37,7 @@ import { TransmissionComponent } from '../../../../components/common/transmissio
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
+import { Subscription } from 'rxjs/Subscription';
 
 describe('PassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;
@@ -71,6 +72,7 @@ describe('PassFinalisationCatBPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(PassFinalisationCatBPage);
         component = fixture.componentInstance;
+        component.subscription = new Subscription();
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
       });

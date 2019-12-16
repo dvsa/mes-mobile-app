@@ -217,10 +217,10 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
+    this.store$.dispatch(new PassFinalisationViewDidEnter());
     if (this.subscription.closed && this.merged$) {
       this.subscription = this.merged$.subscribe();
     }
-    this.store$.dispatch(new PassFinalisationViewDidEnter());
   }
 
   provisionalLicenseReceived(): void {
