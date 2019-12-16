@@ -3,9 +3,9 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
-import { DataRowComponent } from '../../data-row/data-row';
+import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
 import { ContactDetailsCardComponent } from '../contact-details-card';
-import { DataRowCustomComponent } from '../../data-row-custom/data-row-custom';
+import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
 import { CommunicationPreferences, Candidate } from '@dvsa/mes-test-schema/categories/Common';
 import { DisplayAddressComponent } from '../../../../../components/common/display-address/display-address';
 

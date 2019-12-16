@@ -14,8 +14,8 @@ import {
 import {
   DrivingFaultsBadgeComponent,
 } from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
-import { DataRowComponent } from '../../../../components/data-row/data-row';
-import { DataRowCustomComponent } from '../../../../components/data-row-custom/data-row-custom';
+import { DataRowComponent } from '../../../../../../components/common/data-row/data-row';
+import { DataRowCustomComponent } from '../../../../../../components/common/data-row-custom/data-row-custom';
 import { DataRowWithListComponent } from '../../../../components/data-row-with-list/data-list-with-row';
 import { FaultsDataRowComponent } from '../../../../components/faults-data-row/faults-data-row';
 

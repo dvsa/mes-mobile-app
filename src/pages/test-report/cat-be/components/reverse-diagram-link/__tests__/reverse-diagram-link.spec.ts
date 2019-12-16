@@ -9,9 +9,13 @@ import { ReverseDiagramLinkComponent } from '../reverse-diagram-link';
 import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
-import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { ReverseDiagramOpened, ReverseDiagramClosed } from '../../reverse-diagram-modal/reverse-diagram-modal.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { NavigationProvider } from '../../../../../../providers/navigation/navigation';
+import { NavigationProviderMock } from '../../../../../../providers/navigation/__mocks__/navigation.mock';
+import { NavigationStateProvider } from '../../../../../../providers/navigation-state/navigation-state';
+import {
+  NavigationStateProviderMock,
+} from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('reverseDiagramLink', () => {
   let fixture: ComponentFixture<ReverseDiagramLinkComponent>;
@@ -29,6 +33,8 @@ describe('reverseDiagramLink', () => {
       providers: [
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
         { provide: App, useClass: MockAppComponent },
+        { provide: NavigationProvider, useClass: NavigationProviderMock },
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
     })
       .compileComponents()
@@ -37,7 +43,6 @@ describe('reverseDiagramLink', () => {
         component = fixture.componentInstance;
         modalController = TestBed.get(ModalController);
         store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(105, TestCategory.BE));
       });
   }));
 

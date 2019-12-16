@@ -4,7 +4,7 @@ import { IonicModule, Config } from 'ionic-angular';
 import { RekeyReasonCardComponent } from '../rekey-reason';
 import { ConfigMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
-import { DataRowComponent } from '../../data-row/data-row';
+import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
 
 describe('ExaminerDetailsCardComponent', () => {
   let fixture: ComponentFixture<RekeyReasonCardComponent>;

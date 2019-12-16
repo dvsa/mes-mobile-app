@@ -14,11 +14,15 @@ import { CompetencyButtonComponent } from '../../../../components/competency-but
 import { IonicModule } from 'ionic-angular';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../../test-report.reducer';
-import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { ReverseLeftPopoverClosed, ReverseLeftPopoverOpened } from '../reverse-left.actions';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 import { AppModule } from '../../../../../../app/app.module';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { NavigationProvider } from '../../../../../../providers/navigation/navigation';
+import { NavigationProviderMock } from '../../../../../../providers/navigation/__mocks__/navigation.mock';
+import { NavigationStateProvider } from '../../../../../../providers/navigation-state/navigation-state';
+import {
+  NavigationStateProviderMock,
+} from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('reverseLeftComponent', () => {
   let fixture: ComponentFixture<ReverseLeftComponent>;
@@ -42,6 +46,8 @@ describe('reverseLeftComponent', () => {
       ],
       providers: [
         FaultCountProvider,
+        { provide: NavigationProvider, useClass: NavigationProviderMock },
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
     })
       .compileComponents()
@@ -49,13 +55,8 @@ describe('reverseLeftComponent', () => {
         fixture = TestBed.createComponent(ReverseLeftComponent);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(105, TestCategory.BE));
       });
   }));
-
-  describe('DOM', () => {
-
-  });
 
   describe('Class', () => {
     describe('togglePopoverDisplay', () => {

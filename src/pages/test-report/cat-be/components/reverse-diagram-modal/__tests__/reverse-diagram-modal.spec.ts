@@ -1,24 +1,28 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavParams, Config, Platform } from 'ionic-angular';
+import { IonicModule, NavParams, Config, Platform, NavController } from 'ionic-angular';
 import {
   ConfigMock,
   PlatformMock,
   NavParamsMock,
+  NavControllerMock,
 } from 'ionic-mocks';
-import { StoreModel } from '../../../../../../shared/models/store.model';
-import { Store, StoreModule } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
-import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { ReverseDiagramCatBEPage } from '../reverse-diagram-modal';
 import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
+import { NavigationProvider } from '../../../../../../providers/navigation/navigation';
+import { NavigationProviderMock } from '../../../../../../providers/navigation/__mocks__/navigation.mock';
+import { NavigationStateProvider } from '../../../../../../providers/navigation-state/navigation-state';
+import {
+  NavigationStateProviderMock,
+} from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('reverseDiagramModal', () => {
   let fixture: ComponentFixture<ReverseDiagramCatBEPage>;
   let component: ReverseDiagramCatBEPage;
-  let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -79,15 +83,16 @@ describe('reverseDiagramModal', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
+        { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: App, useClass: MockAppComponent },
+        { provide: NavigationProvider, useClass: NavigationProviderMock },
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(ReverseDiagramCatBEPage);
         component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(123, TestCategory.BE));
       });
   }));
 
