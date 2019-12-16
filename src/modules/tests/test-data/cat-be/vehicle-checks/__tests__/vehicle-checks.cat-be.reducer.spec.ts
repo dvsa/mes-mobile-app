@@ -10,6 +10,7 @@ import {
 } from '../vehicle-checks.cat-be.action';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { cloneDeep } from 'lodash';
 
 describe('Vehicle Checks Cat B+E Reducer', () => {
 
@@ -19,9 +20,7 @@ describe('Vehicle Checks Cat B+E Reducer', () => {
         code: 'S1',
         description: 'desc',
       };
-      const state: CatBEUniqueTypes.VehicleChecks = {
-        ...initialState,
-      };
+      const state: CatBEUniqueTypes.VehicleChecks = cloneDeep(initialState);
       const result = vehicleChecksCatBEReducer(state, new ShowMeQuestionSelected(newQuestionPayload, 1));
       expect(result.showMeQuestions[1].code).toEqual('S1');
       expect(result.showMeQuestions[1].description).toEqual('desc');
@@ -30,9 +29,7 @@ describe('Vehicle Checks Cat B+E Reducer', () => {
 
   describe('SHOW_ME_QUESTION_OUTCOME_CHANGED', () => {
     it('should update the outcome property for the object at the specified index', () => {
-      const state: CatBEUniqueTypes.VehicleChecks = {
-        ...initialState,
-      };
+      const state: CatBEUniqueTypes.VehicleChecks = cloneDeep(initialState);
       state.showMeQuestions[1] = {
         code: 'S1',
         description: 'desc',
@@ -49,9 +46,7 @@ describe('Vehicle Checks Cat B+E Reducer', () => {
         code: 'T01',
         description: 'desc',
       };
-      const state: CatBEUniqueTypes.VehicleChecks = {
-        ...initialState,
-      };
+      const state: CatBEUniqueTypes.VehicleChecks = cloneDeep(initialState);
       const result = vehicleChecksCatBEReducer(state, new TellMeQuestionSelected(newQuestionPayload, 1));
       expect(result.tellMeQuestions[1].code).toEqual('T01');
       expect(result.tellMeQuestions[1].description).toEqual('desc');
@@ -60,9 +55,7 @@ describe('Vehicle Checks Cat B+E Reducer', () => {
 
   describe('TELL_ME_QUESTION_OUTCOME_CHANGED' , () => {
     it('should update the outcome property for the object at the specified index', () => {
-      const state: CatBEUniqueTypes.VehicleChecks = {
-        ...initialState,
-      };
+      const state: CatBEUniqueTypes.VehicleChecks = cloneDeep(initialState);
       state.tellMeQuestions[1] = {
         code: 'T01',
         description: 'desc',
