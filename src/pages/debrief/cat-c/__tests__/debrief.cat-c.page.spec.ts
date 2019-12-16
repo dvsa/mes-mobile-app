@@ -38,12 +38,14 @@ import { CAT_C } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
-// TODO: MES-4287 Use Cat C types
+
+// TODO: MES-4254 Import cat c Types
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
+import { VehicleChecksCardCatCComponent } from '../components/vehicle-checks-card/vehicle-checks-card.cat-c';
 
-describe('DebriefCatCPage', () => {
+fdescribe('DebriefCatCPage', () => {
   let fixture: ComponentFixture<DebriefCatCPage>;
   let component: DebriefCatCPage;
   let navController: NavController;
@@ -60,7 +62,6 @@ describe('DebriefCatCPage', () => {
   };
 
   beforeEach(async(() => {
-    // TODO: MES-4287 Use Cat C types
     const exampleTestData: CatBEUniqueTypes.TestData  = {
       dangerousFaults: {},
       drivingFaults: {},
@@ -77,7 +78,7 @@ describe('DebriefCatCPage', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [DebriefCatCPage],
+      declarations: [DebriefCatCPage, VehicleChecksCardCatCComponent],
       imports: [
         IonicModule,
         AppModule,
@@ -92,7 +93,8 @@ describe('DebriefCatCPage', () => {
             startedTests: {
               123: {
                 testSlotAttributes,
-                // TODO: MES-4287 Use Cat C test category
+
+                // TODO: MES-4254 Use category C
                 category: TestCategory.BE,
                 vehicleDetails: {},
                 accompaniment: {},
