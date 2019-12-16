@@ -46,8 +46,7 @@ import { ShowMeQuestionComponent } from '../../components/show-me-question/show-
 import { WeatherConditionsComponent } from '../../components/weather-conditions/weather-conditions';
 import { AdditionalInformationComponent } from '../../components/additional-information/additional-information';
 import { IdentificationComponent } from '../../components/identification/identification';
-// TODO - Cat C - Need a Cat C version of this component
-import { IndependentDrivingComponent } from '../../cat-be/components/independent-driving/independent-driving';
+import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../../components/fault-comment-card/fault-comment-card';
 import { FaultSummary } from '../../../../shared/models/fault-marking.model';
 import { ActivityCodeComponent } from '../../components/activity-code/activity-code';
