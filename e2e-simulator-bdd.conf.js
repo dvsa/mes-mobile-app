@@ -15,7 +15,7 @@ exports.config = {
     isHeadless: false, 
     newCommandTimeout: 180
   },
-  specs: ['./test/e2e/features/*.feature'],
+  specs: ['./test/e2e/features/*/*.feature'],
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   cucumberOpts: {

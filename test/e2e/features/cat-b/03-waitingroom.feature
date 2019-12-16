@@ -1,3 +1,4 @@
+@catb
 Feature: Comms Capture and Waiting Room
 
    Scenario: Waiting room screen populated for candidate

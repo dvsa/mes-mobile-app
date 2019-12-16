@@ -1,4 +1,4 @@
-@smoke
+@catb @smoke
 Feature: Journal
 
    Scenario: Examiner views candidate details

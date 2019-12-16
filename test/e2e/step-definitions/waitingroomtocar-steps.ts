@@ -1,11 +1,19 @@
-import { When } from 'cucumber';
+import { When, Before } from 'cucumber';
 import { getElement, clickElement, nativeTextEntry } from './generic-steps';
-import { by } from 'protractor';
+import { by, element } from 'protractor';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
+
+// Set default category to be cat b
+this.testCategory = 'b';
+
+Before({ tags: '@catbe' }, () => {
+  // This hook will be executed before scenarios tagged with @catbe
+  this.testCategory = 'be';
+});
 
 When('I select a tell me question', () => {
   selectTellMeQuestion('T2 - Tyre pressures');
@@ -35,14 +43,29 @@ When('I fail the eye sight test', () => {
 const completeWaitingRoomPage = (withDriverFault: boolean, manualTransmission: boolean, tellMeQuestion: string) => {
   const eyesightPassRadio = getElement(by.id('eyesight-pass'));
   clickElement(eyesightPassRadio);
-  selectTellMeQuestion(tellMeQuestion);
 
-  const tellMeRadioSelector = (withDriverFault) ? 'tellme-fault' : 'tellme-correct';
-  const tellMeRadio = getElement(by.id(tellMeRadioSelector));
-  clickElement(tellMeRadio);
-  const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
-  const transmissionRadio = getElement(by.id(transmissionSelector));
-  clickElement(transmissionRadio);
+  if (this.testCategory === 'be') {
+    const elements = element.all(by.id('vehicle-checks-question-selector'));
+    elements.each((element, index) => {
+      console.log(`Index: ${index}`);
+      // Open the dialog
+      clickElement(element);
+      // Select the n'th item
+      const vehicleCheck = getElement(by.xpath(`//ion-alert//button//div[contains(text(), 'S0${index}')]`));
+      clickElement(vehicleCheck);
+      // Submit the dialog
+      const submitDialog = getElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
+      clickElement(submitDialog);
+    });
+  } else {
+    selectTellMeQuestion(tellMeQuestion);
+    const tellMeRadioSelector = (withDriverFault) ? 'tellme-fault' : 'tellme-correct';
+    const tellMeRadio = getElement(by.id(tellMeRadioSelector));
+    clickElement(tellMeRadio);
+    const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
+    const transmissionRadio = getElement(by.id(transmissionSelector));
+    clickElement(transmissionRadio);
+  }
 
   // Because registration number field is uppercaseAlphanumOnly we have to go native to get round this
   nativeTextEntry('Vehicle registration number', 'AB12CDE');
