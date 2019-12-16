@@ -47,25 +47,6 @@ export const CAT_BE = {
 };
 
 export const CAT_C = {
-  BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBEPage',
-  COMMUNICATION_PAGE: 'CommunicationCatBEPage',
-  DEBRIEF_PAGE: 'DebriefCatBEPage',
-  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatBEPage',
-  OFFICE_PAGE: 'OfficeCatBEPage',
-  PASS_FINALISATION_PAGE: 'PassFinalisationCatBEPage',
-  REVERSE_DIAGRAM_PAGE: 'ReverseDiagramCatBEPage',
-  TEST_REPORT_PAGE: 'TestReportCatBEPage',
-  WAITING_ROOM_PAGE: 'WaitingRoomCatBEPage',
-  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBEPage',
-  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatBEPage',
-  REKEY_REASON_PAGE: 'RekeyReasonCatBEPage',
-  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
-  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBEPage',
-  VEHICLE_CHECKS_MODAL: 'VehicleChecksCatBEModal',
-  VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatBEPage',
-};
-
-export const CAT_C = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatCPage',
   COMMUNICATION_PAGE: 'CommunicationCatCPage',
   DEBRIEF_PAGE: 'DebriefCatCPage',
