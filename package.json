@@ -6,6 +6,7 @@
   "homepage": "https://github.com/dvsa/mes-mobile-app",
   "private": true,
   "scripts": {
+    "remote-devtools-server": "./bin/remote-devtools-server.sh",
     "clean": "ionic-app-scripts clean",
     "bootstrap": "json2ts schema/schemaExaminerSchedule.json > src/shared/models/DJournal.ts",
     "schema-version": "buildScripts/generate-test-schema-version.js",
@@ -17,6 +18,7 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "serve:local": "run-s update-mock-data copy-mock-data schema-version config:local ionic:serve",
+    "serve:emulator": "npm run config:dev-tools && ionic cordova emulate ios --address=localhost --l --c -- --buildFlag='-UseModernBuildSystem=0' -lc --target='iPad-Pro--10-5-inch-,com.apple.CoreSimulator.SimRuntime.iOS-12-4'",
     "ionic:deploy": "git push ionic master",
     "format:all": "npx prettier --write \"src/**/*{.ts,.js,.json,.css,.scss}\"",
     "prepush": "run-s lint test gitSecrets scanRepo",
@@ -32,6 +34,7 @@
     "gitSecrets": "git secrets --scan",
     "scanRepo": "git log -p -n 15 | scanrepo",
     "stylelint": "stylelint 'src/**/*.scss' fix --config stylelint.json",
+    "config:dev-tools": "cp src/environment/environment.dev.dev-tools.ts src/environment/environment.ts",
     "config:dev": "cp src/environment/environment.dev.ts src/environment/environment.ts",
     "config:perf": "cp src/environment/environment.perf.ts src/environment/environment.ts",
     "config:uat": "cp src/environment/environment.uat.ts src/environment/environment.ts",
@@ -41,8 +44,7 @@
     "copy-mock-data": "cp -r mock/ src/assets/mock/",
     "update-mock-data": "npm run update-mock-data:journal && npm run update-mock-data:nta",
     "update-mock-data:journal": "ts-node -P tsconfig.scripts.json mock/generate-local-journal.ts",
-    "update-mock-data:nta": "ts-node -P tsconfig.scripts.json mock/generate-local-journal-non-test-activities.ts",
-    "livereload": "ionic cordova emulate ios --address=localhost --l --c -- --buildFlag='-UseModernBuildSystem=0' -lc --target='iPad-Pro--10-5-inch-,com.apple.CoreSimulator.SimRuntime.iOS-12-4'"
+    "update-mock-data:nta": "ts-node -P tsconfig.scripts.json mock/generate-local-journal-non-test-activities.ts"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
