@@ -177,7 +177,7 @@ export class TestsEffects {
         new PopulateTestSchemaVersion(version),
       ];
 
-      if (startTestAction.category === TestCategory.BE) {
+      if (startTestAction.category !== TestCategory.B) {
         arrayOfActions.push(new PopulateVehicleDimensions(
           slot.booking.application.vehicleWidth,
           slot.booking.application.vehicleLength,
