@@ -31,7 +31,6 @@ import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { categoryBETestResultMock } from '../../../shared/mocks/cat-be-test-result.mock';
 import { get } from 'lodash';
@@ -131,7 +130,7 @@ export class ViewTestResultCatCPage extends BasePageComponent implements OnInit 
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
       applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
-      category: TestCategory.BE,
+      category: TestCategory.C,
       specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
       entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
       slotType: this.testResult.journalData.testSlotAttributes.slotType,
@@ -160,23 +159,6 @@ export class ViewTestResultCatCPage extends BasePageComponent implements OnInit 
       candidateDriverNumber: this.testResult.journalData.candidate.driverNumber,
       activityCode: this.testResult.activityCode,
       testOutcome: getTestOutcomeText(this.testResult),
-    };
-  }
-
-  getRekeyDetails(): RekeyDetailsModel {
-    if (!this.testResult || !this.testResult.rekey) {
-      return null;
-    }
-
-    const testDate: DateTime = new DateTime(this.testResult.journalData.testSlotAttributes.start);
-    const rekeyDate: DateTime = new DateTime(this.testResult.rekeyDate);
-
-    return {
-      scheduledStaffNumber: this.testResult.examinerBooked,
-      conductedStaffNumber: this.testResult.examinerConducted,
-      testDate: testDate.format('dddd Do MMMM YYYY'),
-      rekeyedStaffNumber: this.testResult.examinerKeyed,
-      rekeyDate: rekeyDate.format('dddd Do MMMM YYYY'),
     };
   }
 

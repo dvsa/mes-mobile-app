@@ -21,7 +21,7 @@
     </contact-details-card>
     <business-details-card [data]="testResult.journalData.candidate"></business-details-card>
     <div *ngIf="testResult.rekey">
-      <rekey-details-card [rekeyDetails]='getRekeyDetails()'></rekey-details-card>
+      <rekey-details-card [data]='testResult'></rekey-details-card>
       <rekey-reason-card [data]='testResult.rekeyReason'></rekey-reason-card>
     </div>
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
