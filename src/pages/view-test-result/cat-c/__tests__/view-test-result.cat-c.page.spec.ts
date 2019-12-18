@@ -26,6 +26,7 @@ import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
 import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
+// TODO - Need to create a Cat C mock and use in the tests
 import { categoryBETestResultMock } from '../../../../shared/mocks/cat-be-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
@@ -35,19 +36,19 @@ import { ViewTestHeaderModel } from '../../components/view-test-header/view-test
 import { TestOutcome } from '../../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
-import { ViewTestResultCatBEPage } from '../view-test-result.cat-be.page';
+import { ViewTestResultCatCPage } from '../view-test-result.cat-c.page';
 import { BusinessDetailsCardComponent } from '../components/business-details-card/business-details-card';
 import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
 
-describe('ViewTestResultCatBEPage', () => {
-  let fixture: ComponentFixture<ViewTestResultCatBEPage>;
-  let component: ViewTestResultCatBEPage;
+describe('ViewTestResultCatCPage', () => {
+  let fixture: ComponentFixture<ViewTestResultCatCPage>;
+  let component: ViewTestResultCatCPage;
   let loadingController: LoadingController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ViewTestResultCatBEPage,
+        ViewTestResultCatCPage,
         MockComponent(TestDetailsCardComponent),
         MockComponent(RekeyDetailsCardComponent),
         MockComponent(RekeyReasonCardComponent),
@@ -82,7 +83,7 @@ describe('ViewTestResultCatBEPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(ViewTestResultCatBEPage);
+        fixture = TestBed.createComponent(ViewTestResultCatCPage);
         component = fixture.componentInstance;
         loadingController = TestBed.get(LoadingController);
       });
@@ -143,6 +144,7 @@ describe('ViewTestResultCatBEPage', () => {
     });
     describe('getHeaderDetails', () => {
       it('should return the correct data', () => {
+        // TODO - CAT C
         component.testResult = categoryBETestResultMock;
         const result: ViewTestHeaderModel = component.getHeaderDetails();
 
