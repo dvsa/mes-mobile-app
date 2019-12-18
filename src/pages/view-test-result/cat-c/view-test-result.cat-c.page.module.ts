@@ -8,7 +8,7 @@ import { ViewTestResultAnalyticsEffects } from '../view-test-result.analytics.ef
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { ViewTestResultComponentsModule } from '../components/view-test-result.components.module';
-import { ViewTestResultCatBEComponentsModule } from './components/view-test-result.cat-be.components.module';
+import { ViewTestResultCatCComponentsModule } from './components/view-test-result.cat-c.components.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { ViewTestResultCatBEComponentsModule } from './components/view-test-resu
     ComponentsModule,
     IonicPageModule.forChild(ViewTestResultCatCPage),
     ViewTestResultComponentsModule,
-    ViewTestResultCatBEComponentsModule,
+    ViewTestResultCatCComponentsModule,
     EffectsModule.forFeature([ViewTestResultAnalyticsEffects]),
   ],
   providers: [
@@ -27,4 +27,4 @@ import { ViewTestResultCatBEComponentsModule } from './components/view-test-resu
     FaultSummaryProvider,
   ],
 })
-export class ViewTestResultCatBEPageModule { }
+export class ViewTestResultCatCPageModule { }

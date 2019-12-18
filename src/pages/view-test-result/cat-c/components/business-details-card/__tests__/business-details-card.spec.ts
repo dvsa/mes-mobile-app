@@ -6,6 +6,7 @@ import { MockComponent } from 'ng-mocks';
 import { DataRowComponent } from '../../../../../../components/common/data-row/data-row';
 import { DataRowCustomComponent } from '../../../../../../components/common/data-row-custom/data-row-custom';
 import { BusinessDetailsCardComponent } from '../business-details-card';
+// TODO - Cat C
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { DisplayAddressComponent } from '../../../../../../components/common/display-address/display-address';
 
@@ -42,6 +43,7 @@ describe('BusinessDetailsCardComponent', () => {
         expect(component.shouldHideCard()).toEqual(true);
       });
       it('should return false if all data has been provided', () => {
+        // TODO - Cat C
         const data: CatBEUniqueTypes.Candidate = {
           businessName: 'Business Name',
           businessTelephone: ' Business Telephone',

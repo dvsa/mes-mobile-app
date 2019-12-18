@@ -25,4 +25,4 @@ import { BusinessDetailsCardComponent } from './business-details-card/business-d
     BusinessDetailsCardComponent,
   ],
 })
-export class ViewTestResultCatBEComponentsModule {}
+export class ViewTestResultCatCComponentsModule {}

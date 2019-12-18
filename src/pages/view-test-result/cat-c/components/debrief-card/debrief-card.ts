@@ -2,12 +2,14 @@ import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
 import { flattenArray } from '../../../view-test-result-helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+// TODO - Cat C
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import {
   DataRowListItem,
   ViewTestResultLabels,
   TestRequirementsLabels,
 } from '../../../components/data-row-with-list/data-list-with-row.model';
+// TODO - Cat C
 import { manoeuvreTypeLabels } from '../../../../../shared/constants/competencies/catbe-manoeuvres';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { FaultSummaryProvider } from '../../../../../providers/fault-summary/fault-summary';
@@ -21,6 +23,7 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
 export class DebriefCardComponent {
 
   @Input()
+  // TODO - CAT C
   data: CatBEUniqueTypes.TestData;
 
   constructor(
@@ -80,14 +83,17 @@ export class DebriefCardComponent {
   }
 
   public getSeriousFaults(): FaultSummary[] {
+    // TODO - Cat C
     return this.faultSummaryProvider.getSeriousFaultsList(this.data, TestCategory.BE);
   }
 
   public getDangerousFaults(): FaultSummary[] {
+    // TODO - Cat C
     return this.faultSummaryProvider.getDangerousFaultsList(this.data, TestCategory.BE);
   }
 
   public getDrivingFaultCount(): number {
+    // TODO - Cat C
     return this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, this.data);
   }
 
