@@ -45,18 +45,25 @@ const completeWaitingRoomPage = (withDriverFault: boolean, manualTransmission: b
   clickElement(eyesightPassRadio);
 
   if (this.testCategory === 'be') {
+    const vehicleChecksButton = getElement(
+      by.xpath('//vehicle-checks-cat-be//input[@type = "button" and @value = "Select questions"]'));
+    clickElement(vehicleChecksButton);
     const elements = element.all(by.id('vehicle-checks-question-selector'));
     elements.each((element, index) => {
-      console.log(`Index: ${index}`);
       // Open the dialog
       clickElement(element);
       // Select the n'th item
-      const vehicleCheck = getElement(by.xpath(`//ion-alert//button//div[contains(text(), 'S0${index}')]`));
+      const vehicleCheck = getElement(by.xpath(`//ion-alert//button//div[contains(text(), '0${index + 1}')]`));
       clickElement(vehicleCheck);
       // Submit the dialog
       const submitDialog = getElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
       clickElement(submitDialog);
+      // vehicleChecksCorrect_1 or vehicleChecksFault_1
+      const vehicleCheckAnswer = getElement(by.id(`vehicleChecksCorrect_${index + 1}`));
+      clickElement(vehicleCheckAnswer);
     });
+    const submitVehicleChecksButton = getElement(by.id('submit-vehicle-checks'));
+    clickElement(submitVehicleChecksButton);
   } else {
     selectTellMeQuestion(tellMeQuestion);
     const tellMeRadioSelector = (withDriverFault) ? 'tellme-fault' : 'tellme-correct';
