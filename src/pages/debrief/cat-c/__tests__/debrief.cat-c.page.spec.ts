@@ -42,6 +42,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-categ
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
+import { VehicleChecksCardCatCComponent } from '../components/vehicle-checks-card/vehicle-checks-card.cat-c';
 
 // TODO: These tests need fixing once the cat c is implemented
 xdescribe('DebriefCatCPage', () => {
@@ -78,7 +79,7 @@ xdescribe('DebriefCatCPage', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [DebriefCatCPage],
+      declarations: [DebriefCatCPage, VehicleChecksCardCatCComponent],
       imports: [
         IonicModule,
         AppModule,

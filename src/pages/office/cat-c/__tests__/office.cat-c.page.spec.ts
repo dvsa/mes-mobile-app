@@ -64,6 +64,7 @@ import { NavigationStateProviderMock } from '../../../../providers/navigation-st
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
+import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatCPage>;
@@ -83,6 +84,7 @@ describe('OfficePage', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
+        MockComponent(VehicleChecksOfficeCardComponent),
       ],
       imports: [
         IonicModule,
