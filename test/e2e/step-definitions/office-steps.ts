@@ -59,8 +59,8 @@ When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel
 });
 
 Then('the office activity code should be {string}', (activityCode) => {
-  const activityCodeField = getElement(by.xpath(`//div[contains(@class, "office-cat-${this.testCategory}-page")]'
-    + '//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`));
+  const activityCodeField = getElement(by.xpath(`//div[contains(@class, "office-cat-${this.testCategory}-page")]`
+    + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`));
   return expect(activityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
