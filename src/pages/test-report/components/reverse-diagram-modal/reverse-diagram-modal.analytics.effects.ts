@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
-import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
+import { AnalyticsProvider } from '../../../../providers/analytics/analytics';
 import {
   AnalyticsScreenNames,
   AnalyticsDimensionIndices,
   AnalyticsEventCategories,
   AnalyticsEvents,
-} from '../../../../../providers/analytics/analytics.model';
+} from '../../../../providers/analytics/analytics.model';
 import {
   REVERSE_DIAGRAM_VIEW_DID_ENTER,
   ReverseDiagramViewDidEnter,
@@ -17,22 +17,22 @@ import {
   REVERSE_DIAGRAM_CLOSED,
   ReverseDiagramClosed,
 } from './reverse-diagram-modal.actions';
-import { StoreModel } from '../../../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
-import { getTests } from '../../../../../modules/tests/tests.reducer';
-import { getCurrentTest, getJournalData } from '../../../../../modules/tests/tests.selector';
-import { getCandidate } from '../../../../../modules/tests/journal-data/candidate/candidate.reducer';
-import { getCandidateId } from '../../../../../modules/tests/journal-data/candidate/candidate.selector';
-import { TestsModel } from '../../../../../modules/tests/tests.model';
-import { AnalyticRecorded } from '../../../../../providers/analytics/analytics.actions';
-import { formatAnalyticsText } from '../../../../../shared/helpers/format-analytics-text';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { getCurrentTest, getJournalData } from '../../../../modules/tests/tests.selector';
+import { getCandidate } from '../../../../modules/tests/journal-data/candidate/candidate.reducer';
+import { getCandidateId } from '../../../../modules/tests/journal-data/candidate/candidate.selector';
+import { TestsModel } from '../../../../modules/tests/tests.model';
+import { AnalyticRecorded } from '../../../../providers/analytics/analytics.actions';
+import { formatAnalyticsText } from '../../../../shared/helpers/format-analytics-text';
 import {
   getApplicationReference,
-} from '../../../../../modules/tests/journal-data/application-reference/application-reference.reducer';
+} from '../../../../modules/tests/journal-data/application-reference/application-reference.reducer';
 import {
   getApplicationNumber,
-} from '../../../../../modules/tests/journal-data/application-reference/application-reference.selector';
-import { getTestCategory } from '../../../../../modules/tests/category/category.reducer';
+} from '../../../../modules/tests/journal-data/application-reference/application-reference.selector';
+import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
 
 @Injectable()

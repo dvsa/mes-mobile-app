@@ -4,7 +4,10 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { App } from '../../../../../app/app.component';
 import { CAT_BE } from '../../../../page-names.constants';
-import { ReverseDiagramOpened, ReverseDiagramClosed } from '../reverse-diagram-modal/reverse-diagram-modal.actions';
+import {
+  ReverseDiagramOpened,
+  ReverseDiagramClosed,
+} from '../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
 
 @Component({
   selector: 'reverse-diagram-link',
