@@ -31,18 +31,21 @@ import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
+// TODO - Cat C
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+// TODO - Cat C
 import { categoryBETestResultMock } from '../../../shared/mocks/cat-be-test-result.mock';
 import { get } from 'lodash';
 
 @IonicPage()
 @Component({
-  selector: '.view-test-result-cat-be-page',
-  templateUrl: 'view-test-result.cat-be.page.html',
+  selector: '.view-test-result-cat-c-page',
+  templateUrl: 'view-test-result.cat-c.page.html',
 })
-export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit {
+export class ViewTestResultCatCPage extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
+  // TODO - Cat C  - Need to type this to Cat C
   testResult: CatBEUniqueTypes.TestResult;
 
   isLoading: boolean;
@@ -129,7 +132,7 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
       applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
-      category: TestCategory.BE,
+      category: TestCategory.C,
       specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
       entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
       slotType: this.testResult.journalData.testSlotAttributes.slotType,

@@ -5,11 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-
-// TODO: MES-4254 Import cat c reducer
+// TODO: Use CAT C reducer & Selector
 import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
-
-// TODO: MES-4254 Import cat c selector
 import { getVehicleChecks } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { map } from 'rxjs/operators';

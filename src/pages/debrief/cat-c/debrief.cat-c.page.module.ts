@@ -29,4 +29,4 @@ import { VehicleChecksCardCatCComponent } from './components/vehicle-checks-card
     FaultSummaryProvider,
   ],
 })
-export class DebriefCatBEPageModule { }
+export class DebriefCatCPageModule { }

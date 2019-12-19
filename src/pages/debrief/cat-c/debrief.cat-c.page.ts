@@ -6,6 +6,7 @@ import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.sel
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
+// TODO: MES-4287 use Cat C reducer
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { getETA, getEco } from '../../../modules/tests/test-data/common/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
@@ -94,27 +95,26 @@ export class DebriefCatCPage extends BasePageComponent {
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          // TODO: MES-4254 Use Category C provider
+          // TODO: MES-4287 Use category C
           this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)
           .map(fault => fault.competencyIdentifier)),
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          // TODO: MES-4254 Use Category C provider
+          // TODO: MES-4287 Use category C
           this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)
           .map(fault => fault.competencyIdentifier)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        // TODO: MES-4254 Use Category C provider
+        // TODO: MES-4287 Use category C
         map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
         withLatestFrom(category$),
         map(([testData, category]) => {
-          // TODO: MES-4254 Use Category C provider
           return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
         }),
       ),
