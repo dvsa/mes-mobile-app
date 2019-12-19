@@ -14,10 +14,7 @@ import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_C } from '../../../pages/page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-<<<<<<< HEAD
 import { DeviceProvider } from '../../../providers/device/device';
-=======
->>>>>>> Fixing PR issues
 
 interface BackToOfficePageState {
   isRekey$: Observable<boolean>;
