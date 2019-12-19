@@ -3,10 +3,11 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common'
 
 // TODO: MES-4287 Import cat-c reducer
 import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.reducer';
@@ -19,6 +20,7 @@ import {
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 
 interface ReverseDiagramPageState {
+  category$: Observable<CategoryCode>;
   vehicleLength$: Observable<number>;
   vehicleWidth$: Observable<number>;
 }
@@ -44,7 +46,7 @@ export class ReverseDiagramCatCPage implements OnInit {
 
   componentState: ReverseDiagramPageState;
   subscription: Subscription;
-  merged$: Observable<number>;
+  merged$: Observable<number | CategoryCode>;
   distanceFromStart: number;
   distanceFromMiddle: number;
   distanceOfBayWidth: number;
@@ -64,6 +66,10 @@ export class ReverseDiagramCatCPage implements OnInit {
     );
 
     this.componentState = {
+      category$: currentTest$.pipe(
+        map(test => test.category),
+        tap(category => alert(category)),
+      ),
       vehicleLength$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getVehicleLength),
@@ -74,23 +80,24 @@ export class ReverseDiagramCatCPage implements OnInit {
       ),
     };
 
-    const { vehicleLength$, vehicleWidth$ } = this.componentState;
+    const { category$, vehicleLength$, vehicleWidth$ } = this.componentState;
 
     this.merged$ = merge(
+      category$,
       vehicleLength$.pipe(map(val => this.vehicleLength = val)),
       vehicleWidth$.pipe(map(val => this.vehicleWidth = val)),
     );
   }
 
   calculateDistanceLength(vehicleLength: number): void {
-    const distanceFromStart = vehicleLength * 4;
+    const distanceFromStart = vehicleLength * 1.5;
     const distanceFromMiddle = vehicleLength * 2;
     this.distanceFromMiddle = Math.round(distanceFromMiddle * 100) / 100;
     this.distanceFromStart = Math.round(distanceFromStart * 100) / 100;
   }
 
   calculateDistanceWidth(vehicleWidth: number): void {
-    const distanceOfBayWidth = vehicleWidth * 1.5;
+    const distanceOfBayWidth = vehicleWidth * 3.5;
     this.distanceOfBayWidth = Math.round(distanceOfBayWidth * 100) / 100;
   }
 
