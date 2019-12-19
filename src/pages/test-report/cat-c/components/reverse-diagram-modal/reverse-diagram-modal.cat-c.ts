@@ -9,6 +9,7 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-c.reducer';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 
 import {
   getVehicleLength,
@@ -89,7 +90,7 @@ export class ReverseDiagramCatCPage implements OnInit {
     let distanceFromStartMultiplier: number;
     let distanceFromMiddleMultiplier: number;
     switch (this.testCategory) {
-      case 'C':
+      case TestCategory.C:
         distanceFromStartMultiplier = 4;
         distanceFromMiddleMultiplier = 2;
         break;
@@ -106,7 +107,7 @@ export class ReverseDiagramCatCPage implements OnInit {
   calculateDistanceWidth(vehicleWidth: number): void {
     let distanceOfBayWidthMultiplier: number;
     switch (this.testCategory) {
-      case 'C':
+      case TestCategory.C:
         distanceOfBayWidthMultiplier = 3.5;
         break;
       default:

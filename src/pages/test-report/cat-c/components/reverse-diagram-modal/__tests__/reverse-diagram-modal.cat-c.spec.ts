@@ -134,13 +134,15 @@ describe('reverseDiagramModal', () => {
     describe('calculateDistanceLength', () => {
       it('CAT C - should set the correct value for aAndA1', () => {
         component.ngOnInit();
-        component.componentState.testCategory$ = of(TestCategory.BE);
+        component.componentState.testCategory$ = of(TestCategory.C);
         component.calculateDistanceLength(vehicleDetails.vehicleLength);
         const result = component.distanceFromStart;
         expect(result).toEqual(40);
       });
 
       it('CAT C - should set the correct value for b', () => {
+        component.ngOnInit();
+        component.componentState.testCategory$ = of(TestCategory.C);
         component.calculateDistanceLength(vehicleDetails.vehicleLength);
         const result = component.distanceFromMiddle;
         expect(result).toEqual(20);
@@ -149,6 +151,8 @@ describe('reverseDiagramModal', () => {
 
     describe('calculateDistanceWidth', () => {
       it('Cat C - should set the correct value for aToA1', () => {
+        component.ngOnInit();
+        component.componentState.testCategory$ = of(TestCategory.C);
         component.calculateDistanceWidth(vehicleDetails.vehicleWidth);
         const result = component.distanceOfBayWidth;
         expect(result).toEqual(9.63);
