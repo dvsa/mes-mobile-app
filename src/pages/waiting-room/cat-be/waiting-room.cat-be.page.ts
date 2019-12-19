@@ -43,6 +43,7 @@ import {
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { DeviceProvider } from '../../../providers/device/device';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE/index';
@@ -85,6 +86,7 @@ export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
+    private deviceProvider: DeviceProvider,
     private screenOrientation: ScreenOrientation,
     private insomnia: Insomnia,
     private translate: TranslateService,
@@ -101,6 +103,7 @@ export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
     if (super.isIos()) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       this.insomnia.keepAwake();
+      this.deviceProvider.enableSingleAppMode();
     }
 
     this.navBar.backButtonClick = (e: UIEvent) => {
