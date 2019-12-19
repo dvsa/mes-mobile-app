@@ -1,4 +1,4 @@
-import { Then, When } from 'cucumber';
+import { Then, When, Before } from 'cucumber';
 import { getElement, clickElement } from './generic-steps';
 import { by } from 'protractor';
 
@@ -6,6 +6,14 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
+
+// Set default category to be cat b
+this.testCategory = 'b';
+
+Before({ tags: '@catbe' }, () => {
+  // This hook will be executed before scenarios tagged with @catbe
+  this.testCategory = 'be';
+});
 
 When('I continue to the back to office page', () => {
   enterD255();
@@ -60,7 +68,7 @@ Then('the nonpassfinalisation page test outcome is {string}', (testOutcome : str
 });
 
 const clickContinue = () => {
-  const continueToBackToOfficeButton = getElement(
-    by.xpath('//div[contains(@class, "non-pass-finalisation-cat-b-page")]//button[@id = "continue-button"]'));
+  const continueToBackToOfficeButton = getElement(by.xpath(
+    `//div[contains(@class, "non-pass-finalisation-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
   clickElement(continueToBackToOfficeButton);
 };

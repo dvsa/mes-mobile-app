@@ -1,4 +1,4 @@
-import { Then, When } from 'cucumber';
+import { Then, When, Before } from 'cucumber';
 import { getElement, clickElement } from './generic-steps';
 import { by } from 'protractor';
 
@@ -7,11 +7,23 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
+// Set default category to be cat b
+this.testCategory = 'b';
+
+Before({ tags: '@catbe' }, () => {
+  // This hook will be executed before scenarios tagged with @catbe
+  this.testCategory = 'be';
+});
+
 When('I complete the office write up', () => {
   enterRouteNumber('2');
-  enterIndependentDriving('satnav');
+  if (this.testCategory === 'be') {
+    enterIndependentDriving('diagram');
+  } else {
+    enterIndependentDriving('satnav');
+    enterShowMe('S5 - Horn');
+  }
   enterCandidateDescription();
-  enterShowMe('S5 - Horn');
   enterWeatherConditions();
 });
 
@@ -47,8 +59,8 @@ When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel
 });
 
 Then('the office activity code should be {string}', (activityCode) => {
-  const activityCodeField = getElement(by.xpath('//div[contains(@class, "office-cat-b-page")]'
-    + '//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]'));
+  const activityCodeField = getElement(by.xpath(`//div[contains(@class, "office-cat-${this.testCategory}-page")]`
+    + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`));
   return expect(activityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
@@ -107,7 +119,7 @@ const uploadTest = () => {
 
 const completeRekey = () => {
   const continueButton = getElement(
-    by.xpath('//div[contains(@class, "office-cat-b-page")]//button//h3[text()="Continue"]'));
+    by.xpath(`//div[contains(@class, "office-cat-${this.testCategory}-page")]//button//h3[text()="Continue"]`));
   clickElement(continueButton);
 
   const iPadIssueCheckbox = getElement(by.id('ipadIssueSelected'));
