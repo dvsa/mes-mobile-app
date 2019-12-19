@@ -10,7 +10,6 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { PassCertificateNumberComponent } from '../../components/pass-certificate-number/pass-certificate-number';
 import { LicenseProvidedComponent } from '../../components/license-provided/license-provided';
 import { D255Component } from '../../../../components/test-finalisation/d255/d255';
@@ -48,7 +47,6 @@ describe('PassFinalisationCatBEPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         PassFinalisationCatBEPage,
-        MockComponent(PracticeModeBanner),
         MockComponent(PassCertificateNumberComponent),
         MockComponent(LicenseProvidedComponent),
         MockComponent(TransmissionComponent),

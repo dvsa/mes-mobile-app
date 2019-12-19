@@ -7,10 +7,10 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 // TODO: MES-4287 Import cat c reducer
 import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { map } from 'rxjs/operators';
-import { getVehicleChecksCatBE }
 
 // TODO: MES-4287 Import cat c selectors
-from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
+import { getVehicleChecksCatBE }
+  from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { Observable } from 'rxjs/Observable';
 

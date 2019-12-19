@@ -71,6 +71,8 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
+import { TransmissionType } from '../../../shared/models/transmission-type';
+import { merge } from 'rxjs/observable/merge';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -103,6 +105,9 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
   category: TestCategory = TestCategory.C;
+  merged$: Observable<string>;
+  transmission: GearboxCategory;
+  subscription: Subscription;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -199,6 +204,14 @@ export class PassFinalisationCatCPage extends BasePageComponent {
         select(getConductedLanguage),
       ),
     };
+
+    const { transmission$ } = this.pageState;
+
+    this.merged$ = merge(
+      transmission$.pipe(map(value => this.transmission = value)),
+    );
+    this.subscription = this.merged$.subscribe();
+
     this.store$.dispatch(new PopulatePassCompletion());
   }
 
@@ -259,5 +272,9 @@ export class PassFinalisationCatCPage extends BasePageComponent {
         new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
         : new CandidateChoseToProceedWithTestInEnglish('English'),
     );
+  }
+
+  displayTransmissionBanner(): boolean {
+    return !this.form.controls['transmissionCtrl'].pristine && this.transmission === TransmissionType.Automatic;
   }
 }

@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
+
+// TODO: MES-4287 Import cat c types
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { Address } from '@dvsa/mes-test-schema/categories/Common';
 
@@ -9,6 +11,7 @@ import { Address } from '@dvsa/mes-test-schema/categories/Common';
 })
 export class BusinessDetailsCardComponent {
 
+  // TODO: MES-4287 Use category c types
   @Input()
   data: CatBEUniqueTypes.Candidate;
 

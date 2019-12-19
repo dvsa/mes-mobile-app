@@ -77,6 +77,8 @@ describe('VehicleDetailsCardComponent', () => {
     });
     describe('getVehicleLength', () => {
       it('should return the correct value', () => {
+
+        // TODO: MES-4287 Use category c type
         const data: CatBEUniqueTypes.VehicleDetails = {
           vehicleLength: 10,
         };
@@ -90,6 +92,8 @@ describe('VehicleDetailsCardComponent', () => {
     });
     describe('getVehicleWidth', () => {
       it('should return the correct value', () => {
+
+        // TODO: MES-4287 Use category c function
         const data: CatBEUniqueTypes.VehicleDetails = {
           vehicleWidth: 4,
         };

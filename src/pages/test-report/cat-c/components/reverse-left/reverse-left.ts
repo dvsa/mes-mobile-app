@@ -67,6 +67,7 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
       select(getManoeuvres),
     );
 
+    // TODO: MES-4287 use category c types
     this.subscription = manoeuvres$.subscribe((manoeuvres: CatBEUniqueTypes.Manoeuvres) => {
       this.drivingFaults =
         this.faultCountProvider.getManoeuvreFaultCount(TestCategory.BE, manoeuvres, CompetencyOutcome.DF);
