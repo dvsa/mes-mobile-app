@@ -14,6 +14,7 @@ import { ReverseDiagramCatCPage } from '../reverse-diagram-modal.cat-c';
 import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
+import { of } from 'rxjs/observable/of';
 
 describe('reverseDiagramModal', () => {
   let fixture: ComponentFixture<ReverseDiagramCatCPage>;
@@ -34,9 +35,7 @@ describe('reverseDiagramModal', () => {
             testStatus: {},
             startedTests: {
               123: {
-
-                // TODO: MES-4287 Change the category to C
-                category: TestCategory.BE,
+                category: TestCategory.C,
                 vehicleDetails: {
                   vehicleLength: 10,
                   vehicleWidth: 2.75,
@@ -90,8 +89,7 @@ describe('reverseDiagramModal', () => {
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
 
-        // TODO: MES-4287 Change the category to C
-        store$.dispatch(new StartTest(123, TestCategory.BE));
+        store$.dispatch(new StartTest(123, TestCategory.C));
       });
   }));
 
@@ -123,16 +121,26 @@ describe('reverseDiagramModal', () => {
           done();
         });
       });
+
+      it('should set the test category', (done: DoneFn) => {
+        component.ngOnInit();
+        component.componentState.testCategory$.subscribe((result) => {
+          expect(result).toEqual(TestCategory.C);
+          done();
+        });
+      });
     });
 
     describe('calculateDistanceLength', () => {
-      it('should set the correct value for aAndA1', () => {
+      it('CAT C - should set the correct value for aAndA1', () => {
+        component.ngOnInit();
+        component.componentState.testCategory$ = of(TestCategory.BE);
         component.calculateDistanceLength(vehicleDetails.vehicleLength);
         const result = component.distanceFromStart;
         expect(result).toEqual(40);
       });
 
-      it('should set the correct value for b', () => {
+      it('CAT C - should set the correct value for b', () => {
         component.calculateDistanceLength(vehicleDetails.vehicleLength);
         const result = component.distanceFromMiddle;
         expect(result).toEqual(20);
@@ -140,10 +148,10 @@ describe('reverseDiagramModal', () => {
     });
 
     describe('calculateDistanceWidth', () => {
-      it('should set the correct value for aToA1', () => {
+      it('Cat C - should set the correct value for aToA1', () => {
         component.calculateDistanceWidth(vehicleDetails.vehicleWidth);
         const result = component.distanceOfBayWidth;
-        expect(result).toEqual(4.13);
+        expect(result).toEqual(9.63);
       });
     });
 

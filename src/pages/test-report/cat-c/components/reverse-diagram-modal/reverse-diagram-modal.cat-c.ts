@@ -3,24 +3,21 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/common'
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-c.reducer';
 
-// TODO: MES-4287 Import cat-c reducer
-import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.reducer';
-
-// TODO: MES-4287 Import cat c selector
 import {
   getVehicleLength,
   getVehicleWidth,
-} from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.selector';
+} from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-c.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 
 interface ReverseDiagramPageState {
-  category$: Observable<CategoryCode>;
+  testCategory$: Observable<CategoryCode>;
   vehicleLength$: Observable<number>;
   vehicleWidth$: Observable<number>;
 }
@@ -29,8 +26,6 @@ type OnCloseFunc = () => void;
 
 @IonicPage()
 @Component({
-
-  // TODO: MES-4287 Think we should name the file with cat c?
   selector: 'reverse-diagram-modal-cat-c',
   templateUrl: 'reverse-diagram-modal.cat-c.html',
 })
@@ -41,6 +36,8 @@ export class ReverseDiagramCatCPage implements OnInit {
 
   @Input()
   vehicleWidth: number;
+
+  testCategory: CategoryCode;
 
   onClose: OnCloseFunc;
 
@@ -66,9 +63,8 @@ export class ReverseDiagramCatCPage implements OnInit {
     );
 
     this.componentState = {
-      category$: currentTest$.pipe(
+      testCategory$: currentTest$.pipe(
         map(test => test.category),
-        tap(category => alert(category)),
       ),
       vehicleLength$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -80,24 +76,43 @@ export class ReverseDiagramCatCPage implements OnInit {
       ),
     };
 
-    const { category$, vehicleLength$, vehicleWidth$ } = this.componentState;
+    const { testCategory$, vehicleLength$, vehicleWidth$ } = this.componentState;
 
     this.merged$ = merge(
-      category$,
+      testCategory$.pipe(map(val => this.testCategory = val)),
       vehicleLength$.pipe(map(val => this.vehicleLength = val)),
       vehicleWidth$.pipe(map(val => this.vehicleWidth = val)),
     );
   }
 
   calculateDistanceLength(vehicleLength: number): void {
-    const distanceFromStart = vehicleLength * 1.5;
-    const distanceFromMiddle = vehicleLength * 2;
+    let distanceFromStartMultiplier: number;
+    let distanceFromMiddleMultiplier: number;
+    switch (this.testCategory) {
+      case 'C':
+        distanceFromStartMultiplier = 4;
+        distanceFromMiddleMultiplier = 2;
+        break;
+      default:
+        distanceFromStartMultiplier = 4;
+        distanceFromMiddleMultiplier = 2;
+    }
+    const distanceFromStart = vehicleLength * distanceFromStartMultiplier;
+    const distanceFromMiddle = vehicleLength * distanceFromMiddleMultiplier;
     this.distanceFromMiddle = Math.round(distanceFromMiddle * 100) / 100;
     this.distanceFromStart = Math.round(distanceFromStart * 100) / 100;
   }
 
   calculateDistanceWidth(vehicleWidth: number): void {
-    const distanceOfBayWidth = vehicleWidth * 3.5;
+    let distanceOfBayWidthMultiplier: number;
+    switch (this.testCategory) {
+      case 'C':
+        distanceOfBayWidthMultiplier = 3.5;
+        break;
+      default:
+        distanceOfBayWidthMultiplier = 3.5;
+    }
+    const distanceOfBayWidth = vehicleWidth * distanceOfBayWidthMultiplier;
     this.distanceOfBayWidth = Math.round(distanceOfBayWidth * 100) / 100;
   }
 
