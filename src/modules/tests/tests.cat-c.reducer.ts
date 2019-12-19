@@ -19,7 +19,7 @@ import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatBEReducer } from './journal-data/journal-data.cat-be.reducer';
 import { testDataCatBEReducer } from './test-data/cat-be/test-data.cat-be.reducer';
-import { vehicleDetailsCatBEReducer } from './vehicle-details/vehicle-details.cat-be.reducer';
+import { vehicleDetailsCatCReducer } from './vehicle-details/vehicle-details.cat-c.reducer';
 
 export function testsCatCReducer(
   action: Action, state: CatBEUniqueTypes.TestResult): Required<CatBEUniqueTypes.TestResult> {
@@ -31,7 +31,7 @@ export function testsCatCReducer(
       journalData: journalDataCatBEReducer,
       preTestDeclarations: preTestDeclarationsReducer,
       accompaniment: accompanimentReducer,
-      vehicleDetails: vehicleDetailsCatBEReducer,
+      vehicleDetails: vehicleDetailsCatCReducer,
       testData: testDataCatBEReducer,
       passCompletion: passCompletionReducer,
       postTestDeclarations: postTestDeclarationsReducer,

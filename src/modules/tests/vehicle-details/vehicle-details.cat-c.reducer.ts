@@ -3,11 +3,12 @@ import * as vehicleDetailsActions from './vehicle-details.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { createFeatureSelector } from '@ngrx/store';
 
+// @TODO - Update for Cat C
 const initialState: CatBEUniqueTypes.VehicleDetails = {
   registrationNumber: '',
 };
 
-export const vehicleDetailsCatBEReducer = (
+export const vehicleDetailsCatCReducer = (
   state: CatBEUniqueTypes.VehicleDetails = initialState,
   action: vehicleDetailsActions.Types,
 ): CatBEUniqueTypes.VehicleDetails => {
