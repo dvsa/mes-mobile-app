@@ -172,16 +172,9 @@ describe('WaitingRoomCatBEPage', () => {
     });
 
     describe('ionViewDidEnter', () => {
-      it('should enable single app mode if on ios and not in practice mode', () => {
-        component.isPracticeMode = false;
+      it('should enable single app mode if on ios', () => {
         component.ionViewDidEnter();
         expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
-      });
-
-      it('should note enable single app mode if on ios and in practice mode', () => {
-        component.isPracticeMode = true;
-        component.ionViewDidEnter();
-        expect(deviceProvider.enableSingleAppMode).not.toHaveBeenCalled();
       });
 
       it('should lock the screen orientation to Portrait Primary', () => {

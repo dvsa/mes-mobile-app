@@ -1,7 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform, Navbar, ModalController } from 'ionic-angular';
-import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -46,6 +45,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../../providers/device/device';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
+import { BasePageComponent } from '../../../shared/classes/base-page';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE/index';
 import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
@@ -67,7 +67,7 @@ interface WaitingRoomPageState {
   selector: '.waiting-room-cat-be-page',
   templateUrl: 'waiting-room.cat-be.page.html',
 })
-export class WaitingRoomCatBEPage extends PracticeableBasePageComponent implements OnInit {
+export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
 
   @ViewChild(Navbar) navBar: Navbar;
 
@@ -93,7 +93,7 @@ export class WaitingRoomCatBEPage extends PracticeableBasePageComponent implemen
     private modalController: ModalController,
     private app: App,
   ) {
-    super(platform, navController, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider);
     this.formGroup = new FormGroup({});
   }
 
@@ -103,10 +103,7 @@ export class WaitingRoomCatBEPage extends PracticeableBasePageComponent implemen
     if (super.isIos()) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       this.insomnia.keepAwake();
-
-      if (!this.isPracticeMode) {
-        this.deviceProvider.enableSingleAppMode();
-      }
+      this.deviceProvider.enableSingleAppMode();
     }
 
     this.navBar.backButtonClick = (e: UIEvent) => {
