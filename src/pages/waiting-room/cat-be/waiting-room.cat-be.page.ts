@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform, Navbar, ModalController } from 'ionic-angular';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -43,8 +44,8 @@ import {
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { DeviceProvider } from '../../../providers/device/device';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
-import { BasePageComponent } from '../../../shared/classes/base-page';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE/index';
 import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
@@ -66,7 +67,7 @@ interface WaitingRoomPageState {
   selector: '.waiting-room-cat-be-page',
   templateUrl: 'waiting-room.cat-be.page.html',
 })
-export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
+export class WaitingRoomCatBEPage extends PracticeableBasePageComponent implements OnInit {
 
   @ViewChild(Navbar) navBar: Navbar;
 
@@ -85,13 +86,14 @@ export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
+    private deviceProvider: DeviceProvider,
     private screenOrientation: ScreenOrientation,
     private insomnia: Insomnia,
     private translate: TranslateService,
     private modalController: ModalController,
     private app: App,
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, store$);
     this.formGroup = new FormGroup({});
   }
 
@@ -101,6 +103,10 @@ export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
     if (super.isIos()) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       this.insomnia.keepAwake();
+
+      if (!this.isPracticeMode) {
+        this.deviceProvider.enableSingleAppMode();
+      }
     }
 
     this.navBar.backButtonClick = (e: UIEvent) => {
