@@ -14,6 +14,7 @@ import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_BE } from '../../../pages/page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { DeviceProvider } from '../../../providers/device/device';
 
 interface BackToOfficePageState {
   isRekey$: Observable<boolean>;
@@ -35,6 +36,7 @@ export class BackToOfficeCatBEPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
+    public deviceProvider: DeviceProvider,
   ) {
     super(platform, navController, authenticationProvider);
   }
@@ -54,6 +56,7 @@ export class BackToOfficeCatBEPage extends BasePageComponent {
     if (super.isIos()) {
       this.screenOrientation.unlock();
       this.insomnia.allowSleepAgain();
+      this.deviceProvider.disableSingleAppMode();
     }
 
     this.store$.dispatch(new BackToOfficeViewDidEnter());
