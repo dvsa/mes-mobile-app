@@ -1,10 +1,18 @@
-import { Then, When } from 'cucumber';
+import { Then, When, Before } from 'cucumber';
 import { getElement, clickElement } from './generic-steps';
 import { browser, by, ExpectedConditions } from 'protractor';
 
+// Set default category to be cat b
+this.testCategory = 'b';
+
+Before({ tags: '@catbe' }, () => {
+  // This hook will be executed before scenarios tagged with @catbe
+  this.testCategory = 'be';
+});
+
 Then('I am on the post debrief holding page', () => {
   // No page title so need to check something else exists that exists on the page
-  const postDebriefHoldingPage = getElement(by.id('post-debrief-holding-cat-b-page'));
+  const postDebriefHoldingPage = getElement(by.id(`post-debrief-holding-cat-${this.testCategory}-page`));
   return browser.wait(ExpectedConditions.presenceOf(postDebriefHoldingPage));
 });
 
