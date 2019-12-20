@@ -72,7 +72,10 @@ export class VehicleChecksCatCComponent implements OnChanges {
   }
 
   validateVehicleChecks(c: FormControl): null | { vehicleChecks: boolean } {
-    return this.everyQuestionHasOutcome() ? null : this.incompleteVehicleChecks();
+    // TODO reinstate this check when Cat C complete (introduced by MES-4264)
+    // disabling validation for ease of testing
+    // return this.everyQuestionHasOutcome() ? null : this.incompleteVehicleChecks();
+    return null;
   }
 
   ngOnChanges(): void {
