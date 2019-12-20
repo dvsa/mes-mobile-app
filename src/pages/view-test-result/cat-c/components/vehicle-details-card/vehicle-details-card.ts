@@ -9,6 +9,7 @@ import { get } from 'lodash';
 })
 export class VehicleDetailsCardComponent {
 
+  // TODO: MES-4287 Use category c type
   @Input()
   data: CatBEUniqueTypes.VehicleDetails;
 

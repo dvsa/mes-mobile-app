@@ -79,6 +79,8 @@ export class ViewTestResultCatCPage extends BasePageComponent implements OnInit 
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
         map((response: HttpResponse<any>): string => response.body),
+
+        // TODO: MES-4287 Use category c type
         map(data => this.testResult = this.compressionProvider.extractTestResult(data) as CatBEUniqueTypes.TestResult),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {

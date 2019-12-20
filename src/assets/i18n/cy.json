@@ -85,9 +85,9 @@
       "vehicleChecks": "Gwirio’r cerbyd",
       "controlledStop": "Stopio dan Reolaeth",
       "eyesightTest": "Prawf Golwg",
-      "uncoupleRecouple": "Uncouple / Adennill",
-      "reverseLeftControl": "Bacio – dan reolaeth",
-      "reverseLeftObservation": "Bacio – gwyliadwriaeth"
+      "uncoupleRecouple": "Dadfachu / Ailfachu",
+      "reverseLeftControl": "Gwrthdroi - dan reolaeth",
+      "reverseLeftObservation": "Gwrthdroi - gwyliadwriaeth"
     },
     "dangerousFault": "Nam peryglus",
     "dangerousFaultsCardDescription": "Namau peryglus",

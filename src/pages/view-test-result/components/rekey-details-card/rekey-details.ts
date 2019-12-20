@@ -10,6 +10,7 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 })
 export class RekeyDetailsCardComponent {
 
+  // TODO: MES-4287 Use category c type
   @Input()
   data: CatBEUniqueTypes.TestResult | CatBUniqueTypes.TestResult;
 

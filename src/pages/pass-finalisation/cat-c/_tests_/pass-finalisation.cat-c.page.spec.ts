@@ -30,23 +30,22 @@ import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
   '../../../../modules/tests/test-summary/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
   '../../../../modules/tests/communication-preferences/communication-preferences.actions';
-import { PassFinalisationCatBEPage } from '../pass-finalisation.cat-be.page';
+import { PassFinalisationCatCPage } from '../pass-finalisation.cat-c.page';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
-import { Subscription } from 'rxjs/Subscription';
 
-describe('PassFinalisationCatBEPage', () => {
-  let fixture: ComponentFixture<PassFinalisationCatBEPage>;
-  let component: PassFinalisationCatBEPage;
+describe('PassFinalisationCatCPage', () => {
+  let fixture: ComponentFixture<PassFinalisationCatCPage>;
+  let component: PassFinalisationCatCPage;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        PassFinalisationCatBEPage,
+        PassFinalisationCatCPage,
         MockComponent(PassCertificateNumberComponent),
         MockComponent(LicenseProvidedComponent),
         MockComponent(TransmissionComponent),
@@ -68,9 +67,8 @@ describe('PassFinalisationCatBEPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(PassFinalisationCatBEPage);
+        fixture = TestBed.createComponent(PassFinalisationCatCPage);
         component = fixture.componentInstance;
-        component.subscription = new Subscription();
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
       });

@@ -95,9 +95,6 @@ describe('WaitingRoomToCarCatCPage', () => {
     spyOn(store$, 'dispatch');
   }));
 
-  describe('DOM', () => {
-  });
-
   describe('ionViewWillLeave', () => {
     it('should dispatch the PersistTests action', () => {
       component.ionViewWillLeave();

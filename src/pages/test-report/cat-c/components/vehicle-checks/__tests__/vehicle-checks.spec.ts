@@ -55,6 +55,7 @@ describe('VehicleChecksComponent', () => {
     };
 
     beforeEach(() => {
+      // TODO: MES-4287 Use Category C
       spyOn(component.faultCountProvider, 'getVehicleChecksFaultCountCatBE').and.returnValue(vehicleChecksScore);
     });
 
