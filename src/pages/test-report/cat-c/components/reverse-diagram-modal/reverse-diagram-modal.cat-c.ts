@@ -7,10 +7,9 @@ import { map } from 'rxjs/operators';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-c.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
-
+import { ReversingDistancesProvider } from '../../../../../providers/reversing-distances/reversing-distances';
 import {
   getVehicleLength,
   getVehicleWidth,
@@ -18,7 +17,6 @@ import {
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 
 interface ReverseDiagramPageState {
-  testCategory$: Observable<CategoryCode>;
   vehicleLength$: Observable<number>;
   vehicleWidth$: Observable<number>;
 }
@@ -38,20 +36,20 @@ export class ReverseDiagramCatCPage implements OnInit {
   @Input()
   vehicleWidth: number;
 
-  testCategory: CategoryCode;
-
   onClose: OnCloseFunc;
 
   componentState: ReverseDiagramPageState;
   subscription: Subscription;
-  merged$: Observable<number | CategoryCode>;
-  distanceFromStart: number;
-  distanceFromMiddle: number;
-  distanceOfBayWidth: number;
+  merged$: Observable<number>;
+  reversingLengthStart: number;
+  reversingLengthMiddle: number;
+  reversingWidth: number;
 
   constructor(
     private navParams: NavParams,
     public store$: Store<StoreModel>,
+
+    private reversingDistancesProvider: ReversingDistancesProvider,
   ) {
     this.onClose = this.navParams.get('onClose');
   }
@@ -64,9 +62,6 @@ export class ReverseDiagramCatCPage implements OnInit {
     );
 
     this.componentState = {
-      testCategory$: currentTest$.pipe(
-        map(test => test.category),
-      ),
       vehicleLength$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getVehicleLength),
@@ -77,51 +72,39 @@ export class ReverseDiagramCatCPage implements OnInit {
       ),
     };
 
-    const { testCategory$, vehicleLength$, vehicleWidth$ } = this.componentState;
+    const { vehicleLength$, vehicleWidth$ } = this.componentState;
 
     this.merged$ = merge(
-      testCategory$.pipe(map(val => this.testCategory = val)),
       vehicleLength$.pipe(map(val => this.vehicleLength = val)),
       vehicleWidth$.pipe(map(val => this.vehicleWidth = val)),
     );
   }
 
-  calculateDistanceLength(vehicleLength: number): void {
-    let distanceFromStartMultiplier: number;
-    let distanceFromMiddleMultiplier: number;
-    switch (this.testCategory) {
-      case TestCategory.C:
-        distanceFromStartMultiplier = 4;
-        distanceFromMiddleMultiplier = 2;
-        break;
-      default:
-        distanceFromStartMultiplier = 4;
-        distanceFromMiddleMultiplier = 2;
-    }
-    const distanceFromStart = vehicleLength * distanceFromStartMultiplier;
-    const distanceFromMiddle = vehicleLength * distanceFromMiddleMultiplier;
-    this.distanceFromMiddle = Math.round(distanceFromMiddle * 100) / 100;
-    this.distanceFromStart = Math.round(distanceFromStart * 100) / 100;
+  calculateReversingLengths(vehicleLength: number): void {
+    const vehicleDetails = {
+      vehicleLength,
+      vehicleWidth: this.vehicleWidth,
+    };
+
+    const reversingLengths = this.reversingDistancesProvider.getDistanceLength(vehicleDetails, TestCategory.C);
+    this.reversingLengthStart = reversingLengths.startDistance;
+    this.reversingLengthMiddle = reversingLengths.middleDistance;
   }
 
-  calculateDistanceWidth(vehicleWidth: number): void {
-    let distanceOfBayWidthMultiplier: number;
-    switch (this.testCategory) {
-      case TestCategory.C:
-        distanceOfBayWidthMultiplier = 3.5;
-        break;
-      default:
-        distanceOfBayWidthMultiplier = 3.5;
-    }
-    const distanceOfBayWidth = vehicleWidth * distanceOfBayWidthMultiplier;
-    this.distanceOfBayWidth = Math.round(distanceOfBayWidth * 100) / 100;
+  calculateReversingWidth(vehicleWidth: number): void {
+    const vehicleDetails = {
+      vehicleWidth,
+      vehicleLength: this.vehicleLength,
+    };
+
+    this.reversingWidth = this.reversingDistancesProvider.getDistanceWidth(vehicleDetails, TestCategory.C);
   }
 
   ionViewWillEnter(): boolean {
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
-      this.calculateDistanceLength(this.vehicleLength);
-      this.calculateDistanceWidth(this.vehicleWidth);
+      this.calculateReversingLengths(this.vehicleLength);
+      this.calculateReversingWidth(this.vehicleWidth);
     }
 
     return true;
