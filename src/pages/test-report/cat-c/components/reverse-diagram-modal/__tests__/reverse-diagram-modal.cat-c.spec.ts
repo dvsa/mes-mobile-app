@@ -34,9 +34,7 @@ describe('reverseDiagramModal', () => {
             testStatus: {},
             startedTests: {
               123: {
-
-                // TODO: MES-4287 Change the category to C
-                category: TestCategory.BE,
+                category: TestCategory.C,
                 vehicleDetails: {
                   vehicleLength: 10,
                   vehicleWidth: 2.75,
@@ -90,8 +88,7 @@ describe('reverseDiagramModal', () => {
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
 
-        // TODO: MES-4287 Change the category to C
-        store$.dispatch(new StartTest(123, TestCategory.BE));
+        store$.dispatch(new StartTest(123, TestCategory.C));
       });
   }));
 
@@ -125,36 +122,42 @@ describe('reverseDiagramModal', () => {
       });
     });
 
-    describe('calculateDistanceLength', () => {
-      it('should set the correct value for aAndA1', () => {
-        component.calculateDistanceLength(vehicleDetails.vehicleLength);
-        const result = component.distanceFromStart;
-        expect(result).toEqual(40);
+    describe('calculateReversingLengths', () => {
+      it('CAT C - should set the correct value for aAndA1', () => {
+        component.ngOnInit();
+        component.calculateReversingLengths(vehicleDetails.vehicleLength);
+        const result = component.reversingLengthStart;
+        // TODO: Update test when using category is C
+        expect(result).toEqual(52.5);
       });
 
-      it('should set the correct value for b', () => {
-        component.calculateDistanceLength(vehicleDetails.vehicleLength);
-        const result = component.distanceFromMiddle;
-        expect(result).toEqual(20);
+      it('CAT C - should set the correct value for b', () => {
+        component.ngOnInit();
+        component.calculateReversingLengths(vehicleDetails.vehicleLength);
+        const result = component.reversingLengthMiddle;
+        // TODO: Update test when using category is C
+        expect(result).toEqual(30);
       });
     });
 
     describe('calculateDistanceWidth', () => {
-      it('should set the correct value for aToA1', () => {
-        component.calculateDistanceWidth(vehicleDetails.vehicleWidth);
-        const result = component.distanceOfBayWidth;
-        expect(result).toEqual(4.13);
+      it('Cat C - should set the correct value for aToA1', () => {
+        component.ngOnInit();
+        component.calculateReversingWidth(vehicleDetails.vehicleWidth);
+        const result = component.reversingWidth;
+        // TODO: Update test when using category is C
+        expect(result).toEqual(3);
       });
     });
 
     describe('ionViewWillEnter', () => {
       it('should calculate the distances if vehicle dimensions are populated', () => {
-        const calculateDistanceLengthSpy = spyOn(component, 'calculateDistanceLength');
-        const calculateDistanceWidthSpy = spyOn(component, 'calculateDistanceWidth');
+        const calculateReversingLengthsSpy = spyOn(component, 'calculateDistanceLength');
+        const calculateReversingWidthSpy = spyOn(component, 'calculateDistanceWidth');
         component.ngOnInit();
         const result = component.ionViewWillEnter();
-        expect(calculateDistanceLengthSpy).toHaveBeenCalled();
-        expect(calculateDistanceWidthSpy).toHaveBeenCalled();
+        expect(calculateReversingLengthsSpy).toHaveBeenCalled();
+        expect(calculateReversingWidthSpy).toHaveBeenCalled();
         expect(result).toEqual(true);
       });
     });

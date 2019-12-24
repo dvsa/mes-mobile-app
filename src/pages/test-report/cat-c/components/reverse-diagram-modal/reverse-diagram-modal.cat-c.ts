@@ -7,15 +7,13 @@ import { map } from 'rxjs/operators';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
-
-// TODO: MES-4287 Import cat-c reducer
-import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.reducer';
-
-// TODO: MES-4287 Import cat c selector
+import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-c.reducer';
+import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { ReversingDistancesProvider } from '../../../../../providers/reversing-distances/reversing-distances';
 import {
   getVehicleLength,
   getVehicleWidth,
-} from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.selector';
+} from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-c.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 
 interface ReverseDiagramPageState {
@@ -27,8 +25,6 @@ type OnCloseFunc = () => void;
 
 @IonicPage()
 @Component({
-
-  // TODO: MES-4287 Think we should name the file with cat c?
   selector: 'reverse-diagram-modal-cat-c',
   templateUrl: 'reverse-diagram-modal.cat-c.html',
 })
@@ -45,13 +41,15 @@ export class ReverseDiagramCatCPage implements OnInit {
   componentState: ReverseDiagramPageState;
   subscription: Subscription;
   merged$: Observable<number>;
-  distanceFromStart: number;
-  distanceFromMiddle: number;
-  distanceOfBayWidth: number;
+  reversingLengthStart: number;
+  reversingLengthMiddle: number;
+  reversingWidth: number;
 
   constructor(
     private navParams: NavParams,
     public store$: Store<StoreModel>,
+
+    private reversingDistancesProvider: ReversingDistancesProvider,
   ) {
     this.onClose = this.navParams.get('onClose');
   }
@@ -82,23 +80,31 @@ export class ReverseDiagramCatCPage implements OnInit {
     );
   }
 
-  calculateDistanceLength(vehicleLength: number): void {
-    const distanceFromStart = vehicleLength * 4;
-    const distanceFromMiddle = vehicleLength * 2;
-    this.distanceFromMiddle = Math.round(distanceFromMiddle * 100) / 100;
-    this.distanceFromStart = Math.round(distanceFromStart * 100) / 100;
+  calculateReversingLengths(vehicleLength: number): void {
+    const vehicleDetails = {
+      vehicleLength,
+      vehicleWidth: this.vehicleWidth,
+    };
+
+    const reversingLengths = this.reversingDistancesProvider.getDistanceLength(vehicleDetails, TestCategory.C);
+    this.reversingLengthStart = reversingLengths.startDistance;
+    this.reversingLengthMiddle = reversingLengths.middleDistance;
   }
 
-  calculateDistanceWidth(vehicleWidth: number): void {
-    const distanceOfBayWidth = vehicleWidth * 1.5;
-    this.distanceOfBayWidth = Math.round(distanceOfBayWidth * 100) / 100;
+  calculateReversingWidth(vehicleWidth: number): void {
+    const vehicleDetails = {
+      vehicleWidth,
+      vehicleLength: this.vehicleLength,
+    };
+
+    this.reversingWidth = this.reversingDistancesProvider.getDistanceWidth(vehicleDetails, TestCategory.C);
   }
 
   ionViewWillEnter(): boolean {
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
-      this.calculateDistanceLength(this.vehicleLength);
-      this.calculateDistanceWidth(this.vehicleWidth);
+      this.calculateReversingLengths(this.vehicleLength);
+      this.calculateReversingWidth(this.vehicleWidth);
     }
 
     return true;
