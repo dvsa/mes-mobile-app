@@ -8,7 +8,7 @@ import { ReversingLengths } from './reversing-lengths.model';
 @Injectable()
 export class ReversingDistancesProvider {
 
-  public getDistanceLength(data: Object, category: TestCategory): ReversingLengths {
+  public getDistanceLength(data: object, category: TestCategory): ReversingLengths {
     switch (category) {
       case TestCategory.C:
         return this.getDistanceLengthCat(data, 3.5);
@@ -23,7 +23,7 @@ export class ReversingDistancesProvider {
     }
   }
 
-  public getDistanceWidth(data: Object, category: TestCategory): number {
+  public getDistanceWidth(data: object, category: TestCategory): number {
     switch (category) {
       case TestCategory.C:
         return this.getDistanceWidthCat(data);
