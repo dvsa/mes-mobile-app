@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { OverlayCallback } from '../../../test-report.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'manoeuvres',

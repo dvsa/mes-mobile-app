@@ -8,7 +8,7 @@ from '../../../../../../components/common/serious-fault-badge/serious-fault-badg
 import { IonicModule } from 'ionic-angular';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { DrivingFaultsBadgeComponent }
 from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';

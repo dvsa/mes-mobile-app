@@ -1,8 +1,8 @@
 import * as vehicleDetailsActions from './vehicle-details.actions';
-import { VehicleDetails } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B/index';
 import { createFeatureSelector } from '@ngrx/store';
 
-const initialState: VehicleDetails = {
+const initialState: CatBUniqueTypes.VehicleDetails = {
   registrationNumber: '',
 };
 
@@ -38,4 +38,4 @@ export const vehicleDetailsReducer = (state = initialState, action: vehicleDetai
   }
 };
 
-export const getVehicleDetails = createFeatureSelector<VehicleDetails>('vehicleDetails');
+export const getVehicleDetails = createFeatureSelector<CatBUniqueTypes.VehicleDetails>('vehicleDetails');

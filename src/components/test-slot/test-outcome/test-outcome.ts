@@ -21,7 +21,7 @@ import { getBookedTestSlot } from '../../../pages/rekey-search/rekey-search.sele
 import { merge } from 'rxjs/observable/merge';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { MarkAsNonRekey } from '../../../modules/tests/rekey/rekey.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'test-outcome',
@@ -65,7 +65,8 @@ export class TestOutcomeComponent implements OnInit {
     private store$: Store<StoreModel>,
     public navController: NavController,
     private modalController: ModalController,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     const bookedTestSlot$ = this.store$.pipe(

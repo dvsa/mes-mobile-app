@@ -46,7 +46,7 @@ import * as reverseLeftActions
   from '../cat-be/components/reverse-left/reverse-left.actions';
 import * as catBEManoeuversActions
   from '../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('Test Report Analytics Effects', () => {
 

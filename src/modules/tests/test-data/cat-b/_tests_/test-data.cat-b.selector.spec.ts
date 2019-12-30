@@ -7,7 +7,6 @@ import {
   getETAFaultText,
   getEcoFaultText,
   getShowMeQuestionOptions,
-  hasEyesightTestBeenCompleted,
 } from '../../common/test-data.selector';
 import {
   getDrivingFaultCount,
@@ -18,6 +17,7 @@ import {
   isTellMeQuestionDrivingFault,
   hasVehicleChecksBeenCompletedCatB,
   hasEyesightTestGotSeriousFault,
+  hasEyesightTestBeenCompleted,
 } from '../test-data.cat-b.selector';
 import { Competencies } from '../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';

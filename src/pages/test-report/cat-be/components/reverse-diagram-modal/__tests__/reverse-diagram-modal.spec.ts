@@ -7,7 +7,7 @@ import {
   NavControllerMock,
 } from 'ionic-mocks';
 import { StoreModule } from '@ngrx/store';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { ReverseDiagramCatBEPage } from '../reverse-diagram-modal';
 import { AppModule } from '../../../../../../app/app.module';

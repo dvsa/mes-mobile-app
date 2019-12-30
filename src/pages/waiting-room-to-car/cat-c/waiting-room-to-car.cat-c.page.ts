@@ -20,7 +20,7 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.cat-b.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,
@@ -29,7 +29,7 @@ import {
   getDualControls,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
+} from '../../../modules/tests/vehicle-details/vehicle-details.cat-b.selector';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
@@ -52,13 +52,10 @@ import {
   TellMeQuestionDrivingFault,
   QuestionOutcomes,
 } from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
-import {
-  hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/common/test-data.selector';
 
 // TODO: MES-4254 Import cat c selector
 import {
-  hasEyesightTestGotSeriousFault,
+  hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
 } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 
 // TODO: MES-4254 Import cat c reducer
@@ -67,7 +64,7 @@ import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_C } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 
 // TODO: MES-4254 Import cat c selector

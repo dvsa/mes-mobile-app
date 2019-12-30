@@ -7,7 +7,7 @@ import { TestsModel } from '../tests.model';
 import * as testsActions from './../tests.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { testReportPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('testsReducer', () => {
   const newCandidate = { candidate: { candidateId: 456 } };

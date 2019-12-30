@@ -66,7 +66,7 @@ import { NavigationStateProvider } from '../../../../providers/navigation-state/
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultCountProvider } from '../../../../providers/fault-count/fault-count';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 

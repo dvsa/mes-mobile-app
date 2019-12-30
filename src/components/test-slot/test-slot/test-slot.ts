@@ -19,7 +19,7 @@ import { getSlotType } from '../../../shared/helpers/get-slot-type';
 import { SlotProvider } from '../../../providers/slot/slot';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
@@ -52,7 +52,8 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     public dateTimeProvider: DateTimeProvider,
     public store$: Store<StoreModel>,
     private slotProvider: SlotProvider,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     const { slotId } = this.slot.slotDetail;

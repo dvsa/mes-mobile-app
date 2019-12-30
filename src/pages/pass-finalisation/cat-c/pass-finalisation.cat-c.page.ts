@@ -12,6 +12,8 @@ import {
   ProvisionalLicenseNotReceived,
   PopulatePassCompletion,
   PassCertificateNumberChanged,
+  Code78NotPresent,
+  Code78Present,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
@@ -41,7 +43,7 @@ import {
   getGearboxCategory,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
+} from '../../../modules/tests/vehicle-details/vehicle-details.cat-b.selector';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
 import { CAT_C } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
@@ -69,7 +71,7 @@ import {
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { TransmissionType } from '../../../shared/models/transmission-type';
 import { merge } from 'rxjs/observable/merge';
@@ -235,6 +237,14 @@ export class PassFinalisationCatCPage extends BasePageComponent {
 
   transmissionChanged(transmission: GearboxCategory): void {
     this.store$.dispatch(new GearboxCategoryChanged(transmission));
+  }
+
+  code78Present(present: boolean) {
+    if (present) {
+      this.store$.dispatch(new Code78Present());
+    } else {
+      this.store$.dispatch(new Code78NotPresent());
+    }
   }
 
   onSubmit() {

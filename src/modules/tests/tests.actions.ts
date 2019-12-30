@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { TestsModel } from './tests.model';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 export const START_SENDING_COMPLETED_TESTS = '[TestsEffects] Start Sending Completed Test';
 export const SEND_COMPLETED_TESTS = '[TestsEffects] Send Completed Tests';
@@ -35,12 +35,12 @@ export class LoadPersistedTests implements Action {
 
 export class LoadPersistedTestsSuccess implements Action {
   readonly type = LOAD_PERSISTED_TESTS_SUCCESS;
-  constructor(public tests: TestsModel) {}
+  constructor(public tests: TestsModel) { }
 }
 
 export class TestOutcomeChanged implements Action {
   readonly type = TEST_OUTCOME_CHANGED;
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export class StartTest implements Action {
@@ -68,7 +68,7 @@ export class SendCompletedTests implements Action {
 
 export class SendCompletedTestSuccess implements Action {
   readonly type = SEND_COMPLETED_TEST_SUCCESS;
-  constructor(public completedTestId: string) {}
+  constructor(public completedTestId: string) { }
 }
 
 export class SendCompletedTestsFailure implements Action {
@@ -77,7 +77,7 @@ export class SendCompletedTestsFailure implements Action {
 
 export class SendPartialTestSuccess implements Action {
   readonly type = SEND_PARTIAL_TEST_SUCCESS;
-  constructor(public slotId: string) {}
+  constructor(public slotId: string) { }
 }
 
 export class SendPartialTestsFailure implements Action {

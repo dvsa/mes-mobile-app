@@ -40,7 +40,7 @@ import { SetExaminerBooked } from '../examiner-booked/examiner-booked.actions';
 import { bufferCount } from 'rxjs/operators';
 import { SetExaminerConducted } from '../examiner-conducted/examiner-conducted.actions';
 import { SetExaminerKeyed } from '../examiner-keyed/examiner-keyed.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateTestCategory } from '../category/category.actions';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
 

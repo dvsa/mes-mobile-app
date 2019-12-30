@@ -16,7 +16,7 @@ import {
 import { ActivityCodeComponent } from '../../../office/components/activity-code/activity-code';
 import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
 import * as testActions from '../../../../modules/tests/tests.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { D255Component } from '../../../../components/test-finalisation/d255/d255';
 import { LanguagePreferencesComponent } from
 '../../../../components/test-finalisation/language-preference/language-preferences';

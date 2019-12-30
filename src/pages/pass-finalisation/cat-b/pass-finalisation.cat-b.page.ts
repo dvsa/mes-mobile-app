@@ -35,12 +35,12 @@ import { map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.cat-b.reducer';
 import {
   getGearboxCategory,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
+} from '../../../modules/tests/vehicle-details/vehicle-details.cat-b.selector';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
 import { CAT_B } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
@@ -70,6 +70,7 @@ import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { merge } from 'rxjs/observable/merge';
 import { TransmissionType } from '../../../shared/models/transmission-type';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -103,6 +104,7 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
   merged$: Observable<string>;
   transmission: GearboxCategory;
   subscription: Subscription;
+  category: TestCategory = TestCategory.B;
 
   constructor(
     store$: Store<StoreModel>,

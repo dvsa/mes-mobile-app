@@ -39,7 +39,7 @@ import { SetExaminerKeyed } from './examiner-keyed/examiner-keyed.actions';
 import { MarkAsRekey } from './rekey/rekey.actions';
 import { getRekeySearchState, RekeySearchModel } from '../../pages/rekey-search/rekey-search.reducer';
 import { getBookedTestSlot, getStaffNumber } from '../../pages/rekey-search/rekey-search.selector';
-import { Examiner, TestSlotAttributes, ConductedLanguage, CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
+import { Examiner, TestSlotAttributes, ConductedLanguage, CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
 import { JournalModel } from '../journal/journal.model';
@@ -47,7 +47,7 @@ import { PopulateConductedLanguage } from './communication-preferences/communica
 import { Language } from './communication-preferences/communication-preferences.model';
 import { version } from '../../environment/test-schema-version';
 import { createPopulateCandidateDetailsAction } from './journal-data/candidate/candidate.action-creator';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateVehicleDimensions } from './vehicle-details/vehicle-details.actions';
 
 @Injectable()
@@ -162,8 +162,7 @@ export class TestsEffects {
 
       const arrayOfActions: Action[] = [
         new PopulateTestCategory(
-          // TODO: Remove temporary assignment of CAT_C to CAT_BE
-          startTestAction.category === TestCategory.C ? TestCategory.BE : startTestAction.category),
+          startTestAction.category === TestCategory.C ? TestCategory.C : startTestAction.category),
         new PopulateExaminer(examiner),
         new PopulateApplicationReference(slot.booking.application),
         createPopulateCandidateDetailsAction(startTestAction.category, slot.booking),

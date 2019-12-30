@@ -21,7 +21,7 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.cat-b.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   InstructorRegistrationNumberChanged,
@@ -33,7 +33,7 @@ import {
   getDualControls,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
+} from '../../../modules/tests/vehicle-details/vehicle-details.cat-b.selector';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
@@ -59,9 +59,6 @@ import {
   EyesightTestFailed,
 } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import {
-  hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/common/test-data.selector';
-import {
   isTellMeQuestionSelected,
   isTellMeQuestionDrivingFault,
   isTellMeQuestionCorrect,
@@ -69,12 +66,13 @@ import {
   getVehicleChecks,
   getTellMeQuestion,
   hasEyesightTestGotSeriousFault,
+  hasEyesightTestBeenCompleted,
 } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_B } from '../../page-names.constants';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;

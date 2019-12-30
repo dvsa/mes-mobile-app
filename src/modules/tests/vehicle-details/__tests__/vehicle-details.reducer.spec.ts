@@ -1,4 +1,4 @@
-import { vehicleDetailsReducer } from '../vehicle-details.reducer';
+import { vehicleDetailsReducer } from '../vehicle-details.cat-b.reducer';
 import {
   VehicleRegistrationChanged,
   SchoolCarToggled,

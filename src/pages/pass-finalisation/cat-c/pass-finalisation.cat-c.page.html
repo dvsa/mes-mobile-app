@@ -9,8 +9,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-grid>
 
-        <finalisation-header [candidateName]="pageState.candidateName$ | async"
-          [candidateDriverNumber]="pageState.candidateDriverNumber$ | async"
+        <finalisation-header [candidateName]="pageState.candidateName$ | async" [candidateDriverNumber]="pageState.candidateDriverNumber$ | async"
           [outcomeText]="pageState.testOutcomeText$ | async"></finalisation-header>
 
         <ion-row class="mes-component-row mes-row-separator" id="application-reference-card" align-items-center>
@@ -22,17 +21,18 @@
           </ion-col>
         </ion-row>
 
-        <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()"
-          (licenseNotReceived)="provisionalLicenseNotReceived()"> </license-provided>
+        <license-provided [form]="form" [category]="this.category" (licenseReceived)="provisionalLicenseReceived()" (licenseNotReceived)="provisionalLicenseNotReceived()">
+        </license-provided>
 
         <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission>
-        <warning-banner *ngIf="displayTransmissionBanner()"
-          warningText="An automatic licence will be issued."></warning-banner>
+        <warning-banner *ngIf="displayTransmissionBanner()" warningText="An automatic licence will be issued."></warning-banner>
+
+        <code-78 [form]="form" [category]="this.category" [transmission]="pageState.transmission$ | async"
+          (code78Present)="code78Present($event)"></code-78>
 
         <pass-certificate-number [form]="form" (passCertificateNumberChange)="passCertificateNumberChanged($event)"></pass-certificate-number>
 
-        <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
-          (d255Change)="d255Changed($event)"></d255>
+        <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
         <warning-banner *ngIf="pageState.d255$ | async" warningText="By selecting Yes you are confirming a D255 is required."></warning-banner>
 
         <language-preferences [formGroup]="form" [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"

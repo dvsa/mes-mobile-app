@@ -7,7 +7,7 @@ import {
 } from 'ionic-mocks';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { Store, StoreModule } from '@ngrx/store';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { ReverseDiagramCatCPage } from '../reverse-diagram-modal.cat-c';

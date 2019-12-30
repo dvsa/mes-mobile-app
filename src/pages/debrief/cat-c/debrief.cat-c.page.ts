@@ -30,7 +30,7 @@ import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';

@@ -36,8 +36,6 @@ export const getEcoFaultText = (data: Eco) => {
   return;
 };
 
-export const hasEyesightTestBeenCompleted = (data: TestData) => data.eyesightTest.complete;
-
 export const getShowMeQuestionOptions = (
   questions: VehicleChecksQuestion[],
   outcome: string,

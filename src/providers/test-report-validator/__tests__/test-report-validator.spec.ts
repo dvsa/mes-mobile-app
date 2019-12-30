@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { TestReportValidatorProvider } from '../test-report-validator';
 import { FaultCountProvider } from '../../fault-count/fault-count';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { validTestCatBE, validTestCatB } from '../__mocks__/test-result.mock';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/Common';
@@ -31,7 +31,7 @@ describe('TestReportValidator', () => {
       expect(result).toEqual(false);
     });
     it('should return true if the test report is valid for a Cat BE test', () => {
-      const result = testReportValidatorProvider.isTestReportValid(validTestCatBE , TestCategory.BE);
+      const result = testReportValidatorProvider.isTestReportValid(validTestCatBE, TestCategory.BE);
       expect(result).toEqual(true);
     });
     it('should return false if the test report is not valid for a Cat BE test', () => {

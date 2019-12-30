@@ -1,11 +1,9 @@
 
 import { Action, combineReducers } from '@ngrx/store';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
-import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';
@@ -20,9 +18,11 @@ import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatBEReducer } from './journal-data/journal-data.cat-be.reducer';
 import { testDataCatBEReducer } from './test-data/cat-be/test-data.cat-be.reducer';
 import { vehicleDetailsCatBEReducer } from './vehicle-details/vehicle-details.cat-be.reducer';
+import { passCompletionCatCReducer } from './pass-completion/cat-c/pass-completion.cat-c.reducer';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 
 export function testsCatCReducer(
-  action: Action, state: CatBEUniqueTypes.TestResult): Required<CatBEUniqueTypes.TestResult> {
+  action: Action, state: CatCUniqueTypes.TestResult): Required<CatCUniqueTypes.TestResult> {
   return combineReducers(
     {
       version: schemaVersionReducer,
@@ -33,7 +33,7 @@ export function testsCatCReducer(
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatBEReducer,
       testData: testDataCatBEReducer,
-      passCompletion: passCompletionReducer,
+      passCompletion: passCompletionCatCReducer,
       postTestDeclarations: postTestDeclarationsReducer,
       testSummary: testSummaryReducer,
       communicationPreferences: communicationPreferencesReducer,
@@ -45,7 +45,7 @@ export function testsCatCReducer(
       examinerKeyed: examinerKeyedReducer,
       changeMarker: changeMarkerReducer,
     })(
-      state as Required<CatBEUniqueTypes.TestResult>,
+      state as Required<CatCUniqueTypes.TestResult>,
       action,
     );
 }
