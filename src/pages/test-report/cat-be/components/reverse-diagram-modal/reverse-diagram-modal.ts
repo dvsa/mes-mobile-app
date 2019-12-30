@@ -76,6 +76,7 @@ export class ReverseDiagramCatBEPage implements OnInit {
     );
   }
 
+  // TODO: Use reversersing-distance provider to calculate this
   calculateDistanceLength(vehicleLength: number): void {
     const distanceFromStart = vehicleLength * 4;
     const distanceFromMiddle = vehicleLength * 2;
@@ -83,6 +84,7 @@ export class ReverseDiagramCatBEPage implements OnInit {
     this.distanceFromStart = Math.round(distanceFromStart * 100) / 100;
   }
 
+  // TODO: Use reversersing-distance provider to calculate this
   calculateDistanceWidth(vehicleWidth: number): void {
     const distanceOfBayWidth = vehicleWidth * 1.5;
     this.distanceOfBayWidth = Math.round(distanceOfBayWidth * 100) / 100;
