@@ -129,7 +129,6 @@ describe('reverseDiagramModal', () => {
         component.ngOnInit();
         component.calculateReversingLengths(vehicleDetails.vehicleLength);
         const result = component.reversingLengthStart;
-        // TODO: Update test when using category is C
         expect(result).toEqual(35);
       });
 
@@ -137,7 +136,6 @@ describe('reverseDiagramModal', () => {
         component.ngOnInit();
         component.calculateReversingLengths(vehicleDetails.vehicleLength);
         const result = component.reversingLengthMiddle;
-        // TODO: Update test when using category is C
         expect(result).toEqual(20);
       });
     });
@@ -147,7 +145,6 @@ describe('reverseDiagramModal', () => {
         component.ngOnInit();
         component.calculateReversingWidth(vehicleDetails.vehicleWidth);
         const result = component.reversingWidth;
-        // TODO: Update test when using category is C
         expect(result).toEqual(4.13);
       });
     });
