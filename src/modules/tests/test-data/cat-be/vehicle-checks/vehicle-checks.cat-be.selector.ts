@@ -1,5 +1,5 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
 import { some } from 'lodash';
 

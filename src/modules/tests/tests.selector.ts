@@ -1,5 +1,5 @@
 import { TestStatus } from './test-status/test-status.model';
-import { JournalData, ActivityCode, TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/Common';
+import { JournalData, ActivityCode, TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/common';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories/index';
 import { TestsModel } from './tests.model';
 import { activityCodeModelList } from '../../pages/office/components/activity-code/activity-code.constants';

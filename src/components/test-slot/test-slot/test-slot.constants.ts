@@ -1,4 +1,4 @@
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 export const vehicleDetails = {
   [TestCategory.A]: false,
@@ -13,7 +13,7 @@ export const vehicleDetails = {
   [TestCategory.C]: true,
   [TestCategory.C1]: true,
   [TestCategory.C1E]: true,
-  [TestCategory.CCPC]:false,
+  [TestCategory.CCPC]: false,
   [TestCategory.CE]: true,
   [TestCategory.D]: true,
   [TestCategory.D1]: true,

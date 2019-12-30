@@ -12,7 +12,7 @@ import { JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE, CAT_C } from '../../../pages/
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -21,7 +21,7 @@ import { getBookedTestSlot } from '../../../pages/rekey-search/rekey-search.sele
 import { merge } from 'rxjs/observable/merge';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { MarkAsNonRekey } from '../../../modules/tests/rekey/rekey.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'test-outcome',

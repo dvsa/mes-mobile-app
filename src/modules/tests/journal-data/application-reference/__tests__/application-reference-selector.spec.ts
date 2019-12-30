@@ -1,7 +1,7 @@
 import {
   getApplicationNumber,
 } from '../application-reference.selector';
-import { ApplicationReference } from '@dvsa/mes-test-schema/categories/Common';
+import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
 
 describe('application reference selector', () => {
   const applicationReference: ApplicationReference = {

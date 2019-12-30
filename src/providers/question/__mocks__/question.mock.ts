@@ -1,7 +1,7 @@
 import { VehicleChecksQuestion } from '../vehicle-checks-question.model';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecks } from '@dvsa/mes-test-schema/categories/BE/partial';
-import { QuestionOutcome } from '@dvsa/mes-test-schema/categories/Common';
+import { QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 

@@ -6,7 +6,7 @@ import {
   SignatureDataCleared,
   ClearPreTestDeclarations,
 } from '../pre-test-declarations.actions';
-import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/Common';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/common';
 
 describe('PreTestDeclarations reducer', () => {
   it('should toggle the residency status when the toggle action is received', () => {

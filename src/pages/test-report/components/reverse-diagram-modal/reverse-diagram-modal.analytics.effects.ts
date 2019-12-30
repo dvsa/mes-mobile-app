@@ -33,7 +33,7 @@ import {
   getApplicationNumber,
 } from '../../../../modules/tests/journal-data/application-reference/application-reference.selector';
 import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
 @Injectable()
 export class ReverseDiagramModalAnalyticsEffects {

@@ -20,7 +20,7 @@ import * as drivingFaultsActions from '../../modules/tests/test-data/common/driv
 import * as controlledStopActions from '../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
 import * as activityCodeActions from '../../modules/tests/activity-code/activity-code.actions';
 import { TestResultProvider } from '../../providers/test-result/test-result';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import { of } from 'rxjs/observable/of';
 import { isEmpty } from 'lodash';
 

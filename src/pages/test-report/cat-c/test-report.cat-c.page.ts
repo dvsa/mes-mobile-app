@@ -47,7 +47,7 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 
 // TODO: MES-4287 Import cat c schema
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 // TODO: MES-4287 Import cat c reducer
 import {

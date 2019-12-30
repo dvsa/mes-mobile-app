@@ -8,7 +8,7 @@ import { IonicPage, NavParams } from 'ionic-angular';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-c.reducer';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { ReversingDistancesProvider } from '../../../../../providers/reversing-distances/reversing-distances';
 import {
   getVehicleLength,

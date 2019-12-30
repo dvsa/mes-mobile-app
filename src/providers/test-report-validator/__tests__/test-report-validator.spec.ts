@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { TestReportValidatorProvider } from '../test-report-validator';
 import { FaultCountProvider } from '../../fault-count/fault-count';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { validTestCatBE, validTestCatB } from '../__mocks__/test-result.mock';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
-import { TestData } from '@dvsa/mes-test-schema/categories/Common';
+import { TestData } from '@dvsa/mes-test-schema/categories/common';
 
 describe('TestReportValidator', () => {
 

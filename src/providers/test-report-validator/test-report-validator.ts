@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { get } from 'lodash';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { FaultCountProvider } from '../fault-count/fault-count';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
-import { TestData } from '@dvsa/mes-test-schema/categories/Common';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { TestData } from '@dvsa/mes-test-schema/categories/common';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import {
   hasManoeuvreBeenCompletedCatB,

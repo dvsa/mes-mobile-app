@@ -32,7 +32,7 @@ import { TestSlot } from '@dvsa/mes-journal-schema';
 import { SpecialNeedsCode } from '../../../../shared/helpers/get-slot-type';
 import { LocationComponent } from '../../location/location';
 import { SlotProvider } from '../../../../providers/slot/slot';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;

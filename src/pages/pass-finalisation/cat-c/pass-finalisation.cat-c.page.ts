@@ -68,8 +68,8 @@ import {
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { TransmissionType } from '../../../shared/models/transmission-type';
 import { merge } from 'rxjs/observable/merge';

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { QuestionProvider } from '../question';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 import tellMeQuestionsCatBConstants
   from '../../../shared/constants/tell-me-questions/tell-me-questions.cat-b.constants';

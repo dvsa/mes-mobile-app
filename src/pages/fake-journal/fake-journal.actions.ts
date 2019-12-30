@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 export const START_E2E_PRACTICE_TEST = '[Tests] Start Full Practice Test';
 

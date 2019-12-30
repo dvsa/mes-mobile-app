@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/Common';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 
 export const POPULATE_TEST_SLOT_ATTRIBUTES = '[TestSlotAttributesEffects] Populate Test slot attributes';
 

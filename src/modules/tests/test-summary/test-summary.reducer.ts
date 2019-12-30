@@ -1,4 +1,4 @@
-import { TestSummary } from '@dvsa/mes-test-schema/categories/Common';
+import { TestSummary } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
 import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
 

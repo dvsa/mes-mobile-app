@@ -56,7 +56,7 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { getGearboxCategory, isAutomatic, isManual } from
 '../../../modules/tests/vehicle-details/vehicle-details.selector';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
 
 interface NonPassFinalisationPageState {

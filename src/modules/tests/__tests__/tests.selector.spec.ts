@@ -24,7 +24,7 @@ import {
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { TestOutcome } from '../tests.constants';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
 describe('testsSelector', () => {
   describe('getCurrentTest', () => {

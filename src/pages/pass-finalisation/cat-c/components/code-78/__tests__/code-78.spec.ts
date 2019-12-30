@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { Code78Component } from '../code-78';
 import { MockComponent } from 'ng-mocks';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { TransmissionType } from '../../../../../../shared/models/transmission-type';
 
 describe('code78Component', () => {

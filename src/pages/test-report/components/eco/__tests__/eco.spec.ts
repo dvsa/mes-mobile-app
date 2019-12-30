@@ -15,7 +15,7 @@ import {
   ToggleControlEco,
 }
 from '../../../../../modules/tests/test-data/common/eco/eco.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('Eco component', () => {
   let fixture: ComponentFixture<EcoComponent>;

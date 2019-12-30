@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 
 export const VEHICLE_REGISTRATION_CHANGED = '[Vehicle Details] Registration changed';
 export const SCHOOL_CAR_TOGGLED = '[Vehicle Details] School car toggled';

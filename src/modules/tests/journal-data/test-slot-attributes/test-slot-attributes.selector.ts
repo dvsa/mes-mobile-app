@@ -1,4 +1,4 @@
-import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/Common';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { DateTime } from '../../../../shared/helpers/date-time';
 import { getSlotType } from '../../../../shared/helpers/get-slot-type';
 

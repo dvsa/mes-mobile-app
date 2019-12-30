@@ -6,7 +6,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   SchoolCarToggled,
@@ -59,9 +59,6 @@ import {
   EyesightTestFailed,
 } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import {
-  hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/common/test-data.selector';
-import {
   isTellMeQuestionSelected,
   isTellMeQuestionDrivingFault,
   isTellMeQuestionCorrect,
@@ -69,12 +66,13 @@ import {
   getVehicleChecks,
   getTellMeQuestion,
   hasEyesightTestGotSeriousFault,
+  hasEyesightTestBeenCompleted,
 } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_B } from '../../page-names.constants';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;

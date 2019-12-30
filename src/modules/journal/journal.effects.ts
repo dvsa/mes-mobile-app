@@ -26,7 +26,7 @@ import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { Examiner } from '@dvsa/mes-test-schema/categories/Common';
+import { Examiner } from '@dvsa/mes-test-schema/categories/common';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { ExaminerSlotItems, ExaminerSlotItemsByDate } from './journal.model';
 import { LogType } from '../../shared/models/log.model';

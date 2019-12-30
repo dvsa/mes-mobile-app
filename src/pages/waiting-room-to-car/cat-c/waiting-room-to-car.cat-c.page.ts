@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   SchoolCarToggled,
@@ -52,13 +52,10 @@ import {
   TellMeQuestionDrivingFault,
   QuestionOutcomes,
 } from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
-import {
-  hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/common/test-data.selector';
 
 // TODO: MES-4254 Import cat c selector
 import {
-  hasEyesightTestGotSeriousFault,
+  hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
 } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 
 // TODO: MES-4254 Import cat c reducer
@@ -67,7 +64,7 @@ import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_C } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 
 // TODO: MES-4254 Import cat c selector

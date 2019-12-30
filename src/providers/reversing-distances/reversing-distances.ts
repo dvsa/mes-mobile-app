@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 // TODO: Import CAT C types
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { ReversingLengths } from './reversing-lengths.model';

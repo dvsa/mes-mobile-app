@@ -1,4 +1,4 @@
-import { EyesightTest } from '@dvsa/mes-test-schema/categories/Common';
+import { EyesightTest } from '@dvsa/mes-test-schema/categories/common';
 import { eyesightTestReducer, initialState } from '../eyesight-test.reducer';
 import {
   EyesightTestPassed,

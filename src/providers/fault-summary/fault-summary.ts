@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { forOwn, transform, endsWith, get } from 'lodash';
-import { EyesightTest, QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
+import { EyesightTest, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { FaultSummary, CommentSource, CompetencyIdentifiers } from '../../shared/models/fault-marking.model';
 import { CompetencyDisplayName } from '../../shared/models/competency-display-name';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
@@ -16,7 +16,7 @@ import {
   manoeuvreTypeLabels as manoeuvreTypeLabelsCatBe,
 }
   from '../../shared/constants/competencies/catbe-manoeuvres';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../fault-count/fault-count';
 import { getCompetencyFaults } from '../../shared/helpers/competency';

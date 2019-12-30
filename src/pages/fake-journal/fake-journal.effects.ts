@@ -17,7 +17,7 @@ import {
   extractTestSlotAttributes,
 } from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
 import { PopulateTestCategory } from '../../modules/tests/category/category.actions';
-import { Examiner, CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
+import { Examiner, CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateExaminer } from '../../modules/tests/journal-data/examiner/examiner.actions';
 
 @Injectable()

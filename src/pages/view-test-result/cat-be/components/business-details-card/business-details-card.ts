@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { Address } from '@dvsa/mes-test-schema/categories/Common';
+import { Address } from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
   selector: 'business-details-card',

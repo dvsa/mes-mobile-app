@@ -1,4 +1,4 @@
-import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/Common';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
 import * as testSlotAttributesActions from './test-slot-attributes.actions';
 

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { CommunicationMethod, ConductedLanguage } from '@dvsa/mes-test-schema/categories/Common';
+import { CommunicationMethod, ConductedLanguage } from '@dvsa/mes-test-schema/categories/common';
 
 export const CANDIDATE_CONFIRMED_COMMUNICATION_PREFERENCE_AS_EMAIL
   = '[Communication Preferences] Candidate confirmed communication preferences as email';

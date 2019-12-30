@@ -4,10 +4,10 @@ import { pickBy, endsWith, sumBy, get } from 'lodash';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../shared/models/vehicle-checks-score.model';
 import { getCompetencyFaults } from '../../shared/helpers/competency';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
 @Injectable()
 export class FaultCountProvider {

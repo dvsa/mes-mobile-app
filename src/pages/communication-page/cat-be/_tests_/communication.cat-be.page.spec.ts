@@ -25,7 +25,7 @@ import * as communicationPreferenceActions
   from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PostalAddressComponent } from '../../components/postal-address/postal-address';
 import { MockComponent } from 'ng-mocks';
-import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/Common';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { TranslateService, TranslateModule } from 'ng2-translate';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { PrivacyNoticeComponent } from '../../components/privacy-notice/privacy-notice';

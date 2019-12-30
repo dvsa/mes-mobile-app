@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/Common';
+import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
   selector: 'vehicle-checks-data-row',

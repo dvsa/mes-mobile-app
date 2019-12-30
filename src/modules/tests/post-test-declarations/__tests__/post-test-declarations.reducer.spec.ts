@@ -6,7 +6,7 @@ import {
   SignatureDataCleared,
   ClearPostTestDeclarations,
 } from '../post-test-declarations.actions';
-import { PostTestDeclarations } from '@dvsa/mes-test-schema/categories/Common';
+import { PostTestDeclarations } from '@dvsa/mes-test-schema/categories/common';
 
 describe('PostTestDeclarations reducer', () => {
   it('should toggle the health declaration status when the toggle action is received', () => {
