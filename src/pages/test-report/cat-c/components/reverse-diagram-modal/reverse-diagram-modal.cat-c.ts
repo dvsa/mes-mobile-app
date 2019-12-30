@@ -48,7 +48,6 @@ export class ReverseDiagramCatCPage implements OnInit {
   constructor(
     private navParams: NavParams,
     public store$: Store<StoreModel>,
-
     private reversingDistancesProvider: ReversingDistancesProvider,
   ) {
     this.onClose = this.navParams.get('onClose');
