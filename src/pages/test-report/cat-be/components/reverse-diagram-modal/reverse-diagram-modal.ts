@@ -11,7 +11,7 @@ import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/
 import {
   getVehicleLength,
   getVehicleWidth,
-} from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-c.selector';
+} from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { ReversingDistancesProvider } from '../../../../../providers/reversing-distances/reversing-distances';
 import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
