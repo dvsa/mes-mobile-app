@@ -14,7 +14,7 @@ import {
 } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { ReversingDistancesProvider } from '../../../../../providers/reversing-distances/reversing-distances';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface ReverseDiagramPageState {
   vehicleLength$: Observable<number>;
