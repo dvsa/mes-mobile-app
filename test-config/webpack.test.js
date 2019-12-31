@@ -1,6 +1,5 @@
 var webpack = require('webpack');
 var path = require('path');
-var ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -20,23 +19,23 @@ module.exports = {
         }
       }, 'angular2-template-loader']
     },
-      {
-        test: /.+\.ts$/,
-        exclude: /(index.ts|mocks.ts|\.spec\.ts$)/,
-        loader: 'istanbul-instrumenter-loader',
-        enforce: 'post',
-        query: {
-          esModules: true
-        }
-      },
-      {
-        test: /\.html$/,
-        loader: 'html-loader?attrs=false'
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-        loader: 'null-loader'
+    {
+      test: /.+\.ts$/,
+      exclude: /(index.ts|mocks.ts|\.spec\.ts$)/,
+      loader: 'istanbul-instrumenter-loader',
+      enforce: 'post',
+      query: {
+        esModules: true
       }
+    },
+    {
+      test: /\.html$/,
+      loader: 'html-loader?attrs=false'
+    },
+    {
+      test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+      loader: 'null-loader'
+    }
     ]
   },
 
@@ -47,7 +46,6 @@ module.exports = {
       root('./src'), // location of your src
       {} // a map of your routes
     ),
-    new ForkTsCheckerWebpackPlugin()
   ]
 };
 
