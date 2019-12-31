@@ -1,6 +1,6 @@
 import {
   TestResultCommonSchema,
-} from '@dvsa/mes-test-schema/categories/Common';
+} from '@dvsa/mes-test-schema/categories/common';
 import { ActivityCodes } from '../../shared/models/activity-codes';
 
 export const getTestOutcome = (test: TestResultCommonSchema): string => {

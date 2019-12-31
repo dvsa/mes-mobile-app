@@ -1,5 +1,5 @@
 import { createFeatureSelector } from '@ngrx/store';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import * as activityCodeActions from './activity-code.actions';
 
 export const initialState: ActivityCode = null;

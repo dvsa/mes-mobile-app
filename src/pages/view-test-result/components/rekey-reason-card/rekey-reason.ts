@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RekeyReason, IpadIssue } from '@dvsa/mes-test-schema/categories/Common';
+import { RekeyReason, IpadIssue } from '@dvsa/mes-test-schema/categories/common';
 import { get } from 'lodash';
 
 @Component({

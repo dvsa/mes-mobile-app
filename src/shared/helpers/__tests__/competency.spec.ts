@@ -1,4 +1,4 @@
-import { DrivingFaults, SeriousFaults, DangerousFaults } from '@dvsa/mes-test-schema/categories/Common';
+import { DrivingFaults, SeriousFaults, DangerousFaults } from '@dvsa/mes-test-schema/categories/common';
 import { getCompetencyFaults, calculateFaultCount } from '../competency';
 import { Competencies } from '../../../modules/tests/test-data/test-data.constants';
 import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';

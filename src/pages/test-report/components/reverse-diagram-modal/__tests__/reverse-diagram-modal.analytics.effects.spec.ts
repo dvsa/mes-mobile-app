@@ -23,7 +23,7 @@ import { Application } from '@dvsa/mes-journal-schema';
 import { end2endPracticeSlotId } from '../../../../../shared/mocks/test-slot-ids.mock';
 import * as applicationReferenceActions
   from '../../../../../modules/tests/journal-data/application-reference/application-reference.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateTestCategory } from '../../../../../modules/tests/category/category.actions';
 
 describe('Reverse Diagram Modal Analytics Effects', () => {

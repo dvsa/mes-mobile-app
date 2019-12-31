@@ -29,7 +29,7 @@ import {
   getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType, getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { merge } from 'rxjs/observable/merge';
-import { CommunicationMethod, Address, ConductedLanguage } from '@dvsa/mes-test-schema/categories/Common';
+import { CommunicationMethod, Address, ConductedLanguage } from '@dvsa/mes-test-schema/categories/common';
 import { Subscription } from 'rxjs/Subscription';
 import {
   CandidateChoseEmailAsCommunicationPreference,

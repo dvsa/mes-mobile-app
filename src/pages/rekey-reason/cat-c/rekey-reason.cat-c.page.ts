@@ -46,7 +46,7 @@ import {
 } from '../../../modules/tests/rekey-reason/rekey-reason.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../modules/tests/tests.selector';
-import { IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/Common';
+import { IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/common';
 import { EndRekey } from '../../../modules/tests/rekey/rekey.actions';
 import { ExitRekeyModalEvent } from '../components/exit-rekey-modal/exit-rekey-modal.constants';
 import { SetExaminerConducted } from '../../../modules/tests/examiner-conducted/examiner-conducted.actions';

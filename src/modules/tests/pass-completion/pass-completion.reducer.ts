@@ -1,5 +1,5 @@
 import * as passCompletionActions from './pass-completion.actions';
-import { PassCompletion } from '@dvsa/mes-test-schema/categories/Common';
+import { PassCompletion } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
 
 export const initialState: PassCompletion = null;

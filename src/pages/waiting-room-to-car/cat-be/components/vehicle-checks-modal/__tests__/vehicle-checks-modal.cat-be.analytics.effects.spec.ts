@@ -8,7 +8,7 @@ import { AnalyticsProvider } from '../../../../../../providers/analytics/analyti
 import { AnalyticsProviderMock } from '../../../../../../providers/analytics/__mocks__/analytics.mock';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as testsActions from '../../../../../../modules/tests/tests.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksViewDidEnter } from '../vehicle-checks-modal.cat-be.actions';
 import { AnalyticRecorded } from '../../../../../../providers/analytics/analytics.actions';
 import { AnalyticsEventCategories, AnalyticsScreenNames } from '../../../../../../providers/analytics/analytics.model';

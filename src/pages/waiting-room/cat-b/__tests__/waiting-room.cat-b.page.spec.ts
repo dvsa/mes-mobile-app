@@ -45,7 +45,7 @@ import { LockScreenIndicator } from '../../../../components/common/screen-lock-i
 import { CandidateSectionComponent } from '../../../../components/common/candidate-section/candidate-section';
 import { FormControl, Validators } from '@angular/forms';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
-import { JournalData } from '@dvsa/mes-test-schema/categories/Common';
+import { JournalData } from '@dvsa/mes-test-schema/categories/common';
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 

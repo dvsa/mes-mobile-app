@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 @Component({

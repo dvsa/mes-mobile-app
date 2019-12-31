@@ -14,7 +14,7 @@ import {
   ReverseDiagramOpened,
   ReverseDiagramClosed,
 } from '../../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('reverseDiagramLink', () => {
   let fixture: ComponentFixture<ReverseDiagramLinkComponent>;

@@ -1,4 +1,4 @@
-import { RekeyReason } from '@dvsa/mes-test-schema/categories/Common';
+import { RekeyReason } from '@dvsa/mes-test-schema/categories/common';
 import {
   Types,
   IPAD_ISSUE_SELECTED,

@@ -1,4 +1,4 @@
-import { CommunicationPreferences } from '@dvsa/mes-test-schema/categories/Common';
+import { CommunicationPreferences } from '@dvsa/mes-test-schema/categories/common';
 import { get } from 'lodash';
 
 export const getCommunicationPreferenceUpdatedEmail

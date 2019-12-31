@@ -1,4 +1,4 @@
-import { ETA } from '@dvsa/mes-test-schema/categories/Common';
+import { ETA } from '@dvsa/mes-test-schema/categories/common';
 import { etaReducer } from '../eta.reducer';
 import { ToggleETA } from '../eta.actions';
 import { ExaminerActions } from '../../../test-data.constants';

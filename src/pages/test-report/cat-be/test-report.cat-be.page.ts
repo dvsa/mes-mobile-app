@@ -41,7 +41,7 @@ import { CAT_BE, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
   getTestRequirementsCatBE,
 } from '../../../modules/tests/test-data/cat-be/test-requirements/test-requirements.cat-be.reducer';

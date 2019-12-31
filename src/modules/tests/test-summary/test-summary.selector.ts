@@ -3,7 +3,7 @@ import {
   WeatherConditions,
   Identification,
   IndependentDriving,
-} from '@dvsa/mes-test-schema/categories/Common';
+} from '@dvsa/mes-test-schema/categories/common';
 
 export const getRouteNumber = (ts: TestSummary): number => ts.routeNumber;
 export const getCandidateDescription = (ts: TestSummary): string => ts.candidateDescription;

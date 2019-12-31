@@ -1,13 +1,13 @@
 import { testsReducer } from '../tests.reducer';
 import * as candidateReducer from '../journal-data/candidate/candidate.reducer';
 import * as preTestDeclarationsReducer from '../pre-test-declarations/pre-test-declarations.reducer';
-import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/Common';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from '../tests.model';
 import * as testsActions from './../tests.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { testReportPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('testsReducer', () => {
   const newCandidate = { candidate: { candidateId: 456 } };

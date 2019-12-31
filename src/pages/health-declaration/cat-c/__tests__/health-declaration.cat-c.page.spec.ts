@@ -26,7 +26,7 @@ import * as passCompletionActions
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { By } from '@angular/platform-browser';
-import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/Common';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { Subscription } from 'rxjs/Subscription';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';

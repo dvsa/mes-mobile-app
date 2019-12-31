@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { QuestionOutcome } from '@dvsa/mes-test-schema/categories/Common';
+import { QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';

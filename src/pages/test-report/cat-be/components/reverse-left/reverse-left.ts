@@ -8,7 +8,7 @@ import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { OverlayCallback } from '../../../test-report.model';
 import { ReverseLeftPopoverOpened, ReverseLeftPopoverClosed } from './reverse-left.actions';

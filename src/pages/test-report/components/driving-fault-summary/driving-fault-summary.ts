@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { FaultCountProvider } from '../../../../providers/fault-count/fault-count';
 import { withLatestFrom, map } from 'rxjs/operators';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
 
 interface DrivingFaultSummaryState {

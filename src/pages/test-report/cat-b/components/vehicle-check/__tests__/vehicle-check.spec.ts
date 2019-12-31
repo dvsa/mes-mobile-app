@@ -29,7 +29,7 @@ import {
   ShowMeQuestionRemoveFault,
 } from '../../../../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('VehicleCheckComponent', () => {
 

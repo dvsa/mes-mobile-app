@@ -1,5 +1,5 @@
 import { drivingFaultsReducer } from '../driving-faults.reducer';
-import { DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
+import { DrivingFaults } from '@dvsa/mes-test-schema/categories/common';
 import { AddDrivingFault, RemoveDrivingFault, AddDrivingFaultComment } from '../driving-faults.actions';
 import { Competencies } from '../../../test-data.constants';
 

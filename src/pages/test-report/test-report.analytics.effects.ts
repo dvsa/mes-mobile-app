@@ -33,7 +33,7 @@ import { legalRequirementsLabels, legalRequirementToggleValues }
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { getTestData } from '../../modules/tests/test-data/cat-b/test-data.reducer';
 import { getEco, getTestRequirements } from '../../modules/tests/test-data/common/test-data.selector';
-import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/Common';
+import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/common';
 import * as uncoupleRecoupleActions
   from '../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
 import * as reverseLeftActions from './cat-be/components/reverse-left/reverse-left.actions';

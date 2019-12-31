@@ -16,7 +16,7 @@ import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { of } from 'rxjs/observable/of';
 import { ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 

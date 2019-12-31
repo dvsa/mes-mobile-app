@@ -1,6 +1,6 @@
 import  * as categoryActions from './category.actions';
 import { createFeatureSelector } from '@ngrx/store';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
 export const initialState: CategoryCode = null;
 

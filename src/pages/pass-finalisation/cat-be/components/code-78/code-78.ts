@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { Code78Present, Code78NotPresent } from '../../../../../modules/tests/pass-completion/pass-completion.actions';
 import { TransmissionType } from '../../../../../shared/models/transmission-type';
 

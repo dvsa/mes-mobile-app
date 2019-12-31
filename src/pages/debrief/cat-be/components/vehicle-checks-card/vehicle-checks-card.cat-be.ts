@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';

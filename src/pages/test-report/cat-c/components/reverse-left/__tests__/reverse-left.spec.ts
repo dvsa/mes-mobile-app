@@ -18,7 +18,7 @@ import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { ReverseLeftPopoverClosed, ReverseLeftPopoverOpened } from '../reverse-left.actions';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 import { AppModule } from '../../../../../../app/app.module';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('reverseLeftComponent', () => {
   let fixture: ComponentFixture<ReverseLeftComponent>;

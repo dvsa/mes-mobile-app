@@ -1,4 +1,4 @@
-import { Accompaniment } from '@dvsa/mes-test-schema/categories/Common';
+import { Accompaniment } from '@dvsa/mes-test-schema/categories/common';
 
 export const getInstructorAccompaniment = (accompaniment: Accompaniment) => accompaniment.ADI;
 export const getSupervisorAccompaniment = (accompaniment: Accompaniment) => accompaniment.supervisor;

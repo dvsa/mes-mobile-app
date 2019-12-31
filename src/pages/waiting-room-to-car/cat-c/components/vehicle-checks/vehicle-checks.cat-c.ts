@@ -8,7 +8,7 @@ import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-
 // TODO: MES-4254 Import cat c schema
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { get } from 'lodash';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
   selector: 'vehicle-checks-cat-c',

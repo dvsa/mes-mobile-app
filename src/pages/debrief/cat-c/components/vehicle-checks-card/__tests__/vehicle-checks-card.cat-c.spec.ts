@@ -18,11 +18,11 @@ import { createTranslateLoader } from '../../../../../../app/app.module';
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import * as englishTranslations from '../../../../../../assets/i18n/en.json';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestCategory } from '../../../../../../modules/tests/category/category.actions';
 import { PopulateCandidateDetails } from '../../../../../../modules/tests/journal-data/candidate/candidate.actions';
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('VehicleChecksCardCatCComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatCComponent>;

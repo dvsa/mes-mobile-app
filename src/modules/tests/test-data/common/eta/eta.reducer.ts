@@ -1,4 +1,4 @@
-import { ETA } from '@dvsa/mes-test-schema/categories/Common';
+import { ETA } from '@dvsa/mes-test-schema/categories/common';
 import * as etaActions from './eta.actions';
 
 export const initialState: ETA = {};

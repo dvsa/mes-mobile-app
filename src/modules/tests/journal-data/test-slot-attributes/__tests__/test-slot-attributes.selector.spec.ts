@@ -6,7 +6,7 @@ import {
   isExtendedTest,
   extractTestSlotAttributes,
 } from '../test-slot-attributes.selector';
-import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/Common';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { DateTime } from '../../../../../shared/helpers/date-time';
 import { SlotTypes } from '../../../../../shared/models/slot-types';
 

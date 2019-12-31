@@ -1,4 +1,4 @@
-import { TestCentre } from '@dvsa/mes-test-schema/categories/Common';
+import { TestCentre } from '@dvsa/mes-test-schema/categories/common';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 
 export const getCostCentre = (testCentre: TestCentre) => testCentre.costCode || '';

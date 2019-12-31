@@ -8,10 +8,10 @@ import { NUMBER_OF_SHOW_ME_QUESTIONS }
   from '../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
 import { NUMBER_OF_TELL_ME_QUESTIONS }
   from '../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 export const getDrivingFaultCount = (
-    data: CatBEUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];
+  data: CatBEUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];
 
 export const getManoeuvres = (data: CatBEUniqueTypes.TestData): CatBEUniqueTypes.Manoeuvres => data.manoeuvres;
 
@@ -21,6 +21,8 @@ export const hasManoeuvreBeenCompletedCatBE = (data: CatBEUniqueTypes.TestData) 
     get(data.manoeuvres, 'reverseLeft.selected')
   );
 };
+
+export const hasEyesightTestBeenCompleted = (data: CatBEUniqueTypes.TestData) => data.eyesightTest.complete;
 
 export const hasEyesightTestGotSeriousFault = (data: CatBEUniqueTypes.TestData) => data.eyesightTest.seriousFault;
 
@@ -33,7 +35,7 @@ export const getVehicleChecks = (
   state: CatBEUniqueTypes.TestData): CatBEUniqueTypes.VehicleChecks => state.vehicleChecks;
 
 export const getTellMeQuestion = (state: CatBEUniqueTypes.VehicleChecks): VehicleChecksQuestion => {
-  const questionProvider: QuestionProvider =  new QuestionProvider();
+  const questionProvider: QuestionProvider = new QuestionProvider();
   return questionProvider
     .getTellMeQuestions(TestCategory.BE)
     .find(question => question.code === get(state, 'tellMeQuestion.code'));
@@ -67,7 +69,7 @@ export const hasVehicleChecksBeenCompletedCatBE = (data: CatBEUniqueTypes.TestDa
   if (
     !(data.vehicleChecks && data.vehicleChecks.showMeQuestions instanceof Array) ||
     data.vehicleChecks.showMeQuestions.length !== NUMBER_OF_SHOW_ME_QUESTIONS
-   ) {
+  ) {
     showMeQuestionComplete = false;
   } else {
     data.vehicleChecks.showMeQuestions.forEach((element) => {
@@ -80,7 +82,7 @@ export const hasVehicleChecksBeenCompletedCatBE = (data: CatBEUniqueTypes.TestDa
   if (
     !(data.vehicleChecks && data.vehicleChecks.tellMeQuestions instanceof Array) ||
     data.vehicleChecks.tellMeQuestions.length !== NUMBER_OF_TELL_ME_QUESTIONS
-    ) {
+  ) {
     tellMeQuestionComplete = false;
   } else {
     data.vehicleChecks.tellMeQuestions.forEach((element) => {

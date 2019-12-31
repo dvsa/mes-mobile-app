@@ -1,8 +1,8 @@
-import { VehicleDetails } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { getRegistrationNumber, getGearboxCategory, getSchoolCar, getDualControls } from '../vehicle-details.selector';
 
 describe('vehicle details selector', () => {
-  const state: VehicleDetails = {
+  const state: CatBUniqueTypes.VehicleDetails = {
     dualControls: true,
     gearboxCategory: 'Manual',
     registrationNumber: '11AAA',

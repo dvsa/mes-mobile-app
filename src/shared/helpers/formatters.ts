@@ -1,4 +1,4 @@
-import { ApplicationReference } from '@dvsa/mes-test-schema/categories/Common';
+import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
 
 /**
  * Formats application reference as a single number, of the form <``app-id``><``book-seq``><``check-digit``>.

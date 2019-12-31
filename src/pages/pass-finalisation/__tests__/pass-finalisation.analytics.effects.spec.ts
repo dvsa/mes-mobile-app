@@ -19,7 +19,7 @@ import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/ca
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('Pass Finalisation Analytics Effects', () => {
 

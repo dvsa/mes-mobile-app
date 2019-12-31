@@ -1,4 +1,4 @@
-import { Examiner } from '@dvsa/mes-test-schema/categories/Common';
+import { Examiner } from '@dvsa/mes-test-schema/categories/common';
 import { examinerReducer } from '../examiner.reducer';
 import { PopulateExaminer } from '../examiner.actions';
 

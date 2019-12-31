@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { ActivityCodes } from '../../shared/models/activity-codes';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { FaultCountProvider } from '../fault-count/fault-count';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
 @Injectable()

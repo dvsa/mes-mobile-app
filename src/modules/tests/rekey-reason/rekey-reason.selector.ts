@@ -4,7 +4,7 @@ import {
   Transfer,
   Other,
   TestResultCommonSchema,
-} from '@dvsa/mes-test-schema/categories/Common';
+} from '@dvsa/mes-test-schema/categories/common';
 
 export const getReasonForRekey = (test: TestResultCommonSchema) => {
   return test.rekeyReason;

@@ -1,7 +1,7 @@
 import { FaultSummaryProvider } from '../fault-summary';
 import { TestBed } from '@angular/core/testing';
-import { TestData } from '@dvsa/mes-test-schema/categories/Common';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestData } from '@dvsa/mes-test-schema/categories/common';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { FaultCountProvider } from '../../fault-count/fault-count';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
@@ -136,8 +136,8 @@ describe('faultSummaryProvider', () => {
               { outcome: 'DF' },
             ],
             showMeQuestions: [
-             { outcome: 'DF' },
-             { outcome: 'DF' },
+              { outcome: 'DF' },
+              { outcome: 'DF' },
             ],
           },
         };
@@ -154,8 +154,8 @@ describe('faultSummaryProvider', () => {
               { outcome: 'DF' },
             ],
             showMeQuestions: [
-             { outcome: 'DF' },
-             { outcome: 'DF' },
+              { outcome: 'DF' },
+              { outcome: 'DF' },
             ],
           },
         };
@@ -183,7 +183,7 @@ describe('faultSummaryProvider', () => {
         expect(result.length).toEqual(2);
       });
       it('should return an eyesight fail fault if one exists', () => {
-        const data: TestData = {
+        const data: CatBUniqueTypes.TestData = {
           eyesightTest: {
             complete: true,
             seriousFault: true,
@@ -245,7 +245,7 @@ describe('faultSummaryProvider', () => {
         expect(result.length).toEqual(2);
       });
       it('should return an eyesight fail fault if one exists', () => {
-        const data: TestData = {
+        const data: CatBUniqueTypes.TestData = {
           eyesightTest: {
             complete: true,
             seriousFault: true,
@@ -288,8 +288,8 @@ describe('faultSummaryProvider', () => {
               { outcome: 'DF' },
             ],
             showMeQuestions: [
-             { outcome: 'DF' },
-             { outcome: 'DF' },
+              { outcome: 'DF' },
+              { outcome: 'DF' },
             ],
           },
         };

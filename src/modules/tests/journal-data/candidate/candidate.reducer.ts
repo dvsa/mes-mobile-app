@@ -1,4 +1,4 @@
-import { Candidate } from '@dvsa/mes-test-schema/categories/Common';
+import { Candidate } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
 import * as candidateActions from './candidate.actions';
 

@@ -14,7 +14,7 @@ import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-be/tes
 
 // TODO: MES-4287 Import cat C schema
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { OverlayCallback } from '../../../test-report.model';
 import { ReverseLeftPopoverOpened, ReverseLeftPopoverClosed } from './reverse-left.actions';

@@ -1,4 +1,4 @@
-import { TestCentre } from '@dvsa/mes-test-schema/categories/Common';
+import { TestCentre } from '@dvsa/mes-test-schema/categories/common';
 import { testCentreReducer } from '../test-centre.reducer';
 import { PopulateTestCentre } from '../test-centre.actions';
 

@@ -3,7 +3,7 @@ import { get } from 'lodash';
 
 // TODO: MES-4287 Import cat c types
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { Address } from '@dvsa/mes-test-schema/categories/Common';
+import { Address } from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
   selector: 'business-details-card',

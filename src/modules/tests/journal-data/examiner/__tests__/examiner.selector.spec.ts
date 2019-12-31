@@ -1,5 +1,5 @@
 import { getStaffNumber  } from '../examiner.selector';
-import { Examiner } from '@dvsa/mes-test-schema/categories/Common';
+import { Examiner } from '@dvsa/mes-test-schema/categories/common';
 
 describe('examiner selector', () => {
   const examiner: Examiner = {
