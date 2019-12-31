@@ -14,6 +14,7 @@ import { ReverseDiagramCatCPage } from '../reverse-diagram-modal.cat-c';
 import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
+import { ReversingDistancesProvider } from '../../../../../../providers/reversing-distances/reversing-distances';
 
 describe('reverseDiagramModal', () => {
   let fixture: ComponentFixture<ReverseDiagramCatCPage>;
@@ -80,6 +81,7 @@ describe('reverseDiagramModal', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: App, useClass: MockAppComponent },
+        ReversingDistancesProvider,
       ],
     })
       .compileComponents()
@@ -127,16 +129,14 @@ describe('reverseDiagramModal', () => {
         component.ngOnInit();
         component.calculateReversingLengths(vehicleDetails.vehicleLength);
         const result = component.reversingLengthStart;
-        // TODO: Update test when using category is C
-        expect(result).toEqual(52.5);
+        expect(result).toEqual(35);
       });
 
       it('CAT C - should set the correct value for b', () => {
         component.ngOnInit();
         component.calculateReversingLengths(vehicleDetails.vehicleLength);
         const result = component.reversingLengthMiddle;
-        // TODO: Update test when using category is C
-        expect(result).toEqual(30);
+        expect(result).toEqual(20);
       });
     });
 
@@ -145,15 +145,14 @@ describe('reverseDiagramModal', () => {
         component.ngOnInit();
         component.calculateReversingWidth(vehicleDetails.vehicleWidth);
         const result = component.reversingWidth;
-        // TODO: Update test when using category is C
-        expect(result).toEqual(3);
+        expect(result).toEqual(4.13);
       });
     });
 
     describe('ionViewWillEnter', () => {
       it('should calculate the distances if vehicle dimensions are populated', () => {
-        const calculateReversingLengthsSpy = spyOn(component, 'calculateDistanceLength');
-        const calculateReversingWidthSpy = spyOn(component, 'calculateDistanceWidth');
+        const calculateReversingLengthsSpy = spyOn(component, 'calculateReversingLengths');
+        const calculateReversingWidthSpy = spyOn(component, 'calculateReversingWidth');
         component.ngOnInit();
         const result = component.ionViewWillEnter();
         expect(calculateReversingLengthsSpy).toHaveBeenCalled();

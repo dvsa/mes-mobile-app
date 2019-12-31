@@ -19,6 +19,7 @@ import { NavigationStateProvider } from '../../../../../../providers/navigation-
 import {
   NavigationStateProviderMock,
 } from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { ReversingDistancesProvider } from '../../../../../../providers/reversing-distances/reversing-distances';
 
 describe('reverseDiagramModal', () => {
   let fixture: ComponentFixture<ReverseDiagramCatBEPage>;
@@ -87,6 +88,7 @@ describe('reverseDiagramModal', () => {
         { provide: App, useClass: MockAppComponent },
         { provide: NavigationProvider, useClass: NavigationProviderMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
+        ReversingDistancesProvider,
       ],
     })
       .compileComponents()
