@@ -16,7 +16,7 @@ module.exports = {
         loader: 'ts-loader',
         options: {
           // disable type checker - we will use it in fork plugin
-          transpileOnly: true
+          transpileOnly: false
         }
       }, 'angular2-template-loader']
     },
