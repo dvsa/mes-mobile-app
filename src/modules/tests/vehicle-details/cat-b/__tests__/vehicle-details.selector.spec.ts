@@ -1,5 +1,13 @@
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { getRegistrationNumber, getGearboxCategory, getSchoolCar, getDualControls } from '../vehicle-details.selector';
+import {
+  getRegistrationNumber,
+  getGearboxCategory,
+} from '../../common/vehicle-details.selector';
+
+import {
+  getSchoolCar,
+  getDualControls,
+} from '../vehicle-details.cat-b.selector';
 
 describe('vehicle details selector', () => {
   const state: CatBUniqueTypes.VehicleDetails = {

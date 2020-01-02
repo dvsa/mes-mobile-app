@@ -17,9 +17,9 @@ import { examinerConductedReducer } from './examiner-conducted/examiner-conducte
 import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
-import { journalDataCatBEReducer } from './journal-data/cat-be/journal-data.cat-be.reducer';
+import { journalDataCatCReducer } from './journal-data/cat-c/journal-data.cat-c.reducer';
 import { testDataCatBEReducer } from './test-data/cat-be/test-data.cat-be.reducer';
-import { vehicleDetailsCatCReducer } from './vehicle-details/vehicle-details.cat-c.reducer';
+import { vehicleDetailsCatCReducer } from './vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 
 export function testsCatCReducer(
   action: Action, state: CatCUniqueTypes.TestResult): Required<CatCUniqueTypes.TestResult> {
@@ -28,7 +28,7 @@ export function testsCatCReducer(
       version: schemaVersionReducer,
       category: categoryReducer,
       activityCode: activityCodeReducer,
-      journalData: journalDataCatBEReducer,
+      journalData: journalDataCatCReducer,
       preTestDeclarations: preTestDeclarationsReducer,
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatCReducer,

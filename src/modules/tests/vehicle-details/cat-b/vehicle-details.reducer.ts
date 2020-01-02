@@ -1,15 +1,13 @@
-import * as vehicleDetailsActions from './vehicle-details.actions';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import * as vehicleDetailsActions from '../common/vehicle-details.actions';
+import { VehicleDetails } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
-const initialState: CatBEUniqueTypes.VehicleDetails = {
+const initialState: CatBUniqueTypes.VehicleDetails = {
   registrationNumber: '',
 };
 
-export const vehicleDetailsCatBEReducer = (
-  state: CatBEUniqueTypes.VehicleDetails = initialState,
-  action: vehicleDetailsActions.Types,
-): CatBEUniqueTypes.VehicleDetails => {
+export const vehicleDetailsReducer = (state = initialState, action: vehicleDetailsActions.Types) => {
   switch (action.type) {
     case vehicleDetailsActions.VEHICLE_REGISTRATION_CHANGED:
       return {
@@ -36,15 +34,9 @@ export const vehicleDetailsCatBEReducer = (
         ...state,
         gearboxCategory: null,
       };
-    case vehicleDetailsActions.POPULATE_VEHICLE_DIMENSIONS:
-      return {
-        ...state,
-        vehicleLength: action.vehicleLength,
-        vehicleWidth: action.vehicleWidth,
-      };
     default:
       return state;
   }
 };
 
-export const getVehicleDetails = createFeatureSelector<CatBEUniqueTypes.VehicleDetails>('vehicleDetails');
+export const getVehicleDetails = createFeatureSelector<VehicleDetails>('vehicleDetails');

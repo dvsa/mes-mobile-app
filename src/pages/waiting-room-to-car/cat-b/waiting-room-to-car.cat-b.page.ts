@@ -13,7 +13,7 @@ import {
   DualControlsToggled,
   GearboxCategoryChanged,
   VehicleRegistrationChanged,
-} from '../../../modules/tests/vehicle-details/vehicle-details.actions';
+} from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { map } from 'rxjs/operators';
 import {
   InstructorAccompanimentToggled,
@@ -21,7 +21,7 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   InstructorRegistrationNumberChanged,
@@ -29,11 +29,13 @@ import {
 import {
   getRegistrationNumber,
   getGearboxCategory,
-  getSchoolCar,
-  getDualControls,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
+} from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import {
+  getSchoolCar,
+  getDualControls,
+} from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.cat-b.selector';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,

@@ -49,7 +49,7 @@ import { Language } from './communication-preferences/communication-preferences.
 import { version } from '../../environment/test-schema-version';
 import { createPopulateCandidateDetailsAction } from './journal-data/common/candidate/candidate.action-creator';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { PopulateVehicleDimensions } from './vehicle-details/vehicle-details.actions';
+import { PopulateVehicleDimensions } from './vehicle-details/common/vehicle-details.actions';
 
 @Injectable()
 export class TestsEffects {

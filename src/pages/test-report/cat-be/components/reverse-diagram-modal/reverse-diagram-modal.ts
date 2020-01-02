@@ -7,11 +7,11 @@ import { map } from 'rxjs/operators';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
-import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.reducer';
+import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
 import {
   getVehicleLength,
   getVehicleWidth,
-} from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.selector';
+} from '../../../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { ReversingDistancesProvider } from '../../../../../providers/reversing-distances/reversing-distances';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';

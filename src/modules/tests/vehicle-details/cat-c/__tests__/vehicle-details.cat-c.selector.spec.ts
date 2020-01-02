@@ -1,10 +1,9 @@
 // @TODO - import Cat C Types
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { getVehicleLength, getVehicleWidth } from '../vehicle-details.cat-c.selector';
 
 describe('vehicle details CAT C selector', () => {
-  // @ TODO - use Cat C Type
-  const state: CatBEUniqueTypes.VehicleDetails = {
+  const state: CatCUniqueTypes.VehicleDetails = {
     vehicleLength: 10,
     vehicleWidth: 3.5,
   };

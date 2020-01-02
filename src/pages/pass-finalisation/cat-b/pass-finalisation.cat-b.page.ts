@@ -35,13 +35,13 @@ import { map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.reducer';
 import {
   getGearboxCategory,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
-import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
+} from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { CAT_B } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';

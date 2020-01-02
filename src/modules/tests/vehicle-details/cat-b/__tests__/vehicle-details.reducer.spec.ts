@@ -4,7 +4,7 @@ import {
   SchoolCarToggled,
   DualControlsToggled,
   GearboxCategoryChanged,
-} from '../vehicle-details.actions';
+} from '../../common/vehicle-details.actions';
 
 describe('vehicle details reducer', () => {
   it('should put the registration number into the state on vehicle registration changed action', () => {

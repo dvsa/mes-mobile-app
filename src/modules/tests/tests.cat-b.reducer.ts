@@ -5,7 +5,7 @@ import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
-import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
+import { vehicleDetailsReducer } from './vehicle-details/cat-b/vehicle-details.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';

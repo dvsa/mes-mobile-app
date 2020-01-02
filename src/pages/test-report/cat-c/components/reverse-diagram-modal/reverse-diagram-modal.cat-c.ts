@@ -7,13 +7,13 @@ import { map } from 'rxjs/operators';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
-import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-c.reducer';
+import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { ReversingDistancesProvider } from '../../../../../providers/reversing-distances/reversing-distances';
 import {
   getVehicleLength,
   getVehicleWidth,
-} from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-c.selector';
+} from '../../../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 
 interface ReverseDiagramPageState {

@@ -1,6 +1,7 @@
 import { Candidate } from '@dvsa/mes-test-schema/categories/common';
 
 export const getCandidateName = (candidate: Candidate): string => {
+  console.log('getting name', candidate.candidateName);
   const { title, firstName, lastName } = candidate.candidateName;
   return `${title} ${firstName} ${lastName}`;
 };
