@@ -18,7 +18,7 @@ import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatCReducer } from './journal-data/cat-c/journal-data.cat-c.reducer';
-import { testDataCatBEReducer } from './test-data/cat-be/test-data.cat-be.reducer';
+import { testDataCatCReducer } from './test-data/cat-c/test-data.cat-c.reducer';
 import { vehicleDetailsCatCReducer } from './vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 
 export function testsCatCReducer(
@@ -32,7 +32,7 @@ export function testsCatCReducer(
       preTestDeclarations: preTestDeclarationsReducer,
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatCReducer,
-      testData: testDataCatBEReducer,
+      testData: testDataCatCReducer,
       passCompletion: passCompletionReducer,
       postTestDeclarations: postTestDeclarationsReducer,
       testSummary: testSummaryReducer,
