@@ -5,10 +5,10 @@ import { dangerousFaultsReducer } from '../common/dangerous-faults/dangerous-fau
 import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.reducer';
 import { ecoReducer } from '../common/eco/eco.reducer';
 import { etaReducer } from '../common/eta/eta.reducer';
-import { manoeuvresCatBEReducer } from './manoeuvres/manoeuvres.cat-c.reducer';
+import { manoeuvresCatCReducer } from './manoeuvres/manoeuvres.cat-c.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
-import { vehicleChecksCatBEReducer } from './vehicle-checks/vehicle-checks.cat-c.reducer';
-import { testRequirementsCatBEReducer } from './test-requirements/test-requirements.cat-c.reducer';
+import { vehicleChecksCatCReducer } from './vehicle-checks/vehicle-checks.cat-c.reducer';
+import { testRequirementsCatCReducer } from './test-requirements/test-requirements.cat-c.reducer';
 
 export const initialState: CatCUniqueTypes.TestData = {
   dangerousFaults: {},
@@ -32,11 +32,11 @@ export function testDataCatCReducer(
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
     seriousFaults: seriousFaultsReducer,
-    vehicleChecks: vehicleChecksCatBEReducer,
+    vehicleChecks: vehicleChecksCatCReducer,
     eco: ecoReducer,
     ETA: etaReducer,
-    manoeuvres: manoeuvresCatBEReducer,
-    testRequirements: testRequirementsCatBEReducer,
+    manoeuvres: manoeuvresCatCReducer,
+    testRequirements: testRequirementsCatCReducer,
   })(state as Required<CatCUniqueTypes.TestData>, action);
 }
 

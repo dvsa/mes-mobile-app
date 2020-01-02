@@ -1,7 +1,7 @@
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { getReverseLeftSelected } from '../manoeuvres.cat-c.selectors';
 
-describe('Manoeuvres CatBE Selectors', () => {
+describe('Manoeuvres CatC Selectors', () => {
   describe('getReverseLeftSelected', () => {
     it('should return true when reverse left is selected', () => {
       const manoeuvres: CatCUniqueTypes.Manoeuvres = {

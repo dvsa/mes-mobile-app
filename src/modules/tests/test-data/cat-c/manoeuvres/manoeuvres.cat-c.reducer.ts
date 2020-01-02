@@ -8,7 +8,7 @@ export const initialState: CatCUniqueTypes.Manoeuvres = {
   reverseLeft: {},
 };
 
-export function manoeuvresCatBEReducer(
+export function manoeuvresCatCReducer(
   state = initialState,
   action: manoeuvresActions.Types | catCManoeuvresActions.Types,
 ): CatCUniqueTypes.Manoeuvres {

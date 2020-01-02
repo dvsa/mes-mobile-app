@@ -9,10 +9,10 @@ import {
 import {
   getDrivingFaultCount,
   getManoeuvres,
-  hasManoeuvreBeenCompletedCatBE,
+  hasManoeuvreBeenCompletedCatC,
   areTellMeQuestionsSelected,
   areTellMeQuestionsCorrect,
-  hasVehicleChecksBeenCompletedCatBE,
+  hasVehicleChecksBeenCompletedCatC,
 } from '../test-data.cat-c.selector';
 import { Competencies } from '../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
@@ -192,7 +192,7 @@ describe('TestDataSelectors', () => {
       const state: CatCUniqueTypes.TestData = {
         manoeuvres: {},
       };
-      expect(hasManoeuvreBeenCompletedCatBE(state)).toBeFalsy();
+      expect(hasManoeuvreBeenCompletedCatC(state)).toBeFalsy();
     });
     it('should return true when a manoeuvre has been completed', () => {
       const state: CatCUniqueTypes.TestData = {
@@ -200,7 +200,7 @@ describe('TestDataSelectors', () => {
           reverseLeft: { selected: true },
         },
       };
-      expect(hasManoeuvreBeenCompletedCatBE(state)).toEqual(true);
+      expect(hasManoeuvreBeenCompletedCatC(state)).toEqual(true);
     });
   });
 
@@ -276,7 +276,7 @@ describe('TestDataSelectors', () => {
           },
         } as CatCUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatC(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a driving fault', () => {
         const state = {
@@ -303,7 +303,7 @@ describe('TestDataSelectors', () => {
           },
         } as CatCUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatC(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a serious fault', () => {
         const state = {
@@ -330,7 +330,7 @@ describe('TestDataSelectors', () => {
           },
         } as CatCUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatC(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a dangerous fault', () => {
         const state = {
@@ -357,7 +357,7 @@ describe('TestDataSelectors', () => {
           },
         } as CatCUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatC(state)).toEqual(true);
       });
       it('should return false if show me question outcome is not defined', () => {
         const state = {
@@ -375,7 +375,7 @@ describe('TestDataSelectors', () => {
           },
         } as CatCUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(false);
+        expect(hasVehicleChecksBeenCompletedCatC(state)).toEqual(false);
       });
     });
   });

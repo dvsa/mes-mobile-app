@@ -4,7 +4,7 @@ import { createFeatureSelector } from '@ngrx/store';
 
 export const initialState: CatCUniqueTypes.TestRequirements = {};
 
-export function testRequirementsCatBEReducer(
+export function testRequirementsCatCReducer(
   state = initialState,
   action: testRequirementsActions.Types,
 ): CatCUniqueTypes.TestRequirements {

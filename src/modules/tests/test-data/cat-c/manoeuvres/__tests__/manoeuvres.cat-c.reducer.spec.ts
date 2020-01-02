@@ -1,6 +1,6 @@
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { ManoeuvreTypes, ManoeuvreCompetencies } from '../../../test-data.constants';
-import { manoeuvresCatBEReducer } from '../manoeuvres.cat-c.reducer';
+import { manoeuvresCatCReducer } from '../manoeuvres.cat-c.reducer';
 import {
   RecordManoeuvresSelection,
   AddManoeuvreDrivingFault,
@@ -11,12 +11,12 @@ import {
 } from '../../../common/manoeuvres/manoeuvres.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 
-describe('Manoeuvres CatBE Reducer', () => {
+describe('Manoeuvres CatC Reducer', () => {
 
   describe('RECORD_MANOEUVRES_SELECTION', () => {
     it('should add selected manoeuvre', () => {
       const state: CatCUniqueTypes.Manoeuvres = {};
-      const result = manoeuvresCatBEReducer(
+      const result = manoeuvresCatCReducer(
         state,
         new RecordManoeuvresSelection(ManoeuvreTypes.reverseLeft),
       );
@@ -28,7 +28,7 @@ describe('Manoeuvres CatBE Reducer', () => {
       const state: CatCUniqueTypes.Manoeuvres = {
         reverseLeft: { selected: true },
       };
-      const result = manoeuvresCatBEReducer(
+      const result = manoeuvresCatCReducer(
           state,
           new AddManoeuvreDrivingFault({
             manoeuvre: ManoeuvreTypes.reverseLeft,
@@ -44,7 +44,7 @@ describe('Manoeuvres CatBE Reducer', () => {
       const state: CatCUniqueTypes.Manoeuvres = {
         reverseLeft: { selected: true },
       };
-      const result = manoeuvresCatBEReducer(
+      const result = manoeuvresCatCReducer(
           state,
           new AddManoeuvreSeriousFault({
             manoeuvre: ManoeuvreTypes.reverseLeft,
@@ -60,7 +60,7 @@ describe('Manoeuvres CatBE Reducer', () => {
       const state: CatCUniqueTypes.Manoeuvres = {
         reverseLeft: { selected: true },
       };
-      const result = manoeuvresCatBEReducer(
+      const result = manoeuvresCatCReducer(
           state,
           new AddManoeuvreDangerousFault({
             manoeuvre: ManoeuvreTypes.reverseLeft,
@@ -76,7 +76,7 @@ describe('Manoeuvres CatBE Reducer', () => {
       const state: CatCUniqueTypes.Manoeuvres = {
         reverseLeft: { selected: true },
       };
-      const result = manoeuvresCatBEReducer(
+      const result = manoeuvresCatCReducer(
         state,
         new AddManoeuvreComment(
           ManoeuvreTypes.reverseLeft,
@@ -94,7 +94,7 @@ describe('Manoeuvres CatBE Reducer', () => {
       const state: CatCUniqueTypes.Manoeuvres = {
         reverseLeft: { selected: true , controlFault: CompetencyOutcome.DF },
       };
-      const result = manoeuvresCatBEReducer(state, new RemoveManoeuvreFault({
+      const result = manoeuvresCatCReducer(state, new RemoveManoeuvreFault({
         competency: ManoeuvreCompetencies.controlFault,
         manoeuvre: ManoeuvreTypes.reverseLeft,
       }));

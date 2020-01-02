@@ -16,7 +16,7 @@ export const getDrivingFaultCount = (
 export const getManoeuvres = (data: CatCUniqueTypes.TestData): CatCUniqueTypes.Manoeuvres => data.manoeuvres;
 
 // TODO - We should pass a Manoeuvre object here instead of TestData
-export const hasManoeuvreBeenCompletedCatBE = (data: CatCUniqueTypes.TestData) => {
+export const hasManoeuvreBeenCompletedCatC = (data: CatCUniqueTypes.TestData) => {
   return (
     get(data.manoeuvres, 'reverseLeft.selected')
   );
@@ -33,7 +33,7 @@ export const getVehicleChecks = (
 export const getTellMeQuestion = (state: CatCUniqueTypes.VehicleChecks): VehicleChecksQuestion => {
   const questionProvider: QuestionProvider = new QuestionProvider();
   return questionProvider
-    .getTellMeQuestions(TestCategory.BE)
+    .getTellMeQuestions(TestCategory.C)
     .find(question => question.code === get(state, 'tellMeQuestion.code'));
 };
 
@@ -59,7 +59,7 @@ export const areTellMeQuestionsCorrect = (state: CatCUniqueTypes.VehicleChecks) 
 
 // TODO - We should really pass a Vehicle Checks object here and not Test Data
 // TODO - Also this has to go into a provider
-export const hasVehicleChecksBeenCompletedCatBE = (data: CatCUniqueTypes.TestData): boolean => {
+export const hasVehicleChecksBeenCompletedCatC = (data: CatCUniqueTypes.TestData): boolean => {
   let showMeQuestionComplete = true;
   let tellMeQuestionComplete = true;
 
