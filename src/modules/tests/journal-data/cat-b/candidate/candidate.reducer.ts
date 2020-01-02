@@ -25,8 +25,9 @@ export function candidateReducer(
   switch (action.type) {
     case candidateActions.POPULATE_CANDIDATE_DETAILS:
       return action.payload;
+    default:
+      return state;
   }
-  return state;
 }
 
 export const getCandidate = createFeatureSelector<Candidate>('candidate');

@@ -21,7 +21,7 @@ import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-d
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-import { getCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { DebriefCardModel } from './components/debrief-card/debrief-card.model';
 import {

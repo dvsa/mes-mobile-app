@@ -8,7 +8,7 @@ import { Store, select } from '@ngrx/store';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
 import {
   getCandidateName,
   getUntitledCandidateName,
@@ -16,7 +16,7 @@ import {
   formatDriverNumber,
   getCandidateEmailAddress,
   getPostalAddress,
-} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+} from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import {
   CommunicationViewDidEnter, CommunicationValidationError, CommunicationSubmitInfo, CommunicationSubmitInfoError,
 } from '../communication.actions';

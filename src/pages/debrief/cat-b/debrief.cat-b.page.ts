@@ -34,8 +34,8 @@ import { getTestCategory } from '../../../modules/tests/category/category.reduce
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { getTestOutcome } from '../debrief.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
-import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
+import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;

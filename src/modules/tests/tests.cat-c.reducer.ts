@@ -1,6 +1,6 @@
 
 import { Action, combineReducers } from '@ngrx/store';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
@@ -17,12 +17,12 @@ import { examinerConductedReducer } from './examiner-conducted/examiner-conducte
 import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
-import { journalDataCatBEReducer } from './journal-data/journal-data.cat-be.reducer';
+import { journalDataCatBEReducer } from './journal-data/cat-be/journal-data.cat-be.reducer';
 import { testDataCatBEReducer } from './test-data/cat-be/test-data.cat-be.reducer';
 import { vehicleDetailsCatCReducer } from './vehicle-details/vehicle-details.cat-c.reducer';
 
 export function testsCatCReducer(
-  action: Action, state: CatBEUniqueTypes.TestResult): Required<CatBEUniqueTypes.TestResult> {
+  action: Action, state: CatCUniqueTypes.TestResult): Required<CatCUniqueTypes.TestResult> {
   return combineReducers(
     {
       version: schemaVersionReducer,
@@ -45,7 +45,7 @@ export function testsCatCReducer(
       examinerKeyed: examinerKeyedReducer,
       changeMarker: changeMarkerReducer,
     })(
-      state as Required<CatBEUniqueTypes.TestResult>,
+      state as Required<CatCUniqueTypes.TestResult>,
       action,
     );
 }

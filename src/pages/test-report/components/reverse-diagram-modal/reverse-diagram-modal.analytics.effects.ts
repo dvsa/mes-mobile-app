@@ -21,17 +21,17 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest, getJournalData } from '../../../../modules/tests/tests.selector';
-import { getCandidate } from '../../../../modules/tests/journal-data/candidate/candidate.reducer';
-import { getCandidateId } from '../../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
+import { getCandidateId } from '../../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { TestsModel } from '../../../../modules/tests/tests.model';
 import { AnalyticRecorded } from '../../../../providers/analytics/analytics.actions';
 import { formatAnalyticsText } from '../../../../shared/helpers/format-analytics-text';
 import {
   getApplicationReference,
-} from '../../../../modules/tests/journal-data/application-reference/application-reference.reducer';
+} from '../../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
 import {
   getApplicationNumber,
-} from '../../../../modules/tests/journal-data/application-reference/application-reference.selector';
+} from '../../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
 import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 

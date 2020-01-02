@@ -7,8 +7,8 @@ import {
   extractTestSlotAttributes,
 } from '../test-slot-attributes.selector';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
-import { DateTime } from '../../../../../shared/helpers/date-time';
-import { SlotTypes } from '../../../../../shared/models/slot-types';
+import { DateTime } from '../../../../../../shared/helpers/date-time';
+import { SlotTypes } from '../../../../../../shared/models/slot-types';
 
 const testTime = new DateTime().toString();
 const formattedTime = DateTime.at(testTime).format('HH:mm');

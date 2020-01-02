@@ -1,8 +1,8 @@
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { createFeatureSelector } from '@ngrx/store';
-import * as candidateActions from './candidate.cat-be.actions';
+import * as candidateActions from './candidate.cat-c.actions';
 
-export const initialState: CatBEUniqueTypes.Candidate = {
+export const initialState: CatCUniqueTypes.Candidate = {
   candidateId: null,
   candidateName: {},
   driverNumber: null,
@@ -21,15 +21,16 @@ export const initialState: CatBEUniqueTypes.Candidate = {
   businessTelephone: null,
 };
 
-export function candidateCatBEReducer(
+export function candidateCatCReducer(
   state = initialState,
   action: candidateActions.Types,
-): CatBEUniqueTypes.Candidate {
+): CatCUniqueTypes.Candidate {
   switch (action.type) {
-    case candidateActions.POPULATE_CANDIDATE_DETAILS_CAT_BE:
+    case candidateActions.POPULATE_CANDIDATE_DETAILS_CAT_C:
       return action.payload;
+    default:
+      return state;
   }
-  return state;
 }
 
-export const getCandidate = createFeatureSelector<CatBEUniqueTypes.Candidate>('candidate');
+export const getCandidate = createFeatureSelector<CatCUniqueTypes.Candidate>('candidate');

@@ -18,11 +18,11 @@ import * as testsActions from '../../../../../modules/tests/tests.actions';
 import * as fakeJournalActions from '../../../../fake-journal/fake-journal.actions';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportPracticeModeSlot, candidateMock } from '../../../../../modules/tests/__mocks__/tests.mock';
-import { PopulateCandidateDetails } from '../../../../../modules/tests/journal-data/candidate/candidate.actions';
+import { PopulateCandidateDetails } from '../../../../../modules/tests/journal-data/cat-b/candidate/candidate.actions';
 import { Application } from '@dvsa/mes-journal-schema';
 import { end2endPracticeSlotId } from '../../../../../shared/mocks/test-slot-ids.mock';
 import * as applicationReferenceActions
-  from '../../../../../modules/tests/journal-data/application-reference/application-reference.actions';
+  from '../../../../../modules/tests/journal-data/common/application-reference/application-reference.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateTestCategory } from '../../../../../modules/tests/category/category.actions';
 
