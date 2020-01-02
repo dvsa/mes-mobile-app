@@ -162,9 +162,7 @@ export class TestsEffects {
       examiner.individualId;
 
       const arrayOfActions: Action[] = [
-        new PopulateTestCategory(
-          // TODO: Remove temporary assignment of CAT_C to CAT_BE
-          startTestAction.category === TestCategory.C ? TestCategory.BE : startTestAction.category),
+        new PopulateTestCategory(startTestAction.category),
         new PopulateExaminer(examiner),
         new PopulateApplicationReference(slot.booking.application),
         createPopulateCandidateDetailsAction(startTestAction.category, slot.booking),
