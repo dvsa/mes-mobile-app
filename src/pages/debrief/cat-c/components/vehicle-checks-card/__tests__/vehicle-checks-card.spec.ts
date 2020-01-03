@@ -51,8 +51,8 @@ describe('VehicleChecksCardComponent', () => {
         fixture = TestBed.createComponent(VehicleChecksCardCatCComponent);
         store$ = TestBed.get(Store);
 
-        store$.dispatch(new StartTest(105, TestCategory.C));
-        store$.dispatch(new PopulateTestCategory(TestCategory.C));
+        store$.dispatch(new StartTest(105, TestCategory.BE));
+        store$.dispatch(new PopulateTestCategory(TestCategory.BE));
         store$.dispatch(new PopulateCandidateDetails(candidateMock));
 
         translate = TestBed.get(TranslateService);
