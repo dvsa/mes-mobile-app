@@ -14,7 +14,7 @@ import {
   isTestOutcomeSet,
   getTestOutcomeText,
 } from '../../../modules/tests/tests.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
 import {
   getUntitledCandidateName,
   getCandidateDriverNumber,
@@ -39,6 +39,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+
 // TODO: MES-4287 Import Cat C behaviour map
 import { behaviourMap } from '../../office/office-behaviour-map.cat-be';
 import {
@@ -56,7 +57,7 @@ import { SetActivityCode } from '../../../modules/tests/activity-code/activity-c
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { getGearboxCategory, isAutomatic, isManual } from
 '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 

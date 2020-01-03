@@ -1,7 +1,7 @@
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import * as vehicleChecksCatCActionTypes from './vehicle-checks.cat-c.action';
 
 // TODO: These should be Cat C specific contants
-import * as vehicleChecksCatCActionTypes from './vehicle-checks.cat-c.action';
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestions,
 }
