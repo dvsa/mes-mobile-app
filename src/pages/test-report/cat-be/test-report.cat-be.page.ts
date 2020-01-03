@@ -14,8 +14,8 @@ import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { StoreModel } from '../../../shared/models/store.model';
-import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
+import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import {
   CalculateTestResult,
   TerminateTestFromTestReport,

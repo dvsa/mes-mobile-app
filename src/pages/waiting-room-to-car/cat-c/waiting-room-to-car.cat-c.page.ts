@@ -12,7 +12,7 @@ import {
   DualControlsToggled,
   GearboxCategoryChanged,
   VehicleRegistrationChanged,
-} from '../../../modules/tests/vehicle-details/vehicle-details.actions';
+} from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { map } from 'rxjs/operators';
 import {
   InstructorAccompanimentToggled,
@@ -20,24 +20,22 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,
   getGearboxCategory,
-  getSchoolCar,
-  getDualControls,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
+} from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
   getOtherAccompaniment,
   getInterpreterAccompaniment,
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
-import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
+import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../providers/question/question';
@@ -81,8 +79,6 @@ interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
-  schoolCar$: Observable<boolean>;
-  dualControls$: Observable<boolean>;
   instructorAccompaniment$: Observable<boolean>;
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
@@ -149,14 +145,6 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
       transmission$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getGearboxCategory),
-      ),
-      schoolCar$: currentTest$.pipe(
-        select(getVehicleDetails),
-        select(getSchoolCar),
-      ),
-      dualControls$: currentTest$.pipe(
-        select(getVehicleDetails),
-        select(getDualControls),
       ),
       instructorAccompaniment$: currentTest$.pipe(
         select(getAccompaniment),

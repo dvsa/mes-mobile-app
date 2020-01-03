@@ -20,29 +20,29 @@ import {
   isProvisionalLicenseNotProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+} from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import {
   getApplicationReference,
-} from '../../../modules/tests/journal-data/application-reference/application-reference.reducer';
+} from '../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
 import {
   getApplicationNumber,
-} from '../../../modules/tests/journal-data/application-reference/application-reference.selector';
+} from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
 import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 // TODO: MES-4287 use Cat C reducer
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.cat-be.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
 import {
   getGearboxCategory,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
-import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
+} from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { CAT_C } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';

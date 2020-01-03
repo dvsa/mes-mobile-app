@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
-import { getCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';

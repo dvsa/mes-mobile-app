@@ -6,19 +6,19 @@ import * as testStatusActions from '../../modules/tests/test-status/test-status.
 import { fakeJournalTestSlots } from './__mocks__/fake-journal.mock';
 import {
   PopulateApplicationReference,
-} from '../../modules/tests/journal-data/application-reference/application-reference.actions';
-import { PopulateCandidateDetails } from '../../modules/tests/journal-data/candidate/candidate.actions';
+} from '../../modules/tests/journal-data/common/application-reference/application-reference.actions';
+import { PopulateCandidateDetails } from '../../modules/tests/journal-data/cat-b/candidate/candidate.actions';
 import {
   PopulateTestSlotAttributes,
-} from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.actions';
-import { PopulateTestCentre } from '../../modules/tests/journal-data/test-centre/test-centre.actions';
+} from '../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
+import { PopulateTestCentre } from '../../modules/tests/journal-data/common/test-centre/test-centre.actions';
 import { Application } from '@dvsa/mes-journal-schema';
 import {
   extractTestSlotAttributes,
-} from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
+} from '../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import { PopulateTestCategory } from '../../modules/tests/category/category.actions';
 import { Examiner, CategoryCode } from '@dvsa/mes-test-schema/categories/common';
-import { PopulateExaminer } from '../../modules/tests/journal-data/examiner/examiner.actions';
+import { PopulateExaminer } from '../../modules/tests/journal-data/common/examiner/examiner.actions';
 
 @Injectable()
 export class FakeJournalEffects {

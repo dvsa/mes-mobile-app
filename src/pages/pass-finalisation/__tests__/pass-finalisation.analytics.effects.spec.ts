@@ -15,7 +15,7 @@ import {
 } from '../../../providers/analytics/analytics.model';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/candidate/candidate.actions';
+import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.actions';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';

@@ -47,25 +47,25 @@ import {
   WeatherConditionsChanged,
   AdditionalInformationChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
 import {
   getCandidateName,
   getCandidateDriverNumber,
   formatDriverNumber,
-} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+} from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { QuestionProvider } from '../../../providers/question/question';
 import {
   getTestSlotAttributes,
-} from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
-import { getTestTime } from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
+} from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
+import { getTestTime }
+  from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
   getETA,
   getETAFaultText,
   getEco,
   getEcoFaultText,
 } from '../../../modules/tests/test-data/common/test-data.selector';
-// TODO: MES-4287 use Cat C reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';

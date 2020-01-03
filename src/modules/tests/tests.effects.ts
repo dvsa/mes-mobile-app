@@ -6,8 +6,9 @@ import { from } from 'rxjs/observable/from';
 import * as testActions from './tests.actions';
 import * as testStatusActions from './test-status/test-status.actions';
 import { of } from 'rxjs/observable/of';
-import { PopulateApplicationReference } from './journal-data/application-reference/application-reference.actions';
-import { PopulateCandidateDetails } from './journal-data/candidate/candidate.actions';
+import { PopulateApplicationReference }
+  from './journal-data/common/application-reference/application-reference.actions';
+import { PopulateCandidateDetails } from './journal-data/cat-b/candidate/candidate.actions';
 import { testReportPracticeModeSlot } from './__mocks__/tests.mock';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { StoreModel } from '../../shared/models/store.model';
@@ -26,11 +27,11 @@ import { TestsModel } from './tests.model';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { getJournalState } from '../journal/journal.reducer';
 import { getSlotsOnSelectedDate } from '../journal/journal.selector';
-import { PopulateExaminer } from './journal-data/examiner/examiner.actions';
-import { PopulateTestSlotAttributes } from './journal-data/test-slot-attributes/test-slot-attributes.actions';
-import { extractTestSlotAttributes } from './journal-data/test-slot-attributes/test-slot-attributes.selector';
-import { PopulateTestCentre } from './journal-data/test-centre/test-centre.actions';
-import { extractTestCentre } from './journal-data/test-centre/test-centre.selector';
+import { PopulateExaminer } from './journal-data/common/examiner/examiner.actions';
+import { PopulateTestSlotAttributes } from './journal-data/common/test-slot-attributes/test-slot-attributes.actions';
+import { extractTestSlotAttributes } from './journal-data/common/test-slot-attributes/test-slot-attributes.selector';
+import { PopulateTestCentre } from './journal-data/common/test-centre/test-centre.actions';
+import { extractTestCentre } from './journal-data/common/test-centre/test-centre.selector';
 import { PopulateTestCategory } from './category/category.actions';
 import { PopulateTestSchemaVersion } from './schema-version/schema-version.actions';
 import { SetExaminerBooked } from './examiner-booked/examiner-booked.actions';
@@ -46,9 +47,9 @@ import { JournalModel } from '../journal/journal.model';
 import { PopulateConductedLanguage } from './communication-preferences/communication-preferences.actions';
 import { Language } from './communication-preferences/communication-preferences.model';
 import { version } from '../../environment/test-schema-version';
-import { createPopulateCandidateDetailsAction } from './journal-data/candidate/candidate.action-creator';
+import { createPopulateCandidateDetailsAction } from './journal-data/common/candidate/candidate.action-creator';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { PopulateVehicleDimensions } from './vehicle-details/vehicle-details.actions';
+import { PopulateVehicleDimensions } from './vehicle-details/common/vehicle-details.actions';
 
 @Injectable()
 export class TestsEffects {
@@ -161,9 +162,7 @@ export class TestsEffects {
       examiner.individualId;
 
       const arrayOfActions: Action[] = [
-        new PopulateTestCategory(
-          // TODO: Remove temporary assignment of CAT_C to CAT_BE
-          startTestAction.category === TestCategory.C ? TestCategory.BE : startTestAction.category),
+        new PopulateTestCategory(startTestAction.category),
         new PopulateExaminer(examiner),
         new PopulateApplicationReference(slot.booking.application),
         createPopulateCandidateDetailsAction(startTestAction.category, slot.booking),

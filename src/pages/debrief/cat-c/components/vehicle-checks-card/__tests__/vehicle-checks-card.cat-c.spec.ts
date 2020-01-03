@@ -20,7 +20,8 @@ import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import * as englishTranslations from '../../../../../../assets/i18n/en.json';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestCategory } from '../../../../../../modules/tests/category/category.actions';
-import { PopulateCandidateDetails } from '../../../../../../modules/tests/journal-data/candidate/candidate.actions';
+import { PopulateCandidateDetailsCatBE }
+  from '../../../../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.actions';
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
@@ -55,7 +56,7 @@ describe('VehicleChecksCardCatCComponent', () => {
         // TODO: MES-4254 Use category C
         store$.dispatch(new StartTest(105, TestCategory.BE));
         store$.dispatch(new PopulateTestCategory(TestCategory.BE));
-        store$.dispatch(new PopulateCandidateDetails(candidateMock));
+        store$.dispatch(new PopulateCandidateDetailsCatBE(candidateMock));
 
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');

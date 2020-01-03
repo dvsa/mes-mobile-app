@@ -11,14 +11,14 @@ import { of } from 'rxjs/observable/of';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
-import { getCandidate } from '../../modules/tests/journal-data/candidate/candidate.reducer';
-import { getCandidateId } from '../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
+import { getCandidateId } from '../../modules/tests/journal-data/common/candidate/candidate.selector';
 import {
   getApplicationReference,
-} from '../../modules/tests/journal-data/application-reference/application-reference.reducer';
+} from '../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
 import {
   getApplicationNumber,
-} from '../../modules/tests/journal-data/application-reference/application-reference.selector';
+} from '../../modules/tests/journal-data/common/application-reference/application-reference.selector';
 import { REKEY_REASON_VIEW_DID_ENTER, RekeyReasonViewDidEnter } from './rekey-reason.actions';
 
 @Injectable()

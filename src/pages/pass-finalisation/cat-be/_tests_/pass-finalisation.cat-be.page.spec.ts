@@ -25,7 +25,7 @@ import {
   PassFinalisationViewDidEnter,
   PassFinalisationValidationError,
 } from '../../pass-finalisation.actions';
-import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
+import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
   '../../../../modules/tests/test-summary/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from

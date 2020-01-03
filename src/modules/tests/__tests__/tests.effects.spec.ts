@@ -9,8 +9,9 @@ import * as testStatusActions from '../test-status/test-status.actions';
 import * as rekeyActions from '../rekey/rekey.actions';
 import * as journalActions from '../../../modules/journal/journal.actions';
 import { TestsModel } from '../tests.model';
-import { PopulateApplicationReference } from '../journal-data/application-reference/application-reference.actions';
-import { PopulateCandidateDetails } from '../journal-data/candidate/candidate.actions';
+import { PopulateApplicationReference }
+  from '../journal-data/common/application-reference/application-reference.actions';
+import { PopulateCandidateDetails } from '../journal-data/cat-b/candidate/candidate.actions';
 import {
   testApplicationMock,
   candidateMock,
@@ -26,7 +27,7 @@ import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 import { StoreModel } from '../../../shared/models/store.model';
 import { DateTime } from '../../../shared/helpers/date-time';
-import { PopulateExaminer } from '../journal-data/examiner/examiner.actions';
+import { PopulateExaminer } from '../journal-data/common/examiner/examiner.actions';
 import journalSlotsDataMock from '../../../modules/journal/__mocks__/journal-slots-data.mock';
 import { journalReducer } from '../../../modules/journal/journal.reducer';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';

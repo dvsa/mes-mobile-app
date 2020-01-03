@@ -14,7 +14,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/candidate/candidate.actions';
+import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.actions';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { NonPassFinalisationAnalyticsEffects } from '../non-pass-finalisation.analytics.effects';
 import * as nonPassFinalisationActions from '../non-pass-finalisation.actions';

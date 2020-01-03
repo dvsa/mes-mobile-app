@@ -18,7 +18,8 @@ import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import * as englishTranslations from '../../../../../../assets/i18n/en.json';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestCategory } from '../../../../../../modules/tests/category/category.actions';
-import { PopulateCandidateDetails } from '../../../../../../modules/tests/journal-data/candidate/candidate.actions';
+import { PopulateCandidateDetails }
+  from '../../../../../../modules/tests/journal-data/cat-b/candidate/candidate.actions';
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
@@ -50,8 +51,8 @@ describe('VehicleChecksCardComponent', () => {
         fixture = TestBed.createComponent(VehicleChecksCardCatCComponent);
         store$ = TestBed.get(Store);
 
-        store$.dispatch(new StartTest(105, TestCategory.C));
-        store$.dispatch(new PopulateTestCategory(TestCategory.C));
+        store$.dispatch(new StartTest(105, TestCategory.BE));
+        store$.dispatch(new PopulateTestCategory(TestCategory.BE));
         store$.dispatch(new PopulateCandidateDetails(candidateMock));
 
         translate = TestBed.get(TranslateService);

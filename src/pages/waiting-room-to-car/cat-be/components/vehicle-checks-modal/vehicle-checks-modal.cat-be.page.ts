@@ -4,8 +4,9 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest, getJournalData } from '../../../../../modules/tests/tests.selector';
-import { getCandidate } from '../../../../../modules/tests/journal-data/candidate/candidate.reducer';
-import { getUntitledCandidateName } from '../../../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getUntitledCandidateName }
+  from '../../../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../../../providers/question/question';

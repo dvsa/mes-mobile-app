@@ -14,12 +14,12 @@ import {
   isTestOutcomeSet,
   getTestOutcomeText,
 } from '../../../modules/tests/tests.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import {
   getUntitledCandidateName,
   getCandidateDriverNumber,
   formatDriverNumber,
-} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+} from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import {
   NonPassFinalisationViewDidEnter,
   NonPassFinalisationValidationError,
@@ -29,8 +29,9 @@ import { getTestSummary } from '../../../modules/tests/test-summary/test-summary
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
 import {
   getTestSlotAttributes,
-} from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
+} from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest }
+  from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
   ActivityCodeModel,
   activityCodeModelList,
