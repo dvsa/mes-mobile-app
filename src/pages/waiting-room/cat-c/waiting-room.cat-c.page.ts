@@ -46,8 +46,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-// TODO: Import Cat C Types
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE/index';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { App } from '../../../app/app.component';
@@ -78,8 +77,7 @@ export class WaitingRoomCatCPage extends BasePageComponent implements OnInit {
 
   subscription: Subscription;
 
-  // TODO: Use Cat C Types
-  merged$: Observable<boolean | string | CatBEUniqueTypes.JournalData>;
+  merged$: Observable<boolean | string | CatCUniqueTypes.JournalData>;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -170,8 +168,7 @@ export class WaitingRoomCatCPage extends BasePageComponent implements OnInit {
     this.merged$ = merge(
       currentTest$.pipe(
         select(getJournalData),
-        // TODO: Use Cat C Types
-        tap((journalData: CatBEUniqueTypes.JournalData) => {
+        tap((journalData: CatCUniqueTypes.JournalData) => {
           if (this.isJournalDataInvalid(journalData)) {
             this.showCandidateDataMissingError();
           }
@@ -196,8 +193,7 @@ export class WaitingRoomCatCPage extends BasePageComponent implements OnInit {
     }
   }
 
-  // TODO: Import Cat C Types
-  isJournalDataInvalid = (journalData: CatBEUniqueTypes.JournalData): boolean => {
+  isJournalDataInvalid = (journalData: CatCUniqueTypes.JournalData): boolean => {
     return isEmpty(journalData.examiner.staffNumber) ||
       (isEmpty(journalData.candidate.candidateName) && isEmpty(journalData.candidate.driverNumber));
   }
