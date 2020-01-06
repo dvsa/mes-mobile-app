@@ -5,12 +5,8 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
-  SchoolCarToggled,
-  DualControlsToggled,
-  GearboxCategoryChanged,
   VehicleRegistrationChanged,
 } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { map } from 'rxjs/operators';
@@ -24,9 +20,6 @@ import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-c/
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,
-  getGearboxCategory,
-  isAutomatic,
-  isManual,
 } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import {
   getInstructorAccompaniment,
@@ -40,24 +33,13 @@ import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../providers/question/question';
 import {
-  EyesightTestReset,
-  EyesightTestPassed,
-  EyesightTestFailed,
-} from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
-import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
   QuestionOutcomes,
 } from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 
-// TODO: MES-4254 Import cat c selector
-import {
-  hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
-
-// TODO: MES-4254 Import cat c reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_C } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
@@ -67,30 +49,22 @@ import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.
 
 // TODO: MES-4254 Import cat c selector
 import {
-  getVehicleChecksCatBE,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
+  getVehicleChecksCatC,
+} from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
-// TODO: MES-4254 Import cat c schema
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { VehicleChecksCatCComponent } from './components/vehicle-checks/vehicle-checks.cat-c';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
-  transmission$: Observable<GearboxCategory>;
   instructorAccompaniment$: Observable<boolean>;
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
-  eyesightTestComplete$: Observable<boolean>;
-  eyesightTestFailed$: Observable<boolean>;
-  gearboxAutomaticRadioChecked$: Observable<boolean>;
-  gearboxManualRadioChecked$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
-
-  // TODO: MES-4254 Use cat c type
-  vehicleChecks$: Observable<CatBEUniqueTypes.VehicleChecks>;
+  vehicleChecks$: Observable<CatCUniqueTypes.VehicleChecks>;
 }
 
 @IonicPage()
@@ -120,8 +94,7 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   ) {
     super(platform, navController, authenticationProvider);
 
-    // TODO: MES-4254 Use category C
-    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
+    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.C);
     this.form = new FormGroup({});
   }
 
@@ -142,10 +115,6 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
         select(getVehicleDetails),
         select(getRegistrationNumber),
       ),
-      transmission$: currentTest$.pipe(
-        select(getVehicleDetails),
-        select(getGearboxCategory),
-      ),
       instructorAccompaniment$: currentTest$.pipe(
         select(getAccompaniment),
         select(getInstructorAccompaniment),
@@ -162,36 +131,14 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
         select(getAccompaniment),
         select(getInterpreterAccompaniment),
       ),
-      eyesightTestComplete$: currentTest$.pipe(
-        select(getTestData),
-        select(hasEyesightTestBeenCompleted),
-      ),
-      eyesightTestFailed$: currentTest$.pipe(
-        select(getTestData),
-        select(hasEyesightTestGotSeriousFault),
-      ),
-      gearboxAutomaticRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
-        map(isAutomatic),
-      ),
-      gearboxManualRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
-        map(isManual),
-      ),
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO: MES-4254 Use cat c selector
-        select(getVehicleChecksCatBE),
-        map((vehicleChecks) => {
-
-          // TODO: MES-4254 Use cat c provider
-          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
-        }),
+        select(getVehicleChecksCatC),
+        map(vehicleChecks => this.faultCountProvider.getVehicleChecksFaultCountCatC(vehicleChecks)),
       ),
       vehicleChecks$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatC),
       ),
     };
   }
@@ -202,18 +149,6 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
 
   ionViewWillLeave(): void {
     this.store$.dispatch(new PersistTests());
-  }
-
-  schoolCarToggled(): void {
-    this.store$.dispatch(new SchoolCarToggled());
-  }
-
-  dualControlsToggled(): void {
-    this.store$.dispatch(new DualControlsToggled());
-  }
-
-  transmissionChanged(transmission: GearboxCategory): void {
-    this.store$.dispatch(new GearboxCategoryChanged(transmission));
   }
 
   instructorAccompanimentToggled(): void {
@@ -270,15 +205,6 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
     return !this.form.value[controlName] && this.form.get(controlName).dirty;
   }
 
-  setEyesightFailureVisibility(show: boolean) {
-    this.showEyesightFailureConfirmation = show;
-  }
-
-  eyesightFailCancelled = () => {
-    this.form.get('eyesightCtrl') && this.form.get('eyesightCtrl').reset();
-    this.store$.dispatch(new EyesightTestReset());
-  }
-
   tellMeQuestionChanged(newTellMeQuestion: VehicleChecksQuestion): void {
     this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
     if (this.form.controls['tellMeQuestionOutcome']) {
@@ -292,11 +218,6 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
       return;
     }
     this.store$.dispatch(new TellMeQuestionDrivingFault());
-  }
-
-  eyesightTestResultChanged(passed: boolean): void {
-    const action = passed ? new EyesightTestPassed() : new EyesightTestFailed();
-    this.store$.dispatch(action);
   }
 
   getDebriefPage() {
