@@ -4,6 +4,7 @@ import { pickBy, endsWith, sumBy, get } from 'lodash';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../shared/models/vehicle-checks-score.model';
 import { getCompetencyFaults } from '../../shared/helpers/competency';
@@ -58,6 +59,36 @@ export class FaultCountProvider {
   }
 
   public getVehicleChecksFaultCountCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): VehicleChecksScore => {
+
+    if (!vehicleChecks) {
+      return { seriousFaults: 0, drivingFaults: 0 };
+    }
+
+    const showMeQuestions: QuestionResult[] = get(vehicleChecks, 'showMeQuestions', []);
+    const tellMeQuestions: QuestionResult[] = get(vehicleChecks, 'tellMeQuestions', []);
+
+    const numberOfShowMeFaults: number = showMeQuestions.filter((showMeQuestion) => {
+      return showMeQuestion.outcome === CompetencyOutcome.DF;
+    }).length;
+    const numberOfTellMeFaults: number = tellMeQuestions.filter((tellMeQuestion) => {
+      return tellMeQuestion.outcome === CompetencyOutcome.DF;
+    }).length;
+
+    const totalFaultCount: number = numberOfShowMeFaults + numberOfTellMeFaults;
+
+    if (totalFaultCount === 5) {
+      return {
+        drivingFaults: 4,
+        seriousFaults: 1,
+      };
+    }
+    return {
+      drivingFaults: totalFaultCount,
+      seriousFaults: 0,
+    };
+  }
+
+  public getVehicleChecksFaultCountCatC = (vehicleChecks: CatCUniqueTypes.VehicleChecks): VehicleChecksScore => {
 
     if (!vehicleChecks) {
       return { seriousFaults: 0, drivingFaults: 0 };

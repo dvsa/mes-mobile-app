@@ -20,5 +20,5 @@ export const vehicleChecksExist = (vehicleChecks: CatCUniqueTypes.VehicleChecks)
   return some(questions, fault => fault.outcome != null);
 };
 
-export const getVehicleChecksCatBE =
+export const getVehicleChecksCatC =
   createFeatureSelector<CatCUniqueTypes.VehicleChecks>('vehicleChecks');
