@@ -2,6 +2,8 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
 import { LicenseProvidedComponent } from '../license-provided';
+import { WarningBannerComponent } from '../../../../../components/common/warning-banner/warning-banner';
+import { MockComponent } from 'ng-mocks';
 
 describe('licenseProvidedComponent', () => {
   let fixture: ComponentFixture<LicenseProvidedComponent>;
@@ -11,6 +13,7 @@ describe('licenseProvidedComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         LicenseProvidedComponent,
+        MockComponent(WarningBannerComponent),
       ],
       imports: [
         IonicModule,
@@ -18,12 +21,12 @@ describe('licenseProvidedComponent', () => {
       providers: [
       ],
     })
-    .compileComponents()
-    .then(() => {
-      fixture = TestBed.createComponent(LicenseProvidedComponent);
-      component = fixture.componentInstance;
-      component.form = new FormGroup({});
-    });
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(LicenseProvidedComponent);
+        component = fixture.componentInstance;
+        component.form = new FormGroup({});
+      });
   }));
 
   describe('Class', () => {

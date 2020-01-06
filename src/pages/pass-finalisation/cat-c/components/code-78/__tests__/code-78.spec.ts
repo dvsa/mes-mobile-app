@@ -36,15 +36,15 @@ describe('code78Component', () => {
       it('should emit code 78 present if code 78 is present is selected', () => {
         spyOn(component.code78Present, 'emit');
         component.code78IsPresent();
-        expect(component.code78Present.emit).toHaveBeenCalled();
+        expect(component.code78Present.emit).toHaveBeenCalledWith(true);
       });
     });
 
     describe('Code78NotPresent', () => {
       it('should emit code 78 not present if code 78 is not present is selected', () => {
-        spyOn(component.code78NotPresent, 'emit');
+        spyOn(component.code78Present, 'emit');
         component.code78IsNotPresent();
-        expect(component.code78NotPresent.emit).toHaveBeenCalled();
+        expect(component.code78Present.emit).toHaveBeenCalledWith(false);
       });
     });
 

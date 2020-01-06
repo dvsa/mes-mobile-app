@@ -31,7 +31,7 @@ describe('TestReportValidator', () => {
       expect(result).toEqual(false);
     });
     it('should return true if the test report is valid for a Cat BE test', () => {
-      const result = testReportValidatorProvider.isTestReportValid(validTestCatBE , TestCategory.BE);
+      const result = testReportValidatorProvider.isTestReportValid(validTestCatBE, TestCategory.BE);
       expect(result).toEqual(true);
     });
     it('should return false if the test report is not valid for a Cat BE test', () => {

@@ -36,6 +36,7 @@ import { TransmissionComponent } from '../../../../components/common/transmissio
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
+import { Code78Component } from '../components/code-78/code-78';
 
 describe('PassFinalisationCatCPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatCPage>;
@@ -54,6 +55,7 @@ describe('PassFinalisationCatCPage', () => {
         MockComponent(FinalisationHeaderComponent),
         MockComponent(LanguagePreferencesComponent),
         MockComponent(WarningBannerComponent),
+        MockComponent(Code78Component),
       ],
       imports: [IonicModule, AppModule],
       providers: [

@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { Code78Present, Code78NotPresent } from '../../../../../modules/tests/pass-completion/pass-completion.actions';
 import { TransmissionType } from '../../../../../shared/models/transmission-type';
 
 @Component({
@@ -20,10 +19,7 @@ export class Code78Component implements OnChanges {
   transmission: TransmissionType;
 
   @Output()
-  code78Present = new EventEmitter<Code78Present>();
-
-  @Output()
-  code78NotPresent = new EventEmitter<Code78NotPresent>();
+  code78Present = new EventEmitter<boolean>();
 
   formControl: FormControl;
   static readonly fieldName: string = 'code78Ctrl';
@@ -49,9 +45,11 @@ export class Code78Component implements OnChanges {
 
   shouldShowManualBanner(): boolean {
     if (!this.shouldHideBanner()) {
-      switch (this.category as TestCategory) {
+      switch (this.category) {
         case TestCategory.C:
-          return this.transmission === TransmissionType.Manual;
+          return this.transmission === TransmissionType.Manual ||
+            (this.transmission === TransmissionType.Automatic
+              && this.form.get(Code78Component.fieldName).value === 'no');
       }
     }
     return false;
@@ -59,19 +57,20 @@ export class Code78Component implements OnChanges {
 
   shouldShowAutomaticBanner(): boolean {
     if (!this.shouldHideBanner()) {
-      switch (this.category as TestCategory) {
+      switch (this.category) {
         case TestCategory.C:
-          return this.transmission === TransmissionType.Automatic;
+          return this.transmission === TransmissionType.Automatic
+            && this.form.get(Code78Component.fieldName).value === 'yes';
       }
     }
     return false;
   }
 
   code78IsPresent(): void {
-    this.code78Present.emit();
+    this.code78Present.emit(true);
   }
 
   code78IsNotPresent(): void {
-    this.code78NotPresent.emit();
+    this.code78Present.emit(false);
   }
 }

@@ -12,6 +12,8 @@ import {
   ProvisionalLicenseNotReceived,
   PopulatePassCompletion,
   PassCertificateNumberChanged,
+  Code78NotPresent,
+  Code78Present,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
@@ -235,6 +237,14 @@ export class PassFinalisationCatCPage extends BasePageComponent {
 
   transmissionChanged(transmission: GearboxCategory): void {
     this.store$.dispatch(new GearboxCategoryChanged(transmission));
+  }
+
+  code78Present(present: boolean) {
+    if (present) {
+      this.store$.dispatch(new Code78Present());
+    } else {
+      this.store$.dispatch(new Code78NotPresent());
+    }
   }
 
   onSubmit() {

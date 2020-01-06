@@ -70,6 +70,7 @@ import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { merge } from 'rxjs/observable/merge';
 import { TransmissionType } from '../../../shared/models/transmission-type';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -103,6 +104,7 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
   merged$: Observable<string>;
   transmission: GearboxCategory;
   subscription: Subscription;
+  category: TestCategory = TestCategory.B;
 
   constructor(
     store$: Store<StoreModel>,

@@ -23,7 +23,7 @@
           </ion-col>
         </ion-row>
 
-        <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()"
+        <license-provided [form]="form" [category]="this.category" (licenseReceived)="provisionalLicenseReceived()"
           (licenseNotReceived)="provisionalLicenseNotReceived()"> </license-provided>
 
         <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission>
