@@ -8,7 +8,6 @@ import { testsCatBReducer } from './tests.cat-b.reducer';
 import { testsCatBEReducer } from './tests.cat-be.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { testsCatCReducer } from './tests.cat-c.reducer';
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 
 export function testsReducerFactory(
   category: TestCategory | null, action: Action, state: TestResultSchemasUnion,

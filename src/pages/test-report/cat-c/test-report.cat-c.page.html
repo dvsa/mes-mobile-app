@@ -30,40 +30,25 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <legal-requirement
-              [legalRequirement]="legalRequirements.normalStart1"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart1]"
-            >
+            <legal-requirement [legalRequirement]="legalRequirements.normalStart1" [ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart1]">
             </legal-requirement>
           </ion-col>
           <ion-col>
-            <legal-requirement
-              [legalRequirement]="legalRequirements.normalStart2"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart2]"
-            >
+            <legal-requirement [legalRequirement]="legalRequirements.normalStart2" [ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart2]">
             </legal-requirement>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col col-28>
-            <legal-requirement
-              [legalRequirement]="legalRequirements.uphillStart"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.uphillStart]"
-            >
+            <legal-requirement [legalRequirement]="legalRequirements.uphillStart" [ticked]="(pageState.testRequirements$ | async)[legalRequirements.uphillStart]">
             </legal-requirement>
           </ion-col>
           <ion-col col-28>
-            <legal-requirement
-              [legalRequirement]="legalRequirements.downhillStart"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.downhillStart]"
-            >
+            <legal-requirement [legalRequirement]="legalRequirements.downhillStart" [ticked]="(pageState.testRequirements$ | async)[legalRequirements.downhillStart]">
             </legal-requirement>
           </ion-col>
           <ion-col col-40>
-            <legal-requirement
-              [legalRequirement]="legalRequirements.angledStartControlledStop"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.angledStartControlledStop]"
-            >
+            <legal-requirement [legalRequirement]="legalRequirements.angledStartControlledStop" [ticked]="(pageState.testRequirements$ | async)[legalRequirements.angledStartControlledStop]">
             </legal-requirement>
           </ion-col>
         </ion-row>
@@ -74,8 +59,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <reverse-left [completed]="manoeuvresCompleted" [controlLabel]="'Reverse Left'"
-              [clickCallback]="getCallback()">
+            <reverse-left [completed]="manoeuvresCompleted" [controlLabel]="'Reverse Left'" [clickCallback]="getCallback()">
               <reverse-left-popover></reverse-left-popover>
             </reverse-left>
           </ion-col>
@@ -107,7 +91,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-           <uncouple-recouple></uncouple-recouple>
+            <!-- <uncouple-recouple></uncouple-recouple> -->
           </ion-col>
         </ion-row>
         <ion-row>
