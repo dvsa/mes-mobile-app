@@ -161,7 +161,6 @@ describe('FaultCountProvider', () => {
     });
   });
 
-
   describe('getSeriousFaultSumCountCatBE', () => {
     it('should return the serious faults count', () => {
       expect((faultCountProvider as any).getSeriousFaultSumCountCatBE(catBETestDataStateObject)).toBe(1);
