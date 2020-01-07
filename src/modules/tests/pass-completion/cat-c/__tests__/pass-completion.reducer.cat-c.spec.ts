@@ -37,12 +37,6 @@ describe('pass completion reducer', () => {
     expect(result.provisionalLicenceProvided).toBe(false);
   });
 
-  it('should put that the provisional license was not received into state when no selected', () => {
-    let result;
-    result = passCompletionCatCReducer(result, new ProvisionalLicenseNotReceived());
-    expect(result.provisionalLicenceProvided).toBe(false);
-  });
-
   it('should put that the code 78 was present into the state when selected', () => {
     let result;
     result = passCompletionCatCReducer(result, new Code78Present());

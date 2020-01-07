@@ -281,7 +281,7 @@ export class FaultCountProvider {
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
     const vehicleCheckSeriousFaults =
-      vehicleChecks ? this.getVehicleChecksFaultCountCatBE(vehicleChecks).seriousFaults : 0;
+      vehicleChecks ? this.getVehicleChecksFaultCountCatC(vehicleChecks).seriousFaults : 0;
 
     const result =
       seriousFaultSumOfSimpleCompetencies +
@@ -295,19 +295,15 @@ export class FaultCountProvider {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { dangerousFaults, manoeuvres, vehicleChecks, uncoupleRecouple } = data;
+    const { dangerousFaults, manoeuvres, uncoupleRecouple } = data;
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
-    const vehicleCheckDangerousFaults = vehicleChecks ? vehicleChecks.showMeQuestions.filter((check) => {
-      check.outcome === CompetencyOutcome.D;
-    }).length : 0;
     const uncoupleRecoupleDangerousFaults =
       (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.D) ? 1 : 0;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) +
-      vehicleCheckDangerousFaults +
       uncoupleRecoupleDangerousFaults;
 
     return result;
@@ -317,17 +313,13 @@ export class FaultCountProvider {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { dangerousFaults, manoeuvres, vehicleChecks } = data;
+    const { dangerousFaults, manoeuvres } = data;
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
-    const vehicleCheckDangerousFaults = vehicleChecks ? vehicleChecks.showMeQuestions.filter((check) => {
-      check.outcome === CompetencyOutcome.D;
-    }).length : 0;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
-      this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) +
-      vehicleCheckDangerousFaults;
+      this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D);
 
     return result;
   }

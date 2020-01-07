@@ -177,7 +177,7 @@ describe('FaultCountProvider', () => {
           showMeQuestions: [{
             code: 'string',
             description: 'string',
-            outcome: 'S',
+            outcome: 'DF',
           }],
         },
         eyesightTest: {
@@ -205,7 +205,7 @@ describe('FaultCountProvider', () => {
           showMeQuestions: [{
             code: 'string',
             description: 'string',
-            outcome: 'D',
+            outcome: 'DF',
           }],
         },
       };
