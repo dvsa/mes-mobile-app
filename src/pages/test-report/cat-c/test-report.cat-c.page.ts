@@ -195,10 +195,10 @@ export class TestReportCatCPage extends BasePageComponent {
         map((data) => {
           // TODO: MES-4287 Use category c function
           this.isTestReportValid =
-            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.BE);
+            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.C);
           this.missingLegalRequirements =
-            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.BE);
-          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.BE);
+            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.C);
+          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.C);
         }),
       ),
     ).subscribe();

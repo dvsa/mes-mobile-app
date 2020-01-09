@@ -15,7 +15,6 @@ import {
   Code78NotPresent,
   Code78Present,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
-import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
@@ -71,10 +70,10 @@ import {
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { TransmissionType } from '../../../shared/models/transmission-type';
 import { merge } from 'rxjs/observable/merge';
+import { getPassCompletion } from '../../../modules/tests/pass-completion/cat-c/pass-completion.cat-c.reducer';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -106,10 +105,16 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   inputSubscriptions: Subscription[] = [];
   testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
-  category: TestCategory = TestCategory.C;
   merged$: Observable<string>;
   transmission: GearboxCategory;
   subscription: Subscription;
+  code78Present: boolean = null;
+  provisionalLicenseIsReceived: boolean;
+
+  manualMessage: string = 'A <b><em>manual</em></b> licence will be issued';
+  automaticMessage: string =
+    'An <b><em>automatic</em></b> licence will be issued';
+  askCandidateLicenseMessage: string = `Check that the candidate doesn't need their driving licence`;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -125,7 +130,6 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
-
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -148,9 +152,7 @@ export class PassFinalisationCatCPage extends BasePageComponent {
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
-      testOutcomeText$: currentTest$.pipe(
-        select(getTestOutcomeText),
-      ),
+      testOutcomeText$: currentTest$.pipe(select(getTestOutcomeText)),
       applicationNumber$: currentTest$.pipe(
         select(getJournalData),
         select(getApplicationReference),
@@ -160,14 +162,20 @@ export class PassFinalisationCatCPage extends BasePageComponent {
         select(getPassCompletion),
         map(isProvisionalLicenseProvided),
         tap((val) => {
-          if (val) this.form.controls['provisionalLicenseProvidedCtrl'].setValue('yes');
+          if (val) {
+            this.form.controls['provisionalLicenseProvidedCtrl'].setValue(
+              'yes',
+            );
+          }
         }),
       ),
       provisionalLicenseNotProvidedRadioChecked$: currentTest$.pipe(
         select(getPassCompletion),
         map(isProvisionalLicenseNotProvided),
         tap((val) => {
-          if (val) this.form.controls['provisionalLicenseProvidedCtrl'].setValue('no');
+          if (val) {
+            this.form.controls['provisionalLicenseProvidedCtrl'].setValue('no');
+          }
         }),
       ),
       passCertificateNumber$: currentTest$.pipe(
@@ -210,7 +218,7 @@ export class PassFinalisationCatCPage extends BasePageComponent {
     const { transmission$ } = this.pageState;
 
     this.merged$ = merge(
-      transmission$.pipe(map(value => this.transmission = value)),
+      transmission$.pipe(map(value => (this.transmission = value))),
     );
     this.subscription = this.merged$.subscribe();
 
@@ -228,10 +236,12 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   }
 
   provisionalLicenseReceived(): void {
+    this.provisionalLicenseIsReceived = true;
     this.store$.dispatch(new ProvisionalLicenseReceived());
   }
 
   provisionalLicenseNotReceived(): void {
+    this.provisionalLicenseIsReceived = false;
     this.store$.dispatch(new ProvisionalLicenseNotReceived());
   }
 
@@ -239,7 +249,8 @@ export class PassFinalisationCatCPage extends BasePageComponent {
     this.store$.dispatch(new GearboxCategoryChanged(transmission));
   }
 
-  code78Present(present: boolean) {
+  onCode78Present(present: boolean) {
+    this.code78Present = present;
     if (present) {
       this.store$.dispatch(new Code78Present());
     } else {
@@ -248,7 +259,9 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   }
 
   onSubmit() {
-    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
+    Object.keys(this.form.controls).forEach(controlName =>
+      this.form.controls[controlName].markAsDirty(),
+    );
     if (this.form.valid) {
       this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_C.HEALTH_DECLARATION_PAGE);
@@ -257,15 +270,21 @@ export class PassFinalisationCatCPage extends BasePageComponent {
     Object.keys(this.form.controls).forEach((controlName) => {
       if (this.form.controls[controlName].invalid) {
         if (controlName === PASS_CERTIFICATE_NUMBER_CTRL) {
-          this.store$.dispatch(new PassFinalisationValidationError(`${controlName} is invalid`));
+          this.store$.dispatch(
+            new PassFinalisationValidationError(`${controlName} is invalid`),
+          );
         }
-        this.store$.dispatch(new PassFinalisationValidationError(`${controlName} is blank`));
+        this.store$.dispatch(
+          new PassFinalisationValidationError(`${controlName} is blank`),
+        );
       }
     });
   }
 
   passCertificateNumberChanged(passCertificateNumber: string): void {
-    this.store$.dispatch(new PassCertificateNumberChanged(passCertificateNumber));
+    this.store$.dispatch(
+      new PassCertificateNumberChanged(passCertificateNumber),
+    );
   }
 
   d255Changed(d255: boolean): void {
@@ -273,18 +292,56 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   }
 
   debriefWitnessedChanged(debriefWitnessed: boolean) {
-    this.store$.dispatch(debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed());
+    this.store$.dispatch(
+      debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed(),
+    );
   }
 
   isWelshChanged(isWelsh: boolean) {
     this.store$.dispatch(
-      isWelsh ?
-        new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
+      isWelsh
+        ? new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
         : new CandidateChoseToProceedWithTestInEnglish('English'),
     );
   }
 
   displayTransmissionBanner(): boolean {
-    return !this.form.controls['transmissionCtrl'].pristine && this.transmission === TransmissionType.Automatic;
+    return (
+      !this.form.controls['transmissionCtrl'].pristine &&
+      this.transmission === TransmissionType.Automatic &&
+      !this.shouldShowCode78Banner()
+    );
+  }
+
+  shouldShowCode78Banner(): boolean {
+    return this.code78Present !== null && this.transmission !== null;
+  }
+
+  shouldShowManualBanner(): boolean {
+    if (this.shouldShowCode78Banner()) {
+      return (
+        this.transmission === TransmissionType.Manual ||
+        (this.transmission === TransmissionType.Automatic &&
+          !this.code78Present)
+      );
+    }
+    return false;
+  }
+
+  shouldShowAutomaticBanner(): boolean {
+    if (this.shouldShowCode78Banner()) {
+      return (
+        this.transmission === TransmissionType.Automatic && this.code78Present
+      );
+    }
+    return false;
+  }
+
+  shouldHideLicenseProvidedBanner(): boolean {
+    return this.provisionalLicenseIsReceived === null;
+  }
+
+  shouldShowCandidateDoesntNeedLicenseBanner(): boolean {
+    return this.provisionalLicenseIsReceived;
   }
 }

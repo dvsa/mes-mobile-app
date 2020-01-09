@@ -21,14 +21,20 @@
           </ion-col>
         </ion-row>
 
-        <license-provided [form]="form" [category]="this.category" (licenseReceived)="provisionalLicenseReceived()" (licenseNotReceived)="provisionalLicenseNotReceived()">
+        <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()" (licenseNotReceived)="provisionalLicenseNotReceived()">
         </license-provided>
+
+        <warning-banner *ngIf="shouldShowCandidateDoesntNeedLicenseBanner()" warningText="{{askCandidateLicenseMessage}}">
+        </warning-banner>
 
         <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission>
         <warning-banner *ngIf="displayTransmissionBanner()" warningText="An automatic licence will be issued."></warning-banner>
 
-        <code-78 [form]="form" [category]="this.category" [transmission]="pageState.transmission$ | async"
-          (code78Present)="code78Present($event)"></code-78>
+        <code-78 [form]="form" [transmission]="pageState.transmission$ | async"
+          (code78Present)="onCode78Present($event)"></code-78>
+
+        <warning-banner *ngIf="shouldShowManualBanner()" warningText="{{manualMessage}}"></warning-banner>
+        <warning-banner *ngIf="shouldShowAutomaticBanner()" warningText="{{automaticMessage}}"></warning-banner>
 
         <pass-certificate-number [form]="form" (passCertificateNumberChange)="passCertificateNumberChanged($event)"></pass-certificate-number>
 
