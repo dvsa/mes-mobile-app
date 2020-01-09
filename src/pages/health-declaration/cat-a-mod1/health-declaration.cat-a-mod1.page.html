@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ 'healthDeclaration.title' | translate }} - {{pageState.candidateUntitledName$ | async}}</ion-title>
+    <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
+      <button ion-button (click)="logout()">Sign out</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce>
+  <lock-screen-indicator></lock-screen-indicator>
+  <form [formGroup]="form">
+    <candidate-section [candidateName]="pageState.candidateName$ | async"
+      [candidateDriverNumber]="pageState.candidateDriverNumber$ | async" (continueClickEvent)="onSubmit()">
+    </candidate-section>
+    <div class="mes-full-width-card-separator"></div>
+    <div class="mes-full-width-card" id="declaration-section">
+      <ion-row>
+        <ion-col>
+          <h4>{{ 'healthDeclaration.declarationIntent' | translate }}:</h4>
+        </ion-col>
+      </ion-row>
+      <health-declaration [formGroup]="form" [selected]="pageState.healthDeclarationAccepted$ | async"
+        (healthDeclarationChange)="healthDeclarationChanged()">
+      </health-declaration>
+      <ion-row>
+        <ion-col></ion-col>
+      </ion-row>
+      <receipt-declaration [formGroup]="form" [selected]="pageState.receiptDeclarationAccepted$ | async"
+        (receiptDeclarationChange)="receiptDeclarationChanged()" [certificateNumber]="pageState.passCertificateNumber$ | async">
+      </receipt-declaration>
+      <div class="signature-area-padding"></div>
+      <signature [formGroup]="form" [signature]="pageState.signature$ | async"
+        [drawCompleteAction]="getSignatureDrawCompleteAction()" [clearAction]="getSignatureClearAction()">
+      </signature>
+    </div>
+  </form>
+</ion-content>
