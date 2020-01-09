@@ -145,9 +145,7 @@ describe('VehicleChecksCatCComponent', () => {
     });
 
     describe('validateVehicleChecks', () => {
-      // TODO reinstate this test when Cat C complete (introduced by MES-4264)
-      // validation has been disabled so test fails
-      xit('should call incompleteVehicleChecks() if all questions have NOT been answered', () => {
+      it('should call incompleteVehicleChecks() if all questions have NOT been answered', () => {
         spyOn(component, 'everyQuestionHasOutcome').and.returnValue(false);
         spyOn(component, 'incompleteVehicleChecks');
         component.validateVehicleChecks(null);

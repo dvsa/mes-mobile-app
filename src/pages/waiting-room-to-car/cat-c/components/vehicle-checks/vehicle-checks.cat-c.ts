@@ -5,8 +5,7 @@ import { ModalController } from 'ionic-angular';
 import { App } from '../../../../../app/app.component';
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
 
-// TODO: MES-4254 Import cat c schema
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { get } from 'lodash';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
@@ -20,8 +19,7 @@ export class VehicleChecksCatCComponent implements OnChanges {
 
   @Input() vehicleChecksScore: VehicleChecksScore;
 
-  // TODO: MES-4254 Use cat c type
-  @Input() vehicleChecks: CatBEUniqueTypes.VehicleChecks;
+  @Input() vehicleChecks: CatCUniqueTypes.VehicleChecks;
 
   @Input()
   vehicleChecksSelectQuestions: string;
@@ -72,10 +70,7 @@ export class VehicleChecksCatCComponent implements OnChanges {
   }
 
   validateVehicleChecks(c: FormControl): null | { vehicleChecks: boolean } {
-    // TODO reinstate this check when Cat C complete (introduced by MES-4264)
-    // disabling validation for ease of testing
-    // return this.everyQuestionHasOutcome() ? null : this.incompleteVehicleChecks();
-    return null;
+    return this.everyQuestionHasOutcome() ? null : this.incompleteVehicleChecks();
   }
 
   ngOnChanges(): void {

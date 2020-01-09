@@ -43,8 +43,7 @@ describe('VehicleChecksComponent', () => {
         fixture = TestBed.createComponent(VehicleChecksComponent);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
-        // TODO: MES-4287 Use Category C
-        store$.dispatch(new StartTest(105, TestCategory.BE));
+        store$.dispatch(new StartTest(105, TestCategory.C));
       });
   }));
 
@@ -55,14 +54,13 @@ describe('VehicleChecksComponent', () => {
     };
 
     beforeEach(() => {
-      // TODO: MES-4287 Use Category C
-      spyOn(component.faultCountProvider, 'getVehicleChecksFaultCountCatBE').and.returnValue(vehicleChecksScore);
+      spyOn(component.faultCountProvider, 'getVehicleChecksFaultCountCatC').and.returnValue(vehicleChecksScore);
     });
 
     it('should set the vehicle checks driving fault count', (done: DoneFn) => {
       component.ngOnInit();
       component.componentState.vehicleChecksDrivingFaultCount$.subscribe((result) => {
-        expect(component.faultCountProvider.getVehicleChecksFaultCountCatBE).toHaveBeenCalled();
+        expect(component.faultCountProvider.getVehicleChecksFaultCountCatC).toHaveBeenCalled();
         expect(result).toEqual(4);
         done();
       });
@@ -70,7 +68,7 @@ describe('VehicleChecksComponent', () => {
     it('should set the vehicle checks serious fault count', (done: DoneFn) => {
       component.ngOnInit();
       component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
-        expect(component.faultCountProvider.getVehicleChecksFaultCountCatBE).toHaveBeenCalled();
+        expect(component.faultCountProvider.getVehicleChecksFaultCountCatC).toHaveBeenCalled();
         expect(result).toEqual(1);
         done();
       });
@@ -78,7 +76,6 @@ describe('VehicleChecksComponent', () => {
   });
 
   describe('DOM', () => {
-
     it('should pass the number of VC driving faults to the driving faults component', () => {
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
@@ -96,7 +93,5 @@ describe('VehicleChecksComponent', () => {
       fixture.detectChanges();
       expect(seriousFaultsBadge.showBadge).toEqual(true);
     });
-
   });
-
 });

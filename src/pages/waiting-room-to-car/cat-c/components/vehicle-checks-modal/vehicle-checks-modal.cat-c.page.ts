@@ -14,33 +14,28 @@ import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle
 import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-// TODO: MES-4254 Import cat c selector
 import {
-  getVehicleChecksCatBE,
+  getVehicleChecksCatC,
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
-} from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
+} from '../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 
-// TODO: MES-4254 Import cat c reducer
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 
-// TODO: MES-4254 Import cat c actions
 import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
-} from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+} from '../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 
-// TODO: MES-4254 Import cat C constants
 import {
  NUMBER_OF_TELL_ME_QUESTIONS,
-} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+} from '../../../../../shared/constants/tell-me-questions/tell-me-questions-small-medium-trailer-light.constants';
 
-// TODO: MES-4254 Import cat c constants
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS,
-} from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
+} from '../../../../../shared/constants/show-me-questions/show-me-questions-small-medium-trailer-light.constants';
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { map } from 'rxjs/operators';
@@ -82,9 +77,8 @@ export class VehicleChecksCatCModal {
   ) {
     this.formGroup = new FormGroup({});
 
-    // TODO: MES-4254 Use category C
-    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.BE);
-    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
+    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.C);
+    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.C);
   }
 
   ngOnInit(): void {
@@ -100,27 +94,19 @@ export class VehicleChecksCatCModal {
       ),
       showMeQuestions$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO: MES-4254 Use cat c selector
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatC),
         select(getSelectedShowMeQuestions),
       ),
       tellMeQuestions$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO: MES-4254 Use cat c selector
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatC),
         select(getSelectedTellMeQuestions),
       ),
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO: MES-4254 Use cat c selector
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatC),
         map((vehicleChecks) => {
-
-          // TODO: MES-4254 Use cat c Provider
-          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCountCatC(vehicleChecks);
         }),
       ),
     };

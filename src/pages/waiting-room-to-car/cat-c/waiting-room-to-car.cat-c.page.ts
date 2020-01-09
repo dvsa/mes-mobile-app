@@ -47,7 +47,6 @@ import { VehicleChecksQuestion } from '../../../providers/question/vehicle-check
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 
-// TODO: MES-4254 Import cat c selector
 import {
   getVehicleChecksCatC,
 } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
