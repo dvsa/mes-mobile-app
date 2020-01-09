@@ -30,29 +30,21 @@ import {
   LegalRequirements,
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
-
-// TODO: MES-4287 Import cat c reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
-
-// TODO: MES-4287 Import cat c selector
-import { hasManoeuvreBeenCompletedCatBE } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { hasManoeuvreBeenCompletedCatC } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import { ModalEvent } from '../test-report.constants';
 import { CAT_C, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-
-// TODO: MES-4287 Import cat c schema
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-
-// TODO: MES-4287 Import cat c reducer
 import {
-  getTestRequirementsCatBE,
-} from '../../../modules/tests/test-data/cat-be/test-requirements/test-requirements.cat-be.reducer';
+  getTestRequirementsCatC,
+} from '../../../modules/tests/test-data/cat-c/test-requirements/test-requirements.cat-c.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
@@ -67,8 +59,8 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  testData$: Observable<CatBEUniqueTypes.TestData>;
-  testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
+  testData$: Observable<CatCUniqueTypes.TestData>;
+  testRequirements$: Observable<CatCUniqueTypes.TestRequirements>;
   testCategory$: Observable<CategoryCode>;
 }
 
@@ -142,18 +134,14 @@ export class TestReportCatCPage extends BasePageComponent {
       ),
       manoeuvres$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO: MES-4287 use cat c function
-        select(hasManoeuvreBeenCompletedCatBE),
+        select(hasManoeuvreBeenCompletedCatC),
       ),
       testData$: currentTest$.pipe(
         select(getTestData),
       ),
       testRequirements$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO: MES-4287 use cat c function
-        select(getTestRequirementsCatBE),
+        select(getTestRequirementsCatC),
       ),
       testCategory$: currentTest$.pipe(
         select(getTestCategory),
