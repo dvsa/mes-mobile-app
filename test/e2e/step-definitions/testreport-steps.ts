@@ -1,7 +1,6 @@
-import { Then, When } from 'cucumber';
-import { getElement, clickElement, getParentContext } from './generic-steps';
-import { browser, by, element, ExpectedConditions } from 'protractor';
-import { TEST_CONFIG } from '../test.config';
+import { Then, When, Before } from 'cucumber';
+import { getElement, clickElement } from './generic-steps';
+import { browser, by, element } from 'protractor';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -10,6 +9,14 @@ const expect = chai.expect;
 
 const buttonPadding = 30;
 const request = require('request');
+
+// Set default category to be cat b
+this.testCategory = 'b';
+
+Before({ tags: '@catbe' }, () => {
+  // This hook will be executed before scenarios tagged with @catbe
+  this.testCategory = 'be';
+});
 
 const endTest = () => {
   const endTestButton = getElement(by.id('end-test-button'));
@@ -57,7 +64,12 @@ When('I complete the test', () => {
   completeLegalRequirements();
   completeManouveure();
   completeEco();
-  completeShowMe();
+  if (this.testCategory === 'b') {
+    completeShowMe();
+  }
+  if (this.testCategory === 'be') {
+    completeUncoupleRecouple();
+  }
   endTest();
 });
 
@@ -284,13 +296,19 @@ const clickCompetency = (competency) => {
 };
 
 const completeManouveure = () => {
-  const manoeuvresButton = getElement(
-    by.xpath('//manoeuvres/button'));
+  if (this.testCategory === 'be') {
+    const manoeuvresButton = getElement(by.xpath('//competency-button[contains(@class, "reverse-left-tick")]'));
+    longPressButton(manoeuvresButton);
+  } else {
+    const manoeuvresButton = getElement(by.xpath('//manoeuvres/button'));
+    clickElement(manoeuvresButton);
+    const reverseRightRadio = getElement(by.id('manoeuvres-reverse-right-radio'));
+    clickElement(reverseRightRadio);
+    clickElement(manoeuvresButton);
+  }
+};
 
-  clickElement(manoeuvresButton);
-
-  const reverseRightRadio = getElement(by.id('manoeuvres-reverse-right-radio'));
-  clickElement(reverseRightRadio);
-
-  clickElement(manoeuvresButton);
+const completeUncoupleRecouple = () => {
+  const uncoupleRecouple = getElement(by.xpath('//competency-button[contains(@class, "uncouple-recouple-tick")]'));
+  longPressButton(uncoupleRecouple);
 };
