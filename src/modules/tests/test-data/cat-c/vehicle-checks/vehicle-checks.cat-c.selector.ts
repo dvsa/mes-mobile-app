@@ -10,9 +10,9 @@ export const getSelectedShowMeQuestions = (
 };
 
 export const getSelectedTellMeQuestions = (
-  vehicleChecksCatBEReducer: CatCUniqueTypes.VehicleChecks,
+  vehicleChecksCatCReducer: CatCUniqueTypes.VehicleChecks,
 ): QuestionResult[] => {
-  return vehicleChecksCatBEReducer.tellMeQuestions;
+  return vehicleChecksCatCReducer.tellMeQuestions;
 };
 
 export const vehicleChecksExist = (vehicleChecks: CatCUniqueTypes.VehicleChecks): boolean => {

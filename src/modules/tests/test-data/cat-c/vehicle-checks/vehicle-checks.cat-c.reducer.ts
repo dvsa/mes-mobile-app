@@ -5,11 +5,11 @@ import * as vehicleChecksCatCActionTypes from './vehicle-checks.cat-c.action';
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestions,
 }
-  from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+  from '../../../../../shared/constants/tell-me-questions/tell-me-questions-small-medium-trailer-light.constants';
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS as numberOfShowMeQuestions,
 }
-  from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
+  from '../../../../../shared/constants/show-me-questions/show-me-questions-small-medium-trailer-light.constants';
 
 export const initialState: CatCUniqueTypes.VehicleChecks = {
   tellMeQuestions: Array(numberOfTellMeQuestions).fill({}),
