@@ -54,6 +54,10 @@ import {
   getTestRequirementsCatBE,
 } from '../../../modules/tests/test-data/cat-be/test-requirements/test-requirements.cat-be.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
+import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
+import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
+import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
+import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -242,5 +246,42 @@ export class TestReportCatCPage extends BasePageComponent {
 
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_C.DEBRIEF_PAGE));
+  }
+
+  passTest = (): void => {
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.clearance,
+      newFaultCount: 3,
+    }));
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.followingDistance,
+      newFaultCount: 1,
+    }));
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.moveOffSafety,
+      newFaultCount: 2,
+    }));
+    this.store$.dispatch(new SetActivityCode('1'));
+    this.navController.push(CAT_C.DEBRIEF_PAGE);
+  }
+
+  failTest = (): void => {
+
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.pedestrianCrossings,
+      newFaultCount: 3,
+    }));
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.positioningLaneDiscipline,
+      newFaultCount: 1,
+    }));
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.signalsCorrectly,
+      newFaultCount: 2,
+    }));
+    this.store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsChangeSpeed));
+    this.store$.dispatch(new AddSeriousFault(Competencies.useOfSpeed));
+    this.store$.dispatch(new AddDangerousFault(Competencies.responseToSignsTrafficLights));
+    this.navController.push(CAT_C.DEBRIEF_PAGE);
   }
 }
