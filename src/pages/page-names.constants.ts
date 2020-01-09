@@ -71,7 +71,7 @@ export const CAT_C = {
 
 export const CAT_AMOD1 = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatCPage',
-  COMMUNICATION_PAGE: 'CommunicationCatCPage',
+  COMMUNICATION_PAGE: 'CommunicationCatAMod1Page',
   DEBRIEF_PAGE: 'DebriefCatCPage',
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatCPage',
   OFFICE_PAGE: 'OfficeCatCPage',
