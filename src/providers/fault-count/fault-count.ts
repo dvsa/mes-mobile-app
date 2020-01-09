@@ -18,24 +18,32 @@ export class FaultCountProvider {
   public getDrivingFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getDrivingFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getDrivingFaultSumCountCatBE(data);
+    if (category === TestCategory.C) return this.getDrivingFaultSumCountCatC(data);
+
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
   public getSeriousFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getSeriousFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getSeriousFaultSumCountCatBE(data);
+    if (category === TestCategory.C) return this.getSeriousFaultSumCountCatC(data);
+
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
   public getDangerousFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getDangerousFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getDangerousFaultSumCountCatBE(data);
+    if (category === TestCategory.C) return this.getDangerousFaultSumCountCatC(data);
+
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
   public getManoeuvreFaultCount = (category: TestCategory, data: Object, faultType: CompetencyOutcome): number => {
     if (category === TestCategory.B) return this.sumManoeuvreFaults(data, faultType);
     if (category === TestCategory.BE) return this.sumManoeuvreFaults(data, faultType);
+    if (category === TestCategory.C) return this.sumManoeuvreFaults(data, faultType);
+
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
@@ -240,6 +248,60 @@ export class FaultCountProvider {
       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) +
       vehicleCheckDangerousFaults +
       uncoupleRecoupleDangerousFaults;
+
+    return result;
+  }
+
+  private getDrivingFaultSumCountCatC = (data: CatCUniqueTypes.TestData): number => {
+
+    // The way how we store the driving faults differs for certain competencies
+    // Because of this we need to pay extra attention on summing up all of them
+    const { drivingFaults, manoeuvres,  vehicleChecks } = data;
+
+    let faultTotal: number = 0;
+    getCompetencyFaults(drivingFaults).forEach(fault => faultTotal = faultTotal + fault.faultCount);
+
+    const result =
+      faultTotal +
+      this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
+      this.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults;
+
+    return result;
+  }
+
+  private getSeriousFaultSumCountCatC = (data: CatCUniqueTypes.TestData): number => {
+
+    // The way how we store serious faults differs for certain competencies
+    // Because of this we need to pay extra attention on summing up all of them
+    const { seriousFaults, manoeuvres, vehicleChecks } = data;
+
+    const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
+    const vehicleCheckSeriousFaults =
+      vehicleChecks ? this.getVehicleChecksFaultCountCatBE(vehicleChecks).seriousFaults : 0;
+
+    const result =
+      seriousFaultSumOfSimpleCompetencies +
+      this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) +
+      vehicleCheckSeriousFaults;
+
+    return result;
+  }
+
+  private getDangerousFaultSumCountCatC = (data: CatCUniqueTypes.TestData): number => {
+
+    // The way how we store serious faults differs for certain competencies
+    // Because of this we need to pay extra attention on summing up all of them
+    const { dangerousFaults, manoeuvres, vehicleChecks } = data;
+
+    const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
+    const vehicleCheckDangerousFaults = vehicleChecks ? vehicleChecks.showMeQuestions.filter((check) => {
+      check.outcome === CompetencyOutcome.D;
+    }).length : 0;
+
+    const result =
+      dangerousFaultSumOfSimpleCompetencies +
+      this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) +
+      vehicleCheckDangerousFaults;
 
     return result;
   }

@@ -31,29 +31,27 @@ import {
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
 
-// TODO: MES-4287 Import cat c reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 
-// TODO: MES-4287 Import cat c selector
-import { hasManoeuvreBeenCompletedCatBE } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { hasManoeuvreBeenCompletedCatC } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import { ModalEvent } from '../test-report.constants';
 import { CAT_C, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 
-// TODO: MES-4287 Import cat c schema
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-// TODO: MES-4287 Import cat c reducer
 import {
-  getTestRequirementsCatBE,
-} from '../../../modules/tests/test-data/cat-be/test-requirements/test-requirements.cat-be.reducer';
+  getTestRequirementsCatC,
+} from '../../../modules/tests/test-data/cat-c/test-requirements/test-requirements.cat-c.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
+import {CategoryCode} from "@dvsa/mes-test-schema/categories/common";
+import {getTestCategory} from "../../../modules/tests/category/category.reducer";
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -61,8 +59,9 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  testData$: Observable<CatBEUniqueTypes.TestData>;
-  testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
+  testData$: Observable<CatCUniqueTypes.TestData>;
+  testRequirements$: Observable<CatCUniqueTypes.TestRequirements>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -81,6 +80,7 @@ export class TestReportCatCPage extends BasePageComponent {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
+  testCategory: CategoryCode;
   isTestReportValid: boolean = false;
   isEtaValid: boolean = true;
 
@@ -134,18 +134,17 @@ export class TestReportCatCPage extends BasePageComponent {
       ),
       manoeuvres$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO: MES-4287 use cat c function
-        select(hasManoeuvreBeenCompletedCatBE),
+        select(hasManoeuvreBeenCompletedCatC),
       ),
       testData$: currentTest$.pipe(
         select(getTestData),
       ),
       testRequirements$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO: MES-4287 use cat c function
-        select(getTestRequirementsCatBE),
+        select(getTestRequirementsCatC),
+      ),
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
       ),
     };
     this.setupSubscription();
@@ -179,6 +178,7 @@ export class TestReportCatCPage extends BasePageComponent {
       isDangerousMode$,
       manoeuvres$,
       testData$,
+      testCategory$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -189,14 +189,13 @@ export class TestReportCatCPage extends BasePageComponent {
       manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
       testData$.pipe(
         map((data) => {
-          // TODO: MES-4287 Use category c function
-          this.isTestReportValid =
-            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.BE);
+          this.isTestReportValid = this.testReportValidatorProvider.isTestReportValid(data, TestCategory.C);
           this.missingLegalRequirements =
-            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.BE);
-          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.BE);
+            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.C);
+          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.C);
         }),
       ),
+      testCategory$.pipe(map(result => this.testCategory = result))
     ).subscribe();
   }
 
@@ -243,4 +242,6 @@ export class TestReportCatCPage extends BasePageComponent {
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_C.DEBRIEF_PAGE));
   }
+
+  showUncoupleRecouple = (): boolean => [TestCategory.C].indexOf(this.testCategory as TestCategory) === -1;
 }

@@ -88,27 +88,27 @@
         </ion-row>
         <ion-row>
           <ion-col no-padding>
+            <div class="dark-divider"></div>
+          </ion-col>
+        </ion-row>
+        <ion-row [ngClass]="showUncoupleRecouple() ? 'showField' : 'hideField'">
+          <ion-col>
+           <uncouple-recouple></uncouple-recouple>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="showUncoupleRecouple()">
+          <ion-col no-padding>
+            <div class="dark-divider"></div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col no-padding>
             <span class="section-header">Vehicle check</span>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
             <vehicle-checks></vehicle-checks>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col no-padding>
-            <div class="dark-divider"></div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-           <uncouple-recouple></uncouple-recouple>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col no-padding>
-            <div class="dark-divider"></div>
           </ion-col>
         </ion-row>
         <ion-row>

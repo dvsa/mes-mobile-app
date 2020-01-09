@@ -131,4 +131,13 @@ div[class^="test-report-cat-"] {
     animation-duration: 0.15s;
     animation-fill-mode: forwards;
   }
+
+  .showField {
+    visibility: visible;
+  }
+
+  .hideField {
+    visibility: hidden;
+    margin-bottom: -20px;
+  }
 }
