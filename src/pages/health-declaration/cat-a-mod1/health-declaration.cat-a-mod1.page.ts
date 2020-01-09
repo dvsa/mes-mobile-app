@@ -26,7 +26,7 @@ import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 
-//TODO - PREP-AMOD1 implement category specific reducer
+// TODO - PREP-AMOD1 implement category specific reducer
 import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import { map, tap } from 'rxjs/operators';
 import {
