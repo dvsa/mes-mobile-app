@@ -1,3 +1,5 @@
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
+import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/BE/partial';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
@@ -30,7 +32,7 @@ export const catBETestDataStateObject: CatBEUniqueTypes.TestData = {
   },
   manoeuvres: {
     reverseLeft: {
-      controlFault: 'DF',
+      controlFault: CompetencyOutcome.DF as ManoeuvreOutcome,
       selected: true,
     },
   },

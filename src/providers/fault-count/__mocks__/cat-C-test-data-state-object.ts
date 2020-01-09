@@ -1,10 +1,12 @@
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/BE/partial';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
+import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/common';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/C/partial';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 
 export const catCTestDataStateObject: CatCUniqueTypes.TestData = {
   drivingFaults: {
     controlsGears: 1,
-    pedestrianCrossings: 2,
+    pedestrianCrossings: 1,
     ancillaryControls: 1,
   },
   seriousFaults: {
@@ -30,7 +32,7 @@ export const catCTestDataStateObject: CatCUniqueTypes.TestData = {
   },
   manoeuvres: {
     reverseLeft: {
-      controlFault: 'DF',
+      controlFault: CompetencyOutcome.DF as ManoeuvreOutcome,
       selected: true,
     },
   },

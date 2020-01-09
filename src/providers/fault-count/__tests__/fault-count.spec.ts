@@ -1,12 +1,11 @@
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/BE/partial';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { FaultCountProvider } from '../fault-count';
 import { TestBed } from '@angular/core/testing';
 import { catBTestDataStateObject } from '../__mocks__/cat-B-test-data-state-object';
 import { catBETestDataStateObject } from '../__mocks__/cat-BE-test-data-state-object';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { catCTestDataStateObject } from '../__mocks__/cat-C-test-data-state-object';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('FaultCountProvider', () => {
 
@@ -32,16 +31,25 @@ describe('FaultCountProvider', () => {
     spyOn(faultCountProvider, 'getDrivingFaultSumCountCatC').and.callThrough();
     spyOn(faultCountProvider, 'getSeriousFaultSumCountCatC').and.callThrough();
     spyOn(faultCountProvider, 'getDangerousFaultSumCountCatC').and.callThrough();
+
+    spyOn(faultCountProvider, 'vehicleChecksFaultSmallMediumTrailerLight').and.callThrough();
   });
 
   describe('getDrivingFaultSumCount', () => {
     it('should call the category B specific method for getting the driving fault sum count', () => {
-      faultCountProvider.getDrivingFaultSumCount(TestCategory.B, catBTestDataStateObject);
+      const result = faultCountProvider.getDrivingFaultSumCount(TestCategory.B, catBTestDataStateObject);
       expect((faultCountProvider as any).getDrivingFaultSumCountCatB).toHaveBeenCalled();
+      expect(result).toEqual(4);
     });
     it('should call the category BE specific method for getting the driving fault sum count', () => {
-      faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, catBETestDataStateObject);
+      const result = faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, catBETestDataStateObject);
       expect((faultCountProvider as any).getDrivingFaultSumCountCatBE).toHaveBeenCalled();
+      expect(result).toEqual(5);
+    });
+    it('should call the category C specific method for getting the driving fault sum count', () => {
+      const result = faultCountProvider.getDrivingFaultSumCount(TestCategory.C, catCTestDataStateObject);
+      expect((faultCountProvider as any).getDrivingFaultSumCountCatC).toHaveBeenCalled();
+      expect(result).toEqual(4);
     });
     it('should call the category C specific method for getting the driving fault sum count', () => {
       faultCountProvider.getDrivingFaultSumCount(TestCategory.C, catCTestDataStateObject);
@@ -51,165 +59,101 @@ describe('FaultCountProvider', () => {
 
   describe('getSeriousFaultSumCount', () => {
     it('should call the category B specific method for getting the serious fault sum count', () => {
-      faultCountProvider.getSeriousFaultSumCount(TestCategory.B, catBTestDataStateObject);
+      const result = faultCountProvider.getSeriousFaultSumCount(TestCategory.B, catBTestDataStateObject);
       expect((faultCountProvider as any).getSeriousFaultSumCountCatB).toHaveBeenCalled();
+      expect(result).toEqual(1);
     });
     it('should call the category BE specific method for getting the serious fault sum count', () => {
-      faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, catBETestDataStateObject);
+      const result = faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, catBETestDataStateObject);
       expect((faultCountProvider as any).getSeriousFaultSumCountCatBE).toHaveBeenCalled();
+      expect(result).toEqual(1);
     });
     it('should call the category C specific method for getting the serious fault sum count', () => {
-      faultCountProvider.getSeriousFaultSumCount(TestCategory.C, catCTestDataStateObject);
+      const result = faultCountProvider.getSeriousFaultSumCount(TestCategory.C, catCTestDataStateObject);
       expect((faultCountProvider as any).getSeriousFaultSumCountCatC).toHaveBeenCalled();
+      expect(result).toEqual(1);
     });
   });
 
   describe('getDangerousFaultSumCount', () => {
     it('should call the category B specific method for getting the dangerous fault sum count', () => {
-      faultCountProvider.getDangerousFaultSumCount(TestCategory.B, catBTestDataStateObject);
+      const result = faultCountProvider.getDangerousFaultSumCount(TestCategory.B, catBTestDataStateObject);
       expect((faultCountProvider as any).getDangerousFaultSumCountCatB).toHaveBeenCalled();
+      expect(result).toEqual(1);
     });
     it('should call the category BE specific method for getting the dangerous fault sum count', () => {
-      faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, catBETestDataStateObject);
+      const result = faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, catBETestDataStateObject);
       expect((faultCountProvider as any).getDangerousFaultSumCountCatBE).toHaveBeenCalled();
+      expect(result).toEqual(1);
     });
     it('should call the category C specific method for getting the dangerous fault sum count', () => {
-      faultCountProvider.getDangerousFaultSumCount(TestCategory.C, catCTestDataStateObject);
+      const result = faultCountProvider.getDangerousFaultSumCount(TestCategory.C, catCTestDataStateObject);
       expect((faultCountProvider as any).getDangerousFaultSumCountCatC).toHaveBeenCalled();
+      expect(result).toEqual(1);
     });
   });
 
-  describe('getDrivingFaultSumCountCatB', () => {
-    it('should return the driving fault for cat B count correctly', () => {
-      expect((faultCountProvider as any).getDrivingFaultSumCountCatB(catBTestDataStateObject)).toBe(4);
-    });
+  // Vehicle Checks: CAT B
+  describe('getVehicleChecksFaultCountCatB', () => {
+    it('should return 1 if competency outcome is DF', () => {
+      const result = faultCountProvider.getVehicleChecksFaultCountCatB(catBTestDataStateObject.vehicleChecks);
+      expect(result).toEqual(1);
+    })
+
+
+    it('should return 0 if competency outcome is S or D', () => {
+      const mockVehiclChecks = {
+        tellMeQuestion: {
+          outcome: CompetencyOutcome.S,
+        },
+        showMeQuestion: {
+          outcome: CompetencyOutcome.D,
+        },
+      }
+      const result = faultCountProvider.getVehicleChecksFaultCountCatB(mockVehiclChecks);
+      expect(result).toEqual(0);
+    })
   });
 
-  describe('getDrivingFaultSumCountCatBE', () => {
-    it('should return the driving fault for cat BE count correctly', () => {
-      expect((faultCountProvider as any).getDrivingFaultSumCountCatBE(catBETestDataStateObject)).toBe(5);
-    });
-  });
+  // Vehicle Checks: CAT BE
+  describe('getVehicleChecksFaultCountCatB', () => {
+    it('should return 0 zero faults when all questions are passed', () => {
+      const result = faultCountProvider.getVehicleChecksFaultCountCatBE(catBETestDataStateObject.vehicleChecks);
+      expect((faultCountProvider as any).vehicleChecksFaultSmallMediumTrailerLight).toHaveBeenCalled();
+      expect(result).toEqual({ drivingFaults: 0, seriousFaults: 0 });
+    })
 
-  describe('getDrivingFaultSumCountCatC', () => {
-    it('should return the driving fault for cat C count correctly', () => {
-      expect((faultCountProvider as any).getDrivingFaultSumCountCatC(catCTestDataStateObject)).toBe(5);
-    });
-  });
-
-  describe('getSeriousFaultSumCountCatB', () => {
-    it('should return the serious faults count', () => {
-      expect((faultCountProvider as any).getSeriousFaultSumCountCatB(catBTestDataStateObject)).toBe(1);
-    });
-    it('should return the correct count of serious faults', () => {
-      const failedState: CatBUniqueTypes.TestData = {
-        ...catBTestDataStateObject,
-        manoeuvres: {
-          forwardPark: {
-            selected: true,
-            controlFault: CompetencyOutcome.S,
-          },
+    it('should return 4 driving faults and 1 serious fault when there are 5 faults in total', () => {
+      const mockVehiclChecks = {
+        tellMeQuestions: [{
+          code: 'string',
+          description: 'string',
+          outcome: 'DF',
         },
-        controlledStop: {
-          selected: true,
-          fault: CompetencyOutcome.S,
+        {
+          code: 'string',
+          description: 'string',
+          outcome: 'DF',
         },
-        vehicleChecks: {
-          tellMeQuestion: {
-            outcome: CompetencyOutcome.DF,
-          },
-          showMeQuestion: {
-            outcome: CompetencyOutcome.S,
-          },
+        {
+          code: 'string',
+          description: 'string',
+          outcome: 'DF',
+        }] as QuestionResult[],
+        showMeQuestions: [{
+          code: 'string',
+          description: 'string',
+          outcome: 'DF',
         },
-        eyesightTest: {
-          complete: true,
-          seriousFault: true,
-        },
-      };
-      expect((faultCountProvider as any).getSeriousFaultSumCountCatB(failedState)).toBe(5);
-    });
-  });
-
-  describe('getDangerousFaultSumCountCatB', () => {
-    it('should return the dangerous faults count', () => {
-      expect((faultCountProvider as any).getDangerousFaultSumCountCatB(catBTestDataStateObject)).toBe(1);
-    });
-    it('should return the correct number of dangerous faults', () => {
-      const failedState: CatBUniqueTypes.TestData = {
-        ...catBTestDataStateObject,
-        manoeuvres: {
-          forwardPark: {
-            selected: true,
-            controlFault: CompetencyOutcome.D,
-          },
-        },
-        controlledStop: {
-          selected: true,
-          fault: CompetencyOutcome.D,
-        },
-        vehicleChecks: {
-          tellMeQuestion: {
-            outcome: CompetencyOutcome.DF,
-          },
-          showMeQuestion: {
-            outcome: CompetencyOutcome.D,
-          },
-        },
-      };
-      expect((faultCountProvider as any).getDangerousFaultSumCountCatB(failedState)).toBe(4);
-    });
-  });
-
-  describe('getSeriousFaultSumCountCatBE', () => {
-    it('should return the serious faults count', () => {
-      expect((faultCountProvider as any).getSeriousFaultSumCountCatBE(catBETestDataStateObject)).toBe(1);
-    });
-    it('should return the correct count of serious faults', () => {
-      const failedState: CatBEUniqueTypes.TestData = {
-        ...catBETestDataStateObject,
-        vehicleChecks: {
-          tellMeQuestions: [{
-            code: 'string',
-            description: 'string',
-            outcome: 'DF',
-          }],
-          showMeQuestions: [{
-            code: 'string',
-            description: 'string',
-            outcome: 'DF',
-          }],
-        },
-        eyesightTest: {
-          complete: true,
-          seriousFault: true,
-        },
-      };
-      expect((faultCountProvider as any).getSeriousFaultSumCountCatBE(failedState)).toBe(2);
-    });
-  });
-
-  describe('getDangerousFaultSumCountCatBE', () => {
-    it('should return the dangerous faults count', () => {
-      expect((faultCountProvider as any).getDangerousFaultSumCountCatBE(catBETestDataStateObject)).toBe(1);
-    });
-    it('should return the correct number of dangerous faults', () => {
-      const failedState: CatBEUniqueTypes.TestData = {
-        ...catBETestDataStateObject,
-        vehicleChecks: {
-          tellMeQuestions: [{
-            code: 'string',
-            description: 'string',
-            outcome: 'DF',
-          }],
-          showMeQuestions: [{
-            code: 'string',
-            description: 'string',
-            outcome: 'DF',
-          }],
-        },
-      };
-      expect((faultCountProvider as any).getDangerousFaultSumCountCatBE(failedState)).toBe(1);
-    });
+        {
+          code: 'string',
+          description: 'string',
+          outcome: 'DF',
+        }] as QuestionResult[],
+      }
+      const result = faultCountProvider.getVehicleChecksFaultCountCatBE(mockVehiclChecks);
+      expect((faultCountProvider as any).vehicleChecksFaultSmallMediumTrailerLight).toHaveBeenCalled();
+      expect(result).toEqual({ drivingFaults: 4, seriousFaults: 1 });
+    })
   });
 });
