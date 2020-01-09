@@ -9,7 +9,7 @@ import { DeviceAuthenticationProvider } from '../../../providers/device-authenti
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 
-//TODO - PREP-AMOD1 - implement category specific reducer
+// TODO - PREP-AMOD1 - implement category specific reducer
 import { getCandidate } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
 import {
   getCandidateName,
@@ -202,7 +202,8 @@ export class CommunicationCatAMod1Page extends BasePageComponent implements OnIn
           this.store$.dispatch(new CommunicationSubmitInfo());
           this.navController.push(CAT_AMOD1.WAITING_ROOM_TO_CAR_PAGE)
             .then(() => {
-              const waitingRoomPage = this.navController.getViews().find(view => view.id === CAT_AMOD1.WAITING_ROOM_PAGE);
+              const waitingRoomPage =
+              this.navController.getViews().find(view => view.id === CAT_AMOD1.WAITING_ROOM_PAGE);
               if (waitingRoomPage) {
                 this.navController.removeView(waitingRoomPage);
               }
