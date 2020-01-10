@@ -41,6 +41,7 @@ import { UncoupleRecoupleComponent } from '../components/uncouple-recouple/uncou
 import { ReverseLeftComponent } from '../components/reverse-left/reverse-left';
 import { ReverseLeftPopoverComponent } from '../components/reverse-left-popover/reverse-left-popover';
 import { VehicleChecksComponent } from '../components/vehicle-checks/vehicle-checks';
+import { TestCategory } from "@dvsa/mes-test-schema/category-definitions/common/test-category";
 
 describe('TestReportCatCPage', () => {
   let fixture: ComponentFixture<TestReportCatCPage>;
@@ -147,4 +148,15 @@ describe('TestReportCatCPage', () => {
     });
   });
 
+  describe('showUncoupleRecouple', () => {
+    it('should return false when the test is a category C', () => {
+      component.testCategory = TestCategory.C;
+      expect(component.showUncoupleRecouple()).toBeFalsy();
+    });
+
+    it('should return true when the test is not a category C', () => {
+      component.testCategory = TestCategory.B;
+      expect(component.showUncoupleRecouple()).toBeTruthy();
+    });
+  });
 });

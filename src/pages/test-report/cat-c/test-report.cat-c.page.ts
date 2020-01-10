@@ -50,8 +50,8 @@ import {
   getTestRequirementsCatC,
 } from '../../../modules/tests/test-data/cat-c/test-requirements/test-requirements.cat-c.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
-import {CategoryCode} from "@dvsa/mes-test-schema/categories/common";
-import {getTestCategory} from "../../../modules/tests/category/category.reducer";
+import { CategoryCode } from "@dvsa/mes-test-schema/categories/common";
+import { getTestCategory } from "../../../modules/tests/category/category.reducer";
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -107,6 +107,7 @@ export class TestReportCatCPage extends BasePageComponent {
       },
     };
   }
+
   ngOnInit(): void {
 
     const currentTest$ = this.store$.pipe(
@@ -150,6 +151,7 @@ export class TestReportCatCPage extends BasePageComponent {
     this.setupSubscription();
 
   }
+
   ionViewDidEnter(): void {
 
     // it is possible that we come back to the page from the terminate screen
@@ -195,7 +197,7 @@ export class TestReportCatCPage extends BasePageComponent {
           this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.C);
         }),
       ),
-      testCategory$.pipe(map(result => this.testCategory = result))
+      testCategory$.pipe(map(result => this.testCategory = result)),
     ).subscribe();
   }
 
@@ -243,5 +245,5 @@ export class TestReportCatCPage extends BasePageComponent {
     this.modal.dismiss().then(() => this.navController.push(CAT_C.DEBRIEF_PAGE));
   }
 
-  showUncoupleRecouple = (): boolean => [TestCategory.C].indexOf(this.testCategory as TestCategory) === -1;
+  showUncoupleRecouple = (): boolean => this.testCategory !== TestCategory.C;
 }
