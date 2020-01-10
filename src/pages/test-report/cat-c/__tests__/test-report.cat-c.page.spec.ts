@@ -26,7 +26,7 @@ import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from '../../test-report.reducer';
 import { LegalRequirementComponent } from '../../components/legal-requirement/legal-requirement';
 import { EtaComponent } from '../../components/examiner-takes-action/eta';
-import { initialState } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { initialState } from '../../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { EcoComponent } from '../../components/eco/eco';
 import { TestReportValidatorProvider } from '../../../../providers/test-report-validator/test-report-validator';
 import {
@@ -136,7 +136,9 @@ describe('TestReportCatCPage', () => {
         expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeDefined();
       });
     });
-
+    it('should NOT display the uncouple/recouple button if property does not exists in test data', () => {
+      expect(fixture.debugElement.query(By.css('.uncouple-recouple-competency'))).toBeNull();
+    });
   });
 
   describe('End Test Button', () => {
