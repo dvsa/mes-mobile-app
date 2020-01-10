@@ -30,7 +30,7 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
 '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-describe('NonPassFinalisationCatBEPage', () => {
+describe('NonPassFinalisationCatAMod1Page', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatAMod1Page>;
   let component: NonPassFinalisationCatAMod1Page;
   let store$: Store<StoreModel>;
