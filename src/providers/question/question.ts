@@ -4,10 +4,16 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 
 import tellMeQuestionsCatBConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-b.constants';
 import showMeQuestionsCatBConstants from '../../shared/constants/show-me-questions/show-me-questions.cat-b.constants';
-// tslint:disable-next-line: import-name
-import tellMeQuestionsCatBEConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
-// tslint:disable-next-line: import-name
-import showMeQuestionsCatBEConstants from '../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
+import tellMeQuestionsCatBeConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+import showMeQuestionsCatBeConstants from '../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
+import tellMeQuestionsVocationalConstants
+  from '../../shared/constants/tell-me-questions/tell-me-questions.vocational.constants';
+import tellMeQuestionsVocationalTrailerConstants
+  from '../../shared/constants/tell-me-questions/tell-me-questions.vocational-trailer.constants';
+import showMeQuestionsVocationalConstants
+  from '../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
+import showMeQuestionsVocationalTrailerConstants
+  from '../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
 
 @Injectable()
 export class QuestionProvider {
@@ -17,7 +23,17 @@ export class QuestionProvider {
       case TestCategory.B:
         return tellMeQuestionsCatBConstants;
       case TestCategory.BE:
-        return tellMeQuestionsCatBEConstants;
+        return tellMeQuestionsCatBeConstants;
+      case TestCategory.C:
+      case TestCategory.C1:
+      case TestCategory.D:
+      case TestCategory.D1:
+        return tellMeQuestionsVocationalConstants;
+      case TestCategory.CE:
+      case TestCategory.C1E:
+      case TestCategory.DE:
+      case TestCategory.D1E:
+        return tellMeQuestionsVocationalTrailerConstants;
       default:
         return [];
     }
@@ -27,7 +43,17 @@ export class QuestionProvider {
       case TestCategory.B:
         return showMeQuestionsCatBConstants;
       case TestCategory.BE:
-        return showMeQuestionsCatBEConstants;
+        return showMeQuestionsCatBeConstants;
+      case TestCategory.C:
+      case TestCategory.C1:
+      case TestCategory.D:
+      case TestCategory.D1:
+        return showMeQuestionsVocationalConstants;
+      case TestCategory.CE:
+      case TestCategory.C1E:
+      case TestCategory.DE:
+      case TestCategory.D1E:
+        return showMeQuestionsVocationalTrailerConstants;
       default:
         return [];
     }
