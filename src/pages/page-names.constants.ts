@@ -14,10 +14,6 @@ export const CAT_A_MOD1 = {
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
 };
 
-export const CAT_A_MOD2 = {
-  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
-};
-
 export const CAT_B = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBPage',
   COMMUNICATION_PAGE: 'CommunicationCatBPage',
@@ -90,4 +86,22 @@ export const CAT_AMOD1 = {
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationAMod1Page',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksAMod1Modal',
   VIEW_TEST_RESULT_PAGE:'ViewTestResultAMod1Page',
+};
+
+export const CAT_A_MOD2 = {
+  BACK_TO_OFFICE_PAGE: 'BackToOfficeCatAMod2Page',
+  COMMUNICATION_PAGE: 'CommunicationCatAMod2Page',
+  DEBRIEF_PAGE: 'DebriefCatAMod2Page',
+  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatAMod2Page',
+  OFFICE_PAGE: 'OfficeCatAMod2Page',
+  PASS_FINALISATION_PAGE: 'PassFinalisationAMod2Page',
+  TEST_REPORT_PAGE: 'TestReportCatAMod2Page',
+  WAITING_ROOM_PAGE: 'WaitingRoomCatAMod2Page',
+  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatAMod2Page',
+  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatAMod2Page',
+  REKEY_REASON_PAGE: 'RekeyReasonCatAMod2Page',
+  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
+  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatCAMod2age',
+  VEHICLE_CHECKS_MODAL: 'VehicleChecksCatAMod2Modal',
+  VIEW_TEST_RESULT_PAGE:'ViewTestResultCatAMod2Page',
 };
