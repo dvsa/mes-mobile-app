@@ -1,0 +1,27 @@
+<ion-card *ngIf="!shouldHideCard()">
+  <ion-card-header>
+    <h4>Vehicle details</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <data-row [label]="'Transmission'" [value]="getTransmission()" *ngIf="getTransmission()"></data-row>
+      <data-row
+        [label]="'Vehicle registration number'"
+        [value]="getRegistrationNumber()"
+        *ngIf="getRegistrationNumber()">
+      </data-row>
+      <data-row-custom [label]="'Vehicle dimensions'" >
+        <ion-grid>
+          <ion-row>
+            <ion-col col-32>
+              <span class="mes-data"><span class="mes-data bold">L:</span> {{ getVehicleLength() }}</span>
+            </ion-col>
+            <ion-col col-32>
+                <span class="mes-data"><span class="mes-data bold">W:</span> {{ getVehicleWidth() }}</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </data-row-custom>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
