@@ -55,8 +55,12 @@ import {
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { getGearboxCategory, isAutomatic, isManual } from
-'../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import {
+  getGearboxCategory,
+  isAutomatic,
+  isManual,
+} from
+  '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';

@@ -5,7 +5,6 @@ import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
-import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';
@@ -20,6 +19,7 @@ import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatCReducer } from './journal-data/cat-c/journal-data.cat-c.reducer';
 import { testDataCatCReducer } from './test-data/cat-c/test-data.cat-c.reducer';
 import { vehicleDetailsCatCReducer } from './vehicle-details/cat-c/vehicle-details.cat-c.reducer';
+import { passCompletionCatCReducer } from './pass-completion/cat-c/pass-completion.cat-c.reducer';
 
 export function testsCatCReducer(
   action: Action, state: CatCUniqueTypes.TestResult): Required<CatCUniqueTypes.TestResult> {
@@ -33,7 +33,7 @@ export function testsCatCReducer(
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatCReducer,
       testData: testDataCatCReducer,
-      passCompletion: passCompletionReducer,
+      passCompletion: passCompletionCatCReducer,
       postTestDeclarations: postTestDeclarationsReducer,
       testSummary: testSummaryReducer,
       communicationPreferences: communicationPreferencesReducer,

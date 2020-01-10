@@ -7,7 +7,6 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { TestFinalisationComponentsModule } from
 '../../../components/test-finalisation/test-finalisation-component.module';
 import { PassFinalisationComponentsModule } from '../components/pass-finalisation-components.module';
-import { PassFinalisationCatBEComponentsModule } from './components/pass-finalisation.cat-be.components.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +18,6 @@ import { PassFinalisationCatBEComponentsModule } from './components/pass-finalis
     ComponentsModule,
     TestFinalisationComponentsModule,
     PassFinalisationComponentsModule,
-    PassFinalisationCatBEComponentsModule,
   ],
 })
 export class PassFinalisationCatBEPageModule {}

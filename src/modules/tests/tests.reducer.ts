@@ -25,7 +25,7 @@ export const initialState: TestsModel = {
 export function testsReducer(
   state = initialState,
   action: testsActions.Types | journalActions.JournalActionTypes | fakeJournalActions.Types,
-  ): TestsModel {
+): TestsModel {
 
   const slotId = deriveSlotId(state, action);
   const category = deriveCategory(state, action, slotId);
@@ -47,8 +47,8 @@ const deriveSlotId = (state: TestsModel, action: Action): string | null => {
   }
 
   if (action instanceof testsActions.StartTest
-      || action instanceof testsActions.ActivateTest
-      || action instanceof fakeJournalActions.StartE2EPracticeTest) {
+    || action instanceof testsActions.ActivateTest
+    || action instanceof fakeJournalActions.StartE2EPracticeTest) {
     return `${action.slotId}`;
   }
 
@@ -57,9 +57,9 @@ const deriveSlotId = (state: TestsModel, action: Action): string | null => {
 
 const deriveCategory = (state: TestsModel, action: Action, slotId: string | null): TestCategory => {
   if (action instanceof testsActions.StartTest
-      || action instanceof testsActions.ActivateTest
-      || action instanceof testsActions.StartTestReportPracticeTest
-      || action instanceof fakeJournalActions.StartE2EPracticeTest) {
+    || action instanceof testsActions.ActivateTest
+    || action instanceof testsActions.StartTestReportPracticeTest
+    || action instanceof fakeJournalActions.StartE2EPracticeTest) {
     return action.category;
   }
 

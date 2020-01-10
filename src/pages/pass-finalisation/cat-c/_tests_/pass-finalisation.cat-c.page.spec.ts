@@ -36,6 +36,8 @@ import { TransmissionComponent } from '../../../../components/common/transmissio
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
+import { Code78Component } from '../components/code-78/code-78';
+import { TransmissionType } from '../../../../shared/models/transmission-type';
 
 describe('PassFinalisationCatCPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatCPage>;
@@ -54,6 +56,7 @@ describe('PassFinalisationCatCPage', () => {
         MockComponent(FinalisationHeaderComponent),
         MockComponent(LanguagePreferencesComponent),
         MockComponent(WarningBannerComponent),
+        MockComponent(Code78Component),
       ],
       imports: [IonicModule, AppModule],
       providers: [
@@ -173,6 +176,30 @@ describe('PassFinalisationCatCPage', () => {
           .not
           .toHaveBeenCalledWith(new PassFinalisationValidationError('notRequiredControl is blank'));
       }));
+    });
+
+    describe('showAutomaticBanner', () => {
+      it('should show the automatic banner when it is valid', () => {
+        component.transmission = TransmissionType.Automatic;
+        component.code78Present = true;
+        expect(component.shouldShowAutomaticBanner()).toEqual(true);
+      });
+    });
+
+    describe('should show manual banner', () => {
+      it('should show the manual banner when it is valid', () => {
+        component.transmission = TransmissionType.Manual;
+        component.code78Present = true;
+        expect(component.shouldShowManualBanner()).toEqual(true);
+      });
+    });
+
+    describe('shouldHideBanner', () => {
+      it('should hide banner when only transmission is selected', () => {
+        component.transmission = TransmissionType.Manual;
+        expect(component.shouldShowCode78Banner()).toEqual(false);
+      });
+
     });
   });
 });

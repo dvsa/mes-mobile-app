@@ -21,7 +21,7 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.cat-b.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   InstructorRegistrationNumberChanged,
