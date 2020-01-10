@@ -7,8 +7,9 @@ import { LogType } from '../../shared/models/log.model';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { LogHelper } from '../logs/logsHelper';
-import { from } from 'rxjs/observable/from';
-import { timeout, map, retry } from 'rxjs/operators';
+import { timeout, retry, map } from 'rxjs/operators';
+import { defer } from 'rxjs/observable/defer';
+import { Observable } from 'rxjs/Observable';
 
 declare let cordova: any;
 
@@ -47,32 +48,37 @@ export class DeviceProvider implements IDeviceProvider {
   /**
    * [enableSingleAppMode description]
    *
-   * @returns void
+   * @returns Promise<any>
    *
    * Runs setSingleAppMode(true) and retries a number
    * of times, eventually timing out after a specified
    * duration.
    *
-   * This method is designed to execute and
-   * complete in the background without blocking the
-   * user, hence the void return type. If with retries,
-   * ASAM still failed to enable, a unique log is sent.
-   */
-  enableSingleAppMode(): void {
-    from(this.setSingleAppMode(true)).pipe(
-      map((didSucceed: boolean): boolean | Error => {
-        if (!didSucceed) throw new Error();
-        return didSucceed;
-      }),
-      retry(this.enableASAMRetryLimit),
-      timeout(this.enableASAMTimeout),
-    ).toPromise()
-    .catch(() => {
-      this.store$.dispatch(new SaveLog(this.logHelper.createLog(
-        LogType.ERROR, null,
-        this.enableASAMRetryFailureMessage
-      )));
-    });
+   * This method is designed to execute and complete
+   * in the background without blocking the user.
+   * If after retrying, ASAM still failed to enable,
+   * a unique log is sent.
+  */
+  enableSingleAppMode = async(): Promise<any> => {
+    const enableAsamWithRetriesAndTimeout$: Observable<boolean> = defer(() => this.setSingleAppMode(true)).pipe(
+        map((didSucceed: boolean): boolean => {
+          if (!didSucceed) throw new Error('Call to enable ASAM failed');
+          return didSucceed;
+        }),
+        retry(this.enableASAMRetryLimit),
+        timeout(this.enableASAMTimeout),
+      );
+
+    const promisifiedEnableAsamWithRetriesAndTimeout = enableAsamWithRetriesAndTimeout$.toPromise()
+      .catch(() => {
+        this.store$.dispatch(new SaveLog(this.logHelper.createLog(
+          LogType.ERROR,
+          null,
+          this.enableASAMRetryFailureMessage,
+        )));
+      });
+
+    return await promisifiedEnableAsamWithRetriesAndTimeout;
   }
 
   disableSingleAppMode = async (): Promise<boolean> => {
