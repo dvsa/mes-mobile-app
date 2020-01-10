@@ -39,7 +39,7 @@ export default [
   {
     code: 'S7',
     description: 'Show me how you would clean the windscreen using the windscreen washer and wipers.',
-    shortName: 'Clean windescreen',
+    shortName: 'Clean windscreen',
   },
   {
     code: 'S8',
