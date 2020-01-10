@@ -193,7 +193,6 @@ export class TestReportCatCPage extends BasePageComponent {
       manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
       testData$.pipe(
         map((data) => {
-          // TODO: MES-4287 Use category c function
           this.isTestReportValid =
             this.testReportValidatorProvider.isTestReportValid(data, TestCategory.C);
           this.missingLegalRequirements =

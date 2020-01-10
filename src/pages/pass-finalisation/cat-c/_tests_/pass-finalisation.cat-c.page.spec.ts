@@ -180,7 +180,6 @@ describe('PassFinalisationCatCPage', () => {
 
     describe('showAutomaticBanner', () => {
       it('should show the automatic banner when it is valid', () => {
-        // component.ionViewDidEnter();
         component.transmission = TransmissionType.Automatic;
         component.code78Present = true;
         expect(component.shouldShowAutomaticBanner()).toEqual(true);
@@ -189,7 +188,6 @@ describe('PassFinalisationCatCPage', () => {
 
     describe('should show manual banner', () => {
       it('should show the manual banner when it is valid', () => {
-        // component.ionViewDidEnter();
         component.transmission = TransmissionType.Manual;
         component.code78Present = true;
         expect(component.shouldShowManualBanner()).toEqual(true);
@@ -198,7 +196,6 @@ describe('PassFinalisationCatCPage', () => {
 
     describe('shouldHideBanner', () => {
       it('should hide banner when only transmission is selected', () => {
-        // component.ionViewDidEnter();
         component.transmission = TransmissionType.Manual;
         expect(component.shouldShowCode78Banner()).toEqual(false);
       });
