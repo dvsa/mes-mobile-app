@@ -27,4 +27,4 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
     FaultSummaryProvider,
   ],
 })
-export class DebriefCatBEPageModule { }
+export class DebriefCatAMod1PageModule { }
