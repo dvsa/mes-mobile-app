@@ -5,7 +5,6 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { TestData } from '@dvsa/mes-test-schema/categories/common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import {
   hasManoeuvreBeenCompletedCatB,
   hasVehicleChecksBeenCompletedCatB,
@@ -24,8 +23,6 @@ export class TestReportValidatorProvider {
         return this.validateLegalRequirementsCatB(data);
       case TestCategory.BE:
         return this.validateLegalRequirementsCatBE(data);
-      case TestCategory.C:
-        return this.validateLegalRequirementsCatC(data);
       default:
         return false;
     }
@@ -37,8 +34,6 @@ export class TestReportValidatorProvider {
         return this.getMissingLegalRequirementsCatB(data);
       case TestCategory.BE:
         return this.getMissingLegalRequirementsCatBE(data);
-      case TestCategory.C:
-        return this.getMissingLegalRequirementsCatC(data);
       default:
         return [];
     }
@@ -96,24 +91,6 @@ export class TestReportValidatorProvider {
       uncoupleRecouple
     );
   }
-
-  private validateLegalRequirementsCatC(data: CatCUniqueTypes.TestData): boolean {
-    const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
-    const normalStart2: boolean =  get(data, 'testRequirements.normalStart2', false);
-    const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
-    const angledStartControlledStop:boolean =  get(data, 'testRequirements.angledStartControlledStop', false);
-    const manoeuvre: boolean = hasManoeuvreBeenCompletedCatBE(data) || false ;
-    const eco: boolean =  get(data, 'eco.completed', false);
-
-    return (
-      (normalStart1 || normalStart2) &&
-      uphillStart &&
-      angledStartControlledStop &&
-      manoeuvre &&
-      eco
-    );
-  }
-
   private getMissingLegalRequirementsCatBE(data: CatBEUniqueTypes.TestData): legalRequirementsLabels[] {
     const result: legalRequirementsLabels[] = [];
 
@@ -125,20 +102,6 @@ export class TestReportValidatorProvider {
     !hasManoeuvreBeenCompletedCatBE(data) && result.push(legalRequirementsLabels.manoeuvre);
     !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
     !get(data, 'uncoupleRecouple.selected', false) && result.push(legalRequirementsLabels.uncoupleRecouple);
-
-    return result;
-  }
-
-  private getMissingLegalRequirementsCatC(data: CatCUniqueTypes.TestData): legalRequirementsLabels[] {
-    const result: legalRequirementsLabels[] = [];
-
-    (!get(data, 'testRequirements.normalStart1', false) && !get(data, 'testRequirements.normalStart2', false))
-    && result.push(legalRequirementsLabels.normalStart1);
-    !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
-    !get(data, 'testRequirements.angledStartControlledStop', false)
-    && result.push(legalRequirementsLabels.angledStartControlledStop);
-    !hasManoeuvreBeenCompletedCatBE(data) && result.push(legalRequirementsLabels.manoeuvre);
-    !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
 
     return result;
   }
