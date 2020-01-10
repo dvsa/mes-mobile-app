@@ -114,6 +114,15 @@ describe('TestReportCatCPage', () => {
       });
     });
 
+    describe('Uncouple/Recouple', () => {
+      it('should set the showUncoupleRecouple field to FALSE if property does not exist in test data', () => {
+        expect(component.uncoupleRecouple()).toBeFalsy();
+      });
+      // TODO: MES-4535 - Add Truthy test for CAT CE/C1E
+      // it('should set the showUncoupleRecouple field to TRUE if property does exist in test data', () => {
+      //   expect(component.uncoupleRecouple()).toBeTruthy();
+      // });
+    });
   });
 
   describe('DOM', () => {
