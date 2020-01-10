@@ -62,6 +62,7 @@ describe('VehicleChecksComponent', () => {
     it('should set the vehicle checks driving fault count', (done: DoneFn) => {
       component.ngOnInit();
       component.componentState.vehicleChecksDrivingFaultCount$.subscribe((result) => {
+        // TODO - AMOD2-PREP: Use cat a mod2 provider function
         expect(component.faultCountProvider.getVehicleChecksFaultCountCatBE).toHaveBeenCalled();
         expect(result).toEqual(4);
         done();
@@ -70,6 +71,7 @@ describe('VehicleChecksComponent', () => {
     it('should set the vehicle checks serious fault count', (done: DoneFn) => {
       component.ngOnInit();
       component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
+        // TODO - AMOD2-PREP: Use cat a mod2 provider function
         expect(component.faultCountProvider.getVehicleChecksFaultCountCatBE).toHaveBeenCalled();
         expect(result).toEqual(1);
         done();
