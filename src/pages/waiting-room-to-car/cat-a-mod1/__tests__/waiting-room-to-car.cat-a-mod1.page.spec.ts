@@ -181,4 +181,3 @@ describe('WaitingRoomToCarCatAMod1Page', () => {
     }));
   });
 });
-
