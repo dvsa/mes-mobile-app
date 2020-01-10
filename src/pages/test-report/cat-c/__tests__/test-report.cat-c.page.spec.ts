@@ -136,8 +136,15 @@ describe('TestReportCatCPage', () => {
         expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeDefined();
       });
     });
-    it('should NOT display the uncouple/recouple button if property does not exists in test data', () => {
-      expect(fixture.debugElement.query(By.css('.uncouple-recouple-competency'))).toBeNull();
+
+    describe('Uncouple/Recouple', () => {
+      it('should NOT display the uncouple/recouple button if property does not exists in test data', () => {
+        expect(fixture.debugElement.query(By.css('.uncouple-recouple-competency'))).toBeNull();
+      });
+      it('should display the uncouple/recouple button if property does exists in test data', () => {
+        component.showUncoupleRecouple = true;
+        expect(fixture.debugElement.query(By.css('.uncouple-recouple-competency'))).toBeNull();
+      });
     });
   });
 
