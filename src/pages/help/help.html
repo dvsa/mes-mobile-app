@@ -44,6 +44,7 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
+
   <ion-card>
     <ion-card-header>
       <h4>Audio recording</h4>
@@ -87,6 +88,29 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <h4>Camera</h4>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid no-padding>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <div>Photos taken here are saved to the camera roll.</div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <button ion-button id="camera-button" class="mes-primary-button" (click)="openCamera()">
+              <h3>Open camera</h3>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card [formGroup]="formGroup">
     <ion-card-header>
       <h4>Messages</h4>

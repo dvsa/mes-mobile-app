@@ -55,6 +55,7 @@
     "@dvsa/mes-test-schema": "^3.0.0",
     "@ionic-native-mocks/network": "^2.0.12",
     "@ionic-native/app-version": "^4.20.0",
+    "@ionic-native/camera": "^4.20.0",
     "@ionic-native/core": "~4.17.0",
     "@ionic-native/device": "^4.18.0",
     "@ionic-native/file": "^4.20.0",
@@ -79,6 +80,7 @@
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-appconfig": "^1.1.4",
     "cordova-plugin-autonomous-single-app-mode": "git+https://github.com/dvsa/cordova-plugin-autonomous-single-app-mode.git",
+    "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-device-authentication": "git+https://github.com/dvsa/cordova-plugin-device-authentication.git",
@@ -204,7 +206,8 @@
       "cordova-plugin-is-debug": {},
       "cordova-plugin-geolocation": {},
       "cordova-plugin-file": {},
-      "cordova-plugin-media": {}
+      "cordova-plugin-media": {},
+      "cordova-plugin-camera": {}
     },
     "platforms": [
       "ios"

@@ -26,6 +26,7 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { Subscription } from 'rxjs/Subscription';
 import { AudioRecorderProvider } from '../../providers/audio-recorder/audio-recorder';
 import { DateTime } from '../../shared/helpers/date-time';
+import { CameraOptions, Camera } from '@ionic-native/camera';
 // import { DeviceProvider } from '../../providers/device/device';
 
 interface HelpPageState {
@@ -65,6 +66,7 @@ export class HelpPage extends BasePageComponent implements OnInit {
     private geolocation: Geolocation,
     private audioRecorder: AudioRecorderProvider,
     private alertController: AlertController,
+    private camera: Camera,
     // private deviceProvider: DeviceProvider,
   ) {
     super(platform, navController, authenticationProvider);
@@ -208,6 +210,26 @@ export class HelpPage extends BasePageComponent implements OnInit {
         console.log('list', JSON.stringify(this.recordings));
       })
       .catch(err => console.log(err));
+  }
+
+  openCamera(): void {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      saveToPhotoAlbum: true,
+    };
+
+    this.camera.getPicture(options).then((imageData) => {
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64 (DATA_URL):
+      const base64Image = `data:image/jpeg;base64,${imageData}`;
+      console.log(base64Image.length);
+    }, (err) => {
+      console.log('camera error', err);
+    });
   }
 
 }

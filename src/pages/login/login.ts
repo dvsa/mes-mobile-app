@@ -95,6 +95,9 @@ export class LoginPage extends BasePageComponent {
 
       this.initialiseAuthentication();
 
+      this.authenticationProvider.initialiseAuthentication();
+      this.authenticationProvider.determineAuthenticationMode();
+
       await this.authenticationProvider.login();
 
       this.store$.dispatch(new LoadEmployeeId(this.authenticationProvider.getEmployeeId()));

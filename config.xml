@@ -101,11 +101,24 @@
     <plugin name="cordova-plugin-geolocation" spec="4.0.2" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-media" spec="~5.0.3" />
+    <plugin name="cordova-plugin-camera" spec="4.1.0" />
     <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
         <string>Your location is only required when requesting emergency assistance</string>
     </edit-config>
     <edit-config file="*-Info.plist" mode="merge" target="NSMicrophoneUsageDescription">
         <string>Microphone access is needed when recording audio in emergency situations</string>
+    </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+        <string>need camera access to take pictures</string>
+    </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
+        <string>need photo library access to get pictures from there</string>
+    </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+        <string>need location access to find things nearby</string>
+    </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
+        <string>need photo library access to save pictures there</string>
     </edit-config>
     <hook src="scripts/editPlist.js" type="before_build" />
     <engine name="ios" spec="4.5.5" />

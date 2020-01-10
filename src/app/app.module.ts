@@ -48,6 +48,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Media } from '@ionic-native/media';
 import { File } from '@ionic-native/file';
 import { AudioRecorderProvider } from '../providers/audio-recorder/audio-recorder';
+import { Camera } from '@ionic-native/camera';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -117,6 +118,7 @@ const enableDevTools = environment && environment.enableDevTools;
     File,
     Media,
     AudioRecorderProvider,
+    Camera,
   ],
 })
 export class AppModule { }
