@@ -20,14 +20,14 @@ import { FaultsDataRowComponent } from '../../../../components/faults-data-row/f
 import { VehicleChecksDataRowComponent } from '../../../../components/vehicle-checks-data-row/vehicle-checks-data-row';
 import { FaultSummaryProvider } from '../../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
-// todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+// todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import {
   DataRowListItem,
   TestRequirementsLabels,
   ViewTestResultLabels,
 } from '../../../../components/data-row-with-list/data-list-with-row.model';
-// todo: PREP-AMOD1 change to manoeuvreTypeLabels from Cat A Mod 1
+// todo: PREP-AMOD2 change to manoeuvreTypeLabels from Cat A Mod 2
 import { manoeuvreTypeLabels } from '../../../../../../shared/constants/competencies/catbe-manoeuvres';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
@@ -72,7 +72,7 @@ describe('DebriefCardComponent', () => {
   describe('Class', () => {
     describe('getTestRequirements', () => {
       it('should return the correct values for all test requirements', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
         const data: CatBEUniqueTypes.TestData = {
           testRequirements: {
             angledStartControlledStop: true,
@@ -96,7 +96,7 @@ describe('DebriefCardComponent', () => {
     });
     describe('getManoeuvre', () => {
       it('should return Reverse Left if the manoeuvre has been completed', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
         const data: CatBEUniqueTypes.TestData = {
           manoeuvres: {
             reverseLeft: {
@@ -109,7 +109,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getManoeuvre()).toEqual(manoeuvreTypeLabels.reverseLeft);
       });
       it('should return None if the manoeuvre has not been completed', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
         const data: CatBEUniqueTypes.TestData = {
           manoeuvres: {
             reverseLeft: {
@@ -127,7 +127,7 @@ describe('DebriefCardComponent', () => {
     });
     describe('getEco', () => {
       it('should return the correct data for eco', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
         const data: CatBEUniqueTypes.TestData = {
           eco: {
             adviceGivenControl: true,
@@ -176,7 +176,7 @@ describe('DebriefCardComponent', () => {
     });
     describe('getETA', () => {
       it('should return the correct data if all eta options have been selected', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
         const data: CatBEUniqueTypes.TestData = {
           ETA: {
             physical: true,
@@ -188,7 +188,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getETA()).toEqual('Physical and Verbal');
       });
       it('should return the correct data if only a physical eta has been selected', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
         const data: CatBEUniqueTypes.TestData = {
           ETA: {
             physical: true,
@@ -200,7 +200,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getETA()).toEqual('Physical');
       });
       it('should return the correct data if only a verbal eta has been selected', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
         const data: CatBEUniqueTypes.TestData = {
           ETA: {
             verbal: true,
@@ -219,7 +219,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getShowMeQuestions()).toEqual([]);
       });
       it('should return the correct data when present', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
         const data: CatBEUniqueTypes.TestData = {
           vehicleChecks: {
             showMeQuestions: [
@@ -243,7 +243,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getTellMeQuestions()).toEqual([]);
       });
       it('should return the correct data when present', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
         const data: CatBEUniqueTypes.TestData = {
           vehicleChecks: {
             tellMeQuestions: [
