@@ -69,6 +69,7 @@ export const CAT_C = {
   VIEW_TEST_RESULT_PAGE:'ViewTestResultCatCPage',
 };
 
+<<<<<<< HEAD
 export const CAT_AMOD1 = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeAMod1Page',
   COMMUNICATION_PAGE: 'CommunicationCatAMod1Page',
@@ -88,6 +89,8 @@ export const CAT_AMOD1 = {
   VIEW_TEST_RESULT_PAGE:'ViewTestResultAMod1Page',
 };
 
+=======
+>>>>>>> cat-a-mod1 page constants created
 export const CAT_A_MOD2 = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatAMod2Page',
   COMMUNICATION_PAGE: 'CommunicationCatAMod2Page',
