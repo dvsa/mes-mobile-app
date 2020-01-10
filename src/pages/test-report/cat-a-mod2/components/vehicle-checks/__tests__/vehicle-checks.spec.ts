@@ -56,6 +56,7 @@ describe('VehicleChecksComponent', () => {
     };
 
     beforeEach(() => {
+      // TODO - AMOD2-PREP: Use cat a mod2 provider function name
       spyOn(component.faultCountProvider, 'getVehicleChecksFaultCountCatBE').and.returnValue(vehicleChecksScore);
     });
 
