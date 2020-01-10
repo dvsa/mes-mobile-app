@@ -14,6 +14,10 @@ export const CAT_A_MOD1 = {
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
 };
 
+export const CAT_A_MOD2 = {
+  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
+};
+
 export const CAT_B = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBPage',
   COMMUNICATION_PAGE: 'CommunicationCatBPage',
