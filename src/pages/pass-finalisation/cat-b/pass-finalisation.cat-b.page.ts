@@ -35,7 +35,7 @@ import { map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.cat-b.reducer';
 import {
   getGearboxCategory,
   isAutomatic,

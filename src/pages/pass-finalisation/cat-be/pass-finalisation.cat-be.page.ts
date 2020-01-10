@@ -67,7 +67,6 @@ import {
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { merge } from 'rxjs/observable/merge';
 import { TransmissionType } from '../../../shared/models/transmission-type';
@@ -101,7 +100,6 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
   passCertificateNumberInput: ElementRef;
   testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
-  category: TestCategory = TestCategory.BE;
   merged$: Observable<string>;
   transmission: GearboxCategory;
   subscription: Subscription;

@@ -4,11 +4,11 @@ import { pickBy, endsWith, sumBy, get } from 'lodash';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../shared/models/vehicle-checks-score.model';
 import { getCompetencyFaults } from '../../shared/helpers/competency';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 
 @Injectable()
 export class FaultCountProvider {
@@ -18,24 +18,28 @@ export class FaultCountProvider {
   public getDrivingFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getDrivingFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getDrivingFaultSumCountCatBE(data);
+    if (category === TestCategory.C) return this.getDrivingFaultSumCountCatC(data);
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
   public getSeriousFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getSeriousFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getSeriousFaultSumCountCatBE(data);
+    if (category === TestCategory.C) return this.getSeriousFaultSumCountCatC(data);
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
   public getDangerousFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getDangerousFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getDangerousFaultSumCountCatBE(data);
+    if (category === TestCategory.C) return this.getDangerousFaultSumCountCatC(data);
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
   public getManoeuvreFaultCount = (category: TestCategory, data: Object, faultType: CompetencyOutcome): number => {
     if (category === TestCategory.B) return this.sumManoeuvreFaults(data, faultType);
     if (category === TestCategory.BE) return this.sumManoeuvreFaults(data, faultType);
+    if (category === TestCategory.C) return this.sumManoeuvreFaults(data, faultType);
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
@@ -183,7 +187,7 @@ export class FaultCountProvider {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { drivingFaults, manoeuvres,  vehicleChecks, uncoupleRecouple } = data;
+    const { drivingFaults, manoeuvres, vehicleChecks, uncoupleRecouple } = data;
 
     let faultTotal: number = 0;
     getCompetencyFaults(drivingFaults).forEach(fault => faultTotal = faultTotal + fault.faultCount);
@@ -191,10 +195,27 @@ export class FaultCountProvider {
       (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.DF) ? 1 : 0;
 
     const result =
-       faultTotal +
-       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-       this.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults +
-       uncoupleRecoupleHasDrivingFault;
+      faultTotal +
+      this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
+      this.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults +
+      uncoupleRecoupleHasDrivingFault;
+
+    return result;
+  }
+
+  private getDrivingFaultSumCountCatC = (data: CatCUniqueTypes.TestData): number => {
+
+    // The way how we store the driving faults differs for certain competencies
+    // Because of this we need to pay extra attention on summing up all of them
+    const { drivingFaults, manoeuvres, vehicleChecks } = data;
+
+    let faultTotal: number = 0;
+    getCompetencyFaults(drivingFaults).forEach(fault => faultTotal = faultTotal + fault.faultCount);
+
+    const result =
+      faultTotal +
+      this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
+      this.getVehicleChecksFaultCountCatC(vehicleChecks).drivingFaults;
 
     return result;
   }
@@ -222,28 +243,56 @@ export class FaultCountProvider {
     return result;
   }
 
+  private getSeriousFaultSumCountCatC = (data: CatCUniqueTypes.TestData): number => {
+
+    // The way how we store serious faults differs for certain competencies
+    // Because of this we need to pay extra attention on summing up all of them
+    const { seriousFaults, manoeuvres, vehicleChecks } = data;
+
+    const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
+    const vehicleCheckSeriousFaults =
+      vehicleChecks ? this.getVehicleChecksFaultCountCatC(vehicleChecks).seriousFaults : 0;
+
+    const result =
+      seriousFaultSumOfSimpleCompetencies +
+      this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) +
+      vehicleCheckSeriousFaults;
+
+    return result;
+  }
+
   private getDangerousFaultSumCountCatBE = (data: CatBEUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { dangerousFaults, manoeuvres, vehicleChecks, uncoupleRecouple } = data;
+    const { dangerousFaults, manoeuvres, uncoupleRecouple } = data;
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
-    const vehicleCheckDangerousFaults = vehicleChecks ? vehicleChecks.showMeQuestions.filter((check) => {
-      check.outcome === CompetencyOutcome.D;
-    }).length : 0;
     const uncoupleRecoupleDangerousFaults =
       (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.D) ? 1 : 0;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
       this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) +
-      vehicleCheckDangerousFaults +
       uncoupleRecoupleDangerousFaults;
 
     return result;
   }
 
+  private getDangerousFaultSumCountCatC = (data: CatCUniqueTypes.TestData): number => {
+
+    // The way how we store serious faults differs for certain competencies
+    // Because of this we need to pay extra attention on summing up all of them
+    const { dangerousFaults, manoeuvres } = data;
+
+    const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
+
+    const result =
+      dangerousFaultSumOfSimpleCompetencies +
+      this.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D);
+
+    return result;
+  }
   private sumManoeuvreFaults(manoeuvres: Object, faultType: CompetencyOutcome): number {
     if (!manoeuvres) {
       return 0;

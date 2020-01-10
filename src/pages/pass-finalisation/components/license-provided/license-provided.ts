@@ -1,7 +1,20 @@
-import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived } from
-'../../../../modules/tests/pass-completion/pass-completion.actions';
+import {
+  Component,
+  OnChanges,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
+import {
+  ProvisionalLicenseReceived,
+  ProvisionalLicenseNotReceived,
+} from
+  '../../../../modules/tests/pass-completion/pass-completion.actions';
 
 @Component({
   selector: 'license-provided',
