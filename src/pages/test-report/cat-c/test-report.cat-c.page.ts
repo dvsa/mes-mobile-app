@@ -50,8 +50,8 @@ import {
   getTestRequirementsCatC,
 } from '../../../modules/tests/test-data/cat-c/test-requirements/test-requirements.cat-c.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
-import { CategoryCode } from "@dvsa/mes-test-schema/categories/common";
-import { getTestCategory } from "../../../modules/tests/category/category.reducer";
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
