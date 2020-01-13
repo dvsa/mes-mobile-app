@@ -95,7 +95,7 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
-import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
+import { CAT_A_MOD2, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
@@ -309,6 +309,7 @@ export class OfficeCatAMod2Page extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
+            // TODO - PREP-AMOD2: update to cat a mod 2
             this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
           )),
       ),
@@ -568,7 +569,7 @@ export class OfficeCatAMod2Page extends BasePageComponent {
 
   goToReasonForRekey() {
     if (this.isFormValid()) {
-      this.navController.push(CAT_BE.REKEY_REASON_PAGE);
+      this.navController.push(CAT_A_MOD2.REKEY_REASON_PAGE);
     }
   }
 
