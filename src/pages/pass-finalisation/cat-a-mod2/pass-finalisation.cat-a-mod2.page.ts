@@ -243,7 +243,7 @@ export class PassFinalisationCatAMod2Page extends BasePageComponent {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.store$.dispatch(new PersistTests());
-      this.navController.push(CAT_BE.HEALTH_DECLARATION_PAGE);
+      this.navController.push(CAT_A_MOD2.HEALTH_DECLARATION_PAGE);
       return;
     }
     Object.keys(this.form.controls).forEach((controlName) => {
