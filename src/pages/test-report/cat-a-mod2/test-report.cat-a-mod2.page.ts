@@ -63,10 +63,10 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  
+
   // TODO - AMOD2-PREP: Use cat a mod2 type
   testData$: Observable<CatBEUniqueTypes.TestData>;
-  
+
   // TODO - AMOD2-PREP: Use cat a mod2 type
   testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
 }
