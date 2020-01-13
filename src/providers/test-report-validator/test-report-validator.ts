@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { get } from 'lodash';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { FaultCountProvider } from '../fault-count/fault-count';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { TestData } from '@dvsa/mes-test-schema/categories/common';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import {
   hasManoeuvreBeenCompletedCatB,
   hasVehicleChecksBeenCompletedCatB,
 } from '../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { hasManoeuvreBeenCompletedCatBE } from '../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { hasManoeuvreBeenCompletedCatC } from '../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import { legalRequirementsLabels } from '../../shared/constants/legal-requirements/legal-requirements.constants';
 
 @Injectable()
@@ -23,6 +25,8 @@ export class TestReportValidatorProvider {
         return this.validateLegalRequirementsCatB(data);
       case TestCategory.BE:
         return this.validateLegalRequirementsCatBE(data);
+      case TestCategory.C:
+        return this.validateLegalRequirementsVocationalTrailerLight(data);
       default:
         return false;
     }
@@ -34,6 +38,8 @@ export class TestReportValidatorProvider {
         return this.getMissingLegalRequirementsCatB(data);
       case TestCategory.BE:
         return this.getMissingLegalRequirementsCatBE(data);
+      case TestCategory.C:
+        return this.getMissingLegalRequirementsVocationalTrailerLight(data);
       default:
         return [];
     }
@@ -92,6 +98,23 @@ export class TestReportValidatorProvider {
     );
   }
 
+  private validateLegalRequirementsVocationalTrailerLight(data: CatCUniqueTypes.TestData): boolean {
+    const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
+    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
+    const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
+    const angledStartControlledStop: boolean = get(data, 'testRequirements.angledStartControlledStop', false);
+    const manoeuvre: boolean = hasManoeuvreBeenCompletedCatC(data) || false;
+    const eco: boolean = get(data, 'eco.completed', false);
+
+    return (
+      (normalStart1 || normalStart2) &&
+      uphillStart &&
+      angledStartControlledStop &&
+      manoeuvre &&
+      eco
+    );
+  }
+
   private getMissingLegalRequirementsCatBE(data: CatBEUniqueTypes.TestData): legalRequirementsLabels[] {
     const result: legalRequirementsLabels[] = [];
 
@@ -107,4 +130,17 @@ export class TestReportValidatorProvider {
     return result;
   }
 
+  private getMissingLegalRequirementsVocationalTrailerLight(data: CatCUniqueTypes.TestData): legalRequirementsLabels[] {
+    const result: legalRequirementsLabels[] = [];
+
+    (!get(data, 'testRequirements.normalStart1', false) && !get(data, 'testRequirements.normalStart2', false))
+      && result.push(legalRequirementsLabels.normalStart1);
+    !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
+    !get(data, 'testRequirements.angledStartControlledStop', false)
+      && result.push(legalRequirementsLabels.angledStartControlledStop);
+    !hasManoeuvreBeenCompletedCatC(data) && result.push(legalRequirementsLabels.manoeuvre);
+    !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
+
+    return result;
+  }
 }

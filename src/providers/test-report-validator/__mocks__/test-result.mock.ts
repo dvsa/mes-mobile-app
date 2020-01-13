@@ -1,5 +1,6 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const validTestCatB: CatBUniqueTypes.TestData = {
@@ -54,5 +55,32 @@ export const validTestCatBE: CatBEUniqueTypes.TestData = {
   },
   uncoupleRecouple: {
     selected: true,
+  },
+};
+
+export const validTestCatC: CatCUniqueTypes.TestData = {
+  testRequirements: {
+    angledStartControlledStop: true,
+    normalStart2: true,
+    uphillStart: true,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+  vehicleChecks: {
+    tellMeQuestions: [
+      { outcome: CompetencyOutcome.P },
+      { outcome: CompetencyOutcome.P },
+    ],
+    showMeQuestions: [
+      { outcome: CompetencyOutcome.P },
+      { outcome: CompetencyOutcome.P },
+      { outcome: CompetencyOutcome.P },
+    ],
+  },
+  eco: {
+    completed: true,
   },
 };
