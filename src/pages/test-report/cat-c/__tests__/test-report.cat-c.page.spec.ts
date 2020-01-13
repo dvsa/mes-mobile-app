@@ -154,8 +154,18 @@ describe('TestReportCatCPage', () => {
       expect(component.showUncoupleRecouple()).toBeFalsy();
     });
 
-    it('should return true when the test is not a category C', () => {
-      component.testCategory = TestCategory.B;
+    it('should return false when the test is a category C1', () => {
+      component.testCategory = TestCategory.C1;
+      expect(component.showUncoupleRecouple()).toBeFalsy();
+    });
+
+    it('should return true when the test is a category C1E', () => {
+      component.testCategory = TestCategory.C1E;
+      expect(component.showUncoupleRecouple()).toBeTruthy();
+    });
+
+    it('should return true when the test is a category CE', () => {
+      component.testCategory = TestCategory.CE;
       expect(component.showUncoupleRecouple()).toBeTruthy();
     });
   });

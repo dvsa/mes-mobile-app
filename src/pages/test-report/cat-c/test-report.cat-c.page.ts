@@ -293,5 +293,5 @@ export class TestReportCatCPage extends BasePageComponent {
     this.navController.push(CAT_C.DEBRIEF_PAGE);
   }
 
-  showUncoupleRecouple = (): boolean => this.testCategory !== TestCategory.C;
+  showUncoupleRecouple = (): boolean => this.testCategory === TestCategory.CE || this.testCategory === TestCategory.C1E;
 }
