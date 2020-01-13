@@ -69,11 +69,13 @@ import {
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { CategoryCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { TransmissionType } from '../../../shared/models/transmission-type';
 import { merge } from 'rxjs/observable/merge';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/cat-c/pass-completion.cat-c.reducer';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -90,6 +92,7 @@ interface PassFinalisationPageState {
   d255$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -110,6 +113,7 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   subscription: Subscription;
   code78Present: boolean = null;
   provisionalLicenseIsReceived: boolean;
+  testCategory: CategoryCode;
 
   manualMessage: string = 'A <b><em>manual</em></b> licence will be issued';
   automaticMessage: string =
@@ -213,12 +217,16 @@ export class PassFinalisationCatCPage extends BasePageComponent {
         select(getCommunicationPreference),
         select(getConductedLanguage),
       ),
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
+      ),
     };
 
-    const { transmission$ } = this.pageState;
+    const { transmission$, testCategory$ } = this.pageState;
 
     this.merged$ = merge(
       transmission$.pipe(map(value => (this.transmission = value))),
+      testCategory$.pipe(map(value => (this.testCategory = value))),
     );
     this.subscription = this.merged$.subscribe();
 
@@ -344,4 +352,6 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   shouldShowCandidateDoesntNeedLicenseBanner(): boolean {
     return this.provisionalLicenseIsReceived;
   }
+
+  showCode78 = (): boolean => this.testCategory === TestCategory.C || this.testCategory === TestCategory.CE;
 }

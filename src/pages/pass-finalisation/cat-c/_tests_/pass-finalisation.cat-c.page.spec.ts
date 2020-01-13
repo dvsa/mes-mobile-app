@@ -38,6 +38,7 @@ import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
 import { Code78Component } from '../components/code-78/code-78';
 import { TransmissionType } from '../../../../shared/models/transmission-type';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('PassFinalisationCatCPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatCPage>;
@@ -200,6 +201,28 @@ describe('PassFinalisationCatCPage', () => {
         expect(component.shouldShowCode78Banner()).toEqual(false);
       });
 
+    });
+
+    describe('showCode78', () => {
+      it('should return true when the test is a category C', () => {
+        component.testCategory = TestCategory.C;
+        expect(component.showCode78()).toBeTruthy();
+      });
+
+      it('should return true when the test is a category C+E', () => {
+        component.testCategory = TestCategory.CE;
+        expect(component.showCode78()).toBeTruthy();
+      });
+
+      it('should return false when the test is a category C1E', () => {
+        component.testCategory = TestCategory.C1E;
+        expect(component.showCode78()).toBeFalsy();
+      });
+
+      it('should return false when the test is a category C1', () => {
+        component.testCategory = TestCategory.C1;
+        expect(component.showCode78()).toBeFalsy();
+      });
     });
   });
 });
