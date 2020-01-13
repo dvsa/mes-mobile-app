@@ -92,3 +92,5 @@ export default [
   },
 
 ] as VehicleChecksQuestion[];
+
+export const NUMBER_OF_SHOW_ME_QUESTIONS = 3;

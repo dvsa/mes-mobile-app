@@ -1,4 +1,4 @@
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
@@ -14,39 +14,42 @@ import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle
 import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-// TODO: MES-4254 Import cat c selector
-import {
-  getVehicleChecksCatBE,
-  getSelectedShowMeQuestions,
-  getSelectedTellMeQuestions,
-} from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 
-// TODO: MES-4254 Import cat c reducer
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
-
-// TODO: MES-4254 Import cat c actions
 import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
-} from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+} from '../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 
-// TODO: MES-4254 Import cat C constants
 import {
- NUMBER_OF_TELL_ME_QUESTIONS,
-} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER,
+} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.vocational.constants';
 
-// TODO: MES-4254 Import cat c constants
 import {
-  NUMBER_OF_SHOW_ME_QUESTIONS,
-} from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
+  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER,
+} from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
+
+import {
+  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_TRAILER,
+} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.vocational-trailer.constants';
+
+import {
+  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER,
+} from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
+
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
 import * as vehicleChecksModalActions from './vehicle-checks-modal.cat-c.actions';
+import {
+  getVehicleChecksCatC,
+  getSelectedShowMeQuestions,
+  getSelectedTellMeQuestions,
+} from '../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 
 interface VehicleChecksModalCatCState {
   candidateName$: Observable<string>;
@@ -61,14 +64,16 @@ interface VehicleChecksModalCatCState {
   templateUrl: 'vehicle-checks-modal.cat-c.page.html',
 })
 export class VehicleChecksCatCModal {
-
   pageState: VehicleChecksModalCatCState;
   formGroup: FormGroup;
 
   showMeQuestions: VehicleChecksQuestion[];
   tellMeQuestions: VehicleChecksQuestion[];
-  readonly showMeQuestionsNumberArray: number[] = Array(NUMBER_OF_SHOW_ME_QUESTIONS);
-  readonly tellMeQuestionsNumberArray: number[] = Array(NUMBER_OF_TELL_ME_QUESTIONS);
+
+  category : TestCategory;
+
+  showMeQuestionsNumberArray: number[];
+  tellMeQuestionsNumberArray: number[];
 
   vehicleChecksScore: VehicleChecksScore;
 
@@ -79,12 +84,35 @@ export class VehicleChecksCatCModal {
     private navController: NavController,
     private faultCountProvider: FaultCountProvider,
     questionProvider: QuestionProvider,
+    params: NavParams,
   ) {
+    this.category = params.get('category');
+    this.setNumberOfShowMeTellMeQuestions();
     this.formGroup = new FormGroup({});
 
-    // TODO: MES-4254 Use category C
-    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.BE);
-    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
+    this.showMeQuestions = questionProvider.getShowMeQuestions(this.category);
+    this.tellMeQuestions = questionProvider.getTellMeQuestions(this.category);
+  }
+
+  setNumberOfShowMeTellMeQuestions() {
+    let numberOfShowMeQuestions: number;
+    let numberOfTellMeQuestions: number;
+
+    console.log(this.category);
+    switch (this.category as TestCategory) {
+      case TestCategory.C || TestCategory.C1: {
+        numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER;
+        numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER;
+        break;
+      }
+      case TestCategory.CE || TestCategory.C1E: {
+        numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER;
+        numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_TRAILER;
+        break;
+      }
+    }
+    this.showMeQuestionsNumberArray = Array(numberOfShowMeQuestions);
+    this.tellMeQuestionsNumberArray = Array(numberOfTellMeQuestions);
   }
 
   ngOnInit(): void {
@@ -100,26 +128,19 @@ export class VehicleChecksCatCModal {
       ),
       showMeQuestions$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO: MES-4254 Use cat c selector
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatC),
         select(getSelectedShowMeQuestions),
       ),
       tellMeQuestions$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO: MES-4254 Use cat c selector
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatC),
         select(getSelectedTellMeQuestions),
       ),
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
 
-        // TODO: MES-4254 Use cat c selector
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatC),
         map((vehicleChecks) => {
-
-          // TODO: MES-4254 Use cat c Provider
           return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
         }),
       ),
@@ -128,9 +149,7 @@ export class VehicleChecksCatCModal {
     const { vehicleChecksScore$ } = this.pageState;
 
     const merged$ = merge(
-      vehicleChecksScore$.pipe(
-        map(score => this.vehicleChecksScore = score),
-      ),
+      vehicleChecksScore$.pipe(map(score => (this.vehicleChecksScore = score))),
     );
 
     this.subscription = merged$.subscribe();
@@ -147,7 +166,9 @@ export class VehicleChecksCatCModal {
   }
 
   ionViewDidEnter() {
-    this.store$.dispatch(new vehicleChecksModalActions.VehicleChecksViewDidEnter());
+    this.store$.dispatch(
+      new vehicleChecksModalActions.VehicleChecksViewDidEnter(),
+    );
   }
 
   showMeQuestionChanged(result: QuestionResult, index: number): void {
@@ -167,6 +188,9 @@ export class VehicleChecksCatCModal {
   }
 
   shouldDisplayBanner = (): boolean => {
-    return this.vehicleChecksScore.drivingFaults === 4 && this.vehicleChecksScore.seriousFaults === 1;
+    return (
+      this.vehicleChecksScore.drivingFaults === 4 &&
+      this.vehicleChecksScore.seriousFaults === 1
+    );
   }
 }

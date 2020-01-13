@@ -7,6 +7,7 @@ import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { get } from 'lodash';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'vehicle-checks-cat-be',
@@ -36,7 +37,7 @@ export class VehicleChecksCatBEComponent implements OnChanges {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const modal = this.modalController.create(
       CAT_BE.VEHICLE_CHECKS_MODAL,
-      {},
+      { category: TestCategory.BE },
       { cssClass: zoomClass },
     );
     modal.onDidDismiss(() => {

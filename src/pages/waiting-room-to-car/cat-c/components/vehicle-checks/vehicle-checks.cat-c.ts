@@ -4,11 +4,15 @@ import { CAT_C } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
 import { App } from '../../../../../app/app.component';
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
-
-// TODO: MES-4254 Import cat c schema
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { get } from 'lodash';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { StoreModel } from '../../../../../shared/models/store.model';
+import { Store, select } from '@ngrx/store';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { getTests } from '../../../../../modules/tests/tests.reducer';
+import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
+import { getTestCategory } from '../../../../../modules/tests/category/category.reducer';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'vehicle-checks-cat-c',
@@ -20,8 +24,7 @@ export class VehicleChecksCatCComponent implements OnChanges {
 
   @Input() vehicleChecksScore: VehicleChecksScore;
 
-  // TODO: MES-4254 Use cat c type
-  @Input() vehicleChecks: CatBEUniqueTypes.VehicleChecks;
+  @Input() vehicleChecks: CatCUniqueTypes.VehicleChecks;
 
   @Input()
   vehicleChecksSelectQuestions: string;
@@ -31,16 +34,27 @@ export class VehicleChecksCatCComponent implements OnChanges {
 
   formControl: FormControl;
 
+  category: TestCategory;
+
   constructor(
     private modalController: ModalController,
     private app: App,
-  ) { }
+    private store$: Store<StoreModel>,
+  ) {
+    this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+      select(getTestCategory),
+    ).subscribe((category) => {
+      this.category = category as TestCategory;
+    });
+  }
 
   openVehicleChecksModal(): void {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const modal = this.modalController.create(
       CAT_C.VEHICLE_CHECKS_MODAL,
-      {},
+      { category: this.category },
       { cssClass: zoomClass },
     );
     modal.onDidDismiss(() => {
