@@ -58,6 +58,8 @@ import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -67,6 +69,7 @@ interface TestReportPageState {
   manoeuvres$: Observable<boolean>;
   testData$: Observable<CatBEUniqueTypes.TestData>;
   testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -87,6 +90,7 @@ export class TestReportCatCPage extends BasePageComponent {
   manoeuvresCompleted: boolean = false;
   isTestReportValid: boolean = false;
   isEtaValid: boolean = true;
+  testCategory: CategoryCode;
 
   modal: Modal;
   missingLegalRequirements: legalRequirementsLabels[] = [];
@@ -151,6 +155,9 @@ export class TestReportCatCPage extends BasePageComponent {
         // TODO: MES-4287 use cat c function
         select(getTestRequirementsCatBE),
       ),
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
+      ),
     };
     this.setupSubscription();
 
@@ -183,6 +190,7 @@ export class TestReportCatCPage extends BasePageComponent {
       isDangerousMode$,
       manoeuvres$,
       testData$,
+      testCategory$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -200,6 +208,7 @@ export class TestReportCatCPage extends BasePageComponent {
           this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.C);
         }),
       ),
+      testCategory$.pipe(map(result => this.testCategory = result)),
     ).subscribe();
   }
 
@@ -283,4 +292,6 @@ export class TestReportCatCPage extends BasePageComponent {
     this.store$.dispatch(new AddDangerousFault(Competencies.responseToSignsTrafficLights));
     this.navController.push(CAT_C.DEBRIEF_PAGE);
   }
+
+  showUncoupleRecouple = (): boolean => this.testCategory === TestCategory.CE || this.testCategory === TestCategory.C1E;
 }
