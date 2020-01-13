@@ -7,10 +7,14 @@ import { DeviceMock } from '@ionic-native-mocks/device';
 import { LogHelperMock } from '../../logs/__mocks__/logsHelper.mock';
 import { StoreModule, Store } from '@ngrx/store';
 import { LogHelper } from '../../logs/logsHelper';
+import { SaveLog } from '../../../modules/logs/logs.actions';
+import { LogType } from '../../../shared/models/log.model';
 
 describe('Device Provider', () => {
 
   let deviceProvider: DeviceProvider;
+  let store$: Store<any>;
+  let logHelper: LogHelper;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,8 +33,9 @@ describe('Device Provider', () => {
         { provide: LogHelper, useClass: LogHelperMock },
       ],
     });
-
+    store$ = TestBed.get(Store);
     deviceProvider = TestBed.get(DeviceProvider);
+    logHelper = TestBed.get(LogHelper);
   });
 
   describe('getDeviceType', () => {
@@ -70,6 +75,23 @@ describe('Device Provider', () => {
       const result = await deviceProvider.enableSingleAppMode();
       expect(result).toBe(true);
     });
+
+    it('should retry uptil the specified limit if calling setSingleAppMode(true) fails', async () => {
+      // Simulate the ASAM toggle failing
+      spyOn(deviceProvider, 'setSingleAppMode').and.returnValue(Promise.resolve(false));
+      spyOn(store$, 'dispatch').and.callThrough();
+      const asamFailureLog = new SaveLog(logHelper.createLog(
+        LogType.ERROR,
+        null,
+        this.enableASAMRetryFailureMessage,
+      ));
+
+      await deviceProvider.enableSingleAppMode();
+
+      expect(deviceProvider.setSingleAppMode).toHaveBeenCalledTimes(4);
+      expect(store$.dispatch).toHaveBeenCalledWith(asamFailureLog);
+    });
+
     it('should return true when disabling single app mode', async () => {
       const result = await deviceProvider.disableSingleAppMode();
       expect(result).toBe(true);

@@ -31,20 +31,20 @@ import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-// todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+// todo: PREP-AMOD2 change to CatAMod2UniqueTypes when schema changes are ready
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { categoryBETestResultMock } from '../../../shared/mocks/cat-be-test-result.mock';
 import { get } from 'lodash';
 
 @IonicPage()
 @Component({
-  selector: '.view-test-result-cat-a-mod1-page',
-  templateUrl: 'view-test-result.cat-a-mod1.page.html',
+  selector: '.view-test-result-cat-a-mod2-page',
+  templateUrl: 'view-test-result.cat-a-mod2.page.html',
 })
-export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnInit {
+export class ViewTestResultCatAMod2Page extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
-  // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+  // todo: PREP-AMOD2 change to CatAMod2UniqueTypes when schema changes are ready
   testResult: CatBEUniqueTypes.TestResult;
 
   isLoading: boolean;
@@ -78,7 +78,7 @@ export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnI
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
         map((response: HttpResponse<any>): string => response.body),
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
+        // todo: PREP-AMOD2 change to CatAMod2UniqueTypes when schema changes are ready
         map(data => this.testResult = this.compressionProvider.extractTestResult(data) as CatBEUniqueTypes.TestResult),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
