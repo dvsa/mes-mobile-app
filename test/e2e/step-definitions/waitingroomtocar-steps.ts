@@ -1,6 +1,7 @@
 import { When, Before } from 'cucumber';
 import { getElement, clickElement, nativeTextEntry } from './generic-steps';
 import { by, element } from 'protractor';
+import { threadId } from 'worker_threads';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -43,43 +44,53 @@ When('I fail the eye sight test', () => {
 const completeWaitingRoomPage = (withDriverFault: boolean, manualTransmission: boolean, tellMeQuestion: string) => {
   const eyesightPassRadio = getElement(by.id('eyesight-pass'));
   clickElement(eyesightPassRadio);
-
-  if (this.testCategory === 'be') {
-    const vehicleChecksButton = getElement(
-      by.xpath('//vehicle-checks-cat-be//input[@type = "button" and @value = "Select questions"]'));
-    clickElement(vehicleChecksButton);
-    const elements = element.all(by.id('vehicle-checks-question-selector'));
-    elements.each((element, index) => {
-      // Open the dialog
-      clickElement(element);
-      // Select the n'th item
-      const vehicleCheck = getElement(by.xpath(`//ion-alert//button//div[contains(text(), '0${index + 1}')]`));
-      clickElement(vehicleCheck);
-      // Submit the dialog
-      const submitDialog = getElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
-      clickElement(submitDialog);
-      // vehicleChecksCorrect_1 or vehicleChecksFault_1
-      const vehicleCheckAnswer = getElement(by.id(`vehicleChecksCorrect_${index + 1}`));
-      clickElement(vehicleCheckAnswer);
-    });
-    const submitVehicleChecksButton = getElement(by.id('submit-vehicle-checks'));
-    clickElement(submitVehicleChecksButton);
+  console.log(withDriverFault)
+  if (this.testCategory === 'be' && withDriverFault === true) {
+    console.log("IN THE ELSE IF");
+  } else if (this.testCategory === 'be') {
+    beCategory();
   } else {
-    selectTellMeQuestion(tellMeQuestion);
-    const tellMeRadioSelector = (withDriverFault) ? 'tellme-fault' : 'tellme-correct';
-    const tellMeRadio = getElement(by.id(tellMeRadioSelector));
-    clickElement(tellMeRadio);
-    const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
-    const transmissionRadio = getElement(by.id(transmissionSelector));
-    clickElement(transmissionRadio);
+    standardUserJourney(withDriverFault, manualTransmission, tellMeQuestion);
   }
-
   // Because registration number field is uppercaseAlphanumOnly we have to go native to get round this
   nativeTextEntry('Vehicle registration number', 'AB12CDE');
-
   const submitWRTC = getElement(by.xpath('//button[span[h3[text()="Continue to test report"]]]'));
   clickElement(submitWRTC);
 };
+
+function beCategory() {
+  console.log("IN THE BE CATEGORY FUNCTIONS")
+  const vehicleChecksButton = getElement(
+    by.xpath('//vehicle-checks-cat-be//input[@type = "button" and @value = "Select questions"]'));
+  clickElement(vehicleChecksButton);
+  const elements = element.all(by.id('vehicle-checks-question-selector'));
+  elements.each((element, index) => {
+    // Open the dialog
+    clickElement(element);
+    // Select the n'th item
+    const vehicleCheck = getElement(by.xpath(`//ion-alert//button//div[contains(text(), '0${index + 1}')]`));
+    clickElement(vehicleCheck);
+    // Submit the dialog
+    const submitDialog = getElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
+    clickElement(submitDialog);
+    // vehicleChecksCorrect_1 or vehicleChecksFault_1
+    const vehicleCheckAnswer = getElement(by.id(`vehicleChecksCorrect_${index + 1}`));
+    clickElement(vehicleCheckAnswer);
+  });
+  const submitVehicleChecksButton = getElement(by.id('submit-vehicle-checks'));
+  clickElement(submitVehicleChecksButton);
+}
+
+function standardUserJourney(withDriverFault: boolean, manualTransmission: boolean, tellMeQuestion: string) {
+  console.log("IN THE STANDARD JOURNEY FUNCTION")
+  selectTellMeQuestion(tellMeQuestion);
+  const tellMeRadioSelector = (withDriverFault) ? 'tellme-fault' : 'tellme-correct';
+  const tellMeRadio = getElement(by.id(tellMeRadioSelector));
+  clickElement(tellMeRadio);
+  const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
+  const transmissionRadio = getElement(by.id(transmissionSelector));
+  clickElement(transmissionRadio);
+}
 
 const selectTellMeQuestion = (tellMeQuestion) => {
   const tellMeSelector = getElement(by.id('tell-me-selector'));
