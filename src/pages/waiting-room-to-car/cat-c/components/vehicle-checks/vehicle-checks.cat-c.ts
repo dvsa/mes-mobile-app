@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CAT_C } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
@@ -18,7 +18,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
   selector: 'vehicle-checks-cat-c',
   templateUrl: 'vehicle-checks.cat-c.html',
 })
-export class VehicleChecksCatCComponent implements OnChanges {
+export class VehicleChecksCatCComponent implements OnChanges, OnInit {
 
   @Input() onCloseVehicleChecksModal: () => {};
 
@@ -41,6 +41,9 @@ export class VehicleChecksCatCComponent implements OnChanges {
     private app: App,
     private store$: Store<StoreModel>,
   ) {
+  }
+
+  ngOnInit() {
     this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
