@@ -134,7 +134,7 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatC),
-        map(vehicleChecks => this.faultCountProvider.getVehicleChecksFaultCountCatC(vehicleChecks)),
+        map(vehicleChecks => this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.C, vehicleChecks)),
       ),
       vehicleChecks$: currentTest$.pipe(
         select(getTestData),

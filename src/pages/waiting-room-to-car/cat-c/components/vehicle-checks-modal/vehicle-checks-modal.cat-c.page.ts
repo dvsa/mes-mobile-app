@@ -120,7 +120,7 @@ export class VehicleChecksCatCModal {
         map((vehicleChecks) => {
 
           // TODO: MES-4254 Use cat c Provider
-          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
         }),
       ),
     };
