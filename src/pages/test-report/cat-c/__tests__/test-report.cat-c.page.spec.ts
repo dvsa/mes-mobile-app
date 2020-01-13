@@ -26,7 +26,7 @@ import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from '../../test-report.reducer';
 import { LegalRequirementComponent } from '../../components/legal-requirement/legal-requirement';
 import { EtaComponent } from '../../components/examiner-takes-action/eta';
-import { initialState } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { initialState } from '../../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { EcoComponent } from '../../components/eco/eco';
 import { TestReportValidatorProvider } from '../../../../providers/test-report-validator/test-report-validator';
 import {
@@ -113,7 +113,6 @@ describe('TestReportCatCPage', () => {
         expect(calls.argsFor(0)[0]).toBe(CAT_C.DEBRIEF_PAGE);
       });
     });
-
   });
 
   describe('DOM', () => {
@@ -136,7 +135,6 @@ describe('TestReportCatCPage', () => {
         expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeDefined();
       });
     });
-
   });
 
   describe('End Test Button', () => {
@@ -169,5 +167,4 @@ describe('TestReportCatCPage', () => {
       expect(component.showUncoupleRecouple()).toBeTruthy();
     });
   });
-
 });
