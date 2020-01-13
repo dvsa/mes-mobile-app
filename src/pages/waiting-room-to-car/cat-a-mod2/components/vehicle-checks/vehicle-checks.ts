@@ -19,6 +19,8 @@ export class VehicleChecksCatAMod2Component implements OnChanges {
   @Input() onCloseVehicleChecksModal: () => {};
 
   @Input() vehicleChecksScore: VehicleChecksScore;
+
+  // TODO - PREP-AMOD2: Use a mod2 types
   @Input() vehicleChecks: CatBEUniqueTypes.VehicleChecks;
 
   @Input()

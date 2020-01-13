@@ -227,10 +227,5 @@ describe('VehicleChecksCatAMod2Component', () => {
         expect(component.formControl.value).toEqual('Select questions');
       });
     });
-
-    describe('DOM', () => {
-
-    });
-
   });
 });

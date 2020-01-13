@@ -102,6 +102,8 @@ interface WaitingRoomToCarPageState {
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
+
+  // TODO - PREP-AMOD2: Use a mod2 types
   vehicleChecks$: Observable<CatBEUniqueTypes.VehicleChecks>;
 }
 
