@@ -48,7 +48,7 @@ export class VehicleChecksComponent implements OnInit {
       ),
       vehicleChecksSeriousFaultCount$: currentTest$.pipe(
         select(getTestData),
-        
+
         // TODO - PREP-AMOD2: Use cat a mod2 selector
         select(getVehicleChecksCatBE),
         map((vehicleChecks) => {
