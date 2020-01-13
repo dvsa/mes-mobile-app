@@ -77,6 +77,7 @@ describe('DebriefCatAMod2Page', () => {
       uncoupleRecouple: {},
     };
 
+    // TODO - PREP-AMOD2 - replace test category
     TestBed.configureTestingModule({
       declarations: [DebriefCatAMod2Page, VehicleChecksCardCatAMod2Component],
       imports: [

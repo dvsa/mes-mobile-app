@@ -94,22 +94,25 @@ export class DebriefCatAMod2Page extends BasePageComponent {
     const category$ = currentTest$.pipe(
       select(getTestCategory),
     );
+    // TODO - PREP-AMOD2 - replace test category
     this.pageState = {
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.EUA1M2)
+          this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)
           .map(fault => fault.competencyIdentifier)),
       ),
+      // TODO - PREP-AMOD2 - replace test category
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.EUA1M2)
+          this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)
           .map(fault => fault.competencyIdentifier)),
       ),
+      // TODO - PREP-AMOD2 - replace test category
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.EUA1M2)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
