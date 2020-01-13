@@ -318,6 +318,8 @@ export class OfficeCatAMod1Page extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
+
+            // TODO - PREP-AMOD1: Use TestCategory A Mod1
             this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
           )),
       ),
@@ -330,6 +332,8 @@ export class OfficeCatAMod1Page extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
+
+            // TODO - PREP-AMOD1: Use TestCategory A Mod1
             this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE),
           )),
       ),
@@ -342,6 +346,8 @@ export class OfficeCatAMod1Page extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
+
+            // TODO - PREP-AMOD1: Use TestCategory A Mod1
             this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
           )),
       ),
@@ -382,18 +388,26 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
+
+        // TODO - PREP-AMOD1: Use TestCategory A Mod1
         map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
+
+        // TODO - PREP-AMOD1: Use TestCategory A Mod1
         map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
+
+        // TODO - PREP-AMOD1: Use TestCategory A Mod1
         map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
+
+        // TODO - PREP-AMOD1: Use TestCategory A Mod1
         map(data => this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
@@ -597,6 +611,8 @@ export class OfficeCatAMod1Page extends BasePageComponent {
 
   // TODO - PREP-AMOD1: Use cat a mod1 types
   shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {
+
+    // TODO - PREP-AMOD1: Use TestCategory A Mod1
     const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data);
     const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, data);
     const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data);

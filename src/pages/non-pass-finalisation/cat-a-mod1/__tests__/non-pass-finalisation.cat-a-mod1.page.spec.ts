@@ -7,7 +7,6 @@ import { AuthenticationProviderMock } from '../../../../providers/authentication
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { NonPassFinalisationCatAMod1Page } from '../non-pass-finalisation.cat-a-mod1.page';
 import {
   NonPassFinalisationViewDidEnter,
@@ -39,7 +38,6 @@ describe('NonPassFinalisationCatAMod1Page', () => {
     TestBed.configureTestingModule({
       declarations: [
         NonPassFinalisationCatAMod1Page,
-        MockComponent(PracticeModeBanner),
         MockComponent(ActivityCodeComponent),
         MockComponent(D255Component),
         MockComponent(LanguagePreferencesComponent),

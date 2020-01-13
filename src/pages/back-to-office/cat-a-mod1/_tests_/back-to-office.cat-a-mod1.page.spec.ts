@@ -21,7 +21,7 @@ import { PracticeModeBanner } from '../../../../components/common/practice-mode-
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
 
-describe('BackToOfficePage', () => {
+describe('BackToOfficeCatAMod1Page', () => {
   let fixture: ComponentFixture<BackToOfficeCatAMod1Page>;
   let component: BackToOfficeCatAMod1Page;
   let navController: NavController;

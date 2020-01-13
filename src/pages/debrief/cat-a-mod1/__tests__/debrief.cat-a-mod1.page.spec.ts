@@ -93,6 +93,8 @@ describe('DebriefCatAMod1Page', () => {
             startedTests: {
               123: {
                 testSlotAttributes,
+
+                // TODO - REP-AMOD1: Change to TestCategory A Mod1
                 category: TestCategory.BE,
                 vehicleDetails: {},
                 accompaniment: {},
