@@ -113,16 +113,6 @@ describe('TestReportCatCPage', () => {
         expect(calls.argsFor(0)[0]).toBe(CAT_C.DEBRIEF_PAGE);
       });
     });
-
-    describe('Uncouple/Recouple', () => {
-      it('should set the showUncoupleRecouple field to FALSE if property does not exist in test data', () => {
-        expect(component.uncoupleRecouple()).toBeFalsy();
-      });
-      // TODO: MES-4535 - Add Truthy test for CAT CE/C1E
-      // it('should set the showUncoupleRecouple field to TRUE if property does exist in test data', () => {
-      //   expect(component.uncoupleRecouple()).toBeTruthy();
-      // });
-    });
   });
 
   describe('DOM', () => {
@@ -143,16 +133,6 @@ describe('TestReportCatCPage', () => {
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('.serious-mode'))).toBeNull();
         expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeDefined();
-      });
-    });
-
-    describe('Uncouple/Recouple', () => {
-      it('should NOT display the uncouple/recouple button if property does not exists in test data', () => {
-        expect(fixture.debugElement.query(By.css('.uncouple-recouple-competency'))).toBeNull();
-      });
-      it('should display the uncouple/recouple button if property does exists in test data', () => {
-        component.showUncoupleRecouple = true;
-        expect(fixture.debugElement.query(By.css('.uncouple-recouple-competency'))).toBeNull();
       });
     });
   });
@@ -187,5 +167,4 @@ describe('TestReportCatCPage', () => {
       expect(component.showUncoupleRecouple()).toBeTruthy();
     });
   });
-
 });
