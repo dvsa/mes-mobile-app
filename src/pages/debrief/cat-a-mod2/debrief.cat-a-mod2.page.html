@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ 'debrief.title' | translate }} - {{pageState.candidateName$ | async}}</ion-title>
+    <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
+      <button ion-button (click)="logout()">Sign Out</button>
+    </ion-buttons>
+  </ion-navbar>
+  <test-outcome-debrief-card [outcome]="outcome"></test-outcome-debrief-card>
+</ion-header>
+
+<ion-content>
+  <eta-debrief-card [hasPhysicalEta]="hasPhysicalEta" [hasVerbalEta]="hasVerbalEta"></eta-debrief-card>
+  <dangerous-faults-debrief-card [dangerousFaults]="pageState.dangerousFaults$ | async"></dangerous-faults-debrief-card>
+  <serious-faults-debrief-card [seriousFaults]="pageState.seriousFaults$ | async"></serious-faults-debrief-card>
+  <driving-faults-debrief-card [drivingFaults]="pageState.drivingFaults$ | async" [drivingFaultCount]="pageState.drivingFaultCount$ | async"></driving-faults-debrief-card>
+  <eco-debrief-card [adviceGivenControl]="adviceGivenControl" [adviceGivenPlanning]="adviceGivenPlanning"></eco-debrief-card>
+  <vehicle-checks-card-cat-a-mod2></vehicle-checks-card-cat-a-mod2>
+</ion-content>
+<ion-footer>
+  <div id="end-debrief-background">
+    <button ion-button id="end-debrief-button" class="mes-primary-button" (click)="endDebrief()">
+      <h3>{{ 'debrief.end' | translate }}</h3>
+    </button>
+  </div>
+</ion-footer>
