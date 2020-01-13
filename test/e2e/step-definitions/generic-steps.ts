@@ -1,6 +1,7 @@
 import { Before } from 'cucumber';
 import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
+import { waitForOverlay } from '../test/helpers/helpers';
 
 const {
   Given,
@@ -65,7 +66,16 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
   buttonElement.isPresent().then((isStartPresent) => {
     if (!isStartPresent) {
       // Go back to dashboard
+
+
+      waitForOverlay('click-block-active')
+      browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
       const backButton = getElement(by.xpath('//page-journal//button//span[text()="Back"]'));
+    
+      //browser.sleep(2000)
+        
+      // browser.waitForAngular();
+  
       clickElement(backButton);
       // Logout
       logout();
