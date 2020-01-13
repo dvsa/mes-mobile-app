@@ -53,6 +53,7 @@ describe('VehicleChecksCardComponent', () => {
         fixture = TestBed.createComponent(VehicleChecksCardCatAMod2Component);
         store$ = TestBed.get(Store);
 
+        // TODO - PREP-AMOD2 - implement correct test category
         store$.dispatch(new StartTest(105, TestCategory.BE));
         store$.dispatch(new PopulateTestCategory(TestCategory.BE));
         store$.dispatch(new PopulateCandidateDetails(candidateMock));
