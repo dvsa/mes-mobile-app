@@ -9,6 +9,9 @@ import { VehicleChecksScore } from '../../shared/models/vehicle-checks-score.mod
 import { getCompetencyFaults } from '../../shared/helpers/competency';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 
 @Injectable()
 export class FaultCountProvider {
@@ -43,6 +46,16 @@ export class FaultCountProvider {
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
+  public getVehicleChecksFaultCount = (category: TestCategory, data: Object): VehicleChecksScore => {
+    if (category === TestCategory.BE) return this.getVehicleChecksFaultCountCatBE(data);
+    if (category === TestCategory.C) return this.getVehicleChecksFaultCountCatC(data);
+    if (category === TestCategory.CE) return this.getVehicleChecksFaultCountCatCE(data);
+    if (category === TestCategory.C1) return this.getVehicleChecksFaultCountCatC1(data);
+    if (category === TestCategory.C1E) return this.getVehicleChecksFaultCountCatC1E(data);
+
+    throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
+  }
+
   public getVehicleChecksFaultCountCatB = (vehicleChecks: CatBUniqueTypes.VehicleChecks): number => {
 
     if (!vehicleChecks) {
@@ -62,7 +75,7 @@ export class FaultCountProvider {
     return 0;
   }
 
-  public getVehicleChecksFaultCountCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): VehicleChecksScore => {
+  private getVehicleChecksFaultCountCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): VehicleChecksScore => {
 
     if (!vehicleChecks) {
       return { seriousFaults: 0, drivingFaults: 0 };
@@ -92,7 +105,7 @@ export class FaultCountProvider {
     };
   }
 
-  public getVehicleChecksFaultCountCatC = (vehicleChecks: CatCUniqueTypes.VehicleChecks): VehicleChecksScore => {
+  private getVehicleChecksFaultCountCatC = (vehicleChecks: CatCUniqueTypes.VehicleChecks): VehicleChecksScore => {
 
     if (!vehicleChecks) {
       return { seriousFaults: 0, drivingFaults: 0 };
@@ -113,6 +126,96 @@ export class FaultCountProvider {
     if (totalFaultCount === 5) {
       return {
         drivingFaults: 4,
+        seriousFaults: 1,
+      };
+    }
+    return {
+      drivingFaults: totalFaultCount,
+      seriousFaults: 0,
+    };
+  }
+
+  private getVehicleChecksFaultCountCatCE = (vehicleChecks: CatCEUniqueTypes.VehicleChecks): VehicleChecksScore => {
+
+    if (!vehicleChecks) {
+      return { seriousFaults: 0, drivingFaults: 0 };
+    }
+
+    const showMeQuestions: QuestionResult[] = get(vehicleChecks, 'showMeQuestions', []);
+    const tellMeQuestions: QuestionResult[] = get(vehicleChecks, 'tellMeQuestions', []);
+
+    const numberOfShowMeFaults: number = showMeQuestions.filter((showMeQuestion) => {
+      return showMeQuestion.outcome === CompetencyOutcome.DF;
+    }).length;
+    const numberOfTellMeFaults: number = tellMeQuestions.filter((tellMeQuestion) => {
+      return tellMeQuestion.outcome === CompetencyOutcome.DF;
+    }).length;
+
+    const totalFaultCount: number = numberOfShowMeFaults + numberOfTellMeFaults;
+
+    if (totalFaultCount === 2) {
+      return {
+        drivingFaults: 1,
+        seriousFaults: 1,
+      };
+    }
+    return {
+      drivingFaults: totalFaultCount,
+      seriousFaults: 0,
+    };
+  }
+
+  private getVehicleChecksFaultCountCatC1 = (vehicleChecks: CatC1UniqueTypes.VehicleChecks): VehicleChecksScore => {
+
+    if (!vehicleChecks) {
+      return { seriousFaults: 0, drivingFaults: 0 };
+    }
+
+    const showMeQuestions: QuestionResult[] = get(vehicleChecks, 'showMeQuestions', []);
+    const tellMeQuestions: QuestionResult[] = get(vehicleChecks, 'tellMeQuestions', []);
+
+    const numberOfShowMeFaults: number = showMeQuestions.filter((showMeQuestion) => {
+      return showMeQuestion.outcome === CompetencyOutcome.DF;
+    }).length;
+    const numberOfTellMeFaults: number = tellMeQuestions.filter((tellMeQuestion) => {
+      return tellMeQuestion.outcome === CompetencyOutcome.DF;
+    }).length;
+
+    const totalFaultCount: number = numberOfShowMeFaults + numberOfTellMeFaults;
+
+    if (totalFaultCount === 5) {
+      return {
+        drivingFaults: 4,
+        seriousFaults: 1,
+      };
+    }
+    return {
+      drivingFaults: totalFaultCount,
+      seriousFaults: 0,
+    };
+  }
+
+  private getVehicleChecksFaultCountCatC1E = (vehicleChecks: CatC1EUniqueTypes.VehicleChecks): VehicleChecksScore => {
+
+    if (!vehicleChecks) {
+      return { seriousFaults: 0, drivingFaults: 0 };
+    }
+
+    const showMeQuestions: QuestionResult[] = get(vehicleChecks, 'showMeQuestions', []);
+    const tellMeQuestions: QuestionResult[] = get(vehicleChecks, 'tellMeQuestions', []);
+
+    const numberOfShowMeFaults: number = showMeQuestions.filter((showMeQuestion) => {
+      return showMeQuestion.outcome === CompetencyOutcome.DF;
+    }).length;
+    const numberOfTellMeFaults: number = tellMeQuestions.filter((tellMeQuestion) => {
+      return tellMeQuestion.outcome === CompetencyOutcome.DF;
+    }).length;
+
+    const totalFaultCount: number = numberOfShowMeFaults + numberOfTellMeFaults;
+
+    if (totalFaultCount === 2) {
+      return {
+        drivingFaults: 1,
         seriousFaults: 1,
       };
     }

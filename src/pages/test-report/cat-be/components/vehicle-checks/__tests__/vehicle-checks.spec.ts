@@ -54,13 +54,13 @@ describe('VehicleChecksComponent', () => {
     };
 
     beforeEach(() => {
-      spyOn(component.faultCountProvider, 'getVehicleChecksFaultCountCatBE').and.returnValue(vehicleChecksScore);
+      spyOn(component.faultCountProvider, 'getVehicleChecksFaultCount').and.returnValue(vehicleChecksScore);
     });
 
     it('should set the vehicle checks driving fault count', (done: DoneFn) => {
       component.ngOnInit();
       component.componentState.vehicleChecksDrivingFaultCount$.subscribe((result) => {
-        expect(component.faultCountProvider.getVehicleChecksFaultCountCatBE).toHaveBeenCalled();
+        expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
         expect(result).toEqual(4);
         done();
       });
@@ -68,7 +68,7 @@ describe('VehicleChecksComponent', () => {
     it('should set the vehicle checks serious fault count', (done: DoneFn) => {
       component.ngOnInit();
       component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
-        expect(component.faultCountProvider.getVehicleChecksFaultCountCatBE).toHaveBeenCalled();
+        expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
         expect(result).toEqual(1);
         done();
       });
