@@ -109,7 +109,7 @@ describe('NonPassFinalisationCatAMod2Page', () => {
     describe('OnContinue', () => {
       it('should dispatch a change test state to WriteUp action', () => {
         // Arrange
-        store$.dispatch(new testActions.StartTest(123, TestCategory.BE));
+        store$.dispatch(new testActions.StartTest(123, TestCategory.EUA1M2));
         component.slotId = '123';
 
         // Act
