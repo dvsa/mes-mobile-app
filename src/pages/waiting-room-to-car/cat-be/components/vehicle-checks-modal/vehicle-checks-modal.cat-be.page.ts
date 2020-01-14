@@ -100,7 +100,7 @@ export class VehicleChecksCatBEModal {
         select(getTestData),
         select(getVehicleChecksCatBE),
         map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
         }),
       ),
     };

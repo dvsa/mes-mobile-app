@@ -313,7 +313,7 @@ export class FaultSummaryProvider {
       return result;
     }
 
-    const vehicleCheckFaults = this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+    const vehicleCheckFaults = this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
     if (vehicleCheckFaults.drivingFaults > 0) {
       const competency: FaultSummary = {
         comment: vehicleChecks.showMeTellMeComments || '',
