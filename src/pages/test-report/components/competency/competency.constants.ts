@@ -39,4 +39,6 @@ export enum competencyLabels  {
   pedestrianCrossings  = 'Pedestrian crossings',
   positionNormalStops  = 'Position/normal stop',
   awarenessPlanning  = 'Awareness planning',
+  speedCheckEmergency = 'Emergency stop',
+  speedCheckAvoidance = 'Avoidance Ex. Control Stop',
 }

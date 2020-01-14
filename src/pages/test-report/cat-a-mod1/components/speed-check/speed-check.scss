@@ -1,0 +1,35 @@
+speed-check {
+  .speed-input {
+    width: 60px;
+    margin-left: 50px;
+    font-size: 18px;
+    font-weight: 700;
+
+    .second-input {
+      margin-left: 25px;
+    }
+  }
+
+
+
+  competency-button {
+
+    &.not-met {
+      .competency-button {
+        background-color: #F2E8E7;
+        border: 2px solid map-get($colors-gds, "gds-red");
+
+        .competency-label {
+          // font-weight: bold;
+        }
+      }
+    }
+
+    .label {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+  }
+}
