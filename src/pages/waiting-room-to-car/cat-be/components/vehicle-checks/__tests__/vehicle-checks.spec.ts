@@ -1,26 +1,24 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { IonicModule, ModalController, Config, NavParams } from 'ionic-angular';
-import { ModalControllerMock, ConfigMock, NavParamsMock } from 'ionic-mocks';
+import { FormBuilder } from '@angular/forms';
+import { IonicModule, ModalController, Config } from 'ionic-angular';
+import { ModalControllerMock, ConfigMock } from 'ionic-mocks';
 import { VehicleChecksCatBEComponent } from '../vehicle-checks';
 import { CAT_BE } from '../../../../../page-names.constants';
 import { App } from '../../../../../../app/app.component';
-import { Store, StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
 import { SeriousFaultBadgeComponent }
   from '../../../../../../components/common/serious-fault-badge/serious-fault-badge';
 import { DrivingFaultsBadgeComponent }
   from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { TickIndicatorComponent } from '../../../../../../components/common/tick-indicator/tick-indicator';
-import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+
+class MockStore { }
 
 describe('VehicleChecksCatBEComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCatBEComponent>;
   let component: VehicleChecksCatBEComponent;
   let modalController: ModalController;
-
-  class MockStore { }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,26 +30,18 @@ describe('VehicleChecksCatBEComponent', () => {
       ],
       imports: [
         IonicModule,
-        StoreModule.forRoot({
-          tests: testsReducer,
-        }),
       ],
       providers: [
-        {
-          provide: ModalController,
-          useFactory: () => ModalControllerMock.instance(),
-        },
+        { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
         { provide: App, useClass: MockAppComponent },
         { provide: Store, useClass: MockStore },
         { provide: Config, useFactory: () => ConfigMock.instance() },
-        { provide: NavParams, useFactory: () => NavParamsMock.instance() },
       ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(VehicleChecksCatBEComponent);
         component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
         modalController = TestBed.get(ModalController);
       });
   }));
@@ -63,7 +53,7 @@ describe('VehicleChecksCatBEComponent', () => {
         expect(modalController.create).toHaveBeenCalledTimes(1);
         expect(modalController.create).toHaveBeenCalledWith(
           CAT_BE.VEHICLE_CHECKS_MODAL,
-          { category: TestCategory.BE },
+          {},
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );
       });
@@ -130,11 +120,7 @@ describe('VehicleChecksCatBEComponent', () => {
 
       it('should return false when not all tell me questions have outcome', () => {
         component.vehicleChecks = {
-          showMeQuestions: [
-            { outcome: 'P' },
-            { outcome: 'DF' },
-            { outcome: 'P' },
-          ],
+          showMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }, { outcome: 'P' }],
           tellMeQuestions: [{}, {}],
         };
 
@@ -143,11 +129,7 @@ describe('VehicleChecksCatBEComponent', () => {
 
       it('should return true when all show / tell me questions have outcome', () => {
         component.vehicleChecks = {
-          showMeQuestions: [
-            { outcome: 'P' },
-            { outcome: 'DF' },
-            { outcome: 'P' },
-          ],
+          showMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }, { outcome: 'P' }],
           tellMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }],
         };
 
@@ -179,6 +161,7 @@ describe('VehicleChecksCatBEComponent', () => {
     });
 
     describe('invalid', () => {
+
       beforeEach(() => {
         const formBuilder: FormBuilder = new FormBuilder();
         component.formGroup = formBuilder.group({
@@ -219,9 +202,7 @@ describe('VehicleChecksCatBEComponent', () => {
         });
         spyOn(component, 'everyQuestionHasOutcome').and.returnValue(true);
         component.ngOnChanges();
-        const result = component.formGroup.contains(
-          'vehicleChecksSelectQuestions',
-        );
+        const result = component.formGroup.contains('vehicleChecksSelectQuestions');
         expect(result).toEqual(true);
       });
 
@@ -247,6 +228,9 @@ describe('VehicleChecksCatBEComponent', () => {
       });
     });
 
-    describe('DOM', () => {});
+    describe('DOM', () => {
+
+    });
+
   });
 });

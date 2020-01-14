@@ -98,7 +98,6 @@ export class VehicleChecksCatCModal {
     let numberOfShowMeQuestions: number;
     let numberOfTellMeQuestions: number;
 
-    console.log(this.category);
     switch (this.category as TestCategory) {
       case TestCategory.C || TestCategory.C1: {
         numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER;
@@ -141,7 +140,7 @@ export class VehicleChecksCatCModal {
 
         select(getVehicleChecksCatC),
         map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.C, vehicleChecks);
         }),
       ),
     };

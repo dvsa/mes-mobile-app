@@ -1,4 +1,4 @@
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
@@ -51,19 +51,14 @@ interface VehicleChecksModalCatBEState {
   templateUrl: 'vehicle-checks-modal.cat-be.page.html',
 })
 export class VehicleChecksCatBEModal {
+
   pageState: VehicleChecksModalCatBEState;
   formGroup: FormGroup;
 
-  category: TestCategory;
-
   showMeQuestions: VehicleChecksQuestion[];
   tellMeQuestions: VehicleChecksQuestion[];
-  readonly showMeQuestionsNumberArray: number[] = Array(
-    NUMBER_OF_SHOW_ME_QUESTIONS,
-  );
-  readonly tellMeQuestionsNumberArray: number[] = Array(
-    NUMBER_OF_TELL_ME_QUESTIONS,
-  );
+  readonly showMeQuestionsNumberArray: number[] = Array(NUMBER_OF_SHOW_ME_QUESTIONS);
+  readonly tellMeQuestionsNumberArray: number[] = Array(NUMBER_OF_TELL_ME_QUESTIONS);
 
   vehicleChecksScore: VehicleChecksScore;
 
@@ -74,9 +69,7 @@ export class VehicleChecksCatBEModal {
     private navController: NavController,
     private faultCountProvider: FaultCountProvider,
     questionProvider: QuestionProvider,
-    params: NavParams,
   ) {
-    this.category = params.get('category');
     this.formGroup = new FormGroup({});
     this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.BE);
     this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
@@ -115,7 +108,9 @@ export class VehicleChecksCatBEModal {
     const { vehicleChecksScore$ } = this.pageState;
 
     const merged$ = merge(
-      vehicleChecksScore$.pipe(map(score => (this.vehicleChecksScore = score))),
+      vehicleChecksScore$.pipe(
+        map(score => this.vehicleChecksScore = score),
+      ),
     );
 
     this.subscription = merged$.subscribe();
@@ -132,9 +127,7 @@ export class VehicleChecksCatBEModal {
   }
 
   ionViewDidEnter() {
-    this.store$.dispatch(
-      new vehicleChecksModalActions.VehicleChecksViewDidEnter(),
-    );
+    this.store$.dispatch(new vehicleChecksModalActions.VehicleChecksViewDidEnter());
   }
 
   showMeQuestionChanged(result: QuestionResult, index: number): void {
@@ -154,9 +147,6 @@ export class VehicleChecksCatBEModal {
   }
 
   shouldDisplayBanner = (): boolean => {
-    return (
-      this.vehicleChecksScore.drivingFaults === 4 &&
-      this.vehicleChecksScore.seriousFaults === 1
-    );
+    return this.vehicleChecksScore.drivingFaults === 4 && this.vehicleChecksScore.seriousFaults === 1;
   }
 }
