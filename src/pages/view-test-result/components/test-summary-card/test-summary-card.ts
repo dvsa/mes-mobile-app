@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { isBoolean, get } from 'lodash';
+import { get } from 'lodash';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { flattenArray, convertBooleanToString } from '../../view-test-result-helpers';
@@ -74,6 +74,6 @@ export class TestSummaryCardComponent {
   }
 
   public shouldDisplayLicenceProvided(data: boolean) : boolean {
-    return isBoolean(data);
+    return get(this.data, 'passCompletion.provisionalLicenceProvided', false);
   }
 }
