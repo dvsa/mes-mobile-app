@@ -84,11 +84,11 @@ export class VehicleChecksCatCComponent implements OnChanges, OnInit {
     return this.vehicleChecksScore.drivingFaults > 0;
   }
 
-  incompleteVehicleChecks(): { vehicleChecks: boolean } {
+  incompleteVehicleChecks(): VehicleCheckFormState {
     return { vehicleChecks: false };
   }
 
-  validateVehicleChecks(c: FormControl): null | { vehicleChecks: boolean } {
+  validateVehicleChecks(c: FormControl): null | VehicleCheckFormState {
     return this.everyQuestionHasOutcome() ? null : this.incompleteVehicleChecks();
   }
 
@@ -107,4 +107,8 @@ export class VehicleChecksCatCComponent implements OnChanges, OnInit {
   get invalid(): boolean {
     return !this.formControl.valid && this.formControl.dirty;
   }
+}
+
+interface VehicleCheckFormState {
+  vehicleChecks: boolean;
 }
