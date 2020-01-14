@@ -6,8 +6,6 @@ import { AuthenticationProvider } from '../../../../providers/authentication/aut
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { PostDebriefHoldingViewDidEnter } from '../../post-debrief-holding.actions';
 import { PostDebriefHoldingCatAMod2Page } from '../post-debrief-holding.cat-a-mod2.page';
 
@@ -20,7 +18,6 @@ describe('PostDebriefHoldingCatAMod2Page', () => {
     TestBed.configureTestingModule({
       declarations: [
         PostDebriefHoldingCatAMod2Page,
-        MockComponent(PracticeModeBanner),
       ],
       imports: [
         IonicModule,
