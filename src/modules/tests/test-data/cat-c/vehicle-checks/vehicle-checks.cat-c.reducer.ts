@@ -1,19 +1,16 @@
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import * as vehicleChecksCatCActionTypes from './vehicle-checks.cat-c.action';
 
-// TODO: These should be Cat C specific contants
 import {
-  NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestions,
-}
-  from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+  NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestionsForNonTrailer,
+ } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.vocational.constants';
 import {
-  NUMBER_OF_SHOW_ME_QUESTIONS as numberOfShowMeQuestions,
-}
-  from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
+  NUMBER_OF_SHOW_ME_QUESTIONS as numberOfShowMeQuestionsForNonTrailer,
+ } from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
 
 export const initialState: CatCUniqueTypes.VehicleChecks = {
-  tellMeQuestions: Array(numberOfTellMeQuestions).fill({}),
-  showMeQuestions: Array(numberOfShowMeQuestions).fill({}),
+  tellMeQuestions: Array(numberOfTellMeQuestionsForNonTrailer).fill({}),
+  showMeQuestions: Array(numberOfShowMeQuestionsForNonTrailer).fill({}),
 };
 
 export function vehicleChecksCatCReducer(

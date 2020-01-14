@@ -1,9 +1,9 @@
 
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, Config, NavController } from 'ionic-angular';
+import { IonicModule, Config, NavController, NavParams } from 'ionic-angular';
 import { VehicleChecksCatCModal } from '../vehicle-checks-modal.cat-c.page';
 import { Store, StoreModule } from '@ngrx/store';
-import { ConfigMock, NavControllerMock } from 'ionic-mocks';
+import { ConfigMock, NavControllerMock, NavParamsMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../../app/app.module';
 import { MockComponent } from 'ng-mocks';
 import { VehicleChecksQuestionCatCComponent } from '../../vehicle-checks-question/vehicle-checks-question.cat-c';
@@ -13,13 +13,12 @@ import {
 } from '@dvsa/mes-test-schema/categories/common';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 
-// TODO: MES-4254 Import cat c actions
 import {
   ShowMeQuestionOutcomeChanged,
   ShowMeQuestionSelected,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
-} from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+} from '../../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 
 describe('VehicleChecksCatCModal', () => {
@@ -42,6 +41,7 @@ describe('VehicleChecksCatCModal', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: NavParams, useFactory: () => NavParamsMock.instance() },
       ],
     })
       .compileComponents()

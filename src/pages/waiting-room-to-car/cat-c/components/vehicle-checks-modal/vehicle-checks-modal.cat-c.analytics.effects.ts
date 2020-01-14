@@ -27,7 +27,7 @@ import {
   TELL_ME_QUESTION_SELECTED,
   TellMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
-} from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+} from '../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 
 @Injectable()
 export class VehicleChecksModalCatCAnalyticsEffects {

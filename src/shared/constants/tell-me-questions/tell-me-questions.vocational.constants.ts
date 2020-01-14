@@ -63,3 +63,5 @@ export default [
     shortName: 'Windscreen washer'
   },
 ] as VehicleChecksQuestion[];
+
+export const NUMBER_OF_TELL_ME_QUESTIONS = 2;

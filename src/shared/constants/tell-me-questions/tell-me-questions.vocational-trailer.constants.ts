@@ -33,3 +33,5 @@ export default [
     shortName: 'Safety factors while loading '
   },
 ] as VehicleChecksQuestion[];
+
+export const NUMBER_OF_TELL_ME_QUESTIONS = 1;
