@@ -173,6 +173,9 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.BE:
         this.navController.push(CAT_BE.WAITING_ROOM_PAGE);
         break;
+      case TestCategory.CE:
+      case TestCategory.C1E:
+      case TestCategory.C1:
       case TestCategory.C:
         this.navController.push(CAT_C.WAITING_ROOM_PAGE);
         break;
@@ -261,6 +264,9 @@ export class TestOutcomeComponent implements OnInit {
         return CAT_B.WAITING_ROOM_PAGE;
       case TestCategory.BE:
         return CAT_BE.WAITING_ROOM_PAGE;
+      case TestCategory.C1E:
+      case TestCategory.CE:
+      case TestCategory.C1:
       case TestCategory.C:
         return CAT_C.WAITING_ROOM_PAGE;
     }
@@ -272,6 +278,11 @@ export class TestOutcomeComponent implements OnInit {
         return CAT_B.PASS_FINALISATION_PAGE;
       case TestCategory.BE:
         return CAT_BE.PASS_FINALISATION_PAGE;
+      case TestCategory.C1E:
+      case TestCategory.CE:
+      case TestCategory.C1:
+      case TestCategory.C:
+        return CAT_C.PASS_FINALISATION_PAGE;
     }
   }
 
@@ -281,6 +292,11 @@ export class TestOutcomeComponent implements OnInit {
         return CAT_B.NON_PASS_FINALISATION_PAGE;
       case TestCategory.BE:
         return CAT_BE.NON_PASS_FINALISATION_PAGE;
+      case TestCategory.C1E:
+      case TestCategory.CE:
+      case TestCategory.C1:
+      case TestCategory.C:
+        return CAT_C.NON_PASS_FINALISATION_PAGE;
     }
   }
 
@@ -290,6 +306,11 @@ export class TestOutcomeComponent implements OnInit {
         return CAT_B.OFFICE_PAGE;
       case TestCategory.BE:
         return CAT_BE.OFFICE_PAGE;
+      case TestCategory.C1E:
+      case TestCategory.CE:
+      case TestCategory.C1:
+      case TestCategory.C:
+        return CAT_C.OFFICE_PAGE;
     }
   }
 }
