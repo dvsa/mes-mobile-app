@@ -16,7 +16,7 @@ import { VehicleChecksScore } from '../../../../../../shared/models/vehicle-chec
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
 
-describe('VehicleChecksComponent', () => {
+fdescribe('VehicleChecksComponent', () => {
   let fixture: ComponentFixture<VehicleChecksComponent>;
   let component: VehicleChecksComponent;
   let store$: Store<StoreModel>;
@@ -56,54 +56,47 @@ describe('VehicleChecksComponent', () => {
     };
 
     beforeEach(() => {
-      // TODO - AMOD2-PREP: Use cat a mod2 provider function name
-      spyOn(component.faultCountProvider, 'getVehicleChecksFaultCountCatBE').and.returnValue(vehicleChecksScore);
+      spyOn(component.faultCountProvider, 'getVehicleChecksFaultCount').and.returnValue(vehicleChecksScore);
     });
 
     it('should set the vehicle checks driving fault count', (done: DoneFn) => {
       component.ngOnInit();
+      // TODO - AMOD2-PREP: Use cat a mod2 provider function
       component.componentState.vehicleChecksDrivingFaultCount$.subscribe((result) => {
-        // TODO - AMOD2-PREP: Use cat a mod2 provider function
-        component.componentState.vehicleChecksDrivingFaultCount$.subscribe((result) => {
-          expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
-          expect(result).toEqual(4);
-          done();
-          done();
-        });
+        expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
+        expect(result).toEqual(4);
+        done();
       });
-      it('should set the vehicle checks serious fault count', (done: DoneFn) => {
-        component.ngOnInit();
-        component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
-          // TODO - AMOD2-PREP: Use cat a mod2 provider function
-          component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
-            expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
-            expect(result).toEqual(1);
-            done();
-          });
-        });
+    });
+    it('should set the vehicle checks serious fault count', (done: DoneFn) => {
+      component.ngOnInit();
+      // TODO - AMOD2-PREP: Use cat a mod2 provider function
+      component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
+        expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
+        expect(result).toEqual(1);
+        done();
       });
+    });
+  });
 
-      describe('DOM', () => {
+  describe('DOM', () => {
 
-        it('should pass the number of VC driving faults to the driving faults component', () => {
-          fixture.detectChanges();
-          const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
-            .componentInstance as DrivingFaultsBadgeComponent;
-          component.componentState.vehicleChecksDrivingFaultCount$ = of(3);
-          fixture.detectChanges();
-          expect(drivingFaultsBadge.count).toBe(3);
-        });
+    it('should pass the number of VC driving faults to the driving faults component', () => {
+      fixture.detectChanges();
+      const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
+        .componentInstance as DrivingFaultsBadgeComponent;
+      component.componentState.vehicleChecksDrivingFaultCount$ = of(3);
+      fixture.detectChanges();
+      expect(drivingFaultsBadge.count).toBe(3);
+    });
 
-        it('should pass true to the serious faults badge if there are serious VC faults', () => {
-          fixture.detectChanges();
-          const seriousFaultsBadge = fixture.debugElement.query(By.css('serious-fault-badge'))
-            .componentInstance as SeriousFaultBadgeComponent;
-          component.componentState.vehicleChecksSeriousFaultCount$ = of(1);
-          fixture.detectChanges();
-          expect(seriousFaultsBadge.showBadge).toEqual(true);
-        });
-
-      });
+    it('should pass true to the serious faults badge if there are serious VC faults', () => {
+      fixture.detectChanges();
+      const seriousFaultsBadge = fixture.debugElement.query(By.css('serious-fault-badge'))
+        .componentInstance as SeriousFaultBadgeComponent;
+      component.componentState.vehicleChecksSeriousFaultCount$ = of(1);
+      fixture.detectChanges();
+      expect(seriousFaultsBadge.showBadge).toEqual(true);
     });
   });
 });
