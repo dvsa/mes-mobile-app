@@ -14,6 +14,8 @@ import {
   getResidencyDeclarationStatus,
   getSignatureStatus,
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.selector';
+
+// TODO - PREP-AMOD2 - Implement category specific reducer
 import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
@@ -80,6 +82,7 @@ export class WaitingRoomCatAMod2Page extends BasePageComponent implements OnInit
 
   subscription: Subscription;
 
+  // TODO - PREP-AMOD2 - Implement category specific schema
   merged$: Observable<boolean | string | CatBEUniqueTypes.JournalData>;
 
   constructor(
@@ -199,6 +202,7 @@ export class WaitingRoomCatAMod2Page extends BasePageComponent implements OnInit
     }
   }
 
+  // TODO - PREP-AMOD2 - Implement category specific schema
   isJournalDataInvalid = (journalData: CatBEUniqueTypes.JournalData): boolean => {
     return isEmpty(journalData.examiner.staffNumber) ||
       (isEmpty(journalData.candidate.candidateName) && isEmpty(journalData.candidate.driverNumber));

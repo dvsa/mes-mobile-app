@@ -27,7 +27,6 @@ import { AccompanimentCardComponent } from '../../components/accompaniment-card/
 import { AccompanimentComponent } from '../../components/accompaniment/accompaniment';
 import { EyesightTestComponent } from '../../components/eyesight-test/eyesight-test';
 import { EyesightTestReset } from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
-import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
@@ -50,7 +49,6 @@ describe('WaitingRoomToCarCatAMod2Page', () => {
         MockComponent(VehicleDetailsComponent),
         MockComponent(AccompanimentCardComponent),
         MockComponent(AccompanimentComponent),
-        MockComponent(PracticeModeBanner),
         MockComponent(VehicleChecksCatAMod2Component),
         MockComponent(WarningBannerComponent),
       ],

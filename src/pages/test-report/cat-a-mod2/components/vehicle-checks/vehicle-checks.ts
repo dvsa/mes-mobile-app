@@ -3,6 +3,8 @@ import { select, Store } from '@ngrx/store';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { StoreModel } from '../../../../../shared/models/store.model';
+
+// TODO - PREP-AMOD2 - Implement category specific reducer
 import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { map } from 'rxjs/operators';
 

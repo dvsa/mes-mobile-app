@@ -234,7 +234,7 @@ describe('CommunicationCatAMod2Page', () => {
 
     });
     describe('clickBack', () => {
-      it('should not should trigger the lock screen', () => {
+      it('should not trigger the lock screen', () => {
         component.clickBack();
         expect(deviceAuthenticationProvider.triggerLockScreen).not.toHaveBeenCalled();
       });

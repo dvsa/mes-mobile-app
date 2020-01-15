@@ -19,7 +19,7 @@ import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientati
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
 
-describe('BackToOfficePage', () => {
+describe('BackToOfficeCatAMod2Page', () => {
   let fixture: ComponentFixture<BackToOfficeCatAMod2Page>;
   let component: BackToOfficeCatAMod2Page;
   let navController: NavController;

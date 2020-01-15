@@ -28,6 +28,8 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { TranslateModule, TranslateService } from 'ng2-translate';
+
+// TODO - PREP-AMOD2 - Implement category specific competencies
 import { fullCompetencyLabels } from '../../../../shared/constants/competencies/catb-competencies';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestSlotAttributes }

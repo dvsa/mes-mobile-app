@@ -127,8 +127,4 @@ describe('VehicleChecksCatAMod2Modal', () => {
       });
     });
   });
-
-  describe('DOM', () => {
-
-  });
 });
