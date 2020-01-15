@@ -75,7 +75,7 @@ export class FaultCountProvider {
     return 0;
   }
 
-  private getVehicleChecksFaultCountCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): VehicleChecksScore => {
+  public getVehicleChecksFaultCountCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): VehicleChecksScore => {
 
     if (!vehicleChecks) {
       return { seriousFaults: 0, drivingFaults: 0 };
