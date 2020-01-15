@@ -30,7 +30,7 @@ Feature: Full end to end journey for Cat B+E
       Then I should see the "Journal" page
       And the test result for "Mr Callahan Eaton" is "1"
 
-  Scenario: Examiner completes a passed test with no faults
+  Scenario: Examiner terminates a test on the test report due to mechanical failure
     Given I am logged in as "mobexaminer2" and I have a test for "Mr Dixon Clayton"
     When I check candidate details for "Mr Dixon Clayton"
     And I start the test for "Mr Dixon Clayton"
