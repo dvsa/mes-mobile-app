@@ -20,4 +20,4 @@ import { VehicleChecksModalCatAMod2AnalyticsEffects } from './vehicle-checks-mod
     ComponentsModule,
   ],
 })
-export class VehicleChecksModalCatBEModule { }
+export class VehicleChecksModalCatAMod2Module { }
