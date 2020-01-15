@@ -74,6 +74,6 @@ export class TestSummaryCardComponent {
   }
 
   public shouldDisplayLicenceProvided(data: boolean) : boolean {
-    return get(this.data, 'passCompletion.provisionalLicenceProvided', false);
+    return get(this.data, 'passCompletion.provisionalLicenceProvided') !== undefined;
   }
 }
