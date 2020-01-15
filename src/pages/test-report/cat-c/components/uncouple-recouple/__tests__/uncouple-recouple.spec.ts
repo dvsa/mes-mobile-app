@@ -25,7 +25,7 @@ import { CompetencyOutcome } from '../../../../../../shared/models/competency-ou
 import {
   UncoupleRecoupleAddDrivingFault,
   UncoupleRecoupleRemoveFault,
-} from '../../../../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
+} from '../../../../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import { ToggleSeriousFaultMode } from '../../../../test-report.actions';
 import { By } from '@angular/platform-browser';
 
