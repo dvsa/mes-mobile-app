@@ -208,7 +208,7 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
         map((vehicleChecks) => {
 
           // TODO - PREP-AMOD2: Use a mod2 provider function
-          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
         }),
       ),
       vehicleChecks$: currentTest$.pipe(
