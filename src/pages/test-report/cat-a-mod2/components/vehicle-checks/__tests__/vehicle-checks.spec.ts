@@ -64,8 +64,10 @@ describe('VehicleChecksComponent', () => {
       component.ngOnInit();
       component.componentState.vehicleChecksDrivingFaultCount$.subscribe((result) => {
         // TODO - AMOD2-PREP: Use cat a mod2 provider function
-        expect(component.faultCountProvider.getVehicleChecksFaultCountCatBE).toHaveBeenCalled();
-        expect(result).toEqual(4);
+        component.componentState.vehicleChecksDrivingFaultCount$.subscribe((result) => {
+          expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
+          expect(result).toEqual(4);
+          done();
         done();
       });
     });
@@ -73,8 +75,9 @@ describe('VehicleChecksComponent', () => {
       component.ngOnInit();
       component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
         // TODO - AMOD2-PREP: Use cat a mod2 provider function
-        expect(component.faultCountProvider.getVehicleChecksFaultCountCatBE).toHaveBeenCalled();
-        expect(result).toEqual(1);
+        component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
+          expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
+          expect(result).toEqual(1);
         done();
       });
     });
@@ -101,5 +104,4 @@ describe('VehicleChecksComponent', () => {
     });
 
   });
-
 });
