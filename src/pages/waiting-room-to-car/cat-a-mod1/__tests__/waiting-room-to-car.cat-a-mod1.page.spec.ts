@@ -177,7 +177,7 @@ describe('WaitingRoomToCarCatAMod1Page', () => {
 
       component.onSubmit();
       tick();
-      expect(component.navController.push).toHaveBeenCalledWith('TestReportAMod1Page');
+      expect(component.navController.push).toHaveBeenCalledWith('TestReportCatAMod1Page');
     }));
   });
 });
