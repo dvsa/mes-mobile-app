@@ -218,6 +218,14 @@ Then('the competency {string} driver fault count is {string}', (competency, driv
   return expect(competencyCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
+When('I terminate the test from the test report page', () => {
+  const endTestButton = getElement(by.id('end-test-button'));
+  clickElement(endTestButton);
+
+  const terminateTestButton = getElement(by.xpath('//button/span[text() = "Terminate test"]'));
+  clickElement(terminateTestButton);
+});
+
 const getCompetencyButton = (competency: string) => {
   return getElement(by.xpath(`//competency-button/div/span[text() = '${competency}']`));
 };
