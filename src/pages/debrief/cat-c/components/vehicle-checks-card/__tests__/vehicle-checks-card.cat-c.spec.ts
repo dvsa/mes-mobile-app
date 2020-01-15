@@ -5,12 +5,10 @@ import { StoreModule, Store } from '@ngrx/store';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
-
-// TODO: MES-4254 Import cat c actions
 import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
-} from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+} from '../../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
 import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
@@ -20,8 +18,8 @@ import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import * as englishTranslations from '../../../../../../assets/i18n/en.json';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestCategory } from '../../../../../../modules/tests/category/category.actions';
-import { PopulateCandidateDetailsCatBE }
-  from '../../../../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.actions';
+import { PopulateCandidateDetailsCatC }
+  from '../../../../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.actions';
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
@@ -53,10 +51,9 @@ describe('VehicleChecksCardCatCComponent', () => {
         fixture = TestBed.createComponent(VehicleChecksCardCatCComponent);
         store$ = TestBed.get(Store);
 
-        // TODO: MES-4254 Use category C
-        store$.dispatch(new StartTest(105, TestCategory.BE));
-        store$.dispatch(new PopulateTestCategory(TestCategory.BE));
-        store$.dispatch(new PopulateCandidateDetailsCatBE(candidateMock));
+        store$.dispatch(new StartTest(105, TestCategory.C));
+        store$.dispatch(new PopulateTestCategory(TestCategory.C));
+        store$.dispatch(new PopulateCandidateDetailsCatC(candidateMock));
 
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
@@ -67,8 +64,8 @@ describe('VehicleChecksCardCatCComponent', () => {
     describe('Vehicle check reporting', () => {
       it('should show results', () => {
         const showMeQuestion: QuestionResult = {
-          code: 'S01',
-          description: 'Show me how you would check that the direction indicators are working.',
+          code: 'S1',
+          description: 'Show me how you would check that all doors including cargo doors are secure.',
         };
         // Configure show me/tell me questions
         store$.dispatch(new ShowMeQuestionSelected(showMeQuestion, 1));
@@ -80,13 +77,13 @@ describe('VehicleChecksCardCatCComponent', () => {
           .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
         expect(tellMeQuestionText.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions.S01);
+          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions.S1);
       });
 
       it('should show results in Welsh for a Welsh test', (done) => {
         const showMeQuestion: QuestionResult = {
-          code: 'S01',
-          description: 'Show me how you would check that the direction indicators are working.',
+          code: 'S1',
+          description: 'Show me how you would check that all doors including cargo doors are secure.',
         };
         // Configure show me/tell me questions
         store$.dispatch(new ShowMeQuestionSelected(showMeQuestion, 1));
@@ -101,7 +98,7 @@ describe('VehicleChecksCardCatCComponent', () => {
             .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
           expect(tellMeQuestionText.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions.S01);
+            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions.S1);
           done();
         });
       });
