@@ -1,22 +1,30 @@
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import * as vehicleChecksCatCActionTypes from './vehicle-checks.cat-c.action';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-import {
-  NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestionsForNonTrailer,
- } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.vocational.constants';
-import {
-  NUMBER_OF_SHOW_ME_QUESTIONS as numberOfShowMeQuestionsForNonTrailer,
- } from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
-
-export const initialState: CatCUniqueTypes.VehicleChecks = {
-  tellMeQuestions: Array(numberOfTellMeQuestionsForNonTrailer).fill({}),
-  showMeQuestions: Array(numberOfShowMeQuestionsForNonTrailer).fill({}),
+export const generateInitialState = (category: TestCategory): CatCUniqueTypes.VehicleChecks => {
+  switch (category) {
+    case TestCategory.C:
+    case TestCategory.C1:
+      return  {
+        tellMeQuestions: Array(2).fill({}),
+        showMeQuestions: Array(3).fill({}),
+      };
+    case TestCategory.CE:
+    case TestCategory.C1E:
+      return {
+        tellMeQuestions: Array(1).fill({}),
+        showMeQuestions: Array(1).fill({}),
+      };
+  }
 };
 
 export function vehicleChecksCatCReducer(
-  state: CatCUniqueTypes.VehicleChecks = initialState,
+  state: CatCUniqueTypes.VehicleChecks,
   action: vehicleChecksCatCActionTypes.Types): CatCUniqueTypes.VehicleChecks {
   switch (action.type) {
+    case vehicleChecksCatCActionTypes.INITIALIZE_VEHICLE_CHECKS:
+      return generateInitialState(action.category);
     case vehicleChecksCatCActionTypes.SHOW_ME_QUESTION_SELECTED:
       return {
         ...state,

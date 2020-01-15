@@ -1,13 +1,13 @@
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import * as uncoupleRecoupleActions from '../../common/uncouple-recouple/uncouple-recouple.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
-export const initialState: CatBEUniqueTypes.UncoupleRecouple = {};
+export const initialState: CatCEUniqueTypes.UncoupleRecouple = {};
 
-export function uncoupleRecoupleReducer(
+export function uncoupleRecoupleCatCEReducer(
   state = initialState,
   action: uncoupleRecoupleActions.Types,
-): CatBEUniqueTypes.UncoupleRecouple {
+): CatCEUniqueTypes.UncoupleRecouple {
   switch (action.type) {
     case uncoupleRecoupleActions.TOGGLE_UNCOUPLE_RECOUPLE:
       return {

@@ -41,7 +41,7 @@ import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions
 import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import * as uncoupleRecoupleActions
-  from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
+  from '../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import * as reverseLeftActions
   from '../cat-be/components/reverse-left/reverse-left.actions';
 import * as catBEManoeuversActions

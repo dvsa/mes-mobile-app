@@ -11,9 +11,9 @@ import { testsCatBReducer } from './tests.cat-b.reducer';
 import { testsCatBEReducer } from './tests.cat-be.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { testsCatCReducer } from './tests.cat-c.reducer';
-import { testsCatCeReducer } from './tests.cat-ce.reducer';
+import { testsCatCEReducer } from './tests.cat-ce.reducer';
 import { testsCatC1Reducer } from './tests.cat-c1.reducer';
-import { testsCatC1eReducer } from './tests.cat-c1e.reducer';
+import { testsCatC1EReducer } from './tests.cat-c1e.reducer';
 
 export function testsReducerFactory(
   category: TestCategory | null, action: Action, state: TestResultSchemasUnion,
@@ -26,11 +26,11 @@ export function testsReducerFactory(
     case TestCategory.C:
       return testsCatCReducer(action, state as Required<CatCUniqueTypes.TestResult>);
     case TestCategory.CE:
-      return testsCatCeReducer(action, state as Required<CatCEUniqueTypes.TestResult>);
+      return testsCatCEReducer(action, state as Required<CatCEUniqueTypes.TestResult>);
     case TestCategory.C1:
       return testsCatC1Reducer(action, state as Required<CatC1UniqueTypes.TestResult>);
     case TestCategory.C1E:
-      return testsCatC1eReducer(action, state as Required<CatC1EUniqueTypes.TestResult>);
+      return testsCatC1EReducer(action, state as Required<CatC1EUniqueTypes.TestResult>);
     default:
       // TODO (low priority): throw an exception here instead of using category b reducer
       return testsCatBReducer(action, state as Required<CatBUniqueTypes.TestResult>);
