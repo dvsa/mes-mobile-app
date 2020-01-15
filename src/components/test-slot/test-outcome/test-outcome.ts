@@ -8,7 +8,7 @@ import { TestStatus } from '../../../modules/tests/test-status/test-status.model
 import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
 import { startsWith, isEmpty } from 'lodash';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
-import { JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE, CAT_C } from '../../../pages/page-names.constants';
+import { JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE, CAT_C, CAT_A_MOD1 } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
@@ -179,6 +179,12 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.C:
         this.navController.push(CAT_C.WAITING_ROOM_PAGE);
         break;
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1:
+        this.navController.push(CAT_A_MOD1.WAITING_ROOM_PAGE);
+        break;
     }
   }
 
@@ -269,6 +275,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.C1:
       case TestCategory.C:
         return CAT_C.WAITING_ROOM_PAGE;
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1:
+        return CAT_A_MOD1.WAITING_ROOM_PAGE;
     }
   }
 
@@ -283,6 +294,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.C1:
       case TestCategory.C:
         return CAT_C.PASS_FINALISATION_PAGE;
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1:
+        return CAT_A_MOD1.PASS_FINALISATION_PAGE;
     }
   }
 
@@ -297,6 +313,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.C1:
       case TestCategory.C:
         return CAT_C.NON_PASS_FINALISATION_PAGE;
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1:
+        return CAT_A_MOD1.NON_PASS_FINALISATION_PAGE;
     }
   }
 
@@ -311,6 +332,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.C1:
       case TestCategory.C:
         return CAT_C.OFFICE_PAGE;
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1:
+        return CAT_A_MOD1.OFFICE_PAGE;
     }
   }
 }
