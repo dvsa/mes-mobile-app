@@ -10,14 +10,6 @@ export const REKEY_SEARCH_PAGE = 'RekeySearchPage';
 export const TEST_RESULTS_SEARCH_PAGE = 'TestResultsSearchPage';
 export const LEGAL_REQUIREMENTS_MODAL = 'LegalRequirementsModal';
 
-export const CAT_A_MOD1 = {
-  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
-};
-
-export const CAT_A_MOD2 = {
-  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
-};
-
 export const CAT_B = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBPage',
   COMMUNICATION_PAGE: 'CommunicationCatBPage',
@@ -73,21 +65,39 @@ export const CAT_C = {
   VIEW_TEST_RESULT_PAGE:'ViewTestResultCatCPage',
 };
 
-export const CAT_AMOD1 = {
-  BACK_TO_OFFICE_PAGE: 'BackToOfficeAMod1Page',
+export const CAT_A_MOD1 = {
+  BACK_TO_OFFICE_PAGE: 'BackToOfficeCatAMod1Page',
   COMMUNICATION_PAGE: 'CommunicationCatAMod1Page',
-  DEBRIEF_PAGE: 'DebriefAMod1Page',
-  HEALTH_DECLARATION_PAGE: 'HealthDeclarationAMod1Page',
-  OFFICE_PAGE: 'OfficeAMod1Page',
-  PASS_FINALISATION_PAGE: 'PassFinalisationAMod1Page',
-  REVERSE_DIAGRAM_PAGE: 'ReverseDiagramAMod1Page',
-  TEST_REPORT_PAGE: 'TestReportAMod1Page',
-  WAITING_ROOM_PAGE: 'WaitingRoomAMod1Page',
-  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarAMod1Page',
-  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingAMod1Page',
-  REKEY_REASON_PAGE: 'RekeyReasonAMod1Page',
+  DEBRIEF_PAGE: 'DebriefCatAMod1Page',
+  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatAMod1Page',
+  OFFICE_PAGE: 'OfficeCatAMod1Page',
+  PASS_FINALISATION_PAGE: 'PassFinalisationCatAMod1Page',
+  REVERSE_DIAGRAM_PAGE: 'ReverseDiagramCatAMod1Page',
+  TEST_REPORT_PAGE: 'TestReportCatAMod1Page',
+  WAITING_ROOM_PAGE: 'WaitingRoomCatAMod1Page',
+  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCatAMod1Page',
+  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatAMod1Page',
+  REKEY_REASON_PAGE: 'RekeyReasonCatAMod1Page',
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
-  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationAMod1Page',
-  VEHICLE_CHECKS_MODAL: 'VehicleChecksAMod1Modal',
-  VIEW_TEST_RESULT_PAGE:'ViewTestResultAMod1Page',
+  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatAMod1Page',
+  VEHICLE_CHECKS_MODAL: 'VehicleChecksCatAMod1Modal',
+  VIEW_TEST_RESULT_PAGE:'ViewTestResultCatAMod1Page',
+};
+
+export const CAT_A_MOD2 = {
+  BACK_TO_OFFICE_PAGE: 'BackToOfficeCatAMod2Page',
+  COMMUNICATION_PAGE: 'CommunicationCatAMod2Page',
+  DEBRIEF_PAGE: 'DebriefCatAMod2Page',
+  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatAMod2Page',
+  OFFICE_PAGE: 'OfficeCatAMod2Page',
+  PASS_FINALISATION_PAGE: 'PassFinalisationCatAMod2Page',
+  TEST_REPORT_PAGE: 'TestReportCatAMod2Page',
+  WAITING_ROOM_PAGE: 'WaitingRoomCatAMod2Page',
+  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatAMod2Page',
+  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatAMod2Page',
+  REKEY_REASON_PAGE: 'RekeyReasonCatAMod2Page',
+  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
+  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatAMod2Page',
+  VEHICLE_CHECKS_MODAL: 'VehicleChecksCatAMod2Modal',
+  VIEW_TEST_RESULT_PAGE:'ViewTestResultCatAMod2Page',
 };

@@ -3,7 +3,7 @@ import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { CAT_AMOD1 } from '../../page-names.constants';
+import { CAT_A_MOD1 } from '../../page-names.constants';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
@@ -172,7 +172,7 @@ export class NonPassFinalisationCatAMod1Page extends BasePageComponent implement
     if (this.form.valid) {
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
-      this.navController.push(CAT_AMOD1.BACK_TO_OFFICE_PAGE);
+      this.navController.push(CAT_A_MOD1.BACK_TO_OFFICE_PAGE);
       return;
     }
     Object.keys(this.form.controls).forEach((controlName) => {

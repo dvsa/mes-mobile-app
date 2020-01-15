@@ -37,7 +37,7 @@ import {
   CandidateChosePostAsCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { TranslateService } from 'ng2-translate';
-import { CAT_AMOD1 } from '../../page-names.constants';
+import { CAT_A_MOD1 } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
@@ -200,15 +200,15 @@ export class CommunicationCatAMod1Page extends BasePageComponent implements OnIn
       this.deviceAuthenticationProvider.triggerLockScreen()
         .then(() => {
           this.store$.dispatch(new CommunicationSubmitInfo());
-          this.navController.push(CAT_AMOD1.WAITING_ROOM_TO_CAR_PAGE)
+          this.navController.push(CAT_A_MOD1.WAITING_ROOM_TO_CAR_PAGE)
             .then(() => {
               const waitingRoomPage =
-              this.navController.getViews().find(view => view.id === CAT_AMOD1.WAITING_ROOM_PAGE);
+              this.navController.getViews().find(view => view.id === CAT_A_MOD1.WAITING_ROOM_PAGE);
               if (waitingRoomPage) {
                 this.navController.removeView(waitingRoomPage);
               }
               const communicationPage =
-                this.navController.getViews().find(view => view.id === CAT_AMOD1.COMMUNICATION_PAGE);
+                this.navController.getViews().find(view => view.id === CAT_A_MOD1.COMMUNICATION_PAGE);
               if (communicationPage) {
                 this.navController.removeView(communicationPage);
               }

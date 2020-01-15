@@ -43,7 +43,7 @@ import { TestReportValidatorProvider } from '../../../providers/test-report-vali
 // TODO - PREP-AMOD1: Use cat amod1 selectors
 import { hasManoeuvreBeenCompletedCatBE } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ModalEvent } from '../test-report.constants';
-import { CAT_AMOD1, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
+import { CAT_A_MOD1, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 
@@ -226,11 +226,11 @@ export class TestReportCatAMod1Page extends BasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        this.navController.push(CAT_AMOD1.DEBRIEF_PAGE);
+        this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE);
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new TerminateTestFromTestReport());
-        this.navController.push(CAT_AMOD1.DEBRIEF_PAGE);
+        this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE);
         break;
     }
   }
@@ -240,10 +240,10 @@ export class TestReportCatAMod1Page extends BasePageComponent {
   }
 
   onContinue = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(CAT_AMOD1.DEBRIEF_PAGE));
+    this.modal.dismiss().then(() => this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE));
   }
 
   onTerminate = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(CAT_AMOD1.DEBRIEF_PAGE));
+    this.modal.dismiss().then(() => this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE));
   }
 }
