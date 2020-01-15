@@ -16,7 +16,7 @@ import { VehicleChecksScore } from '../../../../../../shared/models/vehicle-chec
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
 
-fdescribe('VehicleChecksComponent', () => {
+describe('VehicleChecksComponent', () => {
   let fixture: ComponentFixture<VehicleChecksComponent>;
   let component: VehicleChecksComponent;
   let store$: Store<StoreModel>;
