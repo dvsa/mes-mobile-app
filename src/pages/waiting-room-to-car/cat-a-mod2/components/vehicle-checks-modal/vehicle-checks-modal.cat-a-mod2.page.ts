@@ -124,7 +124,7 @@ export class VehicleChecksCatAMod2Modal {
         map((vehicleChecks) => {
 
           // TODO - PREP-AMOD2: Use a mod2 provider function
-          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
         }),
       ),
     };

@@ -11,6 +11,7 @@ import { getVehicleChecksCatBE }
   from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { Observable } from 'rxjs/Observable';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface ComponentState {
   vehicleChecksDrivingFaultCount$: Observable<number>;
@@ -43,7 +44,7 @@ export class VehicleChecksComponent implements OnInit {
         map((vehicleChecks) => {
 
           // TODO - PREP-AMOD2: Change provider function to a cat a mod2 one
-          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks).drivingFaults;
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks).drivingFaults;
         }),
       ),
       vehicleChecksSeriousFaultCount$: currentTest$.pipe(
@@ -54,7 +55,7 @@ export class VehicleChecksComponent implements OnInit {
         map((vehicleChecks) => {
 
           // TODO - PREP-AMOD2: Change provider function to a cat a mod2 one
-          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks).seriousFaults;
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks).seriousFaults;
         }),
       ),
     };
