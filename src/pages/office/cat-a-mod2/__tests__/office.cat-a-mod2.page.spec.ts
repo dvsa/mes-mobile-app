@@ -98,7 +98,7 @@ describe('OfficePage', () => {
             testStatus: {},
             startedTests: {
               123: {
-                category: TestCategory.BE,
+                category: TestCategory.BE, // TODO - PREP-AMOD2: update to cat a mod 2
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
