@@ -8,7 +8,7 @@ export const initialState: CatCUniqueTypes.PassCompletion = null;
 export const passCompletionCatCReducer = (
   state = initialState,
   action: passCompletionActionsCatC.Types | passCompletionActions.Types,
-) => {
+): CatCUniqueTypes.PassCompletion => {
   switch (action.type) {
     case passCompletionActionsCatC.CODE_78_PRESENT:
       return {

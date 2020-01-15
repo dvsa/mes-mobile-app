@@ -18,8 +18,8 @@ import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatCReducer } from './journal-data/cat-c/journal-data.cat-c.reducer';
 import { vehicleDetailsCatCReducer } from './vehicle-details/cat-c/vehicle-details.cat-c.reducer';
-import { passCompletionCatCReducer } from './pass-completion/cat-c/pass-completion.cat-c.reducer';
 import { testDataCatC1EReducer } from './test-data/cat-c/test-data.cat-c1e.reducer';
+import { passCompletionCatCReducer } from './pass-completion/cat-c/pass-completion.cat-c.reducer';
 
 export function testsCatC1EReducer(
   action: Action, state: CatC1EUniqueTypes.TestResult): Required<CatC1EUniqueTypes.TestResult> {
