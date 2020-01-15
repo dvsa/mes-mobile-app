@@ -6,7 +6,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { BackToOfficeViewDidEnter, DeferWriteUp } from '../back-to-office.actions';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
-import { JOURNAL_PAGE, CAT_AMOD1 } from '../../page-names.constants';
+import { JOURNAL_PAGE, CAT_A_MOD1 } from '../../page-names.constants';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../modules/tests/tests.selector';
@@ -68,6 +68,6 @@ export class BackToOfficeCatAMod1Page extends BasePageComponent {
   }
 
   goToOfficePage() {
-    this.navController.push(CAT_AMOD1.OFFICE_PAGE);
+    this.navController.push(CAT_A_MOD1.OFFICE_PAGE);
   }
 }

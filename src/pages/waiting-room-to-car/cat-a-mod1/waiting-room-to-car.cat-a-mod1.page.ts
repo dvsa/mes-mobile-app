@@ -58,7 +58,7 @@ import {
 // TODO - PREP-AMOD1: update to cat A
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import { CAT_AMOD1 } from '../../page-names.constants';
+import { CAT_A_MOD1 } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -209,9 +209,9 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push(CAT_AMOD1.TEST_REPORT_PAGE).then(() => {
+      this.navController.push(CAT_A_MOD1.TEST_REPORT_PAGE).then(() => {
         // remove Waiting Room To Car Page
-        const view = this.navController.getViews().find(view => view.id === CAT_AMOD1.WAITING_ROOM_TO_CAR_PAGE);
+        const view = this.navController.getViews().find(view => view.id === CAT_A_MOD1.WAITING_ROOM_TO_CAR_PAGE);
         if (view) {
           this.navController.removeView(view);
         }
@@ -251,7 +251,7 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
   }
 
   getDebriefPage() {
-    return CAT_AMOD1.DEBRIEF_PAGE;
+    return CAT_A_MOD1.DEBRIEF_PAGE;
   }
 
 }

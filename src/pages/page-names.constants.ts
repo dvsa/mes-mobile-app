@@ -10,10 +10,6 @@ export const REKEY_SEARCH_PAGE = 'RekeySearchPage';
 export const TEST_RESULTS_SEARCH_PAGE = 'TestResultsSearchPage';
 export const LEGAL_REQUIREMENTS_MODAL = 'LegalRequirementsModal';
 
-export const CAT_A_MOD1 = {
-  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
-};
-
 export const CAT_B = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBPage',
   COMMUNICATION_PAGE: 'CommunicationCatBPage',
@@ -69,7 +65,7 @@ export const CAT_C = {
   VIEW_TEST_RESULT_PAGE:'ViewTestResultCatCPage',
 };
 
-export const CAT_AMOD1 = {
+export const CAT_A_MOD1 = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeAMod1Page',
   COMMUNICATION_PAGE: 'CommunicationCatAMod1Page',
   DEBRIEF_PAGE: 'DebriefAMod1Page',
