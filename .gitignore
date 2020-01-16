@@ -41,6 +41,7 @@ fastlane/report.xml
 test/e2e/test.config.ts
 mock/local-journal.json
 mock/local-journal-non-test-activities.json
+remotedev-server/
 
 .DS_Store
 Thumbs.db
