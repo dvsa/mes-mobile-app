@@ -1,5 +1,5 @@
 
-import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, async } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
@@ -48,6 +48,7 @@ import { JournalData } from '@dvsa/mes-test-schema/categories/common';
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 import { configureTestSuite } from 'ng-bullet';
+import { CBTNumberComponent } from '../../components/cbt-number/cbt-number';
 
 describe('WaitingRoomCatAMod1Page', () => {
   let fixture: ComponentFixture<WaitingRoomCatAMod1Page>;
@@ -71,6 +72,7 @@ describe('WaitingRoomCatAMod1Page', () => {
         MockComponent(InsuranceDeclarationComponent),
         MockComponent(ResidencyDeclarationComponent),
         MockComponent(SignatureComponent),
+        MockComponent(CBTNumberComponent),
       ],
       imports: [
         IonicModule,
@@ -171,16 +173,9 @@ describe('WaitingRoomCatAMod1Page', () => {
     });
 
     describe('ionViewDidEnter', () => {
-      it('should enable single app mode if on ios and not in practice mode', () => {
-        component.isPracticeMode = false;
+      it('should enable single app mode if on ios', () => {
         component.ionViewDidEnter();
         expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
-      });
-
-      it('should note enable single app mode if on ios and in practice mode', () => {
-        component.isPracticeMode = true;
-        component.ionViewDidEnter();
-        expect(deviceProvider.enableSingleAppMode).not.toHaveBeenCalled();
       });
 
       it('should lock the screen orientation to Portrait Primary', () => {

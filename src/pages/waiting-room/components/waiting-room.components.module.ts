@@ -6,6 +6,8 @@ import { TranslateModule } from 'ng2-translate';
 import { ResidencyDeclarationComponent } from './residency-declaration/residency-declaration';
 import { SignatureComponent } from './signature/signature';
 import { ComponentsModule } from '../../../components/common/common-components.module';
+import { CBTNumberComponent } from './cbt-number/cbt-number';
+import { DirectivesModule } from '../../../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -13,17 +15,20 @@ import { ComponentsModule } from '../../../components/common/common-components.m
     InsuranceDeclarationComponent,
     ResidencyDeclarationComponent,
     SignatureComponent,
+    CBTNumberComponent,
   ],
   imports: [
     IonicModule,
     TranslateModule,
     ComponentsModule,
+    DirectivesModule,
   ],
   exports: [
     ConductedLanguageComponent,
     InsuranceDeclarationComponent,
     ResidencyDeclarationComponent,
     SignatureComponent,
+    CBTNumberComponent,
   ],
 })
 export class WaitingRoomComponentsModule { }

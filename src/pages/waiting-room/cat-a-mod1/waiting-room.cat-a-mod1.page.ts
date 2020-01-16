@@ -1,15 +1,15 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform, Navbar, ModalController } from 'ionic-angular';
-import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomActions from '../waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
-import {
-   getPreTestDeclarations,
-} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
+import { getPreTestDeclarationsCatAMod1 } from
+'../../../modules/tests/pre-test-declarations/cat-a-mod1/pre-test-declarations.cat-a-mod1.reducer';
+import * as preTestDeclarationsCatAMod1Actions
+  from '../../../modules/tests/pre-test-declarations/cat-a-mod1/pre-test-declarations.cat-a-mod1.actions';
 import * as preTestDeclarationsActions
   from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
@@ -17,6 +17,8 @@ import {
   getResidencyDeclarationStatus,
   getSignatureStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
+import { getcbtNumberStatus } from
+'../../../modules/tests/pre-test-declarations/cat-a-mod1/pre-test-declarations.cat-a-mod1.selector';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
@@ -53,6 +55,7 @@ import { JournalData } from '@dvsa/mes-test-schema/categories/common';
 import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { App } from '../../../app/app.component';
+import { BasePageComponent } from '../../../shared/classes/base-page';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -63,6 +66,7 @@ interface WaitingRoomPageState {
   candidateDriverNumber$: Observable<string>;
   welshTest$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
+  cbtNumber$: Observable<string>;
 }
 
 @IonicPage()
@@ -70,7 +74,7 @@ interface WaitingRoomPageState {
   selector: '.waiting-room-cat-a-mod1-page',
   templateUrl: 'waiting-room.cat-a-mod1.page.html',
 })
-export class WaitingRoomCatAMod1Page extends PracticeableBasePageComponent implements OnInit {
+export class WaitingRoomCatAMod1Page extends BasePageComponent implements OnInit {
 
   @ViewChild(Navbar) navBar: Navbar;
 
@@ -83,7 +87,7 @@ export class WaitingRoomCatAMod1Page extends PracticeableBasePageComponent imple
   merged$: Observable<boolean | string | JournalData>;
 
   constructor(
-    store$: Store<StoreModel>,
+    public store$: Store<StoreModel>,
     public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -96,7 +100,7 @@ export class WaitingRoomCatAMod1Page extends PracticeableBasePageComponent imple
     private modalController: ModalController,
     private app: App,
   ) {
-    super(platform, navController, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider);
     this.formGroup = new FormGroup({});
   }
 
@@ -106,10 +110,7 @@ export class WaitingRoomCatAMod1Page extends PracticeableBasePageComponent imple
     if (super.isIos()) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       this.insomnia.keepAwake();
-
-      if (!this.isPracticeMode) {
-        this.deviceProvider.enableSingleAppMode();
-      }
+      this.deviceProvider.enableSingleAppMode();
     }
 
     this.navBar.backButtonClick = (e: UIEvent) => {
@@ -128,7 +129,6 @@ export class WaitingRoomCatAMod1Page extends PracticeableBasePageComponent imple
   }
 
   ngOnInit(): void {
-    super.ngOnInit();
 
     const currentTest$ = this.store$.pipe(
       select(getTests),
@@ -137,15 +137,15 @@ export class WaitingRoomCatAMod1Page extends PracticeableBasePageComponent imple
 
     this.pageState = {
       insuranceDeclarationAccepted$: currentTest$.pipe(
-        select(getPreTestDeclarations),
+        select(getPreTestDeclarationsCatAMod1),
         select(getInsuranceDeclarationStatus),
       ),
       residencyDeclarationAccepted$: currentTest$.pipe(
-        select(getPreTestDeclarations),
+        select(getPreTestDeclarationsCatAMod1),
         select(getResidencyDeclarationStatus),
       ),
       signature$: currentTest$.pipe(
-        select(getPreTestDeclarations),
+        select(getPreTestDeclarationsCatAMod1),
         select(getSignatureStatus),
       ),
       candidateName$: currentTest$.pipe(
@@ -173,6 +173,10 @@ export class WaitingRoomCatAMod1Page extends PracticeableBasePageComponent imple
         select(getCommunicationPreference),
         select(getConductedLanguage),
       ),
+      cbtNumber$: currentTest$.pipe(
+        select(getPreTestDeclarationsCatAMod1),
+        select(getcbtNumberStatus),
+      ),
     };
     const { welshTest$, conductedLanguage$ } = this.pageState;
     this.merged$ = merge(
@@ -198,7 +202,6 @@ export class WaitingRoomCatAMod1Page extends PracticeableBasePageComponent imple
   }
 
   ionViewDidLeave(): void {
-    super.ionViewDidLeave();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -209,7 +212,7 @@ export class WaitingRoomCatAMod1Page extends PracticeableBasePageComponent imple
       (isEmpty(journalData.candidate.candidateName) && isEmpty(journalData.candidate.driverNumber));
   }
 
-  getSignatureDrawCompleteAction() : string {
+  getSignatureDrawCompleteAction(): string {
     return preTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
   }
 
@@ -231,6 +234,10 @@ export class WaitingRoomCatAMod1Page extends PracticeableBasePageComponent imple
 
   dispatchCandidateChoseToProceedInEnglish() {
     this.store$.dispatch(new CandidateChoseToProceedWithTestInEnglish(Language.ENGLISH));
+  }
+
+  cbtNumberChanged(cbtNumber: string) {
+    this.store$.dispatch(new preTestDeclarationsCatAMod1Actions.CbtNumberChanged(cbtNumber));
   }
 
   onSubmit() {
