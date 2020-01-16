@@ -8,7 +8,7 @@ import * as testStatusActions from './test-status/test-status.actions';
 import { of } from 'rxjs/observable/of';
 import { PopulateApplicationReference }
   from './journal-data/common/application-reference/application-reference.actions';
-import { PopulateCandidateDetails } from './journal-data/cat-b/candidate/candidate.actions';
+import { PopulateCandidateDetails } from './journal-data/common/candidate/candidate.actions';
 import { testReportPracticeModeSlot } from './__mocks__/tests.mock';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { StoreModel } from '../../shared/models/store.model';

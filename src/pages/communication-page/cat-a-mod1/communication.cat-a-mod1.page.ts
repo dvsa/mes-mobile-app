@@ -10,7 +10,7 @@ import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.sel
 import { getTests } from '../../../modules/tests/tests.reducer';
 
 // TODO - PREP-AMOD1 - implement category specific reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName,
   getUntitledCandidateName,

@@ -11,7 +11,7 @@ import * as journalActions from '../../../modules/journal/journal.actions';
 import { TestsModel } from '../tests.model';
 import { PopulateApplicationReference }
   from '../journal-data/common/application-reference/application-reference.actions';
-import { PopulateCandidateDetails } from '../journal-data/cat-b/candidate/candidate.actions';
+import { PopulateCandidateDetails } from '../journal-data/common/candidate/candidate.actions';
 import {
   testApplicationMock,
   candidateMock,

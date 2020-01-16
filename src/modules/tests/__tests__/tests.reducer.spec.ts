@@ -1,5 +1,5 @@
 import { testsReducer } from '../tests.reducer';
-import * as candidateReducer from '../journal-data/cat-b/candidate/candidate.reducer';
+import * as candidateReducer from '../journal-data/common/candidate/candidate.reducer';
 import * as preTestDeclarationsReducer from '../pre-test-declarations/pre-test-declarations.reducer';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';

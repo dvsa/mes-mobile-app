@@ -6,6 +6,7 @@ import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories/index';
 import { testsCatBReducer } from './tests.cat-b.reducer';
 import { testsCatBEReducer } from './tests.cat-be.reducer';
@@ -14,6 +15,7 @@ import { testsCatCReducer } from './tests.cat-c.reducer';
 import { testsCatCEReducer } from './tests.cat-ce.reducer';
 import { testsCatC1Reducer } from './tests.cat-c1.reducer';
 import { testsCatC1EReducer } from './tests.cat-c1e.reducer';
+import { testsCatAMod1Reducer } from './tests.cat-a-mod1.reducer';
 
 export function testsReducerFactory(
   category: TestCategory | null, action: Action, state: TestResultSchemasUnion,
@@ -31,6 +33,11 @@ export function testsReducerFactory(
       return testsCatC1Reducer(action, state as Required<CatC1UniqueTypes.TestResult>);
     case TestCategory.C1E:
       return testsCatC1EReducer(action, state as Required<CatC1EUniqueTypes.TestResult>);
+    case TestCategory.EUAMM1:
+    case TestCategory.EUA1M1:
+    case TestCategory.EUA2M1:
+    case TestCategory.EUAM1:
+      return testsCatAMod1Reducer(action, state as Required<TestResultCatAM1Schema>);
     default:
       // TODO (low priority): throw an exception here instead of using category b reducer
       return testsCatBReducer(action, state as Required<CatBUniqueTypes.TestResult>);
