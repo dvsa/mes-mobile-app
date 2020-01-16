@@ -6,6 +6,7 @@ import { WaitingRoomToCarAnalyticsEffects } from '../waiting-room-to-car.analyti
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { WaitingRoomToCarCatAMod2ComponentsModule }
   from './components/waiting-room-to-car.cat-a-mod2.components.module';
+import { WaitingRoomToCarComponentsModule } from '../components/waiting-room-to-car.components.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { WaitingRoomToCarCatAMod2ComponentsModule }
     IonicPageModule.forChild(WaitingRoomToCarCatAMod2Page),
     EffectsModule.forFeature([WaitingRoomToCarAnalyticsEffects]),
     ComponentsModule,
-    WaitingRoomToCarCatAMod2ComponentsModule,
+    WaitingRoomToCarComponentsModule,
     WaitingRoomToCarCatAMod2ComponentsModule,
   ],
 })
