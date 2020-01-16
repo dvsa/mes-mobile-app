@@ -167,7 +167,11 @@ export class TestsEffects {
         startTestAction.category === TestCategory.EUAM1 ||
         startTestAction.category === TestCategory.EUA1M1 ||
         startTestAction.category === TestCategory.EUA2M1 ||
-        startTestAction.category === TestCategory.EUAMM1
+        startTestAction.category === TestCategory.EUAMM1 ||
+        startTestAction.category === TestCategory.EUAM2 ||
+        startTestAction.category === TestCategory.EUA1M2 ||
+        startTestAction.category === TestCategory.EUA2M2 ||
+        startTestAction.category === TestCategory.EUAMM2
       ) {
         startTestAction.category = TestCategory.B;
       }
