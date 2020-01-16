@@ -25,6 +25,22 @@ DVSA Mobile Examiner Services (GDS Beta phase)
 #### Serve with local data
 - `npm run serve:local` (This will take the files in `/mock/` and serve them. You can edit them in `src/assets/mock` after running the command, this will live reload the UI with the new updated mock data. To point the app to different mock data, edit the `environment/environment.local.ts` file)
 
+### Serve to iOS Emulator with livereload and Redux Remote Devtools
+
+Run the following in separate terminals:
+
+- `npm run remote-devtools-server`
+- `npm run serve:emulator` (Note: you must have simulator / iOS version specified in the `package.json` file installed via Xcode)
+
+To open Redux Remote Devtools:
+
+- install the [Chrome Redux Devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) extension if not already installed
+- right click the icon in your browser toolbar and select 'Open Remote Devtools'
+- on first launch, you will need to update the settings as follows
+    - select use custom (local) 
+    - set the host name to `localhost`
+    - set the port to `8000`
+
 ### Mac users
 
 To run the app in the simulator with live code reload, run the following:
