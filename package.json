@@ -23,6 +23,7 @@
     "precommit": "run-s lint:fix lint compile-no-emit",
     "test": "npm run update-mock-data && npm run schema-version && npm run test:jasmine",
     "test:jasmine": "karma start ./test-config/karma.conf.js",
+    "test:jasmine-reload": "karma start ./test-config/karma.conf.js --no-single-run",
     "test:jasmine-ci": "karma start ./test-config/karma.conf.js --single-run",
     "test:jasmine-coverage": "karma start ./test-config/karma.conf.js --coverage",
     "test:e2e-simulator-bdd": "protractor e2e-simulator-bdd.conf.js",

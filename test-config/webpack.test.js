@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -15,7 +16,7 @@ module.exports = {
         loader: 'ts-loader',
         options: {
           // disable type checker - we will use it in fork plugin
-          transpileOnly: false
+          transpileOnly: true
         }
       }, 'angular2-template-loader']
     },
@@ -46,6 +47,7 @@ module.exports = {
       root('./src'), // location of your src
       {} // a map of your routes
     ),
+    new ForkTsCheckerWebpackPlugin()
   ]
 };
 
