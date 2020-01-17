@@ -12,7 +12,7 @@ export class RekeyDetailsCardComponent {
 
   // TODO: MES-4287 Use category c type
   @Input()
-  data: CatBEUniqueTypes.TestResult | CatBUniqueTypes.TestResult;
+  data: CatBEUniqueTypes.TestResult | CatBUniqueTypes.TestResult | ;
 
   public getScheduledStaffNumber (): string {
     return get(this.data, 'examinerBooked'.toString());

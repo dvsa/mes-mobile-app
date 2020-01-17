@@ -123,6 +123,8 @@ describe('testsReducer', () => {
 
     const output = testsReducer(state, { ...action, category: TestCategory.B });
 
+    output.startedTests[testReportPracticeSlotId].testData;
+
     expect(output.startedTests[testReportPracticeSlotId].testData.seriousFaults.positioningNormalDriving)
       .toBeUndefined();
     expect(output.startedTests[testReportPracticeSlotId].testData.drivingFaults.moveOffSafety)

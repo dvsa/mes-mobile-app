@@ -28,6 +28,10 @@
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
     <vehicle-details-card [data]='testResult.vehicleDetails'></vehicle-details-card>
     <debrief-card [data]='testResult.testData'></debrief-card>
-    <test-summary-card [data]='testResult'></test-summary-card>
+    <test-summary-card
+      [accompaniment]='testResult.accompaniment'
+      [passCompletion]='testResult.passCompletion'
+      [testSummary]='testResult.testSummary'
+      ></test-summary-card>
   </div>
 </ion-content>
