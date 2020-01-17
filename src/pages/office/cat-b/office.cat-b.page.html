@@ -16,7 +16,7 @@
     </ion-col>
     <ion-col col-36 class="align-col-right">
       <h2>{{pageState.startTime$ | async}}</h2>
-      <h3>Test outcome: 
+      <h3>Test outcome:
         <div id="test-outcome-text" class="inline-mode" [ngSwitch]="(pageState.testOutcomeText$ | async)">
           <span class="pass" *ngSwitchCase="'Passed'">
             {{pageState.testOutcomeText$ | async}}
@@ -49,7 +49,7 @@
               [outcome]="pageState.testOutcome$ | async" (routeNumberChange)="routeNumberChanged($event)" [formGroup]="form">
             </route-number>
 
-            <independent-driving [display]="pageState.displayIndependentDriving$ | async" [formGroup]="form" [outcome]="pageState.testOutcome$ | async"
+            <independent-driving [display]="pageState.displayIndependentDriving$ | async" option1="Sat Nav" option2="Traffic Signs" [formGroup]="form" [outcome]="pageState.testOutcome$ | async"
               [independentDriving]="pageState.independentDriving$ | async" (independentDrivingChange)="independentDrivingChanged($event)"></independent-driving>
 
             <candidate-description [display]="pageState.displayCandidateDescription$ | async" [formGroup]="form"
