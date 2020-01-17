@@ -30,6 +30,9 @@ export const createPopulateCandidateDetailsAction = (testCategory: string, booki
         businessName: get(booking, 'business.businessName'),
         businessTelephone: get(booking, 'business.telephone'),
       });
+    case TestCategory.EUA1M2:
+    case TestCategory.EUA2M2:
+      return new PopulateCandidateDetails(booking.candidate);
     default:
       throw new Error('No testCategory has been defined');
   }
