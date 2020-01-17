@@ -64,7 +64,7 @@ describe('VehicleChecksCardCatAMod2Component', () => {
   }));
 
   // TODO - Remove X when the Vehicle Checks for mod2 are implemented and can be checked against DOM
- xdescribe('DOM', () => {
+  xdescribe('DOM', () => {
     describe('Vehicle check reporting', () => {
       it('should show results', () => {
         const showMeQuestion: QuestionResult = {

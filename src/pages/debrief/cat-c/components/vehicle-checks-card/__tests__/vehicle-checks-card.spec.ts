@@ -36,8 +36,7 @@ describe('VehicleChecksCardComponent', () => {
       imports: [
         IonicModule,
         StoreModule.forRoot({ tests: testsReducer }),
-        TranslateModule.forRoot(
-          {
+        TranslateModule.forRoot({
           provide: TranslateLoader,
           useFactory: createTranslateLoader,
           deps: [Http],

@@ -265,7 +265,7 @@ describe('DebriefCatAMod2Page', () => {
         const expectedDrivingFaultTranslation = (<any>welshTranslations).debrief.competencies.moveOffSafety;
         const expectedSeriousFaultTranslation = (<any>welshTranslations).debrief.competencies.useOfMirrorsSignalling;
         const expectedDangerousFaultTranslation =
-            (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
+          (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
 
         expect(drivingFaultLabel.innerHTML).toBe(expectedDrivingFaultTranslation);
         expect(seriousLabel.innerHTML).toBe(expectedSeriousFaultTranslation);
