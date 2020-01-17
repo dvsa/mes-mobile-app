@@ -16,6 +16,9 @@ export const createPopulateCandidateDetailsAction = (testCategory: string, booki
         businessName: get(booking, 'business.businessName'),
         businessTelephone: get(booking, 'business.telephone'),
       });
+    case TestCategory.C1E:
+    case TestCategory.CE:
+    case TestCategory.C1:
     case TestCategory.C:
       return new PopulateCandidateDetailsCatC({
         ...booking.candidate,

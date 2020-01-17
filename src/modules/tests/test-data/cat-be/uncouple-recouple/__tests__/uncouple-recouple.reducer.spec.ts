@@ -7,7 +7,7 @@ import {
   UncoupleRecoupleAddDangerousFault,
   UncoupleRecoupleRemoveFault,
   AddUncoupleRecoupleComment,
-} from '../uncouple-recouple.actions';
+} from '../../../common/uncouple-recouple/uncouple-recouple.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 
 describe('Uncouple Recouple Reducer' , () => {

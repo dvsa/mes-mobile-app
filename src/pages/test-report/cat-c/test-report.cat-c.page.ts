@@ -46,10 +46,6 @@ import {
   getTestRequirementsCatC,
 } from '../../../modules/tests/test-data/cat-c/test-requirements/test-requirements.cat-c.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
-import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
-import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
-import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
@@ -242,43 +238,6 @@ export class TestReportCatCPage extends BasePageComponent {
 
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_C.DEBRIEF_PAGE));
-  }
-
-  passTest = (): void => {
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.clearance,
-      newFaultCount: 3,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.followingDistance,
-      newFaultCount: 1,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.moveOffSafety,
-      newFaultCount: 2,
-    }));
-    this.store$.dispatch(new SetActivityCode('1'));
-    this.navController.push(CAT_C.DEBRIEF_PAGE);
-  }
-
-  failTest = (): void => {
-
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.pedestrianCrossings,
-      newFaultCount: 3,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.positioningLaneDiscipline,
-      newFaultCount: 1,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.signalsCorrectly,
-      newFaultCount: 2,
-    }));
-    this.store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsChangeSpeed));
-    this.store$.dispatch(new AddSeriousFault(Competencies.useOfSpeed));
-    this.store$.dispatch(new AddDangerousFault(Competencies.responseToSignsTrafficLights));
-    this.navController.push(CAT_C.DEBRIEF_PAGE);
   }
 
   showUncoupleRecouple = (): boolean => this.testCategory === TestCategory.CE || this.testCategory === TestCategory.C1E;

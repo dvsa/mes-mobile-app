@@ -12,7 +12,7 @@ import * as testRequirementsActions
 import * as manoeuvresActions from '../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import * as manoeuvresCatBEActions from '../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 import * as uncoupleRecoupleActions
-  from '../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
+  from '../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import * as vehicleChecksActions from '../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import * as ecoActions from '../../modules/tests/test-data/common/eco/eco.actions';
 import * as etaActions from '../../modules/tests/test-data/common/eta/eta.actions';

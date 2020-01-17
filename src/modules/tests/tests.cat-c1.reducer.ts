@@ -17,9 +17,9 @@ import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatCReducer } from './journal-data/cat-c/journal-data.cat-c.reducer';
-import { testDataCatCReducer } from './test-data/cat-c/test-data.cat-c.reducer';
 import { vehicleDetailsCatCReducer } from './vehicle-details/cat-c/vehicle-details.cat-c.reducer';
-import { passCompletionCatCReducer } from './pass-completion/cat-c/pass-completion.cat-c.reducer';
+import { testDataCatC1Reducer } from './test-data/cat-c/test-data.cat-c1.reducer';
+import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 
 export function testsCatC1Reducer(
   action: Action, state: CatC1UniqueTypes.TestResult): Required<CatC1UniqueTypes.TestResult> {
@@ -32,8 +32,8 @@ export function testsCatC1Reducer(
       preTestDeclarations: preTestDeclarationsReducer,
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatCReducer,
-      testData: testDataCatCReducer,
-      passCompletion: passCompletionCatCReducer,
+      testData: testDataCatC1Reducer,
+      passCompletion: passCompletionReducer,
       postTestDeclarations: postTestDeclarationsReducer,
       testSummary: testSummaryReducer,
       communicationPreferences: communicationPreferencesReducer,

@@ -50,6 +50,7 @@ import { version } from '../../environment/test-schema-version';
 import { createPopulateCandidateDetailsAction } from './journal-data/common/candidate/candidate.action-creator';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateVehicleDimensions } from './vehicle-details/common/vehicle-details.actions';
+import { InitializeVehicleChecks } from './test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 
 @Injectable()
 export class TestsEffects {
@@ -161,6 +162,16 @@ export class TestsEffects {
 
       examiner.individualId;
 
+      // TODO: PREP-AMOD1 Remove bypass logic for enabling a-mod1
+      if (
+        startTestAction.category === TestCategory.EUAM1 ||
+        startTestAction.category === TestCategory.EUA1M1 ||
+        startTestAction.category === TestCategory.EUA2M1 ||
+        startTestAction.category === TestCategory.EUAMM1
+      ) {
+        startTestAction.category = TestCategory.B;
+      }
+
       const arrayOfActions: Action[] = [
         new PopulateTestCategory(startTestAction.category),
         new PopulateExaminer(examiner),
@@ -185,6 +196,14 @@ export class TestsEffects {
 
       if (startTestAction.rekey) {
         arrayOfActions.push(new MarkAsRekey());
+      }
+
+      if (
+        startTestAction.category === TestCategory.C ||
+        startTestAction.category === TestCategory.C1 ||
+        startTestAction.category === TestCategory.C1E ||
+        startTestAction.category === TestCategory.CE) {
+        arrayOfActions.push(new InitializeVehicleChecks(startTestAction.category));
       }
 
       return arrayOfActions;

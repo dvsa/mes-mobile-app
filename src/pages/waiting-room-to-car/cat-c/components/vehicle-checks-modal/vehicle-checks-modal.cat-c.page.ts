@@ -99,16 +99,15 @@ export class VehicleChecksCatCModal {
     let numberOfTellMeQuestions: number;
 
     switch (this.category as TestCategory) {
-      case TestCategory.C || TestCategory.C1: {
+      case TestCategory.C:
+      case TestCategory.C1:
         numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER;
         numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER;
         break;
-      }
-      case TestCategory.CE || TestCategory.C1E: {
+      case TestCategory.CE:
+      case TestCategory.C1E:
         numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER;
         numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_TRAILER;
-        break;
-      }
     }
     this.showMeQuestionsNumberArray = Array(numberOfShowMeQuestions);
     this.tellMeQuestionsNumberArray = Array(numberOfTellMeQuestions);

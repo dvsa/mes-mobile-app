@@ -98,7 +98,7 @@ import { SetActivityCode } from '../../../modules/tests/activity-code/activity-c
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
   AddUncoupleRecoupleComment,
-} from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
+} from '../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';

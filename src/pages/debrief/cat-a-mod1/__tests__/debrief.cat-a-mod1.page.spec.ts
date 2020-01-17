@@ -35,7 +35,7 @@ import { PopulateTestSlotAttributes }
   from '../../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
 import { EndDebrief } from '../../debrief.actions';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
-import { CAT_AMOD1 } from '../../../page-names.constants';
+import { CAT_A_MOD1 } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -220,17 +220,17 @@ describe('DebriefCatAMod1Page', () => {
     it('should navigate to PassFinalisationPage when outcome = pass', () => {
       component.outcome = 'Pass';
       component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_AMOD1.PASS_FINALISATION_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_A_MOD1.PASS_FINALISATION_PAGE);
     });
     it('should navigate to BackToOfficePage when outcome = fail', () => {
       component.outcome = 'Fail';
       component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_AMOD1.POST_DEBRIEF_HOLDING_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_A_MOD1.POST_DEBRIEF_HOLDING_PAGE);
     });
     it('should navigate to the BackToOfficePage when outcomes = terminated', () => {
       component.outcome = 'Terminated';
       component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_AMOD1.POST_DEBRIEF_HOLDING_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_A_MOD1.POST_DEBRIEF_HOLDING_PAGE);
     });
   });
 

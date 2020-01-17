@@ -1,5 +1,5 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import * as uncoupleRecoupleActions from './uncouple-recouple.actions';
+import * as uncoupleRecoupleActions from '../../common/uncouple-recouple/uncouple-recouple.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 export const initialState: CatBEUniqueTypes.UncoupleRecouple = {};
