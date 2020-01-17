@@ -58,7 +58,6 @@ export class IndependentDrivingComponent implements OnChanges {
   }
 
   independentDrivingChanged(independentDriving: IndependentDriving): void {
-    console.log(independentDriving)
     if (this.formControl.valid) {
       this.independentDrivingChange.emit(independentDriving);
     }

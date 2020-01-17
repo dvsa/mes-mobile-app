@@ -12,7 +12,7 @@ import { WeatherConditionsComponent } from './weather-conditions/weather-conditi
 import { AdditionalInformationComponent } from './additional-information/additional-information';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { VehicleChecksOfficeCardComponent } from './vehicle-checks/vehicle-checks-office-card';
-import { IndependentDrivingComponent } from './independent-driving/independent-driving'
+import { IndependentDrivingComponent } from './independent-driving/independent-driving';
 
 @NgModule({
   declarations: [
