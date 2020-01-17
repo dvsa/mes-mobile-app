@@ -30,7 +30,7 @@ describe('VehicleChecksCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [
+      declarations: [
         VehicleChecksCardCatCComponent,
       ],
       imports: [
@@ -55,7 +55,7 @@ describe('VehicleChecksCardComponent', () => {
         store$.dispatch(new StartTest(105, TestCategory.C));
         store$.dispatch(new PopulateTestCategory(TestCategory.C));
         store$.dispatch(new PopulateCandidateDetails(candidateMock));
-§
+
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
       });
