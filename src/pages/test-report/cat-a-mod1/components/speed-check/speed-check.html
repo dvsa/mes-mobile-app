@@ -1,0 +1,33 @@
+<ion-row>
+  <ion-col col-32>
+  <competency-button
+    [onTap]="onTap"
+    [onPress]="onPress"
+    [ngClass]=""
+  >
+    <span class='competency-label'>{{ getLabel() }}</span>
+    <div class="fault-wrapper">
+      <serious-fault-badge [showBadge]="showSerious()"></serious-fault-badge>
+      <dangerous-fault-badge [showBadge]="showDangerous()"></dangerous-fault-badge>
+    </div>
+  </competency-button>
+</ion-col>
+<ion-col col-32>
+  <input type="text" class="speed-input" maxlength="3">
+  <input type="text" class="speed-input second-input" maxlength="3">
+</ion-col>
+<ion-col col-20>
+  <competency-button
+    [onTap]="toggleNotMet()"
+    [ngClass]="{
+      'not-met': actionTaken
+    }">
+      <span class='competency-label'>Not met</span>
+  </competency-button>
+</ion-col>
+</ion-row>
+<ion-row>
+  <ion-col no-padding>
+    <div class="dark-divider"></div>
+  </ion-col>
+</ion-row>
