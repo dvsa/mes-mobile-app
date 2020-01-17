@@ -125,20 +125,21 @@ describe('testsReducer', () => {
 
     output.startedTests[testReportPracticeSlotId].testData;
 
-    expect(output.startedTests[testReportPracticeSlotId].testData.seriousFaults.positioningNormalDriving)
+    expect((output.startedTests[testReportPracticeSlotId].testData as CatBUniqueTypes.TestData)
+      .seriousFaults.positioningNormalDriving)
       .toBeUndefined();
-    expect(output.startedTests[testReportPracticeSlotId].testData.drivingFaults.moveOffSafety)
+    expect((output.startedTests[testReportPracticeSlotId].testData as CatBUniqueTypes.TestData)
+      .drivingFaults.moveOffSafety)
       .toBeUndefined();
-    expect(
-      (output.startedTests[testReportPracticeSlotId].testData.vehicleChecks as CatBUniqueTypes.VehicleChecks)
-        .tellMeQuestion.outcome)
+    expect((output.startedTests[testReportPracticeSlotId].testData as CatBUniqueTypes.TestData)
+      .vehicleChecks.tellMeQuestion.outcome)
       .toBeUndefined();
 
-    expect(output.startedTests[1].testData.seriousFaults.signalsTimed).toEqual(true);
-    expect(output.startedTests[1].testData.drivingFaults.clearance).toEqual(1);
-    expect((output.startedTests[1].testData.vehicleChecks as CatBUniqueTypes.VehicleChecks).tellMeQuestion.outcome)
+    expect((output.startedTests[1].testData as CatBUniqueTypes.TestData).seriousFaults.signalsTimed).toEqual(true);
+    expect((output.startedTests[1].testData as CatBUniqueTypes.TestData).drivingFaults.clearance).toEqual(1);
+    expect((output.startedTests[1].testData as CatBUniqueTypes.TestData).vehicleChecks.tellMeQuestion.outcome)
       .toEqual(CompetencyOutcome.DF);
-    expect((output.startedTests[1].testData.vehicleChecks as CatBUniqueTypes.VehicleChecks).showMeQuestion.outcome)
+    expect((output.startedTests[1].testData as CatBUniqueTypes.TestData).vehicleChecks.showMeQuestion.outcome)
       .toEqual(CompetencyOutcome.S);
   });
 
