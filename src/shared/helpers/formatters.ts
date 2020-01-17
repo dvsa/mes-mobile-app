@@ -14,3 +14,7 @@ export const formatApplicationReference = (appRef: ApplicationReference): string
 export const removeLeadingZeros = (value: string): string => {
   return value.replace(/^0+(?!$)/, '');
 };
+
+export const removeNonAlphaNumericChars = (value: string): string => {
+  return value.replace(/[^a-z0-9+]+/gi, '');
+};
