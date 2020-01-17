@@ -56,7 +56,9 @@ export function createTranslateLoader(http: Http) {
 const enableDevTools = environment && environment.enableDevTools;
 
 // Register our remote devtools if we're on-device and not in a browser and dev tools enabled
-if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__'] && enableDevTools) {
+if (
+  !window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
+  && enableDevTools && window.hasOwnProperty('cordova')) {
   const remoteDevToolsProxy = new RemoteDevToolsProxy({
     connectTimeout: 300000, // extend for pauses during debugging
     ackTimeout: 120000, // extend for pauses during debugging
