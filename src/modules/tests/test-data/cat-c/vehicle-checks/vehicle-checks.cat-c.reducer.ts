@@ -26,6 +26,7 @@ export function vehicleChecksCatCReducer(
     case vehicleChecksCatCActionTypes.INITIALIZE_VEHICLE_CHECKS:
       return generateInitialState(action.category);
     case vehicleChecksCatCActionTypes.SHOW_ME_QUESTION_SELECTED:
+      console.log('****** state', state);
       return {
         ...state,
         showMeQuestions: state.showMeQuestions.map(

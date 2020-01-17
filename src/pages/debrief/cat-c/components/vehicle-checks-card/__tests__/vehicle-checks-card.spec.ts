@@ -30,13 +30,14 @@ describe('VehicleChecksCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
+        declarations: [
         VehicleChecksCardCatCComponent,
       ],
       imports: [
         IonicModule,
         StoreModule.forRoot({ tests: testsReducer }),
-        TranslateModule.forRoot({
+        TranslateModule.forRoot(
+          {
           provide: TranslateLoader,
           useFactory: createTranslateLoader,
           deps: [Http],
@@ -51,16 +52,16 @@ describe('VehicleChecksCardComponent', () => {
         fixture = TestBed.createComponent(VehicleChecksCardCatCComponent);
         store$ = TestBed.get(Store);
 
-        store$.dispatch(new StartTest(105, TestCategory.BE));
-        store$.dispatch(new PopulateTestCategory(TestCategory.BE));
+        store$.dispatch(new StartTest(105, TestCategory.C));
+        store$.dispatch(new PopulateTestCategory(TestCategory.C));
         store$.dispatch(new PopulateCandidateDetails(candidateMock));
-
+§
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
       });
   }));
 
-  describe('DOM', () => {
+  xdescribe('DOM', () => {
     describe('Vehicle check reporting', () => {
       it('should show results', () => {
         const showMeQuestion: QuestionResult = {
@@ -77,7 +78,7 @@ describe('VehicleChecksCardComponent', () => {
           .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
         expect(tellMeQuestionText.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions.S01);
+          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions[TestCategory.C].S01);
       });
 
       it('should show results in Welsh for a Welsh test', (done) => {
@@ -98,7 +99,7 @@ describe('VehicleChecksCardComponent', () => {
             .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
           expect(tellMeQuestionText.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions.S01);
+            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions[TestCategory.C].S01);
           done();
         });
       });
