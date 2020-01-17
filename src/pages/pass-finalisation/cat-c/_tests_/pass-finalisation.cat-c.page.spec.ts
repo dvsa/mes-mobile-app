@@ -206,22 +206,22 @@ describe('PassFinalisationCatCPage', () => {
     describe('showCode78', () => {
       it('should return true when the test is a category C', () => {
         component.testCategory = TestCategory.C;
-        expect(component.showCode78()).toBeTruthy();
+        expect(component.showCode78()).toBe(true);
       });
 
       it('should return true when the test is a category C+E', () => {
         component.testCategory = TestCategory.CE;
-        expect(component.showCode78()).toBeTruthy();
+        expect(component.showCode78()).toBe(true);
       });
 
       it('should return false when the test is a category C1E', () => {
         component.testCategory = TestCategory.C1E;
-        expect(component.showCode78()).toBeFalsy();
+        expect(component.showCode78()).toBe(false);
       });
 
       it('should return false when the test is a category C1', () => {
         component.testCategory = TestCategory.C1;
-        expect(component.showCode78()).toBeFalsy();
+        expect(component.showCode78()).toBe(false);
       });
     });
   });

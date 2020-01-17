@@ -30,10 +30,8 @@
         <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission>
         <warning-banner *ngIf="displayTransmissionBanner()" warningText="An automatic licence will be issued."></warning-banner>
 
-        <div *ngIf="showCode78()">
-          <code-78 [form]="form" [transmission]="pageState.transmission$ | async"
-          (code78Present)="onCode78Present($event)"></code-78>
-        </div>
+        <code-78 *ngIf="showCode78()" [form]="form" [transmission]="pageState.transmission$ | async"
+                 (code78Present)="onCode78Present($event)"></code-78>
 
         <warning-banner *ngIf="shouldShowManualBanner()" warningText="{{manualMessage}}"></warning-banner>
         <warning-banner *ngIf="shouldShowAutomaticBanner()" warningText="{{automaticMessage}}"></warning-banner>
