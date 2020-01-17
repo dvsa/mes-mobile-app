@@ -60,8 +60,6 @@ import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.c
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_A_MOD1 } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
 interface WaitingRoomToCarPageState {
@@ -90,8 +88,6 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
 
   showEyesightFailureConfirmation: boolean = false;
 
-  tellMeQuestions: VehicleChecksQuestion[];
-
   constructor(
     public store$: Store<StoreModel>,
     public navController: NavController,
@@ -102,7 +98,6 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
     public questionProvider: QuestionProvider,
   ) {
     super(platform, navController, authenticationProvider);
-    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
     this.form = new FormGroup({});
   }
 
@@ -200,10 +195,6 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
 
   vehicleRegistrationChanged(vehicleRegistration: string) {
     this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
-  }
-
-  closeVehicleChecksModal = () => {
-    this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
   }
 
   onSubmit() {
