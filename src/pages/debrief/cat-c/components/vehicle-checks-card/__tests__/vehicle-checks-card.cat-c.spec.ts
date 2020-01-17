@@ -77,7 +77,7 @@ describe('VehicleChecksCardCatCComponent', () => {
           .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
         expect(tellMeQuestionText.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions.S1);
+          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions[TestCategory.C].S1);
       });
 
       it('should show results in Welsh for a Welsh test', (done) => {
@@ -98,7 +98,7 @@ describe('VehicleChecksCardCatCComponent', () => {
             .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
           expect(tellMeQuestionText.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions.S1);
+            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions[TestCategory.C].S1);
           done();
         });
       });

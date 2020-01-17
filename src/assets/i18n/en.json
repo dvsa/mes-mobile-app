@@ -17,6 +17,23 @@
   },
   "debrief": {
     "showMeTellMeQuestions": {
+      "B": {
+        "T01": "Brakes",
+        "T02": "Safety factors while loading",
+        "T03": "Safety factors while securing a load",
+        "T04": "Sufficient tread",
+        "T05": "Engine coolant",
+        "T06": "Head restraint",
+        "S01": "Direction indicators",
+        "S02": "Doors secure",
+        "S03": "Horn",
+        "S04": "Parking brake",
+        "S05": "Windscreen",
+        "S06": "Demist windscreen",
+        "S07": "Rear fog lights",
+        "S08": "Dipped to main beam",
+        "S09": "Brake lights"
+      },
       "B+E": {
         "T01": "Brakes",
         "T02": "Safety factors while loading",

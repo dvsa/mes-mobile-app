@@ -21,7 +21,7 @@ import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-describe('VehicleChecksCardComponent', () => {
+describe('VehicleChecksCardComponentB', () => {
   let fixture: ComponentFixture<VehicleChecksCardComponent>;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
