@@ -1,7 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
 import { DateTime } from '../../../../shared/helpers/date-time';
-import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
+import { TestResultCatAM2Schema } from '@dvsa/mes-test-schema/categories/AM2';
 
 @Component({
   selector: 'rekey-details-card',
@@ -11,7 +18,14 @@ export class RekeyDetailsCardComponent {
 
   // TODO: MES-4287 Use category c type
   @Input()
-  data: TestResultSchemasUnion;
+  data: CatBUniqueTypes.TestResult
+  | CatBEUniqueTypes.TestResult
+  | CatCUniqueTypes.TestResult
+  | CatCEUniqueTypes.TestResult
+  | CatC1UniqueTypes.TestResult
+  | CatC1EUniqueTypes.TestResult
+  | TestResultCatAM1Schema
+  | TestResultCatAM2Schema;
 
   public getScheduledStaffNumber (): string {
     return get(this.data, 'examinerBooked'.toString());
