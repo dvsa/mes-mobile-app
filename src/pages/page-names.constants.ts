@@ -75,7 +75,7 @@ export const CAT_A_MOD1 = {
   REVERSE_DIAGRAM_PAGE: 'ReverseDiagramCatAMod1Page',
   TEST_REPORT_PAGE: 'TestReportCatAMod1Page',
   WAITING_ROOM_PAGE: 'WaitingRoomCatAMod1Page',
-  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCatAMod1Page',
+  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatAMod1Page',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatAMod1Page',
   REKEY_REASON_PAGE: 'RekeyReasonCatAMod1Page',
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
