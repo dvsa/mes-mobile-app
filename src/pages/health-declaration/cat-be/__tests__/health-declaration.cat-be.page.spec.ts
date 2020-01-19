@@ -110,7 +110,6 @@ describe('HealthDeclarationCatBEPage', () => {
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
         component.subscription = new Subscription();
-        store$.dispatch(new passCompletionActions.PopulatePassCompletion()); // Will have been dispatched by prior page
       });
 
   }));

@@ -1,6 +1,5 @@
 import { passCompletionCatCReducer, initialState } from '../pass-completion.cat-c.reducer';
 import {
-  PopulatePassCompletion,
   PassCertificateNumberChanged,
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
@@ -8,10 +7,6 @@ import {
 import { Code78Present, Code78NotPresent } from '../pass-completion.cat-c.actions';
 
 describe('pass completion reducer', () => {
-  it('should populate the unanswered defaults when receiving POPULATE_PASS_COMPLETION', () => {
-    const result = passCompletionCatCReducer(initialState, new PopulatePassCompletion());
-    expect(result).toEqual({ passCertificateNumber: null, provisionalLicenceProvided: null });
-  });
   it('should put the pass certificate number into the state on pass certificate number changed action', () => {
     const result = passCompletionCatCReducer(initialState, new PassCertificateNumberChanged('ABC123'));
     expect(result.passCertificateNumber).toBe('ABC123');

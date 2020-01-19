@@ -10,7 +10,6 @@ import {
 import {
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
-  PopulatePassCompletion,
   PassCertificateNumberChanged,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
@@ -205,7 +204,6 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
       transmission$.pipe(map(value => this.transmission = value)),
     );
     this.subscription = this.merged$.subscribe();
-    this.store$.dispatch(new PopulatePassCompletion());
   }
 
   ionViewDidLeave(): void {

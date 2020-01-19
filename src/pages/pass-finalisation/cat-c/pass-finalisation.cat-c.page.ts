@@ -10,7 +10,6 @@ import {
 import {
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
-  PopulatePassCompletion,
   PassCertificateNumberChanged,
   Code78NotPresent,
   Code78Present,
@@ -221,8 +220,6 @@ export class PassFinalisationCatCPage extends BasePageComponent {
       transmission$.pipe(map(value => (this.transmission = value))),
     );
     this.subscription = this.merged$.subscribe();
-
-    this.store$.dispatch(new PopulatePassCompletion());
   }
 
   ionViewDidLeave(): void {
