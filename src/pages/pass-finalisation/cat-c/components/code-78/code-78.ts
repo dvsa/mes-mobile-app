@@ -1,6 +1,10 @@
 import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TransmissionType } from '../../../../../shared/models/transmission-type';
+
+enum ValidCode78Values {
+  YES = 'yes',
+  NO = 'no',
+}
 
 @Component({
   selector: 'code-78',
@@ -12,7 +16,7 @@ export class Code78Component implements OnChanges {
   form: FormGroup;
 
   @Input()
-  transmission: TransmissionType;
+  code78: boolean;
 
   @Output()
   code78Present = new EventEmitter<boolean>();
@@ -24,6 +28,12 @@ export class Code78Component implements OnChanges {
     if (!this.formControl) {
       this.formControl = new FormControl('', [Validators.required]);
       this.form.addControl(Code78Component.fieldName, this.formControl);
+    }
+
+    if (this.code78 !== null) {
+      this.formControl.patchValue(this.code78 ? ValidCode78Values.YES : ValidCode78Values.NO);
+    } else {
+      this.formControl.patchValue(null);
     }
   }
 

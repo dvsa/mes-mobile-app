@@ -9,12 +9,12 @@
     <ion-row [formGroup]="form">
       <ion-col col-48>
         <input formControlName="provisionalLicenseProvidedCtrl" type="radio" id="license-received" value="yes"
-          [checked]="provisionalLicenseProvidedRadioChecked" class="gds-radio-button" (click)="provisionalLicenseReceived()">
+          class="gds-radio-button" (click)="provisionalLicenseReceived()">
         <label for="license-received" class="radio-label">Yes</label>
       </ion-col>
       <ion-col>
         <input formControlName="provisionalLicenseProvidedCtrl" type="radio" id="license-not-received" value="no"
-          [checked]="provisionalLicenseNotProvidedRadioChecked" class="gds-radio-button" (click)="provisionalLicenseNotReceived()">
+          class="gds-radio-button" (click)="provisionalLicenseNotReceived()">
         <label for="license-not-received" class="radio-label">No</label>
       </ion-col>
     </ion-row>
