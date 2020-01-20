@@ -6,8 +6,7 @@ import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.sel
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
-// TODO: MES-4287 use Cat C reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { getETA, getEco } from '../../../modules/tests/test-data/common/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';
@@ -94,29 +93,29 @@ export class DebriefCatCPage extends BasePageComponent {
     this.pageState = {
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data =>
-          // TODO: MES-4287 Use category C
-          this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)
-          .map(fault => fault.competencyIdentifier)),
+        withLatestFrom(category$),
+        map(([data, category]) =>
+          this.faultSummaryProvider.getSeriousFaultsList(data, category as TestCategory)
+            .map(fault => fault.competencyIdentifier)),
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data =>
-          // TODO: MES-4287 Use category C
-          this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)
-          .map(fault => fault.competencyIdentifier)),
+        withLatestFrom(category$),
+        map(([data, category]) =>
+          this.faultSummaryProvider.getDangerousFaultsList(data, category as TestCategory)
+            .map(fault => fault.competencyIdentifier)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        // TODO: MES-4287 Use category C
-        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
+        withLatestFrom(category$),
+        map(([data, category]) =>
+          this.faultSummaryProvider.getDrivingFaultsList(data, category as TestCategory)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
         withLatestFrom(category$),
-        map(([testData, category]) => {
-          return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
-        }),
+        map(([testData, category]) =>
+          this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData)),
       ),
       etaFaults$: currentTest$.pipe(
         select(getTestData),
