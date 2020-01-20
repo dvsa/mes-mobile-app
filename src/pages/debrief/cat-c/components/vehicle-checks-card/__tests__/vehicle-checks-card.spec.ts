@@ -23,7 +23,7 @@ import { PopulateCandidateDetails }
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-describe('VehicleChecksCardComponent', () => {
+describe('VehicleChecksCardComponentC', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatCComponent>;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
@@ -64,8 +64,8 @@ describe('VehicleChecksCardComponent', () => {
     describe('Vehicle check reporting', () => {
       it('should show results', () => {
         const showMeQuestion: QuestionResult = {
-          code: 'S01',
-          description: 'Show me how you would check that the direction indicators are working.',
+          code: 'S1',
+          description: 'Show me how you would check that all doors including cargo doors are secure.',
         };
         // Configure show me/tell me questions
         store$.dispatch(new ShowMeQuestionSelected(showMeQuestion, 1));
@@ -77,13 +77,13 @@ describe('VehicleChecksCardComponent', () => {
           .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
         expect(tellMeQuestionText.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions[TestCategory.C].S01);
+          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions[TestCategory.C].S1);
       });
 
       it('should show results in Welsh for a Welsh test', (done) => {
         const showMeQuestion: QuestionResult = {
-          code: 'S01',
-          description: 'Show me how you would check that the direction indicators are working.',
+          code: 'S1',
+          description: 'Show me how you would check that all doors including cargo doors are secure.',
         };
         // Configure show me/tell me questions
         store$.dispatch(new ShowMeQuestionSelected(showMeQuestion, 1));
@@ -98,7 +98,7 @@ describe('VehicleChecksCardComponent', () => {
             .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
           expect(tellMeQuestionText.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions[TestCategory.C].S01);
+            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions[TestCategory.C].S1);
           done();
         });
       });
