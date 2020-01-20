@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { forOwn, transform, endsWith, get } from 'lodash';
+import { endsWith, forOwn, get, transform } from 'lodash';
 import { CategoryCode, EyesightTest, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
-import { FaultSummary, CommentSource, CompetencyIdentifiers } from '../../shared/models/fault-marking.model';
+import { CommentSource, CompetencyIdentifiers, FaultSummary } from '../../shared/models/fault-marking.model';
 import { CompetencyDisplayName } from '../../shared/models/competency-display-name';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
@@ -9,13 +9,11 @@ import { ManoeuvreTypes } from '../../modules/tests/test-data/test-data.constant
 import {
   manoeuvreCompetencyLabels as manoeuvreCompetencyLabelsCatB,
   manoeuvreTypeLabels as manoeuvreTypeLabelsCatB,
-}
-  from '../../shared/constants/competencies/catb-manoeuvres';
+} from '../../shared/constants/competencies/catb-manoeuvres';
 import {
   manoeuvreCompetencyLabels as manoeuvreCompetencyLabelsCatBe,
   manoeuvreTypeLabels as manoeuvreTypeLabelsCatBe,
-}
-  from '../../shared/constants/competencies/catbe-manoeuvres';
+} from '../../shared/constants/competencies/catbe-manoeuvres';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../fault-count/fault-count';
@@ -23,7 +21,7 @@ import { getCompetencyFaults } from '../../shared/helpers/competency';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import {
   manoeuvreCompetencyLabelsCatC,
-  manoeuvreTypeLabelsCatC
+  manoeuvreTypeLabelsCatC,
 } from '../../shared/constants/competencies/catc-manoeuvres';
 
 @Injectable()

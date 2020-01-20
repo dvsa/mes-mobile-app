@@ -6,6 +6,7 @@ import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import {
+  InitializeVehicleChecks,
   ShowMeQuestionOutcomeChanged,
   ShowMeQuestionSelected,
 } from '../../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
@@ -18,10 +19,9 @@ import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import * as englishTranslations from '../../../../../../assets/i18n/en.json';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestCategory } from '../../../../../../modules/tests/category/category.actions';
-import { PopulateCandidateDetailsCatC } from '../../../../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.actions';
+import { PopulateCandidateDetailsCatC, } from '../../../../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.actions';
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { InitializeVehicleChecks } from '../../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 
 describe('VehicleChecksCardComponentCatC', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatCComponent>;
