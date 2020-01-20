@@ -16,12 +16,20 @@ import {
 } from
   '../../../../modules/tests/pass-completion/pass-completion.actions';
 
+enum ValidLicenceProvidedValues {
+    YES = 'yes',
+    NO = 'no',
+  }
+
 @Component({
   selector: 'license-provided',
   templateUrl: 'license-provided.html',
 })
 
 export class LicenseProvidedComponent implements OnChanges {
+
+  @Input()
+  license: boolean;
 
   @Output()
   licenseReceived = new EventEmitter<ProvisionalLicenseReceived>();
@@ -39,6 +47,12 @@ export class LicenseProvidedComponent implements OnChanges {
     if (!this.formControl) {
       this.formControl = new FormControl('', [Validators.required]);
       this.form.addControl(LicenseProvidedComponent.fieldName, this.formControl);
+    }
+
+    if (this.license !== null) {
+      this.formControl.patchValue(this.license ? ValidLicenceProvidedValues.YES : ValidLicenceProvidedValues.NO);
+    } else {
+      this.formControl.patchValue(null);
     }
   }
 

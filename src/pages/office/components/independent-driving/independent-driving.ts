@@ -4,7 +4,8 @@ import { IndependentDriving } from '@dvsa/mes-test-schema/categories/common';
 import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
-} from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+} from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { removeNonAlphaNumeric } from '../../../../shared/helpers/formatters';
 
 @Component({
   selector: 'independent-driving',
@@ -16,6 +17,12 @@ export class IndependentDrivingComponent implements OnChanges {
 
   @Input()
   outcome: string;
+
+  @Input()
+  option1: IndependentDriving;
+
+  @Input()
+  option2: IndependentDriving;
 
   @Input()
   independentDriving: IndependentDriving;
@@ -54,6 +61,10 @@ export class IndependentDrivingComponent implements OnChanges {
     if (this.formControl.valid) {
       this.independentDrivingChange.emit(independentDriving);
     }
+  }
+
+  getIndependentDrivingInputId(inputLabel: string): string {
+    return `independent-driving-${removeNonAlphaNumeric(inputLabel).toLowerCase()}`;
   }
 
   get invalid(): boolean {

@@ -23,14 +23,23 @@
           </ion-col>
         </ion-row>
 
-        <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()"
-          (licenseNotReceived)="provisionalLicenseNotReceived()"> </license-provided>
+        <license-provided
+          [form]="form"
+          [license]="pageState.provisionalLicense$ | async"
+          (licenseReceived)="provisionalLicenseReceived()"
+          (licenseNotReceived)="provisionalLicenseNotReceived()">
+        </license-provided>
 
         <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission>
+
         <warning-banner *ngIf="displayTransmissionBanner()" warningText="An automatic licence will be issued.">
         </warning-banner>
 
-        <pass-certificate-number [form]="form" (passCertificateNumberChange)="passCertificateNumberChanged($event)"></pass-certificate-number>
+        <pass-certificate-number
+          [form]="form"
+          [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
+          (passCertificateNumberChange)="passCertificateNumberChanged($event)">
+        </pass-certificate-number>
 
         <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
           (d255Change)="d255Changed($event)"></d255>

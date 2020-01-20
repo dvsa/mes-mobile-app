@@ -15,7 +15,7 @@ import {
   isTestOutcomeSet,
   getTestOutcomeText,
 } from '../../../modules/tests/tests.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getUntitledCandidateName,
   getCandidateDriverNumber,

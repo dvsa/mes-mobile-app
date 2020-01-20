@@ -8,7 +8,7 @@ import * as testStatusActions from './test-status/test-status.actions';
 import { of } from 'rxjs/observable/of';
 import { PopulateApplicationReference }
   from './journal-data/common/application-reference/application-reference.actions';
-import { PopulateCandidateDetails } from './journal-data/cat-b/candidate/candidate.actions';
+import { PopulateCandidateDetails } from './journal-data/common/candidate/candidate.actions';
 import { testReportPracticeModeSlot } from './__mocks__/tests.mock';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { StoreModel } from '../../shared/models/store.model';
@@ -162,12 +162,8 @@ export class TestsEffects {
 
       examiner.individualId;
 
-      // TODO: PREP-AMOD1 Remove bypass logic for enabling a-mod1
+      // TODO: PREP-AMOD2 Remove bypass logic for enabling a-mod2
       if (
-        startTestAction.category === TestCategory.EUAM1 ||
-        startTestAction.category === TestCategory.EUA1M1 ||
-        startTestAction.category === TestCategory.EUA2M1 ||
-        startTestAction.category === TestCategory.EUAMM1 ||
         startTestAction.category === TestCategory.EUAM2 ||
         startTestAction.category === TestCategory.EUA1M2 ||
         startTestAction.category === TestCategory.EUA2M2 ||

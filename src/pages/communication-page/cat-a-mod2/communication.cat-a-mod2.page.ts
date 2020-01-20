@@ -8,9 +8,7 @@ import { Store, select } from '@ngrx/store';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
-
-// TODO - PREP-AMOD2 implement category specific reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName,
   getUntitledCandidateName,

@@ -19,7 +19,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
-import { getCandidate } from '../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
+import { getCandidate } from '../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getCandidateId } from '../../modules/tests/journal-data/common/candidate/candidate.selector';
 import {
   getApplicationReference,

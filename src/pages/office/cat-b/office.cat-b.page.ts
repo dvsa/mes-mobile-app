@@ -47,7 +47,7 @@ import {
   WeatherConditionsChanged,
   AdditionalInformationChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
-import { getCandidate } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName,
   getCandidateDriverNumber,

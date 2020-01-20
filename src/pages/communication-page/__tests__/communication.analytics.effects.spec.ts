@@ -17,7 +17,7 @@ import { Application } from '@dvsa/mes-journal-schema';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
-import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.actions';
+import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/common/candidate/candidate.actions';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import * as applicationReferenceActions

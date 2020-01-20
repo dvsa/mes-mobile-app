@@ -1,7 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { VehicleChecksCardCatCComponent } from '../vehicle-checks-card.cat-c';
-import { Config, IonicModule } from 'ionic-angular';
-import { Store, StoreModule } from '@ngrx/store';
+import { IonicModule, Config } from 'ionic-angular';
+import { StoreModule, Store } from '@ngrx/store';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
@@ -12,7 +12,7 @@ import {
 } from '../../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
-import { TranslateLoader, TranslateModule, TranslateService } from 'ng2-translate';
+import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
 import { createTranslateLoader } from '../../../../../../app/app.module';
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../../assets/i18n/cy.json';

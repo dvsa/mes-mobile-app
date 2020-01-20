@@ -45,14 +45,15 @@ describe('licenseProvidedComponent', () => {
 
     describe('isInvalid', () => {
       it('should validate the field when it is valid', () => {
+        component.license = true;
         component.ngOnChanges();
-        component.form.get(LicenseProvidedComponent.fieldName).setValue('yes');
         fixture.detectChanges();
         const result: boolean = component.isInvalid();
         expect(result).toEqual(false);
       });
 
       it('should not validate the field when it is dirty', () => {
+        component.license = null;
         component.ngOnChanges();
         component.formControl.markAsDirty();
         fixture.detectChanges();
