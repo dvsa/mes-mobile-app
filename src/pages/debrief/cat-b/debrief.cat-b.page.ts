@@ -37,6 +37,8 @@ import { getTestOutcome } from '../debrief.selector';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 
+import { TestOutcome } from '../../../shared/models/test-outcome';
+
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
   dangerousFaults$: Observable<string[]>;
@@ -185,7 +187,7 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
       return;
     }
     this.store$.dispatch(new EndDebrief());
-    if (this.outcome === 'Pass') {
+    if (this.outcome === TestOutcome.PASS) {
       this.navController.push(CAT_B.PASS_FINALISATION_PAGE);
       return;
     }

@@ -37,6 +37,8 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
 import { getCandidate } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 
+import { TestOutcome } from '../../../shared/models/test-outcome';
+
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
   dangerousFaults$: Observable<string[]>;
@@ -176,7 +178,7 @@ export class DebriefCatAMod1Page extends BasePageComponent {
   endDebrief(): void {
     this.store$.dispatch(new EndDebrief());
     // TODO: refactor to use an enum for outcome
-    if (this.outcome === 'Pass') {
+    if (this.outcome === TestOutcome.PASS) {
       this.navController.push(CAT_A_MOD1.PASS_FINALISATION_PAGE);
       return;
     }

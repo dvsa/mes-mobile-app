@@ -40,6 +40,7 @@ import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
+import { TestOutcome } from '../../../../shared/models/test-outcome';
 
 describe('DebriefCatBPage', () => {
   let fixture: ComponentFixture<DebriefCatBPage>;
@@ -163,7 +164,7 @@ describe('DebriefCatBPage', () => {
     });
     it('should display passed container if outcome is `passed`', () => {
       fixture.detectChanges();
-      component.outcome = 'Pass';
+      component.outcome = TestOutcome.PASS;
       fixture.detectChanges();
 
       expect(fixture.debugElement.query(By.css('.passed'))).not.toBeNull();
@@ -228,7 +229,7 @@ describe('DebriefCatBPage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new EndDebrief);
       });
       it('should navigate to PassFinalisationPage when outcome = pass', () => {
-        component.outcome = 'Pass';
+        component.outcome = TestOutcome.PASS;
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith(CAT_B.PASS_FINALISATION_PAGE);
       });
