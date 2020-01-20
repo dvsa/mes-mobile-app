@@ -5,7 +5,7 @@ import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
 } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { removeNonAlphaNumericChars } from '../../../../shared/helpers/formatters';
+import { removeNonAlphaNumeric } from '../../../../shared/helpers/formatters';
 
 @Component({
   selector: 'independent-driving',
@@ -64,7 +64,7 @@ export class IndependentDrivingComponent implements OnChanges {
   }
 
   getIndependentDrivingInputId(inputLabel: string): string {
-    return `independent-driving-${removeNonAlphaNumericChars(inputLabel).toLowerCase()}`;
+    return `independent-driving-${removeNonAlphaNumeric(inputLabel).toLowerCase()}`;
   }
 
   get invalid(): boolean {
