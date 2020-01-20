@@ -268,14 +268,6 @@ export class PassFinalisationCatCPage extends BasePageComponent {
     );
   }
 
-  displayTransmissionBanner(): boolean {
-    return (
-      !this.form.controls['transmissionCtrl'].pristine &&
-      this.transmission === TransmissionType.Automatic &&
-      !this.shouldShowCode78Banner()
-    );
-  }
-
   shouldShowCode78Banner(): boolean {
     return this.code78Present !== null && this.transmission !== null;
   }
