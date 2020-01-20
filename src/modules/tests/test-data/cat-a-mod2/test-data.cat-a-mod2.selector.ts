@@ -1,81 +1,86 @@
-import { Competencies, LegalRequirements } from '../test-data.constants';
-import { get } from 'lodash';
+import { Competencies } from '../test-data.constants';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { QuestionProvider } from '../../../../providers/question/question';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { TestData, SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
+import { NUMBER_OF_SAFETY_QUESTIONS }
+  from '../../../../shared/constants/safety-questions.cat-a-mod2.constants';
+import { NUMBER_OF_BALANCE_QUESTIONS }
+  from '../../../../shared/constants/balance-questions.cat-a-mod2.constants';
+import { get } from 'lodash';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
+import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 export const getDrivingFaultCount = (
-  data: CatBUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];
+  data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
-export const getManoeuvres = (data: CatBUniqueTypes.TestData): CatBUniqueTypes.Manoeuvres => data.manoeuvres;
+export const getVehicleChecks = (
+  state: TestData): SafetyAndBalanceQuestions => state.safetyAndBalanceQuestions;
 
-// TODO - We should pass a Manoeuvre object here instead of TestData
-export const hasManoeuvreBeenCompletedCatB = (data: CatBUniqueTypes.TestData) => {
-  return (
-    get(data.manoeuvres, 'forwardPark.selected') ||
-    get(data.manoeuvres, 'reverseParkCarpark.selected') ||
-    get(data.manoeuvres, 'reverseParkRoad.selected') ||
-    get(data.manoeuvres, 'reverseRight.selected')
-  );
-};
+  export const getSafetyQuestionOptions = (
+    questions: VehicleChecksQuestion[],
+    outcome: string,
+    provider: OutcomeBehaviourMapProvider) => {
+    const filteredQuestions: VehicleChecksQuestion[] = [];
+    const showNotApplicable = provider.showNotApplicable(outcome, 'safetyQuestion');
+    questions.forEach((value) => {
+      if (value.code !== 'N/A' || (value.code === 'N/A' && showNotApplicable)) {
+        filteredQuestions.push(value);
+      }
+    });
+    return filteredQuestions;
+  };
+  
+export const areBalanceQuestionsCorrect = (state: SafetyAndBalanceQuestions) => {
+  let correct = true;
 
-export const hasControlledStopBeenCompleted = (data: CatBUniqueTypes.TestData) => data.controlledStop.selected;
-
-export const hasEyesightTestGotSeriousFault = (data: CatBUniqueTypes.TestData) => data.eyesightTest.seriousFault;
-
-export const hasEyesightTestBeenCompleted = (data: CatBUniqueTypes.TestData) => data.eyesightTest.complete;
-
-export const hasLegalRequirementBeenCompleted = (
-  data: CatBUniqueTypes.TestRequirements, legalRequirement: LegalRequirements) => {
-  return data[legalRequirement];
-};
-
-export const getVehicleChecks = (state: CatBUniqueTypes.TestData): CatBUniqueTypes.VehicleChecks => state.vehicleChecks;
-
-export const getTellMeQuestion = (state: CatBUniqueTypes.VehicleChecks): VehicleChecksQuestion => {
-  const questionProvider: QuestionProvider = new QuestionProvider();
-  return questionProvider
-    .getTellMeQuestions(TestCategory.B)
-    .find(question => question.code === get(state, 'tellMeQuestion.code'));
-};
-
-export const isTellMeQuestionSelected = (
-  state: CatBUniqueTypes.VehicleChecks) => get(state, 'tellMeQuestion.code') !== undefined;
-
-export const isTellMeQuestionCorrect =
-  (state: CatBUniqueTypes.VehicleChecks) => get(state, 'tellMeQuestion.outcome') === CompetencyOutcome.P;
-
-export const isTellMeQuestionDrivingFault = (state: CatBUniqueTypes.VehicleChecks) =>
-  get(state, 'tellMeQuestion.outcome') === CompetencyOutcome.DF;
-
-export const tellMeQuestionOutcome = (state: CatBUniqueTypes.VehicleChecks) => get(state, 'tellMeQuestion.outcome');
-
-export const getSelectedTellMeQuestionText = (state: CatBUniqueTypes.VehicleChecks) => {
-  const questionProvider: QuestionProvider = new QuestionProvider();
-
-  const tellMeQuestionText = questionProvider
-    .getTellMeQuestions(TestCategory.B)
-    .find(question => question.code === get(state, 'tellMeQuestion.code'));
-
-  if (!tellMeQuestionText) {
-    return '';
+  if (
+    typeof state.balanceQuestions === 'undefined' ||
+    state.balanceQuestions === null ||
+    !(state.balanceQuestions instanceof Array)) {
+    correct = false;
+  } else {
+    state.balanceQuestions.forEach((question) => {
+      if (question.outcome !== CompetencyOutcome.P) {
+        correct = false;
+      }
+    });
   }
-  return `${get(state, 'tellMeQuestion.code')} - ${tellMeQuestionText.shortName}`;
+
+  return correct;
 };
 
-export const getShowMeQuestion = (state: CatBUniqueTypes.VehicleChecks) => {
-  const questionProvider: QuestionProvider = new QuestionProvider();
-  return questionProvider
-    .getShowMeQuestions(TestCategory.B)
-    .find(question => question.code === get(state, 'showMeQuestion.code'));
-};
 
-// TODO - We should really pass a Vehicle Checks object here and not Test Data
-export const hasVehicleChecksBeenCompletedCatB = (data: CatBUniqueTypes.TestData): boolean => {
-  const showMeQuestionOutcome = get(data, 'vehicleChecks.showMeQuestion.outcome', null);
-  const tellMeQuestionOutcome = get(data, 'vehicleChecks.tellMeQuestion.outcome', null);
+export const areBalanceQuestionsSelected = (
+  state: SafetyAndBalanceQuestions) => typeof get(state, 'balanceQuestions') !== 'undefined';
 
-  return (showMeQuestionOutcome != null && tellMeQuestionOutcome != null);
+export const hasVehicleChecksBeenCompleted = (data: SafetyAndBalanceQuestions): boolean => {
+  let safetyQuestionComplete = true;
+  let balanceQuestionComplete = true;
+
+  if (
+    !(data && data.safetyQuestions instanceof Array) ||
+    data.safetyQuestions.length !== NUMBER_OF_SAFETY_QUESTIONS
+  ) {
+    safetyQuestionComplete = false;
+  } else {
+    data.safetyQuestions.forEach((element) => {
+      if (element.outcome == null) {
+        safetyQuestionComplete = false;
+      }
+    });
+  }
+
+  if (
+    !(data && data.balanceQuestions instanceof Array) ||
+    data.balanceQuestions.length !== NUMBER_OF_BALANCE_QUESTIONS
+  ) {
+    balanceQuestionComplete = false;
+  } else {
+    data.balanceQuestions.forEach((element) => {
+      if (element.outcome == null) {
+        balanceQuestionComplete = false;
+      }
+    });
+  }
+
+  return (safetyQuestionComplete && balanceQuestionComplete);
 };

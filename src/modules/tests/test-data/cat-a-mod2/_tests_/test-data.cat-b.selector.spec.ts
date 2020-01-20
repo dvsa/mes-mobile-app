@@ -1,23 +1,16 @@
-import { QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { TestData, SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
 import {
   hasSeriousFault,
-  getTestRequirements,
   hasDangerousFault,
   getETAFaultText,
-  getEcoFaultText,
-  getShowMeQuestionOptions,
+  getEcoFaultText
 } from '../../common/test-data.selector';
 import {
   getDrivingFaultCount,
-  getManoeuvres,
-  hasManoeuvreBeenCompletedCatB,
-  isTellMeQuestionSelected,
-  isTellMeQuestionCorrect,
-  isTellMeQuestionDrivingFault,
-  hasVehicleChecksBeenCompletedCatB,
-  hasEyesightTestGotSeriousFault,
-  hasEyesightTestBeenCompleted,
+  areBalanceQuestionsSelected,
+  areBalanceQuestionsCorrect,
+  hasVehicleChecksBeenCompleted,
+  getSafetyQuestionOptions,
 } from '../test-data.cat-a-mod2.selector';
 import { Competencies } from '../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
@@ -26,7 +19,7 @@ import { behaviourMap } from '../../../../../pages/office/office-behaviour-map';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 
 describe('TestDataSelectors', () => {
-  const state: CatBUniqueTypes.TestData = {
+  const state: TestData = {
     drivingFaults: {
       controlsGears: 1,
     },
@@ -36,70 +29,34 @@ describe('TestDataSelectors', () => {
     dangerousFaults: {
       useOfSpeed: true,
     },
-    testRequirements: {
-      normalStart1: true,
-      normalStart2: true,
-      angledStart: true,
-      hillStart: true,
-    },
     ETA: {
-      physical: false,
       verbal: false,
     },
     eco: {
       adviceGivenControl: false,
       adviceGivenPlanning: false,
     },
-    manoeuvres: {
-      forwardPark: {
-        selected: true,
-        controlFault: CompetencyOutcome.DF,
-      },
-    },
-    controlledStop: {
-      selected: true,
-    },
-    vehicleChecks: {
-      tellMeQuestion: {
-        outcome: CompetencyOutcome.DF,
-      },
-      showMeQuestion: {
-        outcome: CompetencyOutcome.P,
-      },
-    },
-    eyesightTest: {
-      complete: true,
-      seriousFault: false,
+    safetyAndBalanceQuestions: {
+      balanceQuestions: [
+        {
+          code: '',
+          outcome: CompetencyOutcome.DF,
+        },
+      ],
+      safetyQuestions: [
+        {
+          code: '',
+          outcome: CompetencyOutcome.DF,
+        },
+      ],
     },
   };
 
-  describe('hasEyesightTestBeenCompleted', () => {
-    it('should return true if the eyesight test is complete', () => {
-      expect(hasEyesightTestBeenCompleted(state)).toBe(true);
-    });
-
-    it('should return false if the eyesight test is not complete', () => {
-      const newState: CatBUniqueTypes.TestData = { ...state, eyesightTest: { complete: false } };
-      expect(hasEyesightTestBeenCompleted(newState)).toBe(false);
-    });
-  });
-
-  describe('hasEyesightTestGotSeriousFault', () => {
-    it('should return true if the eyesight test has a serious fault', () => {
-      const newState: CatBUniqueTypes.TestData = { ...state, eyesightTest: { seriousFault: true } };
-      expect(hasEyesightTestGotSeriousFault(newState)).toBe(true);
-    });
-
-    it('should return false if the eyesight test does not have a serious fault', () => {
-      expect(hasEyesightTestGotSeriousFault(state)).toBe(false);
-    });
-  });
-
-  describe('getShowMeQuestionOptions', () => {
+  describe('getSafetyQuestionOptions', () => {
     const outcomeBehaviourMapProvider = new OutcomeBehaviourMapProvider();
     outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
 
-    const showMeQuestions: VehicleChecksQuestion[] = [
+    const safetyQuestions: VehicleChecksQuestion[] = [
       {
         code: 'S1',
         description: 'S1 Desc',
@@ -117,13 +74,13 @@ describe('TestDataSelectors', () => {
       },
     ];
     it('should return the list of questions without N/A if outcome field does not have showNotApplicable set', () => {
-      const result = getShowMeQuestionOptions(showMeQuestions, '1', outcomeBehaviourMapProvider);
+      const result = getSafetyQuestionOptions(safetyQuestions, '1', outcomeBehaviourMapProvider);
       expect(result.length).toBe(2);
       expect(result[0].code).toBe('S1');
       expect(result[1].code).toBe('S2');
     });
     it('should return extra question if outcome showNotApplicable set', () => {
-      const result = getShowMeQuestionOptions(showMeQuestions, '4', outcomeBehaviourMapProvider);
+      const result = getSafetyQuestionOptions(safetyQuestions, '4', outcomeBehaviourMapProvider);
       expect(result.length).toBe(3);
       expect(result[2].code).toBe('N/A');
     });
@@ -157,36 +114,12 @@ describe('TestDataSelectors', () => {
     });
   });
 
-  describe('getTestRequirements', () => {
-    it('should return all the properties of testRequirements', () => {
-      const result = getTestRequirements(state) as CatBUniqueTypes.TestRequirements;
-
-      expect(result.normalStart1).toEqual(true);
-      expect(result.normalStart2).toEqual(true);
-      expect(result.angledStart).toEqual(true);
-      expect(result.hillStart).toEqual(true);
-    });
-  });
-
   describe('getETAFaultText', () => {
     it('should return null if no ETA faults', () => {
       const result = getETAFaultText(state.ETA);
       expect(result).toBeUndefined();
     });
-    it('should return `Physical and Verbal` if both ETA faults', () => {
-      state.ETA.physical = true;
-      state.ETA.verbal = true;
-      const result = getETAFaultText(state.ETA);
-      expect(result).toEqual('Physical and Verbal');
-    });
-    it('should return `Physical` if just physical ETA fault', () => {
-      state.ETA.physical = true;
-      state.ETA.verbal = false;
-      const result = getETAFaultText(state.ETA);
-      expect(result).toEqual('Physical');
-    });
     it('should return `Verbal` if just verbal ETA fault', () => {
-      state.ETA.physical = false;
       state.ETA.verbal = true;
       const result = getETAFaultText(state.ETA);
       expect(result).toEqual('Verbal');
@@ -218,160 +151,168 @@ describe('TestDataSelectors', () => {
     });
   });
 
-  describe('getManoeuvres', () => {
-    it('should retrive the manoeuvres data when requested', () => {
-      const result = getManoeuvres(state);
-      expect(result).toEqual(state.manoeuvres);
-    });
-  });
-
-  describe('hasManoeuvreBeenCompleted', () => {
-    it('should return false when no manoeuvres have been completed', () => {
-      const state: CatBUniqueTypes.TestData = {
-        manoeuvres: {},
-      };
-      expect(hasManoeuvreBeenCompletedCatB(state)).toBeFalsy();
-    });
-    it('should return true when a manoeuvre has been completed', () => {
-      const state: CatBUniqueTypes.TestData = {
-        manoeuvres: {
-          forwardPark: { selected: true },
-        },
-      };
-      expect(hasManoeuvreBeenCompletedCatB(state)).toEqual(true);
-    });
-  });
-
   describe('vehicle checks selector', () => {
-    describe('isTellMeQuestionSelected', () => {
+    describe('areTellMeQuestionsSelected', () => {
       it('should return true if there is a tell me question selected', () => {
-        const state: CatBUniqueTypes.VehicleChecks = {
-          tellMeQuestion: {
+        const state: SafetyAndBalanceQuestions = {
+          balanceQuestions: [
+            {
+              code: 'T1',
+              description: 'desc',
+              outcome: CompetencyOutcome.P,
+            },
+          ],
+        };
+        expect(areBalanceQuestionsSelected(state)).toBe(true);
+      });
+      it('should return false if there is no tell me question selected', () => {
+        expect(areBalanceQuestionsSelected({})).toBe(false);
+      });
+    });
+    describe('areTellMeQuestionsCorrect', () => {
+      const passedState: SafetyAndBalanceQuestions = {
+        balanceQuestions: [
+          {
             code: 'T1',
             description: 'desc',
             outcome: CompetencyOutcome.P,
           },
-        };
-        expect(isTellMeQuestionSelected(state)).toBe(true);
-      });
-      it('should return false if there is no tell me question selected', () => {
-        expect(isTellMeQuestionSelected({})).toBe(false);
-      });
-    });
-    describe('isTellMeQuestionCorrect', () => {
-      const passedState: CatBUniqueTypes.VehicleChecks = {
-        tellMeQuestion: {
-          code: 'T1',
-          description: 'desc',
-          outcome: CompetencyOutcome.P,
-        },
+        ],
       };
 
       it('should return true if the tell me question is marked as a pass', () => {
-        expect(isTellMeQuestionCorrect(passedState)).toBe(true);
+        expect(areBalanceQuestionsCorrect(passedState)).toBe(true);
       });
       it('should return false if the tell me question is marked as a driving fault', () => {
-        const failedState = {
-          ...passedState,
-          tellMeQuestion: {
-            outcome: 'DF' as QuestionOutcome,
-          },
+        const failedState: SafetyAndBalanceQuestions = {
+          balanceQuestions: [
+            {
+              code: 'T1',
+              description: 'desc',
+              outcome: CompetencyOutcome.D,
+            },
+          ],
         };
-        expect(isTellMeQuestionCorrect(failedState)).toBe(false);
-      });
-    });
-    describe('isTellMeQuestionDrivingFault', () => {
-      const faultState: CatBUniqueTypes.VehicleChecks = {
-        tellMeQuestion: {
-          code: 'T1',
-          description: 'desc',
-          outcome: 'DF',
-        },
-      };
-
-      it('should return true if the tell me question is marked as a pass', () => {
-        expect(isTellMeQuestionDrivingFault(faultState)).toBe(true);
-      });
-      it('should return false if the tell me question is marked as a driving fault', () => {
-        const passedState = {
-          ...faultState,
-          tellMeQuestion: {
-            outcome: CompetencyOutcome.P,
-          },
-        };
-        expect(isTellMeQuestionDrivingFault(passedState)).toBe(false);
+        expect(areBalanceQuestionsCorrect(failedState)).toBe(false);
       });
     });
 
     describe('hasVehicleChecksBeenCompleted', () => {
       it('should return true if vehicle checks have been completed with a pass', () => {
         const state = {
-          vehicleChecks: {
-            showMeQuestion: {
-              outcome: CompetencyOutcome.P,
-            },
-            tellMeQuestion: {
-              outcome: CompetencyOutcome.P,
-            },
-          },
-        } as CatBUniqueTypes.TestData;
+            safetyQuestions: [
+              {
+                outcome: CompetencyOutcome.P,
+              },
+              {
+                outcome: CompetencyOutcome.P,
+              },
+              {
+                outcome: CompetencyOutcome.P,
+              },
+            ],
+            balanceQuestions: [
+              {
+                outcome: CompetencyOutcome.P,
+              },
+              {
+                outcome: CompetencyOutcome.P,
+              },
+            ],
+        } as SafetyAndBalanceQuestions;
 
-        expect(hasVehicleChecksBeenCompletedCatB(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a driving fault', () => {
         const state = {
-          vehicleChecks: {
-            showMeQuestion: {
-              outcome: CompetencyOutcome.DF,
-            },
-            tellMeQuestion: {
-              outcome: CompetencyOutcome.DF,
-            },
-          },
-        } as CatBUniqueTypes.TestData;
+            safetyQuestions: [
+              {
+                outcome: CompetencyOutcome.DF,
+              },
+              {
+                outcome: CompetencyOutcome.DF,
+              },
+              {
+                outcome: CompetencyOutcome.DF,
+              },
+            ],
+            tellMeQuestions: [
+              {
+                outcome: CompetencyOutcome.DF,
+              },
+              {
+                outcome: CompetencyOutcome.DF,
+              },
+            ],
+        } as SafetyAndBalanceQuestions;
 
-        expect(hasVehicleChecksBeenCompletedCatB(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a serious fault', () => {
         const state = {
-          vehicleChecks: {
-            showMeQuestion: {
-              outcome: CompetencyOutcome.S,
-            },
-            tellMeQuestion: {
-              outcome: CompetencyOutcome.S,
-            },
-          },
-        } as CatBUniqueTypes.TestData;
+            safetyQuestions: [
+              {
+                outcome: CompetencyOutcome.S,
+              },
+              {
+                outcome: CompetencyOutcome.S,
+              },
+              {
+                outcome: CompetencyOutcome.S,
+              },
+            ],
+            balanceQuestions: [
+              {
+                outcome: CompetencyOutcome.S,
+              },
+              {
+                outcome: CompetencyOutcome.S,
+              },
+            ],
+        } as SafetyAndBalanceQuestions;
 
-        expect(hasVehicleChecksBeenCompletedCatB(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a dangerous fault', () => {
         const state = {
-          vehicleChecks: {
-            showMeQuestion: {
-              outcome: CompetencyOutcome.D,
-            },
-            tellMeQuestion: {
-              outcome: CompetencyOutcome.D,
-            },
-          },
-        } as CatBUniqueTypes.TestData;
+            safetyQuestions: [
+              {
+                outcome: CompetencyOutcome.D,
+              },
+              {
+                outcome: CompetencyOutcome.D,
+              },
+              {
+                outcome: CompetencyOutcome.D,
+              },
+            ],
+            balanceQuestions: [
+              {
+                outcome: CompetencyOutcome.D,
+              },
+              {
+                outcome: CompetencyOutcome.D,
+              },
+            ],
+        } as SafetyAndBalanceQuestions;
 
-        expect(hasVehicleChecksBeenCompletedCatB(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
       it('should return false if show me question outcome is not defined', () => {
         const state = {
-          vehicleChecks: {
-            showMeQuestion: {
-            },
-            tellMeQuestion: {
-              outcome: CompetencyOutcome.DF,
-            },
-          },
-        } as CatBUniqueTypes.TestData;
+            safetyQuestions: [
+            ],
+            balanceQuestions: [
+              {
+                outcome: CompetencyOutcome.DF,
+              },
+              {
+                outcome: CompetencyOutcome.DF,
+              },
+            ],
+        } as SafetyAndBalanceQuestions;
 
-        expect(hasVehicleChecksBeenCompletedCatB(state)).toEqual(false);
+        expect(hasVehicleChecksBeenCompleted(state)).toEqual(false);
       });
     });
   });
