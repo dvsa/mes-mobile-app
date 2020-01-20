@@ -19,7 +19,7 @@ import * as englishTranslations from '../../../../../../assets/i18n/en.json';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestCategory } from '../../../../../../modules/tests/category/category.actions';
 import { PopulateCandidateDetails }
-  from '../../../../../../modules/tests/journal-data/cat-b/candidate/candidate.actions';
+  from '../../../../../../modules/tests/journal-data/common/candidate/candidate.actions';
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 

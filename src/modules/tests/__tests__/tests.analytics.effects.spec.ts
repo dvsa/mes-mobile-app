@@ -16,7 +16,7 @@ import { TestsAnalyticsEffects } from '../tests.analytics.effects';
 import * as testsActions from '../tests.actions';
 import * as activityCodeActions from '../activity-code/activity-code.actions';
 import * as testStatusActions from '../test-status/test-status.actions';
-import * as candidateActions from '../journal-data/cat-b/candidate/candidate.actions';
+import * as candidateActions from '../journal-data/common/candidate/candidate.actions';
 import * as rekeyActions from '../rekey/rekey.actions';
 import * as applicationReferenceActions
   from '../journal-data/common/application-reference/application-reference.actions';

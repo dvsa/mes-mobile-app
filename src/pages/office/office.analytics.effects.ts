@@ -23,7 +23,7 @@ import { of } from 'rxjs/observable/of';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
-import { getCandidate } from '../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
+import { getCandidate } from '../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getCandidateId } from '../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { isRekey } from '../../modules/tests/rekey/rekey.selector';
 import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';

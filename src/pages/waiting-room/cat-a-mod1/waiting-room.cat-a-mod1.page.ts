@@ -15,8 +15,7 @@ import {
   getResidencyDeclarationStatus,
   getSignatureStatus,
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.selector';
-// TODO: PREP-AMOD1 Replace reducer when relevant a-mod1 reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';

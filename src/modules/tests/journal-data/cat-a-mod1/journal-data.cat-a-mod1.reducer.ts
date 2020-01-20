@@ -15,8 +15,6 @@ export const initialState: JournalData = {
   },
   candidate: {},
   examiner: {
-    // TODO - we don't use this anywhere in the code.
-    individualId: null,
     staffNumber: null,
   },
   testCentre: {
@@ -40,7 +38,7 @@ export const initialState: JournalData = {
   },
 };
 
-export function journalDataReducer(
+export function journalDataCatAMod1Reducer(
   state = initialState,
   action: Action,
 ): Required<JournalData> {

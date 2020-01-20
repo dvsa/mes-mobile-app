@@ -10,7 +10,7 @@ import {
   PopulateApplicationReference,
 } from '../../../modules/tests/journal-data/common/application-reference/application-reference.actions';
 import { fakeJournalTestSlots } from '../__mocks__/fake-journal.mock';
-import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/cat-b/candidate/candidate.actions';
+import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/common/candidate/candidate.actions';
 import {
   PopulateTestSlotAttributes,
 } from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
