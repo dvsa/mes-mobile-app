@@ -58,7 +58,7 @@ fdescribe('VehicleChecksCardComponentBE', () => {
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
       });
-  })); 
+  }));
 
   describe('DOM', () => {
     describe('Vehicle check reporting', () => {
