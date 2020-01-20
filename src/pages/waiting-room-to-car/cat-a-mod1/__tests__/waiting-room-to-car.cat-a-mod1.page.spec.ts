@@ -66,10 +66,6 @@ describe('WaitingRoomToCarCatAMod1Page', () => {
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
-                  vehicleChecks: {
-                    tellMeQuestions: [],
-                    showMeQuestions: [],
-                  },
                   seriousFaults: [],
                   eyesightTest: {},
                 },
