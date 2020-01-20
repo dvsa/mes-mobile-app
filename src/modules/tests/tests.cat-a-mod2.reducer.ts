@@ -3,7 +3,8 @@ import { Action, combineReducers } from '@ngrx/store';
 import { TestResultCatAM2Schema } from '@dvsa/mes-test-schema/categories/AM2';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
-import { preTestDeclarationsCatAMod2Reducer } from './pre-test-declarations/cat-a-mod2/pre-test-declarations.cat-a-mod2.reducer';
+import { preTestDeclarationsCatAMod2Reducer }
+  from './pre-test-declarations/cat-a-mod2/pre-test-declarations.cat-a-mod2.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';

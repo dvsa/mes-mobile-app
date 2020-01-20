@@ -8,7 +8,7 @@ import {
 } from '../pre-test-declarations.cat-a-mod2.actions';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM2';
 
-describe('PreTestDeclarations reducer', () => {
+describe('PreTestDeclarations Cat A Mod2 reducer', () => {
   it('should toggle the residency status when the toggle action is received', () => {
     const result = preTestDeclarationsCatAMod2Reducer(initialState, new ToggleInsuranceDeclaration());
     expect(result.insuranceDeclarationAccepted).toBe(true);

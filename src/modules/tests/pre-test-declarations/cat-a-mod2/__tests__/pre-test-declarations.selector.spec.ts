@@ -5,7 +5,7 @@ import {
 } from '../pre-test-declarations.cat-a-mod2.selector';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/common';
 
-describe('PreTestDeclarations selector', () => {
+describe('PreTestDeclarations Cat A Mod2 selector', () => {
   const state: PreTestDeclarations = {
     insuranceDeclarationAccepted: true,
     residencyDeclarationAccepted: false,
