@@ -1,4 +1,3 @@
-// @TODO - import Cat C Types
 import { VehicleDetails } from '@dvsa/mes-test-schema/categories/AM2';
 import { getSchoolBike } from '../vehicle-details.cat-a-mod2.selector';
 
