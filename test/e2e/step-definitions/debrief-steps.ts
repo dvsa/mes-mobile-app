@@ -39,8 +39,8 @@ When('I complete the pass details', () => {
 When('I complete the fail details', () => {
   const d255NoRadio = getElement(by.id('d255-no'));
   clickElement(d255NoRadio);
-  const debreifWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
-  clickElement(debreifWitnessedRadio);
+  const debriefWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
+  clickElement(debriefWitnessedRadio);
   const submitButton = getElement(by.id('continue-button'));
   clickElement(submitButton)
 });
