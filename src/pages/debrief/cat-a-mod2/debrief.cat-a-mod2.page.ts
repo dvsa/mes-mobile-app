@@ -33,8 +33,6 @@ import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
-
-// TODO - PREP-AMOD2 - Implement category specific reducer
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 
