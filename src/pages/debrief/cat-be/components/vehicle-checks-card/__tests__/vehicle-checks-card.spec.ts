@@ -23,7 +23,7 @@ import { PopulateCandidateDetails }
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-describe('VehicleChecksCardComponentBE', () => {
+fdescribe('VehicleChecksCardComponentBE', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatBEComponent>;
   let store$: Store<StoreModel>;
   let translate: TranslateService;

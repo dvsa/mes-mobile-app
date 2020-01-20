@@ -23,7 +23,7 @@ import { PopulateCandidateDetails }
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-describe('VehicleChecksCardComponentC', () => {
+fdescribe('VehicleChecksCardComponentC', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatCComponent>;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
@@ -60,7 +60,7 @@ describe('VehicleChecksCardComponentC', () => {
       });
   }));
 
-  xdescribe('DOM', () => {
+  describe('DOM', () => {
     describe('Vehicle check reporting', () => {
       it('should show results', () => {
         const showMeQuestion: QuestionResult = {
