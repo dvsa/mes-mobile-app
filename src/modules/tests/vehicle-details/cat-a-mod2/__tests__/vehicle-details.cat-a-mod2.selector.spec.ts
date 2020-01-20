@@ -1,9 +1,9 @@
 // @TODO - import Cat C Types
-import { CatAM2UniqueTypes } from '@dvsa/mes-test-schema/categories/AM2';
+import { VehicleDetails } from '@dvsa/mes-test-schema/categories/AM2';
 import { getSchoolBike } from '../vehicle-details.cat-a-mod2.selector';
 
 describe('vehicle details CAT A Mod 2 selector', () => {
-  const state: CatAM2UniqueTypes.VehicleDetails = {
+  const state: VehicleDetails = {
     schoolBike: true,
   };
 
