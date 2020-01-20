@@ -224,6 +224,29 @@ When('I terminate the test from the test report page', () => {
 
   const terminateTestButton = getElement(by.xpath('//button/span[text() = "Terminate test"]'));
   clickElement(terminateTestButton);
+Then('the legal requirements pop up is present', () => {
+  const legalRequirementPopUp = getElement(by.xpath('//div/legal-requirements-modal'));
+  expect(legalRequirementPopUp.isPresent()).to.eventually.be.true
+});
+
+When('all the required test observations are present {string}', (legal_requirement: string) => {
+  expect(getElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legal_requirement}']`)).isPresent()).to.eventually.be.true;
+});
+
+Then('I return to the test report page',() =>   {
+  const returnToTestBtn = getElement(by.xpath('//div/legal-requirements-modal//modal-return-button//span'));
+  clickElement(returnToTestBtn)
+});
+
+When('I enter the legal requirements',() => {
+  completeLegalRequirements();
+  completeManouveure();
+  completeEco();
+});
+
+When('I add the Uncouple and Recouple fault',() => {
+  const uncoupleRecoupleFault = getElement(by.xpath('//uncouple-recouple//competency-button/div/div[1]'));
+  longPressButton(uncoupleRecoupleFault);
 });
 
 const getCompetencyButton = (competency: string) => {
