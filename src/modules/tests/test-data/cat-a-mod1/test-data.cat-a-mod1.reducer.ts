@@ -13,7 +13,7 @@ export const initialState: TestData = {
   ETA: {},
 };
 
-export function testDataCatBEReducer(
+export function testDataCatAMod1Reducer(
   state: TestData,
   action: Action,
 ): TestData {
