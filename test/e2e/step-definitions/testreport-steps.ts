@@ -224,6 +224,8 @@ When('I terminate the test from the test report page', () => {
 
   const terminateTestButton = getElement(by.xpath('//button/span[text() = "Terminate test"]'));
   clickElement(terminateTestButton);
+});
+
 Then('the legal requirements pop up is present', () => {
   const legalRequirementPopUp = getElement(by.xpath('//div/legal-requirements-modal'));
   expect(legalRequirementPopUp.isPresent()).to.eventually.be.true

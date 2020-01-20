@@ -25,7 +25,7 @@ When('I complete the waiting room to car page', () => {
   completeWaitingRoomPage(false, true, 'T5 - Headlights & tail lights');
 });
 
-When('I complete the waiting room to car page with a tell me driver fault', async  function (table) {
+When('I complete the waiting room to car page with a tell me driver fault', () => {
   completeWaitingRoomPage(true, true, 'T01 - Brakes');
 });
 
