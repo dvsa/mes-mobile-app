@@ -86,12 +86,9 @@ export class TestSubmissionProvider {
     return removeNullFields(data);
   }
   removeFieldsForPartialData = (data: TestResultSchemasUnion): Partial<TestResultSchemasUnion> => {
-    data.testSummary.additionalInformation = null;
-    data.testSummary.candidateDescription = null;
-    data.testSummary.identification = null;
-    data.testSummary.independentDriving = null;
-    data.testSummary.routeNumber = null;
-    data.testSummary.weatherConditions = null;
+    Object.keys(data.testSummary).map((key: string) => {
+      data.testSummary[key] = null;
+    });
 
     return data;
   }
