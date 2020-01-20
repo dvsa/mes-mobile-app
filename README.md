@@ -21,8 +21,7 @@ DVSA Mobile Examiner Services (GDS Beta phase)
 - `npm run schema-version`
 - `ionic serve`
 
-
-#### Serve with local data
+### Serve with local data
 - `npm run serve:local` (This will take the files in `/mock/` and serve them. You can edit them in `src/assets/mock` after running the command, this will live reload the UI with the new updated mock data. To point the app to different mock data, edit the `environment/environment.local.ts` file)
 
 ### Serve to iOS Emulator with livereload and Redux Remote Devtools
@@ -45,6 +44,16 @@ To open Redux Remote Devtools:
 
 To run the app in the simulator with live code reload, run the following:
 `ionic cordova emulate ios -lc --address=localhost`
+
+### Building for production
+
+To build the app for production, run `ionic cordova build ios --prod`
+
+__N.B__ _As of [#1091](https://github.com/dvsa/mes-mobile-app/pull/1091) the app size has grown to a point that causes the default heap memory limit to be exceeded when building with the `--prod` flag enabled. Increase the memory limit by setting this Node environment variable before the build:-_  
+  
+  ```export NODE_OPTIONS=--max-old-space-size=4096```  
+  
+_See this [this GH issue](https://github.com/ionic-team/ionic-app-scripts/issues/1036) for more info._
 
 ### Manual Deployments
 
