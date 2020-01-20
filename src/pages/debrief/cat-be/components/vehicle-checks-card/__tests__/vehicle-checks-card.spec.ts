@@ -1,25 +1,26 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { VehicleChecksCardCatBEComponent } from '../vehicle-checks-card.cat-be';
-import { IonicModule, Config } from 'ionic-angular';
-import { StoreModule, Store } from '@ngrx/store';
+import { Config, IonicModule } from 'ionic-angular';
+import { Store, StoreModule } from '@ngrx/store';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import {
-  ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
+  ShowMeQuestionSelected,
 } from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
-import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
+import { TranslateLoader, TranslateModule, TranslateService } from 'ng2-translate';
 import { createTranslateLoader } from '../../../../../../app/app.module';
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import * as englishTranslations from '../../../../../../assets/i18n/en.json';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestCategory } from '../../../../../../modules/tests/category/category.actions';
-import { PopulateCandidateDetailsCatBE }
-  from '../../../../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.actions';
+import {
+  PopulateCandidateDetails
+} from '../../../../../../modules/tests/journal-data/cat-b/candidate/candidate.actions';
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
@@ -53,7 +54,7 @@ describe('VehicleChecksCardComponentCatB', () => {
 
         store$.dispatch(new StartTest(105, TestCategory.BE));
         store$.dispatch(new PopulateTestCategory(TestCategory.BE));
-        store$.dispatch(new PopulateCandidateDetailsCatBE(candidateMock));
+        store$.dispatch(new PopulateCandidateDetails(candidateMock));
 
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { CategoryCode, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
@@ -29,8 +29,6 @@ export class VehicleChecksCardCatBEComponent implements OnInit {
     );
 
     this.tellMeShowMeQuestions$ = currentTest$.pipe(
-      select(getTests),
-      select(getCurrentTest),
       select(getTestData),
       select(getVehicleChecks),
       map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
