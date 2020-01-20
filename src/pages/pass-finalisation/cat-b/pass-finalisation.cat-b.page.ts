@@ -10,14 +10,12 @@ import {
 import {
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
-  PopulatePassCompletion,
   PassCertificateNumberChanged,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
-  isProvisionalLicenseNotProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
@@ -77,8 +75,7 @@ interface PassFinalisationPageState {
   candidateDriverNumber$: Observable<string>;
   testOutcomeText$: Observable<string>;
   applicationNumber$: Observable<string>;
-  provisionalLicenseProvidedRadioChecked$: Observable<boolean>;
-  provisionalLicenseNotProvidedRadioChecked$: Observable<boolean>;
+  provisionalLicense$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
   transmissionAutomaticRadioChecked$: Observable<boolean>;
@@ -149,24 +146,13 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
         select(getApplicationReference),
         select(getApplicationNumber),
       ),
-      provisionalLicenseProvidedRadioChecked$: currentTest$.pipe(
+      provisionalLicense$: currentTest$.pipe(
         select(getPassCompletion),
         map(isProvisionalLicenseProvided),
-        tap((val) => {
-          if (val) this.form.controls['provisionalLicenseProvidedCtrl'].setValue('yes');
-        }),
-      ),
-      provisionalLicenseNotProvidedRadioChecked$: currentTest$.pipe(
-        select(getPassCompletion),
-        map(isProvisionalLicenseNotProvided),
-        tap((val) => {
-          if (val) this.form.controls['provisionalLicenseProvidedCtrl'].setValue('no');
-        }),
       ),
       passCertificateNumber$: currentTest$.pipe(
         select(getPassCompletion),
         select(getPassCertificateNumber),
-        tap(val => this.form.controls[this.passCertificateCtrl].setValue(val)),
       ),
       transmission$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -205,7 +191,6 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
       transmission$.pipe(map(value => this.transmission = value)),
     );
     this.subscription = this.merged$.subscribe();
-    this.store$.dispatch(new PopulatePassCompletion());
   }
 
   ionViewDidLeave(): void {

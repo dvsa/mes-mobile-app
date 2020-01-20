@@ -13,6 +13,7 @@ import { Device } from '@ionic-native/device';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
+import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
 
 describe('TestSubmissionProvider', () => {
 
@@ -279,6 +280,55 @@ describe('TestSubmissionProvider', () => {
 
       // ASSERT
       expect(result).toEqual('https://www.example.com/api/v1/test-result');
+    });
+  });
+
+  describe('removePassCompletionWhenTestIsNotPass', () => {
+    it('should not remove the pass completion key if the activity code is a Pass', () => {
+      const result: Partial<TestResultSchemasUnion> = testSubmissionProvider.removePassCompletionWhenTestIsNotPass({
+        activityCode: '1',
+        category: 'B',
+        accompaniment: {
+          ADI: true,
+        },
+        passCompletion: {
+          passCertificateNumber: 'A123456X',
+          provisionalLicenceProvided: true,
+        },
+      });
+
+      expect(result).toEqual({
+        activityCode: '1',
+        category: 'B',
+        accompaniment: {
+          ADI: true,
+        },
+        passCompletion: {
+          passCertificateNumber: 'A123456X',
+          provisionalLicenceProvided: true,
+        },
+      });
+    });
+    it('should remove the pass completion key if the activity code is not a pass', () => {
+      const result: Partial<TestResultSchemasUnion> = testSubmissionProvider.removePassCompletionWhenTestIsNotPass({
+        activityCode: '3',
+        category: 'B',
+        accompaniment: {
+          ADI: true,
+        },
+        passCompletion: {
+          passCertificateNumber: 'A123456X',
+          provisionalLicenceProvided: true,
+        },
+      });
+
+      expect(result).toEqual({
+        activityCode: '3',
+        category: 'B',
+        accompaniment: {
+          ADI: true,
+        },
+      });
     });
   });
 

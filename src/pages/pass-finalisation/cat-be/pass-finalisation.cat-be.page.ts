@@ -10,14 +10,12 @@ import {
 import {
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
-  PopulatePassCompletion,
   PassCertificateNumberChanged,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
-  isProvisionalLicenseNotProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
@@ -31,16 +29,12 @@ import {
   getApplicationNumber,
 } from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
 import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../modules/tests/tests.selector';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
-import {
-  getGearboxCategory,
-  isAutomatic,
-  isManual,
-} from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import { getGearboxCategory } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { CAT_BE } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
@@ -77,12 +71,9 @@ interface PassFinalisationPageState {
   candidateDriverNumber$: Observable<string>;
   testOutcomeText$: Observable<string>;
   applicationNumber$: Observable<string>;
-  provisionalLicenseProvidedRadioChecked$: Observable<boolean>;
-  provisionalLicenseNotProvidedRadioChecked$: Observable<boolean>;
+  provisionalLicense$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
-  transmissionAutomaticRadioChecked$: Observable<boolean>;
-  transmissionManualRadioChecked$: Observable<boolean>;
   d255$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
@@ -149,42 +140,17 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
         select(getApplicationReference),
         select(getApplicationNumber),
       ),
-      provisionalLicenseProvidedRadioChecked$: currentTest$.pipe(
+      provisionalLicense$: currentTest$.pipe(
         select(getPassCompletion),
         map(isProvisionalLicenseProvided),
-        tap((val) => {
-          if (val) this.form.controls['provisionalLicenseProvidedCtrl'].setValue('yes');
-        }),
-      ),
-      provisionalLicenseNotProvidedRadioChecked$: currentTest$.pipe(
-        select(getPassCompletion),
-        map(isProvisionalLicenseNotProvided),
-        tap((val) => {
-          if (val) this.form.controls['provisionalLicenseProvidedCtrl'].setValue('no');
-        }),
       ),
       passCertificateNumber$: currentTest$.pipe(
         select(getPassCompletion),
         select(getPassCertificateNumber),
-        tap(val => this.form.controls[this.passCertificateCtrl].setValue(val)),
       ),
       transmission$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getGearboxCategory),
-      ),
-      transmissionAutomaticRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
-        map(isAutomatic),
-        tap((val) => {
-          if (val) this.form.controls['transmissionCtrl'].setValue('Automatic');
-        }),
-      ),
-      transmissionManualRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
-        map(isManual),
-        tap((val) => {
-          if (val) this.form.controls['transmissionCtrl'].setValue('Manual');
-        }),
       ),
       debriefWitnessed$: currentTest$.pipe(
         select(getTestSummary),
@@ -205,7 +171,6 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
       transmission$.pipe(map(value => this.transmission = value)),
     );
     this.subscription = this.merged$.subscribe();
-    this.store$.dispatch(new PopulatePassCompletion());
   }
 
   ionViewDidLeave(): void {

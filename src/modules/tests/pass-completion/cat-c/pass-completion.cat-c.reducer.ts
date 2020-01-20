@@ -3,7 +3,11 @@ import * as passCompletionActions from '../pass-completion.actions';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C/index';
 import { createFeatureSelector } from '@ngrx/store';
 
-export const initialState: CatCUniqueTypes.PassCompletion = null;
+export const initialState: CatCUniqueTypes.PassCompletion = {
+  passCertificateNumber: null,
+  provisionalLicenceProvided: null,
+  code78Present: null,
+};
 
 export const passCompletionCatCReducer = (
   state = initialState,
@@ -19,11 +23,6 @@ export const passCompletionCatCReducer = (
       return {
         ...state,
         code78Present: false,
-      };
-    case passCompletionActions.POPULATE_PASS_COMPLETION:
-      return {
-        passCertificateNumber: null,
-        provisionalLicenceProvided: null,
       };
     case passCompletionActions.PASS_CERTIFICATE_NUMBER_CHANGED:
       return {
