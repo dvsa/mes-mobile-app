@@ -164,10 +164,6 @@ export class TestsEffects {
 
       // TODO: PREP-AMOD1 Remove bypass logic for enabling a-mod1
       if (
-        startTestAction.category === TestCategory.EUAM1 ||
-        startTestAction.category === TestCategory.EUA1M1 ||
-        startTestAction.category === TestCategory.EUA2M1 ||
-        startTestAction.category === TestCategory.EUAMM1 ||
         startTestAction.category === TestCategory.EUAM2 ||
         startTestAction.category === TestCategory.EUA1M2 ||
         startTestAction.category === TestCategory.EUA2M2 ||
