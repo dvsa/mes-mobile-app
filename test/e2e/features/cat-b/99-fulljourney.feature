@@ -30,7 +30,7 @@ Feature: Full end to end journey
       And the test result for "Miss Florence Pearson" is "1"
 
    @smoke
-   Scenario: Examiner completes a failed test with various faults
+   Scenario Outline: Examiner completes a failed test with various faults
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
       When I check candidate details for "Mrs Jane Doe"
       And I start the test for "Mrs Jane Doe"
@@ -41,6 +41,9 @@ Feature: Full end to end journey
       And I proceed to the car
       Then I should see the "Jane Doe" page
       And I complete the waiting room to car page with a tell me driver fault
+      | show_me_1   |
+      | <show_me_1> | 
+
       Then I should see the "Test report - Jane Doe" page
       And the driver fault count is "1"
 
@@ -137,6 +140,11 @@ Feature: Full end to end journey
       And I upload the test
       Then I should see the "Journal" page
       And the test result for "Mrs Jane Doe" is "2"
+
+   Examples: Show and tell me responses (true is fail, false is pass)
+         | show_me_1 | 
+         | true      |   
+
 
    @smoke
    Scenario: Examiner terminates test as candidate failed to attend (No mandatory office fields)

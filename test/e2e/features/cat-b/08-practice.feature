@@ -42,7 +42,7 @@ Feature: Practice mode
     And I upload the test
     Then I should see the "Journal" page
 
-  Scenario: User completes a full practice test fail
+  Scenario Outline: User completes a full practice test fail
     Given I am on the landing page as "mobexaminer1"
     And I start full practice mode
     When I start the test for "Captain Jeremy Craig"
@@ -53,6 +53,9 @@ Feature: Practice mode
     And I proceed to the car
     Then I should see the "Jeremy Craig" page
     And I complete the waiting room to car page with a tell me driver fault
+    | show_me_1   |
+    | <show_me_1> | 
+    
     Then I should see the "Test report - Jeremy Craig" page
     And the driver fault count is "1"
     When I add a "Accelerator" driver fault
@@ -97,6 +100,10 @@ Feature: Practice mode
     And I enter a comment for "serious" fault "Controls - Accelerator"
     And I upload the test
     Then I should see the "Journal" page
+
+  Examples: Show and tell me responses (true is fail, false is pass)
+         | show_me_1 | 
+         | true      |   
 
   Scenario: User completes a full practice test terminate
     Given I am on the landing page as "mobexaminer1"
