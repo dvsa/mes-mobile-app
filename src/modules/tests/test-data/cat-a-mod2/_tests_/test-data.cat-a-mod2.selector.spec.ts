@@ -9,16 +9,16 @@ import {
   getDrivingFaultCount,
   areBalanceQuestionsSelected,
   areBalanceQuestionsCorrect,
-  hasVehicleChecksBeenCompleted,
-  getSafetyQuestionOptions,
+  hasVehicleChecksBeenCompleted
 } from '../test-data.cat-a-mod2.selector';
+import { getShowMeQuestionOptions } from '../../common/test-data.selector'
 import { Competencies } from '../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { OutcomeBehaviourMapProvider } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../../../../../pages/office/office-behaviour-map.cat-a-mod2';
+import { behaviourMap } from '../../../../../pages/office/office-behaviour-map';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 
-describe('TestDataSelectors', () => {
+describe('TestDataSelectors CAT A Mod 2', () => {
   const state: TestData = {
     drivingFaults: {
       controlsGears: 1,
@@ -74,7 +74,7 @@ describe('TestDataSelectors', () => {
       },
     ];
     it('should return the list of questions without N/A if outcome field does not have showNotApplicable set', () => {
-      const result = getSafetyQuestionOptions(safetyQuestions, '1', outcomeBehaviourMapProvider);
+      const result = getShowMeQuestionOptions(safetyQuestions, '1', outcomeBehaviourMapProvider);
       expect(result.length).toBe(2);
       expect(result[0].code).toBe('S1');
       expect(result[1].code).toBe('S2');

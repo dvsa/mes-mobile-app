@@ -10,13 +10,13 @@ import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM2';
 
 describe('PreTestDeclarations Cat A Mod2 reducer', () => {
   it('should toggle the residency status when the toggle action is received', () => {
-    const result = preTestDeclarationsCatAMod2Reducer(initialState, new ToggleInsuranceDeclaration());
-    expect(result.insuranceDeclarationAccepted).toBe(true);
+    const result = preTestDeclarationsCatAMod2Reducer(initialState, new ToggleResidencyDeclaration);
+    expect(result.residencyDeclarationAccepted).toBe(true);
   });
 
   it('should toggle the insurance status when the toggle action is received', () => {
-    const result = preTestDeclarationsCatAMod2Reducer(initialState, new ToggleResidencyDeclaration);
-    expect(result.residencyDeclarationAccepted).toBe(true);
+    const result = preTestDeclarationsCatAMod2Reducer(initialState, new ToggleInsuranceDeclaration());
+    expect(result.insuranceDeclarationAccepted).toBe(true);
   });
 
   it('should set the signature when the SignatureDataChanged action is received', () => {
