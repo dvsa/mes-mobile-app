@@ -13,15 +13,14 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-grid>
 
-        <eyesight-test [formGroup]="form" [eyesightPassRadioChecked]="(pageState.eyesightTestComplete$ | async) && !(pageState.eyesightTestFailed$ | async)"
-          [eyesightFailRadioChecked]="pageState.eyesightTestFailed$ | async" (eyesightTestResultChange)="eyesightTestResultChanged($event)"></eyesight-test>
-
-        <ion-row *ngIf="pageState.eyesightTestFailed$ | async">
-          <eyesight-failure-confirmation [nextPageOnFail]="this.getDebriefPage()" [cancelFn]="eyesightFailCancelled"></eyesight-failure-confirmation>
-        </ion-row>
-
-        <ion-row no-padding [hidden]="pageState.eyesightTestFailed$ | async" id="post-eyesight-form-content">
+        <ion-row no-padding>
           <ion-col no-padding>
+            <transmission [formGroup]="form"
+              [hideTransmissionLabel]="true"
+              [hideConfirmTransmissionLabel]="false"
+              [transmission]="pageState.transmission$ | async"
+              (transmissionChange)="transmissionChanged($event)"></transmission>
+
             <vehicle-registration [formGroup]="form" [vehicleRegistration]="pageState.registrationNumber$ | async"
               (vehicleRegistrationChange)="vehicleRegistrationChanged($event)"></vehicle-registration>
 
@@ -32,13 +31,13 @@
               (interpreterAccompanimentChange)="interpreterAccompanimentToggled()">
             </accompaniment-card>
 
-            <!-- TODO - PREP-AMOD1: update to cat A -->
-            <!-- <vehicle-details-card [formGroup]="form" [schoolVehicleDetails]="pageState.schoolCar$ | async"
-              [dualVehicleDetails]="pageState.dualControls$ | async" (schoolVehicleDetailsChange)="schoolCarToggled()"
-              (dualVehicleDetailsChange)="dualControlsToggled()"></vehicle-details-card> -->
+            <vehicle-details-card [formGroup]="form"
+            [hideSchoolVehicleAndDualControlRow]="true"
+            [hideSchoolBikeRow]="false"
+            [schoolVehicleDetails]="pageState.schoolBike$ | async"
+            (schoolBikeVehicleDetailsChange)="schoolBikeToggled()"></vehicle-details-card>
           </ion-col>
         </ion-row>
-        <warning-banner warningText="Is the load secure?"></warning-banner>
       </ion-grid>
     </form>
   </div>
