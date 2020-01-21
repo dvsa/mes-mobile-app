@@ -6,7 +6,9 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomActions from '../waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
-import { getPreTestDeclarations } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
+import {
+  getPreTestDeclarations,
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions
   from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
