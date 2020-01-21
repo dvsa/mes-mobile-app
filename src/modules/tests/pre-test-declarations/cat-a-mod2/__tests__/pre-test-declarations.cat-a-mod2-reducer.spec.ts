@@ -1,26 +1,26 @@
-import { preTestDeclarationsReducer, initialState } from '../common/pre-test-declarations.reducer';
+import { preTestDeclarationsCatAMod2Reducer, initialState } from '../pre-test-declarations.cat-a-mod2.reducer';
 import {
   ToggleInsuranceDeclaration,
   ToggleResidencyDeclaration,
   SignatureDataChanged,
   SignatureDataCleared,
   ClearPreTestDeclarations,
-} from '../common/pre-test-declarations.actions';
-import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/common';
+} from '../../common/pre-test-declarations.actions';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM2';
 
-describe('PreTestDeclarations reducer', () => {
+describe('PreTestDeclarations Cat A Mod2 reducer', () => {
   it('should toggle the residency status when the toggle action is received', () => {
-    const result = preTestDeclarationsReducer(initialState, new ToggleInsuranceDeclaration());
-    expect(result.insuranceDeclarationAccepted).toBe(true);
-  });
-
-  it('should toggle the insurance status when the toggle action is received', () => {
-    const result = preTestDeclarationsReducer(initialState, new ToggleResidencyDeclaration);
+    const result = preTestDeclarationsCatAMod2Reducer(initialState, new ToggleResidencyDeclaration);
     expect(result.residencyDeclarationAccepted).toBe(true);
   });
 
+  it('should toggle the insurance status when the toggle action is received', () => {
+    const result = preTestDeclarationsCatAMod2Reducer(initialState, new ToggleInsuranceDeclaration());
+    expect(result.insuranceDeclarationAccepted).toBe(true);
+  });
+
   it('should set the signature when the SignatureDataChanged action is received', () => {
-    const result = preTestDeclarationsReducer(initialState, new SignatureDataChanged('ImSomeNewSignatureData'));
+    const result = preTestDeclarationsCatAMod2Reducer(initialState, new SignatureDataChanged('ImSomeNewSignatureData'));
     expect(result.preTestSignature).toEqual('ImSomeNewSignatureData');
   });
 
@@ -29,7 +29,7 @@ describe('PreTestDeclarations reducer', () => {
       ...initialState,
       preTestSignature: 'SomeSignatureData',
     };
-    const result = preTestDeclarationsReducer(state, new SignatureDataCleared());
+    const result = preTestDeclarationsCatAMod2Reducer(state, new SignatureDataCleared());
     expect(result.preTestSignature).toEqual('');
   });
 
@@ -38,9 +38,10 @@ describe('PreTestDeclarations reducer', () => {
       insuranceDeclarationAccepted: true,
       residencyDeclarationAccepted: true,
       preTestSignature: 'somesig',
+      mod1CertificateNumber: 'abc123',
     };
 
-    const result = preTestDeclarationsReducer(dirtyState, new ClearPreTestDeclarations());
+    const result = preTestDeclarationsCatAMod2Reducer(dirtyState, new ClearPreTestDeclarations());
 
     expect(result).toBe(initialState);
   });

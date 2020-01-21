@@ -162,16 +162,6 @@ export class TestsEffects {
 
       examiner.individualId;
 
-      // TODO: PREP-AMOD2 Remove bypass logic for enabling a-mod2
-      if (
-        startTestAction.category === TestCategory.EUAM2 ||
-        startTestAction.category === TestCategory.EUA1M2 ||
-        startTestAction.category === TestCategory.EUA2M2 ||
-        startTestAction.category === TestCategory.EUAMM2
-      ) {
-        startTestAction.category = TestCategory.B;
-      }
-
       const arrayOfActions: Action[] = [
         new PopulateTestCategory(startTestAction.category),
         new PopulateExaminer(examiner),

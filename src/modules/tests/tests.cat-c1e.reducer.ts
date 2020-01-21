@@ -3,7 +3,7 @@ import { Action, combineReducers } from '@ngrx/store';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
-import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
+import { preTestDeclarationsReducer } from './pre-test-declarations/common/pre-test-declarations.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';

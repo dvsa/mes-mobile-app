@@ -1,9 +1,10 @@
 
 import { Action, combineReducers } from '@ngrx/store';
-import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { TestResultCatAM2Schema } from '@dvsa/mes-test-schema/categories/AM2';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
-import { preTestDeclarationsReducer } from './pre-test-declarations/common/pre-test-declarations.reducer';
+import { preTestDeclarationsCatAMod2Reducer }
+  from './pre-test-declarations/cat-a-mod2/pre-test-declarations.cat-a-mod2.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
@@ -16,23 +17,23 @@ import { examinerConductedReducer } from './examiner-conducted/examiner-conducte
 import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
-import { journalDataCatCReducer } from './journal-data/cat-c/journal-data.cat-c.reducer';
-import { vehicleDetailsCatCReducer } from './vehicle-details/cat-c/vehicle-details.cat-c.reducer';
-import { testDataCatC1Reducer } from './test-data/cat-c/test-data.cat-c1.reducer';
+import { journalDataCatAMod2Reducer } from './journal-data/cat-a-mod2/journal-data.cat-a-mod2.reducer';
+import { testDataCatAMod2Reducer } from './test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
+import { vehicleDetailsCatAMod2Reducer } from './vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 
-export function testsCatC1Reducer(
-  action: Action, state: CatC1UniqueTypes.TestResult): Required<CatC1UniqueTypes.TestResult> {
+export function testsCatAMod2Reducer(
+  action: Action, state: TestResultCatAM2Schema): Required<TestResultCatAM2Schema> {
   return combineReducers(
     {
       version: schemaVersionReducer,
       category: categoryReducer,
       activityCode: activityCodeReducer,
-      journalData: journalDataCatCReducer,
-      preTestDeclarations: preTestDeclarationsReducer,
+      journalData: journalDataCatAMod2Reducer,
+      preTestDeclarations: preTestDeclarationsCatAMod2Reducer,
       accompaniment: accompanimentReducer,
-      vehicleDetails: vehicleDetailsCatCReducer,
-      testData: testDataCatC1Reducer,
+      vehicleDetails: vehicleDetailsCatAMod2Reducer,
+      testData: testDataCatAMod2Reducer,
       passCompletion: passCompletionReducer,
       postTestDeclarations: postTestDeclarationsReducer,
       testSummary: testSummaryReducer,
@@ -45,7 +46,7 @@ export function testsCatC1Reducer(
       examinerKeyed: examinerKeyedReducer,
       changeMarker: changeMarkerReducer,
     })(
-      state as Required<CatC1UniqueTypes.TestResult>,
+      state as Required<TestResultCatAM2Schema>,
       action,
     );
 }
