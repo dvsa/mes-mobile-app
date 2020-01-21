@@ -1,0 +1,21 @@
+<ion-row class="mes-validated-row mes-row-separator" id="category-type" [formGroup]="formGroup">
+  <ion-col col-32 align-self-center class="component-label">
+    <label>Confirm cat type</label>
+  </ion-col>
+  <ion-col padding-left align-self-center>
+    <ion-row class="spacing-row"></ion-row>
+    <ion-row>
+      <ion-col col-48>
+        <ion-select #categorySelect hidden="true" okText="Confirm" cancelText="Cancel" [selectOptions]="categorySelectOptions">
+        <ion-option *ngFor="let category of categories">{{category}}</ion-option>
+        </ion-select>
+        <input
+          type="button"
+          formControlName="categoryTypeSelectCategory"
+          class="mes-return-button"
+          (click)="openCategorySelector()"
+        >
+      </ion-col>
+    </ion-row>
+  </ion-col>
+</ion-row>

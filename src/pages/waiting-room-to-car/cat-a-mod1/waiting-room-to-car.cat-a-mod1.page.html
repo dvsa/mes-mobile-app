@@ -15,6 +15,9 @@
 
         <ion-row no-padding>
           <ion-col no-padding>
+
+            <category-type [formGroup]="form"></category-type>
+
             <transmission [formGroup]="form"
               [hideTransmissionLabel]="true"
               [hideConfirmTransmissionLabel]="false"
