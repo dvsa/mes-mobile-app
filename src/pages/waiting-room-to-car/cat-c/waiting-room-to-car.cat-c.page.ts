@@ -87,7 +87,6 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
 
   tellMeQuestions: VehicleChecksQuestion[];
 
-  displayBanner:boolean;
   constructor(
     public store$: Store<StoreModel>,
     public navController: NavController,
