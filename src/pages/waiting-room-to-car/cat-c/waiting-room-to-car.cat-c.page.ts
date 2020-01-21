@@ -56,7 +56,8 @@ import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { VehicleChecksCatCComponent } from './components/vehicle-checks/vehicle-checks.cat-c';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
-import { displayCabLockDown, displayLoadSecured } from '../waiting-room-to-car.selector';
+
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -67,8 +68,7 @@ interface WaitingRoomToCarPageState {
   interpreterAccompaniment$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
   vehicleChecks$: Observable<CatCUniqueTypes.VehicleChecks>;
-  displayCabLockDown$: Observable<boolean>;
-  displayLoadSecured$: Observable<boolean>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -86,6 +86,7 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   showEyesightFailureConfirmation: boolean = false;
 
   tellMeQuestions: VehicleChecksQuestion[];
+  testCategory: CategoryCode;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -144,15 +145,12 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
         select(getTestData),
         select(getVehicleChecksCatC),
       ),
-      displayCabLockDown$: currentTest$.pipe(
+      testCategory$: currentTest$.pipe(
         select(getTestCategory),
-        map(category => displayCabLockDown(category)),
-      ),
-      displayLoadSecured$: currentTest$.pipe(
-        select(getTestCategory),
-        map(category => displayLoadSecured(category)),
+        map(result => this.testCategory = result),
       ),
     };
+    this.pageState.testCategory$.subscribe();
   }
 
   ionViewDidEnter(): void {
@@ -235,5 +233,8 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   getDebriefPage() {
     return CAT_C.DEBRIEF_PAGE;
   }
-
+  displayCabLockDown = (): boolean => this.testCategory === TestCategory.C || this.testCategory === TestCategory.CE;
+  displayLoadSecured = (): boolean => this.testCategory === TestCategory.C ||
+                                      this.testCategory === TestCategory.CE ||
+                                      this.testCategory === TestCategory.C1E;
 }
