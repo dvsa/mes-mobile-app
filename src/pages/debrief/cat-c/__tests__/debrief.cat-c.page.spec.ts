@@ -144,7 +144,7 @@ describe('DebriefCatCPage', () => {
     });
     it('should display failed container if outcome is `fail`', () => {
       fixture.detectChanges();
-      component.outcome = 'Fail';
+      component.outcome = TestOutcome.FAIL;
       fixture.detectChanges();
 
       expect(fixture.debugElement.query(By.css('.failed'))).not.toBeNull();
@@ -215,7 +215,7 @@ describe('DebriefCatCPage', () => {
       expect(navController.push).toHaveBeenCalledWith(CAT_C.PASS_FINALISATION_PAGE);
     });
     it('should navigate to BackToOfficePage when outcome = fail', () => {
-      component.outcome = 'Fail';
+      component.outcome = TestOutcome.FAIL;
       component.endDebrief();
       expect(navController.push).toHaveBeenCalledWith(CAT_C.POST_DEBRIEF_HOLDING_PAGE);
     });
