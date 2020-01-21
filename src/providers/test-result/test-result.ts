@@ -8,6 +8,9 @@ import { FaultCountProvider } from '../fault-count/fault-count';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 
 @Injectable()
 export class TestResultProvider {
@@ -21,7 +24,13 @@ export class TestResultProvider {
       case TestCategory.BE:
         return this.calculateCatBETestResult(testData as CatBEUniqueTypes.TestData);
       case TestCategory.C:
-        return this.calculateCatCTestResult(testData as CatCUniqueTypes.TestData);
+        return this.calculateCatCAndSubCategoryTestResult(TestCategory.C, testData as CatCUniqueTypes.TestData);
+      case TestCategory.C1:
+        return this.calculateCatCAndSubCategoryTestResult(TestCategory.C1, testData as CatC1UniqueTypes.TestData);
+      case TestCategory.CE:
+        return this.calculateCatCAndSubCategoryTestResult(TestCategory.CE, testData as CatCEUniqueTypes.TestData);
+      case TestCategory.C1E:
+        return this.calculateCatCAndSubCategoryTestResult(TestCategory.C1E, testData as CatC1EUniqueTypes.TestData);
       default:
         throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }
@@ -62,17 +71,23 @@ export class TestResultProvider {
     return of(ActivityCodes.PASS);
   }
 
-  private calculateCatCTestResult = (testData: CatCUniqueTypes.TestData): Observable<ActivityCode> => {
+  private calculateCatCAndSubCategoryTestResult = (
+    category: TestCategory,
+    testData: CatCUniqueTypes.TestData |
+    CatCEUniqueTypes.TestData |
+    CatC1EUniqueTypes.TestData |
+    CatC1UniqueTypes.TestData,
+    ): Observable<ActivityCode> => {
 
-    if (this.faultCountProvider.getDangerousFaultSumCount(TestCategory.C, testData) > 0) {
+    if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
 
-    if (this.faultCountProvider.getSeriousFaultSumCount(TestCategory.C, testData) > 0) {
+    if (this.faultCountProvider.getSeriousFaultSumCount(category, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
 
-    if (this.faultCountProvider.getDrivingFaultSumCount(TestCategory.C, testData) > 15) {
+    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) > 15) {
       return of(ActivityCodes.FAIL);
     }
 
