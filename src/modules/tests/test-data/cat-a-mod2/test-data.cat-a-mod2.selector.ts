@@ -6,15 +6,13 @@ import { NUMBER_OF_SAFETY_QUESTIONS }
 import { NUMBER_OF_BALANCE_QUESTIONS }
   from '../../../../shared/constants/balance-questions.cat-a-mod2.constants';
 import { get } from 'lodash';
-import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
-import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 export const getDrivingFaultCount = (
   data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
 export const getVehicleChecks = (
   state: TestData): SafetyAndBalanceQuestions => state.safetyAndBalanceQuestions;
-  
+
 export const areBalanceQuestionsCorrect = (state: SafetyAndBalanceQuestions) => {
   let correct = true;
 
@@ -33,7 +31,6 @@ export const areBalanceQuestionsCorrect = (state: SafetyAndBalanceQuestions) => 
 
   return correct;
 };
-
 
 export const areBalanceQuestionsSelected = (
   state: SafetyAndBalanceQuestions) => typeof get(state, 'balanceQuestions') !== 'undefined';
