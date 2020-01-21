@@ -6,17 +6,16 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomActions from '../waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
-import { getPreTestDeclarations } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+import { getPreTestDeclarations } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions
-  from '../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
+  from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
   getSignatureStatus,
-} from '../../../modules/tests/pre-test-declarations/pre-test-declarations.selector';
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
 
-// TODO - PREP-AMOD2 - Implement category specific reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';

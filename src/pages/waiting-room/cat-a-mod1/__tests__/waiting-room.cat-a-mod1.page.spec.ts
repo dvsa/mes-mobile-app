@@ -12,10 +12,10 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
-} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
+} from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
   initialState as preTestDeclarationInitialState,
-} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+} from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
 import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
 import {
   DeviceAuthenticationProviderMock,

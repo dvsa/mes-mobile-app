@@ -7,7 +7,7 @@ import { AppModule, createTranslateLoader } from '../../../../../app/app.module'
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
 import {
   initialState as preTestDeclarationInitialState,
-} from '../../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+} from '../../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 import { AuthenticationProvider } from '../../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../../providers/authentication/__mocks__/authentication.mock';
