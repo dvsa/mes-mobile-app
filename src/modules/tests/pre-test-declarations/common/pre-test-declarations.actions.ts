@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { Action } from './node_modules/@ngrx/store';
 
 export const CLEAR_DECLARATIONS = '[PreTestDeclarations] Clear declarations';
 export const TOGGLE_INSURANCE_DECLARATION = '[PreTestDeclarations] Insurance declaration toggled';

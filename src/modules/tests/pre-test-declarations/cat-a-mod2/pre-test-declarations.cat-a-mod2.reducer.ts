@@ -1,5 +1,5 @@
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM2';
-import * as preTestDeclarationActions from './pre-test-declarations.cat-a-mod2.actions';
+import * as preTestDeclarationActions from '../common/pre-test-declarations.actions';
 import { createFeatureSelector } from '@ngrx/store';
 
 export const initialState: PreTestDeclarations = {

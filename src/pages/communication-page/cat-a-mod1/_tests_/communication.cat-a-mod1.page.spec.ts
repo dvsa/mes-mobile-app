@@ -11,7 +11,7 @@ import { AuthenticationProvider } from '../../../../providers/authentication/aut
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import {
   initialState as preTestDeclarationInitialState,
-} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+} from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
 import {
   DeviceAuthenticationProviderMock,
 } from '../../../../providers/device-authentication/__mocks__/device-authentication.mock';

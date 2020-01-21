@@ -5,7 +5,7 @@ import {
   SignatureDataChanged,
   SignatureDataCleared,
   ClearPreTestDeclarations,
-} from '../pre-test-declarations.cat-a-mod2.actions';
+} from '../../common/pre-test-declarations.actions';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM2';
 
 describe('PreTestDeclarations Cat A Mod2 reducer', () => {
