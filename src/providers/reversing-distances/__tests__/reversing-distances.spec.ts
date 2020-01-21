@@ -1,7 +1,6 @@
-import { ReversingDistancesProvider } from '../reversing-distances';
+import { ReversingDistancesProvider, CatCVehicleDetailsUnion } from '../reversing-distances';
 import { TestBed } from '@angular/core/testing';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
 describe('ReversingDistancesProvider', () => {
 
@@ -18,9 +17,13 @@ describe('ReversingDistancesProvider', () => {
   });
 
   describe('getDistanceLength', () => {
-    // TODO: Use CAT C type
-    const vehicleDetails: CatBEUniqueTypes.VehicleDetails = {
+    const vehicleDetails: CatCVehicleDetailsUnion = {
       vehicleLength: 15,
+      vehicleWidth: 2,
+    };
+
+    const longVehicleDetails: CatCVehicleDetailsUnion = {
+      vehicleLength: 20,
       vehicleWidth: 2,
     };
 
@@ -28,6 +31,11 @@ describe('ReversingDistancesProvider', () => {
       it('should return a start distance value 3 and a half times the vehicle length', () => {
         const result = reversingDistancesProvider.getDistanceLength(vehicleDetails, TestCategory.C);
         expect(result.startDistance).toEqual(52.5);
+      });
+
+      it('should return a value 3 and a half times vehicle length is greater then 16.5', () => {
+        const result = reversingDistancesProvider.getDistanceLength(longVehicleDetails, TestCategory.C);
+        expect(result.startDistance).toEqual(70);
       });
 
       it('should return a middle distance value 2 times the vehicle length', () => {
@@ -42,6 +50,11 @@ describe('ReversingDistancesProvider', () => {
         expect(result.startDistance).toEqual(60);
       });
 
+      it('should return a start distance of 66 if the vehicle length is greater then 16.5', () => {
+        const result = reversingDistancesProvider.getDistanceLength(longVehicleDetails, TestCategory.CE);
+        expect(result.startDistance).toEqual(66);
+      });
+
       it('should return a middle distance value 2 times the vehicle length', () => {
         const result = reversingDistancesProvider.getDistanceLength(vehicleDetails, TestCategory.CE);
         expect(result.middleDistance).toEqual(30);
@@ -52,6 +65,11 @@ describe('ReversingDistancesProvider', () => {
       it('should return a start distance value 3 and a half times the vehicle length', () => {
         const result = reversingDistancesProvider.getDistanceLength(vehicleDetails, TestCategory.C1);
         expect(result.startDistance).toEqual(52.5);
+      });
+
+      it('should return a value 3 and a half times vehicle length is greater then 16.5', () => {
+        const result = reversingDistancesProvider.getDistanceLength(longVehicleDetails, TestCategory.C1);
+        expect(result.startDistance).toEqual(70);
       });
 
       it('should return a middle distance value 2 times the vehicle length', () => {
@@ -66,6 +84,11 @@ describe('ReversingDistancesProvider', () => {
         expect(result.startDistance).toEqual(60);
       });
 
+      it('should return a start distance of 66 if the vehicle length is greater then 16.5', () => {
+        const result = reversingDistancesProvider.getDistanceLength(longVehicleDetails, TestCategory.C1E);
+        expect(result.startDistance).toEqual(66);
+      });
+
       it('should return a middle distance value 2 times the vehicle length', () => {
         const result = reversingDistancesProvider.getDistanceLength(vehicleDetails, TestCategory.C1E);
         expect(result.middleDistance).toEqual(30);
@@ -74,8 +97,7 @@ describe('ReversingDistancesProvider', () => {
   });
 
   describe('getDistanceWidth', () => {
-    // TODO: Use CAT C type
-    const vehicleDetails: CatBEUniqueTypes.VehicleDetails = {
+    const vehicleDetails: CatCVehicleDetailsUnion = {
       vehicleLength: 15,
       vehicleWidth: 2,
     };
