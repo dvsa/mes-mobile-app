@@ -25,8 +25,8 @@ When('I complete the waiting room to car page', () => {
   completeWaitingRoomPage(false, true, 'T5 - Headlights & tail lights');
 });
 
-When('I complete the waiting room to car page with a tell me driver fault', () => {
-  completeWaitingRoomPage(true, true, 'T01 - Brakes');
+When('I complete the waiting room to car page with a tell me driver fault', function (table) {
+  completeWaitingRoomPage(table.raw()[1], true, 'T1 - Brakes');
 });
 
 When('I complete the waiting room to car page with automatic transmission', () => {
@@ -42,13 +42,13 @@ When('I fail the eye sight test', () => {
   clickElement(eyesightFailConfirmButton);
 });
 
-const completeWaitingRoomPage = (withDriverFault: boolean, manualTransmission: boolean, tellMeQuestion: string) => {
+const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, tellMeQuestion: string) => {
   const eyesightPassRadio = getElement(by.id('eyesight-pass'));
   clickElement(eyesightPassRadio);
   if (this.testCategory === 'be') {
-    beCategory(withDriverFault, tellMeQuestion);
+    beCategory(questionResult);
   } else {
-    standardUserJourney(withDriverFault, manualTransmission, tellMeQuestion);
+    standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
   }
   // Because registration number field is uppercaseAlphanumOnly we have to go native to get round this
   nativeTextEntry('Vehicle registration number', 'AB12CDE');
@@ -56,9 +56,9 @@ const completeWaitingRoomPage = (withDriverFault: boolean, manualTransmission: b
   clickElement(submitWRTC);
 };
 
-const beCategory = (withDriverFault: boolean, tellMeQuestion: string) => {
+const beCategory = (questionResult) => {
   beCategoryOpenSelectQuestionsOverlay();
-  showMeQuestions(withDriverFault);
+  showMeQuestions(questionResult);
   const submitVehicleChecksButton = getElement(by.id('submit-vehicle-checks'));
   clickElement(submitVehicleChecksButton);
 };
@@ -69,9 +69,9 @@ const beCategoryOpenSelectQuestionsOverlay = () => {
   clickElement(selectQuestionsButton);
 };
 
-const standardUserJourney = (withDriverFault: boolean, manualTransmission: boolean, tellMeQuestion: string) => {
+const standardUserJourney = (withDriverFault, manualTransmission: boolean, tellMeQuestion: string) => {
   selectTellMeQuestion(tellMeQuestion);
-  const tellMeRadioSelector = (withDriverFault) ? 'tellme-fault' : 'tellme-correct';
+  const tellMeRadioSelector = (withDriverFault[0] === "true") ? 'tellme-fault' : 'tellme-correct';
   const tellMeRadio = getElement(by.id(tellMeRadioSelector));
   clickElement(tellMeRadio);
   const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
@@ -79,16 +79,16 @@ const standardUserJourney = (withDriverFault: boolean, manualTransmission: boole
   clickElement(transmissionRadio);
 };
 
-const showMeQuestions = (withDriverFault: boolean) => {
- const showMeQuestionsArray = [['S01 - Direction indicators', 'S02 - Doors secure', 'S03 - Horn', 'T01 - Brakes', 'T02 - Safety factors while loading'],[true, true, true, false, false]];
-  const elements = element.all(by.id('vehicle-checks-question-selector'));
+const showMeQuestions = (questionResult) => {
+ const showMeQuestionsArray = [['S01 - Direction indicators', 'S02 - Doors secure', 'S03 - Horn', 'T01 - Brakes', 'T02 - Safety factors while loading'], questionResult];
+ const elements = element.all(by.id('vehicle-checks-question-selector'));
       elements.each((element, index) => {
         clickElement(element)
         const vehicleCheck = getElement(by.xpath(`//button//div[normalize-space(text()) =  "${showMeQuestionsArray[0][index]}"]`));
         clickElement(vehicleCheck);
         const submitDialog = getElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
-        clickElement(submitDialog);
-        const resultFromQuestions = (showMeQuestionsArray[1][index]) ? 'vehicleChecksFault' : 'vehicleChecksCorrect';
+        clickElement(submitDialog);     
+        const resultFromQuestions = (showMeQuestionsArray[1][index] === "true") ? 'vehicleChecksFault' : 'vehicleChecksCorrect';
         const vehicleCheckAnswer = getElement(by.id(`${resultFromQuestions}_${index + 1}`));
         clickElement(vehicleCheckAnswer)
       });
