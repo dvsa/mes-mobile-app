@@ -212,7 +212,7 @@ describe('faultSummaryProvider', () => {
         expect(result.length).toEqual(1);
         expect(result[0].faultCount).toEqual(4);
       });
-      it('should correctly return any vehicle checks faults when there are 5 driving faults', () => {
+      it('should correctly return 4 driving faults as the fault count when there are 5', () => {
         const data: CatCUniqueTypes.TestData = {
           vehicleChecks: {
             tellMeQuestions: [

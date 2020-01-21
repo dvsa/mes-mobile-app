@@ -17,23 +17,6 @@
   },
   "debrief": {
     "showMeTellMeQuestions": {
-      "B": {
-        "T01": "Breciau",
-        "T02": "Ffactorau diogelwch wrth lwytho",
-        "T03": "Ffactorau diogelwch wrth sicrhau llwyth",
-        "T04": "Digon o wadn",
-        "T05": "Oerydd y peiriant",
-        "T06": "Ataliad pen",
-        "S01": "Dangosyddion cyfeiriad",
-        "S02": "Drysau'n ddiogel",
-        "S03": "Corn",
-        "S04": "Brêc parcio",
-        "S05": "Y sgrîn wynt",
-        "S06": "Diniwlio'r sgrîn wynt",
-        "S07": "Goleuadau niwl y cefn",
-        "S08": "Wedi'u gostwng i'r prif belydryn",
-        "S09": "Goleuadau brêciau"
-      },
       "B+E": {
         "T01": "Breciau",
         "T02": "Ffactorau diogelwch wrth lwytho",
