@@ -15,7 +15,7 @@ import {
 import { Competencies } from '../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { OutcomeBehaviourMapProvider } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../../../../../pages/office/office-behaviour-map';
+import { behaviourMap } from '../../../../../pages/office/office-behaviour-map.cat-a-mod2';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 
 describe('TestDataSelectors', () => {
@@ -79,12 +79,6 @@ describe('TestDataSelectors', () => {
       expect(result[0].code).toBe('S1');
       expect(result[1].code).toBe('S2');
     });
-    it('should return extra question if outcome showNotApplicable set', () => {
-      const result = getSafetyQuestionOptions(safetyQuestions, '4', outcomeBehaviourMapProvider);
-      expect(result.length).toBe(3);
-      expect(result[2].code).toBe('N/A');
-    });
-
   });
 
   describe('getDrivingFaultCount', () => {
@@ -218,6 +212,9 @@ describe('TestDataSelectors', () => {
               {
                 outcome: CompetencyOutcome.P,
               },
+              {
+                outcome: CompetencyOutcome.P,
+              },
             ],
         } as SafetyAndBalanceQuestions;
 
@@ -236,7 +233,10 @@ describe('TestDataSelectors', () => {
                 outcome: CompetencyOutcome.DF,
               },
             ],
-            tellMeQuestions: [
+            balanceQuestions: [
+              {
+                outcome: CompetencyOutcome.DF,
+              },
               {
                 outcome: CompetencyOutcome.DF,
               },
@@ -268,6 +268,9 @@ describe('TestDataSelectors', () => {
               {
                 outcome: CompetencyOutcome.S,
               },
+              {
+                outcome: CompetencyOutcome.S,
+              },
             ],
         } as SafetyAndBalanceQuestions;
 
@@ -287,6 +290,9 @@ describe('TestDataSelectors', () => {
               },
             ],
             balanceQuestions: [
+              {
+                outcome: CompetencyOutcome.D,
+              },
               {
                 outcome: CompetencyOutcome.D,
               },

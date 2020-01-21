@@ -20,7 +20,7 @@ export const getVehicleChecks = (
     outcome: string,
     provider: OutcomeBehaviourMapProvider) => {
     const filteredQuestions: VehicleChecksQuestion[] = [];
-    const showNotApplicable = provider.showNotApplicable(outcome, 'safetyQuestion');
+    const showNotApplicable = provider.showNotApplicable(outcome, 'vehicleChecks');
     questions.forEach((value) => {
       if (value.code !== 'N/A' || (value.code === 'N/A' && showNotApplicable)) {
         filteredQuestions.push(value);
