@@ -43,6 +43,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
+import { TestOutcome } from '../../../../shared/models/test-outcome';
 
 describe('DebriefCatAMod1Page', () => {
   let fixture: ComponentFixture<DebriefCatAMod1Page>;
@@ -143,7 +144,7 @@ describe('DebriefCatAMod1Page', () => {
   describe('DOM', () => {
     it('should display passed container if outcome is `passed`', () => {
       fixture.detectChanges();
-      component.outcome = 'Pass';
+      component.outcome = TestOutcome.PASS;
       fixture.detectChanges();
 
       expect(fixture.debugElement.query(By.css('.passed'))).not.toBeNull();
@@ -218,7 +219,7 @@ describe('DebriefCatAMod1Page', () => {
       expect(store$.dispatch).toHaveBeenCalledWith(new EndDebrief);
     });
     it('should navigate to PassFinalisationPage when outcome = pass', () => {
-      component.outcome = 'Pass';
+      component.outcome = TestOutcome.PASS;
       component.endDebrief();
       expect(navController.push).toHaveBeenCalledWith(CAT_A_MOD1.PASS_FINALISATION_PAGE);
     });

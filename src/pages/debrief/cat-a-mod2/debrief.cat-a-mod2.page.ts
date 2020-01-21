@@ -35,6 +35,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
+import { TestOutcome } from '../../../shared/models/test-outcome';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -174,7 +175,7 @@ export class DebriefCatAMod2Page extends BasePageComponent {
 
   endDebrief(): void {
     this.store$.dispatch(new EndDebrief());
-    if (this.outcome === 'Pass') {
+    if (this.outcome === TestOutcome.PASS) {
       this.navController.push(CAT_A_MOD2.PASS_FINALISATION_PAGE);
       return;
     }
