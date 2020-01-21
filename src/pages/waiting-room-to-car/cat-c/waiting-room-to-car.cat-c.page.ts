@@ -236,5 +236,5 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   displayCabLockDown = (): boolean => this.testCategory === TestCategory.C || this.testCategory === TestCategory.CE;
   displayLoadSecured = (): boolean => this.testCategory === TestCategory.C ||
                                       this.testCategory === TestCategory.CE ||
-                                      this.testCategory === TestCategory.C1E;
+                                      this.testCategory === TestCategory.C1E
 }
