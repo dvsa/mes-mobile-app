@@ -175,7 +175,6 @@ export class DebriefCatAMod1Page extends BasePageComponent {
 
   endDebrief(): void {
     this.store$.dispatch(new EndDebrief());
-    // TODO: refactor to use an enum for outcome
     if (this.outcome === TestOutcome.PASS) {
       this.navController.push(CAT_A_MOD1.PASS_FINALISATION_PAGE);
       return;
