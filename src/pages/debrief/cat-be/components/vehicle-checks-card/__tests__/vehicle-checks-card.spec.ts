@@ -23,7 +23,7 @@ import { PopulateCandidateDetails }
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-describe('VehicleChecksCardComponent', () => {
+describe('VehicleChecksCardComponentCatBE', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatBEComponent>;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
@@ -77,7 +77,7 @@ describe('VehicleChecksCardComponent', () => {
           .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
         expect(tellMeQuestionText.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions.S01);
+          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions[TestCategory.BE].S01);
       });
 
       it('should show results in Welsh for a Welsh test', (done) => {
@@ -98,7 +98,7 @@ describe('VehicleChecksCardComponent', () => {
             .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
           expect(tellMeQuestionText.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions.S01);
+            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions[TestCategory.BE].S01);
           done();
         });
       });

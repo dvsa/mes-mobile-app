@@ -17,10 +17,6 @@ import {
 } from '../../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFault } from '../../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDrivingFault } from '../../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-import {
-  EyesightTestFailed,
-  EyesightTestPassed,
-} from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
 import { DebriefComponentsModule } from '../../components/debrief-components.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -38,15 +34,13 @@ import { CAT_C } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-// TODO: MES-4287 Use Cat C types
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
 import { VehicleChecksCardCatCComponent } from '../components/vehicle-checks-card/vehicle-checks-card.cat-c';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 
-// TODO: These tests need fixing once the cat c is implemented
-xdescribe('DebriefCatCPage', () => {
+describe('DebriefCatCPage', () => {
   let fixture: ComponentFixture<DebriefCatCPage>;
   let component: DebriefCatCPage;
   let navController: NavController;
@@ -63,8 +57,7 @@ xdescribe('DebriefCatCPage', () => {
   };
 
   beforeEach(async(() => {
-    // TODO: MES-4287 Use Cat C types
-    const exampleTestData: CatBEUniqueTypes.TestData  = {
+    const exampleTestData: CatCUniqueTypes.TestData  = {
       dangerousFaults: {},
       drivingFaults: {},
       manoeuvres: {},
@@ -76,7 +69,6 @@ xdescribe('DebriefCatCPage', () => {
         tellMeQuestions: [{}],
         showMeQuestions: [{}],
       },
-      uncoupleRecouple: {},
     };
 
     TestBed.configureTestingModule({
@@ -95,8 +87,7 @@ xdescribe('DebriefCatCPage', () => {
             startedTests: {
               123: {
                 testSlotAttributes,
-                // TODO: MES-4287 Use Cat C test category
-                category: TestCategory.BE,
+                category: TestCategory.C,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: exampleTestData,
@@ -272,22 +263,6 @@ xdescribe('DebriefCatCPage', () => {
         done();
       });
       store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
-    });
-  });
-
-  describe('Eyesight Test', () => {
-    it('should display the eyesight test serious fault', () => {
-      store$.dispatch(new EyesightTestFailed());
-      fixture.detectChanges();
-      const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
-      expect(seriousLabel.innerHTML).toBe(fullCompetencyLabels.eyesightTest);
-    });
-
-    it('should not display a eyesight test serious fault if the test is passed', () => {
-      store$.dispatch(new EyesightTestPassed());
-      fixture.detectChanges();
-      const label = fixture.debugElement.query(By.css('#serious-fault .counter-label'));
-      expect(label).toBeNull();
     });
   });
 });
