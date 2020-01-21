@@ -36,6 +36,15 @@ When('I complete the pass details', () => {
   continuePassFinalisation();
 });
 
+When('I complete the fail details', () => {
+  const d255NoRadio = getElement(by.id('d255-no'));
+  clickElement(d255NoRadio);
+  const debriefWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
+  clickElement(debriefWitnessedRadio);
+  const submitButton = getElement(by.id('continue-button'));
+  clickElement(submitButton)
+});
+
 When('I try to confirm the pass certificate details', () => {
   continuePassFinalisation();
 });
