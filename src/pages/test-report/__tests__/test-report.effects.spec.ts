@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
@@ -19,6 +19,7 @@ import { ExaminerActions } from '../../../modules/tests/test-data/test-data.cons
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
+import { configureTestSuite } from 'ng-bullet';
 
 export class TestActions extends Actions {
   constructor() {
@@ -37,8 +38,7 @@ describe('Test Report Effects', () => {
   let testResultProvider: TestResultProvider;
   let store$: Store<StoreModel>;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -53,10 +53,14 @@ describe('Test Report Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(async(() => {
+    actions$ = new ReplaySubject(1);
     testResultProvider = TestBed.get(TestResultProvider);
     effects = TestBed.get(TestReportEffects);
     store$ = TestBed.get(Store);
-  });
+  }));
 
   describe('calculateTestResult', () => {
 

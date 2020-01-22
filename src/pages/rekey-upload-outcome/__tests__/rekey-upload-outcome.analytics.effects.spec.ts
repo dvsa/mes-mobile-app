@@ -1,5 +1,5 @@
 import { RekeyUploadOutcomeAnalyticsEffects } from '../rekey-upload-outcome.analytics.effects';
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -16,6 +16,7 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/common/candidate/candidate.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Rekey Uploaded Analytics Effects', () => {
 
@@ -25,8 +26,7 @@ describe('Rekey Uploaded Analytics Effects', () => {
   let store$: Store<StoreModel>;
   const screenName = AnalyticsScreenNames.REKEY_UPLOADED;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -40,10 +40,14 @@ describe('Rekey Uploaded Analytics Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(async(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(RekeyUploadOutcomeAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
-  });
+  }));
 
   describe('rekeyUploadedViewDidEnter', () => {
     it('should call setCurrentPage', (done) => {

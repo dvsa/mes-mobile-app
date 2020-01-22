@@ -1,5 +1,5 @@
 import { PassFinalisationAnalyticsEffects } from '../pass-finalisation.analytics.effects';
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -20,6 +20,7 @@ import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Pass Finalisation Analytics Effects', () => {
 
@@ -31,8 +32,7 @@ describe('Pass Finalisation Analytics Effects', () => {
   // tslint:disable-next-line:max-line-length
   const screenNamePracticeMode = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.PASS_FINALISATION}`;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -46,10 +46,14 @@ describe('Pass Finalisation Analytics Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(async(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(PassFinalisationAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
-  });
+  }));
 
   describe('passFinalisationViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
@@ -94,7 +98,7 @@ describe('Pass Finalisation Analytics Effects', () => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${AnalyticsScreenNames.PASS_FINALISATION})`,
-          'error message');
+            'error message');
         done();
       });
     });
@@ -111,7 +115,7 @@ describe('Pass Finalisation Analytics Effects', () => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${practiceScreenName})`,
-          'error message');
+            'error message');
         done();
       });
     });

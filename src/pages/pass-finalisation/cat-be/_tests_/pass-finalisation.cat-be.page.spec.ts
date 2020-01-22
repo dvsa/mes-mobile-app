@@ -14,22 +14,22 @@ import { PassCertificateNumberComponent } from '../../components/pass-certificat
 import { LicenseProvidedComponent } from '../../components/license-provided/license-provided';
 import { D255Component } from '../../../../components/test-finalisation/d255/d255';
 import { DebriefWitnessedComponent } from
-  '../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
+    '../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
 import { LanguagePreferencesComponent } from
-  '../../../../components/test-finalisation/language-preference/language-preferences';
+    '../../../../components/test-finalisation/language-preference/language-preferences';
 import { FinalisationHeaderComponent } from
-  '../../../../components/test-finalisation/finalisation-header/finalisation-header';
+    '../../../../components/test-finalisation/finalisation-header/finalisation-header';
 import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged } from
-  '../../../../modules/tests/pass-completion/pass-completion.actions';
+    '../../../../modules/tests/pass-completion/pass-completion.actions';
 import {
   PassFinalisationViewDidEnter,
   PassFinalisationValidationError,
 } from '../../pass-finalisation.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
-  '../../../../modules/tests/test-summary/test-summary.actions';
+    '../../../../modules/tests/test-summary/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
-  '../../../../modules/tests/communication-preferences/communication-preferences.actions';
+    '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PassFinalisationCatBEPage } from '../pass-finalisation.cat-be.page';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
@@ -37,13 +37,14 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
 import { Subscription } from 'rxjs/Subscription';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PassFinalisationCatBEPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBEPage>;
   let component: PassFinalisationCatBEPage;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PassFinalisationCatBEPage,
@@ -65,15 +66,15 @@ describe('PassFinalisationCatBEPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(PassFinalisationCatBEPage);
-        component = fixture.componentInstance;
-        component.subscription = new Subscription();
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(PassFinalisationCatBEPage);
+    component = fixture.componentInstance;
+    component.subscription = new Subscription();
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

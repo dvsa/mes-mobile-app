@@ -5,12 +5,13 @@ import {
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('passCertificateNumberComponent', () => {
   let fixture: ComponentFixture<PassCertificateNumberComponent>;
   let component: PassCertificateNumberComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PassCertificateNumberComponent,
@@ -21,13 +22,13 @@ describe('passCertificateNumberComponent', () => {
       providers: [
         PassCertificateValidationProvider,
       ],
-    })
-    .compileComponents()
-    .then(() => {
-      fixture = TestBed.createComponent(PassCertificateNumberComponent);
-      component = fixture.componentInstance;
-      component.form = new FormGroup({});
     });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(PassCertificateNumberComponent);
+    component = fixture.componentInstance;
+    component.form = new FormGroup({});
   }));
 
   describe('Class', () => {

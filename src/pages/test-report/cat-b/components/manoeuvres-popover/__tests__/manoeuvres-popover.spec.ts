@@ -21,13 +21,14 @@ import { NavigationStateProvider } from '../../../../../../providers/navigation-
 import {
   NavigationStateProviderMock,
 } from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;
   let component: ManoeuvresPopoverComponent;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ManoeuvresPopoverComponent,
@@ -88,13 +89,13 @@ describe('ManoeuvresPopoverComponent', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ManoeuvresPopoverComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ManoeuvresPopoverComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch').and.callThrough();
   }));

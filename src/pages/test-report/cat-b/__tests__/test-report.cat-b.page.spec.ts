@@ -49,6 +49,7 @@ import { CAT_B } from '../../../page-names.constants';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestReportCatBPage', () => {
   let fixture: ComponentFixture<TestReportCatBPage>;
@@ -58,7 +59,7 @@ describe('TestReportCatBPage', () => {
   let insomnia: Insomnia;
   let statusBar: StatusBar;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [TestReportCatBPage,
         MockComponent(ManoeuvresPopoverComponent),
@@ -110,16 +111,16 @@ describe('TestReportCatBPage', () => {
         { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TestReportCatBPage);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        screenOrientation = TestBed.get(ScreenOrientation);
-        insomnia = TestBed.get(Insomnia);
-        statusBar = TestBed.get(StatusBar);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TestReportCatBPage);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    screenOrientation = TestBed.get(ScreenOrientation);
+    insomnia = TestBed.get(Insomnia);
+    statusBar = TestBed.get(StatusBar);
   }));
 
   describe('Class', () => {
