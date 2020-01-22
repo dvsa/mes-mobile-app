@@ -47,12 +47,12 @@ Feature: Full end to end journey for Cat B+E
       And the driver fault count is "3"
       When I end the test
       Then the legal requirements pop up is present
-      And all the required test observations are present "NS (normal start)"
-      And all the required test observations are present "UH (uphill start)"
-      And all the required test observations are present "AS/CS (angled start/ controlled stop)"
-      And all the required test observations are present "Manoeuvres"
-      And all the required test observations are present "Eco (control and planning)"
-      And all the required test observations are present "Uncouple / Recouple"
+      And the required test observation is present "NS (normal start)"
+      And the required test observation is present "UH (uphill start)"
+      And the required test observation is present "AS/CS (angled start/ controlled stop)"
+      And the required test observation is present "Manoeuvres"
+      And the required test observation is present "Eco (control and planning)"
+      And the required test observation is present "Uncouple / Recouple"
       Then I return to the test report page
       And I should see the "Test report - Dillon Jennings" page
       And I enter the legal requirements
