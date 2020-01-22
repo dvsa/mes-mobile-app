@@ -84,7 +84,7 @@ describe('ViewTestResultCatBPage', () => {
         { provide: CompressionProvider, useClass: CompressionProviderMock },
         FaultSummaryProvider,
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {
