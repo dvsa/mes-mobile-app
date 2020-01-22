@@ -33,6 +33,7 @@ import { CommunicationSubmitInfo } from '../../communication.actions';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('CommunicationCatAMod1Page', () => {
   let fixture: ComponentFixture<CommunicationCatAMod1Page>;
@@ -50,7 +51,7 @@ describe('CommunicationCatAMod1Page', () => {
     vehicleTypeCode: '',
   };
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         CommunicationCatAMod1Page,
@@ -93,27 +94,26 @@ describe('CommunicationCatAMod1Page', () => {
         TranslateModule,
       ],
       providers: [
-        { provide: NavController, useFactory: () => NavControllerMock.instance() },
-        { provide: NavParams, useFactory: () => NavParamsMock.instance() },
-        { provide: Config, useFactory: () => ConfigMock.instance() },
-        { provide: Platform, useFactory: () => PlatformMock.instance() },
-        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
-        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        {provide: NavController, useFactory: () => NavControllerMock.instance()},
+        {provide: NavParams, useFactory: () => NavParamsMock.instance()},
+        {provide: Config, useFactory: () => ConfigMock.instance()},
+        {provide: Platform, useFactory: () => PlatformMock.instance()},
+        {provide: AuthenticationProvider, useClass: AuthenticationProviderMock},
+        {provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock},
+        {provide: DateTimeProvider, useClass: DateTimeProviderMock},
       ],
     })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(CommunicationCatAMod1Page);
-        component = fixture.componentInstance;
-        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch').and.callThrough();
-        component.subscription = new Subscription();
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+  });
 
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(CommunicationCatAMod1Page);
+    component = fixture.componentInstance;
+    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch').and.callThrough();
+    component.subscription = new Subscription();
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('Class', () => {
@@ -246,7 +246,7 @@ describe('CommunicationCatAMod1Page', () => {
     describe('i18n', () => {
       it('should render the page in English by default', () => {
         fixture.detectChanges();
-        const { debugElement } = fixture;
+        const {debugElement} = fixture;
         expect(debugElement.query(By.css('h4')).nativeElement.innerHTML).toBe('Select how to receive the test results');
       });
       it('should render the page in Welsh for a Welsh test', (done) => {
