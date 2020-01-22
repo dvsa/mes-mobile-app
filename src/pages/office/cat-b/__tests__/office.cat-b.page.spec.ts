@@ -69,6 +69,7 @@ import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-ch
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultCountProvider } from '../../../../providers/fault-count/fault-count';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatBPage>;
@@ -77,7 +78,7 @@ describe('OfficePage', () => {
   let store$: Store<StoreModel>;
   let faultCountProvider: FaultCountProvider;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         OfficeCatBPage,
@@ -153,13 +154,13 @@ describe('OfficePage', () => {
         { provide: FaultCountProvider, useClass: FaultCountProvider },
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(OfficeCatBPage);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(OfficeCatBPage);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
     faultCountProvider = TestBed.get(FaultCountProvider);

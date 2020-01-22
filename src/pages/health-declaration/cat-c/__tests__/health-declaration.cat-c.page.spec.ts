@@ -37,6 +37,7 @@ import { SignatureComponent } from '../../components/signature/signature';
 import { HealthDeclarationComponent } from '../../components/health-declaration/health-declaration';
 import { ReceiptDeclarationComponent } from '../../components/receipt-declaration/receipt-declaration';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('HealthDeclarationCatCPage', () => {
   let fixture: ComponentFixture<HealthDeclarationCatCPage>;
@@ -54,7 +55,7 @@ describe('HealthDeclarationCatCPage', () => {
     vehicleTypeCode: '',
   };
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         HealthDeclarationCatCPage,
@@ -99,19 +100,18 @@ describe('HealthDeclarationCatCPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(HealthDeclarationCatCPage);
-        component = fixture.componentInstance;
-        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch').and.callThrough();
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-        component.subscription = new Subscription();
-      });
+    });
+  });
 
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(HealthDeclarationCatCPage);
+    component = fixture.componentInstance;
+    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch').and.callThrough();
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
+    component.subscription = new Subscription();
   }));
 
   describe('Class', () => {

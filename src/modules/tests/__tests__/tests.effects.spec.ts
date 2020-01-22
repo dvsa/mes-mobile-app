@@ -103,7 +103,8 @@
 //   });
 //
 //   describe('loadPersistedTestsEffect', () => {
-//     it('should respond to a LOAD_PERSISTED_TESTS action by loading tests and dispatching a success action', (done) => {
+//     it('should respond to a LOAD_PERSISTED_TESTS
+//     action by loading tests and dispatching a success action', (done) => {
 //       // ARRANGE
 //       const persistedTests: TestsModel = {
 //         ...initialState,
@@ -280,7 +281,8 @@
 //       const staffNumber = '654321';
 //       store$.dispatch(new rekeySearchActions.SearchBookedTestSuccess(testSlot, staffNumber));
 //       // ACT
-//       actions$.next(new testsActions.StartTest(1001, testSlot.booking.application.testCategory as TestCategory, true));
+//       actions$
+//       .next(new testsActions.StartTest(1001, testSlot.booking.application.testCategory as TestCategory, true));
 //       // ASSERT
 //       effects.startTestEffect$
 //       .pipe(

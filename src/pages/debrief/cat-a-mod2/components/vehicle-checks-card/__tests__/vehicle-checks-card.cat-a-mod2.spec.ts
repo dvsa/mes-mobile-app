@@ -23,13 +23,14 @@ import { PopulateCandidateDetails }
   from '../../../../../../modules/tests/journal-data/common/candidate/candidate.actions';
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleChecksCardCatAMod2Component', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatAMod2Component>;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksCardCatAMod2Component,
@@ -46,20 +47,18 @@ describe('VehicleChecksCardCatAMod2Component', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleChecksCardCatAMod2Component);
-        store$ = TestBed.get(Store);
+    });
+  });
 
-        // TODO - PREP-AMOD2 - implement correct test category
-        store$.dispatch(new StartTest(105, TestCategory.BE));
-        store$.dispatch(new PopulateTestCategory(TestCategory.BE));
-        store$.dispatch(new PopulateCandidateDetails(candidateMock));
-
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleChecksCardCatAMod2Component);
+    store$ = TestBed.get(Store);
+// TODO - PREP-AMOD2 - implement correct test category
+    store$.dispatch(new StartTest(105, TestCategory.BE));
+    store$.dispatch(new PopulateTestCategory(TestCategory.BE));
+    store$.dispatch(new PopulateCandidateDetails(candidateMock));
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   // TODO - PREP-AMOD2 - update test category and question number when feature implemented

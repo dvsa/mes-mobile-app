@@ -18,25 +18,26 @@ import * as testActions from '../../../../modules/tests/tests.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { D255Component } from '../../../../components/test-finalisation/d255/d255';
 import { LanguagePreferencesComponent } from
-'../../../../components/test-finalisation/language-preference/language-preferences';
+    '../../../../components/test-finalisation/language-preference/language-preferences';
 import { DebriefWitnessedComponent } from
-'../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
+    '../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
 import { FinalisationHeaderComponent } from
-'../../../../components/test-finalisation/finalisation-header/finalisation-header';
+    '../../../../components/test-finalisation/finalisation-header/finalisation-header';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
-'../../../../modules/tests/test-summary/test-summary.actions';
+    '../../../../modules/tests/test-summary/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
-'../../../../modules/tests/communication-preferences/communication-preferences.actions';
+    '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('NonPassFinalisationCatCPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatCPage>;
   let component: NonPassFinalisationCatCPage;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         NonPassFinalisationCatCPage,
@@ -56,14 +57,14 @@ describe('NonPassFinalisationCatCPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(NonPassFinalisationCatCPage);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(NonPassFinalisationCatCPage);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

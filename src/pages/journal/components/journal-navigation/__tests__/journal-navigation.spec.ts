@@ -15,13 +15,14 @@ import { AppConfigProvider } from '../../../../../providers/app-config/app-confi
 import { AppConfigProviderMock } from '../../../../../providers/app-config/__mocks__/app-config.mock';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('JournalNavigationComponent', () => {
   let fixture: ComponentFixture<JournalNavigationComponent>;
   let store$: Store<StoreModel>;
   let dateTimeProvider: DateTimeProvider;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [JournalNavigationComponent],
       imports: [
@@ -35,10 +36,11 @@ describe('JournalNavigationComponent', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(JournalNavigationComponent);
     });
+  });
 
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(JournalNavigationComponent);
     store$ = TestBed.get(Store);
     dateTimeProvider = TestBed.get(DateTimeProvider);
   }));

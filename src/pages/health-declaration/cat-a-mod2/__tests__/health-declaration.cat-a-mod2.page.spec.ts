@@ -36,6 +36,7 @@ import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { SignatureComponent } from '../../components/signature/signature';
 import { HealthDeclarationComponent } from '../../components/health-declaration/health-declaration';
 import { ReceiptDeclarationComponent } from '../../components/receipt-declaration/receipt-declaration';
+import { configureTestSuite } from 'ng-bullet';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 describe('HealthDeclarationCatAMod2Page', () => {
@@ -54,7 +55,7 @@ describe('HealthDeclarationCatAMod2Page', () => {
     vehicleTypeCode: '',
   };
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         HealthDeclarationCatAMod2Page,
@@ -99,19 +100,18 @@ describe('HealthDeclarationCatAMod2Page', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(HealthDeclarationCatAMod2Page);
-        component = fixture.componentInstance;
-        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch').and.callThrough();
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-        component.subscription = new Subscription();
-      });
+    });
+  });
 
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(HealthDeclarationCatAMod2Page);
+    component = fixture.componentInstance;
+    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch').and.callThrough();
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
+    component.subscription = new Subscription();
   }));
 
   describe('Class', () => {

@@ -7,13 +7,14 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Http } from '@angular/http';
 import { createTranslateLoader } from '../../../../../app/app.module';
 import { NewEmailComponent } from '../new-email';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('NewEmailComponent', () => {
   let fixture: ComponentFixture<NewEmailComponent>;
   let component: NewEmailComponent;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         NewEmailComponent,
@@ -26,23 +27,22 @@ describe('NewEmailComponent', () => {
           deps: [Http],
         }),
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(NewEmailComponent);
-        component = fixture.componentInstance;
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-        component.formGroup = new FormGroup({});
-        const radioCtrl = new FormControl('radioCtrl');
-        component.formGroup.addControl('radioCtrl', radioCtrl);
-        component.radioButtonControl = radioCtrl;
-        const newEmailCtrl = new FormControl('newEmailCtrl');
-        component.formGroup.addControl('newEmailCtrl', newEmailCtrl);
-        component.formControl = newEmailCtrl;
-        component.isNewEmailAddressChosen = true;
-      });
+    });
+  });
 
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(NewEmailComponent);
+    component = fixture.componentInstance;
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
+    component.formGroup = new FormGroup({});
+    const radioCtrl = new FormControl('radioCtrl');
+    component.formGroup.addControl('radioCtrl', radioCtrl);
+    component.radioButtonControl = radioCtrl;
+    const newEmailCtrl = new FormControl('newEmailCtrl');
+    component.formGroup.addControl('newEmailCtrl', newEmailCtrl);
+    component.formControl = newEmailCtrl;
+    component.isNewEmailAddressChosen = true;
   }));
 
   describe('DOM', () => {

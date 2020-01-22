@@ -5,12 +5,13 @@ import { EventEmitter } from '@angular/core';
 import { HealthDeclarationComponent } from '../health-declaration';
 import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate';
 import { FormGroup } from '@angular/forms';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('HealthDeclarationComponent', () => {
   let fixture: ComponentFixture<HealthDeclarationComponent>;
   let component: HealthDeclarationComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         HealthDeclarationComponent,
@@ -24,12 +25,12 @@ describe('HealthDeclarationComponent', () => {
         TranslateLoader,
         TranslateParser,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(HealthDeclarationComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(HealthDeclarationComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {
