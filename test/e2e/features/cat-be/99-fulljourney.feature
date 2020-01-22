@@ -30,7 +30,7 @@ Feature: Full end to end journey for Cat B+E
       Then I should see the "Journal" page
       And the test result for "Mr Callahan Eaton" is "1"
 
-   Scenario Outline: Examiner completes a failed test with various faults
+   Scenario: Examiner completes a failed test with various faults
       Given I am logged in as "mobexaminer2" and I have a test for "Mr Dillon Jennings"
       When I check candidate details for "Mr Dillon Jennings"
       And I start the test for "Mr Dillon Jennings"
@@ -42,7 +42,7 @@ Feature: Full end to end journey for Cat B+E
       Then I should see the "Dillon Jennings" page
       And I complete the waiting room to car page with the following vehicle checks
         | show_me_1   | show_me_2   | show_me_3   | show_me_4   | show_me_5   |
-        | <show_me_1> | <show_me_2> | <show_me_3> | <show_me_4> | <show_me_5> |
+        | true        | true        | true        | false       | false       |   
       Then I should see the "Test report - Dillon Jennings" page
       And the driver fault count is "3"
       When I end the test
@@ -88,10 +88,6 @@ Feature: Full end to end journey for Cat B+E
       And I upload the test
       Then I should see the "Journal" page
       And the test result for "Mr Dillon Jennings" is "2"
-
-   Examples: Show and tell me responses (true is fail, false is pass)
-         | show_me_1 | show_me_2 | show_me_3 | show_me_4 | show_me_5 |
-         | true      | true      | true      | false     | false     |    
 
    Scenario: Examiner terminates a test on the test report due to mechanical failure
       Given I am logged in as "mobexaminer2" and I have a test for "Mr Dixon Clayton"
