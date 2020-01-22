@@ -43,6 +43,16 @@ Feature: Full end to end journey
       And I complete the waiting room to car page with a tell me driver fault
       Then I should see the "Test report - Jane Doe" page
       And the driver fault count is "1"
+      When I end the test
+      Then the legal requirements pop up is present
+      And all the required test observations are present "NS (normal start)"
+      And all the required test observations are present "NS (normal start)"
+      And all the required test observations are present "AS (angled start)"
+      And all the required test observations are present "HS / DS (hill or designated start)"
+      And all the required test observations are present "Manoeuvres"
+      And all the required test observations are present "Show me / Tell me"
+      And all the required test observations are present "Eco (control and planning)"
+      Then I return to the test report page
 
       # Existing driver fault should prevent a second fault from being added
       When I add a Show me / Tell me driver fault
