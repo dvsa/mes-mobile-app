@@ -18,26 +18,55 @@ export class CategoryTypeComponent implements OnChanges {
 
   formControl: FormControl;
 
-  categories: string[] = [
-    'AM Moped',
-    'A1 Motorcycle',
-    'A2 Motorcycle',
-    'A Motorcycle'
+  categories: any[] = [
+    {
+      code: 'AM',
+      description: 'Motorcycle',
+      imageUrl: '',
+    },
+    {
+      code: 'A1',
+      description: 'Motorcycle',
+      imageUrl: '',
+    },
+    {
+      code: 'A2',
+      description: 'Motorcycle',
+      imageUrl: '',
+    },
+    {
+      code: 'A',
+      description: 'Motorcycle',
+      imageUrl: '',
+    }
   ];
 
   categorySelectOptions: any = {
-    cssClass: 'selector-header'
+    cssClass: 'selector-header',
   };
+
+  imagePath: string = 'src/assets/imgs/motorbike.png';
 
   constructor(
   ) { }
 
   openCategorySelector() {
+    this.loadImages();
     this.selectRef.open();
   }
 
   closeCategorySelector() {
     this.selectRef.close();
+  }
+
+  loadImages() {
+    setTimeout(function() {
+      let options= document.getElementsByClassName('alert-radio-label');
+      for (let index = 0; index < options.length; index++) {
+        let element = options[index];
+        element.innerHTML=element.innerHTML.concat('<img class="bike-image" src="assets/imgs/motorbike.png" />');
+      }
+    }, 200);
   }
 
   ngOnChanges(): void {

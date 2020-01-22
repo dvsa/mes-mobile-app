@@ -1,3 +1,4 @@
+<ion-img src="assets/imgs/motorbike.png"></ion-img>
 <ion-row class="mes-validated-row mes-row-separator" id="category-type" [formGroup]="formGroup">
   <ion-col col-32 align-self-center class="component-label">
     <label>Confirm cat type</label>
@@ -6,8 +7,15 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col col-48>
-        <ion-select #categorySelect hidden="true" okText="Confirm" cancelText="Cancel" [selectOptions]="categorySelectOptions">
-        <ion-option *ngFor="let category of categories">{{category}}</ion-option>
+        <ion-select #categorySelect interface="popover" hidden="true" okText="Confirm" cancelText="Cancel"
+                    [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}">
+          <ion-option *ngFor="let category of categories">
+           <!--{{category.code}} - {{category.description}}-->
+            <ion-row>
+              <ion-col col-6>column 1</ion-col>
+              <ion-col col-6>column 2</ion-col>
+            </ion-row>
+          </ion-option>
         </ion-select>
         <input
           type="button"
