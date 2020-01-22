@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { Platform, NavController } from 'ionic-angular';
 import { PlatformMock, NavControllerMock } from 'ionic-mocks';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -25,7 +25,7 @@ describe('Base Page', () => {
     });
   });
 
-  beforeEach(async () => {
+  beforeEach(async(() => {
 
     platform = TestBed.get(Platform);
     navController = TestBed.get(NavController);
@@ -42,7 +42,7 @@ describe('Base Page', () => {
     }
 
     basePageComponent = new BasePageClass(platform, navController, authenticationProvider);
-  });
+  }));
 
   describe('ionViewWillEnter()', () => {
     it('should allow user access if authentication is not required', () => {

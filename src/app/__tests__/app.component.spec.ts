@@ -16,6 +16,7 @@ import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { translateServiceMock } from '../../shared/__mocks__/translate';
 import { LOGIN_PAGE } from '../../pages/page-names.constants';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
@@ -23,7 +24,7 @@ describe('App', () => {
   let statusBar: Spied<StatusBar>;
   let store$: Store<AppInfoModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [App],
@@ -37,18 +38,18 @@ describe('App', () => {
         { provide: SecureStorage, useClass: SecureStorageMock },
         { provide: TranslateService, useValue: translateServiceMock },
       ],
-    })
-    .compileComponents()
-    .then(() => {
-      fixture = TestBed.createComponent(App);
-      component = fixture.componentInstance;
-      statusBar = TestBed.get(StatusBar);
-      store$ = TestBed.get(Store);
-
-      spyOn(store$, 'dispatch');
-      spyOn(component, 'configureAccessibility');
-      spyOn(component, 'configurePlatformSubscriptions');
     });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(App);
+    component = fixture.componentInstance;
+    statusBar = TestBed.get(StatusBar);
+    store$ = TestBed.get(Store);
+
+    spyOn(store$, 'dispatch');
+    spyOn(component, 'configureAccessibility');
+    spyOn(component, 'configurePlatformSubscriptions');
   }));
 
   describe('Class', () => {

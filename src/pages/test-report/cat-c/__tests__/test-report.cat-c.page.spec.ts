@@ -42,13 +42,14 @@ import { ReverseLeftComponent } from '../components/reverse-left/reverse-left';
 import { ReverseLeftPopoverComponent } from '../components/reverse-left-popover/reverse-left-popover';
 import { VehicleChecksComponent } from '../components/vehicle-checks/vehicle-checks';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestReportCatCPage', () => {
   let fixture: ComponentFixture<TestReportCatCPage>;
   let component: TestReportCatCPage;
   let navController: NavController;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [TestReportCatCPage,
         MockComponent(TickIndicatorComponent),
@@ -95,13 +96,13 @@ describe('TestReportCatCPage', () => {
         { provide: TestReportValidatorProvider, useClass: TestReportValidatorProviderMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TestReportCatCPage);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TestReportCatCPage);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
   }));
 
   describe('Class', () => {

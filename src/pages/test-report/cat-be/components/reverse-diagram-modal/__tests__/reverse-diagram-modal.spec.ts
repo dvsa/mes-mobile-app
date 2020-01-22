@@ -20,12 +20,13 @@ import {
   NavigationStateProviderMock,
 } from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { ReversingDistancesProvider } from '../../../../../../providers/reversing-distances/reversing-distances';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('reverseDiagramModal', () => {
   let fixture: ComponentFixture<ReverseDiagramCatBEPage>;
   let component: ReverseDiagramCatBEPage;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [ReverseDiagramCatBEPage],
       imports: [
@@ -90,12 +91,12 @@ describe('reverseDiagramModal', () => {
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
         ReversingDistancesProvider,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ReverseDiagramCatBEPage);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ReverseDiagramCatBEPage);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

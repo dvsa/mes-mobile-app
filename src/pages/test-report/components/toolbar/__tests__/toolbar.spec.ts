@@ -1,4 +1,3 @@
-
 import { IonicModule, Config, NavController } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';

@@ -19,6 +19,7 @@ import {
   ReverseDiagramOpened,
   ReverseDiagramClosed,
 } from '../../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('reverseDiagramLink', () => {
   let fixture: ComponentFixture<ReverseDiagramLinkComponent>;
@@ -26,7 +27,7 @@ describe('reverseDiagramLink', () => {
   let modalController: ModalController;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [ReverseDiagramLinkComponent],
       imports: [
@@ -39,14 +40,14 @@ describe('reverseDiagramLink', () => {
         { provide: NavigationProvider, useClass: NavigationProviderMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ReverseDiagramLinkComponent);
-        component = fixture.componentInstance;
-        modalController = TestBed.get(ModalController);
-        store$ = TestBed.get(Store);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ReverseDiagramLinkComponent);
+    component = fixture.componentInstance;
+    modalController = TestBed.get(ModalController);
+    store$ = TestBed.get(Store);
   }));
 
   describe('DOM', () => {
