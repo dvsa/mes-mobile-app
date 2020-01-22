@@ -16,6 +16,7 @@ import {
 }
 from '../../../../../modules/tests/test-data/common/eco/eco.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Eco component', () => {
   let fixture: ComponentFixture<EcoComponent>;
@@ -23,7 +24,7 @@ describe('Eco component', () => {
   let store$: Store<StoreModel>;
   let storeDispatchSpy: jasmine.Spy;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         EcoComponent,
@@ -34,15 +35,15 @@ describe('Eco component', () => {
         IonicModule,
         StoreModule.forRoot({ tests: testsReducer, testReport : testReportReducer }),
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(EcoComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(105, TestCategory.B));
-        storeDispatchSpy = spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(EcoComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    store$.dispatch(new StartTest(105, TestCategory.B));
+    storeDispatchSpy = spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

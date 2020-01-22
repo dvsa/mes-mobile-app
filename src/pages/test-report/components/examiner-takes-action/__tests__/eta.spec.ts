@@ -8,13 +8,14 @@ import { ToggleETA } from '../../../../../modules/tests/test-data/common/eta/eta
 import { ExaminerActions } from '../../../../../modules/tests/test-data/test-data.constants';
 import { MockComponent } from 'ng-mocks';
 import { CompetencyButtonComponent } from '../../competency-button/competency-button';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Examiner Takes Action Component', () => {
   let fixture: ComponentFixture<EtaComponent>;
   let component: EtaComponent;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         EtaComponent,
@@ -24,12 +25,12 @@ describe('Examiner Takes Action Component', () => {
         IonicModule,
         StoreModule.forRoot({ tests: testsReducer }),
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(EtaComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(EtaComponent);
+    component = fixture.componentInstance;
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));

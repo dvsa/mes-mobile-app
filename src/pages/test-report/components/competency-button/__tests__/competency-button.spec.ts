@@ -5,12 +5,13 @@ import { By } from '@angular/platform-browser';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 import { IonicModule } from 'ionic-angular';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('CompetencyButtonComponent', () => {
   let fixture: ComponentFixture<CompetencyButtonComponent>;
   let component: CompetencyButtonComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         CompetencyButtonComponent,
@@ -22,12 +23,12 @@ describe('CompetencyButtonComponent', () => {
       providers: [
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(CompetencyButtonComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(CompetencyButtonComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

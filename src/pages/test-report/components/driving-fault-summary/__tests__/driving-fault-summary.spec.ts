@@ -14,13 +14,14 @@ import { Competencies } from '../../../../../modules/tests/test-data/test-data.c
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { PopulateTestCategory } from '../../../../../modules/tests/category/category.actions';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DrivingFaultSummary', () => {
   let fixture: ComponentFixture<DrivingFaultSummaryComponent>;
   let component: DrivingFaultSummaryComponent;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         DrivingFaultSummaryComponent,
@@ -33,13 +34,13 @@ describe('DrivingFaultSummary', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         FaultCountProvider,
       ],
-    }).compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(DrivingFaultSummaryComponent);
-        component = fixture.componentInstance;
-        component.subscription = new Subscription();
-      });
+    });
+  });
 
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DrivingFaultSummaryComponent);
+    component = fixture.componentInstance;
+    component.subscription = new Subscription();
     store$ = TestBed.get(Store);
   }));
 
