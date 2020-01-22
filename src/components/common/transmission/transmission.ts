@@ -13,6 +13,11 @@ export class TransmissionComponent implements OnChanges {
   transmission: TransmissionType;
 
   @Input()
+  hideTransmissionLabel: boolean = false;
+  @Input()
+  hideConfirmTransmissionLabel: boolean = true;
+
+  @Input()
   formGroup: FormGroup;
 
   @Output()

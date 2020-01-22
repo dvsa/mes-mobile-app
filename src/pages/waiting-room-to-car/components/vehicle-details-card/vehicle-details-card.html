@@ -4,18 +4,26 @@
       <label>Vehicle details (optional)</label>
     </ion-col>
     <ion-col align-self-center padding-left>
-      <ion-row>
+      <ion-row [hidden]="hideSchoolVehicleAndDualControlRow">
         <ion-col col-48>
-          <vehicle-details [formGroup]="formGroup" 
+          <vehicle-details [formGroup]="formGroup"
             [vehicleDetails]="schoolVehicleDetails"
             vehicleDetailsType="School car"
             (vehicleDetailsChange)="schoolVehicleDetailsChanged()"></vehicle-details>
         </ion-col>
-        <ion-col col-48> 
-          <vehicle-details [formGroup]="formGroup" 
+        <ion-col col-48>
+          <vehicle-details [formGroup]="formGroup"
             [vehicleDetails]="dualVehicleDetails"
             vehicleDetailsType="Dual control"
             (vehicleDetailsChange)="dualVehicleDetailsChanged()"></vehicle-details>
+        </ion-col>
+      </ion-row>
+      <ion-row [hidden]="hideSchoolBikeRow">
+        <ion-col col-48>
+          <vehicle-details [formGroup]="formGroup"
+          [vehicleDetails]="schoolBikeDetails"
+          vehicleDetailsType="School bike"
+          (vehicleDetailsChange)="schoolBikeVehicleDetailsChanged()"></vehicle-details>
         </ion-col>
       </ion-row>
     </ion-col>

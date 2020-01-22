@@ -3,6 +3,7 @@ import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 
 export const VEHICLE_REGISTRATION_CHANGED = '[Vehicle Details] Registration changed';
 export const SCHOOL_CAR_TOGGLED = '[Vehicle Details] School car toggled';
+export const SCHOOL_BIKE_TOGGLED = '[Vehicle Details] School bike toggled';
 export const DUAL_CONTROLS_TOGGLED = '[Vehicle Details] Dual controls toggled';
 export const GEARBOX_CATEGORY_CHANGED = '[Vehicle Details] Gearbox category changed';
 export const CLEAR_GEARBOX_CATEGORY = '[Vehicle Details] Clear gearbox category';
@@ -15,6 +16,9 @@ export class VehicleRegistrationChanged implements Action {
 
 export class SchoolCarToggled implements Action {
   readonly type = SCHOOL_CAR_TOGGLED;
+}
+export class SchoolBikeToggled implements Action {
+  readonly type = SCHOOL_BIKE_TOGGLED;
 }
 
 export class DualControlsToggled implements Action {

@@ -8,9 +8,9 @@ import { Observable } from 'rxjs/Observable';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
-  SchoolCarToggled,
   GearboxCategoryChanged,
   VehicleRegistrationChanged,
+  SchoolBikeToggled,
 } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { map } from 'rxjs/operators';
 import {
@@ -46,17 +46,6 @@ import { getUntitledCandidateName } from '../../../modules/tests/journal-data/co
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../providers/question/question';
-import {
-  EyesightTestReset,
-  EyesightTestPassed,
-  EyesightTestFailed,
-} from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
-// TODO - PREP-AMOD1: update to cat A
-import {
-  hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
-// TODO - PREP-AMOD1: update to cat A
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_A_MOD1 } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
@@ -71,8 +60,6 @@ interface WaitingRoomToCarPageState {
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
-  eyesightTestComplete$: Observable<boolean>;
-  eyesightTestFailed$: Observable<boolean>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
 }
@@ -85,8 +72,6 @@ interface WaitingRoomToCarPageState {
 export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
-
-  showEyesightFailureConfirmation: boolean = false;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -142,14 +127,6 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
         select(getAccompaniment),
         select(getInterpreterAccompaniment),
       ),
-      eyesightTestComplete$: currentTest$.pipe(
-        select(getTestData),
-        select(hasEyesightTestBeenCompleted),
-      ),
-      eyesightTestFailed$: currentTest$.pipe(
-        select(getTestData),
-        select(hasEyesightTestGotSeriousFault),
-      ),
       gearboxAutomaticRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
         map(isAutomatic),
@@ -169,8 +146,8 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
     this.store$.dispatch(new PersistTests());
   }
 
-  schoolCarToggled(): void {
-    this.store$.dispatch(new SchoolCarToggled());
+  schoolBikeToggled(): void {
+    this.store$.dispatch(new SchoolBikeToggled());
   }
 
   transmissionChanged(transmission: GearboxCategory): void {
@@ -225,20 +202,6 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
 
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.value[controlName] && this.form.get(controlName).dirty;
-  }
-
-  setEyesightFailureVisibility(show: boolean) {
-    this.showEyesightFailureConfirmation = show;
-  }
-
-  eyesightFailCancelled = () => {
-    this.form.get('eyesightCtrl') && this.form.get('eyesightCtrl').reset();
-    this.store$.dispatch(new EyesightTestReset());
-  }
-
-  eyesightTestResultChanged(passed: boolean): void {
-    const action = passed ? new EyesightTestPassed() : new EyesightTestFailed();
-    this.store$.dispatch(action);
   }
 
   getDebriefPage() {
