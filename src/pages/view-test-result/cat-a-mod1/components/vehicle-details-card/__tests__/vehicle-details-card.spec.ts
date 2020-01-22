@@ -9,12 +9,13 @@ import { DataRowCustomComponent } from '../../../../../../components/common/data
 import { VehicleDetails } from '@dvsa/mes-test-schema/categories/common';
 // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleDetailsCardComponent', () => {
   let fixture: ComponentFixture<VehicleDetailsCardComponent>;
   let component: VehicleDetailsCardComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleDetailsCardComponent,
@@ -28,11 +29,11 @@ describe('VehicleDetailsCardComponent', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
     })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleDetailsCardComponent);
-        component = fixture.componentInstance;
-      });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleDetailsCardComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

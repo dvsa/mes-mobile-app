@@ -42,13 +42,14 @@ import { ErrorMessageComponent } from '../../../../components/common/error-messa
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ViewTestResultCatBPage', () => {
   let fixture: ComponentFixture<ViewTestResultCatBPage>;
   let component: ViewTestResultCatBPage;
   let loadingController: LoadingController;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ViewTestResultCatBPage,
@@ -84,12 +85,12 @@ describe('ViewTestResultCatBPage', () => {
         FaultSummaryProvider,
       ],
     })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ViewTestResultCatBPage);
-        component = fixture.componentInstance;
-        loadingController = TestBed.get(LoadingController);
-      });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ViewTestResultCatBPage);
+    component = fixture.componentInstance;
+    loadingController = TestBed.get(LoadingController);
   }));
 
   describe('Class', () => {
