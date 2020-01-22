@@ -5,12 +5,13 @@ import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('LegalRequirementsModal', () => {
   let fixture: ComponentFixture<LegalRequirementsModal>;
   let component: LegalRequirementsModal;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         LegalRequirementsModal,
@@ -24,14 +25,16 @@ describe('LegalRequirementsModal', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(LegalRequirementsModal);
-        component = fixture.componentInstance;
-        component.onCancel = () => {};
-        component.onTerminate = () => {};
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(LegalRequirementsModal);
+    component = fixture.componentInstance;
+    component.onCancel = () => {
+    };
+    component.onTerminate = () => {
+    };
   }));
 
   describe('Class', () => {

@@ -9,6 +9,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import * as testStatusActions from '../test-status.actions';
 import { AnalyticRecorded } from '../../../../providers/analytics/analytics.actions';
 import { AnalyticsEventCategories, AnalyticsEvents } from '../../../../providers/analytics/analytics.model';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Test Status Analytics Effects', () => {
 
@@ -16,8 +17,7 @@ describe('Test Status Analytics Effects', () => {
   let analyticsProviderMock;
   let actions$: any;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -31,6 +31,10 @@ describe('Test Status Analytics Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(TestStatusAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
   });
