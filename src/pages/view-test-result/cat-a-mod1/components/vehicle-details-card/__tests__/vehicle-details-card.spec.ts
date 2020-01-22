@@ -28,7 +28,7 @@ describe('VehicleDetailsCardComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {
