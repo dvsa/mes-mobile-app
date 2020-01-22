@@ -1,8 +1,16 @@
 import { Injectable } from '@angular/core';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-// TODO: Import CAT C types
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { ReversingLengths } from './reversing-lengths.model';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+
+export type CatCVehicleDetailsUnion =
+  | CatCUniqueTypes.VehicleDetails
+  | CatC1UniqueTypes.VehicleDetails
+  | CatCEUniqueTypes.VehicleDetails
+  | CatC1UniqueTypes.VehicleDetails;
 
 @Injectable()
 export class ReversingDistancesProvider {
@@ -14,11 +22,11 @@ export class ReversingDistancesProvider {
       case TestCategory.C:
         return this.getDistanceLengthCatC(data, 3.5);
       case TestCategory.CE:
-        return this.getDistanceLengthCatC(data, 4);
+        return this.getDistanceLengthCatCE(data, 4);
       case TestCategory.C1:
         return this.getDistanceLengthCatC(data, 3.5);
       case TestCategory.C1E:
-        return this.getDistanceLengthCatC(data, 4);
+        return this.getDistanceLengthCatCE(data, 4);
       default:
         return { startDistance: 52.5, middleDistance: 30 };
     }
@@ -41,14 +49,21 @@ export class ReversingDistancesProvider {
     }
   }
 
-  // TODO: Use CAT C types
-  private getDistanceWidthCatC(data: CatBEUniqueTypes.VehicleDetails): number {
+  private getDistanceWidthCatC(data: CatCVehicleDetailsUnion): number {
     const distanceOfBayWidth = data.vehicleWidth * 1.5;
     return Math.round(distanceOfBayWidth * 100) / 100;
   }
 
-  // TODO: Use CAT C types
-  private getDistanceLengthCatC(data: CatBEUniqueTypes.VehicleDetails, multiplier: number): ReversingLengths {
+  private getDistanceLengthCatC(data: CatCVehicleDetailsUnion, multiplier: number): ReversingLengths {
+    const distanceFromStart = data.vehicleLength * multiplier;
+    const distanceFromMiddle = data.vehicleLength * 2;
+    return ({
+      startDistance:  Math.round(distanceFromStart * 100) / 100,
+      middleDistance: Math.round(distanceFromMiddle * 100) / 100,
+    });
+  }
+
+  private getDistanceLengthCatCE(data: CatCVehicleDetailsUnion, multiplier: number): ReversingLengths {
     const distanceFromStart = data.vehicleLength * multiplier;
     const distanceFromMiddle = data.vehicleLength * 2;
     return ({

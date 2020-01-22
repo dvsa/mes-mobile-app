@@ -15,10 +15,13 @@ import {
   getVehicleWidth,
 } from '../../../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
+import { getTestCategory } from '../../../../../modules/tests/category/category.reducer';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
 interface ReverseDiagramPageState {
   vehicleLength$: Observable<number>;
   vehicleWidth$: Observable<number>;
+  category$: Observable<CategoryCode>;
 }
 
 type OnCloseFunc = () => void;
@@ -40,10 +43,11 @@ export class ReverseDiagramCatCPage implements OnInit {
 
   componentState: ReverseDiagramPageState;
   subscription: Subscription;
-  merged$: Observable<number>;
+  merged$: Observable<number | CategoryCode>;
   reversingLengthStart: number;
   reversingLengthMiddle: number;
   reversingWidth: number;
+  category: TestCategory;
 
   constructor(
     private navParams: NavParams,
@@ -69,13 +73,17 @@ export class ReverseDiagramCatCPage implements OnInit {
         select(getVehicleDetails),
         select(getVehicleWidth),
       ),
+      category$: currentTest$.pipe(
+        select(getTestCategory),
+      ),
     };
 
-    const { vehicleLength$, vehicleWidth$ } = this.componentState;
+    const { vehicleLength$, vehicleWidth$, category$ } = this.componentState;
 
     this.merged$ = merge(
       vehicleLength$.pipe(map(val => this.vehicleLength = val)),
       vehicleWidth$.pipe(map(val => this.vehicleWidth = val)),
+      category$.pipe(map(val => this.category = val as TestCategory)),
     );
   }
 
@@ -85,7 +93,7 @@ export class ReverseDiagramCatCPage implements OnInit {
       vehicleWidth: this.vehicleWidth,
     };
 
-    const reversingLengths = this.reversingDistancesProvider.getDistanceLength(vehicleDetails, TestCategory.C);
+    const reversingLengths = this.reversingDistancesProvider.getDistanceLength(vehicleDetails, this.category);
     this.reversingLengthStart = reversingLengths.startDistance;
     this.reversingLengthMiddle = reversingLengths.middleDistance;
   }
@@ -96,7 +104,7 @@ export class ReverseDiagramCatCPage implements OnInit {
       vehicleLength: this.vehicleLength,
     };
 
-    this.reversingWidth = this.reversingDistancesProvider.getDistanceWidth(vehicleDetails, TestCategory.C);
+    this.reversingWidth = this.reversingDistancesProvider.getDistanceWidth(vehicleDetails, this.category);
   }
 
   ionViewWillEnter(): boolean {

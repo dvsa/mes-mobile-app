@@ -9,12 +9,12 @@ import { StoreModel } from '../../../../../../shared/models/store.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { ReverseDiagramCatCPage } from '../reverse-diagram-modal.cat-c';
 import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
 import { ReversingDistancesProvider } from '../../../../../../providers/reversing-distances/reversing-distances';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 
 describe('reverseDiagramModal', () => {
   let fixture: ComponentFixture<ReverseDiagramCatCPage>;
@@ -100,8 +100,7 @@ describe('reverseDiagramModal', () => {
 
   describe('Class', () => {
 
-    // TODO: MES-4287 namespace has to come from cat C
-    const vehicleDetails: CatBEUniqueTypes.VehicleDetails = {
+    const vehicleDetails: CatCUniqueTypes.VehicleDetails = {
       vehicleLength: 10,
       vehicleWidth: 2.75,
     };
@@ -126,6 +125,7 @@ describe('reverseDiagramModal', () => {
 
     describe('calculateReversingLengths', () => {
       it('CAT C - should set the correct value for aAndA1', () => {
+        component.category = TestCategory.C;
         component.ngOnInit();
         component.calculateReversingLengths(vehicleDetails.vehicleLength);
         const result = component.reversingLengthStart;
@@ -133,6 +133,7 @@ describe('reverseDiagramModal', () => {
       });
 
       it('CAT C - should set the correct value for b', () => {
+        component.category = TestCategory.C;
         component.ngOnInit();
         component.calculateReversingLengths(vehicleDetails.vehicleLength);
         const result = component.reversingLengthMiddle;
@@ -142,6 +143,7 @@ describe('reverseDiagramModal', () => {
 
     describe('calculateDistanceWidth', () => {
       it('Cat C - should set the correct value for aToA1', () => {
+        component.category = TestCategory.C;
         component.ngOnInit();
         component.calculateReversingWidth(vehicleDetails.vehicleWidth);
         const result = component.reversingWidth;
