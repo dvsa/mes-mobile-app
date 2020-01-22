@@ -3,27 +3,28 @@ import { LanguagePreferencesComponent } from '../language-preferences';
 import { IonicModule } from 'ionic-angular';
 import { AppModule } from '../../../../app/app.module';
 import { FormGroup } from '@angular/forms';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('LanguagePreferencesComponent', () => {
   let fixture: ComponentFixture<LanguagePreferencesComponent>;
   let component: LanguagePreferencesComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         LanguagePreferencesComponent,
       ],
       imports: [
         IonicModule,
-        AppModule,
+        AppModule
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(LanguagePreferencesComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(LanguagePreferencesComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
   }));
 
   describe('ngOnChanges', () => {

@@ -3,12 +3,13 @@ import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
 import { WarningBannerComponent } from '../warning-banner';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('WarningBanner', () => {
   let fixture: ComponentFixture<WarningBannerComponent>;
   let component: WarningBannerComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [WarningBannerComponent],
       imports: [
@@ -18,11 +19,11 @@ describe('WarningBanner', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
     })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(WarningBannerComponent);
-        component = fixture.componentInstance;
-      });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(WarningBannerComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {
