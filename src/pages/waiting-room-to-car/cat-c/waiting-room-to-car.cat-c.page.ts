@@ -55,6 +55,11 @@ import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { VehicleChecksCatCComponent } from './components/vehicle-checks/vehicle-checks.cat-c';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { merge } from 'rxjs/observable/merge';
+import { Subscription } from 'rxjs/Subscription';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -65,6 +70,8 @@ interface WaitingRoomToCarPageState {
   interpreterAccompaniment$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
   vehicleChecks$: Observable<CatCUniqueTypes.VehicleChecks>;
+  testCategory$: Observable<CategoryCode>;
+
 }
 
 @IonicPage()
@@ -78,10 +85,11 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
 
   @ViewChild(VehicleChecksCatCComponent)
   vehicleChecks: VehicleChecksCatCComponent;
-
+  subscription: Subscription;
   showEyesightFailureConfirmation: boolean = false;
 
   tellMeQuestions: VehicleChecksQuestion[];
+  testCategory: CategoryCode;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -140,7 +148,12 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
         select(getTestData),
         select(getVehicleChecksCatC),
       ),
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
+        map(result => this.testCategory = result),
+      ),
     };
+    this.setupSubscription();
   }
 
   ionViewDidEnter(): void {
@@ -170,9 +183,24 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   vehicleRegistrationChanged(vehicleRegistration: string) {
     this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
   }
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
   closeVehicleChecksModal = () => {
     this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
+  }
+
+  setupSubscription() {
+    const {
+      testCategory$,
+    } = this.pageState;
+
+    this.subscription = merge(
+      testCategory$.pipe(map(result => this.testCategory = result)),
+    ).subscribe();
   }
 
   onSubmit() {
@@ -223,5 +251,8 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   getDebriefPage() {
     return CAT_C.DEBRIEF_PAGE;
   }
-
+  displayCabLockDown = (): boolean => this.testCategory === TestCategory.C || this.testCategory === TestCategory.CE;
+  displayLoadSecured = (): boolean => this.testCategory === TestCategory.C ||
+                                      this.testCategory === TestCategory.CE ||
+                                      this.testCategory === TestCategory.C1E
 }

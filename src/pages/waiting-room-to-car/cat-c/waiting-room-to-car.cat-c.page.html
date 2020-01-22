@@ -31,8 +31,10 @@
             </accompaniment-card>
           </ion-col>
         </ion-row>
-        <warning-banner class="banner-space" warningText="Is the cab locked down?"></warning-banner>
-        <warning-banner warningText="Is the load secure?"></warning-banner>
+
+        <warning-banner *ngIf=" displayCabLockDown() " class="banner-space" warningText="Is the cab locked down?"></warning-banner>
+        <warning-banner *ngIf=" displayLoadSecured() " warningText="Is the load secure?"></warning-banner>
+
       </ion-grid>
     </form>
   </div>
