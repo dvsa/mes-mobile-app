@@ -27,7 +27,6 @@ import * as activityCodeActions from '../../../modules/tests/activity-code/activ
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('Back To Office Analytics Effects', () => {
 
