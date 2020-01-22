@@ -6,12 +6,13 @@ import { ConfigMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
 import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestDetailsCardComponent', () => {
   let fixture: ComponentFixture<TestDetailsCardComponent>;
   let component: TestDetailsCardComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         TestDetailsCardComponent,
@@ -24,12 +25,12 @@ describe('TestDetailsCardComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TestDetailsCardComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TestDetailsCardComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

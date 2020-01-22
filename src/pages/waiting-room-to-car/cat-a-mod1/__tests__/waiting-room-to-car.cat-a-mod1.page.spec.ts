@@ -28,13 +28,14 @@ import { PracticeModeBanner } from '../../../../components/common/practice-mode-
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('WaitingRoomToCarCatAMod1Page', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatAMod1Page>;
   let component: WaitingRoomToCarCatAMod1Page;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         WaitingRoomToCarCatAMod1Page,
@@ -85,12 +86,13 @@ describe('WaitingRoomToCarCatAMod1Page', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: QuestionProvider, useClass: QuestionProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomToCarCatAMod1Page);
-        component = fixture.componentInstance;
-      });
+    });
+
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(WaitingRoomToCarCatAMod1Page);
+    component = fixture.componentInstance;
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));

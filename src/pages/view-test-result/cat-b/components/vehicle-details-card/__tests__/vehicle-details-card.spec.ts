@@ -6,12 +6,13 @@ import { VehicleDetailsCardComponent } from '../vehicle-details-card';
 import { MockComponent } from 'ng-mocks';
 import { DataRowComponent } from '../../../../../../components/common/data-row/data-row';
 import { DataRowCustomComponent } from '../../../../../../components/common/data-row-custom/data-row-custom';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleDetailsCardComponent', () => {
   let fixture: ComponentFixture<VehicleDetailsCardComponent>;
   let component: VehicleDetailsCardComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleDetailsCardComponent,
@@ -24,12 +25,12 @@ describe('VehicleDetailsCardComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleDetailsCardComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleDetailsCardComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

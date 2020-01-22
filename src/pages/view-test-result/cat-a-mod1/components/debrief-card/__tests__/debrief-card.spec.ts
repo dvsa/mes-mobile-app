@@ -30,6 +30,7 @@ import {
 // todo: PREP-AMOD1 change to manoeuvreTypeLabels from Cat A Mod 1
 import { manoeuvreTypeLabels } from '../../../../../../shared/constants/competencies/catbe-manoeuvres';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DebriefCardComponent', () => {
   let fixture: ComponentFixture<DebriefCardComponent>;
@@ -37,7 +38,7 @@ describe('DebriefCardComponent', () => {
   let faultSummaryProvider: FaultSummaryProvider;
   let faultCountProvider: FaultCountProvider;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         DebriefCardComponent,
@@ -59,14 +60,14 @@ describe('DebriefCardComponent', () => {
         FaultSummaryProvider,
         FaultCountProvider,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(DebriefCardComponent);
-        component = fixture.componentInstance;
-        faultSummaryProvider = TestBed.get(FaultSummaryProvider);
-        faultCountProvider = TestBed.get(FaultCountProvider);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DebriefCardComponent);
+    component = fixture.componentInstance;
+    faultSummaryProvider = TestBed.get(FaultSummaryProvider);
+    faultCountProvider = TestBed.get(FaultCountProvider);
   }));
 
   describe('Class', () => {

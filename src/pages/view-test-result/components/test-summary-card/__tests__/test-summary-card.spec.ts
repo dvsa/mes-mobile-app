@@ -7,12 +7,13 @@ import { MockComponent } from 'ng-mocks';
 import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
 import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
 import { IndependentDriving, WeatherConditions } from '@dvsa/mes-test-schema/categories/common';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestSummaryCardComponent', () => {
   let fixture: ComponentFixture<TestSummaryCardComponent>;
   let component: TestSummaryCardComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         TestSummaryCardComponent,
@@ -25,12 +26,13 @@ describe('TestSummaryCardComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TestSummaryCardComponent);
-        component = fixture.componentInstance;
-      });
+    });
+
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TestSummaryCardComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

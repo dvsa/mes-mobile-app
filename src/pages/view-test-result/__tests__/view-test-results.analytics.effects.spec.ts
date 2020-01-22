@@ -7,6 +7,7 @@ import { AnalyticsScreenNames, AnalyticsDimensionIndices } from '../../../provid
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { ViewTestResultAnalyticsEffects } from '../view-test-result.analytics.effects';
 import * as viewTestResultActions from '../view-test-result.actions';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('View Test Results Analytics Effects', () => {
 
@@ -15,8 +16,7 @@ describe('View Test Results Analytics Effects', () => {
   let actions$: any;
   const screenName = AnalyticsScreenNames.VIEW_TEST_RESULT;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         ViewTestResultAnalyticsEffects,
@@ -24,6 +24,10 @@ describe('View Test Results Analytics Effects', () => {
         provideMockActions(() => actions$),
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(ViewTestResultAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
   });

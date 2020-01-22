@@ -39,13 +39,14 @@ import { ErrorMessageComponent } from '../../../../components/common/error-messa
 import { BusinessDetailsCardComponent } from '../components/business-details-card/business-details-card';
 import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
 import { ViewTestResultCatAMod2Page } from '../view-test-result.cat-a-mod2.page';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ViewTestResultCatAMod2Page', () => {
   let fixture: ComponentFixture<ViewTestResultCatAMod2Page>;
   let component: ViewTestResultCatAMod2Page;
   let loadingController: LoadingController;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ViewTestResultCatAMod2Page,
@@ -80,13 +81,13 @@ describe('ViewTestResultCatAMod2Page', () => {
         { provide: SearchProvider, useClass: SearchProviderMock },
         { provide: CompressionProvider, useClass: CompressionProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ViewTestResultCatAMod2Page);
-        component = fixture.componentInstance;
-        loadingController = TestBed.get(LoadingController);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ViewTestResultCatAMod2Page);
+    component = fixture.componentInstance;
+    loadingController = TestBed.get(LoadingController);
   }));
 
   describe('Class', () => {

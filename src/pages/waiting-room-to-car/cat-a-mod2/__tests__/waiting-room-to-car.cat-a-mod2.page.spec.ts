@@ -31,13 +31,14 @@ import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actio
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { VehicleChecksCatAMod2Component } from '../components/vehicle-checks/vehicle-checks';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('WaitingRoomToCarCatAMod2Page', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatAMod2Page>;
   let component: WaitingRoomToCarCatAMod2Page;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         WaitingRoomToCarCatAMod2Page,
@@ -92,12 +93,12 @@ describe('WaitingRoomToCarCatAMod2Page', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: QuestionProvider, useClass: QuestionProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomToCarCatAMod2Page);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(WaitingRoomToCarCatAMod2Page);
+    component = fixture.componentInstance;
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));
