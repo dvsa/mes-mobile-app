@@ -212,6 +212,12 @@ Then('the driver fault count is {string}', (driverFaultCount) => {
   return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
+Then('a serious fault is present along the driver fault count of {string}', (driverFaultCount) => {
+  expect(getElement(by.xpath('//vehicle-checks//serious-fault-badge//span')).isPresent()).to.eventually.be.true;
+  const summaryCountField = getElement(by.id('summary-count'));
+  return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
+});
+
 Then('the competency {string} driver fault count is {string}', (competency, driverFaultCount) => {
   const competencyCountField = getElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
   and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`));
