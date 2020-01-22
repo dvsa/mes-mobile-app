@@ -25,8 +25,8 @@ When('I complete the waiting room to car page', () => {
   completeWaitingRoomPage(false, true, 'T5 - Headlights & tail lights');
 });
 
-When('I complete the waiting room to car page with a tell me driver fault', function (table) {
-  completeWaitingRoomPage(table.raw()[1], true, 'T1 - Brakes');
+When('I complete the waiting room to car page with a tell me driver fault', () => {
+  completeWaitingRoomPage(true, true, 'T1 - Brakes');
 });
 
 When('I complete the waiting room to car page with automatic transmission', () => {
@@ -42,7 +42,11 @@ When('I fail the eye sight test', () => {
   clickElement(eyesightFailConfirmButton);
 });
 
-const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, tellMeQuestion: string) => {
+When('I complete the waiting room to car page with the following vehicle checks', function (table) {
+  completeWaitingRoomPage(table.raw()[1], true);
+});
+
+const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, tellMeQuestion?: string) => {
   const eyesightPassRadio = getElement(by.id('eyesight-pass'));
   clickElement(eyesightPassRadio);
   if (this.testCategory === 'be') {
@@ -69,9 +73,9 @@ const beCategoryOpenSelectQuestionsOverlay = () => {
   clickElement(selectQuestionsButton);
 };
 
-const standardUserJourney = (withDriverFault, manualTransmission: boolean, tellMeQuestion: string) => {
+const standardUserJourney = (withDriverFault: boolean, manualTransmission: boolean, tellMeQuestion: string) => {
   selectTellMeQuestion(tellMeQuestion);
-  const tellMeRadioSelector = (withDriverFault[0] === "true") ? 'tellme-fault' : 'tellme-correct';
+  const tellMeRadioSelector = withDriverFault ? 'tellme-fault' : 'tellme-correct';
   const tellMeRadio = getElement(by.id(tellMeRadioSelector));
   clickElement(tellMeRadio);
   const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
