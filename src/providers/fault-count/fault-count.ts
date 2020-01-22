@@ -12,9 +12,9 @@ import { sumManoeuvreFaults } from '../../shared/helpers/faults';
 
 @Injectable()
 export class FaultCountProvider {
-
+  
   static getFaultSumCountErrMsg: string = 'Error getting fault sum count';
-
+  
   public getDrivingFaultSumCount = (category: TestCategory, data: Object): number => {
     switch (category) {
       case TestCategory.B: return FaultCountBHelper.getDrivingFaultSumCountCatB(data);
@@ -23,10 +23,12 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getDrivingFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getDrivingFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getDrivingFaultSumCountCatC(data);
+      // TODO: To be implemented properly in MES-4420 
+      case TestCategory.EUAM1: return FaultCountBEHelper.getDrivingFaultSumCountCatBE(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
-
+  
   public getSeriousFaultSumCount = (category: TestCategory, data: Object): number => {
     switch (category) {
       case TestCategory.B: return FaultCountBHelper.getSeriousFaultSumCountCatB(data);
@@ -35,6 +37,8 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getSeriousFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getSeriousFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getSeriousFaultSumCountCatC(data);
+      // TODO: To be implemented properly in MES-4420 
+      case TestCategory.EUAM1: return FaultCountBEHelper.getSeriousFaultSumCountCatBE(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -47,6 +51,8 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getDangerousFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getDangerousFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getDangerousFaultSumCountCatC(data);
+      // TODO: To be implemented properly in MES-4420 
+      case TestCategory.EUAM1: return FaultCountBEHelper.getDangerousFaultSumCountCatBE(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -59,6 +65,8 @@ export class FaultCountProvider {
       case TestCategory.C1E:
       case TestCategory.CE:
       case TestCategory.C: return sumManoeuvreFaults(data, faultType);
+      // TODO: To be implemented properly in MES-4420 
+      case TestCategory.EUAM1: return sumManoeuvreFaults(data, faultType);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -70,6 +78,8 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getVehicleChecksFaultCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getVehicleChecksFaultCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getVehicleChecksFaultCountCatC(data);
+      // TODO: To be implemented properly in MES-4420 
+      case TestCategory.EUAM1: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
