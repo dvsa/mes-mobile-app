@@ -8,12 +8,13 @@ import { ContactDetailsCardComponent } from '../contact-details-card';
 import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
 import { CommunicationPreferences, Candidate } from '@dvsa/mes-test-schema/categories/common';
 import { DisplayAddressComponent } from '../../../../../components/common/display-address/display-address';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ContactDetailsCardComponent', () => {
   let fixture: ComponentFixture<ContactDetailsCardComponent>;
   let component: ContactDetailsCardComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ContactDetailsCardComponent,
@@ -27,12 +28,12 @@ describe('ContactDetailsCardComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ContactDetailsCardComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ContactDetailsCardComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

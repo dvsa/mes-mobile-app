@@ -6,6 +6,7 @@ import { AppModule } from '../../../../../../app/app.module';
 import { VehicleChecksQuestion } from '../../../../../../providers/question/vehicle-checks-question.model';
 import { EventEmitter } from '@angular/core';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { configureTestSuite } from 'ng-bullet';
 
 const vehicleChecksQuestion: VehicleChecksQuestion = {
   code: 'S04',
@@ -17,7 +18,7 @@ describe('VehicleChecksQuestionComponent', () => {
   let fixture: ComponentFixture<VehicleChecksQuestionComponent>;
   let component: VehicleChecksQuestionComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksQuestionComponent,
@@ -26,12 +27,12 @@ describe('VehicleChecksQuestionComponent', () => {
         IonicModule,
         AppModule,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleChecksQuestionComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleChecksQuestionComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {
