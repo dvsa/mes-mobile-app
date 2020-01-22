@@ -3,6 +3,9 @@ import { get } from 'lodash';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { FaultCountProvider } from '../fault-count/fault-count';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { TestData } from '@dvsa/mes-test-schema/categories/common';
@@ -25,8 +28,12 @@ export class TestReportValidatorProvider {
         return this.validateLegalRequirementsCatB(data);
       case TestCategory.BE:
         return this.validateLegalRequirementsCatBE(data);
+      case TestCategory.C1:
       case TestCategory.C:
-        return this.validateLegalRequirementsVocationalTrailerLight(data);
+        return this.validateLegalRequirementsCNonTrailer(data);
+      case TestCategory.C1E:
+      case TestCategory.CE:
+        return this.validateLegalRequirementsCTrailer(data);
       default:
         return false;
     }
@@ -38,8 +45,12 @@ export class TestReportValidatorProvider {
         return this.getMissingLegalRequirementsCatB(data);
       case TestCategory.BE:
         return this.getMissingLegalRequirementsCatBE(data);
+      case TestCategory.C1:
       case TestCategory.C:
-        return this.getMissingLegalRequirementsVocationalTrailerLight(data);
+        return this.getMissingLegalRequirementsCNonTrailer(data);
+      case TestCategory.C1E:
+      case TestCategory.CE:
+        return this.getMissingLegalRequirementsCTrailer(data);
       default:
         return [];
     }
@@ -98,7 +109,9 @@ export class TestReportValidatorProvider {
     );
   }
 
-  private validateLegalRequirementsVocationalTrailerLight(data: CatCUniqueTypes.TestData): boolean {
+  private validateLegalRequirementsCNonTrailer(
+    data: CatCUniqueTypes.TestData | CatC1UniqueTypes.TestData,
+    ): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
     const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
@@ -112,6 +125,27 @@ export class TestReportValidatorProvider {
       angledStartControlledStop &&
       manoeuvre &&
       eco
+    );
+  }
+
+  private validateLegalRequirementsCTrailer(
+    data: CatCEUniqueTypes.TestData | CatC1EUniqueTypes.TestData,
+    ): boolean {
+    const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
+    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
+    const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
+    const angledStartControlledStop: boolean = get(data, 'testRequirements.angledStartControlledStop', false);
+    const manoeuvre: boolean = hasManoeuvreBeenCompletedCatC(data) || false;
+    const eco: boolean = get(data, 'eco.completed', false);
+    const uncoupleRecouple: boolean = get(data, 'uncoupleRecouple.selected', false);
+
+    return (
+      (normalStart1 || normalStart2) &&
+      uphillStart &&
+      angledStartControlledStop &&
+      manoeuvre &&
+      eco &&
+      uncoupleRecouple
     );
   }
 
@@ -130,7 +164,9 @@ export class TestReportValidatorProvider {
     return result;
   }
 
-  private getMissingLegalRequirementsVocationalTrailerLight(data: CatCUniqueTypes.TestData): legalRequirementsLabels[] {
+  private getMissingLegalRequirementsCNonTrailer(
+    data: CatCUniqueTypes.TestData | CatC1UniqueTypes.TestData,
+    ): legalRequirementsLabels[] {
     const result: legalRequirementsLabels[] = [];
 
     (!get(data, 'testRequirements.normalStart1', false) && !get(data, 'testRequirements.normalStart2', false))
@@ -141,6 +177,22 @@ export class TestReportValidatorProvider {
     !hasManoeuvreBeenCompletedCatC(data) && result.push(legalRequirementsLabels.manoeuvre);
     !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
 
+    return result;
+  }
+
+  private getMissingLegalRequirementsCTrailer(
+    data: CatCEUniqueTypes.TestData | CatC1EUniqueTypes.TestData,
+    ): legalRequirementsLabels[] {
+    const result: legalRequirementsLabels[] = [];
+
+    (!get(data, 'testRequirements.normalStart1', false) && !get(data, 'testRequirements.normalStart2', false))
+      && result.push(legalRequirementsLabels.normalStart1);
+    !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
+    !get(data, 'testRequirements.angledStartControlledStop', false)
+      && result.push(legalRequirementsLabels.angledStartControlledStop);
+    !hasManoeuvreBeenCompletedCatC(data) && result.push(legalRequirementsLabels.manoeuvre);
+    !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
+    !get(data, 'uncoupleRecouple.selected', false) && result.push(legalRequirementsLabels.uncoupleRecouple);
     return result;
   }
 }

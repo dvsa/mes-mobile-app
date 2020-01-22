@@ -214,6 +214,122 @@ describe('TestResultCalculatorProvider', () => {
         });
       });
     });
+
+    describe('Category C and all sub categories', () => {
+      const cCats : TestCategory[] = [
+        TestCategory.C,
+        TestCategory.C1,
+        TestCategory.C1E,
+        TestCategory.CE,
+      ];
+      cCats.forEach((cat) => {
+        it('should return a Fail when a dangerous fault exists', (done) => {
+          const testData = {
+            dangerousFaults: {
+              positioningNormalDriving: true,
+            },
+          };
+          testResultProvider.calculateTestResult(cat, testData).subscribe((result) => {
+            expect(result).toBe(ActivityCodes.FAIL);
+            done();
+          });
+        });
+        it('should return a Fail when a serious fault exists', (done) => {
+          const testData = {
+            seriousFaults: {
+              positioningNormalDriving: true,
+            },
+          };
+          testResultProvider.calculateTestResult(cat, testData).subscribe((result) => {
+            expect(result).toBe(ActivityCodes.FAIL);
+            done();
+          });
+        });
+        it('should return a Fail when there are 16 driving faults', (done) => {
+          const testData = {
+            drivingFaults: {
+              ...drivingFaults,
+              judgementMeeting: 1,
+            },
+          };
+          testResultProvider.calculateTestResult(cat, testData).subscribe((result) => {
+            expect(result).toBe(ActivityCodes.FAIL);
+            done();
+          });
+        });
+        it('should return a Fail when there are 16 driving faults and a dangerous fault', (done) => {
+          const testData = {
+            dangerousFaults: {
+              positioningNormalDriving: true,
+            },
+            drivingFaults: {
+              ...drivingFaults,
+              judgementMeeting: 1,
+            },
+          };
+          testResultProvider.calculateTestResult(cat, testData).subscribe((result) => {
+            expect(result).toBe(ActivityCodes.FAIL);
+            done();
+          });
+        });
+        it('should return a Fail when there are 16 driving faults and a serious fault', (done) => {
+          const testData = {
+            seriousFaults: {
+              positioningNormalDriving: true,
+            },
+            drivingFaults: {
+              ...drivingFaults,
+              judgementMeeting: 1,
+            },
+          };
+          testResultProvider.calculateTestResult(cat, testData).subscribe((result) => {
+            expect(result).toBe(ActivityCodes.FAIL);
+            done();
+          });
+        });
+
+        it('should return a Fail when there are 15 driving faults and a dangerous fault', (done) => {
+          const testData = {
+            drivingFaults,
+            dangerousFaults: {
+              positioningNormalDriving: true,
+            },
+          };
+          testResultProvider.calculateTestResult(cat, testData).subscribe((result) => {
+            expect(result).toBe(ActivityCodes.FAIL);
+            done();
+          });
+        });
+        it('should return a Fail when there are 15 driving faults and a serious fault', (done) => {
+          const testData = {
+            drivingFaults,
+            seriousFaults: {
+              positioningNormalDriving: true,
+            },
+          };
+          testResultProvider.calculateTestResult(cat, testData).subscribe((result) => {
+            expect(result).toBe(ActivityCodes.FAIL);
+            done();
+          });
+        });
+        it('should return a Pass when there are 15 driving faults', (done) => {
+          const testData = {
+            drivingFaults,
+          };
+          testResultProvider.calculateTestResult(cat, testData).subscribe((result) => {
+            expect(result).toBe(ActivityCodes.PASS);
+            done();
+          });
+        });
+        it('should return a Pass when there are no driving faults', (done) => {
+          const testData = {};
+          testResultProvider.calculateTestResult(cat, testData).subscribe((result) => {
+            expect(result).toBe(ActivityCodes.PASS);
+            done();
+          });
+        });
+      });
+    });
     it('should return a Fail when there are 15 driving faults and a dangerous fault', (done) => {
       const testData: CatBEUniqueTypes.TestData = {
         drivingFaults,
