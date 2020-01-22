@@ -11,9 +11,9 @@ Feature: Cat B+E waiting room to car
       And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Dillon Jennings" page
-      And I complete the waiting room to car page with a tell me driver fault
+      And I complete the waiting room to car page with vehicle checks
          | show_me_1   | show_me_2   | show_me_3   | show_me_4   | show_me_5   |
-         | <show_me_1> | <show_me_2> | <show_me_3> | <show_me_4> | <show_me_5> |
+         | <show_me_1> | <show_me_2> | <show_me_3> | <show_me_4> | <show_me_5> |   
       Then I should see the "Test report - Dillon Jennings" page
       And a serious fault is present along the driver fault count of "4"
 

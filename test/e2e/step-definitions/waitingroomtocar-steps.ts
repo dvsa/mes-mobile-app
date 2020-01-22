@@ -42,7 +42,11 @@ When('I fail the eye sight test', () => {
   clickElement(eyesightFailConfirmButton);
 });
 
-const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, tellMeQuestion: string) => {
+When('I complete the waiting room to car page with vehicle checks', function (table) {
+  completeWaitingRoomPage(table.raw()[1], true);
+});
+
+const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, tellMeQuestion?: string) => {
   const eyesightPassRadio = getElement(by.id('eyesight-pass'));
   clickElement(eyesightPassRadio);
   if (this.testCategory === 'be') {
