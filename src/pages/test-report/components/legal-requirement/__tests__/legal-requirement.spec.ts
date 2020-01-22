@@ -13,6 +13,7 @@ import {
 import { LegalRequirements } from '../../../../../modules/tests/test-data/test-data.constants';
 import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('LegalRequirementComponent', () => {
   let fixture: ComponentFixture<LegalRequirementComponent>;
@@ -20,7 +21,7 @@ describe('LegalRequirementComponent', () => {
   let store$: Store<StoreModel>;
   let storeDispatchSpy: jasmine.Spy;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         LegalRequirementComponent,
@@ -34,14 +35,14 @@ describe('LegalRequirementComponent', () => {
       providers: [
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(LegalRequirementComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        storeDispatchSpy = spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(LegalRequirementComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    storeDispatchSpy = spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

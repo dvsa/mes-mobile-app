@@ -25,6 +25,7 @@ import * as applicationReferenceActions
   from '../../../../../modules/tests/journal-data/common/application-reference/application-reference.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateTestCategory } from '../../../../../modules/tests/category/category.actions';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Reverse Diagram Modal Analytics Effects', () => {
 
@@ -40,8 +41,7 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
     checkDigit: 9,
   };
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -55,6 +55,10 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(ReverseDiagramModalAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);

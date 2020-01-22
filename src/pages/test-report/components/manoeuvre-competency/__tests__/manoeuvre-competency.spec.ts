@@ -35,13 +35,14 @@ import { NavigationStateProvider } from '../../../../../providers/navigation-sta
 import {
   NavigationStateProviderMock,
 } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ManoeuvreCompetencyComponent', () => {
   let fixture: ComponentFixture<ManoeuvreCompetencyComponent>;
   let component: ManoeuvreCompetencyComponent;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ManoeuvreCompetencyComponent,
@@ -111,13 +112,13 @@ describe('ManoeuvreCompetencyComponent', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ManoeuvreCompetencyComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ManoeuvreCompetencyComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
   }));
 
   describe('DOM', () => {

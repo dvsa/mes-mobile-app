@@ -2,12 +2,13 @@
 import { IonicModule } from 'ionic-angular';
 import { TimerComponent } from '../timer';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TimerComponent', () => {
   let fixture: ComponentFixture<TimerComponent>;
   let component: TimerComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         TimerComponent,
@@ -15,12 +16,12 @@ describe('TimerComponent', () => {
       imports: [
         IonicModule,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TimerComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TimerComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

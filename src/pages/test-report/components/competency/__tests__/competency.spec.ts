@@ -34,13 +34,14 @@ import { testReportReducer } from '../../../test-report.reducer';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
 import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
   let component: CompetencyComponent;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         CompetencyComponent,
@@ -111,13 +112,13 @@ describe('CompetencyComponent', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(CompetencyComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(CompetencyComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
   }));
 
   describe('Class', () => {
