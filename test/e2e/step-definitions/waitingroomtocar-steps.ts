@@ -75,7 +75,7 @@ const beCategoryOpenSelectQuestionsOverlay = () => {
 
 const standardUserJourney = (withDriverFault: boolean, manualTransmission: boolean, tellMeQuestion: string) => {
   selectTellMeQuestion(tellMeQuestion);
-  const tellMeRadioSelector = withDriverFault ? 'tellme-fault' : 'tellme-correct';
+  const tellMeRadioSelector = (withDriverFault) ? 'tellme-fault' : 'tellme-correct';
   const tellMeRadio = getElement(by.id(tellMeRadioSelector));
   clickElement(tellMeRadio);
   const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
