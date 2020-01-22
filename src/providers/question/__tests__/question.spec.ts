@@ -18,17 +18,21 @@ import tellMeQuestionsVocationalTrailerConstants
   from '../../../shared/constants/tell-me-questions/tell-me-questions.vocational-trailer.constants';
 import showMeQuestionsVocationalTrailerConstants
   from '../../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('question provider', () => {
 
   let questionProvider: QuestionProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         QuestionProvider,
       ],
     });
+  });
+
+  beforeEach(() => {
     questionProvider = TestBed.get(QuestionProvider);
   });
 

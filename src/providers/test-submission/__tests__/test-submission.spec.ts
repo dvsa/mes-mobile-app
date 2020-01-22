@@ -14,6 +14,7 @@ import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestSubmissionProvider', () => {
 
@@ -22,7 +23,7 @@ describe('TestSubmissionProvider', () => {
   let urlProvider: UrlProvider;
   let httpClient: HttpClient;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -42,7 +43,9 @@ describe('TestSubmissionProvider', () => {
         { provide: Device, useClass: DeviceMock },
       ],
     });
+  });
 
+  beforeEach(() => {
     testSubmissionProvider = TestBed.get(TestSubmissionProvider);
     httpMock = TestBed.get(HttpTestingController);
     httpClient = TestBed.get(HttpClient);

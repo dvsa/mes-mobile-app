@@ -12,6 +12,7 @@ import { NetworkStateProviderMock } from '../../network-state/__mocks__/network-
 import { TestPersistenceProvider } from '../../test-persistence/test-persistence';
 import { TestPersistenceProviderMock } from '../../test-persistence/__mocks__/test-persistence.mock';
 import { AppConfig } from '../../app-config/app-config.model';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Authentication', () => {
   let authenticationProvider: AuthenticationProvider;
@@ -19,7 +20,7 @@ describe('Authentication', () => {
   let appConfigProvider: AppConfigProvider;
   let testPersistenceProvider: TestPersistenceProvider;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         AuthenticationProvider,
@@ -30,7 +31,9 @@ describe('Authentication', () => {
         { provide: TestPersistenceProvider, useClass: TestPersistenceProviderMock },
       ],
     });
+  });
 
+  beforeEach(async(() => {
     networkStateProvider = TestBed.get(NetworkStateProvider);
     authenticationProvider = TestBed.get(AuthenticationProvider);
     appConfigProvider = TestBed.get(AppConfigProvider);

@@ -12,6 +12,7 @@ import { SpecialNeedsCode } from '../../../shared/helpers/get-slot-type';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { DateTimeProviderMock } from '../../date-time/__mocks__/date-time.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 const journalSlotsMissingDays = require('../__mocks__/journal-slots-missing-days-mock.json');
 
@@ -79,7 +80,7 @@ describe('SlotProvider', () => {
     },
   };
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({}),
@@ -90,7 +91,9 @@ describe('SlotProvider', () => {
         SlotProvider,
       ],
     });
+  });
 
+  beforeEach(() => {
     store$ = TestBed.get(Store);
     slotProvider = TestBed.get(SlotProvider);
     appConfigProvider = TestBed.get(AppConfigProvider);

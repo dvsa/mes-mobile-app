@@ -9,6 +9,7 @@ import { StoreModule, Store } from '@ngrx/store';
 import { LogHelper } from '../../logs/logsHelper';
 import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogType } from '../../../shared/models/log.model';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Device Provider', () => {
 
@@ -16,7 +17,7 @@ describe('Device Provider', () => {
   let store$: Store<any>;
   let logHelper: LogHelper;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -33,6 +34,9 @@ describe('Device Provider', () => {
         { provide: LogHelper, useClass: LogHelperMock },
       ],
     });
+  });
+
+  beforeEach(() => {
     store$ = TestBed.get(Store);
     deviceProvider = TestBed.get(DeviceProvider);
     logHelper = TestBed.get(LogHelper);

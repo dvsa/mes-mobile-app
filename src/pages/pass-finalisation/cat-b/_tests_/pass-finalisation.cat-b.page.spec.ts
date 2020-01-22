@@ -72,10 +72,10 @@ describe('PassFinalisationCatBPage', () => {
   });
 
   beforeEach(async(() => {
-        fixture = TestBed.createComponent(PassFinalisationCatBPage);
-        component = fixture.componentInstance;
-        component.subscription = new Subscription();store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
+    fixture = TestBed.createComponent(PassFinalisationCatBPage);
+    component = fixture.componentInstance;
+    component.subscription = new Subscription(); store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

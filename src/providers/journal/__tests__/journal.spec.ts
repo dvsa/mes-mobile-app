@@ -19,6 +19,7 @@ import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { DateTimeProvider } from '../../date-time/date-time';
 import { DateTimeProviderMock } from '../../date-time/__mocks__/date-time.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('JournalProvider', () => {
 
@@ -30,7 +31,7 @@ describe('JournalProvider', () => {
   let appConfigProviderMock: AppConfigProvider;
   let cacheDays: number;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -47,7 +48,9 @@ describe('JournalProvider', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     });
+  });
 
+  beforeEach(() => {
     httpMock = TestBed.get(HttpTestingController);
     journalProvider = TestBed.get(JournalProvider);
     authProviderMock = TestBed.get(AuthenticationProvider);

@@ -6,12 +6,13 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { FaultCountProvider } from '../../fault-count/fault-count';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('faultSummaryProvider', () => {
 
   let faultSummaryProvider: FaultSummaryProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         FaultSummaryProvider,
@@ -19,6 +20,9 @@ describe('faultSummaryProvider', () => {
       ],
     });
 
+  });
+
+  beforeEach(() => {
     faultSummaryProvider = TestBed.get(FaultSummaryProvider);
   });
 
