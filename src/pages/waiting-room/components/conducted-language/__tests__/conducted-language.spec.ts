@@ -3,12 +3,13 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { ConductedLanguageComponent } from '../conducted-language';
 import { EventEmitter } from '@angular/core';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ConductedLanguageComponent', () => {
   let fixture: ComponentFixture<ConductedLanguageComponent>;
   let component: ConductedLanguageComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ConductedLanguageComponent,
@@ -16,12 +17,12 @@ describe('ConductedLanguageComponent', () => {
       imports: [
         IonicModule,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ConductedLanguageComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ConductedLanguageComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

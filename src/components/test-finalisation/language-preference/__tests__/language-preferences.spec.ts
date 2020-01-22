@@ -16,7 +16,7 @@ describe('LanguagePreferencesComponent', () => {
       ],
       imports: [
         IonicModule,
-        AppModule
+        AppModule,
       ],
     });
   });

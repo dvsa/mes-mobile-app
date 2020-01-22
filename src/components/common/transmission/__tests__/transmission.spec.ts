@@ -19,7 +19,7 @@ describe('transmissionComponent', () => {
       ],
       providers: [
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

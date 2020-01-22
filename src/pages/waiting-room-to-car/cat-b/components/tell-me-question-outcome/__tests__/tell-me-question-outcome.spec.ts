@@ -5,12 +5,13 @@ import { By } from '@angular/platform-browser';
 import { FormGroup } from '@angular/forms';
 import { TellMeQuestionOutcomeComponent } from '../tell-me-question-outcome';
 import { AppModule } from '../../../../../../app/app.module';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TellMeQuestionOutcomeComponent', () => {
   let fixture: ComponentFixture<TellMeQuestionOutcomeComponent>;
   let component: TellMeQuestionOutcomeComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         TellMeQuestionOutcomeComponent,
@@ -19,13 +20,13 @@ describe('TellMeQuestionOutcomeComponent', () => {
         IonicModule,
         AppModule,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TellMeQuestionOutcomeComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TellMeQuestionOutcomeComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
   }));
 
   describe('DOM', () => {

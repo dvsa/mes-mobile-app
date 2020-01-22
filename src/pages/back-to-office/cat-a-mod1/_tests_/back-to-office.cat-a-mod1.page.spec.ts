@@ -96,7 +96,7 @@ describe('BackToOfficeCatAMod1Page', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {
