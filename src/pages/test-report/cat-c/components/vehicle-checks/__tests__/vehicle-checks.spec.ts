@@ -15,13 +15,14 @@ import { FaultCountProvider } from '../../../../../../providers/fault-count/faul
 import { VehicleChecksScore } from '../../../../../../shared/models/vehicle-checks-score.model';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleChecksComponent', () => {
   let fixture: ComponentFixture<VehicleChecksComponent>;
   let component: VehicleChecksComponent;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksComponent,
@@ -37,15 +38,15 @@ describe('VehicleChecksComponent', () => {
       providers: [
         FaultCountProvider,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleChecksComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        // TODO: MES-4287 Use Category C
-        store$.dispatch(new StartTest(105, TestCategory.BE));
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleChecksComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    // TODO: MES-4287 Use Category C
+    store$.dispatch(new StartTest(105, TestCategory.BE));
   }));
 
   describe('Class', () => {
