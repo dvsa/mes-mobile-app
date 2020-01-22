@@ -7,12 +7,13 @@ import { IonicModule } from 'ionic-angular';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 import { ManoeuvreCompetencyComponent } from '../../../../components/manoeuvre-competency/manoeuvre-competency';
 import { ManoeuvreCompetencies } from '../../../../../../modules/tests/test-data/test-data.constants';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('reverseLeftComponent', () => {
   let fixture: ComponentFixture<ReverseLeftPopoverComponent>;
   let component: ReverseLeftPopoverComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ReverseLeftPopoverComponent,
@@ -25,12 +26,12 @@ describe('reverseLeftComponent', () => {
       providers: [
         FaultCountProvider,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ReverseLeftPopoverComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ReverseLeftPopoverComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

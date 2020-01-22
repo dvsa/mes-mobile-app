@@ -41,13 +41,14 @@ import { UncoupleRecoupleComponent } from '../components/uncouple-recouple/uncou
 import { ReverseLeftComponent } from '../components/reverse-left/reverse-left';
 import { ReverseLeftPopoverComponent } from '../components/reverse-left-popover/reverse-left-popover';
 import { VehicleChecksComponent } from '../components/vehicle-checks/vehicle-checks';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestReportCatBEPage', () => {
   let fixture: ComponentFixture<TestReportCatBEPage>;
   let component: TestReportCatBEPage;
   let navController: NavController;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [TestReportCatBEPage,
         MockComponent(TickIndicatorComponent),
@@ -94,13 +95,13 @@ describe('TestReportCatBEPage', () => {
         { provide: TestReportValidatorProvider, useClass: TestReportValidatorProviderMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TestReportCatBEPage);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TestReportCatBEPage);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
   }));
 
   describe('Class', () => {
