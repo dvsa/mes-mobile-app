@@ -37,13 +37,14 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
 import { Subscription } from 'rxjs/Subscription';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PassFinalisationCatAMod2Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatAMod2Page>;
   let component: PassFinalisationCatAMod2Page;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PassFinalisationCatAMod2Page,
@@ -65,15 +66,15 @@ describe('PassFinalisationCatAMod2Page', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(PassFinalisationCatAMod2Page);
-        component = fixture.componentInstance;
-        component.subscription = new Subscription();
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(PassFinalisationCatAMod2Page);
+    component = fixture.componentInstance;
+    component.subscription = new Subscription();
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

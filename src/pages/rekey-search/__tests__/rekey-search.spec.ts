@@ -13,13 +13,14 @@ import { rekeySearchReducer, RekeySearchModel } from '../rekey-search.reducer';
 import { RekeySearchViewDidEnter, SearchBookedTest } from '../rekey-search.actions';
 import { TestSlotComponentsModule } from '../../../components/test-slot/test-slot-components.module';
 import { bookedTestSlotMock } from '../../../shared/mocks/test-slot-data.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('RekeySearchPage', () => {
   let fixture: ComponentFixture<RekeySearchPage>;
   let component: RekeySearchPage;
   let store$: Store<RekeySearchModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         RekeySearchPage,
@@ -43,13 +44,13 @@ describe('RekeySearchPage', () => {
         { provide: App, useClass: MockAppComponent },
         Store,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(RekeySearchPage);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(RekeySearchPage);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
   }));
 
   describe('Class', () => {

@@ -33,6 +33,7 @@ import { RekeyReasonModel } from '../../rekey-reason.model';
 import { rekeyReasonReducer } from '../../rekey-reason.reducer';
 import { getUploadStatus } from '../../rekey-reason.selector';
 import { RekeyReasonCatAMod2Page } from '../rekey-reason.cat-a-mod2.page';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('RekeyReasonCatAMod2Page', () => {
   let fixture: ComponentFixture<RekeyReasonCatAMod2Page>;
@@ -42,7 +43,7 @@ describe('RekeyReasonCatAMod2Page', () => {
   let modalController: ModalController;
   let store$: Store<AppInfoModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         RekeyReasonCatAMod2Page,
@@ -120,15 +121,15 @@ describe('RekeyReasonCatAMod2Page', () => {
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
         Store,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(RekeyReasonCatAMod2Page);
-        component = fixture.componentInstance;
-        loadingController = TestBed.get(LoadingController);
-        navContoller = TestBed.get(NavController);
-        modalController = TestBed.get(ModalController);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(RekeyReasonCatAMod2Page);
+    component = fixture.componentInstance;
+    loadingController = TestBed.get(LoadingController);
+    navContoller = TestBed.get(NavController);
+    modalController = TestBed.get(ModalController);
     store$ = TestBed.get(Store);
   }));
 

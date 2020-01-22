@@ -4,12 +4,13 @@ import { FormGroup } from '@angular/forms';
 import { Code78Component } from '../code-78';
 import { MockComponent } from 'ng-mocks';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('code78Component', () => {
   let fixture: ComponentFixture<Code78Component>;
   let component: Code78Component;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         Code78Component,
@@ -20,13 +21,13 @@ describe('code78Component', () => {
       ],
       providers: [
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(Code78Component);
-        component = fixture.componentInstance;
-        component.form = new FormGroup({});
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(Code78Component);
+    component = fixture.componentInstance;
+    component.form = new FormGroup({});
   }));
 
   describe('Class', () => {

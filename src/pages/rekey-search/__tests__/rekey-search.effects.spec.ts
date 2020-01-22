@@ -1,6 +1,6 @@
 import { RekeySearchEffects } from '../rekey-search.effects';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { rekeySearchReducer } from '../rekey-search.reducer';
 import { StoreModule, Store } from '@ngrx/store';
@@ -15,6 +15,7 @@ import { SearchProvider } from '../../../providers/search/search';
 import { SearchProviderMock } from '../../../providers/search/__mocks__/search.mock';
 import { RekeySearchErrorMessages } from '../rekey-search-error-model';
 import { HttpStatusCodes } from '../../../shared/models/http-status-codes';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Rekey Search Effects', () => {
 
@@ -35,8 +36,7 @@ describe('Rekey Search Effects', () => {
     });
   };
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -52,11 +52,15 @@ describe('Rekey Search Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(async(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(RekeySearchEffects);
     testSearchProvider = TestBed.get(SearchProvider);
     rekeySearchProvider = TestBed.get(RekeySearchProvider);
     compressionProvider = TestBed.get(CompressionProvider);
-  });
+  }));
 
   it('should dispatch the SearchBookedTestSuccess action when searched with success', (done) => {
 

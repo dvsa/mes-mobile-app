@@ -24,13 +24,14 @@ import {
 } from '../../../../../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ControlledStopComponent', () => {
   let fixture: ComponentFixture<ControlledStopComponent>;
   let component: ControlledStopComponent;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ControlledStopComponent,
@@ -44,14 +45,14 @@ describe('ControlledStopComponent', () => {
         IonicModule,
         StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ControlledStopComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(105, TestCategory.B));
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ControlledStopComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    store$.dispatch(new StartTest(105, TestCategory.B));
   }));
 
   describe('Class', () => {

@@ -8,13 +8,14 @@ import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { PostDebriefHoldingViewDidEnter } from '../../post-debrief-holding.actions';
 import { PostDebriefHoldingCatAMod2Page } from '../post-debrief-holding.cat-a-mod2.page';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PostDebriefHoldingCatAMod2Page', () => {
   let fixture: ComponentFixture<PostDebriefHoldingCatAMod2Page>;
   let component: PostDebriefHoldingCatAMod2Page;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PostDebriefHoldingCatAMod2Page,
@@ -29,14 +30,14 @@ describe('PostDebriefHoldingCatAMod2Page', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(PostDebriefHoldingCatAMod2Page);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(PostDebriefHoldingCatAMod2Page);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
