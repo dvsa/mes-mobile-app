@@ -2,18 +2,21 @@ import { ReversingDistancesProvider } from '../reversing-distances';
 import { TestBed } from '@angular/core/testing';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ReversingDistancesProvider', () => {
 
   let reversingDistancesProvider: ReversingDistancesProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         ReversingDistancesProvider,
       ],
     });
+  });
 
+  beforeEach(() => {
     reversingDistancesProvider = TestBed.get(ReversingDistancesProvider);
   });
 

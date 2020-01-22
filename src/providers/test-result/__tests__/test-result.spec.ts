@@ -6,6 +6,7 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { FaultCountProvider } from '../../fault-count/fault-count';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestResultCalculatorProvider', () => {
 
@@ -29,14 +30,16 @@ describe('TestResultCalculatorProvider', () => {
     progressAppropriateSpeed: 1,
   };
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         TestResultProvider,
         FaultCountProvider,
       ],
     });
+  });
 
+  beforeEach(() => {
     testResultProvider = TestBed.get(TestResultProvider);
   });
 

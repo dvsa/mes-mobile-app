@@ -8,13 +8,14 @@ import { AuthenticationProvider } from '../../authentication/authentication';
 import { AuthenticationProviderMock } from '../../authentication/__mocks__/authentication.mock';
 import { Device } from '@ionic-native/device';
 import { Store, StoreModule } from '@ngrx/store';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('LogsProvider', () => {
   let logsProvider: LogsProvider;
   let httpMock: HttpTestingController;
   let urlProviderMock: UrlProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -32,7 +33,9 @@ describe('LogsProvider', () => {
         Store,
       ],
     });
+  });
 
+  beforeEach(() => {
     httpMock = TestBed.get(HttpTestingController);
     logsProvider = TestBed.get(LogsProvider);
     urlProviderMock = TestBed.get(UrlProvider);

@@ -1,6 +1,7 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { HammerProvider } from '../hammer';
 import { Component } from '@angular/core';
+import { configureTestSuite } from 'ng-bullet';
 @Component({
   selector: 'mock-component',
   template: '<button>Test</button>',
@@ -13,7 +14,7 @@ describe('HammerProvider', () => {
   let fixture: ComponentFixture<MockComponent>;
   let hammerProvider: HammerProvider;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         MockComponent,
@@ -27,7 +28,7 @@ describe('HammerProvider', () => {
         hammerProvider = TestBed.get(HammerProvider);
         fixture = TestBed.createComponent(MockComponent);
       });
-  }));
+  });
 
   describe('addPressAndHoldEvent', () => {
     it('should invoke the provided callback when "pressAndHold" is emitted', () => {

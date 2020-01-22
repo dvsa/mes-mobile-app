@@ -1,17 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 import { PassCertificateValidationProvider } from '../pass-certificate-validation';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PassCertificateValidationProvider', () => {
   let certificateValidatorProvider: PassCertificateValidationProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [],
       providers: [
         PassCertificateValidationProvider,
       ],
     });
+  });
 
+  beforeEach(() => {
     certificateValidatorProvider = TestBed.get(PassCertificateValidationProvider);
   });
 
