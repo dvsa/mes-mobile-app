@@ -157,6 +157,7 @@ export class TestsEffects {
         const slotData = slots.map(slot => slot.slotData);
         slot = slotData.find(data => data.slotDetail.slotId === startTestAction.slotId && has(data, 'booking'));
       }
+      console.log('**********************', slot)
       const testSlotAttributes: TestSlotAttributes = extractTestSlotAttributes(slot);
       const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
 
