@@ -86,17 +86,17 @@ describe('BackToOfficePage', () => {
         }),
       ],
       providers: [
-        {provide: NavController, useFactory: () => NavControllerMock.instance()},
-        {provide: NavParams, useFactory: () => NavParamsMock.instance()},
-        {provide: Config, useFactory: () => ConfigMock.instance()},
-        {provide: Platform, useFactory: () => PlatformMock.instance()},
-        {provide: AuthenticationProvider, useClass: AuthenticationProviderMock},
-        {provide: DateTimeProvider, useClass: DateTimeProviderMock},
-        {provide: ScreenOrientation, useClass: ScreenOrientationMock},
-        {provide: Insomnia, useClass: InsomniaMock},
-        {provide: DeviceProvider, useClass: DeviceProviderMock},
+        { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: NavParams, useFactory: () => NavParamsMock.instance() },
+        { provide: Config, useFactory: () => ConfigMock.instance() },
+        { provide: Platform, useFactory: () => PlatformMock.instance() },
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
+        { provide: Insomnia, useClass: InsomniaMock },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

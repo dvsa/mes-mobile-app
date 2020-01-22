@@ -16,6 +16,7 @@ import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { StoreModel } from '../../../../../../shared/models/store.model';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleChecksCatCComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCatCComponent>;
@@ -23,7 +24,7 @@ describe('VehicleChecksCatCComponent', () => {
   let modalController: ModalController;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksCatCComponent,
@@ -43,18 +44,16 @@ describe('VehicleChecksCatCComponent', () => {
         Store,
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
-
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleChecksCatCComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-        modalController = TestBed.get(ModalController);
-        store$ = TestBed.get(Store);
-      });
+    });
+  });
 
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleChecksCatCComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
+    modalController = TestBed.get(ModalController);
+    store$ = TestBed.get(Store);
   }));
 
   describe('Class', () => {

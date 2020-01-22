@@ -31,14 +31,14 @@ describe('CandidateDetailsPage', () => {
         AppModule,
       ],
       providers: [
-        {provide: NavController, useFactory: () => NavControllerMock.instance()},
-        {provide: NavParams, useFactory: () => NavParamsMock.instance()},
-        {provide: Config, useFactory: () => ConfigMock.instance()},
-        {provide: Platform, useFactory: () => PlatformMock.instance()},
-        {provide: AuthenticationProvider, useClass: AuthenticationProviderMock},
-        {provide: DateTimeProvider, useClass: DateTimeProviderMock},
+        { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: NavParams, useFactory: () => NavParamsMock.instance() },
+        { provide: Config, useFactory: () => ConfigMock.instance() },
+        { provide: Platform, useFactory: () => PlatformMock.instance() },
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {

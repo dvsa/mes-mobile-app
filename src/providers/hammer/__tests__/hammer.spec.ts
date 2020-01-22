@@ -1,4 +1,4 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { HammerProvider } from '../hammer';
 import { Component } from '@angular/core';
 import { configureTestSuite } from 'ng-bullet';

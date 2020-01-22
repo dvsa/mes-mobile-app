@@ -5,12 +5,13 @@ import { EventEmitter } from '@angular/core';
 import { InsuranceDeclarationComponent } from '../insurance-declaration';
 import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate';
 import { FormGroup } from '@angular/forms';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('InsuranceDeclarationComponent', () => {
   let fixture: ComponentFixture<InsuranceDeclarationComponent>;
   let component: InsuranceDeclarationComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         InsuranceDeclarationComponent,
@@ -24,12 +25,12 @@ describe('InsuranceDeclarationComponent', () => {
         TranslateLoader,
         TranslateParser,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(InsuranceDeclarationComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(InsuranceDeclarationComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

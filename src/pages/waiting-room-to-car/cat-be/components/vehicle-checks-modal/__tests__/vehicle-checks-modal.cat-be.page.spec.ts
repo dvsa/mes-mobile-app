@@ -19,13 +19,14 @@ import {
   TellMeQuestionOutcomeChanged,
 } from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleChecksCatBEModal', () => {
   let fixture: ComponentFixture<VehicleChecksCatBEModal>;
   let component: VehicleChecksCatBEModal;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksCatBEModal,
@@ -41,12 +42,13 @@ describe('VehicleChecksCatBEModal', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleChecksCatBEModal);
-        component = fixture.componentInstance;
-      });
+    });
+
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleChecksCatBEModal);
+    component = fixture.componentInstance;
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
 

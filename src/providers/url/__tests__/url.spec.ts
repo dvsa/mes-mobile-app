@@ -4,7 +4,7 @@ import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { configureTestSuite } from 'ng-bullet';
 
-fdescribe('UrlProvider', () => {
+describe('UrlProvider', () => {
 
   let urlProvider: UrlProvider;
 

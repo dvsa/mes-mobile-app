@@ -18,7 +18,7 @@ describe('WarningBanner', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
+    });
   });
 
   beforeEach(async(() => {
