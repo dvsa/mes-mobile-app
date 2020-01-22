@@ -1,5 +1,5 @@
 
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import { Action } from '@ngrx/store';
 
 export const SET_ACTIVITY_CODE = '[Tests] Set activity code';

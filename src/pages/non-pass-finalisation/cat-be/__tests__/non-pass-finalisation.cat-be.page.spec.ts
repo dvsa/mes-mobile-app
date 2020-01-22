@@ -16,7 +16,7 @@ import {
 import { ActivityCodeComponent } from '../../../office/components/activity-code/activity-code';
 import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
 import * as testActions from '../../../../modules/tests/tests.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { D255Component } from '../../../../components/test-finalisation/d255/d255';
 import { LanguagePreferencesComponent } from
 '../../../../components/test-finalisation/language-preference/language-preferences';
@@ -28,8 +28,6 @@ import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
 '../../../../modules/tests/test-summary/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
 '../../../../modules/tests/communication-preferences/communication-preferences.actions';
-import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
-import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 describe('NonPassFinalisationCatBEPage', () => {
@@ -47,7 +45,6 @@ describe('NonPassFinalisationCatBEPage', () => {
         MockComponent(LanguagePreferencesComponent),
         MockComponent(DebriefWitnessedComponent),
         MockComponent(FinalisationHeaderComponent),
-        MockComponent(TransmissionComponent),
       ],
       imports: [
         IonicModule,
@@ -108,13 +105,6 @@ describe('NonPassFinalisationCatBEPage', () => {
       it('should dispatch the correct action if the isWelsh flag is false', () => {
         component.isWelshChanged(false);
         expect(store$.dispatch).toHaveBeenCalledWith(new CandidateChoseToProceedWithTestInEnglish('English'));
-        expect(store$.dispatch).toHaveBeenCalledTimes(1);
-      });
-    });
-    describe('transmissionChanged', () => {
-      it('should dispatch the correct action when called', () => {
-        component.transmissionChanged('Manual');
-        expect(store$.dispatch).toHaveBeenCalledWith(new GearboxCategoryChanged('Manual'));
         expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });

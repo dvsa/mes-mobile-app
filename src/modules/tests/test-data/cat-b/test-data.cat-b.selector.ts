@@ -3,11 +3,11 @@ import { get } from 'lodash';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { QuestionProvider } from '../../../../providers/question/question';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 
 export const getDrivingFaultCount = (
-    data: CatBUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];
+  data: CatBUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];
 
 export const getManoeuvres = (data: CatBUniqueTypes.TestData): CatBUniqueTypes.Manoeuvres => data.manoeuvres;
 
@@ -25,6 +25,8 @@ export const hasControlledStopBeenCompleted = (data: CatBUniqueTypes.TestData) =
 
 export const hasEyesightTestGotSeriousFault = (data: CatBUniqueTypes.TestData) => data.eyesightTest.seriousFault;
 
+export const hasEyesightTestBeenCompleted = (data: CatBUniqueTypes.TestData) => data.eyesightTest.complete;
+
 export const hasLegalRequirementBeenCompleted = (
   data: CatBUniqueTypes.TestRequirements, legalRequirement: LegalRequirements) => {
   return data[legalRequirement];
@@ -33,7 +35,7 @@ export const hasLegalRequirementBeenCompleted = (
 export const getVehicleChecks = (state: CatBUniqueTypes.TestData): CatBUniqueTypes.VehicleChecks => state.vehicleChecks;
 
 export const getTellMeQuestion = (state: CatBUniqueTypes.VehicleChecks): VehicleChecksQuestion => {
-  const questionProvider: QuestionProvider =  new QuestionProvider();
+  const questionProvider: QuestionProvider = new QuestionProvider();
   return questionProvider
     .getTellMeQuestions(TestCategory.B)
     .find(question => question.code === get(state, 'tellMeQuestion.code'));

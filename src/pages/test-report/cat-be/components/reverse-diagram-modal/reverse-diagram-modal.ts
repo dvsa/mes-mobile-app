@@ -7,12 +7,14 @@ import { map } from 'rxjs/operators';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
-import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.reducer';
+import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
 import {
   getVehicleLength,
   getVehicleWidth,
-} from '../../../../../modules/tests/vehicle-details/vehicle-details.cat-be.selector';
+} from '../../../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
+import { ReversingDistancesProvider } from '../../../../../providers/reversing-distances/reversing-distances';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface ReverseDiagramPageState {
   vehicleLength$: Observable<number>;
@@ -46,6 +48,7 @@ export class ReverseDiagramCatBEPage implements OnInit {
   constructor(
     private navParams: NavParams,
     public store$: Store<StoreModel>,
+    public reversingDistancesProvider: ReversingDistancesProvider,
   ) {
     this.onClose = this.navParams.get('onClose');
   }
@@ -76,16 +79,22 @@ export class ReverseDiagramCatBEPage implements OnInit {
     );
   }
 
-  calculateDistanceLength(vehicleLength: number): void {
-    const distanceFromStart = vehicleLength * 4;
-    const distanceFromMiddle = vehicleLength * 2;
-    this.distanceFromMiddle = Math.round(distanceFromMiddle * 100) / 100;
-    this.distanceFromStart = Math.round(distanceFromStart * 100) / 100;
+  calculateDistanceLength(length: number): void {
+    const vehicleDetails = {
+      vehicleLength: length,
+      vehicleWidth: this.vehicleWidth,
+    };
+    const reversingLenghts = this.reversingDistancesProvider.getDistanceLength(vehicleDetails, TestCategory.BE);
+    this.distanceFromMiddle = reversingLenghts.middleDistance;
+    this.distanceFromStart = reversingLenghts.startDistance;
   }
 
-  calculateDistanceWidth(vehicleWidth: number): void {
-    const distanceOfBayWidth = vehicleWidth * 1.5;
-    this.distanceOfBayWidth = Math.round(distanceOfBayWidth * 100) / 100;
+  calculateDistanceWidth(width: number): void {
+    const vehicleDetails = {
+      vehicleLength: this.vehicleLength,
+      vehicleWidth: width,
+    };
+    this.distanceOfBayWidth = this.reversingDistancesProvider.getDistanceWidth(vehicleDetails, TestCategory.BE);
   }
 
   ionViewWillEnter(): boolean {

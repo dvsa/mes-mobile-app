@@ -1,10 +1,11 @@
 import { FaultSummaryProvider } from '../fault-summary';
 import { TestBed } from '@angular/core/testing';
-import { TestData } from '@dvsa/mes-test-schema/categories/Common';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestData } from '@dvsa/mes-test-schema/categories/common';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { FaultCountProvider } from '../../fault-count/fault-count';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 
 describe('faultSummaryProvider', () => {
 
@@ -136,8 +137,8 @@ describe('faultSummaryProvider', () => {
               { outcome: 'DF' },
             ],
             showMeQuestions: [
-             { outcome: 'DF' },
-             { outcome: 'DF' },
+              { outcome: 'DF' },
+              { outcome: 'DF' },
             ],
           },
         };
@@ -154,12 +155,78 @@ describe('faultSummaryProvider', () => {
               { outcome: 'DF' },
             ],
             showMeQuestions: [
-             { outcome: 'DF' },
-             { outcome: 'DF' },
+              { outcome: 'DF' },
+              { outcome: 'DF' },
             ],
           },
         };
         const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE);
+        expect(result.length).toEqual(1);
+        expect(result[0].faultCount).toEqual(4);
+      });
+    });
+    describe('Category C', () => {
+      it('should return an empty array if there are no driving faults', () => {
+        const result = faultSummaryProvider.getDrivingFaultsList({}, TestCategory.C);
+        expect(result.length).toEqual(0);
+      });
+      it('should return an array matching the number of driving faults > 0', () => {
+        const data: TestData = {
+          drivingFaults: {
+            useOfMirrorsChangeDirection: 1,
+            useOfMirrorsSignalling: 2,
+          },
+        };
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C);
+        expect(result.length).toEqual(2);
+      });
+      it('should correctly return any manoeuvre faults', () => {
+        const data: CatCUniqueTypes.TestData = {
+          manoeuvres: {
+            reverseLeft: {
+              selected: true,
+              controlFault: 'DF',
+              observationFault: 'DF',
+            },
+          },
+        };
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C);
+        expect(result.length).toEqual(2);
+        expect(result[0].competencyDisplayName).toEqual('Reverse - Control');
+        expect(result[1].competencyDisplayName).toEqual('Reverse - Observation');
+      });
+      it('should correctly return any vehicle checks faults when there are 4 driving faults', () => {
+        const data: CatCUniqueTypes.TestData = {
+          vehicleChecks: {
+            tellMeQuestions: [
+              { outcome: 'DF' },
+              { outcome: 'DF' },
+            ],
+            showMeQuestions: [
+              { outcome: 'DF' },
+              { outcome: 'DF' },
+            ],
+          },
+        };
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C);
+        expect(result.length).toEqual(1);
+        expect(result[0].faultCount).toEqual(4);
+      });
+      it('should correctly return 4 driving faults as the fault count when there are 5', () => {
+        const data: CatCUniqueTypes.TestData = {
+          vehicleChecks: {
+            tellMeQuestions: [
+              { outcome: 'DF' },
+              { outcome: 'DF' },
+              { outcome: 'DF' },
+            ],
+            showMeQuestions: [
+              { outcome: 'DF' },
+              { outcome: 'DF' },
+            ],
+          },
+        };
+        const result = faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C);
         expect(result.length).toEqual(1);
         expect(result[0].faultCount).toEqual(4);
       });
@@ -183,7 +250,7 @@ describe('faultSummaryProvider', () => {
         expect(result.length).toEqual(2);
       });
       it('should return an eyesight fail fault if one exists', () => {
-        const data: TestData = {
+        const data: CatBUniqueTypes.TestData = {
           eyesightTest: {
             complete: true,
             seriousFault: true,
@@ -245,7 +312,7 @@ describe('faultSummaryProvider', () => {
         expect(result.length).toEqual(2);
       });
       it('should return an eyesight fail fault if one exists', () => {
-        const data: TestData = {
+        const data: CatBUniqueTypes.TestData = {
           eyesightTest: {
             complete: true,
             seriousFault: true,
@@ -288,12 +355,59 @@ describe('faultSummaryProvider', () => {
               { outcome: 'DF' },
             ],
             showMeQuestions: [
-             { outcome: 'DF' },
-             { outcome: 'DF' },
+              { outcome: 'DF' },
+              { outcome: 'DF' },
             ],
           },
         };
         const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE);
+        expect(result.length).toEqual(1);
+        expect(result[0].faultCount).toEqual(1);
+      });
+    });
+    describe('Category C', () => {
+      it('should return an empty array if there are no serious faults', () => {
+        const result = faultSummaryProvider.getSeriousFaultsList({}, TestCategory.C);
+        expect(result.length).toEqual(0);
+      });
+      it('should return an array matching the number of serious faults set to true', () => {
+        const data: TestData = {
+          seriousFaults: {
+            ancillaryControls: true,
+            awarenessPlanning: true,
+          },
+        };
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.C);
+        expect(result.length).toEqual(2);
+      });
+      it('should correctly return any manoeuvre faults', () => {
+        const data: CatCUniqueTypes.TestData = {
+          manoeuvres: {
+            reverseLeft: {
+              selected: true,
+              controlFault: 'S',
+              observationFault: 'S',
+            },
+          },
+        };
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.C);
+        expect(result.length).toEqual(2);
+      });
+      it('should correctly return any vehicle checks faults ', () => {
+        const data: CatCUniqueTypes.TestData = {
+          vehicleChecks: {
+            tellMeQuestions: [
+              { outcome: 'DF' },
+              { outcome: 'DF' },
+              { outcome: 'DF' },
+            ],
+            showMeQuestions: [
+              { outcome: 'DF' },
+              { outcome: 'DF' },
+            ],
+          },
+        };
+        const result = faultSummaryProvider.getSeriousFaultsList(data, TestCategory.C);
         expect(result.length).toEqual(1);
         expect(result[0].faultCount).toEqual(1);
       });
@@ -388,6 +502,35 @@ describe('faultSummaryProvider', () => {
         };
         const result = faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE);
         expect(result.length).toEqual(1);
+      });
+    });
+    describe('Category C', () => {
+      it('should return an empty array if there are no serious faults', () => {
+        const result = faultSummaryProvider.getDangerousFaultsList({}, TestCategory.C);
+        expect(result.length).toEqual(0);
+      });
+      it('should return an array matching the number of serious faults set to true', () => {
+        const data: TestData = {
+          dangerousFaults: {
+            ancillaryControls: true,
+            awarenessPlanning: true,
+          },
+        };
+        const result = faultSummaryProvider.getDangerousFaultsList(data, TestCategory.C);
+        expect(result.length).toEqual(2);
+      });
+      it('should correctly return any manoeuvre faults', () => {
+        const data: CatCUniqueTypes.TestData = {
+          manoeuvres: {
+            reverseLeft: {
+              selected: true,
+              controlFault: 'D',
+              observationFault: 'D',
+            },
+          },
+        };
+        const result = faultSummaryProvider.getDangerousFaultsList(data, TestCategory.C);
+        expect(result.length).toEqual(2);
       });
     });
   });

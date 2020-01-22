@@ -47,17 +47,18 @@ import {
   WeatherConditionsChanged,
   AdditionalInformationChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import {
   getCandidateName,
   getCandidateDriverNumber,
   formatDriverNumber,
-} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+} from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { QuestionProvider } from '../../../providers/question/question';
 import {
   getTestSlotAttributes,
-} from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
-import { getTestTime } from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
+} from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
+import { getTestTime }
+  from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
   getETA,
   getETAFaultText,
@@ -73,7 +74,7 @@ import {
   Identification,
   IndependentDriving,
   QuestionResult,
-} from '@dvsa/mes-test-schema/categories/Common';
+} from '@dvsa/mes-test-schema/categories/common';
 import {
   AddDangerousFaultComment,
 } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
@@ -94,10 +95,10 @@ import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
   AddUncoupleRecoupleComment,
-} from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
+} from '../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';

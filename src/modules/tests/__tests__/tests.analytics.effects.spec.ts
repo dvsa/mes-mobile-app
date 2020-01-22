@@ -16,16 +16,17 @@ import { TestsAnalyticsEffects } from '../tests.analytics.effects';
 import * as testsActions from '../tests.actions';
 import * as activityCodeActions from '../activity-code/activity-code.actions';
 import * as testStatusActions from '../test-status/test-status.actions';
-import * as candidateActions from '../journal-data/candidate/candidate.actions';
+import * as candidateActions from '../journal-data/common/candidate/candidate.actions';
 import * as rekeyActions from '../rekey/rekey.actions';
-import * as applicationReferenceActions from '../journal-data/application-reference/application-reference.actions';
+import * as applicationReferenceActions
+  from '../journal-data/common/application-reference/application-reference.actions';
 
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { Application } from '@dvsa/mes-journal-schema';
 import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
 import { candidateMock } from '../__mocks__/tests.mock';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('Tests Analytics Effects', () => {

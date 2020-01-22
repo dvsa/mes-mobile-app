@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { DateTime } from '../../../../shared/helpers/date-time';
-import { Name } from '@dvsa/mes-test-schema/categories/Common';
+import { Name } from '@dvsa/mes-test-schema/categories/common';
 import { ModalController } from 'ionic-angular';
-import { CAT_B, CAT_BE } from '../../../page-names.constants';
+import { CAT_B, CAT_BE, CAT_C } from '../../../page-names.constants';
 import { App } from '../../../../app/app.component';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'search-result',
@@ -41,6 +41,8 @@ export class SearchResultComponent {
         break;
       case TestCategory.BE:
         pageToOpen = CAT_BE.VIEW_TEST_RESULT_PAGE;
+      case TestCategory.C:
+        pageToOpen = CAT_C.VIEW_TEST_RESULT_PAGE;
         break;
     }
 

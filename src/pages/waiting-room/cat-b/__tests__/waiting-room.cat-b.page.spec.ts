@@ -12,10 +12,10 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
-} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
+} from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
   initialState as preTestDeclarationInitialState,
-} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+} from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
 import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
 import {
   DeviceAuthenticationProviderMock,
@@ -45,7 +45,7 @@ import { LockScreenIndicator } from '../../../../components/common/screen-lock-i
 import { CandidateSectionComponent } from '../../../../components/common/candidate-section/candidate-section';
 import { FormControl, Validators } from '@angular/forms';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
-import { JournalData } from '@dvsa/mes-test-schema/categories/Common';
+import { JournalData } from '@dvsa/mes-test-schema/categories/common';
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 

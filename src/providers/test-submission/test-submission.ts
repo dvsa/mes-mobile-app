@@ -15,6 +15,7 @@ import { LogHelper } from '../logs/logsHelper';
 import { AppConfigProvider } from '../app-config/app-config';
 import { TestStatus } from '../../modules/tests/test-status/test-status.model';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories/index';
+import { ActivityCodes } from '../../shared/models/activity-codes';
 
 export interface TestToSubmit {
   index: number;
@@ -42,10 +43,12 @@ export class TestSubmissionProvider {
   submitTest = (testToSubmit: TestToSubmit): Observable<HttpResponse<any> | HttpErrorResponse> => {
     // Using cloneDeep() to prevent the initialState of the reducers from being modified
     const deepClonedData = cloneDeep(testToSubmit.payload);
-    const cleanData = this.removeNullFieldsDeep(
-      this.isPartialSubmission(testToSubmit)
-        ? this.removeFieldsForPartialData(deepClonedData)
-        : deepClonedData);
+    const cleanData =
+      this.removeNullFieldsDeep(
+        this.removePassCompletionWhenTestIsNotPass(
+          this.isPartialSubmission(testToSubmit)
+            ? this.removeFieldsForPartialData(deepClonedData)
+            : deepClonedData));
 
     return this.httpClient.post(
       this.buildUrl(testToSubmit),
@@ -85,14 +88,19 @@ export class TestSubmissionProvider {
     };
     return removeNullFields(data);
   }
-  removeFieldsForPartialData = (data: TestResultSchemasUnion): Partial<TestResultSchemasUnion> => {
-    data.testSummary.additionalInformation = null;
-    data.testSummary.candidateDescription = null;
-    data.testSummary.identification = null;
-    data.testSummary.independentDriving = null;
-    data.testSummary.routeNumber = null;
-    data.testSummary.weatherConditions = null;
 
+  removeFieldsForPartialData = (data: TestResultSchemasUnion): Partial<TestResultSchemasUnion> => {
+    Object.keys(data.testSummary).map((key: string) => {
+      data.testSummary[key] = null;
+    });
+
+    return data;
+  }
+
+  removePassCompletionWhenTestIsNotPass = (data: Partial<TestResultSchemasUnion>): Partial<TestResultSchemasUnion> => {
+    if (data.activityCode !== ActivityCodes.PASS) {
+      unset(data, 'passCompletion');
+    }
     return data;
   }
 }

@@ -1,4 +1,4 @@
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 export interface TestDetailsModel {
   date: string;

@@ -6,18 +6,20 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomActions from '../waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
-import { getPreTestDeclarations } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+import {
+   getPreTestDeclarations,
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions
-  from '../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
+  from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
   getSignatureStatus,
-} from '../../../modules/tests/pre-test-declarations/pre-test-declarations.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+} from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { map, tap } from 'rxjs/operators';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
@@ -27,8 +29,9 @@ import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
 import {
   getTestSlotAttributes,
-} from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
+} from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest }
+  from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
   getCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
@@ -43,6 +46,7 @@ import {
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { DeviceProvider } from '../../../providers/device/device';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE/index';
@@ -85,6 +89,7 @@ export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
+    private deviceProvider: DeviceProvider,
     private screenOrientation: ScreenOrientation,
     private insomnia: Insomnia,
     private translate: TranslateService,
@@ -101,6 +106,7 @@ export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
     if (super.isIos()) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       this.insomnia.keepAwake();
+      this.deviceProvider.enableSingleAppMode();
     }
 
     this.navBar.backButtonClick = (e: UIEvent) => {

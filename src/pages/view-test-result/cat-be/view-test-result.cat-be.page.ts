@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
-import { getCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -26,12 +26,11 @@ import { LogType } from '../../../shared/models/log.model';
 import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogHelper } from '../../../providers/logs/logsHelper';
 import { QuestionProvider } from '../../../providers/question/question';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { categoryBETestResultMock } from '../../../shared/mocks/cat-be-test-result.mock';
 import { get } from 'lodash';
@@ -159,23 +158,6 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
       candidateDriverNumber: this.testResult.journalData.candidate.driverNumber,
       activityCode: this.testResult.activityCode,
       testOutcome: getTestOutcomeText(this.testResult),
-    };
-  }
-
-  getRekeyDetails(): RekeyDetailsModel {
-    if (!this.testResult || !this.testResult.rekey) {
-      return null;
-    }
-
-    const testDate: DateTime = new DateTime(this.testResult.journalData.testSlotAttributes.start);
-    const rekeyDate: DateTime = new DateTime(this.testResult.rekeyDate);
-
-    return {
-      scheduledStaffNumber: this.testResult.examinerBooked,
-      conductedStaffNumber: this.testResult.examinerConducted,
-      testDate: testDate.format('dddd Do MMMM YYYY'),
-      rekeyedStaffNumber: this.testResult.examinerKeyed,
-      rekeyDate: rekeyDate.format('dddd Do MMMM YYYY'),
     };
   }
 

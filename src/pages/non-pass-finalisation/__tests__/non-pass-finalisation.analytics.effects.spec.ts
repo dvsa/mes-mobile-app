@@ -14,12 +14,12 @@ import { StoreModel } from '../../../shared/models/store.model';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/candidate/candidate.actions';
+import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/common/candidate/candidate.actions';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { NonPassFinalisationAnalyticsEffects } from '../non-pass-finalisation.analytics.effects';
 import * as nonPassFinalisationActions from '../non-pass-finalisation.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('Non Pass Finalisation Analytics Effects', () => {
 

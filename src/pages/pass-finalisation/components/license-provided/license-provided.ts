@@ -1,7 +1,25 @@
-import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived } from
-'../../../../modules/tests/pass-completion/pass-completion.actions';
+import {
+  Component,
+  OnChanges,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
+import {
+  ProvisionalLicenseReceived,
+  ProvisionalLicenseNotReceived,
+} from
+  '../../../../modules/tests/pass-completion/pass-completion.actions';
+
+enum ValidLicenceProvidedValues {
+    YES = 'yes',
+    NO = 'no',
+  }
 
 @Component({
   selector: 'license-provided',
@@ -9,6 +27,9 @@ import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived } from
 })
 
 export class LicenseProvidedComponent implements OnChanges {
+
+  @Input()
+  license: boolean;
 
   @Output()
   licenseReceived = new EventEmitter<ProvisionalLicenseReceived>();
@@ -26,6 +47,12 @@ export class LicenseProvidedComponent implements OnChanges {
     if (!this.formControl) {
       this.formControl = new FormControl('', [Validators.required]);
       this.form.addControl(LicenseProvidedComponent.fieldName, this.formControl);
+    }
+
+    if (this.license !== null) {
+      this.formControl.patchValue(this.license ? ValidLicenceProvidedValues.YES : ValidLicenceProvidedValues.NO);
+    } else {
+      this.formControl.patchValue(null);
     }
   }
 

@@ -41,13 +41,13 @@ import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions
 import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import * as uncoupleRecoupleActions
-  from '../../../modules/tests/test-data/cat-be/uncouple-recouple/uncouple-recouple.actions';
+  from '../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import * as reverseLeftActions
   from '../cat-be/components/reverse-left/reverse-left.actions';
 import { configureTestSuite } from 'ng-bullet';
 import * as catBEManoeuversActions
   from '../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('Test Report Analytics Effects', () => {
 

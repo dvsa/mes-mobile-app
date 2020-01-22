@@ -8,7 +8,7 @@ from '../../../../../../components/common/serious-fault-badge/serious-fault-badg
 import { IonicModule } from 'ionic-angular';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { DrivingFaultsBadgeComponent }
 from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
@@ -54,13 +54,13 @@ describe('VehicleChecksComponent', () => {
     };
 
     beforeEach(() => {
-      spyOn(component.faultCountProvider, 'getVehicleChecksFaultCountCatBE').and.returnValue(vehicleChecksScore);
+      spyOn(component.faultCountProvider, 'getVehicleChecksFaultCount').and.returnValue(vehicleChecksScore);
     });
 
     it('should set the vehicle checks driving fault count', (done: DoneFn) => {
       component.ngOnInit();
       component.componentState.vehicleChecksDrivingFaultCount$.subscribe((result) => {
-        expect(component.faultCountProvider.getVehicleChecksFaultCountCatBE).toHaveBeenCalled();
+        expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
         expect(result).toEqual(4);
         done();
       });
@@ -68,7 +68,7 @@ describe('VehicleChecksComponent', () => {
     it('should set the vehicle checks serious fault count', (done: DoneFn) => {
       component.ngOnInit();
       component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
-        expect(component.faultCountProvider.getVehicleChecksFaultCountCatBE).toHaveBeenCalled();
+        expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
         expect(result).toEqual(1);
         done();
       });

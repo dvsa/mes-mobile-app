@@ -9,8 +9,9 @@ import * as testStatusActions from '../test-status/test-status.actions';
 import * as rekeyActions from '../rekey/rekey.actions';
 import * as journalActions from '../../../modules/journal/journal.actions';
 import { TestsModel } from '../tests.model';
-import { PopulateApplicationReference } from '../journal-data/application-reference/application-reference.actions';
-import { PopulateCandidateDetails } from '../journal-data/candidate/candidate.actions';
+import { PopulateApplicationReference }
+  from '../journal-data/common/application-reference/application-reference.actions';
+import { PopulateCandidateDetails } from '../journal-data/common/candidate/candidate.actions';
 import {
   testApplicationMock,
   candidateMock,
@@ -26,7 +27,7 @@ import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 import { StoreModel } from '../../../shared/models/store.model';
 import { DateTime } from '../../../shared/helpers/date-time';
-import { PopulateExaminer } from '../journal-data/examiner/examiner.actions';
+import { PopulateExaminer } from '../journal-data/common/examiner/examiner.actions';
 import journalSlotsDataMock from '../../../modules/journal/__mocks__/journal-slots-data.mock';
 import { journalReducer } from '../../../modules/journal/journal.reducer';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -40,9 +41,10 @@ import { SetExaminerBooked } from '../examiner-booked/examiner-booked.actions';
 import { bufferCount } from 'rxjs/operators';
 import { SetExaminerConducted } from '../examiner-conducted/examiner-conducted.actions';
 import { SetExaminerKeyed } from '../examiner-keyed/examiner-keyed.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateTestCategory } from '../category/category.actions';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { configureTestSuite } from "ng-bullet";
 
 describe('Tests Effects', () => {
 
@@ -53,8 +55,7 @@ describe('Tests Effects', () => {
   let navigationStateProviderMock: NavigationStateProviderMock;
   let authenticationProviderMock: AuthenticationProviderMock;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -75,6 +76,10 @@ describe('Tests Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(TestsEffects);
     testPersistenceProviderMock = TestBed.get(TestPersistenceProvider);
     navigationStateProviderMock = TestBed.get(NavigationStateProvider);
@@ -194,7 +199,7 @@ describe('Tests Effects', () => {
     });
   });
 
-  describe('startTestEffect', () => {
+  fdescribe('startTestEffect', () => {
     it('should copy the examiner from the journal state into the test state', (done) => {
       const selectedDate: string = new DateTime().format('YYYY-MM-DD');
       const examiner = { staffNumber: '123', individualId: 456 };

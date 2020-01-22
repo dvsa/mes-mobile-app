@@ -1,16 +1,14 @@
 import * as passCompletionActions from './pass-completion.actions';
-import { PassCompletion } from '@dvsa/mes-test-schema/categories/Common';
+import { PassCompletion } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
 
-export const initialState: PassCompletion = null;
+export const initialState: PassCompletion = {
+  passCertificateNumber: null,
+  provisionalLicenceProvided: null,
+};
 
 export const passCompletionReducer = (state = initialState, action: passCompletionActions.Types) => {
   switch (action.type) {
-    case passCompletionActions.POPULATE_PASS_COMPLETION:
-      return {
-        passCertificateNumber: null,
-        provisionalLicenceProvided: null,
-      };
     case passCompletionActions.PASS_CERTIFICATE_NUMBER_CHANGED:
       return {
         ...state,

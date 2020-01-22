@@ -1,5 +1,7 @@
+import { Before } from 'cucumber';
 import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
+import { waitForOverlay } from '../../helpers/helpers'; 
 
 const {
   Given,
@@ -12,6 +14,14 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
+
+// Set default category to be cat b
+this.testCategory = 'b';
+
+Before({ tags: '@catbe' }, () => {
+  // This hook will be executed before scenarios tagged with @catbe
+  this.testCategory = 'be';
+});
 
 // We need this much timeout for the login process to complete
 setDefaultTimeout(TEST_CONFIG.DEFAULT_TIMEOUT);
@@ -56,6 +66,7 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
   buttonElement.isPresent().then((isStartPresent) => {
     if (!isStartPresent) {
       // Go back to dashboard
+      waitForOverlay('click-block-active')
       const backButton = getElement(by.xpath('//page-journal//button//span[text()="Back"]'));
       clickElement(backButton);
       // Logout
@@ -409,13 +420,13 @@ export const onJournalPageAs = (username) => {
 const getPageType = (pageName : string) => {
   switch (pageName) {
     case 'communication page':
-      return 'communication-cat-b-page';
+      return `communication-cat-${this.testCategory}-page`;
     case 'debrief':
-      return 'pass-finalisation-cat-b-page';
+      return `pass-finalisation-cat-${this.testCategory}-page`;
     case 'health declaration':
-      return 'health-declaration-cat-b-page';
+      return `health-declaration-cat-${this.testCategory}-page`;
     default:
-      return 'waiting-room-cat-b-page';
+      return `waiting-room-cat-${this.testCategory}-page`;
   }
 };
 

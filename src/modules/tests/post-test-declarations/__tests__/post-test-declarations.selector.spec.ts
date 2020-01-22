@@ -3,7 +3,7 @@ import {
   getReceiptDeclarationStatus,
   getSignatureStatus,
 } from '../post-test-declarations.selector';
-import { PostTestDeclarations } from '@dvsa/mes-test-schema/categories/Common';
+import { PostTestDeclarations } from '@dvsa/mes-test-schema/categories/common';
 
 describe('PostTestDeclarations selector', () => {
   const state: PostTestDeclarations = {

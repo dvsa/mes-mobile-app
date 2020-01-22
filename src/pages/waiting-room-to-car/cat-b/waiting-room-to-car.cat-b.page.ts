@@ -6,14 +6,14 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   SchoolCarToggled,
   DualControlsToggled,
   GearboxCategoryChanged,
   VehicleRegistrationChanged,
-} from '../../../modules/tests/vehicle-details/vehicle-details.actions';
+} from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { map } from 'rxjs/operators';
 import {
   InstructorAccompanimentToggled,
@@ -21,7 +21,7 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.cat-b.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   InstructorRegistrationNumberChanged,
@@ -29,19 +29,21 @@ import {
 import {
   getRegistrationNumber,
   getGearboxCategory,
-  getSchoolCar,
-  getDualControls,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
+} from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import {
+  getSchoolCar,
+  getDualControls,
+} from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.cat-b.selector';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
   getOtherAccompaniment,
   getInterpreterAccompaniment,
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
-import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
+import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../providers/question/question';
@@ -59,9 +61,6 @@ import {
   EyesightTestFailed,
 } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import {
-  hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/common/test-data.selector';
-import {
   isTellMeQuestionSelected,
   isTellMeQuestionDrivingFault,
   isTellMeQuestionCorrect,
@@ -69,12 +68,13 @@ import {
   getVehicleChecks,
   getTellMeQuestion,
   hasEyesightTestGotSeriousFault,
+  hasEyesightTestBeenCompleted,
 } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_B } from '../../page-names.constants';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;

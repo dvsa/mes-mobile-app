@@ -37,7 +37,7 @@ import { PersistTests } from '../../../../modules/tests/tests.actions';
 import {
   WeatherConditionsChanged,
 } from '../../../../modules/tests/test-summary/test-summary.actions';
-import { WeatherConditions } from '@dvsa/mes-test-schema/categories/Common';
+import { WeatherConditions } from '@dvsa/mes-test-schema/categories/common';
 import { of } from 'rxjs/observable/of';
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../../components/route-number/route-number';
@@ -46,7 +46,7 @@ import { ShowMeQuestionComponent } from '../../components/show-me-question/show-
 import { WeatherConditionsComponent } from '../../components/weather-conditions/weather-conditions';
 import { AdditionalInformationComponent } from '../../components/additional-information/additional-information';
 import { IdentificationComponent } from '../../components/identification/identification';
-import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
+import { IndependentDrivingComponent } from '../../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../../components/fault-comment-card/fault-comment-card';
 import { FaultSummary } from '../../../../shared/models/fault-marking.model';
 import { ActivityCodeComponent } from '../../components/activity-code/activity-code';
@@ -62,7 +62,7 @@ import { ToastControllerMock } from '../../__mocks__/toast-controller-mock';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { configureTestSuite } from 'ng-bullet';
 import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';

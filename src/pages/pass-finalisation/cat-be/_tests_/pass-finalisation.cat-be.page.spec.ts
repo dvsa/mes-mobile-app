@@ -10,7 +10,6 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { PassCertificateNumberComponent } from '../../components/pass-certificate-number/pass-certificate-number';
 import { LicenseProvidedComponent } from '../../components/license-provided/license-provided';
 import { D255Component } from '../../../../components/test-finalisation/d255/d255';
@@ -26,7 +25,7 @@ import {
   PassFinalisationViewDidEnter,
   PassFinalisationValidationError,
 } from '../../pass-finalisation.actions';
-import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
+import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
   '../../../../modules/tests/test-summary/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
@@ -48,7 +47,6 @@ describe('PassFinalisationCatBEPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         PassFinalisationCatBEPage,
-        MockComponent(PracticeModeBanner),
         MockComponent(PassCertificateNumberComponent),
         MockComponent(LicenseProvidedComponent),
         MockComponent(TransmissionComponent),

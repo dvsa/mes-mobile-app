@@ -14,12 +14,12 @@ import { getTestStatus, getActivityCodeBySlotId, getTestById } from '../../../mo
 import { SlotTypes } from '../../../shared/models/slot-types';
 import { map, filter } from 'rxjs/operators';
 import { TestSlot } from '@dvsa/mes-journal-schema';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import { getSlotType } from '../../../shared/helpers/get-slot-type';
 import { SlotProvider } from '../../../providers/slot/slot';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;

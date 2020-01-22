@@ -17,16 +17,16 @@ import { StoreModel } from '../../../shared/models/store.model';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/candidate/candidate.actions';
+import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/common/candidate/candidate.actions';
 import { Application } from '@dvsa/mes-journal-schema';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import * as applicationReferenceActions
-  from '../../../modules/tests/journal-data/application-reference/application-reference.actions';
+  from '../../../modules/tests/journal-data/common/application-reference/application-reference.actions';
 import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('Back To Office Analytics Effects', () => {
 

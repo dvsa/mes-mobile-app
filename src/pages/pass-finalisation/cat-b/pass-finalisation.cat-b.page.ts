@@ -10,38 +10,36 @@ import {
 import {
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
-  PopulatePassCompletion,
   PassCertificateNumberChanged,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
-  isProvisionalLicenseNotProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+} from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import {
   getApplicationReference,
-} from '../../../modules/tests/journal-data/application-reference/application-reference.reducer';
+} from '../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
 import {
   getApplicationNumber,
-} from '../../../modules/tests/journal-data/application-reference/application-reference.selector';
+} from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
 import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.cat-b.reducer';
 import {
   getGearboxCategory,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
-import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
+} from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { CAT_B } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
@@ -77,8 +75,7 @@ interface PassFinalisationPageState {
   candidateDriverNumber$: Observable<string>;
   testOutcomeText$: Observable<string>;
   applicationNumber$: Observable<string>;
-  provisionalLicenseProvidedRadioChecked$: Observable<boolean>;
-  provisionalLicenseNotProvidedRadioChecked$: Observable<boolean>;
+  provisionalLicense$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
   transmissionAutomaticRadioChecked$: Observable<boolean>;
@@ -149,24 +146,13 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
         select(getApplicationReference),
         select(getApplicationNumber),
       ),
-      provisionalLicenseProvidedRadioChecked$: currentTest$.pipe(
+      provisionalLicense$: currentTest$.pipe(
         select(getPassCompletion),
         map(isProvisionalLicenseProvided),
-        tap((val) => {
-          if (val) this.form.controls['provisionalLicenseProvidedCtrl'].setValue('yes');
-        }),
-      ),
-      provisionalLicenseNotProvidedRadioChecked$: currentTest$.pipe(
-        select(getPassCompletion),
-        map(isProvisionalLicenseNotProvided),
-        tap((val) => {
-          if (val) this.form.controls['provisionalLicenseProvidedCtrl'].setValue('no');
-        }),
       ),
       passCertificateNumber$: currentTest$.pipe(
         select(getPassCompletion),
         select(getPassCertificateNumber),
-        tap(val => this.form.controls[this.passCertificateCtrl].setValue(val)),
       ),
       transmission$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -205,7 +191,6 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
       transmission$.pipe(map(value => this.transmission = value)),
     );
     this.subscription = this.merged$.subscribe();
-    this.store$.dispatch(new PopulatePassCompletion());
   }
 
   ionViewDidLeave(): void {

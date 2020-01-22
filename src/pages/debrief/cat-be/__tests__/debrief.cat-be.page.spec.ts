@@ -29,19 +29,20 @@ import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { fullCompetencyLabels } from '../../../../shared/constants/competencies/catb-competencies';
-import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/Common';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestSlotAttributes }
-  from '../../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.actions';
+  from '../../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
 import { EndDebrief } from '../../debrief.actions';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { CAT_BE } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
 import { VehicleChecksCardCatBEComponent } from '../components/vehicle-checks-card/vehicle-checks-card.cat-be';
+import { TestOutcome } from '../../../../shared/models/test-outcome';
 
 describe('DebriefCatBEPage', () => {
   let fixture: ComponentFixture<DebriefCatBEPage>;
@@ -139,7 +140,7 @@ describe('DebriefCatBEPage', () => {
   describe('DOM', () => {
     it('should display passed container if outcome is `passed`', () => {
       fixture.detectChanges();
-      component.outcome = 'Pass';
+      component.outcome = TestOutcome.PASS;
       fixture.detectChanges();
 
       expect(fixture.debugElement.query(By.css('.passed'))).not.toBeNull();
@@ -148,7 +149,7 @@ describe('DebriefCatBEPage', () => {
     });
     it('should display failed container if outcome is `fail`', () => {
       fixture.detectChanges();
-      component.outcome = 'Fail';
+      component.outcome = TestOutcome.FAIL;
       fixture.detectChanges();
 
       expect(fixture.debugElement.query(By.css('.failed'))).not.toBeNull();
@@ -214,12 +215,12 @@ describe('DebriefCatBEPage', () => {
       expect(store$.dispatch).toHaveBeenCalledWith(new EndDebrief);
     });
     it('should navigate to PassFinalisationPage when outcome = pass', () => {
-      component.outcome = 'Pass';
+      component.outcome = TestOutcome.PASS;
       component.endDebrief();
       expect(navController.push).toHaveBeenCalledWith(CAT_BE.PASS_FINALISATION_PAGE);
     });
     it('should navigate to BackToOfficePage when outcome = fail', () => {
-      component.outcome = 'Fail';
+      component.outcome = TestOutcome.FAIL;
       component.endDebrief();
       expect(navController.push).toHaveBeenCalledWith(CAT_BE.POST_DEBRIEF_HOLDING_PAGE);
     });

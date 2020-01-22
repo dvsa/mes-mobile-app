@@ -1,6 +1,6 @@
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
-export const categoryBTestResultMock : CatBUniqueTypes.TestResult = {
+export const categoryBTestResultMock: CatBUniqueTypes.TestResult = {
   version: '0.0.1',
   category: 'B',
   activityCode: '2',
@@ -66,6 +66,8 @@ export const categoryBTestResultMock : CatBUniqueTypes.TestResult = {
   vehicleDetails: {
     gearboxCategory: 'Manual',
     registrationNumber: 'mock-vehicle-registration-number',
+    dualControls: true,
+    schoolCar: true,
   },
   instructorDetails: {
     registrationNumber: 1,

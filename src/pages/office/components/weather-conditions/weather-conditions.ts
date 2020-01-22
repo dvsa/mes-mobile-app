@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { WeatherConditions } from '@dvsa/mes-test-schema/categories/Common';
+import { WeatherConditions } from '@dvsa/mes-test-schema/categories/common';
 import { WeatherConditionSelection } from '../../../../providers/weather-conditions/weather-conditions.model';
 import {
   OutcomeBehaviourMapProvider,

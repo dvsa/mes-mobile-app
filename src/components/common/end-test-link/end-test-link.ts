@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ModalController, Modal, NavController } from 'ionic-angular';
-import { CAT_BE, CAT_B } from '../../../pages/page-names.constants';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { CAT_BE, CAT_B, CAT_C } from '../../../pages/page-names.constants';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'end-test-link',
@@ -39,6 +39,9 @@ export class EndTestLinkComponent {
         break;
       case TestCategory.B:
         this.navController.push(CAT_B.DEBRIEF_PAGE);
+        break;
+      case TestCategory.C:
+        this.navController.push(CAT_C.DEBRIEF_PAGE);
         break;
     }
   }

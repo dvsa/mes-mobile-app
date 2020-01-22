@@ -3,14 +3,9 @@ import {
   PassCertificateNumberChanged,
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
-  PopulatePassCompletion,
 } from '../pass-completion.actions';
 
 describe('pass completion reducer', () => {
-  it('should populate the unanswered defaults when receiving POPULATE_PASS_COMPLETION', () => {
-    const result = passCompletionReducer(initialState, new PopulatePassCompletion());
-    expect(result).toEqual({ passCertificateNumber: null, provisionalLicenceProvided: null });
-  });
   it('should put the pass certificate number into the state on pass certificate number changed action', () => {
     const result = passCompletionReducer(initialState, new PassCertificateNumberChanged('ABC123'));
     expect(result.passCertificateNumber).toBe('ABC123');

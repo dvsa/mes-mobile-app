@@ -112,16 +112,9 @@ describe('BackToOfficePage', () => {
 
   describe('Class', () => {
     describe('ionViewDidEnter', () => {
-      it('should disable test inhibitions when not in practice mode', () => {
+      it('should disable test inhibitions', () => {
         component.ionViewDidEnter();
         expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
-        expect(screenOrientation.unlock).toHaveBeenCalled();
-        expect(insomnia.allowSleepAgain).toHaveBeenCalled();
-      });
-      it('should disable test inhibitions when in practice mode', () => {
-        component.isPracticeMode = true;
-        component.ionViewDidEnter();
-        expect(deviceProvider.disableSingleAppMode).not.toHaveBeenCalled();
         expect(screenOrientation.unlock).toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).toHaveBeenCalled();
       });
@@ -129,12 +122,7 @@ describe('BackToOfficePage', () => {
   });
 
   describe('goToJournal', () => {
-    it('should call the popTo method in the navcontroller if not in practice mode', () => {
-      component.goToJournal();
-      expect(navController.popTo).toHaveBeenCalled();
-    });
-    it('should call the popTo method in the navcontroller if in practice mode', () => {
-      component.isPracticeMode = true;
+    it('should call the popTo method in the navcontroller', () => {
       component.goToJournal();
       expect(navController.popTo).toHaveBeenCalled();
     });

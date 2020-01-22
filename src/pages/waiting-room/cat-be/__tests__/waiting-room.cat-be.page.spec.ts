@@ -12,10 +12,10 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
-} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
+} from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
   initialState as preTestDeclarationInitialState,
-} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+} from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
 import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
 import {
   DeviceAuthenticationProviderMock,
@@ -28,6 +28,8 @@ import { Subscription } from 'rxjs/Subscription';
 import * as communicationPreferenceActions
   from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
+import { DeviceProvider } from '../../../../providers/device/device';
+import { DeviceProviderMock } from '../../../../providers/device/__mocks__/device.mock';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { Insomnia } from '@ionic-native/insomnia';
@@ -51,6 +53,7 @@ describe('WaitingRoomCatBEPage', () => {
   let fixture: ComponentFixture<WaitingRoomCatBEPage>;
   let component: WaitingRoomCatBEPage;
   let store$: Store<StoreModel>;
+  let deviceProvider: DeviceProvider;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
@@ -110,6 +113,7 @@ describe('WaitingRoomCatBEPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: App, useClass: MockAppComponent },
@@ -119,6 +123,7 @@ describe('WaitingRoomCatBEPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(WaitingRoomCatBEPage);
         component = fixture.componentInstance;
+        deviceProvider = TestBed.get(DeviceProvider);
         screenOrientation = TestBed.get(ScreenOrientation);
         insomnia = TestBed.get(Insomnia);
         deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
@@ -167,6 +172,11 @@ describe('WaitingRoomCatBEPage', () => {
     });
 
     describe('ionViewDidEnter', () => {
+      it('should enable single app mode if on ios', () => {
+        component.ionViewDidEnter();
+        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
+      });
+
       it('should lock the screen orientation to Portrait Primary', () => {
         component.ionViewDidEnter();
         expect(screenOrientation.lock)

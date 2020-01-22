@@ -14,7 +14,7 @@ import { ActivityCodes } from '../../../../shared/models/activity-codes';
 import { JournalModel } from '../../../../modules/journal/journal.model';
 import { LogHelper } from '../../../../providers/logs/logsHelper';
 import { LogHelperMock } from '../../../../providers/logs/__mocks__/logsHelper.mock';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('Test Outcome', () => {

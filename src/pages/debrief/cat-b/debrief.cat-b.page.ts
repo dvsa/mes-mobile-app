@@ -20,7 +20,7 @@ import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
-import { ETA, Eco } from '@dvsa/mes-test-schema/categories/Common';
+import { ETA, Eco } from '@dvsa/mes-test-schema/categories/common';
 import {
   getCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
@@ -31,11 +31,13 @@ import { Language } from '../../../modules/tests/communication-preferences/commu
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { getTestOutcome } from '../debrief.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
-import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
+import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
+
+import { TestOutcome } from '../../../shared/models/test-outcome';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -185,7 +187,7 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
       return;
     }
     this.store$.dispatch(new EndDebrief());
-    if (this.outcome === 'Pass') {
+    if (this.outcome === TestOutcome.PASS) {
       this.navController.push(CAT_B.PASS_FINALISATION_PAGE);
       return;
     }

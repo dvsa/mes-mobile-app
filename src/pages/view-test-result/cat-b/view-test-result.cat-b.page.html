@@ -20,12 +20,16 @@
       [communicationPreferencesData]="testResult.communicationPreferences">
     </contact-details-card>
     <div *ngIf="testResult.rekey">
-      <rekey-details-card [rekeyDetails]='getRekeyDetails()'></rekey-details-card>
+      <rekey-details-card [data]='testResult'></rekey-details-card>
       <rekey-reason-card [data]='testResult.rekeyReason'></rekey-reason-card>
     </div>
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
     <vehicle-details-card [data]='getVehicleDetails()'></vehicle-details-card>
     <debrief-card [data]='getDebrief()'></debrief-card>
-    <test-summary-card [data]='testResult'></test-summary-card>
+    <test-summary-card
+      [accompaniment]='testResult.accompaniment'
+      [passCompletion]='testResult.passCompletion'
+      [testSummary]='testResult.testSummary'
+      ></test-summary-card>
   </div>
 </ion-content>

@@ -1,6 +1,6 @@
 import { categoryReducer } from '../category.reducer';
 import { PopulateTestCategory } from '../category.actions';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
 describe('category reducer', () => {
   it('should return the test category for a test', () => {

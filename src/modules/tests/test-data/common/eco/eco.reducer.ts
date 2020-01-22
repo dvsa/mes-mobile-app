@@ -1,4 +1,4 @@
-import { Eco } from '@dvsa/mes-test-schema/categories/Common';
+import { Eco } from '@dvsa/mes-test-schema/categories/common';
 import * as ecoActions from './eco.actions';
 
 export const initialState: Eco = {};

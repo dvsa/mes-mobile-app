@@ -3,9 +3,9 @@ import { Action, combineReducers } from '@ngrx/store';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
-import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
+import { preTestDeclarationsReducer } from './pre-test-declarations/common/pre-test-declarations.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
-import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
+import { vehicleDetailsReducer } from './vehicle-details/cat-b/vehicle-details.cat-b.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
@@ -20,7 +20,7 @@ import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
 import { testDataReducer } from './test-data/cat-b/test-data.reducer';
-import { journalDataReducer } from './journal-data/journal-data.reducer';
+import { journalDataReducer } from './journal-data/cat-b/journal-data.reducer';
 
 export function testsCatBReducer(
   action: Action, state: CatBUniqueTypes.TestResult): Required<CatBUniqueTypes.TestResult> {

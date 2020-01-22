@@ -4,14 +4,15 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest, getJournalData } from '../../../../../modules/tests/tests.selector';
-import { getCandidate } from '../../../../../modules/tests/journal-data/candidate/candidate.reducer';
-import { getUntitledCandidateName } from '../../../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getUntitledCandidateName }
+  from '../../../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../../../providers/question/question';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
   getVehicleChecksCatBE,
   getSelectedShowMeQuestions,
@@ -99,7 +100,7 @@ export class VehicleChecksCatBEModal {
         select(getTestData),
         select(getVehicleChecksCatBE),
         map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
         }),
       ),
     };

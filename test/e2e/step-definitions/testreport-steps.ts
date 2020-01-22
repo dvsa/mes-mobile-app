@@ -1,7 +1,6 @@
-import { Then, When } from 'cucumber';
-import { getElement, clickElement, getParentContext } from './generic-steps';
-import { browser, by, element, ExpectedConditions } from 'protractor';
-import { TEST_CONFIG } from '../test.config';
+import { Then, When, Before } from 'cucumber';
+import { getElement, clickElement } from './generic-steps';
+import { browser, by, element } from 'protractor';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -10,6 +9,14 @@ const expect = chai.expect;
 
 const buttonPadding = 30;
 const request = require('request');
+
+// Set default category to be cat b
+this.testCategory = 'b';
+
+Before({ tags: '@catbe' }, () => {
+  // This hook will be executed before scenarios tagged with @catbe
+  this.testCategory = 'be';
+});
 
 const endTest = () => {
   const endTestButton = getElement(by.id('end-test-button'));
@@ -57,7 +64,12 @@ When('I complete the test', () => {
   completeLegalRequirements();
   completeManouveure();
   completeEco();
-  completeShowMe();
+  if (this.testCategory === 'b') {
+    completeShowMe();
+  }
+  if (this.testCategory === 'be') {
+    completeUncoupleRecouple();
+  }
   endTest();
 });
 
@@ -206,6 +218,39 @@ Then('the competency {string} driver fault count is {string}', (competency, driv
   return expect(competencyCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
+When('I terminate the test from the test report page', () => {
+  const endTestButton = getElement(by.id('end-test-button'));
+  clickElement(endTestButton);
+
+  const terminateTestButton = getElement(by.xpath('//button/span[text() = "Terminate test"]'));
+  clickElement(terminateTestButton);
+});
+
+Then('the legal requirements pop up is present', () => {
+  const legalRequirementPopUp = getElement(by.xpath('//div/legal-requirements-modal'));
+  expect(legalRequirementPopUp.isPresent()).to.eventually.be.true
+});
+
+When('all the required test observations are present {string}', (legal_requirement: string) => {
+  expect(getElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legal_requirement}']`)).isPresent()).to.eventually.be.true;
+});
+
+Then('I return to the test report page',() =>   {
+  const returnToTestBtn = getElement(by.xpath('//div/legal-requirements-modal//modal-return-button//span'));
+  clickElement(returnToTestBtn)
+});
+
+When('I enter the legal requirements',() => {
+  completeLegalRequirements();
+  completeManouveure();
+  completeEco();
+});
+
+When('I add the Uncouple and Recouple fault',() => {
+  const uncoupleRecoupleFault = getElement(by.xpath('//uncouple-recouple//competency-button/div/div[1]'));
+  longPressButton(uncoupleRecoupleFault);
+});
+
 const getCompetencyButton = (competency: string) => {
   return getElement(by.xpath(`//competency-button/div/span[text() = '${competency}']`));
 };
@@ -284,13 +329,19 @@ const clickCompetency = (competency) => {
 };
 
 const completeManouveure = () => {
-  const manoeuvresButton = getElement(
-    by.xpath('//manoeuvres/button'));
+  if (this.testCategory === 'be') {
+    const manoeuvresButton = getElement(by.xpath('//competency-button[contains(@class, "reverse-left-tick")]'));
+    longPressButton(manoeuvresButton);
+  } else {
+    const manoeuvresButton = getElement(by.xpath('//manoeuvres/button'));
+    clickElement(manoeuvresButton);
+    const reverseRightRadio = getElement(by.id('manoeuvres-reverse-right-radio'));
+    clickElement(reverseRightRadio);
+    clickElement(manoeuvresButton);
+  }
+};
 
-  clickElement(manoeuvresButton);
-
-  const reverseRightRadio = getElement(by.id('manoeuvres-reverse-right-radio'));
-  clickElement(reverseRightRadio);
-
-  clickElement(manoeuvresButton);
+const completeUncoupleRecouple = () => {
+  const uncoupleRecouple = getElement(by.xpath('//competency-button[contains(@class, "uncouple-recouple-tick")]'));
+  longPressButton(uncoupleRecouple);
 };

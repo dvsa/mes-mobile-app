@@ -10,7 +10,7 @@ import { SetChangeMarker } from '../../change-marker/change-marker.actions';
 import { StartTest } from '../../tests.actions';
 import { SetExaminerConducted } from '../../examiner-conducted/examiner-conducted.actions';
 import { configureTestSuite } from 'ng-bullet';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('Examiner Booked Effects', () => {
 

@@ -3,7 +3,7 @@ import { Action, combineReducers } from '@ngrx/store';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
-import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
+import { preTestDeclarationsReducer } from './pre-test-declarations/common/pre-test-declarations.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
@@ -17,9 +17,9 @@ import { examinerConductedReducer } from './examiner-conducted/examiner-conducte
 import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
-import { journalDataCatBEReducer } from './journal-data/journal-data.cat-be.reducer';
+import { journalDataCatBEReducer } from './journal-data/cat-be/journal-data.cat-be.reducer';
 import { testDataCatBEReducer } from './test-data/cat-be/test-data.cat-be.reducer';
-import { vehicleDetailsCatBEReducer } from './vehicle-details/vehicle-details.cat-be.reducer';
+import { vehicleDetailsCatBEReducer } from './vehicle-details/cat-be/vehicle-details.cat-be.reducer';
 
 export function testsCatBEReducer(
   action: Action, state: CatBEUniqueTypes.TestResult): Required<CatBEUniqueTypes.TestResult> {

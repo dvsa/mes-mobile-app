@@ -15,7 +15,7 @@ import { SetExaminerBooked } from '../../../modules/tests/examiner-booked/examin
 import { SetExaminerConducted } from '../../../modules/tests/examiner-conducted/examiner-conducted.actions';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { defer } from 'rxjs/observable/defer';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('Rekey Reason Effects', () => {

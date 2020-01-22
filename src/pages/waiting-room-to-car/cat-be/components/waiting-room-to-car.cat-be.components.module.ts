@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { VehicleChecksCatBEComponent } from './vehicle-checks/vehicle-checks';
 import { IonicModule } from 'ionic-angular';
-import { VehicleChecksModalCatBEModule } from './vehicle-checks-modal/vehicle-checks-modal.cat-be.page.module';
-import { VehicleChecksCatBEModule } from './vehicle-checks/vehicle-checks.module';
+import { ComponentsModule } from '../../../../components/common/common-components.module';
 
 @NgModule({
+  declarations: [
+    VehicleChecksCatBEComponent,
+  ],
   imports: [
     IonicModule,
-    VehicleChecksModalCatBEModule,
-    VehicleChecksCatBEModule,
+    ComponentsModule,
   ],
   exports: [
     VehicleChecksCatBEComponent,

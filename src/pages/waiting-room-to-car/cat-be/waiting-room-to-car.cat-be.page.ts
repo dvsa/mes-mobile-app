@@ -5,14 +5,14 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   SchoolCarToggled,
   DualControlsToggled,
   GearboxCategoryChanged,
   VehicleRegistrationChanged,
-} from '../../../modules/tests/vehicle-details/vehicle-details.actions';
+} from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { map } from 'rxjs/operators';
 import {
   InstructorAccompanimentToggled,
@@ -20,24 +20,26 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,
   getGearboxCategory,
-  getSchoolCar,
-  getDualControls,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
+} from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import {
+  getSchoolCar,
+  getDualControls,
+} from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.selector';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
   getOtherAccompaniment,
   getInterpreterAccompaniment,
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
-import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../providers/question/question';
@@ -53,17 +55,14 @@ import {
   QuestionOutcomes,
 } from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import {
-  hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/common/test-data.selector';
-import {
-  hasEyesightTestGotSeriousFault,
+  hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
 } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_BE } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import {
   getVehicleChecksCatBE,
@@ -185,7 +184,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
         select(getTestData),
         select(getVehicleChecksCatBE),
         map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCountCatBE(vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
         }),
       ),
       vehicleChecks$: currentTest$.pipe(

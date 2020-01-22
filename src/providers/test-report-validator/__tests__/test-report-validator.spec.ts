@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { TestReportValidatorProvider } from '../test-report-validator';
 import { FaultCountProvider } from '../../fault-count/fault-count';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
-import { validTestCatBE, validTestCatB } from '../__mocks__/test-result.mock';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { validTestCatBE, validTestCatB, validTestCatC  } from '../__mocks__/test-result.mock';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
-import { TestData } from '@dvsa/mes-test-schema/categories/Common';
+import { TestData } from '@dvsa/mes-test-schema/categories/common';
 
 describe('TestReportValidator', () => {
 
@@ -38,6 +38,14 @@ describe('TestReportValidator', () => {
       const result = testReportValidatorProvider.isTestReportValid({}, TestCategory.BE);
       expect(result).toEqual(false);
     });
+    it('should return true if the test report is valid for a Cat C test', () => {
+      const result = testReportValidatorProvider.isTestReportValid(validTestCatBE, TestCategory.C);
+      expect(result).toEqual(true);
+    });
+    it('should return false if the test report is not valid for a Cat C test', () => {
+      const result = testReportValidatorProvider.isTestReportValid({}, TestCategory.C);
+      expect(result).toEqual(false);
+    });
   });
   describe('getMissingLegalRequirements', () => {
     it('should return an empty array if the legal requirements are met for a Cat B test', () => {
@@ -68,6 +76,19 @@ describe('TestReportValidator', () => {
       expect(result).toContain(legalRequirementsLabels.manoeuvre);
       expect(result).toContain(legalRequirementsLabels.eco);
       expect(result).toContain(legalRequirementsLabels.uncoupleRecouple);
+    });
+    it('should return an empty array if the legal requirements are met for a Cat C test', () => {
+      const result = testReportValidatorProvider.getMissingLegalRequirements(validTestCatC, TestCategory.C);
+      expect(result.length).toEqual(0);
+    });
+    it('should return any missing legal requirements for a Cat C test', () => {
+      const result = testReportValidatorProvider.getMissingLegalRequirements({}, TestCategory.C);
+      expect(result.length).toEqual(5);
+      expect(result).toContain(legalRequirementsLabels.normalStart1);
+      expect(result).toContain(legalRequirementsLabels.uphillStart);
+      expect(result).toContain(legalRequirementsLabels.angledStartControlledStop);
+      expect(result).toContain(legalRequirementsLabels.manoeuvre);
+      expect(result).toContain(legalRequirementsLabels.eco);
     });
   });
   describe('isETAValid', () => {

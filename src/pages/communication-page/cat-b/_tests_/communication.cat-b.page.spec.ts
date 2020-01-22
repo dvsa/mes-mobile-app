@@ -11,7 +11,7 @@ import { AuthenticationProvider } from '../../../../providers/authentication/aut
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import {
   initialState as preTestDeclarationInitialState,
-} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+} from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
 import {
   DeviceAuthenticationProviderMock,
 } from '../../../../providers/device-authentication/__mocks__/device-authentication.mock';
@@ -25,7 +25,7 @@ import * as communicationPreferenceActions
   from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PostalAddressComponent } from '../../components/postal-address/postal-address';
 import { MockComponent } from 'ng-mocks';
-import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/Common';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { TranslateService, TranslateModule } from 'ng2-translate';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { PrivacyNoticeComponent } from '../../components/privacy-notice/privacy-notice';

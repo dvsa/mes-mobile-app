@@ -21,7 +21,6 @@ import { SearchProviderMock } from '../../../../providers/search/__mocks__/searc
 import { MockComponent } from 'ng-mocks';
 import { TestDetailsCardComponent } from '../../components/test-details-card/test-details-card';
 import { RekeyDetailsCardComponent } from '../../components/rekey-details-card/rekey-details';
-import { RekeyDetailsModel } from '../../components/rekey-details-card/rekey-details-card.model';
 import { RekeyReasonCardComponent } from '../../components/rekey-reason-card/rekey-reason';
 import { ExaminerDetailsCardComponent } from '../../components/examiner-details-card/examiner-details';
 import { By } from '@angular/platform-browser';
@@ -40,7 +39,7 @@ import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 import { manoeuvreTypeLabels } from '../../../../shared/constants/competencies/catb-manoeuvres';
 import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
 import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
 
@@ -127,23 +126,6 @@ describe('ViewTestResultCatBPage', () => {
       });
       it('should return null when there is no test result', () => {
         const result: TestDetailsModel = component.getTestDetails();
-        expect(result).toBeNull();
-      });
-    });
-    describe('getRekeyDetails', () => {
-      it('should correctly generate the data', () => {
-        component.testResult = categoryBTestResultMock;
-
-        const result: RekeyDetailsModel = component.getRekeyDetails();
-
-        expect(result.scheduledStaffNumber).toBe(1);
-        expect(result.conductedStaffNumber).toBe(1);
-        expect(result.testDate).toBe('Friday 5th July 2019');
-        expect(result.rekeyedStaffNumber).toBe(1);
-        expect(result.rekeyDate).toBe('Monday 5th August 2019');
-      });
-      it('should return null when there is no test result', () => {
-        const result: RekeyDetailsModel = component.getRekeyDetails();
         expect(result).toBeNull();
       });
     });

@@ -18,11 +18,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
-import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-import { getCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { DebriefCardModel } from './components/debrief-card/debrief-card.model';
 import {
@@ -39,7 +38,7 @@ import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogHelper } from '../../../providers/logs/logsHelper';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { QuestionProvider } from '../../../providers/question/question';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { HttpResponse } from '@angular/common/http';
@@ -286,23 +285,6 @@ export class ViewTestResultCatBPage extends BasePageComponent implements OnInit 
   getDrivingFaults(): FaultSummary[] {
     const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
     return this.faultSummaryProvider.getDrivingFaultsList(testData, TestCategory.B);
-  }
-
-  getRekeyDetails(): RekeyDetailsModel {
-    if (!this.testResult || !this.testResult.rekey) {
-      return null;
-    }
-
-    const testDate: DateTime = new DateTime(this.testResult.journalData.testSlotAttributes.start);
-    const rekeyDate: DateTime = new DateTime(this.testResult.rekeyDate);
-
-    return {
-      scheduledStaffNumber: this.testResult.examinerBooked,
-      conductedStaffNumber: this.testResult.examinerConducted,
-      testDate: testDate.format('dddd Do MMMM YYYY'),
-      rekeyedStaffNumber: this.testResult.examinerKeyed,
-      rekeyDate: rekeyDate.format('dddd Do MMMM YYYY'),
-    };
   }
 
   // on exit error modal

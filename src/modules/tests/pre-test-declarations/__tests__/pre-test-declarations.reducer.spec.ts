@@ -1,12 +1,12 @@
-import { preTestDeclarationsReducer, initialState } from '../pre-test-declarations.reducer';
+import { preTestDeclarationsReducer, initialState } from '../common/pre-test-declarations.reducer';
 import {
   ToggleInsuranceDeclaration,
   ToggleResidencyDeclaration,
   SignatureDataChanged,
   SignatureDataCleared,
   ClearPreTestDeclarations,
-} from '../pre-test-declarations.actions';
-import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/Common';
+} from '../common/pre-test-declarations.actions';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/common';
 
 describe('PreTestDeclarations reducer', () => {
   it('should toggle the residency status when the toggle action is received', () => {

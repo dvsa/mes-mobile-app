@@ -1,6 +1,6 @@
 import { MesError } from '../../shared/models/mes-error.model';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
-import { Examiner } from '@dvsa/mes-test-schema/categories/Common';
+import { Examiner } from '@dvsa/mes-test-schema/categories/common';
 import { Booking, SlotDetail, TestCentre } from '@dvsa/mes-journal-schema';
 
 export type Slot = {

@@ -1,5 +1,5 @@
 
-import { ETA, Eco, TestData } from '@dvsa/mes-test-schema/categories/Common';
+import { ETA, Eco, TestData } from '@dvsa/mes-test-schema/categories/common';
 import { Competencies, ExaminerActions } from '../test-data.constants';
 import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
@@ -35,8 +35,6 @@ export const getEcoFaultText = (data: Eco) => {
   if (data.adviceGivenControl && data.adviceGivenPlanning) return 'Control and Planning';
   return;
 };
-
-export const hasEyesightTestBeenCompleted = (data: TestData) => data.eyesightTest.complete;
 
 export const getShowMeQuestionOptions = (
   questions: VehicleChecksQuestion[],

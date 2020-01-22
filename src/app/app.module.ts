@@ -47,12 +47,27 @@ import { SchemaValidatorProvider } from '../providers/schema-validator/schema-va
 import {
   PassCertificateValidationProvider,
 } from '../providers/pass-certificate-validation/pass-certificate-validation';
+import { RemoteDevToolsProxy } from '../../ngrx-devtool-proxy/remote-devtools-proxy';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
 }
 
 const enableDevTools = environment && environment.enableDevTools;
+
+// Register our remote devtools if we're on-device and not in a browser and dev tools enabled
+if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
+  && enableDevTools && window.hasOwnProperty('cordova')) {
+  const remoteDevToolsProxy = new RemoteDevToolsProxy({
+    connectTimeout: 300000, // extend for pauses during debugging
+    ackTimeout: 120000, // extend for pauses during debugging
+    secure: false, // dev only
+  });
+
+  // support both the legacy and new keys, for now
+  window['devToolsExtension'] = remoteDevToolsProxy;
+  window['__REDUX_DEVTOOLS_EXTENSION__'] = remoteDevToolsProxy;
+}
 
 @NgModule({
   declarations: [App],

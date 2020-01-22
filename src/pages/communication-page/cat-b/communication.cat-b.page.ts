@@ -9,7 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName,
   getUntitledCandidateName,
@@ -17,7 +17,7 @@ import {
   formatDriverNumber,
   getCandidateEmailAddress,
   getPostalAddress,
-} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+} from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import {
   CommunicationViewDidEnter, CommunicationValidationError, CommunicationSubmitInfo, CommunicationSubmitInfoError,
 } from '../communication.actions';
@@ -29,7 +29,7 @@ import {
   getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType, getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { merge } from 'rxjs/observable/merge';
-import { CommunicationMethod, Address, ConductedLanguage } from '@dvsa/mes-test-schema/categories/Common';
+import { CommunicationMethod, Address, ConductedLanguage } from '@dvsa/mes-test-schema/categories/common';
 import { Subscription } from 'rxjs/Subscription';
 import {
   CandidateChoseEmailAsCommunicationPreference,

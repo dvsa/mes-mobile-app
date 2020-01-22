@@ -9,13 +9,16 @@ import { ReverseDiagramLinkComponent } from '../reverse-diagram-link';
 import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
-import { ReverseDiagramOpened, ReverseDiagramClosed } from '../../reverse-diagram-modal/reverse-diagram-modal.actions';
 import { NavigationProvider } from '../../../../../../providers/navigation/navigation';
 import { NavigationProviderMock } from '../../../../../../providers/navigation/__mocks__/navigation.mock';
 import { NavigationStateProvider } from '../../../../../../providers/navigation-state/navigation-state';
 import {
   NavigationStateProviderMock,
 } from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import {
+  ReverseDiagramOpened,
+  ReverseDiagramClosed,
+} from '../../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
 
 describe('reverseDiagramLink', () => {
   let fixture: ComponentFixture<ReverseDiagramLinkComponent>;

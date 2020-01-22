@@ -16,8 +16,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { StoreModel } from '../../../shared/models/store.model';
-import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
+import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   TestReportViewDidEnter,
   CalculateTestResult,
@@ -45,7 +45,7 @@ import { CAT_B, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { hasManoeuvreBeenCompletedCatB } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
   getTestRequirementsCatB,
 } from '../../../modules/tests/test-data/cat-b/test-requirements/test-requirements.reducer';

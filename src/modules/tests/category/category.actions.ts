@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/Common';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
 export const POPULATE_TEST_CATEGORY = '[Journal Effects] populating test category';
 

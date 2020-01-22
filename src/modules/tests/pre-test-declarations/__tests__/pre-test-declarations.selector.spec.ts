@@ -2,8 +2,8 @@ import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
   getSignatureStatus,
-} from '../pre-test-declarations.selector';
-import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/Common';
+} from '../common/pre-test-declarations.selector';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/common';
 
 describe('PreTestDeclarations selector', () => {
   const state: PreTestDeclarations = {

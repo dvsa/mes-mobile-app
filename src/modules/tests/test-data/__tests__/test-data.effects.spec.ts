@@ -10,7 +10,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Competencies } from '../test-data.constants';
 import { FaultPayload } from '../test-data.models';
-import { TestCategory } from '@dvsa/mes-test-schema/categories/common/test-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('Test Data Effects', () => {

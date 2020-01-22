@@ -1,5 +1,5 @@
 import * as accompanimentActions from './accompaniment.actions';
-import { Accompaniment } from '@dvsa/mes-test-schema/categories/Common';
+import { Accompaniment } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
 
 const initialState: Accompaniment = {};

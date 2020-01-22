@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/Common';
+import { WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/common';
 
 export const CANDIDATE_DESCRIPTION_CHANGED = '[Test Summary] Candidate description changed';
 export const ADDITIONAL_INFORMATION_CHANGED = '[Test Summary] Additional Information changed';
