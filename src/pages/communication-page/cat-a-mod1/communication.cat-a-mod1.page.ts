@@ -28,7 +28,7 @@ import {
   getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType, getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { merge } from 'rxjs/observable/merge';
-import { CommunicationMethod, Address, ConductedLanguage } from '@dvsa/mes-test-schema/categories/common';
+import { CommunicationMethod, Address, ConductedLanguage, CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { Subscription } from 'rxjs/Subscription';
 import {
   CandidateChoseEmailAsCommunicationPreference,
@@ -39,8 +39,11 @@ import { CAT_A_MOD1 } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface CommunicationPageState {
+  categoryCode$: Observable<CategoryCode>;
+
   candidateName$: Observable<string>;
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
@@ -111,6 +114,9 @@ export class CommunicationCatAMod1Page extends BasePageComponent implements OnIn
     );
 
     this.pageState = {
+      categoryCode$: currentTest$.pipe(
+        select(getTestCategory),
+      ),
       candidateName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
