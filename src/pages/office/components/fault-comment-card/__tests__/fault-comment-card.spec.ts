@@ -6,12 +6,13 @@ import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import { AppModule } from '../../../../../app/app.module';
 import { FormGroup } from '@angular/forms';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('FaultCommentCardComponent', () => {
   let fixture: ComponentFixture<FaultCommentCardComponent>;
   let component: FaultCommentCardComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         FaultCommentCardComponent,
@@ -21,13 +22,13 @@ describe('FaultCommentCardComponent', () => {
         IonicModule,
         AppModule,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(FaultCommentCardComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(FaultCommentCardComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
   }));
 
   describe('DOM', () => {

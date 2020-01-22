@@ -44,6 +44,7 @@ import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DebriefCatAMod1Page', () => {
   let fixture: ComponentFixture<DebriefCatAMod1Page>;
@@ -61,23 +62,23 @@ describe('DebriefCatAMod1Page', () => {
     vehicleTypeCode: '',
   };
 
-  beforeEach(async(() => {
-    // TODO - PREP-AMOD1 - update to cat c type
-    const exampleTestData: CatBEUniqueTypes.TestData  = {
-      dangerousFaults: {},
-      drivingFaults: {},
-      manoeuvres: {},
-      seriousFaults: {},
-      testRequirements: {},
-      ETA: {},
-      eco: {},
-      vehicleChecks: {
-        tellMeQuestions: [{}],
-        showMeQuestions: [{}],
-      },
-      uncoupleRecouple: {},
-    };
+  // TODO - PREP-AMOD1 - update to cat c type
+  const exampleTestData: CatBEUniqueTypes.TestData  = {
+    dangerousFaults: {},
+    drivingFaults: {},
+    manoeuvres: {},
+    seriousFaults: {},
+    testRequirements: {},
+    ETA: {},
+    eco: {},
+    vehicleChecks: {
+      tellMeQuestions: [{}],
+      showMeQuestions: [{}],
+    },
+    uncoupleRecouple: {},
+  };
 
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [DebriefCatAMod1Page],
       imports: [
@@ -94,7 +95,6 @@ describe('DebriefCatAMod1Page', () => {
             startedTests: {
               123: {
                 testSlotAttributes,
-
                 // TODO - REP-AMOD1: Change to TestCategory A Mod1
                 category: TestCategory.BE,
                 vehicleDetails: {},
@@ -128,17 +128,17 @@ describe('DebriefCatAMod1Page', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(DebriefCatAMod1Page);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch').and.callThrough();
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DebriefCatAMod1Page);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch').and.callThrough();
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {
@@ -264,7 +264,7 @@ describe('DebriefCatAMod1Page', () => {
         const expectedDrivingFaultTranslation = (<any>welshTranslations).debrief.competencies.moveOffSafety;
         const expectedSeriousFaultTranslation = (<any>welshTranslations).debrief.competencies.useOfMirrorsSignalling;
         const expectedDangerousFaultTranslation =
-            (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
+          (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
 
         expect(drivingFaultLabel.innerHTML).toBe(expectedDrivingFaultTranslation);
         expect(seriousLabel.innerHTML).toBe(expectedSeriousFaultTranslation);

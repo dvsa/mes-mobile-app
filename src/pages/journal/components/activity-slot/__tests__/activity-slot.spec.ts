@@ -8,12 +8,13 @@ import { AppConfigProviderMock } from '../../../../../providers/app-config/__moc
 import { ConfigMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
 import { LocationComponent } from '../../../../../components/test-slot/location/location';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ActivitySlotComponent', () => {
   let fixture: ComponentFixture<ActivitySlotComponent>;
   let component: ActivitySlotComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ActivitySlotComponent,
@@ -25,10 +26,12 @@ describe('ActivitySlotComponent', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
       imports: [IonicModule],
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(ActivitySlotComponent);
-      component = fixture.componentInstance;
     });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ActivitySlotComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

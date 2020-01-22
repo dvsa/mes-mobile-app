@@ -40,6 +40,7 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { SlotProvider } from '../../../providers/slot/slot';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -49,7 +50,7 @@ describe('JournalPage', () => {
   let insomnia: Insomnia;
   let deviceProvider: DeviceProvider;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [JournalPage],
       imports: [
@@ -81,19 +82,18 @@ describe('JournalPage', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: SlotProvider, useClass: SlotProvider },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(JournalPage);
-        component = fixture.componentInstance;
-        component.subscription = new Subscription();
-        screenOrientation = TestBed.get(ScreenOrientation);
-        insomnia = TestBed.get(Insomnia);
-        deviceProvider = TestBed.get(DeviceProvider);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-      });
+    });
+  });
 
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(JournalPage);
+    component = fixture.componentInstance;
+    component.subscription = new Subscription();
+    screenOrientation = TestBed.get(ScreenOrientation);
+    insomnia = TestBed.get(Insomnia);
+    deviceProvider = TestBed.get(DeviceProvider);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

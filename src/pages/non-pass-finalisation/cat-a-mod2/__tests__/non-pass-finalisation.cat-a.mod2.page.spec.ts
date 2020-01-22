@@ -28,13 +28,14 @@ import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
 '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('NonPassFinalisationCatAMod2Page', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatAMod2Page>;
   let component: NonPassFinalisationCatAMod2Page;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         NonPassFinalisationCatAMod2Page,
@@ -53,14 +54,14 @@ describe('NonPassFinalisationCatAMod2Page', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(NonPassFinalisationCatAMod2Page);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(NonPassFinalisationCatAMod2Page);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

@@ -1,5 +1,5 @@
 import { DebriefEffects } from '../debrief.effects';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -11,6 +11,7 @@ import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Debrief Effects', () => {
 
@@ -20,8 +21,7 @@ describe('Debrief Effects', () => {
 
   const currentSlotId = '1234';
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -34,9 +34,13 @@ describe('Debrief Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(async(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(DebriefEffects);
     store$ = TestBed.get(Store);
-  });
+  }));
 
   describe('endDebriefEffect', () => {
 

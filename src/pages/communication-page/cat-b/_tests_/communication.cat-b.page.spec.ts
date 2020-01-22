@@ -33,6 +33,7 @@ import { CommunicationSubmitInfo } from '../../communication.actions';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('CommunicationCatBPage', () => {
   let fixture: ComponentFixture<CommunicationCatBPage>;
@@ -50,7 +51,7 @@ describe('CommunicationCatBPage', () => {
     vehicleTypeCode: '',
   };
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         CommunicationCatBPage,
@@ -101,19 +102,18 @@ describe('CommunicationCatBPage', () => {
         { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(CommunicationCatBPage);
-        component = fixture.componentInstance;
-        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch').and.callThrough();
-        component.subscription = new Subscription();
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+    });
+  });
 
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(CommunicationCatBPage);
+    component = fixture.componentInstance;
+    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch').and.callThrough();
+    component.subscription = new Subscription();
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('Class', () => {

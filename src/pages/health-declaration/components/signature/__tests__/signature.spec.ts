@@ -6,12 +6,13 @@ import { FormGroup } from '@angular/forms';
 import { SignatureComponent } from '../signature';
 import { MockComponent } from 'ng-mocks';
 import { SignatureAreaComponent } from '../../../../../components/common/signature-area/signature-area';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('SignatureComponent', () => {
   let fixture: ComponentFixture<SignatureComponent>;
   let component: SignatureComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         SignatureComponent,
@@ -26,12 +27,12 @@ describe('SignatureComponent', () => {
         TranslateLoader,
         TranslateParser,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(SignatureComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(SignatureComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

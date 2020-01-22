@@ -9,6 +9,7 @@ import { TimeComponent } from '../../../../../components/test-slot/time/time';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../../../shared/mocks/screen-orientation.mock';
 import { LocationComponent } from '../../../../../components/test-slot/location/location';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('EmptySlotComponent', () => {
   let fixture: ComponentFixture<EmptySlotComponent>;
@@ -71,7 +72,7 @@ describe('EmptySlotComponent', () => {
     },
   };
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         EmptySlotComponent,
@@ -84,11 +85,13 @@ describe('EmptySlotComponent', () => {
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
 
       ],
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(EmptySlotComponent);
-      component = fixture.componentInstance;
-      component.slot = cloneDeep(mockSlot);
     });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(EmptySlotComponent);
+    component = fixture.componentInstance;
+    component.slot = cloneDeep(mockSlot);
   }));
 
   describe('DOM', () => {

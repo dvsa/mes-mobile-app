@@ -47,6 +47,7 @@ import { LoadEmployeeId, LoadConfigSuccess } from '../../../modules/app-info/app
 import { AppConfigError } from '../../../providers/app-config/app-config.constants';
 import { LogHelper } from '../../../providers/logs/logsHelper';
 import { LogHelperMock } from '../../../providers/logs/__mocks__/logsHelper.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -57,7 +58,7 @@ describe('LoginPage', () => {
   let appConfigProvider: AppConfigProvider;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [LoginPage],
       imports: [
@@ -83,16 +84,16 @@ describe('LoginPage', () => {
         { provide: SecureStorage, useClass: SecureStorageMock },
         { provide: LogHelper, useClass: LogHelperMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(LoginPage);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        splashScreen = TestBed.get(SplashScreen);
-        authenticationProvider = TestBed.get(AuthenticationProvider);
-        appConfigProvider = TestBed.get(AppConfigProvider);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(LoginPage);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    splashScreen = TestBed.get(SplashScreen);
+    authenticationProvider = TestBed.get(AuthenticationProvider);
+    appConfigProvider = TestBed.get(AppConfigProvider);
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));
