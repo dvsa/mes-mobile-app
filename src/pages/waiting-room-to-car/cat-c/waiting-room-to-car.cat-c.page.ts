@@ -58,6 +58,8 @@ import { VehicleChecksCatCComponent } from './components/vehicle-checks/vehicle-
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { merge } from 'rxjs/observable/merge';
+import { Subscription } from 'rxjs/Subscription';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -69,6 +71,7 @@ interface WaitingRoomToCarPageState {
   vehicleChecksScore$: Observable<VehicleChecksScore>;
   vehicleChecks$: Observable<CatCUniqueTypes.VehicleChecks>;
   testCategory$: Observable<CategoryCode>;
+
 }
 
 @IonicPage()
@@ -82,7 +85,7 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
 
   @ViewChild(VehicleChecksCatCComponent)
   vehicleChecks: VehicleChecksCatCComponent;
-
+  subscription: Subscription;
   showEyesightFailureConfirmation: boolean = false;
 
   tellMeQuestions: VehicleChecksQuestion[];
@@ -150,7 +153,7 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
         map(result => this.testCategory = result),
       ),
     };
-    this.pageState.testCategory$.subscribe();
+    this.setupSubscription();
   }
 
   ionViewDidEnter(): void {
@@ -180,9 +183,24 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   vehicleRegistrationChanged(vehicleRegistration: string) {
     this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
   }
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
   closeVehicleChecksModal = () => {
     this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
+  }
+
+  setupSubscription() {
+    const {
+      testCategory$,
+    } = this.pageState;
+
+    this.subscription = merge(
+      testCategory$.pipe(map(result => this.testCategory = result)),
+    ).subscribe();
   }
 
   onSubmit() {
