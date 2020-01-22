@@ -52,7 +52,7 @@ Feature: Practice mode
     And the candidate enters a new email address
     And I proceed to the car
     Then I should see the "Jeremy Craig" page
-    And I complete the waiting room to car page with a tell me driver fault 
+    And I complete the waiting room to car page with a tell me driver fault
     Then I should see the "Test report - Jeremy Craig" page
     And the driver fault count is "1"
     When I add a "Accelerator" driver fault
