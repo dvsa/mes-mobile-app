@@ -5,12 +5,13 @@ import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { FormGroup } from '@angular/forms';
 import { EyesightTestComponent } from '../eyesight-test';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('EyesightTestComponent', () => {
   let fixture: ComponentFixture<EyesightTestComponent>;
   let component: EyesightTestComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         EyesightTestComponent,
@@ -19,13 +20,13 @@ describe('EyesightTestComponent', () => {
         IonicModule,
         AppModule,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(EyesightTestComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(EyesightTestComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
   }));
 
   describe('DOM', () => {

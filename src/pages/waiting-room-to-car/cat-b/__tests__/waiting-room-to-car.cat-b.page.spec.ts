@@ -40,13 +40,14 @@ import { TellMeQuestionOutcomeComponent } from '../components/tell-me-question-o
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { InstructorRegistrationComponent } from '../components/instructor-registration/instructor-registration';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('WaitingRoomToCarCatBPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatBPage>;
   let component: WaitingRoomToCarCatBPage;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         WaitingRoomToCarCatBPage,
@@ -108,12 +109,12 @@ describe('WaitingRoomToCarCatBPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: QuestionProvider, useClass: QuestionProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomToCarCatBPage);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(WaitingRoomToCarCatBPage);
+    component = fixture.componentInstance;
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));

@@ -20,13 +20,14 @@ import {
   TellMeQuestionOutcomeChanged,
 } from '../../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleChecksCatCModal', () => {
   let fixture: ComponentFixture<VehicleChecksCatCModal>;
   let component: VehicleChecksCatCModal;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksCatCModal,
@@ -43,15 +44,14 @@ describe('VehicleChecksCatCModal', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleChecksCatCModal);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleChecksCatCModal);
+    component = fixture.componentInstance;
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
-
   }));
 
   describe('Class', () => {
