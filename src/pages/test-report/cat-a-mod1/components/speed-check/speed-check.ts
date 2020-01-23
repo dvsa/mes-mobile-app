@@ -23,7 +23,7 @@ export class SpeedCheckComponent {
   ngOnDestroy(): void { }
 
   // todo: PREP-AMOD1 MES - 4419 implement
-  toggleNotMet():void { }
+  toggleNotMet(): void { }
 
   getLabel = (): string => speedCheckLabels[this.competency];
 

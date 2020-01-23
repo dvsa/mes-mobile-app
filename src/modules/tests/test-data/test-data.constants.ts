@@ -44,6 +44,8 @@ export enum Competencies {
   slowControl = 'slowControl',
   uTurnExercise = 'uTurnExercise',
   controlledStop = 'controlledStop',
+  speedCheckEmergency = 'speedCheckEmergency',
+  speedCheckAvoidance = 'speedCheckAvoidance',
 }
 
 export enum ManoeuvreTypes {
