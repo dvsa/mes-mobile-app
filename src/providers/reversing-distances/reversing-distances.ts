@@ -4,13 +4,14 @@ import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { ReversingLengths } from './reversing-lengths.model';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 
 export type CatCVehicleDetailsUnion =
   | CatCUniqueTypes.VehicleDetails
   | CatC1UniqueTypes.VehicleDetails
   | CatCEUniqueTypes.VehicleDetails
-  | CatC1UniqueTypes.VehicleDetails;
+  | CatC1EUniqueTypes.VehicleDetails;
 
 @Injectable()
 export class ReversingDistancesProvider {

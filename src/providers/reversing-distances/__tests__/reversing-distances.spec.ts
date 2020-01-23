@@ -36,7 +36,7 @@ describe('ReversingDistancesProvider', () => {
         expect(result.startDistance).toEqual(52.5);
       });
 
-      it('should return a value 3 and a half times vehicle length is greater then 16.5', () => {
+      it('should return a value 3 and a half times vehicle length if greater than 16.5', () => {
         const result = reversingDistancesProvider.getDistanceLength(longVehicleDetails, TestCategory.C);
         expect(result.startDistance).toEqual(70);
       });
@@ -53,7 +53,7 @@ describe('ReversingDistancesProvider', () => {
         expect(result.startDistance).toEqual(60);
       });
 
-      it('should return a start distance of 66 if the vehicle length is greater then 16.5', () => {
+      it('should return a start distance of 66 if the vehicle length is greater than 16.5', () => {
         const result = reversingDistancesProvider.getDistanceLength(longVehicleDetails, TestCategory.CE);
         expect(result.startDistance).toEqual(66);
       });
@@ -70,7 +70,7 @@ describe('ReversingDistancesProvider', () => {
         expect(result.startDistance).toEqual(52.5);
       });
 
-      it('should return a value 3 and a half times vehicle length is greater then 16.5', () => {
+      it('should return a value 3 and a half times vehicle length if greater than 16.5', () => {
         const result = reversingDistancesProvider.getDistanceLength(longVehicleDetails, TestCategory.C1);
         expect(result.startDistance).toEqual(70);
       });
@@ -87,7 +87,7 @@ describe('ReversingDistancesProvider', () => {
         expect(result.startDistance).toEqual(60);
       });
 
-      it('should return a start distance of 66 if the vehicle length is greater then 16.5', () => {
+      it('should return a start distance of 66 if the vehicle length is greater than 16.5', () => {
         const result = reversingDistancesProvider.getDistanceLength(longVehicleDetails, TestCategory.C1E);
         expect(result.startDistance).toEqual(66);
       });
