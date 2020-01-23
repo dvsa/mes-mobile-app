@@ -1,6 +1,7 @@
 import { Then, When, Before } from 'cucumber';
-import { getElement, clickElement, nativeTextEntry } from './generic-steps';
+import { getElement, clickElement } from './generic-steps';
 import { by } from 'protractor';
+import { textFieldInputViaNativeMode } from '../../helpers/helpers'; 
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -21,7 +22,7 @@ When('I end the debrief', () => {
 });
 
 When('I complete the pass details', () => {
-  nativeTextEntry('Pass certificate number', 'A123456X');
+  textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
 
   const licenceRecievedRadio = getElement(by.id('license-received'));
   clickElement(licenceRecievedRadio);

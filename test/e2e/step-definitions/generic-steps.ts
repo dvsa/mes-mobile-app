@@ -2,6 +2,7 @@ import { Before } from 'cucumber';
 import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
 import { waitForOverlay } from '../../helpers/helpers'; 
+import { getParentContext } from '../../helpers/helpers'; 
 
 const {
   Given,
@@ -66,9 +67,8 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
   buttonElement.isPresent().then((isStartPresent) => {
     if (!isStartPresent) {
       // Go back to dashboard
-      waitForOverlay('click-block-active')
-      const backButton = getElement(by.xpath('//page-journal//button//span[text()="Back"]'));
-      clickElement(backButton);
+      waitForOverlay('click-block-active');
+      clickBackButton();
       // Logout
       logout();
       // Login
@@ -208,6 +208,15 @@ Then(/^the (communication page|waiting room|debrief|health declaration) candidat
   const candidateDriverNumberElement = getElement(
     by.xpath(`//div[contains(@class, '${getPageType(pageName)}')]//h3[@id = 'candidate-driver-number']`));
   return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
+});
+
+Then('I return to the Journal Page', () => {
+  const returnToJournalBtn = getElement(by.xpath('//*[@id="back-to-office-page"]//div[3]/button/span'));
+  clickElement(returnToJournalBtn);
+});
+
+When('I click the back button', () => {
+  clickBackButton(); 
 });
 
 /**
@@ -430,23 +439,7 @@ const getPageType = (pageName : string) => {
   }
 };
 
-export const getParentContext = (currentContext: string) => {
-  return `${currentContext.substring(0, currentContext.indexOf('.'))}.1`;
-};
-
-export const nativeTextEntry = (fieldLabel: string, fieldValue: string) => {
-  // Swtiches to native mode and enters the text
-  browser.driver.getCurrentContext().then((webviewContext) => {
-    // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP').then(() => {
-      const nativeField = element(by.xpath(`//XCUIElementTypeOther[XCUIElementTypeOther[
-          @name="${fieldLabel}"]]/following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField`));
-      nativeField.sendKeys(fieldValue);
-
-      // Switch back to WEBVIEW context
-      browser.driver.selectContext(getParentContext(webviewContext)).then(() => {
-        browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
-      });
-    });
-  });
+const clickBackButton = () => {
+  const backButton = getElement(by.xpath('//page-journal//button//span[text()="Back"]'));
+  clickElement(backButton);
 };
