@@ -15,6 +15,11 @@ interface DrivingFaultSummaryState {
   count$: Observable<number>;
 }
 
+enum driverType {
+  R = 'R',
+  D = 'D',
+}
+
 @Component({
   selector: 'driving-fault-summary',
   templateUrl: 'driving-fault-summary.html',
@@ -23,6 +28,7 @@ export class DrivingFaultSummaryComponent implements OnInit {
 
   componentState: DrivingFaultSummaryState;
   subscription: Subscription;
+  driverRiderFlag: driverType;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -42,6 +48,7 @@ export class DrivingFaultSummaryComponent implements OnInit {
         select(getTestData),
         withLatestFrom(category$),
         map(([testData, category]) => {
+          this.driverRiderFlag = this.driverTypeSwitch(category as TestCategory);
           return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
         }),
       ),
@@ -58,6 +65,17 @@ export class DrivingFaultSummaryComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  driverTypeSwitch(cat: string): driverType {
+    // switch to determine Driver or Rider based upon category
+    let type: driverType;
+    if (cat.includes('EUA')) {
+      type = driverType.R;
+    } else {
+      type = driverType.D;
+    }
+    return type;
   }
 
 }
