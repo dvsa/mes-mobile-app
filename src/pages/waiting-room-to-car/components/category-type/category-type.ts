@@ -45,7 +45,7 @@ export class CategoryTypeComponent implements OnChanges {
       for (let index = 0; index < options.length; index++) {
         const element = options[index];
         const category = this.bikeCategoryDetails[index].categoryCode;
-        const bike = this.bikeCategoryDetailProvider.getBikeDetail(category);
+        const bike = this.bikeCategoryDetailProvider.getDetailByCategoryCode(category);
         element.innerHTML = element.innerHTML
           .concat(`<span>${bike.displayName}</span> <img class="bike-image" src="${bike.imageUrl}" />`);
       }
@@ -67,7 +67,7 @@ export class CategoryTypeComponent implements OnChanges {
   }
 
   ngOnInit(): void {
-    this.bikeCategoryDetails = this.bikeCategoryDetailProvider.getCategoryDetailsByTestType('MOD1');
+    this.bikeCategoryDetails = this.bikeCategoryDetailProvider.getAllDetailsByTestType('MOD1');
   }
 
 }
