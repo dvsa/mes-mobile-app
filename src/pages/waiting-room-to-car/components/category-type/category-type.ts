@@ -1,6 +1,8 @@
 import { Component, OnChanges, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Select } from 'ionic-angular';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { BikeCategoryIconProvider } from '../../../../providers/bike-category-icon/bike-category-icon';
 
 @Component({
   selector: 'category-type',
@@ -18,36 +20,21 @@ export class CategoryTypeComponent implements OnChanges {
 
   formControl: FormControl;
 
-  categories: any[] = [
-    {
-      code: 'AM',
-      description: 'Motorcycle',
-      imageUrl: '',
-    },
-    {
-      code: 'A1',
-      description: 'Motorcycle',
-      imageUrl: '',
-    },
-    {
-      code: 'A2',
-      description: 'Motorcycle',
-      imageUrl: '',
-    },
-    {
-      code: 'A',
-      description: 'Motorcycle',
-      imageUrl: '',
-    }
+  categories: CategoryCode[] = [
+    'EUA1M1',
+    'EUA2M1',
+    'EUAM1',
+    'EUAMM1',
   ];
 
   categorySelectOptions: any = {
     cssClass: 'selector-header',
   };
 
-  imagePath: string = 'src/assets/imgs/motorbike.png';
+  //imagePath: string = 'src/assets/imgs/motorbike.png';
 
   constructor(
+    private bikeCategoryIconProvider: BikeCategoryIconProvider
   ) { }
 
   openCategorySelector() {
@@ -60,13 +47,21 @@ export class CategoryTypeComponent implements OnChanges {
   }
 
   loadImages() {
-    setTimeout(function() {
+    setTimeout(() =>  {
       let options= document.getElementsByClassName('alert-radio-label');
       for (let index = 0; index < options.length; index++) {
         let element = options[index];
-        element.innerHTML=element.innerHTML.concat('A1 &emsp; &emsp; Motorbike <img class="bike-image" src="assets/imgs/img_icon_bike-A.png" />');
+        let category = this.categories[index];
+        console.log(this.categories[index]);
+        let imagePath = this.bikeCategoryIconProvider.getBikeIcon(category);
+        console.log(imagePath);
+        element.innerHTML=element.innerHTML.concat(`A1 &emsp; Motorbike <img class="bike-image" src="${imagePath}" />`);
       }
     }, 200);
+  }
+
+  pickCategoryImage(category: CategoryCode) {
+
   }
 
   ngOnChanges(): void {
