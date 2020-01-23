@@ -64,7 +64,7 @@ export class CategoryTypeComponent implements OnChanges {
       let options= document.getElementsByClassName('alert-radio-label');
       for (let index = 0; index < options.length; index++) {
         let element = options[index];
-        element.innerHTML=element.innerHTML.concat('<img class="bike-image" src="assets/imgs/motorbike.png" />');
+        element.innerHTML=element.innerHTML.concat('A1 &emsp; &emsp; Motorbike <img class="bike-image" src="assets/imgs/img_icon_bike-A.png" />');
       }
     }, 200);
   }
