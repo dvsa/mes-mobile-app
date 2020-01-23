@@ -4,12 +4,13 @@ import { PrivacyNoticeComponent } from '../privacy-notice';
 import { TranslateService, TranslateModule } from 'ng2-translate';
 import { translateServiceMock } from '../../../../../shared/__mocks__/translate';
 import { ConfigMock } from 'ionic-mocks';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PrivacyNoticeComponent', () => {
   let fixture: ComponentFixture<PrivacyNoticeComponent>;
   let component: PrivacyNoticeComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PrivacyNoticeComponent,
@@ -22,12 +23,12 @@ describe('PrivacyNoticeComponent', () => {
         { provide: TranslateService, useValue: translateServiceMock },
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(PrivacyNoticeComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(PrivacyNoticeComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

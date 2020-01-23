@@ -1,4 +1,3 @@
-
 import { IonicModule, Config, NavController } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
@@ -15,6 +14,7 @@ import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode
 import { testReportReducer } from '../../../test-report.reducer';
 import { DangerousTooltipComponent } from '../../dangerous-tooltip/dangerous-tooltip';
 import { TimerComponent } from '../../timer/timer';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ToolbarComponent', () => {
   let fixture: ComponentFixture<ToolbarComponent>;
@@ -22,7 +22,7 @@ describe('ToolbarComponent', () => {
   let store$: Store<StoreModel>;
   let storeDispatchSpy: jasmine.Spy;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ToolbarComponent,
@@ -39,14 +39,14 @@ describe('ToolbarComponent', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ToolbarComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        storeDispatchSpy = spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ToolbarComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    storeDispatchSpy = spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

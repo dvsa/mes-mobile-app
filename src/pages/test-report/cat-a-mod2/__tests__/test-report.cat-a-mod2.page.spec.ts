@@ -38,13 +38,14 @@ import { NavigationStateProvider } from '../../../../providers/navigation-state/
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { VehicleChecksComponent } from '../components/vehicle-checks/vehicle-checks';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestReportCatAMod2Page', () => {
   let fixture: ComponentFixture<TestReportCatAMod2Page>;
   let component: TestReportCatAMod2Page;
   let navController: NavController;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [TestReportCatAMod2Page,
         MockComponent(TickIndicatorComponent),
@@ -88,13 +89,13 @@ describe('TestReportCatAMod2Page', () => {
         { provide: TestReportValidatorProvider, useClass: TestReportValidatorProviderMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TestReportCatAMod2Page);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TestReportCatAMod2Page);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
   }));
 
   describe('Class', () => {

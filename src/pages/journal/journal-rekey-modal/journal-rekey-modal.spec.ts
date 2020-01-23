@@ -9,12 +9,13 @@ import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { LogHelper } from '../../../providers/logs/logsHelper';
 import { LogHelperMock } from '../../../providers/logs/__mocks__/logsHelper.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('JournalRekeyModal', () => {
   let fixture: ComponentFixture<JournalRekeyModal>;
   let component: JournalRekeyModal;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         JournalRekeyModal,
@@ -30,15 +31,18 @@ describe('JournalRekeyModal', () => {
         { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: LogHelper, useClass: LogHelperMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(JournalRekeyModal);
-        component = fixture.componentInstance;
-        component.onStartTest = () => { };
-        component.onRekeyTest = () => { };
-        component.onCancel = () => { };
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(JournalRekeyModal);
+    component = fixture.componentInstance;
+    component.onStartTest = () => {
+    };
+    component.onRekeyTest = () => {
+    };
+    component.onCancel = () => {
+    };
   }));
 
   describe('DOM', () => {

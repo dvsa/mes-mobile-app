@@ -25,6 +25,7 @@ import * as applicationReferenceActions
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Waiting Room To Car Analytics Effects', () => {
 
@@ -41,8 +42,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
     checkDigit: 9,
   };
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -56,6 +56,10 @@ describe('Waiting Room To Car Analytics Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(WaitingRoomToCarAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);

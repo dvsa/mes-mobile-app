@@ -44,6 +44,7 @@ import { SetExaminerKeyed } from '../examiner-keyed/examiner-keyed.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateTestCategory } from '../category/category.actions';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Tests Effects', () => {
 
@@ -54,8 +55,7 @@ describe('Tests Effects', () => {
   let navigationStateProviderMock: NavigationStateProviderMock;
   let authenticationProviderMock: AuthenticationProviderMock;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -76,6 +76,10 @@ describe('Tests Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(TestsEffects);
     testPersistenceProviderMock = TestBed.get(TestPersistenceProvider);
     navigationStateProviderMock = TestBed.get(NavigationStateProvider);

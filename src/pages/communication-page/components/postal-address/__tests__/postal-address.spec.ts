@@ -1,7 +1,6 @@
 import { PostalAddressComponent } from '../postal-address';
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../../../shared/models/store.model';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { AppModule, createTranslateLoader } from '../../../../../app/app.module';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
@@ -18,6 +17,8 @@ import { TranslateModule, TranslateLoader, TranslateService } from 'ng2-translat
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import { candidateMock } from '../../../../../modules/tests/__mocks__/tests.mock';
+import { configureTestSuite } from 'ng-bullet';
+import { StoreModel } from '../../../../../shared/models/store.model';
 
 describe('PostalAddressComponent', () => {
   let fixture: ComponentFixture<PostalAddressComponent>;
@@ -34,7 +35,7 @@ describe('PostalAddressComponent', () => {
     postcode: 'AB12 3CD',
   };
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PostalAddressComponent,
@@ -80,17 +81,16 @@ describe('PostalAddressComponent', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(PostalAddressComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+    });
+  });
 
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(PostalAddressComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {

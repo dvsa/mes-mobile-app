@@ -1,4 +1,3 @@
-
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { FaultCommentComponent } from '../fault-comment';
 import { IonicModule } from 'ionic-angular';
@@ -14,14 +13,16 @@ import {
 } from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
 import { FormGroup, FormControl } from '@angular/forms';
 import { OutcomeBehaviourMapProvider } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../../../../../pages/office/office-behaviour-map';
+import { behaviourMap } from '../../../office-behaviour-map';
 import { CommentSource } from '../../../../../shared/models/fault-marking.model';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('FaultCommentComponent', () => {
   let fixture: ComponentFixture<FaultCommentComponent>;
   let component: FaultCommentComponent;
   let behaviourMapProvider: OutcomeBehaviourMapProvider;
-  beforeEach(async(() => {
+
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         FaultCommentComponent,
@@ -36,17 +37,17 @@ describe('FaultCommentComponent', () => {
       providers: [
         { provide: OutcomeBehaviourMapProvider, useClass: OutcomeBehaviourMapProvider },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(FaultCommentComponent);
-        behaviourMapProvider = TestBed.get(OutcomeBehaviourMapProvider);
-        behaviourMapProvider.setBehaviourMap(behaviourMap);
-        component = fixture.componentInstance;
-        component.parentForm = new FormGroup({});
-        const control = new FormControl(null);
-        component.parentForm.addControl(`faultComment-${CommentSource.SIMPLE}-driving-id`, control);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(FaultCommentComponent);
+    behaviourMapProvider = TestBed.get(OutcomeBehaviourMapProvider);
+    behaviourMapProvider.setBehaviourMap(behaviourMap);
+    component = fixture.componentInstance;
+    component.parentForm = new FormGroup({});
+    const control = new FormControl(null);
+    component.parentForm.addControl(`faultComment-${CommentSource.SIMPLE}-driving-id`, control);
   }));
 
   describe('DOM', () => {
@@ -127,8 +128,8 @@ describe('FaultCommentComponent', () => {
 
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(component.parentForm.
-        get(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`).validator).toBeNull();
+      expect(component.parentForm
+        .get(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`).validator).toBeNull();
     });
 
     it('should pass the fault count down to the driving-fault-badge', () => {

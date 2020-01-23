@@ -2,18 +2,22 @@ import { TestBed } from '@angular/core/testing';
 import { DeviceAuthenticationProvider } from '../device-authentication';
 import { Platform } from 'ionic-angular';
 import { PlatformMock } from 'ionic-mocks';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Device Authentication Provider', () => {
 
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         DeviceAuthenticationProvider,
         { provide: Platform, useFactory: () => PlatformMock.instance() },
       ],
     });
+  });
+
+  beforeEach(() => {
     deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
   });
 

@@ -5,12 +5,13 @@ import { EventEmitter } from '@angular/core';
 import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate';
 import { FormGroup } from '@angular/forms';
 import { ResidencyDeclarationComponent } from '../residency-declaration';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ResidencyDeclarationComponent', () => {
   let fixture: ComponentFixture<ResidencyDeclarationComponent>;
   let component: ResidencyDeclarationComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ResidencyDeclarationComponent,
@@ -24,12 +25,12 @@ describe('ResidencyDeclarationComponent', () => {
         TranslateLoader,
         TranslateParser,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ResidencyDeclarationComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ResidencyDeclarationComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

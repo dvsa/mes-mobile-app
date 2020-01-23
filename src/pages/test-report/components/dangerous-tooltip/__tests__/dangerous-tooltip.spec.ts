@@ -1,21 +1,22 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { DangerousTooltipComponent } from '../dangerous-tooltip';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DangerousTooltipComponent', () => {
   let fixture: ComponentFixture<DangerousTooltipComponent>;
   let component: DangerousTooltipComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         DangerousTooltipComponent,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(DangerousTooltipComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DangerousTooltipComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

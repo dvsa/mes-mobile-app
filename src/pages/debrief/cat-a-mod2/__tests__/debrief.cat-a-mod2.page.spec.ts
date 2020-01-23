@@ -47,6 +47,7 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { of } from 'rxjs/observable/of';
 import { VehicleChecksCardCatAMod2Component } from '../components/vehicle-checks-card/vehicle-checks-card.cat-a-mod2';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DebriefCatAMod2Page', () => {
   let fixture: ComponentFixture<DebriefCatAMod2Page>;
@@ -64,23 +65,22 @@ describe('DebriefCatAMod2Page', () => {
     vehicleTypeCode: '',
   };
 
-  // TODO - PREP-AMOD2 - replace cat BE unique types
-  beforeEach(async(() => {
-    const exampleTestData: CatBEUniqueTypes.TestData  = {
-      dangerousFaults: {},
-      drivingFaults: {},
-      manoeuvres: {},
-      seriousFaults: {},
-      testRequirements: {},
-      ETA: {},
-      eco: {},
-      vehicleChecks: {
-        tellMeQuestions: [{}],
-        showMeQuestions: [{}],
-      },
-      uncoupleRecouple: {},
-    };
+  const exampleTestData: CatBEUniqueTypes.TestData  = {
+    dangerousFaults: {},
+    drivingFaults: {},
+    manoeuvres: {},
+    seriousFaults: {},
+    testRequirements: {},
+    ETA: {},
+    eco: {},
+    vehicleChecks: {
+      tellMeQuestions: [{}],
+      showMeQuestions: [{}],
+    },
+    uncoupleRecouple: {},
+  };
 
+  configureTestSuite(() => {
     // TODO - PREP-AMOD2 - replace test category
     TestBed.configureTestingModule({
       declarations: [DebriefCatAMod2Page, VehicleChecksCardCatAMod2Component],
@@ -130,17 +130,18 @@ describe('DebriefCatAMod2Page', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(DebriefCatAMod2Page);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch').and.callThrough();
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+    });
+  });
+
+  // TODO - PREP-AMOD2 - replace cat BE unique types
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DebriefCatAMod2Page);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch').and.callThrough();
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {
@@ -266,7 +267,7 @@ describe('DebriefCatAMod2Page', () => {
         const expectedDrivingFaultTranslation = (<any>welshTranslations).debrief.competencies.moveOffSafety;
         const expectedSeriousFaultTranslation = (<any>welshTranslations).debrief.competencies.useOfMirrorsSignalling;
         const expectedDangerousFaultTranslation =
-            (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
+          (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
 
         expect(drivingFaultLabel.innerHTML).toBe(expectedDrivingFaultTranslation);
         expect(seriousLabel.innerHTML).toBe(expectedSeriousFaultTranslation);

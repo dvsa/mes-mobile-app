@@ -3,12 +3,13 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
 import { VehicleChecksDataRowComponent } from '../vehicle-checks-data-row';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleChecksDataRowComponent', () => {
   let fixture: ComponentFixture<VehicleChecksDataRowComponent>;
   let component: VehicleChecksDataRowComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksDataRowComponent,
@@ -19,12 +20,12 @@ describe('VehicleChecksDataRowComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleChecksDataRowComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleChecksDataRowComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

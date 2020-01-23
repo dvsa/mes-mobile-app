@@ -16,6 +16,7 @@ import { Actions } from '@ngrx/effects';
 import { empty } from 'rxjs/Observable/empty';
 import { Observable } from 'rxjs/Observable';
 import { Competencies } from '../../../modules/tests/test-data/test-data.constants';
+import { configureTestSuite } from 'ng-bullet';
 
 export class TestActions extends Actions {
   constructor() {
@@ -34,8 +35,7 @@ describe('Test Office Data Effects', () => {
 
   const currentSlotId = '1234';
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
 
@@ -55,6 +55,10 @@ describe('Test Office Data Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(OfficeEffects);
   });
 

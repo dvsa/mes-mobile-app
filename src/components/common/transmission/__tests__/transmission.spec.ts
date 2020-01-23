@@ -1,14 +1,15 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
 import { TransmissionComponent } from '../transmission';
 import { TransmissionType } from '../../../../shared/models/transmission-type';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('transmissionComponent', () => {
   let fixture: ComponentFixture<TransmissionComponent>;
   let component: TransmissionComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         TransmissionComponent,
@@ -18,13 +19,13 @@ describe('transmissionComponent', () => {
       ],
       providers: [
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TransmissionComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TransmissionComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
   }));
 
   describe('Class', () => {

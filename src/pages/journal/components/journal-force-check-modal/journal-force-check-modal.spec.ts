@@ -5,12 +5,13 @@ import { IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('JournalForceCheckModal', () => {
   let fixture: ComponentFixture<JournalForceCheckModal>;
   let component: JournalForceCheckModal;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         JournalForceCheckModal,
@@ -24,13 +25,14 @@ describe('JournalForceCheckModal', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(JournalForceCheckModal);
-        component = fixture.componentInstance;
-        component.onCancel = () => { };
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(JournalForceCheckModal);
+    component = fixture.componentInstance;
+    component.onCancel = () => {
+    };
   }));
 
   describe('Class', () => {

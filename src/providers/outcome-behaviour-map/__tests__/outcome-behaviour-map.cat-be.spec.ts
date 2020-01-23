@@ -1,18 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 import { OutcomeBehaviourMapProvider } from '../outcome-behaviour-map';
 import { behaviourMap } from '../../../pages/office/office-behaviour-map.cat-be';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('OutcomeBehaviourMapProvider', () => {
   let outcomeBehaviourMapProvider: OutcomeBehaviourMapProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [],
       providers: [
         OutcomeBehaviourMapProvider,
       ],
     });
+  });
 
+  beforeEach(() => {
     outcomeBehaviourMapProvider = TestBed.get(OutcomeBehaviourMapProvider);
     outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
   });

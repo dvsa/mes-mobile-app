@@ -8,12 +8,13 @@ import { DataRowComponent } from '../../../../../../components/common/data-row/d
 import { DataRowCustomComponent } from '../../../../../../components/common/data-row-custom/data-row-custom';
 import { VehicleDetails } from '@dvsa/mes-test-schema/categories/common';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleDetailsCardComponent', () => {
   let fixture: ComponentFixture<VehicleDetailsCardComponent>;
   let component: VehicleDetailsCardComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleDetailsCardComponent,
@@ -26,12 +27,12 @@ describe('VehicleDetailsCardComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleDetailsCardComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleDetailsCardComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

@@ -41,6 +41,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DebriefCatBPage', () => {
   let fixture: ComponentFixture<DebriefCatBPage>;
@@ -60,7 +61,7 @@ describe('DebriefCatBPage', () => {
     vehicleTypeCode: '',
   };
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [DebriefCatBPage],
       imports: [
@@ -122,19 +123,19 @@ describe('DebriefCatBPage', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(DebriefCatBPage);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        store$ = TestBed.get(Store);
-        screenOrientation = TestBed.get(ScreenOrientation);
-        insomnia = TestBed.get(Insomnia);
-        spyOn(store$, 'dispatch').and.callThrough();
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DebriefCatBPage);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    store$ = TestBed.get(Store);
+    screenOrientation = TestBed.get(ScreenOrientation);
+    insomnia = TestBed.get(Insomnia);
+    spyOn(store$, 'dispatch').and.callThrough();
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('Class', () => {

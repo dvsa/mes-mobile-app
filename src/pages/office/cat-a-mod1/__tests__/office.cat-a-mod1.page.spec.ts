@@ -65,6 +65,7 @@ import { SetActivityCode } from '../../../../modules/tests/activity-code/activit
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('OfficeAMod1Page', () => {
   let fixture: ComponentFixture<OfficeCatAMod1Page>;
@@ -72,7 +73,7 @@ describe('OfficeAMod1Page', () => {
   let navController: NavController;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         OfficeCatAMod1Page,
@@ -150,13 +151,13 @@ describe('OfficeAMod1Page', () => {
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(OfficeCatAMod1Page);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(OfficeCatAMod1Page);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));

@@ -19,6 +19,7 @@ import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Debrief Analytics Effects', () => {
 
@@ -31,8 +32,7 @@ describe('Debrief Analytics Effects', () => {
   const screenNamePracticeModePass = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.PASS_DEBRIEF}`;
   const screenNamePracticeModeFail = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.FAIL_DEBRIEF}`;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -46,6 +46,10 @@ describe('Debrief Analytics Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(DebriefAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);

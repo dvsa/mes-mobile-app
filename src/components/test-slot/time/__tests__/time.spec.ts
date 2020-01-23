@@ -5,26 +5,27 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { LogHelper } from '../../../../providers/logs/logsHelper';
 import { LogHelperMock } from '../../../../providers/logs/__mocks__/logsHelper.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TimeComponent', () => {
   let component: TimeComponent;
   let fixture: ComponentFixture<TimeComponent>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [TimeComponent],
       imports: [IonicModule],
       providers: [
         { provide: LogHelper, useClass: LogHelperMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TimeComponent);
-        component = fixture.componentInstance;
-        component.time =  '2018-12-10T10:04:00+00:00';
-        component.testComplete = true;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TimeComponent);
+    component = fixture.componentInstance;
+    component.time = '2018-12-10T10:04:00+00:00';
+    component.testComplete = true;
   }));
 
   describe('DOM', () => {

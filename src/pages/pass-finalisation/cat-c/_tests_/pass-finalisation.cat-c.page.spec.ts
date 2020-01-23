@@ -38,13 +38,14 @@ import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
 import { Code78Component } from '../components/code-78/code-78';
 import { TransmissionType } from '../../../../shared/models/transmission-type';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PassFinalisationCatCPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatCPage>;
   let component: PassFinalisationCatCPage;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PassFinalisationCatCPage,
@@ -67,14 +68,14 @@ describe('PassFinalisationCatCPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(PassFinalisationCatCPage);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(PassFinalisationCatCPage);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

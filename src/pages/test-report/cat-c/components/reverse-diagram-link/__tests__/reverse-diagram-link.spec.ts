@@ -15,6 +15,7 @@ import {
   ReverseDiagramClosed,
 } from '../../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('reverseDiagramLink', () => {
   let fixture: ComponentFixture<ReverseDiagramLinkComponent>;
@@ -22,7 +23,7 @@ describe('reverseDiagramLink', () => {
   let modalController: ModalController;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [ReverseDiagramLinkComponent],
       imports: [
@@ -33,17 +34,16 @@ describe('reverseDiagramLink', () => {
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
         { provide: App, useClass: MockAppComponent },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ReverseDiagramLinkComponent);
-        component = fixture.componentInstance;
-        modalController = TestBed.get(ModalController);
-        store$ = TestBed.get(Store);
+    });
+  });
 
-        // // TODO: MES-4287 Change category to C
-        store$.dispatch(new StartTest(105, TestCategory.BE));
-      });
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ReverseDiagramLinkComponent);
+    component = fixture.componentInstance;
+    modalController = TestBed.get(ModalController);
+    store$ = TestBed.get(Store);
+    // // TODO: MES-4287 Change category to C
+    store$.dispatch(new StartTest(105, TestCategory.BE));
   }));
 
   describe('DOM', () => {

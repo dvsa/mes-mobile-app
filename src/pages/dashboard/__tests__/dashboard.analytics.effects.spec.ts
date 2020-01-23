@@ -7,6 +7,7 @@ import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/an
 import { AnalyticsScreenNames } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import * as dashboardActions from '../dashboard.actions';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Dashboard Analytics Effects', () => {
 
@@ -15,8 +16,7 @@ describe('Dashboard Analytics Effects', () => {
   let actions$: any;
   const screenName = AnalyticsScreenNames.DASHBOARD;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         DashboardAnalyticsEffects,
@@ -24,6 +24,10 @@ describe('Dashboard Analytics Effects', () => {
         provideMockActions(() => actions$),
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(DashboardAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
   });

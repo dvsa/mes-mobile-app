@@ -12,12 +12,13 @@ import { MockComponent } from 'ng-mocks';
 import { DisplayAddressComponent } from '../../../components/common/display-address/display-address';
 import { DataRowComponent } from '../../../components/common/data-row/data-row';
 import { DataRowCustomComponent } from '../../../components/common/data-row-custom/data-row-custom';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('CandidateDetailsPage', () => {
   let fixture: ComponentFixture<CandidateDetailsPage>;
   let component: CandidateDetailsPage;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         CandidateDetailsPage,
@@ -37,12 +38,12 @@ describe('CandidateDetailsPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(CandidateDetailsPage);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(CandidateDetailsPage);
+    component = fixture.componentInstance;
   }));
 
   describe('specialNeedsIsPopulated', () => {

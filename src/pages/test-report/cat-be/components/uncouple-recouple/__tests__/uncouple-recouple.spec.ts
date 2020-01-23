@@ -26,13 +26,14 @@ import {
 } from '../../../../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import { ToggleSeriousFaultMode } from '../../../../test-report.actions';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('UncoupleRecoupleComponent', () => {
   let fixture: ComponentFixture<UncoupleRecoupleComponent>;
   let component: UncoupleRecoupleComponent;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         UncoupleRecoupleComponent,
@@ -46,14 +47,14 @@ describe('UncoupleRecoupleComponent', () => {
         IonicModule,
         StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(UncoupleRecoupleComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(105, TestCategory.BE));
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(UncoupleRecoupleComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    store$.dispatch(new StartTest(105, TestCategory.BE));
   }));
 
   describe('Class', () => {

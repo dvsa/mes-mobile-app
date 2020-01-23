@@ -48,6 +48,7 @@ import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { JournalData } from '@dvsa/mes-test-schema/categories/common';
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('WaitingRoomCatBPage', () => {
   let fixture: ComponentFixture<WaitingRoomCatBPage>;
@@ -60,7 +61,7 @@ describe('WaitingRoomCatBPage', () => {
   let translate: TranslateService;
   let navController: NavController;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         WaitingRoomCatBPage,
@@ -118,22 +119,23 @@ describe('WaitingRoomCatBPage', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: App, useClass: MockAppComponent },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomCatBPage);
-        component = fixture.componentInstance;
-        deviceProvider = TestBed.get(DeviceProvider);
-        screenOrientation = TestBed.get(ScreenOrientation);
-        insomnia = TestBed.get(Insomnia);
-        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-        component.subscription = new Subscription();
-        navController = TestBed.get(NavController);
-      });
+    });
+
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(WaitingRoomCatBPage);
+    component = fixture.componentInstance;
+    deviceProvider = TestBed.get(DeviceProvider);
+    screenOrientation = TestBed.get(ScreenOrientation);
+    insomnia = TestBed.get(Insomnia);
+    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
+    component.subscription = new Subscription();
+    navController = TestBed.get(NavController);
   }));
 
   describe('Class', () => {

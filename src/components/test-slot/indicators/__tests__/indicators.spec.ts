@@ -3,19 +3,22 @@ import { IndicatorsComponent } from '../indicators';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('IndicatorsComponent', () => {
   let component: IndicatorsComponent;
   let fixture: ComponentFixture<IndicatorsComponent>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [IndicatorsComponent],
       imports: [IonicModule],
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(IndicatorsComponent);
-      component = fixture.componentInstance;
     });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(IndicatorsComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

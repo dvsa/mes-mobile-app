@@ -2,12 +2,13 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
 import { LicenseProvidedComponent } from '../license-provided';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('licenseProvidedComponent', () => {
   let fixture: ComponentFixture<LicenseProvidedComponent>;
   let component: LicenseProvidedComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         LicenseProvidedComponent,
@@ -17,13 +18,13 @@ describe('licenseProvidedComponent', () => {
       ],
       providers: [
       ],
-    })
-    .compileComponents()
-    .then(() => {
-      fixture = TestBed.createComponent(LicenseProvidedComponent);
-      component = fixture.componentInstance;
-      component.form = new FormGroup({});
     });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(LicenseProvidedComponent);
+    component = fixture.componentInstance;
+    component.form = new FormGroup({});
   }));
 
   describe('Class', () => {

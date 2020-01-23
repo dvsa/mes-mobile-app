@@ -22,12 +22,13 @@ import { NavigationStateProvider } from '../../../../../../providers/navigation-
 import {
   NavigationStateProviderMock,
 } from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ManoeuvresComponent', () => {
   let fixture: ComponentFixture<ManoeuvresComponent>;
   let component: ManoeuvresComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ManoeuvresComponent,
@@ -90,12 +91,12 @@ describe('ManoeuvresComponent', () => {
         { provide: DateTimeProvider, useCalss: DateTimeProviderMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ManoeuvresComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ManoeuvresComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('DOM', () => {

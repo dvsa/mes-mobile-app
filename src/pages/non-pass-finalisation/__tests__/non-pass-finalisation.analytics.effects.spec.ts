@@ -20,6 +20,7 @@ import { NonPassFinalisationAnalyticsEffects } from '../non-pass-finalisation.an
 import * as nonPassFinalisationActions from '../non-pass-finalisation.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Non Pass Finalisation Analytics Effects', () => {
 
@@ -31,8 +32,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
   // tslint:disable-next-line:max-line-length
   const practiceScreenName = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.NON_PASS_FINALISATION}`;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -46,6 +46,10 @@ describe('Non Pass Finalisation Analytics Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(NonPassFinalisationAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
@@ -94,7 +98,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(
             `${AnalyticsErrorTypes.VALIDATION_ERROR} (${AnalyticsScreenNames.NON_PASS_FINALISATION})`,
-          'error message');
+            'error message');
         done();
       });
     });
@@ -111,7 +115,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${practiceScreenName})`,
-          'error message');
+            'error message');
         done();
       });
     });

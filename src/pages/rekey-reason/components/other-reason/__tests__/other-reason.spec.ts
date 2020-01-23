@@ -4,11 +4,13 @@ import { IonicModule } from 'ionic-angular';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { FormGroup } from '@angular/forms';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('OtherReasonComponent', () => {
   let fixture: ComponentFixture<OtherReasonComponent>;
   let component: OtherReasonComponent;
-  beforeEach(async(() => {
+
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         OtherReasonComponent,
@@ -18,14 +20,14 @@ describe('OtherReasonComponent', () => {
         AppModule,
       ],
       providers: [],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(OtherReasonComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-        component.ngOnChanges();
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(OtherReasonComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
+    component.ngOnChanges();
   }));
 
   describe('class', () => {

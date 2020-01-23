@@ -18,6 +18,7 @@ import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('BackToOfficeCatAMod2Page', () => {
   let fixture: ComponentFixture<BackToOfficeCatAMod2Page>;
@@ -28,7 +29,7 @@ describe('BackToOfficeCatAMod2Page', () => {
   let insomnia: Insomnia;
   let deviceProvider: DeviceProvider;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         BackToOfficeCatAMod2Page,
@@ -92,18 +93,18 @@ describe('BackToOfficeCatAMod2Page', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(BackToOfficeCatAMod2Page);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        screenOrientation = TestBed.get(ScreenOrientation);
-        insomnia = TestBed.get(Insomnia);
-        deviceProvider = TestBed.get(DeviceProvider);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(BackToOfficeCatAMod2Page);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    screenOrientation = TestBed.get(ScreenOrientation);
+    insomnia = TestBed.get(Insomnia);
+    deviceProvider = TestBed.get(DeviceProvider);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

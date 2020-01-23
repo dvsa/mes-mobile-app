@@ -8,12 +8,28 @@ import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestPersistenceProvider', () => {
   let testPersistenceProvider: TestPersistenceProvider;
   let dataStoreProvider;
   let testState: TestsModel;
   const todaysDate = new DateTime().format('YYYY-MM-DDTHH:mm:ss');
+
+  configureTestSuite(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        TestPersistenceProvider,
+        { provide: DataStoreProvider, useClass: DataStoreProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+      ],
+      imports: [
+        StoreModule.forRoot({
+          tests: () => testState,
+        }),
+      ],
+    });
+  });
 
   beforeEach(() => {
     testState =  {
@@ -91,19 +107,6 @@ describe('TestPersistenceProvider', () => {
         23456789: TestStatus.Booked,
       },
     };
-
-    TestBed.configureTestingModule({
-      providers: [
-        TestPersistenceProvider,
-        { provide: DataStoreProvider, useClass: DataStoreProviderMock },
-        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
-      ],
-      imports: [
-        StoreModule.forRoot({
-          tests: () => testState,
-        }),
-      ],
-    });
     testPersistenceProvider = TestBed.get(TestPersistenceProvider);
     dataStoreProvider = TestBed.get(DataStoreProvider);
   });

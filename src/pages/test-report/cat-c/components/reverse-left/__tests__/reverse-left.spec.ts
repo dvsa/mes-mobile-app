@@ -19,13 +19,14 @@ import { ReverseLeftPopoverClosed, ReverseLeftPopoverOpened } from '../reverse-l
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 import { AppModule } from '../../../../../../app/app.module';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('reverseLeftComponent', () => {
   let fixture: ComponentFixture<ReverseLeftComponent>;
   let component: ReverseLeftComponent;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ReverseLeftComponent,
@@ -43,15 +44,15 @@ describe('reverseLeftComponent', () => {
       providers: [
         FaultCountProvider,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ReverseLeftComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        // TODO: MES-4287 use category C
-        store$.dispatch(new StartTest(105, TestCategory.BE));
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ReverseLeftComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    // TODO: MES-4287 use category C
+    store$.dispatch(new StartTest(105, TestCategory.BE));
   }));
 
   describe('DOM', () => {

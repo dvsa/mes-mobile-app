@@ -5,13 +5,14 @@ import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { FindUserProvider } from '../find-user';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('FindUserProvider', () => {
 
   let findUserProvider: FindUserProvider;
   let httpMock: HttpTestingController;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -22,7 +23,9 @@ describe('FindUserProvider', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     });
+  });
 
+  beforeEach(() => {
     httpMock = TestBed.get(HttpTestingController);
     findUserProvider = TestBed.get(FindUserProvider);
   });

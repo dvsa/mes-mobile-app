@@ -8,6 +8,7 @@ import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { CAT_B } from '../../../../page-names.constants';
 import { SetActivityCode } from '../../../../../modules/tests/activity-code/activity-code.actions';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('eyesight failure confirmation component', () => {
   let fixture: ComponentFixture<EyesightFailureConfirmationComponent>;
@@ -15,7 +16,7 @@ describe('eyesight failure confirmation component', () => {
   let navController: NavController;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         EyesightFailureConfirmationComponent,
@@ -30,15 +31,15 @@ describe('eyesight failure confirmation component', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(EyesightFailureConfirmationComponent);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(EyesightFailureConfirmationComponent);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('DOM', () => {

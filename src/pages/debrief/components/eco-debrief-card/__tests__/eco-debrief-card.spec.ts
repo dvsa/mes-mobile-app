@@ -7,31 +7,31 @@ import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
 import { EcoDebriefCardComponent } from '../eco-debrief-card';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('EcoDebriefCardComponent', () => {
   let fixture: ComponentFixture<EcoDebriefCardComponent>;
   let component: EcoDebriefCardComponent;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [EcoDebriefCardComponent],
       imports: [
         IonicModule,
         AppModule,
         ComponentsModule,
-        StoreModule.forRoot({
-        }),
+        StoreModule.forRoot({}),
         TranslateModule,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(EcoDebriefCardComponent);
-        component = fixture.componentInstance;
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(EcoDebriefCardComponent);
+    component = fixture.componentInstance;
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {

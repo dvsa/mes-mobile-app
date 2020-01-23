@@ -33,6 +33,7 @@ import { TransferComponent } from '../../components/transfer/transfer';
 import { OtherReasonComponent } from '../../components/other-reason/other-reason';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('RekeyReasonCatBEPage', () => {
   let fixture: ComponentFixture<RekeyReasonCatBEPage>;
@@ -42,7 +43,7 @@ describe('RekeyReasonCatBEPage', () => {
   let modalController: ModalController;
   let store$: Store<AppInfoModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         RekeyReasonCatBEPage,
@@ -119,15 +120,15 @@ describe('RekeyReasonCatBEPage', () => {
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
         Store,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(RekeyReasonCatBEPage);
-        component = fixture.componentInstance;
-        loadingController = TestBed.get(LoadingController);
-        navContoller = TestBed.get(NavController);
-        modalController = TestBed.get(ModalController);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(RekeyReasonCatBEPage);
+    component = fixture.componentInstance;
+    loadingController = TestBed.get(LoadingController);
+    navContoller = TestBed.get(NavController);
+    modalController = TestBed.get(ModalController);
     store$ = TestBed.get(Store);
   }));
 

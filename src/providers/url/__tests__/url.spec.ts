@@ -2,19 +2,22 @@ import { TestBed } from '@angular/core/testing';
 import { UrlProvider } from '../url';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('UrlProvider', () => {
 
   let urlProvider: UrlProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         UrlProvider,
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     });
+  });
 
+  beforeEach(() => {
     urlProvider = TestBed.get(UrlProvider);
   });
 

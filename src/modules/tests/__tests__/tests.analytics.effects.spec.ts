@@ -27,6 +27,7 @@ import { NavigationStateProviderMock } from '../../../providers/navigation-state
 import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
 import { candidateMock } from '../__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Tests Analytics Effects', () => {
 
@@ -41,8 +42,7 @@ describe('Tests Analytics Effects', () => {
     checkDigit: 9,
   };
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -57,6 +57,10 @@ describe('Tests Analytics Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(TestsAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     navigationStateProviderMock = TestBed.get(NavigationStateProvider);

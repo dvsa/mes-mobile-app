@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
@@ -9,6 +9,7 @@ import {
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { RekeySearchAnalyticsEffects } from '../rekey-search.analytics.effects';
 import * as rekeySearchActions from '../rekey-search.actions';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Rekey Search Analytics Effects', () => {
 
@@ -17,8 +18,7 @@ describe('Rekey Search Analytics Effects', () => {
   let actions$: any;
   const screenName = AnalyticsScreenNames.REKEY_SEARCH;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         RekeySearchAnalyticsEffects,
@@ -26,9 +26,13 @@ describe('Rekey Search Analytics Effects', () => {
         provideMockActions(() => actions$),
       ],
     });
+  });
+
+  beforeEach(async(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(RekeySearchAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
-  });
+  }));
 
   describe('rekeySearchViewDidEnter', () => {
     it('should call setCurrentPage', (done) => {

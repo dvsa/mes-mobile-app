@@ -45,6 +45,7 @@ import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('WaitingRoomCatCPage', () => {
   let fixture: ComponentFixture<WaitingRoomCatCPage>;
@@ -56,7 +57,7 @@ describe('WaitingRoomCatCPage', () => {
   let translate: TranslateService;
   let navController: NavController;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         WaitingRoomCatCPage,
@@ -112,21 +113,21 @@ describe('WaitingRoomCatCPage', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: App, useClass: MockAppComponent },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomCatCPage);
-        component = fixture.componentInstance;
-        screenOrientation = TestBed.get(ScreenOrientation);
-        insomnia = TestBed.get(Insomnia);
-        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-        component.subscription = new Subscription();
-        navController = TestBed.get(NavController);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(WaitingRoomCatCPage);
+    component = fixture.componentInstance;
+    screenOrientation = TestBed.get(ScreenOrientation);
+    insomnia = TestBed.get(Insomnia);
+    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
+    component.subscription = new Subscription();
+    navController = TestBed.get(NavController);
   }));
 
   describe('Class', () => {

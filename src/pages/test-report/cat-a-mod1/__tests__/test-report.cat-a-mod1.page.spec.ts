@@ -39,13 +39,14 @@ import { CAT_A_MOD1 } from '../../../page-names.constants';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestReportCatAMod1Page', () => {
   let fixture: ComponentFixture<TestReportCatAMod1Page>;
   let component: TestReportCatAMod1Page;
   let navController: NavController;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [TestReportCatAMod1Page,
         MockComponent(TickIndicatorComponent),
@@ -88,13 +89,13 @@ describe('TestReportCatAMod1Page', () => {
         { provide: TestReportValidatorProvider, useClass: TestReportValidatorProviderMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TestReportCatAMod1Page);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TestReportCatAMod1Page);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
   }));
 
   describe('Class', () => {

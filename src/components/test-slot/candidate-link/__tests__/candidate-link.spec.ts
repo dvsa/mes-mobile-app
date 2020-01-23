@@ -22,8 +22,10 @@ import { CANDIDATE_DETAILS_PAGE, FAKE_CANDIDATE_DETAILS_PAGE } from '../../../..
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 import { bookedTestSlotMock } from '../../../../shared/mocks/test-slot-data.mock';
+import { configureTestSuite } from 'ng-bullet';
 
-class MockStore { }
+class MockStore {
+}
 
 describe('CandidateLinkComponent', () => {
   let component: CandidateLinkComponent;
@@ -31,7 +33,7 @@ describe('CandidateLinkComponent', () => {
 
   const modalControllerMock = ModalControllerMock.instance();
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [CandidateLinkComponent],
       imports: [IonicModule.forRoot(CandidateLinkComponent)],
@@ -44,19 +46,19 @@ describe('CandidateLinkComponent', () => {
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: TranslateService, useValue: translateServiceMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(CandidateLinkComponent);
-        component = fixture.componentInstance;
-        component.name = { title: '', firstName: '', lastName: '' };
-        component.name.title = 'Mr';
-        component.name.firstName = 'Joe';
-        component.name.lastName = 'Bloggs';
-        component.slot = bookedTestSlotMock;
-        component.slotChanged = false;
-        component.isPortrait = true;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(CandidateLinkComponent);
+    component = fixture.componentInstance;
+    component.name = { title: '', firstName: '', lastName: '' };
+    component.name.title = 'Mr';
+    component.name.firstName = 'Joe';
+    component.name.lastName = 'Bloggs';
+    component.slot = bookedTestSlotMock;
+    component.slotChanged = false;
+    component.isPortrait = true;
   }));
 
   describe('Class', () => {

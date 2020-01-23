@@ -3,7 +3,7 @@ import * as fakeJournalActions from '../fake-journal.actions';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { provideMockActions } from '@ngrx/effects/testing';
 import {
@@ -18,14 +18,14 @@ import { PopulateTestCentre } from '../../../modules/tests/journal-data/common/t
 import { SetTestStatusBooked } from '../../../modules/tests/test-status/test-status.actions';
 import { Application } from '@dvsa/mes-journal-schema';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Fake Journal Effects', () => {
   let effects: FakeJournalEffects;
   let actions$: ReplaySubject<{}>;
   let store$: Store<StoreModel>;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -38,9 +38,13 @@ describe('Fake Journal Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(async(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(FakeJournalEffects);
     store$ = TestBed.get(Store);
-  });
+  }));
 
   describe('startE2EPracticeTestEffect', () => {
     const testId = `${end2endPracticeSlotId}_1`;

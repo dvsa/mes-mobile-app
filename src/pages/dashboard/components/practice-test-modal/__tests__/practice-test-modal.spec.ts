@@ -4,12 +4,13 @@ import { IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PracticeTestModal', () => {
   let fixture: ComponentFixture<PracticeTestModal>;
   let component: PracticeTestModal;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PracticeTestModal,
@@ -22,15 +23,18 @@ describe('PracticeTestModal', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(PracticeTestModal);
-        component = fixture.componentInstance;
-        component.onCancel = () => {};
-        component.onNoFault = () => {};
-        component.onFault = () => {};
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(PracticeTestModal);
+    component = fixture.componentInstance;
+    component.onCancel = () => {
+    };
+    component.onNoFault = () => {
+    };
+    component.onFault = () => {
+    };
   }));
 
   describe('DOM', () => {

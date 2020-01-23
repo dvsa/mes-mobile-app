@@ -15,6 +15,7 @@ import { ExaminerRole } from '../../../providers/app-config/constants/examiner-r
 import { App } from '../../../app/app.component';
 import { MockAppComponent } from '../../../app/__mocks__/app.component.mock';
 import { ComponentsModule } from '../../../components/common/common-components.module';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestResultsSearchPage', () => {
   let fixture: ComponentFixture<TestResultsSearchPage>;
@@ -22,7 +23,7 @@ describe('TestResultsSearchPage', () => {
   let modalController: ModalController;
   let appConfigProviderMock: AppConfigProvider;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         TestResultsSearchPage,
@@ -44,14 +45,14 @@ describe('TestResultsSearchPage', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: App, useClass: MockAppComponent },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TestResultsSearchPage);
-        component = fixture.componentInstance;
-        modalController = TestBed.get(ModalController);
-        appConfigProviderMock = TestBed.get(AppConfigProvider);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TestResultsSearchPage);
+    component = fixture.componentInstance;
+    modalController = TestBed.get(ModalController);
+    appConfigProviderMock = TestBed.get(AppConfigProvider);
   }));
 
   describe('DOM', () => {

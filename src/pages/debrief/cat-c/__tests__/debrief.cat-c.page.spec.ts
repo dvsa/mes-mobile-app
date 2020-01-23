@@ -39,6 +39,7 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { of } from 'rxjs/observable/of';
 import { VehicleChecksCardCatCComponent } from '../components/vehicle-checks-card/vehicle-checks-card.cat-c';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DebriefCatCPage', () => {
   let fixture: ComponentFixture<DebriefCatCPage>;
@@ -56,21 +57,21 @@ describe('DebriefCatCPage', () => {
     vehicleTypeCode: '',
   };
 
-  beforeEach(async(() => {
-    const exampleTestData: CatCUniqueTypes.TestData  = {
-      dangerousFaults: {},
-      drivingFaults: {},
-      manoeuvres: {},
-      seriousFaults: {},
-      testRequirements: {},
-      ETA: {},
-      eco: {},
-      vehicleChecks: {
-        tellMeQuestions: [{}],
-        showMeQuestions: [{}],
-      },
-    };
+  const exampleTestData: CatCUniqueTypes.TestData = {
+    dangerousFaults: {},
+    drivingFaults: {},
+    manoeuvres: {},
+    seriousFaults: {},
+    testRequirements: {},
+    ETA: {},
+    eco: {},
+    vehicleChecks: {
+      tellMeQuestions: [{}],
+      showMeQuestions: [{}],
+    },
+  };
 
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [DebriefCatCPage, VehicleChecksCardCatCComponent],
       imports: [
@@ -119,17 +120,17 @@ describe('DebriefCatCPage', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(DebriefCatCPage);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch').and.callThrough();
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DebriefCatCPage);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch').and.callThrough();
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {
@@ -255,7 +256,7 @@ describe('DebriefCatCPage', () => {
         const expectedDrivingFaultTranslation = (<any>welshTranslations).debrief.competencies.moveOffSafety;
         const expectedSeriousFaultTranslation = (<any>welshTranslations).debrief.competencies.useOfMirrorsSignalling;
         const expectedDangerousFaultTranslation =
-            (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
+          (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
 
         expect(drivingFaultLabel.innerHTML).toBe(expectedDrivingFaultTranslation);
         expect(seriousLabel.innerHTML).toBe(expectedSeriousFaultTranslation);

@@ -9,12 +9,13 @@ import { BusinessDetailsCardComponent } from '../business-details-card';
 // TODO - Cat C
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { DisplayAddressComponent } from '../../../../../../components/common/display-address/display-address';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('BusinessDetailsCardComponent', () => {
   let fixture: ComponentFixture<BusinessDetailsCardComponent>;
   let component: BusinessDetailsCardComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         BusinessDetailsCardComponent,
@@ -29,12 +30,12 @@ describe('BusinessDetailsCardComponent', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(BusinessDetailsCardComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(BusinessDetailsCardComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

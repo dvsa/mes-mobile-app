@@ -5,19 +5,22 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { validTestCatBE, validTestCatB, validTestCatC  } from '../__mocks__/test-result.mock';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/common';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TestReportValidator', () => {
 
   let testReportValidatorProvider: TestReportValidatorProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         TestReportValidatorProvider,
         FaultCountProvider,
       ],
     });
+  });
 
+  beforeEach(() => {
     testReportValidatorProvider = TestBed.get(TestReportValidatorProvider);
   });
 

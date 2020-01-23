@@ -11,6 +11,7 @@ import { StartTest } from '../../tests.actions';
 import { SetExaminerBooked } from '../../examiner-booked/examiner-booked.actions';
 import { journalReducer } from '../../../journal/journal.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Examiner Conducted Effects', () => {
 
@@ -18,8 +19,7 @@ describe('Examiner Conducted Effects', () => {
   let actions$: any;
   let store$: Store<StoreModel>;
 
-  beforeEach(() => {
-    actions$ = new ReplaySubject(1);
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -33,6 +33,10 @@ describe('Examiner Conducted Effects', () => {
         Store,
       ],
     });
+  });
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
     effects = TestBed.get(ExaminerConductedEffects);
     store$ = TestBed.get(Store);
   });

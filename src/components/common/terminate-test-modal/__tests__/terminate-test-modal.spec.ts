@@ -12,13 +12,14 @@ import { By } from '@angular/platform-browser';
 import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
 // tslint:disable-next-line:max-line-length
 import { DeviceAuthenticationProviderMock } from '../../../../providers/device-authentication/__mocks__/device-authentication.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('TerminateTestModal', () => {
   let fixture: ComponentFixture<TerminateTestModal>;
   let component: TerminateTestModal;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [TerminateTestModal],
       imports: [IonicModule, AppModule],
@@ -31,15 +32,15 @@ describe('TerminateTestModal', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(TerminateTestModal);
-        component = fixture.componentInstance;
-        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
-        component.onTerminate = jasmine.createSpy('onTerminate');
-        component.onCancel = jasmine.createSpy('onCancel');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TerminateTestModal);
+    component = fixture.componentInstance;
+    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+    component.onTerminate = jasmine.createSpy('onTerminate');
+    component.onCancel = jasmine.createSpy('onCancel');
   }));
 
   describe('DOM', () => {

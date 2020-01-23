@@ -23,13 +23,14 @@ import { NavigationStateProvider } from '../../../../../../providers/navigation-
 import {
   NavigationStateProviderMock,
 } from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('reverseLeftComponent', () => {
   let fixture: ComponentFixture<ReverseLeftComponent>;
   let component: ReverseLeftComponent;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ReverseLeftComponent,
@@ -49,13 +50,13 @@ describe('reverseLeftComponent', () => {
         { provide: NavigationProvider, useClass: NavigationProviderMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ReverseLeftComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ReverseLeftComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
   }));
 
   describe('Class', () => {

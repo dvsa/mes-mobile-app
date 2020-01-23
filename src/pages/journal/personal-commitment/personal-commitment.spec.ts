@@ -8,6 +8,7 @@ import { ConfigMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 import { TimeComponent } from '../../../components/test-slot/time/time';
 import { LocationComponent } from '../../../components/test-slot/location/location';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PersonalCommitmentSlotComponent', () => {
   let fixture: ComponentFixture<PersonalCommitmentSlotComponent>;
@@ -23,7 +24,7 @@ describe('PersonalCommitmentSlotComponent', () => {
     activityDescription: 'Annual Leave',
   };
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PersonalCommitmentSlotComponent,
@@ -35,10 +36,12 @@ describe('PersonalCommitmentSlotComponent', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
       imports: [IonicModule],
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(PersonalCommitmentSlotComponent);
-      component = fixture.componentInstance;
     });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(PersonalCommitmentSlotComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

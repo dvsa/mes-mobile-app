@@ -15,13 +15,14 @@ import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
 import { ReversingDistancesProvider } from '../../../../../../providers/reversing-distances/reversing-distances';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('reverseDiagramModal', () => {
   let fixture: ComponentFixture<ReverseDiagramCatCPage>;
   let component: ReverseDiagramCatCPage;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [ReverseDiagramCatCPage],
       imports: [
@@ -83,15 +84,14 @@ describe('reverseDiagramModal', () => {
         { provide: App, useClass: MockAppComponent },
         ReversingDistancesProvider,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ReverseDiagramCatCPage);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
+    });
+  });
 
-        store$.dispatch(new StartTest(123, TestCategory.C));
-      });
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ReverseDiagramCatCPage);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    store$.dispatch(new StartTest(123, TestCategory.C));
   }));
 
   describe('DOM', () => {

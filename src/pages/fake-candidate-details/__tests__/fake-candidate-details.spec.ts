@@ -8,12 +8,13 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { FakeCandidateDetailsPage } from '../fake-candidate-details';
 import { MockComponent } from 'ng-mocks';
 import { DisplayAddressComponent } from '../../../components/common/display-address/display-address';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('FakeCandidateDetailsPage', () => {
   let fixture: ComponentFixture<FakeCandidateDetailsPage>;
   let component: FakeCandidateDetailsPage;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         FakeCandidateDetailsPage,
@@ -29,13 +30,13 @@ describe('FakeCandidateDetailsPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(FakeCandidateDetailsPage);
-        component = fixture.componentInstance;
-        component.slot = {};
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(FakeCandidateDetailsPage);
+    component = fixture.componentInstance;
+    component.slot = {};
   }));
 
   describe('Class', () => {

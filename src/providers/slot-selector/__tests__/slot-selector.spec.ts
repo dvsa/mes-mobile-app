@@ -6,11 +6,12 @@ import { ActivitySlotComponent } from '../../../pages/journal/components/activit
 import { EmptySlotComponent } from '../../../pages/journal/components/empty-slot/empty-slot';
 import { TestSlot, NonTestActivity } from '@dvsa/mes-journal-schema';
 import { Slot } from '../../../modules/journal/journal.model';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('Slot Selector', () => {
   let slotSelector: SlotSelectorProvider;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
         SlotSelectorProvider,

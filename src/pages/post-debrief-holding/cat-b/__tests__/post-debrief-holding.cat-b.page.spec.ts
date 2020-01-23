@@ -10,13 +10,14 @@ import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { PostDebriefHoldingCatBPage } from '../post-debrief-holding.cat-b.page';
 import { PostDebriefHoldingViewDidEnter } from '../../post-debrief-holding.actions';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PostDebriefHoldingCatBPage', () => {
   let fixture: ComponentFixture<PostDebriefHoldingCatBPage>;
   let component: PostDebriefHoldingCatBPage;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         PostDebriefHoldingCatBPage,
@@ -32,14 +33,14 @@ describe('PostDebriefHoldingCatBPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(PostDebriefHoldingCatBPage);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(PostDebriefHoldingCatBPage);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

@@ -3,12 +3,13 @@ import { IonicModule } from 'ionic-angular';
 import { AppModule } from '../../../../app/app.module';
 import { SubmissionStatusComponent } from '../submission-status';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PracticeTestModal', () => {
   let fixture: ComponentFixture<SubmissionStatusComponent>;
   let component: SubmissionStatusComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         SubmissionStatusComponent,
@@ -17,12 +18,12 @@ describe('PracticeTestModal', () => {
         AppModule,
         IonicModule,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(SubmissionStatusComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(SubmissionStatusComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

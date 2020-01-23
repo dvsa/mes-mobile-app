@@ -19,6 +19,7 @@ import { AppInfoProvider } from '../../app-info/app-info';
 import { AppInfoProviderMock } from '../../app-info/__mocks__/app-info.mock';
 import { SchemaValidatorProvider } from '../../schema-validator/schema-validator';
 import { SchemaValidatorProviderMock } from '../../schema-validator/__mocks__/schema-validator.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('App Config Provider', () => {
 
@@ -26,7 +27,7 @@ describe('App Config Provider', () => {
   let httpMock: HttpTestingController;
   let platform: Platform;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -48,7 +49,9 @@ describe('App Config Provider', () => {
         Device,
       ],
     });
+  });
 
+  beforeEach(() => {
     appConfig = TestBed.get(AppConfigProvider);
     httpMock = TestBed.get(HttpTestingController);
     platform = TestBed.get(Platform);

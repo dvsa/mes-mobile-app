@@ -4,12 +4,13 @@ import { PracticeTestReportCardComponent } from '../practice-test-report-card';
 import { NavControllerMock, AlertControllerMock, ModalControllerMock } from 'ionic-mocks';
 import { journalReducer } from '../../../../../modules/journal/journal.reducer';
 import { StoreModule } from '@ngrx/store';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('PracticeTestReportCard ', () => {
   let component: PracticeTestReportCardComponent;
   let fixture: ComponentFixture<PracticeTestReportCardComponent>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [PracticeTestReportCardComponent],
       imports: [
@@ -23,10 +24,12 @@ describe('PracticeTestReportCard ', () => {
         { provide: AlertController, useFactory: () => AlertControllerMock.instance() },
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
       ],
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(PracticeTestReportCardComponent);
-      component = fixture.componentInstance;
     });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(PracticeTestReportCardComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

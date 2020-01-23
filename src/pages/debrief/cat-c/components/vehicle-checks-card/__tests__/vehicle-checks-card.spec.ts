@@ -24,13 +24,14 @@ import {
 } from '../../../../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.actions';
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleChecksCardComponentCatC', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatCComponent>;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksCardCatCComponent,
@@ -47,19 +48,17 @@ describe('VehicleChecksCardComponentCatC', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleChecksCardCatCComponent);
-        store$ = TestBed.get(Store);
+    });
+  });
 
-        store$.dispatch(new StartTest(105, TestCategory.C));
-        store$.dispatch(new PopulateTestCategory(TestCategory.C));
-        store$.dispatch(new PopulateCandidateDetailsCatC(candidateMock));
-
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleChecksCardCatCComponent);
+    store$ = TestBed.get(Store);
+    store$.dispatch(new StartTest(105, TestCategory.C));
+    store$.dispatch(new PopulateTestCategory(TestCategory.C));
+    store$.dispatch(new PopulateCandidateDetailsCatC(candidateMock));
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {

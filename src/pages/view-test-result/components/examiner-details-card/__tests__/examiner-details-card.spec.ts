@@ -5,12 +5,13 @@ import { ExaminerDetailsCardComponent } from '../examiner-details';
 import { ConfigMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ExaminerDetailsCardComponent', () => {
   let fixture: ComponentFixture<ExaminerDetailsCardComponent>;
   let component: ExaminerDetailsCardComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ExaminerDetailsCardComponent,
@@ -22,12 +23,12 @@ describe('ExaminerDetailsCardComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ExaminerDetailsCardComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ExaminerDetailsCardComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

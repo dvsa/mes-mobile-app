@@ -26,13 +26,14 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { journalReducer } from '../../../modules/journal/journal.reducer';
 import { SlotProvider } from '../../../providers/slot/slot';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DashboardPage', () => {
   let fixture: ComponentFixture<DashboardPage>;
   let component: DashboardPage;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [DashboardPage],
       imports: [
@@ -58,16 +59,15 @@ describe('DashboardPage', () => {
         { provide: App, useClass: MockAppComponent },
         { provide: SlotProvider, useClass: SlotProvider },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(DashboardPage);
-        component = fixture.componentInstance;
-        component.subscription = new Subscription();
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
-      });
+    });
+  });
 
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DashboardPage);
+    component = fixture.componentInstance;
+    component.subscription = new Subscription();
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('DOM', () => {

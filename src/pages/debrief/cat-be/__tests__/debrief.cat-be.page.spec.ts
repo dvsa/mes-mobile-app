@@ -43,6 +43,7 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { of } from 'rxjs/observable/of';
 import { VehicleChecksCardCatBEComponent } from '../components/vehicle-checks-card/vehicle-checks-card.cat-be';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('DebriefCatBEPage', () => {
   let fixture: ComponentFixture<DebriefCatBEPage>;
@@ -60,22 +61,22 @@ describe('DebriefCatBEPage', () => {
     vehicleTypeCode: '',
   };
 
-  beforeEach(async(() => {
-    const exampleTestData: CatBEUniqueTypes.TestData  = {
-      dangerousFaults: {},
-      drivingFaults: {},
-      manoeuvres: {},
-      seriousFaults: {},
-      testRequirements: {},
-      ETA: {},
-      eco: {},
-      vehicleChecks: {
-        tellMeQuestions: [{}],
-        showMeQuestions: [{}],
-      },
-      uncoupleRecouple: {},
-    };
+  const exampleTestData: CatBEUniqueTypes.TestData  = {
+    dangerousFaults: {},
+    drivingFaults: {},
+    manoeuvres: {},
+    seriousFaults: {},
+    testRequirements: {},
+    ETA: {},
+    eco: {},
+    vehicleChecks: {
+      tellMeQuestions: [{}],
+      showMeQuestions: [{}],
+    },
+    uncoupleRecouple: {},
+  };
 
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [DebriefCatBEPage, VehicleChecksCardCatBEComponent],
       imports: [
@@ -124,17 +125,17 @@ describe('DebriefCatBEPage', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(DebriefCatBEPage);
-        component = fixture.componentInstance;
-        navController = TestBed.get(NavController);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch').and.callThrough();
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DebriefCatBEPage);
+    component = fixture.componentInstance;
+    navController = TestBed.get(NavController);
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch').and.callThrough();
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {
@@ -260,7 +261,7 @@ describe('DebriefCatBEPage', () => {
         const expectedDrivingFaultTranslation = (<any>welshTranslations).debrief.competencies.moveOffSafety;
         const expectedSeriousFaultTranslation = (<any>welshTranslations).debrief.competencies.useOfMirrorsSignalling;
         const expectedDangerousFaultTranslation =
-            (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
+          (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
 
         expect(drivingFaultLabel.innerHTML).toBe(expectedDrivingFaultTranslation);
         expect(seriousLabel.innerHTML).toBe(expectedSeriousFaultTranslation);

@@ -4,12 +4,13 @@ import { IonicModule } from 'ionic-angular';
 import { SearchResultComponent } from '../search-result';
 import { App } from '../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../app/__mocks__/app.component.mock';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('SearchResultComponent', () => {
   let fixture: ComponentFixture<SearchResultComponent>;
   let component: SearchResultComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         SearchResultComponent,
@@ -21,12 +22,12 @@ describe('SearchResultComponent', () => {
       providers: [
         { provide: App, useClass: MockAppComponent },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(SearchResultComponent);
-        component = fixture.componentInstance;
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(SearchResultComponent);
+    component = fixture.componentInstance;
   }));
 
   describe('Class', () => {

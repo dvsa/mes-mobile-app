@@ -7,13 +7,14 @@ import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translat
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import { createTranslateLoader } from '../../../../../app/app.module';
 import { Http } from '@angular/http';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('ProvidedEmailComponent', () => {
   let fixture: ComponentFixture<ProvidedEmailComponent>;
   let component: ProvidedEmailComponent;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         ProvidedEmailComponent,
@@ -26,18 +27,18 @@ describe('ProvidedEmailComponent', () => {
           deps: [Http],
         }),
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ProvidedEmailComponent);
-        component = fixture.componentInstance;
-        component.formGroup = new FormGroup({});
-        component.formGroup.addControl('radioCtrl', new FormControl());
-        component.shouldRender = true;
-        component.isProvidedEmailAddressChosen = true;
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(ProvidedEmailComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
+    component.formGroup.addControl('radioCtrl', new FormControl());
+    component.shouldRender = true;
+    component.isProvidedEmailAddressChosen = true;
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {

@@ -30,6 +30,7 @@ import {
 } from '../../../../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleCheckComponent', () => {
 
@@ -37,7 +38,7 @@ describe('VehicleCheckComponent', () => {
   let component: VehicleCheckComponent;
   let store$: Store<StoreModel>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleCheckComponent,
@@ -51,14 +52,14 @@ describe('VehicleCheckComponent', () => {
         IonicModule,
         StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(VehicleCheckComponent);
-        component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(105, TestCategory.B));
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(VehicleCheckComponent);
+    component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    store$.dispatch(new StartTest(105, TestCategory.B));
   }));
 
   describe('Class', () => {

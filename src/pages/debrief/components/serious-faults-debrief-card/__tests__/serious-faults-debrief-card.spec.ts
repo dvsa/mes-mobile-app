@@ -11,31 +11,31 @@ import { configureI18N } from '../../../../../shared/helpers/translation.helpers
 import { Language } from '../../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { SeriousFaultsDebriefCardComponent } from '../serious-faults-debrief-card';
 import { Competencies } from '../../../../../modules/tests/test-data/test-data.constants';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('SeriousFaultsDebriefCardComponent', () => {
   let fixture: ComponentFixture<SeriousFaultsDebriefCardComponent>;
   let component: SeriousFaultsDebriefCardComponent;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [SeriousFaultsDebriefCardComponent],
       imports: [
         IonicModule,
         AppModule,
         ComponentsModule,
-        StoreModule.forRoot({
-        }),
+        StoreModule.forRoot({}),
         TranslateModule,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(SeriousFaultsDebriefCardComponent);
-        component = fixture.componentInstance;
-        translate = TestBed.get(TranslateService);
-        translate.setDefaultLang('en');
-      });
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(SeriousFaultsDebriefCardComponent);
+    component = fixture.componentInstance;
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
   }));
 
   describe('DOM', () => {
