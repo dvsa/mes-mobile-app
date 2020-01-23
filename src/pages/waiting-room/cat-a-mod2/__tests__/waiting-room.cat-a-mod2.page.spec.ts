@@ -44,12 +44,11 @@ import { LockScreenIndicator } from '../../../../components/common/screen-lock-i
 import { CandidateSectionComponent } from '../../../../components/common/candidate-section/candidate-section';
 import { FormControl, Validators } from '@angular/forms';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
-
-// TODO - PREP-AMOD2 - Implement category specific schema
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { JournalData } from '@dvsa/mes-test-schema/categories/AM2';
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 import { configureTestSuite } from 'ng-bullet';
+import { CBTNumberComponent } from '../../components/cbt-number/cbt-number';
 
 describe('WaitingRoomCatAMod2Page', () => {
   let fixture: ComponentFixture<WaitingRoomCatAMod2Page>;
@@ -73,6 +72,7 @@ describe('WaitingRoomCatAMod2Page', () => {
         MockComponent(InsuranceDeclarationComponent),
         MockComponent(ResidencyDeclarationComponent),
         MockComponent(SignatureComponent),
+        MockComponent(CBTNumberComponent),
       ],
       imports: [
         IonicModule,
@@ -217,7 +217,7 @@ describe('WaitingRoomCatAMod2Page', () => {
     });
 
     describe('isJournalDataInvalid', () => {
-      const journalData: CatBEUniqueTypes.JournalData = {
+      const journalData: JournalData = {
         examiner: {
           staffNumber: 'real-staff-number',
         },
@@ -239,7 +239,7 @@ describe('WaitingRoomCatAMod2Page', () => {
             firstName: 'fname',
             lastName: 'lname',
           },
-        } as CatBEUniqueTypes.Candidate,
+        },
         applicationReference: {
           applicationId: 11223344141414,
           bookingSequence: 112,
@@ -263,7 +263,7 @@ describe('WaitingRoomCatAMod2Page', () => {
           candidate: {
             candidateName: {},
             driverNumber: '',
-          } as CatBEUniqueTypes.Candidate,
+          },
         });
         expect(result).toBeTruthy;
       });

@@ -2,7 +2,6 @@ import { Action, combineReducers } from '@ngrx/store';
 import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
-import { preTestDeclarationsReducer } from './pre-test-declarations/common/pre-test-declarations.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
@@ -19,6 +18,8 @@ import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatAMod1Reducer } from './journal-data/cat-a-mod1/journal-data.cat-a-mod1.reducer';
 import { testDataCatAMod1Reducer } from './test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
 import { vehicleDetailsCatAMod1Reducer } from './vehicle-details/cat-a-mod1/vehicle-details.cat-a-mod1.reducer';
+import { preTestDeclarationsCatAMod1Reducer } from
+'./pre-test-declarations/cat-a-mod1/pre-test-declarations.cat-a-mod1.reducer';
 
 export function testsCatAMod1Reducer(
   action: Action, state: TestResultCatAM1Schema): Required<TestResultCatAM1Schema> {
@@ -28,7 +29,7 @@ export function testsCatAMod1Reducer(
       category: categoryReducer,
       activityCode: activityCodeReducer,
       journalData: journalDataCatAMod1Reducer,
-      preTestDeclarations: preTestDeclarationsReducer,
+      preTestDeclarations: preTestDeclarationsCatAMod1Reducer,
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatAMod1Reducer,
       testData: testDataCatAMod1Reducer,

@@ -1,5 +1,6 @@
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM2';
 import * as preTestDeclarationActions from '../common/pre-test-declarations.actions';
+import * as preTestDeclarationActionsCatAMod2 from '../cat-a/pre-test-declarations.cat-a.actions';
 import { createFeatureSelector } from '@ngrx/store';
 
 export const initialState: PreTestDeclarations = {
@@ -11,7 +12,7 @@ export const initialState: PreTestDeclarations = {
 
 export function preTestDeclarationsCatAMod2Reducer(
   state = initialState,
-  action: preTestDeclarationActions.Types,
+  action: preTestDeclarationActionsCatAMod2.Types | preTestDeclarationActions.Types,
 ): PreTestDeclarations {
   switch (action.type) {
     case preTestDeclarationActions.CLEAR_DECLARATIONS:
@@ -36,10 +37,15 @@ export function preTestDeclarationsCatAMod2Reducer(
         ...state,
         preTestSignature: '',
       };
+    case preTestDeclarationActionsCatAMod2.CBT_NUMBER_CHANGED:
+      return {
+        ...state,
+        mod1CertificateNumber: action.cbtNumber,
+      };
 
     default:
       return state;
   }
 }
 
-export const getPreTestDeclarations = createFeatureSelector<PreTestDeclarations>('preTestDeclarations');
+export const getPreTestDeclarationsCatAMod2 = createFeatureSelector<PreTestDeclarations>('preTestDeclarations');

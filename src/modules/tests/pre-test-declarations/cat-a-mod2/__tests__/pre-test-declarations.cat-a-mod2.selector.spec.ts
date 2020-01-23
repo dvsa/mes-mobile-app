@@ -1,0 +1,17 @@
+import { getCBTNumberStatus } from '../pre-test-declarations.cat-a-mod2.selector';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM2/index';
+
+describe('PreTestDeclarations selector', () => {
+  const state: PreTestDeclarations = {
+    mod1CertificateNumber: '1234567',
+    insuranceDeclarationAccepted: true,
+    residencyDeclarationAccepted: false,
+    preTestSignature: 'sig',
+  };
+
+  describe('getCBTNumberStatus', () => {
+    it('should retrieve the cbt number', () => {
+      expect(getCBTNumberStatus(state)).toBe('1234567');
+    });
+  });
+});
