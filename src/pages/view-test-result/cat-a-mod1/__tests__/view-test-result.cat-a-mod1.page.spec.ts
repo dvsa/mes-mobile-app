@@ -108,20 +108,23 @@ describe('ViewTestResultCatAMod1Page', () => {
       });
     });
     describe('getTestDetails', () => {
-      // TODO - Need to fix
-      xit('should correctly generate the data', () => {
+      it('should correctly generate the data', () => {
         // todo: PREP-AMOD1 change to Cat A Mod 1 mock
         component.testResult = categoryBETestResultMock;
 
         const result: TestDetailsModel = component.getTestDetails();
 
-        expect(result.applicationReference).toBe('1234');
-        expect(result.category).toBe('B');
+        expect(result.applicationReference).toBe('12345672013');
+        expect(result.category).toBe('B+E');
         expect(result.date).toBe('Friday 5th July 2019');
         expect(result.time).toBe('09:00');
-        expect(result.specialNeeds).toEqual(['special need 1', 'special need 2']);
+        expect(result.specialNeeds).toEqual(
+          [
+            'Candidate is heavily pregnant',
+            'Candidate whishes to be called a different name',
+          ]);
         expect(result.entitlementCheck).toBe(true);
-        expect(result.slotType).toBe('slot-type-mock');
+        expect(result.slotType).toBe('Double Slot Special Needs');
         expect(result.previousCancellations).toEqual(['Act of nature', 'DSA']);
       });
       it('should return null when there is no test result', () => {
@@ -224,8 +227,7 @@ describe('ViewTestResultCatAMod1Page', () => {
         fixture.debugElement.query(By.css('test-summary-card')),
       ).toBeNull();
     });
-    // TODO - need to fix
-    xit('should show the cards when the data is not loading and there is no error', () => {
+    it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
       // todo: PREP-AMOD1 chage to Cat A Mod 1 mock
       component.testResult = categoryBETestResultMock;
@@ -258,8 +260,7 @@ describe('ViewTestResultCatAMod1Page', () => {
       ).not.toBeNull();
     });
   });
-  // TODO - Need to fix
-  xit('should show rekey cards only when rekey is true', () => {
+  it('should show rekey cards only when rekey is true', () => {
     component.isLoading = false;
     // todo: PREP-AMOD1 chage to Cat A Mod 1 mock
     component.testResult = categoryBETestResultMock;
