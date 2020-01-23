@@ -14,19 +14,15 @@ import {
   manoeuvreTypeLabels as manoeuvreTypeLabelsCatBe,
 } from '../../shared/constants/competencies/catbe-manoeuvres';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { CatBUniqueTypes } from "@dvsa/mes-test-schema/categories/B";
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../fault-count/fault-count';
 import { getCompetencyFaults } from '../../shared/helpers/competency';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import {
   manoeuvreCompetencyLabelsCatC,
   manoeuvreTypeLabelsCatC,
 } from '../../shared/constants/competencies/catc-manoeuvres';
-
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
-import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
-import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
-import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 
 @Injectable()
 export class FaultSummaryProvider {
@@ -40,11 +36,7 @@ export class FaultSummaryProvider {
       case TestCategory.BE:
         return this.getDrivingFaultsCatBE(data);
       case TestCategory.C:
-      case TestCategory.C1:
-        return this.getDrivingFaultsCatCNonTrailer(data, category);
-      case TestCategory.CE:
-      case TestCategory.C1E:
-        return this.getDrivingFaultsCatCTrailer(data, category);
+        return this.getDrivingFaultsCatC(data, category);
       default:
         return [];
     }
@@ -57,11 +49,7 @@ export class FaultSummaryProvider {
       case TestCategory.BE:
         return this.getSeriousFaultsCatBE(data);
       case TestCategory.C:
-      case TestCategory.C1:
-        return this.getSeriousFaultsCatCNonTrailer(data);
-      case TestCategory.CE:
-      case TestCategory.C1E:
-        return this.getSeriousFaultsCatCTrailer(data);
+        return this.getSeriousFaultsCatC(data);
       default:
         return [];
     }
@@ -74,11 +62,7 @@ export class FaultSummaryProvider {
       case TestCategory.BE:
         return this.getDangerousFaultsCatBE(data);
       case TestCategory.C:
-      case TestCategory.C1:
-        return this.getDangerousFaultsCatCNonTrailer(data);
-      case TestCategory.CE:
-      case TestCategory.C1E:
-        return this.getDangerousFaultsCatCTrailer(data);
+        return this.getDangerousFaultsCatC(data);
       default:
         return [];
     }
@@ -139,8 +123,7 @@ export class FaultSummaryProvider {
     ];
   }
 
-  private getDrivingFaultsCatCNonTrailer(
-    data: CatCUniqueTypes.TestData | CatC1UniqueTypes.TestData, category: TestCategory): FaultSummary[] {
+  private getDrivingFaultsCatC(data: CatCUniqueTypes.TestData, category: TestCategory): FaultSummary[] {
     return [
       ...getCompetencyFaults(data.drivingFaults),
       ...this.getManoeuvreFaultsCatC(data.manoeuvres, CompetencyOutcome.DF),
@@ -148,17 +131,7 @@ export class FaultSummaryProvider {
     ];
   }
 
-  private getDrivingFaultsCatCTrailer(
-    data: CatCEUniqueTypes.TestData | CatC1EUniqueTypes.TestData, category: TestCategory): FaultSummary[] {
-    return [
-      ...getCompetencyFaults(data.drivingFaults),
-      ...this.getManoeuvreFaultsCatC(data.manoeuvres, CompetencyOutcome.DF),
-      ...this.getVehicleCheckDrivingFaultsCatC(data.vehicleChecks, category),
-      ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.DF),
-    ];
-  }
-
-  private getSeriousFaultsCatCNonTrailer(data: CatCUniqueTypes.TestData | CatC1UniqueTypes.TestData): FaultSummary[] {
+  private getSeriousFaultsCatC(data: CatCUniqueTypes.TestData): FaultSummary[] {
     return [
       ...getCompetencyFaults(data.seriousFaults),
       ...this.getManoeuvreFaultsCatC(data.manoeuvres, CompetencyOutcome.S),
@@ -166,27 +139,10 @@ export class FaultSummaryProvider {
     ];
   }
 
-  private getSeriousFaultsCatCTrailer(data: CatCEUniqueTypes.TestData | CatC1EUniqueTypes.TestData): FaultSummary[] {
-    return [
-      ...getCompetencyFaults(data.seriousFaults),
-      ...this.getManoeuvreFaultsCatC(data.manoeuvres, CompetencyOutcome.S),
-      ...this.getVehicleCheckSeriousFaultsCatC(data.vehicleChecks),
-      ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.S),
-    ];
-  }
-
-  private getDangerousFaultsCatCNonTrailer(data: CatCUniqueTypes.TestData | CatC1UniqueTypes.TestData): FaultSummary[] {
+  private getDangerousFaultsCatC(data: CatCUniqueTypes.TestData): FaultSummary[] {
     return [
       ...getCompetencyFaults(data.dangerousFaults),
       ...this.getManoeuvreFaultsCatC(data.manoeuvres, CompetencyOutcome.D),
-    ];
-  }
-
-  private getDangerousFaultsCatCTrailer(data: CatCEUniqueTypes.TestData |  CatC1EUniqueTypes.TestData): FaultSummary[] {
-    return [
-      ...getCompetencyFaults(data.dangerousFaults),
-      ...this.getManoeuvreFaultsCatC(data.manoeuvres, CompetencyOutcome.D),
-      ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.D),
     ];
   }
 
