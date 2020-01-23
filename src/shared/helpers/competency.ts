@@ -26,6 +26,17 @@ export const getCompetencyFaults = (faults: DrivingFaults | SeriousFaults | Dang
   return faultsEncountered.sort((a, b) => b.faultCount - a.faultCount);
 };
 
+export const getCompetencyComment = (
+  key: string,
+  controlFaultComments: string,
+  observationFaultComments: string,
+): string => {
+  if (key === CompetencyIdentifiers.CONTROL_FAULT) {
+    return controlFaultComments || '';
+  }
+  return observationFaultComments || '';
+};
+
 export const calculateFaultCount = (value: number | boolean) : number => {
   if (isBoolean(value)) {
     return value ? 1 : 0;
