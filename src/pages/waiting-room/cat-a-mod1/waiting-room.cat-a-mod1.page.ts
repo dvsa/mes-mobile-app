@@ -17,7 +17,7 @@ import {
   getResidencyDeclarationStatus,
   getSignatureStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
-import { getcbtNumberStatus } from
+import { getCBTNumberStatus } from
 '../../../modules/tests/pre-test-declarations/cat-a-mod1/pre-test-declarations.cat-a-mod1.selector';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
@@ -175,7 +175,7 @@ export class WaitingRoomCatAMod1Page extends BasePageComponent implements OnInit
       ),
       cbtNumber$: currentTest$.pipe(
         select(getPreTestDeclarationsCatAMod1),
-        select(getcbtNumberStatus),
+        select(getCBTNumberStatus),
       ),
     };
     const { welshTest$, conductedLanguage$ } = this.pageState;

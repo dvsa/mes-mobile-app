@@ -1,4 +1,4 @@
-import { getcbtNumberStatus } from '../pre-test-declarations.cat-a-mod1.selector';
+import { getCBTNumberStatus } from '../pre-test-declarations.cat-a-mod1.selector';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM1/index';
 
 describe('PreTestDeclarations selector', () => {
@@ -9,9 +9,9 @@ describe('PreTestDeclarations selector', () => {
     preTestSignature: 'sig',
   };
 
-  describe('getcbtNumberStatus', () => {
+  describe('getCBTNumberStatus', () => {
     it('should retrieve the cbt number', () => {
-      expect(getcbtNumberStatus(state)).toBe('1234567');
+      expect(getCBTNumberStatus(state)).toBe('1234567');
     });
   });
 });
