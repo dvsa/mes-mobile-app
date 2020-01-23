@@ -9,12 +9,8 @@
       <ion-col col-48>
         <ion-select #categorySelect interface="popover" hidden="true" okText="Confirm" cancelText="Cancel"
                     [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}">
-          <ion-option *ngFor="let category of categories">
-           <!--{{category.code}} - {{category.description}}-->
-            <ion-row>
-              <ion-col col-6>column 1</ion-col>
-              <ion-col col-6>column 2</ion-col>
-            </ion-row>
+          <ion-option *ngFor="let category of categories" class="category-option">
+            {{category.code}} - {{category.description}}
           </ion-option>
         </ion-select>
         <input
