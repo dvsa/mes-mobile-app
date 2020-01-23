@@ -7,16 +7,19 @@ import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomActions from '../waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
 import {
-   getPreTestDeclarations,
-} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
-import * as preTestDeclarationsActions
-  from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
+   getPreTestDeclarationsCatAMod2,
+} from '../../../modules/tests/pre-test-declarations/cat-a-mod2/pre-test-declarations.cat-a-mod2.reducer';
+import * as preTestDeclarationsActionsCatA from
+'../../../modules/tests/pre-test-declarations/cat-a/pre-test-declarations.cat-a.actions';
+import * as preTestDeclarationsActions from
+'../../../modules//tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
   getSignatureStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
-
+import { getCBTNumberStatus } from
+'../../../modules/tests/pre-test-declarations/cat-a-mod2/pre-test-declarations.cat-a-mod2.selector';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
@@ -50,9 +53,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../../providers/device/device';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-
-// TODO - PREP-AMOD2 - Implement category specific schema
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { JournalData } from '@dvsa/mes-test-schema/categories/AM2';
 import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { App } from '../../../app/app.component';
@@ -66,6 +67,7 @@ interface WaitingRoomPageState {
   candidateDriverNumber$: Observable<string>;
   welshTest$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
+  cbtNumber$: Observable<string>;
 }
 
 @IonicPage()
@@ -83,8 +85,7 @@ export class WaitingRoomCatAMod2Page extends BasePageComponent implements OnInit
 
   subscription: Subscription;
 
-  // TODO - PREP-AMOD2 - Implement category specific schema
-  merged$: Observable<boolean | string | CatBEUniqueTypes.JournalData>;
+  merged$: Observable<boolean | string | JournalData>;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -136,15 +137,15 @@ export class WaitingRoomCatAMod2Page extends BasePageComponent implements OnInit
 
     this.pageState = {
       insuranceDeclarationAccepted$: currentTest$.pipe(
-        select(getPreTestDeclarations),
+        select(getPreTestDeclarationsCatAMod2),
         select(getInsuranceDeclarationStatus),
       ),
       residencyDeclarationAccepted$: currentTest$.pipe(
-        select(getPreTestDeclarations),
+        select(getPreTestDeclarationsCatAMod2),
         select(getResidencyDeclarationStatus),
       ),
       signature$: currentTest$.pipe(
-        select(getPreTestDeclarations),
+        select(getPreTestDeclarationsCatAMod2),
         select(getSignatureStatus),
       ),
       candidateName$: currentTest$.pipe(
@@ -172,13 +173,16 @@ export class WaitingRoomCatAMod2Page extends BasePageComponent implements OnInit
         select(getCommunicationPreference),
         select(getConductedLanguage),
       ),
+      cbtNumber$: currentTest$.pipe(
+        select(getPreTestDeclarationsCatAMod2),
+        select(getCBTNumberStatus),
+      ),
     };
     const { welshTest$, conductedLanguage$ } = this.pageState;
     this.merged$ = merge(
       currentTest$.pipe(
         select(getJournalData),
-        // TODO - PREP-AMOD2 - Impement category specific schema
-        tap((journalData: CatBEUniqueTypes.JournalData) => {
+        tap((journalData: JournalData) => {
           if (this.isJournalDataInvalid(journalData)) {
             this.showCandidateDataMissingError();
           }
@@ -203,8 +207,7 @@ export class WaitingRoomCatAMod2Page extends BasePageComponent implements OnInit
     }
   }
 
-  // TODO - PREP-AMOD2 - Implement category specific schema
-  isJournalDataInvalid = (journalData: CatBEUniqueTypes.JournalData): boolean => {
+  isJournalDataInvalid = (journalData: JournalData): boolean => {
     return isEmpty(journalData.examiner.staffNumber) ||
       (isEmpty(journalData.candidate.candidateName) && isEmpty(journalData.candidate.driverNumber));
   }
@@ -231,6 +234,10 @@ export class WaitingRoomCatAMod2Page extends BasePageComponent implements OnInit
 
   dispatchCandidateChoseToProceedInEnglish() {
     this.store$.dispatch(new CandidateChoseToProceedWithTestInEnglish(Language.ENGLISH));
+  }
+
+  cbtNumberChanged(cbtNumber: string) {
+    this.store$.dispatch(new preTestDeclarationsActionsCatA.CbtNumberChanged(cbtNumber));
   }
 
   onSubmit() {

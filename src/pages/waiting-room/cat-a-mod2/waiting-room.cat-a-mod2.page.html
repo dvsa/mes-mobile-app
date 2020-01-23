@@ -2,6 +2,7 @@
   <ion-navbar>
     <ion-title>{{ 'waitingRoom.title' | translate }} - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end>
+      <!-- TODO: PREP-AMOD2 To replace with proper category information -->
       <end-test-link category="EUA1M2"></end-test-link>
     </ion-buttons>
   </ion-navbar>
@@ -25,16 +26,19 @@
           <h4>{{ 'waitingRoom.declarationIntent' | translate}}:</h4>
         </ion-col>
       </ion-row>
-      <insurance-declaration [formGroup]="formGroup" [selected]="pageState.insuranceDeclarationAccepted$ | async"
-        (insuranceDeclarationChange)="insuranceDeclarationChanged()">
-      </insurance-declaration>
-      <residency-declaration [formGroup]="formGroup" [selected]="pageState.residencyDeclarationAccepted$ | async"
-        (residencyDeclarationChange)="residencyDeclarationChanged()">
-      </residency-declaration>
-      <div class="signature-area-padding"></div>
-      <signature [formGroup]="formGroup" [signature]="pageState.signature$ | async"
-        [drawCompleteAction]="getSignatureDrawCompleteAction()" [clearAction]="getSignatureClearAction()">
-      </signature>
+      <cbt-number [formGroup]="formGroup" [cbtNumber]="pageState.cbtNumber$ | async"
+        (cbtNumberChange)="cbtNumberChanged($event)">
+      </cbt-number>
     </div>
+    <insurance-declaration [formGroup]="formGroup" [selected]="pageState.insuranceDeclarationAccepted$ | async"
+      (insuranceDeclarationChange)="insuranceDeclarationChanged()">
+    </insurance-declaration>
+    <residency-declaration [formGroup]="formGroup" [selected]="pageState.residencyDeclarationAccepted$ | async"
+      (residencyDeclarationChange)="residencyDeclarationChanged()">
+    </residency-declaration>
+    <div class="signature-area-padding"></div>
+    <signature [formGroup]="formGroup" [signature]="pageState.signature$ | async"
+      [drawCompleteAction]="getSignatureDrawCompleteAction()" [clearAction]="getSignatureClearAction()">
+    </signature>
   </form>
 </ion-content>

@@ -8,8 +8,8 @@ import * as waitingRoomActions from '../waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
 import { getPreTestDeclarationsCatAMod1 } from
 '../../../modules/tests/pre-test-declarations/cat-a-mod1/pre-test-declarations.cat-a-mod1.reducer';
-import * as preTestDeclarationsCatAMod1Actions
-  from '../../../modules/tests/pre-test-declarations/cat-a-mod1/pre-test-declarations.cat-a-mod1.actions';
+import * as preTestDeclarationsActionsCatA
+  from '../../../modules/tests/pre-test-declarations/cat-a/pre-test-declarations.cat-a.actions';
 import * as preTestDeclarationsActions
   from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
@@ -51,7 +51,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../../providers/device/device';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
-import { JournalData } from '@dvsa/mes-test-schema/categories/common';
+import { JournalData } from '@dvsa/mes-test-schema/categories/AM1';
 import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { App } from '../../../app/app.component';
@@ -237,7 +237,7 @@ export class WaitingRoomCatAMod1Page extends BasePageComponent implements OnInit
   }
 
   cbtNumberChanged(cbtNumber: string) {
-    this.store$.dispatch(new preTestDeclarationsCatAMod1Actions.CbtNumberChanged(cbtNumber));
+    this.store$.dispatch(new preTestDeclarationsActionsCatA.CbtNumberChanged(cbtNumber));
   }
 
   onSubmit() {

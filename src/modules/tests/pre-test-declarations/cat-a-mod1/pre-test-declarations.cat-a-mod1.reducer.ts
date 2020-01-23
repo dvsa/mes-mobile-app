@@ -1,7 +1,8 @@
-import * as preTestDeclarationActionsCatAMod1 from './pre-test-declarations.cat-a-mod1.actions';
+import * as preTestDeclarationActionsCatAMod1 from
+'../cat-a/pre-test-declarations.cat-a.actions';
 import * as preTestDeclarationActions from '../common/pre-test-declarations.actions';
 import { createFeatureSelector } from '@ngrx/store';
-import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM1/index';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM1';
 
 export const initialState: PreTestDeclarations = {
   insuranceDeclarationAccepted: false,
