@@ -48,7 +48,9 @@ import {
   PassCertificateValidationProvider,
 } from '../providers/pass-certificate-validation/pass-certificate-validation';
 import { RemoteDevToolsProxy } from '../../ngrx-devtool-proxy/remote-devtools-proxy';
-import { BikeCategoryIconProvider } from '../providers/bike-category-icon/bike-category-icon';
+import {
+  BikeCategoryDetailProvider,
+} from '../providers/bike-category-detail/bike-category-detail';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -129,7 +131,7 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
     AnalyticsProvider,
     SchemaValidatorProvider,
     PassCertificateValidationProvider,
-    BikeCategoryIconProvider,
+    BikeCategoryDetailProvider,
   ],
 })
 export class AppModule { }

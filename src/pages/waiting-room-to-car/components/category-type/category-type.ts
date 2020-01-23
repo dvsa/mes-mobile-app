@@ -1,8 +1,8 @@
 import { Component, OnChanges, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Select } from 'ionic-angular';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
-import { BikeCategoryIconProvider } from '../../../../providers/bike-category-icon/bike-category-icon';
+import { BikeCategoryDetailProvider } from '../../../../providers/bike-category-detail/bike-category-detail';
+import { BikeCategoryDetail } from '../../../../providers/bike-category-detail/bike-category-detail.model';
 
 @Component({
   selector: 'category-type',
@@ -20,21 +20,14 @@ export class CategoryTypeComponent implements OnChanges {
 
   formControl: FormControl;
 
-  categories: CategoryCode[] = [
-    'EUA1M1',
-    'EUA2M1',
-    'EUAM1',
-    'EUAMM1',
-  ];
+  bikeCategoryDetails: BikeCategoryDetail[];
 
   categorySelectOptions: any = {
     cssClass: 'selector-header',
   };
 
-  //imagePath: string = 'src/assets/imgs/motorbike.png';
-
   constructor(
-    private bikeCategoryIconProvider: BikeCategoryIconProvider
+    private bikeCategoryDetailProvider: BikeCategoryDetailProvider,
   ) { }
 
   openCategorySelector() {
@@ -48,20 +41,15 @@ export class CategoryTypeComponent implements OnChanges {
 
   loadImages() {
     setTimeout(() =>  {
-      let options= document.getElementsByClassName('alert-radio-label');
+      const options = document.getElementsByClassName('alert-radio-label');
       for (let index = 0; index < options.length; index++) {
-        let element = options[index];
-        let category = this.categories[index];
-        console.log(this.categories[index]);
-        let imagePath = this.bikeCategoryIconProvider.getBikeIcon(category);
-        console.log(imagePath);
-        element.innerHTML=element.innerHTML.concat(`A1 &emsp; Motorbike <img class="bike-image" src="${imagePath}" />`);
+        const element = options[index];
+        const category = this.bikeCategoryDetails[index].categoryCode;
+        const bike = this.bikeCategoryDetailProvider.getBikeDetail(category);
+        element.innerHTML = element.innerHTML
+          .concat(`<span>${bike.displayName}</span> <img class="bike-image" src="${bike.imageUrl}" />`);
       }
-    }, 200);
-  }
-
-  pickCategoryImage(category: CategoryCode) {
-
+    }, 20);
   }
 
   ngOnChanges(): void {
@@ -76,6 +64,10 @@ export class CategoryTypeComponent implements OnChanges {
     }
     this.formControl.patchValue('Select cat type..');
 
+  }
+
+  ngOnInit(): void {
+    this.bikeCategoryDetails = this.bikeCategoryDetailProvider.getCategoryDetailsByTestType('MOD1');
   }
 
 }
