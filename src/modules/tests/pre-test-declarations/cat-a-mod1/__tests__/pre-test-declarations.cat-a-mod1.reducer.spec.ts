@@ -1,6 +1,6 @@
 import { preTestDeclarationsCatAMod1Reducer, initialState } from '../pre-test-declarations.cat-a-mod1.reducer';
 import { CbtNumberChanged } from '../../cat-a/pre-test-declarations.cat-a.actions';
-import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM1/index';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM1';
 import {
   ToggleInsuranceDeclaration, ToggleResidencyDeclaration, SignatureDataChanged, SignatureDataCleared,
   ClearPreTestDeclarations,

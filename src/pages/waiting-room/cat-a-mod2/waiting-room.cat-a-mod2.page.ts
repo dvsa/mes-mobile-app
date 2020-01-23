@@ -53,7 +53,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../../providers/device/device';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { JournalData } from '@dvsa/mes-test-schema/categories/AM2/index';
+import { JournalData } from '@dvsa/mes-test-schema/categories/AM2';
 import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { App } from '../../../app/app.component';
