@@ -183,16 +183,16 @@ export class TestReportCatCPage extends BasePageComponent {
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
+      testCategory$.pipe(map(result => this.testCategory = result)),
       testData$.pipe(
         map((data) => {
           this.isTestReportValid =
-            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.C);
+            this.testReportValidatorProvider.isTestReportValid(data, this.testCategory as TestCategory);
           this.missingLegalRequirements =
-            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.C);
-          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.C);
+            this.testReportValidatorProvider.getMissingLegalRequirements(data, this.testCategory as TestCategory);
+          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, this.testCategory as TestCategory);
         }),
       ),
-      testCategory$.pipe(map(result => this.testCategory = result)),
     ).subscribe();
   }
 
