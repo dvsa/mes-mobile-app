@@ -34,6 +34,8 @@ export class TestReportValidatorProvider {
       case TestCategory.C1E:
       case TestCategory.CE:
         return this.validateLegalRequirementsCTrailer(data);
+      case TestCategory.EUAM1:
+        return this.validateLegalRequirementsCatBE(data);
       default:
         return false;
     }

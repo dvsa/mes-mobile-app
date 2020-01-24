@@ -10,6 +10,7 @@ import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+import { FaultSummaryCatAM1Helper } from './cat-a-mod1/fault-summary.cat-a-mod1';
 
 @Injectable()
 export class FaultSummaryProvider {
@@ -63,12 +64,7 @@ export class FaultSummaryProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
-        return FaultSummaryCatBEHelper.getDrivingFaultsCatBE(
-          data,
-          this.faultCountProvider.getVehicleChecksFaultCount(
-            TestCategory.BE,
-             (<CatBEUniqueTypes.TestData>data).vehicleChecks,
-          ));
+        return FaultSummaryCatAM1Helper.getDrivingFaultsCatAM1(data);
       default:
         return [];
     }
@@ -90,7 +86,7 @@ export class FaultSummaryProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
-        return FaultSummaryCatBEHelper.getSeriousFaultsCatBE(data);
+        return FaultSummaryCatAM1Helper.getSeriousFaultsCatAM1(data);
       default:
         return [];
     }
@@ -112,7 +108,7 @@ export class FaultSummaryProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
-        return FaultSummaryCatBEHelper.getDangerousFaultsCatBE(data);
+        return FaultSummaryCatAM1Helper.getDangerousFaultsCatAM1(data);
       default:
         return [];
     }

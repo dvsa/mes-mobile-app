@@ -191,7 +191,12 @@
       "eyesightTest": "Eyesight test",
       "uncoupleRecouple": "Uncouple / Recouple",
       "reverseLeftControl": "Reverse - Control",
-      "reverseLeftObservation": "Reverse - Observation"
+      "reverseLeftObservation": "Reverse - Observation",
+      "useOfStand": "Use of stand",
+      "manualHandling": "Manual handling",
+      "slalomFigure8": "Slalom / Figure 8",
+      "slowControl": "Slow control",
+      "uTurnExercise": "'U' Turn Exercise"
     },
     "dangerousFault": "Dangerous fault",
     "dangerousFaultsCardDescription": "dangerous faults",

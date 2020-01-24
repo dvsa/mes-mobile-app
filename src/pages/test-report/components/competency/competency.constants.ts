@@ -41,4 +41,10 @@ export enum competencyLabels  {
   awarenessPlanning  = 'Awareness planning',
   speedCheckEmergency = 'Emergency stop',
   speedCheckAvoidance = 'Avoidance Ex. Control Stop',
+  useOfStand = 'Use of stand',
+  manualHandling = 'Manual handling',
+  slalomFigure8 = 'Slalom / Figure 8',
+  slowControl = 'Slow control',
+  uTurnExercise = '\'U\' Turn Exercise',
+  controlledStop = 'Controlled stop',
 }

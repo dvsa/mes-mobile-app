@@ -38,6 +38,12 @@ export enum Competencies {
   pedestrianCrossings = 'pedestrianCrossings',
   positionNormalStops = 'positionNormalStops',
   awarenessPlanning = 'awarenessPlanning',
+  useOfStand = 'useOfStand',
+  manualHandling = 'manualHandling',
+  slalomFigure8 = 'slalomFigure8',
+  slowControl = 'slowControl',
+  uTurnExercise = 'uTurnExercise',
+  controlledStop = 'controlledStop',
 }
 
 export enum ManoeuvreTypes {
