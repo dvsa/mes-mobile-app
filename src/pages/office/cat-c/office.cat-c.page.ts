@@ -79,10 +79,9 @@ import {
 } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-// TODO: MES-4287 use Cat C vehicle checks action
 import {
   AddShowMeTellMeComment,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+} from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
@@ -100,13 +99,11 @@ import {
   AddUncoupleRecoupleComment,
 } from '../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
-// TODO: MES-4287 Import Cat C category
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
-// TODO: MES-4287 use Cat C vehicle checks selector
 import {
   vehicleChecksExist,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
+} from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -304,7 +301,7 @@ export class OfficeCatCPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C),
           )),
       ),
       displaySeriousFault$: currentTest$.pipe(
@@ -316,8 +313,7 @@ export class OfficeCatCPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            // TODO: MES-4287 Use category C
-            this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.C),
           )),
       ),
       displayDangerousFault$: currentTest$.pipe(
@@ -329,8 +325,7 @@ export class OfficeCatCPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            // TODO: MES-4287 Use category C
-            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C),
           )),
       ),
       displayVehicleChecks$: currentTest$.pipe(
@@ -370,23 +365,19 @@ export class OfficeCatCPage extends BasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        // TODO: MES-4287 Use category C
-        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)),
+        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.C)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        // TODO: MES-4287 Use category C
-        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)),
+        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.C)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        // TODO: MES-4287 Use category C
-        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        // TODO: MES-4287 Use category C
-        map(data => this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data)),
+        map(data => this.faultCountProvider.getDrivingFaultSumCount(TestCategory.C, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
@@ -582,13 +573,10 @@ export class OfficeCatCPage extends BasePageComponent {
     this.popToRoot();
   }
 
-  shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {
-    // TODO: MES-4287 Use category C
-    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data);
-    // TODO: MES-4287 Use category C
-    const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, data);
-    // TODO: MES-4287 Use category C
-    const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data);
+  shouldDisplayDrivingFaultComments = (data: CatCUniqueTypes.TestData): boolean => {
+    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.C, data);
+    const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.C, data);
+    const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.C, data);
 
     return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
   }
