@@ -2,14 +2,17 @@ import { Component, OnChanges, Input, ViewChild, Output, EventEmitter } from '@a
 import { FormControl, FormGroup } from '@angular/forms';
 import { Select } from 'ionic-angular';
 import { BikeCategoryDetailProvider } from '../../../../providers/bike-category-detail/bike-category-detail';
-import { BikeCategoryDetail } from '../../../../providers/bike-category-detail/bike-category-detail.model';
+import {
+  BikeCategoryDetail,
+  BikeTestType,
+} from '../../../../providers/bike-category-detail/bike-category-detail.model';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
-  selector: 'category-type',
-  templateUrl: 'category-type.html',
+  selector: 'bike-category-type',
+  templateUrl: 'bike-category-type.html',
 })
-export class CategoryTypeComponent implements OnChanges {
+export class BikeCategoryTypeComponent implements OnChanges {
 
   @ViewChild('categorySelect') selectRef: Select;
 
@@ -18,6 +21,9 @@ export class CategoryTypeComponent implements OnChanges {
 
   @Input()
   testCategory: CategoryCode;
+
+  @Input()
+  testType: BikeTestType;
 
   @Output()
   categoryCodeChange = new EventEmitter<CategoryCode>();
@@ -72,8 +78,11 @@ export class CategoryTypeComponent implements OnChanges {
   }
 
   ngOnInit(): void {
+    // default to MOD1 if any input other than MOD1 or MOD2 provided
+    this.testType  = (this.testType === BikeTestType.MOD1 || this.testType === BikeTestType.MOD2) ?
+      this.testType : BikeTestType.MOD1;
     this.categoryConfirmed = false;
-    this.bikeCategoryDetails = this.bikeCategoryDetailProvider.getAllDetailsByTestType('MOD1');
+    this.bikeCategoryDetails = this.bikeCategoryDetailProvider.getAllDetailsByTestType(this.testType);
   }
 
   categoryCodeChanged(category: CategoryCode): void {

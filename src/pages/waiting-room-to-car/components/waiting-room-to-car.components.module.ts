@@ -10,7 +10,7 @@ import { AccompanimentComponent } from './accompaniment/accompaniment';
 import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
 import { VehicleDetailsComponent } from './vehicle-details/vehicle-details';
 import { DirectivesModule } from '../../../directives/directives.module';
-import { CategoryTypeComponent } from './category-type/category-type';
+import { BikeCategoryTypeComponent } from './bike-category-type/bike-category-type';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { CategoryTypeComponent } from './category-type/category-type';
     AccompanimentComponent,
     VehicleDetailsCardComponent,
     VehicleDetailsComponent,
-    CategoryTypeComponent,
+    BikeCategoryTypeComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +37,7 @@ import { CategoryTypeComponent } from './category-type/category-type';
     AccompanimentComponent,
     VehicleDetailsCardComponent,
     VehicleDetailsComponent,
-    CategoryTypeComponent,
+    BikeCategoryTypeComponent,
   ],
 })
 export class WaitingRoomToCarComponentsModule { }

@@ -52,7 +52,7 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
-import { CategoryTypeComponent } from '../components/category-type/category-type';
+import { BikeCategoryTypeComponent } from '../components/bike-category-type/bike-category-type';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -77,7 +77,7 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
 
-  @ViewChild(CategoryTypeComponent)
+  @ViewChild(BikeCategoryTypeComponent)
 
   showEyesightFailureConfirmation: boolean = false;
   categoryConfirmed: boolean;

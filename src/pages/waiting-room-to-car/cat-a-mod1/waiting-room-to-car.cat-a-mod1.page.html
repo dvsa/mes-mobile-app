@@ -14,7 +14,10 @@
       <ion-grid>
 
 <ion-row no-padding>
-          <ion-col no-padding>        <category-type [testCategory] = "pageState.testCategory$ | async" (categoryCodeChange)="categoryCodeChanged($event)" [formGroup]="form"></category-type>
+          <ion-col no-padding>
+            <bike-category-type testType="MOD1" [testCategory] = "pageState.testCategory$ | async"
+                           (categoryCodeChange)="categoryCodeChanged($event)" [formGroup]="form">
+            </bike-category-type>
 
             <transmission [formGroup]="form"
               [hideTransmissionLabel]="true"
