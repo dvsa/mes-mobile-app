@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { CategoryCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   GearboxCategoryChanged,
@@ -50,6 +50,8 @@ import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_A_MOD1 } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -62,6 +64,7 @@ interface WaitingRoomToCarPageState {
   interpreterAccompaniment$: Observable<boolean>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -135,6 +138,9 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
         select(getVehicleDetails),
         map(isManual),
       ),
+      testCategory$: currentTest$.pipe(
+      select(getTestCategory),
+    ),
     };
   }
 
@@ -187,6 +193,7 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
     } else {
       Object.keys(this.form.controls).forEach((controlName) => {
         if (this.form.controls[controlName].invalid) {
+          console.log(`the value for ${controlName} is ${this.form.controls[name]}`);
           this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarValidationError(
             `${controlName} is blank`,
           ));
@@ -206,6 +213,10 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
 
   getDebriefPage() {
     return CAT_A_MOD1.DEBRIEF_PAGE;
+  }
+
+  categoryCodeChanged(category: CategoryCode) {
+    this.store$.dispatch( new PopulateTestCategory(category));
   }
 
 }

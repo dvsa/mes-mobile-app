@@ -13,10 +13,8 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-grid>
 
-        <ion-row no-padding>
-          <ion-col no-padding>
-
-            <category-type [formGroup]="form"></category-type>
+<ion-row no-padding>
+          <ion-col no-padding>        <category-type [testCategory] = "pageState.testCategory$ | async" (categoryCodeChange)="categoryCodeChanged($event)" [formGroup]="form"></category-type>
 
             <transmission [formGroup]="form"
               [hideTransmissionLabel]="true"
