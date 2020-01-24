@@ -6,6 +6,9 @@
   <ion-col padding-left align-self-center>
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
+
+
+
       <ion-col col-48>
         <ion-select #categorySelect hidden="true" okText="Confirm" cancelText="Cancel"
                     [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}" (ionChange)="categoryCodeChanged($event)">
@@ -14,15 +17,28 @@
           </ion-option>
         </ion-select>
         <input
+          *ngIf="!categoryConfirmed"
           type="button"
           formControlName="categoryTypeSelectCategory"
           class="mes-return-button"
           (click)="openCategorySelector()"
         >
       </ion-col>
+      <ion-col col-47 padding-right *ngIf="categoryConfirmed" class="select-category-link-container">
+        <button type="button" class="mes-link-button category-selector-link" (click)="openCategorySelector()" ion-button>
+          <span>
+            Select cat type
+            <ion-icon name="arrow-forward"></ion-icon>
+          </span>
+        </button>
+      </ion-col>
+      <ion-col col-48 class="selected-category-code" align-self-center *ngIf="categoryConfirmed">A2 - Motorcycle </ion-col>
+
+
+
+
+
     </ion-row>
-
-
     <ion-row class="validation-message-row" align-items-center>
       <div class="validation-text" [class.ng-invalid]="invalid" id="waiting-room-to-car-category-type-validation-text">
         Please confirm category type

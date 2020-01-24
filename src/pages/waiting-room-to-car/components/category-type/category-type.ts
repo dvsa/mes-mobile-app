@@ -29,6 +29,8 @@ export class CategoryTypeComponent implements OnChanges {
 
   bikeCategoryDetails: BikeCategoryDetail[];
 
+  categoryConfirmed: boolean;
+
   categorySelectOptions: any = {
     cssClass: 'selector-header',
   };
@@ -69,6 +71,7 @@ export class CategoryTypeComponent implements OnChanges {
       );
       this.formGroup.addControl('categoryTypeSelectCategory', this.formControl);
     }
+    console.log(this.formGroup)
     this.formControl.patchValue('Select cat type..');
 
   }
@@ -78,17 +81,17 @@ export class CategoryTypeComponent implements OnChanges {
   }
 
   ngOnInit(): void {
+    this.categoryConfirmed = false;
     this.bikeCategoryDetails = this.bikeCategoryDetailProvider.getAllDetailsByTestType('MOD1');
   }
 
   categoryCodeChanged(category: CategoryCode) {
-    if (this.formControl.valid) {
+    this.categoryConfirmed = true;
       this.categoryCodeChange.emit(category);
-    }
   }
 
-  validateCategorySelection(c: FormControl): null | {categoryTypeSelectCategory: boolean} {
-    return this.testCategory === 'EUAMM1' ? null : { categoryTypeSelectCategory: false }
+  validateCategorySelection(): null | {categoryTypeSelectCategory: boolean} {
+    return this.categoryConfirmed ? null : { categoryTypeSelectCategory: false }
   }
 
 }

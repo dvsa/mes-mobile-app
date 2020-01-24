@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
@@ -52,6 +52,7 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
+import { CategoryTypeComponent } from '../components/category-type/category-type';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -75,6 +76,11 @@ interface WaitingRoomToCarPageState {
 export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
+
+  @ViewChild(CategoryTypeComponent)
+
+  showEyesightFailureConfirmation: boolean = false;
+  categoryConfirmed: boolean;
 
   constructor(
     public store$: Store<StoreModel>,
