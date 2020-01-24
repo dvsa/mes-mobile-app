@@ -31,6 +31,11 @@ export class TestResultProvider {
         return this.calculateCatCAndSubCategoryTestResult(TestCategory.CE, testData as CatCEUniqueTypes.TestData);
       case TestCategory.C1E:
         return this.calculateCatCAndSubCategoryTestResult(TestCategory.C1E, testData as CatC1EUniqueTypes.TestData);
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1:
+        return this.calculateCatBETestResult(testData as CatBEUniqueTypes.TestData);
       default:
         throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }
@@ -74,10 +79,10 @@ export class TestResultProvider {
   private calculateCatCAndSubCategoryTestResult = (
     category: TestCategory,
     testData: CatCUniqueTypes.TestData |
-    CatCEUniqueTypes.TestData |
-    CatC1EUniqueTypes.TestData |
-    CatC1UniqueTypes.TestData,
-    ): Observable<ActivityCode> => {
+      CatCEUniqueTypes.TestData |
+      CatC1EUniqueTypes.TestData |
+      CatC1UniqueTypes.TestData,
+  ): Observable<ActivityCode> => {
 
     if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
       return of(ActivityCodes.FAIL);

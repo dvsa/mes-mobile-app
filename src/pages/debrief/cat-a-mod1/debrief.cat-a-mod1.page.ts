@@ -142,11 +142,12 @@ export class DebriefCatAMod1Page extends BasePageComponent {
       ),
     };
 
-    const { testResult$, etaFaults$, ecoFaults$, conductedLanguage$ } = this.pageState;
+    // TODO: MES-4563 + MES-4423 Fix non-functional fault cards for Cat A Mod1
+    const { testResult$, /* etaFaults$, ecoFaults$, */ conductedLanguage$ } = this.pageState;
 
     this.subscription = merge(
       testResult$.pipe(map(result => this.outcome = result)),
-      etaFaults$.pipe(
+      /*etaFaults$.pipe(
         map((eta) => {
           this.hasPhysicalEta = eta.physical;
           this.hasVerbalEta = eta.verbal;
@@ -157,7 +158,7 @@ export class DebriefCatAMod1Page extends BasePageComponent {
           this.adviceGivenControl = eco.adviceGivenControl;
           this.adviceGivenPlanning = eco.adviceGivenPlanning;
         }),
-      ),
+      ), */
       conductedLanguage$.pipe(tap(value => configureI18N(value as Language, this.translate))),
     ).subscribe();
   }

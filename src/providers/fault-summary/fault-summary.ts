@@ -59,6 +59,16 @@ export class FaultSummaryProvider {
             TestCategory.C1E,
             (<CatC1EUniqueTypes.TestData>data).vehicleChecks,
           ));
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1:
+        return FaultSummaryCatBEHelper.getDrivingFaultsCatBE(
+          data,
+          this.faultCountProvider.getVehicleChecksFaultCount(
+            TestCategory.BE,
+             (<CatBEUniqueTypes.TestData>data).vehicleChecks,
+          ));
       default:
         return [];
     }
@@ -76,6 +86,11 @@ export class FaultSummaryProvider {
       case TestCategory.C1E:
       case TestCategory.CE:
         return FaultSummaryCatCHelper.getSeriousFaultsTrailer(data);
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1:
+        return FaultSummaryCatBEHelper.getSeriousFaultsCatBE(data);
       default:
         return [];
     }
@@ -93,6 +108,11 @@ export class FaultSummaryProvider {
       case TestCategory.C1E:
       case TestCategory.CE:
         return FaultSummaryCatCHelper.getDangerousFaultsTrailer(data);
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1:
+        return FaultSummaryCatBEHelper.getDangerousFaultsCatBE(data);
       default:
         return [];
     }
