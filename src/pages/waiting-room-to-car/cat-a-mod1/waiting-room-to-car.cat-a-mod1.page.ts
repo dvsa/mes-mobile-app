@@ -222,7 +222,7 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
   }
 
   categoryCodeChanged(category: CategoryCode) {
-    this.store$.dispatch( new PopulateTestCategory(category));
+    this.store$.dispatch(new PopulateTestCategory(category));
   }
 
 }

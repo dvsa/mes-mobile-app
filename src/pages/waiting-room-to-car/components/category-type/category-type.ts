@@ -17,47 +17,38 @@ export class CategoryTypeComponent implements OnChanges {
   formGroup: FormGroup;
 
   @Input()
-  onCloseCategorySelectModal: () => {};
-
-  @Input()
   testCategory: CategoryCode;
 
   @Output()
   categoryCodeChange = new EventEmitter<CategoryCode>();
 
   formControl: FormControl;
-
   bikeCategoryDetails: BikeCategoryDetail[];
-
   categoryConfirmed: boolean;
-
-  categorySelectOptions: any = {
-    cssClass: 'selector-header',
-  };
 
   constructor(
     private bikeCategoryDetailProvider: BikeCategoryDetailProvider,
   ) { }
 
-  openCategorySelector() {
+  openCategorySelector(): void {
     this.loadImages();
     this.selectRef.open();
   }
 
-  closeCategorySelector() {
+  closeCategorySelector(): void {
     this.selectRef.close();
   }
 
-  loadImages() {
+  loadImages(): void {
     setTimeout(() =>  {
       const options = document.getElementsByClassName('alert-radio-label');
-      for (let index = 0; index < options.length; index++) {
+      Array.from(options).forEach((option, index) => {
         const element = options[index];
         const category = this.bikeCategoryDetails[index].categoryCode;
         const bike = this.bikeCategoryDetailProvider.getDetailByCategoryCode(category);
         element.innerHTML = `<span class="bike-code">${element.innerHTML}</span>`
-          .concat(`${bike.displayName}<img class="bike-image" src="${bike.imageUrl}" />`);
-      }
+            .concat(`${bike.displayName}<img class="bike-image" src="${bike.imageUrl}" />`);
+      });
     }, 20);
   }
 
@@ -67,11 +58,11 @@ export class CategoryTypeComponent implements OnChanges {
         value: 'Select cat type..',
         disabled: false,
       },
-        [this.validateCategorySelection.bind(this)]
+        [this.validateCategorySelection.bind(this)],
       );
       this.formGroup.addControl('categoryTypeSelectCategory', this.formControl);
     }
-    console.log(this.formGroup)
+    console.log(this.formGroup);
     this.formControl.patchValue('Select cat type..');
 
   }
@@ -85,13 +76,13 @@ export class CategoryTypeComponent implements OnChanges {
     this.bikeCategoryDetails = this.bikeCategoryDetailProvider.getAllDetailsByTestType('MOD1');
   }
 
-  categoryCodeChanged(category: CategoryCode) {
+  categoryCodeChanged(category: CategoryCode): void {
     this.categoryConfirmed = true;
-      this.categoryCodeChange.emit(category);
+    this.categoryCodeChange.emit(category);
   }
 
   validateCategorySelection(): null | {categoryTypeSelectCategory: boolean} {
-    return this.categoryConfirmed ? null : { categoryTypeSelectCategory: false }
+    return this.categoryConfirmed ? null : { categoryTypeSelectCategory: false };
   }
 
 }
