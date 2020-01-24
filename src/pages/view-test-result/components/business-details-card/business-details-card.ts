@@ -1,9 +1,18 @@
 import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
-
-// TODO: MES-4287 Import cat c types
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { Address } from '@dvsa/mes-test-schema/categories/common';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+
+export type CandidateWithBusinessDetails =
+  | CatBEUniqueTypes.Candidate
+  | CatCUniqueTypes.Candidate
+  | CatC1UniqueTypes.Candidate
+  | CatCEUniqueTypes.Candidate
+  | CatC1EUniqueTypes.Candidate;
 
 @Component({
   selector: 'business-details-card',
@@ -11,13 +20,12 @@ import { Address } from '@dvsa/mes-test-schema/categories/common';
 })
 export class BusinessDetailsCardComponent {
 
-  // TODO: MES-4287 Use category c types
   @Input()
-  data: CatBEUniqueTypes.Candidate;
+  data: CandidateWithBusinessDetails;
 
   constructor() {}
 
-  public shouldHideCard(): boolean {
+  public shouldHideCard() : boolean {
     return (
       !get(this.data, 'businessName') &&
       !get(this.data, 'businessTelephone') &&
@@ -25,15 +33,15 @@ export class BusinessDetailsCardComponent {
     );
   }
 
-  public getBusinessName(): string {
+  public getBusinessName() : string {
     return get(this.data, 'businessName', 'Not supplied');
   }
 
-  public getPhoneNumber(): string {
+  public getPhoneNumber() : string {
     return get(this.data, 'businessTelephone' , 'Not supplied');
   }
 
-  public getAddress(): Address {
+  public getAddress() : Address {
     return get(this.data, 'businessAddress');
   }
 

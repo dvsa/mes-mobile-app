@@ -2,13 +2,12 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
-import { VehicleDetailsCardComponent } from '../vehicle-details-card';
+import { VehicleDetailsCardComponent, VehicleDetailsWithDimensions } from '../vehicle-details-card';
 import { MockComponent } from 'ng-mocks';
-import { DataRowComponent } from '../../../../../../components/common/data-row/data-row';
-import { DataRowCustomComponent } from '../../../../../../components/common/data-row-custom/data-row-custom';
 import { VehicleDetails } from '@dvsa/mes-test-schema/categories/common';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { configureTestSuite } from 'ng-bullet';
+import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
+import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
 
 describe('VehicleDetailsCardComponent', () => {
   let fixture: ComponentFixture<VehicleDetailsCardComponent>;
@@ -77,7 +76,7 @@ describe('VehicleDetailsCardComponent', () => {
     });
     describe('getVehicleLength', () => {
       it('should return the correct value', () => {
-        const data: CatBEUniqueTypes.VehicleDetails = {
+        const data: VehicleDetailsWithDimensions = {
           vehicleLength: 10,
         };
         component.data = data;
@@ -90,7 +89,7 @@ describe('VehicleDetailsCardComponent', () => {
     });
     describe('getVehicleWidth', () => {
       it('should return the correct value', () => {
-        const data: CatBEUniqueTypes.VehicleDetails = {
+        const data: VehicleDetailsWithDimensions = {
           vehicleWidth: 4,
         };
         component.data = data;

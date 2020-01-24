@@ -25,7 +25,7 @@ import { ExaminerDetailsCardComponent } from '../../components/examiner-details-
 import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
-import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
+import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
 import { categoryBETestResultMock } from '../../../../shared/mocks/cat-be-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
@@ -36,7 +36,7 @@ import { TestOutcome } from '../../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
 import { ViewTestResultCatBEPage } from '../view-test-result.cat-be.page';
-import { BusinessDetailsCardComponent } from '../components/business-details-card/business-details-card';
+import { BusinessDetailsCardComponent } from '../../components/business-details-card/business-details-card';
 import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
 import { configureTestSuite } from 'ng-bullet';
 
