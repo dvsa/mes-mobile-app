@@ -2,19 +2,26 @@ import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
 import { flattenArray } from '../../../view-test-result-helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-// TODO - Cat C
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import {
   DataRowListItem,
   ViewTestResultLabels,
   TestRequirementsLabels,
 } from '../../../components/data-row-with-list/data-list-with-row.model';
-// TODO - Cat C
-import { manoeuvreTypeLabels } from '../../../../../shared/constants/competencies/catbe-manoeuvres';
+import { manoeuvreTypeLabelsCatC } from '../../../../../shared/constants/competencies/catc-manoeuvres';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { FaultSummaryProvider } from '../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+
+export type CatCTestData =
+  | CatCUniqueTypes.TestData
+  | CatC1UniqueTypes.TestData
+  | CatCEUniqueTypes.TestData
+  | CatC1EUniqueTypes.TestData;
 
 @Component({
   selector: 'debrief-card',
@@ -23,8 +30,10 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 export class DebriefCardComponent {
 
   @Input()
-  // TODO - CAT C
-  data: CatBEUniqueTypes.TestData;
+  data: CatCTestData;
+
+  @Input()
+  category: TestCategory;
 
   constructor(
     private faultSummaryProvider: FaultSummaryProvider,
@@ -32,7 +41,7 @@ export class DebriefCardComponent {
   ) {}
 
   public getTestRequirements = (): DataRowListItem[] => {
-    return [
+    const testRequirements: DataRowListItem[] = [
       {
         label: TestRequirementsLabels.normalStart1,
         checked: get(this.data, 'testRequirements.normalStart1', false) ,
@@ -53,16 +62,21 @@ export class DebriefCardComponent {
         label: TestRequirementsLabels.angledStartControlledStop,
         checked: get(this.data, 'testRequirements.angledStartControlledStop', false),
       },
-      {
+    ];
+
+    if (this.category === TestCategory.C1E || this.category === TestCategory.CE) {
+      testRequirements.push({
         label: TestRequirementsLabels.uncoupleRecouple,
         checked: get(this.data, 'uncoupleRecouple.selected', false),
-      },
-    ];
+      });
+    }
+
+    return testRequirements;
   }
 
   public getManoeuvre(): string {
     const isReverseLeftSelected = get(this.data, 'manoeuvres.reverseLeft.selected', false);
-    return isReverseLeftSelected ? manoeuvreTypeLabels.reverseLeft : 'None' ;
+    return isReverseLeftSelected ? manoeuvreTypeLabelsCatC.reverseLeft : 'None' ;
   }
 
   public getEco(): DataRowListItem[] {
@@ -79,22 +93,19 @@ export class DebriefCardComponent {
   }
 
   public getDrivingFaults(): FaultSummary[] {
-    return this.faultSummaryProvider.getDrivingFaultsList(this.data, TestCategory.BE);
+    return this.faultSummaryProvider.getDrivingFaultsList(this.data, this.category);
   }
 
   public getSeriousFaults(): FaultSummary[] {
-    // TODO - Cat C
-    return this.faultSummaryProvider.getSeriousFaultsList(this.data, TestCategory.BE);
+    return this.faultSummaryProvider.getSeriousFaultsList(this.data, this.category);
   }
 
   public getDangerousFaults(): FaultSummary[] {
-    // TODO - Cat C
-    return this.faultSummaryProvider.getDangerousFaultsList(this.data, TestCategory.BE);
+    return this.faultSummaryProvider.getDangerousFaultsList(this.data, this.category);
   }
 
   public getDrivingFaultCount(): number {
-    // TODO - Cat C
-    return this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, this.data);
+    return this.faultCountProvider.getDrivingFaultSumCount(this.category, this.data);
   }
 
   public getETA(): string {
@@ -109,7 +120,7 @@ export class DebriefCardComponent {
     if (eta.length === 0) {
       eta.push('None');
     }
-    return   flattenArray(eta);
+    return flattenArray(eta);
   }
 
   public getShowMeQuestions(): QuestionResult[] {

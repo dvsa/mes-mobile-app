@@ -26,8 +26,7 @@ import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
 import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
-// TODO - Need to create a Cat C mock and use in the tests
-import { categoryBETestResultMock } from '../../../../shared/mocks/cat-be-test-result.mock';
+import { categoryCTestResultMock } from '../../../../shared/mocks/cat-c-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
 import { TestSummaryCardComponent } from '../../components/test-summary-card/test-summary-card';
@@ -109,8 +108,7 @@ describe('ViewTestResultCatCPage', () => {
     });
     describe('getTestDetails', () => {
       it('should correctly generate the data', () => {
-        // TODO - Use Cat C Mock
-        component.testResult = categoryBETestResultMock;
+        component.testResult = categoryCTestResultMock;
 
         const result: TestDetailsModel = component.getTestDetails();
 
@@ -134,7 +132,7 @@ describe('ViewTestResultCatCPage', () => {
     });
     describe('getExaminerDetails', () => {
       it('should correctly generate the data', () => {
-        component.testResult = categoryBETestResultMock;
+        component.testResult = categoryCTestResultMock;
 
         const result: ExaminerDetailsModel = component.getExaminerDetails();
 
@@ -149,8 +147,7 @@ describe('ViewTestResultCatCPage', () => {
     });
     describe('getHeaderDetails', () => {
       it('should return the correct data', () => {
-        // TODO - CAT C
-        component.testResult = categoryBETestResultMock;
+        component.testResult = categoryCTestResultMock;
         const result: ViewTestHeaderModel = component.getHeaderDetails();
 
         expect(result.activityCode).toBe('2');
@@ -228,8 +225,7 @@ describe('ViewTestResultCatCPage', () => {
     });
     it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
-      // TODO - Use Cat C Mock
-      component.testResult = categoryBETestResultMock;
+      component.testResult = categoryCTestResultMock;
 
       fixture.detectChanges();
 
@@ -261,8 +257,7 @@ describe('ViewTestResultCatCPage', () => {
   });
   it('should show rekey cards only when rekey is true', () => {
     component.isLoading = false;
-    // TODO - use Cat C mock
-    component.testResult = categoryBETestResultMock;
+    component.testResult = categoryCTestResultMock;
 
     fixture.detectChanges();
 
