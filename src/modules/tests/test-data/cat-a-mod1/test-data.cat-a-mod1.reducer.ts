@@ -5,6 +5,8 @@ import { dangerousFaultsReducer } from '../common/dangerous-faults/dangerous-fau
 import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.reducer';
 import { etaReducer } from '../common/eta/eta.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
+import { emergencyStopReducer } from './emergency-stop/emergency-stop.reducer';
+import { avoidanceReducer } from './avoidance/avoidance.reducer';
 
 export const initialState: TestData = {
   dangerousFaults: {},
@@ -21,7 +23,10 @@ export function testDataCatAMod1Reducer(
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
     seriousFaults: seriousFaultsReducer,
+    emergencyStop: emergencyStopReducer,
+    avoidance: avoidanceReducer,
     ETA: etaReducer,
+
   })(state as Required<TestData>, action);
 }
 

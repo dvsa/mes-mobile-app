@@ -7,26 +7,26 @@
     [ngClass]="{
       'fault': faultCount() > 0,
       'serious-fault': hasSeriousFault(),
-      'dangerous-fault': hasDangerousFault(),
+      'dangerous-fault': hasDangerousFault()
     }"
   >
-    <driving-faults-badge class="driving-faults" [count]="faultCount"></driving-faults-badge>
+    <driving-faults-badge class="driving-faults" [count]="faultCount()"></driving-faults-badge>
     <span class='competency-label'>{{ getLabel() }}</span>
     <div class="fault-wrapper">
-      <serious-fault-badge [showBadge]="showSerious()"></serious-fault-badge>
-      <dangerous-fault-badge [showBadge]="showDangerous()"></dangerous-fault-badge>
+      <serious-fault-badge *ngIf="hasSeriousFault()" [showBadge]="hasSeriousFault()"></serious-fault-badge>
+      <dangerous-fault-badge *ngIf="hasDangerousFault()" [showBadge]="hasDangerousFault()"></dangerous-fault-badge>
     </div>
   </competency-button>
 </ion-col>
 <ion-col col-32>
-  <input type="text" class="speed-input" maxlength="3">
-  <input type="text" class="speed-input second-input" maxlength="3">
+  <input [value]="firstAttempt" type="text" class="speed-input" maxlength="3">
+  <input [value]="secondAttempt" type="text" class="speed-input second-input" maxlength="3">
 </ion-col>
 <ion-col col-20>
   <competency-button
-    [onTap]="toggleNotMet()"
+    [onTap]="toggleNotMet"
     [ngClass]="{
-      'not-met': actionTaken
+      'not-met': speedNotMetSeriousFault
     }">
       <span class='competency-label'>Not met</span>
   </competency-button>
