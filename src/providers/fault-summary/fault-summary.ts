@@ -14,7 +14,7 @@ import {
   manoeuvreTypeLabels as manoeuvreTypeLabelsCatBe,
 } from '../../shared/constants/competencies/catbe-manoeuvres';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { CatBUniqueTypes } from "@dvsa/mes-test-schema/categories/B";
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../fault-count/fault-count';
 import { getCompetencyFaults } from '../../shared/helpers/competency';
