@@ -74,6 +74,7 @@ import {
   Identification,
   IndependentDriving,
   QuestionResult,
+  CategoryCode,
 } from '@dvsa/mes-test-schema/categories/common';
 import {
   AddDangerousFaultComment,
@@ -106,6 +107,7 @@ import {
   vehicleChecksExist,
 } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -143,6 +145,7 @@ interface OfficePageState {
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -160,6 +163,7 @@ export class OfficeCatCPage extends BasePageComponent {
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
+  testCategory: CategoryCode;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -192,7 +196,12 @@ export class OfficeCatCPage extends BasePageComponent {
       select(getTests),
       select(getCurrentTest),
     );
+
     this.pageState = {
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
+        map(result => this.testCategory = result),
+      ),
       activityCode$: currentTest$.pipe(
         select(getActivityCode),
       ),
@@ -304,7 +313,7 @@ export class OfficeCatCPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C),
+            this.faultSummaryProvider.getDrivingFaultsList(data, this.testCategory as TestCategory),
           )),
       ),
       displaySeriousFault$: currentTest$.pipe(
@@ -328,7 +337,7 @@ export class OfficeCatCPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C),
+            this.faultSummaryProvider.getDrivingFaultsList(data, this.testCategory as TestCategory),
           )),
       ),
       displayVehicleChecks$: currentTest$.pipe(
@@ -368,19 +377,19 @@ export class OfficeCatCPage extends BasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.C)),
+        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, this.testCategory as TestCategory)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.C)),
+        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, this.testCategory as TestCategory)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, this.testCategory as TestCategory)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultCountProvider.getDrivingFaultSumCount(TestCategory.C, data)),
+        map(data => this.faultCountProvider.getDrivingFaultSumCount(this.testCategory as TestCategory, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
@@ -588,5 +597,4 @@ export class OfficeCatCPage extends BasePageComponent {
 
     return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
   }
-
 }
