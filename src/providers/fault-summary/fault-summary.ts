@@ -4,7 +4,6 @@ import { CategoryCode, EyesightTest, QuestionResult } from '@dvsa/mes-test-schem
 import { CommentSource, CompetencyIdentifiers, FaultSummary } from '../../shared/models/fault-marking.model';
 import { CompetencyDisplayName } from '../../shared/models/competency-display-name';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { ManoeuvreTypes } from '../../modules/tests/test-data/test-data.constants';
 import {
   manoeuvreCompetencyLabels as manoeuvreCompetencyLabelsCatB,
@@ -15,6 +14,7 @@ import {
   manoeuvreTypeLabels as manoeuvreTypeLabelsCatBe,
 } from '../../shared/constants/competencies/catbe-manoeuvres';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../fault-count/fault-count';
 import { getCompetencyFaults } from '../../shared/helpers/competency';
