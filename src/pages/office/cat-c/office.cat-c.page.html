@@ -59,6 +59,9 @@
               [outcome]="pageState.testOutcome$ | async" (identificationChange)="identificationChanged($event)">
             </identification>
 
+            <vehicle-checks-office-card [display]="pageState.displayVehicleChecks$ | async"
+                                        [checks]="pageState.vehicleChecks$ | async"></vehicle-checks-office-card>
+
             <weather-conditions [display]="pageState.displayWeatherConditions$ | async" [weatherConditions]="pageState.weatherConditions$ | async"
               [formGroup]="form" [outcome]="pageState.testOutcome$ | async" [weatherConditionsOptions]="weatherConditions"
               (weatherConditionsChange)="weatherConditionsChanged($event)">
