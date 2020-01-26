@@ -164,7 +164,6 @@ export class TestsEffects {
       examiner.individualId;
 
       const arrayOfActions: Action[] = [
-        new PopulateTestCategory(startTestAction.category),
         new PopulateExaminer(examiner),
         new PopulateApplicationReference(slot.booking.application),
         createPopulateCandidateDetailsAction(startTestAction.category, slot.booking),
@@ -197,6 +196,16 @@ export class TestsEffects {
         arrayOfActions.push(new InitializeVehicleChecks(startTestAction.category));
       }
 
+      if (
+        startTestAction.category !== TestCategory.EUAMM1 &&
+        startTestAction.category !== TestCategory.EUAM1 &&
+        startTestAction.category !== TestCategory.EUA1M1 &&
+        startTestAction.category !== TestCategory.EUA2M1
+      ) {
+        arrayOfActions.push(
+          new PopulateTestCategory(startTestAction.category),
+        );
+      }
       return arrayOfActions;
     }),
   );

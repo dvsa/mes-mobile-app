@@ -74,13 +74,10 @@ interface WaitingRoomToCarPageState {
   templateUrl: 'waiting-room-to-car.cat-a-mod1.page.html',
 })
 export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
-  pageState: WaitingRoomToCarPageState;
-  form: FormGroup;
-
   @ViewChild(BikeCategoryTypeComponent)
 
-  showEyesightFailureConfirmation: boolean = false;
-  categoryConfirmed: boolean;
+  pageState: WaitingRoomToCarPageState;
+  form: FormGroup;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -199,7 +196,6 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
     } else {
       Object.keys(this.form.controls).forEach((controlName) => {
         if (this.form.controls[controlName].invalid) {
-          console.log(`the value for ${controlName} is ${this.form.controls[name]}`);
           this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarValidationError(
             `${controlName} is blank`,
           ));

@@ -13,7 +13,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-grid>
 
-<ion-row no-padding>
+        <ion-row no-padding>
           <ion-col no-padding>
             <bike-category-type testType="MOD1" [testCategory] = "pageState.testCategory$ | async"
                            (categoryCodeChange)="categoryCodeChanged($event)" [formGroup]="form">

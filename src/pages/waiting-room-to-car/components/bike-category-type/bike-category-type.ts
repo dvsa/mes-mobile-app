@@ -30,7 +30,6 @@ export class BikeCategoryTypeComponent implements OnChanges {
 
   formControl: FormControl;
   bikeCategoryDetails: BikeCategoryDetail[];
-  categoryConfirmed: boolean;
 
   constructor(
     private bikeCategoryDetailProvider: BikeCategoryDetailProvider,
@@ -81,17 +80,15 @@ export class BikeCategoryTypeComponent implements OnChanges {
     // default to MOD1 if any input other than MOD1 or MOD2 provided
     this.testType  = (this.testType === BikeTestType.MOD1 || this.testType === BikeTestType.MOD2) ?
       this.testType : BikeTestType.MOD1;
-    this.categoryConfirmed = false;
     this.bikeCategoryDetails = this.bikeCategoryDetailProvider.getAllDetailsByTestType(this.testType);
   }
 
   categoryCodeChanged(category: CategoryCode): void {
-    this.categoryConfirmed = true;
     this.categoryCodeChange.emit(category);
   }
 
   validateCategorySelection(): null | {categoryTypeSelectCategory: boolean} {
-    return this.categoryConfirmed ? null : { categoryTypeSelectCategory: false };
+    return this.testCategory ? null : { categoryTypeSelectCategory: false };
   }
 
 }
