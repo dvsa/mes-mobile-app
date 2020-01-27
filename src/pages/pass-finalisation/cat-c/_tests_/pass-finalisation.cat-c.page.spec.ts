@@ -39,11 +39,19 @@ import { PASS_CERTIFICATE_NUMBER_CTRL }
 import { Code78Component } from '../components/code-78/code-78';
 import { TransmissionType } from '../../../../shared/models/transmission-type';
 import { configureTestSuite } from 'ng-bullet';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('PassFinalisationCatCPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatCPage>;
   let component: PassFinalisationCatCPage;
   let store$: Store<StoreModel>;
+
+  const categoryDifferences = [
+    { category: TestCategory.C, showCode78: true },
+    { category: TestCategory.C1, showCode78: false },
+    { category: TestCategory.C1E, showCode78: false },
+    { category: TestCategory.CE, showCode78: true },
+  ];
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -201,6 +209,13 @@ describe('PassFinalisationCatCPage', () => {
         expect(component.shouldShowCode78Banner()).toEqual(false);
       });
 
+    });
+
+    categoryDifferences.forEach((cat) => {
+      it(`shouldShowCode78 for Cat ${cat.category}`, () => {
+        component.testCategory = cat.category;
+        expect(component.shouldShowCode78()).toEqual(cat.showCode78);
+      });
     });
   });
 });
