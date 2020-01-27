@@ -1,6 +1,8 @@
 import { When, Before } from 'cucumber';
-import { getElement, clickElement, nativeTextEntry } from './generic-steps';
+import { getElement, clickElement } from './generic-steps';
 import { by, element, browser } from 'protractor';
+import { textFieldInputViaNativeMode } from '../../helpers/helpers'; 
+
 import { threadId } from 'worker_threads';
 import { boolean, number } from '@hapi/joi';
 
@@ -55,7 +57,8 @@ const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, te
     standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
   }
   // Because registration number field is uppercaseAlphanumOnly we have to go native to get round this
-  nativeTextEntry('Vehicle registration number', 'AB12CDE');
+  textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Vehicle registration number"]]/following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'AB12CDE');
+
   const submitWRTC = getElement(by.xpath('//button[span[h3[text()="Continue to test report"]]]'));
   clickElement(submitWRTC);
 };

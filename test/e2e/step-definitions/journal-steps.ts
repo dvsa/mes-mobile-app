@@ -126,6 +126,13 @@ Then('The vehicle for {string} has length {string}, width {string}, height {stri
   return expect(seatValue.getText()).to.eventually.equal(seats);
 });
 
+Then('I continue the write up for {string}', (candidateName) => {
+  const continueWriteUp = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Write-up"]]
+    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    h3[text() = "${candidateName}"]]`));
+  clickElement(continueWriteUp);  
+});
+
 const viewCandidateDetails = (candidateName) => {
   const buttonElement = getElement(by.xpath(`//h3[text()[normalize-space(.) = "${candidateName}"]]`));
   return clickElement(buttonElement);
