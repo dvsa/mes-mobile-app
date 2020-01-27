@@ -219,6 +219,10 @@ When('I click the back button', () => {
   clickBackButton(); 
 });
 
+When('I click go to my Journal', () => {
+  clickGoToMyJournalButton();
+});
+
 /**
  * Take a screenshot of the page at the end of the scenario.
  */
@@ -418,8 +422,7 @@ export const onJournalPageAs = (username) => {
   onLandingPageAs(username);
 
   // Navigate to journal page
-  const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
-  clickElement(goToJournalButton);
+  clickGoToMyJournalButton();
 
   // If the journal page is loaded we should have a refresh button
   const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
@@ -442,4 +445,9 @@ const getPageType = (pageName : string) => {
 const clickBackButton = () => {
   const backButton = getElement(by.xpath('//page-journal//button//span[text()="Back"]'));
   clickElement(backButton);
+};
+
+const clickGoToMyJournalButton = () => {
+  const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
+  clickElement(goToJournalButton);
 };
