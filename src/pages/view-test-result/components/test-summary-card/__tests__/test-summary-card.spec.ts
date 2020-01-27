@@ -80,6 +80,38 @@ describe('TestSummaryCardComponent', () => {
       });
     });
 
+    describe('getCode78', () => {
+      it('should return null if the data does not exist' , () => {
+        const passCompletion = {
+          provisionalLicenceProvided: false,
+          passCertificateNumber: 'A123456X',
+        };
+        component.passCompletion = passCompletion;
+        fixture.detectChanges();
+        expect(component.getCode78()).toEqual(null);
+      });
+      it('should return yes if code78 is true' , () => {
+        const passCompletion = {
+          provisionalLicenceProvided: false,
+          passCertificateNumber: 'A123456X',
+          code78Present: true,
+        };
+        component.passCompletion = passCompletion;
+        fixture.detectChanges();
+        expect(component.getCode78()).toEqual('Yes');
+      });
+      it('should return no if code78 is false' , () => {
+        const passCompletion = {
+          provisionalLicenceProvided: false,
+          passCertificateNumber: 'A123456X',
+          code78Present: false,
+        };
+        component.passCompletion = passCompletion;
+        fixture.detectChanges();
+        expect(component.getCode78()).toEqual('No');
+      });
+    });
+
     describe('getPassCertificateNumber', (() => {
       it('should return the correct data', () => {
         const passCompletion = {

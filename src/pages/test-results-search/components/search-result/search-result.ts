@@ -42,6 +42,9 @@ export class SearchResultComponent {
       case TestCategory.BE:
         pageToOpen = CAT_BE.VIEW_TEST_RESULT_PAGE;
       case TestCategory.C:
+      case TestCategory.CE:
+      case TestCategory.C1:
+      case TestCategory.C1E:
         pageToOpen = CAT_C.VIEW_TEST_RESULT_PAGE;
         break;
     }

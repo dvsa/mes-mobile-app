@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
 import { flattenArray, convertBooleanToString } from '../../view-test-result-helpers';
 import { Accompaniment, PassCompletion, TestSummary } from '@dvsa/mes-test-schema/categories/common';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 
 @Component({
   selector: 'test-summary-card',
@@ -13,7 +14,7 @@ export class TestSummaryCardComponent {
   accompaniment: Accompaniment;
 
   @Input()
-  passCompletion: PassCompletion;
+  passCompletion: PassCompletion | CatCUniqueTypes.PassCompletion;
 
   @Input()
   testSummary: TestSummary;
@@ -44,6 +45,11 @@ export class TestSummaryCardComponent {
 
   public getProvisionalLicenceProvided() : string {
     return convertBooleanToString(get(this.passCompletion, 'provisionalLicenceProvided'));
+  }
+
+  public getCode78(): string  {
+    const code78: boolean = get(this.passCompletion, 'code78Present', null);
+    return code78 !== null ? convertBooleanToString(code78) : null;
   }
 
   public getPassCertificateNumber() : string {

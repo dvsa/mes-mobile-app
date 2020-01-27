@@ -31,11 +31,8 @@ import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-// TODO - Cat C
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-// TODO - Cat C
-import { categoryBETestResultMock } from '../../../shared/mocks/cat-be-test-result.mock';
 import { get } from 'lodash';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 
 @IonicPage()
 @Component({
@@ -45,8 +42,7 @@ import { get } from 'lodash';
 export class ViewTestResultCatCPage extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
-  // TODO - Cat C  - Need to type this to Cat C
-  testResult: CatBEUniqueTypes.TestResult;
+  testResult: CatCUniqueTypes.TestResult;
 
   isLoading: boolean;
   loadingSpinner: Loading;
@@ -80,11 +76,9 @@ export class ViewTestResultCatCPage extends BasePageComponent implements OnInit 
       .pipe(
         map((response: HttpResponse<any>): string => response.body),
 
-        // TODO: MES-4287 Use category c type
-        map(data => this.testResult = this.compressionProvider.extractTestResult(data) as CatBEUniqueTypes.TestResult),
+        map(data => this.testResult = this.compressionProvider.extractTestResult(data) as CatCUniqueTypes.TestResult),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
-          this.testResult = categoryBETestResultMock;
           this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
           this.errorLink = ErrorTypes.SEARCH_RESULT;
@@ -134,7 +128,7 @@ export class ViewTestResultCatCPage extends BasePageComponent implements OnInit 
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
       applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
-      category: TestCategory.C,
+      category: this.testResult.category as TestCategory,
       specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
       entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
       slotType: this.testResult.journalData.testSlotAttributes.slotType,

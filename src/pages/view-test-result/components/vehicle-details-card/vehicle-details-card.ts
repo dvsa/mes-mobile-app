@@ -1,7 +1,17 @@
 import { Component, Input } from '@angular/core';
-// todo: PREP-AMOD2 change to CatAMod2UniqueTypes when schema changes are ready
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { get } from 'lodash';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+
+export type VehicleDetailsWithDimensions =
+  | CatBEUniqueTypes.VehicleDetails
+  | CatCUniqueTypes.VehicleDetails
+  | CatCEUniqueTypes.VehicleDetails
+  | CatC1UniqueTypes.VehicleDetails
+  | CatC1EUniqueTypes.VehicleDetails;
 
 @Component({
   selector: 'vehicle-details-card',
@@ -10,7 +20,6 @@ import { get } from 'lodash';
 export class VehicleDetailsCardComponent {
 
   @Input()
-  // todo: PREP-AMOD2 change to CatAMod2UniqueTypes when schema changes are ready
   data: CatBEUniqueTypes.VehicleDetails;
 
   constructor() {}

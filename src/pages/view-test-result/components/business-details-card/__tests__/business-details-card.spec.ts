@@ -3,12 +3,10 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config, Platform } from 'ionic-angular';
 import { ConfigMock, PlatformMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
-import { DataRowComponent } from '../../../../../../components/common/data-row/data-row';
-import { DataRowCustomComponent } from '../../../../../../components/common/data-row-custom/data-row-custom';
-import { BusinessDetailsCardComponent } from '../business-details-card';
-// TODO - Cat C
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { DisplayAddressComponent } from '../../../../../../components/common/display-address/display-address';
+import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
+import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
+import { BusinessDetailsCardComponent, CandidateWithBusinessDetails } from '../business-details-card';
+import { DisplayAddressComponent } from '../../../../../components/common/display-address/display-address';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('BusinessDetailsCardComponent', () => {
@@ -44,8 +42,7 @@ describe('BusinessDetailsCardComponent', () => {
         expect(component.shouldHideCard()).toEqual(true);
       });
       it('should return false if all data has been provided', () => {
-        // TODO - Cat C
-        const data: CatBEUniqueTypes.Candidate = {
+        const data: CandidateWithBusinessDetails = {
           businessName: 'Business Name',
           businessTelephone: ' Business Telephone',
           businessAddress: {
@@ -57,7 +54,7 @@ describe('BusinessDetailsCardComponent', () => {
         expect(component.shouldHideCard()).toEqual(false);
       });
       it('should return false if only business name has been provided', () => {
-        const data: CatBEUniqueTypes.Candidate = {
+        const data: CandidateWithBusinessDetails = {
           businessName: 'Business Name',
         };
         component.data = data;
@@ -65,7 +62,7 @@ describe('BusinessDetailsCardComponent', () => {
         expect(component.shouldHideCard()).toEqual(false);
       });
       it('should return false if only business telephone has been provided', () => {
-        const data: CatBEUniqueTypes.Candidate = {
+        const data: CandidateWithBusinessDetails = {
           businessTelephone: ' Business Telephone',
         };
         component.data = data;
@@ -73,7 +70,7 @@ describe('BusinessDetailsCardComponent', () => {
         expect(component.shouldHideCard()).toEqual(false);
       });
       it('should return false if only business address has been provided', () => {
-        const data: CatBEUniqueTypes.Candidate = {
+        const data: CandidateWithBusinessDetails = {
           businessAddress: {
             addressLine1: 'Address Line 1',
           },
@@ -85,7 +82,7 @@ describe('BusinessDetailsCardComponent', () => {
     });
     describe('getBusinessName', () => {
       it('should return the correct value if the data is present', () => {
-        const data: CatBEUniqueTypes.Candidate = {
+        const data: CandidateWithBusinessDetails = {
           businessName: 'Test Business Name',
         };
         component.data = data;
@@ -98,7 +95,7 @@ describe('BusinessDetailsCardComponent', () => {
     });
     describe('getPhoneNumber', () => {
       it('should return the correct value if the data is present', () => {
-        const data: CatBEUniqueTypes.Candidate = {
+        const data: CandidateWithBusinessDetails = {
           businessTelephone: '123456789',
         };
         component.data = data;
@@ -111,7 +108,7 @@ describe('BusinessDetailsCardComponent', () => {
     });
     describe('getAddress', () => {
       it('should return the correct value if the data is present', () => {
-        const data: CatBEUniqueTypes.Candidate = {
+        const data: CandidateWithBusinessDetails = {
           businessAddress:{
             addressLine1: 'Address Line 1',
             addressLine2: 'Address Line 2',
