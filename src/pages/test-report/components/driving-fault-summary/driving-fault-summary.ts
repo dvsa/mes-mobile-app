@@ -33,7 +33,7 @@ export class DrivingFaultSummaryComponent implements OnInit {
   constructor(
     private store$: Store<StoreModel>,
     private faultCountProvider: FaultCountProvider,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const currentTest$ = this.store$.pipe(
