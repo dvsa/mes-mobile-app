@@ -30,7 +30,6 @@ import {
   AddDangerousFault,
 } from '../../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFault } from '../../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
-import { EyesightTestFailed } from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { ExaminerActions, Competencies } from '../../../../modules/tests/test-data/test-data.constants';
 import { By } from '@angular/platform-browser';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
@@ -99,8 +98,7 @@ describe('OfficePage', () => {
             testStatus: {},
             startedTests: {
               123: {
-                // TODO: MES-4287 Use category C
-                category: TestCategory.BE,
+                category: TestCategory.C,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
@@ -239,12 +237,6 @@ describe('OfficePage', () => {
     });
     it('should display serious fault comment textbox if there are any', () => {
       store$.dispatch(new AddSeriousFault(Competencies.judgementOvertaking));
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#seriousFaultComment'))).toBeDefined();
-    });
-
-    it('should display the serious fault comment textbox if the eyesight test is failed', () => {
-      store$.dispatch(new EyesightTestFailed());
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#seriousFaultComment'))).toBeDefined();
     });
