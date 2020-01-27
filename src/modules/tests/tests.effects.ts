@@ -157,7 +157,6 @@ export class TestsEffects {
         const slotData = slots.map(slot => slot.slotData);
         slot = slotData.find(data => data.slotDetail.slotId === startTestAction.slotId && has(data, 'booking'));
       }
-      console.log('**********************', slot);
       const testSlotAttributes: TestSlotAttributes = extractTestSlotAttributes(slot);
       const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
 
@@ -202,7 +201,7 @@ export class TestsEffects {
         startTestAction.category !== TestCategory.EUA1M1 &&
         startTestAction.category !== TestCategory.EUA2M1
       ) {
-        arrayOfActions.push(
+        arrayOfActions.unshift(
           new PopulateTestCategory(startTestAction.category),
         );
       }

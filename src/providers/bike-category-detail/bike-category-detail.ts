@@ -11,12 +11,6 @@ export class BikeCategoryDetailProvider {
   }
 
   public getAllDetailsByTestType(testType: BikeTestType): BikeCategoryDetail[] {
-    const bikesForSpecifiedTestType: BikeCategoryDetail[] = [];
-    bikeCategoryDetails.forEach((bikeCategory) => {
-      if (testType === bikeCategory.testType) {
-        bikesForSpecifiedTestType.push(bikeCategory);
-      }
-    });
-    return bikesForSpecifiedTestType;
+    return bikeCategoryDetails.filter(bikeDetail => bikeDetail.testType === testType);
   }
 }
