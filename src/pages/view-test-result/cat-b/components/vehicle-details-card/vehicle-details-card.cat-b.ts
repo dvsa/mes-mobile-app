@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { VehicleDetailsModel } from './vehicle-details-card.model';
+import { VehicleDetailsModel } from './vehicle-details-card.cat-b.model';
 import { flattenArray } from '../../../view-test-result-helpers';
 
 @Component({
-  selector: 'vehicle-details-card',
-  templateUrl: 'vehicle-details-card.html',
+  selector: 'vehicle-details-cat-b-card',
+  templateUrl: 'vehicle-details-card.cat-b.html',
 })
-export class VehicleDetailsCardComponent {
+export class VehicleDetailsCardCatBComponent {
 
   @Input()
   data: VehicleDetailsModel;
