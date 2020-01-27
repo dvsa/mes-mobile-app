@@ -11,13 +11,14 @@ import { withLatestFrom, map } from 'rxjs/operators';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
 
-interface DrivingFaultSummaryState {
-  count$: Observable<number>;
-}
-
 enum driverType {
   R = 'R',
   D = 'D',
+}
+
+interface DrivingFaultSummaryState {
+  count$: Observable<number>;
+  driverRiderFlag$: Observable<driverType>;
 }
 
 @Component({
@@ -28,12 +29,11 @@ export class DrivingFaultSummaryComponent implements OnInit {
 
   componentState: DrivingFaultSummaryState;
   subscription: Subscription;
-  driverRiderFlag: driverType;
 
   constructor(
     private store$: Store<StoreModel>,
     private faultCountProvider: FaultCountProvider,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     const currentTest$ = this.store$.pipe(
@@ -48,8 +48,13 @@ export class DrivingFaultSummaryComponent implements OnInit {
         select(getTestData),
         withLatestFrom(category$),
         map(([testData, category]) => {
-          this.driverRiderFlag = this.driverTypeSwitch(category as TestCategory);
           return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
+        }),
+      ),
+      driverRiderFlag$: currentTest$.pipe(
+        select(getTestCategory),
+        map((category) => {
+          return this.driverTypeSwitch(category as TestCategory);
         }),
       ),
     };
@@ -67,15 +72,12 @@ export class DrivingFaultSummaryComponent implements OnInit {
     }
   }
 
-  driverTypeSwitch(cat: string): driverType {
+  driverTypeSwitch(cat: TestCategory): driverType {
     // switch to determine Driver or Rider based upon category
-    let type: driverType;
     if (cat.includes('EUA')) {
-      type = driverType.R;
-    } else {
-      type = driverType.D;
+      return driverType.R;
     }
-    return type;
+    return driverType.D;
   }
 
 }
