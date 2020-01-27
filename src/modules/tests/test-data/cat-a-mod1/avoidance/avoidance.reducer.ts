@@ -9,16 +9,22 @@ export function avoidanceReducer(
   state: Avoidance = initialState,
   action: avoidanceActions.Types,
 ): Avoidance {
-
-  console.log('here in avoidance reducers');
   switch (action.type) {
-
     case avoidanceActions.TOGGLE_AVOIDANCE_SPEED_REQ:
       return {
         ...state,
         speedNotMetSeriousFault: !state.speedNotMetSeriousFault,
       };
-
+    case avoidanceActions.RECORD_AVOIDANCE_FIRST_ATTEMPT:
+      return {
+        ...state,
+        firstAttempt: action.attemptedSpeed,
+      };
+    case avoidanceActions.RECORD_AVOIDANCE_SECOND_ATTEMPT:
+      return {
+        ...state,
+        secondAttempt: action.attemptedSpeed,
+      };
     default:
       return state;
   }

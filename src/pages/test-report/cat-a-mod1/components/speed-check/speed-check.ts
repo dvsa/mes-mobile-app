@@ -12,10 +12,16 @@ import { getEmergencyStop }
 import { getTestData } from '../../../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
 import { getAvoidance } from '../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.selector';
 import { isEmpty } from 'lodash';
-import { ToggleEmergencyStopSpeedReq }
-  from '../../../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
-import { ToggleAvoidanceSpeedReq }
-  from '../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
+import {
+  ToggleEmergencyStopSpeedReq,
+  RecordEmergencyStopFirstAttempt,
+  RecordEmergencyStopSecondAttempt,
+} from '../../../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
+import {
+  ToggleAvoidanceSpeedReq,
+  RecordAvoidanceFirstAttempt,
+  RecordAvoidanceSecondAttempt,
+} from '../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 
 @Component({
   selector: 'speed-check',
@@ -110,4 +116,25 @@ export class SpeedCheckComponent {
   hasDangerousFault = (): boolean => {
     return this.outcome === 'D';
   }
+
+  onFirstAttemptChange = (attemptedSpeed: number): void => {
+    if (this.competency === Competencies.speedCheckEmergency) {
+      this.store$.dispatch(new RecordEmergencyStopFirstAttempt(attemptedSpeed));
+    }
+
+    if (this.competency === Competencies.speedCheckAvoidance) {
+      this.store$.dispatch(new RecordAvoidanceFirstAttempt(attemptedSpeed));
+    }
+  }
+
+  onSecondAttemptChange = (attemptedSpeed: number): void => {
+    if (this.competency === Competencies.speedCheckEmergency) {
+      this.store$.dispatch(new RecordEmergencyStopSecondAttempt(attemptedSpeed));
+    }
+
+    if (this.competency === Competencies.speedCheckAvoidance) {
+      this.store$.dispatch(new RecordAvoidanceSecondAttempt(attemptedSpeed));
+    }
+  }
+
 }
