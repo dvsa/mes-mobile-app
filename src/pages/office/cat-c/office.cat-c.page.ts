@@ -18,6 +18,8 @@ import {
   OfficeValidationError,
 } from '../office.actions';
 import { Observable } from 'rxjs/Observable';
+import { merge } from 'rxjs/observable/merge';
+import { Subscription } from 'rxjs/Subscription';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
@@ -155,6 +157,7 @@ interface OfficePageState {
 })
 export class OfficeCatCPage extends BasePageComponent {
   pageState: OfficePageState;
+  subscription: Subscription;
   form: FormGroup;
   toast: Toast;
   drivingFaultCtrl: String = 'drivingFaultCtrl';
@@ -188,6 +191,9 @@ export class OfficeCatCPage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
+    if (!this.subscription || this.subscription.closed) {
+      this.setupSubscription();
+    }
     this.store$.dispatch(new OfficeViewDidEnter());
   }
 
@@ -325,7 +331,7 @@ export class OfficeCatCPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.C),
+            this.faultSummaryProvider.getSeriousFaultsList(data, this.testCategory as TestCategory),
           )),
       ),
       displayDangerousFault$: currentTest$.pipe(
@@ -405,6 +411,21 @@ export class OfficeCatCPage extends BasePageComponent {
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
     };
+    this.setupSubscription();
+  }
+
+  setupSubscription() {
+    const { testCategory$ } = this.pageState;
+
+    this.subscription = merge(
+      testCategory$.pipe(map(result => this.testCategory = result)),
+    ).subscribe();
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   popToRoot() {
@@ -591,9 +612,12 @@ export class OfficeCatCPage extends BasePageComponent {
   }
 
   shouldDisplayDrivingFaultComments = (data: CatCUniqueTypes.TestData): boolean => {
-    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.C, data);
-    const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.C, data);
-    const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.C, data);
+    const drivingFaultCount: number =
+      this.faultCountProvider.getDrivingFaultSumCount(this.testCategory as TestCategory, data);
+    const seriousFaultCount: number =
+      this.faultCountProvider.getSeriousFaultSumCount(this.testCategory as TestCategory, data);
+    const dangerousFaultCount: number =
+      this.faultCountProvider.getDangerousFaultSumCount(this.testCategory as TestCategory, data);
 
     return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
   }
