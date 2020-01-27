@@ -1,5 +1,6 @@
 import { EmergencyStop } from '@dvsa/mes-test-schema/categories/AM1';
 import * as emergencyStopActions from './emergency-stop.actions';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 export const initialState: EmergencyStop = {
   speedNotMetSeriousFault: false,
@@ -24,6 +25,26 @@ export function emergencyStopReducer(
       return {
         ...state,
         secondAttempt: action.attemptedSpeed,
+      };
+    case emergencyStopActions.ADD_EMERGENCY_STOP_RIDING_FAULT:
+      return {
+        ...state,
+        outcome: CompetencyOutcome.DF,
+      };
+    case emergencyStopActions.ADD_EMERGENCY_STOP_SERIOUS_FAULT:
+      return {
+        ...state,
+        outcome: CompetencyOutcome.S,
+      };
+    case emergencyStopActions.ADD_EMERGENCY_STOP_DANGEROUS_FAULT:
+      return {
+        ...state,
+        outcome: CompetencyOutcome.D,
+      };
+    case emergencyStopActions.REMOVE_EMERGENCY_STOP_FAULT:
+      return {
+        ...state,
+        outcome: undefined,
       };
     default:
       return state;
