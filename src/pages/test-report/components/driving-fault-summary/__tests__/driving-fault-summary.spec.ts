@@ -83,12 +83,12 @@ describe('DrivingFaultSummary', () => {
       expect(driverType).toEqual('R');
     });
 
-    it('should return R when a category equals B', () => {
+    it('should return D when a category equals B', () => {
       const driverType = component.driverTypeSwitch(TestCategory.B);
       expect(driverType).toEqual('D');
     });
 
-    it('should return R when a category equals B+E', () => {
+    it('should return D when a category equals B+E', () => {
       const driverType = component.driverTypeSwitch(TestCategory.BE);
       expect(driverType).toEqual('D');
     });
