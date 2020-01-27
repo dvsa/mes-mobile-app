@@ -6,9 +6,8 @@ import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.sel
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
-// TODO - PREP-AMOD1 - update to cat c reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
-import { getETA, getEco } from '../../../modules/tests/test-data/common/test-data.selector';
+import { getTestData } from '../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
+import { getETA } from '../../../modules/tests/test-data/common/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
@@ -18,7 +17,7 @@ import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
-import { ETA, Eco } from '@dvsa/mes-test-schema/categories/common';
+import { ETA } from '@dvsa/mes-test-schema/categories/common';
 import {
   getCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
@@ -43,7 +42,6 @@ interface DebriefPageState {
   drivingFaults$: Observable<FaultSummary[]>;
   drivingFaultCount$: Observable<number>;
   etaFaults$: Observable<ETA>;
-  ecoFaults$: Observable<Eco>;
   testResult$: Observable<string>;
   conductedLanguage$: Observable<string>;
   candidateName$: Observable<string>;
@@ -66,9 +64,6 @@ export class DebriefCatAMod1Page extends BasePageComponent {
 
   public hasPhysicalEta: boolean = false;
   public hasVerbalEta: boolean = false;
-
-  public adviceGivenControl: boolean = false;
-  public adviceGivenPlanning: boolean = false;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -94,24 +89,21 @@ export class DebriefCatAMod1Page extends BasePageComponent {
       select(getTestCategory),
     );
     this.pageState = {
-      // TODO - PREP-AMOD1: update to AMOD1 test category
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)
+          this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.EUAM1)
           .map(fault => fault.competencyIdentifier)),
       ),
-      // TODO - PREP-AMOD1: update to AMOD1 test category
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)
+          this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.EUAM1)
           .map(fault => fault.competencyIdentifier)),
       ),
-      // TODO - PREP-AMOD1: update to AMOD1 test category
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.EUAM1)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
@@ -123,10 +115,6 @@ export class DebriefCatAMod1Page extends BasePageComponent {
       etaFaults$: currentTest$.pipe(
         select(getTestData),
         select(getETA),
-      ),
-      ecoFaults$: currentTest$.pipe(
-        select(getTestData),
-        select(getEco),
       ),
       testResult$: currentTest$.pipe(
         select(getTestOutcome),
@@ -142,23 +130,16 @@ export class DebriefCatAMod1Page extends BasePageComponent {
       ),
     };
 
-    // TODO: MES-4563 + MES-4423 Fix non-functional fault cards for Cat A Mod1
-    const { testResult$, /* etaFaults$, ecoFaults$, */ conductedLanguage$ } = this.pageState;
+    const { testResult$, etaFaults$, conductedLanguage$ } = this.pageState;
 
     this.subscription = merge(
       testResult$.pipe(map(result => this.outcome = result)),
-      /*etaFaults$.pipe(
+      etaFaults$.pipe(
         map((eta) => {
           this.hasPhysicalEta = eta.physical;
           this.hasVerbalEta = eta.verbal;
         }),
       ),
-      ecoFaults$.pipe(
-        map((eco) => {
-          this.adviceGivenControl = eco.adviceGivenControl;
-          this.adviceGivenPlanning = eco.adviceGivenPlanning;
-        }),
-      ), */
       conductedLanguage$.pipe(tap(value => configureI18N(value as Language, this.translate))),
     ).subscribe();
   }

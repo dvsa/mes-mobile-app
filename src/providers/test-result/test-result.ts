@@ -11,6 +11,7 @@ import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 
 @Injectable()
 export class TestResultProvider {
@@ -35,7 +36,7 @@ export class TestResultProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
-        return this.calculateCatBETestResult(testData as CatBEUniqueTypes.TestData);
+        return this.calculateCatBETestResult(testData as TestData);
       default:
         throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }

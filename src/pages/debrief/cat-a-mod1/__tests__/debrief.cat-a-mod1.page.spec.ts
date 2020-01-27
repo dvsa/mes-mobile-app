@@ -19,10 +19,6 @@ import {
 } from '../../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFault } from '../../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDrivingFault } from '../../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-import {
-  EyesightTestFailed,
-  EyesightTestPassed,
-} from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
 */
 import { DebriefComponentsModule } from '../../components/debrief-components.module';
@@ -292,22 +288,5 @@ describe('DebriefCatAMod1Page', () => {
       });
       store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
     });
-  });
-
-  describe('Eyesight Test', () => {
-    it('should display the eyesight test serious fault', () => {
-      store$.dispatch(new EyesightTestFailed());
-      fixture.detectChanges();
-      const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
-      expect(seriousLabel.innerHTML).toBe(fullCompetencyLabels.eyesightTest);
-    });
-
-    it('should not display a eyesight test serious fault if the test is passed', () => {
-      store$.dispatch(new EyesightTestPassed());
-      fixture.detectChanges();
-      const label = fixture.debugElement.query(By.css('#serious-fault .counter-label'));
-      expect(label).toBeNull();
-    });
-  });
-  */
+  });*/
 });

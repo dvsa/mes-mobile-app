@@ -29,33 +29,19 @@ import {
 } from '../../../modules/tests/tests.selector';
 import {
   Competencies,
-  LegalRequirements,
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
-
-// TODO - PREP-AMOD1: Use cat amod1 reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
-
-// TODO - PREP-AMOD1: Use cat amod1 selectors
-import { hasManoeuvreBeenCompletedCatBE } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ModalEvent } from '../test-report.constants';
-import { CAT_A_MOD1, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
+import { CAT_A_MOD1 } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-
-// TODO - PREP-AMOD1: Use cat amod1 types
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-
-// TODO - PREP-AMOD1: Use cat amod1 reducer
-import {
-  getTestRequirementsCatBE,
-} from '../../../modules/tests/test-data/cat-be/test-requirements/test-requirements.cat-be.reducer';
-import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
@@ -66,11 +52,7 @@ interface TestReportPageState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
-  manoeuvres$: Observable<boolean>;
-
-  // TODO - PREP-AMOD1: Use cat amod1 types
-  testData$: Observable<CatBEUniqueTypes.TestData>;
-  testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
+  testData$: Observable<TestData>;
 }
 
 @IonicPage()
@@ -82,7 +64,6 @@ export class TestReportCatAMod1Page extends BasePageComponent {
   pageState: TestReportPageState;
   subscription: Subscription;
   competencies = Competencies;
-  legalRequirements = LegalRequirements;
   eta = ExaminerActions;
   displayOverlay: boolean;
   isRemoveFaultMode: boolean = false;
@@ -93,7 +74,6 @@ export class TestReportCatAMod1Page extends BasePageComponent {
   isEtaValid: boolean = true;
 
   modal: Modal;
-  missingLegalRequirements: legalRequirementsLabels[] = [];
 
   constructor(
     public store$: Store<StoreModel>,
@@ -140,20 +120,8 @@ export class TestReportCatAMod1Page extends BasePageComponent {
         select(getTestReportState),
         select(isDangerousMode),
       ),
-      manoeuvres$: currentTest$.pipe(
-        select(getTestData),
-
-        // TODO - PREP-AMOD1: Use cat amod1 selector
-        select(hasManoeuvreBeenCompletedCatBE),
-      ),
       testData$: currentTest$.pipe(
         select(getTestData),
-      ),
-      testRequirements$: currentTest$.pipe(
-        select(getTestData),
-
-        // TODO - PREP-AMOD1: Use cat amod1 selector
-        select(getTestRequirementsCatBE),
       ),
     };
     this.setupSubscription();
@@ -185,7 +153,6 @@ export class TestReportCatAMod1Page extends BasePageComponent {
       isRemoveFaultMode$,
       isSeriousMode$,
       isDangerousMode$,
-      manoeuvres$,
       testData$,
     } = this.pageState;
 
@@ -194,13 +161,10 @@ export class TestReportCatAMod1Page extends BasePageComponent {
       isRemoveFaultMode$.pipe(map(result => (this.isRemoveFaultMode = result))),
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
-      manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
       testData$.pipe(
         map((data) => {
           this.isTestReportValid =
             this.testReportValidatorProvider.isTestReportValid(data, TestCategory.EUAM1);
-          this.missingLegalRequirements =
-            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.EUAM1);
           this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.EUAM1);
         }),
       ),
@@ -209,15 +173,7 @@ export class TestReportCatAMod1Page extends BasePageComponent {
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    if (!this.isTestReportValid) {
-      this.modal = this.modalController.create(
-        LEGAL_REQUIREMENTS_MODAL,
-        {
-          legalRequirements: this.missingLegalRequirements,
-        },
-        options,
-      );
-    } else if (!this.isEtaValid) {
+    if (!this.isEtaValid) {
       this.modal = this.modalController.create('EtaInvalidModal', {}, options);
     } else {
       this.modal = this.modalController.create('EndTestModal', {}, options);
