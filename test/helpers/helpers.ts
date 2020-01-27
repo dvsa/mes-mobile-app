@@ -31,5 +31,5 @@ export const textFieldInputViaNativeMode = (xpathString: string, searchTerm) => 
 export const scrollToElement = (element) => {
   browser.executeScript("arguments[0].scrollIntoView(true);", element).then(function () {
     expect(element.isPresent()).to.eventually.be.true;
-  })
+  });
 };
