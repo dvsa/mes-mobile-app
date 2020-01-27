@@ -157,14 +157,12 @@ export class TestsEffects {
         const slotData = slots.map(slot => slot.slotData);
         slot = slotData.find(data => data.slotDetail.slotId === startTestAction.slotId && has(data, 'booking'));
       }
-      console.log('**********************', slot);
       const testSlotAttributes: TestSlotAttributes = extractTestSlotAttributes(slot);
       const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
 
       examiner.individualId;
 
       const arrayOfActions: Action[] = [
-        new PopulateTestCategory(startTestAction.category),
         new PopulateExaminer(examiner),
         new PopulateApplicationReference(slot.booking.application),
         createPopulateCandidateDetailsAction(startTestAction.category, slot.booking),
@@ -197,6 +195,16 @@ export class TestsEffects {
         arrayOfActions.push(new InitializeVehicleChecks(startTestAction.category));
       }
 
+      if (
+        startTestAction.category !== TestCategory.EUAMM1 &&
+        startTestAction.category !== TestCategory.EUAM1 &&
+        startTestAction.category !== TestCategory.EUA1M1 &&
+        startTestAction.category !== TestCategory.EUA2M1
+      ) {
+        arrayOfActions.unshift(
+          new PopulateTestCategory(startTestAction.category),
+        );
+      }
       return arrayOfActions;
     }),
   );

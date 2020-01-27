@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { CategoryCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   GearboxCategoryChanged,
@@ -50,6 +50,9 @@ import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_A_MOD1 } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
+import { BikeCategoryTypeComponent } from '../components/bike-category-type/bike-category-type';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -62,6 +65,7 @@ interface WaitingRoomToCarPageState {
   interpreterAccompaniment$: Observable<boolean>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -70,6 +74,8 @@ interface WaitingRoomToCarPageState {
   templateUrl: 'waiting-room-to-car.cat-a-mod1.page.html',
 })
 export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
+  @ViewChild(BikeCategoryTypeComponent)
+
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
 
@@ -135,6 +141,9 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
         select(getVehicleDetails),
         map(isManual),
       ),
+      testCategory$: currentTest$.pipe(
+      select(getTestCategory),
+    ),
     };
   }
 
@@ -206,6 +215,10 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
 
   getDebriefPage() {
     return CAT_A_MOD1.DEBRIEF_PAGE;
+  }
+
+  categoryCodeChanged(category: CategoryCode) {
+    this.store$.dispatch(new PopulateTestCategory(category));
   }
 
 }

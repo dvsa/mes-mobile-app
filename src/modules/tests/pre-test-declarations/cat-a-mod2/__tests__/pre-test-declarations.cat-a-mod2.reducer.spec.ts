@@ -42,13 +42,14 @@ describe('PreTestDeclarations Cat A Mod2 reducer', () => {
       mod1CertificateNumber: 'abc123',
     };
 
-    it('should put the CBT number into the state on certificate number changed action', () => {
-      const result = preTestDeclarationsCatAMod2Reducer(initialState, new CbtNumberChanged('12345678'));
-      expect(result.mod1CertificateNumber).toBe('12345678');
-    });
-
     const result = preTestDeclarationsCatAMod2Reducer(dirtyState, new ClearPreTestDeclarations());
 
     expect(result).toBe(initialState);
   });
+
+  it('should put the CBT number into the state on certificate number changed action', () => {
+    const result = preTestDeclarationsCatAMod2Reducer(initialState, new CbtNumberChanged('12345678'));
+    expect(result.mod1CertificateNumber).toBe('12345678');
+  });
+
 });
