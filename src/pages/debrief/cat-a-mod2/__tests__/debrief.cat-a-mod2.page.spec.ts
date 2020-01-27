@@ -65,6 +65,7 @@ describe('DebriefCatAMod2Page', () => {
     vehicleTypeCode: '',
   };
 
+  // TODO - PREP-AMOD2 - replace cat BE unique types
   const exampleTestData: CatBEUniqueTypes.TestData  = {
     dangerousFaults: {},
     drivingFaults: {},
