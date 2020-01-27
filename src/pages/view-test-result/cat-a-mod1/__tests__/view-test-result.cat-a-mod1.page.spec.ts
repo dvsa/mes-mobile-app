@@ -25,7 +25,7 @@ import { ExaminerDetailsCardComponent } from '../../components/examiner-details-
 import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
-import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
+import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
 // todo: PREP-AMOD1 chage to Cat A Mod 1 mock
 import { categoryBETestResultMock } from '../../../../shared/mocks/cat-be-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
@@ -36,7 +36,7 @@ import { ViewTestHeaderModel } from '../../components/view-test-header/view-test
 import { TestOutcome } from '../../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
-import { BusinessDetailsCardComponent } from '../components/business-details-card/business-details-card';
+import { BusinessDetailsCardComponent } from '../../components/business-details-card/business-details-card';
 import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
 import { ViewTestResultCatAMod1Page }from '../view-test-result.cat-a-mod1.page';
 import { configureTestSuite } from 'ng-bullet';
