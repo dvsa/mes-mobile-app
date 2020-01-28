@@ -17,7 +17,7 @@ import { TestDetailsModel } from '../components/test-details-card/test-details-c
 import { Subscription } from 'rxjs/Subscription';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
-import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
+import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.cat-b.model';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';

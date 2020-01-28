@@ -2,20 +2,20 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
-import { VehicleDetailsCardComponent } from '../vehicle-details-card';
+import { VehicleDetailsCardCatBComponent } from '../vehicle-details-card.cat-b';
 import { MockComponent } from 'ng-mocks';
 import { DataRowComponent } from '../../../../../../components/common/data-row/data-row';
 import { DataRowCustomComponent } from '../../../../../../components/common/data-row-custom/data-row-custom';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('VehicleDetailsCardComponent', () => {
-  let fixture: ComponentFixture<VehicleDetailsCardComponent>;
-  let component: VehicleDetailsCardComponent;
+describe('VehicleDetailsCardCatBComponent', () => {
+  let fixture: ComponentFixture<VehicleDetailsCardCatBComponent>;
+  let component: VehicleDetailsCardCatBComponent;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        VehicleDetailsCardComponent,
+        VehicleDetailsCardCatBComponent,
         MockComponent(DataRowComponent),
         MockComponent(DataRowCustomComponent),
       ],
@@ -29,7 +29,7 @@ describe('VehicleDetailsCardComponent', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(VehicleDetailsCardComponent);
+    fixture = TestBed.createComponent(VehicleDetailsCardCatBComponent);
     component = fixture.componentInstance;
   }));
 

@@ -26,8 +26,8 @@ import { ExaminerDetailsCardComponent } from '../../components/examiner-details-
 import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
-import { VehicleDetailsModel } from '../components/vehicle-details-card/vehicle-details-card.model';
-import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
+import { VehicleDetailsModel } from '../components/vehicle-details-card/vehicle-details-card.cat-b.model';
+import { VehicleDetailsCardCatBComponent } from '../components/vehicle-details-card/vehicle-details-card.cat-b';
 import { categoryBTestResultMock } from '../../../../shared/mocks/cat-b-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
@@ -57,7 +57,7 @@ describe('ViewTestResultCatBPage', () => {
         MockComponent(RekeyDetailsCardComponent),
         MockComponent(RekeyReasonCardComponent),
         MockComponent(ExaminerDetailsCardComponent),
-        MockComponent(VehicleDetailsCardComponent),
+        MockComponent(VehicleDetailsCardCatBComponent),
         MockComponent(TestSummaryCardComponent),
         MockComponent(ViewTestHeaderComponent),
         MockComponent(DebriefCardComponent),
@@ -385,7 +385,7 @@ describe('ViewTestResultCatBPage', () => {
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).toBeNull();
       expect(
-        fixture.debugElement.query(By.css('vehicle-details-card')),
+        fixture.debugElement.query(By.css('vehicle-details-cat-b-card')),
       ).toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).toBeNull();
       expect(
@@ -417,7 +417,7 @@ describe('ViewTestResultCatBPage', () => {
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).not.toBeNull();
       expect(
-        fixture.debugElement.query(By.css('vehicle-details-card')),
+        fixture.debugElement.query(By.css('vehicle-details-cat-b-card')),
       ).not.toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).not.toBeNull();
       expect(
