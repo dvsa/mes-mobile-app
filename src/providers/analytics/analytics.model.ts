@@ -105,6 +105,7 @@ export enum AnalyticsEvents {
   REVERSE_DIAGRAM_OPENED = 'open reversing diagram',
   REVERSE_DIAGRAM_CLOSED = 'close reversing diagram',
   TOGGLE_CODE_78 = 'toggle code 78',
+  TOGGLE_LICENSE_RECEIVED = 'toggle license recieved',
 }
 
 export enum AnalyticsLabels {

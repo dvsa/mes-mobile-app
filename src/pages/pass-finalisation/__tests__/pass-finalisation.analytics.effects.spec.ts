@@ -122,7 +122,6 @@ describe('Pass Finalisation Analytics Effects', () => {
       });
     });
   });
-
   describe('code78PresentEffect', () => {
     it('should call logEvent', (done) => {
       // ARRANGE
@@ -143,7 +142,6 @@ describe('Pass Finalisation Analytics Effects', () => {
       });
     });
   });
-
   describe('code78NotPresentEffect', () => {
     it('should call logEvent', (done) => {
       // ARRANGE
@@ -159,6 +157,46 @@ describe('Pass Finalisation Analytics Effects', () => {
             AnalyticsEventCategories.POST_TEST,
             AnalyticsEvents.TOGGLE_CODE_78,
             'No',
+          );
+        done();
+      });
+    });
+  });
+  describe('provisionalLicenseNotReceived', () => {
+    it('should call logEvent', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new passCompletionActions.ProvisionalLicenseNotReceived());
+      // ASSERT
+      effects.provisionalLicenseNotReceived$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.TOGGLE_LICENSE_RECEIVED,
+            'No',
+          );
+        done();
+      });
+    });
+  });
+  describe('provisionalLicenseReceived', () => {
+    it('should call logEvent', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new passCompletionActions.ProvisionalLicenseReceived());
+      // ASSERT
+      effects.provisionalLicenseReceived$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.TOGGLE_LICENSE_RECEIVED,
+            'Yes',
           );
         done();
       });

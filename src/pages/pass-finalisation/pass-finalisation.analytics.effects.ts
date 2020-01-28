@@ -21,12 +21,7 @@ import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
-import {
-  CODE_78_PRESENT,
-  Code78Present,
-  Code78NotPresent,
-  CODE_78_NOT_PRESENT,
-} from '../../modules/tests/pass-completion/pass-completion.actions';
+import * as passCompletionActions from '../../modules/tests/pass-completion/pass-completion.actions';
 
 @Injectable()
 export class PassFinalisationAnalyticsEffects {
@@ -77,7 +72,7 @@ export class PassFinalisationAnalyticsEffects {
 
   @Effect()
   code78PresentEffect$ = this.actions$.pipe(
-    ofType(CODE_78_PRESENT),
+    ofType(passCompletionActions.CODE_78_PRESENT),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -85,7 +80,7 @@ export class PassFinalisationAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [Code78Present, TestsModel]) => {
+    concatMap(([action, tests]: [passCompletionActions.Code78Present, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_CODE_78, tests),
@@ -97,7 +92,7 @@ export class PassFinalisationAnalyticsEffects {
 
   @Effect()
   code78NotPresentEffect$ = this.actions$.pipe(
-    ofType(CODE_78_NOT_PRESENT),
+    ofType(passCompletionActions.CODE_78_NOT_PRESENT),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -105,11 +100,51 @@ export class PassFinalisationAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [Code78NotPresent, TestsModel]) => {
+    concatMap(([action, tests]: [passCompletionActions.Code78NotPresent, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_CODE_78, tests),
         'No',
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  provisionalLicenseNotReceived$ = this.actions$.pipe(
+    ofType(passCompletionActions.PROVISIONAL_LICENSE_NOT_RECEIVED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [passCompletionActions.ProvisionalLicenseNotReceived, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LICENSE_RECEIVED, tests),
+        'No',
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  provisionalLicenseReceived$ = this.actions$.pipe(
+    ofType(passCompletionActions.PROVISIONAL_LICENSE_RECEIVED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [passCompletionActions.ProvisionalLicenseReceived, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LICENSE_RECEIVED, tests),
+        'Yes',
       );
       return of(new AnalyticRecorded());
     }),
