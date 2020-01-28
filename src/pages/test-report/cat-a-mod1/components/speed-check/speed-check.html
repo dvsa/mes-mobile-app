@@ -1,4 +1,4 @@
-<ion-row>
+<ion-row class="speed-check-wrapper">
   <ion-col col-32 class="competency-button-wrapper">
     <competency-button
       [onTap]="onTap"
@@ -14,16 +14,16 @@
       <driving-faults-badge class="driving-faults" [count]="faultCount()"></driving-faults-badge>
       <span class='competency-label'>{{ getLabel() }}</span>
       <div class="fault-wrapper">
-        <serious-fault-badge *ngIf="hasSeriousFault()" [showBadge]="hasSeriousFault()"></serious-fault-badge>
+        <serious-fault-badge *ngIf="hasSeriousFault() || (!hasSeriousFault() && !hasDangerousFault())" [showBadge]="hasSeriousFault()"></serious-fault-badge>
         <dangerous-fault-badge *ngIf="hasDangerousFault()" [showBadge]="hasDangerousFault()"></dangerous-fault-badge>
       </div>
     </competency-button>
   </ion-col>
   <ion-col col-32>
-    <input (change)="onFirstAttemptChange($event.target.value)" [value]="firstAttempt" type="text" class="speed-input" maxlength="3">
-    <input (change)="onSecondAttemptChange($event.target.value)" [value]="secondAttempt" type="text" class="speed-input second-input" maxlength="3">
+    <input (change)="onFirstAttemptChange($event.target.value)" [value]="getFirstAttempt()" type="text" class="speed-input first-speed-input" maxlength="3">
+    <input (change)="onSecondAttemptChange($event.target.value)" [value]="getSecondAttempt()" type="text" class="speed-input second-speed-input" maxlength="3">
   </ion-col>
-  <ion-col col-20>
+  <ion-col col-16>
     <competency-button
       [onTap]="toggleNotMet"
       [ngClass]="{

@@ -128,6 +128,14 @@ export class SpeedCheckComponent {
 
   getLabel = (): string => speedCheckLabels[this.competency];
 
+  getFirstAttempt = (): number | null => {
+    return this.firstAttempt || null;
+  }
+
+  getSecondAttempt = (): number | null => {
+    return this.secondAttempt || null;
+  }
+
   onTap = () => {
     if (this.competency === Competencies.speedCheckEmergency) {
       this.addOrRemoveEmergencyStopFault();
