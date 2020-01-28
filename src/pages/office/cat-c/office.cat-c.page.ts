@@ -18,6 +18,8 @@ import {
   OfficeValidationError,
 } from '../office.actions';
 import { Observable } from 'rxjs/Observable';
+import { merge } from 'rxjs/observable/merge';
+import { Subscription } from 'rxjs/Subscription';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
@@ -74,6 +76,7 @@ import {
   Identification,
   IndependentDriving,
   QuestionResult,
+  CategoryCode,
 } from '@dvsa/mes-test-schema/categories/common';
 import {
   AddDangerousFaultComment,
@@ -106,6 +109,7 @@ import {
   vehicleChecksExist,
 } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -143,6 +147,7 @@ interface OfficePageState {
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -152,6 +157,7 @@ interface OfficePageState {
 })
 export class OfficeCatCPage extends BasePageComponent {
   pageState: OfficePageState;
+  subscription: Subscription;
   form: FormGroup;
   toast: Toast;
   drivingFaultCtrl: String = 'drivingFaultCtrl';
@@ -160,6 +166,7 @@ export class OfficeCatCPage extends BasePageComponent {
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
+  testCategory: CategoryCode;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -184,6 +191,9 @@ export class OfficeCatCPage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
+    if (!this.subscription || this.subscription.closed) {
+      this.setupSubscription();
+    }
     this.store$.dispatch(new OfficeViewDidEnter());
   }
 
@@ -192,7 +202,12 @@ export class OfficeCatCPage extends BasePageComponent {
       select(getTests),
       select(getCurrentTest),
     );
+
     this.pageState = {
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
+        map(result => this.testCategory = result),
+      ),
       activityCode$: currentTest$.pipe(
         select(getActivityCode),
       ),
@@ -304,7 +319,7 @@ export class OfficeCatCPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C),
+            this.faultSummaryProvider.getDrivingFaultsList(data, this.testCategory as TestCategory),
           )),
       ),
       displaySeriousFault$: currentTest$.pipe(
@@ -316,7 +331,7 @@ export class OfficeCatCPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.C),
+            this.faultSummaryProvider.getSeriousFaultsList(data, this.testCategory as TestCategory),
           )),
       ),
       displayDangerousFault$: currentTest$.pipe(
@@ -328,7 +343,7 @@ export class OfficeCatCPage extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C),
+            this.faultSummaryProvider.getDrivingFaultsList(data, this.testCategory as TestCategory),
           )),
       ),
       displayVehicleChecks$: currentTest$.pipe(
@@ -368,19 +383,19 @@ export class OfficeCatCPage extends BasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.C)),
+        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, this.testCategory as TestCategory)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.C)),
+        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, this.testCategory as TestCategory)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.C)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, this.testCategory as TestCategory)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultCountProvider.getDrivingFaultSumCount(TestCategory.C, data)),
+        map(data => this.faultCountProvider.getDrivingFaultSumCount(this.testCategory as TestCategory, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
@@ -396,6 +411,21 @@ export class OfficeCatCPage extends BasePageComponent {
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
     };
+    this.setupSubscription();
+  }
+
+  setupSubscription() {
+    const { testCategory$ } = this.pageState;
+
+    this.subscription = merge(
+      testCategory$.pipe(map(result => this.testCategory = result)),
+    ).subscribe();
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   popToRoot() {
@@ -582,11 +612,13 @@ export class OfficeCatCPage extends BasePageComponent {
   }
 
   shouldDisplayDrivingFaultComments = (data: CatCUniqueTypes.TestData): boolean => {
-    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.C, data);
-    const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.C, data);
-    const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.C, data);
+    const drivingFaultCount: number =
+      this.faultCountProvider.getDrivingFaultSumCount(this.testCategory as TestCategory, data);
+    const seriousFaultCount: number =
+      this.faultCountProvider.getSeriousFaultSumCount(this.testCategory as TestCategory, data);
+    const dangerousFaultCount: number =
+      this.faultCountProvider.getDangerousFaultSumCount(this.testCategory as TestCategory, data);
 
     return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
   }
-
 }
