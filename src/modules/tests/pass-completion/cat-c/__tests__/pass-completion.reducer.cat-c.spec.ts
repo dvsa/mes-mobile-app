@@ -3,8 +3,9 @@ import {
   PassCertificateNumberChanged,
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
+  Code78Present,
+  Code78NotPresent,
 } from '../../pass-completion.actions';
-import { Code78Present, Code78NotPresent } from '../pass-completion.cat-c.actions';
 
 describe('pass completion reducer', () => {
   it('should put the pass certificate number into the state on pass certificate number changed action', () => {

@@ -1,4 +1,3 @@
-import * as passCompletionActionsCatC from './pass-completion.cat-c.actions';
 import * as passCompletionActions from '../pass-completion.actions';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C/index';
 import { createFeatureSelector } from '@ngrx/store';
@@ -11,15 +10,15 @@ export const initialState: CatCUniqueTypes.PassCompletion = {
 
 export const passCompletionCatCReducer = (
   state = initialState,
-  action: passCompletionActionsCatC.Types | passCompletionActions.Types,
+  action: passCompletionActions.Types,
 ): CatCUniqueTypes.PassCompletion => {
   switch (action.type) {
-    case passCompletionActionsCatC.CODE_78_PRESENT:
+    case passCompletionActions.CODE_78_PRESENT:
       return {
         ...state,
         code78Present: true,
       };
-    case passCompletionActionsCatC.CODE_78_NOT_PRESENT:
+    case passCompletionActions.CODE_78_NOT_PRESENT:
       return {
         ...state,
         code78Present: false,

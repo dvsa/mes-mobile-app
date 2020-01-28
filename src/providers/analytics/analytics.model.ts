@@ -104,6 +104,7 @@ export enum AnalyticsEvents {
   REVERSE_LEFT_POPOVER_CLOSED = 'close reversing manoevure',
   REVERSE_DIAGRAM_OPENED = 'open reversing diagram',
   REVERSE_DIAGRAM_CLOSED = 'close reversing diagram',
+  TOGGLE_CODE_78 = 'toggle code 78',
 }
 
 export enum AnalyticsLabels {

@@ -5,6 +5,7 @@ import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as passFinalisationActions from '../pass-finalisation.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
+import * as passCompletionActions from '../../../modules/tests/pass-completion/pass-completion.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
@@ -12,6 +13,7 @@ import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsErrorTypes,
+  AnalyticsEvents,
 } from '../../../providers/analytics/analytics.model';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
@@ -121,4 +123,45 @@ describe('Pass Finalisation Analytics Effects', () => {
     });
   });
 
+  describe('code78PresentEffect', () => {
+    it('should call logEvent', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new passCompletionActions.Code78Present());
+      // ASSERT
+      effects.code78PresentEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.TOGGLE_CODE_78,
+            'Yes',
+          );
+        done();
+      });
+    });
+  });
+
+  describe('code78NotPresentEffect', () => {
+    it('should call logEvent', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new passCompletionActions.Code78NotPresent());
+      // ASSERT
+      effects.code78NotPresentEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.TOGGLE_CODE_78,
+            'No',
+          );
+        done();
+      });
+    });
+  });
 });
