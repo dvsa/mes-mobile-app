@@ -71,4 +71,26 @@ describe('DrivingFaultSummary', () => {
       expect(summaryCount.textContent).toBe('3');
     });
   });
+
+  describe('driverTypeSwitch()', () => {
+    it('should return R when a category equals EUAM1,', () => {
+      const driverType = component.driverTypeSwitch(TestCategory.EUAM1);
+      expect(driverType).toEqual('R');
+    });
+
+    it('should return R when a category equals EUAM2', () => {
+      const driverType = component.driverTypeSwitch(TestCategory.EUAM2);
+      expect(driverType).toEqual('R');
+    });
+
+    it('should return D when a category equals B', () => {
+      const driverType = component.driverTypeSwitch(TestCategory.B);
+      expect(driverType).toEqual('D');
+    });
+
+    it('should return D when a category equals B+E', () => {
+      const driverType = component.driverTypeSwitch(TestCategory.BE);
+      expect(driverType).toEqual('D');
+    });
+  });
 });

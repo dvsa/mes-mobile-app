@@ -11,8 +11,14 @@ import { withLatestFrom, map } from 'rxjs/operators';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
 
+enum driverType {
+  R = 'R',
+  D = 'D',
+}
+
 interface DrivingFaultSummaryState {
   count$: Observable<number>;
+  driverRiderFlag$: Observable<driverType>;
 }
 
 @Component({
@@ -45,6 +51,12 @@ export class DrivingFaultSummaryComponent implements OnInit {
           return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
         }),
       ),
+      driverRiderFlag$: currentTest$.pipe(
+        select(getTestCategory),
+        map((category) => {
+          return this.driverTypeSwitch(category as TestCategory);
+        }),
+      ),
     };
   }
 
@@ -58,6 +70,14 @@ export class DrivingFaultSummaryComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  driverTypeSwitch(cat: TestCategory): driverType {
+    // switch to determine Driver or Rider based upon category
+    if (cat.includes('EUA')) {
+      return driverType.R;
+    }
+    return driverType.D;
   }
 
 }
