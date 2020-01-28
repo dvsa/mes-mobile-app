@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/AM2';
+import { GearboxCategory, CategoryCode } from '@dvsa/mes-test-schema/categories/AM2';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   SchoolBikeToggled,
@@ -60,6 +60,8 @@ from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector'
 import { getSafetyAndBalanceQuestions } from
 '../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
+import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -74,6 +76,7 @@ interface WaitingRoomToCarPageState {
   eyesightTestFailed$: Observable<boolean>;
   safetyAndBalanceQuestionsScore$: Observable<VehicleChecksScore>;
   safetyAndBalanceQuestions$: Observable<any>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -163,6 +166,9 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
       safetyAndBalanceQuestions$: currentTest$.pipe(
         select(getTestData),
         select(getSafetyAndBalanceQuestions),
+      ),
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
       ),
     };
   }
@@ -255,4 +261,7 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
     return CAT_A_MOD2.DEBRIEF_PAGE;
   }
 
+  categoryCodeChanged(category: CategoryCode) {
+    this.store$.dispatch(new PopulateTestCategory(category));
+  }
 }
