@@ -26,17 +26,17 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   isLastQuestion: boolean;
 
   @Output()
-  vehicleChecksQuestionChange = new EventEmitter<QuestionResult>();
+  safetyAndBalanceQuestionChange = new EventEmitter<QuestionResult>();
 
   @Output()
-  vehicleChecksQuestionOutcomeChange = new EventEmitter<QuestionOutcome>();
+  safetyAndBalanceQuestionOutcomeChange = new EventEmitter<QuestionOutcome>();
 
   private questionFormControl: FormControl;
   private questionOutcomeFormControl: FormControl;
 
   readonly questionId: string = uniqueId();
-  readonly questionOutcomeFieldName: string = `vehicleChecksQuestionOutcome_${this.questionId}`;
-  readonly questionFieldName: string = `vehicleChecksQuestion_${this.questionId}`;
+  readonly questionOutcomeFieldName: string = `safetyAndBalanceQuestionOutcome_${this.questionId}`;
+  readonly questionFieldName: string = `safetyAndBalancesQuestion_${this.questionId}`;
 
   ngOnChanges(): void {
     if (!this.questionFormControl) {
@@ -63,23 +63,23 @@ export class VehicleChecksQuestionComponent implements OnChanges {
     return doesQuestionExist !== undefined;
   }
 
-  vehicleChecksQuestionChanged(vehicleChecksQuestion: VehicleChecksQuestion): void {
+  safetyAndBalanceQuestionChanged(safetyAndBalanceQuestion: VehicleChecksQuestion): void {
 
     const result: QuestionResult = {
-      code: vehicleChecksQuestion.code,
-      description: vehicleChecksQuestion.shortName,
+      code: safetyAndBalanceQuestion.code,
+      description: safetyAndBalanceQuestion.shortName,
     };
-    this.vehicleChecksQuestionChange.emit(result);
+    this.safetyAndBalanceQuestionChange.emit(result);
   }
 
-  vehicleChecksPassSelected() {
+  safetyAndBalancePassSelected() {
     const result: QuestionOutcome = 'P';
-    this.vehicleChecksQuestionOutcomeChange.emit(result);
+    this.safetyAndBalanceQuestionOutcomeChange.emit(result);
   }
 
-  vehicleChecksDrivingFaultSelected() {
+  safetyAndBalanceDrivingFaultSelected() {
     const result: QuestionOutcome = 'DF';
-    this.vehicleChecksQuestionOutcomeChange.emit(result);
+    this.safetyAndBalanceQuestionOutcomeChange.emit(result);
   }
 
   findQuestion(): VehicleChecksQuestion {

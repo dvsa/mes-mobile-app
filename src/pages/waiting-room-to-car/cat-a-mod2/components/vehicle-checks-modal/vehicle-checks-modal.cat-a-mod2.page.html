@@ -6,7 +6,7 @@
       </button>
     </ion-buttons>
     <ion-title>
-      Vehicle checks - {{ pageState.candidateName$ | async }}
+      Safety and Balance Questions - {{ pageState.candidateName$ | async }}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -16,18 +16,18 @@
     <ion-card-header>
       <ion-card-title>
         <h4>
-          Show me questions
+          Safety questions
         </h4>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <vehicle-checks-question *ngFor="let question of showMeQuestionsNumberArray; let i = index; let l = last" [formGroup]="formGroup"
-        [questionResult]="(pageState.showMeQuestions$ | async)[i]"
-        [questions]="showMeQuestions"
-        [questionsToDisable]="pageState.showMeQuestions$ | async"
+      <vehicle-checks-question *ngFor="let question of safetyQuestionsNumberArray; let i = index; let l = last" [formGroup]="formGroup"
+        [questionResult]="(pageState.safetyQuestions$ | async)[i]"
+        [questions]="safetyQuestions"
+        [questionsToDisable]="pageState.safetyQuestions$ | async"
         [isLastQuestion]="l"
-        (vehicleChecksQuestionChange)="showMeQuestionChanged($event, i)"
-        (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event, i)">
+        (vehicleChecksQuestionChange)="safetyQuestionChanged($event, i)"
+        (vehicleChecksQuestionOutcomeChange)="safetyQuestionOutcomeChanged($event, i)">
       </vehicle-checks-question>
     </ion-card-content>
   </ion-card>
@@ -40,13 +40,13 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <vehicle-checks-question *ngFor="let question of tellMeQuestionsNumberArray; let i = index; let l = last" [formGroup]="formGroup"
-        [questionResult]="(pageState.tellMeQuestions$ | async)[i]"
+      <vehicle-checks-question *ngFor="let question of balanceQuestionsNumberArray; let i = index; let l = last" [formGroup]="formGroup"
+        [questionResult]="(pageState.balanceQuestions$ | async)[i]"
         [questions]="tellMeQuestions"
         [questionsToDisable]="pageState.tellMeQuestions$ | async"
         [isLastQuestion]= "l"
-        (vehicleChecksQuestionChange)="tellMeQuestionChanged($event, i)"
-        (vehicleChecksQuestionOutcomeChange)="tellMeQuestionOutcomeChanged($event, i)">
+        (vehicleChecksQuestionChange)="balanceQuestionChanged($event, i)"
+        (vehicleChecksQuestionOutcomeChange)="balanceQuestionOutcomeChanged($event, i)">
       </vehicle-checks-question>
     </ion-card-content>
   </ion-card>

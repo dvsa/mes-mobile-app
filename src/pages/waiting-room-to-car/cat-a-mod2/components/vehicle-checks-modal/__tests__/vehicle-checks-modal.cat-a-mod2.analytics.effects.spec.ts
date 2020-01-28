@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { VehicleChecksModalCatAMod2AnalyticsEffects } from '../vehicle-checks-modal.cat-a-mod2.analytics.effects';
+import { SafetyAndBalanceModalCatAMod2AnalyticsEffects } from '../vehicle-checks-modal.cat-a-mod2.analytics.effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
@@ -12,11 +12,8 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { VehicleChecksViewDidEnter } from '../vehicle-checks-modal.cat-a-mod2.actions';
 import { AnalyticRecorded } from '../../../../../../providers/analytics/analytics.actions';
 import { AnalyticsEventCategories, AnalyticsScreenNames } from '../../../../../../providers/analytics/analytics.model';
-
-// TODO - PREP-AMOD2: Use a mod2 actions
-import * as VehicleChecksActions
-  from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
-
+import * as SafetyAndBalanceQuestionsActions
+  from '../../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.actions';
 import {
   QuestionOutcome,
   QuestionResult,
@@ -24,7 +21,7 @@ import {
 
 describe('Vehicle Checks Modal A Mod2 Analytics Effects', () => {
 
-  let effects: VehicleChecksModalCatAMod2AnalyticsEffects;
+  let effects: SafetyAndBalanceModalCatAMod2AnalyticsEffects;
   let analyticsProviderMock;
   let actions$: any;
   let store$: Store<StoreModel>;
@@ -39,22 +36,20 @@ describe('Vehicle Checks Modal A Mod2 Analytics Effects', () => {
         }),
       ],
       providers: [
-        VehicleChecksModalCatAMod2AnalyticsEffects,
+        SafetyAndBalanceModalCatAMod2AnalyticsEffects,
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         provideMockActions(() => actions$),
         Store,
       ],
     });
-    effects = TestBed.get(VehicleChecksModalCatAMod2AnalyticsEffects);
+    effects = TestBed.get(SafetyAndBalanceModalCatAMod2AnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
   });
 
   describe('vehicleChecksModalViewDidEnter$ effect', () => {
     it('should call analytics.setCurrentPage', (done) => {
-
-      // TODO - PREP-AMOD2: Use TestCategory A Mod2
-      store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.EUAM2));
       actions$.next(new VehicleChecksViewDidEnter());
       effects.vehicleChecksModalViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -64,41 +59,37 @@ describe('Vehicle Checks Modal A Mod2 Analytics Effects', () => {
     });
   });
 
-  describe('showMeQuestionChanged$ effect', () => {
+  describe('safetyQuestionChanged$ effect', () => {
     const questionNumber: number = 1;
-    const showMeQuestion: QuestionResult = {
+    const safetyQuestion: QuestionResult = {
       code: 'S01',
     };
-    it('should log an analyics event with show me question info', (done) => {
-
-      // TODO - PREP-AMOD2: Use TestCategory A Mod2
-      store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
-      actions$.next(new VehicleChecksActions.ShowMeQuestionSelected(showMeQuestion, questionNumber));
-      effects.showMeQuestionChanged$.subscribe((result) => {
+    it('should log an analyics event with safety question info', (done) => {
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.EUAM2));
+      actions$.next(new SafetyAndBalanceQuestionsActions.SafetyQuestionSelected(safetyQuestion, questionNumber));
+      effects.safetyQuestionChanged$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.VEHICLE_CHECKS,
-          `show me question ${questionNumber + 1} changed`,
-          showMeQuestion.code,
-          );
+          `safety question ${questionNumber + 1} changed`,
+          safetyQuestion.code,
+        );
         done();
       });
     });
   });
 
-  describe('showMeQuestionOutComeChanged$', () => {
+  describe('safetyQuestionOutComeChanged$', () => {
     const questionOutcome: QuestionOutcome = 'P';
     const questionNumber: number = 1;
-    it('should log an analytics event with show me question outcome info', (done) => {
-
-      // TODO - PREP-AMOD2: Use TestCategory A Mod2
-      store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
-      actions$.next(new VehicleChecksActions.ShowMeQuestionOutcomeChanged(questionOutcome, questionNumber));
-      effects.showMeQuestionOutComeChanged$.subscribe((result) => {
+    it('should log an analytics event with safety question outcome info', (done) => {
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.EUAM2));
+      actions$.next(new SafetyAndBalanceQuestionsActions.SafetyQuestionOutcomeChanged(questionOutcome, questionNumber));
+      effects.safetyQuestionOutcomeChanged$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.VEHICLE_CHECKS,
-          `show me question ${questionNumber + 1} outcome changed`,
+          `safety question ${questionNumber + 1} outcome changed`,
           'correct',
         );
         done();
@@ -106,41 +97,38 @@ describe('Vehicle Checks Modal A Mod2 Analytics Effects', () => {
     });
   });
 
-  describe('tellMeQuestionChanged$ effect', () => {
+  describe('balanceQuestionChanged$ effect', () => {
     const questionNumber: number = 1;
-    const tellMeQuestion: QuestionResult = {
+    const balanceQuestion: QuestionResult = {
       code: 'T01',
     };
-    it('should log an analyics event with tell me question info', (done) => {
-
-      // TODO - PREP-AMOD2: Use TestCategory A Mod2
-      store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
-      actions$.next(new VehicleChecksActions.TellMeQuestionSelected(tellMeQuestion, questionNumber));
-      effects.tellMeQuestionChanged$.subscribe((result) => {
+    it('should log an analyics event with balance question info', (done) => {
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.EUAM2));
+      actions$.next(new SafetyAndBalanceQuestionsActions.BalanceQuestionSelected(balanceQuestion, questionNumber));
+      effects.balanceQuestionChanged$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.VEHICLE_CHECKS,
-          `tell me question ${questionNumber + 1} changed`,
-          tellMeQuestion.code,
+          `balance question ${questionNumber + 1} changed`,
+          balanceQuestion.code,
         );
         done();
       });
     });
   });
 
-  describe('tellMeQuestionOutComeChanged$', () => {
+  describe('balanceQuestionOutComeChanged$', () => {
     const questionOutcome: QuestionOutcome = 'DF';
     const questionNumber: number = 1;
-    it('should log an analytics event with tell me question outcome info', (done) => {
-
-      // TODO - PREP-AMOD2: Use TestCategory A Mod2
-      store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
-      actions$.next(new VehicleChecksActions.TellMeQuestionOutcomeChanged(questionOutcome, questionNumber));
-      effects.tellMeQuestionOutComeChanged$.subscribe((result) => {
+    it('should log an analytics event with balance question outcome info', (done) => {
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.EUAM2));
+      actions$.next(
+        new SafetyAndBalanceQuestionsActions.BalanceQuestionOutcomeChanged(questionOutcome, questionNumber));
+      effects.balanceQuestionOutcomeChanged$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.VEHICLE_CHECKS,
-          `tell me question ${questionNumber + 1} outcome changed`,
+          `balance question ${questionNumber + 1} outcome changed`,
           'driving fault',
         );
         done();

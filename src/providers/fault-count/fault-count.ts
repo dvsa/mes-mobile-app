@@ -80,6 +80,7 @@ export class FaultCountProvider {
       case TestCategory.C: return FaultCountCHelper.getVehicleChecksFaultCountCatC(data);
       // TODO: To be implemented properly in MES-4420
       case TestCategory.EUAM1: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
+      case TestCategory.EUAM2: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }

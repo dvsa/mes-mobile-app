@@ -8,7 +8,7 @@ import { EventEmitter } from '@angular/core';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
 
-const vehicleChecksQuestion: VehicleChecksQuestion = {
+const safetyAndBalanceQuestion: VehicleChecksQuestion = {
   code: 'S04',
   description: 'Show me how you would check the parking brake for excessive wear.',
   shortName: 'Parking brake',
@@ -42,7 +42,7 @@ describe('VehicleChecksQuestionComponent', () => {
       () => {
         component.questionResult = { code: 'S03' };
         component.questionsToDisable = [
-          vehicleChecksQuestion,
+          safetyAndBalanceQuestion,
         ];
         const result = component.isOptionDisabled({ code: 'S04', description: '', shortName: '' });
         expect(result).toEqual(true);
@@ -62,47 +62,47 @@ describe('VehicleChecksQuestionComponent', () => {
          expect(result).toEqual(false);
        });
     });
-    describe('vehicleChecksQuestionChanged', () => {
+    describe('safetyAndBalanceQuestionChanged', () => {
       it('should emit the correct event', () => {
-        component.vehicleChecksQuestionChange = new EventEmitter();
-        spyOn(component.vehicleChecksQuestionChange, 'emit');
+        component.safetyAndBalanceQuestionChange = new EventEmitter();
+        spyOn(component.safetyAndBalanceQuestionChange, 'emit');
 
-        component.vehicleChecksQuestionChanged(vehicleChecksQuestion);
+        component.safetyAndBalanceQuestionChanged(safetyAndBalanceQuestion);
 
-        expect(component.vehicleChecksQuestionChange.emit).toHaveBeenCalledWith({
+        expect(component.safetyAndBalanceQuestionChange.emit).toHaveBeenCalledWith({
           code: 'S04',
           description: 'Parking brake',
         });
       });
     });
-    describe('vehicleChecksPassSelected', () => {
+    describe('safetyAndBalancePassSelected', () => {
       it('should emit the correct event', () => {
-        component.vehicleChecksQuestionOutcomeChange = new EventEmitter();
-        spyOn(component.vehicleChecksQuestionOutcomeChange, 'emit');
+        component.safetyAndBalanceQuestionOutcomeChange = new EventEmitter();
+        spyOn(component.safetyAndBalanceQuestionOutcomeChange, 'emit');
 
-        component.vehicleChecksPassSelected();
+        component.safetyAndBalancePassSelected();
 
-        expect(component.vehicleChecksQuestionOutcomeChange.emit).toHaveBeenCalledWith('P');
+        expect(component.safetyAndBalanceQuestionOutcomeChange.emit).toHaveBeenCalledWith('P');
       });
     });
-    describe('vehicleChecksDrivingFaultSelected', () => {
+    describe('safetyAndBalanceDrivingFaultSelected', () => {
       it('should emit the correct event', () => {
-        component.vehicleChecksQuestionOutcomeChange = new EventEmitter();
-        spyOn(component.vehicleChecksQuestionOutcomeChange, 'emit');
+        component.safetyAndBalanceQuestionOutcomeChange = new EventEmitter();
+        spyOn(component.safetyAndBalanceQuestionOutcomeChange, 'emit');
 
-        component.vehicleChecksDrivingFaultSelected();
+        component.safetyAndBalanceDrivingFaultSelected();
 
-        expect(component.vehicleChecksQuestionOutcomeChange.emit).toHaveBeenCalledWith('DF');
+        expect(component.safetyAndBalanceQuestionOutcomeChange.emit).toHaveBeenCalledWith('DF');
       });
     });
     describe('findQuestion', () => {
       it('should return the question if it is found', () => {
-        component.questions = [vehicleChecksQuestion];
+        component.questions = [safetyAndBalanceQuestion];
         component.questionResult = { code: 'S04' };
-        expect(component.findQuestion()).toEqual(vehicleChecksQuestion);
+        expect(component.findQuestion()).toEqual(safetyAndBalanceQuestion);
       });
       it('should return undefined if the question is not found', () => {
-        component.questions = [vehicleChecksQuestion];
+        component.questions = [safetyAndBalanceQuestion];
         component.questionResult = { code: 'B04' };
         expect(component.findQuestion()).toEqual(undefined);
       });

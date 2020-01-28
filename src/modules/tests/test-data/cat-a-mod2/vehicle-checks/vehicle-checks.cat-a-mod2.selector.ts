@@ -9,7 +9,7 @@ export const getSelectedSafetyQuestions = (
   return safetyAndBalanceQuestions.safetyQuestions;
 };
 
-export const getSelectedBaQuestions = (
+export const getSelectedBalanceQuestions = (
   safetyAndBalanceQuestions: SafetyAndBalanceQuestions,
 ): QuestionResult[] => {
   return safetyAndBalanceQuestions.balanceQuestions;
@@ -20,5 +20,5 @@ export const safetyAndBalanceQuestionsExist = (safetyAndBalanceQuestions: Safety
   return some(questions, fault => fault.outcome != null);
 };
 
-export const getSafetyAndBalanceQuestionsCatAMod2 =
+export const getSafetyAndBalanceQuestions =
   createFeatureSelector<SafetyAndBalanceQuestions>('SafetyAndBalanceQuestions');

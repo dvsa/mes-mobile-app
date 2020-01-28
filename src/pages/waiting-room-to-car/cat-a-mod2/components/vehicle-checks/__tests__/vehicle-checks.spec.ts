@@ -62,7 +62,7 @@ describe('VehicleChecksCatAMod2Component', () => {
 
     describe('hasSeriousFault', () => {
       it('should return true if vehicle checks score has serious fault', () => {
-        component.vehicleChecksScore = {
+        component.safetyAndBalanceQuestionsScore = {
           seriousFaults: 1,
           drivingFaults: 4,
         };
@@ -71,7 +71,7 @@ describe('VehicleChecksCatAMod2Component', () => {
       });
 
       it('should return false if vehicle checks score does not have serious fault', () => {
-        component.vehicleChecksScore = {
+        component.safetyAndBalanceQuestionsScore = {
           seriousFaults: 0,
           drivingFaults: 3,
         };
@@ -82,7 +82,7 @@ describe('VehicleChecksCatAMod2Component', () => {
 
     describe('hasDrivingFault', () => {
       it('should return true if vehicle checks score has driving fault', () => {
-        component.vehicleChecksScore = {
+        component.safetyAndBalanceQuestionsScore = {
           seriousFaults: 0,
           drivingFaults: 1,
         };
@@ -91,7 +91,7 @@ describe('VehicleChecksCatAMod2Component', () => {
       });
 
       it('should return false if vehicle checks score does not have driving fault', () => {
-        component.vehicleChecksScore = {
+        component.safetyAndBalanceQuestionsScore = {
           seriousFaults: 0,
           drivingFaults: 0,
         };
@@ -102,36 +102,36 @@ describe('VehicleChecksCatAMod2Component', () => {
 
     describe('everyQuestionHasOutcome', () => {
       it('should return false when not all show me and tell me questions have outcome', () => {
-        component.vehicleChecks = {
-          showMeQuestions: [{}, {}, {}],
-          tellMeQuestions: [{}, {}],
+        component.safetyAndBalanceQuestions = {
+          safetyQuestions: [{}, {}, {}],
+          balanceQuestions: [{}, {}],
         };
 
         expect(component.everyQuestionHasOutcome()).toBeFalsy();
       });
 
       it('should return false when not all show me questions have outcome', () => {
-        component.vehicleChecks = {
-          showMeQuestions: [{}, {}, {}],
-          tellMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }],
+        component.safetyAndBalanceQuestions = {
+          safetyQuestions: [{}, {}, {}],
+          balanceQuestions: [{ outcome: 'P' }, { outcome: 'DF' }],
         };
 
         expect(component.everyQuestionHasOutcome()).toBeFalsy();
       });
 
       it('should return false when not all tell me questions have outcome', () => {
-        component.vehicleChecks = {
-          showMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }, { outcome: 'P' }],
-          tellMeQuestions: [{}, {}],
+        component.safetyAndBalanceQuestions = {
+          safetyQuestions: [{ outcome: 'P' }, { outcome: 'DF' }, { outcome: 'P' }],
+          balanceQuestions: [{}, {}],
         };
 
         expect(component.everyQuestionHasOutcome()).toBeFalsy();
       });
 
       it('should return true when all show / tell me questions have outcome', () => {
-        component.vehicleChecks = {
-          showMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }, { outcome: 'P' }],
-          tellMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }],
+        component.safetyAndBalanceQuestions = {
+          safetyQuestions: [{ outcome: 'P' }, { outcome: 'DF' }, { outcome: 'P' }],
+          balanceQuestions: [{ outcome: 'P' }, { outcome: 'DF' }],
         };
 
         expect(component.everyQuestionHasOutcome()).toBeTruthy();

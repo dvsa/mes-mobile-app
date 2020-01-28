@@ -5,14 +5,11 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { GearboxCategory, SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
-  SchoolCarToggled,
-  DualControlsToggled,
-  GearboxCategoryChanged,
-  VehicleRegistrationChanged,
-} from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
+  SchoolBikeToggled,
+} from '../../../modules/tests/vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.actions';
 import { map } from 'rxjs/operators';
 import {
   InstructorAccompanimentToggled,
@@ -20,13 +17,12 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.reducer';
+import { getVehicleDetails } from
+'../../../modules/tests/vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,
   getGearboxCategory,
-  isAutomatic,
-  isManual,
 } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import {
   getSchoolBike,
@@ -41,44 +37,41 @@ import { getCandidate } from '../../../modules/tests/journal-data/common/candida
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
-import { QuestionProvider } from '../../../providers/question/question';
 import {
   EyesightTestReset,
   EyesightTestPassed,
   EyesightTestFailed,
-} from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
-// import {
-//   hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
-// } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
-import { getTestData } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
+  hasEyesightTestGotSeriousFault,
+  hasEyesightTestBeenCompleted,
+} from '../../../modules/tests/test-data/common';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_A_MOD2 } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
-import {
-  getSafetyAndBalanceQuestionsCatAMod2,
-} from '../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { VehicleChecksCatAMod2Component } from './components/vehicle-checks/vehicle-checks';
-import { SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
+import {
+  getEyesightTest,
+  getSafetyAndBalanceQuestions,
+  getTestData,
+} from '../../../modules/tests/test-data/cat-a-mod2';
+import { VehicleRegistrationChanged, GearboxCategoryChanged } from
+'../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
-  schoolCar$: Observable<boolean>;
-  dualControls$: Observable<boolean>;
+  schoolBike$: Observable<boolean>;
   instructorAccompaniment$: Observable<boolean>;
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
-  // eyesightTestComplete$: Observable<boolean>;
-  // eyesightTestFailed$: Observable<boolean>;
-  gearboxAutomaticRadioChecked$: Observable<boolean>;
-  gearboxManualRadioChecked$: Observable<boolean>;
-  vehicleChecksScore$: Observable<VehicleChecksScore>;
-  vehicleChecks$: Observable<SafetyAndBalanceQuestions>;
+  eyesightTestComplete$: Observable<boolean>;
+  eyesightTestFailed$: Observable<boolean>;
+  safetyAndBalanceQuestionsScore$: Observable<VehicleChecksScore>;
+  safetyAndBalanceQuestions$: Observable<SafetyAndBalanceQuestions>;
 }
 
 @IonicPage()
@@ -102,8 +95,7 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public faultCountProvider: FaultCountProvider,
-    public questionProvider: QuestionProvider,
-  ) {
+    ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
   }
@@ -129,11 +121,7 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
         select(getVehicleDetails),
         select(getGearboxCategory),
       ),
-      schoolCar$: currentTest$.pipe(
-        select(getVehicleDetails),
-        select(getSchoolBike),
-      ),
-      dualControls$: currentTest$.pipe(
+      schoolBike$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getSchoolBike),
       ),
@@ -153,32 +141,26 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
         select(getAccompaniment),
         select(getInterpreterAccompaniment),
       ),
-      // eyesightTestComplete$: currentTest$.pipe(
-      //   select(getTestData),
-      //   select(hasEyesightTestBeenCompleted),
-      // ),
-      // eyesightTestFailed$: currentTest$.pipe(
-      //   select(getTestData),
-      //   select(hasEyesightTestGotSeriousFault),
-      // ),
-      gearboxAutomaticRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
-        map(isAutomatic),
-      ),
-      gearboxManualRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
-        map(isManual),
-      ),
-      vehicleChecksScore$: currentTest$.pipe(
+      eyesightTestComplete$: currentTest$.pipe(
         select(getTestData),
-        select(getSafetyAndBalanceQuestionsCatAMod2),
-        map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.EUA1M2, vehicleChecks);
+        select(getEyesightTest),
+        select(hasEyesightTestBeenCompleted),
+      ),
+      eyesightTestFailed$: currentTest$.pipe(
+        select(getTestData),
+        select(getEyesightTest),
+        select(hasEyesightTestGotSeriousFault),
+      ),
+      safetyAndBalanceQuestionsScore$: currentTest$.pipe(
+        select(getTestData),
+        select(getSafetyAndBalanceQuestions),
+        map((safetyAndBalanceQuestions) => {
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.EUAM2, safetyAndBalanceQuestions);
         }),
       ),
-      vehicleChecks$: currentTest$.pipe(
+      safetyAndBalanceQuestions$: currentTest$.pipe(
         select(getTestData),
-        select(getSafetyAndBalanceQuestionsCatAMod2),
+        select(getSafetyAndBalanceQuestions),
       ),
     };
   }
@@ -191,12 +173,8 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
     this.store$.dispatch(new PersistTests());
   }
 
-  schoolCarToggled(): void {
-    this.store$.dispatch(new SchoolCarToggled());
-  }
-
-  dualControlsToggled(): void {
-    this.store$.dispatch(new DualControlsToggled());
+  schoolBikeToggled(): void {
+    this.store$.dispatch(new SchoolBikeToggled());
   }
 
   transmissionChanged(transmission: GearboxCategory): void {

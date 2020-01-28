@@ -22,7 +22,7 @@ export class EyesightTestAddComment implements Action {
   constructor(public comment: string) { }
 }
 
-export type Types =
+export type EyeSightActions =
   | EyesightTestPassed
   | EyesightTestFailed
   | EyesightTestReset

@@ -4,7 +4,7 @@ import { VehicleChecksCatAMod2Modal } from './vehicle-checks-modal.cat-a-mod2.pa
 import { VehicleChecksQuestionComponent } from '../vehicle-checks-question/vehicle-checks-question';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
 import { EffectsModule } from '@ngrx/effects';
-import { VehicleChecksModalCatAMod2AnalyticsEffects } from './vehicle-checks-modal.cat-a-mod2.analytics.effects';
+import { SafetyAndBalanceModalCatAMod2AnalyticsEffects } from './vehicle-checks-modal.cat-a-mod2.analytics.effects';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import { VehicleChecksModalCatAMod2AnalyticsEffects } from './vehicle-checks-mod
   imports: [
     IonicPageModule.forChild(VehicleChecksCatAMod2Modal),
     EffectsModule.forFeature([
-      VehicleChecksModalCatAMod2AnalyticsEffects,
+      SafetyAndBalanceModalCatAMod2AnalyticsEffects,
     ]),
     IonicModule,
     ComponentsModule,
