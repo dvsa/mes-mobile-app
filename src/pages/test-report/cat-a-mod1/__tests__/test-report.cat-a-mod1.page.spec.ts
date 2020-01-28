@@ -40,6 +40,8 @@ import { NavigationStateProvider } from '../../../../providers/navigation-state/
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { configureTestSuite } from 'ng-bullet';
+import { SpeedCheckHeaderComponent } from '../components/speed-check-header/speed-check-header';
+import { SpeedCheckComponent } from '../components/speed-check/speed-check';
 
 describe('TestReportCatAMod1Page', () => {
   let fixture: ComponentFixture<TestReportCatAMod1Page>;
@@ -57,6 +59,8 @@ describe('TestReportCatAMod1Page', () => {
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),
         MockComponent(EcoComponent),
+        MockComponent(SpeedCheckHeaderComponent),
+        MockComponent(SpeedCheckComponent),
       ],
       imports: [
         IonicModule,
