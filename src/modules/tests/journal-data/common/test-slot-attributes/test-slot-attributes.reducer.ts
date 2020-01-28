@@ -13,7 +13,7 @@ export const initialState: TestSlotAttributes = {
 
 export function testSlotsAttributesReducer(
   state = initialState,
-  action: testSlotAttributesActions.Types,
+  action: testSlotAttributesActions.TestSlotAttributesActionTypes,
 ): TestSlotAttributes {
   switch (action.type) {
     case testSlotAttributesActions.POPULATE_TEST_SLOT_ATTRIBUTES:
