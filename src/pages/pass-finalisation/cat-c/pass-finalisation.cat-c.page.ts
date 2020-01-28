@@ -69,6 +69,9 @@ import { TransmissionType } from '../../../shared/models/transmission-type';
 import { merge } from 'rxjs/observable/merge';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/cat-c/pass-completion.cat-c.reducer';
 import { getCode78 } from '../../../modules/tests/pass-completion/cat-c/pass-completion.cat-c.selector';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/AM2';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -83,6 +86,7 @@ interface PassFinalisationPageState {
   debriefWitnessed$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
   code78$: Observable<boolean>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -103,6 +107,7 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   subscription: Subscription;
   code78Present: boolean = null;
   provisionalLicenseIsReceived: boolean;
+  testCategory: TestCategory;
 
   manualMessage: string = 'A <b><em>manual</em></b> licence will be issued';
   automaticMessage: string =
@@ -179,14 +184,18 @@ export class PassFinalisationCatCPage extends BasePageComponent {
         select(getPassCompletion),
         select(getCode78),
       ),
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
+      ),
     };
 
-    const { transmission$, code78$, provisionalLicense$ } = this.pageState;
+    const { transmission$, code78$, provisionalLicense$, testCategory$ } = this.pageState;
 
     this.merged$ = merge(
       transmission$.pipe(map(value => this.transmission = value)),
       code78$.pipe(map(value => this.code78Present = value)),
       provisionalLicense$.pipe(map(value => this.provisionalLicenseIsReceived = value)),
+      testCategory$.pipe(map(value => this.testCategory = value as TestCategory)),
     );
     this.subscription = this.merged$.subscribe();
   }
@@ -298,5 +307,9 @@ export class PassFinalisationCatCPage extends BasePageComponent {
 
   shouldShowCandidateDoesntNeedLicenseBanner(): boolean {
     return this.provisionalLicenseIsReceived;
+  }
+
+  shouldShowCode78(): boolean {
+    return this.testCategory === TestCategory.C || this.testCategory === TestCategory.CE;
   }
 }
