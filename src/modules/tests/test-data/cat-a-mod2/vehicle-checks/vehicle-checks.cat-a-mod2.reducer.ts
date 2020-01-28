@@ -13,7 +13,7 @@ export const initialState: SafetyAndBalanceQuestions = {
 
 export function vehicleChecksCatAMod2Reducer(
   state: SafetyAndBalanceQuestions = initialState,
-  action: vehicleChecksCatAMod2ActionTypes.Types,
+  action: vehicleChecksCatAMod2ActionTypes.VehicleChecksCatAMod2ActionTypes,
 ): SafetyAndBalanceQuestions {
   switch (action.type) {
     case vehicleChecksCatAMod2ActionTypes.SAFETY_QUESTION_SELECTED:

@@ -1,13 +1,15 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
+import { combineReducers, Action } from '@ngrx/store';
 
-import { dangerousFaultsReducer } from '../common/dangerous-faults/dangerous-faults.reducer';
-import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.reducer';
-import { ecoReducer } from '../common/eco/eco.reducer';
-import { etaReducer } from '../common/eta/eta.reducer';
-import { eyesightTestReducer } from '../common/eyesight-test/eyesight-test.reducer';
+import { 
+  dangerousFaultsReducer,
+  drivingFaultsReducer,
+  seriousFaultsReducer,
+  ecoReducer,
+  etaReducer,
+  eyesightTestReducer 
+} from '../common';
 import { manoeuvresCatBEReducer } from './manoeuvres/manoeuvres.cat-be.reducer';
-import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { vehicleChecksCatBEReducer } from './vehicle-checks/vehicle-checks.cat-be.reducer';
 import { testRequirementsCatBEReducer } from './test-requirements/test-requirements.cat-be.reducer';
 import { uncoupleRecoupleReducer } from './uncouple-recouple/uncouple-recouple.reducer';
@@ -44,5 +46,3 @@ export function testDataCatBEReducer(
     testRequirements: testRequirementsCatBEReducer,
   })(state as Required<CatBEUniqueTypes.TestData>, action);
 }
-
-export const getTestData = createFeatureSelector<CatBEUniqueTypes.TestData>('testData');

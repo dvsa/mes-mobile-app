@@ -1,10 +1,15 @@
-import { Competencies, LegalRequirements } from '../test-data.constants';
 import { get } from 'lodash';
-import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { createFeatureSelector } from '@ngrx/store';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { QuestionProvider } from '../../../../providers/question/question';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+
+import { Competencies, LegalRequirements } from '../test-data.constants';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { QuestionProvider } from '../../../../providers/question/question';
+
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
+
+export const getTestData = createFeatureSelector<CatBUniqueTypes.TestData>('testData');
 
 export const getDrivingFaultCount = (
   data: CatBUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];

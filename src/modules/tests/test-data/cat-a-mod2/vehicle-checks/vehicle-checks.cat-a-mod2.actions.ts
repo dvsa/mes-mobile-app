@@ -38,7 +38,7 @@ export class AddBalanceComment implements Action {
   readonly type = ADD_BALANCE_COMMENT;
 }
 
-export type Types =
+export type VehicleChecksCatAMod2ActionTypes =
   | SafetyQuestionSelected
   | SafetyQuestionOutcomeChanged
   | BalanceQuestionSelected

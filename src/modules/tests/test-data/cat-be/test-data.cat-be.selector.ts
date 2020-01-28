@@ -1,7 +1,10 @@
-import { Competencies, LegalRequirements } from '../test-data.constants';
+
 import { get } from 'lodash';
-import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { createFeatureSelector } from '@ngrx/store';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+
+import { Competencies, LegalRequirements } from '../test-data.constants';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { QuestionProvider } from '../../../../providers/question/question';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 import { NUMBER_OF_SHOW_ME_QUESTIONS }
@@ -9,6 +12,8 @@ import { NUMBER_OF_SHOW_ME_QUESTIONS }
 import { NUMBER_OF_TELL_ME_QUESTIONS }
   from '../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+
+export const getTestData = createFeatureSelector<CatBEUniqueTypes.TestData>('testData');
 
 export const getDrivingFaultCount = (
   data: CatBEUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];

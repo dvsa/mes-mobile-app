@@ -1,12 +1,14 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
-import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
+import { combineReducers, Action } from '@ngrx/store';
 
-import { dangerousFaultsReducer } from '../common/dangerous-faults/dangerous-faults.reducer';
-import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.reducer';
-import { etaReducer } from '../common/eta/eta.reducer';
-import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
-import { emergencyStopReducer } from './emergency-stop/emergency-stop.reducer';
 import { avoidanceReducer } from './avoidance/avoidance.reducer';
+import { emergencyStopReducer } from './emergency-stop/emergency-stop.reducer';
+import {
+  dangerousFaultsReducer,
+  drivingFaultsReducer,
+  seriousFaultsReducer,
+  etaReducer,
+} from '../common';
 
 export const initialState: TestData = {
   dangerousFaults: {},
@@ -29,5 +31,3 @@ export function testDataCatAMod1Reducer(
 
   })(state as Required<TestData>, action);
 }
-
-export const getTestData = createFeatureSelector<TestData>('testData');

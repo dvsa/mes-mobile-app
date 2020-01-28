@@ -1,12 +1,14 @@
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 
-import { dangerousFaultsReducer } from '../common/dangerous-faults/dangerous-faults.reducer';
-import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.reducer';
-import { ecoReducer } from '../common/eco/eco.reducer';
-import { etaReducer } from '../common/eta/eta.reducer';
+import { 
+  dangerousFaultsReducer,
+  drivingFaultsReducer,
+  seriousFaultsReducer,
+  ecoReducer,
+  etaReducer
+} from '../common';
 import { manoeuvresCatCReducer } from './manoeuvres/manoeuvres.cat-c.reducer';
-import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { vehicleChecksCatCReducer } from './vehicle-checks/vehicle-checks.cat-c.reducer';
 import { testRequirementsCatCReducer } from './test-requirements/test-requirements.cat-c.reducer';
 

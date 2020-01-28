@@ -19,7 +19,7 @@ import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
-import { testDataReducer } from './test-data/cat-b/test-data.reducer';
+import { testDataReducer } from './test-data/cat-b';
 import { journalDataReducer } from './journal-data/cat-b/journal-data.reducer';
 
 export function testsCatBReducer(

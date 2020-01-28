@@ -1,19 +1,24 @@
+import { get } from 'lodash';
+import { createFeatureSelector } from '@ngrx/store';
+import { TestData, SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
+
 import { Competencies } from '../test-data.constants';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
-import { TestData, SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
 import { NUMBER_OF_SAFETY_QUESTIONS }
   from '../../../../shared/constants/safety-questions.cat-a-mod2.constants';
 import { NUMBER_OF_BALANCE_QUESTIONS }
   from '../../../../shared/constants/balance-questions.cat-a-mod2.constants';
-import { get } from 'lodash';
+
+
+export const getTestData = createFeatureSelector<TestData>('testData');
 
 export const getDrivingFaultCount = (
   data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
-export const getVehicleChecks = (
+  export const getVehicleChecks = (
   state: TestData): SafetyAndBalanceQuestions => state.safetyAndBalanceQuestions;
 
-export const areBalanceQuestionsCorrect = (state: SafetyAndBalanceQuestions) => {
+  export const areBalanceQuestionsCorrect = (state: SafetyAndBalanceQuestions) => {
   let correct = true;
 
   if (

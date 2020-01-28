@@ -1,14 +1,15 @@
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { Action, createFeatureSelector } from '@ngrx/store';
+import { get } from 'lodash';
+
 import * as journalActions from '../../modules/journal/journal.actions';
 import * as testsActions from './tests.actions';
 import { TestsModel } from './tests.model';
 import * as testStatusActions from './test-status/test-status.actions';
-import { Action, createFeatureSelector } from '@ngrx/store';
 import { testStatusReducer } from './test-status/test-status.reducer';
 import * as fakeJournalActions from '../../pages/fake-journal/fake-journal.actions';
 import { testReportPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
-import { get } from 'lodash';
 import { testsReducerFactory } from './tests-reducer-factory';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },

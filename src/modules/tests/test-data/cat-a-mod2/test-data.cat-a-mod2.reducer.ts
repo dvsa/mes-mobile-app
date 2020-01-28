@@ -1,5 +1,5 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/AM2';
-import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
+import { combineReducers, Action } from '@ngrx/store';
 import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.reducer';
 import { dangerousFaultsReducer } from '../common/dangerous-faults/dangerous-faults.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
@@ -36,4 +36,3 @@ export function testDataCatAMod2Reducer(
   })(state as Required<TestData>, action);
 }
 
-export const getTestData = createFeatureSelector<TestData>('testData');

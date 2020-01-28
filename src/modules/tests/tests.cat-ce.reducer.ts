@@ -19,7 +19,7 @@ import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatCReducer } from './journal-data/cat-c/journal-data.cat-c.reducer';
 import { vehicleDetailsCatCReducer } from './vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { passCompletionCatCReducer } from './pass-completion/cat-c/pass-completion.cat-c.reducer';
-import { testDataCatCEReducer } from './test-data/cat-c/test-data.cat-ce.reducer';
+import { testDataCatCEReducer } from './test-data/cat-c';
 
 export function testsCatCEReducer(
   action: Action, state: CatCEUniqueTypes.TestResult): Required<CatCEUniqueTypes.TestResult> {

@@ -18,7 +18,7 @@ import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatCReducer } from './journal-data/cat-c/journal-data.cat-c.reducer';
 import { vehicleDetailsCatCReducer } from './vehicle-details/cat-c/vehicle-details.cat-c.reducer';
-import { testDataCatC1Reducer } from './test-data/cat-c/test-data.cat-c1.reducer';
+import { testDataCatC1Reducer } from './test-data/cat-c';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 
 export function testsCatC1Reducer(
