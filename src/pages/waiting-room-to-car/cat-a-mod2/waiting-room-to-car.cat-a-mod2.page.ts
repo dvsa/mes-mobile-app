@@ -37,9 +37,7 @@ import {
   getOtherAccompaniment,
   getInterpreterAccompaniment,
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
-
-// TODO - PREP-AMOD2: Use a mod2 reducers
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
@@ -49,9 +47,9 @@ import {
   EyesightTestPassed,
   EyesightTestFailed,
 } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
-import {
-  hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
+// import {
+//   hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
+// } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_A_MOD2 } from '../../page-names.constants';
@@ -75,8 +73,8 @@ interface WaitingRoomToCarPageState {
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
-  eyesightTestComplete$: Observable<boolean>;
-  eyesightTestFailed$: Observable<boolean>;
+  // eyesightTestComplete$: Observable<boolean>;
+  // eyesightTestFailed$: Observable<boolean>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
@@ -155,14 +153,14 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
         select(getAccompaniment),
         select(getInterpreterAccompaniment),
       ),
-      eyesightTestComplete$: currentTest$.pipe(
-        select(getTestData),
-        select(hasEyesightTestBeenCompleted),
-      ),
-      eyesightTestFailed$: currentTest$.pipe(
-        select(getTestData),
-        select(hasEyesightTestGotSeriousFault),
-      ),
+      // eyesightTestComplete$: currentTest$.pipe(
+      //   select(getTestData),
+      //   select(hasEyesightTestBeenCompleted),
+      // ),
+      // eyesightTestFailed$: currentTest$.pipe(
+      //   select(getTestData),
+      //   select(hasEyesightTestGotSeriousFault),
+      // ),
       gearboxAutomaticRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
         map(isAutomatic),

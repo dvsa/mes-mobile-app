@@ -33,9 +33,9 @@ export const areBalanceQuestionsCorrect = (state: SafetyAndBalanceQuestions) => 
 };
 
 // TO-DO - where is eyesight checks in the schema? 
-export const hasEyesightTestBeenCompleted = (data: TestData) => data.eyesightTest.complete;
+// export const hasEyesightTestBeenCompleted = (data: TestData) => data.eyesightTest.complete;
 
-export const hasEyesightTestGotSeriousFault = (data: TestData) => data.eyesightTest.seriousFault;
+// export const hasEyesightTestGotSeriousFault = (data: TestData) => data.eyesightTest.seriousFault;
 
 export const areBalanceQuestionsSelected = (
   state: SafetyAndBalanceQuestions) => typeof get(state, 'balanceQuestions') !== 'undefined';
