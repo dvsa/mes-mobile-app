@@ -10,6 +10,7 @@ import { SeriousFaultsDebriefCardComponent } from './serious-faults-debrief-card
 import { DrivingFaultsDebriefCardComponent } from './driving-faults-debrief-card/driving-faults-debrief-card';
 import { EcoDebriefCardComponent } from './eco-debrief-card/eco-debrief-card';
 import { TestOutcomeDebriefCardComponent } from './test-outcome-debrief-card/test-outcome-debrief-card';
+import { SpeedReqDebriefCardComponent } from './speed-requirements-debrief-card/speed-requirements-debrief-card';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { TestOutcomeDebriefCardComponent } from './test-outcome-debrief-card/tes
     DrivingFaultsDebriefCardComponent,
     EcoDebriefCardComponent,
     TestOutcomeDebriefCardComponent,
+    SpeedReqDebriefCardComponent,
   ],
   imports: [
     ComponentsModule,
@@ -35,6 +37,7 @@ import { TestOutcomeDebriefCardComponent } from './test-outcome-debrief-card/tes
     DrivingFaultsDebriefCardComponent,
     EcoDebriefCardComponent,
     TestOutcomeDebriefCardComponent,
+    SpeedReqDebriefCardComponent,
   ],
 })
 export class DebriefComponentsModule { }
