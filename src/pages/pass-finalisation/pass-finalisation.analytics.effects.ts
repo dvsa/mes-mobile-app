@@ -6,6 +6,8 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsScreenNames,
   AnalyticsErrorTypes,
+  AnalyticsEventCategories,
+  AnalyticsEvents,
 } from '../../providers/analytics/analytics.model';
 import {
   PASS_FINALISTATION_VIEW_DID_ENTER,
@@ -19,6 +21,12 @@ import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
+import {
+  CODE_78_PRESENT,
+  Code78Present,
+  Code78NotPresent,
+  CODE_78_NOT_PRESENT,
+} from '../../modules/tests/pass-completion/pass-completion.actions';
 
 @Injectable()
 export class PassFinalisationAnalyticsEffects {
@@ -66,4 +74,45 @@ export class PassFinalisationAnalyticsEffects {
       return of(new AnalyticRecorded());
     }),
   );
+
+  @Effect()
+  code78PresentEffect$ = this.actions$.pipe(
+    ofType(CODE_78_PRESENT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [Code78Present, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_CODE_78, tests),
+        'Yes',
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  code78NotPresentEffect$ = this.actions$.pipe(
+    ofType(CODE_78_NOT_PRESENT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [Code78NotPresent, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_CODE_78, tests),
+        'No',
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
 }
