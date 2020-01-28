@@ -622,4 +622,88 @@ describe('CompetencyComponent', () => {
     });
   });
 
+  describe('addSingleFault', () => {
+    it('should not dispatch an ADD_SERIOUS_FAULT action if a dangerous fault exists on competency', () => {
+      component.competency = Competencies.useOfStand;
+      component.oneFaultLimit = true;
+      component.hasDangerousFault = true;
+      component.isSeriousMode = true;
+
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault(true);
+
+      expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddSeriousFault(component.competency));
+    });
+
+    it('should not dispatch an ADD_DANGEROUS_FAULT action if a serious fault exists on competency', () => {
+      component.competency = Competencies.useOfStand;
+      component.oneFaultLimit = true;
+      component.hasSeriousFault = true;
+      component.isDangerousMode = true;
+
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault(true);
+
+      expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDangerousFault(component.competency));
+    });
+  });
+
+  describe('competencyHasFault', () => {
+    it('should return true if competency has a driving fault', () => {
+      component.faultCount = 1;
+
+      expect(component.competencyHasFault(true)).toBe(true);
+    });
+    it('should return true if competency has a serious fault', () => {
+      component.hasSeriousFault = true;
+
+      expect(component.competencyHasFault(true)).toBe(true);
+    });
+    it('should return true if competency has a dangerous fault', () => {
+      component.hasDangerousFault = true;
+
+      expect(component.competencyHasFault(true)).toBe(true);
+    });
+    it('should return false if competency does not have a fault', () => {
+      component.faultCount = 0;
+      component.hasDangerousFault = false;
+      component.hasSeriousFault = false;
+
+      expect(component.competencyHasFault(true)).toBe(false);
+    });
+  });
+
+  describe('canAddSingleFault', () => {
+    it('should return false if competency button was not pressed', () => {
+      component.faultCount = 0;
+      expect(component.canAddSingleDrivingFault(false)).toBe(false);
+    });
+    it('should return false if competency is equal to 1', () => {
+      component.faultCount = 1;
+      expect(component.canAddSingleDrivingFault(true)).toBe(false);
+    });
+    it('should return true if competency button was pressed and faultCount is undefined', () => {
+      component.faultCount = undefined;
+      expect(component.canAddSingleDrivingFault(true)).toBe(true);
+    });
+    it('should return true if competency button was pressed and faultCount is 0', () => {
+      component.faultCount = 0;
+      expect(component.canAddSingleDrivingFault(true)).toBe(true);
+    });
+  });
+
+  describe('shouldDisableRippleForOneFaultLimit', () => {
+    it('should return false if more than one fault permitted', () => {
+      component.faultCount = 2;
+      component.oneFaultLimit = false;
+
+      expect(component.shouldDisableRippleForOneFaultLimit()).toBe(false);
+    });
+    it('should return true if only one fault permitted', () => {
+      component.faultCount = 1;
+      component.oneFaultLimit = true;
+
+      expect(component.shouldDisableRippleForOneFaultLimit()).toBe(true);
+    });
+  });
 });

@@ -50,6 +50,9 @@ export class CompetencyComponent {
   @Input()
   competency: Competencies;
 
+  @Input()
+  oneFaultLimit: boolean = false;
+
   competencyState: CompetencyState;
   subscription: Subscription;
 
@@ -148,6 +151,11 @@ export class CompetencyComponent {
       }
       this.allowRipple = false;
     } else {
+      if (this.shouldDisableRippleForOneFaultLimit()) {
+        this.allowRipple = false;
+        return;
+      }
+
       if (this.hasDangerousFault) {
         this.allowRipple = false;
         return;
@@ -167,6 +175,7 @@ export class CompetencyComponent {
         this.allowRipple = true;
         return;
       }
+
       this.allowRipple = true;
     }
   }
@@ -176,6 +185,8 @@ export class CompetencyComponent {
   addOrRemoveFault = (wasPress: boolean = false): void => {
     if (this.isRemoveFaultMode) {
       this.removeFault();
+    } else if (this.shouldAddSingleFault()) {
+      this.addSingleFault(wasPress);
     } else {
       this.addFault(wasPress);
     }
@@ -235,4 +246,45 @@ export class CompetencyComponent {
 
   }
 
+  shouldAddSingleFault = (): boolean => {
+    return this.oneFaultLimit;
+  }
+
+  addSingleFault = (wasPress: boolean): void => {
+    if (this.competencyHasFault(wasPress)) {
+      return;
+    }
+
+    if (this.isDangerousMode) {
+      this.store$.dispatch(new AddDangerousFault(this.competency));
+      this.store$.dispatch(new ToggleDangerousFaultMode());
+      return;
+    }
+
+    if (this.isSeriousMode) {
+      this.store$.dispatch(new AddSeriousFault(this.competency));
+      this.store$.dispatch(new ToggleSeriousFaultMode());
+      return;
+    }
+
+    if (this.canAddSingleDrivingFault(wasPress)) {
+      const competency = this.competency;
+      return this.store$.dispatch(new ThrottleAddDrivingFault({
+        competency,
+        newFaultCount: 1,
+      }));
+    }
+  }
+
+  competencyHasFault = (wasPress: boolean): boolean => {
+    return this.hasDangerousFault || this.hasSeriousFault || !this.canAddSingleDrivingFault(wasPress);
+  }
+
+  canAddSingleDrivingFault = (wasPress: boolean): boolean => {
+    return wasPress && (this.faultCount === undefined || this.faultCount === 0);
+  }
+
+  shouldDisableRippleForOneFaultLimit = (): boolean => {
+    return this.faultCount > 0 && this.oneFaultLimit;
+  }
 }
