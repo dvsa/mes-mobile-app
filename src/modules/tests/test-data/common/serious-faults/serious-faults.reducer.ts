@@ -6,7 +6,7 @@ export const initialState: SeriousFaults = {};
 
 export function seriousFaultsReducer(
   state = initialState,
-  action: seriousFaultsActions.Types,
+  action: seriousFaultsActions.SeriousFaultsActionTypes,
 ): SeriousFaults {
   switch (action.type) {
     case seriousFaultsActions.ADD_SERIOUS_FAULT:

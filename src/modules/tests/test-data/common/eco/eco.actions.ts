@@ -16,7 +16,7 @@ export class TogglePlanningEco implements Action {
   readonly type = TOGGLE_PLANNING_ECO;
 }
 
-export type Types =
+export type EcoActionTypes =
   | ToggleEco
   | ToggleControlEco
   | TogglePlanningEco;

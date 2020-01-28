@@ -8,5 +8,5 @@ export class ToggleETA implements Action {
   readonly type = TOGGLE_ETA;
 }
 
-export type Types =
+export type EtaActionTypes =
   | ToggleETA;

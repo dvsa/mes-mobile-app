@@ -6,7 +6,7 @@ export const initialState: CatCEUniqueTypes.UncoupleRecouple = {};
 
 export function uncoupleRecoupleCatCEReducer(
   state = initialState,
-  action: uncoupleRecoupleActions.Types,
+  action: uncoupleRecoupleActions.UncoupleRecoupleActionsTypes,
 ): CatCEUniqueTypes.UncoupleRecouple {
   switch (action.type) {
     case uncoupleRecoupleActions.TOGGLE_UNCOUPLE_RECOUPLE:

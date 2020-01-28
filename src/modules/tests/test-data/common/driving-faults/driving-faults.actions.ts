@@ -26,7 +26,7 @@ export class AddDrivingFaultComment implements Action {
   readonly type = ADD_DRIVING_FAULT_COMMENT;
 }
 
-export type Types =
+export type DrivingFaultsActionTypes =
   | AddDrivingFault
   | ThrottleAddDrivingFault
   | RemoveDrivingFault

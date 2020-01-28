@@ -53,7 +53,7 @@ export class RemoveManoeuvreFault implements Action {
   readonly type = REMOVE_MANOEUVRE_FAULT;
 }
 
-export type Types =
+export type ManoeuvresActionTypes =
   | RecordManoeuvresSelection
   | AddManoeuvreDrivingFault
   | AddManoeuvreSeriousFault

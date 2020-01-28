@@ -5,7 +5,7 @@ export const initialState: Eco = {};
 
 export function ecoReducer(
   state = initialState,
-  action: ecoActions.Types,
+  action: ecoActions.EcoActionTypes,
 ): Eco {
   switch (action.type) {
     case ecoActions.TOGGLE_ECO:

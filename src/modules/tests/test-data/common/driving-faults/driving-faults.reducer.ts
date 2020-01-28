@@ -5,7 +5,7 @@ export const initialState: DrivingFaults = {};
 
 export function drivingFaultsReducer(
   state = initialState,
-  action: drivingFaultsActions.Types,
+  action: drivingFaultsActions.DrivingFaultsActionTypes,
 ): DrivingFaults {
   switch (action.type) {
     case drivingFaultsActions.ADD_DRIVING_FAULT:

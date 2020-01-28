@@ -5,7 +5,7 @@ export const initialState: ETA = {};
 
 export function etaReducer(
   state = initialState,
-  action: etaActions.Types,
+  action: etaActions.EtaActionTypes,
 ): ETA {
   switch (action.type) {
     case etaActions.TOGGLE_ETA:

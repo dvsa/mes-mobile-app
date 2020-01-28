@@ -20,7 +20,7 @@ export class AddSeriousFaultComment implements Action {
   readonly type = ADD_SERIOUS_FAULT_COMMENT;
 }
 
-export type Types =
+export type SeriousFaultsActionTypes =
   | AddSeriousFault
   | RemoveSeriousFault
   | AddSeriousFaultComment;

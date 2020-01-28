@@ -31,7 +31,7 @@ export class AddUncoupleRecoupleComment implements Action {
   constructor(public comment: string) { }
 }
 
-export type Types =
+export type UncoupleRecoupleActionsTypes =
   | ToggleUncoupleRecouple
   | UncoupleRecoupleAddDrivingFault
   | UncoupleRecoupleAddSeriousFault

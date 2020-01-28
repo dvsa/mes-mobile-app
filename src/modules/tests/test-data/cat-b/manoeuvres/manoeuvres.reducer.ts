@@ -6,7 +6,7 @@ export const initialState: CatBUniqueTypes.Manoeuvres = {};
 
 export function manoeuvresReducer(
   state = initialState,
-  action: manoeuvresActions.Types,
+  action: manoeuvresActions.ManoeuvresActionTypes,
 ): CatBUniqueTypes.Manoeuvres {
   switch (action.type) {
     case manoeuvresActions.RECORD_MANOEUVRES_SELECTION:

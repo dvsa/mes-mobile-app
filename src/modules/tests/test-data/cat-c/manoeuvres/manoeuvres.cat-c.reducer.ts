@@ -10,7 +10,7 @@ export const initialState: CatCUniqueTypes.Manoeuvres = {
 
 export function manoeuvresCatCReducer(
   state = initialState,
-  action: manoeuvresActions.Types | catCManoeuvresActions.Types,
+  action: manoeuvresActions.ManoeuvresActionTypes | catCManoeuvresActions.Types,
 ): CatCUniqueTypes.Manoeuvres {
   switch (action.type) {
     case manoeuvresActions.RECORD_MANOEUVRES_SELECTION:

@@ -6,7 +6,7 @@ export const initialState: DangerousFaults = {};
 
 export function dangerousFaultsReducer(
   state = initialState,
-  action: dangerousFaultsActions.Types,
+  action: dangerousFaultsActions.DangerousFaultsActionTypes,
 ) {
   switch (action.type) {
     case dangerousFaultsActions.ADD_DANGEROUS_FAULT:

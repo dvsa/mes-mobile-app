@@ -21,7 +21,7 @@ export class AddDangerousFaultComment implements Action {
   readonly type = ADD_DANGEROUS_FAULT_COMMENT;
 }
 
-export type Types =
+export type DangerousFaultsActionTypes =
   | AddDangerousFault
   | RemoveDangerousFault
   | AddDangerousFaultComment;
