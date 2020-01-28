@@ -15,7 +15,7 @@ import { examinerConductedReducer } from './examiner-conducted/examiner-conducte
 import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
-import { journalDataCatAMod1Reducer } from './journal-data/cat-a-mod1/journal-data.cat-a-mod1.reducer';
+import { journalDataReducer } from './journal-data';
 import { testDataCatAMod1Reducer } from './test-data/cat-a-mod1';
 import { vehicleDetailsCatAMod1Reducer } from './vehicle-details/cat-a-mod1/vehicle-details.cat-a-mod1.reducer';
 import { preTestDeclarationsCatAMod1Reducer } from
@@ -28,7 +28,7 @@ export function testsCatAMod1Reducer(
       version: schemaVersionReducer,
       category: categoryReducer,
       activityCode: activityCodeReducer,
-      journalData: journalDataCatAMod1Reducer,
+      journalData: journalDataReducer,
       preTestDeclarations: preTestDeclarationsCatAMod1Reducer,
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatAMod1Reducer,

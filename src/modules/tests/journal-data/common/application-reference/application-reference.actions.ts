@@ -8,5 +8,5 @@ export class PopulateApplicationReference implements Action {
   constructor(public payload: Application) {}
 }
 
-export type Types =
+export type ApplicationReferenceActionTypes =
   | PopulateApplicationReference;

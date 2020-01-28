@@ -17,7 +17,7 @@ import { examinerConductedReducer } from './examiner-conducted/examiner-conducte
 import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
-import { journalDataCatAMod2Reducer } from './journal-data/cat-a-mod2/journal-data.cat-a-mod2.reducer';
+import { journalDataReducer } from './journal-data';
 import { testDataCatAMod2Reducer } from './test-data/cat-a-mod2';
 import { vehicleDetailsCatAMod2Reducer } from './vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
@@ -29,7 +29,7 @@ export function testsCatAMod2Reducer(
       version: schemaVersionReducer,
       category: categoryReducer,
       activityCode: activityCodeReducer,
-      journalData: journalDataCatAMod2Reducer,
+      journalData: journalDataReducer,
       preTestDeclarations: preTestDeclarationsCatAMod2Reducer,
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatAMod2Reducer,

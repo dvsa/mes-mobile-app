@@ -8,5 +8,5 @@ export class PopulateTestSlotAttributes implements Action {
   constructor(public payload: TestSlotAttributes) {}
 }
 
-export type Types =
+export type TestSlotAttributesActionTypes =
   | PopulateTestSlotAttributes;

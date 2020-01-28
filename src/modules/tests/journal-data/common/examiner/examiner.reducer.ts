@@ -8,7 +8,7 @@ export const initialState:Examiner = {
 
 export function examinerReducer(
   state = initialState,
-  action: examinerActions.Types,
+  action: examinerActions.ExaminerActionTypes,
 ): Examiner {
   switch (action.type) {
     case examinerActions.POPULATE_EXAMINER:

@@ -8,5 +8,5 @@ export class PopulateTestCentre implements Action {
   constructor(public payload: TestCentre) {}
 }
 
-export type Types =
+export type TestCentreActionTypes =
   | PopulateTestCentre;

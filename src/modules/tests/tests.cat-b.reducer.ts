@@ -20,7 +20,7 @@ import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
 import { testDataReducer } from './test-data/cat-b';
-import { journalDataReducer } from './journal-data/cat-b/journal-data.reducer';
+import { journalDataReducer } from './journal-data';
 
 export function testsCatBReducer(
   action: Action, state: CatBUniqueTypes.TestResult): Required<CatBUniqueTypes.TestResult> {

@@ -9,7 +9,7 @@ export const initialState: TestCentre = {
 
 export function testCentreReducer(
   state = initialState,
-  action: testCentreActions.Types,
+  action: testCentreActions.TestCentreActionTypes,
 ): TestCentre {
   switch (action.type) {
     case testCentreActions.POPULATE_TEST_CENTRE:

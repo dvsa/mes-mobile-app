@@ -10,7 +10,7 @@ export const initialState: ApplicationReference = {
 
 export function applicationReferenceReducer(
   state = initialState,
-  action: applicationReferenceActions.Types,
+  action: applicationReferenceActions.ApplicationReferenceActionTypes,
 ): ApplicationReference {
   switch (action.type) {
     case applicationReferenceActions.POPULATE_APPLICATION_REFERENCE:

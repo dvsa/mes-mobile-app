@@ -35,4 +35,3 @@ export function testDataCatAMod2Reducer(
     eyesightTest: eyesightTestReducer,
   })(state as Required<TestData>, action);
 }
-

@@ -8,5 +8,5 @@ export class PopulateExaminer implements Action {
   constructor(public payload: Examiner) {}
 }
 
-export type Types =
+export type ExaminerActionTypes =
   | PopulateExaminer;

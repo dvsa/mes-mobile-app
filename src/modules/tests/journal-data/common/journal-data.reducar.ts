@@ -1,10 +1,11 @@
 import { JournalData } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
-import { examinerReducer } from '../common/examiner/examiner.reducer';
-import { testCentreReducer } from '../common/test-centre/test-centre.reducer';
-import { testSlotsAttributesReducer } from '../common/test-slot-attributes/test-slot-attributes.reducer';
-import { candidateReducer } from '../common/candidate/candidate.reducer';
-import { applicationReferenceReducer } from '../common/application-reference/application-reference.reducer';
+
+import {  examinerReducer } from './examiner';
+import { testCentreReducer } from './test-centre';
+import { testSlotsAttributesReducer} from './test-slot-attributes';
+import { candidateReducer} from './candidate';
+import { applicationReferenceReducer } from './application-reference';
 
 export const initialState: JournalData = {
   applicationReference: {
@@ -15,8 +16,6 @@ export const initialState: JournalData = {
   },
   candidate: {},
   examiner: {
-    // TODO - we don't use this anywhere in the code.
-    individualId: null,
     staffNumber: null,
   },
   testCentre: {

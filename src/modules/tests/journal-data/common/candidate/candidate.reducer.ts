@@ -20,7 +20,7 @@ export const initialState: Candidate = {
 
 export function candidateReducer(
   state = initialState,
-  action: candidateActions.Types,
+  action: candidateActions.CandidateActionTypes,
 ): Candidate {
   switch (action.type) {
     case candidateActions.POPULATE_CANDIDATE_DETAILS:

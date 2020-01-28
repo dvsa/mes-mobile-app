@@ -9,7 +9,6 @@ import { NUMBER_OF_SAFETY_QUESTIONS }
 import { NUMBER_OF_BALANCE_QUESTIONS }
   from '../../../../shared/constants/balance-questions.cat-a-mod2.constants';
 
-
 export const getTestData = createFeatureSelector<TestData>('testData');
 
 export const getDrivingFaultCount = (
