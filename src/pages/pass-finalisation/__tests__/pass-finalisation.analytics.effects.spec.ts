@@ -8,6 +8,7 @@ import * as testsActions from '../../../modules/tests/tests.actions';
 import * as passCompletionActions from '../../../modules/tests/pass-completion/pass-completion.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
+import * as vehicleDetailsActions from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import {
@@ -19,11 +20,14 @@ import {
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/common/candidate/candidate.actions';
-import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
+import { AnalyticRecorded, AnalyticNotRecorded } from '../../../providers/analytics/analytics.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { TransmissionType } from '../../../shared/models/transmission-type';
 
 describe('Pass Finalisation Analytics Effects', () => {
 
@@ -199,6 +203,59 @@ describe('Pass Finalisation Analytics Effects', () => {
             AnalyticsEvents.TOGGLE_LICENSE_RECEIVED,
             'Yes',
           );
+        done();
+      });
+    });
+  });
+  describe('transmissionChanged', () => {
+    it('should call logEvent with Manual if Gearbox Category is Manual', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new SetActivityCode(ActivityCodes.PASS));
+      // ACT
+      actions$.next(new vehicleDetailsActions.GearboxCategoryChanged(TransmissionType.Manual));
+      // ASSERT
+      effects.transmissionChanged$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.GEARBOX_CATEGORY_CHANGED,
+            TransmissionType.Manual,
+          );
+        done();
+      });
+    });
+    it('should call logEvent with Automatic if Gearbox Category is Automatic', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new SetActivityCode(ActivityCodes.PASS));
+      // ACT
+      actions$.next(new vehicleDetailsActions.GearboxCategoryChanged(TransmissionType.Automatic));
+      // ASSERT
+      effects.transmissionChanged$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.GEARBOX_CATEGORY_CHANGED,
+            TransmissionType.Automatic,
+          );
+        done();
+      });
+    });
+    it('should call not call logEvent if there is no activty code', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new vehicleDetailsActions.GearboxCategoryChanged(TransmissionType.Manual));
+      // ASSERT
+      effects.transmissionChanged$.subscribe((result) => {
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
         done();
       });
     });

@@ -20,9 +20,13 @@ import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
-import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
+import { AnalyticRecorded, AnalyticNotRecorded } from '../../providers/analytics/analytics.actions';
 import * as passCompletionActions from '../../modules/tests/pass-completion/pass-completion.actions';
 import * as testSummaryActions from '../../modules/tests/test-summary/test-summary.actions';
+import * as vehicleDetailsActions from '../../modules/tests/vehicle-details/common/vehicle-details.actions';
+import { getActivityCode } from '../../modules/tests/activity-code/activity-code.reducer';
+import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 
 @Injectable()
 export class PassFinalisationAnalyticsEffects {
@@ -148,6 +152,35 @@ export class PassFinalisationAnalyticsEffects {
         'Yes',
       );
       return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  transmissionChanged$ = this.actions$.pipe(
+    ofType(vehicleDetailsActions.GEARBOX_CATEGORY_CHANGED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getActivityCode),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, activityCode]:
+        [vehicleDetailsActions.GearboxCategoryChanged, TestsModel, ActivityCode]) => {
+      if (activityCode != null) {
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+          formatAnalyticsText(AnalyticsEvents.GEARBOX_CATEGORY_CHANGED, tests),
+          action.gearboxCategory,
+        );
+        return of(new AnalyticRecorded());
+      }
+      return of(new AnalyticNotRecorded());
     }),
   );
 
