@@ -5,7 +5,7 @@ import { DirectivesModule } from '../../../../directives/directives.module';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { TestReportComponentsModule } from '../../components/test-report-components.module';
 import { SpeedCheckComponent } from './speed-check/speed-check';
-import { SpeedCheckHeaderComponent } from './speed-check/speed-check-header';
+import { SpeedCheckHeaderComponent } from './speed-check-header/speed-check-header';
 
 @NgModule({
   declarations: [
