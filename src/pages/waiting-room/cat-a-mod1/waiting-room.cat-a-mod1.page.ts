@@ -56,6 +56,7 @@ import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { App } from '../../../app/app.component';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { CBT_NUMBER_CTRL } from '../components/cbt-number/cbt-number.constants';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -247,7 +248,11 @@ export class WaitingRoomCatAMod1Page extends BasePageComponent implements OnInit
     } else {
       Object.keys(this.formGroup.controls).forEach((controlName) => {
         if (this.formGroup.controls[controlName].invalid) {
-          this.store$.dispatch(new waitingRoomActions.WaitingRoomValidationError(`${controlName} is blank`));
+          if (controlName === CBT_NUMBER_CTRL) {
+            this.store$.dispatch(new waitingRoomActions.WaitingRoomValidationError(`${controlName} is invalid`));
+          } else {
+            this.store$.dispatch(new waitingRoomActions.WaitingRoomValidationError(`${controlName} is blank`));
+          }
         }
       });
     }

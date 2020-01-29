@@ -7,6 +7,8 @@ import {
   AnalyticsScreenNames,
   AnalyticsDimensionIndices,
   AnalyticsErrorTypes,
+  AnalyticsEvents,
+  AnalyticsEventCategories,
 } from '../../providers/analytics/analytics.model';
 import {
   WAITING_ROOM_TO_CAR_VIEW_DID_ENTER,
@@ -15,6 +17,12 @@ import {
   WaitingRoomToCarError,
   WAITING_ROOM_TO_CAR_VALIDATION_ERROR,
   WaitingRoomToCarValidationError,
+  WAITING_ROOM_TO_CAR_BIKE_CATEGORY_CHANGED,
+  WaitingRoomToCarBikeCategoryChanged,
+  WAITING_ROOM_TO_CAR_BIKE_CATEGORY_SELECTED,
+  WaitingRoomToCarBikeCategorySelected,
+  WAITING_ROOM_TO_CAR_VIEW_BIKE_CATEGORY_MODAL,
+  WaitingRoomToCarViewBikeCategoryModal,
 } from '../../pages/waiting-room-to-car/waiting-room-to-car.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -135,4 +143,75 @@ export class WaitingRoomToCarAnalyticsEffects {
     }),
   );
 
+  @Effect()
+  waitingRoomToCarBikeCategoryChanged$ = this.actions$.pipe(
+    ofType(WAITING_ROOM_TO_CAR_BIKE_CATEGORY_CHANGED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestCategory),
+        ),
+      ),
+    )),
+    switchMap(([action, tests, category]: [WaitingRoomToCarBikeCategoryChanged, TestsModel, CategoryCode]) => {
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, action.selectedBikeCategory);
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.WAITING_ROOM_TO_CAR, tests),
+        formatAnalyticsText(AnalyticsEvents.BIKE_CATEGORY_CHANGED, tests),
+        `bike category changed to ${action.initialBikeCategory} from ${action.selectedBikeCategory}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  waitingRoomToCarBikeCategorySelected$ = this.actions$.pipe(
+    ofType(WAITING_ROOM_TO_CAR_BIKE_CATEGORY_SELECTED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestCategory),
+        ),
+      ),
+    )),
+    switchMap(([action, tests, category]: [WaitingRoomToCarBikeCategorySelected, TestsModel, CategoryCode]) => {
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, action.bikeCategory);
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.WAITING_ROOM_TO_CAR, tests),
+        formatAnalyticsText(AnalyticsEvents.BIKE_CATEGORY_SELECTED, tests),
+        `bike category ${action.bikeCategory} selected`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  waitingRoomToCarViewBikeCategoryModal$ = this.actions$.pipe(
+    ofType(WAITING_ROOM_TO_CAR_VIEW_BIKE_CATEGORY_MODAL),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    switchMap(([action, tests]: [WaitingRoomToCarViewBikeCategoryModal, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.WAITING_ROOM_TO_CAR, tests),
+        formatAnalyticsText(AnalyticsEvents.BIKE_CATEGORY_MODAL_TRIGGERED, tests),
+        `bike category selection modal triggered`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
 }

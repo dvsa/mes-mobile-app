@@ -53,6 +53,8 @@ import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 import { BikeCategoryTypeComponent } from '../components/bike-category-type/bike-category-type';
+import { Subscription } from 'rxjs/Subscription';
+import { merge } from 'rxjs/observable/merge';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -78,6 +80,9 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
 
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
+  merged$: Observable<string>;
+  category: CategoryCode;
+  subscription: Subscription;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -145,6 +150,16 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
         select(getTestCategory),
       ),
     };
+
+    const {
+      testCategory$,
+    } = this.pageState;
+
+    this.merged$ = merge(
+      testCategory$.pipe(map(value => this.category = value)),
+    );
+
+    this.subscription = this.merged$.subscribe();
   }
 
   ionViewDidEnter(): void {
@@ -153,6 +168,12 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
 
   ionViewWillLeave(): void {
     this.store$.dispatch(new PersistTests());
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription !== null) {
+      this.subscription.unsubscribe();
+    }
   }
 
   schoolBikeToggled(): void {
@@ -218,6 +239,15 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
   }
 
   categoryCodeChanged(category: CategoryCode) {
+    this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarBikeCategorySelected(category));
+    if (this.category !== category) {
+      this.store$.dispatch(
+        new waitingRoomToCarActions.WaitingRoomToCarBikeCategoryChanged(
+          category,
+          this.category,
+        ),
+      );
+    }
     this.store$.dispatch(new PopulateTestCategory(category));
   }
 
