@@ -14,6 +14,10 @@
       <driving-faults-badge class="driving-faults" [count]="faultCount()"></driving-faults-badge>
       <span class='competency-label'>{{ getLabel() }}</span>
       <div class="fault-wrapper">
+        
+        <!-- The reason we have that extra logic in the ngIf is purely for visual reasons
+             By that expression we make sure that the space for the badge will stay there even if there is nothing to render
+             So that we can have the lable of the button centered at all times  -->
         <serious-fault-badge *ngIf="hasSeriousFault() || (!hasSeriousFault() && !hasDangerousFault())" [showBadge]="hasSeriousFault()"></serious-fault-badge>
         <dangerous-fault-badge *ngIf="hasDangerousFault()" [showBadge]="hasDangerousFault()"></dangerous-fault-badge>
       </div>
