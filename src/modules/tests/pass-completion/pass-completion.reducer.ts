@@ -1,11 +1,17 @@
 import * as passCompletionActions from './pass-completion.actions';
-import { PassCompletion } from '@dvsa/mes-test-schema/categories/common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+
 import { createFeatureSelector } from '@ngrx/store';
 
-export const initialState: PassCompletion = {
-  passCertificateNumber: null,
-  provisionalLicenceProvided: null,
-};
+export const initialState:
+  CatBUniqueTypes.PassCompletion |
+  CatBEUniqueTypes.PassCompletion |
+  CatCUniqueTypes.PassCompletion = {
+    passCertificateNumber: null,
+    provisionalLicenceProvided: null,
+  };
 
 export const passCompletionReducer = (state = initialState, action: passCompletionActions.Types) => {
   switch (action.type) {
@@ -29,4 +35,6 @@ export const passCompletionReducer = (state = initialState, action: passCompleti
   }
 };
 
-export const getPassCompletion = createFeatureSelector<PassCompletion>('passCompletion');
+// Can't do multi line type assertion
+// tslint:disable-next-line:max-line-length
+export const getPassCompletion = createFeatureSelector<CatBUniqueTypes.PassCompletion | CatBEUniqueTypes.PassCompletion | CatCUniqueTypes.PassCompletion>('passCompletion');
