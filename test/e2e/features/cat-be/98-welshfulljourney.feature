@@ -3,19 +3,19 @@ Feature: Full Welsh end to end journey
 
    @welsh 
   Scenario: Examiner completes a failed test with various faults
-      Given I am logged in as "mobexaminer2" and I have a test for "Mr Dillon Jennings"
-      When I check candidate details for "Mr Dillon Jennings"
-      And I start the test for "Mr Dillon Jennings"
+      Given I am logged in as "desexaminerw" and I have a test for "Mr Hendricks Parsons"
+      When I check candidate details for "Mr Hendricks Parsons"
+      And I start the test for "Mr Hendricks Parsons"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Datganiad - Dillon Jennings" page
+      Then I should see the "Datganiad - Hendricks Parsons" page
       And the candidate enters a new email address
       And I proceed to the car
-      Then I should see the "Dillon Jennings" page
+      Then I should see the "Hendricks Parsons" page
       And I complete the waiting room to car page with the following vehicle checks
         | show_me_1   | show_me_2   | show_me_3   | show_me_4   | show_me_5   |
         | true        | true        | true        | false       | false       |   
-      Then I should see the "Test report - Dillon Jennings" page
+      Then I should see the "Test report - Hendricks Parsons" page
       And the driver fault count is "3"
       When I end the test
       Then the legal requirements pop up is present
@@ -26,7 +26,7 @@ Feature: Full Welsh end to end journey
       And the required test observation is present "Eco (control and planning)"
       And the required test observation is present "Uncouple / Recouple"
       Then I return to the test report page
-      And I should see the "Test report - Dillon Jennings" page
+      And I should see the "Test report - Hendricks Parsons" page
       And I enter the legal requirements
       When I add a "Timed" driver fault
       And the driver fault count is "4"
@@ -59,4 +59,4 @@ Feature: Full Welsh end to end journey
       And I enter a comment for "serious" fault "Clearance"
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Mr Dillon Jennings" is "2"
+      And the test result for "Mr Hendricks Parsons" is "2"
