@@ -256,7 +256,21 @@ export class SpeedCheckComponent {
   }
 
   canButtonRipple = (): boolean => {
-    return true;
+    if (this.isRemoveFaultMode) {
+      if (this.hasDangerousFault() && this.isDangerousMode) {
+        return true;
+      }
+
+      if (this.hasSeriousFault() && this.isSeriousMode) {
+        return true;
+      }
+
+      if (!this.isSeriousMode && !this.isDangerousMode && this.faultCount() > 0) {
+        return true;
+      }
+      return false;
+    }
+    return !(this.hasDangerousFault() || this.hasSeriousFault() || this.faultCount() > 0);
   }
 
   faultCount = (): number => {
