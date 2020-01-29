@@ -1,6 +1,6 @@
-import { When,Then } from 'cucumber';
+import { When, Then } from 'cucumber';
 import { getElement, clickElement } from './generic-steps';
-import { browser, by, ExpectedConditions, element } from 'protractor';
+import { by } from 'protractor';
 import { textFieldInputViaNativeMode, scrollToElement } from '../../helpers/helpers';
 
 const chai = require('chai');
@@ -14,7 +14,8 @@ When('I click search completed tests', () => {
 });
 
 When('I search for a completed test with the application reference of {string}', (searchTerm) => {
-  textFieldInputViaNativeMode('//XCUIElementTypeWindow//XCUIElementTypeTextField[@value="Enter an application reference"]', searchTerm);
+  textFieldInputViaNativeMode(
+    '//XCUIElementTypeWindow//XCUIElementTypeTextField[@value="Enter an application reference"]', searchTerm);
   const searchButton = getElement(by.xpath('//*[@id="tab-search-candidate-details"]//ion-row[3]/button/span'));
   clickElement(searchButton);
 });
@@ -24,20 +25,27 @@ When('the search result is clicked', () => {
   clickElement(searchResult);
 });
 
-Then('the Test Details has the correct test information, {string}, {string}, {string}, {string}', (result: string, reference, category, type) => {
-  const testResult = getElement(by.xpath(`//*[@id="testOutcome"][@class="mes-${result}"]`));
-  const applicationReference = getElement(by.xpath(`//test-details-card//data-row[3][@ng-reflect-value="${reference}"]`));
-  const testCategory = getElement(by.xpath(`//test-details-card//data-row[4][@ng-reflect-value="${category}"]`));
-  const testType = getElement(by.xpath(`//test-details-card//data-row[5][@ng-reflect-value="${type}"]`));
-  assertElementIsPresent([testResult, applicationReference, testCategory, testType]);
+Then('the test result outcome is {string}', (testOutcome) => {
+  const testOutcomeField = getElement(by.id('testOutcome'));
+  expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
 
-Then('the Defrief has the correct test information, {string}, {string}', (category, categoryText) => {
+Then('the test result has the following data present', (table) => {
+  table.rows().forEach((row: string[]) => {
+    const dataRow = getElement(
+      by.xpath(`//data-row/ion-row[ion-col/label[text() = '${row[0]}'] and ion-col/span[text() = '${row[1]}']]`));
+    expect(dataRow.isPresent()).to.eventually.be.true;
+  });
+});
+
+Then('the Debrief has the correct test information, {string}, {string}', (cat, categoryText) => {
   const debriefSection = getElement(by.xpath('//debrief-card'));
   scrollToElement(debriefSection);
-  const catTellMeQuestion = getElement(by.xpath(`//debrief-card//data-row-custom[1]/ion-row/ion-col[2]/span/span[@class="mes-data bold" and text() = "${category}"]`));
-  const textTellMeQuestion = getElement(by.xpath(`//debrief-card//data-row-custom[1]/ion-row/ion-col[2]/span[@class="mes-data" and text() = "${categoryText}"]`));
-  assertElementIsPresent([catTellMeQuestion,textTellMeQuestion]);
+  const catTellMeQuestion = getElement(by.xpath(
+    `//debrief-card//data-row-custom[1]/ion-row/ion-col[2]/span/span[@class="mes-data bold" and text() = "${cat}"]`));
+  const textTellMeQuestion = getElement(by.xpath(
+    `//debrief-card//data-row-custom[1]/ion-row/ion-col[2]/span[@class="mes-data" and text() = "${categoryText}"]`));
+  assertElementIsPresent([catTellMeQuestion, textTellMeQuestion]);
 });
 
 Then('I click the close button', () => {

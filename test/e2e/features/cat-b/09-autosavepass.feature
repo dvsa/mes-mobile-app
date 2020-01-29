@@ -28,8 +28,19 @@ Feature: Autosave end to end journey
       When I search for a completed test with the application reference of "1234567031"
       And the search result is clicked
       Then I should see the "Test information" page
-      And the Test Details has the correct test information, "green", "1234567031", "B", "Standard Test"
-      And the Defrief has the correct test information, "T5", " - Headlights & tail lights"
+      And the test result outcome is "Passed"
+      And the test result has the following data present
+         | label                             | value                |
+         | Application reference             | 1234567031           |
+         | Vehicle registration number       | AB12CDE              |
+         | Test category                     | B                    |
+         | Slot type                         | Standard Test        |
+         | ETA                               | None                 |
+         | Licence provided                  | Yes                  |
+         | Route number                      | None                 |
+         | Physical description of candidate | None                 |
+         | Weather conditions                | None                 |
+      And the Debrief has the correct test information, "T5", " - Headlights & tail lights"
       When I click the close button
       Then I should see the "Search submitted test" page
       When I click the back button on the search submitted test page
@@ -43,4 +54,4 @@ Feature: Autosave end to end journey
       And I upload the test
       Then I should see the "Journal" page
       And the test result for "Miss Florence Pearson" is "1"
-    
+      
