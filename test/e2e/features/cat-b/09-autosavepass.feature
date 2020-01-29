@@ -1,7 +1,6 @@
 @catb
 Feature: Autosave end to end journey
 
-   @smoke
    Scenario: Examiner completes a passed test for autosave
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"

@@ -37,6 +37,11 @@ When('I select activity code {string}', (activityCodeDesc) => {
   selectActivityCode(activityCodeDesc);
 });
 
+When('the D255 Radio is pre-selected to yes', () => {
+  const d255PreselectedToYes = getElement(by.id('d255-yes'));
+  expect(d255PreselectedToYes.isSelected()).to.eventually.be.true;
+});
+
 const selectActivityCode = (activityCodeDesc) => {
   const activitySelector = getElement(by.id('activity-code-selector'));
   clickElement(activitySelector);
