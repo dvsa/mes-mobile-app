@@ -52,7 +52,6 @@ describe('reverseLeftComponent', () => {
     fixture = TestBed.createComponent(ReverseLeftComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
-    // TODO: MES-4287 use category C
     store$.dispatch(new StartTest(105, TestCategory.C));
   }));
 
