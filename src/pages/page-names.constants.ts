@@ -101,3 +101,20 @@ export const CAT_A_MOD2 = {
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatAMod2Modal',
   VIEW_TEST_RESULT_PAGE:'ViewTestResultCatAMod2Page',
 };
+
+export const CAT_D = {
+  BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBPage',
+  COMMUNICATION_PAGE: 'CommunicationCatBPage',
+  DEBRIEF_PAGE: 'DebriefCatBPage',
+  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatBPage',
+  OFFICE_PAGE: 'OfficeCatBPage',
+  PASS_FINALISATION_PAGE: 'PassFinalisationCatBPage',
+  TEST_REPORT_PAGE: 'TestReportCatBPage',
+  WAITING_ROOM_PAGE: 'WaitingRoomCatBPage',
+  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBPage',
+  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatBPage',
+  REKEY_REASON_PAGE: 'RekeyReasonCatBPage',
+  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
+  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBPage',
+  VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatBPage',
+};

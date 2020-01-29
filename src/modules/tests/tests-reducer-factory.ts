@@ -45,6 +45,12 @@ export function testsReducerFactory(
     case TestCategory.EUA2M2:
     case TestCategory.EUAM2:
       return testsCatAMod2Reducer(action, state as Required<TestResultCatAM2Schema>);
+    case TestCategory.D:
+    case TestCategory.D1:
+    case TestCategory.D1E:
+    case TestCategory.DE:
+      // TODO - CAT D - use correct state tree reducer
+      return testsCatCReducer(action, state as Required<CatCUniqueTypes.TestResult>);
     default:
       // TODO (low priority): throw an exception here instead of using category b reducer
       return testsCatBReducer(action, state as Required<CatBUniqueTypes.TestResult>);
