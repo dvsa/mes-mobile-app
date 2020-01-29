@@ -7,6 +7,7 @@ import * as passFinalisationActions from '../pass-finalisation.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as passCompletionActions from '../../../modules/tests/pass-completion/pass-completion.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
+import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import {
@@ -197,6 +198,46 @@ describe('Pass Finalisation Analytics Effects', () => {
             AnalyticsEventCategories.POST_TEST,
             AnalyticsEvents.TOGGLE_LICENSE_RECEIVED,
             'Yes',
+          );
+        done();
+      });
+    });
+  });
+  describe('d255Yes', () => {
+    it('should call logEvent', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new testSummaryActions.D255Yes());
+      // ASSERT
+      effects.d255Yes$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.D255,
+            'Yes',
+          );
+        done();
+      });
+    });
+  });
+  describe('d255No', () => {
+    it('should call logEvent', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new testSummaryActions.D255No());
+      // ASSERT
+      effects.d255No$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.D255,
+            'No',
           );
         done();
       });

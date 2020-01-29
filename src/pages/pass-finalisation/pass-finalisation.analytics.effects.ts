@@ -22,6 +22,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import * as passCompletionActions from '../../modules/tests/pass-completion/pass-completion.actions';
+import * as testSummaryActions from '../../modules/tests/test-summary/test-summary.actions';
 
 @Injectable()
 export class PassFinalisationAnalyticsEffects {
@@ -145,6 +146,46 @@ export class PassFinalisationAnalyticsEffects {
         formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_LICENSE_RECEIVED, tests),
         'Yes',
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  d255Yes$ = this.actions$.pipe(
+    ofType(testSummaryActions.D255_YES),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [testSummaryActions.D255Yes, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+        formatAnalyticsText(AnalyticsEvents.D255, tests),
+        'Yes',
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  d255No$ = this.actions$.pipe(
+    ofType(testSummaryActions.D255_NO),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [testSummaryActions.D255No, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+        formatAnalyticsText(AnalyticsEvents.D255, tests),
+        'No',
       );
       return of(new AnalyticRecorded());
     }),
