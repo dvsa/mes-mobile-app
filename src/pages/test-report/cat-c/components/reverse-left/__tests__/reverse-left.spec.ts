@@ -16,7 +16,11 @@ import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../../test-report.reducer';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { ReverseLeftPopoverClosed, ReverseLeftPopoverOpened } from '../reverse-left.actions';
-import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
+import { DeselectReverseLeftManoeuvreCatC }
+  from '../../../../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.actions';
+import { RecordManoeuvresSelection }
+  from '../../../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+import { ManoeuvreTypes } from '../../../../../../modules/tests/test-data/test-data.constants';
 import { AppModule } from '../../../../../../app/app.module';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
@@ -41,9 +45,6 @@ describe('reverseLeftComponent', () => {
         AppModule,
         StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
       ],
-      providers: [
-        FaultCountProvider,
-      ],
     });
   });
 
@@ -52,7 +53,7 @@ describe('reverseLeftComponent', () => {
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
     // TODO: MES-4287 use category C
-    store$.dispatch(new StartTest(105, TestCategory.BE));
+    store$.dispatch(new StartTest(105, TestCategory.C));
   }));
 
   describe('DOM', () => {
@@ -60,6 +61,35 @@ describe('reverseLeftComponent', () => {
   });
 
   describe('Class', () => {
+
+    describe('hasFaults', () => {
+      it('should return TRUE if there are any driving faults', () => {
+        component.drivingFaults = 1;
+        const result = component.hasFaults();
+        expect(result).toEqual(true);
+      });
+
+      it('should return TRUE if there is a serious fault', () => {
+        component.hasSeriousFault = true;
+        const result = component.hasFaults();
+        expect(result).toEqual(true);
+      });
+
+      it('should return TRUE if there is a dangerous fault', () => {
+        component.hasDangerousFault = true;
+        const result = component.hasFaults();
+        expect(result).toEqual(true);
+      });
+
+      it('should return FALSE if there are no faults', () => {
+        component.drivingFaults = 0;
+        component.hasSeriousFault = false;
+        component.hasDangerousFault = false;
+        const result = component.hasFaults();
+        expect(result).toEqual(false);
+      });
+    });
+
     describe('togglePopoverDisplay', () => {
       it('should dispatch ReverseLeftPopoverClosed and set displayPopover to false', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
@@ -83,6 +113,30 @@ describe('reverseLeftComponent', () => {
         );
         expect(component.displayPopover).toBeTruthy();
         expect(toggleOverlaySpy).toHaveBeenCalled();
+      });
+    });
+
+    describe('toggleReverseLeft', () => {
+      describe('when reversLeft is selected and there are no faults', () => {
+        it('should delect the manoeuvre', () => {
+          const storeDispatchSpy = spyOn(store$, 'dispatch');
+          component.completedReverseLeft = true;
+          component.toggleReverseLeft();
+          expect(storeDispatchSpy).toHaveBeenCalledWith(
+            new DeselectReverseLeftManoeuvreCatC(),
+          );
+        });
+      });
+
+      describe('when reversLeft is not selected', () => {
+        it('should record the manoeuvre', () => {
+          const storeDispatchSpy = spyOn(store$, 'dispatch');
+          component.completedReverseLeft = false;
+          component.toggleReverseLeft();
+          expect(storeDispatchSpy).toHaveBeenCalledWith(
+            new RecordManoeuvresSelection(ManoeuvreTypes.reverseLeft),
+          );
+        });
       });
     });
 
