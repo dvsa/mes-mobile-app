@@ -1,19 +1,15 @@
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
   isProvisionalLicenseNotProvided,
 } from '../pass-completion.selector';
+import { PassCompletionUnion } from '../pass-completion.constants';
 
 describe('pass completion selector', () => {
-  const state: CatBUniqueTypes.PassCompletion |
-   CatBEUniqueTypes.PassCompletion |
-    CatCUniqueTypes.PassCompletion = {
-      provisionalLicenceProvided: true,
-      passCertificateNumber: 'ABC123',
-    };
+  const state: PassCompletionUnion = {
+    provisionalLicenceProvided: true,
+    passCertificateNumber: 'ABC123',
+  };
 
   describe('getPassCertificateNumber', () => {
     it('should retrieve the pass certificate number', () => {

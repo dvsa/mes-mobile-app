@@ -1,10 +1,10 @@
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { PassCompletionUnion } from './pass-completion.constants';
 
 export const getPassCertificateNumber = (
-  passCompletion: CatCUniqueTypes.PassCompletion,
+  passCompletion: PassCompletionUnion,
   ) => passCompletion.passCertificateNumber;
 export const isProvisionalLicenseProvided =
-  (passCompletion: CatCUniqueTypes.PassCompletion) => passCompletion.provisionalLicenceProvided;
+  (passCompletion: PassCompletionUnion) => passCompletion.provisionalLicenceProvided;
 export const isProvisionalLicenseNotProvided =
-  (passCompletion: CatCUniqueTypes.PassCompletion) => passCompletion.provisionalLicenceProvided !== null
+  (passCompletion: PassCompletionUnion) => passCompletion.provisionalLicenceProvided !== null
   && !passCompletion.provisionalLicenceProvided;
