@@ -3,7 +3,7 @@ import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
-import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
+import { passCompletionReducer } from './pass-completion/common/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';

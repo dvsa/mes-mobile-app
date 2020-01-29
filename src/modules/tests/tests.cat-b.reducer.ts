@@ -6,7 +6,7 @@ import { categoryReducer } from './category/category.reducer';
 import { preTestDeclarationsReducer } from './pre-test-declarations/common/pre-test-declarations.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { vehicleDetailsReducer } from './vehicle-details/cat-b/vehicle-details.cat-b.reducer';
-import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
+import { passCompletionReducer } from './pass-completion/common/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';

@@ -1,7 +1,7 @@
 import { JournalData } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 
-import {  examinerReducer } from './examiner';
+import { examinerReducer } from './examiner';
 import { testCentreReducer } from './test-centre';
 import { testSlotsAttributesReducer } from './test-slot-attributes';
 import { candidateReducer } from './candidate';

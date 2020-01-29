@@ -30,12 +30,12 @@ import { map, tap } from 'rxjs/operators';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
-} from '../../../modules/tests/pass-completion/pass-completion.selector';
-import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
+} from '../../../modules/tests/pass-completion/common/pass-completion.selector';
+import { getPassCompletion } from '../../../modules/tests/pass-completion/common/pass-completion.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { TranslateService } from 'ng2-translate';
-import { ProvisionalLicenseNotReceived } from '../../../modules/tests/pass-completion/pass-completion.actions';
+import { ProvisionalLicenseNotReceived } from '../../../modules/tests/pass-completion/common/pass-completion.actions';
 import {
   getCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.reducer';

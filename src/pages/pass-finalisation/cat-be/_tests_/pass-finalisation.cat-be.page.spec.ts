@@ -20,7 +20,7 @@ import { LanguagePreferencesComponent } from
 import { FinalisationHeaderComponent } from
     '../../../../components/test-finalisation/finalisation-header/finalisation-header';
 import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged } from
-    '../../../../modules/tests/pass-completion/pass-completion.actions';
+    '../../../../modules/tests/pass-completion/common/pass-completion.actions';
 import {
   PassFinalisationViewDidEnter,
   PassFinalisationValidationError,

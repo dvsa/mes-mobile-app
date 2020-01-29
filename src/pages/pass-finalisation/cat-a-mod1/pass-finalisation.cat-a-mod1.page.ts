@@ -11,12 +11,12 @@ import {
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
   PassCertificateNumberChanged,
-} from '../../../modules/tests/pass-completion/pass-completion.actions';
-import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
+} from '../../../modules/tests/pass-completion/common/pass-completion.actions';
+import { getPassCompletion } from '../../../modules/tests/pass-completion/common/pass-completion.reducer';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
-} from '../../../modules/tests/pass-completion/pass-completion.selector';
+} from '../../../modules/tests/pass-completion/common/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
 
 // TODO - PREP-AMOD1 - implement category specific reducer

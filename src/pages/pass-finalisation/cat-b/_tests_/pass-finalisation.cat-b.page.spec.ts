@@ -24,7 +24,7 @@ import {
   PassFinalisationValidationError,
 } from '../../pass-finalisation.actions';
 import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged } from
-    '../../../../modules/tests/pass-completion/pass-completion.actions';
+    '../../../../modules/tests/pass-completion/common/pass-completion.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
     '../../../../modules/tests/test-summary/test-summary.actions';

@@ -22,7 +22,7 @@ import {
 import * as postTestDeclarationsActions
   from '../../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import * as passCompletionActions
-  from '../../../../modules/tests/pass-completion/pass-completion.actions';
+  from '../../../../modules/tests/pass-completion/common/pass-completion.actions';
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { By } from '@angular/platform-browser';

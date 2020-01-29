@@ -14,7 +14,7 @@ import {
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
 } from
-  '../../../../modules/tests/pass-completion/pass-completion.actions';
+  '../../../../modules/tests/pass-completion/common/pass-completion.actions';
 
 enum ValidLicenceProvidedValues {
     YES = 'yes',

@@ -115,11 +115,9 @@ import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
 // TODO - PREP-AMOD1: Use cat a mod1 selectors
 import {
+  getVehicleChecksCatBE,
   vehicleChecksExist,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
-
-// TODO - PREP-AMOD1: Use cat a mod1 selectors
-import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+} from '../../../modules/tests/test-data/cat-be';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -420,7 +418,7 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       ),
       vehicleChecks$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecks),
+        select(getVehicleChecksCatBE),
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
     };

@@ -9,7 +9,7 @@ import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { map } from 'rxjs/operators';
 import { getEmergencyStop }
   from '../../../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-a-mod1';
 import { getAvoidance } from '../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.selector';
 import { isEmpty } from 'lodash';
 import {

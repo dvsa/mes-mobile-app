@@ -26,7 +26,7 @@ import {
   Code78Present,
   Code78NotPresent,
   CODE_78_NOT_PRESENT,
-} from '../../modules/tests/pass-completion/pass-completion.actions';
+} from '../../modules/tests/pass-completion/cat-c';
 
 @Injectable()
 export class PassFinalisationAnalyticsEffects {

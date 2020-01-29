@@ -11,13 +11,15 @@ import {
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
   PassCertificateNumberChanged,
+} from '../../../modules/tests/pass-completion';
+import {
   Code78NotPresent,
   Code78Present,
-} from '../../../modules/tests/pass-completion/pass-completion.actions';
+} from '../../../modules/tests/pass-completion/cat-c';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
-} from '../../../modules/tests/pass-completion/pass-completion.selector';
+} from '../../../modules/tests/pass-completion/common/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
 import {

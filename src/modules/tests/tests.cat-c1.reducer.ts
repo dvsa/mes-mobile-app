@@ -19,7 +19,7 @@ import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatCReducer } from './journal-data/cat-c';
 import { vehicleDetailsCatCReducer } from './vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { testDataCatC1Reducer } from './test-data/cat-c';
-import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
+import { passCompletionReducer } from './pass-completion/common/pass-completion.reducer';
 
 export function testsCatC1Reducer(
   action: Action, state: CatC1UniqueTypes.TestResult): Required<CatC1UniqueTypes.TestResult> {

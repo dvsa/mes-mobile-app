@@ -3,9 +3,15 @@ import { async, TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
-import * as passFinalisationActions from '../pass-finalisation.actions';
+import {
+  PassFinalisationValidationError,
+  PassFinalisationViewDidEnter,
+} from '../pass-finalisation.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
-import * as passCompletionActions from '../../../modules/tests/pass-completion/pass-completion.actions';
+import {
+  Code78Present,
+  Code78NotPresent,
+} from '../../../modules/tests/pass-completion/cat-c';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
@@ -63,7 +69,7 @@ describe('Pass Finalisation Analytics Effects', () => {
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
-      actions$.next(new passFinalisationActions.PassFinalisationViewDidEnter());
+      actions$.next(new PassFinalisationViewDidEnter());
       // ASSERT
       effects.passFinalisationViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -77,7 +83,7 @@ describe('Pass Finalisation Analytics Effects', () => {
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
-      actions$.next(new passFinalisationActions.PassFinalisationViewDidEnter());
+      actions$.next(new PassFinalisationViewDidEnter());
       // ASSERT
       effects.passFinalisationViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -94,7 +100,7 @@ describe('Pass Finalisation Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       // ACT
-      actions$.next(new passFinalisationActions.PassFinalisationValidationError('error message'));
+      actions$.next(new PassFinalisationValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -111,7 +117,7 @@ describe('Pass Finalisation Analytics Effects', () => {
       const practiceScreenName =
         `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.PASS_FINALISATION}`;
       // ACT
-      actions$.next(new passFinalisationActions.PassFinalisationValidationError('error message'));
+      actions$.next(new PassFinalisationValidationError('error message'));
       // ASSERT
       effects.validationErrorEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -129,7 +135,7 @@ describe('Pass Finalisation Analytics Effects', () => {
       store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
-      actions$.next(new passCompletionActions.Code78Present());
+      actions$.next(new Code78Present());
       // ASSERT
       effects.code78PresentEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -150,7 +156,7 @@ describe('Pass Finalisation Analytics Effects', () => {
       store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
-      actions$.next(new passCompletionActions.Code78NotPresent());
+      actions$.next(new Code78NotPresent());
       // ASSERT
       effects.code78NotPresentEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);

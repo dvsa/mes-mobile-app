@@ -20,7 +20,7 @@ import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataReducer } from './journal-data';
 import { testDataCatAMod2Reducer } from './test-data/cat-a-mod2';
 import { vehicleDetailsCatAMod2Reducer } from './vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.reducer';
-import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
+import { passCompletionReducer } from './pass-completion/common/pass-completion.reducer';
 
 export function testsCatAMod2Reducer(
   action: Action, state: TestResultCatAM2Schema): Required<TestResultCatAM2Schema> {
