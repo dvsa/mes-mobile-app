@@ -51,7 +51,7 @@ export class VehicleChecksCatAMod2Component implements OnChanges {
       const outcome = get(question, 'outcome', undefined);
       return outcome !== undefined;
     };
-
+console.log(this.safetyAndBalanceQuestions);
     return this.safetyAndBalanceQuestions.safetyQuestions.reduce((res, question) => res && hasOutcome(question), true)
       && this.safetyAndBalanceQuestions.balanceQuestions.reduce((res, question) => res && hasOutcome(question), true);
   }

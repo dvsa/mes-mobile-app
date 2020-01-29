@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory, SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/AM2';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   SchoolBikeToggled,
@@ -71,7 +71,7 @@ interface WaitingRoomToCarPageState {
   eyesightTestComplete$: Observable<boolean>;
   eyesightTestFailed$: Observable<boolean>;
   safetyAndBalanceQuestionsScore$: Observable<VehicleChecksScore>;
-  safetyAndBalanceQuestions$: Observable<SafetyAndBalanceQuestions>;
+  safetyAndBalanceQuestions$: Observable<any>;
 }
 
 @IonicPage()

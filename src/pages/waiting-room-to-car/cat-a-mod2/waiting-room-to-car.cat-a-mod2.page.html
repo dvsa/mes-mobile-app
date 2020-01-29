@@ -30,12 +30,12 @@
               <vehicle-registration [formGroup]="form" [vehicleRegistration]="pageState.registrationNumber$ | async"
               (vehicleRegistrationChange)="vehicleRegistrationChanged($event)"></vehicle-registration>
 
-            <!-- <vehicle-checks-cat-a-mod2
+            <vehicle-checks-cat-a-mod2
               [formGroup]="form"
               [safetyAndBalanceQuestionsScore]="pageState.safetyAndBalanceQuestionsScore$ | async"
               [safetyAndBalanceQuestions]="pageState.safetyAndBalanceQuestions$ | async"
               [onCloseVehicleChecksModal]="closeVehicleChecksModal"
-            ></vehicle-checks-cat-a-mod2> -->
+            ></vehicle-checks-cat-a-mod2>
 
             <accompaniment-card [formGroup]="form"
               [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"

@@ -21,4 +21,4 @@ export const safetyAndBalanceQuestionsExist = (safetyAndBalanceQuestions: Safety
 };
 
 export const getSafetyAndBalanceQuestions =
-  createFeatureSelector<SafetyAndBalanceQuestions>('SafetyAndBalanceQuestions');
+  createFeatureSelector<SafetyAndBalanceQuestions>('safetyAndBalanceQuestions');
