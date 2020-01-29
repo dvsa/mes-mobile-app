@@ -2,45 +2,62 @@ import { Competencies, LegalRequirements } from '../test-data.constants';
 import { get } from 'lodash';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
-import { QuestionProvider } from '../../../../providers/question/question';
-import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
+import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { NUMBER_OF_SHOW_ME_QUESTIONS }
   from '../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
 import { NUMBER_OF_TELL_ME_QUESTIONS }
   from '../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+
+export type CatCTestData =
+  | CatCUniqueTypes.TestData
+  | CatC1UniqueTypes.TestData
+  | CatCEUniqueTypes.TestData
+  | CatC1EUniqueTypes.TestData;
+
+export type CatCManoeuvres =
+  | CatCUniqueTypes.Manoeuvres
+  | CatC1UniqueTypes.Manoeuvres
+  | CatCEUniqueTypes.Manoeuvres
+  | CatC1EUniqueTypes.Manoeuvres;
+
+export type CatCTestRequirements =
+  | CatCUniqueTypes.TestRequirements
+  | CatC1UniqueTypes.TestRequirements
+  | CatCEUniqueTypes.TestRequirements
+  | CatC1EUniqueTypes.TestRequirements;
+
+export type CatCVehicleChecks =
+  | CatCUniqueTypes.VehicleChecks
+  | CatC1UniqueTypes.VehicleChecks
+  | CatCEUniqueTypes.VehicleChecks
+  | CatC1EUniqueTypes.VehicleChecks;
 
 export const getDrivingFaultCount = (
-  data: CatCUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];
+  data: CatCTestData, competency: Competencies) => data.drivingFaults[competency];
 
-export const getManoeuvres = (data: CatCUniqueTypes.TestData): CatCUniqueTypes.Manoeuvres => data.manoeuvres;
+export const getManoeuvres = (data: CatCTestData): CatCManoeuvres => data.manoeuvres;
 
 // TODO - We should pass a Manoeuvre object here instead of TestData
-export const hasManoeuvreBeenCompletedCatC = (data: CatCUniqueTypes.TestData) => {
+export const hasManoeuvreBeenCompletedCatC = (data: CatCTestData) => {
   return (
     get(data.manoeuvres, 'reverseLeft.selected')
   );
 };
 
 export const hasLegalRequirementBeenCompleted = (
-  data: CatCUniqueTypes.TestRequirements, legalRequirement: LegalRequirements) => {
+  data: CatCTestRequirements, legalRequirement: LegalRequirements) => {
   return data[legalRequirement];
 };
 
 export const getVehicleChecks = (
-  state: CatCUniqueTypes.TestData): CatCUniqueTypes.VehicleChecks => state.vehicleChecks;
-
-export const getTellMeQuestion = (state: CatCUniqueTypes.VehicleChecks): VehicleChecksQuestion => {
-  const questionProvider: QuestionProvider = new QuestionProvider();
-  return questionProvider
-    .getTellMeQuestions(TestCategory.C)
-    .find(question => question.code === get(state, 'tellMeQuestion.code'));
-};
+  state: CatCTestData): CatCVehicleChecks => state.vehicleChecks;
 
 export const areTellMeQuestionsSelected = (
-  state: CatCUniqueTypes.VehicleChecks) => typeof get(state, 'tellMeQuestions') !== 'undefined';
+  state: CatCVehicleChecks) => typeof get(state, 'tellMeQuestions') !== 'undefined';
 
-export const areTellMeQuestionsCorrect = (state: CatCUniqueTypes.VehicleChecks) => {
+export const areTellMeQuestionsCorrect = (state: CatCVehicleChecks) => {
   const tellMeQuestions = get(state, 'tellMeQuestions');
   let correct = true;
 
@@ -59,7 +76,7 @@ export const areTellMeQuestionsCorrect = (state: CatCUniqueTypes.VehicleChecks) 
 
 // TODO - We should really pass a Vehicle Checks object here and not Test Data
 // TODO - Also this has to go into a provider
-export const hasVehicleChecksBeenCompletedCatC = (data: CatCUniqueTypes.TestData): boolean => {
+export const hasVehicleChecksBeenCompletedCatC = (data: CatCTestData): boolean => {
   let showMeQuestionComplete = true;
   let tellMeQuestionComplete = true;
 
