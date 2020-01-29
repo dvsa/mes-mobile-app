@@ -211,6 +211,7 @@ Feature: Full end to end journey
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - James Brown" page
+      And the D255 Radio is pre-selected to yes
       When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
