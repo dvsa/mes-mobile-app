@@ -7,7 +7,7 @@ export const initialState: PreTestDeclarations = {
   insuranceDeclarationAccepted: false,
   residencyDeclarationAccepted: false,
   preTestSignature: '',
-  mod1CertificateNumber: '',
+  DL196CBTCertNumber: '',
 };
 
 export function preTestDeclarationsCatAMod2Reducer(
@@ -40,7 +40,7 @@ export function preTestDeclarationsCatAMod2Reducer(
     case preTestDeclarationActionsCatAMod2.CBT_NUMBER_CHANGED:
       return {
         ...state,
-        mod1CertificateNumber: action.cbtNumber,
+        DL196CBTCertNumber: action.cbtNumber,
       };
 
     default:
