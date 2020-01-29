@@ -32,7 +32,7 @@ import {
   LegalRequirements,
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
-import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-b';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode  } from '../test-report.selector';

@@ -20,7 +20,7 @@ import {
 } from '../../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../../modules/tests/test-data/cat-b';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import {
   hasSeriousFault,

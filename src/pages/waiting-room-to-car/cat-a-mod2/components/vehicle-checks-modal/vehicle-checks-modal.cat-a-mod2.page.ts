@@ -24,7 +24,7 @@ import {
 } from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
 
 // TODO - PREP-AMOD2: Use a mod2 selectors
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-be';
 
 // TODO - PREP-AMOD2: Use a mod2 actions
 import {

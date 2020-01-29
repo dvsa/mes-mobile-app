@@ -18,7 +18,7 @@ import {
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
 } from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-be';
 import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,

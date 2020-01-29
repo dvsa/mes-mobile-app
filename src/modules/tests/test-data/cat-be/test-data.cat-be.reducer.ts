@@ -1,13 +1,13 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { combineReducers, Action } from '@ngrx/store';
 
-import { 
+import {
   dangerousFaultsReducer,
   drivingFaultsReducer,
   seriousFaultsReducer,
   ecoReducer,
   etaReducer,
-  eyesightTestReducer 
+  eyesightTestReducer,
 } from '../common';
 import { manoeuvresCatBEReducer } from './manoeuvres/manoeuvres.cat-be.reducer';
 import { vehicleChecksCatBEReducer } from './vehicle-checks/vehicle-checks.cat-be.reducer';

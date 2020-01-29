@@ -6,7 +6,7 @@ import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.sel
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-be';
 import { getETA, getEco } from '../../../modules/tests/test-data/common/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';

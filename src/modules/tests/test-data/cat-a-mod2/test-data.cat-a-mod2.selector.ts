@@ -14,10 +14,10 @@ export const getTestData = createFeatureSelector<TestData>('testData');
 export const getDrivingFaultCount = (
   data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
-  export const getVehicleChecks = (
+export const getVehicleChecks = (
   state: TestData): SafetyAndBalanceQuestions => state.safetyAndBalanceQuestions;
 
-  export const areBalanceQuestionsCorrect = (state: SafetyAndBalanceQuestions) => {
+export const areBalanceQuestionsCorrect = (state: SafetyAndBalanceQuestions) => {
   let correct = true;
 
   if (

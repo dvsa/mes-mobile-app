@@ -65,11 +65,10 @@ import {
 
 // TODO - PREP-AMOD2: Use a mod2 selectors
 import {
-  hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
+  getTestData,
+  hasEyesightTestGotSeriousFault,
+  hasEyesightTestBeenCompleted,
 } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
-
-// TODO - PREP-AMOD2: Use a mod2 reducers
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_A_MOD2 } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';

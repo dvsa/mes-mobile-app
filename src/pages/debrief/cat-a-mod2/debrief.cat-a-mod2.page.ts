@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
 
 // TODO - PREP-AMOD2 - Implement category specific reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-be';
 import { getETA, getEco } from '../../../modules/tests/test-data/common/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';

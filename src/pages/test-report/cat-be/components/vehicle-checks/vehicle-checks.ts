@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-be';
 import { map } from 'rxjs/operators';
 import { getVehicleChecksCatBE }
 from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';

@@ -47,4 +47,3 @@ export function testDataReducer(
     testRequirements: testRequirementsReducer,
   })(state as Required<CatBUniqueTypes.TestData>, action);
 }
-

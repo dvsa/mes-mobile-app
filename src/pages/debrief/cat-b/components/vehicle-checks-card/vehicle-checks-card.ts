@@ -6,7 +6,7 @@ import { QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-b';
 import { getVehicleChecks } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';

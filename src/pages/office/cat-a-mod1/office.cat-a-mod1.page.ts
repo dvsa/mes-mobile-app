@@ -69,7 +69,7 @@ import {
 } from '../../../modules/tests/test-data/common/test-data.selector';
 
 // TODO - PREP-AMOD1: Use car a mod1 reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';

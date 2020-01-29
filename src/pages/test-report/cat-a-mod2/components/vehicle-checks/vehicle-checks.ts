@@ -5,7 +5,7 @@ import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { StoreModel } from '../../../../../shared/models/store.model';
 
 // TODO - PREP-AMOD2 - Implement category specific reducer
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-be';
 import { map } from 'rxjs/operators';
 
 // TODO - PREP-AMOD2: Use cat a mod2 selector

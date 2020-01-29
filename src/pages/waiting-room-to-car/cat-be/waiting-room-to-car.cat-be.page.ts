@@ -57,7 +57,7 @@ import {
 import {
   hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
 } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-be';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_BE } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';

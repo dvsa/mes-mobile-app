@@ -9,7 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { getTests } from './../tests.reducer';
 import { getCurrentTest } from './../tests.selector';
 import { Eco } from '@dvsa/mes-test-schema/categories/common';
-import { getTestData } from './cat-b/test-data.reducer';
+import { getTestData } from './cat-b';
 import { getEco } from './common/test-data.selector';
 
 @Injectable()

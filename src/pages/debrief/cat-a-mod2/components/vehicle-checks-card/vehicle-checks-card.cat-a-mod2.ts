@@ -7,10 +7,10 @@ import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 
 // TODO - PREP-AMOD2 - Implement category specific reducer
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
-
-// TODO - PREP-AMOD2 - Implement category specific selector
-import { getVehicleChecks } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import {
+  getTestData,
+  getVehicleChecksCatBE,
+} from '../../../../../modules/tests/test-data/cat-be';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { map } from 'rxjs/operators';
 
@@ -28,7 +28,7 @@ export class VehicleChecksCardCatAMod2Component implements OnInit {
       select(getTests),
       select(getCurrentTest),
       select(getTestData),
-      select(getVehicleChecks),
+      select(getVehicleChecksCatBE),
       map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       map(checks => checks.filter(c => c.code !== undefined)),
     );

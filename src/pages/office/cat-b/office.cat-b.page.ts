@@ -73,7 +73,7 @@ import {
   getShowMeQuestion,
   getTellMeQuestion,
 } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-b';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';

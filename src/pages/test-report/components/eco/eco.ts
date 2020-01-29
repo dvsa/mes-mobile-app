@@ -4,7 +4,7 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../../modules/tests/test-data/cat-b';
 import { getEco } from '../../../../modules/tests/test-data/common/test-data.selector';
 import {
   ToggleEco,

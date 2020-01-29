@@ -3,8 +3,8 @@ import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 
 import {  examinerReducer } from './examiner';
 import { testCentreReducer } from './test-centre';
-import { testSlotsAttributesReducer} from './test-slot-attributes';
-import { candidateReducer} from './candidate';
+import { testSlotsAttributesReducer } from './test-slot-attributes';
+import { candidateReducer } from './candidate';
 import { applicationReferenceReducer } from './application-reference';
 
 export const initialState: JournalData = {

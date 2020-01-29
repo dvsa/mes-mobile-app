@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { CategoryCode, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-be';
 import { getVehicleChecks } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { map } from 'rxjs/operators';

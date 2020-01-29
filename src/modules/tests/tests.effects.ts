@@ -50,7 +50,7 @@ import { version } from '../../environment/test-schema-version';
 import { createPopulateCandidateDetailsAction } from './journal-data/common/candidate/candidate.action-creator';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateVehicleDimensions } from './vehicle-details/common/vehicle-details.actions';
-import { InitializeVehicleChecks } from './test-data/cat-c';
+import { InitializeVehicleChecks } from './test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 
 @Injectable()
 export class TestsEffects {

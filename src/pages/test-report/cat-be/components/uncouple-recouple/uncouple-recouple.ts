@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
-import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-b';
 import { getTestReportState } from '../../../test-report.reducer';
 import { get } from 'lodash';
 import { ToggleDangerousFaultMode, ToggleRemoveFaultMode, ToggleSeriousFaultMode } from '../../../test-report.actions';

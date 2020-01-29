@@ -31,7 +31,7 @@ import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text'
 import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../shared/constants/legal-requirements/legal-requirements.constants';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
-import { getTestData } from '../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../modules/tests/test-data/cat-b';
 import { getEco, getTestRequirements } from '../../modules/tests/test-data/common/test-data.selector';
 import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/common';
 import * as uncoupleRecoupleActions

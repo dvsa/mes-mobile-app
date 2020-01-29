@@ -65,7 +65,7 @@ import {
   getEco,
   getEcoFaultText,
 } from '../../../modules/tests/test-data/common/test-data.selector';
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-be';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';

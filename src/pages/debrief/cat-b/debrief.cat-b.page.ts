@@ -7,7 +7,7 @@ import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.sel
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-b';
 import {
   getETA,
   getEco,

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../../modules/tests/test-data/cat-b';
 import { ToggleETA } from '../../../../modules/tests/test-data/common/eta/eta.actions';
 import { getETA, hasExaminerTakenAction } from '../../../../modules/tests/test-data/common/test-data.selector';
 import { ExaminerActions } from '../../../../modules/tests/test-data/test-data.constants';

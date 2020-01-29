@@ -1,11 +1,11 @@
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 
-import { 
+import {
   examinerReducer,
   testCentreReducer,
   testSlotsAttributesReducer,
-  applicationReferenceReducer 
+  applicationReferenceReducer,
 } from '../common';
 import { candidateCatCReducer } from './candidate/candidate.cat-c.reducer';
 

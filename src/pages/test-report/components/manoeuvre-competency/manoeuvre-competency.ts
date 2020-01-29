@@ -8,7 +8,7 @@ import {
   RemoveManoeuvreFault,
 } from '../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../../modules/tests/test-data/cat-b';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getManoeuvres } from '../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTestReportState } from '../../test-report.reducer';

@@ -1,11 +1,11 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 
-import { 
-  applicationReferenceReducer, 
+import {
+  applicationReferenceReducer,
   testSlotsAttributesReducer,
   testCentreReducer,
-  examinerReducer
+  examinerReducer,
 } from '../common';
 import { candidateCatBEReducer } from './candidate/candidate.cat-be.reducer';
 

@@ -34,7 +34,7 @@ import {
 } from '../../../modules/tests/test-data/test-data.constants';
 
 // TODO - PREP-AMOD2: Use cat a mod2 reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-be';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';

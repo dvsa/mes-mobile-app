@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../../modules/tests/test-data/cat-b';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { FaultCountProvider } from '../../../../providers/fault-count/fault-count';

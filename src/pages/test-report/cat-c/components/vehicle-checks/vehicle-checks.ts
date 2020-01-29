@@ -5,7 +5,7 @@ import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { StoreModel } from '../../../../../shared/models/store.model';
 
 // TODO: MES-4287 Import cat c reducer
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-be';
 import { map } from 'rxjs/operators';
 
 // TODO: MES-4287 Import cat c selectors

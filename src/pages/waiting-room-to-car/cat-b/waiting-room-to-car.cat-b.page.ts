@@ -70,7 +70,7 @@ import {
   hasEyesightTestGotSeriousFault,
   hasEyesightTestBeenCompleted,
 } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-b';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_B } from '../../page-names.constants';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';

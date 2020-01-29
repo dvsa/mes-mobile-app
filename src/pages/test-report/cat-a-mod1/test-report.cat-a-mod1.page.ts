@@ -31,7 +31,7 @@ import {
   Competencies,
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
-import { getTestData } from '../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-a-mod1';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';

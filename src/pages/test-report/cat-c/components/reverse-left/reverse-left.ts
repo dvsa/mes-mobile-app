@@ -7,7 +7,7 @@ import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 
 // TODO: MES-4287  Import cat c reducer
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-be';
 
 // TODO: MES-4287 Import cat c selector
 import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';

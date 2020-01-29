@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-b';
 import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
