@@ -6,6 +6,7 @@ import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.re
 import { vehicleChecksCatAMod2Reducer } from './vehicle-checks/vehicle-checks.cat-a-mod2.reducer';
 import { ecoReducer } from '../common/eco/eco.reducer';
 import { etaReducer } from '../common/eta/eta.reducer';
+import { eyesightTestReducer } from '../common/eyesight-test/eyesight-test.reducer';
 
 export const initialState: TestData = {
   dangerousFaults: {},
@@ -17,6 +18,7 @@ export const initialState: TestData = {
     safetyQuestions: [],
     balanceQuestions: [],
   },
+  eyesightTest: {},
 };
 
 export function testDataCatAMod2Reducer(
@@ -30,6 +32,7 @@ export function testDataCatAMod2Reducer(
     eco: ecoReducer,
     ETA: etaReducer,
     safetyAndBalanceQuestions: vehicleChecksCatAMod2Reducer,
+    eyesightTest: eyesightTestReducer,
   })(state as Required<TestData>, action);
 }
 

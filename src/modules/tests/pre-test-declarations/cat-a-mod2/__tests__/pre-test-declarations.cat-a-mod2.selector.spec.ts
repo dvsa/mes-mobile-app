@@ -3,7 +3,7 @@ import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/AM2';
 
 describe('PreTestDeclarations selector', () => {
   const state: PreTestDeclarations = {
-    mod1CertificateNumber: '1234567',
+    DL196CBTCertNumber: '1234567',
     insuranceDeclarationAccepted: true,
     residencyDeclarationAccepted: false,
     preTestSignature: 'sig',
