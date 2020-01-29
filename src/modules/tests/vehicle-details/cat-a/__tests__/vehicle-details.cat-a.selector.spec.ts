@@ -1,7 +1,7 @@
 import { VehicleDetails } from '@dvsa/mes-test-schema/categories/AM2';
-import { getSchoolBike } from '../vehicle-details.cat-a-mod2.selector';
+import { getSchoolBike } from '../vehicle-details.cat-a.selector';
 
-describe('vehicle details CAT A Mod 2 selector', () => {
+describe('vehicle details CAT A selector', () => {
   const state: VehicleDetails = {
     schoolBike: true,
   };

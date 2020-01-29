@@ -14,7 +14,7 @@ import { rekeyReasonReducer } from './rekey-reason/rekey-reason.reducer';
 import { examinerBookedReducer } from './examiner-booked/examiner-booked.reducer';
 import { examinerConductedReducer } from './examiner-conducted/examiner-conducted.reducer';
 import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
-import { changeMarkerReducer } from './change-marker/change-marker';
+import { changeMarkerReducer } from './change-marker/change-marker.reducer';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatCReducer } from './journal-data/cat-c';
 import { testDataCatCReducer } from './test-data/cat-c';

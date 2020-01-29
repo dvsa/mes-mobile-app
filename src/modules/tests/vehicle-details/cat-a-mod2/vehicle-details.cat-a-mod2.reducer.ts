@@ -1,5 +1,5 @@
 import * as vehicleDetailsActions from '../common/vehicle-details.actions';
-import * as vehicleDetailsCatAMod2Actions from './vehicle-details.cat-a-mod2.actions';
+import * as vehicleDetailsCatAMod2Actions from '../cat-a/vehicle-details.cat-a.actions';
 import { VehicleDetails } from '@dvsa/mes-test-schema/categories/AM2';
 import { createFeatureSelector } from '@ngrx/store';
 
@@ -37,4 +37,4 @@ export const vehicleDetailsCatAMod2Reducer = (
   }
 };
 
-export const getVehicleDetails = createFeatureSelector<VehicleDetails>('vehicleDetails');
+export const getVehicleDetailsCatAMod2 = createFeatureSelector<VehicleDetails>('vehicleDetails');

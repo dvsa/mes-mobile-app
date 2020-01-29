@@ -1,4 +1,4 @@
-import { changeMarkerReducer } from '../change-marker';
+import { changeMarkerReducer } from '../change-marker.reducer';
 import { SetChangeMarker } from '../change-marker.actions';
 
 describe('changeMarkerReducer', () => {
