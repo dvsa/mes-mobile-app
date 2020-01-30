@@ -8,7 +8,7 @@ import { TestStatus } from '../../../modules/tests/test-status/test-status.model
 import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
 import { startsWith, isEmpty } from 'lodash';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
-import { JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE, CAT_C, CAT_A_MOD1, CAT_A_MOD2 }
+import { JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE, CAT_C, CAT_A_MOD1, CAT_A_MOD2, CAT_D }
   from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
@@ -292,6 +292,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.EUA2M2:
       case TestCategory.EUAMM2:
         return CAT_A_MOD2.WAITING_ROOM_PAGE;
+      case TestCategory.D:
+      case TestCategory.D1:
+      case TestCategory.D1E:
+      case TestCategory.DE:
+        return CAT_D.WAITING_ROOM_PAGE;
     }
   }
 
@@ -316,6 +321,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.EUA2M2:
       case TestCategory.EUAMM2:
         return CAT_A_MOD2.PASS_FINALISATION_PAGE;
+      case TestCategory.D:
+      case TestCategory.D1:
+      case TestCategory.D1E:
+      case TestCategory.DE:
+        return CAT_D.PASS_FINALISATION_PAGE;
     }
   }
 
@@ -340,6 +350,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.EUA2M2:
       case TestCategory.EUAMM2:
         return CAT_A_MOD2.NON_PASS_FINALISATION_PAGE;
+      case TestCategory.D:
+      case TestCategory.D1:
+      case TestCategory.D1E:
+      case TestCategory.DE:
+        return CAT_D.NON_PASS_FINALISATION_PAGE;
     }
   }
 
@@ -364,6 +379,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.EUA2M2:
       case TestCategory.EUAMM2:
         return CAT_A_MOD2.OFFICE_PAGE;
+      case TestCategory.D:
+      case TestCategory.D1:
+      case TestCategory.D1E:
+      case TestCategory.DE:
+        return CAT_D.OFFICE_PAGE;
     }
   }
 }

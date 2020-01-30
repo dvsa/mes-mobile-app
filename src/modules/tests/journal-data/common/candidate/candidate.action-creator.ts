@@ -28,6 +28,10 @@ export const createPopulateCandidateDetailsAction = (testCategory: string, booki
     case TestCategory.CE:
     case TestCategory.C1:
     case TestCategory.C:
+    case TestCategory.D:
+    case TestCategory.D1:
+    case TestCategory.D1E:
+    case TestCategory.DE:
       return new PopulateCandidateDetailsCatC({
         ...booking.candidate,
         businessAddress: get(booking, 'business.businessAddress'),
