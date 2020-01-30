@@ -1,19 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { StoreModel } from '../../../../../shared/models/store.model';
-
-// TODO: MES-4287 Import cat c reducer
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { map } from 'rxjs/operators';
-
-// TODO: MES-4287 Import cat c selectors
-import { getVehicleChecksCatBE }
-  from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
+import { getVehicleChecksCatC }
+  from '../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { Observable } from 'rxjs/Observable';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { TestDataByCategoryProvider } from '../../../../../providers/test-data-by-category/test-data-by-category';
 
 interface ComponentState {
   vehicleChecksDrivingFaultCount$: Observable<number>;
@@ -25,11 +21,17 @@ interface ComponentState {
   templateUrl: 'vehicle-checks.html',
 })
 export class VehicleChecksComponent implements OnInit {
+
+  @Input()
+  testCategory: TestCategory;
+
   componentState: ComponentState;
 
   constructor(
     private store$: Store<StoreModel>,
-    public faultCountProvider: FaultCountProvider) {}
+    public faultCountProvider: FaultCountProvider,
+    private testDataByCategory: TestDataByCategoryProvider,
+  ) {}
 
   ngOnInit(): void {
     const currentTest$ = this.store$.pipe(
@@ -39,29 +41,21 @@ export class VehicleChecksComponent implements OnInit {
 
     this.componentState = {
       vehicleChecksDrivingFaultCount$: currentTest$.pipe(
-        select(getTestData),
-
-        // TODO: MES-4287 use cat C function
-        select(getVehicleChecksCatBE),
+        select(this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)),
+        select(getVehicleChecksCatC),
         map((vehicleChecks) => {
-
-          // TODO: MES-4287 use cat c function
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE , vehicleChecks).drivingFaults;
+          return this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory, vehicleChecks).drivingFaults;
         }),
       ),
       vehicleChecksSeriousFaultCount$: currentTest$.pipe(
-        select(getTestData),
-
-        // TODO: MES-4287 Use cat c function
-        select(getVehicleChecksCatBE),
+        select(this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)),
+        select(getVehicleChecksCatC),
         map((vehicleChecks) => {
-
-          // TODO: MES-4287 use cat c function
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks).seriousFaults;
+          return this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory, vehicleChecks).seriousFaults;
         }),
       ),
     };
 
+    console.log('TEST CATEGORY', this.testCategory);
   }
-
 }

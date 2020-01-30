@@ -12,6 +12,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { DrivingFaultsBadgeComponent }
 from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
+import { TestDataByCategoryProvider } from '../../../../../../providers/test-data-by-category/test-data-by-category';
 import { VehicleChecksScore } from '../../../../../../shared/models/vehicle-checks-score.model';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
@@ -37,6 +38,7 @@ describe('VehicleChecksComponent', () => {
       ],
       providers: [
         FaultCountProvider,
+        TestDataByCategoryProvider,
       ],
     });
   });
@@ -45,8 +47,7 @@ describe('VehicleChecksComponent', () => {
     fixture = TestBed.createComponent(VehicleChecksComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
-    // TODO: MES-4287 Use Category C
-    store$.dispatch(new StartTest(105, TestCategory.BE));
+    store$.dispatch(new StartTest(105, TestCategory.C));
   }));
 
   describe('Class', () => {
@@ -56,7 +57,6 @@ describe('VehicleChecksComponent', () => {
     };
 
     beforeEach(() => {
-      // TODO: MES-4287 Use Category C
       spyOn(component.faultCountProvider, 'getVehicleChecksFaultCount').and.returnValue(vehicleChecksScore);
     });
 
