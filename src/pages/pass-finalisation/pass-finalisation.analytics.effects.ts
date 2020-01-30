@@ -20,13 +20,13 @@ import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
-import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
-import {
-  CODE_78_PRESENT,
-  Code78Present,
-  Code78NotPresent,
-  CODE_78_NOT_PRESENT,
-} from '../../modules/tests/pass-completion/pass-completion.actions';
+import { AnalyticRecorded, AnalyticNotRecorded } from '../../providers/analytics/analytics.actions';
+import * as passCompletionActions from '../../modules/tests/pass-completion/pass-completion.actions';
+import * as testSummaryActions from '../../modules/tests/test-summary/test-summary.actions';
+import * as vehicleDetailsActions from '../../modules/tests/vehicle-details/common/vehicle-details.actions';
+import { getActivityCode } from '../../modules/tests/activity-code/activity-code.reducer';
+import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 
 @Injectable()
 export class PassFinalisationAnalyticsEffects {
@@ -77,7 +77,7 @@ export class PassFinalisationAnalyticsEffects {
 
   @Effect()
   code78PresentEffect$ = this.actions$.pipe(
-    ofType(CODE_78_PRESENT),
+    ofType(passCompletionActions.CODE_78_PRESENT),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -85,7 +85,7 @@ export class PassFinalisationAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [Code78Present, TestsModel]) => {
+    concatMap(([action, tests]: [passCompletionActions.Code78Present, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_CODE_78, tests),
@@ -97,7 +97,7 @@ export class PassFinalisationAnalyticsEffects {
 
   @Effect()
   code78NotPresentEffect$ = this.actions$.pipe(
-    ofType(CODE_78_NOT_PRESENT),
+    ofType(passCompletionActions.CODE_78_NOT_PRESENT),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -105,10 +105,119 @@ export class PassFinalisationAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [Code78NotPresent, TestsModel]) => {
+    concatMap(([action, tests]: [passCompletionActions.Code78NotPresent, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_CODE_78, tests),
+        'No',
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  provisionalLicenseNotReceived$ = this.actions$.pipe(
+    ofType(passCompletionActions.PROVISIONAL_LICENSE_NOT_RECEIVED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [passCompletionActions.ProvisionalLicenseNotReceived, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LICENSE_RECEIVED, tests),
+        'No',
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  provisionalLicenseReceived$ = this.actions$.pipe(
+    ofType(passCompletionActions.PROVISIONAL_LICENSE_RECEIVED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [passCompletionActions.ProvisionalLicenseReceived, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LICENSE_RECEIVED, tests),
+        'Yes',
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  transmissionChanged$ = this.actions$.pipe(
+    ofType(vehicleDetailsActions.GEARBOX_CATEGORY_CHANGED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getActivityCode),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, activityCode]:
+        [vehicleDetailsActions.GearboxCategoryChanged, TestsModel, ActivityCode]) => {
+      if (activityCode != null) {
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+          formatAnalyticsText(AnalyticsEvents.GEARBOX_CATEGORY_CHANGED, tests),
+          action.gearboxCategory,
+        );
+        return of(new AnalyticRecorded());
+      }
+      return of(new AnalyticNotRecorded());
+    }),
+  );
+
+  @Effect()
+  d255Yes$ = this.actions$.pipe(
+    ofType(testSummaryActions.D255_YES),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [testSummaryActions.D255Yes, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+        formatAnalyticsText(AnalyticsEvents.D255, tests),
+        'Yes',
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  d255No$ = this.actions$.pipe(
+    ofType(testSummaryActions.D255_NO),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [testSummaryActions.D255No, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+        formatAnalyticsText(AnalyticsEvents.D255, tests),
         'No',
       );
       return of(new AnalyticRecorded());

@@ -1,4 +1,4 @@
-import * as vehicleDetailsActions from '../cat-a-mod1/vehicle-details.cat-a-mod1.actions';
+import * as vehicleDetailsActions from '../common/vehicle-details.actions';
 import { VehicleDetails } from '@dvsa/mes-test-schema/categories/AM1';
 import { createFeatureSelector } from '@ngrx/store';
 

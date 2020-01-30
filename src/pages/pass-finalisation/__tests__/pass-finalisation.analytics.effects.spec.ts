@@ -7,6 +7,8 @@ import * as passFinalisationActions from '../pass-finalisation.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as passCompletionActions from '../../../modules/tests/pass-completion/pass-completion.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
+import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
+import * as vehicleDetailsActions from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import {
@@ -18,11 +20,14 @@ import {
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/common/candidate/candidate.actions';
-import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
+import { AnalyticRecorded, AnalyticNotRecorded } from '../../../providers/analytics/analytics.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { TransmissionType } from '../../../shared/models/transmission-type';
 
 describe('Pass Finalisation Analytics Effects', () => {
 
@@ -122,7 +127,6 @@ describe('Pass Finalisation Analytics Effects', () => {
       });
     });
   });
-
   describe('code78PresentEffect', () => {
     it('should call logEvent', (done) => {
       // ARRANGE
@@ -143,7 +147,6 @@ describe('Pass Finalisation Analytics Effects', () => {
       });
     });
   });
-
   describe('code78NotPresentEffect', () => {
     it('should call logEvent', (done) => {
       // ARRANGE
@@ -158,6 +161,139 @@ describe('Pass Finalisation Analytics Effects', () => {
           .toHaveBeenCalledWith(
             AnalyticsEventCategories.POST_TEST,
             AnalyticsEvents.TOGGLE_CODE_78,
+            'No',
+          );
+        done();
+      });
+    });
+  });
+  describe('provisionalLicenseNotReceived', () => {
+    it('should call logEvent', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new passCompletionActions.ProvisionalLicenseNotReceived());
+      // ASSERT
+      effects.provisionalLicenseNotReceived$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.TOGGLE_LICENSE_RECEIVED,
+            'No',
+          );
+        done();
+      });
+    });
+  });
+  describe('provisionalLicenseReceived', () => {
+    it('should call logEvent', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new passCompletionActions.ProvisionalLicenseReceived());
+      // ASSERT
+      effects.provisionalLicenseReceived$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.TOGGLE_LICENSE_RECEIVED,
+            'Yes',
+          );
+        done();
+      });
+    });
+  });
+  describe('transmissionChanged', () => {
+    it('should call logEvent with Manual if Gearbox Category is Manual', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new SetActivityCode(ActivityCodes.PASS));
+      // ACT
+      actions$.next(new vehicleDetailsActions.GearboxCategoryChanged(TransmissionType.Manual));
+      // ASSERT
+      effects.transmissionChanged$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.GEARBOX_CATEGORY_CHANGED,
+            TransmissionType.Manual,
+          );
+        done();
+      });
+    });
+    it('should call logEvent with Automatic if Gearbox Category is Automatic', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new SetActivityCode(ActivityCodes.PASS));
+      // ACT
+      actions$.next(new vehicleDetailsActions.GearboxCategoryChanged(TransmissionType.Automatic));
+      // ASSERT
+      effects.transmissionChanged$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.GEARBOX_CATEGORY_CHANGED,
+            TransmissionType.Automatic,
+          );
+        done();
+      });
+    });
+    it('should call not call logEvent if there is no activty code', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new vehicleDetailsActions.GearboxCategoryChanged(TransmissionType.Manual));
+      // ASSERT
+      effects.transmissionChanged$.subscribe((result) => {
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        done();
+      });
+    });
+  });
+  describe('d255Yes', () => {
+    it('should call logEvent', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new testSummaryActions.D255Yes());
+      // ASSERT
+      effects.d255Yes$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.D255,
+            'Yes',
+          );
+        done();
+      });
+    });
+  });
+  describe('d255No', () => {
+    it('should call logEvent', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new testSummaryActions.D255No());
+      // ASSERT
+      effects.d255No$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.D255,
             'No',
           );
         done();
