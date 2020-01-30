@@ -18,13 +18,13 @@ describe('TestDataByCategoryProvider', () => {
 
     it('should throw an error when there is no matching test category', () => {
       expect(() => {
-        provider.getTestDataByCategoryCode('z' as TestCategory)
+        provider.getTestDataByCategoryCode('z' as TestCategory);
       }).toThrowError('Error getting test category');
     });
 
     it('should throw an error when test category is undefined', () => {
       expect(() => {
-        provider.getTestDataByCategoryCode(undefined)
+        provider.getTestDataByCategoryCode(undefined);
       }).toThrowError('Error getting test category');
     });
   });
