@@ -1,5 +1,5 @@
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalEvent } from './journal-early-start-modal.constants';
 import { SlotDetail } from '@dvsa/mes-journal-schema';
 import { DateTime } from '../../../../shared/helpers/date-time';
@@ -9,10 +9,17 @@ import { DateTime } from '../../../../shared/helpers/date-time';
   selector: 'journal-early-start-modal',
   templateUrl: 'journal-early-start-modal.html',
 })
-export class JournalEarlyStartModal {
+export class JournalEarlyStartModal implements OnInit {
   private slotData: SlotDetail;
-  constructor(private viewCtrl: ViewController, params: NavParams) {
-    this.slotData = params.get('slotData');
+  constructor(private viewCtrl: ViewController, private params: NavParams) {
+  }
+
+  ngOnInit(): void {
+    this.slotData = this.params.get('slotData');
+  }
+
+  getSlotData() {
+    return this.slotData;
   }
 
   onCancel() {

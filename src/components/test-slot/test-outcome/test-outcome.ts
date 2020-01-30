@@ -260,7 +260,6 @@ export class TestOutcomeComponent implements OnInit {
 
   shouldDisplayCheckStartModal(): boolean {
     const retVal = new DateTime().compareDuration(this.slotDetail.start, Duration.MINUTE) > 5;
-    console.log(retVal);
     return retVal;
   }
 
