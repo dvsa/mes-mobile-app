@@ -13,7 +13,8 @@ import { QuestionProvider } from '../../../../../providers/question/question';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import * as safetyAndBalance from '../../../../../modules/tests/test-data/cat-a-mod2';
+import * as safetyAndBalance from
+'../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.selector';
 import {
   NUMBER_OF_BALANCE_QUESTIONS,
 } from '../../../../../shared/constants/balance-questions.cat-a-mod2.constants';
@@ -26,6 +27,14 @@ import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
 import * as vehicleChecksModalActions from './vehicle-checks-modal.cat-a-mod2.actions';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
+import {
+  SafetyQuestionOutcomeChanged,
+  SafetyQuestionSelected,
+  BalanceQuestionSelected,
+  BalanceQuestionOutcomeChanged,
+} from
+'../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.actions';
 
 interface SafetyAndBalanceModalState {
   candidateName$: Observable<string>;
@@ -78,17 +87,17 @@ export class VehicleChecksCatAMod2Modal {
         select(getUntitledCandidateName),
       ),
       safetyQuestions$: currentTest$.pipe(
-        select(safetyAndBalance.getTestData),
+        select(getTestData),
         select(safetyAndBalance.getSafetyAndBalanceQuestions),
         select(safetyAndBalance.getSelectedSafetyQuestions),
       ),
       balanceQuestions$: currentTest$.pipe(
-        select(safetyAndBalance.getTestData),
+        select(getTestData),
         select(safetyAndBalance.getSafetyAndBalanceQuestions),
         select(safetyAndBalance.getSelectedBalanceQuestions),
       ),
       safetyAndBalanceQuestionsScore$: currentTest$.pipe(
-        select(safetyAndBalance.getTestData),
+        select(getTestData),
         select(safetyAndBalance.getSafetyAndBalanceQuestions),
         map((safetyAndBalanceQuestions) => {
           return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.EUAM2, safetyAndBalanceQuestions);
@@ -122,19 +131,19 @@ export class VehicleChecksCatAMod2Modal {
   }
 
   safetyQuestionChanged(result: QuestionResult, index: number): void {
-    this.store$.dispatch(new safetyAndBalance.SafetyQuestionSelected(result, index));
+    this.store$.dispatch(new SafetyQuestionSelected(result, index));
   }
 
   safetyQuestionOutcomeChanged(result: QuestionOutcome, index: number): void {
-    this.store$.dispatch(new safetyAndBalance.SafetyQuestionOutcomeChanged(result, index));
+    this.store$.dispatch(new SafetyQuestionOutcomeChanged(result, index));
   }
 
   balanceQuestionChanged(result: QuestionResult, index: number): void {
-    this.store$.dispatch(new safetyAndBalance.BalanceQuestionSelected(result, index));
+    this.store$.dispatch(new BalanceQuestionSelected(result, index));
   }
 
   balanceQuestionOutcomeChanged(result: QuestionOutcome, index: number): void {
-    this.store$.dispatch(new safetyAndBalance.BalanceQuestionOutcomeChanged(result, index));
+    this.store$.dispatch(new BalanceQuestionOutcomeChanged(result, index));
   }
 
   shouldDisplayBanner = (): boolean => {

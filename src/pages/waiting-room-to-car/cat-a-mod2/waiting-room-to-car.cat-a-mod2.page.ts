@@ -51,13 +51,13 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { VehicleChecksCatAMod2Component } from './components/vehicle-checks/vehicle-checks';
-import {
-  getEyesightTest,
-  getSafetyAndBalanceQuestions,
-  getTestData,
-} from '../../../modules/tests/test-data/cat-a-mod2';
 import { VehicleRegistrationChanged, GearboxCategoryChanged } from
 '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
+import { getEyesightTest }
+from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
+import { getSafetyAndBalanceQuestions } from
+'../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.selector';
+import { getTestData } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
