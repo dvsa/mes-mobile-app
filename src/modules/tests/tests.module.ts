@@ -12,6 +12,7 @@ import { ExaminerBookedEffects } from './examiner-booked/examiner-booked.effects
 import { ExaminerConductedEffects } from './examiner-conducted/examiner-conducted.effects';
 import { FaultCountProvider } from '../../providers/fault-count/fault-count';
 import { TestStatusAnalyticsEffects } from './test-status/test-status.analytics.effects';
+import { TestDataByCategoryProvider } from '../../providers/test-data-by-category/test-data-by-category';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { TestStatusAnalyticsEffects } from './test-status/test-status.analytics.
     FaultCountProvider,
     NavigationProvider,
     NavigationStateProvider,
+    TestDataByCategoryProvider,
   ],
 })
 export class TestsModule {}
