@@ -61,6 +61,7 @@ describe('VehicleChecksComponent', () => {
     });
 
     it('should set the vehicle checks driving fault count', (done: DoneFn) => {
+      component.testCategory = TestCategory.C;
       component.ngOnInit();
       component.componentState.vehicleChecksDrivingFaultCount$.subscribe((result) => {
         expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
@@ -69,6 +70,7 @@ describe('VehicleChecksComponent', () => {
       });
     });
     it('should set the vehicle checks serious fault count', (done: DoneFn) => {
+      component.testCategory = TestCategory.C;
       component.ngOnInit();
       component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
         expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
@@ -81,6 +83,7 @@ describe('VehicleChecksComponent', () => {
   describe('DOM', () => {
 
     it('should pass the number of VC driving faults to the driving faults component', () => {
+      component.testCategory = TestCategory.C;
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
@@ -90,6 +93,7 @@ describe('VehicleChecksComponent', () => {
     });
 
     it('should pass true to the serious faults badge if there are serious VC faults', () => {
+      component.testCategory = TestCategory.C;
       fixture.detectChanges();
       const seriousFaultsBadge = fixture.debugElement.query(By.css('serious-fault-badge'))
         .componentInstance as SeriousFaultBadgeComponent;
