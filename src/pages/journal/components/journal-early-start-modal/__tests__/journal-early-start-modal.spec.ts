@@ -4,14 +4,15 @@ import { AppModule } from '../../../../../app/app.module';
 import { ViewControllerMock } from 'ionic-mocks';
 import { IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
-import { By } from '@angular/platform-browser';
 import { JournalEarlyStartModalMock } from '../__mocks__/journal-early-start-modal.mock';
 import { NavParamsMock } from '../__mocks__/nav-params.mock';
+import { By } from '@angular/platform-browser';
 
-fdescribe('JournalEarlyStartModal', () => {
+describe('JournalEarlyStartModal', () => {
   let modalFixture: ComponentFixture<JournalEarlyStartModal>;
   let modalComponent: JournalEarlyStartModal;
   const mockFile: JournalEarlyStartModalMock = new JournalEarlyStartModalMock();
+  const navMock: NavParamsMock = new NavParamsMock();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,34 +26,39 @@ fdescribe('JournalEarlyStartModal', () => {
       ],
       providers: [
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() } ,
-        { provide: NavParams, useFactory: () => NavParamsMock },
+        { provide: NavParams, useFactory: () => navMock },
       ],
-    }).compileComponents();
-    spyOn(NavParamsMock, 'get').and.callFake(mockFile.mockSlotDetail);
-    modalFixture = TestBed.createComponent(JournalEarlyStartModal);
-    modalComponent = modalFixture.componentInstance;
-    modalComponent.onCancel = () => {
-    };
-    modalComponent.onStart = () => {
-    };
+    }).compileComponents().then(() => {
+      const mockValue = mockFile.mockSlotDetail();
+      spyOn(navMock, 'get').and.returnValue(mockValue);
+      modalFixture = TestBed.createComponent(JournalEarlyStartModal);
+      modalComponent = modalFixture.componentInstance;
+      modalComponent.onCancel = () => {
+      };
+      modalComponent.onStart = () => {
+      };
+    });
   }));
-
-  describe('DOM', () => {
-    it('should call onStart when the Start test button is clicked', () => {
-      modalFixture.detectChanges();
-      spyOn(modalComponent, 'onStart');
-      const button = modalFixture.debugElement.query(By.css('button.early-start-start-test-button'));
-      button.triggerEventHandler('click', null);
-      modalFixture.detectChanges();
-      expect(modalComponent.onStart).toHaveBeenCalled();
-    });
-    it('should call onCancel when the Cancel button is clicked', () => {
-      modalFixture.detectChanges();
-      spyOn(modalComponent, 'onCancel');
-      const button = modalFixture.debugElement.query(By.css('button.early-start-cancel-button'));
-      button.triggerEventHandler('click', null);
-      modalFixture.detectChanges();
-      expect(modalComponent.onCancel).toHaveBeenCalled();
-    });
+  it('should return slot details from nav param', () => {
+    modalFixture.detectChanges();
+    const slotData = modalComponent.getSlotData();
+    const mockValue = mockFile.mockSlotDetail();
+    expect(slotData).toEqual(mockValue);
+  });
+  it('should call onStart when the Start test button is clicked', () => {
+    modalFixture.detectChanges();
+    spyOn(modalComponent, 'onStart');
+    const button = modalFixture.debugElement.query(By.css('.start-test-button'));
+    button.triggerEventHandler('click', null);
+    modalFixture.detectChanges();
+    expect(modalComponent.onStart).toHaveBeenCalled();
+  });
+  it('should call onCancel when the Cancel button is clicked', () => {
+    modalFixture.detectChanges();
+    spyOn(modalComponent, 'onCancel');
+    const button = modalFixture.debugElement.query(By.css('.cancel-button'));
+    button.triggerEventHandler('click', null);
+    modalFixture.detectChanges();
+    expect(modalComponent.onCancel).toHaveBeenCalled();
   });
 });

@@ -91,6 +91,32 @@ describe('Test Outcome', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new StartTest(component.slotDetail.slotId, component.category));
       });
     });
+    describe('earlyStart', () => {
+      it('should create and present the early start modal', () => {
+        component.slotDetail = testSlotDetail;
+        const dateTime = new DateTime();
+        dateTime.add(8, Duration.MINUTE);
+        component.slotDetail.start = dateTime.toString();
+        component.testStatus = TestStatus.Booked;
+        spyOn(component, 'displayCheckStartModal');
+        fixture.detectChanges();
+        const startButton = fixture.debugElement.query(By.css('.mes-primary-button'));
+        startButton.triggerEventHandler('click', null);
+        expect(component.displayCheckStartModal).toHaveBeenCalled();
+      });
+      it('should not create and present the early start modal', () => {
+        component.slotDetail = testSlotDetail;
+        const dateTime = new DateTime();
+        dateTime.add(2, Duration.MINUTE);
+        component.slotDetail.start = dateTime.toString();
+        component.testStatus = TestStatus.Booked;
+        spyOn(component, 'displayCheckStartModal');
+        fixture.detectChanges();
+        const startButton = fixture.debugElement.query(By.css('.mes-primary-button'));
+        startButton.triggerEventHandler('click', null);
+        expect(component.displayCheckStartModal).not.toHaveBeenCalled();
+      });
+    });
 
     describe('writeUpTest', () => {
       it('should dispatch an ActivateTest action and navigate to the Office Cat B page', () => {
