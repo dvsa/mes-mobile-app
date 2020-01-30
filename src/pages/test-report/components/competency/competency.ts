@@ -251,7 +251,7 @@ export class CompetencyComponent {
   }
 
   addSingleFault = (wasPress: boolean): void => {
-    if (this.competencyHasFault(wasPress)) {
+    if (this.competencyHasFault()) {
       return;
     }
 
@@ -276,15 +276,19 @@ export class CompetencyComponent {
     }
   }
 
-  competencyHasFault = (wasPress: boolean): boolean => {
-    return this.hasDangerousFault || this.hasSeriousFault || !this.canAddSingleDrivingFault(wasPress);
+  competencyHasFault = (): boolean => {
+    return this.hasDangerousFault || this.hasSeriousFault || this.hasDrivingFault();
   }
 
-  canAddSingleDrivingFault = (wasPress: boolean): boolean => {
-    return wasPress && (this.faultCount === undefined || this.faultCount === 0);
+  canAddSingleDrivingFault = (wasPress: boolean = false): boolean => {
+    return wasPress && !this.hasDrivingFault();
   }
 
   shouldDisableRippleForOneFaultLimit = (): boolean => {
     return this.faultCount > 0 && this.oneFaultLimit;
+  }
+
+  hasDrivingFault = (): boolean => {
+    return this.faultCount !== undefined;
   }
 }
