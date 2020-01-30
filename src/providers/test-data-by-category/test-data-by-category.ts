@@ -8,13 +8,16 @@ import { getTestData as getTestDataC1E } from '../../modules/tests/test-data/cat
 
 @Injectable()
 export class TestDataByCategoryProvider {
+
+  static getTestDataByCategoryCodeErrMsg: string = 'Error getting test category';
+
   public getTestDataByCategoryCode(category: CategoryCode) {
     switch (category) {
       case TestCategory.C: return getTestDataC;
       case TestCategory.C1: return getTestDataC1;
       case TestCategory.CE: return getTestDataCE;
       case TestCategory.C1E: return getTestDataC1E;
-      default: return getTestDataC;
+      default: throw new Error(TestDataByCategoryProvider.getTestDataByCategoryCodeErrMsg);
     }
   }
 }
