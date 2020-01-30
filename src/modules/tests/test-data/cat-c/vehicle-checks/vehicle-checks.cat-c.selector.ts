@@ -11,7 +11,7 @@ export type CatCVehicleChecks =
   | CatC1UniqueTypes.VehicleChecks
   | CatCEUniqueTypes.VehicleChecks
   | CatC1EUniqueTypes.VehicleChecks;
-  
+
 export const getSelectedShowMeQuestions = (
   vehicleChecks: CatCVehicleChecks,
 ): QuestionResult[] => {

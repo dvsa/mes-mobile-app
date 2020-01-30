@@ -55,7 +55,5 @@ export class VehicleChecksComponent implements OnInit {
         }),
       ),
     };
-
-    console.log('TEST CATEGORY', this.testCategory);
   }
 }
