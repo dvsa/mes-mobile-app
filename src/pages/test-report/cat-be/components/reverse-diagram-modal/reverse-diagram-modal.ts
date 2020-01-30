@@ -15,6 +15,10 @@ import {
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { ReversingDistancesProvider } from '../../../../../providers/reversing-distances/reversing-distances';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import {
+  ReverseDiagramLengthChanged,
+  ReverseDiagramWidthChanged,
+} from '../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
 
 interface ReverseDiagramPageState {
   vehicleLength$: Observable<number>;
@@ -115,5 +119,15 @@ export class ReverseDiagramCatBEPage implements OnInit {
 
   closeModal(): void {
     this.onClose();
+  }
+
+  onLengthKeyup(vehicleLength: number) : void {
+    this.calculateDistanceLength(vehicleLength);
+    this.store$.dispatch(new ReverseDiagramLengthChanged());
+  }
+
+  onWidthKeyup(vehicleWidth: number) : void {
+    this.calculateDistanceWidth(vehicleWidth);
+    this.store$.dispatch(new ReverseDiagramWidthChanged());
   }
 }

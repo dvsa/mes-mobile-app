@@ -17,6 +17,10 @@ import {
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTestCategory } from '../../../../../modules/tests/category/category.reducer';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import {
+  ReverseDiagramLengthChanged,
+  ReverseDiagramWidthChanged,
+} from '../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
 
 interface ReverseDiagramPageState {
   vehicleLength$: Observable<number>;
@@ -125,5 +129,15 @@ export class ReverseDiagramCatCPage implements OnInit {
 
   closeModal(): void {
     this.onClose();
+  }
+
+  onLengthKeyup(vehicleLength: number) : void {
+    this.calculateReversingLengths(vehicleLength);
+    this.store$.dispatch(new ReverseDiagramLengthChanged());
+  }
+
+  onWidthKeyup(vehicleWidth: number) : void {
+    this.calculateReversingWidth(vehicleWidth);
+    this.store$.dispatch(new ReverseDiagramWidthChanged());
   }
 }

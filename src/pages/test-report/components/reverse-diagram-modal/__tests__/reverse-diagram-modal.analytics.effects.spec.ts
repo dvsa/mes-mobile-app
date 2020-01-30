@@ -155,4 +155,42 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
       });
     });
   });
+
+  describe('reverseDiagramLengthChanged', () => {
+    it('should call logEvent with the correct parameters', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new reverseDiagramModalActions.ReverseDiagramLengthChanged());
+      // ASSERT
+      effects.reverseDiagramLengthChanged$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REVERSE_DIAGRAM_LENGTH_CHANGED}`,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('reverseDiagramWidthChanged', () => {
+    it('should call logEvent with the correct parameters', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new reverseDiagramModalActions.ReverseDiagramWidthChanged());
+      // ASSERT
+      effects.reverseDiagramWidthChanged$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REVERSE_DIAGRAM_WIDTH_CHANGED}`,
+        );
+        done();
+      });
+    });
+  });
 });

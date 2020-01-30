@@ -30,7 +30,7 @@
                   <ion-col col-42>
                     <input type="number" step="0.01" id="vehicleLength" class="vehicle-length-input"
                     [value]="vehicleLength"
-                    (keyup)="calculateDistanceLength($event.target.value)">
+                    (keyup)="onLengthKeyup($event.target.value)">
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -42,7 +42,7 @@
                   <ion-col col-42>
                     <input type="number" step="0.01" id="vehicleWidth" class="vehicle-width-input"
                     [value]="vehicleWidth"
-                    (keyup)="calculateDistanceWidth($event.target.value)">
+                    (keyup)="onWidthKeyup($event.target.value)">
                   </ion-col>
                 </ion-row>
               </ion-col>
