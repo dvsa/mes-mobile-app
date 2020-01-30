@@ -1,8 +1,9 @@
 import * as passCompletionActions from './pass-completion.actions';
-import { PassCompletion } from '@dvsa/mes-test-schema/categories/common';
-import { createFeatureSelector } from '@ngrx/store';
 
-export const initialState: PassCompletion = {
+import { createFeatureSelector } from '@ngrx/store';
+import { PassCompletionUnion } from './pass-completion.constants';
+
+export const initialState: PassCompletionUnion = {
   passCertificateNumber: null,
   provisionalLicenceProvided: null,
 };
@@ -29,4 +30,4 @@ export const passCompletionReducer = (state = initialState, action: passCompleti
   }
 };
 
-export const getPassCompletion = createFeatureSelector<PassCompletion>('passCompletion');
+export const getPassCompletion = createFeatureSelector<PassCompletionUnion>('passCompletion');

@@ -1,8 +1,10 @@
-import { PassCompletion } from '@dvsa/mes-test-schema/categories/common';
+import { PassCompletionUnion } from './pass-completion.constants';
 
-export const getPassCertificateNumber = (passCompletion: PassCompletion) => passCompletion.passCertificateNumber;
+export const getPassCertificateNumber = (
+  passCompletion: PassCompletionUnion,
+  ) => passCompletion.passCertificateNumber;
 export const isProvisionalLicenseProvided =
-  (passCompletion: PassCompletion) => passCompletion.provisionalLicenceProvided;
+  (passCompletion: PassCompletionUnion) => passCompletion.provisionalLicenceProvided;
 export const isProvisionalLicenseNotProvided =
-  (passCompletion: PassCompletion) => passCompletion.provisionalLicenceProvided !== null
+  (passCompletion: PassCompletionUnion) => passCompletion.provisionalLicenceProvided !== null
   && !passCompletion.provisionalLicenceProvided;

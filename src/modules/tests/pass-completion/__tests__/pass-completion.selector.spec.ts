@@ -1,12 +1,12 @@
-import { PassCompletion } from '@dvsa/mes-test-schema/categories/common';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
   isProvisionalLicenseNotProvided,
 } from '../pass-completion.selector';
+import { PassCompletionUnion } from '../pass-completion.constants';
 
 describe('pass completion selector', () => {
-  const state: PassCompletion = {
+  const state: PassCompletionUnion = {
     provisionalLicenceProvided: true,
     passCertificateNumber: 'ABC123',
   };
