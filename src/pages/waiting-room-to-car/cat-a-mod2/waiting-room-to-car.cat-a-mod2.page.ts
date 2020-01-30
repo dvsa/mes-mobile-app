@@ -38,12 +38,14 @@ import { getUntitledCandidateName } from '../../../modules/tests/journal-data/co
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
 import {
+  hasEyesightTestGotSeriousFault,
+  hasEyesightTestBeenCompleted,
+} from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.selector';
+import {
   EyesightTestReset,
   EyesightTestPassed,
   EyesightTestFailed,
-  hasEyesightTestGotSeriousFault,
-  hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/common';
+} from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_A_MOD2 } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
