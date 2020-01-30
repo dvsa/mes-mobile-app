@@ -4,6 +4,7 @@ export const FAKE_JOURNAL_PAGE = 'FakeJournalPage';
 export const JOURNAL_PAGE = 'JournalPage';
 export const LOGIN_PAGE = 'LoginPage';
 export const JOURNAL_FORCE_CHECK_MODAL = 'JournalForceCheckModal';
+export const JOURNAL_EARLY_START_MODAL = 'JournalEarlyStartModal';
 export const ERROR_PAGE = 'ErrorPage';
 export const DASHBOARD_PAGE = 'DashboardPage';
 export const REKEY_SEARCH_PAGE = 'RekeySearchPage';
