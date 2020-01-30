@@ -9,6 +9,7 @@ import * as passCompletionActions from '../../../modules/tests/pass-completion/p
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
 import * as vehicleDetailsActions from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
+import * as commsActions from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import {
@@ -28,6 +29,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { TransmissionType } from '../../../shared/models/transmission-type';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 describe('Pass Finalisation Analytics Effects', () => {
 
@@ -246,7 +248,7 @@ describe('Pass Finalisation Analytics Effects', () => {
         done();
       });
     });
-    it('should call not call logEvent if there is no activty code', (done) => {
+    it('should call not call logEvent if there is no activity code', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
@@ -296,6 +298,74 @@ describe('Pass Finalisation Analytics Effects', () => {
             AnalyticsEvents.D255,
             'No',
           );
+        done();
+      });
+    });
+  });
+  describe('candidateChoseToProceedWithTestInEnglish$', () => {
+    it('should call logEvent with the correct parameters', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new SetActivityCode(ActivityCodes.PASS));
+      // ACT
+      actions$.next(new commsActions.CandidateChoseToProceedWithTestInEnglish(Language.ENGLISH));
+      // ASSERT
+      effects.candidateChoseToProccedWithTestInEnglish$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.LANGUAGE_CHANGED,
+            Language.ENGLISH,
+          );
+        done();
+      });
+    });
+    it('should call not call logEvent if there is no activity code', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new commsActions.CandidateChoseToProceedWithTestInEnglish(Language.ENGLISH));
+      // ASSERT
+      effects.candidateChoseToProccedWithTestInEnglish$.subscribe((result) => {
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        done();
+      });
+    });
+  });
+  describe('candidateChoseToProceedWithTestInWelsh$', () => {
+    it('should call logEvent with the correct parameters', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new SetActivityCode(ActivityCodes.PASS));
+      // ACT
+      actions$.next(new commsActions.CandidateChoseToProceedWithTestInWelsh(Language.CYMRAEG));
+      // ASSERT
+      effects.candidateChoseToProccedWithTestInWelsh$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.LANGUAGE_CHANGED,
+            Language.CYMRAEG,
+          );
+        done();
+      });
+    });
+    it('should call not call logEvent if there is no activity code', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      // ACT
+      actions$.next(new commsActions.CandidateChoseToProceedWithTestInWelsh(Language.CYMRAEG));
+      // ASSERT
+      effects.candidateChoseToProccedWithTestInWelsh$.subscribe((result) => {
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
         done();
       });
     });

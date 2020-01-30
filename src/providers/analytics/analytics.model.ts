@@ -110,6 +110,7 @@ export enum AnalyticsEvents {
   TOGGLE_LICENSE_RECEIVED = 'toggle license recieved',
   D255 = 'set D255',
   GEARBOX_CATEGORY_CHANGED = 'set transmission',
+  LANGUAGE_CHANGED = 'language changed',
 }
 
 export enum AnalyticsLabels {

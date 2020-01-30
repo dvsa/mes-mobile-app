@@ -27,6 +27,8 @@ import * as vehicleDetailsActions from '../../modules/tests/vehicle-details/comm
 import { getActivityCode } from '../../modules/tests/activity-code/activity-code.reducer';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
+import * as commsActions from '../../modules/tests/communication-preferences/communication-preferences.actions';
+import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
 
 @Injectable()
 export class PassFinalisationAnalyticsEffects {
@@ -221,6 +223,64 @@ export class PassFinalisationAnalyticsEffects {
         'No',
       );
       return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  candidateChoseToProccedWithTestInEnglish$ = this.actions$.pipe(
+    ofType(commsActions.CANDIDATE_CHOSE_TO_PROCEED_WITH_TEST_IN_ENGLISH),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getActivityCode),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, activityCode]:
+      [commsActions.CandidateChoseToProceedWithTestInEnglish, TestsModel, ActivityCode]) => {
+      if (activityCode !== null) {
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+          formatAnalyticsText(AnalyticsEvents.LANGUAGE_CHANGED, tests),
+          Language.ENGLISH,
+        );
+        return of(new AnalyticRecorded());
+      }
+      return of(new AnalyticNotRecorded());
+    }),
+  );
+
+  @Effect()
+  candidateChoseToProccedWithTestInWelsh$ = this.actions$.pipe(
+    ofType(commsActions.CANDIDATE_CHOSE_TO_PROCEED_WITH_TEST_IN_WELSH),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getActivityCode),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, activityCode]:
+      [commsActions.CandidateChoseToProceedWithTestInWelsh, TestsModel, ActivityCode]) => {
+      if (activityCode !== null) {
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+          formatAnalyticsText(AnalyticsEvents.LANGUAGE_CHANGED, tests),
+          Language.CYMRAEG,
+        );
+        return of(new AnalyticRecorded());
+      }
+      return of(new AnalyticNotRecorded());
     }),
   );
 
