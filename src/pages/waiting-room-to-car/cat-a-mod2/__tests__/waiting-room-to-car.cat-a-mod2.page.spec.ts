@@ -32,6 +32,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { VehicleChecksCatAMod2Component } from '../components/vehicle-checks/vehicle-checks';
 import { configureTestSuite } from 'ng-bullet';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
+import { BikeCategoryTypeComponent } from '../../components/bike-category-type/bike-category-type';
 
 describe('WaitingRoomToCarCatAMod2Page', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatAMod2Page>;
@@ -52,6 +53,7 @@ describe('WaitingRoomToCarCatAMod2Page', () => {
         MockComponent(AccompanimentComponent),
         MockComponent(VehicleChecksCatAMod2Component),
         MockComponent(TransmissionComponent),
+        MockComponent(BikeCategoryTypeComponent),
       ],
       imports: [
         IonicModule,
