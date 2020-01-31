@@ -80,8 +80,8 @@ export class FaultCountAM1Helper {
     const slalomDrivingFaults = (slalom && slalom === CompetencyOutcome.DF) ? 1 : 0;
     const slowControlDrivingFaults = (slowControl && slowControl === CompetencyOutcome.DF) ? 1 : 0;
     const uTurnDrivingFaults = (uTurn && uTurn === CompetencyOutcome.DF) ? 1 : 0;
-    const emergencyStopRidingFaults = (emergencyStop && emergencyStop === CompetencyOutcome.DF) ? 1 : 0;
-    const avoidanceRidingFaults = (avoidance && avoidance === CompetencyOutcome.DF) ? 1 : 0;
+    const emergencyStopRidingFaults = (emergencyStop && emergencyStop.outcome === CompetencyOutcome.DF) ? 1 : 0;
+    const avoidanceRidingFaults = (avoidance && avoidance.outcome === CompetencyOutcome.DF) ? 1 : 0;
 
     const result =
       drivingFaultSumOfSimpleCompetencies +
