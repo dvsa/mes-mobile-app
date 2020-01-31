@@ -17,6 +17,10 @@ import {
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTestCategory } from '../../../../../modules/tests/category/category.reducer';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import {
+  ReverseDiagramLengthChanged,
+  ReverseDiagramWidthChanged,
+} from '../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
 
 interface ReverseDiagramPageState {
   vehicleLength$: Observable<number>;
@@ -96,6 +100,7 @@ export class ReverseDiagramCatCPage implements OnInit {
     const reversingLengths = this.reversingDistancesProvider.getDistanceLength(vehicleDetails, this.category);
     this.reversingLengthStart = reversingLengths.startDistance;
     this.reversingLengthMiddle = reversingLengths.middleDistance;
+    this.vehicleLength = vehicleLength;
   }
 
   calculateReversingWidth(vehicleWidth: number): void {
@@ -105,6 +110,7 @@ export class ReverseDiagramCatCPage implements OnInit {
     };
 
     this.reversingWidth = this.reversingDistancesProvider.getDistanceWidth(vehicleDetails, this.category);
+    this.vehicleWidth = vehicleWidth;
   }
 
   ionViewWillEnter(): boolean {
@@ -125,5 +131,15 @@ export class ReverseDiagramCatCPage implements OnInit {
 
   closeModal(): void {
     this.onClose();
+  }
+
+  onLengthKeyup(vehicleLength: number) : void {
+    this.store$.dispatch(new ReverseDiagramLengthChanged(this.vehicleLength , vehicleLength));
+    this.calculateReversingLengths(vehicleLength);
+  }
+
+  onWidthKeyup(vehicleWidth: number) : void {
+    this.store$.dispatch(new ReverseDiagramWidthChanged(this.vehicleWidth, vehicleWidth));
+    this.calculateReversingWidth(vehicleWidth);
   }
 }

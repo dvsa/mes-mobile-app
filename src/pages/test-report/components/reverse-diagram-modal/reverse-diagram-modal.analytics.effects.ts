@@ -9,14 +9,7 @@ import {
   AnalyticsEventCategories,
   AnalyticsEvents,
 } from '../../../../providers/analytics/analytics.model';
-import {
-  REVERSE_DIAGRAM_VIEW_DID_ENTER,
-  ReverseDiagramViewDidEnter,
-  REVERSE_DIAGRAM_OPENED,
-  ReverseDiagramOpened,
-  REVERSE_DIAGRAM_CLOSED,
-  ReverseDiagramClosed,
-} from './reverse-diagram-modal.actions';
+import * as reverseDiagramActions from './reverse-diagram-modal.actions';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../../../modules/tests/tests.reducer';
@@ -47,7 +40,7 @@ export class ReverseDiagramModalAnalyticsEffects {
 
   @Effect()
   reverseDiagramViewDidEnter$ = this.actions$.pipe(
-    ofType(REVERSE_DIAGRAM_VIEW_DID_ENTER),
+    ofType(reverseDiagramActions.REVERSE_DIAGRAM_VIEW_DID_ENTER),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -76,7 +69,7 @@ export class ReverseDiagramModalAnalyticsEffects {
     )),
     switchMap((
       [action, tests, applicationReference, candidateId, category]:
-      [ReverseDiagramViewDidEnter, TestsModel, string, number, CategoryCode],
+      [reverseDiagramActions.ReverseDiagramViewDidEnter, TestsModel, string, number, CategoryCode],
     ) => {
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
@@ -90,7 +83,7 @@ export class ReverseDiagramModalAnalyticsEffects {
 
   @Effect()
   reverseDiagramOpened$ = this.actions$.pipe(
-    ofType(REVERSE_DIAGRAM_OPENED),
+    ofType(reverseDiagramActions.REVERSE_DIAGRAM_OPENED),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -98,7 +91,7 @@ export class ReverseDiagramModalAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [ReverseDiagramOpened, TestsModel]) => {
+    concatMap(([action, tests]: [reverseDiagramActions.ReverseDiagramOpened, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REVERSE_DIAGRAM_OPENED, tests),
@@ -109,7 +102,7 @@ export class ReverseDiagramModalAnalyticsEffects {
 
   @Effect()
   reverseDiagramClosed$ = this.actions$.pipe(
-    ofType(REVERSE_DIAGRAM_CLOSED),
+    ofType(reverseDiagramActions.REVERSE_DIAGRAM_CLOSED),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -117,10 +110,50 @@ export class ReverseDiagramModalAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [ReverseDiagramClosed, TestsModel]) => {
+    concatMap(([action, tests]: [reverseDiagramActions.ReverseDiagramClosed, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REVERSE_DIAGRAM_CLOSED, tests),
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  reverseDiagramLengthChanged$ = this.actions$.pipe(
+    ofType(reverseDiagramActions.REVERSE_DIAGRAM_LENGTH_CHANGED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [reverseDiagramActions.ReverseDiagramLengthChanged, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REVERSE_DIAGRAM_LENGTH_CHANGED, tests),
+        `from ${action.previousLength} to ${action.newLength}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  reverseDiagramWidthChanged$ = this.actions$.pipe(
+    ofType(reverseDiagramActions.REVERSE_DIAGRAM_WIDTH_CHANGED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [reverseDiagramActions.ReverseDiagramWidthChanged, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REVERSE_DIAGRAM_WIDTH_CHANGED, tests),
+        `from ${action.previousWidth} to ${action.newWidth}`,
       );
       return of(new AnalyticRecorded());
     }),

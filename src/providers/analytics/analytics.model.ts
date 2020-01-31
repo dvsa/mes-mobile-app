@@ -104,10 +104,13 @@ export enum AnalyticsEvents {
   REVERSE_LEFT_POPOVER_CLOSED = 'close reversing manoevure',
   REVERSE_DIAGRAM_OPENED = 'open reversing diagram',
   REVERSE_DIAGRAM_CLOSED = 'close reversing diagram',
+  REVERSE_DIAGRAM_LENGTH_CHANGED = 'change vehicle length on reversing diagram',
+  REVERSE_DIAGRAM_WIDTH_CHANGED = 'change vehicle width on reversing diagram',
   TOGGLE_CODE_78 = 'toggle code 78',
-  TOGGLE_LICENSE_RECEIVED = 'toggle license recieved',
+  TOGGLE_LICENSE_RECEIVED = 'toggle licence received',
   D255 = 'set D255',
   GEARBOX_CATEGORY_CHANGED = 'set transmission',
+  LANGUAGE_CHANGED = 'language changed',
 }
 
 export enum AnalyticsLabels {
