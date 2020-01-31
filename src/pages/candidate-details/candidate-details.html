@@ -45,7 +45,7 @@
           [label]="'Meeting place'"
           [value]="pageState.details.meetingPlace">
         </data-row>
-        <data-row [label]="'Driver number'" [value]="pageState.details.driverNumber"></data-row>
+        <data-row [label]="driverTypeLabel + ' number'" [value]="pageState.details.driverNumber"></data-row>
         <data-row [label]="'Application number'" [value]="pageState.details.applicationRef"></data-row>
         <data-row-custom [label]="'Special requirements'" [shouldShowIndicator]="specialNeedsIsPopulated(pageState.details.specialNeeds)">
           <div class="mes-data" *ngIf="!specialNeedsIsPopulated(pageState.details.specialNeeds)">

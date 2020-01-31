@@ -29,6 +29,11 @@ interface CandidateDetailsPageState {
   business: Business;
 }
 
+enum driverType {
+  R = 'Rider',
+  D = 'Driver',
+}
+
 @IonicPage()
 @Component({
   selector: 'page-candidate-details',
@@ -39,6 +44,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
   slot: TestSlot;
   slotChanged: boolean = false;
   testCategory = TestCategory.B;
+  driverTypeLabel: driverType = driverType.D;
 
   constructor(
     public navController: NavController,
@@ -68,6 +74,8 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
       this.store$.dispatch(new CandidateDetailsSlotChangeViewed(this.slot.slotDetail.slotId));
     }
     this.store$.dispatch(new ClearChangedSlot(this.slot.slotDetail.slotId));
+
+    this.driverTypeLabel = this.driverTypeSwitch(this.testCategory);
   }
 
   ionViewDidEnter(): void {
@@ -81,5 +89,13 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
 
   public specialNeedsIsPopulated(specialNeeds: string | string[]): boolean {
     return Array.isArray(specialNeeds);
+  }
+
+  driverTypeSwitch(cat: TestCategory): driverType {
+    // switch to determine Driver or Rider based upon category
+    if (cat.includes('EUA')) {
+      return driverType.R;
+    }
+    return driverType.D;
   }
 }
