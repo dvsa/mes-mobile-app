@@ -142,8 +142,8 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
         map(isManual),
       ),
       testCategory$: currentTest$.pipe(
-      select(getTestCategory),
-    ),
+        select(getTestCategory),
+      ),
     };
   }
 

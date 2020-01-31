@@ -11,8 +11,8 @@
   <div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-grid>
-        <bike-category-type testType="MOD1" [testCategory] = "pageState.testCategory$ | async"
-                           (categoryCodeChange)="categoryCodeChanged($event)" [formGroup]="form">
+        <bike-category-type testType="MOD2" [testCategory] = "pageState.testCategory$ | async"
+          (categoryCodeChange)="categoryCodeChanged($event)" [formGroup]="form">
         </bike-category-type>
 
         <transmission [formGroup]="form" [transmission]="pageState.transmission$ | async"
