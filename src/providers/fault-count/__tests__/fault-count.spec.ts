@@ -16,7 +16,7 @@ import { FaultCountBHelper } from '../cat-b/fault-count.cat-b';
 import { FaultCountBEHelper } from '../cat-be/fault-count.cat-be';
 import { FaultCountCHelper } from '../cat-c/fault-count.cat-c';
 import { configureTestSuite } from 'ng-bullet';
-import { FaultCountAM1Helper } from '../cat-am1/fault-count.cat-a';
+import { FaultCountAM1Helper } from '../cat-a-mod1/fault-count.cat-a-mod1';
 
 describe('FaultCountProvider', () => {
 
