@@ -298,7 +298,7 @@ describe('FaultCountProvider', () => {
     });
   });
 
-  fdescribe('getDangerousFaultSumCountCatAM1', () => {
+  describe('getDangerousFaultSumCountCatAM1', () => {
     it('should return the dangerous faults count', () => {
       expect((FaultCountAHelper as any).getDangerousFaultSumCountCatAM1(catAM1TestDataStateObject)).toBe(7);
     });
