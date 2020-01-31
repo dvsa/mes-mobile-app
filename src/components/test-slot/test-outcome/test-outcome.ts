@@ -8,9 +8,11 @@ import { TestStatus } from '../../../modules/tests/test-status/test-status.model
 import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
 import { startsWith, isEmpty } from 'lodash';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
-import { JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE, CAT_C, CAT_A_MOD1, CAT_A_MOD2, CAT_D }
+import { JOURNAL_EARLY_START_MODAL, JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE, CAT_C, CAT_A_MOD1, CAT_A_MOD2, CAT_D }
   from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
+import { ModalEvent as EarlyStartModalEvent }
+from '../../../pages/journal/components/journal-early-start-modal/journal-early-start-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
@@ -202,6 +204,26 @@ export class TestOutcomeComponent implements OnInit {
     this.modal.present();
   }
 
+  displayCheckStartModal = (): void => {
+    const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
+    this.modal = this.modalController.create(JOURNAL_EARLY_START_MODAL, { slotData: this.slotDetail }, options);
+    this.modal.onDidDismiss((event: EarlyStartModalEvent) => {
+      switch (event) {
+        case ModalEvent.START:
+          this.startTestAsRekey = false;
+          this.isRekey = false;
+          if (this.testStatus !== null) {
+            this.store$.dispatch(new MarkAsNonRekey());
+          }
+          this.startOrResumeTestDependingOnStatus();
+          break;
+        case ModalEvent.CANCEL:
+          break;
+      }
+    });
+    this.modal.present();
+  }
+
   displayForceCheckModal = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     this.modal = this.modalController.create(JOURNAL_FORCE_CHECK_MODAL, {}, options);
@@ -239,7 +261,16 @@ export class TestOutcomeComponent implements OnInit {
       this.displayRekeyModal();
       return;
     }
+    if (this.shouldDisplayCheckStartModal()) {
+      this.displayCheckStartModal();
+      return;
+    }
     this.startOrResumeTestDependingOnStatus();
+  }
+
+  shouldDisplayCheckStartModal(): boolean {
+    const retVal = new DateTime().compareDuration(this.slotDetail.start, Duration.MINUTE) > 5;
+    return retVal;
   }
 
   isE2EPracticeMode(): boolean {

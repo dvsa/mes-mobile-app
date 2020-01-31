@@ -1,0 +1,19 @@
+journal-early-start-modal {
+  @extend .modal-alert-wrapper;
+
+  .modal-alert {
+    width: 450px;
+  }
+
+  .modal-alert-message {
+    margin-bottom: 24px;
+  }
+
+  .mes-align-content-center {
+    text-align: center;
+  }
+
+  .cancel-button {
+    color: map-get($colors-gds, gds-black);
+  }
+}
