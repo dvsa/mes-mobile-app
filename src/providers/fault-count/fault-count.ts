@@ -24,14 +24,12 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getDrivingFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getDrivingFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getDrivingFaultSumCountCatC(data);
-      // TODO: To be implemented properly in MES-4420
-      case TestCategory.EUAM1: return FaultCountBEHelper.getDrivingFaultSumCountCatBE(data);
+      case TestCategory.EUAM1: return FaultCountAM1Helper.getDrivingFaultSumCountCatAM1(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
 
   public getSeriousFaultSumCount = (category: TestCategory, data: Object): number => {
-    console.log('Inside getSeriousFaultSumCount');
     switch (category) {
       case TestCategory.B: return FaultCountBHelper.getSeriousFaultSumCountCatB(data);
       case TestCategory.BE: return FaultCountBEHelper.getSeriousFaultSumCountCatBE(data);

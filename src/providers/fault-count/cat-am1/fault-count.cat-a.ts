@@ -55,4 +55,30 @@ export class FaultCountAM1Helper {
 
     return result;
   }
+
+  public static getDrivingFaultSumCountCatAM1 = (data: TestData): number => {
+
+    // The way how we store serious faults differs for certain competencies
+    // Because of this we need to pay extra attention on summing up all of them
+    const { drivingFaults, useOfStand, manualHandling, slalom, slowControl, uTurn, controlledStop } = data;
+
+    const drivingFaultSumOfSimpleCompetencies = Object.keys(pickBy(drivingFaults)).length;
+    const controlledStopDrivingFaults = (controlledStop && controlledStop === CompetencyOutcome.DF) ? 1 : 0;
+    const useOfStandDrivingFaults = (useOfStand && useOfStand === CompetencyOutcome.DF) ? 1 : 0;
+    const manualHandlingDrivingFaults = (manualHandling && manualHandling === CompetencyOutcome.DF) ? 1 : 0;
+    const slalomDrivingFaults = (slalom && slalom === CompetencyOutcome.DF) ? 1 : 0;
+    const slowControlDrivingFaults = (slowControl && slowControl === CompetencyOutcome.DF) ? 1 : 0;
+    const uTurnDrivingFaults = (uTurn && uTurn === CompetencyOutcome.DF) ? 1 : 0;
+
+    const result =
+      drivingFaultSumOfSimpleCompetencies +
+      controlledStopDrivingFaults +
+      useOfStandDrivingFaults +
+      manualHandlingDrivingFaults +
+      slalomDrivingFaults +
+      slowControlDrivingFaults +
+      uTurnDrivingFaults;
+
+    return result;
+  }
 }

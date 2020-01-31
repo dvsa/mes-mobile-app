@@ -110,8 +110,10 @@ export class TestResultProvider {
     if (this.faultCountProvider.getSeriousFaultSumCount(category, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
-    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) > 0) {
+    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) >= 6) {
       return of(ActivityCodes.FAIL);
     }
+
+    return of(ActivityCodes.PASS);
   }
 }
