@@ -7,6 +7,7 @@ import { ComponentsModule } from '../../../../../components/common/common-compon
 import { JournalEarlyStartModalMock } from '../__mocks__/journal-early-start-modal.mock';
 import { NavParamsMock } from '../__mocks__/nav-params.mock';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite } from 'ng-bullet';
 
 describe('JournalEarlyStartModal', () => {
   let modalFixture: ComponentFixture<JournalEarlyStartModal>;
@@ -14,7 +15,7 @@ describe('JournalEarlyStartModal', () => {
   const mockFile: JournalEarlyStartModalMock = new JournalEarlyStartModalMock();
   const navMock: NavParamsMock = new NavParamsMock();
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
         JournalEarlyStartModal,
@@ -28,16 +29,17 @@ describe('JournalEarlyStartModal', () => {
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() } ,
         { provide: NavParams, useFactory: () => navMock },
       ],
-    }).compileComponents().then(() => {
-      const mockValue = mockFile.mockSlotDetail();
-      spyOn(navMock, 'get').and.returnValue(mockValue);
-      modalFixture = TestBed.createComponent(JournalEarlyStartModal);
-      modalComponent = modalFixture.componentInstance;
-      modalComponent.onCancel = () => {
-      };
-      modalComponent.onStart = () => {
-      };
     });
+  });
+  beforeEach(async(() => {
+    const mockValue = mockFile.mockSlotDetail();
+    spyOn(navMock, 'get').and.returnValue(mockValue);
+    modalFixture = TestBed.createComponent(JournalEarlyStartModal);
+    modalComponent = modalFixture.componentInstance;
+    modalComponent.onCancel = () => {
+    };
+    modalComponent.onStart = () => {
+    };
   }));
   it('should return slot details from nav param', () => {
     modalFixture.detectChanges();
