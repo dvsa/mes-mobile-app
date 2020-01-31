@@ -59,6 +59,7 @@ describe('FaultCountProvider', () => {
     spyOn(FaultCountCHelper, 'getDangerousFaultSumCountCatC1E').and.callThrough();
 
     spyOn(FaultCountAM1Helper, 'getDangerousFaultSumCountCatAM1').and.callThrough();
+    spyOn(FaultCountAM1Helper, 'getSeriousFaultSumCountCatAM1').and.callThrough();
   });
 
   describe('getDrivingFaultSumCount', () => {
@@ -112,6 +113,10 @@ describe('FaultCountProvider', () => {
     it('should call the category C1E specific method for getting the serious fault sum count', () => {
       faultCountProvider.getSeriousFaultSumCount(TestCategory.C1E, catC1ETestDataStateObject);
       expect((FaultCountCHelper as any).getSeriousFaultSumCountCatC1E).toHaveBeenCalled();
+    });
+    it('should call the category AM1 specific method for getting the serious fault sum count', () => {
+      faultCountProvider.getSeriousFaultSumCount(TestCategory.EUAM1, catAM1TestDataStateObject);
+      expect((FaultCountAM1Helper as any).getSeriousFaultSumCountCatAM1).toHaveBeenCalled();
     });
   });
 
@@ -300,7 +305,13 @@ describe('FaultCountProvider', () => {
 
   describe('getDangerousFaultSumCountCatAM1', () => {
     it('should return the dangerous faults count', () => {
-      expect((FaultCountAM1Helper as any).getDangerousFaultSumCountCatAM1(catAM1TestDataStateObject)).toBe(7);
+      expect((FaultCountAM1Helper as any).getDangerousFaultSumCountCatAM1(catAM1TestDataStateObject)).toBe(5);
+    });
+  });
+
+  describe('getSeriousFaultSumCountCatAM1', () => {
+    it('should return the serious faults count', () => {
+      expect((FaultCountAM1Helper as any).getSeriousFaultSumCountCatAM1(catAM1TestDataStateObject)).toBe(3);
     });
   });
 });

@@ -5,9 +5,9 @@ export const catAM1TestDataStateObject: TestData = {
   useOfStand: CompetencyOutcome.D,
   manualHandling: CompetencyOutcome.D,
   slalom: CompetencyOutcome.D,
-  slowControl: CompetencyOutcome.D,
+  slowControl: CompetencyOutcome.S,
   uTurn: CompetencyOutcome.D,
-  controlledStop: CompetencyOutcome.D,
+  controlledStop: CompetencyOutcome.S,
   // todo: Add emergency stop and avoidance
   drivingFaults: {
   },
