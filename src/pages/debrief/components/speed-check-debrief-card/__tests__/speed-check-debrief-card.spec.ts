@@ -5,7 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { AppModule } from '../../../../../app/app.module';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
-import { SpeedReqDebriefCardComponent } from '../speed-requirements-debrief-card';
+import { SpeedCheckDebriefCardComponent } from '../speed-check-debrief-card';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('SeriousFaultsDebriefCardComponent', () => {
@@ -13,7 +13,7 @@ describe('SeriousFaultsDebriefCardComponent', () => {
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      declarations: [SpeedReqDebriefCardComponent],
+      declarations: [SpeedCheckDebriefCardComponent],
       imports: [
         IonicModule,
         AppModule,
