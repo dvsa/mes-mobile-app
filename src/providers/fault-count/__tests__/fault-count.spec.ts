@@ -18,7 +18,7 @@ import { FaultCountCHelper } from '../cat-c/fault-count.cat-c';
 import { configureTestSuite } from 'ng-bullet';
 import { FaultCountAM1Helper } from '../cat-a-mod1/fault-count.cat-a-mod1';
 
-fdescribe('FaultCountProvider', () => {
+describe('FaultCountProvider', () => {
 
   let faultCountProvider: FaultCountProvider;
 
