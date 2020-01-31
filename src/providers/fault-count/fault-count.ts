@@ -24,7 +24,7 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getDrivingFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getDrivingFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getDrivingFaultSumCountCatC(data);
-      case TestCategory.EUAM1: return FaultCountAM1Helper.getDrivingFaultSumCountCatAM1(data);
+      case TestCategory.EUAM1: return FaultCountAM1Helper.getRidingFaultSumCountCatAM1(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }

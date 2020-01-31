@@ -66,7 +66,7 @@ export class FaultCountAM1Helper {
     return result;
   }
 
-  public static getDrivingFaultSumCountCatAM1 = (data: TestData): number => {
+  public static getRidingFaultSumCountCatAM1 = (data: TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
