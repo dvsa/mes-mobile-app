@@ -12,6 +12,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { DrivingFaultsBadgeComponent }
 from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
+import { TestDataByCategoryProvider } from '../../../../../../providers/test-data-by-category/test-data-by-category';
 import { VehicleChecksScore } from '../../../../../../shared/models/vehicle-checks-score.model';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
@@ -37,6 +38,7 @@ describe('VehicleChecksComponent', () => {
       ],
       providers: [
         FaultCountProvider,
+        TestDataByCategoryProvider,
       ],
     });
   });
@@ -45,8 +47,7 @@ describe('VehicleChecksComponent', () => {
     fixture = TestBed.createComponent(VehicleChecksComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
-    // TODO: MES-4287 Use Category C
-    store$.dispatch(new StartTest(105, TestCategory.BE));
+    store$.dispatch(new StartTest(105, TestCategory.C));
   }));
 
   describe('Class', () => {
@@ -56,11 +57,11 @@ describe('VehicleChecksComponent', () => {
     };
 
     beforeEach(() => {
-      // TODO: MES-4287 Use Category C
       spyOn(component.faultCountProvider, 'getVehicleChecksFaultCount').and.returnValue(vehicleChecksScore);
     });
 
     it('should set the vehicle checks driving fault count', (done: DoneFn) => {
+      component.testCategory = TestCategory.C;
       component.ngOnInit();
       component.componentState.vehicleChecksDrivingFaultCount$.subscribe((result) => {
         expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
@@ -69,6 +70,7 @@ describe('VehicleChecksComponent', () => {
       });
     });
     it('should set the vehicle checks serious fault count', (done: DoneFn) => {
+      component.testCategory = TestCategory.C;
       component.ngOnInit();
       component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
         expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
@@ -81,6 +83,7 @@ describe('VehicleChecksComponent', () => {
   describe('DOM', () => {
 
     it('should pass the number of VC driving faults to the driving faults component', () => {
+      component.testCategory = TestCategory.C;
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
@@ -90,6 +93,7 @@ describe('VehicleChecksComponent', () => {
     });
 
     it('should pass true to the serious faults badge if there are serious VC faults', () => {
+      component.testCategory = TestCategory.C;
       fixture.detectChanges();
       const seriousFaultsBadge = fixture.debugElement.query(By.css('serious-fault-badge'))
         .componentInstance as SeriousFaultBadgeComponent;

@@ -1,24 +1,33 @@
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
 import { some } from 'lodash';
 
+export type CatCVehicleChecks =
+  | CatCUniqueTypes.VehicleChecks
+  | CatC1UniqueTypes.VehicleChecks
+  | CatCEUniqueTypes.VehicleChecks
+  | CatC1EUniqueTypes.VehicleChecks;
+
 export const getSelectedShowMeQuestions = (
-  vehicleChecks: CatCUniqueTypes.VehicleChecks,
+  vehicleChecks: CatCVehicleChecks,
 ): QuestionResult[] => {
   return vehicleChecks.showMeQuestions;
 };
 
 export const getSelectedTellMeQuestions = (
-  vehicleChecksCatCReducer: CatCUniqueTypes.VehicleChecks,
+  vehicleChecksCatCReducer: CatCVehicleChecks,
 ): QuestionResult[] => {
   return vehicleChecksCatCReducer.tellMeQuestions;
 };
 
-export const vehicleChecksExist = (vehicleChecks: CatCUniqueTypes.VehicleChecks): boolean => {
+export const vehicleChecksExist = (vehicleChecks: CatCVehicleChecks): boolean => {
   const questions = [...vehicleChecks.showMeQuestions, ... vehicleChecks.tellMeQuestions];
   return some(questions, fault => fault.outcome != null);
 };
 
 export const getVehicleChecksCatC =
-  createFeatureSelector<CatCUniqueTypes.VehicleChecks>('vehicleChecks');
+  createFeatureSelector<CatCVehicleChecks>('vehicleChecks');

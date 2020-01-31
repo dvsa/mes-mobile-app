@@ -98,7 +98,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <vehicle-checks></vehicle-checks>
+            <vehicle-checks [testCategory]="pageState.testCategory$ | async"></vehicle-checks>
           </ion-col>
         </ion-row>
         <ion-row>
