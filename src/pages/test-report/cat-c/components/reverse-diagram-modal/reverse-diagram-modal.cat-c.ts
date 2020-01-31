@@ -100,6 +100,7 @@ export class ReverseDiagramCatCPage implements OnInit {
     const reversingLengths = this.reversingDistancesProvider.getDistanceLength(vehicleDetails, this.category);
     this.reversingLengthStart = reversingLengths.startDistance;
     this.reversingLengthMiddle = reversingLengths.middleDistance;
+    this.vehicleLength = vehicleLength;
   }
 
   calculateReversingWidth(vehicleWidth: number): void {
@@ -109,6 +110,7 @@ export class ReverseDiagramCatCPage implements OnInit {
     };
 
     this.reversingWidth = this.reversingDistancesProvider.getDistanceWidth(vehicleDetails, this.category);
+    this.vehicleWidth = vehicleWidth;
   }
 
   ionViewWillEnter(): boolean {
@@ -132,12 +134,12 @@ export class ReverseDiagramCatCPage implements OnInit {
   }
 
   onLengthKeyup(vehicleLength: number) : void {
+    this.store$.dispatch(new ReverseDiagramLengthChanged(this.vehicleLength , vehicleLength));
     this.calculateReversingLengths(vehicleLength);
-    this.store$.dispatch(new ReverseDiagramLengthChanged());
   }
 
   onWidthKeyup(vehicleWidth: number) : void {
+    this.store$.dispatch(new ReverseDiagramWidthChanged(this.vehicleWidth, vehicleWidth));
     this.calculateReversingWidth(vehicleWidth);
-    this.store$.dispatch(new ReverseDiagramWidthChanged());
   }
 }

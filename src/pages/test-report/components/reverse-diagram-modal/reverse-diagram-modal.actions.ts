@@ -19,9 +19,11 @@ export class ReverseDiagramClosed implements Action {
 }
 export class ReverseDiagramLengthChanged implements Action {
   readonly type = REVERSE_DIAGRAM_LENGTH_CHANGED;
+  constructor(public previousLength: number , public newLength: number) {}
 }
 export class ReverseDiagramWidthChanged implements Action {
   readonly type = REVERSE_DIAGRAM_WIDTH_CHANGED;
+  constructor(public previousWidth: number , public newWidth: number) {}
 }
 
 export type Types =

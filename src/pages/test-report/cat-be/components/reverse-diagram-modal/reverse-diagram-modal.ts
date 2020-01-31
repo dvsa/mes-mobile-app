@@ -91,6 +91,7 @@ export class ReverseDiagramCatBEPage implements OnInit {
     const reversingLenghts = this.reversingDistancesProvider.getDistanceLength(vehicleDetails, TestCategory.BE);
     this.distanceFromMiddle = reversingLenghts.middleDistance;
     this.distanceFromStart = reversingLenghts.startDistance;
+    this.vehicleLength = length;
   }
 
   calculateDistanceWidth(width: number): void {
@@ -99,6 +100,7 @@ export class ReverseDiagramCatBEPage implements OnInit {
       vehicleWidth: width,
     };
     this.distanceOfBayWidth = this.reversingDistancesProvider.getDistanceWidth(vehicleDetails, TestCategory.BE);
+    this.vehicleWidth = width;
   }
 
   ionViewWillEnter(): boolean {
@@ -122,12 +124,12 @@ export class ReverseDiagramCatBEPage implements OnInit {
   }
 
   onLengthKeyup(vehicleLength: number) : void {
+    this.store$.dispatch(new ReverseDiagramLengthChanged(this.vehicleLength, vehicleLength));
     this.calculateDistanceLength(vehicleLength);
-    this.store$.dispatch(new ReverseDiagramLengthChanged());
   }
 
   onWidthKeyup(vehicleWidth: number) : void {
+    this.store$.dispatch(new ReverseDiagramWidthChanged(this.vehicleWidth, vehicleWidth));
     this.calculateDistanceWidth(vehicleWidth);
-    this.store$.dispatch(new ReverseDiagramWidthChanged());
   }
 }

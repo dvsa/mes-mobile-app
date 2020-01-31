@@ -161,7 +161,7 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new reverseDiagramModalActions.ReverseDiagramLengthChanged());
+      actions$.next(new reverseDiagramModalActions.ReverseDiagramLengthChanged(100 , 10));
       // ASSERT
       effects.reverseDiagramLengthChanged$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -169,6 +169,7 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REVERSE_DIAGRAM_LENGTH_CHANGED}`,
+          'from 100 to 10',
         );
         done();
       });
@@ -180,7 +181,7 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new reverseDiagramModalActions.ReverseDiagramWidthChanged());
+      actions$.next(new reverseDiagramModalActions.ReverseDiagramWidthChanged(100, 10));
       // ASSERT
       effects.reverseDiagramWidthChanged$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -188,6 +189,7 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REVERSE_DIAGRAM_WIDTH_CHANGED}`,
+          'from 100 to 10',
         );
         done();
       });

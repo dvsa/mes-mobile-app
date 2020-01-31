@@ -133,6 +133,7 @@ export class ReverseDiagramModalAnalyticsEffects {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REVERSE_DIAGRAM_LENGTH_CHANGED, tests),
+        `from ${action.previousLength} to ${action.newLength}`,
       );
       return of(new AnalyticRecorded());
     }),
@@ -152,6 +153,7 @@ export class ReverseDiagramModalAnalyticsEffects {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REVERSE_DIAGRAM_WIDTH_CHANGED, tests),
+        `from ${action.previousWidth} to ${action.newWidth}`,
       );
       return of(new AnalyticRecorded());
     }),
