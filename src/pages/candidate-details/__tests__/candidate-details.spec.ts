@@ -15,7 +15,7 @@ import { DataRowCustomComponent } from '../../../components/common/data-row-cust
 import { configureTestSuite } from 'ng-bullet';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-fdescribe('CandidateDetailsPage', () => {
+describe('CandidateDetailsPage', () => {
   let fixture: ComponentFixture<CandidateDetailsPage>;
   let component: CandidateDetailsPage;
 
