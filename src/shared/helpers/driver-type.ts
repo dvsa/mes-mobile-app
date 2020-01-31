@@ -5,7 +5,7 @@ export enum driverTypeDescription {
   DRIVER = 'Driver',
 }
 
-export const driverTypeSwitch = (cat: TestCategory): driverTypeDescription => {
+export const getDriverOrRiderLabel = (cat: TestCategory): driverTypeDescription => {
     // switch to determine Driver or Rider based upon category
   if (cat.includes('EUA')) {
     return driverTypeDescription.RIDER;

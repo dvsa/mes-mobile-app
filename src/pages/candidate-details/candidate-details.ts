@@ -21,7 +21,7 @@ import {
   CandidateDetailsSlotChangeViewed,
 } from './candidate-details.actions';
 import { Business, TestSlot } from '@dvsa/mes-journal-schema';
-import { driverTypeSwitch, driverTypeDescription } from '../../shared/helpers/driver-type';
+import { getDriverOrRiderLabel, driverTypeDescription } from '../../shared/helpers/driver-type';
 
 interface CandidateDetailsPageState {
   name: string;
@@ -71,7 +71,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
     }
     this.store$.dispatch(new ClearChangedSlot(this.slot.slotDetail.slotId));
 
-    this.driverTypeLabel = driverTypeSwitch(this.testCategory);
+    this.driverTypeLabel = getDriverOrRiderLabel(this.testCategory);
   }
 
   ionViewDidEnter(): void {
