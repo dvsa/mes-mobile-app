@@ -8,7 +8,8 @@ export class FaultCountAM1Helper {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { dangerousFaults, useOfStand, manualHandling, slalom, slowControl, uTurn, controlledStop } = data;
+    const { dangerousFaults, useOfStand, manualHandling,
+      slalom, slowControl, uTurn, controlledStop, emergencyStop, avoidance } = data;
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
     const controlledStopDangerousFaults = (controlledStop && controlledStop === CompetencyOutcome.D) ? 1 : 0;
@@ -17,6 +18,8 @@ export class FaultCountAM1Helper {
     const slalomDangerousFaults = (slalom && slalom === CompetencyOutcome.D) ? 1 : 0;
     const slowControlDangerousFaults = (slowControl && slowControl === CompetencyOutcome.D) ? 1 : 0;
     const uTurnDangerousFaults = (uTurn && uTurn === CompetencyOutcome.D) ? 1 : 0;
+    const emergencyStopDangerousFaults = (emergencyStop && emergencyStop.outcome === CompetencyOutcome.D) ? 1 : 0;
+    const avoidanceDangerousFaults = (avoidance && avoidance.outcome === CompetencyOutcome.D) ? 1 : 0;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
@@ -25,7 +28,9 @@ export class FaultCountAM1Helper {
       manualHandlingDangerousFaults +
       slalomDangerousFaults +
       slowControlDangerousFaults +
-      uTurnDangerousFaults;
+      uTurnDangerousFaults +
+      emergencyStopDangerousFaults +
+      avoidanceDangerousFaults;
 
     return result;
   }
@@ -34,7 +39,8 @@ export class FaultCountAM1Helper {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { seriousFaults, useOfStand, manualHandling, slalom, slowControl, uTurn, controlledStop } = data;
+    const { seriousFaults, useOfStand, manualHandling,
+      slalom, slowControl, uTurn, controlledStop, emergencyStop, avoidance } = data;
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
     const controlledStopSeriousFaults = (controlledStop && controlledStop === CompetencyOutcome.S) ? 1 : 0;
@@ -43,6 +49,8 @@ export class FaultCountAM1Helper {
     const slalomSeriousFaults = (slalom && slalom === CompetencyOutcome.S) ? 1 : 0;
     const slowControlSeriousFaults = (slowControl && slowControl === CompetencyOutcome.S) ? 1 : 0;
     const uTurnSeriousFaults = (uTurn && uTurn === CompetencyOutcome.S) ? 1 : 0;
+    const emergencyStopSeriousFaults = (emergencyStop && emergencyStop.outcome === CompetencyOutcome.S) ? 1 : 0;
+    const avoidanceSeriousFaults = (avoidance && avoidance.outcome === CompetencyOutcome.S) ? 1 : 0;
 
     const result =
       seriousFaultSumOfSimpleCompetencies +
@@ -51,7 +59,9 @@ export class FaultCountAM1Helper {
       manualHandlingSeriousFaults +
       slalomSeriousFaults +
       slowControlSeriousFaults +
-      uTurnSeriousFaults;
+      uTurnSeriousFaults +
+      emergencyStopSeriousFaults +
+      avoidanceSeriousFaults;
 
     return result;
   }
