@@ -108,7 +108,7 @@ describe('WaitingRoomToCarCatAMod2Page', () => {
     describe('eyesight failure confirmation', () => {
 
       // tslint:disable-next-line:max-line-length
-      it('should hide the rest of the form and show eyesight failure confirmationwhen page state indicates fail is selected', () => {
+      it('should hide the rest of the form and show eyesight failure confirmation when page state indicates fail is selected', () => {
         fixture.detectChanges();
         component.pageState.eyesightTestComplete$ = of(true);
         component.pageState.eyesightTestFailed$ = of(true);
