@@ -167,7 +167,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
         done();
       });
     });
-    it('should call not call logEvent if there is no activity code', (done) => {
+    it('should not call logEvent if there is no activity code', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
@@ -241,7 +241,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
         done();
       });
     });
-    it('should call not call logEvent if there is no activity code', (done) => {
+    it('should not call logEvent if there is no activity code', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
@@ -275,7 +275,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
         done();
       });
     });
-    it('should call not call logEvent if there is no activity code', (done) => {
+    it('should not call logEvent if there is no activity code', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.C));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
