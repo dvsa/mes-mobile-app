@@ -18,7 +18,7 @@ import { FaultCountCHelper } from '../cat-c/fault-count.cat-c';
 import { configureTestSuite } from 'ng-bullet';
 import { FaultCountAM1Helper } from '../cat-a-mod1/fault-count.cat-a-mod1';
 
-describe('FaultCountProvider', () => {
+fdescribe('FaultCountProvider', () => {
 
   let faultCountProvider: FaultCountProvider;
 
@@ -60,6 +60,7 @@ describe('FaultCountProvider', () => {
 
     spyOn(FaultCountAM1Helper, 'getDangerousFaultSumCountCatAM1').and.callThrough();
     spyOn(FaultCountAM1Helper, 'getSeriousFaultSumCountCatAM1').and.callThrough();
+    spyOn(FaultCountAM1Helper, 'getRidingFaultSumCountCatAM1').and.callThrough();
   });
 
   describe('getDrivingFaultSumCount', () => {
@@ -86,6 +87,10 @@ describe('FaultCountProvider', () => {
     it('should call the category C1 specific method for getting the driving fault sum count', () => {
       faultCountProvider.getDrivingFaultSumCount(TestCategory.C1, catC1TestDataStateObject);
       expect((FaultCountCHelper as any).getDrivingFaultSumCountCatC1).toHaveBeenCalled();
+    });
+    it('shoud call the category AM1 specific method for getting the riding fault sum count', () => {
+      faultCountProvider.getDrivingFaultSumCount(TestCategory.EUAM1, catAM1TestDataStateObject);
+      expect((FaultCountAM1Helper as any).getRidingFaultSumCountCatAM1).toHaveBeenCalled();
     });
   });
 
@@ -184,6 +189,12 @@ describe('FaultCountProvider', () => {
   describe('getDrivingFaultSumCountCatC1E', () => {
     it('should return the driving fault for cat C1E count correctly', () => {
       expect((FaultCountCHelper as any).getDrivingFaultSumCountCatC1E(catC1ETestDataStateObject)).toBe(5);
+    });
+  });
+
+  describe('getRidingFaultSumCountCatAM1', () => {
+    it('should return the driving fault for cat AM1 count correctly', () => {
+      expect((FaultCountAM1Helper as any).getRidingFaultSumCountCatAM1(catAM1TestDataStateObject)).toBe(5);
     });
   });
 

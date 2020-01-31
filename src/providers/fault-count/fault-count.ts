@@ -11,6 +11,8 @@ import { FaultCountCHelper } from './cat-c/fault-count.cat-c';
 import { sumManoeuvreFaults } from '../../shared/helpers/faults';
 import { FaultCountAM1Helper } from './cat-a-mod1/fault-count.cat-a-mod1';
 
+// TODO: Remove category from helper functions as the name of the helper class already contains the category
+
 @Injectable()
 export class FaultCountProvider {
 

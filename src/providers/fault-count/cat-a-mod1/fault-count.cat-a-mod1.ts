@@ -1,6 +1,7 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { pickBy } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
+import { getCompetencyFaults } from '../../../shared/helpers/competency';
 
 export class FaultCountAM1Helper {
 
@@ -73,7 +74,9 @@ export class FaultCountAM1Helper {
     const { drivingFaults, useOfStand, manualHandling,
       slalom, slowControl, uTurn, controlledStop, emergencyStop, avoidance } = data;
 
-    const drivingFaultSumOfSimpleCompetencies = Object.keys(pickBy(drivingFaults)).length;
+    const drivingFaultSumOfSimpleCompetencies = getCompetencyFaults(drivingFaults)
+      .reduce(((res, faultSummary) => res + faultSummary.faultCount), 0);
+    Object.keys(pickBy(drivingFaults)).length;
     const controlledStopDrivingFaults = (controlledStop && controlledStop === CompetencyOutcome.DF) ? 1 : 0;
     const useOfStandDrivingFaults = (useOfStand && useOfStand === CompetencyOutcome.DF) ? 1 : 0;
     const manualHandlingDrivingFaults = (manualHandling && manualHandling === CompetencyOutcome.DF) ? 1 : 0;
