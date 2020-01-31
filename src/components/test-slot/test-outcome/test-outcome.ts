@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NavController, ModalController, Modal } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
 import { StartTest, ActivateTest } from '../../../modules/tests/tests.actions';
-import { ResumingWriteUp } from '../../../modules/journal/journal.actions';
+import { EarlyStartModalDidEnter, ResumingWriteUp } from '../../../modules/journal/journal.actions';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
 import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
 import { startsWith, isEmpty } from 'lodash';
@@ -205,6 +205,7 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   displayCheckStartModal = (): void => {
+    this.store$.dispatch(new EarlyStartModalDidEnter());
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     this.modal = this.modalController.create(JOURNAL_EARLY_START_MODAL, { slotData: this.slotDetail }, options);
     this.modal.onDidDismiss((event: EarlyStartModalEvent) => {

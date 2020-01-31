@@ -22,11 +22,26 @@ export const CANDIDATE_DETAILS_SEEN = '[JournalPage] Candidate Details Seen';
 
 // Analytic actions
 
+export const EARLY_START_MODAL_DID_ENTER = '[JournalPage] Early Start Modal Entered';
+export const EARLY_START_MODAL_RETURN_TO_JOURNAL = '[JournalPage] Early Start Modal Exited - Return to Journal';
+export const EARLY_START_MODAL_CONTINUE_TO_TEST = '[JournalPage] Early Start Modal Exited - Continue to Test';
 export const JOURNAL_VIEW_DID_ENTER = '[JournalPage] Journal view did enter';
 export const JOURNAL_NAVIGATE_DAY = '[JournalPage] Navigate Day';
 export const JOURNAL_REFRESH = '[JournalPage] Journal Refresh';
 export const JOURNAL_REFRESH_ERROR = '[JournalPage] Journal Refresh Error';
 export const RESUMING_WRITE_UP = '[JournalPage] Resuming write-up';
+
+export class EarlyStartModalDidEnter implements Action {
+  readonly type = EARLY_START_MODAL_DID_ENTER;
+}
+
+export class EarlyStartDidContinue implements Action {
+  readonly type = EARLY_START_MODAL_CONTINUE_TO_TEST;
+}
+
+export class EarlyStartDidReturn implements Action {
+  readonly type = EARLY_START_MODAL_RETURN_TO_JOURNAL;
+}
 
 export class LoadJournal implements Action {
   readonly type = LOAD_JOURNAL;
@@ -138,4 +153,7 @@ export type JournalActionTypes =
   | ResumingWriteUp
   | JournalRefreshError
   | JournalRefresh
-  | CandidateDetailsSeen;
+  | CandidateDetailsSeen
+  | EarlyStartModalDidEnter
+  | EarlyStartDidContinue
+  | EarlyStartDidReturn;

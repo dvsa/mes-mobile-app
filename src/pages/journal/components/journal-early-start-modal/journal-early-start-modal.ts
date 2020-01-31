@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ModalEvent } from './journal-early-start-modal.constants';
 import { SlotDetail } from '@dvsa/mes-journal-schema';
 import { DateTime } from '../../../../shared/helpers/date-time';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { EarlyStartDidContinue, EarlyStartDidReturn } from '../../../../modules/journal/journal.actions';
 
 @IonicPage()
 @Component({
@@ -11,7 +14,11 @@ import { DateTime } from '../../../../shared/helpers/date-time';
 })
 export class JournalEarlyStartModal implements OnInit {
   private slotData: SlotDetail;
-  constructor(private viewCtrl: ViewController, private params: NavParams) {
+  constructor(
+    private store$: Store<StoreModel>,
+    private viewCtrl: ViewController,
+    private params: NavParams,
+  ) {
   }
 
   ngOnInit(): void {
@@ -23,10 +30,12 @@ export class JournalEarlyStartModal implements OnInit {
   }
 
   onCancel() {
+    this.store$.dispatch(new EarlyStartDidReturn());
     this.viewCtrl.dismiss(ModalEvent.CANCEL);
   }
 
   onStart() {
+    this.store$.dispatch(new EarlyStartDidContinue());
     this.viewCtrl.dismiss(ModalEvent.START);
   }
 

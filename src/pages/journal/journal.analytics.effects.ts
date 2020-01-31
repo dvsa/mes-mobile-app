@@ -13,6 +13,9 @@ import {
   JournalRefreshError,
   RESUMING_WRITE_UP,
   ResumingWriteUp,
+  EARLY_START_MODAL_DID_ENTER,
+  EARLY_START_MODAL_CONTINUE_TO_TEST,
+  EARLY_START_MODAL_RETURN_TO_JOURNAL,
 } from '../../modules/journal/journal.actions';
 import {
     AnalyticsDimensionIndices,
@@ -79,6 +82,33 @@ export class JournalAnalyticsEffects {
         return of(new AnalyticRecorded());
       },
     ),
+  );
+
+  @Effect()
+  earlyStartModalDidEnter$ = this.actions$.pipe(
+    ofType(EARLY_START_MODAL_DID_ENTER),
+    switchMap(() => {
+      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.DISPLAY_EARLY_START_MODAL);
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  earlyStartModalContinue$ = this.actions$.pipe(
+    ofType(EARLY_START_MODAL_CONTINUE_TO_TEST),
+    switchMap(() => {
+      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.EXIT_EARLY_START_MODAL_CONTINUE);
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  earlyStartModalReturn$ = this.actions$.pipe(
+    ofType(EARLY_START_MODAL_RETURN_TO_JOURNAL),
+    switchMap(() => {
+      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.EXIT_EARLY_START_MODAL_RETURN);
+      return of(new AnalyticRecorded());
+    }),
   );
 
   @Effect()
