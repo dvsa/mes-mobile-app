@@ -36,7 +36,7 @@ import {
 } from
 '../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.actions';
 
-interface SafetyAndBalanceModalState {
+interface VehicleChecksModalState {
   candidateName$: Observable<string>;
   safetyQuestions$: Observable<QuestionResult[]>;
   balanceQuestions$: Observable<QuestionResult[]>;
@@ -50,7 +50,7 @@ interface SafetyAndBalanceModalState {
 })
 export class VehicleChecksCatAMod2Modal {
 
-  pageState: SafetyAndBalanceModalState;
+  pageState: VehicleChecksModalState;
   formGroup: FormGroup;
 
   safetyQuestions: VehicleChecksQuestion[];

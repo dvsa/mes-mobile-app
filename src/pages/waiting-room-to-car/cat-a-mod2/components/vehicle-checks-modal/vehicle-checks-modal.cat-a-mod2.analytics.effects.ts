@@ -28,7 +28,7 @@ import {
 } from '../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.actions';
 
 @Injectable()
-export class SafetyAndBalanceModalCatAMod2AnalyticsEffects {
+export class VehicleChecksModalCatAMod2AnalyticsEffects {
 
   constructor(
     private analytics: AnalyticsProvider,

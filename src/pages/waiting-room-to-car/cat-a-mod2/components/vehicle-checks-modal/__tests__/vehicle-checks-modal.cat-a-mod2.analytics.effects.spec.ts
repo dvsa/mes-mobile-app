@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { SafetyAndBalanceModalCatAMod2AnalyticsEffects } from '../vehicle-checks-modal.cat-a-mod2.analytics.effects';
+import { VehicleChecksModalCatAMod2AnalyticsEffects } from '../vehicle-checks-modal.cat-a-mod2.analytics.effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
@@ -21,7 +21,7 @@ import {
 
 describe('Vehicle Checks Modal A Mod2 Analytics Effects', () => {
 
-  let effects: SafetyAndBalanceModalCatAMod2AnalyticsEffects;
+  let effects: VehicleChecksModalCatAMod2AnalyticsEffects;
   let analyticsProviderMock;
   let actions$: any;
   let store$: Store<StoreModel>;
@@ -36,13 +36,13 @@ describe('Vehicle Checks Modal A Mod2 Analytics Effects', () => {
         }),
       ],
       providers: [
-        SafetyAndBalanceModalCatAMod2AnalyticsEffects,
+        VehicleChecksModalCatAMod2AnalyticsEffects,
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         provideMockActions(() => actions$),
         Store,
       ],
     });
-    effects = TestBed.get(SafetyAndBalanceModalCatAMod2AnalyticsEffects);
+    effects = TestBed.get(VehicleChecksModalCatAMod2AnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
   });
