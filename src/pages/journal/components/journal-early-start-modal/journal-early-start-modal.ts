@@ -15,7 +15,7 @@ import { EarlyStartDidContinue, EarlyStartDidReturn } from '../../../../modules/
 export class JournalEarlyStartModal implements OnInit {
   private slotData: SlotDetail;
   constructor(
-    private store$: Store<StoreModel>,
+    public store$: Store<StoreModel>,
     private viewCtrl: ViewController,
     private params: NavParams,
   ) {

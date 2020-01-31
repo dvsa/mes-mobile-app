@@ -36,10 +36,6 @@ describe('JournalEarlyStartModal', () => {
     spyOn(navMock, 'get').and.returnValue(mockValue);
     modalFixture = TestBed.createComponent(JournalEarlyStartModal);
     modalComponent = modalFixture.componentInstance;
-    modalComponent.onCancel = () => {
-    };
-    modalComponent.onStart = () => {
-    };
   }));
   it('should return slot details from nav param', () => {
     modalFixture.detectChanges();
@@ -49,7 +45,7 @@ describe('JournalEarlyStartModal', () => {
   });
   it('should call onStart when the Start test button is clicked', () => {
     modalFixture.detectChanges();
-    spyOn(modalComponent, 'onStart');
+    spyOn(modalComponent, 'onStart').and.callThrough();
     const button = modalFixture.debugElement.query(By.css('.start-test-button'));
     button.triggerEventHandler('click', null);
     modalFixture.detectChanges();
@@ -57,7 +53,7 @@ describe('JournalEarlyStartModal', () => {
   });
   it('should call onCancel when the Cancel button is clicked', () => {
     modalFixture.detectChanges();
-    spyOn(modalComponent, 'onCancel');
+    spyOn(modalComponent, 'onCancel').and.callThrough();
     const button = modalFixture.debugElement.query(By.css('.cancel-button'));
     button.triggerEventHandler('click', null);
     modalFixture.detectChanges();
