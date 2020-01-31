@@ -1,4 +1,4 @@
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/BE/partial';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/C1/partial';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 
 export const catC1TestDataStateObject: CatC1UniqueTypes.TestData = {

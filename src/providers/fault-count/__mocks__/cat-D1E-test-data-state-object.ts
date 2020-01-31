@@ -1,7 +1,7 @@
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/C/partial';
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/D1E/partial';
+import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 
-export const catCTestDataStateObject: CatCUniqueTypes.TestData = {
+export const catD1ETestDataStateObject: CatD1EUniqueTypes.TestData = {
   drivingFaults: {
     controlsGears: 1,
     pedestrianCrossings: 2,
@@ -46,4 +46,22 @@ export const catCTestDataStateObject: CatCUniqueTypes.TestData = {
       outcome: 'P',
     }] as QuestionResult[],
   },
+  pcvDoorExercise: {
+    drivingFault: true,
+    seriousFault: false,
+  },
+  safetyQuestions: [
+    {
+      description: 'string',
+      outcome: 'P',
+    },
+    {
+      description: 'string',
+      outcome: 'P',
+    },
+    {
+      description: 'string',
+      outcome: 'P',
+    },
+  ],
 };
