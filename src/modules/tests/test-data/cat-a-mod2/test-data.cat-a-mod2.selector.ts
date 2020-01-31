@@ -32,6 +32,8 @@ export const areBalanceQuestionsCorrect = (state: SafetyAndBalanceQuestions) => 
   return correct;
 };
 
+export const getEyesightTest = (data: TestData) => data.eyesightTest;
+
 export const areBalanceQuestionsSelected = (
   state: SafetyAndBalanceQuestions) => typeof get(state, 'balanceQuestions') !== 'undefined';
 

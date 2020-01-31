@@ -24,7 +24,6 @@ import { VehicleDetailsComponent } from '../../components/vehicle-details/vehicl
 import { AccompanimentCardComponent } from '../../components/accompaniment-card/accompaniment-card';
 import { AccompanimentComponent } from '../../components/accompaniment/accompaniment';
 import { EyesightTestComponent } from '../../components/eyesight-test/eyesight-test';
-import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
@@ -48,7 +47,6 @@ describe('WaitingRoomToCarCatAMod1Page', () => {
         MockComponent(VehicleDetailsComponent),
         MockComponent(AccompanimentCardComponent),
         MockComponent(AccompanimentComponent),
-        MockComponent(PracticeModeBanner),
         MockComponent(TransmissionComponent),
         MockComponent(BikeCategoryTypeComponent),
       ],

@@ -5,14 +5,11 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/AM2';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
-  SchoolCarToggled,
-  DualControlsToggled,
-  GearboxCategoryChanged,
-  VehicleRegistrationChanged,
-} from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
+  SchoolBikeToggled,
+} from '../../../modules/tests/vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.actions';
 import { map } from 'rxjs/operators';
 import {
   InstructorAccompanimentToggled,
@@ -20,91 +17,63 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-
-// TODO - PREP-AMOD2: Use A Mod2 reducers
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
+import { getVehicleDetails } from
+'../../../modules/tests/vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,
   getGearboxCategory,
-  isAutomatic,
-  isManual,
 } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
-
-// TODO - PREP-AMOD2: Use a mod2 selectors
 import {
-  getSchoolCar,
-  getDualControls,
-} from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.selector';
+  getSchoolBike,
+} from '../../../modules/tests/vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.selector';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
   getOtherAccompaniment,
   getInterpreterAccompaniment,
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
-
-// TODO - PREP-AMOD2: Use a mod2 reducers
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
-import { QuestionProvider } from '../../../providers/question/question';
+import {
+  hasEyesightTestGotSeriousFault,
+  hasEyesightTestBeenCompleted,
+} from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.selector';
 import {
   EyesightTestReset,
   EyesightTestPassed,
   EyesightTestFailed,
 } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
-
-// TODO - PREP-AMOD2: Use a mod2 actions
-import {
-  TellMeQuestionSelected,
-  TellMeQuestionCorrect,
-  TellMeQuestionDrivingFault,
-  QuestionOutcomes,
-} from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
-
-// TODO - PREP-AMOD2: Use a mod2 selectors
-import {
-  hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
-
-// TODO - PREP-AMOD2: Use a mod2 reducers
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_A_MOD2 } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
-
-// TODO - PREP-AMOD2: Use a mod2 selectors
-import {
-  getVehicleChecksCatBE,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
-
-// TODO - PREP-AMOD2: Use a mod2 types
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { VehicleChecksCatAMod2Component } from './components/vehicle-checks/vehicle-checks';
+import { VehicleRegistrationChanged, GearboxCategoryChanged } from
+'../../../modules/tests/vehicle-details/common/vehicle-details.actions';
+import { getEyesightTest }
+from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
+import { getSafetyAndBalanceQuestions } from
+'../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.selector';
+import { getTestData } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
-  schoolCar$: Observable<boolean>;
-  dualControls$: Observable<boolean>;
+  schoolBike$: Observable<boolean>;
   instructorAccompaniment$: Observable<boolean>;
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
   eyesightTestComplete$: Observable<boolean>;
   eyesightTestFailed$: Observable<boolean>;
-  gearboxAutomaticRadioChecked$: Observable<boolean>;
-  gearboxManualRadioChecked$: Observable<boolean>;
-  vehicleChecksScore$: Observable<VehicleChecksScore>;
-
-  // TODO - PREP-AMOD2: Use a mod2 types
-  vehicleChecks$: Observable<CatBEUniqueTypes.VehicleChecks>;
+  safetyAndBalanceQuestionsScore$: Observable<VehicleChecksScore>;
+  safetyAndBalanceQuestions$: Observable<any>;
 }
 
 @IonicPage()
@@ -121,8 +90,6 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
 
   showEyesightFailureConfirmation: boolean = false;
 
-  tellMeQuestions: VehicleChecksQuestion[];
-
   constructor(
     public store$: Store<StoreModel>,
     public navController: NavController,
@@ -130,12 +97,8 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public faultCountProvider: FaultCountProvider,
-    public questionProvider: QuestionProvider,
-  ) {
+    ) {
     super(platform, navController, authenticationProvider);
-
-    // TODO - PREP-AMOD2: Change TestCategory to A Mod2
-    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
     this.form = new FormGroup({});
   }
 
@@ -160,13 +123,9 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
         select(getVehicleDetails),
         select(getGearboxCategory),
       ),
-      schoolCar$: currentTest$.pipe(
+      schoolBike$: currentTest$.pipe(
         select(getVehicleDetails),
-        select(getSchoolCar),
-      ),
-      dualControls$: currentTest$.pipe(
-        select(getVehicleDetails),
-        select(getDualControls),
+        select(getSchoolBike),
       ),
       instructorAccompaniment$: currentTest$.pipe(
         select(getAccompaniment),
@@ -186,36 +145,24 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
       ),
       eyesightTestComplete$: currentTest$.pipe(
         select(getTestData),
+        select(getEyesightTest),
         select(hasEyesightTestBeenCompleted),
       ),
       eyesightTestFailed$: currentTest$.pipe(
         select(getTestData),
+        select(getEyesightTest),
         select(hasEyesightTestGotSeriousFault),
       ),
-      gearboxAutomaticRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
-        map(isAutomatic),
-      ),
-      gearboxManualRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
-        map(isManual),
-      ),
-      vehicleChecksScore$: currentTest$.pipe(
+      safetyAndBalanceQuestionsScore$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO - PREP-AMOD2: Use a mod2 selector
-        select(getVehicleChecksCatBE),
-        map((vehicleChecks) => {
-
-          // TODO - PREP-AMOD2: Use a mod2 provider function
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
+        select(getSafetyAndBalanceQuestions),
+        map((safetyAndBalanceQuestions) => {
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.EUAM2, safetyAndBalanceQuestions);
         }),
       ),
-      vehicleChecks$: currentTest$.pipe(
+      safetyAndBalanceQuestions$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO - PREP-AMOD2: Use a mod2 selector
-        select(getVehicleChecksCatBE),
+        select(getSafetyAndBalanceQuestions),
       ),
     };
   }
@@ -228,12 +175,8 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
     this.store$.dispatch(new PersistTests());
   }
 
-  schoolCarToggled(): void {
-    this.store$.dispatch(new SchoolCarToggled());
-  }
-
-  dualControlsToggled(): void {
-    this.store$.dispatch(new DualControlsToggled());
+  schoolBikeToggled(): void {
+    this.store$.dispatch(new SchoolBikeToggled());
   }
 
   transmissionChanged(transmission: GearboxCategory): void {
@@ -301,21 +244,6 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
   eyesightFailCancelled = () => {
     this.form.get('eyesightCtrl') && this.form.get('eyesightCtrl').reset();
     this.store$.dispatch(new EyesightTestReset());
-  }
-
-  tellMeQuestionChanged(newTellMeQuestion: VehicleChecksQuestion): void {
-    this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
-    if (this.form.controls['tellMeQuestionOutcome']) {
-      this.form.controls['tellMeQuestionOutcome'].setValue('');
-    }
-  }
-
-  tellMeQuestionOutcomeChanged(outcome: string): void {
-    if (outcome === QuestionOutcomes.Pass) {
-      this.store$.dispatch(new TellMeQuestionCorrect());
-      return;
-    }
-    this.store$.dispatch(new TellMeQuestionDrivingFault());
   }
 
   eyesightTestResultChanged(passed: boolean): void {

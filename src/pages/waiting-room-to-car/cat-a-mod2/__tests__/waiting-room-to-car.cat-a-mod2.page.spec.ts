@@ -29,9 +29,9 @@ import { EyesightTestComponent } from '../../components/eyesight-test/eyesight-t
 import { EyesightTestReset } from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { VehicleChecksCatAMod2Component } from '../components/vehicle-checks/vehicle-checks';
 import { configureTestSuite } from 'ng-bullet';
+import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 
 describe('WaitingRoomToCarCatAMod2Page', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatAMod2Page>;
@@ -51,7 +51,7 @@ describe('WaitingRoomToCarCatAMod2Page', () => {
         MockComponent(AccompanimentCardComponent),
         MockComponent(AccompanimentComponent),
         MockComponent(VehicleChecksCatAMod2Component),
-        MockComponent(WarningBannerComponent),
+        MockComponent(TransmissionComponent),
       ],
       imports: [
         IonicModule,
@@ -67,9 +67,9 @@ describe('WaitingRoomToCarCatAMod2Page', () => {
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
-                  vehicleChecks: {
-                    tellMeQuestions: [],
-                    showMeQuestions: [],
+                  safetyAndBalanceQuestions: {
+                    safetyQuestions: [],
+                    balanceQuestions: [],
                   },
                   seriousFaults: [],
                   eyesightTest: {},
@@ -131,11 +131,6 @@ describe('WaitingRoomToCarCatAMod2Page', () => {
       it('should dispatch an EyesightResultReset action when the when the method is called', () => {
         component.eyesightFailCancelled();
         expect(store$.dispatch).toHaveBeenCalledWith(new EyesightTestReset());
-      });
-      it('should show the is load secure warning banner', () => {
-        fixture.detectChanges();
-        const warningBanner = fixture.debugElement.query(By.css('warning-banner'));
-        expect(warningBanner).not.toBeNull();
       });
     });
 

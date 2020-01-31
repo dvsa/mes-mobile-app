@@ -14,7 +14,7 @@ import {
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 import { configureTestSuite } from 'ng-bullet';
-import { SafetyQuestionOutcomeChanged, BalanceQuestionSelected, SafetyQuestionSelected, BalanceQuestionOutcomeChanged }
+import { SafetyQuestionSelected, BalanceQuestionSelected, SafetyQuestionOutcomeChanged, BalanceQuestionOutcomeChanged }
 from '../../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.actions';
 
 describe('VehicleChecksCatAMod2Modal', () => {
@@ -39,6 +39,7 @@ describe('VehicleChecksCatAMod2Modal', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
     });
+
   });
 
   beforeEach(async(() => {
@@ -69,7 +70,7 @@ describe('VehicleChecksCatAMod2Modal', () => {
     });
 
     describe('safetyQuestionOutcomeChanged()', () => {
-      it('should dispatch a new safetyQuestionOutcomeChanged action', () => {
+      it('should dispatch a new SafetyQuestionOutcomeChanged action', () => {
         const safetyQuestionOutcomePayload: QuestionOutcome = 'P';
         const index = 1;
         component.safetyQuestionOutcomeChanged(safetyQuestionOutcomePayload, index);
@@ -121,5 +122,9 @@ describe('VehicleChecksCatAMod2Modal', () => {
         expect(component.shouldDisplayBanner()).toBeTruthy();
       });
     });
+  });
+
+  describe('DOM', () => {
+
   });
 });

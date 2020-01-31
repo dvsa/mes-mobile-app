@@ -39,7 +39,7 @@ describe('PreTestDeclarations Cat A Mod2 reducer', () => {
       insuranceDeclarationAccepted: true,
       residencyDeclarationAccepted: true,
       preTestSignature: 'somesig',
-      DL196CBTCertNumber: 'abc123',
+      DL196CBTCertNumber: '123456',
     };
 
     const result = preTestDeclarationsCatAMod2Reducer(dirtyState, new ClearPreTestDeclarations());
@@ -51,5 +51,4 @@ describe('PreTestDeclarations Cat A Mod2 reducer', () => {
     const result = preTestDeclarationsCatAMod2Reducer(initialState, new CbtNumberChanged('12345678'));
     expect(result.DL196CBTCertNumber).toBe('12345678');
   });
-
 });

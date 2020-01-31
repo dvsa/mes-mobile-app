@@ -1,18 +1,14 @@
 <ion-row class="mes-validated-row mes-row-separator" id="vehicle-checks" [formGroup]="formGroup">
   <div class="validation-bar" [class.ng-invalid]="invalid"></div>
   <ion-col col-32 align-self-center class="component-label">
-    <label>Vehicle checks</label>
+    <label>Safety and Balance Questions</label>
   </ion-col>
   <ion-col padding-left align-self-center>
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col col-48 *ngIf="!everyQuestionHasOutcome()">
-        <input
-          type="button"
-          formControlName="vehicleChecksSelectQuestions"
-          class="mes-return-button"
-          (click)="openVehicleChecksModal()"
-        >
+        <input type="button" formControlName="safetyAndBalanceSelectQuestions" class="mes-return-button"
+          (click)="openVehicleChecksModal()">
       </ion-col>
       <ion-col col-48 align-self-center class="vehicle-check-score" *ngIf="everyQuestionHasOutcome()">
         <ion-row class="vehicle-checks-result" *ngIf="!hasDrivingFault() && !hasSeriousFault()">
@@ -23,14 +19,15 @@
           serious fault
         </ion-row>
         <ion-row class="vehicle-checks-result" *ngIf="hasDrivingFault()">
-          <driving-faults-badge class="badge" showOnZero=true [count]='vehicleChecksScore.drivingFaults'></driving-faults-badge>
+          <driving-faults-badge class="badge" showOnZero=true [count]='safetyAndBalanceQuestionsScore.drivingFaults'>
+          </driving-faults-badge>
           driving faults
         </ion-row>
       </ion-col>
       <ion-col col-47 padding-right *ngIf="everyQuestionHasOutcome()" class="see-answer-link-container">
         <button type="button" class="mes-link-button see-answer-link" (click)="openVehicleChecksModal()" ion-button>
           <span>
-            See answers 
+            See answers
             <ion-icon name="arrow-forward"></ion-icon>
           </span>
         </button>

@@ -4,9 +4,7 @@ import { CAT_A_MOD2 } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
 import { App } from '../../../../../app/app.component';
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
-
-// TODO - PREP-AMOD2: Use a mod2 types
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
 import { get } from 'lodash';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
@@ -18,13 +16,12 @@ export class VehicleChecksCatAMod2Component implements OnChanges {
 
   @Input() onCloseVehicleChecksModal: () => {};
 
-  @Input() vehicleChecksScore: VehicleChecksScore;
+  @Input() safetyAndBalanceQuestionsScore: VehicleChecksScore;
 
-  // TODO - PREP-AMOD2: Use a mod2 types
-  @Input() vehicleChecks: CatBEUniqueTypes.VehicleChecks;
+  @Input() safetyAndBalanceQuestions: SafetyAndBalanceQuestions;
 
   @Input()
-  vehicleChecksSelectQuestions: string;
+  safetyAndBalanceSelectQuestions: string;
 
   @Input()
   formGroup: FormGroup;
@@ -54,17 +51,16 @@ export class VehicleChecksCatAMod2Component implements OnChanges {
       const outcome = get(question, 'outcome', undefined);
       return outcome !== undefined;
     };
-
-    return this.vehicleChecks.showMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
-      && this.vehicleChecks.tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true);
+    return this.safetyAndBalanceQuestions.safetyQuestions.reduce((res, question) => res && hasOutcome(question), true)
+      && this.safetyAndBalanceQuestions.balanceQuestions.reduce((res, question) => res && hasOutcome(question), true);
   }
 
   hasSeriousFault(): boolean {
-    return this.vehicleChecksScore.seriousFaults > 0;
+    return this.safetyAndBalanceQuestionsScore.seriousFaults > 0;
   }
 
   hasDrivingFault(): boolean {
-    return this.vehicleChecksScore.drivingFaults > 0;
+    return this.safetyAndBalanceQuestionsScore.drivingFaults > 0;
   }
 
   incompleteVehicleChecks(): { vehicleChecks: boolean } {
@@ -82,7 +78,7 @@ export class VehicleChecksCatAMod2Component implements OnChanges {
         disabled: false,
       },
       [this.validateVehicleChecks.bind(this)]);
-      this.formGroup.addControl('vehicleChecksSelectQuestions', this.formControl);
+      this.formGroup.addControl('safetyAndBalanceSelectQuestions', this.formControl);
     }
     this.formControl.patchValue('Select questions');
   }

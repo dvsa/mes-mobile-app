@@ -14,6 +14,8 @@ import showMeQuestionsVocationalConstants
   from '../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
 import showMeQuestionsVocationalTrailerConstants
   from '../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
+import safetyQuestionsCatAMod2Constants from '../../shared/constants/safety-questions.cat-a-mod2.constants';
+import balanceQuestionsCatAMod2Constants from '../../shared/constants/balance-questions.cat-a-mod2.constants';
 
 @Injectable()
 export class QuestionProvider {
@@ -54,6 +56,28 @@ export class QuestionProvider {
       case TestCategory.DE:
       case TestCategory.D1E:
         return showMeQuestionsVocationalTrailerConstants;
+      default:
+        return [];
+    }
+  }
+  getSafetyQuestions(testCategory: TestCategory): VehicleChecksQuestion[] {
+    switch (testCategory) {
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAM2:
+      case TestCategory.EUAMM2:
+        return safetyQuestionsCatAMod2Constants;
+      default:
+        return [];
+    }
+  }
+  getBalanceQuestions(testCategory: TestCategory): VehicleChecksQuestion[] {
+    switch (testCategory) {
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAM2:
+      case TestCategory.EUAMM2:
+        return balanceQuestionsCatAMod2Constants;
       default:
         return [];
     }

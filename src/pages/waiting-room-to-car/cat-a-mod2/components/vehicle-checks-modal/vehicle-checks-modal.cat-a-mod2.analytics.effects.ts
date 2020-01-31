@@ -16,18 +16,16 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { TestsModel } from '../../../../../modules/tests/tests.model';
 import { formatAnalyticsText } from '../../../../../shared/helpers/format-analytics-text';
-
-// TODO - PREP-AMOD2: Use a mod2 actions
 import {
-  SHOW_ME_QUESTION_OUTCOME_CHANGED,
-  SHOW_ME_QUESTION_SELECTED,
-  ShowMeQuestionOutcomeChanged,
-  ShowMeQuestionSelected,
-  TELL_ME_QUESTION_OUTCOME_CHANGED,
-  TELL_ME_QUESTION_SELECTED,
-  TellMeQuestionOutcomeChanged,
-  TellMeQuestionSelected,
-} from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+  SAFETY_QUESTION_OUTCOME_CHANGED,
+  SAFETY_QUESTION_SELECTED,
+  SafetyQuestionOutcomeChanged,
+  SafetyQuestionSelected,
+  BALANCE_QUESTION_OUTCOME_CHANGED,
+  BALANCE_QUESTION_SELECTED,
+  BalanceQuestionOutcomeChanged,
+  BalanceQuestionSelected,
+} from '../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.actions';
 
 @Injectable()
 export class VehicleChecksModalCatAMod2AnalyticsEffects {
@@ -58,8 +56,8 @@ export class VehicleChecksModalCatAMod2AnalyticsEffects {
   );
 
   @Effect()
-  showMeQuestionChanged$ = this.actions$.pipe(
-    ofType(SHOW_ME_QUESTION_SELECTED),
+  safetyQuestionChanged$ = this.actions$.pipe(
+    ofType(SAFETY_QUESTION_SELECTED),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -67,20 +65,20 @@ export class VehicleChecksModalCatAMod2AnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests]: [ShowMeQuestionSelected, TestsModel]) => {
-      const eventText = `show me question ${action.index + 1} changed`;
+    switchMap(([action, tests]: [SafetyQuestionSelected, TestsModel]) => {
+      const eventText = `safety question ${action.index + 1} changed`;
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.VEHICLE_CHECKS, tests),
         eventText,
-        action.showMeQuestion.code,
+        action.safetyQuestion.code,
       );
       return of(new AnalyticRecorded());
     }),
   );
 
   @Effect()
-  showMeQuestionOutComeChanged$ = this.actions$.pipe(
-    ofType(SHOW_ME_QUESTION_OUTCOME_CHANGED),
+  safetyQuestionOutcomeChanged$ = this.actions$.pipe(
+    ofType(SAFETY_QUESTION_OUTCOME_CHANGED),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -88,9 +86,9 @@ export class VehicleChecksModalCatAMod2AnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests]: [ShowMeQuestionOutcomeChanged, TestsModel]) => {
-      const eventText = `show me question ${action.index + 1} outcome changed`;
-      const outComeText = action.showMeQuestionOutcome === 'P' ? 'correct' : 'driving fault';
+    switchMap(([action, tests]: [SafetyQuestionOutcomeChanged, TestsModel]) => {
+      const eventText = `safety question ${action.index + 1} outcome changed`;
+      const outComeText = action.safetyQuestionOutcome === 'P' ? 'correct' : 'driving fault';
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.VEHICLE_CHECKS, tests),
         eventText,
@@ -101,8 +99,8 @@ export class VehicleChecksModalCatAMod2AnalyticsEffects {
   );
 
   @Effect()
-  tellMeQuestionChanged$ = this.actions$.pipe(
-    ofType(TELL_ME_QUESTION_SELECTED),
+  balanceQuestionChanged$ = this.actions$.pipe(
+    ofType(BALANCE_QUESTION_SELECTED),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -110,20 +108,20 @@ export class VehicleChecksModalCatAMod2AnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests]: [TellMeQuestionSelected, TestsModel]) => {
-      const eventText = `tell me question ${action.index + 1} changed`;
+    switchMap(([action, tests]: [BalanceQuestionSelected, TestsModel]) => {
+      const eventText = `balance question ${action.index + 1} changed`;
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.VEHICLE_CHECKS, tests),
         eventText,
-        action.tellMeQuestion.code,
+        action.balanceQuestion.code,
       );
       return of(new AnalyticRecorded());
     }),
   );
 
   @Effect()
-  tellMeQuestionOutComeChanged$ = this.actions$.pipe(
-    ofType(TELL_ME_QUESTION_OUTCOME_CHANGED),
+  balanceQuestionOutcomeChanged$ = this.actions$.pipe(
+    ofType(BALANCE_QUESTION_OUTCOME_CHANGED),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -131,9 +129,9 @@ export class VehicleChecksModalCatAMod2AnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests]: [TellMeQuestionOutcomeChanged, TestsModel]) => {
-      const eventText = `tell me question ${action.index + 1} outcome changed`;
-      const outComeText = action.tellMeQuestionOutcome === 'P' ? 'correct' : 'driving fault';
+    switchMap(([action, tests]: [BalanceQuestionOutcomeChanged, TestsModel]) => {
+      const eventText = `balance question ${action.index + 1} outcome changed`;
+      const outComeText = action.balanceQuestionOutcome === 'P' ? 'correct' : 'driving fault';
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.VEHICLE_CHECKS, tests),
         eventText,

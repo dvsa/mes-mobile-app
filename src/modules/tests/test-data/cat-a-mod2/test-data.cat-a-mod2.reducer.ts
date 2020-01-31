@@ -1,9 +1,9 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
-import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.reducer';
-import { dangerousFaultsReducer } from '../common/dangerous-faults/dangerous-faults.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { vehicleChecksCatAMod2Reducer } from './vehicle-checks/vehicle-checks.cat-a-mod2.reducer';
+import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.reducer';
+import { dangerousFaultsReducer } from '../common/dangerous-faults/dangerous-faults.reducer';
 import { ecoReducer } from '../common/eco/eco.reducer';
 import { etaReducer } from '../common/eta/eta.reducer';
 import { eyesightTestReducer } from '../common/eyesight-test/eyesight-test.reducer';
