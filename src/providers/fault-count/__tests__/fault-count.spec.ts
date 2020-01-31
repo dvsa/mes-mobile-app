@@ -2,6 +2,7 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { FaultCountProvider } from '../fault-count';
 import { TestBed } from '@angular/core/testing';
+import { catAM1TestDataStateObject } from '../__mocks__/cat-AM1-test-data-state-object';
 import { catBTestDataStateObject } from '../__mocks__/cat-B-test-data-state-object';
 import { catBETestDataStateObject } from '../__mocks__/cat-BE-test-data-state-object';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -15,6 +16,7 @@ import { FaultCountBHelper } from '../cat-b/fault-count.cat-b';
 import { FaultCountBEHelper } from '../cat-be/fault-count.cat-be';
 import { FaultCountCHelper } from '../cat-c/fault-count.cat-c';
 import { configureTestSuite } from 'ng-bullet';
+import { FaultCountAHelper } from '../cat-a/fault-count.cat-a';
 
 describe('FaultCountProvider', () => {
 
@@ -55,6 +57,8 @@ describe('FaultCountProvider', () => {
     spyOn(FaultCountCHelper, 'getDrivingFaultSumCountCatC1E').and.callThrough();
     spyOn(FaultCountCHelper, 'getSeriousFaultSumCountCatC1E').and.callThrough();
     spyOn(FaultCountCHelper, 'getDangerousFaultSumCountCatC1E').and.callThrough();
+
+    spyOn(FaultCountAHelper, 'getDangerousFaultSumCountCatAM1').and.callThrough();
   });
 
   describe('getDrivingFaultSumCount', () => {
@@ -135,6 +139,10 @@ describe('FaultCountProvider', () => {
     it('should call the category C1E specific method for getting the dangerous fault sum count', () => {
       faultCountProvider.getDangerousFaultSumCount(TestCategory.C1E, catC1ETestDataStateObject);
       expect((FaultCountCHelper as any).getDangerousFaultSumCountCatC1E).toHaveBeenCalled();
+    });
+    it('should call the category AM1 specific method for getting the dangerous fault sum count', () => {
+      faultCountProvider.getDangerousFaultSumCount(TestCategory.EUAM1, catAM1TestDataStateObject);
+      expect((FaultCountAHelper as any).getDangerousFaultSumCountCatAM1).toHaveBeenCalled();
     });
   });
 

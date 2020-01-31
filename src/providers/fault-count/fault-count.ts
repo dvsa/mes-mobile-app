@@ -9,6 +9,7 @@ import { FaultCountBEHelper } from './cat-be/fault-count.cat-be';
 import { FaultCountCHelper } from './cat-c/fault-count.cat-c';
 
 import { sumManoeuvreFaults } from '../../shared/helpers/faults';
+import { FaultCountAHelper } from './cat-a/fault-count.cat-a';
 
 @Injectable()
 export class FaultCountProvider {
@@ -52,7 +53,7 @@ export class FaultCountProvider {
       case TestCategory.CE: return FaultCountCHelper.getDangerousFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getDangerousFaultSumCountCatC(data);
       // TODO: To be implemented properly in MES-4420
-      case TestCategory.EUAM1: return FaultCountBEHelper.getDangerousFaultSumCountCatBE(data);
+      case TestCategory.EUAM1: return FaultCountAHelper.getDangerousFaultSumCountCatAM1(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
