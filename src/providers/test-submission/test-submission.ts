@@ -89,9 +89,12 @@ export class TestSubmissionProvider {
     return removeNullFields(data);
   }
 
+  // NOTE debrief witnessed and D255 should not be removed
   removeFieldsForPartialData = (data: TestResultSchemasUnion): Partial<TestResultSchemasUnion> => {
     Object.keys(data.testSummary).map((key: string) => {
-      data.testSummary[key] = null;
+      if (key !== 'debriefWitnessed' && key !== 'D255') {
+        data.testSummary[key] = null;
+      }
     });
 
     return data;
