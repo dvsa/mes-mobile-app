@@ -2,7 +2,7 @@ import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { pickBy } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
-export class FaultCountAHelper {
+export class FaultCountAM1Helper {
 
   public static getDangerousFaultSumCountCatAM1 = (data: TestData): number => {
     // The way how we store serious faults differs for certain competencies

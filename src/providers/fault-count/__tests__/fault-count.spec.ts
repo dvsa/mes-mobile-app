@@ -16,7 +16,7 @@ import { FaultCountBHelper } from '../cat-b/fault-count.cat-b';
 import { FaultCountBEHelper } from '../cat-be/fault-count.cat-be';
 import { FaultCountCHelper } from '../cat-c/fault-count.cat-c';
 import { configureTestSuite } from 'ng-bullet';
-import { FaultCountAHelper } from '../cat-a/fault-count.cat-a';
+import { FaultCountAM1Helper } from '../cat-am1/fault-count.cat-a';
 
 describe('FaultCountProvider', () => {
 
@@ -58,7 +58,7 @@ describe('FaultCountProvider', () => {
     spyOn(FaultCountCHelper, 'getSeriousFaultSumCountCatC1E').and.callThrough();
     spyOn(FaultCountCHelper, 'getDangerousFaultSumCountCatC1E').and.callThrough();
 
-    spyOn(FaultCountAHelper, 'getDangerousFaultSumCountCatAM1').and.callThrough();
+    spyOn(FaultCountAM1Helper, 'getDangerousFaultSumCountCatAM1').and.callThrough();
   });
 
   describe('getDrivingFaultSumCount', () => {
@@ -142,7 +142,7 @@ describe('FaultCountProvider', () => {
     });
     it('should call the category AM1 specific method for getting the dangerous fault sum count', () => {
       faultCountProvider.getDangerousFaultSumCount(TestCategory.EUAM1, catAM1TestDataStateObject);
-      expect((FaultCountAHelper as any).getDangerousFaultSumCountCatAM1).toHaveBeenCalled();
+      expect((FaultCountAM1Helper as any).getDangerousFaultSumCountCatAM1).toHaveBeenCalled();
     });
   });
 
@@ -300,7 +300,7 @@ describe('FaultCountProvider', () => {
 
   describe('getDangerousFaultSumCountCatAM1', () => {
     it('should return the dangerous faults count', () => {
-      expect((FaultCountAHelper as any).getDangerousFaultSumCountCatAM1(catAM1TestDataStateObject)).toBe(7);
+      expect((FaultCountAM1Helper as any).getDangerousFaultSumCountCatAM1(catAM1TestDataStateObject)).toBe(7);
     });
   });
 });
