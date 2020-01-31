@@ -1,0 +1,73 @@
+<ion-card id="speed-check">
+  <ion-card-header>
+    <ion-card-title>
+      <h4 class="fault-heading">Speed requirements</h4>
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row padding>
+        <ion-col col-32 no-padding>
+          <h4>Emergency stop</h4>
+        </ion-col>
+        <ion-col col-5 no-padding></ion-col>
+        <ion-col col-20 no-padding>
+          <div>
+            1st: 46km/h
+          </div>
+        </ion-col>
+        <ion-col col-20 no-padding>
+          <div>
+            2nd: 52km/h
+          </div>
+        </ion-col>
+        <ion-col col-4 no-padding align-self-start>
+            <div class="counter-icon">
+              <img *ngIf="true" src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met" class="tick-icon"/>
+              <img *ngIf="false" src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met" class="cross-icon"/>
+            </div>
+        </ion-col>
+        <ion-col col-13 no-padding>
+          <div class="counter-label" *ngIf="true">
+            Met
+          </div>
+          <div class="counter-label" *ngIf="false">
+            Not Met
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <!--Todo (MES-4724): remove the below row when above is linked up to data-->
+      <ion-row padding>
+        <ion-col col-32 no-padding>
+          <h4>Avoidance exercise</h4>
+        </ion-col>
+        <ion-col col-5 no-padding></ion-col>
+        <ion-col col-20 no-padding>
+          <div>
+            1st: 46km/h
+          </div>
+        </ion-col>
+        <ion-col col-20 no-padding>
+          <div>
+            2nd: 38km/h
+          </div>
+        </ion-col>
+        <ion-col col-4 no-padding align-self-start>
+          <div class="counter-icon">
+            <img *ngIf="false" src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met" class="tick-icon"/>
+            <img *ngIf="true" src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met" class="cross-icon"/>
+          </div>
+        </ion-col>
+        <ion-col col-13 no-padding>
+          <div class="counter-label" *ngIf="false">
+            Met
+          </div>
+          <div class="counter-label" *ngIf="true">
+            Not Met
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

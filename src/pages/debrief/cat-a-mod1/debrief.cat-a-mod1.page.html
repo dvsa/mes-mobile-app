@@ -8,6 +8,7 @@
   <test-outcome-debrief-card [outcome]="outcome"></test-outcome-debrief-card>
 </ion-header>
 <ion-content>
+  <speed-check-debrief-card></speed-check-debrief-card>
   <eta-debrief-card [hasPhysicalEta]="hasPhysicalEta" [hasVerbalEta]="hasVerbalEta"></eta-debrief-card>
   <dangerous-faults-debrief-card [dangerousFaults]="pageState.dangerousFaults$ | async"></dangerous-faults-debrief-card>
   <serious-faults-debrief-card [seriousFaults]="pageState.seriousFaults$ | async"></serious-faults-debrief-card>
