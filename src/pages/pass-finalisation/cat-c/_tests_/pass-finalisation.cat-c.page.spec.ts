@@ -53,6 +53,136 @@ describe('PassFinalisationCatCPage', () => {
     { category: TestCategory.CE, showCode78: true },
   ];
 
+  const automaticManualBannerConditions = [
+    { category: TestCategory.C,
+      code78: true,
+      transmission: TransmissionType.Automatic,
+      automaticBanner: true,
+      manualBanner: false,
+      desc: 'Automatic banner shown when automatic transmission and code78 present',
+    },
+    {
+      category: TestCategory.C,
+      code78: false,
+      transmission: TransmissionType.Automatic,
+      automaticBanner: false,
+      manualBanner: true,
+      desc: 'Manual banner shown when automatic transmission and no code78 present',
+    },
+    {
+      category: TestCategory.C,
+      code78: false,
+      transmission: TransmissionType.Manual,
+      automaticBanner: false,
+      manualBanner: true,
+      desc: 'Manual banner shown when manual transmission and no code78 present',
+    },
+    {
+      category: TestCategory.C,
+      code78: true,
+      transmission: TransmissionType.Manual,
+      automaticBanner: false,
+      manualBanner: true,
+      desc: 'Manual banner shown when manual transmission and code78 present',
+    },
+    {
+      category: TestCategory.CE,
+      code78: true,
+      transmission: TransmissionType.Automatic,
+      automaticBanner: true,
+      manualBanner: false,
+      desc: 'Automatic banner shown when automatic transmission and code78 present',
+    },
+    {
+      category: TestCategory.CE,
+      code78: false,
+      transmission: TransmissionType.Automatic,
+      automaticBanner: false,
+      manualBanner: true,
+      desc: 'Manual banner shown when automatic transmission and no code78 present',
+    },
+    {
+      category: TestCategory.CE,
+      code78: false,
+      transmission: TransmissionType.Manual,
+      automaticBanner: false,
+      manualBanner: true,
+      desc: 'Manual banner shown when manual transmission and no code78 present',
+    },
+    {
+      category: TestCategory.CE,
+      code78: true,
+      transmission: TransmissionType.Manual,
+      automaticBanner: false,
+      manualBanner: true,
+      desc: 'Manual banner shown when manual transmission and code78 present',
+    },
+    {
+      category: TestCategory.C1,
+      code78: true,
+      transmission: TransmissionType.Automatic,
+      automaticBanner: false,
+      manualBanner: false,
+      desc: 'No banner shown when automatic transmission and code78 present',
+    },
+    {
+      category: TestCategory.C1,
+      code78: false,
+      transmission: TransmissionType.Automatic,
+      automaticBanner: false,
+      manualBanner: false,
+      desc: 'No banner shown when automatic transmission and no code78 present',
+    },
+    {
+      category: TestCategory.C1,
+      code78: false,
+      transmission: TransmissionType.Manual,
+      automaticBanner: false,
+      manualBanner: false,
+      desc: 'No banner shown when manual transmission and no code78 present',
+    },
+    {
+      category: TestCategory.C1,
+      code78: true,
+      transmission: TransmissionType.Manual,
+      automaticBanner: false,
+      manualBanner: false,
+      desc: 'No banner shown when manual transmission and code78 present',
+    },
+    {
+      category: TestCategory.C1E,
+      code78: true,
+      transmission: TransmissionType.Automatic,
+      automaticBanner: false,
+      manualBanner: false,
+      desc: 'No banner shown when automatic transmission and code78 present',
+    },
+    {
+      category: TestCategory.C1E,
+      code78: false,
+      transmission: TransmissionType.Automatic,
+      automaticBanner: false,
+      manualBanner: false,
+      desc: 'No banner shown when automatic transmission and no code78 present',
+    },
+    {
+      category: TestCategory.C1E,
+      code78: false,
+      transmission: TransmissionType.Manual,
+      automaticBanner: false,
+      manualBanner: false,
+      desc: 'No banner shown when manual transmission and no code78 present',
+    },
+    {
+      category: TestCategory.C1E,
+      code78: true,
+      transmission: TransmissionType.Manual,
+      automaticBanner: false,
+      manualBanner: false,
+      desc: 'No banner shown when manual transmission and code78 present',
+    },
+  ];
+
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -187,19 +317,14 @@ describe('PassFinalisationCatCPage', () => {
       }));
     });
 
-    describe('showAutomaticBanner', () => {
-      it('should show the automatic banner when it is valid', () => {
-        component.transmission = TransmissionType.Automatic;
-        component.code78Present = true;
-        expect(component.shouldShowAutomaticBanner()).toEqual(true);
-      });
-    });
+    automaticManualBannerConditions.forEach((cat) => {
+      it(`${cat.desc} (${cat.category})`, () => {
+        component.transmission = cat.transmission;
+        component.code78Present = cat.code78;
+        component.testCategory = cat.category;
+        expect(component.shouldShowAutomaticBanner()).toEqual(cat.automaticBanner);
+        expect(component.shouldShowManualBanner()).toEqual(cat.manualBanner);
 
-    describe('should show manual banner', () => {
-      it('should show the manual banner when it is valid', () => {
-        component.transmission = TransmissionType.Manual;
-        component.code78Present = true;
-        expect(component.shouldShowManualBanner()).toEqual(true);
       });
     });
 

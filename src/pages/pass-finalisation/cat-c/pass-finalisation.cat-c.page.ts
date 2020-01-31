@@ -278,7 +278,7 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   }
 
   shouldShowCode78Banner(): boolean {
-    return this.code78Present !== null && this.transmission !== null;
+    return this.code78Present !== null && this.transmission !== null && this.shouldShowCode78();
   }
 
   shouldShowManualBanner(): boolean {
@@ -295,7 +295,7 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   shouldShowAutomaticBanner(): boolean {
     if (this.shouldShowCode78Banner()) {
       return (
-        this.transmission === TransmissionType.Automatic && this.code78Present
+        this.code78Present && this.transmission === TransmissionType.Automatic
       );
     }
     return false;
