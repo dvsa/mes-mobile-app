@@ -191,6 +191,7 @@ describe('PassFinalisationCatCPage', () => {
       it('should show the automatic banner when it is valid', () => {
         component.transmission = TransmissionType.Automatic;
         component.code78Present = true;
+        component.testCategory = TestCategory.C;
         expect(component.shouldShowAutomaticBanner()).toEqual(true);
       });
     });
@@ -199,6 +200,7 @@ describe('PassFinalisationCatCPage', () => {
       it('should show the manual banner when it is valid', () => {
         component.transmission = TransmissionType.Manual;
         component.code78Present = true;
+        component.testCategory = TestCategory.C;
         expect(component.shouldShowManualBanner()).toEqual(true);
       });
     });
