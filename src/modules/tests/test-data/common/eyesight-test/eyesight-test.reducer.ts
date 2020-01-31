@@ -5,7 +5,7 @@ export const initialState: EyesightTest = {};
 
 export function eyesightTestReducer(
   state = initialState,
-  action: eyesightTestActions.EyeSightActions,
+  action: eyesightTestActions.Types,
 ): EyesightTest {
   switch (action.type) {
     case eyesightTestActions.EYESIGHT_TEST_PASSED:
