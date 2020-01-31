@@ -21,17 +21,13 @@ import {
   CandidateDetailsSlotChangeViewed,
 } from './candidate-details.actions';
 import { Business, TestSlot } from '@dvsa/mes-journal-schema';
+import { driverTypeSwitch, driverTypeDescription } from '../../shared/helpers/driver-type';
 
 interface CandidateDetailsPageState {
   name: string;
   time: string;
   details: Details;
   business: Business;
-}
-
-enum driverType {
-  R = 'Rider',
-  D = 'Driver',
 }
 
 @IonicPage()
@@ -44,7 +40,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
   slot: TestSlot;
   slotChanged: boolean = false;
   testCategory = TestCategory.B;
-  driverTypeLabel: driverType = driverType.D;
+  driverTypeLabel: driverTypeDescription = driverTypeDescription.DRIVER;
 
   constructor(
     public navController: NavController,
@@ -75,7 +71,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
     }
     this.store$.dispatch(new ClearChangedSlot(this.slot.slotDetail.slotId));
 
-    this.driverTypeLabel = this.driverTypeSwitch(this.testCategory);
+    this.driverTypeLabel = driverTypeSwitch(this.testCategory);
   }
 
   ionViewDidEnter(): void {
@@ -89,13 +85,5 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
 
   public specialNeedsIsPopulated(specialNeeds: string | string[]): boolean {
     return Array.isArray(specialNeeds);
-  }
-
-  driverTypeSwitch(cat: TestCategory): driverType {
-    // switch to determine Driver or Rider based upon category
-    if (cat.includes('EUA')) {
-      return driverType.R;
-    }
-    return driverType.D;
   }
 }

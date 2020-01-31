@@ -13,7 +13,6 @@ import { DisplayAddressComponent } from '../../../components/common/display-addr
 import { DataRowComponent } from '../../../components/common/data-row/data-row';
 import { DataRowCustomComponent } from '../../../components/common/data-row-custom/data-row-custom';
 import { configureTestSuite } from 'ng-bullet';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('CandidateDetailsPage', () => {
   let fixture: ComponentFixture<CandidateDetailsPage>;
@@ -63,17 +62,5 @@ describe('CandidateDetailsPage', () => {
 
   describe('DOM', () => {
     // Unit tests for the components template
-  });
-
-  describe('driverTypeSwitch()', () => {
-    it('should return Rider when a category equals EUAM1,', () => {
-      const driverType = component.driverTypeSwitch(TestCategory.EUAM1);
-      expect(driverType).toEqual('Rider');
-    });
-
-    it('should return Driver when a category equals B', () => {
-      const driverType = component.driverTypeSwitch(TestCategory.B);
-      expect(driverType).toEqual('Driver');
-    });
   });
 });
