@@ -110,7 +110,7 @@ export const CAT_D = {
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatBPage',
   OFFICE_PAGE: 'OfficeCatBPage',
   PASS_FINALISATION_PAGE: 'PassFinalisationCatBPage',
-  TEST_REPORT_PAGE: 'TestReportCatBPage',
+  TEST_REPORT_PAGE: 'TestReportCatDPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatDPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatBPage',
