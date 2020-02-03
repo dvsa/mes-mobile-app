@@ -192,6 +192,9 @@ export class TestReportCatAMod1Page extends BasePageComponent {
         console.log('continue to debreif');
         break;
       case ModalEvent.END:
+
+        // TODO for Matt C: dispatch an action which sets the activity code to 4
+
         console.log('continue to debreif with activity code 4');
         break;
     }
