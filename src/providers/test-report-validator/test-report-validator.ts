@@ -58,7 +58,6 @@ export class TestReportValidatorProvider {
     }
   }
 
-
   public isETAValid(data: TestData, category: TestCategory): boolean {
     const noEtaFaults = !(get(data, 'ETA.verbal') || get(data, 'ETA.physical'));
 
