@@ -118,7 +118,7 @@ describe('TestReportCatAMod1Page', () => {
       it('should set activity code to 4 when passed an END_WITH_ACTIVITY_CODE_4 event', () => {
         spyOn(component.store$, 'dispatch');
         component.onModalDismiss(ModalEvent.END_WITH_ACTIVITY_CODE_4);
-        expect(component.store$.dispatch).toHaveBeenCalledWith(new SetActivityCode("4"));
+        expect(component.store$.dispatch).toHaveBeenCalledWith(new SetActivityCode('4'));
       });
 
       it('should dispatch CalculateTestResult action', () => {
