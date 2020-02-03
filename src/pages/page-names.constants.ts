@@ -105,12 +105,12 @@ export const CAT_A_MOD2 = {
 
 export const CAT_D = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatDPage',
-  COMMUNICATION_PAGE: 'CommunicationCatDPage',
-  DEBRIEF_PAGE: 'DebriefCatDPage',
-  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatDPage',
-  OFFICE_PAGE: 'OfficeCatDPage',
-  PASS_FINALISATION_PAGE: 'PassFinalisationCatDPage',
+  DEBRIEF_PAGE: 'DebriefCatBPage',
+  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatBPage',
+  OFFICE_PAGE: 'OfficeCatBPage',
+  PASS_FINALISATION_PAGE: 'PassFinalisationCatBPage',
   TEST_REPORT_PAGE: 'TestReportCatDPage',
+  COMMUNICATION_PAGE: 'CommunicationCatDPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatDPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatDPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatDPage',
