@@ -12,7 +12,10 @@ import {
 } from '../__mocks__/test-result.mock';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/common';
+import { TestData as CatAMod1TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { configureTestSuite } from 'ng-bullet';
+import { SpeedCheckState } from '../test-report-validator.constants';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 describe('TestReportValidator', () => {
   const cCats = [
@@ -205,6 +208,58 @@ describe('TestReportValidator', () => {
         const result = testReportValidatorProvider.isETAValid(data, cat.category);
         expect(result).toEqual(false);
       });
+    });
+  });
+
+  describe('validateSpeedChecksCatAMod1', () => {
+    it('should return SpeedCheckState.NOT_MET when emergency stop speed not met is true', () => {
+      const testData = {
+        emergencyStop: {
+          speedNotMetSeriousFault: true,
+        },
+      };
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.NOT_MET);
+    });
+
+    it('should return SpeedCheckState.NOT_MET when avoidance speed not met is true', () => {
+      const testData = {
+        avoidance: {
+          speedNotMetSeriousFault: true,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.NOT_MET);
+    });
+
+    it('should return SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT', () => {
+      const testData = {
+        emergencyStop: {
+          outcome: CompetencyOutcome.S,
+          speedNotMetSeriousFault: false,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT);
+    });
+
+    it('should return SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT', () => {
+      const testData = {
+        emergencyStop: {
+          outcome: CompetencyOutcome.D,
+          speedNotMetSeriousFault: false,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT);
     });
   });
 

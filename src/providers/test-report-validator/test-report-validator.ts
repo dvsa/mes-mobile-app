@@ -72,7 +72,7 @@ export class TestReportValidatorProvider {
     const emergencyStopNotMet = get(data, 'emergencyStop.speedNotMetSeriousFault');
     const avoidanceNotMet = get(data, 'avoidance.speedNotMetSeriousFault');
 
-    if (!emergencyStopNotMet || !avoidanceNotMet) {
+    if (emergencyStopNotMet || avoidanceNotMet) {
       return SpeedCheckState.NOT_MET;
     }
 
