@@ -172,8 +172,10 @@ export class TestReportCatAMod1Page extends BasePageComponent {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     if (!this.isEtaValid) {
       this.modal = this.modalController.create('EtaInvalidModal', {}, options);
+    } else if (this.isTestReportValid === SpeedCheckState.VALID) {
+      this.modal = this.modalController.create('EndTestModal', {}, options);
     } else {
-      this.createEndTestModal(options);
+      this.modal = this.createEndTestModal(options);
     }
 
     this.modal.onDidDismiss(this.onModalDismiss);
@@ -211,32 +213,26 @@ export class TestReportCatAMod1Page extends BasePageComponent {
     this.modal.dismiss().then(() => this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE));
   }
 
-  createEndTestModal(options: any) {
+  createEndTestModal(options: any): Modal {
     switch (this.isTestReportValid) {
       case SpeedCheckState.NOT_MET:
-        this.modal = this.modalController.create(
+        return this.modalController.create(
           'ActivityCode4Modal',
           { modalReason: ModalReason.SPEED_REQUIREMENTS },
           options,
         );
-        break;
       case SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT:
-        this.modal = this.modalController.create(
+        return this.modalController.create(
           'ActivityCode4Modal',
           { modalReason: ModalReason.EMERGENCY_STOP_DANGEROUS },
           options,
         );
-        break;
       case SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT:
-        this.modal = this.modalController.create(
+        return this.modalController.create(
           'ActivityCode4Modal',
           { modalReason: ModalReason.EMERGENCY_STOP_SERIOUS },
           options,
         );
-        break;
-      case SpeedCheckState.VALID:
-        this.modal = this.modalController.create('ActivityCode4Modal', {}, options);
-        break;
     }
   }
 }
