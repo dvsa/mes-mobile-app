@@ -12,7 +12,7 @@
   <eta-debrief-card [hasPhysicalEta]="hasPhysicalEta" [hasVerbalEta]="hasVerbalEta"></eta-debrief-card>
   <dangerous-faults-debrief-card [dangerousFaults]="pageState.dangerousFaults$ | async"></dangerous-faults-debrief-card>
   <serious-faults-debrief-card [seriousFaults]="pageState.seriousFaults$ | async"></serious-faults-debrief-card>
-  <driving-faults-debrief-card [drivingFaults]="pageState.drivingFaults$ | async" [drivingFaultCount]="pageState.drivingFaultCount$ | async"></driving-faults-debrief-card>
+  <driving-faults-debrief-card [drivingFaults]="pageState.drivingFaults$ | async" [drivingFaultCount]="pageState.drivingFaultCount$ | async" [testCategory]="category"></driving-faults-debrief-card>
 </ion-content>
 <ion-footer>
   <div id="end-debrief-background">

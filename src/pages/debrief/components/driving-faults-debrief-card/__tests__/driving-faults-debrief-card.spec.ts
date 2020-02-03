@@ -12,6 +12,7 @@ import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { configureI18N } from '../../../../../shared/helpers/translation.helpers';
 import { Language } from '../../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureTestSuite } from 'ng-bullet';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('DrivingFaultsDebriefCardComponent', () => {
   let fixture: ComponentFixture<DrivingFaultsDebriefCardComponent>;
@@ -102,6 +103,28 @@ describe('DrivingFaultsDebriefCardComponent', () => {
       component.drivingFaultCount = 0;
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
+    });
+  });
+
+  describe('drivingFaultsCardDescriptionSwitch', () => {
+    it('Should return debrief.ridingFaultsCardDescription when cat is EUA1M1', () => {
+      const value = component.drivingFaultsCardDescriptionSwitch(TestCategory.EUA1M1);
+      expect(value).toEqual('debrief.ridingFaultsCardDescription');
+    });
+
+    it('Should return debrief.ridingFaultsCardDescription when cat is EUA1M2', () => {
+      const value = component.drivingFaultsCardDescriptionSwitch(TestCategory.EUA1M2);
+      expect(value).toEqual('debrief.ridingFaultsCardDescription');
+    });
+
+    it('Should return debrief.drivingFaultsCardDescription when cat is B', () => {
+      const value = component.drivingFaultsCardDescriptionSwitch(TestCategory.B);
+      expect(value).toEqual('debrief.drivingFaultsCardDescription');
+    });
+
+    it('Should return debrief.drivingFaultsCardDescription when cat is BE', () => {
+      const value = component.drivingFaultsCardDescriptionSwitch(TestCategory.BE);
+      expect(value).toEqual('debrief.drivingFaultsCardDescription');
     });
   });
 });

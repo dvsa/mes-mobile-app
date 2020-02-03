@@ -202,6 +202,7 @@
     "dangerousFaultsCardDescription": "dangerous faults",
     "drivingFault": "Driving fault",
     "drivingFaultsCardDescription": "driving faults",
+    "ridingFaultsCardDescription": "riding faults",
     "ecoBoth": "Control and Planning",
     "ecoControl": "Control",
     "ecoHeader": "ECO",
