@@ -42,6 +42,8 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { of } from 'rxjs/observable/of';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
+import { MockComponent } from 'ng-mocks';
+import { VehicleChecksCardCatBComponent } from '../components/vehicle-checks-card-cat-b/vehicle-checks-card.cat-b';
 
 describe('DebriefCatBPage', () => {
   let fixture: ComponentFixture<DebriefCatBPage>;
@@ -63,7 +65,10 @@ describe('DebriefCatBPage', () => {
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      declarations: [DebriefCatBPage],
+      declarations: [
+        DebriefCatBPage,
+        MockComponent(VehicleChecksCardCatBComponent),
+      ],
       imports: [
         IonicModule,
         AppModule,
