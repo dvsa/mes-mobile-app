@@ -169,11 +169,14 @@ export class TestReportCatAMod1Page extends BasePageComponent {
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    if (!this.isEtaValid) {
-      this.modal = this.modalController.create('EtaInvalidModal', {}, options);
-    } else {
-      this.modal = this.modalController.create('EndTestModal', {}, options);
+    if(true){
+      this.modal = this.modalController.create('SpeedCheckModal', {}, options);
     }
+    // else if (!this.isEtaValid) {
+    //   this.modal = this.modalController.create('EtaInvalidModal', {}, options);
+    // } else {
+    //   this.modal = this.modalController.create('EndTestModal', {}, options);
+    // }
     this.modal.onDidDismiss(this.onModalDismiss);
     this.modal.present();
   }

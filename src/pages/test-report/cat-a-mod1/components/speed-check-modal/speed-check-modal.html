@@ -1,11 +1,11 @@
 <ion-card class="modal-alert">
-  <modal-alert-title>You've not completed <br />the speed requirements</modal-alert-title>
+  <modal-alert-title>You've not completed the <br />speed requirements</modal-alert-title>
   <ion-row justify-content-center>
     <ion-col no-padding col-80>
       <div class="modal-alert-message mes-data">
         <div class="mes-data">To end this test, complete:</div>
-        <ul *ngIf="2 > speedCheck.length">
-          <li *ngFor="let attempt of speedCheck">{{attempt}}</li>
+         <ul> 
+           <li *ngFor="let speed of speedCheck">{{speed}}</li>
         </ul>
       </div>
     </ion-col>

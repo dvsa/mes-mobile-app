@@ -58,6 +58,7 @@ export class TestReportValidatorProvider {
     }
   }
 
+
   public isETAValid(data: TestData, category: TestCategory): boolean {
     const noEtaFaults = !(get(data, 'ETA.verbal') || get(data, 'ETA.physical'));
 
@@ -113,7 +114,7 @@ export class TestReportValidatorProvider {
 
   private validateLegalRequirementsCNonTrailer(
     data: CatCUniqueTypes.TestData | CatC1UniqueTypes.TestData,
-    ): boolean {
+  ): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
     const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
@@ -132,7 +133,7 @@ export class TestReportValidatorProvider {
 
   private validateLegalRequirementsCTrailer(
     data: CatCEUniqueTypes.TestData | CatC1EUniqueTypes.TestData,
-    ): boolean {
+  ): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
     const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
@@ -168,7 +169,7 @@ export class TestReportValidatorProvider {
 
   private getMissingLegalRequirementsCNonTrailer(
     data: CatCUniqueTypes.TestData | CatC1UniqueTypes.TestData,
-    ): legalRequirementsLabels[] {
+  ): legalRequirementsLabels[] {
     const result: legalRequirementsLabels[] = [];
 
     (!get(data, 'testRequirements.normalStart1', false) && !get(data, 'testRequirements.normalStart2', false))
@@ -184,7 +185,7 @@ export class TestReportValidatorProvider {
 
   private getMissingLegalRequirementsCTrailer(
     data: CatCEUniqueTypes.TestData | CatC1EUniqueTypes.TestData,
-    ): legalRequirementsLabels[] {
+  ): legalRequirementsLabels[] {
     const result: legalRequirementsLabels[] = [];
 
     (!get(data, 'testRequirements.normalStart1', false) && !get(data, 'testRequirements.normalStart2', false))
