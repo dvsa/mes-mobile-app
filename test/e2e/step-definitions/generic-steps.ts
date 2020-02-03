@@ -1,8 +1,7 @@
 import { Before } from 'cucumber';
 import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-import { waitForOverlay } from '../../helpers/helpers'; 
-import { getParentContext } from '../../helpers/helpers'; 
+import { waitForOverlay, getParentContext } from '../../helpers/helpers';
 
 const {
   Given,
@@ -216,7 +215,7 @@ Then('I return to the Journal Page', () => {
 });
 
 When('I click the back button', () => {
-  clickBackButton(); 
+  clickBackButton();
 });
 
 When('I click go to my Journal', () => {
