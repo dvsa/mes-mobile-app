@@ -19,7 +19,7 @@ import { getUntitledCandidateName } from '../../../modules/tests/journal-data/co
 // TODO - PREP-AMOD1: Use cat amod1 reducer
 import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import {
-  TestReportViewDidEnter,
+  TestReportViewDidEnter, TerminateTestFromTestReport, CalculateTestResult,
 } from '../test-report.actions';
 import {
   getCurrentTest,
@@ -186,10 +186,12 @@ export class TestReportCatAMod1Page extends BasePageComponent {
         console.log('return to test report');
         break;
       case ModalEvent.TERMINATE:
-        console.log('terminate test');
+        this.store$.dispatch(new TerminateTestFromTestReport());
+        this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE);
         break;
       case ModalEvent.CONTINUE:
-        console.log('continue to debreif');
+        this.store$.dispatch(new CalculateTestResult());
+        this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE);
         break;
       case ModalEvent.END_WITH_ACTIVITY_CODE_4:
         this.store$.dispatch(new SetActivityCode("4"));
