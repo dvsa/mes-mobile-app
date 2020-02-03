@@ -41,6 +41,8 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
+import { SpeedCheckState } from '../../../providers/test-report-validator/test-report-validator.constants';
+import { ModalReason } from './components/activity-code-4-modal/activity-code-4-modal.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -65,7 +67,7 @@ export class TestReportCatAMod1Page extends BasePageComponent {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
-  isTestReportValid: boolean = false;
+  isTestReportValid: SpeedCheckState;
   isEtaValid: boolean = true;
 
   modal: Modal;
@@ -158,10 +160,8 @@ export class TestReportCatAMod1Page extends BasePageComponent {
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       testData$.pipe(
         map((data) => {
-
-          // TODO: change isTestReportValid to the speed check validation
           this.isTestReportValid =
-            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.EUAM1);
+            this.testReportValidatorProvider.validateSpeedChecksCatAMod1(data);
           this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.EUAM1);
         }),
       ),
@@ -173,10 +173,9 @@ export class TestReportCatAMod1Page extends BasePageComponent {
     if (!this.isEtaValid) {
       this.modal = this.modalController.create('EtaInvalidModal', {}, options);
     } else {
-
-      // TODO: use the speed check validation to display the right modal
-      this.modal = this.modalController.create('EndTestModal', {}, options);
+      this.createEndTestModal(options);
     }
+
     this.modal.onDidDismiss(this.onModalDismiss);
     this.modal.present();
   }
@@ -208,5 +207,34 @@ export class TestReportCatAMod1Page extends BasePageComponent {
 
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE));
+  }
+
+  createEndTestModal(options: any) {
+    switch (this.isTestReportValid) {
+      case SpeedCheckState.NOT_MET:
+        this.modal = this.modalController.create(
+          'ActivityCode4Modal',
+          { modalReason: ModalReason.SPEED_REQUIREMENTS },
+          options,
+        );
+        break;
+      case SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT:
+        this.modal = this.modalController.create(
+          'ActivityCode4Modal',
+          { modalReason: ModalReason.EMERGENCY_STOP_DANGEROUS },
+          options,
+        );
+        break;
+      case SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT:
+        this.modal = this.modalController.create(
+          'ActivityCode4Modal',
+          { modalReason: ModalReason.EMERGENCY_STOP_SERIOUS },
+          options,
+        );
+        break;
+      case SpeedCheckState.VALID:
+        this.modal = this.modalController.create('ActivityCode4Modal', {}, options);
+        break;
+    }
   }
 }
