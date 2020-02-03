@@ -12,8 +12,6 @@ export class ActivityCode4Modal implements OnInit {
 
   modalReason: ModalReason;
 
-  faultType: any;
-
   constructor(
     private viewCtrl: ViewController,
     private navParams: NavParams,
