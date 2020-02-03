@@ -37,9 +37,6 @@ describe('SpeedCheckModal', () => {
     };
   }));
 
-  describe('Class', () => {
-  });
-
   describe('DOM', () => {
     it('should call onCancel when the Return to test button is clicked', () => {
       component.speedChecksNeedCompleting = [];
