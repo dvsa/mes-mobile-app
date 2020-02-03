@@ -111,7 +111,7 @@ export const CAT_D = {
   OFFICE_PAGE: 'OfficeCatBPage',
   PASS_FINALISATION_PAGE: 'PassFinalisationCatBPage',
   TEST_REPORT_PAGE: 'TestReportCatBPage',
-  WAITING_ROOM_PAGE: 'WaitingRoomCatBPage',
+  WAITING_ROOM_PAGE: 'WaitingRoomCatDPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatBPage',
   REKEY_REASON_PAGE: 'RekeyReasonCatBPage',
