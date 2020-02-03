@@ -16,7 +16,7 @@ export class JournalEarlyStartModal implements OnInit {
   private slotData: SlotDetail;
   constructor(
     public store$: Store<StoreModel>,
-    private viewCtrl: ViewController,
+    public viewCtrl: ViewController,
     private params: NavParams,
   ) {
   }

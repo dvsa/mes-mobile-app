@@ -8,8 +8,10 @@ import { JournalEarlyStartModalMock } from '../__mocks__/journal-early-start-mod
 import { NavParamsMock } from '../__mocks__/nav-params.mock';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite } from 'ng-bullet';
+import { EarlyStartDidContinue, EarlyStartDidReturn } from '../../../../../modules/journal/journal.actions';
+import {ModalEvent} from '../journal-early-start-modal.constants';
 
-describe('JournalEarlyStartModal', () => {
+fdescribe('JournalEarlyStartModal', () => {
   let modalFixture: ComponentFixture<JournalEarlyStartModal>;
   let modalComponent: JournalEarlyStartModal;
   const mockFile: JournalEarlyStartModalMock = new JournalEarlyStartModalMock();
@@ -36,6 +38,7 @@ describe('JournalEarlyStartModal', () => {
     spyOn(navMock, 'get').and.returnValue(mockValue);
     modalFixture = TestBed.createComponent(JournalEarlyStartModal);
     modalComponent = modalFixture.componentInstance;
+    spyOn(modalComponent.store$, 'dispatch').and.callFake(() => {});
   }));
   it('should return slot details from nav param', () => {
     modalFixture.detectChanges();
@@ -50,6 +53,8 @@ describe('JournalEarlyStartModal', () => {
     button.triggerEventHandler('click', null);
     modalFixture.detectChanges();
     expect(modalComponent.onStart).toHaveBeenCalled();
+    expect(modalComponent.store$.dispatch).toHaveBeenCalledWith(new EarlyStartDidContinue());
+    expect(modalComponent.viewCtrl.dismiss).toHaveBeenCalledWith(ModalEvent.START);
   });
   it('should call onCancel when the Cancel button is clicked', () => {
     modalFixture.detectChanges();
@@ -58,5 +63,7 @@ describe('JournalEarlyStartModal', () => {
     button.triggerEventHandler('click', null);
     modalFixture.detectChanges();
     expect(modalComponent.onCancel).toHaveBeenCalled();
+    expect(modalComponent.store$.dispatch).toHaveBeenCalledWith(new EarlyStartDidReturn());
+    expect(modalComponent.viewCtrl.dismiss).toHaveBeenCalledWith(ModalEvent.CANCEL);
   });
 });
