@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { SpeedRequirementsModal } from './speed-requirements-modal';
+import { ActivityCode4Modal } from './activity-code-4-modal';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
 
 @NgModule({
   declarations: [
-    SpeedRequirementsModal,
+    ActivityCode4Modal,
   ],
   imports: [
-    IonicPageModule.forChild(SpeedRequirementsModal),
+    IonicPageModule.forChild(ActivityCode4Modal),
     ComponentsModule,
   ],
   exports: [
-    SpeedRequirementsModal,
+    ActivityCode4Modal,
   ],
 })
-export class SpeedRequirementsModalModule { }
+export class ActivityCode4ModalModule { }

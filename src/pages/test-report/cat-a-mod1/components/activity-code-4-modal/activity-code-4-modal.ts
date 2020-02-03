@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 import { ModalEvent } from '../../../test-report.constants';
-import { ModalReason } from './speed-requirements-modal.constants';
+import { ModalReason } from './activity-code-4-modal.constants';
 
 @IonicPage()
 @Component({
-  selector: 'speed-requirements-modal',
-  templateUrl: 'speed-requirements-modal.html',
+  selector: 'activity-code-4-modal',
+  templateUrl: 'activity-code-4-modal.html',
 })
-export class SpeedRequirementsModal implements OnInit {
+export class ActivityCode4Modal implements OnInit {
 
   modalReason: ModalReason;
 
@@ -18,18 +18,17 @@ export class SpeedRequirementsModal implements OnInit {
     private viewCtrl: ViewController,
     private navParams: NavParams,
   ) {
-    this.faultType = this.navParams.get('legalRequirements');
   }
 
   ngOnInit() {
-    this.modalReason = this.navParams.get('modalReason')
+    this.modalReason = this.navParams.get('modalReason');
   }
 
   onCancel() {
     this.viewCtrl.dismiss(ModalEvent.CANCEL);
   }
 
-  onTerminate() {
+  onEndTest() {
     this.viewCtrl.dismiss();
   }
 

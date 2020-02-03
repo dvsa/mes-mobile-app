@@ -2,7 +2,7 @@
   <modal-alert-title>{{modalReason}}</modal-alert-title>
   <ion-row justify-content-center>
     <ion-col no-padding col-72>
-      <button class="end-test-button" (click)="onCancel()"><h3>End test now</h3></button>
+      <button class="end-test-button" (click)="onEndTest()"><h3>End test now</h3></button>
     </ion-col>
   </ion-row>
   <ion-row justify-content-center>
@@ -14,7 +14,7 @@
   </ion-row>
   <ion-row>
     <ion-col class="column-border-top" no-padding>
-      <button class="return-button" ion-button clear (click)="onTerminate()">Return to test</button>
+      <button class="return-button" ion-button clear (click)="onCancel()">Return to test</button>
     </ion-col>
   </ion-row>
 </ion-card>

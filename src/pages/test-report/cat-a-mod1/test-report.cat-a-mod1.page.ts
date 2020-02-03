@@ -46,7 +46,6 @@ import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
-import { ModalReason } from './components/speed-requirements-modal/speed-requirements-modal.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -174,12 +173,11 @@ export class TestReportCatAMod1Page extends BasePageComponent {
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    this.modal = this.modalController.create('SpeedRequirementsModal', {modalReason: ModalReason.EMERGENCY_STOP}, options);
-    // if (!this.isEtaValid) {
-    //   this.modal = this.modalController.create('EtaInvalidModal', {}, options);
-    // } else {
-    //   this.modal = this.modalController.create('EndTestModal', {}, options);
-    // }
+    if (!this.isEtaValid) {
+      this.modal = this.modalController.create('EtaInvalidModal', {}, options);
+    } else {
+      this.modal = this.modalController.create('EndTestModal', {}, options);
+    }
     this.modal.onDidDismiss(this.onModalDismiss);
     this.modal.present();
   }
