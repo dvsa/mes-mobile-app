@@ -16,7 +16,6 @@ import { TestResultCatAM2Schema } from '@dvsa/mes-test-schema/categories/AM2';
 })
 export class RekeyDetailsCardComponent {
 
-  // TODO: MES-4287 Use category c type
   @Input()
   data: CatBUniqueTypes.TestResult
   | CatBEUniqueTypes.TestResult

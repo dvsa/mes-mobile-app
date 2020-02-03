@@ -39,9 +39,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-
-// TODO: MES-4287 Import Cat C behaviour map
-import { behaviourMap } from '../../office/office-behaviour-map.cat-be';
+import { behaviourMap } from '../../office/office-behaviour-map.cat-c';
 import {
   DebriefWitnessed,
   DebriefUnwitnessed,

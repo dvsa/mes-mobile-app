@@ -20,8 +20,6 @@ import {
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { UncoupleRecoupleComponent } from '../uncouple-recouple';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
-
-// TODO: MES-4287 Import cat c actions
 import {
   UncoupleRecoupleAddDrivingFault,
   UncoupleRecoupleRemoveFault,
@@ -56,8 +54,7 @@ describe('UncoupleRecoupleComponent', () => {
     fixture = TestBed.createComponent(UncoupleRecoupleComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
-    // TODO: MES-4287 Use Category C
-    store$.dispatch(new StartTest(105, TestCategory.BE));
+    store$.dispatch(new StartTest(105, TestCategory.C1E));
   }));
 
   describe('Class', () => {

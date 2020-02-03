@@ -42,13 +42,8 @@ describe('reverseDiagramLink', () => {
     component = fixture.componentInstance;
     modalController = TestBed.get(ModalController);
     store$ = TestBed.get(Store);
-    // // TODO: MES-4287 Change category to C
-    store$.dispatch(new StartTest(105, TestCategory.BE));
+    store$.dispatch(new StartTest(105, TestCategory.C));
   }));
-
-  describe('DOM', () => {
-
-  });
 
   describe('Class', () => {
     describe('openReverseDiagramModal', () => {

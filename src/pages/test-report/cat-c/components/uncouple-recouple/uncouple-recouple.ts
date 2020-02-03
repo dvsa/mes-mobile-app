@@ -13,8 +13,6 @@ import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-d
 import { getTestReportState } from '../../../test-report.reducer';
 import { get } from 'lodash';
 import { ToggleDangerousFaultMode, ToggleRemoveFaultMode, ToggleSeriousFaultMode } from '../../../test-report.actions';
-
-// TODO: MES-4287 Import cat c actions
 import {
   ToggleUncoupleRecouple,
   UncoupleRecoupleAddDangerousFault,

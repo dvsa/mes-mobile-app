@@ -34,8 +34,7 @@ import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-// TODO: MES-4287 use Cat C reducer
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { getGearboxCategory } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { CAT_C } from '../../page-names.constants';
@@ -48,8 +47,7 @@ import {
   DebriefUnwitnessed,
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-// TODO: MES-4287 Import Cat C behaviour map
-import { behaviourMap } from '../../office/office-behaviour-map.cat-be';
+import { behaviourMap } from '../../office/office-behaviour-map.cat-c';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
   CandidateChoseToProceedWithTestInWelsh,
