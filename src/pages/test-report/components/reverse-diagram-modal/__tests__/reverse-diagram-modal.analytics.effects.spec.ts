@@ -67,12 +67,9 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
   describe('reverseDiagramViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
-
-      // TODO: MES-4287 Change the category to C
       store$.dispatch(new testsActions.StartTest(123, TestCategory.BE));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
-      // TODO: MES-4287 Change the category to C
       store$.dispatch(new PopulateTestCategory(TestCategory.BE));
       // ACT
       actions$.next(new reverseDiagramModalActions.ReverseDiagramViewDidEnter());
@@ -80,8 +77,6 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
       effects.reverseDiagramViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-
-          // TODO: MES-4287 Change the category to C
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B+E');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
@@ -104,8 +99,6 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
       effects.reverseDiagramViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-
-          // TODO: MES-4287 Change the category to C
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B+E');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');

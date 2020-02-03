@@ -16,8 +16,6 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { TestsModel } from '../../../../../modules/tests/tests.model';
 import { formatAnalyticsText } from '../../../../../shared/helpers/format-analytics-text';
-
-// TODO: MES-4254 Import Category C actions
 import {
   SHOW_ME_QUESTION_OUTCOME_CHANGED,
   SHOW_ME_QUESTION_SELECTED,

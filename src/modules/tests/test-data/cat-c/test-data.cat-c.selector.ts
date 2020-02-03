@@ -5,10 +5,12 @@ import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
-import { NUMBER_OF_SHOW_ME_QUESTIONS }
-  from '../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
-import { NUMBER_OF_TELL_ME_QUESTIONS }
-  from '../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+import {
+  NUMBER_OF_SHOW_ME_QUESTIONS,
+} from '../../../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
+import {
+   NUMBER_OF_TELL_ME_QUESTIONS,
+  } from '../../../../shared/constants/tell-me-questions/tell-me-questions.vocational.constants';
 
 export type CatCTestData =
   | CatCUniqueTypes.TestData
