@@ -41,6 +41,14 @@ When('I start the test for {string}', (candidateName) => {
       clickElement(rekeyStartTestButton);
     }
   });
+
+    // If the start test early dialog is shown just select continue
+  const startTestEarlyButton = element(by.id('early-start-start-test-button'));
+  startTestEarlyButton.isPresent().then((result) => {
+    if (result) {
+      clickElement(startTestEarlyButton);
+    }
+  });
 });
 
 When('I rekey a test for {string}', (candidateName) => {
@@ -130,7 +138,7 @@ Then('I continue the write up for {string}', (candidateName) => {
   const continueWriteUp = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Write-up"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
-  clickElement(continueWriteUp);  
+  clickElement(continueWriteUp);
 });
 
 const viewCandidateDetails = (candidateName) => {
