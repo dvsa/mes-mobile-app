@@ -8,6 +8,8 @@ import { JournalEarlyStartModalMock } from '../__mocks__/journal-early-start-mod
 import { NavParamsMock } from '../__mocks__/nav-params.mock';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite } from 'ng-bullet';
+import { EarlyStartDidContinue, EarlyStartDidReturn } from '../../../../../modules/journal/journal.actions';
+import { ModalEvent } from '../journal-early-start-modal.constants';
 
 describe('JournalEarlyStartModal', () => {
   let modalFixture: ComponentFixture<JournalEarlyStartModal>;
@@ -36,10 +38,7 @@ describe('JournalEarlyStartModal', () => {
     spyOn(navMock, 'get').and.returnValue(mockValue);
     modalFixture = TestBed.createComponent(JournalEarlyStartModal);
     modalComponent = modalFixture.componentInstance;
-    modalComponent.onCancel = () => {
-    };
-    modalComponent.onStart = () => {
-    };
+    spyOn(modalComponent.store$, 'dispatch').and.callFake(() => {});
   }));
   it('should return slot details from nav param', () => {
     modalFixture.detectChanges();
@@ -49,18 +48,22 @@ describe('JournalEarlyStartModal', () => {
   });
   it('should call onStart when the Start test button is clicked', () => {
     modalFixture.detectChanges();
-    spyOn(modalComponent, 'onStart');
+    spyOn(modalComponent, 'onStart').and.callThrough();
     const button = modalFixture.debugElement.query(By.css('.start-test-button'));
     button.triggerEventHandler('click', null);
     modalFixture.detectChanges();
     expect(modalComponent.onStart).toHaveBeenCalled();
+    expect(modalComponent.store$.dispatch).toHaveBeenCalledWith(new EarlyStartDidContinue());
+    expect(modalComponent.viewCtrl.dismiss).toHaveBeenCalledWith(ModalEvent.START);
   });
   it('should call onCancel when the Cancel button is clicked', () => {
     modalFixture.detectChanges();
-    spyOn(modalComponent, 'onCancel');
+    spyOn(modalComponent, 'onCancel').and.callThrough();
     const button = modalFixture.debugElement.query(By.css('.cancel-button'));
     button.triggerEventHandler('click', null);
     modalFixture.detectChanges();
     expect(modalComponent.onCancel).toHaveBeenCalled();
+    expect(modalComponent.store$.dispatch).toHaveBeenCalledWith(new EarlyStartDidReturn());
+    expect(modalComponent.viewCtrl.dismiss).toHaveBeenCalledWith(ModalEvent.CANCEL);
   });
 });

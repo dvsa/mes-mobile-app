@@ -103,6 +103,45 @@ describe('Journal Analytics Effects', () => {
       });
     });
   });
+  describe('earlyStartModalDidEnter', () => {
+    it('should log an event', (done) => {
+      actions$.next(new journalActions.EarlyStartModalDidEnter());
+      effects.earlyStartModalDidEnter$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.JOURNAL,
+          AnalyticsEvents.DISPLAY_EARLY_START_MODAL,
+        );
+        done();
+      });
+    });
+  });
+  describe('earlyStartModalContinue', () => {
+    it('should log an event', (done) => {
+      actions$.next(new journalActions.EarlyStartDidContinue());
+      effects.earlyStartModalContinue$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.JOURNAL,
+          AnalyticsEvents.EXIT_EARLY_START_MODAL_CONTINUE,
+        );
+        done();
+      });
+    });
+  });
+  describe('earlyStartModalReturn', () => {
+    it('should log an event', (done) => {
+      actions$.next(new journalActions.EarlyStartDidReturn());
+      effects.earlyStartModalReturn$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.JOURNAL,
+          AnalyticsEvents.EXIT_EARLY_START_MODAL_RETURN,
+        );
+        done();
+      });
+    });
+  });
   describe('journalRefreshError', () => {
     it('should log an error', (done) => {
       // ACT
