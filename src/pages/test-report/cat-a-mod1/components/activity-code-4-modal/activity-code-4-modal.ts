@@ -27,7 +27,7 @@ export class ActivityCode4Modal implements OnInit {
   }
 
   onEndTest() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(ModalEvent.END_WITH_ACTIVITY_CODE_4);
   }
 
 }

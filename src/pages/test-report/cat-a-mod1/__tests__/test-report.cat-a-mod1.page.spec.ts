@@ -42,6 +42,7 @@ import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { configureTestSuite } from 'ng-bullet';
 import { SpeedCheckHeaderComponent } from '../components/speed-check-header/speed-check-header';
 import { SpeedCheckComponent } from '../components/speed-check/speed-check';
+import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 
 describe('TestReportCatAMod1Page', () => {
   let fixture: ComponentFixture<TestReportCatAMod1Page>;
@@ -108,6 +109,11 @@ describe('TestReportCatAMod1Page', () => {
         component.onModalDismiss(ModalEvent.CONTINUE);
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(CAT_A_MOD1.DEBRIEF_PAGE);
+      });
+      it('should set activity code to 4 when passed an END_WITH_ACTIVITY_CODE_4 event', () => {
+        spyOn(component.store$, 'dispatch');
+        component.onModalDismiss(ModalEvent.END_WITH_ACTIVITY_CODE_4);
+        expect(component.store$.dispatch).toHaveBeenCalledWith(new SetActivityCode("4"));
       });
     });
 

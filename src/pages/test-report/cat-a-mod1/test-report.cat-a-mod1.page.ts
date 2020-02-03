@@ -40,6 +40,7 @@ import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -191,11 +192,8 @@ export class TestReportCatAMod1Page extends BasePageComponent {
       case ModalEvent.CONTINUE:
         console.log('continue to debreif');
         break;
-      case ModalEvent.END:
-
-        // TODO for Matt C: dispatch an action which sets the activity code to 4
-
-        console.log('continue to debreif with activity code 4');
+      case ModalEvent.END_WITH_ACTIVITY_CODE_4:
+        this.store$.dispatch(new SetActivityCode("4"));
         break;
     }
   }
