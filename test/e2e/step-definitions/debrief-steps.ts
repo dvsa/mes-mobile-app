@@ -1,7 +1,7 @@
 import { Then, When, Before } from 'cucumber';
 import { getElement, clickElement } from './generic-steps';
 import { by } from 'protractor';
-import { textFieldInputViaNativeMode } from '../../helpers/helpers'; 
+import { textFieldInputViaNativeMode } from '../../helpers/helpers';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -22,7 +22,8 @@ When('I end the debrief', () => {
 });
 
 When('I complete the pass details', () => {
-  textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
+  textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
+    + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
 
   const licenceRecievedRadio = getElement(by.id('license-received'));
   clickElement(licenceRecievedRadio);
@@ -43,7 +44,7 @@ When('I complete the fail details', () => {
   const debriefWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
   clickElement(debriefWitnessedRadio);
   const submitButton = getElement(by.id('continue-button'));
-  clickElement(submitButton)
+  clickElement(submitButton);
 });
 
 When('I try to confirm the pass certificate details', () => {
