@@ -85,6 +85,8 @@ describe('faultSummaryProvider', () => {
     spyOn(FaultSummaryCatCHelper, 'getDrivingFaultsTrailer').and.callThrough();
     spyOn(FaultSummaryCatCHelper, 'getSeriousFaultsTrailer').and.callThrough();
     spyOn(FaultSummaryCatCHelper, 'getDangerousFaultsTrailer').and.callThrough();
+    spyOn(FaultSummaryCatDHelper, 'getDrivingFaultsNonTrailer').and.callThrough();
+    spyOn(FaultSummaryCatDHelper, 'getSeriousFaultsNonTrailer').and.callThrough();
     spyOn(FaultSummaryCatDHelper, 'getDangerousFaultsNonTrailer').and.callThrough();
     spyOn(FaultSummaryCatDHelper, 'getDrivingFaultsTrailer').and.callThrough();
     spyOn(FaultSummaryCatDHelper, 'getSeriousFaultsTrailer').and.callThrough();

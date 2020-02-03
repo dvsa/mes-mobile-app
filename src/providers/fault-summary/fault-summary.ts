@@ -66,7 +66,7 @@ export class FaultSummaryProvider {
             (<CatC1EUniqueTypes.TestData>data).vehicleChecks,
           ));
       case TestCategory.D:
-        return FaultSummaryCatCHelper.getDrivingFaultsNonTrailer(
+        return FaultSummaryCatDHelper.getDrivingFaultsNonTrailer(
           data,
           TestCategory.D,
           this.faultCountProvider.getVehicleChecksFaultCount(
@@ -74,7 +74,7 @@ export class FaultSummaryProvider {
             (<CatDUniqueTypes.TestData>data).vehicleChecks,
           ));
       case TestCategory.D1:
-        return FaultSummaryCatCHelper.getDrivingFaultsNonTrailer(
+        return FaultSummaryCatDHelper.getDrivingFaultsNonTrailer(
           data,
           TestCategory.D1,
           this.faultCountProvider.getVehicleChecksFaultCount(
@@ -82,7 +82,7 @@ export class FaultSummaryProvider {
             (<CatD1UniqueTypes.TestData>data).vehicleChecks,
           ));
       case TestCategory.DE:
-        return FaultSummaryCatCHelper.getDrivingFaultsTrailer(
+        return FaultSummaryCatDHelper.getDrivingFaultsTrailer(
           data,
           TestCategory.DE,
           this.faultCountProvider.getVehicleChecksFaultCount(
@@ -90,7 +90,7 @@ export class FaultSummaryProvider {
             (<CatDEUniqueTypes.TestData>data).vehicleChecks,
           ));
       case TestCategory.D1E:
-        return FaultSummaryCatCHelper.getDrivingFaultsTrailer(
+        return FaultSummaryCatDHelper.getDrivingFaultsTrailer(
           data,
           TestCategory.D1E,
           this.faultCountProvider.getVehicleChecksFaultCount(
