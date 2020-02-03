@@ -32,6 +32,7 @@ export const createPopulateCandidateDetailsAction = (testCategory: string, booki
     case TestCategory.D1:
     case TestCategory.D1E:
     case TestCategory.DE:
+      // TODO - Cat D - Rename function so it's not category c specific
       return new PopulateCandidateDetailsCatC({
         ...booking.candidate,
         businessAddress: get(booking, 'business.businessAddress'),
