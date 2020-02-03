@@ -58,6 +58,7 @@ export class DebriefCatAMod1Page extends BasePageComponent {
   pageState: DebriefPageState;
   subscription: Subscription;
   isPassed: boolean;
+  category: TestCategory = TestCategory.EUAM1;
 
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
