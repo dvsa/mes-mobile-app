@@ -9,9 +9,9 @@ import { NavParamsMock } from '../__mocks__/nav-params.mock';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite } from 'ng-bullet';
 import { EarlyStartDidContinue, EarlyStartDidReturn } from '../../../../../modules/journal/journal.actions';
-import {ModalEvent} from '../journal-early-start-modal.constants';
+import { ModalEvent } from '../journal-early-start-modal.constants';
 
-fdescribe('JournalEarlyStartModal', () => {
+describe('JournalEarlyStartModal', () => {
   let modalFixture: ComponentFixture<JournalEarlyStartModal>;
   let modalComponent: JournalEarlyStartModal;
   const mockFile: JournalEarlyStartModalMock = new JournalEarlyStartModalMock();
