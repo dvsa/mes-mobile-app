@@ -19,8 +19,6 @@ import { getUntitledCandidateName } from '../../../modules/tests/journal-data/co
 // TODO - PREP-AMOD1: Use cat amod1 reducer
 import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import {
-  CalculateTestResult,
-  TerminateTestFromTestReport,
   TestReportViewDidEnter,
 } from '../test-report.actions';
 import {
@@ -159,6 +157,8 @@ export class TestReportCatAMod1Page extends BasePageComponent {
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       testData$.pipe(
         map((data) => {
+
+          // TODO: change isTestReportValid to the speed check validation
           this.isTestReportValid =
             this.testReportValidatorProvider.isTestReportValid(data, TestCategory.EUAM1);
           this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.EUAM1);
@@ -172,6 +172,8 @@ export class TestReportCatAMod1Page extends BasePageComponent {
     if (!this.isEtaValid) {
       this.modal = this.modalController.create('EtaInvalidModal', {}, options);
     } else {
+
+      // TODO: use the speed check validation to display the right modal
       this.modal = this.modalController.create('EndTestModal', {}, options);
     }
     this.modal.onDidDismiss(this.onModalDismiss);
@@ -180,13 +182,17 @@ export class TestReportCatAMod1Page extends BasePageComponent {
 
   onModalDismiss = (event: ModalEvent): void => {
     switch (event) {
-      case ModalEvent.CONTINUE:
-        this.store$.dispatch(new CalculateTestResult());
-        this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE);
+      case ModalEvent.CANCEL:
+        console.log('return to test report');
         break;
       case ModalEvent.TERMINATE:
-        this.store$.dispatch(new TerminateTestFromTestReport());
-        this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE);
+        console.log('terminate test');
+        break;
+      case ModalEvent.CONTINUE:
+        console.log('continue to debreif');
+        break;
+      case ModalEvent.END:
+        console.log('continue to debreif with activity code 4');
         break;
     }
   }
