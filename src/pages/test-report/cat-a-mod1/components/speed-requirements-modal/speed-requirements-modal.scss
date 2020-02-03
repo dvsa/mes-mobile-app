@@ -1,0 +1,40 @@
+speed-requirements-modal {
+  @extend .modal-alert-wrapper;
+
+  .modal-alert {
+    width: 450px;
+    height: 455px;
+  }
+
+  .modal-alert-message {
+    margin-bottom: 0px;
+  }
+
+  .modal-alert-message > ul {
+    text-align: left;
+    display: inline-block;
+    li {
+      line-height: 32px;
+    }
+  }
+
+  .end-test-button {
+      @extend .mes-return-button;
+    background: map-get($colors-gds, gds-bright-red);
+    &.activated {
+      background:  map-get($colors-gds, gds-red);
+    }
+    h3 {
+      color: map-get($colors-gds, gds-grey-5);
+    }
+  }
+
+  .mes-data {
+    padding-bottom: 25px;
+  }
+
+  .return-button {
+    color: map-get($colors-gds, gds-black);
+  }
+
+}

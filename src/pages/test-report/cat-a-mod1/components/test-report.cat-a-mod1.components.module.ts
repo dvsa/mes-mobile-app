@@ -6,6 +6,7 @@ import { ComponentsModule } from '../../../../components/common/common-component
 import { TestReportComponentsModule } from '../../components/test-report-components.module';
 import { SpeedCheckComponent } from './speed-check/speed-check';
 import { SpeedCheckHeaderComponent } from './speed-check-header/speed-check-header';
+import { SpeedRequirementsModalModule } from './speed-requirements-modal/speed-requirements-modal.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { SpeedCheckHeaderComponent } from './speed-check-header/speed-check-head
     TestReportComponentsModule,
     IonicModule,
     DirectivesModule,
+    SpeedRequirementsModalModule,
   ],
   exports: [
     SpeedCheckHeaderComponent,
