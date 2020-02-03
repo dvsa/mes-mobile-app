@@ -6,10 +6,15 @@ import { FaultCountProvider } from '../fault-count/fault-count';
 import { FaultSummaryCatBHelper } from './cat-b/fault-summary.cat-b';
 import { FaultSummaryCatBEHelper } from './cat-be/fault-summary.cat-be';
 import { FaultSummaryCatCHelper } from './cat-c/fault-summary.cat-c';
+import { FaultSummaryCatDHelper } from './cat-d/fault-summary.cat-d';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
+import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
+import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 import { FaultSummaryCatAM1Helper } from './cat-a-mod1/fault-summary.cat-a-mod1';
 
 @Injectable()
@@ -60,6 +65,38 @@ export class FaultSummaryProvider {
             TestCategory.C1E,
             (<CatC1EUniqueTypes.TestData>data).vehicleChecks,
           ));
+      case TestCategory.D:
+        return FaultSummaryCatCHelper.getDrivingFaultsNonTrailer(
+          data,
+          TestCategory.D,
+          this.faultCountProvider.getVehicleChecksFaultCount(
+            TestCategory.D,
+            (<CatDUniqueTypes.TestData>data).vehicleChecks,
+          ));
+      case TestCategory.D1:
+        return FaultSummaryCatCHelper.getDrivingFaultsNonTrailer(
+          data,
+          TestCategory.D1,
+          this.faultCountProvider.getVehicleChecksFaultCount(
+            TestCategory.D1,
+            (<CatD1UniqueTypes.TestData>data).vehicleChecks,
+          ));
+      case TestCategory.DE:
+        return FaultSummaryCatCHelper.getDrivingFaultsTrailer(
+          data,
+          TestCategory.DE,
+          this.faultCountProvider.getVehicleChecksFaultCount(
+            TestCategory.DE,
+            (<CatDEUniqueTypes.TestData>data).vehicleChecks,
+          ));
+      case TestCategory.D1E:
+        return FaultSummaryCatCHelper.getDrivingFaultsTrailer(
+          data,
+          TestCategory.D1E,
+          this.faultCountProvider.getVehicleChecksFaultCount(
+            TestCategory.D1E,
+            (<CatD1EUniqueTypes.TestData>data).vehicleChecks,
+          ));
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
@@ -82,6 +119,12 @@ export class FaultSummaryProvider {
       case TestCategory.C1E:
       case TestCategory.CE:
         return FaultSummaryCatCHelper.getSeriousFaultsTrailer(data);
+      case TestCategory.D1:
+      case TestCategory.D:
+        return FaultSummaryCatDHelper.getSeriousFaultsNonTrailer(data);
+      case TestCategory.D1E:
+      case TestCategory.DE:
+        return FaultSummaryCatDHelper.getSeriousFaultsTrailer(data);
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
@@ -104,6 +147,12 @@ export class FaultSummaryProvider {
       case TestCategory.C1E:
       case TestCategory.CE:
         return FaultSummaryCatCHelper.getDangerousFaultsTrailer(data);
+      case TestCategory.D1:
+      case TestCategory.D:
+        return FaultSummaryCatDHelper.getDangerousFaultsNonTrailer(data);
+      case TestCategory.D1E:
+      case TestCategory.DE:
+        return FaultSummaryCatDHelper.getDangerousFaultsTrailer(data);
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:

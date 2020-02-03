@@ -154,7 +154,7 @@ describe('FaultCountProvider', () => {
         faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, catBETestDataStateObject);
         expect((FaultCountBEHelper as any).getSeriousFaultSumCountCatBE).toHaveBeenCalled();
       });
-    })
+    });
 
     describe('CAT C', () => {
       it('should call the category C specific method for getting the serious fault sum count', () => {
@@ -210,7 +210,7 @@ describe('FaultCountProvider', () => {
         expect((FaultCountBEHelper as any).getDangerousFaultSumCountCatBE).toHaveBeenCalled();
       });
     });
-    
+
     describe('CAT C', () => {
       it('should call the category C specific method for getting the dangerous fault sum count', () => {
         faultCountProvider.getDangerousFaultSumCount(TestCategory.C, catCTestDataStateObject);
@@ -253,7 +253,6 @@ describe('FaultCountProvider', () => {
       expect((FaultCountAM1Helper as any).getDangerousFaultSumCountCatAM1).toHaveBeenCalled();
     });
   });
-
 
   describe('getDrivingFaultSumCountCatB', () => {
     it('should return the driving fault for cat B count correctly', () => {
