@@ -47,7 +47,7 @@ import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('WaitingRoomCatCPage', () => {
+describe('WaitingRoomCatDpage', () => {
   let fixture: ComponentFixture<WaitingRoomCatDPage>;
   let component: WaitingRoomCatDPage;
   let store$: Store<StoreModel>;

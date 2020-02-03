@@ -56,7 +56,7 @@ export const CAT_C = {
   PASS_FINALISATION_PAGE: 'PassFinalisationCatCPage',
   REVERSE_DIAGRAM_PAGE: 'ReverseDiagramCatCPage',
   TEST_REPORT_PAGE: 'TestReportCatCPage',
-  WAITING_ROOM_PAGE: 'WaitingRoomCatDPage',
+  WAITING_ROOM_PAGE: 'WaitingRoomCatCPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatCPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatCPage',
   REKEY_REASON_PAGE: 'RekeyReasonCatCPage',

@@ -70,7 +70,7 @@ describe('FaultCountProvider', () => {
     spyOn(FaultCountAM1Helper, 'getDangerousFaultSumCountCatAM1').and.callThrough();
     spyOn(FaultCountAM1Helper, 'getSeriousFaultSumCountCatAM1').and.callThrough();
     spyOn(FaultCountAM1Helper, 'getRidingFaultSumCountCatAM1').and.callThrough();
-    
+
     spyOn(FaultCountDHelper, 'getDrivingFaultSumCountCatD').and.callThrough();
     spyOn(FaultCountDHelper, 'getSeriousFaultSumCountCatD').and.callThrough();
     spyOn(FaultCountDHelper, 'getDangerousFaultSumCountCatD').and.callThrough();
@@ -295,7 +295,7 @@ describe('FaultCountProvider', () => {
       expect((FaultCountAM1Helper as any).getRidingFaultSumCountCatAM1(catAM1TestDataStateObject)).toBe(5);
     });
   });
-  
+
   describe('getDrivingFaultSumCountCatD', () => {
     it('should return the driving fault for cat D count correctly', () => {
       expect((FaultCountDHelper as any).getDrivingFaultSumCountCatD(catDTestDataStateObject)).toBe(5);

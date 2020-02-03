@@ -38,7 +38,7 @@ import {
 import {
   getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
-import { CAT_C, ERROR_PAGE, LOGIN_PAGE } from '../../page-names.constants';
+import { CAT_D, ERROR_PAGE, LOGIN_PAGE } from '../../page-names.constants';
 import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
@@ -66,7 +66,7 @@ interface WaitingRoomPageState {
 
 @IonicPage()
 @Component({
-  selector: '.waiting-room-cat-c-page',
+  selector: '.waiting-room-cat-d-page',
   templateUrl: 'waiting-room.cat-d.page.html',
 })
 export class WaitingRoomCatDPage extends BasePageComponent implements OnInit {
@@ -227,7 +227,7 @@ export class WaitingRoomCatDPage extends BasePageComponent implements OnInit {
   onSubmit() {
     Object.keys(this.formGroup.controls).forEach(controlName => this.formGroup.controls[controlName].markAsDirty());
     if (this.formGroup.valid) {
-      this.navController.push(CAT_C.COMMUNICATION_PAGE);
+      this.navController.push(CAT_D.COMMUNICATION_PAGE);
     } else {
       Object.keys(this.formGroup.controls).forEach((controlName) => {
         if (this.formGroup.controls[controlName].invalid) {
