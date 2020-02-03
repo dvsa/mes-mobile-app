@@ -10,13 +10,13 @@ import { speedCheckLabels } from '../../../../../shared/constants/competencies/c
 })
 export class SpeedCheckModal {
 
-  speedCheck: speedCheckLabels[];
+  speedChecksNeedCompleting: speedCheckLabels[];
 
   constructor(
     private viewCtrl: ViewController,
     private navParams: NavParams,
   ) {
-    this.speedCheck = this.navParams.get('speedCheck');
+    this.speedChecksNeedCompleting = this.navParams.get('speedChecksNeedCompleting');
   }
 
   onCancel() {

@@ -42,7 +42,7 @@ describe('SpeedCheckModal', () => {
 
   describe('DOM', () => {
     it('should call onCancel when the Return to test button is clicked', () => {
-      component.speedCheck = [];
+      component.speedChecksNeedCompleting = [];
       fixture.detectChanges();
       spyOn(component, 'onCancel');
       const button = fixture.debugElement.query(By.css('button.modal-return-button'));
@@ -53,7 +53,7 @@ describe('SpeedCheckModal', () => {
     });
 
     it('should call onTerminate when the Terminate test button is clicked', () => {
-      component.speedCheck = [];
+      component.speedChecksNeedCompleting = [];
       fixture.detectChanges();
       spyOn(component, 'onTerminate');
       const button = fixture.debugElement.query(By.css('button.terminate-button'));
