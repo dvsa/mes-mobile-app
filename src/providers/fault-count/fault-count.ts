@@ -9,6 +9,9 @@ import { FaultCountBEHelper } from './cat-be/fault-count.cat-be';
 import { FaultCountCHelper } from './cat-c/fault-count.cat-c';
 
 import { sumManoeuvreFaults } from '../../shared/helpers/faults';
+import { FaultCountAM1Helper } from './cat-a-mod1/fault-count.cat-a-mod1';
+
+// TODO: Remove category from helper functions as the name of the helper class already contains the category
 
 @Injectable()
 export class FaultCountProvider {
@@ -23,8 +26,7 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getDrivingFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getDrivingFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getDrivingFaultSumCountCatC(data);
-      // TODO: To be implemented properly in MES-4420
-      case TestCategory.EUAM1: return FaultCountBEHelper.getDrivingFaultSumCountCatBE(data);
+      case TestCategory.EUAM1: return FaultCountAM1Helper.getRidingFaultSumCountCatAM1(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -37,8 +39,7 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getSeriousFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getSeriousFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getSeriousFaultSumCountCatC(data);
-      // TODO: To be implemented properly in MES-4420
-      case TestCategory.EUAM1: return FaultCountBEHelper.getSeriousFaultSumCountCatBE(data);
+      case TestCategory.EUAM1: return FaultCountAM1Helper.getSeriousFaultSumCountCatAM1(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -51,8 +52,7 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getDangerousFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getDangerousFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getDangerousFaultSumCountCatC(data);
-      // TODO: To be implemented properly in MES-4420
-      case TestCategory.EUAM1: return FaultCountBEHelper.getDangerousFaultSumCountCatBE(data);
+      case TestCategory.EUAM1: return FaultCountAM1Helper.getDangerousFaultSumCountCatAM1(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }

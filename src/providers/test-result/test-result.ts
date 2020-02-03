@@ -36,7 +36,7 @@ export class TestResultProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
-        return this.calculateCatBETestResult(testData as TestData);
+        return this.calculateCatAAndSubCategoryTestResult(TestCategory.EUAM1, testData as TestData);
       default:
         throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }
@@ -94,6 +94,23 @@ export class TestResultProvider {
     }
 
     if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) > 15) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    return of(ActivityCodes.PASS);
+  }
+
+  private calculateCatAAndSubCategoryTestResult = (
+    category: TestCategory,
+    testData: TestData,
+  ): Observable<ActivityCode> => {
+    if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+    if (this.faultCountProvider.getSeriousFaultSumCount(category, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) >= 6) {
       return of(ActivityCodes.FAIL);
     }
 
