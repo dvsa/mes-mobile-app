@@ -105,7 +105,7 @@ export const CAT_A_MOD2 = {
 
 export const CAT_D = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBPage',
-  COMMUNICATION_PAGE: 'CommunicationCatBPage',
+  COMMUNICATION_PAGE: 'CommunicationCatDPage',
   DEBRIEF_PAGE: 'DebriefCatBPage',
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatBPage',
   OFFICE_PAGE: 'OfficeCatBPage',
