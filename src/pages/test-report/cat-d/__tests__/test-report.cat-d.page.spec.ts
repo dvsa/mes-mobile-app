@@ -153,22 +153,22 @@ describe('TestReportCatDPage', () => {
   });
 
   describe('showUncoupleRecouple', () => {
-    it('should return false when the test is a category C', () => {
+    it('should return false when the test is a category D', () => {
       component.testCategory = TestCategory.D;
       expect(component.showUncoupleRecouple()).toBeFalsy();
     });
 
-    it('should return false when the test is a category C1', () => {
+    it('should return false when the test is a category D1', () => {
       component.testCategory = TestCategory.D1;
       expect(component.showUncoupleRecouple()).toBeFalsy();
     });
 
-    it('should return true when the test is a category C1E', () => {
+    it('should return true when the test is a category D1E', () => {
       component.testCategory = TestCategory.D1E;
       expect(component.showUncoupleRecouple()).toBeTruthy();
     });
 
-    it('should return true when the test is a category CE', () => {
+    it('should return true when the test is a category DE', () => {
       component.testCategory = TestCategory.DE;
       expect(component.showUncoupleRecouple()).toBeTruthy();
     });
