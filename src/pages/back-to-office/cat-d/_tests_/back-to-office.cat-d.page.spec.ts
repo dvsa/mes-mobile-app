@@ -3,7 +3,7 @@ import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-a
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../../app/app.module';
-import { BackToOfficeCatCPage } from '../back-to-office.cat-c.page';
+import { BackToOfficeCatDPage } from '../back-to-office.cat-d.page';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
@@ -20,9 +20,9 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('BackToOfficeCatCPage', () => {
-  let fixture: ComponentFixture<BackToOfficeCatCPage>;
-  let component: BackToOfficeCatCPage;
+describe('BackToOfficeCatDPage', () => {
+  let fixture: ComponentFixture<BackToOfficeCatDPage>;
+  let component: BackToOfficeCatDPage;
   let navController: NavController;
   let store$: Store<StoreModel>;
   let screenOrientation: ScreenOrientation;
@@ -32,7 +32,7 @@ describe('BackToOfficeCatCPage', () => {
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        BackToOfficeCatCPage,
+        BackToOfficeCatDPage,
       ],
       imports: [
         IonicModule,
@@ -97,7 +97,7 @@ describe('BackToOfficeCatCPage', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(BackToOfficeCatCPage);
+    fixture = TestBed.createComponent(BackToOfficeCatDPage);
     component = fixture.componentInstance;
     navController = TestBed.get(NavController);
     screenOrientation = TestBed.get(ScreenOrientation);
