@@ -248,9 +248,7 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
   getDebriefPage() {
     return CAT_D.DEBRIEF_PAGE;
   }
-  // TODO CHECK LOGIC ON BANNERS FOR CAT D
-  displayCabLockDown = (): boolean => this.testCategory === TestCategory.D || this.testCategory === TestCategory.DE;
-  displayLoadSecured = (): boolean => this.testCategory === TestCategory.D ||
-                                      this.testCategory === TestCategory.DE ||
+
+  displayLoadSecured = (): boolean => this.testCategory === TestCategory.DE ||
                                       this.testCategory === TestCategory.D1E
 }

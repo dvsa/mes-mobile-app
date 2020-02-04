@@ -2,6 +2,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { PopulateCandidateDetails } from './candidate.actions';
 import { PopulateCandidateDetailsCatBE } from '../../cat-be/candidate/candidate.cat-be.actions';
 import { PopulateCandidateDetailsCatC } from '../../cat-c/candidate/candidate.cat-c.actions';
+import { PopulateCandidateDetailsCatD } from '../../cat-d/candidate/candidate.cat-d.actions';
 import { Booking } from '@dvsa/mes-journal-schema';
 import { get } from 'lodash';
 
@@ -28,12 +29,17 @@ export const createPopulateCandidateDetailsAction = (testCategory: string, booki
     case TestCategory.CE:
     case TestCategory.C1:
     case TestCategory.C:
+      return new PopulateCandidateDetailsCatC({
+        ...booking.candidate,
+        businessAddress: get(booking, 'business.businessAddress'),
+        businessName: get(booking, 'business.businessName'),
+        businessTelephone: get(booking, 'business.telephone'),
+      });
     case TestCategory.D:
     case TestCategory.D1:
     case TestCategory.D1E:
     case TestCategory.DE:
-      // TODO - Cat D - Rename function so it's not category c specific
-      return new PopulateCandidateDetailsCatC({
+      return new PopulateCandidateDetailsCatD({
         ...booking.candidate,
         businessAddress: get(booking, 'business.businessAddress'),
         businessName: get(booking, 'business.businessName'),

@@ -50,8 +50,13 @@ import { version } from '../../environment/test-schema-version';
 import { createPopulateCandidateDetailsAction } from './journal-data/common/candidate/candidate.action-creator';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateVehicleDimensions } from './vehicle-details/common/vehicle-details.actions';
-import { InitializeVehicleChecks } from './test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
-
+import {
+  InitializeVehicleChecks as InitializeVehicleChecksCatC,
+} from './test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
+import {
+  InitializeVehicleChecks as InitializeVehicleChecksCatD,
+}
+from './test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 @Injectable()
 export class TestsEffects {
   constructor(
@@ -192,7 +197,14 @@ export class TestsEffects {
         startTestAction.category === TestCategory.C1 ||
         startTestAction.category === TestCategory.C1E ||
         startTestAction.category === TestCategory.CE) {
-        arrayOfActions.push(new InitializeVehicleChecks(startTestAction.category));
+        arrayOfActions.push(new InitializeVehicleChecksCatC(startTestAction.category));
+      }
+      if (
+        startTestAction.category === TestCategory.D ||
+        startTestAction.category === TestCategory.D1 ||
+        startTestAction.category === TestCategory.D1E ||
+        startTestAction.category === TestCategory.DE) {
+        arrayOfActions.push(new InitializeVehicleChecksCatD(startTestAction.category));
       }
 
       if (
