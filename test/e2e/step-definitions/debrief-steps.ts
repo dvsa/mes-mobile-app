@@ -27,16 +27,15 @@ When('I end the welsh debrief', () => {
 });
 
 When('I complete the pass details', () => {
-  textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
-    + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
-
-  const licenceRecievedRadio = getElement(by.id('license-received'));
-  clickElement(licenceRecievedRadio);
-  const d255YesRadio = getElement(by.id('d255-yes'));
-  clickElement(d255YesRadio);
-  const debreifWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
-  clickElement(debreifWitnessedRadio);
+  completePassdetails();
   const transmissionRadio = getElement(by.id('transmission-manual'));
+  clickElement(transmissionRadio);
+  continuePassFinalisation();
+});
+
+When('I complete the pass details with an automatic transmission', () => {
+  completePassdetails();
+  const transmissionRadio = getElement(by.id('transmission-automatic'));
   clickElement(transmissionRadio);
   continuePassFinalisation();
 });
@@ -75,4 +74,17 @@ const continuePassFinalisation = () => {
   const continueButton = getElement(by.xpath(
   `//div[contains(@class, "pass-finalisation-cat-${this.testCategory}-page")]//button[span[h3[text() = "Continue"]]]`));
   clickElement(continueButton);
+};
+
+const completePassdetails = () => {
+  textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
+  + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
+  const licenceRecievedRadio = getElement(by.id('license-received'));
+  clickElement(licenceRecievedRadio);
+  const d255YesRadio = getElement(by.id('d255-yes'));
+  clickElement(d255YesRadio);
+  const englishPrefRadio = getElement(by.id('lang-pref-english'));
+  clickElement(englishPrefRadio);
+  const debreifWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
+  clickElement(debreifWitnessedRadio);
 };
