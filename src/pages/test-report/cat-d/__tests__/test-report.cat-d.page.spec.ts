@@ -1,4 +1,3 @@
-
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform, ModalController } from 'ionic-angular';
 import {
@@ -43,9 +42,10 @@ import { configureTestSuite } from 'ng-bullet';
 // TODO Implement Cat D UncoupleRecoupleComponent
 import { UncoupleRecoupleComponent } from '../../cat-c/components/uncouple-recouple/uncouple-recouple';
 // TODO Implement Cat D ReverseLeftComponent
-import { ReverseLeftComponent } from '../../cat-c/components/reverse-left/reverse-left';
+import { ReverseLeftCatDComponent } from '../../cat-d/components/reverse-left/reverse-left.cat-d';
 // TODO Implement Cat D ReverseLeftPopoverComponent
-import { ReverseLeftPopoverComponent } from '../../cat-c/components/reverse-left-popover/reverse-left-popover';
+import { ReverseLeftPopoverCatDComponent }
+from '../../cat-d/components/reverse-left-popover/reverse-left-popover.cat-d';
 // TODO Implement Cat D VehicleChecksComponent
 import { VehicleChecksComponent } from '../../cat-c/components/vehicle-checks/vehicle-checks';
 
@@ -66,8 +66,8 @@ describe('TestReportCatDPage', () => {
         MockComponent(ToolbarComponent),
         MockComponent(EcoComponent),
         MockComponent(UncoupleRecoupleComponent),
-        MockComponent(ReverseLeftComponent),
-        MockComponent(ReverseLeftPopoverComponent),
+        MockComponent(ReverseLeftCatDComponent),
+        MockComponent(ReverseLeftPopoverCatDComponent),
         MockComponent(VehicleChecksComponent),
       ],
       imports: [
