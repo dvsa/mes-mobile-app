@@ -19,6 +19,7 @@ import {
   isProvisionalLicenseProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
+// TODO: create cat d reducer
 import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
@@ -34,6 +35,7 @@ import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
+// TODO: create cat d reducer
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { getGearboxCategory } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
@@ -47,6 +49,7 @@ import {
   DebriefUnwitnessed,
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+// TODO: create cat d behaiviour map
 import { behaviourMap } from '../../office/office-behaviour-map.cat-c';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
@@ -65,7 +68,9 @@ import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { TransmissionType } from '../../../shared/models/transmission-type';
 import { merge } from 'rxjs/observable/merge';
+// TODO: create cat d reducer
 import { getPassCompletion } from '../../../modules/tests/pass-completion/cat-c/pass-completion.cat-c.reducer';
+// TODO: create cat d selector
 import { getCode78 } from '../../../modules/tests/pass-completion/cat-c/pass-completion.cat-c.selector';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/AM2';
@@ -89,7 +94,7 @@ interface PassFinalisationPageState {
 
 @IonicPage()
 @Component({
-  selector: '.pass-finalisation-cat-c-page',
+  selector: '.pass-finalisation-cat-d-page',
   templateUrl: 'pass-finalisation.cat-d.page.html',
 })
 export class PassFinalisationCatDPage extends BasePageComponent {

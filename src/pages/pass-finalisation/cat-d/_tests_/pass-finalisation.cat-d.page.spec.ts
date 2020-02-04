@@ -41,7 +41,7 @@ import { TransmissionType } from '../../../../shared/models/transmission-type';
 import { configureTestSuite } from 'ng-bullet';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-describe('PassFinalisationCatCPage', () => {
+describe('PassFinalisationCatDPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatDPage>;
   let component: PassFinalisationCatDPage;
   let store$: Store<StoreModel>;
