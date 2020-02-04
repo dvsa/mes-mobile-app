@@ -216,6 +216,7 @@ export class TestReportCatAMod1Page extends BasePageComponent {
         break;
       case ModalEvent.END_WITH_ACTIVITY_CODE_4:
         this.store$.dispatch(new SetActivityCode('4'));
+        this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE);
         break;
     }
   }
