@@ -8,66 +8,67 @@
     <ion-grid>
       <ion-row padding>
         <ion-col col-32 no-padding>
-          <h4>Emergency stop</h4>
+          <h4>Emergency Stop</h4>
         </ion-col>
         <ion-col col-5 no-padding></ion-col>
         <ion-col col-20 no-padding>
-          <div>
-            1st: 46km/h
+          <div *ngIf=emergencyStop.firstAttempt>
+            1st: {{emergencyStop.firstAttempt}}km/h
           </div>
         </ion-col>
         <ion-col col-20 no-padding>
-          <div>
-            2nd: 52km/h
+          <div *ngIf=emergencyStop.secondAttempt>
+            2nd: {{emergencyStop.secondAttempt}}km/h
           </div>
         </ion-col>
         <ion-col col-4 no-padding align-self-start>
             <div class="counter-icon">
-              <img *ngIf="true" src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met" class="tick-icon"/>
-              <img *ngIf="false" src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met" class="cross-icon"/>
+              <img *ngIf=!emergencyStop.speedNotMetSeriousFault src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met" class="tick-icon"/>
+              <img *ngIf=emergencyStop.speedNotMetSeriousFault src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met" class="cross-icon"/>
             </div>
         </ion-col>
         <ion-col col-13 no-padding>
-          <div class="counter-label" *ngIf="true">
+          <div class="counter-label" *ngIf=!emergencyStop.speedNotMetSeriousFault>
             Met
           </div>
-          <div class="counter-label" *ngIf="false">
+          <div class="counter-label" *ngIf=emergencyStop.speedNotMetSeriousFault>
             Not Met
           </div>
         </ion-col>
       </ion-row>
 
-      <!--Todo (MES-4724): remove the below row when above is linked up to data-->
       <ion-row padding>
         <ion-col col-32 no-padding>
-          <h4>Avoidance exercise</h4>
+          <h4>Avoidance</h4>
         </ion-col>
         <ion-col col-5 no-padding></ion-col>
         <ion-col col-20 no-padding>
-          <div>
-            1st: 46km/h
+          <div *ngIf=avoidance.firstAttempt>
+            1st: {{avoidance.firstAttempt}}km/h
           </div>
         </ion-col>
         <ion-col col-20 no-padding>
-          <div>
-            2nd: 38km/h
+          <div *ngIf=avoidance.secondAttempt>
+            2nd: {{avoidance.secondAttempt}}km/h
           </div>
         </ion-col>
         <ion-col col-4 no-padding align-self-start>
           <div class="counter-icon">
-            <img *ngIf="false" src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met" class="tick-icon"/>
-            <img *ngIf="true" src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met" class="cross-icon"/>
+            <img *ngIf=!avoidance.speedNotMetSeriousFault src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met" class="tick-icon"/>
+            <img *ngIf=avoidance.speedNotMetSeriousFault src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met" class="cross-icon"/>
           </div>
         </ion-col>
         <ion-col col-13 no-padding>
-          <div class="counter-label" *ngIf="false">
+          <div class="counter-label" *ngIf=!avoidance.speedNotMetSeriousFault>
             Met
           </div>
-          <div class="counter-label" *ngIf="true">
+          <div class="counter-label" *ngIf=avoidance.speedNotMetSeriousFault>
             Not Met
           </div>
         </ion-col>
       </ion-row>
+
+
     </ion-grid>
   </ion-card-content>
 </ion-card>

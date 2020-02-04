@@ -56,7 +56,7 @@ import { of } from 'rxjs/observable/of';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('DebriefCatAMod1Page', () => {
+fdescribe('DebriefCatAMod1Page', () => {
   let fixture: ComponentFixture<DebriefCatAMod1Page>;
   let component: DebriefCatAMod1Page;
   let navController: NavController;
