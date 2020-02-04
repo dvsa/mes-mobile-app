@@ -30,18 +30,22 @@ import {
   LegalRequirements,
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
+// TODO Implement Cat D TestData Reducer
 import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
+// TODO Implement Cat D TestData Selector
 import { hasManoeuvreBeenCompletedCatC } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import { ModalEvent } from '../test-report.constants';
-import { CAT_C, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
+import { CAT_D, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+// TODO Implement Cat C Unique Types
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+// TODO Implement Cat D TestRequirements Reducer
 import {
   getTestRequirementsCatC,
 } from '../../../modules/tests/test-data/cat-c/test-requirements/test-requirements.cat-c.reducer';
@@ -219,11 +223,11 @@ export class TestReportCatDPage extends BasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        this.navController.push(CAT_C.DEBRIEF_PAGE);
+        this.navController.push(CAT_D.DEBRIEF_PAGE);
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new TerminateTestFromTestReport());
-        this.navController.push(CAT_C.DEBRIEF_PAGE);
+        this.navController.push(CAT_D.DEBRIEF_PAGE);
         break;
     }
   }
@@ -233,12 +237,12 @@ export class TestReportCatDPage extends BasePageComponent {
   }
 
   onContinue = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(CAT_C.DEBRIEF_PAGE));
+    this.modal.dismiss().then(() => this.navController.push(CAT_D.DEBRIEF_PAGE));
   }
 
   onTerminate = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(CAT_C.DEBRIEF_PAGE));
+    this.modal.dismiss().then(() => this.navController.push(CAT_D.DEBRIEF_PAGE));
   }
 
-  showUncoupleRecouple = (): boolean => this.testCategory === TestCategory.CE || this.testCategory === TestCategory.C1E;
+  showUncoupleRecouple = (): boolean => this.testCategory === TestCategory.DE || this.testCategory === TestCategory.D1E;
 }

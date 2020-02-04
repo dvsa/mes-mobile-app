@@ -33,4 +33,4 @@ import { TestReportCatDComponentsModule } from './components/test-report.cat-d.c
     TestResultProvider,
   ],
 })
-export class TestReportCatCPageModule { }
+export class TestReportCatDPageModule { }
