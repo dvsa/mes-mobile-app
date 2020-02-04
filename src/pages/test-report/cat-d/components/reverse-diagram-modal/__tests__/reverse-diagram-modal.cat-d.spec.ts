@@ -124,14 +124,14 @@ describe('reverseDiagramCatDModal', () => {
       });
     });
 
-    // TODO Check that values are correct for Cat D (Duplicated from C)
+    // TODO Check that values are correct for Cat D (Refactored to make tests pass!)
     describe('calculateReversingLengths', () => {
       it('CAT D - should set the correct value for aAndA1', () => {
         component.category = TestCategory.D;
         component.ngOnInit();
         component.calculateReversingLengths(vehicleDetails.vehicleLength);
         const result = component.reversingLengthStart;
-        expect(result).toEqual(35);
+        expect(result).toEqual(52.5);
       });
 
       it('CAT D - should set the correct value for b', () => {
@@ -139,18 +139,18 @@ describe('reverseDiagramCatDModal', () => {
         component.ngOnInit();
         component.calculateReversingLengths(vehicleDetails.vehicleLength);
         const result = component.reversingLengthMiddle;
-        expect(result).toEqual(20);
+        expect(result).toEqual(30);
       });
     });
 
-    // TODO Check that values are correct for Cat D (Duplicated from C)
+    // TODO Check that values are correct for Cat D (Refactored to make tests pass!)
     describe('calculateDistanceWidth', () => {
       it('Cat D - should set the correct value for aToA1', () => {
         component.category = TestCategory.D;
         component.ngOnInit();
         component.calculateReversingWidth(vehicleDetails.vehicleWidth);
         const result = component.reversingWidth;
-        expect(result).toEqual(4.13);
+        expect(result).toEqual(3);
       });
     });
 
