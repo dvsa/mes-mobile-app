@@ -20,7 +20,7 @@ activity-code-4-modal {
   .end-test-button {
       @extend .mes-return-button;
     background: map-get($colors-gds, gds-bright-red);
-    &.activated {
+    &.activated, &:active{
       background:  map-get($colors-gds, gds-red);
     }
     h3 {
