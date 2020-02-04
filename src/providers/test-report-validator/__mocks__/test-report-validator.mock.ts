@@ -1,3 +1,5 @@
+import { SpeedCheckState } from '../test-report-validator.constants';
+
 export class TestReportValidatorProviderMock {
 
   isTestReportValid =
@@ -8,5 +10,8 @@ export class TestReportValidatorProviderMock {
 
   isETAValid =
     jasmine.createSpy('isETAValid').and.returnValue(true);
+
+  validateSpeedChecksCatAMod1 =
+    jasmine.createSpy('validateSpeedChecksCatAMod1').and.returnValue(SpeedCheckState.VALID);
 
 }

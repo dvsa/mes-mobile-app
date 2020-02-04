@@ -22,7 +22,7 @@ import { DrivingFaultSummaryComponent } from '../../components/driving-fault-sum
 import { TickIndicatorComponent } from '../../../../components/common/tick-indicator/tick-indicator';
 import { ToolbarComponent } from '../../components/toolbar/toolbar';
 import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, Store } from '@ngrx/store';
 import { testReportReducer } from '../../test-report.reducer';
 import { LegalRequirementComponent } from '../../components/legal-requirement/legal-requirement';
 import { EtaComponent } from '../../components/examiner-takes-action/eta';
@@ -42,11 +42,15 @@ import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { configureTestSuite } from 'ng-bullet';
 import { SpeedCheckHeaderComponent } from '../components/speed-check-header/speed-check-header';
 import { SpeedCheckComponent } from '../components/speed-check/speed-check';
+import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { CalculateTestResult, TerminateTestFromTestReport } from '../../test-report.actions';
 
 describe('TestReportCatAMod1Page', () => {
   let fixture: ComponentFixture<TestReportCatAMod1Page>;
   let component: TestReportCatAMod1Page;
   let navController: NavController;
+  let store$: Store<StoreModel>;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -100,6 +104,7 @@ describe('TestReportCatAMod1Page', () => {
     fixture = TestBed.createComponent(TestReportCatAMod1Page);
     component = fixture.componentInstance;
     navController = TestBed.get(NavController);
+    store$ = TestBed.get(Store);
   }));
 
   describe('Class', () => {
@@ -108,6 +113,34 @@ describe('TestReportCatAMod1Page', () => {
         component.onModalDismiss(ModalEvent.CONTINUE);
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(CAT_A_MOD1.DEBRIEF_PAGE);
+      });
+
+      it('should set activity code to 4 when passed an END_WITH_ACTIVITY_CODE_4 event', () => {
+        spyOn(component.store$, 'dispatch');
+        component.onModalDismiss(ModalEvent.END_WITH_ACTIVITY_CODE_4);
+        expect(component.store$.dispatch).toHaveBeenCalledWith(new SetActivityCode('4'));
+      });
+
+      it('should dispatch CalculateTestResult action', () => {
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+
+        component.onModalDismiss(ModalEvent.CONTINUE);
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new CalculateTestResult());
+      });
+
+      it('should navigate to debrief page when passed a TERMINATE event', () => {
+        component.onModalDismiss(ModalEvent.TERMINATE);
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe(CAT_A_MOD1.DEBRIEF_PAGE);
+      });
+
+      it('should dispatch TerminateTestFromTestReport action', () => {
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+
+        component.onModalDismiss(ModalEvent.TERMINATE);
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new TerminateTestFromTestReport());
       });
     });
 

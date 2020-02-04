@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
@@ -9,6 +9,7 @@ import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { FaultCountProvider } from '../fault-count/fault-count';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { TestData } from '@dvsa/mes-test-schema/categories/common';
+import { TestData as CatAMod1TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import {
   hasManoeuvreBeenCompletedCatB,
   hasVehicleChecksBeenCompletedCatB,
@@ -16,6 +17,8 @@ import {
 import { hasManoeuvreBeenCompletedCatBE } from '../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { hasManoeuvreBeenCompletedCatC } from '../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import { legalRequirementsLabels } from '../../shared/constants/legal-requirements/legal-requirements.constants';
+import { CompetencyOutcome } from '../../shared/models/competency-outcome';
+import { SpeedCheckState } from './test-report-validator.constants';
 
 @Injectable()
 export class TestReportValidatorProvider {
@@ -34,8 +37,6 @@ export class TestReportValidatorProvider {
       case TestCategory.C1E:
       case TestCategory.CE:
         return this.validateLegalRequirementsCTrailer(data);
-      case TestCategory.EUAM1:
-        return this.validateLegalRequirementsCatBE(data);
       default:
         return false;
     }
@@ -64,6 +65,43 @@ export class TestReportValidatorProvider {
     return noEtaFaults ||
       this.faultCountProvider.getDangerousFaultSumCount(category, data) !== 0 ||
       this.faultCountProvider.getSeriousFaultSumCount(category, data) !== 0;
+  }
+
+  public validateSpeedChecksCatAMod1(data: CatAMod1TestData): SpeedCheckState {
+
+    const emergencyStopNotMet = get(data, 'emergencyStop.speedNotMetSeriousFault');
+    const avoidanceNotMet = get(data, 'avoidance.speedNotMetSeriousFault');
+
+    if (emergencyStopNotMet || avoidanceNotMet) {
+      return SpeedCheckState.NOT_MET;
+    }
+
+    const emergencyStopOutcome = get(data, 'emergencyStop.outcome');
+
+    if (emergencyStopOutcome === CompetencyOutcome.S) {
+      return SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT;
+    }
+
+    if (emergencyStopOutcome === CompetencyOutcome.D) {
+      return SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT;
+    }
+
+    const emergencyStopFirstAttempt = get(data, 'emergencyStop.firstAttempt');
+    const avoidanceFirstAttempt = get(data, 'avoidance.firstAttempt');
+
+    if (isEmpty(emergencyStopFirstAttempt) && isEmpty(avoidanceFirstAttempt)) {
+      return SpeedCheckState.EMERGENCY_STOP_AND_AVOIDANCE_MISSING;
+    }
+
+    if (isEmpty(emergencyStopFirstAttempt)) {
+      return SpeedCheckState.EMERGENCY_STOP_MISSING;
+    }
+
+    if (isEmpty(avoidanceFirstAttempt)) {
+      return SpeedCheckState.AVOIDANCE_MISSING;
+    }
+
+    return SpeedCheckState.VALID;
   }
 
   private validateLegalRequirementsCatB(data: CatBUniqueTypes.TestData): boolean {
