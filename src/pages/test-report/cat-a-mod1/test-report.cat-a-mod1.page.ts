@@ -43,6 +43,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { SpeedCheckState } from '../../../providers/test-report-validator/test-report-validator.constants';
 import { ModalReason } from './components/activity-code-4-modal/activity-code-4-modal.constants';
+import { speedCheckLabels } from '../../../shared/constants/competencies/cata-mod1-competencies';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -172,6 +173,24 @@ export class TestReportCatAMod1Page extends BasePageComponent {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     if (!this.isEtaValid) {
       this.modal = this.modalController.create('EtaInvalidModal', {}, options);
+    } else if (this.isTestReportValid === SpeedCheckState.EMERGENCY_STOP_AND_AVOIDANCE_MISSING) {
+      this.modal = this.modalController.create(
+        'SpeedCheckModal',
+        { speedChecksNeedCompleting: [speedCheckLabels.speedCheckEmergency, speedCheckLabels.speedCheckAvoidance] },
+        options,
+      );
+    } else if (this.isTestReportValid === SpeedCheckState.EMERGENCY_STOP_MISSING) {
+      this.modal = this.modalController.create(
+        'SpeedCheckModal',
+        { speedChecksNeedCompleting: [speedCheckLabels.speedCheckEmergency] },
+        options,
+      );
+    } else if (this.isTestReportValid === SpeedCheckState.AVOIDANCE_MISSING) {
+      this.modal = this.modalController.create(
+        'SpeedCheckModal',
+        { speedChecksNeedCompleting: [speedCheckLabels.speedCheckAvoidance] },
+        options,
+      );
     } else if (this.isTestReportValid === SpeedCheckState.VALID) {
       this.modal = this.modalController.create('EndTestModal', {}, options);
     } else {
