@@ -37,5 +37,6 @@ exports.config = {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
     }
-  }
+  },
+  screenshotAlways: false
 };
