@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest, getJournalData } from '../../../../../modules/tests/tests.selector';
-import { getCandidate } from '../../../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
+import { getCandidate } from '../../../../../modules/tests/journal-data/cat-d/candidate/candidate.cat-d.reducer';
 import { getUntitledCandidateName }
   from '../../../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { Observable } from 'rxjs/Observable';
@@ -14,14 +14,14 @@ import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle
 import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-import { getTestData } from '../../../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
 
 import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
-} from '../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
+} from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER,
@@ -45,12 +45,11 @@ import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
 import * as vehicleChecksModalActions from './vehicle-checks-modal.cat-d.actions';
-// TODO replace with CatD selectors
 import {
-  getVehicleChecksCatC,
+  getVehicleChecksCatD,
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
-} from '../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
+} from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
 
 interface VehicleChecksModalCatDState {
   candidateName$: Observable<string>;
@@ -127,23 +126,19 @@ export class VehicleChecksCatDModal {
       ),
       showMeQuestions$: currentTest$.pipe(
         select(getTestData),
-        // TODO replace with CatD
-        select(getVehicleChecksCatC),
+        select(getVehicleChecksCatD),
         select(getSelectedShowMeQuestions),
       ),
       tellMeQuestions$: currentTest$.pipe(
         select(getTestData),
-        // TODO replace with CatD
-        select(getVehicleChecksCatC),
+        select(getVehicleChecksCatD),
         select(getSelectedTellMeQuestions),
       ),
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
-        // TODO replace with CatD
-        select(getVehicleChecksCatC),
+        select(getVehicleChecksCatD),
         map((vehicleChecks) => {
-        // TODO replace with CatD
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.C, vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.D, vehicleChecks);
         }),
       ),
     };

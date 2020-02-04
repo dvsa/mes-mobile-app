@@ -16,7 +16,6 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { TestsModel } from '../../../../../modules/tests/tests.model';
 import { formatAnalyticsText } from '../../../../../shared/helpers/format-analytics-text';
-// TODO replace with Cat D actions
 import {
   SHOW_ME_QUESTION_OUTCOME_CHANGED,
   SHOW_ME_QUESTION_SELECTED,
@@ -26,7 +25,7 @@ import {
   TELL_ME_QUESTION_SELECTED,
   TellMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
-} from '../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
+} from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 
 @Injectable()
 export class VehicleChecksModalCatDAnalyticsEffects {

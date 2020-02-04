@@ -4,14 +4,14 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 
 export const generateInitialState = (category: TestCategory): CatDUniqueTypes.VehicleChecks => {
   switch (category) {
-    case TestCategory.C:
-    case TestCategory.C1:
+    case TestCategory.D:
+    case TestCategory.D1:
       return  {
         tellMeQuestions: Array(2).fill({}),
         showMeQuestions: Array(3).fill({}),
       };
-    case TestCategory.CE:
-    case TestCategory.C1E:
+    case TestCategory.DE:
+    case TestCategory.D1E:
       return {
         tellMeQuestions: Array(1).fill({}),
         showMeQuestions: Array(1).fill({}),

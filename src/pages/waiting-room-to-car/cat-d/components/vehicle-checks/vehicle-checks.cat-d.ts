@@ -56,7 +56,6 @@ export class VehicleChecksCatDComponent implements OnChanges, OnInit {
   openVehicleChecksModal(): void {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const modal = this.modalController.create(
-      // TODO replace with Category D modal
       CAT_D.VEHICLE_CHECKS_MODAL,
       { category: this.category },
       { cssClass: zoomClass },

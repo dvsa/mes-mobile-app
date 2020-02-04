@@ -16,7 +16,7 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,
@@ -27,7 +27,7 @@ import {
   getOtherAccompaniment,
   getInterpreterAccompaniment,
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-d/candidate/candidate.cat-d.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
@@ -39,7 +39,7 @@ import {
   QuestionOutcomes,
 } from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 
-import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_D } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
@@ -51,7 +51,7 @@ import {
 } from '../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import { VehicleChecksCatDComponent } from './components/vehicle-checks/vehicle-checks.cat-d';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
@@ -67,7 +67,7 @@ interface WaitingRoomToCarPageState {
   otherAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
-  vehicleChecks$: Observable<CatCUniqueTypes.VehicleChecks>;
+  vehicleChecks$: Observable<CatDUniqueTypes.VehicleChecks>;
   testCategory$: Observable<CategoryCode>;
 
 }

@@ -12,9 +12,8 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { VehicleChecksViewDidEnter } from '../vehicle-checks-modal.cat-d.actions';
 import { AnalyticRecorded } from '../../../../../../providers/analytics/analytics.actions';
 import { AnalyticsEventCategories, AnalyticsScreenNames } from '../../../../../../providers/analytics/analytics.model';
-// TODO replace with cat d actions
 import * as VehicleChecksActions
-  from '../../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
+  from '../../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 
 import {
   QuestionOutcome,

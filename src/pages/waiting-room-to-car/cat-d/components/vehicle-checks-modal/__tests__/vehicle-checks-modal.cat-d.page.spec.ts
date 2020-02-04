@@ -18,7 +18,7 @@ import {
   ShowMeQuestionSelected,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
-} from '../../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
+} from '../../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 import { configureTestSuite } from 'ng-bullet';
 

@@ -16,7 +16,7 @@ import {
   getResidencyDeclarationStatus,
   getSignatureStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-d/candidate/candidate.cat-d.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
