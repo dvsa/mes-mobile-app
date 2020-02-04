@@ -6,12 +6,12 @@ import { StoreModule } from '@ngrx/store';
 import { TestReportAnalyticsEffects } from '../test-report.analytics.effects';
 import { testReportReducer } from '../test-report.reducer';
 import { ComponentsModule } from '../../../components/common/common-components.module';
-import { TestReportComponentsModule } from '../components/test-report-components.module';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 import { TestReportEffects } from '../test-report.effects';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { TestReportCatDPage } from './test-report.cat-d.page';
 import { TestReportCatDComponentsModule } from './components/test-report.cat-d.components.module';
+import {TestReportComponentsModule} from '../components/test-report-components.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +19,7 @@ import { TestReportCatDComponentsModule } from './components/test-report.cat-d.c
   ],
   imports: [
     TestReportComponentsModule,
+    TestReportCatDComponentsModule,
     IonicPageModule.forChild(TestReportCatDPage),
     StoreModule.forFeature('testReport', testReportReducer),
     EffectsModule.forFeature([
@@ -26,7 +27,6 @@ import { TestReportCatDComponentsModule } from './components/test-report.cat-d.c
       TestReportEffects,
     ]),
     ComponentsModule,
-    TestReportCatDComponentsModule,
   ],
   providers: [
     TestReportValidatorProvider,

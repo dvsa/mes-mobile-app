@@ -10,10 +10,10 @@ import {
 } from '../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
 
 @Component({
-  selector: 'reverse-diagram-link',
-  templateUrl: 'reverse-diagram-link.html',
+  selector: 'reverse-diagram-link-cat-d',
+  templateUrl: 'reverse-diagram-link.cat-d.html',
 })
-export class ReverseDiagramLinkComponent {
+export class ReverseDiagramLinkCatDComponent {
 
   constructor(
     public modalController: ModalController,

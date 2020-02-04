@@ -5,7 +5,6 @@ import { ModalController } from 'ionic-angular';
 import { ModalControllerMock } from 'ionic-mocks';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../../test-report.reducer';
-import { ReverseDiagramLinkComponent } from '../reverse-diagram-link';
 import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
@@ -16,16 +15,17 @@ import {
 } from '../../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { ReverseDiagramLinkCatDComponent } from '../reverse-diagram-link.cat-d';
 
-describe('reverseDiagramLink', () => {
-  let fixture: ComponentFixture<ReverseDiagramLinkComponent>;
-  let component: ReverseDiagramLinkComponent;
+describe('reverseDiagramCatDLink', () => {
+  let fixture: ComponentFixture<ReverseDiagramLinkCatDComponent>;
+  let component: ReverseDiagramLinkCatDComponent;
   let modalController: ModalController;
   let store$: Store<StoreModel>;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      declarations: [ReverseDiagramLinkComponent],
+      declarations: [ReverseDiagramLinkCatDComponent],
       imports: [
         AppModule,
         StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
@@ -38,7 +38,7 @@ describe('reverseDiagramLink', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(ReverseDiagramLinkComponent);
+    fixture = TestBed.createComponent(ReverseDiagramLinkCatDComponent);
     component = fixture.componentInstance;
     modalController = TestBed.get(ModalController);
     store$ = TestBed.get(Store);
