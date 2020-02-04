@@ -21,6 +21,11 @@ When('I end the debrief', () => {
   clickElement(endDebriefButton);
 });
 
+When('I end the welsh debrief', () => {
+  const endDebriefButton = getElement(by.xpath('//button[span[h3[text()="Diwedd ôl-drafodaeth"]]]'));
+  clickElement(endDebriefButton);
+});
+
 When('I complete the pass details', () => {
   textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
     + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
@@ -29,8 +34,6 @@ When('I complete the pass details', () => {
   clickElement(licenceRecievedRadio);
   const d255YesRadio = getElement(by.id('d255-yes'));
   clickElement(d255YesRadio);
-  const englishPrefRadio = getElement(by.id('lang-pref-english'));
-  clickElement(englishPrefRadio);
   const debreifWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
   clickElement(debreifWitnessedRadio);
   const transmissionRadio = getElement(by.id('transmission-manual'));
