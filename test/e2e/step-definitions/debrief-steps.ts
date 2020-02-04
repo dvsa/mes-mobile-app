@@ -34,8 +34,6 @@ When('I complete the pass details', () => {
   clickElement(licenceRecievedRadio);
   const d255YesRadio = getElement(by.id('d255-yes'));
   clickElement(d255YesRadio);
-  // const englishPrefRadio = getElement(by.id('lang-pref-english'));
-  // clickElement(englishPrefRadio);
   const debreifWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
   clickElement(debreifWitnessedRadio);
   const transmissionRadio = getElement(by.id('transmission-manual'));
