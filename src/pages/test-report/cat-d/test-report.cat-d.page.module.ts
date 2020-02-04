@@ -11,7 +11,7 @@ import { TestReportEffects } from '../test-report.effects';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { TestReportCatDPage } from './test-report.cat-d.page';
 import { TestReportCatDComponentsModule } from './components/test-report.cat-d.components.module';
-import {TestReportComponentsModule} from '../components/test-report-components.module';
+import { TestReportComponentsModule } from '../components/test-report-components.module';
 
 @NgModule({
   declarations: [

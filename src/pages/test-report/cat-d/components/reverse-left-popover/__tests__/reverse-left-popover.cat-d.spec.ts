@@ -37,7 +37,7 @@ describe('reverseLeftComponent', () => {
   describe('DOM', () => {
     it('should display a link to open the reverse diagram', () => {
       const iconElement = fixture.debugElement.queryAll(
-        By.css('reverse-diagram-link[id="reverse-diagram-link-cat-d"]'),
+        By.css('reverse-diagram-link-cat-d[id="reverse-diagram-link"]'),
       );
       fixture.detectChanges();
       expect(iconElement.length).toBe(1);
