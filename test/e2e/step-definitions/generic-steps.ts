@@ -9,6 +9,7 @@ const {
   When,
   setDefaultTimeout,
   After,
+  Status,
 } = require('cucumber');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -28,6 +29,11 @@ setDefaultTimeout(TEST_CONFIG.DEFAULT_TIMEOUT);
 
 // Turn off syncronisation with Angular
 browser.ignoreSynchronization = true;
+
+let screenshotAlways = false;
+browser.getProcessedConfig().then((config) => {
+  screenshotAlways = config.screenshotAlways;
+});
 
 Given('I am not logged in', () => {
 
@@ -226,10 +232,11 @@ When('I click go to my Journal', () => {
  * Take a screenshot of the page at the end of the scenario.
  */
 After(function (testCase) {
-  return browser.driver.takeScreenshot().then((screenShot) => {
-    // screenShot is a base-64 encoded PNG
-    this.attach(screenShot, 'image/png');
-  });
+  if (screenshotAlways || testCase.result.status === Status.FAILED) {
+    return browser.driver.takeScreenshot().then((screenShot) => {
+      this.attach(screenShot, 'image/png');
+    });
+  }
 });
 
 //////////////////////////////////////////// SHARED FUNCTIONS ////////////////////////////////////////////
