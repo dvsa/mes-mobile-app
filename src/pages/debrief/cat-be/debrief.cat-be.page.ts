@@ -17,7 +17,7 @@ import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
-import { ETA, Eco } from '@dvsa/mes-test-schema/categories/common';
+import { ETA, Eco, CategoryCode, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import {
   getCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
@@ -34,6 +34,7 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { TestOutcome } from '../../../shared/models/test-outcome';
+import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -45,6 +46,8 @@ interface DebriefPageState {
   testResult$: Observable<string>;
   conductedLanguage$: Observable<string>;
   candidateName$: Observable<string>;
+  category$: Observable<CategoryCode>;
+  tellMeShowMeQuestions$: Observable<QuestionResult[]>;
 }
 
 @IonicPage()
@@ -134,6 +137,15 @@ export class DebriefCatBEPage extends BasePageComponent {
         select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
+      ),
+      category$: currentTest$.pipe(
+        select(getTestCategory),
+      ),
+      tellMeShowMeQuestions$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecks),
+        map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
+        map(checks => checks.filter(c => c.code !== undefined)),
       ),
     };
 

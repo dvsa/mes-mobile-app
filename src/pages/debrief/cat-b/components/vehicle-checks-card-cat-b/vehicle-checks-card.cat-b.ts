@@ -20,10 +20,10 @@ interface VehicleChecksCardComponentState {
 }
 
 @Component({
-  selector: 'vehicle-checks-card',
-  templateUrl: 'vehicle-checks-card.html',
+  selector: 'vehicle-checks-card-cat-b',
+  templateUrl: 'vehicle-checks-card.cat-b.html',
 })
-export class VehicleChecksCardComponent implements OnInit, OnDestroy {
+export class VehicleChecksCardCatBComponent implements OnInit, OnDestroy {
 
   componentState: VehicleChecksCardComponentState;
   hasFault: boolean = false;
@@ -43,13 +43,13 @@ export class VehicleChecksCardComponent implements OnInit, OnDestroy {
 
     this.componentState = {
       showMeQuestionOutcome$: vehicleChecks$.pipe(
-        select(VehicleChecksCardComponent.getShowMeQuestionOutcome),
+        select(VehicleChecksCardCatBComponent.getShowMeQuestionOutcome),
       ),
       tellMeQuestionHasFault$: vehicleChecks$.pipe(
-        select(VehicleChecksCardComponent.tellMeQuestionHasFault),
+        select(VehicleChecksCardCatBComponent.tellMeQuestionHasFault),
       ),
       hasVehicleChecksFault$: vehicleChecks$.pipe(
-        select(VehicleChecksCardComponent.hasVehicleChecksFault),
+        select(VehicleChecksCardCatBComponent.hasVehicleChecksFault),
       ),
     };
 

@@ -41,7 +41,6 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
-import { VehicleChecksCardCatBEComponent } from '../components/vehicle-checks-card/vehicle-checks-card.cat-be';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
 
@@ -78,7 +77,7 @@ describe('DebriefCatBEPage', () => {
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      declarations: [DebriefCatBEPage, VehicleChecksCardCatBEComponent],
+      declarations: [DebriefCatBEPage],
       imports: [
         IonicModule,
         AppModule,
