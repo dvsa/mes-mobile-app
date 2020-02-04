@@ -1,5 +1,5 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { VehicleChecksCardComponent } from '../vehicle-checks-card';
+import { VehicleChecksCardCatBComponent } from '../vehicle-checks-card.cat-b';
 import { IonicModule, Config } from 'ionic-angular';
 import { StoreModule, Store } from '@ngrx/store';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
@@ -22,15 +22,15 @@ import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('VehicleChecksCardComponent', () => {
-  let fixture: ComponentFixture<VehicleChecksCardComponent>;
+describe('VehicleChecksCardCatBComponent', () => {
+  let fixture: ComponentFixture<VehicleChecksCardCatBComponent>;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        VehicleChecksCardComponent,
+        VehicleChecksCardCatBComponent,
       ],
       imports: [
         IonicModule,
@@ -48,7 +48,7 @@ describe('VehicleChecksCardComponent', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(VehicleChecksCardComponent);
+    fixture = TestBed.createComponent(VehicleChecksCardCatBComponent);
     store$ = TestBed.get(Store);
     store$.dispatch(new StartTest(105, TestCategory.B));
     translate = TestBed.get(TranslateService);

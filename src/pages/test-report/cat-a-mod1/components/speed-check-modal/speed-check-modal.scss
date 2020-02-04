@@ -1,0 +1,24 @@
+speed-check-modal {
+  @extend .modal-alert-wrapper;
+  
+  .modal-alert {
+    width: 450px;
+  }
+
+  .modal-alert-message {
+    margin-bottom: 0px;
+  }
+
+  .modal-alert-message > ul {
+    text-align: left;
+    display: inline-block;
+    li {
+      line-height: 32px;
+    }
+  }
+
+  .terminate-button {
+    color: map-get($colors-gds, gds-red);
+  }
+
+}

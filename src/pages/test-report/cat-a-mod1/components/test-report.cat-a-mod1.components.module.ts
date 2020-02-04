@@ -7,6 +7,7 @@ import { TestReportComponentsModule } from '../../components/test-report-compone
 import { SpeedCheckComponent } from './speed-check/speed-check';
 import { SpeedCheckHeaderComponent } from './speed-check-header/speed-check-header';
 import { ActivityCode4ModalModule } from './activity-code-4-modal/activity-code-4-modal.module';
+import { SpeedCheckModalModule } from './speed-check-modal/speed-check-modal.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ActivityCode4ModalModule } from './activity-code-4-modal/activity-code-
     IonicModule,
     DirectivesModule,
     ActivityCode4ModalModule,
+    SpeedCheckModalModule,
   ],
   exports: [
     SpeedCheckHeaderComponent,
