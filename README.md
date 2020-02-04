@@ -106,6 +106,8 @@ You can also run an individual tag e.g. `npm run test:e2e-simulator-bdd -- --cuc
 
 To run against a simulator with a different iOS version e.g. `npm run test:e2e-simulator-bdd -- --capabilities.platformVersion='12.2'`
 
+By default screenshots are only taken on scenario error but you can override this passing the screenshotAlways argument e.g. `npm run test:e2e-simulator-bdd -- --screenshotAlways=true`
+
 #### Troubleshooting
 
 ##### Bad app... paths need to be absolute
