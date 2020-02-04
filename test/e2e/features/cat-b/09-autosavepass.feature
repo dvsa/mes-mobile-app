@@ -41,18 +41,18 @@ Feature: Autosave end to end journey
          | Route number                      | None                 |
          | Physical description of candidate | None                 |
          | Weather conditions                | None                 |
-      And the Debrief has the correct test information, "T5", " - Headlights & tail lights"
-      # When I click the close button
-      # Then I should see the "Search submitted test" page
-      # When I click the back button on the search submitted test page
-      # Then I should see the "My dashboard" page
-      # When I click go to my Journal
-      # And I should see the "Journal" page
-      # Then I continue the write up for "Miss Florence Pearson"
-      # Then I should see the "Office" page
-      # And the office page test outcome is "Passed"
-      # When I complete the office write up
-      # And I upload the test
-      # Then I should see the "Journal" page
-      # And the test result for "Miss Florence Pearson" is "1"
+      And the Debrief has the correct test information, "T1", " - Brakes"
+      When I click the close button
+      Then I should see the "Search submitted test" page
+      When I click the back button on the search submitted test page
+      Then I should see the "My dashboard" page
+      When I click go to my Journal
+      And I should see the "Journal" page
+      Then I continue the write up for "Miss Florence Pearson"
+      Then I should see the "Office" page
+      And the office page test outcome is "Passed"
+      When I complete the office write up
+      And I upload the test
+      Then I should see the "Journal" page
+      And the test result for "Miss Florence Pearson" is "1"
       
