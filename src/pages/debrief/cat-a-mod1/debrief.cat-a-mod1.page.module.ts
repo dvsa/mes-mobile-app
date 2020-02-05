@@ -16,7 +16,6 @@ import { DebriefCatAMod1ComponentsModule } from './components/debrief.cat-a-mod1
   ],
   imports: [
     DebriefComponentsModule,
-    DebriefCatAMod1ComponentsModule,
     IonicPageModule.forChild(DebriefCatAMod1Page),
     EffectsModule.forFeature([
       DebriefEffects,
@@ -24,6 +23,7 @@ import { DebriefCatAMod1ComponentsModule } from './components/debrief.cat-a-mod1
     ]),
     ComponentsModule,
     TranslateModule,
+    DebriefCatAMod1ComponentsModule,
   ],
   providers: [
     FaultSummaryProvider,

@@ -56,6 +56,8 @@ import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { FaultSummaryProviderMock } from '../../../../providers/fault-summary/__mocks__/fault-summary.mock';
+import { MockComponent } from 'ng-mocks';
+import { SpeedCheckDebriefCardComponent } from '../components/speed-check-debrief-card/speed-check-debrief-card';
 
 describe('DebriefCatAMod1Page', () => {
   let fixture: ComponentFixture<DebriefCatAMod1Page>;
@@ -91,7 +93,10 @@ describe('DebriefCatAMod1Page', () => {
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      declarations: [DebriefCatAMod1Page],
+      declarations: [
+        DebriefCatAMod1Page,
+        MockComponent(SpeedCheckDebriefCardComponent),
+      ],
       imports: [
         IonicModule,
         AppModule,
