@@ -68,10 +68,8 @@ export class TestReportCatAMod1Page extends BasePageComponent {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
-  isTestReportValid: SpeedCheckState;
+  speedCheckState: SpeedCheckState;
   isEtaValid: boolean = true;
-
-  modal: Modal;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -161,7 +159,7 @@ export class TestReportCatAMod1Page extends BasePageComponent {
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       testData$.pipe(
         map((data) => {
-          this.isTestReportValid =
+          this.speedCheckState =
             this.testReportValidatorProvider.validateSpeedChecksCatAMod1(data);
           this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.EUAM1);
         }),
@@ -171,40 +169,31 @@ export class TestReportCatAMod1Page extends BasePageComponent {
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    if (!this.isEtaValid) {
-      this.modal = this.modalController.create('EtaInvalidModal', {}, options);
-    } else if (this.isTestReportValid === SpeedCheckState.EMERGENCY_STOP_AND_AVOIDANCE_MISSING) {
-      this.modal = this.modalController.create(
-        'SpeedCheckModal',
-        { speedChecksNeedCompleting: [speedCheckLabels.speedCheckEmergency, speedCheckLabels.speedCheckAvoidance] },
-        options,
-      );
-    } else if (this.isTestReportValid === SpeedCheckState.EMERGENCY_STOP_MISSING) {
-      this.modal = this.modalController.create(
-        'SpeedCheckModal',
-        { speedChecksNeedCompleting: [speedCheckLabels.speedCheckEmergency] },
-        options,
-      );
-    } else if (this.isTestReportValid === SpeedCheckState.AVOIDANCE_MISSING) {
-      this.modal = this.modalController.create(
-        'SpeedCheckModal',
-        { speedChecksNeedCompleting: [speedCheckLabels.speedCheckAvoidance] },
-        options,
-      );
-    } else if (this.isTestReportValid === SpeedCheckState.VALID) {
-      this.modal = this.modalController.create('EndTestModal', {}, options);
-    } else {
-      this.modal = this.createEndTestModal(options);
+    let modal: Modal = null;
+
+    if (modal === null) {
+      modal = this.createEtaInvalidModal(options);
     }
 
-    this.modal.onDidDismiss(this.onModalDismiss);
-    this.modal.present();
+    if (modal === null) {
+      modal = this.createSpeedCheckModal(options);
+    }
+
+    if (modal === null) {
+      modal = this.createActivityCode4Modal(options);
+    }
+
+    if (modal === null) {
+      modal = this.createEndTestModal(options);
+    }
+
+    modal.onDidDismiss(this.onModalDismiss);
+    modal.present();
   }
 
   onModalDismiss = (event: ModalEvent): void => {
     switch (event) {
       case ModalEvent.CANCEL:
-        console.log('return to test report');
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new TerminateTestFromTestReport());
@@ -221,20 +210,47 @@ export class TestReportCatAMod1Page extends BasePageComponent {
     }
   }
 
-  onCancel = (): void => {
-    this.modal.dismiss();
+  createEtaInvalidModal(options: any): Modal | null {
+    if (!this.isEtaValid) {
+      return this.modalController.create('EtaInvalidModal', {}, options);
+    }
+    return null;
   }
 
-  onContinue = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE));
+  createEndTestModal(options: any): Modal | null {
+    if (this.speedCheckState === SpeedCheckState.VALID) {
+      return this.modalController.create('EndTestModal', {}, options);
+    }
+    return null;
   }
 
-  onTerminate = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(CAT_A_MOD1.DEBRIEF_PAGE));
+  createSpeedCheckModal(options: any): Modal | null {
+    switch (this.speedCheckState) {
+      case SpeedCheckState.EMERGENCY_STOP_AND_AVOIDANCE_MISSING:
+        return this.modalController.create(
+          'SpeedCheckModal',
+          { speedChecksNeedCompleting: [speedCheckLabels.speedCheckEmergency, speedCheckLabels.speedCheckAvoidance] },
+          options,
+        );
+      case SpeedCheckState.EMERGENCY_STOP_MISSING:
+        return this.modalController.create(
+          'SpeedCheckModal',
+          { speedChecksNeedCompleting: [speedCheckLabels.speedCheckEmergency] },
+          options,
+        );
+      case SpeedCheckState.AVOIDANCE_MISSING:
+        return this.modalController.create(
+          'SpeedCheckModal',
+          { speedChecksNeedCompleting: [speedCheckLabels.speedCheckAvoidance] },
+          options,
+        );
+      default:
+        return null;
+    }
   }
 
-  createEndTestModal(options: any): Modal {
-    switch (this.isTestReportValid) {
+  createActivityCode4Modal(options: any): Modal | null {
+    switch (this.speedCheckState) {
       case SpeedCheckState.NOT_MET:
         return this.modalController.create(
           'ActivityCode4Modal',
@@ -253,6 +269,8 @@ export class TestReportCatAMod1Page extends BasePageComponent {
           { modalReason: ModalReason.EMERGENCY_STOP_SERIOUS },
           options,
         );
+      default:
+        return null;
     }
   }
 }
