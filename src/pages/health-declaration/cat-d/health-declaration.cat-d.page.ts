@@ -25,8 +25,7 @@ import {
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
-// TODO: Import CAT D candidate reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-d/candidate/candidate.cat-d.reducer';
 import { map, tap } from 'rxjs/operators';
 import {
   getPassCertificateNumber,
