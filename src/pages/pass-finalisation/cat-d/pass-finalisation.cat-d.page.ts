@@ -47,8 +47,7 @@ import {
   DebriefUnwitnessed,
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-// TODO: create cat d behaiviour map
-import { behaviourMap } from '../../office/office-behaviour-map.cat-c';
+import { behaviourMap } from '../../office/office-behaviour-map.cat-d';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
   CandidateChoseToProceedWithTestInWelsh,
