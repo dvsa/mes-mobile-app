@@ -39,6 +39,13 @@ import * as uncoupleRecoupleActions
 import * as reverseLeftActions from './cat-be/components/reverse-left/reverse-left.actions';
 import * as catBEManoeuversActions
   from '../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
+import * as avoidanceActions from '../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
+import { getTestData as getCatAmod1TestData } from '../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
+import { getAvoidance } from '../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.selector';
+import { Avoidance, EmergencyStop } from '@dvsa/mes-test-schema/categories/AM1';
+import { speedCheckLabels } from '../../shared/constants/competencies/cata-mod1-competencies';
+import * as emergencyStopActions from '../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
+import { getEmergencyStop } from '../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.selector';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -793,7 +800,7 @@ export class TestReportAnalyticsEffects {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REVERSE_LEFT_POPOVER_OPENED, tests),
-        );
+      );
       return of(new AnalyticRecorded());
     }),
   );
@@ -817,4 +824,207 @@ export class TestReportAnalyticsEffects {
     }),
   );
 
+  @Effect()
+  toggleAvoidanceSpeedReq$ = this.actions$.pipe(
+    ofType(
+      avoidanceActions.TOGGLE_AVOIDANCE_SPEED_REQ,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getCatAmod1TestData),
+          select(getAvoidance),
+        ),
+      ),
+    )),
+    concatMap(
+      ([action, tests, avoidance]:
+        [avoidanceActions.ToggleAvoidanceSpeedReq, TestsModel, Avoidance]) => {
+        const toggleValue = avoidance.speedNotMetSeriousFault ? 'Not met' : 'met';
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+          formatAnalyticsText(AnalyticsEvents.TOGGLE_AVOIDANCE_SPEED_REQUIREMENT, tests),
+          `${speedCheckLabels['speedCheckAvoidance']} - ${toggleValue}`,
+        );
+        return of(new AnalyticRecorded());
+      },
+    ),
+  );
+
+  @Effect()
+  recordAvoidanceFirstAttempt$ = this.actions$.pipe(
+    ofType(
+      avoidanceActions.RECORD_AVOIDANCE_FIRST_ATTEMPT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getCatAmod1TestData),
+          select(getAvoidance),
+        ),
+      ),
+    )),
+    concatMap(
+      ([action, tests, avoidance]:
+        [avoidanceActions.RecordAvoidanceFirstAttempt, TestsModel, Avoidance]) => {
+        const toggleValue = avoidance.firstAttempt;
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+          formatAnalyticsText(AnalyticsEvents.RECORD_AVOIDANCE_FIRST_ATTEMPT, tests),
+          `${speedCheckLabels['speedCheckAvoidance']} - ${toggleValue}`,
+        );
+        return of(new AnalyticRecorded());
+      },
+    ),
+  );
+
+  @Effect()
+  recordAvoidanceSecondAttempt$ = this.actions$.pipe(
+    ofType(
+      avoidanceActions.RECORD_AVOIDANCE_SECOND_ATTEMPT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getCatAmod1TestData),
+          select(getAvoidance),
+        ),
+      ),
+    )),
+    concatMap(
+      ([action, tests, avoidance]:
+        [avoidanceActions.RecordAvoidanceSecondAttempt, TestsModel, Avoidance]) => {
+        const toggleValue = avoidance.secondAttempt;
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+          formatAnalyticsText(AnalyticsEvents.RECORD_AVOIDANCE_SECOND_ATTEMPT, tests),
+          `${speedCheckLabels['speedCheckAvoidance']} - ${toggleValue}`,
+        );
+        return of(new AnalyticRecorded());
+      },
+    ),
+  );
+
+  @Effect()
+  addAvoidanceRidingFault$ = this.actions$.pipe(
+    ofType(avoidanceActions.ADD_AVOIDANCE_RIDING_FAULT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [avoidanceActions.AddAvoidanceRidingFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_AVOIDANCE_RIDING_FAULT, tests),
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  addAvoidanceSeriousFault$ = this.actions$.pipe(
+    ofType(avoidanceActions.ADD_AVOIDANCE_SERIOUS_FAULT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [avoidanceActions.AddAvoidanceSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_AVOIDANCE_SERIOUS_FAULT, tests),
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  addAvoidanceDangerousFault$ = this.actions$.pipe(
+    ofType(avoidanceActions.ADD_AVOIDANCE_DANGEROUS_FAULT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [avoidanceActions.AddAvoidanceDangerousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_AVOIDANCE_DANGEROUS_FAULT, tests),
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  removeAvoidanceFault$ = this.actions$.pipe(
+    ofType(avoidanceActions.REMOVE_AVOIDANCE_FAULT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [avoidanceActions.RemoveAvoidanceFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REMOVE_AVOIDANCE_FAULT, tests),
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  toggleEmergencyStopSpeedReq$ = this.actions$.pipe(
+    ofType(
+      emergencyStopActions.TOGGLE_EMERGENCY_STOP_SPEED_REQ,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getCatAmod1TestData),
+          select(getEmergencyStop),
+        ),
+      ),
+    )),
+    concatMap(
+      ([action, tests, emergencyStop]:
+        [avoidanceActions.ToggleAvoidanceSpeedReq, TestsModel, EmergencyStop]) => {
+        const toggleValue = emergencyStop.speedNotMetSeriousFault ? 'Not met' : 'met';
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+          formatAnalyticsText(AnalyticsEvents.TOGGLE_EMERGENCY_STOP_SPEED_REQ, tests),
+          `${speedCheckLabels['speedCheckEmergency']} - ${toggleValue}`,
+        );
+        return of(new AnalyticRecorded());
+      },
+    ),
+  );
 }

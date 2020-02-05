@@ -115,10 +115,21 @@ export enum AnalyticsEvents {
   D255 = 'set D255',
   GEARBOX_CATEGORY_CHANGED = 'set transmission',
   LANGUAGE_CHANGED = 'language changed',
+<<<<<<< HEAD
   CBT_CHANGED = 'cbt changed',
   BIKE_CATEGORY_CHANGED = 'bike category changed',
   BIKE_CATEGORY_SELECTED = 'bike category selected',
   BIKE_CATEGORY_MODAL_TRIGGERED = 'bike category modal triggered',
+=======
+  TOGGLE_AVOIDANCE_SPEED_REQUIREMENT = 'toggle avoidance speed requirement',
+  TOGGLE_EMERGENCY_STOP_SPEED_REQ = 'toggle emergency stop speed requirement',
+  RECORD_AVOIDANCE_FIRST_ATTEMPT = 'record avoidance first attempt',
+  RECORD_AVOIDANCE_SECOND_ATTEMPT = 'record avoidance second attempt',
+  ADD_AVOIDANCE_RIDING_FAULT = 'add avoidance riding fault',
+  ADD_AVOIDANCE_SERIOUS_FAULT = 'add avoidance serious fault',
+  ADD_AVOIDANCE_DANGEROUS_FAULT = 'add avoidance dangerous fault',
+  REMOVE_AVOIDANCE_FAULT = 'remove avoidance fault',
+>>>>>>> analytics for avoidance excersize done
 }
 
 export enum AnalyticsLabels {
