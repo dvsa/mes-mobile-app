@@ -13,12 +13,12 @@
         <ion-col col-5 no-padding></ion-col>
         <ion-col col-20 no-padding>
           <div *ngIf=emergencyStop.firstAttempt>
-            1st: <ng-container *ngTemplateOutlet="SpeedFormat; context: emergencyStop.firstAttempt"></ng-container>
+            1st: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: emergencyStop.firstAttempt}"></ng-container>
           </div>
         </ion-col>
         <ion-col col-20 no-padding>
           <div *ngIf=emergencyStop.secondAttempt>
-            2nd: <ng-container *ngTemplateOutlet="SpeedFormat; context: emergencyStop.secondAttempt"></ng-container>
+            2nd: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: emergencyStop.secondAttempt}"></ng-container>
           </div>
         </ion-col>
         <ion-col col-4 no-padding align-self-start>
@@ -44,12 +44,12 @@
         <ion-col col-5 no-padding></ion-col>
         <ion-col col-20 no-padding>
           <div *ngIf=avoidance.firstAttempt>
-            1st: <ng-container *ngTemplateOutlet="SpeedFormat"></ng-container>
+            1st: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: avoidance.firstAttempt}"></ng-container>
           </div>
         </ion-col>
         <ion-col col-20 no-padding>
           <div *ngIf=avoidance.secondAttempt>
-            2nd: <ng-container *ngTemplateOutlet="SpeedFormat"></ng-container>
+            2nd: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: avoidance.secondAttempt}"></ng-container>
           </div>
         </ion-col>
         <ion-col col-4 no-padding align-self-start>
@@ -71,7 +71,7 @@
   </ion-card-content>
 </ion-card>
 
-<ng-template #SpeedFormat let-speed>
+<ng-template #SpeedFormat let-speed="speed">
   <ng-container *ngIf="speed != 0; else Aborted">
     {{speed}}km/h
   </ng-container>
