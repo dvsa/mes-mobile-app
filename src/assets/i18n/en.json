@@ -226,7 +226,8 @@
     "avoidanceHeader": "Avoidance exercise",
     "emergencyStopHeader": "Emergency stop",
     "speedRequirementMet": "Met",
-    "speedRequirementNotMet": "Not Met"
+    "speedRequirementNotMet": "Not Met",
+    "speedRequirementAborted": "Aborted attempt"
   },
   "healthDeclaration": {
     "confirm": "I confirm",

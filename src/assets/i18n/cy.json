@@ -224,7 +224,8 @@
     "avoidanceHeader": "CY - Avoidance exercise",
     "emergencyStopHeader": "CY - Emergency stop",
     "speedRequirementMet": "CY - Met",
-    "speedRequirementNotMet": "CY - Not Met"
+    "speedRequirementNotMet": "CY - Not Met",
+    "speedRequirementAborted": "CY - Aborted attempt"
   },
   "healthDeclaration": {
     "confirm": "Rwy'n cadarnhau",
