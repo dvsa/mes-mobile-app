@@ -19,6 +19,7 @@ import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatDReducer } from './journal-data/cat-d/journal-data.cat-d.reducer';
 import { vehicleDetailsCatDReducer } from './vehicle-details/cat-d/vehicle-details.cat-d.reducer';
 import { testDataCatDEReducer } from './test-data/cat-d/test-data.cat-de.reducer';
+import { passCompletionCatDReducer } from './pass-completion/cat-d/pass-completion.cat-d.reducer';
 
 export function testsCatDEReducer(
   action: Action, state: CatDEUniqueTypes.TestResult): Required<CatDEUniqueTypes.TestResult> {
@@ -31,6 +32,7 @@ export function testsCatDEReducer(
       preTestDeclarations: preTestDeclarationsReducer,
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatDReducer,
+      passCompletion: passCompletionCatDReducer,
       testData: testDataCatDEReducer,
       postTestDeclarations: postTestDeclarationsReducer,
       testSummary: testSummaryReducer,
