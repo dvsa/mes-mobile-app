@@ -25,8 +25,6 @@ import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from '../../test-report.reducer';
 import { LegalRequirementComponent } from '../../components/legal-requirement/legal-requirement';
 import { EtaComponent } from '../../components/examiner-takes-action/eta';
-// TODO Implement Cat D TestData Reducer
-import { initialState } from '../../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { EcoComponent } from '../../components/eco/eco';
 import { TestReportValidatorProvider } from '../../../../providers/test-report-validator/test-report-validator';
 import {
@@ -39,15 +37,11 @@ import { NavigationStateProviderMock } from '../../../../providers/navigation-st
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
-// TODO Implement Cat D UncoupleRecoupleComponent
-import { UncoupleRecoupleComponent } from '../../cat-c/components/uncouple-recouple/uncouple-recouple';
-// TODO Implement Cat D ReverseLeftComponent
-import { ReverseLeftCatDComponent } from '../../cat-d/components/reverse-left/reverse-left.cat-d';
-// TODO Implement Cat D ReverseLeftPopoverComponent
-import { ReverseLeftPopoverCatDComponent }
-from '../../cat-d/components/reverse-left-popover/reverse-left-popover.cat-d';
-// TODO Implement Cat D VehicleChecksComponent
-import { VehicleChecksComponent } from '../../cat-c/components/vehicle-checks/vehicle-checks';
+import { initialState } from '../../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
+import { ReverseLeftCatDComponent } from '../components/reverse-left/reverse-left.cat-d';
+import { ReverseLeftPopoverCatDComponent } from '../components/reverse-left-popover/reverse-left-popover.cat-d';
+import { UncoupleRecoupleCatDComponent } from '../components/uncouple-recouple/uncouple-recouple.cat-d';
+import { VehicleChecksCatDComponent } from '../components/vehicle-checks/vehicle-checks.cat-d';
 
 describe('TestReportCatDPage', () => {
   let fixture: ComponentFixture<TestReportCatDPage>;
@@ -65,10 +59,10 @@ describe('TestReportCatDPage', () => {
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),
         MockComponent(EcoComponent),
-        MockComponent(UncoupleRecoupleComponent),
+        MockComponent(UncoupleRecoupleCatDComponent),
         MockComponent(ReverseLeftCatDComponent),
         MockComponent(ReverseLeftPopoverCatDComponent),
-        MockComponent(VehicleChecksComponent),
+        MockComponent(VehicleChecksCatDComponent),
       ],
       imports: [
         IonicModule,
