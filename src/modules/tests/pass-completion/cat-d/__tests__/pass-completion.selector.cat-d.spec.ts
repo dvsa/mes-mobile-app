@@ -3,6 +3,8 @@ import { getCode78 } from '../pass-completion.cat-d.selector';
 
 describe('pass completion cat D selector', () => {
   const state: CatDUniqueTypes.PassCompletion = {
+    provisionalLicenceProvided: true,
+    passCertificateNumber: 'ABC123',
     code78Present: true,
   };
 

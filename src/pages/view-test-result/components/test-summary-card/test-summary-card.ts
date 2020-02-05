@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
 import { flattenArray, convertBooleanToString } from '../../view-test-result-helpers';
-import { Accompaniment, TestSummary } from '@dvsa/mes-test-schema/categories/common';
-import { PassCompletionUnion } from '../../../../modules/tests/pass-completion/pass-completion.constants';
+import { Accompaniment, TestSummary, PassCompletion } from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
   selector: 'test-summary-card',
@@ -14,7 +13,7 @@ export class TestSummaryCardComponent {
   accompaniment: Accompaniment;
 
   @Input()
-  passCompletion: PassCompletionUnion;
+  passCompletion: PassCompletion;
 
   @Input()
   testSummary: TestSummary;
