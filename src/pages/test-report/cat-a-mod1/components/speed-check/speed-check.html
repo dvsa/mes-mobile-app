@@ -24,8 +24,8 @@
     </competency-button>
   </ion-col>
   <ion-col col-32>
-    <input (change)="onFirstAttemptChange($event.target.value)" [value]="getFirstAttempt()" type="text" class="speed-input first-speed-input" maxlength="3">
-    <input (change)="onSecondAttemptChange($event.target.value)" [value]="getSecondAttempt()" type="text" class="speed-input second-speed-input" maxlength="3">
+    <input (change)="onFirstAttemptChange($event.target.value)" [value]="getFirstAttempt()" type="text" class="speed-input first-speed-input" maxlength="3" numbersOnly>
+    <input [disabled]="!firstAttempt" (change)="onSecondAttemptChange($event.target.value)" [value]="getSecondAttempt()" type="text" class="speed-input second-speed-input" maxlength="3" numbersOnly>
   </ion-col>
   <ion-col col-16>
     <competency-button
