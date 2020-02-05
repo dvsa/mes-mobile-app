@@ -4,4 +4,5 @@ export const getAvoidance = (testData: TestData): Avoidance => testData.avoidanc
 
 export const getAvoidanceAttempted = (avoidance: Avoidance) : boolean => {
   if (avoidance.firstAttempt || avoidance.secondAttempt) return true;
+  return false;
 };
