@@ -12,4 +12,7 @@ export class SpeedCheckDebriefCardComponent {
 
   @Input()
   public avoidance: Avoidance;
+
+  @Input()
+  public avoidanceAttempted: boolean;
 }

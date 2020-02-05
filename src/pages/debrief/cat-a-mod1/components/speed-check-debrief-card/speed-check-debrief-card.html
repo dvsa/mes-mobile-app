@@ -1,14 +1,14 @@
 <ion-card id="speed-check">
   <ion-card-header>
     <ion-card-title>
-      <h4 class="fault-heading">Speed requirements</h4>
+      <h4 class="fault-heading">{{ 'debrief.speedRequirementsHeader' | translate }}</h4>
     </ion-card-title>
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
       <ion-row padding>
         <ion-col col-32 no-padding>
-          <h4>Emergency Stop</h4>
+          <h4>{{ 'debrief.emergencyStopHeader' | translate }}</h4>
         </ion-col>
         <ion-col col-5 no-padding></ion-col>
         <ion-col col-20 no-padding>
@@ -29,17 +29,17 @@
         </ion-col>
         <ion-col col-13 no-padding>
           <div class="counter-label" *ngIf=!emergencyStop.speedNotMetSeriousFault>
-            Met
+            {{ 'debrief.speedRequirementMet' | translate }}
           </div>
           <div class="counter-label" *ngIf=emergencyStop.speedNotMetSeriousFault>
-            Not Met
+            {{ 'debrief.speedRequirementNotMet' | translate }}
           </div>
         </ion-col>
       </ion-row>
 
-      <ion-row padding *ngIf="avoidance.firstAttempt || avoidance.secondAttempt">
+      <ion-row padding *ngIf="avoidanceAttempted">
         <ion-col col-32 no-padding>
-          <h4>Avoidance Exercise</h4>
+          <h4>{{ 'debrief.avoidanceHeader' | translate }}</h4>
         </ion-col>
         <ion-col col-5 no-padding></ion-col>
         <ion-col col-20 no-padding>
@@ -60,15 +60,13 @@
         </ion-col>
         <ion-col col-13 no-padding>
           <div class="counter-label" *ngIf=!avoidance.speedNotMetSeriousFault>
-            Met
+            {{ 'debrief.speedRequirementMet' | translate }}
           </div>
           <div class="counter-label" *ngIf=avoidance.speedNotMetSeriousFault>
-            Not Met
+            {{ 'debrief.speedRequirementNotMet' | translate }}
           </div>
         </ion-col>
       </ion-row>
-
-
     </ion-grid>
   </ion-card-content>
 </ion-card>

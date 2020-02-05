@@ -34,7 +34,10 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { TestOutcome } from '../../../shared/models/test-outcome';
-import { getAvoidance } from '../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.selector';
+import {
+  getAvoidance,
+  getAvoidanceAttempted,
+} from '../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.selector';
 import { getEmergencyStop } from '../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.selector';
 import { Avoidance, EmergencyStop } from '@dvsa/mes-test-schema/categories/AM1';
 
@@ -49,6 +52,7 @@ interface DebriefPageState {
   candidateName$: Observable<string>;
   emergencyStop$: Observable<EmergencyStop>;
   avoidance$: Observable<Avoidance>;
+  avoidanceAttempted$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -140,6 +144,11 @@ export class DebriefCatAMod1Page extends BasePageComponent {
       avoidance$: currentTest$.pipe(
         select(getTestData),
         select(getAvoidance),
+      ),
+      avoidanceAttempted$: currentTest$.pipe(
+        select(getTestData),
+        select(getAvoidance),
+        select(getAvoidanceAttempted),
       ),
     };
 
