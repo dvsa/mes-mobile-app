@@ -80,7 +80,7 @@ export class DebriefCatAMod1Page extends BasePageComponent {
     public insomnia: Insomnia,
     private translate: TranslateService,
     private faultCountProvider: FaultCountProvider,
-    private faultSummaryProvider: FaultSummaryProvider,
+    public faultSummaryProvider: FaultSummaryProvider,
   ) {
     super(platform, navController, authenticationProvider);
   }
