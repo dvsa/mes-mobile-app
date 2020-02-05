@@ -37,7 +37,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row padding>
+      <ion-row padding *ngIf="avoidance.firstAttempt || avoidance.secondAttempt">
         <ion-col col-32 no-padding>
           <h4>Avoidance Exercise</h4>
         </ion-col>

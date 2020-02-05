@@ -3,8 +3,8 @@ import { IonicModule } from 'ionic-angular';
 
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule, TranslateService } from 'ng2-translate';
-import { AppModule } from '../../../../../app/app.module';
-import { ComponentsModule } from '../../../../../components/common/common-components.module';
+import { AppModule } from '../../../../../../app/app.module';
+import { ComponentsModule } from '../../../../../../components/common/common-components.module';
 import { SpeedCheckDebriefCardComponent } from '../speed-check-debrief-card';
 import { configureTestSuite } from 'ng-bullet';
 
