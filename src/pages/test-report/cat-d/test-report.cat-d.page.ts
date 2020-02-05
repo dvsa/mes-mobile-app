@@ -15,8 +15,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { StoreModel } from '../../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
-// TODO Implement Cat D Candidate Reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
 import {
   CalculateTestResult,
   TerminateTestFromTestReport,
@@ -37,22 +35,19 @@ import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
-// TODO Implement Cat D TestData Selector
-import { hasManoeuvreBeenCompletedCatC } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import { ModalEvent } from '../test-report.constants';
 import { CAT_D, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-// TODO Implement Cat C Unique Types
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-// TODO Implement Cat D TestRequirements Reducer
-import {
-  getTestRequirementsCatC,
-} from '../../../modules/tests/test-data/cat-c/test-requirements/test-requirements.cat-c.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-d/candidate/candidate.cat-d.reducer';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { hasManoeuvreBeenCompletedCatD } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.selector';
+import { getTestRequirementsCatD }
+from '../../../modules/tests/test-data/cat-d/test-requirements/test-requirements.cat-d.reducer';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -60,8 +55,8 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  testData$: Observable<CatCUniqueTypes.TestData>;
-  testRequirements$: Observable<CatCUniqueTypes.TestRequirements>;
+  testData$: Observable<CatDUniqueTypes.TestData>;
+  testRequirements$: Observable<CatDUniqueTypes.TestRequirements>;
   testCategory$: Observable<CategoryCode>;
 }
 
@@ -135,14 +130,14 @@ export class TestReportCatDPage extends BasePageComponent {
       ),
       manoeuvres$: currentTest$.pipe(
         select(getTestData),
-        select(hasManoeuvreBeenCompletedCatC),
+        select(hasManoeuvreBeenCompletedCatD),
       ),
       testData$: currentTest$.pipe(
         select(getTestData),
       ),
       testRequirements$: currentTest$.pipe(
         select(getTestData),
-        select(getTestRequirementsCatC),
+        select(getTestRequirementsCatD),
       ),
       testCategory$: currentTest$.pipe(
         select(getTestCategory),
