@@ -1,6 +1,7 @@
 @catb
 Feature: Practice mode
-
+  
+  @full_smoke
   Scenario: User can start marking practice test without a driver fault
     Given I am on the landing page as "mobexaminer1"
     When I start marking a practice test without a driving fault

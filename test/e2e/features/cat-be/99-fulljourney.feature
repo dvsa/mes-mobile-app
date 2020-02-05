@@ -1,4 +1,4 @@
-@catbe @morning_build
+@catbe @full_smoke
 Feature: Full end to end journey for Cat B+E
 
    Scenario: Examiner completes a passed test with no faults
@@ -126,7 +126,6 @@ Feature: Full end to end journey for Cat B+E
       Then I should see the "Journal" page
       And the test result for "Mr Dixon Clayton" is "11"
 
-   @smoke
    Scenario: Examiner terminates test as candidate failed eye sight test
       Given I am logged in as "mobexaminer2" and I have a test for "Miss Jeannette Bender"
       When I check candidate details for "Miss Jeannette Bender"

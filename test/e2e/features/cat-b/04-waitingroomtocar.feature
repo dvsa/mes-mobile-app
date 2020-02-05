@@ -1,4 +1,4 @@
-@catb @morning_build
+@catb @full_smoke
 Feature: Waiting Room to Car
 
    Scenario: Waiting room to Car validation

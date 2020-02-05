@@ -1,4 +1,4 @@
-@catb @morning_build
+@catb @full_smoke
 Feature: Office page
 
    Scenario: Office page validation for pass
