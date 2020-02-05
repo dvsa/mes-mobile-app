@@ -17,7 +17,7 @@ import * as seriousFaultsActions from '../../modules/tests/test-data/common/seri
 import * as manoeuvresActions from '../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import * as vehicleChecksActions from '../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import * as testRequirementsActions
-  from '../../modules/tests/test-data/cat-b/test-requirements/test-requirements.actions';
+  from '../../modules/tests/test-data/common/test-requirements/test-requirements.actions';
 import * as ecoActions from '../../modules/tests/test-data/common/eco/eco.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';

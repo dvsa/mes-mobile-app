@@ -8,7 +8,7 @@ import { getCurrentTest, isTestReportPracticeTest } from '../../modules/tests/te
 import * as testReportActions from './test-report.actions';
 import * as testsActions from '../../modules/tests/tests.actions';
 import * as testRequirementsActions
-  from '../../modules/tests/test-data/cat-b/test-requirements/test-requirements.actions';
+  from '../../modules/tests/test-data/common/test-requirements/test-requirements.actions';
 import * as manoeuvresActions from '../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import * as manoeuvresCatBEActions from '../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 import * as uncoupleRecoupleActions

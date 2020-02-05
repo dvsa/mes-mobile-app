@@ -32,13 +32,6 @@ import { getUntitledCandidateName } from '../../../modules/tests/journal-data/co
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../providers/question/question';
-import {
-  TellMeQuestionSelected,
-  TellMeQuestionCorrect,
-  TellMeQuestionDrivingFault,
-  QuestionOutcomes,
-} from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
-
 import { getTestData } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_D } from '../../page-names.constants';
@@ -228,21 +221,6 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
 
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.value[controlName] && this.form.get(controlName).dirty;
-  }
-
-  tellMeQuestionChanged(newTellMeQuestion: VehicleChecksQuestion): void {
-    this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
-    if (this.form.controls['tellMeQuestionOutcome']) {
-      this.form.controls['tellMeQuestionOutcome'].setValue('');
-    }
-  }
-
-  tellMeQuestionOutcomeChanged(outcome: string): void {
-    if (outcome === QuestionOutcomes.Pass) {
-      this.store$.dispatch(new TellMeQuestionCorrect());
-      return;
-    }
-    this.store$.dispatch(new TellMeQuestionDrivingFault());
   }
 
   getDebriefPage() {

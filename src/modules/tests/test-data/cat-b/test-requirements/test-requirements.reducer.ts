@@ -1,5 +1,5 @@
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import * as testRequirementsActions from './test-requirements.actions';
+import * as testRequirementsActions from '../../common/test-requirements/test-requirements.actions';
 import { createFeatureSelector } from '@ngrx/store';
 
 export const initialState: CatBUniqueTypes.TestRequirements = {};

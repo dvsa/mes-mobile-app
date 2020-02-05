@@ -1,4 +1,4 @@
-import * as testRequirementsActions from '../../cat-b/test-requirements/test-requirements.actions';
+import * as testRequirementsActions from '../../common/test-requirements/test-requirements.actions';
 import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import { createFeatureSelector } from '@ngrx/store';
 
@@ -19,5 +19,5 @@ export function testRequirementsCatDReducer(
   }
 }
 
-export const getTestRequirementsCatC =
+export const getTestRequirementsCatD =
   createFeatureSelector<CatDUniqueTypes.TestRequirements>('testRequirements');

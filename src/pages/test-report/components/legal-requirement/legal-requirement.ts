@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import {
   ToggleLegalRequirement,
-} from '../../../../modules/tests/test-data/cat-b/test-requirements/test-requirements.actions';
+} from '../../../../modules/tests/test-data/common/test-requirements/test-requirements.actions';
 import { LegalRequirements } from '../../../../modules/tests/test-data/test-data.constants';
 import { legalRequirementLabels } from './legal-requirement.constants';
 

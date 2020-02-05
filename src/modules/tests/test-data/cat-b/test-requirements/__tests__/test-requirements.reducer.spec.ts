@@ -1,6 +1,6 @@
 import { testRequirementsReducer } from '../test-requirements.reducer';
 import { LegalRequirements } from '../../../test-data.constants';
-import { ToggleLegalRequirement } from '../test-requirements.actions';
+import { ToggleLegalRequirement } from '../../../common/test-requirements/test-requirements.actions';
 import { TestRequirements } from '@dvsa/mes-test-schema/categories/common';
 
 describe('Test Requirements Reducer', () => {

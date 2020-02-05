@@ -10,7 +10,7 @@ import {
 } from '../../../common/uncouple-recouple/uncouple-recouple.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 
-describe('uncoupleRecoupleCatC1EReducer' , () => {
+describe('uncoupleRecoupleCatD1EReducer' , () => {
 
   describe('TOGGLE_UNCOUPLE_RECOUPLE', () => {
     it('should toggle the uncouple recouple (true when dispatched first time)', () => {

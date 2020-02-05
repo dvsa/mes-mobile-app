@@ -1,4 +1,4 @@
-import * as testRequirementsActions from '../../cat-b/test-requirements/test-requirements.actions';
+import * as testRequirementsActions from '../../common/test-requirements/test-requirements.actions';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { createFeatureSelector } from '@ngrx/store';
 
