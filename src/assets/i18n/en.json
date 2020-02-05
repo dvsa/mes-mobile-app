@@ -221,7 +221,12 @@
     "tellMeQuestion": "Tell me question",
     "terminatedStatus": "Terminated",
     "title": "Debrief",
-    "vehicleChecks": "Vehicle checks"
+    "vehicleChecks": "Vehicle checks",
+    "speedRequirementsHeader": "Speed requirements",
+    "avoidanceHeader": "Avoidance exercise",
+    "emergencyStopHeader": "Emergency stop",
+    "speedRequirementMet": "Met",
+    "speedRequirementNotMet": "Not Met"
   },
   "healthDeclaration": {
     "confirm": "I confirm",
