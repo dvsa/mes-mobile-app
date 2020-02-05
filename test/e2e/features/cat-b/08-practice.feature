@@ -7,7 +7,6 @@ Feature: Practice mode
     Then I should see the "Test report - Practice Mode" page
     And the driver fault count is "0"
 
-  @smoke
   Scenario: User can start marking practice test with a driver fault
     Given I am on the landing page as "mobexaminer1"
     When I start marking a practice test with a driving fault

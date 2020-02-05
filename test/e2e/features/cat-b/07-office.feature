@@ -1,4 +1,4 @@
-@catb
+@catb @morning_build
 Feature: Office page
 
    Scenario: Office page validation for pass
@@ -36,7 +36,6 @@ Feature: Office page
       And validation item "office-weather-validation-text" should be "Select weather conditions"
       And validation item "office-weather-validation-text" should be visible
 
-   @smoke
    Scenario: Office page validation for fail
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
       When I check candidate details for "Mrs Jane Doe"

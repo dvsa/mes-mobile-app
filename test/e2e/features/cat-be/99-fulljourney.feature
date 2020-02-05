@@ -1,7 +1,6 @@
-@catbe
+@catbe @morning_build
 Feature: Full end to end journey for Cat B+E
 
-   @smoke
    Scenario: Examiner completes a passed test with no faults
       Given I am logged in as "mobexaminer2" and I have a test for "Mr Callahan Eaton"
       When I check candidate details for "Mr Callahan Eaton"

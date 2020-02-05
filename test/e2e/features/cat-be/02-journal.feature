@@ -1,4 +1,4 @@
-@catbe @smoke
+@catbe
 Feature: Cat B+E Journal
 
    Scenario: Examiner has a Cat B + E test with dimensions

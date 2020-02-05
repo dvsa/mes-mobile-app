@@ -1,4 +1,4 @@
-@catb
+@catb @morning_build
 Feature: Autosave end to end journey
 
    Scenario: Examiner completes a passed test for autosave

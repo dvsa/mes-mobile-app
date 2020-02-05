@@ -29,7 +29,6 @@
     "test:jasmine-ci": "karma start ./test-config/karma.conf.js --single-run",
     "test:jasmine-coverage": "karma start ./test-config/karma.conf.js --coverage",
     "test:e2e-simulator-bdd": "protractor e2e-simulator-bdd.conf.js",
-    "test:e2e-simulator-bdd-smoke": "protractor e2e-simulator-bdd.conf.js --cucumberOpts.tags='@smoke'",
     "test:e2e-simulator-bdd-extended": "protractor e2e-simulator-bdd.conf.js --specs='test/e2e/extended/*.feature'",
     "test:generate-report": "node generateTestReport.js",
     "gitSecrets": "git secrets --scan",
