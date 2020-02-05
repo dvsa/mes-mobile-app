@@ -10,14 +10,14 @@ Feature: Autosave end to end journey
       And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Florence Pearson" page
-      And I complete the waiting room to car page
+      And I complete the waiting room to car page with automatic transmission
       Then I should see the "Test report - Florence Pearson" page
       And I complete the test with controlled stop
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
       Then I should see the "Test debrief - Florence Pearson" page
-      And I complete the pass details
+      And I complete the pass details with an automatic transmission
       And I complete the health declaration
       Then I am on the back to office page
       Then I return to the Journal Page
@@ -31,6 +31,7 @@ Feature: Autosave end to end journey
       And the test result outcome is "Passed"
       And the test result has the following data present
          | label                             | value                |
+         | Transmission                      | Automatic            |
          | Application reference             | 1234567031           |
          | Vehicle registration number       | AB12CDE              |
          | Test category                     | B                    |
@@ -40,7 +41,7 @@ Feature: Autosave end to end journey
          | Route number                      | None                 |
          | Physical description of candidate | None                 |
          | Weather conditions                | None                 |
-      And the Debrief has the correct test information, "T5", " - Headlights & tail lights"
+      And the Debrief has the correct test information, "T1", " - Brakes"
       When I click the close button
       Then I should see the "Search submitted test" page
       When I click the back button on the search submitted test page
