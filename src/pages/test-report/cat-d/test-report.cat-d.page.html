@@ -98,7 +98,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <vehicle-checks [testCategory]="pageState.testCategory$ | async"></vehicle-checks>
+            <vehicle-checks-cat-d [testCategory]="pageState.testCategory$ | async"></vehicle-checks-cat-d>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -108,7 +108,7 @@
         </ion-row>
         <ion-row [ngStyle]="{'visibility': showUncoupleRecouple() ? 'visible' : 'hidden' }">
           <ion-col>
-            <uncouple-recouple></uncouple-recouple>
+            <uncouple-recouple-cat-d></uncouple-recouple-cat-d>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="showUncoupleRecouple()">

@@ -14,9 +14,8 @@ import { AppModule } from '../../../../../../app/app.module';
 import { App } from '../../../../../../app/app.component';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
 import { ReversingDistancesProvider } from '../../../../../../providers/reversing-distances/reversing-distances';
-// TODO Implement Cat D Unique Types
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { configureTestSuite } from 'ng-bullet';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 
 describe('reverseDiagramCatDModal', () => {
   let fixture: ComponentFixture<ReverseDiagramCatDPage>;
@@ -101,7 +100,7 @@ describe('reverseDiagramCatDModal', () => {
 
   describe('Class', () => {
 
-    const vehicleDetails: CatCUniqueTypes.VehicleDetails = {
+    const vehicleDetails: CatDUniqueTypes.VehicleDetails = {
       vehicleLength: 10,
       vehicleWidth: 2.75,
     };

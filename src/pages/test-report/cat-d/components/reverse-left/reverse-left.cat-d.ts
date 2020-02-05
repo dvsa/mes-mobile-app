@@ -5,23 +5,19 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-// TODO Implement Cat D TestData Selector
-import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
-// TODO Implement Cat D Unique Types
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { OverlayCallback } from '../../../test-report.model';
 import { ReverseLeftPopoverOpened, ReverseLeftPopoverClosed } from './reverse-left.cat-d.actions';
 import { RecordManoeuvresSelection } from '../../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
-// TODO Implement Cat D Manoeuvre Selectors
-import { getReverseLeftSelected }
-  from '../../../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.selectors';
-// TODO Implement Cat D Manoeuvre Actions
-import { DeselectReverseLeftManoeuvreCatC }
-  from '../../../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.actions';
 import { TestDataByCategoryProvider } from '../../../../../providers/test-data-by-category/test-data-by-category';
+import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-d/test-data.cat-d.selector';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { getReverseLeftSelected }
+from '../../../../../modules/tests/test-data/cat-d/manoeuvres/manoeuvres.cat-d.selectors';
+import { DeselectReverseLeftManoeuvreCatD }
+from '../../../../../modules/tests/test-data/cat-d/manoeuvres/manoeuvres.cat-d.actions';
 
 @Component({
   selector: 'reverse-left-cat-d',
@@ -66,7 +62,7 @@ export class ReverseLeftCatDComponent implements OnInit, OnDestroy  {
       select(getManoeuvres),
     );
 
-    this.subscription = manoeuvres$.subscribe((manoeuvres: CatCUniqueTypes.Manoeuvres) => {
+    this.subscription = manoeuvres$.subscribe((manoeuvres: CatDUniqueTypes.Manoeuvres) => {
       this.drivingFaults =
         this.faultCountProvider.getManoeuvreFaultCount(this.testCategory, manoeuvres, CompetencyOutcome.DF);
       this.hasSeriousFault =
@@ -85,7 +81,7 @@ export class ReverseLeftCatDComponent implements OnInit, OnDestroy  {
 
   toggleReverseLeft = (): void => {
     if (this.completedReverseLeft && !this.hasFaults()) {
-      this.store$.dispatch(new DeselectReverseLeftManoeuvreCatC());
+      this.store$.dispatch(new DeselectReverseLeftManoeuvreCatD());
       return;
     }
     this.store$.dispatch(new RecordManoeuvresSelection(ManoeuvreTypes.reverseLeft));

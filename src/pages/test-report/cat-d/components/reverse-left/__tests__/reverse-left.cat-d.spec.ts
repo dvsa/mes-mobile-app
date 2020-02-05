@@ -15,9 +15,6 @@ import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../../test-report.reducer';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { ReverseLeftPopoverClosed, ReverseLeftPopoverOpened } from '../reverse-left.cat-d.actions';
-// TODO Implement Cat D Manoeuvre Actions
-import { DeselectReverseLeftManoeuvreCatC }
-  from '../../../../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.actions';
 import { RecordManoeuvresSelection }
   from '../../../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { ManoeuvreTypes } from '../../../../../../modules/tests/test-data/test-data.constants';
@@ -25,6 +22,8 @@ import { AppModule } from '../../../../../../app/app.module';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 import { ReverseLeftCatDComponent } from '../reverse-left.cat-d';
+import { DeselectReverseLeftManoeuvreCatD }
+from '../../../../../../modules/tests/test-data/cat-d/manoeuvres/manoeuvres.cat-d.actions';
 
 describe('reverseLeftCatDComponent', () => {
   let fixture: ComponentFixture<ReverseLeftCatDComponent>;
@@ -123,7 +122,7 @@ describe('reverseLeftCatDComponent', () => {
           component.completedReverseLeft = true;
           component.toggleReverseLeft();
           expect(storeDispatchSpy).toHaveBeenCalledWith(
-            new DeselectReverseLeftManoeuvreCatC(),
+            new DeselectReverseLeftManoeuvreCatD(),
           );
         });
       });

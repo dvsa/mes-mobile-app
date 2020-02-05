@@ -9,13 +9,6 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { ReversingDistancesProvider } from '../../../../../providers/reversing-distances/reversing-distances';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-// TODO Implement Cat D VehicleChecks Reducer
-import { getVehicleDetails } from '../../../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
-// TODO Implement Cat D VehicleChecks Selectors
-import {
-  getVehicleLength,
-  getVehicleWidth,
-} from '../../../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.selector';
 import { getTestCategory } from '../../../../../modules/tests/category/category.reducer';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
@@ -23,6 +16,12 @@ import {
   ReverseDiagramLengthChanged,
   ReverseDiagramWidthChanged,
 } from '../../../components/reverse-diagram-modal/reverse-diagram-modal.actions';
+import { getVehicleDetails }
+from '../../../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.reducer';
+import {
+  getVehicleLength,
+  getVehicleWidth,
+} from '../../../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.selector';
 
 interface ReverseDiagramPageState {
   vehicleLength$: Observable<number>;

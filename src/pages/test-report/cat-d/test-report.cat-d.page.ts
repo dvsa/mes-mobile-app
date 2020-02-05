@@ -29,8 +29,6 @@ import {
   LegalRequirements,
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
-// TODO Implement Cat D TestData Reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
@@ -48,6 +46,7 @@ import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import { hasManoeuvreBeenCompletedCatD } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.selector';
 import { getTestRequirementsCatD }
 from '../../../modules/tests/test-data/cat-d/test-requirements/test-requirements.cat-d.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
