@@ -6,8 +6,7 @@ import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.sel
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
-// TODO - Cat D
-import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
 import { getETA, getEco } from '../../../modules/tests/test-data/common/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';
@@ -32,12 +31,10 @@ import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
-// TODO - Use Cat D
-import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-d/candidate/candidate.cat-d.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { TestOutcome } from '../../../shared/models/test-outcome';
-// TODO - Use  Cat D
-import { getVehicleChecks } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
+import { getVehicleChecks } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.selector';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
