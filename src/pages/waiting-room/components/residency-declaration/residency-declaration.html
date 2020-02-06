@@ -18,7 +18,7 @@
           <label for="residency-declaration-checkbox">{{ 'waitingRoom.confirm' | translate }}</label>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="isInvalid()">
         <ion-col>
           <div id="waiting-room-residency-validation-text" class="validation-text-with-row-spacing"
             [class.ng-invalid.withRowMargin]="isInvalid()">
