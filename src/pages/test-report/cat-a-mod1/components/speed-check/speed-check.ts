@@ -287,21 +287,21 @@ export class SpeedCheckComponent {
 
   onFirstAttemptChange = (attemptedSpeed: number): void => {
     if (this.competency === Competencies.speedCheckEmergency) {
-      this.store$.dispatch(new RecordEmergencyStopFirstAttempt(attemptedSpeed));
+      this.store$.dispatch(new RecordEmergencyStopFirstAttempt(Number(attemptedSpeed)));
     }
 
     if (this.competency === Competencies.speedCheckAvoidance) {
-      this.store$.dispatch(new RecordAvoidanceFirstAttempt(attemptedSpeed));
+      this.store$.dispatch(new RecordAvoidanceFirstAttempt(Number(attemptedSpeed)));
     }
   }
 
   onSecondAttemptChange = (attemptedSpeed: number): void => {
     if (this.competency === Competencies.speedCheckEmergency) {
-      this.store$.dispatch(new RecordEmergencyStopSecondAttempt(attemptedSpeed));
+      this.store$.dispatch(new RecordEmergencyStopSecondAttempt(Number(attemptedSpeed)));
     }
 
     if (this.competency === Competencies.speedCheckAvoidance) {
-      this.store$.dispatch(new RecordAvoidanceSecondAttempt(attemptedSpeed));
+      this.store$.dispatch(new RecordAvoidanceSecondAttempt(Number(attemptedSpeed)));
     }
   }
 

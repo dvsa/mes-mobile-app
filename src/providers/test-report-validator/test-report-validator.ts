@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { get, isEmpty } from 'lodash';
+import { get } from 'lodash';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
@@ -89,15 +89,15 @@ export class TestReportValidatorProvider {
     const emergencyStopFirstAttempt = get(data, 'emergencyStop.firstAttempt');
     const avoidanceFirstAttempt = get(data, 'avoidance.firstAttempt');
 
-    if (isEmpty(emergencyStopFirstAttempt) && isEmpty(avoidanceFirstAttempt)) {
+    if (emergencyStopFirstAttempt === undefined && avoidanceFirstAttempt === undefined) {
       return SpeedCheckState.EMERGENCY_STOP_AND_AVOIDANCE_MISSING;
     }
 
-    if (isEmpty(emergencyStopFirstAttempt)) {
+    if (emergencyStopFirstAttempt === undefined) {
       return SpeedCheckState.EMERGENCY_STOP_MISSING;
     }
 
-    if (isEmpty(avoidanceFirstAttempt)) {
+    if (avoidanceFirstAttempt === undefined) {
       return SpeedCheckState.AVOIDANCE_MISSING;
     }
 

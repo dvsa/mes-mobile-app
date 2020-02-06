@@ -261,6 +261,66 @@ describe('TestReportValidator', () => {
 
       expect(result).toBe(SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT);
     });
+
+    it('should return SpeedCheckState.EMERGENCY_STOP_AND_AVOIDANCE_MISSING', () => {
+      const testData = {
+        emergencyStop: {
+          firstAttempt: undefined,
+        },
+        avoidance: {
+          firstAttempt: undefined,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.EMERGENCY_STOP_AND_AVOIDANCE_MISSING);
+    });
+
+    it('should return SpeedCheckState.EMERGENCY_STOP_MISSING', () => {
+      const testData = {
+        emergencyStop: {
+          firstAttempt: undefined,
+        },
+        avoidance: {
+          firstAttempt: 48,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.EMERGENCY_STOP_MISSING);
+    });
+
+    it('should return SpeedCheckState.AVOIDANCE_MISSING', () => {
+      const testData = {
+        emergencyStop: {
+          firstAttempt: 48,
+        },
+        avoidance: {
+          firstAttempt: undefined,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.AVOIDANCE_MISSING);
+    });
+
+    it('should return SpeedCheckState.VALID', () => {
+      const testData = {
+        emergencyStop: {
+          firstAttempt: 48,
+        },
+        avoidance: {
+          firstAttempt: 49,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.VALID);
+    });
   });
 
 });
