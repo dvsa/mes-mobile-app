@@ -39,8 +39,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-// Todo: change to cat d when it is availble
-import { behaviourMap } from '../../office/office-behaviour-map.cat-c';
+import { behaviourMap } from '../../office/office-behaviour-map.cat-d';
 import {
   DebriefWitnessed,
   DebriefUnwitnessed,
