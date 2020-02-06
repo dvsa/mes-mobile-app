@@ -31,12 +31,10 @@ import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidat
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
-import { QuestionProvider } from '../../../providers/question/question';
 import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_C } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import {
@@ -79,7 +77,6 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   subscription: Subscription;
   showEyesightFailureConfirmation: boolean = false;
 
-  tellMeQuestions: VehicleChecksQuestion[];
   testCategory: CategoryCode;
 
   constructor(
@@ -89,11 +86,8 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public faultCountProvider: FaultCountProvider,
-    public questionProvider: QuestionProvider,
   ) {
     super(platform, navController, authenticationProvider);
-
-    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.C);
     this.form = new FormGroup({});
   }
 
