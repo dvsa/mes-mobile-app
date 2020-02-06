@@ -219,7 +219,13 @@
     "tellMeQuestion": "Dywedwch gwestiwn wrthyf",
     "terminatedStatus": "Wedi'i derfynu",
     "title": "Ôl-drafodaeth",
-    "vehicleChecks": "Gwirio’r cerbyd"
+    "vehicleChecks": "Gwirio’r cerbyd",
+    "speedRequirementsHeader": "CY - Speed requirements",
+    "avoidanceHeader": "CY - Avoidance exercise",
+    "emergencyStopHeader": "CY - Emergency stop",
+    "speedRequirementMet": "CY - Met",
+    "speedRequirementNotMet": "CY - Not Met",
+    "speedRequirementAborted": "CY - Aborted attempt"
   },
   "healthDeclaration": {
     "confirm": "Rwy'n cadarnhau",

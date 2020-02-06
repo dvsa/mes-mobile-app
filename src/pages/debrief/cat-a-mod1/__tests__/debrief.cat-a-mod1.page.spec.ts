@@ -50,11 +50,14 @@ import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 */
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 // TODO - PREP-AMOD1 - update to cat c schema
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
+import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
+import { FaultSummaryProviderMock } from '../../../../providers/fault-summary/__mocks__/fault-summary.mock';
+import { MockComponent } from 'ng-mocks';
+import { SpeedCheckDebriefCardComponent } from '../components/speed-check-debrief-card/speed-check-debrief-card';
 
 describe('DebriefCatAMod1Page', () => {
   let fixture: ComponentFixture<DebriefCatAMod1Page>;
@@ -73,24 +76,27 @@ describe('DebriefCatAMod1Page', () => {
   };
 
   // TODO - PREP-AMOD1 - update to cat c type
-  const exampleTestData: CatBEUniqueTypes.TestData  = {
+  const exampleTestData: TestData  = {
     dangerousFaults: {},
     drivingFaults: {},
-    manoeuvres: {},
     seriousFaults: {},
-    testRequirements: {},
     ETA: {},
-    eco: {},
-    vehicleChecks: {
-      tellMeQuestions: [{}],
-      showMeQuestions: [{}],
+    emergencyStop: {
+      firstAttempt: 0,
+      secondAttempt: 0,
     },
-    uncoupleRecouple: {},
+    avoidance: {
+      firstAttempt: 0,
+      secondAttempt: 0,
+    },
   };
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      declarations: [DebriefCatAMod1Page],
+      declarations: [
+        DebriefCatAMod1Page,
+        MockComponent(SpeedCheckDebriefCardComponent),
+      ],
       imports: [
         IonicModule,
         AppModule,
@@ -106,7 +112,7 @@ describe('DebriefCatAMod1Page', () => {
               123: {
                 testSlotAttributes,
                 // TODO - REP-AMOD1: Change to TestCategory A Mod1
-                category: TestCategory.BE,
+                category: TestCategory.EUAM1,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: exampleTestData,
@@ -136,7 +142,7 @@ describe('DebriefCatAMod1Page', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
-        { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
+        { provide: FaultSummaryProvider, useClass: FaultSummaryProviderMock },
       ],
     });
   });
@@ -152,6 +158,13 @@ describe('DebriefCatAMod1Page', () => {
   }));
 
   describe('DOM', () => {
+
+    beforeEach(() => {
+      spyOn(component.faultSummaryProvider, 'getDangerousFaultsList').and.returnValue([0]);
+      spyOn(component.faultSummaryProvider, 'getSeriousFaultsList').and.returnValue([0]);
+      spyOn(component.faultSummaryProvider, 'getDrivingFaultsList').and.returnValue([0]);
+    });
+
     it('should display passed container if outcome is `passed`', () => {
       fixture.detectChanges();
       component.outcome = TestOutcome.PASS;

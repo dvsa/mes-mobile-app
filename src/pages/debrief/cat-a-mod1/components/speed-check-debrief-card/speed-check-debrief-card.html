@@ -1,0 +1,82 @@
+<ion-card id="speed-check">
+  <ion-card-header>
+    <ion-card-title>
+      <h4 class="fault-heading">{{ 'debrief.speedRequirementsHeader' | translate }}</h4>
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row padding>
+        <ion-col col-32 no-padding>
+          <h4>{{ 'debrief.emergencyStopHeader' | translate }}</h4>
+        </ion-col>
+        <ion-col col-5 no-padding></ion-col>
+        <ion-col col-20 no-padding>
+          <div *ngIf=emergencyStop.firstAttempt>
+            1st: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: emergencyStop.firstAttempt}"></ng-container>
+          </div>
+        </ion-col>
+        <ion-col col-20 no-padding>
+          <div *ngIf=emergencyStop.secondAttempt>
+            2nd: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: emergencyStop.secondAttempt}"></ng-container>
+          </div>
+        </ion-col>
+        <ion-col col-4 no-padding align-self-start>
+            <div class="counter-icon">
+              <img *ngIf=!emergencyStop.speedNotMetSeriousFault src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met" class="tick-icon"/>
+              <img *ngIf=emergencyStop.speedNotMetSeriousFault src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met" class="cross-icon"/>
+            </div>
+        </ion-col>
+        <ion-col col-13 no-padding>
+          <div class="counter-label" *ngIf=!emergencyStop.speedNotMetSeriousFault>
+            {{ 'debrief.speedRequirementMet' | translate }}
+          </div>
+          <div class="counter-label" *ngIf=emergencyStop.speedNotMetSeriousFault>
+            {{ 'debrief.speedRequirementNotMet' | translate }}
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row padding *ngIf="avoidanceAttempted">
+        <ion-col col-32 no-padding>
+          <h4>{{ 'debrief.avoidanceHeader' | translate }}</h4>
+        </ion-col>
+        <ion-col col-5 no-padding></ion-col>
+        <ion-col col-20 no-padding>
+          <div *ngIf=avoidance.firstAttempt>
+            1st: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: avoidance.firstAttempt}"></ng-container>
+          </div>
+        </ion-col>
+        <ion-col col-20 no-padding>
+          <div *ngIf=avoidance.secondAttempt>
+            2nd: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: avoidance.secondAttempt}"></ng-container>
+          </div>
+        </ion-col>
+        <ion-col col-4 no-padding align-self-start>
+          <div class="counter-icon">
+            <img *ngIf=!avoidance.speedNotMetSeriousFault src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met" class="tick-icon"/>
+            <img *ngIf=avoidance.speedNotMetSeriousFault src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met" class="cross-icon"/>
+          </div>
+        </ion-col>
+        <ion-col col-13 no-padding>
+          <div class="counter-label" *ngIf=!avoidance.speedNotMetSeriousFault>
+            {{ 'debrief.speedRequirementMet' | translate }}
+          </div>
+          <div class="counter-label" *ngIf=avoidance.speedNotMetSeriousFault>
+            {{ 'debrief.speedRequirementNotMet' | translate }}
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
+
+<ng-template #SpeedFormat let-speed="speed">
+  <ng-container *ngIf="speed != 0; else Aborted">
+    {{speed}}km/h
+  </ng-container>
+</ng-template>
+
+<ng-template #Aborted>
+  {{ 'debrief.speedRequirementAborted' | translate }}
+</ng-template>
