@@ -34,16 +34,63 @@ export const catCTestDataStateObject: CatCUniqueTypes.TestData = {
       selected: true,
     },
   },
-  vehicleChecks: {
-    tellMeQuestions: [{
+  vehicleChecks: this.vehicleChecksNoFaults,
+};
+
+export const vehicleChecksNoFaults = {
+  tellMeQuestions: [{
+    code: 'string',
+    description: 'string',
+    outcome: 'P',
+  }] as QuestionResult[],
+  showMeQuestions: [{
+    code: 'string',
+    description: 'string',
+    outcome: 'P',
+  }] as QuestionResult[],
+};
+
+export const vehicleChecksTwoFaults = {
+  tellMeQuestions: [{
+    code: 'string',
+    description: 'string',
+    outcome: 'DF',
+  }] as QuestionResult[],
+  showMeQuestions: [{
+    code: 'string',
+    description: 'string',
+    outcome: 'DF',
+  }] as QuestionResult[],
+};
+
+export const vehicleChecksFiveFaults = {
+  tellMeQuestions: [
+    {
       code: 'string',
       description: 'string',
-      outcome: 'P',
-    }] as QuestionResult[],
-    showMeQuestions: [{
+      outcome: 'DF',
+    },
+    {
       code: 'string',
       description: 'string',
-      outcome: 'P',
-    }] as QuestionResult[],
-  },
+      outcome: 'DF',
+    },
+    {
+      code: 'string',
+      description: 'string',
+      outcome: 'DF',
+    },
+  ] as QuestionResult[],
+  showMeQuestions: [
+    {
+      code: 'string',
+      description: 'string',
+      outcome: 'DF',
+    },
+    {
+      code: 'string',
+      description: 'string',
+      outcome: 'DF',
+    },
+  ] as QuestionResult[],
 };
