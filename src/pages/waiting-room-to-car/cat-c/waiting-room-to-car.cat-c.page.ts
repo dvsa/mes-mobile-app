@@ -130,11 +130,6 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
         select(getAccompaniment),
         select(getInterpreterAccompaniment),
       ),
-      vehicleChecksScore$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecksCatC),
-        map(vehicleChecks => this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.C, vehicleChecks)),
-      ),
       vehicleChecks$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatC),
@@ -142,6 +137,13 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
       testCategory$: currentTest$.pipe(
         select(getTestCategory),
         map(result => this.testCategory = result),
+      ),
+      vehicleChecksScore$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatC),
+        map(vehicleChecks =>
+          this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory as TestCategory, vehicleChecks),
+        ),
       ),
     };
     this.setupSubscription();
