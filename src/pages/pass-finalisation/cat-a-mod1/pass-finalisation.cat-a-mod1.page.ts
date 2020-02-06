@@ -15,9 +15,7 @@ import {
   getPassCertificateNumber,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
-
-// TODO - PREP-AMOD1 - implement category specific reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
@@ -48,7 +46,7 @@ import {
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
-// TODO - PREP-AMOD1 - implement category specific behaviour map
+// TODO - MES-4572 - implement category specific behaviour map
 import { behaviourMap } from '../../office/office-behaviour-map.cat-be';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
