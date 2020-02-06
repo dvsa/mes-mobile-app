@@ -41,7 +41,9 @@ import { initialState } from '../../../../modules/tests/test-data/cat-d/test-dat
 import { ReverseLeftCatDComponent } from '../components/reverse-left/reverse-left.cat-d';
 import { ReverseLeftPopoverCatDComponent } from '../components/reverse-left-popover/reverse-left-popover.cat-d';
 import { UncoupleRecoupleCatDComponent } from '../components/uncouple-recouple/uncouple-recouple.cat-d';
-import { VehicleChecksCatDComponent } from '../components/vehicle-checks/vehicle-checks.cat-d';
+import {
+  VehicleChecksTestReportCatDComponent,
+} from '../components/vehicle-checks-test-report/vehicle-checks-test-report.cat-d';
 
 describe('TestReportCatDPage', () => {
   let fixture: ComponentFixture<TestReportCatDPage>;
@@ -62,7 +64,7 @@ describe('TestReportCatDPage', () => {
         MockComponent(UncoupleRecoupleCatDComponent),
         MockComponent(ReverseLeftCatDComponent),
         MockComponent(ReverseLeftPopoverCatDComponent),
-        MockComponent(VehicleChecksCatDComponent),
+        MockComponent(VehicleChecksTestReportCatDComponent),
       ],
       imports: [
         IonicModule,

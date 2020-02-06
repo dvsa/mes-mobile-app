@@ -18,9 +18,9 @@ interface ComponentState {
 
 @Component({
   selector: 'vehicle-checks-test-report-cat-d',
-  templateUrl: 'vehicle-checks.cat-d.html',
+  templateUrl: 'vehicle-checks-test-report.cat-d.html',
 })
-export class VehicleChecksCatDComponent implements OnInit {
+export class VehicleChecksTestReportCatDComponent implements OnInit {
 
   @Input()
   testCategory: TestCategory;
