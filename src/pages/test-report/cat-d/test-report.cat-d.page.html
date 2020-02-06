@@ -1,6 +1,10 @@
 <ion-header>
   <ion-navbar hideBackButton>
     <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="passTest()">Pass Test</button>
+      <button ion-button (click)="failTest()">Fail Test</button>
+    </ion-buttons>
     <ion-buttons end>
       <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>
     </ion-buttons>
@@ -71,7 +75,7 @@
         <ion-row>
           <ion-col>
             <reverse-left-cat-d [completed]="manoeuvresCompleted" [controlLabel]="'Reverse Left'"
-                          [clickCallback]="getCallback()" [testCategory]="pageState.testCategory$ | async">
+                                [clickCallback]="getCallback()" [testCategory]="pageState.testCategory$ | async">
               <reverse-left-popover-cat-d></reverse-left-popover-cat-d>
             </reverse-left-cat-d>
           </ion-col>
