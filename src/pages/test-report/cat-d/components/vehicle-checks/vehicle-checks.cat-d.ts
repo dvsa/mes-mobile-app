@@ -17,7 +17,7 @@ interface ComponentState {
 }
 
 @Component({
-  selector: 'vehicle-checks-cat-d',
+  selector: 'vehicle-checks-test-report-cat-d',
   templateUrl: 'vehicle-checks.cat-d.html',
 })
 export class VehicleChecksCatDComponent implements OnInit {
