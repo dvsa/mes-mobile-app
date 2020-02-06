@@ -1,7 +1,7 @@
 @catb
 Feature: Full Welsh end to end journey
 
-   @smoke
+   @full_smoke
    Scenario: Examiner completes a passed welsh test with no faults
       Given I am logged in as "desexaminerw" and I have a test for "Dr Lupe Buck"
       When I check candidate details for "Dr Lupe Buck"

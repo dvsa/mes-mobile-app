@@ -18,8 +18,8 @@ Feature: Comms Capture and Waiting Room
       Then the communication page candidate name should be "Mrs Jane Doe"
       And the communication page candidate driver number should be "DOEXX 625364 A99HC"
       And the email "jane.doe@example.com" has been provided and is preselected
-
-   @smoke
+   
+   @full_smoke
    Scenario: Communications and Waiting room validation
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"

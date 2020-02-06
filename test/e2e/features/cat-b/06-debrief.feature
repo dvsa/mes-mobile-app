@@ -1,7 +1,6 @@
 @catb
 Feature: Debrief including Health Declaration
 
-   @smoke
    Scenario: On a pass test debrief the correct candidate details are displayed and validation is enforced
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"
@@ -47,7 +46,6 @@ Feature: Debrief including Health Declaration
       When I end the debrief
       Then I should see the "Test debrief - Jane Doe" page
 
-   @smoke
    Scenario: For a pass the health declaration shows the correct information and validation is enforced
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
       When I check candidate details for "Mr Ali Campbell"

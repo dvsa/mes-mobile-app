@@ -1,7 +1,6 @@
 @catbe
 Feature: Autosave end to end terminate journey
 
-  @smoke
    Scenario: Examiner terminates test as candidate failed eye sight test and completes write-up later using autosave
       Given I am logged in as "mobexaminer2" and I have a test for "Miss Jeannette Bender"
       When I check candidate details for "Miss Jeannette Bender"

@@ -1,7 +1,7 @@
 @catbe
 Feature: Full Welsh end to end journey
-
-   @smoke 
+ 
+  @full_smoke
   Scenario: Examiner completes a failed test with various faults
       Given I am logged in as "desexaminerw" and I have a test for "Mr Hendricks Parsons"
       When I check candidate details for "Mr Hendricks Parsons"

@@ -6,7 +6,6 @@ Feature: Login
     When I launch the mobile app
     Then I should see the Microsoft login page
     
-  @smoke
   Scenario: User logs into the application
     Given I am not logged in
     When I log in to the application as "mobexaminer1"
