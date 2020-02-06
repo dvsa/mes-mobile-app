@@ -8,19 +8,14 @@ import {
   PassFinalisationValidationError,
 } from '../pass-finalisation.actions';
 import {
-  ProvisionalLicenseReceived,
-  ProvisionalLicenseNotReceived,
   PassCertificateNumberChanged,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
   getPassCertificateNumber,
-  isProvisionalLicenseProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
-
-// TODO - PREP-AMOD1 - implement category specific reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
@@ -35,9 +30,9 @@ import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-
-// TODO - PREP-AMOD1 - implement category specific reducer
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
+import {
+  getVehicleDetails,
+} from '../../../modules/tests/vehicle-details/cat-a-mod1/vehicle-details.cat-a-mod1.reducer';
 import { getGearboxCategory } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { CAT_A_MOD1 } from '../../page-names.constants';
@@ -51,7 +46,7 @@ import {
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
-// TODO - PREP-AMOD1 - implement category specific behaviour map
+// TODO - MES-4572 - implement category specific behaviour map
 import { behaviourMap } from '../../office/office-behaviour-map.cat-be';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
@@ -78,7 +73,6 @@ interface PassFinalisationPageState {
   candidateDriverNumber$: Observable<string>;
   testOutcomeText$: Observable<string>;
   applicationNumber$: Observable<string>;
-  provisionalLicense$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
   d255$: Observable<boolean>;
@@ -148,10 +142,6 @@ export class PassFinalisationCatAMod1Page extends BasePageComponent {
         select(getApplicationReference),
         select(getApplicationNumber),
       ),
-      provisionalLicense$: currentTest$.pipe(
-        select(getPassCompletion),
-        map(isProvisionalLicenseProvided),
-      ),
       passCertificateNumber$: currentTest$.pipe(
         select(getPassCompletion),
         select(getPassCertificateNumber),
@@ -192,14 +182,6 @@ export class PassFinalisationCatAMod1Page extends BasePageComponent {
     if (this.subscription.closed && this.merged$) {
       this.subscription = this.merged$.subscribe();
     }
-  }
-
-  provisionalLicenseReceived(): void {
-    this.store$.dispatch(new ProvisionalLicenseReceived());
-  }
-
-  provisionalLicenseNotReceived(): void {
-    this.store$.dispatch(new ProvisionalLicenseNotReceived());
   }
 
   transmissionChanged(transmission: GearboxCategory): void {

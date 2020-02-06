@@ -19,7 +19,7 @@ import { LanguagePreferencesComponent } from
   '../../../../components/test-finalisation/language-preference/language-preferences';
 import { FinalisationHeaderComponent } from
   '../../../../components/test-finalisation/finalisation-header/finalisation-header';
-import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged } from
+import { PassCertificateNumberChanged } from
   '../../../../modules/tests/pass-completion/pass-completion.actions';
 import {
   PassFinalisationViewDidEnter,
@@ -82,20 +82,6 @@ describe('PassFinalisationCatAMod1Page', () => {
       it('should dispatch the VIEW_DID_ENTER action when the function is run', () => {
         component.ionViewDidEnter();
         expect(store$.dispatch).toHaveBeenCalledWith(new PassFinalisationViewDidEnter());
-        expect(store$.dispatch).toHaveBeenCalledTimes(1);
-      });
-    });
-    describe('provisionalLicenseReceived', () => {
-      it('should dispatch the correct action when called', () => {
-        component.provisionalLicenseReceived();
-        expect(store$.dispatch).toHaveBeenCalledWith(new ProvisionalLicenseReceived());
-        expect(store$.dispatch).toHaveBeenCalledTimes(1);
-      });
-    });
-    describe('provisionalLicenseNotReceived', () => {
-      it('should dispatch the correct action when called', () => {
-        component.provisionalLicenseNotReceived();
-        expect(store$.dispatch).toHaveBeenCalledWith(new ProvisionalLicenseNotReceived());
         expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });
