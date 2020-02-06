@@ -45,11 +45,15 @@ import { SpeedCheckComponent } from '../components/speed-check/speed-check';
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { CalculateTestResult, TerminateTestFromTestReport } from '../../test-report.actions';
+import { SpeedCheckState } from '../../../../providers/test-report-validator/test-report-validator.constants';
+import { speedCheckLabels } from '../../../../shared/constants/competencies/cata-mod1-competencies';
+import { ModalReason } from '../components/activity-code-4-modal/activity-code-4-modal.constants';
 
 describe('TestReportCatAMod1Page', () => {
   let fixture: ComponentFixture<TestReportCatAMod1Page>;
   let component: TestReportCatAMod1Page;
   let navController: NavController;
+  let modalController: ModalController;
   let store$: Store<StoreModel>;
 
   configureTestSuite(() => {
@@ -104,6 +108,7 @@ describe('TestReportCatAMod1Page', () => {
     fixture = TestBed.createComponent(TestReportCatAMod1Page);
     component = fixture.componentInstance;
     navController = TestBed.get(NavController);
+    modalController = TestBed.get(ModalController);
     store$ = TestBed.get(Store);
   }));
 
@@ -111,6 +116,18 @@ describe('TestReportCatAMod1Page', () => {
     describe('onModalDismiss', () => {
       it('should navigate to debrief page when passed a CONTINUE event', () => {
         component.onModalDismiss(ModalEvent.CONTINUE);
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe(CAT_A_MOD1.DEBRIEF_PAGE);
+      });
+
+      it('should navigate to debrief page when passed a TERMINATE event', () => {
+        component.onModalDismiss(ModalEvent.TERMINATE);
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe(CAT_A_MOD1.DEBRIEF_PAGE);
+      });
+
+      it('should navigate to debrief page when passed a END_WITH_ACTIVITY_CODE_4', () => {
+        component.onModalDismiss(ModalEvent.END_WITH_ACTIVITY_CODE_4);
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(CAT_A_MOD1.DEBRIEF_PAGE);
       });
@@ -129,12 +146,6 @@ describe('TestReportCatAMod1Page', () => {
         expect(storeDispatchSpy).toHaveBeenCalledWith(new CalculateTestResult());
       });
 
-      it('should navigate to debrief page when passed a TERMINATE event', () => {
-        component.onModalDismiss(ModalEvent.TERMINATE);
-        const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_A_MOD1.DEBRIEF_PAGE);
-      });
-
       it('should dispatch TerminateTestFromTestReport action', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
 
@@ -144,6 +155,212 @@ describe('TestReportCatAMod1Page', () => {
       });
     });
 
+    describe('createEtaInvalidModal', () => {
+      it('should create an EtaInvalidModal when isEtaValid is false', () => {
+        component.isEtaValid = false;
+
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+        const modalName = 'EtaInvalidModal';
+        const { calls } = modalController.create as jasmine.Spy;
+
+        component.createEtaInvalidModal(options);
+
+        expect(calls.count()).toBe(1);
+        expect(calls.argsFor(0)[0]).toBe(modalName);
+        expect(calls.argsFor(0)[1]).toEqual({});
+        expect(calls.argsFor(0)[2]).toEqual(options);
+      });
+
+      it('should return null when isEtaValid is true', () => {
+        component.isEtaValid = true;
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+
+        const result = component.createEtaInvalidModal(options);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe('createEndTestModal', () => {
+      it('should create an EndTestModal when speedCheckState is VALID', () => {
+        component.speedCheckState = SpeedCheckState.VALID;
+
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+        const modalName = 'EndTestModal';
+        const { calls } = modalController.create as jasmine.Spy;
+
+        component.createEndTestModal(options);
+
+        expect(calls.count()).toBe(1);
+        expect(calls.argsFor(0)[0]).toBe(modalName);
+        expect(calls.argsFor(0)[1]).toEqual({});
+        expect(calls.argsFor(0)[2]).toEqual(options);
+      });
+
+      it('should return null when speedCheckState is not VALID', () => {
+        component.speedCheckState = SpeedCheckState.NOT_MET;
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+
+        const result = component.createEndTestModal(options);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe('createSpeedCheckModal', () => {
+      it('should create the right SpeedCheckModal when EMERGENCY_STOP_AND_AVOIDANCE_MISSING', () => {
+        component.speedCheckState = SpeedCheckState.EMERGENCY_STOP_AND_AVOIDANCE_MISSING;
+
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+        const modalName = 'SpeedCheckModal';
+        const { calls } = modalController.create as jasmine.Spy;
+
+        component.createSpeedCheckModal(options);
+
+        expect(calls.count()).toBe(1);
+        expect(calls.argsFor(0)[0]).toBe(modalName);
+        expect(calls.argsFor(0)[1]).toEqual({
+          speedChecksNeedCompleting: [
+            speedCheckLabels.speedCheckEmergency,
+            speedCheckLabels.speedCheckAvoidance,
+          ],
+        });
+        expect(calls.argsFor(0)[2]).toEqual(options);
+      });
+
+      it('should create the right SpeedCheckModal when EMERGENCY_STOP_MISSING', () => {
+        component.speedCheckState = SpeedCheckState.EMERGENCY_STOP_MISSING;
+
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+        const modalName = 'SpeedCheckModal';
+        const { calls } = modalController.create as jasmine.Spy;
+
+        component.createSpeedCheckModal(options);
+
+        expect(calls.count()).toBe(1);
+        expect(calls.argsFor(0)[0]).toBe(modalName);
+        expect(calls.argsFor(0)[1]).toEqual({
+          speedChecksNeedCompleting: [
+            speedCheckLabels.speedCheckEmergency,
+          ],
+        });
+        expect(calls.argsFor(0)[2]).toEqual(options);
+      });
+
+      it('should create the right SpeedCheckModal when AVOIDANCE_MISSING', () => {
+        component.speedCheckState = SpeedCheckState.AVOIDANCE_MISSING;
+
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+        const modalName = 'SpeedCheckModal';
+        const { calls } = modalController.create as jasmine.Spy;
+
+        component.createSpeedCheckModal(options);
+
+        expect(calls.count()).toBe(1);
+        expect(calls.argsFor(0)[0]).toBe(modalName);
+        expect(calls.argsFor(0)[1]).toEqual({
+          speedChecksNeedCompleting: [
+            speedCheckLabels.speedCheckAvoidance,
+          ],
+        });
+        expect(calls.argsFor(0)[2]).toEqual(options);
+      });
+
+      it('should return null when nor emergency stop nor avoidance is missing', () => {
+        component.speedCheckState = SpeedCheckState.VALID;
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+
+        const result = component.createSpeedCheckModal(options);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe('createActivityCode4Modal', () => {
+      it('should create the right ActivityCode4Modal when speedCheckState is NOT_MET', () => {
+        component.speedCheckState = SpeedCheckState.NOT_MET;
+
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+        const modalName = 'ActivityCode4Modal';
+        const { calls } = modalController.create as jasmine.Spy;
+
+        component.createActivityCode4Modal(options);
+
+        expect(calls.count()).toBe(1);
+        expect(calls.argsFor(0)[0]).toBe(modalName);
+        expect(calls.argsFor(0)[1]).toEqual({
+          modalReason: ModalReason.SPEED_REQUIREMENTS,
+        });
+        expect(calls.argsFor(0)[2]).toEqual(options);
+      });
+
+      it('should create the right ActivityCode4Modal when speedCheckState is EMERGENCY_STOP_DANGEROUS_FAULT', () => {
+        component.speedCheckState = SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT;
+
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+        const modalName = 'ActivityCode4Modal';
+        const { calls } = modalController.create as jasmine.Spy;
+
+        component.createActivityCode4Modal(options);
+
+        expect(calls.count()).toBe(1);
+        expect(calls.argsFor(0)[0]).toBe(modalName);
+        expect(calls.argsFor(0)[1]).toEqual({
+          modalReason: ModalReason.EMERGENCY_STOP_DANGEROUS,
+        });
+        expect(calls.argsFor(0)[2]).toEqual(options);
+      });
+
+      it('should create the right ActivityCode4Modal whe speedCheckState is EMERGENCY_STOP_SERIOUS_FAULT', () => {
+        component.speedCheckState = SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT;
+
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+        const modalName = 'ActivityCode4Modal';
+        const { calls } = modalController.create as jasmine.Spy;
+
+        component.createActivityCode4Modal(options);
+
+        expect(calls.count()).toBe(1);
+        expect(calls.argsFor(0)[0]).toBe(modalName);
+        expect(calls.argsFor(0)[1]).toEqual({
+          modalReason: ModalReason.EMERGENCY_STOP_SERIOUS,
+        });
+        expect(calls.argsFor(0)[2]).toEqual(options);
+      });
+
+      it('should return null speed req is met and not serious or dangerous fault on Emergency Stop', () => {
+        component.speedCheckState = SpeedCheckState.VALID;
+        const options = {
+          optionProperty: 'optionProperty',
+        };
+
+        const result = component.createActivityCode4Modal(options);
+
+        expect(result).toBeNull();
+      });
+    });
   });
 
   describe('DOM', () => {
