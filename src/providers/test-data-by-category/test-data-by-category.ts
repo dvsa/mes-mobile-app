@@ -6,6 +6,11 @@ import { getTestData as getTestDataC1 } from '../../modules/tests/test-data/cat-
 import { getTestData as getTestDataCE } from '../../modules/tests/test-data/cat-c/test-data.cat-ce.reducer';
 import { getTestData as getTestDataC1E } from '../../modules/tests/test-data/cat-c/test-data.cat-c1e.reducer';
 import { getTestData as getTestDataCatBE } from '../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData as getTestDataCatD } from '../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
+import { getTestData as getTestDataCatD1 } from '../../modules/tests/test-data/cat-d/test-data.cat-d1.reducer';
+import { getTestData as getTestDataCatDE } from '../../modules/tests/test-data/cat-d/test-data.cat-de.reducer';
+import { getTestData as getTestDataCatD1E } from '../../modules/tests/test-data/cat-d/test-data.cat-d1e.reducer';
+
 @Injectable()
 export class TestDataByCategoryProvider {
 
@@ -18,6 +23,10 @@ export class TestDataByCategoryProvider {
       case TestCategory.C1: return getTestDataC1;
       case TestCategory.CE: return getTestDataCE;
       case TestCategory.C1E: return getTestDataC1E;
+      case TestCategory.D: return getTestDataCatD;
+      case TestCategory.D1: return getTestDataCatD1;
+      case TestCategory.DE: return getTestDataCatDE;
+      case TestCategory.D1E: return getTestDataCatD1E;
       default: throw new Error(TestDataByCategoryProvider.getTestDataByCategoryCodeErrMsg);
     }
   }
