@@ -60,7 +60,8 @@ export enum AnalyticsEventCategories {
   REKEY_SEARCH = 'rekey search',
   REKEY = 'rekey',
   VEHICLE_CHECKS = 'vehicle checks',
-
+  WAITING_ROOM = 'waiting room',
+  WAITING_ROOM_TO_CAR = 'waiting room to car',
 }
 
 export enum AnalyticsEvents {
@@ -114,6 +115,10 @@ export enum AnalyticsEvents {
   D255 = 'set D255',
   GEARBOX_CATEGORY_CHANGED = 'set transmission',
   LANGUAGE_CHANGED = 'language changed',
+  CBT_CHANGED = 'cbt changed',
+  BIKE_CATEGORY_CHANGED = 'bike category changed',
+  BIKE_CATEGORY_SELECTED = 'bike category selected',
+  BIKE_CATEGORY_MODAL_TRIGGERED = 'bike category modal triggered',
 }
 
 export enum AnalyticsLabels {

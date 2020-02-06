@@ -7,6 +7,9 @@ import {
   BikeTestType,
 } from '../../../../providers/bike-category-detail/bike-category-detail.model';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../../../shared/models/store.model';
+import * as waitingRoomToCarActions from '../../waiting-room-to-car.actions';
 
 @Component({
   selector: 'bike-category-type',
@@ -33,6 +36,7 @@ export class BikeCategoryTypeComponent implements OnChanges {
 
   constructor(
     private bikeCategoryDetailProvider: BikeCategoryDetailProvider,
+    public store$: Store<StoreModel>,
   ) { }
 
   openCategorySelector(): void {
@@ -67,7 +71,6 @@ export class BikeCategoryTypeComponent implements OnChanges {
       );
       this.formGroup.addControl('categoryTypeSelectCategory', this.formControl);
     }
-    console.log(this.formGroup);
     this.formControl.patchValue('Select cat type..');
 
   }
@@ -81,6 +84,11 @@ export class BikeCategoryTypeComponent implements OnChanges {
     this.testType  = (this.testType === BikeTestType.MOD1 || this.testType === BikeTestType.MOD2) ?
       this.testType : BikeTestType.MOD1;
     this.bikeCategoryDetails = this.bikeCategoryDetailProvider.getAllDetailsByTestType(this.testType);
+    this.testCategory = null;
+  }
+
+  bikeCategoryModalShown(): void {
+    this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarViewBikeCategoryModal);
   }
 
   categoryCodeChanged(category: CategoryCode): void {

@@ -7,6 +7,8 @@ import {
   AnalyticsScreenNames,
   AnalyticsDimensionIndices,
   AnalyticsErrorTypes,
+  AnalyticsEvents,
+  AnalyticsEventCategories,
 } from '../../providers/analytics/analytics.model';
 import {
   WAITING_ROOM_VIEW_DID_ENTER,
@@ -14,6 +16,10 @@ import {
   WAITING_ROOM_VALIDATION_ERROR,
   WaitingRoomValidationError,
 } from '../../pages/waiting-room/waiting-room.actions';
+import {
+  CBT_NUMBER_CHANGED,
+  CbtNumberChanged,
+} from '../../modules/tests/pre-test-declarations/cat-a/pre-test-declarations.cat-a.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -109,4 +115,22 @@ export class WaitingRoomAnalyticsEffects {
     }),
   );
 
+  @Effect()
+  cbtNumberChanged$ = this.actions$.pipe(
+    ofType(CBT_NUMBER_CHANGED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [CbtNumberChanged, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.WAITING_ROOM, tests),
+        formatAnalyticsText(AnalyticsEvents.CBT_CHANGED, tests),
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
 }
