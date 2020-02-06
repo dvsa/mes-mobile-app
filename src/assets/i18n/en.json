@@ -196,7 +196,9 @@
       "manualHandling": "Manual handling",
       "slalomFigure8": "Slalom / Figure 8",
       "slowControl": "Slow control",
-      "uTurnExercise": "'U' Turn Exercise"
+      "uTurnExercise": "'U' Turn Exercise",
+      "speedCheckEmergency": "Emergency Stop",
+      "speedCheckAvoidance": "Avoidance"
     },
     "dangerousFault": "Dangerous fault",
     "dangerousFaultsCardDescription": "dangerous faults",

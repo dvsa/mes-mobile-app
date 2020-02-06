@@ -8,8 +8,8 @@
   <test-outcome-debrief-card [outcome]="outcome"></test-outcome-debrief-card>
 </ion-header>
 <ion-content>
-  <speed-check-debrief-card 
-    [emergencyStop]="pageState.emergencyStop$ | async" 
+  <speed-check-debrief-card
+    [emergencyStop]="pageState.emergencyStop$ | async"
     [avoidance]="pageState.avoidance$ | async"
     [avoidanceAttempted]="pageState.avoidanceAttempted$ | async"></speed-check-debrief-card>
   <eta-debrief-card [hasPhysicalEta]="hasPhysicalEta" [hasVerbalEta]="hasVerbalEta"></eta-debrief-card>
