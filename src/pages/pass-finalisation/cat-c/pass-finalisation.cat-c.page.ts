@@ -110,7 +110,8 @@ export class PassFinalisationCatCPage extends BasePageComponent {
   manualMessage: string = 'A <b><em>manual</em></b> licence will be issued';
   automaticMessage: string =
     'An <b><em>automatic</em></b> licence will be issued';
-  askCandidateLicenseMessage: string = `Check that the candidate doesn't need their driving licence`;
+  askCandidateLicenseMessage: string =
+  `Check that the candidate doesn't need their driving licence (e.g CPC Mod4)`;
 
   constructor(
     public store$: Store<StoreModel>,
