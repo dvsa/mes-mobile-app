@@ -212,9 +212,23 @@ describe('TestReportValidator', () => {
   });
 
   describe('validateSpeedChecksCatAMod1', () => {
-    it('should return SpeedCheckState.NOT_MET when emergency stop speed not met is true', () => {
+    it('should return EMERGENCY_STOP_MISSING when speed not met is true & speed is not recorded', () => {
       const testData = {
         emergencyStop: {
+          firstAttempt: undefined,
+          speedNotMetSeriousFault: true,
+        },
+      };
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.EMERGENCY_STOP_MISSING);
+    });
+
+    it('should return SpeedCheckState.NOT_MET when emergency stop speed not met is true & speed is recorded', () => {
+      const testData = {
+        emergencyStop: {
+          firstAttempt: 48,
           speedNotMetSeriousFault: true,
         },
       };
@@ -224,9 +238,23 @@ describe('TestReportValidator', () => {
       expect(result).toBe(SpeedCheckState.NOT_MET);
     });
 
-    it('should return SpeedCheckState.NOT_MET when avoidance speed not met is true', () => {
+    it('should return AVOIDANCE_MISSING when speed not met is true & speed is not recorded', () => {
       const testData = {
         avoidance: {
+          firstAttempt: undefined,
+          speedNotMetSeriousFault: true,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.AVOIDANCE_MISSING);
+    });
+
+    it('should return SpeedCheckState.NOT_MET when avoidance speed not met is true & speed is recorded', () => {
+      const testData = {
+        avoidance: {
+          firstAttempt: 48,
           speedNotMetSeriousFault: true,
         },
       } as CatAMod1TestData;
@@ -234,6 +262,34 @@ describe('TestReportValidator', () => {
       const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
 
       expect(result).toBe(SpeedCheckState.NOT_MET);
+    });
+
+    it('should return VALID when avoidance speed not met first attempt is recorded but has Serious fault', () => {
+      const testData = {
+        avoidance: {
+          firstAttempt: 48,
+          speedNotMetSeriousFault: true,
+          outcome: CompetencyOutcome.S,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.VALID);
+    });
+
+    it('should return VALID when avoidance speed not met first attempt is recorded but has Dangerous fault', () => {
+      const testData = {
+        avoidance: {
+          firstAttempt: 48,
+          speedNotMetSeriousFault: true,
+          outcome: CompetencyOutcome.D,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.VALID);
     });
 
     it('should return SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT', () => {
@@ -290,6 +346,38 @@ describe('TestReportValidator', () => {
       const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
 
       expect(result).toBe(SpeedCheckState.EMERGENCY_STOP_MISSING);
+    });
+
+    it('should return VALID when avoidance missing but competency has Serious fault', () => {
+      const testData = {
+        emergencyStop: {
+          firstAttempt: 48,
+        },
+        avoidance: {
+          firstAttempt: undefined,
+          outcome: CompetencyOutcome.S,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.VALID);
+    });
+
+    it('should return VALID when avoidance missing but competency has Dangerous fault', () => {
+      const testData = {
+        emergencyStop: {
+          firstAttempt: 48,
+        },
+        avoidance: {
+          firstAttempt: undefined,
+          outcome: CompetencyOutcome.D,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.VALID);
     });
 
     it('should return SpeedCheckState.AVOIDANCE_MISSING', () => {

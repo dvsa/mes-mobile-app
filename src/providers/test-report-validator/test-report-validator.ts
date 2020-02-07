@@ -72,11 +72,19 @@ export class TestReportValidatorProvider {
     const emergencyStopNotMet = get(data, 'emergencyStop.speedNotMetSeriousFault');
     const avoidanceNotMet = get(data, 'avoidance.speedNotMetSeriousFault');
 
-    if (emergencyStopNotMet || avoidanceNotMet) {
-      return SpeedCheckState.NOT_MET;
-    }
+    const emergencyStopFirstAttempt = get(data, 'emergencyStop.firstAttempt');
+    const avoidanceFirstAttempt = get(data, 'avoidance.firstAttempt');
 
     const emergencyStopOutcome = get(data, 'emergencyStop.outcome');
+    const avoidanceOutcome = get(data, 'avoidance.outcome');
+
+    if (emergencyStopNotMet) {
+      if (emergencyStopFirstAttempt === undefined) {
+        return SpeedCheckState.EMERGENCY_STOP_MISSING;
+      }
+
+      return SpeedCheckState.NOT_MET;
+    }
 
     if (emergencyStopOutcome === CompetencyOutcome.S) {
       return SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT;
@@ -86,8 +94,17 @@ export class TestReportValidatorProvider {
       return SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT;
     }
 
-    const emergencyStopFirstAttempt = get(data, 'emergencyStop.firstAttempt');
-    const avoidanceFirstAttempt = get(data, 'avoidance.firstAttempt');
+    if (avoidanceNotMet) {
+      if (avoidanceFirstAttempt === undefined) {
+        return SpeedCheckState.AVOIDANCE_MISSING;
+      }
+
+      if (avoidanceOutcome === CompetencyOutcome.S || avoidanceOutcome === CompetencyOutcome.D) {
+        return SpeedCheckState.VALID;
+      }
+
+      return SpeedCheckState.NOT_MET;
+    }
 
     if (emergencyStopFirstAttempt === undefined && avoidanceFirstAttempt === undefined) {
       return SpeedCheckState.EMERGENCY_STOP_AND_AVOIDANCE_MISSING;
@@ -98,6 +115,10 @@ export class TestReportValidatorProvider {
     }
 
     if (avoidanceFirstAttempt === undefined) {
+      if (avoidanceOutcome === CompetencyOutcome.S || avoidanceOutcome === CompetencyOutcome.D) {
+        return SpeedCheckState.VALID;
+      }
+
       return SpeedCheckState.AVOIDANCE_MISSING;
     }
 
