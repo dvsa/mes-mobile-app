@@ -3,3 +3,6 @@ import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 
 export const getDrivingFaultCount = (
   data: TestData, competency: Competencies) => data.drivingFaults[competency];
+
+export const getSpeedRequirementNotMet = (testData: TestData) =>
+  testData.emergencyStop.speedNotMetSeriousFault || testData.avoidance.speedNotMetSeriousFault;

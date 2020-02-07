@@ -15,8 +15,7 @@ import {
   getTestOutcomeText,
 } from '../../../modules/tests/tests.selector';
 
-// TODO - PREP-AMOD1: Use cat a mod1
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getUntitledCandidateName,
   getCandidateDriverNumber,
@@ -26,7 +25,7 @@ import {
   NonPassFinalisationViewDidEnter,
   NonPassFinalisationValidationError,
 } from '../non-pass-finalisation.actions';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { map, withLatestFrom, takeWhile } from 'rxjs/operators';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
 import {
@@ -42,8 +41,7 @@ import { FormGroup } from '@angular/forms';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
-// TODO - PREP-AMOD1: Use cat a mod1 mappings
-import { behaviourMap } from '../../office/office-behaviour-map.cat-be';
+import { behaviourMap } from '../../office/office-behaviour-map.cat-a-mod1';
 import {
   DebriefWitnessed,
   DebriefUnwitnessed,
@@ -57,6 +55,9 @@ import {
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { getTestData } from '../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
+import { getSpeedRequirementNotMet } from '../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.selector';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -161,6 +162,14 @@ export class NonPassFinalisationCatAMod1Page extends BasePageComponent implement
         select(isWelshTest),
       ),
     };
+
+    currentTest$.pipe(
+      select(getTestData),
+      select(getSpeedRequirementNotMet),
+      takeWhile(x => x),
+    ).subscribe(_ =>
+      this.store$.dispatch(new SetActivityCode(ActivityCodes.FAIL_PUBLIC_SAFETY)),
+    );
   }
 
   ionViewDidEnter(): void {

@@ -46,8 +46,7 @@ import {
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
-// TODO - MES-4572 - implement category specific behaviour map
-import { behaviourMap } from '../../office/office-behaviour-map.cat-be';
+import { behaviourMap } from '../../office/office-behaviour-map.cat-a-mod1';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
   CandidateChoseToProceedWithTestInWelsh,
