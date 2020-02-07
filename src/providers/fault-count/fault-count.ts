@@ -27,7 +27,10 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getDrivingFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getDrivingFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getDrivingFaultSumCountCatC(data);
-      case TestCategory.EUAM1: return FaultCountAM1Helper.getRidingFaultSumCountCatAM1(data);
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1: return FaultCountAM1Helper.getRidingFaultSumCountCatAM1(data);
       case TestCategory.D1: return FaultCountDHelper.getDrivingFaultSumCountCatD1(data);
       case TestCategory.D1E: return FaultCountDHelper.getDrivingFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getDrivingFaultSumCountCatDE(data);
@@ -44,7 +47,10 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getSeriousFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getSeriousFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getSeriousFaultSumCountCatC(data);
-      case TestCategory.EUAM1: return FaultCountAM1Helper.getSeriousFaultSumCountCatAM1(data);
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1: return FaultCountAM1Helper.getSeriousFaultSumCountCatAM1(data);
       case TestCategory.D1: return FaultCountDHelper.getSeriousFaultSumCountCatD1(data);
       case TestCategory.D1E: return FaultCountDHelper.getSeriousFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getSeriousFaultSumCountCatDE(data);
@@ -61,7 +67,10 @@ export class FaultCountProvider {
       case TestCategory.C1E: return FaultCountCHelper.getDangerousFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getDangerousFaultSumCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getDangerousFaultSumCountCatC(data);
-      case TestCategory.EUAM1: return FaultCountAM1Helper.getDangerousFaultSumCountCatAM1(data);
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1: return FaultCountAM1Helper.getDangerousFaultSumCountCatAM1(data);
       case TestCategory.D1: return FaultCountDHelper.getDangerousFaultSumCountCatD1(data);
       case TestCategory.D1E: return FaultCountDHelper.getDangerousFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getDangerousFaultSumCountCatDE(data);
@@ -83,7 +92,10 @@ export class FaultCountProvider {
       case TestCategory.DE:
       case TestCategory.D: return sumManoeuvreFaults(data, faultType);
       // TODO: To be implemented properly in MES-4420
-      case TestCategory.EUAM1: return sumManoeuvreFaults(data, faultType);
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1: return sumManoeuvreFaults(data, faultType);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -100,7 +112,10 @@ export class FaultCountProvider {
       case TestCategory.DE: return FaultCountDHelper.getVehicleChecksFaultCountCatDE(data);
       case TestCategory.D: return FaultCountDHelper.getVehicleChecksFaultCountCatD(data);
       // TODO: To be implemented properly in MES-4420
-      case TestCategory.EUAM1: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
       case TestCategory.EUAM2: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
