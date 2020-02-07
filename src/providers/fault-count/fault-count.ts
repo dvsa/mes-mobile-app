@@ -91,11 +91,6 @@ export class FaultCountProvider {
       case TestCategory.D1E:
       case TestCategory.DE:
       case TestCategory.D: return sumManoeuvreFaults(data, faultType);
-      // TODO: To be implemented properly in MES-4420
-      case TestCategory.EUAM1:
-      case TestCategory.EUA1M1:
-      case TestCategory.EUA2M1:
-      case TestCategory.EUAMM1: return sumManoeuvreFaults(data, faultType);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -111,12 +106,6 @@ export class FaultCountProvider {
       case TestCategory.D1E: return FaultCountDHelper.getVehicleChecksFaultCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getVehicleChecksFaultCountCatDE(data);
       case TestCategory.D: return FaultCountDHelper.getVehicleChecksFaultCountCatD(data);
-      // TODO: To be implemented properly in MES-4420
-      case TestCategory.EUAM1:
-      case TestCategory.EUA1M1:
-      case TestCategory.EUA2M1:
-      case TestCategory.EUAMM1: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
-      case TestCategory.EUAM2: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
