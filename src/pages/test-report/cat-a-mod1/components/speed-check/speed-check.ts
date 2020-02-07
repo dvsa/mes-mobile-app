@@ -306,7 +306,7 @@ export class SpeedCheckComponent {
   }
 
   firstAttemptValid(): boolean {
-    return this.firstAttempt >= 0 && this.firstAttempt !== null;
+    return this.firstAttempt !== null && this.firstAttempt >= 0;
   }
 }
 
