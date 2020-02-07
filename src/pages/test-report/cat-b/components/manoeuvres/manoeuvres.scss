@@ -88,7 +88,7 @@ manoeuvres {
     .fault-wrapper {
       display: flex;
     }
-    
+
     .tickwrapper {
       margin-right: 5px;
     }
@@ -117,7 +117,7 @@ manoeuvres {
 
   .popover {
     background-color: map-get($colors, "mes-light-grey");
-    height: 220px;
+    height: 236px;
     width: calc(100% - 12px);
     left: 6px;
     margin-top: 9px;
