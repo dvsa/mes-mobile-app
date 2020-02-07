@@ -22,13 +22,8 @@
     }">
     <ion-row class="first-row-adjust">
       <!-- Column 1-->
-      <ion-col col-32>
-        <ion-row>
-          <ion-col no-padding>
-            <span class="section-header">Test requirements</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
+      <ion-col col-32 >
+        <ion-row class="padding-top-10 only-top-padding">
           <ion-col>
             <legal-requirement
               [legalRequirement]="legalRequirements.normalStart1"
@@ -68,7 +63,7 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col class="padding-top-18 only-top-padding">
+          <ion-col no-padding>
             <div class="dark-divider"></div>
           </ion-col>
         </ion-row>
@@ -97,7 +92,7 @@
         </ion-row>
         <ion-row>
           <ion-col no-padding>
-            <span class="section-header">Vehicle check</span>
+            <span class="section-header">Vehicle checks</span>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -116,6 +111,17 @@
           </ion-col>
         </ion-row>
         <ion-row *ngIf="showUncoupleRecouple()">
+          <ion-col no-padding>
+            <div class="dark-divider"></div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <!-- PLACEHOLDER FOR DOOR EXERCISE-->
+            <uncouple-recouple-cat-d></uncouple-recouple-cat-d>
+          </ion-col>
+        </ion-row>
+        <ion-row >
           <ion-col no-padding>
             <div class="dark-divider"></div>
           </ion-col>
@@ -166,7 +172,7 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col class="padding-top-21 only-top-padding">
+          <ion-col no-padding>
             <div class="dark-divider"></div>
           </ion-col>
         </ion-row>
