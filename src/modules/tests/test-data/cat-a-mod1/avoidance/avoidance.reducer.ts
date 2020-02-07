@@ -46,6 +46,16 @@ export function avoidanceReducer(
         ...state,
         outcome: undefined,
       };
+    case avoidanceActions.REMOVE_DANGEROUS_AVOIDANCE_FAULT:
+      return {
+        ...state,
+        outcome: undefined,
+      };
+    case avoidanceActions.REMOVE_SERIOUS_AVOIDANCE_FAULT:
+      return {
+        ...state,
+        outcome: undefined,
+      };
     default:
       return state;
   }

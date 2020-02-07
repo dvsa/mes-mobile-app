@@ -8,6 +8,8 @@ export const ADD_EMERGENCY_STOP_RIDING_FAULT = '[SpeedCheck] Add Emergency Stop 
 export const ADD_EMERGENCY_STOP_SERIOUS_FAULT = '[SpeedCheck] Add Emergency Stop Serious Fault';
 export const ADD_EMERGENCY_STOP_DANGEROUS_FAULT = '[SpeedCheck] Add Emergency Stop Dangerous Fault';
 export const REMOVE_EMERGENCY_STOP_FAULT = '[SpeedCheck] Remove Emergency Stop Fault';
+export const REMOVE_EMERGENCY_STOP_SERIOUS_FAULT = '[SpeedCheck] Remove Emergency Stop serious Fault';
+export const REMOVE_EMERGENCY_STOP_DANGEROUS_FAULT = '[SpeedCheck] Remove Emergency Stop dangerous Fault';
 
 export class ToggleEmergencyStopSpeedReq implements Action {
   readonly type = TOGGLE_EMERGENCY_STOP_SPEED_REQ;
@@ -39,6 +41,14 @@ export class RemoveEmergencyStopFault implements Action {
   readonly type = REMOVE_EMERGENCY_STOP_FAULT;
 }
 
+export class RemoveEmergencyStopSeriousFault implements Action {
+  readonly type = REMOVE_EMERGENCY_STOP_SERIOUS_FAULT;
+}
+
+export class RemoveEmergencyStopDangerousFault implements Action {
+  readonly type = REMOVE_EMERGENCY_STOP_DANGEROUS_FAULT;
+}
+
 export type Types =
   | ToggleEmergencyStopSpeedReq
   | RecordEmergencyStopFirstAttempt
@@ -46,4 +56,6 @@ export type Types =
   | AddEmergencyStopRidingFault
   | AddEmergencyStopSeriousFault
   | AddEmergencyStopDangerousFault
-  | RemoveEmergencyStopFault;
+  | RemoveEmergencyStopFault
+  | RemoveEmergencyStopDangerousFault
+  | RemoveEmergencyStopSeriousFault;

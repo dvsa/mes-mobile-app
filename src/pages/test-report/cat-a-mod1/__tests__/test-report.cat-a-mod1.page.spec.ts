@@ -46,7 +46,7 @@ import { SetActivityCode } from '../../../../modules/tests/activity-code/activit
 import { StoreModel } from '../../../../shared/models/store.model';
 import { CalculateTestResult, TerminateTestFromTestReport } from '../../test-report.actions';
 import { SpeedCheckState } from '../../../../providers/test-report-validator/test-report-validator.constants';
-import { speedCheckLabels } from '../../../../shared/constants/competencies/cata-mod1-competencies';
+import { speedCheckLabels } from '../../../../shared/constants/competencies/cata-mod1-speed-checks';
 import { ModalReason } from '../components/activity-code-4-modal/activity-code-4-modal.constants';
 import { SingleFaultCompetencyComponent } from '../../components/single-fault-competency/single-fault-competency';
 

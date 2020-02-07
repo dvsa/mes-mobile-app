@@ -8,6 +8,8 @@ export const ADD_AVOIDANCE_RIDING_FAULT = '[SpeedCheck] Add Avoidance Riding Fua
 export const ADD_AVOIDANCE_SERIOUS_FAULT = '[SpeedCheck] Add Avoidance Serious Fault';
 export const ADD_AVOIDANCE_DANGEROUS_FAULT = '[SpeedCheck] Add Avoidance Dangerous Fault';
 export const REMOVE_AVOIDANCE_FAULT = '[SpeedCheck] Remove Avoidance Fault';
+export const REMOVE_SERIOUS_AVOIDANCE_FAULT = '[SpeedCheck] Remove Serious Avoidance Fault';
+export const REMOVE_DANGEROUS_AVOIDANCE_FAULT = '[SpeedCheck] Remove Dangerous Avoidance Fault';
 
 export class ToggleAvoidanceSpeedReq implements Action {
   readonly type = TOGGLE_AVOIDANCE_SPEED_REQ;
@@ -39,6 +41,14 @@ export class RemoveAvoidanceFault implements Action {
   readonly type = REMOVE_AVOIDANCE_FAULT;
 }
 
+export class RemoveSeriousAvoidanceFault implements Action {
+  readonly type = REMOVE_SERIOUS_AVOIDANCE_FAULT;
+}
+
+export class RemoveDangerousAvoidanceFault implements Action {
+  readonly type = REMOVE_DANGEROUS_AVOIDANCE_FAULT;
+}
+
 export type Types =
   | ToggleAvoidanceSpeedReq
   | RecordAvoidanceFirstAttempt
@@ -46,4 +56,6 @@ export type Types =
   | AddAvoidanceRidingFault
   | AddAvoidanceSeriousFault
   | AddAvoidanceDangerousFault
-  | RemoveAvoidanceFault;
+  | RemoveAvoidanceFault
+  | RemoveSeriousAvoidanceFault
+  | RemoveDangerousAvoidanceFault;

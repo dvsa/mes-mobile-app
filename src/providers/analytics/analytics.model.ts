@@ -115,25 +115,36 @@ export enum AnalyticsEvents {
   D255 = 'set D255',
   GEARBOX_CATEGORY_CHANGED = 'set transmission',
   LANGUAGE_CHANGED = 'language changed',
-<<<<<<< HEAD
   CBT_CHANGED = 'cbt changed',
   BIKE_CATEGORY_CHANGED = 'bike category changed',
   BIKE_CATEGORY_SELECTED = 'bike category selected',
   BIKE_CATEGORY_MODAL_TRIGGERED = 'bike category modal triggered',
-=======
   TOGGLE_AVOIDANCE_SPEED_REQUIREMENT = 'toggle avoidance speed requirement',
   TOGGLE_EMERGENCY_STOP_SPEED_REQ = 'toggle emergency stop speed requirement',
   RECORD_AVOIDANCE_FIRST_ATTEMPT = 'record avoidance first attempt',
   RECORD_AVOIDANCE_SECOND_ATTEMPT = 'record avoidance second attempt',
-  ADD_AVOIDANCE_RIDING_FAULT = 'add avoidance riding fault',
-  ADD_AVOIDANCE_SERIOUS_FAULT = 'add avoidance serious fault',
-  ADD_AVOIDANCE_DANGEROUS_FAULT = 'add avoidance dangerous fault',
-  REMOVE_AVOIDANCE_FAULT = 'remove avoidance fault',
->>>>>>> analytics for avoidance excersize done
+  ADD_AVOIDANCE_RIDING_FAULT = 'add driving fault',
+  ADD_AVOIDANCE_SERIOUS_FAULT = 'add serious fault',
+  ADD_AVOIDANCE_DANGEROUS_FAULT = 'add dangerous fault',
+  REMOVE_AVOIDANCE_FAULT = 'remove driving fault',
+  RECORD_EMERGENCY_STOP_FIRST_ATTEMPT = 'record emergency stop first attempt',
+  RECORD_EMERGENCY_STOP_SECOND_ATTEMPT = 'record emergency stop second attempt',
+  ADD_EMERGENCY_STOP_RIDING_FAULT = 'add driving fault',
+  ADD_EMERGENCY_STOP_SERIOUS_FAULT = 'add serious fault',
+  ADD_EMERGENCY_STOP_DANGEROUS_FAULT = 'add dangerous fault',
+  REMOVE_EMERGENCY_STOP_FAULT = 'remove driving fault',
+  SPEED_REQ_NOT_MET_MODAL_OPENED = 'speed requirement not met modal opened',
+  EMERGENCY_STOP_DANGEROUS_FAULT_MODAL_OPENED = 'emergency stop dangerous fault model opened',
+  EMERGENCY_STOP_SERIOUS_FAULT_MODAL_OPENED = 'emergency stop serious fault model opened',
+  REMOVE_EMERGENCY_STOP_DANGEROUS_FAULT = 'remove dangerous fault',
+  REMOVE_EMERGENCY_STOP_SERIOUS_FAULT = 'remove serious fault',
+  REMOVE_SERIOUS_AVOIDANCE_FAULT = 'remove serious fault',
+  REMOVE_DANGEROUS_AVOIDANCE_FAULT = 'remove dangerous fault',
 }
 
 export enum AnalyticsLabels {
   TERMINATE_TEST = 'Test report - legal requirements not met',
+  SET_ACTIVITY_CODE = 'Test report - end the test with activity code 4',
 }
 
 export enum AnalyticsDimensionIndices {
