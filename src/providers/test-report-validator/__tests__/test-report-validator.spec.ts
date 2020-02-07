@@ -17,7 +17,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { SpeedCheckState } from '../test-report-validator.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
-describe('TestReportValidator', () => {
+fdescribe('TestReportValidator', () => {
   const cCats = [
     { category: TestCategory.C, validTest: validTestCatCNonTrailer, legalReqs: legalRequirementsCatCNonTrailer },
     { category: TestCategory.C1, validTest: validTestCatCNonTrailer, legalReqs: legalRequirementsCatCNonTrailer },
@@ -264,6 +264,34 @@ describe('TestReportValidator', () => {
       expect(result).toBe(SpeedCheckState.NOT_MET);
     });
 
+    it('should return VALID when avoidance speed not met first attempt is recorded but has Serious fault', () => {
+      const testData = {
+        avoidance: {
+          firstAttempt: 48,
+          speedNotMetSeriousFault: true,
+          outcome: CompetencyOutcome.S,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.VALID);
+    });
+
+    it('should return VALID when avoidance speed not met first attempt is recorded but has Dangerous fault', () => {
+      const testData = {
+        avoidance: {
+          firstAttempt: 48,
+          speedNotMetSeriousFault: true,
+          outcome: CompetencyOutcome.D,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.VALID);
+    });
+
     it('should return SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT', () => {
       const testData = {
         emergencyStop: {
@@ -318,6 +346,38 @@ describe('TestReportValidator', () => {
       const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
 
       expect(result).toBe(SpeedCheckState.EMERGENCY_STOP_MISSING);
+    });
+
+    it('should return VALID when avoidance missing but competency has Serious fault', () => {
+      const testData = {
+        emergencyStop: {
+          firstAttempt: 48,
+        },
+        avoidance: {
+          firstAttempt: undefined,
+          outcome: CompetencyOutcome.S,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.VALID);
+    });
+
+    it('should return VALID when avoidance missing but competency has Dangerous fault', () => {
+      const testData = {
+        emergencyStop: {
+          firstAttempt: 48,
+        },
+        avoidance: {
+          firstAttempt: undefined,
+          outcome: CompetencyOutcome.D,
+        },
+      } as CatAMod1TestData;
+
+      const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
+
+      expect(result).toBe(SpeedCheckState.VALID);
     });
 
     it('should return SpeedCheckState.AVOIDANCE_MISSING', () => {

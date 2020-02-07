@@ -75,6 +75,9 @@ export class TestReportValidatorProvider {
     const emergencyStopFirstAttempt = get(data, 'emergencyStop.firstAttempt');
     const avoidanceFirstAttempt = get(data, 'avoidance.firstAttempt');
 
+    const emergencyStopOutcome = get(data, 'emergencyStop.outcome');
+    const avoidanceOutcome = get(data, 'avoidance.outcome');
+
     if (emergencyStopNotMet) {
       if (emergencyStopFirstAttempt === undefined) {
         return SpeedCheckState.EMERGENCY_STOP_MISSING;
@@ -88,10 +91,12 @@ export class TestReportValidatorProvider {
         return SpeedCheckState.AVOIDANCE_MISSING;
       }
 
+      if (avoidanceOutcome === CompetencyOutcome.S || avoidanceOutcome === CompetencyOutcome.D) {
+        return SpeedCheckState.VALID;
+      }
+
       return SpeedCheckState.NOT_MET;
     }
-
-    const emergencyStopOutcome = get(data, 'emergencyStop.outcome');
 
     if (emergencyStopOutcome === CompetencyOutcome.S) {
       return SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT;
@@ -110,6 +115,10 @@ export class TestReportValidatorProvider {
     }
 
     if (avoidanceFirstAttempt === undefined) {
+      if (avoidanceOutcome === CompetencyOutcome.S || avoidanceOutcome === CompetencyOutcome.D) {
+        return SpeedCheckState.VALID;
+      }
+
       return SpeedCheckState.AVOIDANCE_MISSING;
     }
 
