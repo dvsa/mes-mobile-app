@@ -16,17 +16,19 @@ import { VehicleChecksScore } from '../../../../../../shared/models/vehicle-chec
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
 import { configureTestSuite } from 'ng-bullet';
-import { VehicleChecksCatDComponent } from '../vehicle-checks.cat-d';
+import {
+  VehicleChecksTestReportCatDComponent,
+} from '../vehicle-checks-test-report.cat-d';
 
 describe('VehicleChecksComponent', () => {
-  let fixture: ComponentFixture<VehicleChecksCatDComponent>;
-  let component: VehicleChecksCatDComponent;
+  let fixture: ComponentFixture<VehicleChecksTestReportCatDComponent>;
+  let component: VehicleChecksTestReportCatDComponent;
   let store$: Store<StoreModel>;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        VehicleChecksCatDComponent,
+        VehicleChecksTestReportCatDComponent,
         MockComponent(SeriousFaultBadgeComponent),
         MockComponent(DrivingFaultsBadgeComponent),
       ],
@@ -44,7 +46,7 @@ describe('VehicleChecksComponent', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(VehicleChecksCatDComponent);
+    fixture = TestBed.createComponent(VehicleChecksTestReportCatDComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
     store$.dispatch(new StartTest(105, TestCategory.D));

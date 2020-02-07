@@ -8,14 +8,14 @@ import { ReverseLeftPopoverCatDComponent } from './reverse-left-popover/reverse-
 import { ReverseDiagramLinkCatDComponent } from './reverse-diagram-link/reverse-diagram-link.cat-d';
 import { ReverseLeftCatDComponent } from './reverse-left/reverse-left.cat-d';
 import { UncoupleRecoupleCatDComponent } from './uncouple-recouple/uncouple-recouple.cat-d';
-import { VehicleChecksCatDComponent } from './vehicle-checks/vehicle-checks.cat-d';
+import { VehicleChecksTestReportCatDComponent } from './vehicle-checks-test-report/vehicle-checks-test-report.cat-d';
 
 @NgModule({
   declarations: [
     ReverseLeftCatDComponent,
     ReverseDiagramLinkCatDComponent,
     ReverseLeftPopoverCatDComponent,
-    VehicleChecksCatDComponent,
+    VehicleChecksTestReportCatDComponent,
     UncoupleRecoupleCatDComponent,
   ],
   imports: [
@@ -29,7 +29,7 @@ import { VehicleChecksCatDComponent } from './vehicle-checks/vehicle-checks.cat-
     ReverseLeftCatDComponent,
     ReverseDiagramLinkCatDComponent,
     ReverseLeftPopoverCatDComponent,
-    VehicleChecksCatDComponent,
+    VehicleChecksTestReportCatDComponent,
     UncoupleRecoupleCatDComponent,
   ],
 })
