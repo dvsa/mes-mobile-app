@@ -665,4 +665,29 @@ describe('SpeedCheckComponent', () => {
     });
   });
 
+  describe('firstAttemptValid', () => {
+    it('should return false if first attempt is null', () => {
+      component.firstAttempt = null;
+
+      expect(component.firstAttemptValid()).toEqual(false);
+    });
+
+    it('should return true if the first attempt is 0', () => {
+      component.firstAttempt = 0;
+
+      expect(component.firstAttemptValid()).toEqual(true);
+    });
+
+    it('should return false if the first attempt is undefined', () => {
+      component.firstAttempt = undefined;
+
+      expect(component.firstAttemptValid()).toEqual(false);
+    });
+
+    it('should return true if the first attempt is a positive number', () => {
+      component.firstAttempt = 25;
+
+      expect(component.firstAttemptValid()).toEqual(true);
+    });
+  });
 });

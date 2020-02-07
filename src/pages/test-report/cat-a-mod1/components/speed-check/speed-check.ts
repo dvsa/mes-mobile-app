@@ -305,4 +305,8 @@ export class SpeedCheckComponent {
     }
   }
 
+  firstAttemptValid(): boolean {
+    return this.firstAttempt !== null && this.firstAttempt >= 0;
+  }
 }
+
