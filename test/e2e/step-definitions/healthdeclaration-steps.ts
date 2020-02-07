@@ -7,12 +7,14 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-// Set default category to be cat b
 this.testCategory = 'b';
 
 Before({ tags: '@catbe' }, () => {
-  // This hook will be executed before scenarios tagged with @catbe
   this.testCategory = 'be';
+});
+
+Before({ tags: '@catc' }, () => {
+  this.testCategory = 'c';
 });
 
 Then('the pass certificate number should be {string}', (certificateNumber) => {

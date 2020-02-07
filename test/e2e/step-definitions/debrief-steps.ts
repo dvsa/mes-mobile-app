@@ -8,12 +8,14 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-// Set default category to be cat b
 this.testCategory = 'b';
 
 Before({ tags: '@catbe' }, () => {
-  // This hook will be executed before scenarios tagged with @catbe
   this.testCategory = 'be';
+});
+
+Before({ tags: '@catc' }, () => {
+  this.testCategory = 'c';
 });
 
 When('I end the debrief', () => {
@@ -30,6 +32,9 @@ When('I complete the pass details', () => {
   completePassdetails();
   const transmissionRadio = getElement(by.id('transmission-manual'));
   clickElement(transmissionRadio);
+  if (this.testCategory === 'c') {
+    code78onLicence(false);
+  }
   continuePassFinalisation();
 });
 
@@ -85,4 +90,10 @@ const completePassdetails = () => {
   clickElement(d255YesRadio);
   const debreifWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
   clickElement(debreifWitnessedRadio);
+};
+
+const code78onLicence = (result: boolean) => {
+  const radio = result ? 'code-78-received' : 'code-78-not-received';
+  const code78Radio = getElement(by.id(`${radio}`));
+  clickElement(code78Radio);
 };

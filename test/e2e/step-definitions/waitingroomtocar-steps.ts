@@ -36,8 +36,7 @@ When('I complete the waiting room to car page with automatic transmission', () =
 });
 
 When('I fail the eye sight test', () => {
-  const eyesightFailRadio = getElement(by.id('eyesight-fail'));
-  clickElement(eyesightFailRadio);
+  eyeSightResult(false);
   const eyesightConfirmation = getElement(by.id('eyesight-failure-confirmation'));
   expect(eyesightConfirmation.isPresent()).to.eventually.be.true;
   const eyesightFailConfirmButton = getElement(by.id('confirm-eyesight-failure'));
@@ -49,16 +48,17 @@ When('I complete the waiting room to car page with the following vehicle checks'
 });
 
 const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, tellMeQuestion?: string) => {
-  const eyesightPassRadio = getElement(by.id('eyesight-pass'));
-  clickElement(eyesightPassRadio);
   if (this.testCategory === 'be') {
-    beCategory(questionResult);
+    eyeSightResult(true);
+    multiShowAndTell(UI_TEST_DATA.testData.be, questionResult);
+  } else if (this.testCategory === 'c') {
+    multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
   } else {
+    eyeSightResult(true);
     standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
   }
-  // Because registration number field is uppercaseAlphanumOnly we have to go native to get round this
-  textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Vehicle registration number"]]/following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'AB12CDE');
-
+  textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Vehicle registration number"]]/' +
+  'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'AB12CDE');
   const submitWRTC = getElement(by.xpath('//button[span[h3[text()="Continue to test report"]]]'));
   clickElement(submitWRTC);
 };
@@ -108,4 +108,10 @@ const selectTellMeQuestion = (tellMeQuestion: string) => {
   clickElement(tellMe);
   const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
   clickElement(submitDialog);
+};
+
+const eyeSightResult = (result: boolean) => {
+  const eyeSight = result ? 'eyesight-pass' : 'eyesight-fail';
+  const eyesightRadio = getElement(by.id(`${eyeSight}`));
+  clickElement(eyesightRadio);
 };
