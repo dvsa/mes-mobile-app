@@ -11,7 +11,8 @@ import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../../../providers/question/question';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
-import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
+import { SafetyQuestion } from '../../../../../providers/question/safety-question.model';
+import { QuestionResult, QuestionOutcome, SafetyQuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 import { getTestData } from '../../../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
@@ -22,6 +23,10 @@ import {
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
 } from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
+
+import {
+  SafetyQuestionOutcomeChanged,
+} from '../../../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.action';
 
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER,
@@ -39,7 +44,12 @@ import {
   NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER,
 } from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
 
+import {
+  NUMBER_OF_SAFETY_QUESTIONS,
+} from '../../../../../shared/constants/safety-questions.cat-d.constants';
+
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
+import { SafetyQuestionsScore } from '../../../../../shared/models/safety-questions-score.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
@@ -50,12 +60,18 @@ import {
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
 } from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
+import {
+  getSafetyQuestionsCatD,
+  getSafetyQuestions,
+} from '../../../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.selector';
 
 interface VehicleChecksModalCatDState {
   candidateName$: Observable<string>;
   showMeQuestions$: Observable<QuestionResult[]>;
   tellMeQuestions$: Observable<QuestionResult[]>;
+  safetyQuestions$: Observable<SafetyQuestionResult[]>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
+  safetyQuestionsScore$: Observable<SafetyQuestionsScore>;
 }
 
 @IonicPage()
@@ -69,13 +85,16 @@ export class VehicleChecksCatDModal {
 
   showMeQuestions: VehicleChecksQuestion[];
   tellMeQuestions: VehicleChecksQuestion[];
+  safetyQuestions: SafetyQuestion[];
 
   category : TestCategory;
 
   showMeQuestionsNumberArray: number[];
   tellMeQuestionsNumberArray: number[];
+  safetyQuestionsNumberArray: number[];
 
   vehicleChecksScore: VehicleChecksScore;
+  safetyQuestionsScore: SafetyQuestionsScore;
 
   subscription: Subscription;
 
@@ -88,10 +107,12 @@ export class VehicleChecksCatDModal {
   ) {
     this.category = params.get('category');
     this.setNumberOfShowMeTellMeQuestions();
+    this.safetyQuestionsNumberArray = Array(NUMBER_OF_SAFETY_QUESTIONS);
     this.formGroup = new FormGroup({});
 
     this.showMeQuestions = questionProvider.getShowMeQuestions(this.category);
     this.tellMeQuestions = questionProvider.getTellMeQuestions(this.category);
+    this.safetyQuestions = questionProvider.getVocationalSafetyQuestions(this.category);
   }
 
   setNumberOfShowMeTellMeQuestions() {
@@ -134,6 +155,11 @@ export class VehicleChecksCatDModal {
         select(getVehicleChecksCatD),
         select(getSelectedTellMeQuestions),
       ),
+      safetyQuestions$: currentTest$.pipe(
+        select(getTestData),
+        select(getSafetyQuestionsCatD),
+        select(getSafetyQuestions),
+      ),
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatD),
@@ -141,12 +167,20 @@ export class VehicleChecksCatDModal {
           return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.D, vehicleChecks);
         }),
       ),
+      safetyQuestionsScore$: currentTest$.pipe(
+        select(getTestData),
+        select(getSafetyQuestionsCatD),
+        map((safetyQuestions) => {
+          return this.faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.D, safetyQuestions);
+        }),
+      ),
     };
 
-    const { vehicleChecksScore$ } = this.pageState;
+    const { vehicleChecksScore$, safetyQuestionsScore$ } = this.pageState;
 
     const merged$ = merge(
       vehicleChecksScore$.pipe(map(score => (this.vehicleChecksScore = score))),
+      safetyQuestionsScore$.pipe(map(score => (this.safetyQuestionsScore = score))),
     );
 
     this.subscription = merged$.subscribe();
@@ -182,6 +216,10 @@ export class VehicleChecksCatDModal {
 
   tellMeQuestionOutcomeChanged(result: QuestionOutcome, index: number): void {
     this.store$.dispatch(new TellMeQuestionOutcomeChanged(result, index));
+  }
+
+  safetyQuestionOutcomeChanged(result: QuestionOutcome, index: number): void {
+    this.store$.dispatch(new SafetyQuestionOutcomeChanged(result, index));
   }
 
   shouldDisplayBanner = (): boolean => {

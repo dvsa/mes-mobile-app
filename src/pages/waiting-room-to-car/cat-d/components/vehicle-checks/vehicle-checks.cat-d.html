@@ -23,14 +23,14 @@
           serious fault
         </ion-row>
         <ion-row class="vehicle-checks-result" *ngIf="hasDrivingFault()">
-          <driving-faults-badge class="badge" showOnZero=true [count]='vehicleChecksScore.drivingFaults'></driving-faults-badge>
+          <driving-faults-badge class="badge" showOnZero=true [count]='vehicleChecksScore.drivingFaults + safetyQuestionsScore.drivingFaults'></driving-faults-badge>
           driving faults
         </ion-row>
       </ion-col>
       <ion-col col-47 padding-right *ngIf="everyQuestionHasOutcome()" class="see-answer-link-container">
         <button type="button" class="mes-link-button see-answer-link" (click)="openVehicleChecksModal()" ion-button>
           <span>
-            See answers 
+            See answers
             <ion-icon name="arrow-forward"></ion-icon>
           </span>
         </button>
