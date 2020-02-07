@@ -46,12 +46,15 @@ import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 import { configureTestSuite } from 'ng-bullet';
+import { DeviceProvider } from '../../../../providers/device/device';
+import { DeviceProviderMock } from '../../../../providers/device/__mocks__/device.mock';
 
 describe('WaitingRoomCatCPage', () => {
   let fixture: ComponentFixture<WaitingRoomCatCPage>;
   let component: WaitingRoomCatCPage;
   let store$: Store<StoreModel>;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
+  let deviceProvider: DeviceProvider;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
   let translate: TranslateService;
@@ -108,6 +111,7 @@ describe('WaitingRoomCatCPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
@@ -122,6 +126,7 @@ describe('WaitingRoomCatCPage', () => {
     screenOrientation = TestBed.get(ScreenOrientation);
     insomnia = TestBed.get(Insomnia);
     deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+    deviceProvider = TestBed.get(DeviceProvider);
     translate = TestBed.get(TranslateService);
     translate.setDefaultLang('en');
     store$ = TestBed.get(Store);
@@ -166,6 +171,10 @@ describe('WaitingRoomCatCPage', () => {
     });
 
     describe('ionViewDidEnter', () => {
+      it('should enable single app mode if on ios', () => {
+        component.ionViewDidEnter();
+        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
+      });
       it('should lock the screen orientation to Portrait Primary', () => {
         component.ionViewDidEnter();
         expect(screenOrientation.lock)
