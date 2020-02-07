@@ -17,7 +17,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { SpeedCheckState } from '../test-report-validator.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
-fdescribe('TestReportValidator', () => {
+describe('TestReportValidator', () => {
   const cCats = [
     { category: TestCategory.C, validTest: validTestCatCNonTrailer, legalReqs: legalRequirementsCatCNonTrailer },
     { category: TestCategory.C1, validTest: validTestCatCNonTrailer, legalReqs: legalRequirementsCatCNonTrailer },
