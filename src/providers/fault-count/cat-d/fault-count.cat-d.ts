@@ -7,6 +7,7 @@ import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 import { sumManoeuvreFaults } from '../../../shared/helpers/faults';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
+import { SafetyQuestionsScore } from '../../../shared/models/safety-questions-score.model';
 import { getCompetencyFaults } from '../../../shared/helpers/competency';
 
 export class FaultCountDHelper {
@@ -51,6 +52,12 @@ export class FaultCountDHelper {
     return FaultCountDHelper.getVehicleChecksFaultCountTrailer(vehicleChecks);
   }
 
+  public static getSafetyQuestionsFaultCountCatD = (
+    safetyQuestions: CatDUniqueTypes.SafetyQuestions,
+  ): SafetyQuestionsScore => {
+    return FaultCountDHelper.getSafetyQuestionsFaultCount(safetyQuestions);
+  }
+
   public static getSeriousFaultSumCountCatD = (data: CatDUniqueTypes.TestData): number => {
     return FaultCountDHelper.getSeriousFaultSumCountNonTrailer(data);
   }
@@ -85,7 +92,7 @@ export class FaultCountDHelper {
 
   private static getVehicleChecksFaultCountNonTrailer = (
     vehicleChecks: CatDUniqueTypes.VehicleChecks | CatD1EUniqueTypes.VehicleChecks,
-    ): VehicleChecksScore => {
+  ): VehicleChecksScore => {
 
     if (!vehicleChecks) {
       return { seriousFaults: 0, drivingFaults: 0 };
@@ -210,7 +217,7 @@ export class FaultCountDHelper {
 
   private static getSeriousFaultSumCountTrailer = (
     data: CatDEUniqueTypes.TestData | CatD1EUniqueTypes.TestData,
-    ): number => {
+  ): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -250,7 +257,7 @@ export class FaultCountDHelper {
 
   private static getDangerousFaultSumCountTrailer = (
     data: CatDEUniqueTypes.TestData | CatD1EUniqueTypes.TestData,
-    ): number => {
+  ): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -268,4 +275,21 @@ export class FaultCountDHelper {
     return result;
   }
 
+  private static getSafetyQuestionsFaultCount = (
+    safetyQuestions: CatDUniqueTypes.SafetyQuestions,
+  ): SafetyQuestionsScore => {
+
+    if (!safetyQuestions) {
+      return { drivingFaults: 0 };
+    }
+
+    const getFaults = (safetyQuestion: any): boolean => {
+      return safetyQuestion.outcome === CompetencyOutcome.DF;
+    };
+
+    const fault: SafetyQuestionsScore =
+      safetyQuestions.questions.some(getFaults) ? { drivingFaults: 1 } : { drivingFaults: 0 };
+
+    return fault;
+  }
 }

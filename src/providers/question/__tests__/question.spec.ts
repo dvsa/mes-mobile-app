@@ -18,6 +18,8 @@ import tellMeQuestionsVocationalTrailerConstants
   from '../../../shared/constants/tell-me-questions/tell-me-questions.vocational-trailer.constants';
 import showMeQuestionsVocationalTrailerConstants
   from '../../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
+import safetyQuestionsCatDConstants
+  from '../../../shared/constants/safety-questions.cat-d.constants';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('question provider', () => {
@@ -105,6 +107,21 @@ describe('question provider', () => {
     });
     it('should return no questions for a non-supported category', () => {
       expect(questionProvider.getShowMeQuestions(TestCategory.B1)).toEqual([]);
+    });
+  });
+
+  describe('getVocationalSafetyQuestions', () => {
+    it('should return the correct questions for a category D test', () => {
+      expect(questionProvider.getVocationalSafetyQuestions(TestCategory.D)).toEqual(safetyQuestionsCatDConstants);
+    });
+    it('should return the correct questions for a category D1 test', () => {
+      expect(questionProvider.getVocationalSafetyQuestions(TestCategory.D1)).toEqual(safetyQuestionsCatDConstants);
+    });
+    it('should return the correct questions for a category DE test', () => {
+      expect(questionProvider.getVocationalSafetyQuestions(TestCategory.DE)).toEqual(safetyQuestionsCatDConstants);
+    });
+    it('should return the correct questions for a category D1E test', () => {
+      expect(questionProvider.getVocationalSafetyQuestions(TestCategory.D1E)).toEqual(safetyQuestionsCatDConstants);
     });
   });
 });

@@ -8,6 +8,7 @@ import { etaReducer } from '../common/eta/eta.reducer';
 import { manoeuvresCatDReducer } from './manoeuvres/manoeuvres.cat-d.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { vehicleChecksCatDReducer } from './vehicle-checks/vehicle-checks.cat-d.reducer';
+import { safetyQuestionsCatDReducer } from './safety-questions/safety-questions.cat-d.reducer';
 import { testRequirementsCatDReducer } from './test-requirements/test-requirements.cat-d.reducer';
 
 export const initialState: CatDUniqueTypes.TestData = {
@@ -22,6 +23,9 @@ export const initialState: CatDUniqueTypes.TestData = {
     tellMeQuestions: [],
     showMeQuestions: [],
   },
+  safetyQuestions: {
+    questions: [],
+  },
 };
 
 export function testDataCatDReducer(
@@ -33,6 +37,7 @@ export function testDataCatDReducer(
     dangerousFaults: dangerousFaultsReducer,
     seriousFaults: seriousFaultsReducer,
     vehicleChecks: vehicleChecksCatDReducer,
+    safetyQuestions: safetyQuestionsCatDReducer,
     eco: ecoReducer,
     ETA: etaReducer,
     manoeuvres: manoeuvresCatDReducer,

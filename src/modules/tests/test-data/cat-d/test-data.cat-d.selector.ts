@@ -78,7 +78,7 @@ export const areTellMeQuestionsCorrect = (state: CatDVehicleChecks) => {
 
 // TODO - We should really pass a Vehicle Checks object here and not Test Data
 // TODO - Also this has to go into a provider
-export const hasVehicleChecksBeenCompletedCatC = (data: CatDTestData): boolean => {
+export const hasVehicleChecksBeenCompletedCatD = (data: CatDTestData): boolean => {
   let showMeQuestionComplete = true;
   let tellMeQuestionComplete = true;
 
