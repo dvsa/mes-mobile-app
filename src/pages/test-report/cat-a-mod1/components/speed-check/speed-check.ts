@@ -309,4 +309,3 @@ export class SpeedCheckComponent {
     return this.firstAttempt !== null && this.firstAttempt >= 0;
   }
 }
-
