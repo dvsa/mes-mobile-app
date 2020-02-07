@@ -86,6 +86,14 @@ export class TestReportValidatorProvider {
       return SpeedCheckState.NOT_MET;
     }
 
+    if (emergencyStopOutcome === CompetencyOutcome.S) {
+      return SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT;
+    }
+
+    if (emergencyStopOutcome === CompetencyOutcome.D) {
+      return SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT;
+    }
+
     if (avoidanceNotMet) {
       if (avoidanceFirstAttempt === undefined) {
         return SpeedCheckState.AVOIDANCE_MISSING;
@@ -96,14 +104,6 @@ export class TestReportValidatorProvider {
       }
 
       return SpeedCheckState.NOT_MET;
-    }
-
-    if (emergencyStopOutcome === CompetencyOutcome.S) {
-      return SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT;
-    }
-
-    if (emergencyStopOutcome === CompetencyOutcome.D) {
-      return SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT;
     }
 
     if (emergencyStopFirstAttempt === undefined && avoidanceFirstAttempt === undefined) {
