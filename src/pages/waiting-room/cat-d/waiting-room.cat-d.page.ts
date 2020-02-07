@@ -52,6 +52,7 @@ import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { App } from '../../../app/app.component';
+import { DeviceProvider } from '../../../providers/device/device';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -88,6 +89,7 @@ export class WaitingRoomCatDPage extends BasePageComponent implements OnInit {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
+    private deviceProvider: DeviceProvider,
     private screenOrientation: ScreenOrientation,
     private insomnia: Insomnia,
     private translate: TranslateService,
@@ -104,6 +106,7 @@ export class WaitingRoomCatDPage extends BasePageComponent implements OnInit {
     if (super.isIos()) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       this.insomnia.keepAwake();
+      this.deviceProvider.enableSingleAppMode();
     }
 
     this.navBar.backButtonClick = (e: UIEvent) => {
