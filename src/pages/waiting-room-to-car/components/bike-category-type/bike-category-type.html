@@ -6,21 +6,21 @@
   <ion-col padding-left align-self-center>
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
-      <ion-col col-48 *ngIf="!testCategory">
+      <ion-col col-48 *ngIf="!categoryConfirmed">
         <input
-          *ngIf="!testCategory"
+          *ngIf="!categoryConfirmed"
           type="button"
           formControlName="categoryTypeSelectCategory"
           class="mes-return-button"
           (click)="openCategorySelector()"
         >
       </ion-col>
-      <ion-col col-48 class="selected-category-code" align-self-center *ngIf="testCategory">
+      <ion-col col-48 class="selected-category-code" align-self-center *ngIf="categoryConfirmed">
         {{bikeCategoryDetailProvider.getDetailByCategoryCode(testCategory).displayId}}
         -
         {{bikeCategoryDetailProvider.getDetailByCategoryCode(testCategory).displayName}}
       </ion-col>
-      <ion-col col-47 padding-right class="select-category-link-container" *ngIf="testCategory">
+      <ion-col col-47 padding-right class="select-category-link-container" *ngIf="categoryConfirmed">
         <button type="button" class="mes-link-button category-selector-link" (click)="openCategorySelector()"
                 ion-button>
           <span>
