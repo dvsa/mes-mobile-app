@@ -17,6 +17,7 @@ export class TestDataByCategoryProvider {
   static getTestDataByCategoryCodeErrMsg: string = 'Error getting test category';
 
   public getTestDataByCategoryCode(category: CategoryCode) {
+    console.log('CATEGORY', category);
     switch (category) {
       case TestCategory.BE: return getTestDataCatBE;
       case TestCategory.C: return getTestDataC;

@@ -1,5 +1,5 @@
 import { pickBy, get } from 'lodash';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { QuestionResult, SafetyQuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
 import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
@@ -283,7 +283,7 @@ export class FaultCountDHelper {
       return { drivingFaults: 0 };
     }
 
-    const getFaults = (safetyQuestion: any): boolean => {
+    const getFaults = (safetyQuestion: SafetyQuestionResult): boolean => {
       return safetyQuestion.outcome === CompetencyOutcome.DF;
     };
 
