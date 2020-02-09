@@ -3,8 +3,13 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { SafetyQuestionComponent } from '../safety-question';
 import { AppModule } from '../../../../../../app/app.module';
+import { SafetyQuestion } from '../../../../../../providers/question/safety-question.model';
 import { EventEmitter } from '@angular/core';
 import { configureTestSuite } from 'ng-bullet';
+
+const safetyQuestion: SafetyQuestion = {
+  description: 'Fuel cutoff',
+};
 
 describe('SafetyQuestionComponent', () => {
   let fixture: ComponentFixture<SafetyQuestionComponent>;
@@ -46,6 +51,18 @@ describe('SafetyQuestionComponent', () => {
         component.safetyQuestionsDrivingFaultSelected();
 
         expect(component.safetyQuestionOutcomeChange.emit).toHaveBeenCalledWith('DF');
+      });
+    });
+    describe('findQuestion', () => {
+      it('should return the question if it is found', () => {
+        component.questions = [safetyQuestion];
+        component.questionResult = { description: 'Fuel cutoff' };
+        expect(component.findQuestion()).toEqual(safetyQuestion);
+      });
+      it('should return undefined if the question is not found', () => {
+        component.questions = [safetyQuestion];
+        component.questionResult = { description: 'Bad question' };
+        expect(component.findQuestion()).toEqual(undefined);
       });
     });
   });
