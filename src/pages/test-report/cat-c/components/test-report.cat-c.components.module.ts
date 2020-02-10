@@ -8,7 +8,6 @@ import { TestReportComponentsModule } from '../../components/test-report-compone
 import { ReverseDiagramLinkComponent } from './reverse-diagram-link/reverse-diagram-link';
 import { ReverseLeftPopoverComponent } from './reverse-left-popover/reverse-left-popover';
 import { VehicleChecksComponent } from './vehicle-checks/vehicle-checks';
-import { UncoupleRecoupleComponent } from './uncouple-recouple/uncouple-recouple';
 
 @NgModule({
   declarations: [
@@ -16,7 +15,6 @@ import { UncoupleRecoupleComponent } from './uncouple-recouple/uncouple-recouple
     ReverseDiagramLinkComponent,
     ReverseLeftPopoverComponent,
     VehicleChecksComponent,
-    UncoupleRecoupleComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +28,6 @@ import { UncoupleRecoupleComponent } from './uncouple-recouple/uncouple-recouple
     ReverseDiagramLinkComponent,
     ReverseLeftPopoverComponent,
     VehicleChecksComponent,
-    UncoupleRecoupleComponent,
   ],
 })
 export class TestReportCatCComponentsModule { }

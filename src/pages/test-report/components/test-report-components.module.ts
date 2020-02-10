@@ -17,6 +17,7 @@ import { EndTestModalModule } from './end-test-modal/end-test-modal.module';
 import { LegalRequirementsModalModule } from './legal-requirements-modal/legal-requirements-modal.module';
 import { EtaInvalidModalModule } from './eta-invalid-modal/eta-invalid-modal.module';
 import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-competency';
+import { UncoupleRecoupleComponent } from './uncouple-recouple/uncouple-recouple';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-c
     LegalRequirementComponent,
     EcoComponent,
     TimerComponent,
+    UncoupleRecoupleComponent,
   ],
   imports: [
     ComponentsModule,
@@ -52,6 +54,7 @@ import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-c
     LegalRequirementComponent,
     EcoComponent,
     TimerComponent,
+    UncoupleRecoupleComponent,
   ],
 })
 export class TestReportComponentsModule {}
