@@ -12,14 +12,14 @@
         <input type="radio" [id]="getIndependentDrivingInputId(option1)" class="gds-radio-button"
           formControlName="independentDriving" name="independentDriving" [value]="option1" [class.ng-invalid]="invalid"
           [checked]="independentDriving === option1" (change)="independentDrivingChanged(option1)">
-        <label [for]="getIndependentDrivingInputId(option1)" class="radio-label">{{option1}}</label>
+        <label [for]="getIndependentDrivingInputId(option1)" class="radio-label">{{option1label}}</label>
       </ion-col>
       <ion-col align-self-center>
         <input type="radio" [id]="getIndependentDrivingInputId(option2)" class="gds-radio-button"
           formControlName="independentDriving" name="independentDriving" [value]="option2"
                [class.ng-invalid]="invalid" [checked]="independentDriving === option2"
           (change)="independentDrivingChanged(option2)">
-        <label [for]="getIndependentDrivingInputId(option2)" class="radio-label">{{option2}}</label>
+        <label [for]="getIndependentDrivingInputId(option2)" class="radio-label">{{option2label}}</label>
       </ion-col>
       <ion-col align-self-center [hidden]="!showNotApplicable">
         <input type="radio" id="independent-driving-na" class="gds-radio-button" formControlName="independentDriving"
