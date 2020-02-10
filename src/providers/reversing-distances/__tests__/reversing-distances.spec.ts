@@ -1,4 +1,4 @@
-import { ReversingDistancesProvider, CatCVehicleDetailsUnion } from '../reversing-distances';
+import { ReversingDistancesProvider, VehicleDetailsUnion } from '../reversing-distances';
 import { TestBed } from '@angular/core/testing';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
@@ -20,12 +20,12 @@ describe('ReversingDistancesProvider', () => {
   });
 
   describe('getDistanceLength', () => {
-    const vehicleDetails: CatCVehicleDetailsUnion = {
+    const vehicleDetails: VehicleDetailsUnion = {
       vehicleLength: 15,
       vehicleWidth: 2,
     };
 
-    const longVehicleDetails: CatCVehicleDetailsUnion = {
+    const longVehicleDetails: VehicleDetailsUnion = {
       vehicleLength: 20,
       vehicleWidth: 2,
     };
@@ -100,7 +100,7 @@ describe('ReversingDistancesProvider', () => {
   });
 
   describe('getDistanceWidth', () => {
-    const vehicleDetails: CatCVehicleDetailsUnion = {
+    const vehicleDetails: VehicleDetailsUnion = {
       vehicleLength: 15,
       vehicleWidth: 2,
     };

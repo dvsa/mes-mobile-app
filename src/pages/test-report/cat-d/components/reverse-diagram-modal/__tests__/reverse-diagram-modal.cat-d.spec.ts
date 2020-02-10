@@ -17,7 +17,7 @@ import { ReversingDistancesProvider } from '../../../../../../providers/reversin
 import { configureTestSuite } from 'ng-bullet';
 import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 
-describe('reverseDiagramCatDModal', () => {
+xdescribe('reverseDiagramCatDModal', () => {
   let fixture: ComponentFixture<ReverseDiagramCatDPage>;
   let component: ReverseDiagramCatDPage;
   let store$: Store<StoreModel>;
