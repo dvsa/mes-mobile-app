@@ -12,7 +12,6 @@ import { FaultCountDHelper } from './cat-d/fault-count.cat-d';
 
 import { sumManoeuvreFaults } from '../../shared/helpers/faults';
 import { FaultCountAM1Helper } from './cat-a-mod1/fault-count.cat-a-mod1';
-// import { SafetyQuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
 // TODO: Remove category from helper functions as the name of the helper class already contains the category
 

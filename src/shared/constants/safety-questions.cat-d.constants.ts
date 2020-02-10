@@ -1,7 +1,5 @@
 import { SafetyQuestion } from '../../providers/question/safety-question.model';
 
-// export default ['Fire Extinguisher', 'Emergency Exit', 'Fuel cutoff'];
-
 export default [
   {
     description: 'Fire extinguisher',
