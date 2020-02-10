@@ -25,6 +25,12 @@ export class IndependentDrivingComponent implements OnChanges {
   option2: IndependentDriving;
 
   @Input()
+  option1label: string;
+
+  @Input()
+  option2label: string;
+
+  @Input()
   independentDriving: IndependentDriving;
 
   @Input()

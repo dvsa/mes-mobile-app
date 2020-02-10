@@ -49,7 +49,7 @@
               [outcome]="pageState.testOutcome$ | async" (routeNumberChange)="routeNumberChanged($event)" [formGroup]="form">
             </route-number>
 
-            <independent-driving [display]="pageState.displayIndependentDriving$ | async" option1="Sat Nav" option2="Traffic Signs" [formGroup]="form" [outcome]="pageState.testOutcome$ | async"
+            <independent-driving [display]="pageState.displayIndependentDriving$ | async" option1="Sat nav" option1label="Sat Nav" option2="Traffic signs" option2label="Traffic Signs" [formGroup]="form" [outcome]="pageState.testOutcome$ | async"
               [independentDriving]="pageState.independentDriving$ | async" (independentDrivingChange)="independentDrivingChanged($event)"></independent-driving>
 
             <candidate-description [display]="pageState.displayCandidateDescription$ | async" [formGroup]="form"
