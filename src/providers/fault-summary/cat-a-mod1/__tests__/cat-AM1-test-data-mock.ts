@@ -4,8 +4,8 @@ import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 
 export const catAM1TestDataStateObject: TestData = {
   singleFaultCompetencies: {
-    useOfStand: CompetencyOutcome.D,
-    manualHandling: CompetencyOutcome.D,
+    useOfStand: CompetencyOutcome.DF,
+    manualHandling: CompetencyOutcome.DF,
     slalom: CompetencyOutcome.D,
     slowControl: CompetencyOutcome.S,
     uTurn: CompetencyOutcome.D,

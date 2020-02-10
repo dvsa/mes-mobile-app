@@ -12,6 +12,11 @@ import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { singleFaultCompetencyLables } from './single-fault-competency.constants';
 import { ToggleDangerousFaultMode, ToggleRemoveFaultMode, ToggleSeriousFaultMode } from '../../test-report.actions';
+import {
+  RemoveSingleFaultCompetencyOutcome,
+  SetSingleFaultCompetencyOutcome,
+} from '../../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 interface SingleFaultCompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -109,23 +114,23 @@ export class SingleFaultCompetencyComponent implements OnInit, OnDestroy {
 
   removeFault = (): void => {
     if (this.hasDangerousFault && this.isDangerousMode && this.isRemoveFaultMode) {
-      console.log('remove dangerous fault from competency');
+      this.store$.dispatch(new RemoveSingleFaultCompetencyOutcome(this.competency));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
     if (this.hasSeriousFault && this.isSeriousMode && this.isRemoveFaultMode) {
-      console.log('remove serious fault from competency');
+      this.store$.dispatch(new RemoveSingleFaultCompetencyOutcome(this.competency));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
+
     if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.hasDrivingFault) {
-      console.log('remove driving fault from competency');
+      this.store$.dispatch(new RemoveSingleFaultCompetencyOutcome(this.competency));
       this.store$.dispatch(new ToggleRemoveFaultMode());
     }
-
   }
 
   addFault = (wasPress: boolean): void => {
@@ -134,19 +139,19 @@ export class SingleFaultCompetencyComponent implements OnInit, OnDestroy {
     }
 
     if (this.isDangerousMode) {
-      console.log('should add Dangerous Fault');
+      this.store$.dispatch(new SetSingleFaultCompetencyOutcome(this.competency, CompetencyOutcome.D));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
     }
 
     if (this.isSeriousMode) {
-      console.log('should add Serious Fault');
+      this.store$.dispatch(new SetSingleFaultCompetencyOutcome(this.competency, CompetencyOutcome.S));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
 
     if (wasPress) {
-      console.log('should add Driving Fault');
+      this.store$.dispatch(new SetSingleFaultCompetencyOutcome(this.competency, CompetencyOutcome.DF));
     }
   }
 

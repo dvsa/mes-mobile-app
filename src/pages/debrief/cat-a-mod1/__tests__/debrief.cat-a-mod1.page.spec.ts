@@ -198,7 +198,7 @@ describe('DebriefCatAMod1Page', () => {
     });
 
     it('should display serious faults container if there are serious faults', () => {
-      store$.dispatch(new AddSeriousFault(Competencies.uTurnExercise));
+      store$.dispatch(new AddSeriousFault(Competencies.uTurn));
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#serious-fault'))).not.toBeNull();
     });

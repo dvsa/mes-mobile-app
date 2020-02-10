@@ -42,7 +42,7 @@ export enum Competencies {
   manualHandling = 'manualHandling',
   slalomFigure8 = 'slalomFigure8',
   slowControl = 'slowControl',
-  uTurnExercise = 'uTurnExercise',
+  uTurn = 'uTurn',
   controlledStop = 'controlledStop',
   speedCheckEmergency = 'speedCheckEmergency',
   speedCheckAvoidance = 'speedCheckAvoidance',
