@@ -11,8 +11,11 @@ const expect = chai.expect;
 this.testCategory = 'b';
 
 Before({ tags: '@catbe' }, () => {
-  // This hook will be executed before scenarios tagged with @catbe
   this.testCategory = 'be';
+});
+
+Before({ tags: '@catc' }, () => {
+  this.testCategory = 'c';
 });
 
 When('the candidate enters a new email address', () => {

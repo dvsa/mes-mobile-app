@@ -2,12 +2,14 @@ import { Then, When, Before } from 'cucumber';
 import { getElement, clickElement } from './generic-steps';
 import { browser, by, ExpectedConditions } from 'protractor';
 
-// Set default category to be cat b
 this.testCategory = 'b';
 
 Before({ tags: '@catbe' }, () => {
-  // This hook will be executed before scenarios tagged with @catbe
   this.testCategory = 'be';
+});
+
+Before({ tags: '@catc' }, () => {
+  this.testCategory = 'c';
 });
 
 Then('I am on the post debrief holding page', () => {

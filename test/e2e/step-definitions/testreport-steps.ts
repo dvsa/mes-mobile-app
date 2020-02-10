@@ -10,12 +10,14 @@ const expect = chai.expect;
 const buttonPadding = 30;
 const request = require('request');
 
-// Set default category to be cat b
 this.testCategory = 'b';
 
 Before({ tags: '@catbe' }, () => {
-  // This hook will be executed before scenarios tagged with @catbe
   this.testCategory = 'be';
+});
+
+Before({ tags: '@catc' }, () => {
+  this.testCategory = 'c';
 });
 
 const endTest = () => {
@@ -335,7 +337,7 @@ const clickCompetency = (competency) => {
 };
 
 const completeManouveure = () => {
-  if (this.testCategory === 'be') {
+  if (this.testCategory === 'be' || this.testCategory === 'c') {
     const manoeuvresButton = getElement(by.xpath('//competency-button[contains(@class, "reverse-left-tick")]'));
     longPressButton(manoeuvresButton);
   } else {
