@@ -40,7 +40,7 @@ export function testDataCatDEReducer(
     manoeuvres: manoeuvresCatDReducer,
     testRequirements: testRequirementsCatDReducer,
     uncoupleRecouple: uncoupleRecoupleCatDEReducer,
-    // TODO - Cat D - To be implmented by relevant tickets
+    // TODO - Cat D - To be implmented by relevant tickets MES-4503 & MES-4129
     safetyQuestions: () => { return null; },
     pcvDoorExercise: () => { return null; },
   })(state as Required<CatDEUniqueTypes.TestData>, action);
