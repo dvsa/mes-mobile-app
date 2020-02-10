@@ -1,32 +1,32 @@
 @catc
 Feature: Full end to end journey
 
-   # Scenario: Examiner completes a passed test with no faults
-   #    Given I am logged in as "mobexaminer5" and I have a test for "Mr Right Ford"
-   #    When I start the test for "Mr Right Ford"
-   #    And the candidate completes the declaration page
-   #    And the candidate confirms their declaration
-   #    Then I should see the "Declaration - Right Ford" page
-   #    And the candidate enters a new email address
-   #    And I proceed to the car
-   #    Then I should see the "Right Ford" page
-   #    And I complete the waiting room to car page
-   #    Then I should see the "Test report - Right Ford" page
-   #    And I complete the test
-   #    And I continue to debrief
-   #    Then I should see the Debrief page with outcome "Passed"
-   #    When I end the debrief
-   #    Then I should see the "Test debrief - Right Ford" page
-   #    And I complete the pass details
-   #    And I complete the health declaration
-   #    Then I am on the back to office page
-   #    And I continue to the office write up
-   #    Then I should see the "Office" page
-   #    And the office page test outcome is "Passed"
-   #    When I complete the office write up
-   #    And I upload the test
-   #    Then I should see the "Journal" page
-   #    And the test result for "Mr Right Ford" is "1"
+   Scenario: Examiner completes a passed test with no faults
+      Given I am logged in as "mobexaminer5" and I have a test for "Mr Right Ford"
+      When I start the test for "Mr Right Ford"
+      And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Right Ford" page
+      And the candidate enters a new email address
+      And I proceed to the car
+      Then I should see the "Right Ford" page
+      And I complete the waiting room to car page
+      Then I should see the "Test report - Right Ford" page
+      And I complete the test
+      And I continue to debrief
+      Then I should see the Debrief page with outcome "Passed"
+      When I end the debrief
+      Then I should see the "Test debrief - Right Ford" page
+      And I complete the pass details
+      And I complete the health declaration
+      Then I am on the back to office page
+      And I continue to the office write up
+      Then I should see the "Office" page
+      And the office page test outcome is "Passed"
+      When I complete the office write up
+      And I upload the test
+      Then I should see the "Journal" page
+      And the test result for "Mr Right Ford" is "1"
 
    Scenario: Examiner completes a failed test with various faults
       Given I am logged in as "mobexaminer5" and I have a test for "Mr Tanner Holman"
@@ -64,7 +64,7 @@ Feature: Full end to end journey
       When I end the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Unsuccessful"
-      And I see a "serious" fault for "Control"
+      And I see a "serious" fault for "Move off - Control"
       And I see a "driving" fault for "Signals - Timed"
       And I see a "driving" fault for "Signals - Correctly"
       And I see a "driving" fault for "Move off - Safety"
@@ -78,7 +78,7 @@ Feature: Full end to end journey
       Then I should see the "Office" page
       And the office page test outcome is "Unsuccessful"
       When I complete the office write up
-      And I enter a comment for "serious" fault "Clearance"
+      And I enter a comment for "serious" fault "Move off - Control"
       And I upload the test
       Then I should see the "Journal" page
       And the test result for "Mr Tanner Holman" is "2"
