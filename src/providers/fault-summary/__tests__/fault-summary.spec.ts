@@ -13,6 +13,7 @@ import { FaultSummaryCatBEHelper } from '../cat-be/fault-summary.cat-be';
 import { FaultSummaryCatDHelper } from '../cat-d/fault-summary.cat-d';
 import { showMe2DFTellMe3DF, showMe2DFTellMe2DF, showMe1DFTellMe1DF, showMe0DFTellMe1DF } from './fault-summary.mock';
 import { configureTestSuite } from 'ng-bullet';
+import { FaultSummaryCatAM1Helper } from '../cat-a-mod1/fault-summary.cat-a-mod1';
 
 describe('faultSummaryProvider', () => {
   const categoryC = [
@@ -55,6 +56,21 @@ describe('faultSummaryProvider', () => {
       category: TestCategory.DE,
       showMeTellMeAllFaults: showMe1DFTellMe1DF,
       showMeTellMeSemiFaults: showMe0DFTellMe1DF,
+    },
+  ];
+
+  const categoryAMod1 = [
+    {
+      category: TestCategory.EUAM1,
+    },
+    {
+      category: TestCategory.EUA1M1,
+    },
+    {
+      category: TestCategory.EUA2M1,
+    },
+    {
+      category: TestCategory.EUAMM1,
     },
   ];
 
@@ -322,6 +338,19 @@ describe('faultSummaryProvider', () => {
         });
       });
     });
+
+    categoryAMod1.forEach((cat) => {
+      describe(`Category ${cat.category}`, () => {
+        it('should call correct helper function', () => {
+          const getDrivingFaultsCatAM1Spy = spyOn(FaultSummaryCatAM1Helper, 'getDrivingFaultsCatAM1');
+
+          const testData = {};
+          faultSummaryProvider.getDrivingFaultsList(testData, cat.category);
+
+          expect(getDrivingFaultsCatAM1Spy).toHaveBeenCalledWith(testData);
+        });
+      });
+    });
   });
 
   describe('getSeriousFaultsList', () => {
@@ -554,6 +583,19 @@ describe('faultSummaryProvider', () => {
         });
       });
     });
+
+    categoryAMod1.forEach((cat) => {
+      describe(`Category ${cat.category}`, () => {
+        it('should call correct helper function', () => {
+          const getSeriousFaultsCatAM1Spy = spyOn(FaultSummaryCatAM1Helper, 'getSeriousFaultsCatAM1');
+
+          const testData = {};
+          faultSummaryProvider.getSeriousFaultsList(testData, cat.category);
+
+          expect(getSeriousFaultsCatAM1Spy).toHaveBeenCalledWith(testData);
+        });
+      });
+    });
   });
 
   describe('getDangerousFaultsList', () => {
@@ -705,6 +747,18 @@ describe('faultSummaryProvider', () => {
           };
           const result = faultSummaryProvider.getDangerousFaultsList(data, cat.category);
           expect(result.length).toEqual(2);
+        });
+      });
+    });
+    categoryAMod1.forEach((cat) => {
+      describe(`Category ${cat.category}`, () => {
+        it('should call correct helper function', () => {
+          const getDangerousFaultsCatAM1Spy = spyOn(FaultSummaryCatAM1Helper, 'getDangerousFaultsCatAM1');
+
+          const testData = {};
+          faultSummaryProvider.getDangerousFaultsList(testData, cat.category);
+
+          expect(getDangerousFaultsCatAM1Spy).toHaveBeenCalledWith(testData);
         });
       });
     });
