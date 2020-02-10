@@ -46,6 +46,8 @@ import {
   getTestRequirementsCatBE,
 } from '../../../modules/tests/test-data/cat-be/test-requirements/test-requirements.cat-be.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -55,6 +57,7 @@ interface TestReportPageState {
   manoeuvres$: Observable<boolean>;
   testData$: Observable<CatBEUniqueTypes.TestData>;
   testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -134,6 +137,9 @@ export class TestReportCatBEPage extends BasePageComponent {
       testRequirements$: currentTest$.pipe(
         select(getTestData),
         select(getTestRequirementsCatBE),
+      ),
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
       ),
     };
     this.setupSubscription();

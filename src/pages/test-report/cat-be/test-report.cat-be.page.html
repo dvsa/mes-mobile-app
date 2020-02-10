@@ -103,7 +103,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-           <uncouple-recouple [category]="'B+E'"></uncouple-recouple>
+           <uncouple-recouple [category]="pageState.testCategory$ | async"></uncouple-recouple>
           </ion-col>
         </ion-row>
         <ion-row>
