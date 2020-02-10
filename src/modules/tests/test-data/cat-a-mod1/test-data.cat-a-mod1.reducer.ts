@@ -7,8 +7,12 @@ import { etaReducer } from '../common/eta/eta.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { emergencyStopReducer } from './emergency-stop/emergency-stop.reducer';
 import { avoidanceReducer } from './avoidance/avoidance.reducer';
+import { singleFaultCompetenciesReducer } from './single-fault-competencies/single-fault-competencies.reducer';
 
 export const initialState: TestData = {
+  singleFaultCompetencies: {},
+  emergencyStop: {},
+  avoidance: {},
   dangerousFaults: {},
   drivingFaults: {},
   seriousFaults: {},
@@ -20,6 +24,7 @@ export function testDataCatAMod1Reducer(
   action: Action,
 ): TestData {
   return combineReducers({
+    singleFaultCompetencies: singleFaultCompetenciesReducer,
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
     seriousFaults: seriousFaultsReducer,
