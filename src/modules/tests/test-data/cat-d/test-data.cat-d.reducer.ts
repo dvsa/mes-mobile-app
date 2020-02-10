@@ -27,7 +27,7 @@ export const initialState: CatDUniqueTypes.TestData = {
 export function testDataCatDReducer(
   state: CatDUniqueTypes.TestData,
   action: Action,
-): CatDUniqueTypes.TestData {
+): Required<CatDUniqueTypes.TestData> {
   return combineReducers({
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
@@ -37,6 +37,9 @@ export function testDataCatDReducer(
     ETA: etaReducer,
     manoeuvres: manoeuvresCatDReducer,
     testRequirements: testRequirementsCatDReducer,
+    // TODO - Cat D - To be implmented by relevant tickets
+    safetyQuestions: () => { return null; },
+    pcvDoorExercise: () => { return null; },
   })(state as Required<CatDUniqueTypes.TestData>, action);
 }
 

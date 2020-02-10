@@ -30,7 +30,7 @@ export const initialState: CatBEUniqueTypes.TestData = {
 export function testDataCatBEReducer(
   state: CatBEUniqueTypes.TestData,
   action: Action,
-): CatBEUniqueTypes.TestData {
+): Required<CatBEUniqueTypes.TestData> {
   return combineReducers({
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
