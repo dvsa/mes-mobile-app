@@ -12,6 +12,7 @@ import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
+import { getSpeedRequirementNotMet } from '../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.selector';
 
 @Injectable()
 export class TestResultProvider {
@@ -104,6 +105,9 @@ export class TestResultProvider {
     category: TestCategory,
     testData: TestData,
   ): Observable<ActivityCode> => {
+    if (getSpeedRequirementNotMet(testData)) {
+      return of(ActivityCodes.FAIL_PUBLIC_SAFETY);
+    }
     if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
