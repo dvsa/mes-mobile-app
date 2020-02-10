@@ -30,8 +30,7 @@ When('I end the welsh debrief', () => {
 
 When('I complete the pass details', () => {
   completePassdetails();
-  const transmissionRadio = getElement(by.id('transmission-manual'));
-  clickElement(transmissionRadio);
+  selectTransmission('manual');
   if (this.testCategory === 'c') {
     code78onLicence(false);
   }
@@ -40,12 +39,14 @@ When('I complete the pass details', () => {
 
 When('I complete the pass details with an automatic transmission', () => {
   completePassdetails();
-  const transmissionRadio = getElement(by.id('transmission-automatic'));
-  clickElement(transmissionRadio);
+  selectTransmission('automatic');
   continuePassFinalisation();
 });
 
 When('I complete the fail details', () => {
+  if (this.testCategory === 'c') {
+    selectTransmission('manual');
+  }
   const d255NoRadio = getElement(by.id('d255-no'));
   clickElement(d255NoRadio);
   const debriefWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
@@ -96,4 +97,9 @@ const code78onLicence = (result: boolean) => {
   const radio = result ? 'code-78-received' : 'code-78-not-received';
   const code78Radio = getElement(by.id(`${radio}`));
   clickElement(code78Radio);
+};
+
+const selectTransmission = (transmissionType: string) => {
+  const transmissionRadio = getElement(by.id(`transmission-${transmissionType}`));
+  clickElement(transmissionRadio);
 };
