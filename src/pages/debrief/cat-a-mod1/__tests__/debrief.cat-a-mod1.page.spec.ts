@@ -12,52 +12,35 @@ import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { StoreModule, Store } from '@ngrx/store';
-// TODO: MES-4563 + MES-4423 Fix fault cards for Cat A Mod 1 and update tests
-/*
 import {
   AddDangerousFault,
 } from '../../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFault } from '../../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDrivingFault } from '../../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
-*/
 import { DebriefComponentsModule } from '../../components/debrief-components.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { TranslateModule, TranslateService } from 'ng2-translate';
-// TODO - PREP-AMOD1 - update to cat a mod 1 compentencies
-/*
-import { fullCompetencyLabels } from '../../../../shared/constants/competencies/catb-competencies';
- */
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
-// TODO: MES-4563 + MES-4423 Fix fault cards for Cat A Mod 1 and update tests
-/*
 import { PopulateTestSlotAttributes }
   from '../../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
-*/
 import { EndDebrief } from '../../debrief.actions';
-// TODO: MES-4563 + MES-4423 Fix fault cards for Cat A Mod 1 and update tests
-/*
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
-*/
 import { CAT_A_MOD1 } from '../../../page-names.constants';
-// TODO: MES-4563 + MES-4423 Fix fault cards for Cat A Mod 1 and update tests
-/*
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
-*/
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-// TODO - PREP-AMOD1 - update to cat c schema
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
-import { FaultSummaryProviderMock } from '../../../../providers/fault-summary/__mocks__/fault-summary.mock';
 import { MockComponent } from 'ng-mocks';
 import { SpeedCheckDebriefCardComponent } from '../components/speed-check-debrief-card/speed-check-debrief-card';
+import { competencyLabels } from '../../../test-report/components/competency/competency.constants';
 
 describe('DebriefCatAMod1Page', () => {
   let fixture: ComponentFixture<DebriefCatAMod1Page>;
@@ -75,12 +58,11 @@ describe('DebriefCatAMod1Page', () => {
     vehicleTypeCode: '',
   };
 
-  // TODO - PREP-AMOD1 - update to cat c type
   const exampleTestData: TestData  = {
-    dangerousFaults: {},
-    drivingFaults: {},
-    seriousFaults: {},
     ETA: {},
+    dangerousFaults: {},
+    seriousFaults: {},
+    drivingFaults: {},
     emergencyStop: {
       firstAttempt: 0,
       secondAttempt: 0,
@@ -89,6 +71,7 @@ describe('DebriefCatAMod1Page', () => {
       firstAttempt: 0,
       secondAttempt: 0,
     },
+
   };
 
   configureTestSuite(() => {
@@ -111,11 +94,10 @@ describe('DebriefCatAMod1Page', () => {
             startedTests: {
               123: {
                 testSlotAttributes,
-                // TODO - REP-AMOD1: Change to TestCategory A Mod1
                 category: TestCategory.EUAM1,
                 vehicleDetails: {},
                 accompaniment: {},
-                testData: exampleTestData,
+                testData: { exampleTestData },
                 journalData: {
                   candidate: {
                     candidateName: 'Joe Bloggs',
@@ -142,7 +124,7 @@ describe('DebriefCatAMod1Page', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
-        { provide: FaultSummaryProvider, useClass: FaultSummaryProviderMock },
+        { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
       ],
     });
   });
@@ -158,13 +140,6 @@ describe('DebriefCatAMod1Page', () => {
   }));
 
   describe('DOM', () => {
-
-    beforeEach(() => {
-      spyOn(component.faultSummaryProvider, 'getDangerousFaultsList').and.returnValue([0]);
-      spyOn(component.faultSummaryProvider, 'getSeriousFaultsList').and.returnValue([0]);
-      spyOn(component.faultSummaryProvider, 'getDrivingFaultsList').and.returnValue([0]);
-    });
-
     it('should display passed container if outcome is `passed`', () => {
       fixture.detectChanges();
       component.outcome = TestOutcome.PASS;
@@ -201,43 +176,39 @@ describe('DebriefCatAMod1Page', () => {
       expect(title.nativeElement.textContent).toEqual('Debrief - John Doe');
     });
 
-  });
+    it('should not display dangerous faults container if there are no dangerous faults', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#dangerous-fault'))).toBeNull();
+    });
 
-  // TODO: MES-4563 + MES-4423 Fix fault cards for Cat A Mod 1 and update tests
-  /**
-  it('should not display dangerous faults container if there are no dangerous faults', () => {
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#dangerous-fault'))).toBeNull();
-  });
+    it('should not display serious faults container if there are no serious faults', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#serious-fault'))).toBeNull();
+    });
 
-  it('should not display serious faults container if there are no serious faults', () => {
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#serious-fault'))).toBeNull();
-  });
+    it('should not display driving faults container if there are no driving faults', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
+    });
 
-  it('should not display driving faults container if there are no driving faults', () => {
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
-  });
+    it('should display dangerous faults container if there are dangerous faults', () => {
+      store$.dispatch(new AddDangerousFault(Competencies.useOfStand));
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#dangerous-fault'))).not.toBeNull();
+    });
 
-  it('should display dangerous faults container if there are dangerous faults', () => {
-    store$.dispatch(new AddDangerousFault(Competencies.controlsClutch));
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#dangerous-fault'))).not.toBeNull();
-  });
+    it('should display serious faults container if there are serious faults', () => {
+      store$.dispatch(new AddSeriousFault(Competencies.uTurnExercise));
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#serious-fault'))).not.toBeNull();
+    });
 
-  it('should display serious faults container if there are serious faults', () => {
-    store$.dispatch(new AddSeriousFault(Competencies.controlsClutch));
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#serious-fault'))).not.toBeNull();
+    it('should display driving faults container if there are driving faults', () => {
+      store$.dispatch(new AddDrivingFault({ competency: Competencies.slalomFigure8, newFaultCount: 1 }));
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#driving-fault'))).not.toBeNull();
+    });
   });
-
-  it('should display driving faults container if there are driving faults', () => {
-    store$.dispatch(new AddDrivingFault({ competency: Competencies.controlsClutch, newFaultCount: 1 }));
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#driving-fault'))).not.toBeNull();
-  });
-  */
 
   describe('endDebrief', () => {
     it('should dispatch the PersistTests action', () => {
@@ -261,26 +232,24 @@ describe('DebriefCatAMod1Page', () => {
     });
   });
 
-  // TODO: MES-4563 + MES-4423 Fix fault cards for Cat A Mod 1 and update tests
-  /**
   describe('translation of fault competencies', () => {
     it('should display fault competencies in English by default', () => {
-      store$.dispatch(new AddDrivingFault({ competency: Competencies.moveOffSafety, newFaultCount: 1 }));
-      store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsSignalling));
-      store$.dispatch(new AddDangerousFault(Competencies.useOfMirrorsChangeDirection));
+      store$.dispatch(new AddDrivingFault({ competency: Competencies.useOfStand, newFaultCount: 1 }));
+      store$.dispatch(new AddSeriousFault(Competencies.slalomFigure8));
+      store$.dispatch(new AddDangerousFault(Competencies.slowControl));
       fixture.detectChanges();
       const drivingFaultLabel = fixture.debugElement.query(By.css('#driving-fault .counter-label')).nativeElement;
       const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
       const dangerousLabel = fixture.debugElement.query(By.css('#dangerous-fault .counter-label')).nativeElement;
 
-      expect(drivingFaultLabel.innerHTML).toBe(fullCompetencyLabels.moveOffSafety);
-      expect(seriousLabel.innerHTML).toBe(fullCompetencyLabels.useOfMirrorsSignalling);
-      expect(dangerousLabel.innerHTML).toBe(fullCompetencyLabels.useOfMirrorsChangeDirection);
+      expect(drivingFaultLabel.innerHTML).toBe(competencyLabels[Competencies.useOfStand]);
+      expect(seriousLabel.innerHTML).toBe(competencyLabels[Competencies.slalomFigure8]);
+      expect(dangerousLabel.innerHTML).toBe(competencyLabels[Competencies.slowControl]);
     });
     it('should display fault competencies in Welsh for a Welsh test', (done) => {
-      store$.dispatch(new AddDrivingFault({ competency: Competencies.moveOffSafety, newFaultCount: 1 }));
-      store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsSignalling));
-      store$.dispatch(new AddDangerousFault(Competencies.useOfMirrorsChangeDirection));
+      store$.dispatch(new AddDrivingFault({ competency: Competencies.useOfStand, newFaultCount: 1 }));
+      store$.dispatch(new AddSeriousFault(Competencies.slalomFigure8));
+      store$.dispatch(new AddDangerousFault(Competencies.slowControl));
       fixture.detectChanges();
       configureI18N(Language.CYMRAEG, translate);
       translate.onLangChange.subscribe(() => {
@@ -289,10 +258,9 @@ describe('DebriefCatAMod1Page', () => {
         const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
         const dangerousLabel = fixture.debugElement.query(By.css('#dangerous-fault .counter-label')).nativeElement;
 
-        const expectedDrivingFaultTranslation = (<any>welshTranslations).debrief.competencies.moveOffSafety;
-        const expectedSeriousFaultTranslation = (<any>welshTranslations).debrief.competencies.useOfMirrorsSignalling;
-        const expectedDangerousFaultTranslation =
-          (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
+        const expectedDrivingFaultTranslation = (<any>welshTranslations).debrief.competencies.useOfStand;
+        const expectedSeriousFaultTranslation = (<any>welshTranslations).debrief.competencies.slalomFigure8;
+        const expectedDangerousFaultTranslation = (<any>welshTranslations).debrief.competencies.slowControl;
 
         expect(drivingFaultLabel.innerHTML).toBe(expectedDrivingFaultTranslation);
         expect(seriousLabel.innerHTML).toBe(expectedSeriousFaultTranslation);
@@ -301,5 +269,5 @@ describe('DebriefCatAMod1Page', () => {
       });
       store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
     });
-  });*/
+  });
 });
