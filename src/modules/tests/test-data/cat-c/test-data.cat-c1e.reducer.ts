@@ -29,7 +29,7 @@ export const initialState: CatC1EUniqueTypes.TestData = {
 export function testDataCatC1EReducer(
   state: CatC1EUniqueTypes.TestData,
   action: Action,
-): CatC1EUniqueTypes.TestData {
+): Required<CatC1EUniqueTypes.TestData> {
   return combineReducers({
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,

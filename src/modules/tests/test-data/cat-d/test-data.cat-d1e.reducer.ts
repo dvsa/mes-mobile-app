@@ -29,7 +29,7 @@ export const initialState: CatD1EUniqueTypes.TestData = {
 export function testDataCatD1EReducer(
   state: CatD1EUniqueTypes.TestData,
   action: Action,
-): CatD1EUniqueTypes.TestData {
+): Required<CatD1EUniqueTypes.TestData> {
   return combineReducers({
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
@@ -40,6 +40,9 @@ export function testDataCatD1EReducer(
     manoeuvres: manoeuvresCatDReducer,
     testRequirements: testRequirementsCatDReducer,
     uncoupleRecouple: uncoupleRecoupleCatD1EReducer,
+    // TODO - Cat D - To be implmented by relevant tickets MES-4503 & MES-4129
+    safetyQuestions: () => { return null; },
+    pcvDoorExercise: () => { return null; },
   })(state as Required<CatD1EUniqueTypes.TestData>, action);
 }
 
