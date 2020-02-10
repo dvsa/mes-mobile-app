@@ -14,6 +14,8 @@ import { AnalyticRecorded } from '../../../../../../providers/analytics/analytic
 import { AnalyticsEventCategories, AnalyticsScreenNames } from '../../../../../../providers/analytics/analytics.model';
 import * as VehicleChecksActions
   from '../../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
+import * as SafetyQuestionsActions
+  from '../../../../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.action';
 
 import {
   QuestionOutcome,
@@ -139,6 +141,25 @@ describe('Vehicle Checks Modal Cat D Analytics Effects', () => {
           AnalyticsEventCategories.VEHICLE_CHECKS,
           `tell me question ${questionNumber + 1} outcome changed`,
           'driving fault',
+        );
+        done();
+      });
+    });
+  });
+
+  describe('safetyQuestionOutComeChanged$', () => {
+    const questionOutcome: QuestionOutcome = 'P';
+    const questionNumber: number = 1;
+    it('should log an analytics event with safety question outcome info', (done) => {
+
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.D));
+      actions$.next(new SafetyQuestionsActions.SafetyQuestionOutcomeChanged(questionOutcome, questionNumber));
+      effects.safetyQuestionOutcomeChanged$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.VEHICLE_CHECKS,
+          `safety question ${questionNumber + 1} outcome changed`,
+          'correct',
         );
         done();
       });
