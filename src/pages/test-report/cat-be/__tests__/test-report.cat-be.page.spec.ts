@@ -37,7 +37,7 @@ import { CAT_BE } from '../../../page-names.constants';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
-import { UncoupleRecoupleComponent } from '../components/uncouple-recouple/uncouple-recouple';
+import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/uncouple-recouple';
 import { ReverseLeftComponent } from '../components/reverse-left/reverse-left';
 import { ReverseLeftPopoverComponent } from '../components/reverse-left-popover/reverse-left-popover';
 import { VehicleChecksComponent } from '../components/vehicle-checks/vehicle-checks';

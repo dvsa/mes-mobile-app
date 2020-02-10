@@ -40,7 +40,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { initialState } from '../../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
 import { ReverseLeftCatDComponent } from '../components/reverse-left/reverse-left.cat-d';
 import { ReverseLeftPopoverCatDComponent } from '../components/reverse-left-popover/reverse-left-popover.cat-d';
-import { UncoupleRecoupleCatDComponent } from '../components/uncouple-recouple/uncouple-recouple.cat-d';
+import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/uncouple-recouple';
 import {
   VehicleChecksTestReportCatDComponent,
 } from '../components/vehicle-checks-test-report/vehicle-checks-test-report.cat-d';
@@ -61,7 +61,7 @@ describe('TestReportCatDPage', () => {
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),
         MockComponent(EcoComponent),
-        MockComponent(UncoupleRecoupleCatDComponent),
+        MockComponent(UncoupleRecoupleComponent),
         MockComponent(ReverseLeftCatDComponent),
         MockComponent(ReverseLeftPopoverCatDComponent),
         MockComponent(VehicleChecksTestReportCatDComponent),

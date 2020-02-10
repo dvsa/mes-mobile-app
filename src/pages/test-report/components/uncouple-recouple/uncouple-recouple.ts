@@ -1,25 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { select, Store } from '@ngrx/store';
-import { StoreModel } from '../../../../../shared/models/store.model';
-import { isDangerousMode, isRemoveFaultMode, isSeriousMode } from '../../../test-report.selector';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { isDangerousMode, isRemoveFaultMode, isSeriousMode } from '../../test-report.selector';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
-import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-import { getTests } from '../../../../../modules/tests/tests.reducer';
-import { getTestReportState } from '../../../test-report.reducer';
+import { getCurrentTest } from '../../../../modules/tests/tests.selector';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { getTestReportState } from '../../test-report.reducer';
 import { get } from 'lodash';
-import { ToggleDangerousFaultMode, ToggleRemoveFaultMode, ToggleSeriousFaultMode } from '../../../test-report.actions';
+import { ToggleDangerousFaultMode, ToggleRemoveFaultMode, ToggleSeriousFaultMode } from '../../test-report.actions';
 import {
   ToggleUncoupleRecouple,
   UncoupleRecoupleAddDangerousFault,
   UncoupleRecoupleAddDrivingFault,
   UncoupleRecoupleAddSeriousFault,
   UncoupleRecoupleRemoveFault,
-} from '../../../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
-import { getTestData } from '../../../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
+} from '../../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { TestDataByCategoryProvider } from '../../../../providers/test-data-by-category/test-data-by-category';
 
 interface UncoupleRecoupleComponentState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -30,11 +31,15 @@ interface UncoupleRecoupleComponentState {
 }
 
 @Component({
-  selector: 'uncouple-recouple-cat-d',
-  templateUrl: 'uncouple-recouple.cat-d.html',
+  selector: 'uncouple-recouple',
+  templateUrl: 'uncouple-recouple.html',
 })
 
-export class UncoupleRecoupleCatDComponent implements OnInit, OnDestroy {
+export class UncoupleRecoupleComponent implements OnInit, OnDestroy {
+
+  @Input()
+  category: CategoryCode;
+
   componentState: UncoupleRecoupleComponentState;
   subscription: Subscription;
 
@@ -46,7 +51,10 @@ export class UncoupleRecoupleCatDComponent implements OnInit, OnDestroy {
   uncoupleRecoupleOutcome: CompetencyOutcome;
   merged$: Observable<boolean | CompetencyOutcome>;
 
-  constructor(private store$: Store<StoreModel>) {
+  constructor(
+    private store$: Store<StoreModel>,
+    private testDataByCategory: TestDataByCategoryProvider,
+    ) {
   }
 
   ngOnInit(): void {
@@ -66,11 +74,11 @@ export class UncoupleRecoupleCatDComponent implements OnInit, OnDestroy {
         select(getTestReportState),
         select(isDangerousMode)),
       selectedUncoupleRecouple$: currentTest$.pipe(
-        select(getTestData),
+        select(this.testDataByCategory.getTestDataByCategoryCode(this.category)),
         select(testData => get(testData, 'uncoupleRecouple.selected')),
       ),
       uncoupleRecoupleOutcome$: currentTest$.pipe(
-        select(getTestData),
+        select(this.testDataByCategory.getTestDataByCategoryCode(this.category)),
         select(testData => get(testData, 'uncoupleRecouple.fault')),
       ),
     };

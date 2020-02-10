@@ -1,42 +1,42 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../../../../shared/models/store.model';
+import { StoreModel } from '../../../../../shared/models/store.model';
 import { IonicModule } from 'ionic-angular';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { TickIndicatorComponent } from '../../../../../../components/common/tick-indicator/tick-indicator';
+import { TickIndicatorComponent } from '../../../../../components/common/tick-indicator/tick-indicator';
 import {
   DrivingFaultsBadgeComponent,
-} from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
-import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
+} from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
+import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import {
   DangerousFaultBadgeComponent,
-} from '../../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
-import { CompetencyButtonComponent } from '../../../../components/competency-button/competency-button';
-import { testReportReducer } from '../../../../test-report.reducer';
+} from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
+import { CompetencyButtonComponent } from '../../../components/competency-button/competency-button';
+import { testReportReducer } from '../../../test-report.reducer';
 import { MockComponent } from 'ng-mocks';
 import {
   SeriousFaultBadgeComponent,
-} from '../../../../../../components/common/serious-fault-badge/serious-fault-badge';
-import { StartTest } from '../../../../../../modules/tests/tests.actions';
-import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
+} from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
+import { StartTest } from '../../../../../modules/tests/tests.actions';
+import { UncoupleRecoupleComponent } from '../uncouple-recouple';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import {
   UncoupleRecoupleAddDrivingFault,
   UncoupleRecoupleRemoveFault,
-} from '../../../../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
-import { ToggleSeriousFaultMode } from '../../../../test-report.actions';
+} from '../../../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
+import { ToggleSeriousFaultMode } from '../../../test-report.actions';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite } from 'ng-bullet';
-import { UncoupleRecoupleCatDComponent } from '../uncouple-recouple.cat-d';
 
 describe('UncoupleRecoupleComponent', () => {
-  let fixture: ComponentFixture<UncoupleRecoupleCatDComponent>;
-  let component: UncoupleRecoupleCatDComponent;
+  let fixture: ComponentFixture<UncoupleRecoupleComponent>;
+  let component: UncoupleRecoupleComponent;
   let store$: Store<StoreModel>;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        UncoupleRecoupleCatDComponent,
+        UncoupleRecoupleComponent,
         MockComponent(TickIndicatorComponent),
         MockComponent(DrivingFaultsBadgeComponent),
         MockComponent(SeriousFaultBadgeComponent),
@@ -51,10 +51,10 @@ describe('UncoupleRecoupleComponent', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(UncoupleRecoupleCatDComponent);
+    fixture = TestBed.createComponent(UncoupleRecoupleComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
-    store$.dispatch(new StartTest(105, TestCategory.D1E));
+    store$.dispatch(new StartTest(105, TestCategory.BE));
   }));
 
   describe('Class', () => {
