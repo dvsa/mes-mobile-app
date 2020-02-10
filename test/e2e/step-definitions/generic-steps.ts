@@ -28,12 +28,8 @@ Before({ tags: '@catc' }, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catce' }, () => {
-  this.testCategory = 'c';
-});
-
 Before({ tags: '@catc1' }, () => {
-  this.testCategory = 'c';
+  this.testCategory = 'c1';
 });
 
 // We need this much timeout for the login process to complete

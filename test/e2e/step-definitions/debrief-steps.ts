@@ -18,12 +18,8 @@ Before({ tags: '@catc' }, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catce' }, () => {
-  this.testCategory = 'c';
-});
-
 Before({ tags: '@catc1' }, () => {
-  this.testCategory = 'c';
+  this.testCategory = 'c1';
 });
 
 When('I end the debrief', () => {
@@ -39,7 +35,7 @@ When('I end the welsh debrief', () => {
 When('I complete the pass details', () => {
   completePassdetails();
   selectTransmission('manual');
-  if (this.testCategory === 'c') {
+  if (this.testCategory === 'c' || this.testCategory === 'c1') {
     code78onLicence(false);
   }
   continuePassFinalisation();
@@ -52,7 +48,7 @@ When('I complete the pass details with an automatic transmission', () => {
 });
 
 When('I complete the fail details', () => {
-  if (this.testCategory === 'c') {
+  if (this.testCategory === 'c' || this.testCategory === 'c1') {
     selectTransmission('manual');
   }
   const d255NoRadio = getElement(by.id('d255-no'));

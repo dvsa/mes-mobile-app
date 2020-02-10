@@ -12,12 +12,8 @@ Before({ tags: '@catc' }, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catce' }, () => {
-  this.testCategory = 'c';
-});
-
 Before({ tags: '@catc1' }, () => {
-  this.testCategory = 'c';
+  this.testCategory = 'c1';
 });
 
 Then('I am on the post debrief holding page', () => {

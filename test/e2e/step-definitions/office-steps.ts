@@ -17,17 +17,13 @@ Before({ tags: '@catc' }, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catce' }, () => {
-  this.testCategory = 'c';
-});
-
 Before({ tags: '@catc1' }, () => {
-  this.testCategory = 'c';
+  this.testCategory = 'c1';
 });
 
 When('I complete the office write up', () => {
   enterRouteNumber('2');
-  if (this.testCategory === 'be' || this.testCategory === 'c') {
+  if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1') {
     enterIndependentDriving('diagram');
   } else {
     enterIndependentDriving('satnav');

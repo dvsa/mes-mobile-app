@@ -21,12 +21,8 @@ Before({ tags: '@catc' }, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catce' }, () => {
-  this.testCategory = 'c';
-});
-
 Before({ tags: '@catc1' }, () => {
-  this.testCategory = 'c';
+  this.testCategory = 'c1';
 });
 
 When('I end the test', () => {
@@ -371,7 +367,7 @@ const clickCompetency = (competency) => {
 };
 
 const completeManouveure = () => {
-  if (this.testCategory === 'be' || this.testCategory === 'c') {
+  if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1') {
     const manoeuvresButton = getElement(by.xpath('//competency-button[contains(@class, "reverse-left-tick")]'));
     longPressButton(manoeuvresButton);
   } else {
