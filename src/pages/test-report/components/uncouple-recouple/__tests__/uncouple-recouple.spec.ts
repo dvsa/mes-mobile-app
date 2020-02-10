@@ -27,6 +27,7 @@ import {
 import { ToggleSeriousFaultMode } from '../../../test-report.actions';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite } from 'ng-bullet';
+import { TestDataByCategoryProvider } from '../../../../../providers/test-data-by-category/test-data-by-category';
 
 describe('UncoupleRecoupleComponent', () => {
   let fixture: ComponentFixture<UncoupleRecoupleComponent>;
@@ -46,6 +47,9 @@ describe('UncoupleRecoupleComponent', () => {
       imports: [
         IonicModule,
         StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
+      ],
+      providers: [
+        TestDataByCategoryProvider,
       ],
     });
   });
@@ -174,6 +178,7 @@ describe('UncoupleRecoupleComponent', () => {
   describe('DOM', () => {
 
     it('should pass the number of driving faults to the driving faults badge component', () => {
+      component.category = TestCategory.C1E;
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
@@ -183,6 +188,7 @@ describe('UncoupleRecoupleComponent', () => {
     });
 
     it('should pass a ripple value of false to the competency button component', () => {
+      component.category = TestCategory.C1E;
       fixture.detectChanges();
       component.isRemoveFaultMode = true;
       component.isSeriousMode = true;
@@ -195,12 +201,14 @@ describe('UncoupleRecoupleComponent', () => {
     describe('Tick button effects', () => {
 
       it('should have added no classes to the tick button', () => {
+        component.category = TestCategory.BE;
         const tickButton = fixture.debugElement.query(By.css('competency-button.uncouple-recouple-tick'));
         fixture.detectChanges();
         expect(tickButton.nativeElement.className).toEqual('uncouple-recouple-tick');
       });
 
       it('should have added a checked class to the tick button', () => {
+        component.category = TestCategory.BE;
         fixture.detectChanges();
         component.selectedUncoupleRecouple = true;
         const tickButton = fixture.debugElement.query(By.css('competency-button.uncouple-recouple-tick'));
