@@ -10,7 +10,8 @@ export const catAM1TestDataStateObject: TestData = {
     slowControl: CompetencyOutcome.S,
     uTurn: CompetencyOutcome.D,
     controlledStop: CompetencyOutcome.S,
-  },  emergencyStop: {
+  },
+  emergencyStop: {
     outcome: CompetencyOutcome.D,
   },
   avoidance: {

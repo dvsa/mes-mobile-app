@@ -59,7 +59,8 @@ export function vehicleChecksCatDReducer(
       return {
         ...state,
         showMeTellMeComments: action.comment,
-      };    default:
+      };
+    default:
       return state;
   }
 }

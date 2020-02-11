@@ -7,6 +7,7 @@ import { ConfigMock, NavControllerMock, NavParamsMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../../app/app.module';
 import { MockComponent } from 'ng-mocks';
 import { VehicleChecksQuestionCatDComponent } from '../../vehicle-checks-question/vehicle-checks-question.cat-d';
+import { SafetyQuestionComponent } from '../../safety-question/safety-question';
 import {
   QuestionOutcome,
   QuestionResult,
@@ -19,6 +20,9 @@ import {
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
 } from '../../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
+import {
+  SafetyQuestionOutcomeChanged,
+} from '../../../../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.action';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 import { configureTestSuite } from 'ng-bullet';
 
@@ -32,6 +36,7 @@ describe('VehicleChecksCatDModal', () => {
       declarations: [
         VehicleChecksCatDModal,
         MockComponent(VehicleChecksQuestionCatDComponent),
+        MockComponent(SafetyQuestionComponent),
         WarningBannerComponent,
       ],
       imports: [
@@ -104,6 +109,16 @@ describe('VehicleChecksCatDModal', () => {
         component.tellMeQuestionOutcomeChanged(tellMeQuestionOutcomePayload, index);
         expect(component.store$.dispatch)
           .toHaveBeenCalledWith(new TellMeQuestionOutcomeChanged(tellMeQuestionOutcomePayload, index));
+      });
+    });
+
+    describe('safetyQuestionOutcomeChanged()', () => {
+      it('should dispatch a new SafetyQuestionOutcomeChanged action', () => {
+        const safetyQuestionOutcomePayload: QuestionOutcome = 'P';
+        const index = 1;
+        component.safetyQuestionOutcomeChanged(safetyQuestionOutcomePayload, index);
+        expect(component.store$.dispatch)
+          .toHaveBeenCalledWith(new SafetyQuestionOutcomeChanged(safetyQuestionOutcomePayload, index));
       });
     });
 

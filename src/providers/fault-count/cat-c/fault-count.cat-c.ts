@@ -27,30 +27,6 @@ export class FaultCountCHelper {
     return FaultCountCHelper.getDangerousFaultSumCountNonTrailer(data);
   }
 
-  public static getVehicleChecksFaultCountCatC = (
-    vehicleChecks: CatCUniqueTypes.VehicleChecks,
-  ): VehicleChecksScore => {
-    return FaultCountCHelper.getVehicleChecksFaultCountNonTrailer(vehicleChecks);
-  }
-
-  public static getVehicleChecksFaultCountCatCE = (
-    vehicleChecks: CatCEUniqueTypes.VehicleChecks,
-  ): VehicleChecksScore => {
-    return FaultCountCHelper.getVehicleChecksFaultCountTrailer(vehicleChecks);
-  }
-
-  public static getVehicleChecksFaultCountCatC1 = (
-    vehicleChecks: CatC1UniqueTypes.VehicleChecks,
-  ): VehicleChecksScore => {
-    return FaultCountCHelper.getVehicleChecksFaultCountNonTrailer(vehicleChecks);
-  }
-
-  public static getVehicleChecksFaultCountCatC1E = (
-    vehicleChecks: CatC1EUniqueTypes.VehicleChecks,
-  ): VehicleChecksScore => {
-    return FaultCountCHelper.getVehicleChecksFaultCountTrailer(vehicleChecks);
-  }
-
   public static getSeriousFaultSumCountCatC = (data: CatCUniqueTypes.TestData): number => {
     return FaultCountCHelper.getSeriousFaultSumCountNonTrailer(data);
   }
@@ -161,7 +137,7 @@ export class FaultCountCHelper {
     const result =
       faultTotal +
       sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-      FaultCountCHelper.getVehicleChecksFaultCountCatC(vehicleChecks).drivingFaults;
+      FaultCountCHelper.getVehicleChecksFaultCountNonTrailer(vehicleChecks).drivingFaults;
 
     return result;
   }
@@ -182,7 +158,7 @@ export class FaultCountCHelper {
     const result =
       faultTotal +
       sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-      FaultCountCHelper.getVehicleChecksFaultCountCatC(vehicleChecks).drivingFaults +
+      FaultCountCHelper.getVehicleChecksFaultCountTrailer(vehicleChecks).drivingFaults +
       uncoupleRecoupleHasDrivingFault;
 
     return result;
@@ -198,7 +174,7 @@ export class FaultCountCHelper {
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
     const vehicleCheckSeriousFaults =
-      vehicleChecks ? FaultCountCHelper.getVehicleChecksFaultCountCatC(vehicleChecks).seriousFaults : 0;
+      vehicleChecks ? FaultCountCHelper.getVehicleChecksFaultCountNonTrailer(vehicleChecks).seriousFaults : 0;
 
     const result =
       seriousFaultSumOfSimpleCompetencies +
@@ -218,7 +194,7 @@ export class FaultCountCHelper {
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
     const vehicleCheckSeriousFaults =
-      vehicleChecks ? FaultCountCHelper.getVehicleChecksFaultCountCatC(vehicleChecks).seriousFaults : 0;
+      vehicleChecks ? FaultCountCHelper.getVehicleChecksFaultCountTrailer(vehicleChecks).seriousFaults : 0;
     const uncoupleRecoupleSeriousFaults =
       (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.S) ? 1 : 0;
 
@@ -266,6 +242,30 @@ export class FaultCountCHelper {
       uncoupleRecoupleDangerousFaults;
 
     return result;
+  }
+
+  public static getVehicleChecksFaultCountCatC = (
+    vehicleChecks: CatCUniqueTypes.VehicleChecks,
+  ): VehicleChecksScore => {
+    return FaultCountCHelper.getVehicleChecksFaultCountNonTrailer(vehicleChecks);
+  }
+
+  public static getVehicleChecksFaultCountCatCE = (
+    vehicleChecks: CatCEUniqueTypes.VehicleChecks,
+  ): VehicleChecksScore => {
+    return FaultCountCHelper.getVehicleChecksFaultCountTrailer(vehicleChecks);
+  }
+
+  public static getVehicleChecksFaultCountCatC1 = (
+    vehicleChecks: CatC1UniqueTypes.VehicleChecks,
+  ): VehicleChecksScore => {
+    return FaultCountCHelper.getVehicleChecksFaultCountNonTrailer(vehicleChecks);
+  }
+
+  public static getVehicleChecksFaultCountCatC1E = (
+    vehicleChecks: CatC1EUniqueTypes.VehicleChecks,
+  ): VehicleChecksScore => {
+    return FaultCountCHelper.getVehicleChecksFaultCountTrailer(vehicleChecks);
   }
 
 }

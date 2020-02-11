@@ -36,12 +36,17 @@ import { getTestData } from '../../../modules/tests/test-data/cat-d/test-data.ca
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_D } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
+import { SafetyQuestionsScore } from '../../../shared/models/safety-questions-score.model';
+
 import {
   getVehicleChecksCatD,
 } from '../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
+import {
+  getSafetyQuestionsCatD,
+} from '../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.selector';
+
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
 import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
@@ -60,7 +65,9 @@ interface WaitingRoomToCarPageState {
   otherAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
+  safetyQuestionsScore$: Observable<SafetyQuestionsScore>;
   vehicleChecks$: Observable<CatDUniqueTypes.VehicleChecks>;
+  safetyQuestions$: Observable<CatDUniqueTypes.SafetyQuestions>;
   testCategory$: Observable<CategoryCode>;
 
 }
@@ -78,8 +85,6 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
   vehicleChecks: VehicleChecksCatDComponent;
   subscription: Subscription;
   showEyesightFailureConfirmation: boolean = false;
-
-  tellMeQuestions: VehicleChecksQuestion[];
   testCategory: CategoryCode;
 
   constructor(
@@ -93,7 +98,6 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
   ) {
     super(platform, navController, authenticationProvider);
 
-    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.D);
     this.form = new FormGroup({});
   }
 
@@ -135,9 +139,20 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
         select(getVehicleChecksCatD),
         map(vehicleChecks => this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.D, vehicleChecks)),
       ),
+      safetyQuestionsScore$: currentTest$.pipe(
+        select(getTestData),
+        select(getSafetyQuestionsCatD),
+        map((safetyQuestions) => {
+          return this.faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.D, safetyQuestions);
+        }),
+      ),
       vehicleChecks$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatD),
+      ),
+      safetyQuestions$: currentTest$.pipe(
+        select(getTestData),
+        select(getSafetyQuestionsCatD),
       ),
       testCategory$: currentTest$.pipe(
         select(getTestCategory),
