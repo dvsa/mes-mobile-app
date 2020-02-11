@@ -57,6 +57,7 @@ describe('WaitingRoomToCarCatCPage', () => {
             testStatus: {},
             startedTests: {
               123: {
+                category: 'C',
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {

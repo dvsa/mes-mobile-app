@@ -36,7 +36,7 @@ export class FaultSummaryCatCHelper {
     return [
       ...getCompetencyFaults(data.seriousFaults),
       ...this.getManoeuvreFaultsCatC(data.manoeuvres, CompetencyOutcome.S),
-      ...this.getVehicleCheckSeriousFaultsCatC(data.vehicleChecks),
+      ...this.getVehicleCheckSeriousFaultsNonTrailer(data.vehicleChecks),
     ];
   }
 
@@ -69,7 +69,7 @@ export class FaultSummaryCatCHelper {
       ...getCompetencyFaults(data.seriousFaults),
       ...this.getManoeuvreFaultsCatC(data.manoeuvres, CompetencyOutcome.S),
       ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.S),
-      ...this.getVehicleCheckSeriousFaultsCatC(data.vehicleChecks),
+      ...this.getVehicleCheckSeriousFaultsTrailer(data.vehicleChecks),
     ];
   }
 
@@ -148,7 +148,9 @@ export class FaultSummaryCatCHelper {
     return result;
   }
 
-  private static getVehicleCheckSeriousFaultsCatC(vehicleChecks: CatCUniqueTypes.VehicleChecks): FaultSummary[] {
+  private static getVehicleCheckSeriousFaultsNonTrailer(
+    vehicleChecks: CatCUniqueTypes.VehicleChecks,
+  ): FaultSummary[] {
     const result: FaultSummary[] = [];
 
     if (!vehicleChecks) {
@@ -174,6 +176,33 @@ export class FaultSummaryCatCHelper {
     return result;
   }
 
+  private static getVehicleCheckSeriousFaultsTrailer(
+    vehicleChecks: CatCUniqueTypes.VehicleChecks,
+  ): FaultSummary[] {
+    const result: FaultSummary[] = [];
+
+    if (!vehicleChecks) {
+      return result;
+    }
+
+    const showMeQuestions: QuestionResult[] = get(vehicleChecks, 'showMeQuestions', []);
+    const tellMeQuestions: QuestionResult[] = get(vehicleChecks, 'tellMeQuestions', []);
+
+    const showMeFaults = showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+    const tellMeFaults = tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
+
+    const seriousFaultCount = showMeFaults.length + tellMeFaults.length === 2 ? 1 : 0;
+    const competency: FaultSummary = {
+      comment: vehicleChecks.showMeTellMeComments || '',
+      competencyIdentifier: CommentSource.VEHICLE_CHECKS,
+      competencyDisplayName: CompetencyDisplayName.VEHICLE_CHECKS,
+      source: CommentSource.VEHICLE_CHECKS,
+      faultCount: seriousFaultCount,
+    };
+    seriousFaultCount > 0 && result.push(competency);
+
+    return result;
+  }
   private static getUncoupleRecoupleFault(
     uncoupleRecouple: CatCEUniqueTypes.UncoupleRecouple | CatC1EUniqueTypes.UncoupleRecouple,
     faultType: CompetencyOutcome,

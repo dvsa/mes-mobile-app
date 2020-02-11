@@ -486,22 +486,9 @@ describe('faultSummaryProvider', () => {
           expect(result.length).toEqual(2);
         });
         it('should correctly return any vehicle checks faults ', () => {
-          const data: CatCUniqueTypes.TestData = {
-            vehicleChecks: {
-              tellMeQuestions: [
-                { outcome: 'DF' },
-                { outcome: 'DF' },
-                { outcome: 'DF' },
-              ],
-              showMeQuestions: [
-                { outcome: 'DF' },
-                { outcome: 'DF' },
-              ],
-            },
-          };
-          const result = faultSummaryProvider.getSeriousFaultsList(data, cat.category);
-          expect(result.length).toEqual(1);
-          expect(result[0].faultCount).toEqual(1);
+          const result = faultSummaryProvider.getSeriousFaultsList(cat.showMeTellMeAllFaults.testData, cat.category);
+          expect(result.length).toEqual(cat.showMeTellMeAllFaults.seriousFaults);
+          expect(result[0].faultCount).toEqual(cat.showMeTellMeAllFaults.seriousFaults);
         });
       });
     });
@@ -535,22 +522,9 @@ describe('faultSummaryProvider', () => {
           expect(result.length).toEqual(2);
         });
         it('should correctly return any vehicle checks faults ', () => {
-          const data: CatDUniqueTypes.TestData = {
-            vehicleChecks: {
-              tellMeQuestions: [
-                { outcome: 'DF' },
-                { outcome: 'DF' },
-                { outcome: 'DF' },
-              ],
-              showMeQuestions: [
-                { outcome: 'DF' },
-                { outcome: 'DF' },
-              ],
-            },
-          };
-          const result = faultSummaryProvider.getSeriousFaultsList(data, cat.category);
-          expect(result.length).toEqual(1);
-          expect(result[0].faultCount).toEqual(1);
+          const result = faultSummaryProvider.getSeriousFaultsList(cat.showMeTellMeAllFaults.testData, cat.category);
+          expect(result.length).toEqual(cat.showMeTellMeAllFaults.seriousFaults);
+          expect(result[0].faultCount).toEqual(cat.showMeTellMeAllFaults.seriousFaults);
         });
       });
     });
