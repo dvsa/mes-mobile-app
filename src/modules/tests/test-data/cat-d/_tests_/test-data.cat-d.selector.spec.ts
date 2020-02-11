@@ -17,7 +17,7 @@ import {
 import { Competencies } from '../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { OutcomeBehaviourMapProvider } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../../../../../pages/office/office-behaviour-map';
+import { behaviourMap } from '../../../../../pages/office/office-behaviour-map.cat-d';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 
 describe('TestDataSelectors', () => {

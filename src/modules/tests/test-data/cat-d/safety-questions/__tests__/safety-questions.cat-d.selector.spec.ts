@@ -18,7 +18,7 @@ describe('Safety Questions Selector Cat D', () => {
       const result = safetyQuestionsExist(populatedSafetyQuestions);
       expect(result).toBeTruthy();
     });
-    it('should return false if there are vehicle checks but no outcome selected', ()  => {
+    it('should return false if there are safety questions but no outcome selected', ()  => {
       const populatedSafetyQuestions: CatDUniqueTypes.SafetyQuestions =
         {
           questions: [{ description: 'test s01', outcome: null }],
