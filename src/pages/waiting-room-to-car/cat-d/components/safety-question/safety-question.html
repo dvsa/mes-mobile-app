@@ -1,0 +1,36 @@
+<form>
+  <ion-row align-items-center [ngClass]="!isLastSafetyQuestion && 'mes-row-separator'"
+    class="mes-validated-row" id="safety-question-row" [formGroup]="formGroup" nowrap>
+    <ion-col col-40>
+      <ion-row>
+          <div>
+            {{questions[questionIndex].description}}
+          </div>
+      </ion-row>
+    </ion-col>
+    <ion-col col-28>
+      <ion-row>
+        <input type="radio"
+               [attr.name]="safetyQuestionOutcomeFieldName"
+               [attr.id]="'safetyQuestionsCorrect_'+safetyQuestionId"
+               class="gds-radio-button"
+               value="P"
+               [formControlName]="safetyQuestionOutcomeFieldName"
+               (change)="safetyQuestionsPassSelected()">
+        <label [for]="'safetyQuestionsCorrect_'+safetyQuestionId" class="radio-label">Correct</label>
+      </ion-row>
+    </ion-col>
+    <ion-col col-28>
+      <ion-row>
+        <input type="radio"
+               [attr.name]="safetyQuestionOutcomeFieldName"
+               [attr.id]="'safetyQuestionsFault_'+safetyQuestionId"
+               class="gds-radio-button"
+               value="DF"
+               [formControlName]="safetyQuestionOutcomeFieldName"
+               (change)="safetyQuestionsDrivingFaultSelected()">
+        <label [for]="'safetyQuestionsFault_'+safetyQuestionId" class="radio-label">1 driving fault</label>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</form>

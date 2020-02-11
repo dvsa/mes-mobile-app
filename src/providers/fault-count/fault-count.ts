@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../shared/models/vehicle-checks-score.model';
+import { SafetyQuestionsScore } from '../../shared/models/safety-questions-score.model';
 
-import { FaultCountBHelper }  from './cat-b/fault-count.cat-b';
+import { FaultCountBHelper } from './cat-b/fault-count.cat-b';
 import { FaultCountBEHelper } from './cat-be/fault-count.cat-be';
 import { FaultCountCHelper } from './cat-c/fault-count.cat-c';
 import { FaultCountDHelper } from './cat-d/fault-count.cat-d';
@@ -115,4 +116,13 @@ export class FaultCountProvider {
     }
   }
 
+  public getSafetyQuestionsFaultCount = (category: TestCategory, data: object): SafetyQuestionsScore => {
+    switch (category) {
+      case TestCategory.D1:
+      case TestCategory.D1E:
+      case TestCategory.DE:
+      case TestCategory.D: return FaultCountDHelper.getSafetyQuestionsFaultCountCatD(data);
+      default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
+    }
+  }
 }

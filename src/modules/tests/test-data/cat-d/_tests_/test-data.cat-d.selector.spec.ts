@@ -1,4 +1,4 @@
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import {
   hasSeriousFault,
   hasDangerousFault,
@@ -8,18 +8,16 @@ import {
 import {
   getDrivingFaultCount,
   getManoeuvres,
-  hasManoeuvreBeenCompletedCatBE,
+  hasManoeuvreBeenCompletedCatD,
   areTellMeQuestionsSelected,
   areTellMeQuestionsCorrect,
-  hasVehicleChecksBeenCompletedCatBE,
-  hasEyesightTestGotSeriousFault,
-  hasEyesightTestBeenCompleted,
-} from '../test-data.cat-be.selector';
+  hasVehicleChecksBeenCompletedCatD,
+} from '../test-data.cat-d.selector';
 import { Competencies } from '../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 describe('TestDataSelectors', () => {
-  const state: CatBEUniqueTypes.TestData = {
+  const state: CatDUniqueTypes.TestData = {
     drivingFaults: {
       controlsGears: 1,
     },
@@ -64,33 +62,15 @@ describe('TestDataSelectors', () => {
         },
       ],
     },
-    eyesightTest: {
-      complete: true,
-      seriousFault: false,
+    safetyQuestions: {
+      questions: [
+        {
+          description: '',
+          outcome: CompetencyOutcome.DF,
+        },
+      ],
     },
   };
-
-  describe('hasEyesightTestBeenCompleted', () => {
-    it('should return true if the eyesight test is complete', () => {
-      expect(hasEyesightTestBeenCompleted(state)).toBe(true);
-    });
-
-    it('should return false if the eyesight test is not complete', () => {
-      const newState: CatBEUniqueTypes.TestData = { ...state, eyesightTest: { complete: false } };
-      expect(hasEyesightTestBeenCompleted(newState)).toBe(false);
-    });
-  });
-
-  describe('hasEyesightTestGotSeriousFault', () => {
-    it('should return true if the eyesight test has a serious fault', () => {
-      const newState: CatBEUniqueTypes.TestData = { ...state, eyesightTest: { seriousFault: true } };
-      expect(hasEyesightTestGotSeriousFault(newState)).toBe(true);
-    });
-
-    it('should return false if the eyesight test does not have a serious fault', () => {
-      expect(hasEyesightTestGotSeriousFault(state)).toBe(false);
-    });
-  });
 
   describe('getDrivingFaultCount', () => {
     it('should return the driving fault count', () => {
@@ -178,25 +158,25 @@ describe('TestDataSelectors', () => {
 
   describe('hasManoeuvreBeenCompleted', () => {
     it('should return false when no manoeuvres have been completed', () => {
-      const state: CatBEUniqueTypes.TestData = {
+      const state: CatDUniqueTypes.TestData = {
         manoeuvres: {},
       };
-      expect(hasManoeuvreBeenCompletedCatBE(state)).toBeFalsy();
+      expect(hasManoeuvreBeenCompletedCatD(state)).toBeFalsy();
     });
     it('should return true when a manoeuvre has been completed', () => {
-      const state: CatBEUniqueTypes.TestData = {
+      const state: CatDUniqueTypes.TestData = {
         manoeuvres: {
           reverseLeft: { selected: true },
         },
       };
-      expect(hasManoeuvreBeenCompletedCatBE(state)).toEqual(true);
+      expect(hasManoeuvreBeenCompletedCatD(state)).toEqual(true);
     });
   });
 
   describe('vehicle checks selector', () => {
     describe('areTellMeQuestionsSelected', () => {
       it('should return true if there is a tell me question selected', () => {
-        const state: CatBEUniqueTypes.VehicleChecks = {
+        const state: CatDUniqueTypes.VehicleChecks = {
           tellMeQuestions: [
             {
               code: 'T1',
@@ -212,7 +192,7 @@ describe('TestDataSelectors', () => {
       });
     });
     describe('areTellMeQuestionsCorrect', () => {
-      const passedState: CatBEUniqueTypes.VehicleChecks = {
+      const passedState: CatDUniqueTypes.VehicleChecks = {
         tellMeQuestions: [
           {
             code: 'T1',
@@ -226,7 +206,7 @@ describe('TestDataSelectors', () => {
         expect(areTellMeQuestionsCorrect(passedState)).toBe(true);
       });
       it('should return false if the tell me question is marked as a driving fault', () => {
-        const failedState: CatBEUniqueTypes.VehicleChecks = {
+        const failedState: CatDUniqueTypes.VehicleChecks = {
           tellMeQuestions: [
             {
               code: 'T1',
@@ -263,9 +243,9 @@ describe('TestDataSelectors', () => {
               },
             ],
           },
-        } as CatBEUniqueTypes.TestData;
+        } as CatDUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatD(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a driving fault', () => {
         const state = {
@@ -290,9 +270,9 @@ describe('TestDataSelectors', () => {
               },
             ],
           },
-        } as CatBEUniqueTypes.TestData;
+        } as CatDUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatD(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a serious fault', () => {
         const state = {
@@ -317,9 +297,9 @@ describe('TestDataSelectors', () => {
               },
             ],
           },
-        } as CatBEUniqueTypes.TestData;
+        } as CatDUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatD(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a dangerous fault', () => {
         const state = {
@@ -344,9 +324,9 @@ describe('TestDataSelectors', () => {
               },
             ],
           },
-        } as CatBEUniqueTypes.TestData;
+        } as CatDUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatD(state)).toEqual(true);
       });
       it('should return false if show me question outcome is not defined', () => {
         const state = {
@@ -362,9 +342,9 @@ describe('TestDataSelectors', () => {
               },
             ],
           },
-        } as CatBEUniqueTypes.TestData;
+        } as CatDUniqueTypes.TestData;
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(false);
+        expect(hasVehicleChecksBeenCompletedCatD(state)).toEqual(false);
       });
     });
   });
