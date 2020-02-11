@@ -622,32 +622,6 @@ describe('CompetencyComponent', () => {
     });
   });
 
-  describe('addSingleFault', () => {
-    it('should not dispatch an ADD_SERIOUS_FAULT action if a dangerous fault exists on competency', () => {
-      component.competency = Competencies.useOfStand;
-      component.oneFaultLimit = true;
-      component.hasDangerousFault = true;
-      component.isSeriousMode = true;
-
-      const storeDispatchSpy = spyOn(store$, 'dispatch');
-      component.addOrRemoveFault(true);
-
-      expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddSeriousFault(component.competency));
-    });
-
-    it('should not dispatch an ADD_DANGEROUS_FAULT action if a serious fault exists on competency', () => {
-      component.competency = Competencies.useOfStand;
-      component.oneFaultLimit = true;
-      component.hasSeriousFault = true;
-      component.isDangerousMode = true;
-
-      const storeDispatchSpy = spyOn(store$, 'dispatch');
-      component.addOrRemoveFault(true);
-
-      expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDangerousFault(component.competency));
-    });
-  });
-
   describe('competencyHasFault', () => {
     it('should return true if competency has a driving fault', () => {
       component.faultCount = 1;

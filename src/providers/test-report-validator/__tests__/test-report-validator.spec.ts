@@ -2,15 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { TestReportValidatorProvider } from '../test-report-validator';
 import { FaultCountProvider } from '../../fault-count/fault-count';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import {
-  validTestCatBE,
-  validTestCatB,
-  validTestCatCNonTrailer,
-  validTestCatCTrailer,
-  legalRequirementsCatCNonTrailer,
-  legalRequirementsCatCTrailer,
-} from '../__mocks__/test-result.mock';
-import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
+import * as mocks from '../__mocks__/test-result.mock';
 import { TestData } from '@dvsa/mes-test-schema/categories/common';
 import { TestData as CatAMod1TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { configureTestSuite } from 'ng-bullet';
@@ -18,11 +10,17 @@ import { SpeedCheckState } from '../test-report-validator.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 describe('TestReportValidator', () => {
-  const cCats = [
-    { category: TestCategory.C, validTest: validTestCatCNonTrailer, legalReqs: legalRequirementsCatCNonTrailer },
-    { category: TestCategory.C1, validTest: validTestCatCNonTrailer, legalReqs: legalRequirementsCatCNonTrailer },
-    { category: TestCategory.CE, validTest: validTestCatCTrailer, legalReqs: legalRequirementsCatCTrailer },
-    { category: TestCategory.C1E, validTest: validTestCatCTrailer, legalReqs: legalRequirementsCatCTrailer },
+  const categories = [
+    { category: TestCategory.B, validTest: mocks.validTestCatB, legalReqs: mocks.legalRequirementsB },
+    { category: TestCategory.BE, validTest: mocks.validTestCatBE, legalReqs: mocks.legalRequirementsBE },
+    { category: TestCategory.C, validTest: mocks.validTestCatC, legalReqs: mocks.legalRequirementsCatCAndC1 },
+    { category: TestCategory.C1, validTest: mocks.validTestCatC1, legalReqs: mocks.legalRequirementsCatCAndC1 },
+    { category: TestCategory.CE, validTest: mocks.validTestCatCE, legalReqs: mocks.legalRequirementsCatCEAndC1E },
+    { category: TestCategory.C1E, validTest: mocks.validTestCatC1E, legalReqs: mocks.legalRequirementsCatCEAndC1E },
+    { category: TestCategory.D, validTest: mocks.validTestCatD, legalReqs: mocks.legalRequirementsCatD },
+    { category: TestCategory.D1, validTest: mocks.validTestCatD1, legalReqs: mocks.legalRequirementsCatD1 },
+    { category: TestCategory.DE, validTest: mocks.validTestCatDE, legalReqs: mocks.legalRequirementsCatDE },
+    { category: TestCategory.D1E, validTest: mocks.validTestCatD1E, legalReqs: mocks.legalRequirementsCatD1E },
   ];
 
   let testReportValidatorProvider: TestReportValidatorProvider;
@@ -41,24 +39,7 @@ describe('TestReportValidator', () => {
   });
 
   describe('isTestReportValid', () => {
-    it('should return true if the test report is valid on a Cat B test', () => {
-      const result = testReportValidatorProvider.isTestReportValid(validTestCatB, TestCategory.B);
-      expect(result).toEqual(true);
-    });
-    it('should return false if the test report is not valid for a Cat B test', () => {
-      const result = testReportValidatorProvider.isTestReportValid({}, TestCategory.B);
-      expect(result).toEqual(false);
-    });
-    it('should return true if the test report is valid for a Cat BE test', () => {
-      const result = testReportValidatorProvider.isTestReportValid(validTestCatBE , TestCategory.BE);
-      expect(result).toEqual(true);
-    });
-    it('should return false if the test report is not valid for a Cat BE test', () => {
-      const result = testReportValidatorProvider.isTestReportValid({}, TestCategory.BE);
-      expect(result).toEqual(false);
-    });
-
-    cCats.forEach((cat) => {
+    categories.forEach((cat) => {
       it(`should return true if the test report is valid for a Cat ${cat.category} test`, () => {
         const result = testReportValidatorProvider.isTestReportValid(cat.validTest, cat.category);
         expect(result).toEqual(true);
@@ -71,37 +52,7 @@ describe('TestReportValidator', () => {
 
   });
   describe('getMissingLegalRequirements', () => {
-    it('should return an empty array if the legal requirements are met for a Cat B test', () => {
-      const result = testReportValidatorProvider.getMissingLegalRequirements(validTestCatB, TestCategory.B);
-      expect(result.length).toEqual(0);
-    });
-    it('should return any missing legal requirements for a Cat B test', () => {
-      const result = testReportValidatorProvider.getMissingLegalRequirements({}, TestCategory.B);
-      expect(result.length).toEqual(7);
-      expect(result).toContain(legalRequirementsLabels.normalStart1);
-      expect(result).toContain(legalRequirementsLabels.normalStart2);
-      expect(result).toContain(legalRequirementsLabels.angledStart);
-      expect(result).toContain(legalRequirementsLabels.hillStart);
-      expect(result).toContain(legalRequirementsLabels.manoeuvre);
-      expect(result).toContain(legalRequirementsLabels.vehicleChecks);
-      expect(result).toContain(legalRequirementsLabels.eco);
-    });
-    it('should return an empty array if the legal requirements are met for a Cat BE test', () => {
-      const result = testReportValidatorProvider.getMissingLegalRequirements(validTestCatBE, TestCategory.BE);
-      expect(result.length).toEqual(0);
-    });
-    it('should return any missing legal requirements for a Cat BE test', () => {
-      const result = testReportValidatorProvider.getMissingLegalRequirements({}, TestCategory.BE);
-      expect(result.length).toEqual(6);
-      expect(result).toContain(legalRequirementsLabels.normalStart1);
-      expect(result).toContain(legalRequirementsLabels.uphillStart);
-      expect(result).toContain(legalRequirementsLabels.angledStartControlledStop);
-      expect(result).toContain(legalRequirementsLabels.manoeuvre);
-      expect(result).toContain(legalRequirementsLabels.eco);
-      expect(result).toContain(legalRequirementsLabels.uncoupleRecouple);
-    });
-
-    cCats.forEach((cat) => {
+    categories.forEach((cat) => {
       it(`should return an empty array if the legal requirements are met for a Cat ${cat.category} test`, () => {
         const result = testReportValidatorProvider.getMissingLegalRequirements(cat.validTest, cat.category);
         expect(result.length).toEqual(0);
@@ -173,41 +124,6 @@ describe('TestReportValidator', () => {
 
       const result = testReportValidatorProvider.isETAValid(data, TestCategory.BE);
       expect(result).toEqual(false);
-    });
-    cCats.forEach((cat) => {
-      it(`should return true if there is a ETA and a Serious Fault for Cat ${cat.category}`, () => {
-        const data: TestData = {
-          ETA: {
-            physical: true,
-          },
-          seriousFaults: {
-            ancillaryControls: true,
-          },
-        };
-
-        const result = testReportValidatorProvider.isETAValid(data, cat.category);
-        expect(result).toEqual(true);
-      });
-      it(`should return true if there is a Serious Fault and no ETA for Cat ${cat.category}`, () => {
-        const data: TestData = {
-          seriousFaults: {
-            clearance: true,
-          },
-        };
-
-        const result = testReportValidatorProvider.isETAValid(data, cat.category);
-        expect(result).toEqual(true);
-      });
-      it(`should return false if there is a ETA and no Serious or Dangerous Faults for Cat ${cat.category}`, () => {
-        const data: TestData = {
-          ETA: {
-            verbal: true,
-          },
-        };
-
-        const result = testReportValidatorProvider.isETAValid(data, cat.category);
-        expect(result).toEqual(false);
-      });
     });
   });
 

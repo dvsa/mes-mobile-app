@@ -28,16 +28,3 @@ Feature: Waiting Room to Car
       Then validation item "waiting-room-to-car-tell-me-validation-text" should not be visible
       And validation item "waiting-room-to-car-tell-me-outcome-validation-text" should be "Select a 'Tell me' question outcome"
       And validation item "waiting-room-to-car-tell-me-outcome-validation-text" should be visible
-
-   Scenario: Adding a Tell me question fault carries through to test
-      Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
-      When I start the test for "Miss Florence Pearson"
-      And the candidate completes the declaration page
-      And the candidate confirms their declaration
-      Then I should see the "Declaration - Florence Pearson" page
-      And the candidate enters a new email address
-      And I proceed to the car
-      Then I should see the "Florence Pearson" page
-      When I complete the waiting room to car page with a tell me driver fault
-      Then the driver fault count is "1"
-      And the competency "Show me / Tell me" driver fault count is "1"
