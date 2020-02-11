@@ -37,12 +37,16 @@ Feature: Full end to end journey
       And the candidate completes the declaration page
       And the candidate confirms their declaration
       Then I should see the "Declaration - Jane Doe" page
-      And the candidate enters a new email address
+      And the communication page candidate name should be "Mrs Jane Doe"
+      And the communication page candidate driver number should be "DOEXX 625364 A99HC"
+      And the email "jane.doe@example.com" has been provided and is preselected
+      When the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Jane Doe" page
       And I complete the waiting room to car page with a tell me driver fault
       Then I should see the "Test report - Jane Doe" page
       And the driver fault count is "1"
+      And the competency "Show me / Tell me" driver fault count is "1"
       When I end the test
       Then the legal requirements pop up is present
       And the required test observation is present "NS (normal start)"
@@ -154,6 +158,8 @@ Feature: Full end to end journey
       When I check candidate details for "Miss Theresa Shaw"
       And I start the test for "Miss Theresa Shaw"
       Then I should see the "Declaration - Theresa Shaw" page
+      And the waiting room candidate name should be "Miss Theresa Shaw"
+      And the waiting room candidate driver number should be "SHAWX 744220 A99HC"
       And I terminate the test
       Then I should see the Debrief page with outcome "Terminated"
       When I end the debrief

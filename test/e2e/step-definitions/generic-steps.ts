@@ -183,6 +183,12 @@ Then('validation item {string} should not be visible', (validationId: string) =>
   return expect(validationElement.getAttribute('class')).to.eventually.not.contain('ng-invalid');
 });
 
+Then('validation item {string} should not exist', (validationId: string) => {
+  element.all(by.id(validationId)).then((elements) => {
+    expect(elements.length).to.equal(0);
+  });
+});
+
 Then('validation item {string} should be {string}', (validationId: string, validationText: string) => {
   const validationElement = getElement(by.css(`#${validationId}`));
   return expect(validationElement.getText()).to.eventually.equal(validationText);
