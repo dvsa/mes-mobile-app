@@ -1,0 +1,19 @@
+<competency-button class="legal-button"
+  [onTap]="toggleLegalRequirement"
+  [onPress]="toggleLegalRequirement"
+  [ripple]="false"
+  [ngClass]="{
+    'complete': ticked
+  }"
+>
+  <div class="tickwrapper">
+    <tick-indicator [ticked]="requirement1Ticked"></tick-indicator>
+  </div>
+  <div></div>
+  <div class="tickwrapper">
+    <tick-indicator [ticked]="requirement2Ticked"></tick-indicator>
+  </div>
+  <div [ngClass]="getLegalRequirementClass()">  
+    <span class='competency-label'>{{ getLabel1() }}</span>
+  </div>
+</competency-button>

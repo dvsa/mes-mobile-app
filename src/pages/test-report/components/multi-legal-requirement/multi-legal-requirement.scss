@@ -1,0 +1,36 @@
+multi-legal-requirement {
+  competency-button {
+    position: relative;
+
+    .label {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .normal-start-label {
+      padding-right: 17%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .tickwrapper {
+      display: flex;
+      justify-content: center;
+      padding-right: 10px;
+    }
+
+    &.complete {
+      .competency-button {
+        border: 2px solid map-get($colors-gds, "gds-green");
+        color: map-get($colors-gds, "gds-green");
+
+        .competency-label {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+}

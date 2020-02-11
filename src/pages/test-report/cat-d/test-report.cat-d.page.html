@@ -24,20 +24,32 @@
       <!-- Column 1-->
       <ion-col col-32 >
         <ion-row class="padding-top-10 only-top-padding">
-          <ion-col>
-            <legal-requirement
-              [legalRequirement]="legalRequirements.normalStart1"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart1]"
+          <ion-col col-44>
+            <multi-legal-requirement
+              [legalRequirement1]="legalRequirements.normalStart1"
+              [legalRequirement2]="legalRequirements.normalStart2"
+              [requirement1Ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart1]"
+              [requirement2Ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart2]"
             >
-            </legal-requirement>
+            </multi-legal-requirement>
           </ion-col>
-          <ion-col>
+          <ion-col col-8></ion-col>
+          <ion-col col-44>
+            <multi-legal-requirement
+              [legalRequirement1]="legalRequirements.busStop1"
+              [legalRequirement2]="legalRequirements.busStop2"
+              [requirement1Ticked]="(pageState.testRequirements$ | async)[legalRequirements.busStop1]"
+              [requirement2Ticked]="(pageState.testRequirements$ | async)[legalRequirements.busStop2]"
+            >
+            </multi-legal-requirement>
+          </ion-col>
+          <!-- <ion-col>
             <legal-requirement
               [legalRequirement]="legalRequirements.normalStart2"
               [ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart2]"
             >
             </legal-requirement>
-          </ion-col>
+          </ion-col> -->
         </ion-row>
         <ion-row>
           <ion-col col-28>
