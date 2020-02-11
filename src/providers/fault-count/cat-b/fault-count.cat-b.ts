@@ -1,7 +1,7 @@
 import { pickBy } from 'lodash';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
-import { getCompetencyFaults } from '../../../shared/helpers/competency';
+import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 import { sumManoeuvreFaults } from '../../../shared/helpers/faults';
 
 export class FaultCountBHelper {

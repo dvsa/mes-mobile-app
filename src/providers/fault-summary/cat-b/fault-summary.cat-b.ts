@@ -9,7 +9,7 @@ import {
   manoeuvreCompetencyLabels as manoeuvreCompetencyLabelsCatB,
   manoeuvreTypeLabels as manoeuvreTypeLabelsCatB,
 } from '../../../shared/constants/competencies/catb-manoeuvres';
-import { getCompetencyFaults, getCompetencyComment } from '../../../shared/helpers/competency';
+import { getCompetencyFaults, getCompetencyComment } from '../../../shared/helpers/get-competency-faults';
 
 export class FaultSummaryCatBHelper {
 

@@ -5,8 +5,8 @@ import { CompetencyDisplayName } from '../../../shared/models/competency-display
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { ManoeuvreTypes } from '../../../modules/tests/test-data/test-data.constants';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { getCompetencyFaults, getCompetencyComment } from '../../../shared/helpers/competency';
 import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { getCompetencyFaults, getCompetencyComment } from '../../../shared/helpers/get-competency-faults';
 import {
   manoeuvreCompetencyLabelsCatD,
   manoeuvreTypeLabelsCatD,

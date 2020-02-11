@@ -4,7 +4,7 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { sumManoeuvreFaults } from '../../../shared/helpers/faults';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
-import { getCompetencyFaults } from '../../../shared/helpers/competency';
+import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 
 export class FaultCountBEHelper {
 

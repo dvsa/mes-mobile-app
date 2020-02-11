@@ -1,128 +1,157 @@
 import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
-import { getCompetencyFaults } from '../../../shared/helpers/competency';
+import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
+import { get } from 'lodash';
 
 export class FaultSummaryCatAM1Helper {
 
   public static getDrivingFaultsCatAM1(data: TestData): FaultSummary[] {
-    if (this.hasEmergencyStopAndAvoidanceRidingFaults(data)) {
-      return [
-        ...getCompetencyFaults(data.drivingFaults),
-        this.createEmergencyStopFaultSummary(),
-        this.createAvoidanceFaultSummary(),
-      ];
-    }
-
-    if (this.hasEmergencyStopRidingFault(data)) {
-      return [
-        ...getCompetencyFaults(data.drivingFaults),
-        this.createEmergencyStopFaultSummary(),
-      ];
-    }
-
-    if (this.hasAvoidanceRidingFault(data)) {
-      return [
-        ...getCompetencyFaults(data.drivingFaults),
-        this.createAvoidanceFaultSummary(),
-      ];
-    }
-
     return [
       ...getCompetencyFaults(data.drivingFaults),
     ];
   }
 
   public static getSeriousFaultsCatAM1(data: TestData): FaultSummary[] {
-    if (this.hasEmergencyStopAndAvoidanceSeriousFaults(data)) {
-      return [
-        ...getCompetencyFaults(data.seriousFaults),
-        this.createEmergencyStopFaultSummary(),
-        this.createAvoidanceFaultSummary(),
-      ];
+    const allCompetencyFaults = [];
+    const emergencyStopHasSpeedNotMetSeriousFault = get(data, 'emergencyStop.speedNotMetSeriousFault') || false;
+    const avoidanceHasSpeedNotMetSeriousFault = get(data, 'avoidance.speedNotMetSeriousFault') || false;
+
+    if (emergencyStopHasSpeedNotMetSeriousFault) {
+      allCompetencyFaults.push(this.createEmergencyStopFaultSummary());
+    }
+    if (avoidanceHasSpeedNotMetSeriousFault) {
+      allCompetencyFaults.push(this.createAvoidanceFaultSummary());
     }
 
-    if (this.hasEmergencyStopSeriousFault(data)) {
-      return [
-        ...getCompetencyFaults(data.seriousFaults),
-        this.createEmergencyStopFaultSummary(),
-      ];
-    }
-
-    if (this.hasAvoidanceSeriousFault(data)) {
-      return [
-        ...getCompetencyFaults(data.seriousFaults),
-        this.createAvoidanceFaultSummary(),
-      ];
-    }
-
-    return [
-      ...getCompetencyFaults(data.seriousFaults),
-    ];
+    allCompetencyFaults.push(...getCompetencyFaults(data.seriousFaults));
+    return allCompetencyFaults;
   }
 
   public static getDangerousFaultsCatAM1(data: TestData): FaultSummary[] {
-    if (this.hasEmergencyStopAndAvoidanceDangerousFaults(data)) {
-      return [
-        ...getCompetencyFaults(data.dangerousFaults),
-        this.createEmergencyStopFaultSummary(),
-        this.createAvoidanceFaultSummary(),
-      ];
-    }
-
-    if (this.hasEmergencyStopDangerousFault(data)) {
-      return [
-        ...getCompetencyFaults(data.dangerousFaults),
-        this.createEmergencyStopFaultSummary(),
-      ];
-    }
-
-    if (this.hasAvoidanceDangerousFault(data)) {
-      return [
-        ...getCompetencyFaults(data.dangerousFaults),
-        this.createAvoidanceFaultSummary(),
-      ];
-    }
-
     return [
       ...getCompetencyFaults(data.dangerousFaults),
     ];
   }
 
-  public static hasEmergencyStopAndAvoidanceRidingFaults(data: TestData) {
-    return this.hasEmergencyStopRidingFault(data) && this.hasAvoidanceRidingFault(data);
-  }
+  // public static getDrivingFaultsCatAM1(data: TestData): FaultSummary[] {
+  //   if (this.hasEmergencyStopAndAvoidanceRidingFaults(data)) {
+  //     return [
+  //       ...getCompetencyFaults(data.drivingFaults),
+  //       this.createEmergencyStopFaultSummary(),
+  //       this.createAvoidanceFaultSummary(),
+  //     ];
+  //   }
 
-  public static hasEmergencyStopAndAvoidanceSeriousFaults(data: TestData) {
-    return this.hasEmergencyStopSeriousFault(data) && this.hasAvoidanceSeriousFault(data);
-  }
+  //   if (this.hasEmergencyStopRidingFault(data)) {
+  //     return [
+  //       ...getCompetencyFaults(data.drivingFaults),
+  //       this.createEmergencyStopFaultSummary(),
+  //     ];
+  //   }
 
-  public static hasEmergencyStopAndAvoidanceDangerousFaults(data: TestData) {
-    return this.hasEmergencyStopDangerousFault(data) && this.hasAvoidanceDangerousFault(data);
-  }
+  //   if (this.hasAvoidanceRidingFault(data)) {
+  //     return [
+  //       ...getCompetencyFaults(data.drivingFaults),
+  //       this.createAvoidanceFaultSummary(),
+  //     ];
+  //   }
 
-  public static hasEmergencyStopRidingFault(data: TestData): boolean {
-    return data.emergencyStop.outcome === 'DF' ? true : false;
-  }
+  //   return [
+  //     ...getCompetencyFaults(data.drivingFaults),
+  //   ];
+  // }
 
-  public static hasAvoidanceRidingFault(data: TestData): boolean {
-    return data.avoidance.outcome === 'DF' ? true : false;
-  }
+  // public static getSeriousFaultsCatAM1(data: TestData): FaultSummary[] {
+  //   if (this.hasEmergencyStopAndAvoidanceSeriousFaults(data)) {
+  //     return [
+  //       ...getCompetencyFaults(data.seriousFaults),
+  //       this.createEmergencyStopFaultSummary(),
+  //       this.createAvoidanceFaultSummary(),
+  //     ];
+  //   }
 
-  public static hasEmergencyStopSeriousFault(data: TestData): boolean {
-    return data.emergencyStop.outcome === 'S' ? true : false;
-  }
+  //   if (this.hasEmergencyStopSeriousFault(data)) {
+  //     return [
+  //       ...getCompetencyFaults(data.seriousFaults),
+  //       this.createEmergencyStopFaultSummary(),
+  //     ];
+  //   }
 
-  public static hasAvoidanceSeriousFault(data: TestData): boolean {
-    return data.avoidance.outcome === 'S' ? true : false;
-  }
+  //   if (this.hasAvoidanceSeriousFault(data)) {
+  //     return [
+  //       ...getCompetencyFaults(data.seriousFaults),
+  //       this.createAvoidanceFaultSummary(),
+  //     ];
+  //   }
 
-  public static hasEmergencyStopDangerousFault(data: TestData): boolean {
-    return data.emergencyStop.outcome === 'D' ? true : false;
-  }
+  //   return [
+  //     ...getCompetencyFaults(data.seriousFaults),
+  //   ];
+  // }
 
-  public static hasAvoidanceDangerousFault(data: TestData): boolean {
-    return data.avoidance.outcome === 'D' ? true : false;
-  }
+  // public static getDangerousFaultsCatAM1(data: TestData): FaultSummary[] {
+  //   if (this.hasEmergencyStopAndAvoidanceDangerousFaults(data)) {
+  //     return [
+  //       ...getCompetencyFaults(data.dangerousFaults),
+  //       this.createEmergencyStopFaultSummary(),
+  //       this.createAvoidanceFaultSummary(),
+  //     ];
+  //   }
+
+  //   if (this.hasEmergencyStopDangerousFault(data)) {
+  //     return [
+  //       ...getCompetencyFaults(data.dangerousFaults),
+  //       this.createEmergencyStopFaultSummary(),
+  //     ];
+  //   }
+
+  //   if (this.hasAvoidanceDangerousFault(data)) {
+  //     return [
+  //       ...getCompetencyFaults(data.dangerousFaults),
+  //       this.createAvoidanceFaultSummary(),
+  //     ];
+  //   }
+
+  //   return [
+  //     ...getCompetencyFaults(data.dangerousFaults),
+  //   ];
+  // }
+
+  // public static hasEmergencyStopAndAvoidanceRidingFaults(data: TestData) {
+  //   return this.hasEmergencyStopRidingFault(data) && this.hasAvoidanceRidingFault(data);
+  // }
+
+  // public static hasEmergencyStopAndAvoidanceSeriousFaults(data: TestData) {
+  //   return this.hasEmergencyStopSeriousFault(data) && this.hasAvoidanceSeriousFault(data);
+  // }
+
+  // public static hasEmergencyStopAndAvoidanceDangerousFaults(data: TestData) {
+  //   return this.hasEmergencyStopDangerousFault(data) && this.hasAvoidanceDangerousFault(data);
+  // }
+
+  // public static hasEmergencyStopRidingFault(data: TestData): boolean {
+  //   return data.emergencyStop.outcome === 'DF' ? true : false;
+  // }
+
+  // public static hasAvoidanceRidingFault(data: TestData): boolean {
+  //   return data.avoidance.outcome === 'DF' ? true : false;
+  // }
+
+  // public static hasEmergencyStopSeriousFault(data: TestData): boolean {
+  //   return data.emergencyStop.outcome === 'S' ? true : false;
+  // }
+
+  // public static hasAvoidanceSeriousFault(data: TestData): boolean {
+  //   return data.avoidance.outcome === 'S' ? true : false;
+  // }
+
+  // public static hasEmergencyStopDangerousFault(data: TestData): boolean {
+  //   return data.emergencyStop.outcome === 'D' ? true : false;
+  // }
+
+  // public static hasAvoidanceDangerousFault(data: TestData): boolean {
+  //   return data.avoidance.outcome === 'D' ? true : false;
+  // }
 
   public static createEmergencyStopFaultSummary(): FaultSummary {
     const faultSummary: FaultSummary = {
