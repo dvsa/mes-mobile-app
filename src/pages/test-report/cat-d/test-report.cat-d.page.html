@@ -30,6 +30,7 @@
               [legalRequirement2]="legalRequirements.normalStart2"
               [requirement1Ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart1]"
               [requirement2Ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart2]"
+              label="NS"
             >
             </multi-legal-requirement>
           </ion-col>
@@ -40,16 +41,10 @@
               [legalRequirement2]="legalRequirements.busStop2"
               [requirement1Ticked]="(pageState.testRequirements$ | async)[legalRequirements.busStop1]"
               [requirement2Ticked]="(pageState.testRequirements$ | async)[legalRequirements.busStop2]"
+              label="BS"
             >
             </multi-legal-requirement>
           </ion-col>
-          <!-- <ion-col>
-            <legal-requirement
-              [legalRequirement]="legalRequirements.normalStart2"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart2]"
-            >
-            </legal-requirement>
-          </ion-col> -->
         </ion-row>
         <ion-row>
           <ion-col col-28>
