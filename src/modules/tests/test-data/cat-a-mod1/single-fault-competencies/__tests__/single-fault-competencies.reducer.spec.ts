@@ -1,7 +1,7 @@
 import { singleFaultCompetenciesReducer, initialState } from '../single-fault-competencies.reducer';
 import * as singleFaultCompetencyActions from '../single-fault-competencies.actions';
 import { SingleFaultCompetencies } from '@dvsa/mes-test-schema/categories/AM1';
-import { Competencies } from '../../../test-data.constants';
+import { SingleFaultCompetencyNames } from '../../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 
 describe('single fault competencies reducer', () => {
@@ -10,11 +10,11 @@ describe('single fault competencies reducer', () => {
     it('should set the outcome for the specified single fault competency', () => {
       const state: SingleFaultCompetencies = { ...initialState };
       const action = new singleFaultCompetencyActions.SetSingleFaultCompetencyOutcome(
-        Competencies.uTurn, CompetencyOutcome.DF);
+        SingleFaultCompetencyNames.uTurn, CompetencyOutcome.DF);
       const result = singleFaultCompetenciesReducer(state, action);
       expect(result).toEqual({
         ...initialState,
-        uTurn: CompetencyOutcome,
+        uTurn: CompetencyOutcome.DF,
       });
     });
   });
@@ -22,14 +22,14 @@ describe('single fault competencies reducer', () => {
   describe('handle remove single fault competency outcome', () => {
     it('should remove the specified single fault competency', () => {
       const state: SingleFaultCompetencies = {
-        [Competencies.uTurn]: CompetencyOutcome.DF,
-        [Competencies.controlledStop]: CompetencyOutcome.D,
+        [SingleFaultCompetencyNames.uTurn]: CompetencyOutcome.DF,
+        [SingleFaultCompetencyNames.controlledStop]: CompetencyOutcome.D,
       };
       const action = new singleFaultCompetencyActions.RemoveSingleFaultCompetencyOutcome(
-        Competencies.controlledStop);
+        SingleFaultCompetencyNames.controlledStop);
       const result: SingleFaultCompetencies = singleFaultCompetenciesReducer(state, action);
       expect(result).toEqual({
-        [Competencies.uTurn]: CompetencyOutcome.DF,
+        [SingleFaultCompetencyNames.uTurn]: CompetencyOutcome.DF,
       });
     });
   });
@@ -38,7 +38,7 @@ describe('single fault competencies reducer', () => {
     it('should add a comment to the specified fault', () => {
       const state: SingleFaultCompetencies = { ...initialState };
       const action = new singleFaultCompetencyActions.AddSingleFaultCompetencyComment(
-        Competencies.controlledStop, 'some controlled stop comments');
+        SingleFaultCompetencyNames.controlledStop, 'some controlled stop comments');
       const result: SingleFaultCompetencies = singleFaultCompetenciesReducer(state, action);
       expect(result).toEqual({
         controlledStopComments: 'some controlled stop comments',

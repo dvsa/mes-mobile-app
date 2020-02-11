@@ -1,7 +1,7 @@
 
 import { Observable } from 'rxjs/Observable';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
+import { SingleFaultCompetencyNames } from '../../../../modules/tests/test-data/test-data.constants';
 import { Subscription } from 'rxjs/Subscription';
 import { Store, select } from '@ngrx/store';
 import { merge } from 'rxjs/observable/merge';
@@ -17,15 +17,24 @@ import {
   SetSingleFaultCompetencyOutcome,
 } from '../../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { getCurrentTest } from '../../../../modules/tests/tests.selector';
+import { getTestData } from '../../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
+import {
+  getSingleFaultCompetencies,
+  hasCompetencyDrivingFault,
+  hasCompetencySeriousFault,
+  hasCompetencyDangerousFault,
+} from '../../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.selector';
 
 interface SingleFaultCompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
 
-  // hasdrivingFault$: Observable<boolean>;
-  // hasSeriousFault$: Observable<boolean>;
-  // hasDangerousFault$: Observable<boolean>;
+  hasDrivingFault$: Observable<boolean>;
+  hasSeriousFault$: Observable<boolean>;
+  hasDangerousFault$: Observable<boolean>;
 }
 
 @Component({
@@ -34,7 +43,7 @@ interface SingleFaultCompetencyState {
 })
 export class SingleFaultCompetencyComponent implements OnInit, OnDestroy {
   @Input()
-  competency: Competencies;
+  competency: SingleFaultCompetencyNames;
 
   singleFaultCompetencyState: SingleFaultCompetencyState;
   subscription: Subscription;
@@ -55,7 +64,12 @@ export class SingleFaultCompetencyComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log('get actual fault value from store');
+    const singleFaultCompetencies$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+      select(getTestData),
+      select(getSingleFaultCompetencies),
+    );
 
     this.singleFaultCompetencyState = {
       isRemoveFaultMode$: this.store$.pipe(
@@ -67,18 +81,30 @@ export class SingleFaultCompetencyComponent implements OnInit, OnDestroy {
       isDangerousMode$: this.store$.pipe(
         select(getTestReportState),
         select(isDangerousMode)),
+      hasDrivingFault$: singleFaultCompetencies$.pipe(
+        select(singleFaultCompetencies => hasCompetencyDrivingFault(singleFaultCompetencies, this.competency))),
+      hasSeriousFault$: singleFaultCompetencies$.pipe(
+        select(singleFaultCompetencies => hasCompetencySeriousFault(singleFaultCompetencies, this.competency))),
+      hasDangerousFault$: singleFaultCompetencies$.pipe(
+        select(singleFaultCompetencies => hasCompetencyDangerousFault(singleFaultCompetencies, this.competency))),
     };
 
     const {
       isRemoveFaultMode$,
       isSeriousMode$,
       isDangerousMode$,
+      hasDrivingFault$,
+      hasSeriousFault$,
+      hasDangerousFault$,
     } = this.singleFaultCompetencyState;
 
     const merged$ = merge(
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
+      hasDrivingFault$.pipe(map(hasfault => this.hasDrivingFault = hasfault)),
+      hasSeriousFault$.pipe(map(hasfault => this.hasSeriousFault = hasfault)),
+      hasDangerousFault$.pipe(map(hasfault => this.hasDangerousFault = hasfault)),
     ).pipe(tap(this.canButtonRipple));
 
     this.subscription = merged$.subscribe();
@@ -99,6 +125,30 @@ export class SingleFaultCompetencyComponent implements OnInit, OnDestroy {
   }
 
   canButtonRipple = (): void => {
+    if (this.isRemoveFaultMode) {
+      if (this.hasDangerousFault && this.isDangerousMode) {
+        this.allowRipple = true;
+        return;
+      }
+
+      if (this.hasSeriousFault && this.isSeriousMode) {
+        this.allowRipple = true;
+        return;
+      }
+
+      if (!this.isSeriousMode && !this.isDangerousMode && this.hasDrivingFault) {
+        this.allowRipple = true;
+        return;
+      }
+
+      this.allowRipple = false;
+      return;
+    }
+
+    if (this.competencyHasFault()) {
+      this.allowRipple = false;
+    }
+
     this.allowRipple = true;
   }
 
@@ -157,5 +207,9 @@ export class SingleFaultCompetencyComponent implements OnInit, OnDestroy {
 
   competencyHasFault = (): boolean => {
     return this.hasDangerousFault || this.hasSeriousFault || this.hasDrivingFault;
+  }
+
+  getFaultCount = (): number => {
+    return this.hasDrivingFault ? 1 : 0;
   }
 }

@@ -3,13 +3,13 @@
   [onPress]="onPress"
   [ripple]="allowRipple"
   [ngClass]="{
-    'fault': faultCount > 0,
+    'fault': hasDrivingFault,
     'serious-fault': hasSeriousFault,
     'dangerous-fault': hasDangerousFault
   }"
 >
 
-  <driving-faults-badge class="driving-faults" [count]="faultCount"></driving-faults-badge>
+  <driving-faults-badge class="driving-faults" [count]="getFaultCount()"></driving-faults-badge>
   
   <span class='competency-label'>{{ getLabel() }}</span>
 

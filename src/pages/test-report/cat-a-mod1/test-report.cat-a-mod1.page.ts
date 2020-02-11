@@ -28,6 +28,7 @@ import {
 import {
   Competencies,
   ExaminerActions,
+  SingleFaultCompetencyNames,
 } from '../../../modules/tests/test-data/test-data.constants';
 import { getTestData } from '../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
@@ -62,6 +63,7 @@ export class TestReportCatAMod1Page extends BasePageComponent {
   pageState: TestReportPageState;
   subscription: Subscription;
   competencies = Competencies;
+  singleFaultCompetencyNames = SingleFaultCompetencyNames;
   eta = ExaminerActions;
   displayOverlay: boolean;
   isRemoveFaultMode: boolean = false;
