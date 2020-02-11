@@ -22,7 +22,7 @@ export class FaultSummaryProvider {
 
   constructor(private faultCountProvider: FaultCountProvider) { }
 
-  public getDrivingFaultsList(data: Object, category: TestCategory): FaultSummary[] {
+  public getDrivingFaultsList(data: object, category: TestCategory): FaultSummary[] {
     switch (category) {
       case TestCategory.B:
         return FaultSummaryCatBHelper.getDrivingFaultsCatB(data);
@@ -101,13 +101,15 @@ export class FaultSummaryProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
+        console.log('### getDrivingFaultsList');
+        console.log(FaultSummaryCatAM1Helper.getDrivingFaultsCatAM1(data));
         return FaultSummaryCatAM1Helper.getDrivingFaultsCatAM1(data);
       default:
         return [];
     }
   }
 
-  public getSeriousFaultsList(data: Object, category: TestCategory): FaultSummary[] {
+  public getSeriousFaultsList(data: object, category: TestCategory): FaultSummary[] {
     switch (category) {
       case TestCategory.B:
         return FaultSummaryCatBHelper.getSeriousFaultsCatB(data);
@@ -129,13 +131,15 @@ export class FaultSummaryProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
+        console.log('### getSeriousFaultsCatAM1');
+        console.log(FaultSummaryCatAM1Helper.getSeriousFaultsCatAM1(data));
         return FaultSummaryCatAM1Helper.getSeriousFaultsCatAM1(data);
       default:
         return [];
     }
   }
 
-  public getDangerousFaultsList(data: Object, category: TestCategory): FaultSummary[] {
+  public getDangerousFaultsList(data: object, category: TestCategory): FaultSummary[] {
     switch (category) {
       case TestCategory.B:
         return FaultSummaryCatBHelper.getDangerousFaultsCatB(data);
@@ -157,6 +161,8 @@ export class FaultSummaryProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
+        console.log('### getDangerousFaultsCatAM1');
+        console.log(FaultSummaryCatAM1Helper.getDangerousFaultsCatAM1(data));
         return FaultSummaryCatAM1Helper.getDangerousFaultsCatAM1(data);
       default:
         return [];
