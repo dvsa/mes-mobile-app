@@ -11,7 +11,7 @@ export enum legalRequirementsLabels {
   vehicleChecks = 'Show me / Tell me',
   uncoupleRecouple = 'Uncouple / Recouple',
   busStop1 = 'BS (bus stop)',
-  busStop2 = 'BS (bus stop',
+  busStop2 = 'BS (bus stop)',
 }
 
 export enum legalRequirementToggleValues {
