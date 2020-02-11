@@ -47,9 +47,7 @@ import {
   WeatherConditionsChanged,
   AdditionalInformationChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
-
-// TODO - PREP-AMOD1: Use cat a mod1 reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName,
   getCandidateDriverNumber,
@@ -64,20 +62,14 @@ import { getTestTime }
 import {
   getETA,
   getETAFaultText,
-  getEco,
-  getEcoFaultText,
 } from '../../../modules/tests/test-data/common/test-data.selector';
-
-// TODO - PREP-AMOD1: Use car a mod1 reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
 import {
   WeatherConditions,
   Identification,
-  IndependentDriving,
-  QuestionResult,
 } from '@dvsa/mes-test-schema/categories/common';
 import {
   AddDangerousFaultComment,
@@ -90,7 +82,6 @@ import {
   AddShowMeTellMeComment,
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
-import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
@@ -109,17 +100,9 @@ import {
 } from '../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 
-// TODO - PREP-AMOD1: Use cat a mod1 types
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
-
-// TODO - PREP-AMOD1: Use cat a mod1 selectors
-import {
-  vehicleChecksExist,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
-
-// TODO - PREP-AMOD1: Use cat a mod1 selectors
-import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -130,25 +113,18 @@ interface OfficePageState {
   isTestOutcomeSet$: Observable<boolean>;
   candidateName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
-  routeNumber$: Observable<number>;
-  displayRouteNumber$: Observable<boolean>;
-  displayIndependentDriving$: Observable<boolean>;
   displayCandidateDescription$: Observable<boolean>;
   displayIdentification$: Observable<boolean>;
   displayWeatherConditions$: Observable<boolean>;
   displayAdditionalInformation$: Observable<boolean>;
-  displayEco$: Observable<boolean>;
   displayEta$: Observable<boolean>;
   displayDrivingFault$: Observable<boolean>;
   displaySeriousFault$: Observable<boolean>;
   displayDangerousFault$: Observable<boolean>;
-  displayVehicleChecks$: Observable<boolean>;
   identification$: Observable<Identification>;
-  independentDriving$: Observable<IndependentDriving>;
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
   etaFaults$: Observable<string>;
-  ecoFaults$: Observable<string>;
   drivingFaults$: Observable<FaultSummary[]>;
   drivingFaultCount$: Observable<number>;
   displayDrivingFaultComments$: Observable<boolean>;
@@ -156,7 +132,6 @@ interface OfficePageState {
   dangerousFaults$: Observable<FaultSummary[]>;
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
-  vehicleChecks$: Observable<QuestionResult[]>;
 }
 
 @IonicPage()
@@ -242,25 +217,6 @@ export class OfficeCatAMod1Page extends BasePageComponent {
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
-      routeNumber$: currentTest$.pipe(
-        select(getTestSummary),
-        select(getRouteNumber),
-      ),
-      displayRouteNumber$: currentTest$.pipe(
-        select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getRouteNumber))),
-        map(([outcome, route]) => this.outcomeBehaviourProvider.isVisible(outcome, 'routeNumber', route)),
-      ),
-      displayIndependentDriving$: currentTest$.pipe(
-        select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getIndependentDriving))),
-        map(([outcome, independent]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'independentDriving', independent)),
-      ),
       displayCandidateDescription$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
@@ -293,14 +249,6 @@ export class OfficeCatAMod1Page extends BasePageComponent {
         map(([outcome, additional]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'additionalInformation', additional)),
       ),
-      displayEco$: currentTest$.pipe(
-        select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestData),
-          select(getEco))),
-        map(([outcome, eco]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'eco', eco)),
-      ),
       displayEta$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
@@ -311,62 +259,61 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       ),
       displayDrivingFault$: currentTest$.pipe(
         select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestData),
-        )),
-        map(([outcome, data]) =>
+        withLatestFrom(
+          currentTest$.pipe(
+            select(getTestData),
+          ),
+          currentTest$.pipe(
+            select(getTestCategory),
+            map(_ => <TestCategory>_),
+          ),
+        ),
+        map(([outcome, data, category]) =>
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-
-            // TODO - PREP-AMOD1: Use TestCategory A Mod1
-            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getDrivingFaultsList(data, category),
           )),
       ),
       displaySeriousFault$: currentTest$.pipe(
         select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestData),
-        )),
-        map(([outcome, data]) =>
+        withLatestFrom(
+          currentTest$.pipe(
+            select(getTestData),
+          ),
+          currentTest$.pipe(
+            select(getTestCategory),
+            map(_ => <TestCategory>_),
+          ),
+        ),
+        map(([outcome, data, category]) =>
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-
-            // TODO - PREP-AMOD1: Use TestCategory A Mod1
-            this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getSeriousFaultsList(data, category),
           )),
       ),
       displayDangerousFault$: currentTest$.pipe(
         select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestData),
-        )),
-        map(([outcome, data]) =>
+        withLatestFrom(
+          currentTest$.pipe(
+            select(getTestData),
+          ),
+          currentTest$.pipe(
+            select(getTestCategory),
+            map(_ => <TestCategory>_),
+          ),
+        ),
+        map(([outcome, data, category]) =>
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-
-            // TODO - PREP-AMOD1: Use TestCategory A Mod1
-            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getDrivingFaultsList(data, category),
           )),
-      ),
-      displayVehicleChecks$: currentTest$.pipe(
-          select(getTestOutcome),
-          withLatestFrom(currentTest$.pipe(
-            select(getTestData))),
-            map(([outcome, data]) =>
-            this.outcomeBehaviourProvider.isVisible(outcome,
-              'vehicleChecks',
-              vehicleChecksExist(data.vehicleChecks))),
       ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
         select(getCandidateDescription),
-      ),
-      independentDriving$: currentTest$.pipe(
-        select(getTestSummary),
-        select(getIndependentDriving),
       ),
       identification$: currentTest$.pipe(
         select(getTestSummary),
@@ -381,49 +328,54 @@ export class OfficeCatAMod1Page extends BasePageComponent {
         select(getETA),
         select(getETAFaultText),
       ),
-      ecoFaults$: currentTest$.pipe(
-        select(getTestData),
-        select(getEco),
-        select(getEcoFaultText),
-      ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO - PREP-AMOD1: Use TestCategory A Mod1
-        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestCategory),
+          map(_ => <TestCategory>_),
+        )),
+        map(([data, category]) => this.faultSummaryProvider.getDangerousFaultsList(data, category)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO - PREP-AMOD1: Use TestCategory A Mod1
-        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestCategory),
+          map(_ => <TestCategory>_),
+        )),
+        map(([data, category]) => this.faultSummaryProvider.getSeriousFaultsList(data, category)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO - PREP-AMOD1: Use TestCategory A Mod1
-        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestCategory),
+          map(_ => <TestCategory>_),
+        )),
+        map(([data, category]) => this.faultSummaryProvider.getDrivingFaultsList(data, category)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO - PREP-AMOD1: Use TestCategory A Mod1
-        map(data => this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data)),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestCategory),
+          map(_ => <TestCategory>_),
+        )),
+        map(([data, category]) => this.faultCountProvider.getDrivingFaultSumCount(category, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.shouldDisplayDrivingFaultComments(data)),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestCategory),
+          map(_ => <TestCategory>_),
+        )),
+        map(([data, category]) => this.shouldDisplayDrivingFaultComments(data, category)),
       ),
       weatherConditions$: currentTest$.pipe(
         select(getTestSummary),
         select(getWeatherConditions),
       ),
-      vehicleChecks$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecks),
-        map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
-      ),
     };
+
+    // Route number is not display and always set to 88 in 'Cat A MOD1' tests
+    this.store$.dispatch(new RouteNumberChanged(88));
   }
 
   popToRoot() {
@@ -447,16 +399,8 @@ export class OfficeCatAMod1Page extends BasePageComponent {
     this.store$.dispatch(new IdentificationUsedChanged(identification));
   }
 
-  independentDrivingChanged(independentDriving: IndependentDriving): void {
-    this.store$.dispatch(new IndependentDrivingTypeChanged(independentDriving));
-  }
-
   weatherConditionsChanged(weatherConditions: WeatherConditions[]): void {
     this.store$.dispatch(new WeatherConditionsChanged(weatherConditions));
-  }
-
-  routeNumberChanged(routeNumber: number) {
-    this.store$.dispatch(new RouteNumberChanged(routeNumber));
   }
 
   candidateDescriptionChanged(candidateDescription: string) {
@@ -484,9 +428,6 @@ export class OfficeCatAMod1Page extends BasePageComponent {
           dangerousFaultComment.comment),
       );
 
-    } else if (dangerousFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
-      this.store$.dispatch(new AddUncoupleRecoupleComment(dangerousFaultComment.comment));
-
     } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
     }
@@ -508,13 +449,6 @@ export class OfficeCatAMod1Page extends BasePageComponent {
           controlOrObservation,
           seriousFaultComment.comment),
       );
-
-    } else if (seriousFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
-      this.store$.dispatch(new AddUncoupleRecoupleComment(seriousFaultComment.comment));
-    } else if (seriousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
-      this.store$.dispatch(new AddShowMeTellMeComment(seriousFaultComment.comment));
-    } else if (seriousFaultComment.source === CommentSource.EYESIGHT_TEST) {
-      this.store$.dispatch(new EyesightTestAddComment(seriousFaultComment.comment));
     }
   }
 
@@ -535,12 +469,7 @@ export class OfficeCatAMod1Page extends BasePageComponent {
           drivingFaultComment.comment),
       );
 
-    } else if (drivingFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
-      this.store$.dispatch(new AddUncoupleRecoupleComment(drivingFaultComment.comment));
-    } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
-      this.store$.dispatch(new AddShowMeTellMeComment(drivingFaultComment.comment));
     }
-
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {
@@ -609,15 +538,12 @@ export class OfficeCatAMod1Page extends BasePageComponent {
     this.popToRoot();
   }
 
-  // TODO - PREP-AMOD1: Use cat a mod1 types
-  shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {
+  shouldDisplayDrivingFaultComments = (data: TestData, category: TestCategory): boolean => {
 
-    // TODO - PREP-AMOD1: Use TestCategory A Mod1
-    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data);
-    const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, data);
-    const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data);
+    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(category, data);
+    const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(category, data);
+    const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(category, data);
 
     return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
   }
-
 }
