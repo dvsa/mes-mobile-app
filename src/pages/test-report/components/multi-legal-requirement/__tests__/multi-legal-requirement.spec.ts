@@ -48,32 +48,65 @@ describe('MultiLegalRequirementComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should dispatch a TOGGLE_NORMAL_START_1 action', () => {
+    it('should dispatch a TOGGLE_NORMAL_START_1 action if neither requirement is  ticked', () => {
       component.legalRequirement1 = LegalRequirements.normalStart1;
+      component.requirement1Ticked = false;
+      component.legalRequirement2 = LegalRequirements.normalStart2;
+      component.requirement2Ticked = false;
       component.toggleLegalRequirement();
 
       expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.normalStart1));
     });
 
-    it('should dispatch a TOGGLE_NORMAL_START_2 action', () => {
+    it('should dispatch a TOGGLE_NORMAL_START_2 action if requirement1 ticked is true', () => {
+      component.legalRequirement1 = LegalRequirements.normalStart1;
+      component.requirement1Ticked = true;
       component.legalRequirement2 = LegalRequirements.normalStart2;
+      component.requirement2Ticked = false;
       component.toggleLegalRequirement();
 
       expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.normalStart2));
     });
   });
 
-  describe('getLegalRequirementClass', () => {
-    it('should return \'normal-start-class\' if component.legalRequirement value contains \'normalStart\'', () => {
-      component.legalRequirement1 = LegalRequirements.normalStart1;
+  it('should toggle both Normal start 1 and Normal start 2 if both requirements are ticked', () => {
+    component.legalRequirement1 = LegalRequirements.normalStart1;
+    component.requirement1Ticked = true;
+    component.legalRequirement2 = LegalRequirements.normalStart2;
+    component.requirement2Ticked = true;
+    component.toggleLegalRequirement();
+    expect(storeDispatchSpy).toHaveBeenCalledTimes(2);
+    expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.normalStart1));
+    expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.normalStart2));
+  });
 
-      expect(component.getLegalRequirementClass()).toEqual('normal-start-label');
-    });
+  it('should dispatch a TOGGLE_BUS_STOP_1 action if neither requirement is  ticked', () => {
+    component.legalRequirement1 = LegalRequirements.busStop1;
+    component.requirement1Ticked = false;
+    component.legalRequirement2 = LegalRequirements.busStop2;
+    component.requirement2Ticked = false;
+    component.toggleLegalRequirement();
 
-    it('should return \'label\' if component.legalRequirement value does not contain \'normalStart\'', () => {
-      component.legalRequirement1 = LegalRequirements.uphillStart;
+    expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.busStop1));
+  });
 
-      expect(component.getLegalRequirementClass()).toEqual('label');
-    });
+  it('should dispatch a TOGGLE_BUS_STOP_2 action if requirement1 ticked is true', () => {
+    component.legalRequirement1 = LegalRequirements.busStop1;
+    component.requirement1Ticked = true;
+    component.legalRequirement2 = LegalRequirements.busStop2;
+    component.requirement2Ticked = false;
+    component.toggleLegalRequirement();
+
+    expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.busStop2));
+  });
+  it('should toggle both bus stop 1 and bus stop 2 if both requirements are ticked', () => {
+    component.legalRequirement1 = LegalRequirements.busStop1;
+    component.requirement1Ticked = true;
+    component.legalRequirement2 = LegalRequirements.busStop2;
+    component.requirement2Ticked = true;
+    component.toggleLegalRequirement();
+    expect(storeDispatchSpy).toHaveBeenCalledTimes(2);
+    expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.busStop1));
+    expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.busStop2));
   });
 });

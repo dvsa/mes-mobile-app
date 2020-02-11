@@ -44,6 +44,7 @@ import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/un
 import {
   VehicleChecksTestReportCatDComponent,
 } from '../components/vehicle-checks-test-report/vehicle-checks-test-report.cat-d';
+import { MultiLegalRequirementComponent } from '../../components/multi-legal-requirement/multi-legal-requirement';
 
 describe('TestReportCatDPage', () => {
   let fixture: ComponentFixture<TestReportCatDPage>;
@@ -57,6 +58,7 @@ describe('TestReportCatDPage', () => {
         MockComponent(CompetencyComponent),
         MockComponent(CompetencyButtonComponent),
         MockComponent(LegalRequirementComponent),
+        MockComponent(MultiLegalRequirementComponent),
         MockComponent(EtaComponent),
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),
