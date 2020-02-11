@@ -41,7 +41,7 @@ describe('FaultCountCHelper', () => {
     });
   });
 
-  describe('getVehicleChecksFaultCountCatE', () => {
+  describe('getVehicleChecksFaultCountCatCE', () => {
     it('2 driving faults result in 1 driving faults and 1 serious', () => {
       expect((FaultCountCHelper as any)
         .getVehicleChecksFaultCountCatCE(vehicleChecksTwoFaults).drivingFaults).toEqual(1);
@@ -50,7 +50,7 @@ describe('FaultCountCHelper', () => {
     });
   });
 
-  describe('getVehicleChecksFaultCountCat1E', () => {
+  describe('getVehicleChecksFaultCountCatC1E', () => {
     it('2 driving faults result in 1 driving faults and 1 serious', () => {
       expect((FaultCountCHelper as any)
         .getVehicleChecksFaultCountCatC1E(vehicleChecksTwoFaults).drivingFaults).toEqual(1);
