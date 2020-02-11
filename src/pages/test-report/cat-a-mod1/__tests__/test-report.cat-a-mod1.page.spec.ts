@@ -48,6 +48,7 @@ import { CalculateTestResult, TerminateTestFromTestReport } from '../../test-rep
 import { SpeedCheckState } from '../../../../providers/test-report-validator/test-report-validator.constants';
 import { speedCheckLabels } from '../../../../shared/constants/competencies/cata-mod1-competencies';
 import { ModalReason } from '../components/activity-code-4-modal/activity-code-4-modal.constants';
+import { SingleFaultCompetencyComponent } from '../../components/single-fault-competency/single-fault-competency';
 
 describe('TestReportCatAMod1Page', () => {
   let fixture: ComponentFixture<TestReportCatAMod1Page>;
@@ -61,6 +62,7 @@ describe('TestReportCatAMod1Page', () => {
       declarations: [TestReportCatAMod1Page,
         MockComponent(TickIndicatorComponent),
         MockComponent(CompetencyComponent),
+        MockComponent(SingleFaultCompetencyComponent),
         MockComponent(CompetencyButtonComponent),
         MockComponent(LegalRequirementComponent),
         MockComponent(EtaComponent),
