@@ -1,8 +1,14 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
-import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
+import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
+import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
+import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 
 export const validTestCatB: CatBUniqueTypes.TestData = {
@@ -41,17 +47,6 @@ export const validTestCatBE: CatBEUniqueTypes.TestData = {
       selected: true,
     },
   },
-  vehicleChecks: {
-    tellMeQuestions: [
-      { outcome: CompetencyOutcome.P },
-      { outcome: CompetencyOutcome.P },
-    ],
-    showMeQuestions: [
-      { outcome: CompetencyOutcome.P },
-      { outcome: CompetencyOutcome.P },
-      { outcome: CompetencyOutcome.P },
-    ],
-  },
   eco: {
     completed: true,
   },
@@ -60,7 +55,7 @@ export const validTestCatBE: CatBEUniqueTypes.TestData = {
   },
 };
 
-export const validTestCatCNonTrailer: CatCUniqueTypes.TestData = {
+export const validTestCatC: CatCUniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
     normalStart2: true,
@@ -71,23 +66,12 @@ export const validTestCatCNonTrailer: CatCUniqueTypes.TestData = {
       selected: true,
     },
   },
-  vehicleChecks: {
-    tellMeQuestions: [
-      { outcome: CompetencyOutcome.P },
-      { outcome: CompetencyOutcome.P },
-    ],
-    showMeQuestions: [
-      { outcome: CompetencyOutcome.P },
-      { outcome: CompetencyOutcome.P },
-      { outcome: CompetencyOutcome.P },
-    ],
-  },
   eco: {
     completed: true,
   },
 };
 
-export const validTestCatCTrailer: CatCEUniqueTypes.TestData = {
+export const validTestCatC1: CatC1UniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
     normalStart2: true,
@@ -98,16 +82,21 @@ export const validTestCatCTrailer: CatCEUniqueTypes.TestData = {
       selected: true,
     },
   },
-  vehicleChecks: {
-    tellMeQuestions: [
-      { outcome: CompetencyOutcome.P },
-      { outcome: CompetencyOutcome.P },
-    ],
-    showMeQuestions: [
-      { outcome: CompetencyOutcome.P },
-      { outcome: CompetencyOutcome.P },
-      { outcome: CompetencyOutcome.P },
-    ],
+  eco: {
+    completed: true,
+  },
+};
+
+export const validTestCatCE: CatCEUniqueTypes.TestData = {
+  testRequirements: {
+    angledStartControlledStop: true,
+    normalStart2: true,
+    uphillStart: true,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
   },
   eco: {
     completed: true,
@@ -117,7 +106,119 @@ export const validTestCatCTrailer: CatCEUniqueTypes.TestData = {
   },
 };
 
-export const legalRequirementsCatCNonTrailer = [
+export const validTestCatC1E: CatC1EUniqueTypes.TestData = {
+  testRequirements: {
+    angledStartControlledStop: true,
+    normalStart2: true,
+    uphillStart: true,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+  eco: {
+    completed: true,
+  },
+  uncoupleRecouple: {
+    selected: true,
+  },
+};
+
+export const validTestCatD: CatDUniqueTypes.TestData = {
+  testRequirements: {
+    busStop1: true,
+    busStop2: true,
+    angledStartControlledStop: true,
+    uphillStart: true,
+  } as CatDUniqueTypes.TestRequirements,
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+  eco: {
+    completed: true,
+  },
+};
+
+export const validTestCatD1: CatD1UniqueTypes.TestData = {
+  testRequirements: {
+    normalStart1: true,
+    normalStart2: true,
+    angledStartControlledStop: true,
+    uphillStart: true,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+  eco: {
+    completed: true,
+  },
+};
+
+export const validTestCatDE: CatDEUniqueTypes.TestData = {
+  testRequirements: {
+    busStop1: true,
+    busStop2: true,
+    angledStartControlledStop: true,
+    uphillStart: true,
+  } as CatDEUniqueTypes.TestRequirements,
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+  eco: {
+    completed: true,
+  },
+  uncoupleRecouple: {
+    selected: true,
+  },
+};
+
+export const validTestCatD1E: CatD1EUniqueTypes.TestData = {
+  testRequirements: {
+    normalStart1: true,
+    normalStart2: true,
+    angledStartControlledStop: true,
+    uphillStart: true,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+  eco: {
+    completed: true,
+  },
+  uncoupleRecouple: {
+    selected: true,
+  },
+};
+
+export const legalRequirementsB = [
+  legalRequirementsLabels.normalStart1,
+  legalRequirementsLabels.normalStart2,
+  legalRequirementsLabels.angledStart,
+  legalRequirementsLabels.hillStart,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.vehicleChecks,
+  legalRequirementsLabels.eco,
+];
+
+export const legalRequirementsBE = [
+  legalRequirementsLabels.normalStart1,
+  legalRequirementsLabels.uphillStart,
+  legalRequirementsLabels.angledStartControlledStop,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.eco,
+  legalRequirementsLabels.uncoupleRecouple,
+];
+
+export const legalRequirementsCatCAndC1 = [
   legalRequirementsLabels.normalStart1,
   legalRequirementsLabels.uphillStart,
   legalRequirementsLabels.angledStartControlledStop,
@@ -125,8 +226,46 @@ export const legalRequirementsCatCNonTrailer = [
   legalRequirementsLabels.eco,
 ];
 
-export const legalRequirementsCatCTrailer = [
+export const legalRequirementsCatCEAndC1E = [
   legalRequirementsLabels.normalStart1,
+  legalRequirementsLabels.uphillStart,
+  legalRequirementsLabels.angledStartControlledStop,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.eco,
+  legalRequirementsLabels.uncoupleRecouple,
+];
+
+export const legalRequirementsCatD = [
+  legalRequirementsLabels.busStop1,
+  legalRequirementsLabels.busStop2,
+  legalRequirementsLabels.uphillStart,
+  legalRequirementsLabels.angledStartControlledStop,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.eco,
+];
+
+export const legalRequirementsCatD1 = [
+  legalRequirementsLabels.normalStart1,
+  legalRequirementsLabels.normalStart2,
+  legalRequirementsLabels.uphillStart,
+  legalRequirementsLabels.angledStartControlledStop,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.eco,
+];
+
+export const legalRequirementsCatDE = [
+  legalRequirementsLabels.busStop1,
+  legalRequirementsLabels.busStop2,
+  legalRequirementsLabels.uphillStart,
+  legalRequirementsLabels.angledStartControlledStop,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.eco,
+  legalRequirementsLabels.uncoupleRecouple,
+];
+
+export const legalRequirementsCatD1E = [
+  legalRequirementsLabels.normalStart1,
+  legalRequirementsLabels.normalStart2,
   legalRequirementsLabels.uphillStart,
   legalRequirementsLabels.angledStartControlledStop,
   legalRequirementsLabels.manoeuvre,
