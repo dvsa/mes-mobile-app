@@ -85,12 +85,6 @@ export default [
     description: 'Show me how you switch your headlight from dipped to main beam',
     shortName: 'Dipped to main beam',
   },
-  {
-    code: 'N/A',
-    description: 'Not applicable.',
-    shortName: 'Not applicable',
-  },
-
 ] as VehicleChecksQuestion[];
 
 export const NUMBER_OF_SHOW_ME_QUESTIONS = 3;
