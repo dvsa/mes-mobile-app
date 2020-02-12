@@ -12,8 +12,6 @@ export const getCompetencyFaults = (
   faults: DrivingFaults | SeriousFaults | DangerousFaults | SingleFaultCompetencies,
 ): FaultSummary[] => {
   const faultsEncountered: FaultSummary[] = [];
-  console.log('### faults');
-  console.log(faults);
 
   forOwn(
     faults,

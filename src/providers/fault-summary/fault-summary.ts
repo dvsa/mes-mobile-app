@@ -101,8 +101,6 @@ export class FaultSummaryProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
-        console.log('### getDrivingFaultsList');
-        console.log(FaultSummaryCatAM1Helper.getDrivingFaultsCatAM1(data));
         return FaultSummaryCatAM1Helper.getDrivingFaultsCatAM1(data);
       default:
         return [];
@@ -131,8 +129,6 @@ export class FaultSummaryProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
-        console.log('### getSeriousFaultsCatAM1');
-        console.log(FaultSummaryCatAM1Helper.getSeriousFaultsCatAM1(data));
         return FaultSummaryCatAM1Helper.getSeriousFaultsCatAM1(data);
       default:
         return [];
@@ -161,8 +157,6 @@ export class FaultSummaryProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
-        console.log('### getDangerousFaultsCatAM1');
-        console.log(FaultSummaryCatAM1Helper.getDangerousFaultsCatAM1(data));
         return FaultSummaryCatAM1Helper.getDangerousFaultsCatAM1(data);
       default:
         return [];
