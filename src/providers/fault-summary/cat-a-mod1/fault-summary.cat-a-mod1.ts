@@ -3,6 +3,7 @@ import { TestData, SingleFaultCompetencies, Avoidance, EmergencyStop } from '@dv
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 import { get, pickBy } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
+import { Competencies } from '../../../modules/tests/test-data/test-data.constants';
 
 export class FaultSummaryCatAM1Helper {
 
@@ -51,7 +52,7 @@ export class FaultSummaryCatAM1Helper {
   public static getAvoidanceFaults(avoidance: Avoidance, outcome: CompetencyOutcome): FaultSummary[] {
     const result = [];
     if (get(avoidance, 'outcome') === outcome) {
-      result.push(FaultSummaryCatAM1Helper.createFaultSummary('Avoidance'));
+      result.push(FaultSummaryCatAM1Helper.createFaultSummary(Competencies.avoidance));
     }
 
     return result;
@@ -60,7 +61,7 @@ export class FaultSummaryCatAM1Helper {
   public static getEmergencyStopFaults(emergencyStop: EmergencyStop, outcome: CompetencyOutcome): FaultSummary[] {
     const result = [];
     if (get(emergencyStop, 'outcome') === outcome) {
-      result.push(FaultSummaryCatAM1Helper.createFaultSummary('Emergency Stop'));
+      result.push(FaultSummaryCatAM1Helper.createFaultSummary(Competencies.emergencyStop));
     }
 
     return result;
@@ -69,7 +70,7 @@ export class FaultSummaryCatAM1Helper {
   public static getSpeedCheckAvoidance(avoidance: Avoidance): FaultSummary[] {
     const result = [];
     if (get(avoidance, 'speedNotMetSeriousFault')) {
-      result.push(FaultSummaryCatAM1Helper.createFaultSummary('Avoidance'));
+      result.push(FaultSummaryCatAM1Helper.createFaultSummary(Competencies.speedCheckAvoidance));
     }
 
     return result;
@@ -78,7 +79,7 @@ export class FaultSummaryCatAM1Helper {
   public static getSpeedCheckEmergencyStop(emergencyStop: EmergencyStop): FaultSummary[] {
     const result = [];
     if (get(emergencyStop, 'speedNotMetSeriousFault')) {
-      result.push(FaultSummaryCatAM1Helper.createFaultSummary('Emergency Stop'));
+      result.push(FaultSummaryCatAM1Helper.createFaultSummary(Competencies.speedCheckEmergency));
     }
 
     return result;

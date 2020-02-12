@@ -38,6 +38,8 @@ export enum Competencies {
   pedestrianCrossings = 'pedestrianCrossings',
   positionNormalStops = 'positionNormalStops',
   awarenessPlanning = 'awarenessPlanning',
+  emergencyStop = 'emergencyStop',
+  avoidance = 'avoidance',
   speedCheckEmergency = 'speedCheckEmergency',
   speedCheckAvoidance = 'speedCheckAvoidance',
 }
