@@ -10,7 +10,7 @@ export class FaultSummaryCatAM1Helper {
     console.log(data);
     return [
       ...getCompetencyFaults(data.drivingFaults),
-      ...getCompetencyFaults(data.singleFaultCompetencies)
+      ...getCompetencyFaults(data.singleFaultCompetencies),
     ];
   }
 
