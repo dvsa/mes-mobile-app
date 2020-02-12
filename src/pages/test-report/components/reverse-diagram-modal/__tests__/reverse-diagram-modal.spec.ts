@@ -14,11 +14,14 @@ import { NavigationProvider } from '../../../../../providers/navigation/navigati
 import { NavigationProviderMock } from '../../../../../providers/navigation/__mocks__/navigation.mock';
 import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
+import { StoreModel } from '../../../../../shared/models/store.model';
+import { ReverseDiagramLengthChanged, ReverseDiagramWidthChanged } from '../reverse-diagram-modal.actions';
 
 describe('reverseDiagramModal', () => {
   let fixture: ComponentFixture<ReverseDiagramPage>;
   let component: ReverseDiagramPage;
+  let store$: Store<StoreModel>;
   const mockFile: ReverseDiagramModalMock = new ReverseDiagramModalMock();
   mockFile.ngOnInit();
 
@@ -92,8 +95,10 @@ describe('reverseDiagramModal', () => {
   beforeEach(async(() => {
     fixture = TestBed.createComponent(ReverseDiagramPage);
     component = fixture.componentInstance;
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
-  describe('Class', () => {
+  fdescribe('Class', () => {
     const vehicleDetails: Map<TestCategory, VehicleData> = mockFile.getVehicleDetails();
     const vehicleDetailsKeys = Array.from(vehicleDetails.keys());
     for (const index in vehicleDetailsKeys) {
@@ -121,8 +126,13 @@ describe('reverseDiagramModal', () => {
         });
         describe(`calculateReversingLengths`, () => {
           it(`should resolve aAndA1 to ${value.expStartDist}`, () => {
+            spyOn(component, 'calculateReversingLengths').and.callThrough();
             component.category = testCategory;
-            component.calculateReversingLengths(value.vLength);
+            component.onLengthKeyup(value.vLength);
+            expect(store$.dispatch).toHaveBeenCalledWith(
+              new ReverseDiagramLengthChanged(undefined, value.vLength),
+            );
+            expect(component.calculateReversingLengths).toHaveBeenCalledWith(value.vLength);
             const result = component.reversingLengthStart;
             expect(result).toEqual(value.expStartDist);
           });
@@ -135,8 +145,13 @@ describe('reverseDiagramModal', () => {
             });
           }
           it(`should resolve b to ${value.expMidDist}`, () => {
+            spyOn(component, 'calculateReversingLengths').and.callThrough();
             component.category = testCategory;
-            component.calculateReversingLengths(value.vLength);
+            component.onLengthKeyup(value.vLength);
+            expect(store$.dispatch).toHaveBeenCalledWith(
+              new ReverseDiagramLengthChanged(undefined, value.vLength),
+            );
+            expect(component.calculateReversingLengths).toHaveBeenCalledWith(value.vLength);
             const result = component.reversingLengthMiddle;
             expect(result).toEqual(value.expMidDist);
           });
@@ -144,7 +159,13 @@ describe('reverseDiagramModal', () => {
         describe(`calculateReversingWidth`, () => {
           it(`should resolve aToA1 to ${value.expWidthDist}`, () => {
             component.category = testCategory;
-            component.calculateReversingWidth(value.vWidth);
+            spyOn(component, 'calculateReversingWidth').and.callThrough();
+            component.category = testCategory;
+            component.onWidthKeyup(value.vWidth);
+            expect(store$.dispatch).toHaveBeenCalledWith(
+              new ReverseDiagramWidthChanged(undefined, value.vWidth),
+            );
+            expect(component.calculateReversingWidth).toHaveBeenCalledWith(value.vWidth);
             const result = component.reversingWidth;
             expect(result).toEqual(value.expWidthDist);
           });
