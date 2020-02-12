@@ -13,6 +13,10 @@ import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { getSpeedRequirementNotMet } from '../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.selector';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
+import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
+import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 
 @Injectable()
 export class TestResultProvider {
@@ -38,6 +42,14 @@ export class TestResultProvider {
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
         return this.calculateCatAAndSubCategoryTestResult(TestCategory.EUAM1, testData as TestData);
+      case TestCategory.D:
+        return this.calculateCatCDndSubCategoryTestResult(TestCategory.D, testData  as CatDUniqueTypes.TestData);
+      case TestCategory.D1:
+        return this.calculateCatCDndSubCategoryTestResult(TestCategory.D1, testData  as CatD1UniqueTypes.TestData);
+      case TestCategory.DE:
+        return this.calculateCatCDndSubCategoryTestResult(TestCategory.DE, testData  as CatDEUniqueTypes.TestData);
+      case TestCategory.D1E:
+        return this.calculateCatCDndSubCategoryTestResult(TestCategory.D1E, testData as CatD1EUniqueTypes.TestData);
       default:
         throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }
@@ -115,6 +127,29 @@ export class TestResultProvider {
       return of(ActivityCodes.FAIL);
     }
     if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) >= 6) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    return of(ActivityCodes.PASS);
+  }
+
+  private calculateCatCDndSubCategoryTestResult = (
+    category: TestCategory,
+    testData: CatDUniqueTypes.TestData |
+      CatDEUniqueTypes.TestData |
+      CatD1EUniqueTypes.TestData |
+      CatD1UniqueTypes.TestData,
+  ): Observable<ActivityCode> => {
+
+    if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    if (this.faultCountProvider.getSeriousFaultSumCount(category, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) > 15) {
       return of(ActivityCodes.FAIL);
     }
 
