@@ -1,19 +1,19 @@
-import { FaultSummaryCatAM1Helper } from '../fault-summary.cat-a-mod1';
+// import { FaultSummaryCatAM1Helper } from '../fault-summary.cat-a-mod1';
 // import { catAM1TestDataStateObject } from './cat-AM1-test-data-mock';
 
 describe('FaultSummaryCatAM1Helper', () => {
-  describe('createEmergencyStopFaultSummary', () => {
-    it('should return a fault summary for emergency stop', () => {
-      const resultSummary = FaultSummaryCatAM1Helper.createEmergencyStopFaultSummary();
-      expect(resultSummary.competencyIdentifier).toBe('speedCheckEmergency');
-      expect(resultSummary.faultCount).toBe(1);
-    });
-    it('should return a fault summary for avoidance', () => {
-      const resultSummary = FaultSummaryCatAM1Helper.createAvoidanceFaultSummary();
-      expect(resultSummary.competencyIdentifier).toBe('speedCheckAvoidance');
-      expect(resultSummary.faultCount).toBe(1);
-    });
-  });
+  // describe('createEmergencyStopFaultSummary', () => {
+  //   it('should return a fault summary for emergency stop', () => {
+  //     const resultSummary = FaultSummaryCatAM1Helper.createEmergencyStopFaultSummary();
+  //     expect(resultSummary.competencyIdentifier).toBe('speedCheckEmergency');
+  //     expect(resultSummary.faultCount).toBe(1);
+  //   });
+  //   it('should return a fault summary for avoidance', () => {
+  //     const resultSummary = FaultSummaryCatAM1Helper.createAvoidanceFaultSummary();
+  //     expect(resultSummary.competencyIdentifier).toBe('speedCheckAvoidance');
+  //     expect(resultSummary.faultCount).toBe(1);
+  //   });
+  // });
 
   describe('hasEmergencyStopRidingFault', () => {
   //   it('should return true if a riding fault exists', () => {
