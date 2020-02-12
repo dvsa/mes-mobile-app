@@ -282,7 +282,7 @@ export class FaultCountDHelper {
     return FaultCountDHelper.getVehicleChecksFaultCountTrailer(vehicleChecks);
   }
 
-  private static getSafetyQuestionsFaultCount = (
+  public static getSafetyQuestionsFaultCount = (
     safetyQuestions: CatDUniqueTypes.SafetyQuestions,
   ): SafetyQuestionsScore => {
 
@@ -298,12 +298,6 @@ export class FaultCountDHelper {
       safetyQuestions.questions.some(getFaults) ? { drivingFaults: 1 } : { drivingFaults: 0 };
 
     return fault;
-  }
-
-  public static getSafetyQuestionsFaultCountCatD = (
-    safetyQuestions: CatDUniqueTypes.SafetyQuestions,
-  ): SafetyQuestionsScore => {
-    return FaultCountDHelper.getSafetyQuestionsFaultCount(safetyQuestions);
   }
 
 }
