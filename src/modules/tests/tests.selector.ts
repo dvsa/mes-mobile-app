@@ -91,7 +91,7 @@ export const getActivityCodeBySlotId = (testsModel: TestsModel, id: number): Act
 
 export const getIncompleteTestsSlotIds = (tests: TestsModel): string[] => {
   return Object.keys(tests.testStatus).filter(slotId =>
-    isTestBeforeToday(tests.startedTests[slotId] as TestResultCommonSchema)
+    isTestBeforeToday(tests.startedTests[slotId])
     && tests.testStatus[slotId] !== TestStatus.Submitted
     && tests.testStatus[slotId] !== TestStatus.Completed);
 };
