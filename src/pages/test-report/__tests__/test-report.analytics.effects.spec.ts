@@ -21,6 +21,7 @@ import {
   ManoeuvreCompetencies,
   ManoeuvreTypes,
   LegalRequirements,
+  SingleFaultCompetencyNames,
 } from '../../../modules/tests/test-data/test-data.constants';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
@@ -50,15 +51,18 @@ import * as catBEManoeuversActions
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import * as avoidanceActions from '../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import { speedCheckLabels, speedCheckToggleValues } from
-'../../../shared/constants/competencies/cata-mod1-speed-checks';
+  '../../../shared/constants/competencies/cata-mod1-speed-checks';
 import * as testReportCatAMod1Actions from '../cat-a-mod1/test-report.cat-a-mod1.actions';
 import { ModalReason } from '../cat-a-mod1/components/activity-code-4-modal/activity-code-4-modal.constants';
 import * as emergencyStopActions from
-'../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
+  '../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
 import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/common/candidate/candidate.actions';
+import * as singleFaultCompetencyActions from
+'../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 describe('Test Report Analytics Effects', () => {
 
@@ -1909,6 +1913,152 @@ describe('Test Report Analytics Effects', () => {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_EMERGENCY_STOP_DANGEROUS_FAULT,
           speedCheckLabels.speedCheckEmergency,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('setSingleFaultCompetencyOutcome', () => {
+    it('should call logEvent for adding a single competency driving fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new singleFaultCompetencyActions.SetSingleFaultCompetencyOutcome(
+        SingleFaultCompetencyNames.slalom, CompetencyOutcome.DF));
+
+      // ASSERT
+      effects.setSingleFaultCompetencyOutcome$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_SINGLE_FAULT,
+          fullCompetencyLabels.slalom,
+        );
+        done();
+      });
+    });
+
+    it('should call logEvent for adding a single competency dangerous fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new singleFaultCompetencyActions.SetSingleFaultCompetencyOutcome(
+        SingleFaultCompetencyNames.slalom, CompetencyOutcome.D));
+
+      // ASSERT
+      effects.setSingleFaultCompetencyOutcome$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_DANGEROUS_SINGLE_FAULT,
+          fullCompetencyLabels.slalom,
+        );
+        done();
+      });
+    });
+
+    it('should call logEvent for adding a single competency serious fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new singleFaultCompetencyActions.SetSingleFaultCompetencyOutcome(
+        SingleFaultCompetencyNames.slalom, CompetencyOutcome.S));
+
+      // ASSERT
+      effects.setSingleFaultCompetencyOutcome$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_SERIOUS_SINGLE_FAULT,
+          fullCompetencyLabels.slalom,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('removeSingleFaultCompetencyOutcome', () => {
+    it('should call logEvent for removing a single competency driving fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new singleFaultCompetencyActions.RemoveSingleFaultCompetencyOutcome(
+        SingleFaultCompetencyNames.slalom));
+
+      // ASSERT
+      effects.setSingleFaultCompetencyOutcome$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_SINGLE_FAULT,
+          fullCompetencyLabels.slalom,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('removeSingleDangerousFaultCompetencyOutcome', () => {
+    it('should call logEvent for removing a single competency dangerous fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new singleFaultCompetencyActions.RemoveSingleDangerousFaultCompetencyOutcome(
+        SingleFaultCompetencyNames.slalom));
+
+      // ASSERT
+      effects.setSingleFaultCompetencyOutcome$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_DANGEROUS_SINGLE_FAULT,
+          fullCompetencyLabels.slalom,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('removeSingleSeriousFaultCompetencyOutcome', () => {
+    it('should call logEvent for removing a single competency serious fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new singleFaultCompetencyActions.RemoveSingleSeriousFaultCompetencyOutcome(
+        SingleFaultCompetencyNames.slalom));
+
+      // ASSERT
+      effects.setSingleFaultCompetencyOutcome$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_SERIOUS_SINGLE_FAULT,
+          fullCompetencyLabels.slalom,
         );
         done();
       });

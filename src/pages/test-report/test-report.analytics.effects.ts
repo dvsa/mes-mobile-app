@@ -41,7 +41,7 @@ import * as catBEManoeuversActions
   from '../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 import * as avoidanceActions from '../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import { getTestData as getCatAmod1TestData } from
-'../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
+  '../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
 import { getAvoidance } from '../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.selector';
 import { Avoidance, EmergencyStop } from '@dvsa/mes-test-schema/categories/AM1';
 import { speedCheckLabels, speedCheckToggleValues } from '../../shared/constants/competencies/cata-mod1-speed-checks';
@@ -50,6 +50,9 @@ import { getEmergencyStop } from '../../modules/tests/test-data/cat-a-mod1/emerg
 import * as activityCodeActions from '../../modules/tests/activity-code/activity-code.actions';
 import * as testReportCatAMod1Actions from './cat-a-mod1/test-report.cat-a-mod1.actions';
 import { ModalReason } from './cat-a-mod1/components/activity-code-4-modal/activity-code-4-modal.constants';
+import * as singleFaultCompetencyActions from
+  '../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
+import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -850,7 +853,7 @@ export class TestReportAnalyticsEffects {
       ([action, tests, avoidance]:
         [avoidanceActions.ToggleAvoidanceSpeedReq, TestsModel, Avoidance]) => {
         const toggleValue = avoidance.speedNotMetSeriousFault ?
-        speedCheckToggleValues.speedNotMet : speedCheckToggleValues.speedMet;
+          speedCheckToggleValues.speedNotMet : speedCheckToggleValues.speedMet;
         this.analytics.logEvent(
           formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
           formatAnalyticsText(AnalyticsEvents.TOGGLE_AVOIDANCE_SPEED_REQUIREMENT, tests),
@@ -1027,7 +1030,7 @@ export class TestReportAnalyticsEffects {
       ([action, tests, emergencyStop]:
         [emergencyStopActions.ToggleEmergencyStopSpeedReq, TestsModel, EmergencyStop]) => {
         const toggleValue = emergencyStop.speedNotMetSeriousFault ?
-        speedCheckToggleValues.speedNotMet : speedCheckToggleValues.speedMet;
+          speedCheckToggleValues.speedNotMet : speedCheckToggleValues.speedMet;
         this.analytics.logEvent(
           formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
           formatAnalyticsText(AnalyticsEvents.TOGGLE_EMERGENCY_STOP_SPEED_REQ, tests),
@@ -1357,5 +1360,106 @@ export class TestReportAnalyticsEffects {
       );
       return of(new AnalyticRecorded());
     }),
+  );
+
+  @Effect()
+  setSingleFaultCompetencyOutcome$ = this.actions$.pipe(
+    ofType(
+      singleFaultCompetencyActions.SET_SINGLE_FAULT_COMPETENCY_OUTCOME,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(
+      ([action, tests]:
+        [singleFaultCompetencyActions.SetSingleFaultCompetencyOutcome, TestsModel]) => {
+        if (action.outcome === CompetencyOutcome.DF) {
+          this.analytics.logEvent(
+            formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+            formatAnalyticsText(AnalyticsEvents.ADD_SINGLE_FAULT, tests),
+            fullCompetencyLabels[action.competencyName],
+          );
+        } else if (action.outcome === CompetencyOutcome.D) {
+          this.analytics.logEvent(
+            formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+            formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_SINGLE_FAULT, tests),
+            fullCompetencyLabels[action.competencyName],
+          );
+        } else if (action.outcome === CompetencyOutcome.S) {
+          this.analytics.logEvent(
+            formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+            formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_SINGLE_FAULT, tests),
+            fullCompetencyLabels[action.competencyName],
+          );
+        }
+        return of(new AnalyticRecorded());
+      }),
+  );
+
+  @Effect()
+  removeSingleFaultCompetencyOutcome$ = this.actions$.pipe(
+    ofType(singleFaultCompetencyActions.REMOVE_SINGLE_FAULT_COMPETENCY_OUTCOME),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(
+      ([action, tests]: [singleFaultCompetencyActions.RemoveSingleFaultCompetencyOutcome, TestsModel]) => {
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+          formatAnalyticsText(AnalyticsEvents.REMOVE_SINGLE_FAULT, tests),
+          fullCompetencyLabels[action.competencyName],
+        );
+        return of(new AnalyticRecorded());
+      }),
+  );
+
+  @Effect()
+  removeSingleDangerousFaultCompetencyOutcome$ = this.actions$.pipe(
+    ofType(singleFaultCompetencyActions.REMOVE_SINGLE_DANGEROUS_FAULT_COMPETENCY_OUTCOME),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(
+      ([action, tests]: [singleFaultCompetencyActions.RemoveSingleDangerousFaultCompetencyOutcome, TestsModel]) => {
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+          formatAnalyticsText(AnalyticsEvents.REMOVE_DANGEROUS_SINGLE_FAULT, tests),
+          fullCompetencyLabels[action.competencyName],
+        );
+        return of(new AnalyticRecorded());
+      }),
+  );
+
+  @Effect()
+  removeSingleSeriousFaultCompetencyOutcome$ = this.actions$.pipe(
+    ofType(singleFaultCompetencyActions.REMOVE_SINGLE_SERIOUS_FAULT_COMPETENCY_OUTCOME),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(
+      ([action, tests]: [singleFaultCompetencyActions.RemoveSingleSeriousFaultCompetencyOutcome, TestsModel]) => {
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+          formatAnalyticsText(AnalyticsEvents.REMOVE_SERIOUS_SINGLE_FAULT, tests),
+          fullCompetencyLabels[action.competencyName],
+        );
+        return of(new AnalyticRecorded());
+      }),
   );
 }

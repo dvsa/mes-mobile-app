@@ -15,6 +15,8 @@ import { ToggleDangerousFaultMode, ToggleRemoveFaultMode, ToggleSeriousFaultMode
 import {
   RemoveSingleFaultCompetencyOutcome,
   SetSingleFaultCompetencyOutcome,
+  RemoveSingleDangerousFaultCompetencyOutcome,
+  RemoveSingleSeriousFaultCompetencyOutcome,
 } from '../../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { getTests } from '../../../../modules/tests/tests.reducer';
@@ -165,14 +167,14 @@ export class SingleFaultCompetencyComponent implements OnInit, OnDestroy {
 
   removeFault = (): void => {
     if (this.hasDangerousFault && this.isDangerousMode) {
-      this.store$.dispatch(new RemoveSingleFaultCompetencyOutcome(this.competency));
+      this.store$.dispatch(new RemoveSingleDangerousFaultCompetencyOutcome(this.competency));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
     if (this.hasSeriousFault && this.isSeriousMode) {
-      this.store$.dispatch(new RemoveSingleFaultCompetencyOutcome(this.competency));
+      this.store$.dispatch(new RemoveSingleSeriousFaultCompetencyOutcome(this.competency));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
