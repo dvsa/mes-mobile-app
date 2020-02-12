@@ -3,30 +3,30 @@ import { Subscription } from 'rxjs/Subscription';
 import { Store, select } from '@ngrx/store';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { ReverseLeftPopoverOpened, ReverseLeftPopoverClosed } from './reverse-left.actions';
-import { getTests } from '../../../modules/tests/tests.reducer';
-import { RecordManoeuvresSelection } from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
-import { OverlayCallback } from '../../../pages/test-report/test-report.model';
-import { getCurrentTest } from '../../../modules/tests/tests.selector';
-import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
-import { ManoeuvreTypes } from '../../../modules/tests/test-data/test-data.constants';
-import { StoreModel } from '../../../shared/models/store.model';
-import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { RecordManoeuvresSelection } from '../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+import { OverlayCallback } from '../../test-report.model';
+import { getCurrentTest } from '../../../../modules/tests/tests.selector';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { ManoeuvreTypes } from '../../../../modules/tests/test-data/test-data.constants';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { FaultCountProvider } from '../../../../providers/fault-count/fault-count';
 import { DeselectReverseLeftManoeuvreCatC }
- from '../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.actions';
+ from '../../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.actions';
 import { DeselectReverseLeftManoeuvreCatD }
- from '../../../modules/tests/test-data/cat-d/manoeuvres/manoeuvres.cat-d.actions';
+ from '../../../../modules/tests/test-data/cat-d/manoeuvres/manoeuvres.cat-d.actions';
 import { DeselectReverseLeftManoeuvre }
- from '../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
-import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
+ from '../../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
+import { TestDataByCategoryProvider } from '../../../../providers/test-data-by-category/test-data-by-category';
 import { getReverseLeftSelected as getReverseLeftSelectedBE }
- from '../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.selectors';
+ from '../../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.selectors';
 import { getReverseLeftSelected as getReverseLeftSelectedC }
- from '../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.selectors';
+ from '../../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.selectors';
 import { getReverseLeftSelected as getReverseLeftSelectedD }
- from '../../../modules/tests/test-data/cat-d/manoeuvres/manoeuvres.cat-d.selectors';
+ from '../../../../modules/tests/test-data/cat-d/manoeuvres/manoeuvres.cat-d.selectors';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { ManoeuvresByCategoryProvider, ManoeuvreUnion }
-  from '../../../providers/manoeuvres-by-category/manoeuvres-by-category';
+  from '../../../../providers/manoeuvres-by-category/manoeuvres-by-category';
 
 @Component({
   selector: 'reverse-left',

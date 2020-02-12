@@ -1,23 +1,26 @@
 import { ReverseLeftComponent } from '../reverse-left';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../../shared/models/store.model';
+import { StoreModel } from '../../../../../shared/models/store.model';
 import { configureTestSuite } from 'ng-bullet';
-import { TickIndicatorComponent } from '../../tick-indicator/tick-indicator';
-import { DrivingFaultsBadgeComponent } from '../../driving-faults-badge/driving-faults-badge';
+import { TickIndicatorComponent } from '../../../../../components/common/tick-indicator/tick-indicator';
+import { DrivingFaultsBadgeComponent }
+ from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { MockComponent } from 'ng-mocks';
-import { SeriousFaultBadgeComponent } from '../../serious-fault-badge/serious-fault-badge';
-import { DangerousFaultBadgeComponent } from '../../dangerous-fault-badge/dangerous-fault-badge';
+import { SeriousFaultBadgeComponent }
+ from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
+import { DangerousFaultBadgeComponent }
+ from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
 import { CompetencyButtonComponent }
-  from '../../../../pages/test-report/components/competency-button/competency-button';
-import { testReportReducer } from '../../../../pages/test-report/test-report.reducer';
-import { AppModule } from '../../../../app/app.module';
+  from '../../competency-button/competency-button';
+import { testReportReducer } from '../../../test-report.reducer';
+import { AppModule } from '../../../../../app/app.module';
 import { IonicModule } from 'ionic-angular';
 import { ReverseLeftPopoverClosed, ReverseLeftPopoverOpened } from '../reverse-left.actions';
 import { ReverseLeftMock, ReverseLeftMockData } from '../__mocks__/reverse-left.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { RecordManoeuvresSelection } from '../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
-import { ManoeuvreTypes } from '../../../../modules/tests/test-data/test-data.constants';
+import { RecordManoeuvresSelection } from '../../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+import { ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
 
 describe('reverseLeftComponent', () => {
   let fixture: ComponentFixture<ReverseLeftComponent>;

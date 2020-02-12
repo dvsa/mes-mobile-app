@@ -2,23 +2,23 @@ import { ReverseDiagramLinkComponent } from '../reverse-diagram-link';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { ModalController } from 'ionic-angular';
-import { StoreModel } from '../../../../shared/models/store.model';
+import { StoreModel } from '../../../../../shared/models/store.model';
 import { configureTestSuite } from 'ng-bullet';
-import { testReportReducer } from '../../../../pages/test-report/test-report.reducer';
-import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
-import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
-import { AppModule } from '../../../../app/app.module';
-import { NavigationProvider } from '../../../../providers/navigation/navigation';
+import { testReportReducer } from '../../../test-report.reducer';
+import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
+import { MockAppComponent } from '../../../../../app/__mocks__/app.component.mock';
+import { AppModule } from '../../../../../app/app.module';
+import { NavigationProvider } from '../../../../../providers/navigation/navigation';
 import { ModalControllerMock } from 'ionic-mocks';
-import { NavigationProviderMock } from '../../../../providers/navigation/__mocks__/navigation.mock';
-import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
-import { testsReducer } from '../../../../modules/tests/tests.reducer';
-import { App } from '../../../../app/app.component';
+import { NavigationProviderMock } from '../../../../../providers/navigation/__mocks__/navigation.mock';
+import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { testsReducer } from '../../../../../modules/tests/tests.reducer';
+import { App } from '../../../../../app/app.component';
 import {
   ReverseDiagramClosed,
   ReverseDiagramOpened,
-} from '../../../../pages/test-report/components/reverse-diagram-modal/reverse-diagram-modal.actions';
-import { REVERSE_DIAGRAM_PAGE } from '../../../../pages/page-names.constants';
+} from '../../reverse-diagram-modal/reverse-diagram-modal.actions';
+import { REVERSE_DIAGRAM_PAGE } from '../../../../page-names.constants';
 
 describe('reverseDiagramLink', () => {
   let fixture: ComponentFixture<ReverseDiagramLinkComponent>;

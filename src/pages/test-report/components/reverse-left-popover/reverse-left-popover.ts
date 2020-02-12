@@ -1,4 +1,4 @@
-import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../modules/tests/test-data/test-data.constants';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../modules/tests/test-data/test-data.constants';
 import { Component } from '@angular/core';
 
 @Component({

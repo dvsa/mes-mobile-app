@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReverseDiagramPage } from '../reverse-diagram-modal';
 import { configureTestSuite } from 'ng-bullet';
-import { AppModule } from '../../../../app/app.module';
+import { AppModule } from '../../../../../app/app.module';
 import { Config, IonicModule, NavController, NavParams, Platform } from 'ionic-angular';
 import { ConfigMock, NavControllerMock, NavParamsMock, PlatformMock } from 'ionic-mocks';
 import { ReversingDistancesProvider }
-  from '../../../../providers/reversing-distances/reversing-distances';
-import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
-import { App } from '../../../../app/app.component';
+  from '../../../../../providers/reversing-distances/reversing-distances';
+import { MockAppComponent } from '../../../../../app/__mocks__/app.component.mock';
+import { App } from '../../../../../app/app.component';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { ReverseDiagramModalMock, VehicleData } from '../__mocks__/reverse-diagram-modal.mock';
-import { NavigationProvider } from '../../../../providers/navigation/navigation';
-import { NavigationProviderMock } from '../../../../providers/navigation/__mocks__/navigation.mock';
-import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
-import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { NavigationProvider } from '../../../../../providers/navigation/navigation';
+import { NavigationProviderMock } from '../../../../../providers/navigation/__mocks__/navigation.mock';
+import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { StoreModule } from '@ngrx/store';
 
 describe('reverseDiagramModal', () => {

@@ -38,8 +38,8 @@ import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 import { initialState } from '../../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
-import { ReverseLeftPopoverComponent } from '../../../../components/common/reverse-left-popover/reverse-left-popover';
-import { ReverseLeftComponent } from '../../../../components/common/reverse-left/reverse-left';
+import { ReverseLeftPopoverComponent } from '../../components/reverse-left-popover/reverse-left-popover';
+import { ReverseLeftComponent } from '../../components/reverse-left/reverse-left';
 import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/uncouple-recouple';
 import {
   VehicleChecksCompactCatDComponent,

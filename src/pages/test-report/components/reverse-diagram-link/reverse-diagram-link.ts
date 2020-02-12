@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
-import { getCurrentTest } from '../../../modules/tests/tests.selector';
-import { getTests } from '../../../modules/tests/tests.reducer';
-import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { getCurrentTest } from '../../../../modules/tests/tests.selector';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
-import { REVERSE_DIAGRAM_PAGE } from '../../../pages/page-names.constants';
+import { REVERSE_DIAGRAM_PAGE } from '../../../page-names.constants';
 import {
   ReverseDiagramClosed,
   ReverseDiagramOpened,
-} from '../../../pages/test-report/components/reverse-diagram-modal/reverse-diagram-modal.actions';
-import { App } from '../../../app/app.component';
+} from '../reverse-diagram-modal/reverse-diagram-modal.actions';
+import { App } from '../../../../app/app.component';
 
 @Component({
   selector: 'reverse-diagram-link',

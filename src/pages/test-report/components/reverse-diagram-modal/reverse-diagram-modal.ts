@@ -5,30 +5,30 @@ import { IonicPage, NavParams } from 'ionic-angular';
 import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { ReversingDistancesProvider } from '../../../providers/reversing-distances/reversing-distances';
+import { ReversingDistancesProvider } from '../../../../providers/reversing-distances/reversing-distances';
 import { select, Store } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
-import { getTests } from '../../../modules/tests/tests.reducer';
-import { getCurrentTest } from '../../../modules/tests/tests.selector';
-import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { getCurrentTest } from '../../../../modules/tests/tests.selector';
+import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { getVehicleDetails as getVehicleDetailsBE }
-  from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
+  from '../../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
 import { getVehicleDetails as getVehicleDetailsC }
-  from '../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
+  from '../../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { getVehicleDetails as getVehicleDetailsD }
-  from '../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.reducer';
+  from '../../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.reducer';
 import { getVehicleWidth as getVehicleWidthBE, getVehicleLength as getVehicleLengthBE }
- from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.selector';
+ from '../../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.selector';
 import { getVehicleWidth as getVehicleWidthC, getVehicleLength as getVehicleLengthC }
- from '../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.selector';
+ from '../../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.selector';
 import { getVehicleWidth as getVehicleWidthD, getVehicleLength as getVehicleLengthD }
- from '../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.selector';
+ from '../../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.selector';
 import {
   ReverseDiagramLengthChanged,
   ReverseDiagramWidthChanged,
-} from '../../../pages/test-report/components/reverse-diagram-modal/reverse-diagram-modal.actions';
+} from './reverse-diagram-modal.actions';
 
 interface ReverseDiagramPageState {
   vehicleLength$: Observable<number>;

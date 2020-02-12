@@ -1,11 +1,11 @@
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { OnInit } from '@angular/core';
 import { DeselectReverseLeftManoeuvre }
- from '../../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
+ from '../../../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 import { DeselectReverseLeftManoeuvreCatC }
- from '../../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.actions';
+ from '../../../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.actions';
 import { DeselectReverseLeftManoeuvreCatD }
- from '../../../../modules/tests/test-data/cat-d/manoeuvres/manoeuvres.cat-d.actions';
+ from '../../../../../modules/tests/test-data/cat-d/manoeuvres/manoeuvres.cat-d.actions';
 
 export interface ReverseLeftMockData {
   deselectReverseLeftManoeuvre;

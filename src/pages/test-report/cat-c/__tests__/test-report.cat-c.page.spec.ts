@@ -41,8 +41,8 @@ import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/un
 import { VehicleChecksComponent } from '../components/vehicle-checks/vehicle-checks';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
-import { ReverseLeftPopoverComponent } from '../../../../components/common/reverse-left-popover/reverse-left-popover';
-import { ReverseLeftComponent } from '../../../../components/common/reverse-left/reverse-left';
+import { ReverseLeftPopoverComponent } from '../../components/reverse-left-popover/reverse-left-popover';
+import { ReverseLeftComponent } from '../../components/reverse-left/reverse-left';
 
 describe('TestReportCatCPage', () => {
   let fixture: ComponentFixture<TestReportCatCPage>;
