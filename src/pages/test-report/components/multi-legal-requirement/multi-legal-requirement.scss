@@ -3,22 +3,15 @@ multi-legal-requirement {
     position: relative;
 
     .label {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-
-    .normal-start-label {
       padding-right: 17%;
       width: 100%;
       display: flex;
       justify-content: center;
     }
-
     .tickwrapper {
       display: flex;
       justify-content: center;
-      padding-right: 10px;
+      padding-right: 15px;
     }
 
     &.complete {

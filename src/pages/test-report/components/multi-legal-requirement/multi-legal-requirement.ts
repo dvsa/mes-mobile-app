@@ -39,16 +39,4 @@ export class MultiLegalRequirementComponent {
       this.store$.dispatch(new ToggleLegalRequirement(this.legalRequirement2));
     }
   }
-
-  /**
-   * Function to check if a legal requirement should use the normal-start-label class
-   */
-  getLegalRequirementClass(): string {
-    let cssClass: string = 'label';
-    if (this.legalRequirement1.indexOf('normalStart') >= 0) {
-      cssClass = 'normal-start-label';
-    }
-
-    return cssClass;
-  }
 }
