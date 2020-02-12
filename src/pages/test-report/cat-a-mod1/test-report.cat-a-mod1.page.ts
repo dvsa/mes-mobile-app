@@ -44,7 +44,9 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { SpeedCheckState } from '../../../providers/test-report-validator/test-report-validator.constants';
 import { ModalReason } from './components/activity-code-4-modal/activity-code-4-modal.constants';
-import { speedCheckLabels } from '../../../shared/constants/competencies/cata-mod1-competencies';
+import { speedCheckLabels } from '../../../shared/constants/competencies/cata-mod1-speed-checks';
+import { SpeedRequirementNotMetModalOpened, EmergencyStopDangerousFaultModelOpened,
+EmergencyStopSeriousFaultModelOpened } from './test-report.cat-a-mod1.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -254,18 +256,21 @@ export class TestReportCatAMod1Page extends BasePageComponent {
   createActivityCode4Modal(options: any): Modal | null {
     switch (this.speedCheckState) {
       case SpeedCheckState.NOT_MET:
+        this.store$.dispatch(new SpeedRequirementNotMetModalOpened());
         return this.modalController.create(
           'ActivityCode4Modal',
           { modalReason: ModalReason.SPEED_REQUIREMENTS },
           options,
         );
       case SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT:
+        this.store$.dispatch(new EmergencyStopDangerousFaultModelOpened());
         return this.modalController.create(
           'ActivityCode4Modal',
           { modalReason: ModalReason.EMERGENCY_STOP_DANGEROUS },
           options,
         );
       case SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT:
+        this.store$.dispatch(new EmergencyStopSeriousFaultModelOpened());
         return this.modalController.create(
           'ActivityCode4Modal',
           { modalReason: ModalReason.EMERGENCY_STOP_SERIOUS },

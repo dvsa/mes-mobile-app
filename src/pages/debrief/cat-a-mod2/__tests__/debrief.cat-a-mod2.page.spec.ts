@@ -30,7 +30,7 @@ import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientati
 import { TranslateModule, TranslateService } from 'ng2-translate';
 
 // TODO - PREP-AMOD2 - Implement category specific competencies
-import { fullCompetencyLabels } from '../../../../shared/constants/competencies/catb-competencies';
+import { fullCompetencyLabels } from '../../../../shared/constants/competencies/competencies';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestSlotAttributes }
   from '../../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';

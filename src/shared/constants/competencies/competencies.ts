@@ -42,4 +42,12 @@ export enum fullCompetencyLabels {
   outcomeControlledStop = 'Controlled stop',
   showMeQuestion = 'Show me question',
   eyesightTest = 'Eyesight test',
+  useOfStand = 'Use of stand',
+  manualHandling = 'Manual handling',
+  slalomFigure8 = 'Slalom figure 8',
+  slowControl = 'Slow control',
+  controlledStop = 'Controlled stop',
+  uTurnExercise = 'U turn exercise',
+  speedCheckEmergency = 'Speed check emergency',
+  speedCheckAvoidance = 'Speed check avoidance',
 }

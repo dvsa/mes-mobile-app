@@ -25,6 +25,8 @@ import {
   AddEmergencyStopRidingFault,
   RecordEmergencyStopFirstAttempt,
   RecordEmergencyStopSecondAttempt,
+  RemoveEmergencyStopDangerousFault,
+  RemoveEmergencyStopSeriousFault,
 } from '../../../../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
 import {
   ToggleAvoidanceSpeedReq,
@@ -34,6 +36,8 @@ import {
   AddAvoidanceRidingFault,
   RecordAvoidanceFirstAttempt,
   RecordAvoidanceSecondAttempt,
+  RemoveDangerousAvoidanceFault,
+  RemoveSeriousAvoidanceFault,
 } from '../../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 import {
@@ -247,7 +251,7 @@ describe('SpeedCheckComponent', () => {
         component.removeEmergencyStopFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledTimes(3);
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveEmergencyStopFault());
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveEmergencyStopDangerousFault());
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
       });
@@ -262,7 +266,7 @@ describe('SpeedCheckComponent', () => {
         component.removeEmergencyStopFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledTimes(3);
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveEmergencyStopFault());
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveEmergencyStopSeriousFault());
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
       });
@@ -294,7 +298,7 @@ describe('SpeedCheckComponent', () => {
         component.removeAvoidanceFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledTimes(3);
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveAvoidanceFault());
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveDangerousAvoidanceFault());
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
       });
@@ -309,7 +313,7 @@ describe('SpeedCheckComponent', () => {
         component.removeAvoidanceFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledTimes(3);
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveAvoidanceFault());
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSeriousAvoidanceFault());
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
       });

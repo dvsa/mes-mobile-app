@@ -30,9 +30,9 @@ import {
   AnalyticsEvents,
   AnalyticsLabels,
 } from '../../../providers/analytics/analytics.model';
-import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
+import { fullCompetencyLabels } from '../../../shared/constants/competencies/competencies';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import { testReportPracticeModeSlot } from '../../../modules/tests/__mocks__/tests.mock';
+import { testReportPracticeModeSlot, candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import {
   manoeuvreTypeLabels,
   manoeuvreCompetencyLabels,
@@ -48,6 +48,17 @@ import { configureTestSuite } from 'ng-bullet';
 import * as catBEManoeuversActions
   from '../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import * as avoidanceActions from '../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
+import { speedCheckLabels, speedCheckToggleValues } from
+'../../../shared/constants/competencies/cata-mod1-speed-checks';
+import * as testReportCatAMod1Actions from '../cat-a-mod1/test-report.cat-a-mod1.actions';
+import { ModalReason } from '../cat-a-mod1/components/activity-code-4-modal/activity-code-4-modal.constants';
+import * as emergencyStopActions from
+'../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
+import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
+import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/common/candidate/candidate.actions';
 
 describe('Test Report Analytics Effects', () => {
 
@@ -934,7 +945,7 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REMOVE_FAULT}`,
           fullCompetencyLabels['showMeQuestion'],
-          );
+        );
         done();
       });
     });
@@ -971,7 +982,7 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TERMINATION}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.END_TEST}`,
           AnalyticsLabels.TERMINATE_TEST,
-          );
+        );
         done();
       });
     });
@@ -1324,4 +1335,583 @@ describe('Test Report Analytics Effects', () => {
     });
   });
 
+  describe('toggleAvoidanceSpeedReq', () => {
+    it('should log speed not met for this competency', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new avoidanceActions.ToggleAvoidanceSpeedReq());
+      // ACT
+      actions$.next(new avoidanceActions.ToggleAvoidanceSpeedReq());
+      // ASSERT
+      effects.toggleAvoidanceSpeedReq$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_AVOIDANCE_SPEED_REQUIREMENT,
+          `${speedCheckLabels['speedCheckAvoidance']} - ${speedCheckToggleValues.speedNotMet}`,
+        );
+        done();
+      });
+    });
+
+    it('should call logEvent for speed met for this competency', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new avoidanceActions.ToggleAvoidanceSpeedReq());
+      store$.dispatch(new avoidanceActions.ToggleAvoidanceSpeedReq());
+
+      // ACT
+      actions$.next(new avoidanceActions.ToggleAvoidanceSpeedReq());
+
+      // ASSERT
+      effects.toggleAvoidanceSpeedReq$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_AVOIDANCE_SPEED_REQUIREMENT,
+          `${speedCheckLabels['speedCheckAvoidance']} - ${speedCheckToggleValues.speedMet}`,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('recordAvoidanceFirstAttempt', () => {
+    it('should call logEvent for record avoidance first attempt', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      const attemptValue = 27;
+      store$.dispatch(new avoidanceActions.RecordAvoidanceFirstAttempt(attemptValue));
+
+      // ACT
+      actions$.next(new avoidanceActions.RecordAvoidanceFirstAttempt(attemptValue));
+
+      // ASSERT
+      effects.recordAvoidanceFirstAttempt$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.RECORD_AVOIDANCE_FIRST_ATTEMPT,
+          `${speedCheckLabels['speedCheckAvoidance']} - ${attemptValue}`,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('recordAvoidanceSecondAttempt', () => {
+    it('should call logEvent for record avoidance second attempt', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      const attemptValue = 5;
+      store$.dispatch(new avoidanceActions.RecordAvoidanceSecondAttempt(attemptValue));
+
+      // ACT
+      actions$.next(new avoidanceActions.RecordAvoidanceSecondAttempt(attemptValue));
+
+      // ASSERT
+      effects.recordAvoidanceSecondAttempt$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.RECORD_AVOIDANCE_SECOND_ATTEMPT,
+          `${speedCheckLabels['speedCheckAvoidance']} - ${attemptValue}`,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('speedRequirementNotMetModalOpened', () => {
+    it('should call logEvent for speed requirement not met modal opened', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new testReportCatAMod1Actions.SpeedRequirementNotMetModalOpened());
+
+      // ASSERT
+      effects.speedRequirementNotMetModalOpened$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.SPEED_REQ_NOT_MET_MODAL_OPENED,
+          ModalReason.SPEED_REQUIREMENTS,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('emergencyStopDangerousFaultModelOpened', () => {
+    it('should call logEvent for ememergency stop dangererous fault modal opened', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new testReportCatAMod1Actions.EmergencyStopDangerousFaultModelOpened());
+
+      // ASSERT
+      effects.emergencyStopDangerousFaultModelOpened$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.EMERGENCY_STOP_DANGEROUS_FAULT_MODAL_OPENED,
+          ModalReason.EMERGENCY_STOP_DANGEROUS,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('emergencyStopSeriousFaultModelOpened', () => {
+    it('should call logEvent for emergency stop serious fault modal opened', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new testReportCatAMod1Actions.EmergencyStopSeriousFaultModelOpened());
+
+      // ASSERT
+      effects.emergencyStopSeriousFaultModelOpened$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.EMERGENCY_STOP_SERIOUS_FAULT_MODAL_OPENED,
+          ModalReason.EMERGENCY_STOP_SERIOUS,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('toggleEmergencyStopSpeedReq', () => {
+    it('should call logEvent for speed not met', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new emergencyStopActions.ToggleEmergencyStopSpeedReq());
+
+      // ACT
+      actions$.next(new emergencyStopActions.ToggleEmergencyStopSpeedReq());
+
+      // ASSERT
+      effects.toggleEmergencyStopSpeedReq$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_EMERGENCY_STOP_SPEED_REQ,
+          `${speedCheckLabels['speedCheckEmergency']} - ${speedCheckToggleValues.speedNotMet}`,
+        );
+        done();
+      });
+    });
+
+    it('should call logEvent for speed met', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new emergencyStopActions.ToggleEmergencyStopSpeedReq());
+      store$.dispatch(new emergencyStopActions.ToggleEmergencyStopSpeedReq());
+
+      // ACT
+      actions$.next(new emergencyStopActions.ToggleEmergencyStopSpeedReq());
+
+      // ASSERT
+      effects.toggleEmergencyStopSpeedReq$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_EMERGENCY_STOP_SPEED_REQ,
+          `${speedCheckLabels['speedCheckEmergency']} - ${speedCheckToggleValues.speedMet}`,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('recordEmergencyStopFirstAttempt', () => {
+    it('should call logEvent for record emergency stop first attempt', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      const attemptValue = 27;
+      store$.dispatch(new emergencyStopActions.RecordEmergencyStopFirstAttempt(attemptValue));
+
+      // ACT
+      actions$.next(new emergencyStopActions.RecordEmergencyStopFirstAttempt(attemptValue));
+
+      // ASSERT
+      effects.recordEmergencyStopFirstAttempt$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.RECORD_EMERGENCY_STOP_FIRST_ATTEMPT,
+          `${speedCheckLabels['speedCheckEmergency']} - ${attemptValue}`,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('recordEmergencyStopSecondAttempt', () => {
+    it('should call logEvent for record emergency stop second attempt', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      const attemptValue = 27;
+      store$.dispatch(new emergencyStopActions.RecordEmergencyStopSecondAttempt(attemptValue));
+
+      // ACT
+      actions$.next(new emergencyStopActions.RecordEmergencyStopSecondAttempt(attemptValue));
+
+      // ASSERT
+      effects.recordEmergencyStopSecondAttempt$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.RECORD_EMERGENCY_STOP_SECOND_ATTEMPT,
+          `${speedCheckLabels['speedCheckEmergency']} - ${attemptValue}`,
+        );
+        done();
+      });
+    });
+  });
+
+  it('should call logEvent for set activity code', (done) => {
+    // ARRANGE
+    store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+
+    // ACT
+    actions$.next(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL_PUBLIC_SAFETY));
+
+    // ASSERT
+    effects.setActivityCode$.subscribe((result) => {
+      expect(result instanceof AnalyticRecorded).toBe(true);
+      expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+      expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+        AnalyticsEventCategories.TERMINATION,
+        AnalyticsEvents.END_TEST,
+        AnalyticsLabels.SET_ACTIVITY_CODE,
+      );
+      done();
+    });
+  });
+
+  describe('addEmergencyStopRidingFault', () => {
+    it('should call logEvent for adding an emergency stop riding fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new emergencyStopActions.AddEmergencyStopRidingFault());
+
+      // ASSERT
+      effects.addEmergencyStopRidingFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_EMERGENCY_STOP_RIDING_FAULT,
+          speedCheckLabels.speedCheckEmergency,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('addAvoidanceRidingFault', () => {
+    it('should call logEvent for adding an avoidance riding fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new avoidanceActions.AddAvoidanceRidingFault());
+
+      // ASSERT
+      effects.addAvoidanceRidingFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_AVOIDANCE_RIDING_FAULT,
+          speedCheckLabels.speedCheckAvoidance,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('addAvoidanceSeriousFault', () => {
+    it('should call logEvent for adding serious fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new avoidanceActions.AddAvoidanceSeriousFault());
+
+      // ASSERT
+      effects.addAvoidanceSeriousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_AVOIDANCE_SERIOUS_FAULT,
+          speedCheckLabels.speedCheckAvoidance,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('addAvoidanceDangerousFault', () => {
+    it('should call logEvent for adding dangerous fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new avoidanceActions.AddAvoidanceDangerousFault());
+
+      // ASSERT
+      effects.addAvoidanceDangerousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_AVOIDANCE_DANGEROUS_FAULT,
+          speedCheckLabels.speedCheckAvoidance,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('addEmergencyStopDangerousFault', () => {
+    it('should call logEvent for adding an emergency stop dangerous fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new emergencyStopActions.AddEmergencyStopDangerousFault());
+
+      // ASSERT
+      effects.addEmergencyStopDangerousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_EMERGENCY_STOP_DANGEROUS_FAULT,
+          speedCheckLabels.speedCheckEmergency,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('addEmergencyStopSeriousFault', () => {
+    it('should call logEvent for adding an emergency stop serious fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new emergencyStopActions.AddEmergencyStopSeriousFault());
+
+      // ASSERT
+      effects.addEmergencyStopSeriousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_EMERGENCY_STOP_SERIOUS_FAULT,
+          speedCheckLabels.speedCheckEmergency,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('removeEmergencyStopFault', () => {
+    it('should call logEvent for removing an emergency stop fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new emergencyStopActions.RemoveEmergencyStopFault());
+
+      // ASSERT
+      effects.removeEmergencyStopFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_EMERGENCY_STOP_FAULT,
+          speedCheckLabels.speedCheckEmergency,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('removeAvoidanceFault', () => {
+    it('should call logEvent for removing avoidance fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new avoidanceActions.RemoveAvoidanceFault());
+
+      // ASSERT
+      effects.removeAvoidanceFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_AVOIDANCE_FAULT,
+          speedCheckLabels.speedCheckAvoidance,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('removeAvoidanceDangerousFault', () => {
+    it('should call logEvent for removing avoidance dangerous fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new avoidanceActions.RemoveDangerousAvoidanceFault());
+
+      // ASSERT
+      effects.removeDangerousAvoidanceFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_DANGEROUS_AVOIDANCE_FAULT,
+          speedCheckLabels.speedCheckAvoidance,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('removeSeriousAvoidanceFault', () => {
+    it('should call logEvent for removing avoidance serious fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new avoidanceActions.RemoveSeriousAvoidanceFault());
+
+      // ASSERT
+      effects.removeSeriousAvoidanceFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_SERIOUS_AVOIDANCE_FAULT,
+          speedCheckLabels.speedCheckAvoidance,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('removeEmergencyStopSeriousFault', () => {
+    it('should call logEvent for removing an emergency stop serious fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new emergencyStopActions.RemoveEmergencyStopSeriousFault());
+
+      // ASSERT
+      effects.removeEmergencyStopSeriousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_EMERGENCY_STOP_SERIOUS_FAULT,
+          speedCheckLabels.speedCheckEmergency,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('removeEmergencyStopDangerousFault', () => {
+    it('should call logEvent for removing an emergency stop dangerous fault', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.EUAM1));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+      // ACT
+      actions$.next(new emergencyStopActions.RemoveEmergencyStopDangerousFault());
+
+      // ASSERT
+      effects.removeEmergencyStopDangerousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_EMERGENCY_STOP_DANGEROUS_FAULT,
+          speedCheckLabels.speedCheckEmergency,
+        );
+        done();
+      });
+    });
+  });
 });

@@ -1,7 +1,7 @@
 import { DrivingFaults, SeriousFaults, DangerousFaults } from '@dvsa/mes-test-schema/categories/common';
 import { CompetencyIdentifiers, FaultSummary, CommentSource } from '../models/fault-marking.model';
 import { competencyLabels } from '../../pages/test-report/components/competency/competency.constants';
-import { fullCompetencyLabels } from '../constants/competencies/catb-competencies';
+import { fullCompetencyLabels } from '../constants/competencies/competencies';
 import { forOwn, isBoolean, isNumber } from 'lodash';
 import { CompetencyOutcome } from '../models/competency-outcome';
 import { SingleFaultCompetencies } from '@dvsa/mes-test-schema/categories/AM1';

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Competencies } from '../../../../../modules/tests/test-data/test-data.constants';
-import { speedCheckLabels } from '../../../../../shared/constants/competencies/cata-mod1-competencies';
+import { speedCheckLabels } from '../../../../../shared/constants/competencies/cata-mod1-speed-checks';
 import { EmergencyStop, Avoidance, TestData, SingleFaultCompetencyOutcome } from '@dvsa/mes-test-schema/categories/AM1';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -20,6 +20,8 @@ import {
   AddEmergencyStopSeriousFault,
   AddEmergencyStopDangerousFault,
   RemoveEmergencyStopFault,
+  RemoveEmergencyStopDangerousFault,
+  RemoveEmergencyStopSeriousFault,
 } from '../../../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
 import {
   ToggleAvoidanceSpeedReq,
@@ -29,6 +31,8 @@ import {
   AddAvoidanceSeriousFault,
   AddAvoidanceRidingFault,
   RemoveAvoidanceFault,
+  RemoveDangerousAvoidanceFault,
+  RemoveSeriousAvoidanceFault,
 } from '../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Subscription } from 'rxjs/Subscription';
@@ -173,14 +177,14 @@ export class SpeedCheckComponent {
 
   removeEmergencyStopFault = () => {
     if (this.hasDangerousFault() && this.isDangerousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveEmergencyStopFault());
+      this.store$.dispatch(new RemoveEmergencyStopDangerousFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
     if (this.hasSeriousFault() && this.isSeriousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveEmergencyStopFault());
+      this.store$.dispatch(new RemoveEmergencyStopSeriousFault());
       this.store$.dispatch(new ToggleSeriousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
@@ -193,14 +197,14 @@ export class SpeedCheckComponent {
 
   removeAvoidanceFault = () => {
     if (this.hasDangerousFault() && this.isDangerousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveAvoidanceFault());
+      this.store$.dispatch(new RemoveDangerousAvoidanceFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
     if (this.hasSeriousFault() && this.isSeriousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveAvoidanceFault());
+      this.store$.dispatch(new RemoveSeriousAvoidanceFault());
       this.store$.dispatch(new ToggleSeriousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;

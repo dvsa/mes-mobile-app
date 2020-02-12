@@ -46,6 +46,16 @@ export function emergencyStopReducer(
         ...state,
         outcome: undefined,
       };
+    case emergencyStopActions.REMOVE_EMERGENCY_STOP_DANGEROUS_FAULT:
+      return {
+        ...state,
+        outcome: undefined,
+      };
+    case emergencyStopActions.REMOVE_EMERGENCY_STOP_SERIOUS_FAULT:
+      return {
+        ...state,
+        outcome: undefined,
+      };
     default:
       return state;
   }
