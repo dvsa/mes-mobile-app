@@ -12,6 +12,9 @@ export class PrivacyNoticeComponent implements OnInit{
   @Input()
   language: Language;
 
+  @Input()
+  isRider: boolean = false;
+
   constructor(private translate: TranslateService) {  }
 
   ngOnInit() : void {
