@@ -57,7 +57,7 @@ export const isTestOutcomeSet = (test: TestResultCommonSchema) => {
   return false;
 };
 
-export const isPassed = (test: TestResultCommonSchema): boolean => {
+export const isPassed = (test: TestResultSchemasUnion): boolean => {
   return test.activityCode === ActivityCodes.PASS;
 };
 
@@ -91,12 +91,12 @@ export const getActivityCodeBySlotId = (testsModel: TestsModel, id: number): Act
 
 export const getIncompleteTestsSlotIds = (tests: TestsModel): string[] => {
   return Object.keys(tests.testStatus).filter(slotId =>
-    isTestBeforeToday(tests.startedTests[slotId])
+    isTestBeforeToday(tests.startedTests[slotId] as TestResultCommonSchema)
     && tests.testStatus[slotId] !== TestStatus.Submitted
     && tests.testStatus[slotId] !== TestStatus.Completed);
 };
 
-const isTestBeforeToday = (test: TestResultCommonSchema): boolean => {
+const isTestBeforeToday = (test: TestResultSchemasUnion): boolean => {
   const testDate = new DateTime(test.journalData.testSlotAttributes.start);
   const today = new DateTime();
   return today.daysDiff(new Date(testDate.format('YYYY-MM-DD'))) < 0;

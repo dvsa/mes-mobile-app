@@ -24,7 +24,7 @@ import {
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { TestOutcome } from '../tests.constants';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { CategoryCode, TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/common';
 
 describe('testsSelector', () => {
   describe('getCurrentTest', () => {
@@ -111,7 +111,7 @@ describe('testsSelector', () => {
   });
 
   describe('getTestOutcomeText', () => {
-    const testState: TestResultSchemasUnion = {
+    const testState: TestResultCommonSchema = {
       activityCode: ActivityCodes.PASS,
       version: '0.0.1',
       category: 'x' as CategoryCode,
@@ -140,7 +140,7 @@ describe('testsSelector', () => {
       examinerKeyed: 1,
     };
     it('should retrieve a passed result for a pass activity code', () => {
-      const result = getTestOutcomeText(testState);
+      const result = getTestOutcomeText(testState as TestResultCommonSchema);
       expect(result).toBe(TestOutcome.Passed);
     });
     it('should retrieve an unsuccessful result for a fail activity code', () => {
@@ -157,7 +157,7 @@ describe('testsSelector', () => {
   });
 
   describe('getTestOutcomeClass', () => {
-    const testState: TestResultSchemasUnion = {
+    const testState: TestResultCommonSchema = {
       activityCode: ActivityCodes.PASS,
       version: '0.0.1',
       category: 'x' as CategoryCode,
@@ -202,7 +202,7 @@ describe('testsSelector', () => {
   });
 
   describe('getActivityCode', () => {
-    const testState: TestResultSchemasUnion = {
+    const testState: TestResultCommonSchema = {
       // DVSA_RADIO_FAILURE = '25'
       activityCode: ActivityCodes.DVSA_RADIO_FAILURE,
       version: '0.0.1',
