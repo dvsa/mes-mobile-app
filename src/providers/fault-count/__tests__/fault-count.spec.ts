@@ -415,7 +415,7 @@ describe('FaultCountProvider', () => {
 
   describe('getDrivingFaultSumCountCatD1E', () => {
     it('should return the driving fault for cat D1E count correctly', () => {
-      expect((FaultCountDHelper as any).getDrivingFaultSumCountCatD1E(catD1ETestDataStateObject)).toBe(5);
+      expect((FaultCountDHelper as any).getDrivingFaultSumCountCatD1E(catD1ETestDataStateObject)).toBe(6);
     });
   });
 

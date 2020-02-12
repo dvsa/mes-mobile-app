@@ -165,7 +165,7 @@ export class FaultCountDHelper {
     let faultTotal: number = 0;
     getCompetencyFaults(drivingFaults).forEach(fault => faultTotal = faultTotal + fault.faultCount);
 
-    const pcvDoorExerciseFaultCount: number = pcvDoorExercise.drivingFault ? 1 : 0;
+    const pcvDoorExerciseFaultCount: number = get(pcvDoorExercise, 'drivingFault') ? 1 : 0;
 
     const result =
       faultTotal +
@@ -188,7 +188,7 @@ export class FaultCountDHelper {
     getCompetencyFaults(drivingFaults).forEach(fault => faultTotal = faultTotal + fault.faultCount);
     const uncoupleRecoupleHasDrivingFault =
       (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.DF) ? 1 : 0;
-    const pcvDoorExerciseFaultCount: number = pcvDoorExercise.drivingFault ? 1 : 0;
+    const pcvDoorExerciseFaultCount: number = get(pcvDoorExercise, 'drivingFault') ? 1 : 0;
 
     const result =
       faultTotal +
@@ -211,7 +211,7 @@ export class FaultCountDHelper {
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
     const vehicleCheckSeriousFaults =
       vehicleChecks ? FaultCountDHelper.getVehicleChecksFaultCountCatD(vehicleChecks).seriousFaults : 0;
-    const pcvDoorExerciseFaultCount: number = pcvDoorExercise.seriousFault ? 1 : 0;
+    const pcvDoorExerciseFaultCount: number = get(pcvDoorExercise, 'seriousFault') ? 1 : 0;
 
     const result =
       seriousFaultSumOfSimpleCompetencies +
@@ -235,7 +235,7 @@ export class FaultCountDHelper {
       vehicleChecks ? FaultCountDHelper.getVehicleChecksFaultCountCatD(vehicleChecks).seriousFaults : 0;
     const uncoupleRecoupleSeriousFaults =
       (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.S) ? 1 : 0;
-    const pcvDoorExerciseFaultCount: number = pcvDoorExercise.seriousFault ? 1 : 0;
+    const pcvDoorExerciseFaultCount: number = get(pcvDoorExercise, 'seriousFault') ? 1 : 0;
 
     const result =
       seriousFaultSumOfSimpleCompetencies +
@@ -256,7 +256,7 @@ export class FaultCountDHelper {
     const { dangerousFaults, manoeuvres, pcvDoorExercise } = data;
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
-    const pcvDoorExerciseFaultCount: number = pcvDoorExercise.dangerousFault ? 1 : 0;
+    const pcvDoorExerciseFaultCount: number = get(pcvDoorExercise, 'dangerousFault') ? 1 : 0;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
@@ -277,7 +277,7 @@ export class FaultCountDHelper {
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
     const uncoupleRecoupleDangerousFaults =
       (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.D) ? 1 : 0;
-    const pcvDoorExerciseFaultCount: number = pcvDoorExercise.dangerousFault ? 1 : 0;
+    const pcvDoorExerciseFaultCount: number = get(pcvDoorExercise, 'dangerousFault') ? 1 : 0;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
