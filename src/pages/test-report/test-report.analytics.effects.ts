@@ -20,7 +20,7 @@ import * as testRequirementsActions
   from '../../modules/tests/test-data/common/test-requirements/test-requirements.actions';
 import * as ecoActions from '../../modules/tests/test-data/common/eco/eco.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { fullCompetencyLabels } from '../../shared/constants/competencies/competencies.ts';
+import { fullCompetencyLabels } from '../../shared/constants/competencies/competencies';
 import {
   manoeuvreCompetencyLabels,
   manoeuvreTypeLabels,

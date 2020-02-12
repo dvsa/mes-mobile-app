@@ -30,7 +30,7 @@ import {
   AnalyticsEvents,
   AnalyticsLabels,
 } from '../../../providers/analytics/analytics.model';
-import { fullCompetencyLabels } from '../../../shared/constants/competencies/competencies.ts';
+import { fullCompetencyLabels } from '../../../shared/constants/competencies/competencies';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { testReportPracticeModeSlot, candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import {
