@@ -137,13 +137,20 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatD),
-        map(vehicleChecks => this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.D, vehicleChecks)),
+        map(vehicleChecks => this.faultCountProvider.getVehicleChecksFaultCount(
+          this.testCategory as TestCategory,
+           vehicleChecks,
+           ),
+        ),
       ),
       safetyQuestionsScore$: currentTest$.pipe(
         select(getTestData),
         select(getSafetyQuestionsCatD),
         map((safetyQuestions) => {
-          return this.faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.D, safetyQuestions);
+          return this.faultCountProvider.getSafetyQuestionsFaultCount(
+            this.testCategory as TestCategory,
+             safetyQuestions,
+          );
         }),
       ),
       vehicleChecks$: currentTest$.pipe(
