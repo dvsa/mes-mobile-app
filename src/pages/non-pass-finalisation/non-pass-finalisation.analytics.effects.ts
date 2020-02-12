@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import * as nonPassFinalisationActions from './non-pass-finalisation.actions';
 import * as vehicleDetailsActions from '../../modules/tests/vehicle-details/common/vehicle-details.actions';
-import * as testSummaryActions from '../../modules/tests/test-summary/test-summary.actions';
+import * as testSummaryActions from '../../modules/tests/test-summary/common/test-summary.actions';
 import * as commsActions from '../../modules/tests/communication-preferences/communication-preferences.actions';
 import { of } from 'rxjs/observable/of';
 import { withLatestFrom } from 'rxjs/operators/withLatestFrom';

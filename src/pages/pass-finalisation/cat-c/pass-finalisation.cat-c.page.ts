@@ -38,14 +38,14 @@ import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-c/
 import { getGearboxCategory } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { CAT_C } from '../../page-names.constants';
-import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
-import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
+import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
+import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/common/test-summary.selector';
 import {
   D255Yes,
   D255No,
   DebriefWitnessed,
   DebriefUnwitnessed,
-} from '../../../modules/tests/test-summary/test-summary.actions';
+} from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../../office/office-behaviour-map.cat-c';
 import { ActivityCodes } from '../../../shared/models/activity-codes';

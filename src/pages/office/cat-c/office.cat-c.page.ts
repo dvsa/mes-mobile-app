@@ -38,8 +38,8 @@ import {
   getWeatherConditions,
   getIdentification,
   getIndependentDriving,
-} from '../../../modules/tests/test-summary/test-summary.selector';
-import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
+} from '../../../modules/tests/test-summary/common/test-summary.selector';
+import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import { map, withLatestFrom } from 'rxjs/operators';
 import {
   RouteNumberChanged,
@@ -48,7 +48,7 @@ import {
   CandidateDescriptionChanged,
   WeatherConditionsChanged,
   AdditionalInformationChanged,
-} from '../../../modules/tests/test-summary/test-summary.actions';
+} from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
 import {
   getCandidateName,

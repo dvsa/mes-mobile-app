@@ -1,10 +1,10 @@
-import { TestSummary } from '@dvsa/mes-test-schema/categories/common';
+import { TestSummary } from '@dvsa/mes-test-schema/categories/AM1';
 import { createFeatureSelector } from '@ngrx/store';
-import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
+import * as fromMod1TestSummaryActions from './test-summary.cat-a-mod1.actions';
+import * as fromTestSummaryActions from '../common/test-summary.actions';
 
 export const initialState : TestSummary = {
   routeNumber: null,
-  independentDriving: null,
   candidateDescription: null,
   additionalInformation: null,
   weatherConditions: [],
@@ -13,60 +13,60 @@ export const initialState : TestSummary = {
   identification:  'Licence',
 };
 
-export function testSummaryReducer(
+export function testSummaryMod1Reducer(
     state = initialState,
-    action: testSummaryActions.Types,
+    action: fromTestSummaryActions.Types | fromMod1TestSummaryActions.Types,
   ): TestSummary {
   switch (action.type) {
-    case testSummaryActions.ADDITIONAL_INFORMATION_CHANGED:
+    case fromTestSummaryActions.ADDITIONAL_INFORMATION_CHANGED:
       return {
         ...state,
         additionalInformation: action.additionalInformation,
       };
-    case testSummaryActions.CANDIDATE_DESCRIPTION_CHANGED:
+    case fromTestSummaryActions.CANDIDATE_DESCRIPTION_CHANGED:
       return {
         ...state,
         candidateDescription: action.description,
       };
-    case testSummaryActions.ROUTE_NUMBER_CHANGED:
+    case fromTestSummaryActions.ROUTE_NUMBER_CHANGED:
       return {
         ...state,
         routeNumber: action.routeNumber,
       };
-    case testSummaryActions.DEBRIEF_WITNESSED:
+    case fromTestSummaryActions.DEBRIEF_WITNESSED:
       return {
         ...state,
         debriefWitnessed: true,
       };
-    case testSummaryActions.DEBRIEF_UNWITNESSED:
+    case fromTestSummaryActions.DEBRIEF_UNWITNESSED:
       return {
         ...state,
         debriefWitnessed: false,
       };
-    case testSummaryActions.IDENTIFICATION_USED_CHANGED:
+    case fromTestSummaryActions.IDENTIFICATION_USED_CHANGED:
       return {
         ...state,
         identification: action.identification,
       };
-    case testSummaryActions.INDEPENDENT_DRIVING_TYPE_CHANGED:
-      return {
-        ...state,
-        independentDriving: action.drivingType,
-      };
-    case testSummaryActions.D255_YES:
+    case fromTestSummaryActions.D255_YES:
       return {
         ...state,
         D255: true,
       };
-    case testSummaryActions.D255_NO:
+    case fromTestSummaryActions.D255_NO:
       return {
         ...state,
         D255: false,
       };
-    case testSummaryActions.WEATHER_CONDITIONS_CHANGED:
+    case fromTestSummaryActions.WEATHER_CONDITIONS_CHANGED:
       return {
         ...state,
         weatherConditions: action.weatherConditions,
+      };
+    case fromMod1TestSummaryActions.CIRCUIT_TYPE_CHANGED:
+      return {
+        ...state,
+        circuit: action.circuitType,
       };
     default:
       return state;

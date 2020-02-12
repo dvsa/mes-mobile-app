@@ -7,7 +7,7 @@ import { preTestDeclarationsCatAMod2Reducer }
   from './pre-test-declarations/cat-a-mod2/pre-test-declarations.cat-a-mod2.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
-import { testSummaryReducer } from './test-summary/test-summary.reducer';
+import { testSummaryReducer } from './test-summary/common/test-summary.reducer';
 import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';
 import { rekeyReducer } from './rekey/rekey.reducer';
 import { rekeyDateReducer } from './rekey-date/rekey-date.reducer';

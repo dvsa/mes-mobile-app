@@ -2,7 +2,7 @@ import { OfficeEffects } from '../office.effects';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
+import * as testSummaryActions from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import {

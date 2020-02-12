@@ -30,23 +30,20 @@ import {
 } from '../../../modules/tests/tests.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
-  getRouteNumber,
   getCandidateDescription,
   getAdditionalInformation,
   getWeatherConditions,
   getIdentification,
-  getIndependentDriving,
-} from '../../../modules/tests/test-summary/test-summary.selector';
-import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
+} from '../../../modules/tests/test-summary/common/test-summary.selector';
+import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import { map, withLatestFrom } from 'rxjs/operators';
 import {
   RouteNumberChanged,
-  IndependentDrivingTypeChanged,
   IdentificationUsedChanged,
   CandidateDescriptionChanged,
   WeatherConditionsChanged,
   AdditionalInformationChanged,
-} from '../../../modules/tests/test-summary/test-summary.actions';
+} from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName,
@@ -84,9 +81,7 @@ import {
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-
-// TODO - PREP-AMOD1: Use cat a mod1 mappings
-import { behaviourMap } from '../office-behaviour-map.cat-be';
+import { behaviourMap } from '../office-behaviour-map.cat-a-mod1';
 import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
@@ -95,14 +90,17 @@ import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_A_MOD1, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import {
-  AddUncoupleRecoupleComment,
-} from '../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
-
-import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
+import { TestData, Circuit, EmergencyStop, Avoidance } from '@dvsa/mes-test-schema/categories/AM1';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { getCircuit } from '../../../modules/tests/test-summary/cat-a-mod1/test-summary.cat-a-mod1.selector';
+import { CircuitTypeChanged } from '../../../modules/tests/test-summary/cat-a-mod1/test-summary.cat-a-mod1.actions';
+import { getEmergencyStop } from '../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.selector';
+import {
+  getAvoidance,
+  getAvoidanceAttempted,
+} from '../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -132,6 +130,11 @@ interface OfficePageState {
   dangerousFaults$: Observable<FaultSummary[]>;
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
+  displayCircuit$: Observable<boolean>;
+  circuit$: Observable<Circuit>;
+  emergencyStop$: Observable<EmergencyStop>;
+  avoidance$: Observable<Avoidance>;
+  avoidanceAttempted$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -181,6 +184,11 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       select(getTests),
       select(getCurrentTest),
     );
+    const testCategory$ = currentTest$.pipe(
+      select(getTestCategory),
+      map(_ => <TestCategory>_),
+    );
+
     this.pageState = {
       activityCode$: currentTest$.pipe(
         select(getActivityCode),
@@ -263,10 +271,7 @@ export class OfficeCatAMod1Page extends BasePageComponent {
           currentTest$.pipe(
             select(getTestData),
           ),
-          currentTest$.pipe(
-            select(getTestCategory),
-            map(_ => <TestCategory>_),
-          ),
+          testCategory$,
         ),
         map(([outcome, data, category]) =>
           this.outcomeBehaviourProvider.isVisible(
@@ -281,10 +286,7 @@ export class OfficeCatAMod1Page extends BasePageComponent {
           currentTest$.pipe(
             select(getTestData),
           ),
-          currentTest$.pipe(
-            select(getTestCategory),
-            map(_ => <TestCategory>_),
-          ),
+          testCategory$,
         ),
         map(([outcome, data, category]) =>
           this.outcomeBehaviourProvider.isVisible(
@@ -299,10 +301,7 @@ export class OfficeCatAMod1Page extends BasePageComponent {
           currentTest$.pipe(
             select(getTestData),
           ),
-          currentTest$.pipe(
-            select(getTestCategory),
-            map(_ => <TestCategory>_),
-          ),
+          testCategory$,
         ),
         map(([outcome, data, category]) =>
           this.outcomeBehaviourProvider.isVisible(
@@ -330,47 +329,57 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestCategory),
-          map(_ => <TestCategory>_),
-        )),
+        withLatestFrom(testCategory$),
         map(([data, category]) => this.faultSummaryProvider.getDangerousFaultsList(data, category)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestCategory),
-          map(_ => <TestCategory>_),
-        )),
+        withLatestFrom(testCategory$),
         map(([data, category]) => this.faultSummaryProvider.getSeriousFaultsList(data, category)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestCategory),
-          map(_ => <TestCategory>_),
-        )),
+        withLatestFrom(testCategory$),
         map(([data, category]) => this.faultSummaryProvider.getDrivingFaultsList(data, category)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestCategory),
-          map(_ => <TestCategory>_),
-        )),
+        withLatestFrom(testCategory$),
         map(([data, category]) => this.faultCountProvider.getDrivingFaultSumCount(category, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestCategory),
-          map(_ => <TestCategory>_),
-        )),
+        withLatestFrom(testCategory$),
         map(([data, category]) => this.shouldDisplayDrivingFaultComments(data, category)),
       ),
       weatherConditions$: currentTest$.pipe(
         select(getTestSummary),
         select(getWeatherConditions),
+      ),
+      displayCircuit$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getCircuit))),
+        map(([outcome, circuit]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'circuit', circuit)),
+      ),
+      circuit$: currentTest$.pipe(
+        select(getTestSummary),
+        select(getCircuit),
+      ),
+      emergencyStop$: currentTest$.pipe(
+        select(getTestData),
+        select(getEmergencyStop),
+      ),
+      avoidance$: currentTest$.pipe(
+        select(getTestData),
+        select(getAvoidance),
+      ),
+      avoidanceAttempted$: currentTest$.pipe(
+        select(getTestData),
+        select(getAvoidance),
+        select(getAvoidanceAttempted),
       ),
     };
 
@@ -409,6 +418,10 @@ export class OfficeCatAMod1Page extends BasePageComponent {
 
   additionalInformationChanged(additionalInformation: string): void {
     this.store$.dispatch(new AdditionalInformationChanged(additionalInformation));
+  }
+
+  circuitChanged(circuit: Circuit): void {
+    this.store$.dispatch(new CircuitTypeChanged(circuit));
   }
 
   dangerousFaultCommentChanged(dangerousFaultComment: FaultSummary) {

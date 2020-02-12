@@ -7,7 +7,7 @@ import * as passFinalisationActions from '../pass-finalisation.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as passCompletionActions from '../../../modules/tests/pass-completion/pass-completion.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
-import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
+import * as testSummaryActions from '../../../modules/tests/test-summary/common/test-summary.actions';
 import * as vehicleDetailsActions from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import * as commsActions from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';

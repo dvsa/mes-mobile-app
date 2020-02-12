@@ -24,7 +24,7 @@ import { DebriefWitnessedComponent } from
 import { FinalisationHeaderComponent } from
     '../../../../components/test-finalisation/finalisation-header/finalisation-header';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
-    '../../../../modules/tests/test-summary/test-summary.actions';
+    '../../../../modules/tests/test-summary/common/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
     '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';

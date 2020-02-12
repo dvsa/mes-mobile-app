@@ -57,7 +57,14 @@
 
           <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
 
-            <!-- Circuit goes here -->
+            <circuit
+              [display]="pageState.displayCircuit$ | async"
+              [formGroup]="form"
+              [outcome]="pageState.testOutcome$ | async"
+              (circuitChange)="circuitChanged($event)"
+              [circuit]="pageState.curcit$ | async"
+            ></circuit>
+
             <candidate-description
               [display]="pageState.displayCandidateDescription$ | async"
               [formGroup]="form"
@@ -72,8 +79,7 @@
               [identification]="pageState.identification$ | async"
               [outcome]="pageState.testOutcome$ | async"
               (identificationChange)="identificationChanged($event)"
-            >
-            </identification>
+            ></identification>
 
             <weather-conditions
               [display]="pageState.displayWeatherConditions$ | async"
@@ -82,8 +88,7 @@
               [outcome]="pageState.testOutcome$ | async"
               [weatherConditionsOptions]="weatherConditions"
               (weatherConditionsChange)="weatherConditionsChanged($event)"
-            >
-            </weather-conditions>
+            ></weather-conditions>
 
             <additional-information
               [display]="pageState.displayAdditionalInformation$ | async"
@@ -96,7 +101,13 @@
         </ion-grid>
       </ion-card-content>
     </ion-card>
-
+    
+    <speed-check-debrief-card
+      [emergencyStop]="pageState.emergencyStop$ | async"
+      [avoidance]="pageState.avoidance$ | async"
+      [avoidanceAttempted]="pageState.avoidanceAttempted$ | async">
+    </speed-check-debrief-card>
+    
     <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
       <ion-card
         id="ETA"
