@@ -62,8 +62,7 @@
         "S15": "Clean windscreen",
         "S16": "Demist windscreen",
         "S17": "Rear fog lights",
-        "S18": "Dipped to main beam",
-        "N/A": "Not applicable"
+        "S18": "Dipped to main beam"
       },
       "C1": {
         "T1": "Safety factors while loading",
@@ -93,8 +92,7 @@
         "S15": "Clean windscreen",
         "S16": "Demist windscreen",
         "S17": "Rear fog lights",
-        "S18": "Dipped to main beam",
-        "N/A": "Not applicable"
+        "S18": "Dipped to main beam"
       },
       "C+E": {
         "T1": "Body condition",
@@ -113,8 +111,7 @@
         "S8": "Demist windscreen",
         "S9": "Rear fog lights",
         "S10": "Dipped to main beam",
-        "S11": "Brake lights",
-        "N/A": "Not applicable"
+        "S11": "Brake lights"
       },
       "C1+E": {
         "T1": "Body condition",
@@ -133,8 +130,7 @@
         "S8": "Demist windscreen",
         "S9": "Rear fog lights",
         "S10": "Dipped to main beam",
-        "S11": "Brake lights",
-        "N/A": "Not applicable"
+        "S11": "Brake lights"
       }
     },
     "competencies": {
