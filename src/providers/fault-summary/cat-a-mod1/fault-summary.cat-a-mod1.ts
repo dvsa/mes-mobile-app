@@ -1,16 +1,22 @@
 import { FaultSummary } from '../../../shared/models/fault-marking.model';
-import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
+import { TestData, SingleFaultCompetencies } from '@dvsa/mes-test-schema/categories/AM1';
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
-import { get } from 'lodash';
+import { get, pickBy } from 'lodash';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export class FaultSummaryCatAM1Helper {
 
   public static getDrivingFaultsCatAM1(data: TestData): FaultSummary[] {
     console.log('### data');
     console.log(data);
+
+    const singleFaultCompetenciesWithDrivingFaults: SingleFaultCompetencies = pickBy(
+      data.singleFaultCompetencies, val => val === CompetencyOutcome.DF,
+    );
+
     return [
       ...getCompetencyFaults(data.drivingFaults),
-      ...getCompetencyFaults(data.singleFaultCompetencies),
+      ...getCompetencyFaults(singleFaultCompetenciesWithDrivingFaults),
     ];
   }
 
@@ -18,6 +24,9 @@ export class FaultSummaryCatAM1Helper {
     const allCompetencyFaults = [];
     const emergencyStopHasSpeedNotMetSeriousFault = get(data, 'emergencyStop.speedNotMetSeriousFault') || false;
     const avoidanceHasSpeedNotMetSeriousFault = get(data, 'avoidance.speedNotMetSeriousFault') || false;
+    const singleFaultCompetenciesWithSeriousFaults: SingleFaultCompetencies = pickBy(
+      data.singleFaultCompetencies, val => val === CompetencyOutcome.S,
+    );
 
     if (emergencyStopHasSpeedNotMetSeriousFault) {
       allCompetencyFaults.push(this.createEmergencyStopFaultSummary());
@@ -27,12 +36,19 @@ export class FaultSummaryCatAM1Helper {
     }
 
     allCompetencyFaults.push(...getCompetencyFaults(data.seriousFaults));
+    allCompetencyFaults.push(...getCompetencyFaults(singleFaultCompetenciesWithSeriousFaults));
+
     return allCompetencyFaults;
   }
 
   public static getDangerousFaultsCatAM1(data: TestData): FaultSummary[] {
+    const singleFaultCompetenciesWithDangerousFaults: SingleFaultCompetencies = pickBy(
+      data.singleFaultCompetencies, val => val === CompetencyOutcome.D,
+    );
+
     return [
       ...getCompetencyFaults(data.dangerousFaults),
+      ...getCompetencyFaults(singleFaultCompetenciesWithDangerousFaults),
     ];
   }
 
