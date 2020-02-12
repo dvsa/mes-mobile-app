@@ -12,13 +12,13 @@ import { NavigationProvider } from '../../../../../providers/navigation/navigati
 import { ModalControllerMock } from 'ionic-mocks';
 import { NavigationProviderMock } from '../../../../../providers/navigation/__mocks__/navigation.mock';
 import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
-import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { App } from '../../../../../app/app.component';
 import {
   ReverseDiagramClosed,
   ReverseDiagramOpened,
 } from '../../reverse-diagram-modal/reverse-diagram-modal.actions';
 import { REVERSE_DIAGRAM_PAGE } from '../../../../page-names.constants';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('reverseDiagramLink', () => {
   let fixture: ComponentFixture<ReverseDiagramLinkComponent>;
@@ -31,7 +31,55 @@ describe('reverseDiagramLink', () => {
       declarations: [ReverseDiagramLinkComponent],
       imports: [
         AppModule,
-        StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                category: TestCategory.D, // Value will be overridden where necessary
+                vehicleDetails: {
+                  vehicleLength: 10,
+                  vehicleWidth: 2.75,
+                },
+                accompaniment: {},
+                testData: {
+                  dangerousFaults: {},
+                  drivingFaults: {},
+                  manoeuvres: {},
+                  seriousFaults: {},
+                  testRequirements: {},
+                  ETA: {},
+                  eco: {},
+                  vehicleChecks: {
+                    showMeQuestions: [{
+                      code: 'S3',
+                      description: '',
+                      outcome: '',
+                    }],
+                    tellMeQuestions: [{
+                      code: '',
+                      description: '',
+                      outcome: '',
+                    }],
+                  },
+                  eyesightTest: {},
+                },
+                activityCode: '28',
+                journalData: {
+                  candidate: {
+                    candidateName: 'Joe Bloggs',
+                    driverNumber: '123',
+                  },
+                },
+                rekey: false,
+              },
+            },
+          }),
+          testReport: testReportReducer,
+        }),
       ],
       providers: [
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
@@ -54,6 +102,12 @@ describe('reverseDiagramLink', () => {
   });
 
   describe('Class', () => {
+    describe('ngOnInit', () => {
+      it('should set the testCategory to Cat D', () => {
+        component.ngOnInit();
+        expect(component.testCategory).toBe(TestCategory.D);
+      });
+    });
     describe('openReverseDiagramModal', () => {
       it('should dispatch ReverseDiagramModal', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');

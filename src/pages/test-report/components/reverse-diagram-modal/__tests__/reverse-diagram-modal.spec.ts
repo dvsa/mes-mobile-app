@@ -98,7 +98,7 @@ describe('reverseDiagramModal', () => {
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));
-  fdescribe('Class', () => {
+  describe('Class', () => {
     const vehicleDetails: Map<TestCategory, VehicleData> = mockFile.getVehicleDetails();
     const vehicleDetailsKeys = Array.from(vehicleDetails.keys());
     for (const index in vehicleDetailsKeys) {
