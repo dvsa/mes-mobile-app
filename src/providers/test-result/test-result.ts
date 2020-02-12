@@ -13,6 +13,10 @@ import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { getSpeedRequirementNotMet } from '../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.selector';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
+import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
+import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 
 @Injectable()
 export class TestResultProvider {
@@ -26,18 +30,20 @@ export class TestResultProvider {
       case TestCategory.BE:
         return this.calculateCatBETestResult(testData as CatBEUniqueTypes.TestData);
       case TestCategory.C:
-        return this.calculateCatCAndSubCategoryTestResult(TestCategory.C, testData as CatCUniqueTypes.TestData);
       case TestCategory.C1:
-        return this.calculateCatCAndSubCategoryTestResult(TestCategory.C1, testData as CatC1UniqueTypes.TestData);
       case TestCategory.CE:
-        return this.calculateCatCAndSubCategoryTestResult(TestCategory.CE, testData as CatCEUniqueTypes.TestData);
       case TestCategory.C1E:
-        return this.calculateCatCAndSubCategoryTestResult(TestCategory.C1E, testData as CatC1EUniqueTypes.TestData);
+        return this.calculateCatCAndSubCategoryTestResult(category, testData);
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
         return this.calculateCatAAndSubCategoryTestResult(TestCategory.EUAM1, testData as TestData);
+      case TestCategory.D:
+      case TestCategory.D1:
+      case TestCategory.DE:
+      case TestCategory.D1E:
+        return this.calculateCatDandSubCategoryTestResult(category, testData);
       default:
         throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }
@@ -115,6 +121,29 @@ export class TestResultProvider {
       return of(ActivityCodes.FAIL);
     }
     if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) >= 6) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    return of(ActivityCodes.PASS);
+  }
+
+  private calculateCatDandSubCategoryTestResult = (
+    category: TestCategory,
+    testData: CatDUniqueTypes.TestData |
+      CatDEUniqueTypes.TestData |
+      CatD1EUniqueTypes.TestData |
+      CatD1UniqueTypes.TestData,
+  ): Observable<ActivityCode> => {
+
+    if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    if (this.faultCountProvider.getSeriousFaultSumCount(category, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) > 15) {
       return of(ActivityCodes.FAIL);
     }
 
