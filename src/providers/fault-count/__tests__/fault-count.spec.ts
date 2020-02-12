@@ -397,19 +397,19 @@ describe('FaultCountProvider', () => {
 
   describe('getDrivingFaultSumCountCatD', () => {
     it('should return the driving fault for cat D count correctly', () => {
-      expect((FaultCountDHelper as any).getDrivingFaultSumCountCatD(catDTestDataStateObject)).toBe(5);
+      expect((FaultCountDHelper as any).getDrivingFaultSumCountCatD(catDTestDataStateObject)).toBe(6);
     });
   });
 
   describe('getDrivingFaultSumCountCatD1', () => {
     it('should return the driving fault for cat D1 count correctly', () => {
-      expect((FaultCountDHelper as any).getDrivingFaultSumCountCatD1(catD1TestDataStateObject)).toBe(5);
+      expect((FaultCountDHelper as any).getDrivingFaultSumCountCatD1(catD1TestDataStateObject)).toBe(6);
     });
   });
 
   describe('getDrivingFaultSumCountCatDE', () => {
     it('should return the driving fault for cat DE count correctly', () => {
-      expect((FaultCountDHelper as any).getDrivingFaultSumCountCatDE(catDETestDataStateObject)).toBe(5);
+      expect((FaultCountDHelper as any).getDrivingFaultSumCountCatDE(catDETestDataStateObject)).toBe(6);
     });
   });
 

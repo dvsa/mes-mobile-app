@@ -36,7 +36,7 @@ describe('TestResultCalculatorProvider', () => {
     testResultProvider = TestBed.get(TestResultProvider);
   });
 
-  fdescribe('calculateTestResult', () => {
+  describe('calculateTestResult', () => {
     categories.forEach((cat) => {
       it(`should return a Fail when a dangerous fault exists for a Cat ${cat} test`, (done) => {
         testResultProvider.calculateTestResult(cat, mocks.dangerousFaultMock).subscribe((result) => {
