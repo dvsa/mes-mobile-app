@@ -8,7 +8,7 @@ import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
-import { CAT_BE, CAT_C, CAT_D } from '../../../pages/page-names.constants';
+import { REVERSE_DIAGRAM_PAGE } from '../../../pages/page-names.constants';
 import {
   ReverseDiagramClosed,
   ReverseDiagramOpened,
@@ -38,7 +38,7 @@ export class ReverseDiagramLinkComponent implements OnInit {
   }
 
   openReverseDiagramModal() {
-    const diagramPage = this.getReverseDiagramPage();
+    const diagramPage = REVERSE_DIAGRAM_PAGE;
     this.store$.dispatch(new ReverseDiagramOpened());
     // Modals are at the same level as the ion-nav so are not getting the zoom level class,
     // this needs to be passed in the create options.
@@ -52,24 +52,5 @@ export class ReverseDiagramLinkComponent implements OnInit {
 
   closeReverseDiagramModal() {
     this.store$.dispatch(new ReverseDiagramClosed());
-  }
-
-  getReverseDiagramPage(): string {
-    switch (this.testCategory) {
-      case 'B+E':
-        return CAT_BE.REVERSE_DIAGRAM_PAGE;
-      case 'C':
-      case 'C+E':
-      case 'C1':
-      case 'C1+E':
-        return CAT_C.REVERSE_DIAGRAM_PAGE;
-      case 'D':
-      case 'D1':
-      case 'D+E':
-      case 'D1+E':
-        return CAT_D.REVERSE_DIAGRAM_PAGE;
-      default:
-        return '';
-    }
   }
 }

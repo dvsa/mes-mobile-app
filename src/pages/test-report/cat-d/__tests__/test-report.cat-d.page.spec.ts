@@ -38,8 +38,8 @@ import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 import { initialState } from '../../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
-import { ReverseLeftCatDComponent } from '../components/reverse-left/reverse-left.cat-d';
-import { ReverseLeftPopoverCatDComponent } from '../components/reverse-left-popover/reverse-left-popover.cat-d';
+import { ReverseLeftPopoverComponent } from '../../../../components/common/reverse-left-popover/reverse-left-popover';
+import { ReverseLeftComponent } from '../../../../components/common/reverse-left/reverse-left';
 import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/uncouple-recouple';
 import {
   VehicleChecksCompactCatDComponent,
@@ -65,8 +65,8 @@ describe('TestReportCatDPage', () => {
         MockComponent(ToolbarComponent),
         MockComponent(EcoComponent),
         MockComponent(UncoupleRecoupleComponent),
-        MockComponent(ReverseLeftCatDComponent),
-        MockComponent(ReverseLeftPopoverCatDComponent),
+        MockComponent(ReverseLeftComponent),
+        MockComponent(ReverseLeftPopoverComponent),
         MockComponent(VehicleChecksCompactCatDComponent),
         MockComponent(SafetyQuestionsCatDComponent),
       ],

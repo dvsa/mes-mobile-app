@@ -12,6 +12,8 @@ import { TestReportEffects } from '../test-report.effects';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { TestReportCatCPage } from './test-report.cat-c.page';
 import { TestReportCatCComponentsModule } from './components/test-report.cat-c.components.module';
+import { ReverseDiagramModalComponentsModule }
+ from '../components/reverse-diagram-modal/reverse-diagram-modal.components.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { TestReportCatCComponentsModule } from './components/test-report.cat-c.c
     ]),
     ComponentsModule,
     TestReportCatCComponentsModule,
+    ReverseDiagramModalComponentsModule,
   ],
   providers: [
     TestReportValidatorProvider,

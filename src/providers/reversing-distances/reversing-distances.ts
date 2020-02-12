@@ -58,6 +58,8 @@ export class ReversingDistancesProvider {
     switch (category) {
       case TestCategory.CE:
       case TestCategory.C1E:
+      case TestCategory.DE:
+      case TestCategory.D1E:
         return ({
           startDistance: data.vehicleLength > 16.5 ? 66 : Math.round(distanceFromStart * 100) / 100,
           middleDistance: Math.round(distanceFromMiddle * 100) / 100,

@@ -78,6 +78,7 @@ export class TestReportCatBEPage extends BasePageComponent {
   manoeuvresCompleted: boolean = false;
   isTestReportValid: boolean = false;
   isEtaValid: boolean = true;
+  testCategory: CategoryCode;
 
   modal: Modal;
   missingLegalRequirements: legalRequirementsLabels[] = [];
@@ -102,6 +103,7 @@ export class TestReportCatBEPage extends BasePageComponent {
       },
     };
   }
+
   ngOnInit(): void {
 
     const currentTest$ = this.store$.pipe(
@@ -145,6 +147,7 @@ export class TestReportCatBEPage extends BasePageComponent {
     this.setupSubscription();
 
   }
+
   ionViewDidEnter(): void {
 
     // it is possible that we come back to the page from the terminate screen
