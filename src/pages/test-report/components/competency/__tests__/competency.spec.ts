@@ -662,21 +662,6 @@ describe('CompetencyComponent', () => {
     });
   });
 
-  describe('shouldDisableRippleForOneFaultLimit', () => {
-    it('should return false if more than one fault permitted', () => {
-      component.faultCount = 2;
-      component.oneFaultLimit = false;
-
-      expect(component.shouldDisableRippleForOneFaultLimit()).toBe(false);
-    });
-    it('should return true if only one fault permitted', () => {
-      component.faultCount = 1;
-      component.oneFaultLimit = true;
-
-      expect(component.shouldDisableRippleForOneFaultLimit()).toBe(true);
-    });
-  });
-
   describe('hasDrivingFault', () => {
     it('should return true if faultCount is not undefined', () => {
       component.faultCount = 1;
