@@ -6,8 +6,11 @@ import { get } from 'lodash';
 export class FaultSummaryCatAM1Helper {
 
   public static getDrivingFaultsCatAM1(data: TestData): FaultSummary[] {
+    console.log('### data');
+    console.log(data);
     return [
       ...getCompetencyFaults(data.drivingFaults),
+      ...getCompetencyFaults(data.singleFaultCompetencies)
     ];
   }
 

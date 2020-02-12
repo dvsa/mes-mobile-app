@@ -4,10 +4,13 @@ import { competencyLabels } from '../../pages/test-report/components/competency/
 import { fullCompetencyLabels } from '../constants/competencies/catb-competencies';
 import { forOwn, isBoolean, isNumber } from 'lodash';
 import { CompetencyOutcome } from '../models/competency-outcome';
+import { SingleFaultCompetencies } from '@dvsa/mes-test-schema/categories/AM1';
 
 const competencyOutcomes = [CompetencyOutcome.DF, CompetencyOutcome.S, CompetencyOutcome.D];
 
-export const getCompetencyFaults = (faults: DrivingFaults | SeriousFaults | DangerousFaults): FaultSummary[] => {
+export const getCompetencyFaults = (
+  faults: DrivingFaults | SeriousFaults | DangerousFaults | SingleFaultCompetencies,
+): FaultSummary[] => {
   const faultsEncountered: FaultSummary[] = [];
 
   forOwn(
