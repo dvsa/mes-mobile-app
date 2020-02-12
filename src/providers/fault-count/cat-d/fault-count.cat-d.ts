@@ -8,7 +8,7 @@ import { sumManoeuvreFaults } from '../../../shared/helpers/faults';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import { SafetyQuestionsScore } from '../../../shared/models/safety-questions-score.model';
-import { getCompetencyFaults } from '../../../shared/helpers/competency';
+import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 
 export class FaultCountDHelper {
 

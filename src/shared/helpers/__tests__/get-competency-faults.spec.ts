@@ -1,7 +1,7 @@
 import { DrivingFaults, SeriousFaults, DangerousFaults } from '@dvsa/mes-test-schema/categories/common';
-import { getCompetencyFaults, calculateFaultCount } from '../competency';
+import { getCompetencyFaults, calculateFaultCount } from '../get-competency-faults';
 import { Competencies } from '../../../modules/tests/test-data/test-data.constants';
-import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
+import { fullCompetencyLabels } from '../../constants/competencies/catb-competencies';
 
 // note: although competency labels come from a file called catb-competencies, these are in fact
 // common to all competencies

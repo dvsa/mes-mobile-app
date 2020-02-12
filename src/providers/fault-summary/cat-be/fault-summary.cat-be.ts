@@ -9,7 +9,7 @@ import {
   manoeuvreTypeLabels as manoeuvreTypeLabelsCatBe,
 } from '../../../shared/constants/competencies/catbe-manoeuvres';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { getCompetencyFaults, getCompetencyComment } from '../../../shared/helpers/competency';
+import { getCompetencyFaults, getCompetencyComment } from '../../../shared/helpers/get-competency-faults';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 
 export class FaultSummaryCatBEHelper {

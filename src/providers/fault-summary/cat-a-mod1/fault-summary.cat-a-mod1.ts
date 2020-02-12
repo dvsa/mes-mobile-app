@@ -1,148 +1,95 @@
 import { FaultSummary } from '../../../shared/models/fault-marking.model';
-import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
-import { getCompetencyFaults } from '../../../shared/helpers/competency';
+import { TestData, SingleFaultCompetencies, Avoidance, EmergencyStop } from '@dvsa/mes-test-schema/categories/AM1';
+import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
+import { get, pickBy } from 'lodash';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export class FaultSummaryCatAM1Helper {
 
   public static getDrivingFaultsCatAM1(data: TestData): FaultSummary[] {
-    if (this.hasEmergencyStopAndAvoidanceRidingFaults(data)) {
-      return [
-        ...getCompetencyFaults(data.drivingFaults),
-        this.createEmergencyStopFaultSummary(),
-        this.createAvoidanceFaultSummary(),
-      ];
-    }
 
-    if (this.hasEmergencyStopRidingFault(data)) {
-      return [
-        ...getCompetencyFaults(data.drivingFaults),
-        this.createEmergencyStopFaultSummary(),
-      ];
-    }
-
-    if (this.hasAvoidanceRidingFault(data)) {
-      return [
-        ...getCompetencyFaults(data.drivingFaults),
-        this.createAvoidanceFaultSummary(),
-      ];
-    }
+    const singleFaultCompetenciesWithDrivingFaults: SingleFaultCompetencies = pickBy(
+      data.singleFaultCompetencies, val => val === CompetencyOutcome.DF,
+    );
 
     return [
       ...getCompetencyFaults(data.drivingFaults),
+      ...getCompetencyFaults(singleFaultCompetenciesWithDrivingFaults),
+      ...FaultSummaryCatAM1Helper.getAvoidanceFaults(data.avoidance, CompetencyOutcome.DF),
+      ...FaultSummaryCatAM1Helper.getEmergencyStopFaults(data.emergencyStop, CompetencyOutcome.DF),
     ];
   }
 
   public static getSeriousFaultsCatAM1(data: TestData): FaultSummary[] {
-    if (this.hasEmergencyStopAndAvoidanceSeriousFaults(data)) {
-      return [
-        ...getCompetencyFaults(data.seriousFaults),
-        this.createEmergencyStopFaultSummary(),
-        this.createAvoidanceFaultSummary(),
-      ];
-    }
-
-    if (this.hasEmergencyStopSeriousFault(data)) {
-      return [
-        ...getCompetencyFaults(data.seriousFaults),
-        this.createEmergencyStopFaultSummary(),
-      ];
-    }
-
-    if (this.hasAvoidanceSeriousFault(data)) {
-      return [
-        ...getCompetencyFaults(data.seriousFaults),
-        this.createAvoidanceFaultSummary(),
-      ];
-    }
+    const singleFaultCompetenciesWithDangerousFaults: SingleFaultCompetencies = pickBy(
+      data.singleFaultCompetencies, val => val === CompetencyOutcome.S,
+    );
 
     return [
-      ...getCompetencyFaults(data.seriousFaults),
+      ...getCompetencyFaults(data.dangerousFaults),
+      ...getCompetencyFaults(singleFaultCompetenciesWithDangerousFaults),
+      ...FaultSummaryCatAM1Helper.getAvoidanceFaults(data.avoidance, CompetencyOutcome.S),
+      ...FaultSummaryCatAM1Helper.getEmergencyStopFaults(data.emergencyStop, CompetencyOutcome.S),
+      ...FaultSummaryCatAM1Helper.getSpeedCheckAvoidance(data.avoidance),
+      ...FaultSummaryCatAM1Helper.getSpeedCheckEmergencyStop(data.emergencyStop),
     ];
   }
 
   public static getDangerousFaultsCatAM1(data: TestData): FaultSummary[] {
-    if (this.hasEmergencyStopAndAvoidanceDangerousFaults(data)) {
-      return [
-        ...getCompetencyFaults(data.dangerousFaults),
-        this.createEmergencyStopFaultSummary(),
-        this.createAvoidanceFaultSummary(),
-      ];
-    }
-
-    if (this.hasEmergencyStopDangerousFault(data)) {
-      return [
-        ...getCompetencyFaults(data.dangerousFaults),
-        this.createEmergencyStopFaultSummary(),
-      ];
-    }
-
-    if (this.hasAvoidanceDangerousFault(data)) {
-      return [
-        ...getCompetencyFaults(data.dangerousFaults),
-        this.createAvoidanceFaultSummary(),
-      ];
-    }
+    const singleFaultCompetenciesWithDangerousFaults: SingleFaultCompetencies = pickBy(
+      data.singleFaultCompetencies, val => val === CompetencyOutcome.D,
+    );
 
     return [
       ...getCompetencyFaults(data.dangerousFaults),
+      ...getCompetencyFaults(singleFaultCompetenciesWithDangerousFaults),
+      ...FaultSummaryCatAM1Helper.getAvoidanceFaults(data.avoidance, CompetencyOutcome.D),
+      ...FaultSummaryCatAM1Helper.getEmergencyStopFaults(data.emergencyStop, CompetencyOutcome.D),
     ];
   }
 
-  public static hasEmergencyStopAndAvoidanceRidingFaults(data: TestData) {
-    return this.hasEmergencyStopRidingFault(data) && this.hasAvoidanceRidingFault(data);
+  public static getAvoidanceFaults(avoidance: Avoidance, outcome: CompetencyOutcome): FaultSummary[] {
+    const result = [];
+    if (get(avoidance, 'outcome') === outcome) {
+      result.push(FaultSummaryCatAM1Helper.createFaultSummary('Avoidance'));
+    }
+
+    return result;
   }
 
-  public static hasEmergencyStopAndAvoidanceSeriousFaults(data: TestData) {
-    return this.hasEmergencyStopSeriousFault(data) && this.hasAvoidanceSeriousFault(data);
+  public static getEmergencyStopFaults(emergencyStop: EmergencyStop, outcome: CompetencyOutcome): FaultSummary[] {
+    const result = [];
+    if (get(emergencyStop, 'outcome') === outcome) {
+      result.push(FaultSummaryCatAM1Helper.createFaultSummary('Emergency Stop'));
+    }
+
+    return result;
   }
 
-  public static hasEmergencyStopAndAvoidanceDangerousFaults(data: TestData) {
-    return this.hasEmergencyStopDangerousFault(data) && this.hasAvoidanceDangerousFault(data);
+  public static getSpeedCheckAvoidance(avoidance: Avoidance): FaultSummary[] {
+    const result = [];
+    if (get(avoidance, 'speedNotMetSeriousFault')) {
+      result.push(FaultSummaryCatAM1Helper.createFaultSummary('Avoidance'));
+    }
+
+    return result;
   }
 
-  public static hasEmergencyStopRidingFault(data: TestData): boolean {
-    return data.emergencyStop.outcome === 'DF' ? true : false;
+  public static getSpeedCheckEmergencyStop(emergencyStop: EmergencyStop): FaultSummary[] {
+    const result = [];
+    if (get(emergencyStop, 'speedNotMetSeriousFault')) {
+      result.push(FaultSummaryCatAM1Helper.createFaultSummary('Emergency Stop'));
+    }
+
+    return result;
   }
 
-  public static hasAvoidanceRidingFault(data: TestData): boolean {
-    return data.avoidance.outcome === 'DF' ? true : false;
-  }
-
-  public static hasEmergencyStopSeriousFault(data: TestData): boolean {
-    return data.emergencyStop.outcome === 'S' ? true : false;
-  }
-
-  public static hasAvoidanceSeriousFault(data: TestData): boolean {
-    return data.avoidance.outcome === 'S' ? true : false;
-  }
-
-  public static hasEmergencyStopDangerousFault(data: TestData): boolean {
-    return data.emergencyStop.outcome === 'D' ? true : false;
-  }
-
-  public static hasAvoidanceDangerousFault(data: TestData): boolean {
-    return data.avoidance.outcome === 'D' ? true : false;
-  }
-
-  public static createEmergencyStopFaultSummary(): FaultSummary {
-    const faultSummary: FaultSummary = {
-      competencyIdentifier: 'speedCheckEmergency',
+  public static createFaultSummary(competencyIdentifier: string): FaultSummary {
+    return {
+      competencyIdentifier,
       competencyDisplayName: null,
       comment: null,
       faultCount: 1,
     };
-
-    return faultSummary;
-  }
-
-  public static createAvoidanceFaultSummary(): FaultSummary {
-    const faultSummary: FaultSummary = {
-      competencyIdentifier: 'speedCheckAvoidance',
-      competencyDisplayName: null,
-      comment: null,
-      faultCount: 1,
-    };
-
-    return faultSummary;
   }
 }

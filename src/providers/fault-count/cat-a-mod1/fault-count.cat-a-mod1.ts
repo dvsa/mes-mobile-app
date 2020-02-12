@@ -1,7 +1,7 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { pickBy } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
-import { getCompetencyFaults } from '../../../shared/helpers/competency';
+import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 
 export class FaultCountAM1Helper {
 

@@ -22,7 +22,7 @@ export class FaultSummaryProvider {
 
   constructor(private faultCountProvider: FaultCountProvider) { }
 
-  public getDrivingFaultsList(data: Object, category: TestCategory): FaultSummary[] {
+  public getDrivingFaultsList(data: object, category: TestCategory): FaultSummary[] {
     switch (category) {
       case TestCategory.B:
         return FaultSummaryCatBHelper.getDrivingFaultsCatB(data);
@@ -107,7 +107,7 @@ export class FaultSummaryProvider {
     }
   }
 
-  public getSeriousFaultsList(data: Object, category: TestCategory): FaultSummary[] {
+  public getSeriousFaultsList(data: object, category: TestCategory): FaultSummary[] {
     switch (category) {
       case TestCategory.B:
         return FaultSummaryCatBHelper.getSeriousFaultsCatB(data);
@@ -135,7 +135,7 @@ export class FaultSummaryProvider {
     }
   }
 
-  public getDangerousFaultsList(data: Object, category: TestCategory): FaultSummary[] {
+  public getDangerousFaultsList(data: object, category: TestCategory): FaultSummary[] {
     switch (category) {
       case TestCategory.B:
         return FaultSummaryCatBHelper.getDangerousFaultsCatB(data);
