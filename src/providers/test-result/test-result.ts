@@ -43,7 +43,7 @@ export class TestResultProvider {
       case TestCategory.D1:
       case TestCategory.DE:
       case TestCategory.D1E:
-        return this.calculateCatCDndSubCategoryTestResult(category, testData);
+        return this.calculateCatDandSubCategoryTestResult(category, testData);
       default:
         throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }
@@ -127,7 +127,7 @@ export class TestResultProvider {
     return of(ActivityCodes.PASS);
   }
 
-  private calculateCatCDndSubCategoryTestResult = (
+  private calculateCatDandSubCategoryTestResult = (
     category: TestCategory,
     testData: CatDUniqueTypes.TestData |
       CatDEUniqueTypes.TestData |
