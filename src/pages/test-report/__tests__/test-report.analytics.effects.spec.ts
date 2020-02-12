@@ -2002,7 +2002,7 @@ describe('Test Report Analytics Effects', () => {
         SingleFaultCompetencyNames.slalom));
 
       // ASSERT
-      effects.setSingleFaultCompetencyOutcome$.subscribe((result) => {
+      effects.removeSingleFaultCompetencyOutcome$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
@@ -2027,7 +2027,7 @@ describe('Test Report Analytics Effects', () => {
         SingleFaultCompetencyNames.slalom));
 
       // ASSERT
-      effects.setSingleFaultCompetencyOutcome$.subscribe((result) => {
+      effects.removeSingleDangerousFaultCompetencyOutcome$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
@@ -2052,7 +2052,7 @@ describe('Test Report Analytics Effects', () => {
         SingleFaultCompetencyNames.slalom));
 
       // ASSERT
-      effects.setSingleFaultCompetencyOutcome$.subscribe((result) => {
+      effects.removeSingleSeriousFaultCompetencyOutcome$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
