@@ -48,7 +48,7 @@ describe('MultiLegalRequirementComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should dispatch a TOGGLE_NORMAL_START_1 action if neither requirement is  ticked', () => {
+    it('should dispatch a TOGGLE_NORMAL_START_1 action if neither requirement is ticked', () => {
       component.legalRequirement1 = LegalRequirements.normalStart1;
       component.requirement1Ticked = false;
       component.legalRequirement2 = LegalRequirements.normalStart2;
@@ -80,7 +80,7 @@ describe('MultiLegalRequirementComponent', () => {
     expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleLegalRequirement(LegalRequirements.normalStart2));
   });
 
-  it('should dispatch a TOGGLE_BUS_STOP_1 action if neither requirement is  ticked', () => {
+  it('should dispatch a TOGGLE_BUS_STOP_1 action if neither requirement is ticked', () => {
     component.legalRequirement1 = LegalRequirements.busStop1;
     component.requirement1Ticked = false;
     component.legalRequirement2 = LegalRequirements.busStop2;
