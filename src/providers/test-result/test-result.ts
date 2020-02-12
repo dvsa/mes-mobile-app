@@ -30,26 +30,20 @@ export class TestResultProvider {
       case TestCategory.BE:
         return this.calculateCatBETestResult(testData as CatBEUniqueTypes.TestData);
       case TestCategory.C:
-        return this.calculateCatCAndSubCategoryTestResult(TestCategory.C, testData as CatCUniqueTypes.TestData);
       case TestCategory.C1:
-        return this.calculateCatCAndSubCategoryTestResult(TestCategory.C1, testData as CatC1UniqueTypes.TestData);
       case TestCategory.CE:
-        return this.calculateCatCAndSubCategoryTestResult(TestCategory.CE, testData as CatCEUniqueTypes.TestData);
       case TestCategory.C1E:
-        return this.calculateCatCAndSubCategoryTestResult(TestCategory.C1E, testData as CatC1EUniqueTypes.TestData);
+        return this.calculateCatCAndSubCategoryTestResult(category, testData);
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
         return this.calculateCatAAndSubCategoryTestResult(TestCategory.EUAM1, testData as TestData);
       case TestCategory.D:
-        return this.calculateCatCDndSubCategoryTestResult(TestCategory.D, testData  as CatDUniqueTypes.TestData);
       case TestCategory.D1:
-        return this.calculateCatCDndSubCategoryTestResult(TestCategory.D1, testData  as CatD1UniqueTypes.TestData);
       case TestCategory.DE:
-        return this.calculateCatCDndSubCategoryTestResult(TestCategory.DE, testData  as CatDEUniqueTypes.TestData);
       case TestCategory.D1E:
-        return this.calculateCatCDndSubCategoryTestResult(TestCategory.D1E, testData as CatD1EUniqueTypes.TestData);
+        return this.calculateCatCDndSubCategoryTestResult(category, testData);
       default:
         throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }
