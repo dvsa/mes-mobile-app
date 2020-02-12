@@ -61,12 +61,6 @@ export default [
     description: 'Show me how you would check that the brake lights are working on this vehicle. (I can assist you, if you need to switch the ignition on, please don’t start the engine)',
     shortName: 'Brake lights',
   },
-  {
-    code: 'N/A',
-    description: 'Not applicable.',
-    shortName: 'Not applicable',
-  },
-
 ] as VehicleChecksQuestion[];
 
 export const NUMBER_OF_SHOW_ME_QUESTIONS = 1;
