@@ -647,21 +647,6 @@ describe('CompetencyComponent', () => {
     });
   });
 
-  describe('canAddSingleFault', () => {
-    it('should return false if competency has an existing fault (faultCount >= 1)', () => {
-      component.faultCount = 1;
-      expect(component.canAddSingleDrivingFault()).toBe(false);
-    });
-    it('should return true if faultCount is undefined and competency was pressed', () => {
-      component.faultCount = undefined;
-      expect(component.canAddSingleDrivingFault(true)).toBe(true);
-    });
-    it('should return false if faultCount is undefined and competency was not pressed', () => {
-      component.faultCount = undefined;
-      expect(component.canAddSingleDrivingFault()).toBe(false);
-    });
-  });
-
   describe('hasDrivingFault', () => {
     it('should return true if faultCount is not undefined', () => {
       component.faultCount = 1;
