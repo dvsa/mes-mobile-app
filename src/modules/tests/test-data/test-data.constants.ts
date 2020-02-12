@@ -67,6 +67,8 @@ export enum ManoeuvreCompetencies {
 export enum LegalRequirements {
   normalStart1 = 'normalStart1',
   normalStart2 = 'normalStart2',
+  busStop1 = 'busStop1',
+  busStop2 = 'busStop2',
   angledStart = 'angledStart',
   hillStart = 'hillStart',
   angledStartControlledStop = 'angledStartControlledStop',

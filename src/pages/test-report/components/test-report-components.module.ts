@@ -18,6 +18,7 @@ import { LegalRequirementsModalModule } from './legal-requirements-modal/legal-r
 import { EtaInvalidModalModule } from './eta-invalid-modal/eta-invalid-modal.module';
 import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-competency';
 import { UncoupleRecoupleComponent } from './uncouple-recouple/uncouple-recouple';
+import { MultiLegalRequirementComponent } from './multi-legal-requirement/multi-legal-requirement';
 import { SingleFaultCompetencyComponent } from './single-fault-competency/single-fault-competency';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { SingleFaultCompetencyComponent } from './single-fault-competency/single
     SeriousTooltipComponent,
     DangerousTooltipComponent,
     LegalRequirementComponent,
+    MultiLegalRequirementComponent,
     EcoComponent,
     TimerComponent,
     UncoupleRecoupleComponent,
@@ -55,6 +57,7 @@ import { SingleFaultCompetencyComponent } from './single-fault-competency/single
     SeriousTooltipComponent,
     DangerousTooltipComponent,
     LegalRequirementComponent,
+    MultiLegalRequirementComponent,
     EcoComponent,
     TimerComponent,
     UncoupleRecoupleComponent,
