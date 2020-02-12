@@ -39,12 +39,6 @@ Feature: Journal
       And I view candidate details for "Mr Bill Pots"
      Then I should see the "Slot type" contains "Single Slot (Special Needs)"
 
-   Scenario: Examiner is informed that the test is Single Slot (Special Needs)
-    Given I am on the journal page as "mobexaminer1"
-     When I navigate to next day
-      And I view candidate details for "Mr Buxton Phil"
-     Then I should see the "Slot type" contains "Single Slot (Special Needs)"
-
   Scenario: Examiner views meeting place information
     Given I am on the journal page as "mobexaminer1"
      When I view candidate details for "Miss Florence Pearson"
