@@ -14,6 +14,8 @@ export function singleFaultCompetenciesReducer(
         [action.competencyName]: action.outcome,
       };
     case singleFaultCompetencyActions.REMOVE_SINGLE_FAULT_COMPETENCY_OUTCOME:
+    case singleFaultCompetencyActions.REMOVE_SINGLE_DANGEROUS_FAULT_COMPETENCY_OUTCOME:
+    case singleFaultCompetencyActions.REMOVE_SINGLE_SERIOUS_FAULT_COMPETENCY_OUTCOME:
       const { [action.competencyName]: removedCompetencyOutcome, ...updatedCompetencyOutcome } = state;
       return {
         ...updatedCompetencyOutcome,

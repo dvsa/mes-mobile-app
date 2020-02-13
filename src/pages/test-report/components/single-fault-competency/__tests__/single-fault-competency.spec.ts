@@ -25,6 +25,8 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import {
   RemoveSingleFaultCompetencyOutcome,
   SetSingleFaultCompetencyOutcome,
+  RemoveSingleSeriousFaultCompetencyOutcome,
+  RemoveSingleDangerousFaultCompetencyOutcome,
 } from '../../../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
 import { ToggleSeriousFaultMode, ToggleRemoveFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
@@ -233,7 +235,8 @@ describe('SingleFaultCompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.removeFault();
 
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSingleFaultCompetencyOutcome(competencyName));
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(
+          new RemoveSingleSeriousFaultCompetencyOutcome(competencyName));
       });
 
       it('should NOT remove driving fault when dangerous mode is active', () => {
@@ -245,12 +248,13 @@ describe('SingleFaultCompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.removeFault();
 
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSingleFaultCompetencyOutcome(competencyName));
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(
+          new RemoveSingleDangerousFaultCompetencyOutcome(competencyName));
       });
     });
 
     describe('removeSeriousFault', () => {
-      it('should dispatch a RemoveSingleFaultCompetencyOutcome for press and hold', () => {
+      it('should dispatch a RemoveSingleSeriousFaultCompetencyOutcome for press and hold', () => {
         const competencyName = SingleFaultCompetencyNames.useOfStand;
         component.competency = competencyName;
         component.hasSeriousFault = true;
@@ -259,9 +263,10 @@ describe('SingleFaultCompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.removeFault();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSingleFaultCompetencyOutcome(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new RemoveSingleSeriousFaultCompetencyOutcome(component.competency));
       });
-      it('should dispatch a RemoveSingleFaultCompetencyOutcome for press', () => {
+      it('should dispatch a RemoveSingleSeriousFaultCompetencyOutcome for press', () => {
         const competencyName = SingleFaultCompetencyNames.useOfStand;
         component.competency = competencyName;
         component.hasSeriousFault = true;
@@ -270,9 +275,10 @@ describe('SingleFaultCompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.removeFault();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSingleFaultCompetencyOutcome(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new RemoveSingleSeriousFaultCompetencyOutcome(component.competency));
       });
-      it('should not dispatch a RemoveSingleFaultCompetencyOutcome when is dangerous mode', () => {
+      it('should not dispatch a RemoveSingleDangerousFaultCompetencyOutcome when is dangerous mode', () => {
         const competencyName = SingleFaultCompetencyNames.useOfStand;
         component.competency = competencyName;
         component.hasSeriousFault = true;
@@ -281,7 +287,8 @@ describe('SingleFaultCompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.removeFault();
 
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSingleFaultCompetencyOutcome(component.competency));
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(
+          new RemoveSingleDangerousFaultCompetencyOutcome(component.competency));
       });
 
       it('should not remove serious mode after removal attempt on competency with no serious fault', () => {
@@ -298,7 +305,7 @@ describe('SingleFaultCompetencyComponent', () => {
     });
 
     describe('removeDangerousFault', () => {
-      it('should dispatch a RemoveSingleFaultCompetencyOutcome for press and hold', () => {
+      it('should dispatch a RemoveSingleDangerousFaultCompetencyOutcome for press and hold', () => {
         const competencyName = SingleFaultCompetencyNames.useOfStand;
         component.competency = competencyName;
         component.hasDangerousFault = true;
@@ -307,10 +314,11 @@ describe('SingleFaultCompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.removeFault();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSingleFaultCompetencyOutcome(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new RemoveSingleDangerousFaultCompetencyOutcome(component.competency));
       });
 
-      it('should dispatch a RemoveSingleFaultCompetencyOutcome for press', () => {
+      it('should dispatch a RemoveSingleDangerousFaultCompetencyOutcome for press', () => {
         const competencyName = SingleFaultCompetencyNames.useOfStand;
         component.competency = competencyName;
         component.hasDangerousFault = true;
@@ -319,10 +327,11 @@ describe('SingleFaultCompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.removeFault();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSingleFaultCompetencyOutcome(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new RemoveSingleDangerousFaultCompetencyOutcome(component.competency));
       });
 
-      it('should not dispatch a RemoveSingleFaultCompetencyOutcome when is serious mode', () => {
+      it('should not dispatch a RemoveSingleSeriousFaultCompetencyOutcome when is serious mode', () => {
         const competencyName = SingleFaultCompetencyNames.useOfStand;
         component.competency = competencyName;
         component.hasDangerousFault = true;
@@ -331,7 +340,8 @@ describe('SingleFaultCompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.removeFault();
 
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSingleFaultCompetencyOutcome(component.competency));
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(
+          new RemoveSingleSeriousFaultCompetencyOutcome(component.competency));
       });
 
       it('should not remove dangerous mode after removal attempt on competency with no dangerous fault', () => {
