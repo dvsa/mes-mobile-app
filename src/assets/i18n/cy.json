@@ -1,7 +1,11 @@
 {
   "common": {
     "continue": "Parhau",
-    "screenLocked": "Dyfais wedi'i chloi"
+    "screenLocked": "Dyfais wedi'i chloi",
+    "driver": "gyrrwr",
+    "rider": "beiciwr",
+    "driving": "gyrru",
+    "riding": "reidio"
   },
   "communication": {
     "bookingEmail": "Defnyddiwyd y cyfeiriad e-bost dilynol wrth archebu'r prawf",
@@ -13,7 +17,7 @@
     "newEmailLabel": "Trwy e-bost (newid e-bost)",
     "newEmailValidation": "Nodwch e-bost dilys",
     "title": "Datganiad",
-    "privacyNotice": "Rwy'n cytuno i DVSA gasglu, defnyddio, storio a rhannu fy ngwybodaeth bersonol at ddibenion cynnal y prawf gyrru"
+    "privacyNotice": "Rwy'n cytuno i DVSA gasglu, defnyddio, storio a rhannu fy ngwybodaeth bersonol at ddibenion cynnal y prawf {{drivingOrRiding}}"
   },
   "debrief": {
     "showMeTellMeQuestions": {
