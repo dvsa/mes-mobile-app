@@ -27,10 +27,6 @@ safety-questions-cat-d {
     .fault-wrapper {
       display: flex;
       align-items: flex-end;
-
-      serious-fault-badge {
-        padding-right: 22px; //padding in place of dangerous fault badge to preserve alignment
-      }
     }
   }
 }
