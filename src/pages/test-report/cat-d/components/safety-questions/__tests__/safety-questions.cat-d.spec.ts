@@ -63,15 +63,6 @@ describe('SafetyQuestionsComponent', () => {
       component.ngOnInit();
       component.componentState.safetyQuestionsDrivingFaultCount$.subscribe((result) => {
         expect(component.faultCountProvider.getSafetyQuestionsFaultCount).toHaveBeenCalled();
-        expect(result).toEqual(4);
-        done();
-      });
-    });
-    it('should set the safetyQuestions serious fault count', (done: DoneFn) => {
-      component.testCategory = TestCategory.D;
-      component.ngOnInit();
-      component.componentState.safetyQuestionsDrivingFaultCount$.subscribe((result) => {
-        expect(component.faultCountProvider.getSafetyQuestionsFaultCount).toHaveBeenCalled();
         expect(result).toEqual(1);
         done();
       });
@@ -79,13 +70,12 @@ describe('SafetyQuestionsComponent', () => {
   });
 
   describe('DOM', () => {
-
     it('should pass the number of safety Question driving faults to the driving faults component', () => {
       component.testCategory = TestCategory.D;
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
-      component.componentState.safetyQuestionsDrivingFaultCount$ = of(3);
+      component.componentState.safetyQuestionsDrivingFaultCount$ = of(1);
       fixture.detectChanges();
       expect(drivingFaultsBadge.count).toBe(1);
     });
