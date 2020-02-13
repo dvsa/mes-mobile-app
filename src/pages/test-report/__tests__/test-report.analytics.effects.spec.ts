@@ -50,8 +50,10 @@ import * as catBEManoeuversActions
   from '../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import * as avoidanceActions from '../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
-import { speedCheckLabels, speedCheckToggleValues } from
-  '../../../shared/constants/competencies/cata-mod1-speed-checks';
+import {
+  speedCheckLabels,
+  speedCheckToggleValues,
+} from '../../../shared/constants/competencies/cata-mod1-speed-checks';
 import * as testReportCatAMod1Actions from '../cat-a-mod1/test-report.cat-a-mod1.actions';
 import { ModalReason } from '../cat-a-mod1/components/activity-code-4-modal/activity-code-4-modal.constants';
 import * as emergencyStopActions from
