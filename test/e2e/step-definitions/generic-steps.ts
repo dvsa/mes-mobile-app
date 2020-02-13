@@ -10,11 +10,18 @@ const {
   setDefaultTimeout,
   After,
   Status,
+  AfterAll,		
+ } = require('cucumber');		 } = require('cucumber');
+   const chai = require('chai');		 const chai = require('chai');
+   const chaiAsPromised = require('chai-as-promised');		 const chaiAsPromised = require('chai-as-promised');
+   chai.use(chaiAsPromised);		 chai.use(chaiAsPromised);
+   const expect = chai.expect;		 const expect = chai.expect;
+   const fs = require('fs');
 } = require('cucumber');
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-chai.use(chaiAsPromised);
-const expect = chai.expect;
+  const chai = require('chai');
+  const chaiAsPromised = require('chai-as-promised');
+  chai.use(chaiAsPromised);
+  const expect = chai.expect;
 
 this.testCategory = 'b';
 
@@ -243,6 +250,19 @@ When('I click the back button', () => {
 When('I click go to my Journal', () => {
   clickGoToMyJournalButton();
 });
+
+/**		
+  * Output the UI processed config so it may be included in the HTML report.		
+  */		
+ AfterAll(() => {		
+   browser.getProcessedConfig().then((config) => {		
+     fs.writeFile('./test-reports/e2e-test-config.json', JSON.stringify(config), (err) => {		
+       if (err) {		
+         return console.log(err);		
+       }		
+     });		
+   });		
+ });		
 
 /**
  * Take a screenshot of the page at the end of the scenario.
