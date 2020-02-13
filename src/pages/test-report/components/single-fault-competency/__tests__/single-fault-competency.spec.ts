@@ -263,7 +263,7 @@ describe('SingleFaultCompetencyComponent', () => {
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSingleSeriousFaultCompetencyOutcome(component.competency));
       });
-      it('should dispatch a RemoveSingleFaultCompetencyOutcome for press', () => {
+      it('should dispatch a RemoveSingleSeriousFaultCompetencyOutcome for press', () => {
         const competencyName = SingleFaultCompetencyNames.useOfStand;
         component.competency = competencyName;
         component.hasSeriousFault = true;
@@ -272,7 +272,7 @@ describe('SingleFaultCompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.removeFault();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSingleFaultCompetencyOutcome(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSingleSeriousFaultCompetencyOutcome(component.competency));
       });
       it('should not dispatch a RemoveSingleDangerousFaultCompetencyOutcome when is dangerous mode', () => {
         const competencyName = SingleFaultCompetencyNames.useOfStand;
@@ -312,7 +312,7 @@ describe('SingleFaultCompetencyComponent', () => {
         expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSingleDangerousFaultCompetencyOutcome(component.competency));
       });
 
-      it('should dispatch a RemoveSingleFaultCompetencyOutcome for press', () => {
+      it('should dispatch a RemoveSingleDangerousFaultCompetencyOutcome for press', () => {
         const competencyName = SingleFaultCompetencyNames.useOfStand;
         component.competency = competencyName;
         component.hasDangerousFault = true;
@@ -321,7 +321,7 @@ describe('SingleFaultCompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.removeFault();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSingleFaultCompetencyOutcome(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSingleDangerousFaultCompetencyOutcome(component.competency));
       });
 
       it('should not dispatch a RemoveSingleSeriousFaultCompetencyOutcome when is serious mode', () => {
