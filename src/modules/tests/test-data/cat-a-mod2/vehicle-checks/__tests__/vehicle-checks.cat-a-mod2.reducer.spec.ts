@@ -47,9 +47,9 @@ describe('Vehicle Checks Cat A Mod2 Reducer', () => {
         description: 'desc',
       };
       const state: SafetyAndBalanceQuestions = cloneDeep(initialState);
-      const result = vehicleChecksCatAMod2Reducer(state, new BalanceQuestionSelected(newQuestionPayload, 1));
-      expect(result.balanceQuestions[1].code).toEqual('B01');
-      expect(result.balanceQuestions[1].description).toEqual('desc');
+      const result = vehicleChecksCatAMod2Reducer(state, new BalanceQuestionSelected(newQuestionPayload, 0));
+      expect(result.balanceQuestions[0].code).toEqual('B01');
+      expect(result.balanceQuestions[0].description).toEqual('desc');
     });
   });
 

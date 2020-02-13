@@ -21,7 +21,7 @@ import {
 import {
   NUMBER_OF_SAFETY_QUESTIONS,
 } from '../../../../../shared/constants/safety-questions.cat-a-mod2.constants';
-import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
+import { SafetyQuestionsScore } from '../../../../../shared/models/safety-questions-score.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
@@ -40,7 +40,7 @@ interface VehicleChecksModalState {
   candidateName$: Observable<string>;
   safetyQuestions$: Observable<QuestionResult[]>;
   balanceQuestions$: Observable<QuestionResult[]>;
-  safetyAndBalanceQuestionsScore$: Observable<VehicleChecksScore>;
+  safetyAndBalanceQuestionsScore$: Observable<SafetyQuestionsScore>;
 }
 
 @IonicPage()
@@ -59,7 +59,7 @@ export class VehicleChecksCatAMod2Modal {
   readonly safetyQuestionsNumberArray: number[] = Array(NUMBER_OF_SAFETY_QUESTIONS);
   readonly balanceQuestionsNumberArray: number[] = Array(NUMBER_OF_BALANCE_QUESTIONS);
 
-  safetyAndBalanceQuestionsScore: VehicleChecksScore;
+  safetyAndBalanceQuestionsScore: SafetyQuestionsScore;
 
   subscription: Subscription;
 
@@ -100,7 +100,7 @@ export class VehicleChecksCatAMod2Modal {
         select(getTestData),
         select(safetyAndBalance.getSafetyAndBalanceQuestions),
         map((safetyAndBalanceQuestions) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.EUAM2, safetyAndBalanceQuestions);
+          return this.faultCountProvider.getSafetyAndBalanceFaultCount(TestCategory.EUAM2, safetyAndBalanceQuestions);
         }),
       ),
     };
@@ -147,7 +147,6 @@ export class VehicleChecksCatAMod2Modal {
   }
 
   shouldDisplayBanner = (): boolean => {
-    return this.safetyAndBalanceQuestionsScore.drivingFaults === 4 &&
-    this.safetyAndBalanceQuestionsScore.seriousFaults === 1;
+    return this.safetyAndBalanceQuestionsScore.drivingFaults === 1;
   }
 }

@@ -5,6 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { SafetyAndBalanceQuestions, QuestionResult } from '@dvsa/mes-test-schema/categories/AM2';
 
 import { catAM1TestDataStateObject } from '../__mocks__/cat-AM1-test-data-state-object';
 import { catBTestDataStateObject } from '../__mocks__/cat-B-test-data-state-object';
@@ -27,6 +28,7 @@ import { FaultCountDHelper } from '../cat-d/fault-count.cat-d';
 
 import { configureTestSuite } from 'ng-bullet';
 import { FaultCountAM1Helper } from '../cat-a-mod1/fault-count.cat-a-mod1';
+import { FaultCountAM2Helper } from '../cat-a-mod2/fault-count.cat-a-mod2';
 
 describe('FaultCountProvider', () => {
 
@@ -72,6 +74,8 @@ describe('FaultCountProvider', () => {
     spyOn(FaultCountAM1Helper, 'getSeriousFaultSumCountCatAM1').and.callThrough();
     spyOn(FaultCountAM1Helper, 'getRidingFaultSumCountCatAM1').and.callThrough();
 
+    spyOn(FaultCountAM2Helper, 'getSafetyAndBalanceFaultCountCatAM2').and.callThrough();
+
     spyOn(FaultCountDHelper, 'getDrivingFaultSumCountCatD').and.callThrough();
     spyOn(FaultCountDHelper, 'getSeriousFaultSumCountCatD').and.callThrough();
     spyOn(FaultCountDHelper, 'getDangerousFaultSumCountCatD').and.callThrough();
@@ -92,6 +96,13 @@ describe('FaultCountProvider', () => {
   });
 
   describe('getDrivingFaultSumCount', () => {
+    describe('CAT A', () => {
+      it('shoud call the category AM1 specific method for getting the riding fault sum count', () => {
+        faultCountProvider.getDrivingFaultSumCount(TestCategory.EUAM1, catAM1TestDataStateObject);
+        expect((FaultCountAM1Helper as any).getRidingFaultSumCountCatAM1).toHaveBeenCalled();
+      });
+    });
+
     describe('CAT B', () => {
       it('should call the category B specific method for getting the driving fault sum count', () => {
         faultCountProvider.getDrivingFaultSumCount(TestCategory.B, catBTestDataStateObject);
@@ -139,10 +150,6 @@ describe('FaultCountProvider', () => {
         faultCountProvider.getDrivingFaultSumCount(TestCategory.D1, catD1TestDataStateObject);
         expect((FaultCountDHelper as any).getDrivingFaultSumCountCatD1).toHaveBeenCalled();
       });
-    });
-    it('shoud call the category AM1 specific method for getting the riding fault sum count', () => {
-      faultCountProvider.getDrivingFaultSumCount(TestCategory.EUAM1, catAM1TestDataStateObject);
-      expect((FaultCountAM1Helper as any).getRidingFaultSumCountCatAM1).toHaveBeenCalled();
     });
   });
 
@@ -349,6 +356,31 @@ describe('FaultCountProvider', () => {
           ],
         };
         expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount(faultsState)).toEqual({ drivingFaults: 1 });
+      });
+    });
+  });
+
+  describe('getSafetyAndBalanceFaultCount', () => {
+    describe('CAT A Mod 2', () => {
+      it('should return the correct number of driving faults', () => {
+        const safetyAndBalanceQuestions: SafetyAndBalanceQuestions = {
+          safetyQuestions: [
+            {
+              outcome: 'DF',
+            },
+            {
+              outcome: 'DF',
+            },
+          ] as QuestionResult[],
+          balanceQuestions: [
+            {
+              outcome: 'DF',
+            },
+          ] as QuestionResult[],
+        };
+
+        expect((FaultCountAM2Helper as any).getSafetyAndBalanceFaultCountCatAM2(safetyAndBalanceQuestions))
+          .toEqual({ drivingFaults: 1 });
       });
     });
   });

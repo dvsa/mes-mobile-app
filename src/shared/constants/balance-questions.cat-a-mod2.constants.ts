@@ -1,23 +1,22 @@
 import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
 
-// TODO - PREP-AMOD2: Add balance questions (MES-4670)
 export default [
   {
-    code: 'T01',
+    code: 'BQ1',
     // tslint:disable-next-line:max-line-length
-    description: 'Open the bonnet, identify where the brake fluid reservoir is and tell me how you would check that you have a safe level of hydraulic brake fluid.',
-    shortName: 'Brakes',
+    description: 'What problems could arise from carrying a pillion passenger?',
+    shortName: 'Pillion passenger problems',
   },
   {
-    code: 'T02',
-    description: 'Tell me the main safety factors involved in loading this vehicle.',
-    shortName: 'Safety factors while loading',
+    code: 'BQ2',
+    description: 'How should a passenger be carried on the pillion seat?',
+    shortName: 'Carrying a passenger',
   },
   {
-    code: 'T03',
-    description: 'Tell me the main safety factors involved in securing a load on this vehicle.',
-    shortName: 'Safety factors while securing a load',
+    code: 'BQ3',
+    description: 'How would the balance of the machine be affected if you carried a pillion passenger?',
+    shortName: 'Balance with passenger',
   },
 ] as VehicleChecksQuestion[];
 
-export const NUMBER_OF_BALANCE_QUESTIONS = 3;
+export const NUMBER_OF_BALANCE_QUESTIONS = 1;
