@@ -3,7 +3,6 @@ import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
-import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';
@@ -20,6 +19,7 @@ import { testDataCatAMod1Reducer } from './test-data/cat-a-mod1/test-data.cat-a-
 import { vehicleDetailsCatAMod1Reducer } from './vehicle-details/cat-a-mod1/vehicle-details.cat-a-mod1.reducer';
 import { preTestDeclarationsCatAMod1Reducer } from
 './pre-test-declarations/cat-a-mod1/pre-test-declarations.cat-a-mod1.reducer';
+import { passCompletionCatAMod1Reducer } from './pass-completion/cat-a-mod1/pass-completionl.cat-a-mod1.reducer';
 
 export function testsCatAMod1Reducer(
   action: Action, state: TestResultCatAM1Schema): Required<TestResultCatAM1Schema> {
@@ -33,7 +33,7 @@ export function testsCatAMod1Reducer(
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatAMod1Reducer,
       testData: testDataCatAMod1Reducer,
-      passCompletion: passCompletionReducer,
+      passCompletion: passCompletionCatAMod1Reducer,
       postTestDeclarations: postTestDeclarationsReducer,
       testSummary: testSummaryReducer,
       communicationPreferences: communicationPreferencesReducer,
