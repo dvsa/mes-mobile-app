@@ -1,4 +1,4 @@
-vehicle-checks-test-report-cat-d {
+vehicle-checks-compact-cat-d {
   @extend .mes-test-report-button;
   position: relative;
   border: 0;
@@ -11,7 +11,7 @@ vehicle-checks-test-report-cat-d {
     flex-flow: row;
     align-items: center;
     padding-left: 5px;
-    padding-right: 5px;
+    padding-right: 0px;
     display: flex;
 
     driving-faults-badge {
@@ -19,8 +19,9 @@ vehicle-checks-test-report-cat-d {
     }
 
     .competency-label {
-      margin-left: 20px;
+      margin-left: 5px;
       font-size: 15px;
+      margin-right: 4px;
     }
 
     .fault-wrapper {

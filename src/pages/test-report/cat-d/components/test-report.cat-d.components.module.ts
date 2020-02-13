@@ -7,14 +7,16 @@ import { TestReportComponentsModule } from '../../components/test-report-compone
 import { ReverseLeftPopoverCatDComponent } from './reverse-left-popover/reverse-left-popover.cat-d';
 import { ReverseDiagramLinkCatDComponent } from './reverse-diagram-link/reverse-diagram-link.cat-d';
 import { ReverseLeftCatDComponent } from './reverse-left/reverse-left.cat-d';
-import { VehicleChecksTestReportCatDComponent } from './vehicle-checks-test-report/vehicle-checks-test-report.cat-d';
+import { VehicleChecksCompactCatDComponent } from './vehicle-checks-compact/vehicle-checks-compact.cat-d';
+import { SafetyQuestionsCatDComponent } from './safety-questions/safety-questions.cat-d';
 
 @NgModule({
   declarations: [
     ReverseLeftCatDComponent,
     ReverseDiagramLinkCatDComponent,
     ReverseLeftPopoverCatDComponent,
-    VehicleChecksTestReportCatDComponent,
+    VehicleChecksCompactCatDComponent,
+    SafetyQuestionsCatDComponent,
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { VehicleChecksTestReportCatDComponent } from './vehicle-checks-test-repo
     ReverseLeftCatDComponent,
     ReverseDiagramLinkCatDComponent,
     ReverseLeftPopoverCatDComponent,
-    VehicleChecksTestReportCatDComponent,
+    VehicleChecksCompactCatDComponent,
+    SafetyQuestionsCatDComponent,
   ],
 })
 export class TestReportCatDComponentsModule { }

@@ -42,9 +42,10 @@ import { ReverseLeftCatDComponent } from '../components/reverse-left/reverse-lef
 import { ReverseLeftPopoverCatDComponent } from '../components/reverse-left-popover/reverse-left-popover.cat-d';
 import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/uncouple-recouple';
 import {
-  VehicleChecksTestReportCatDComponent,
-} from '../components/vehicle-checks-test-report/vehicle-checks-test-report.cat-d';
+  VehicleChecksCompactCatDComponent,
+} from '../components/vehicle-checks-compact/vehicle-checks-compact.cat-d';
 import { MultiLegalRequirementComponent } from '../../components/multi-legal-requirement/multi-legal-requirement';
+import { SafetyQuestionsCatDComponent } from '../components/safety-questions/safety-questions.cat-d';
 
 describe('TestReportCatDPage', () => {
   let fixture: ComponentFixture<TestReportCatDPage>;
@@ -66,7 +67,8 @@ describe('TestReportCatDPage', () => {
         MockComponent(UncoupleRecoupleComponent),
         MockComponent(ReverseLeftCatDComponent),
         MockComponent(ReverseLeftPopoverCatDComponent),
-        MockComponent(VehicleChecksTestReportCatDComponent),
+        MockComponent(VehicleChecksCompactCatDComponent),
+        MockComponent(SafetyQuestionsCatDComponent),
       ],
       imports: [
         IonicModule,
