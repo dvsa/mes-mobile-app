@@ -4,8 +4,8 @@ import { SingleFaultCompetencyNames } from '../../test-data.constants';
 
 export const SET_SINGLE_FAULT_COMPETENCY_OUTCOME = '[Single Fault Competency] Set Outcome';
 export const REMOVE_SINGLE_FAULT_COMPETENCY_OUTCOME = '[Single Fault Competency] Remove Outcome';
-export const REMOVE_SINGLE_SERIOUS_FAULT_COMPETENCY_OUTCOME = '[Single Fault Competency] Remove Outcome';
-export const REMOVE_SINGLE_DANGEROUS_FAULT_COMPETENCY_OUTCOME = '[Single Fault Competency] Remove Outcome';
+export const REMOVE_SINGLE_SERIOUS_FAULT_COMPETENCY_OUTCOME = '[Single Fault Competency] Remove Serious Outcome';
+export const REMOVE_SINGLE_DANGEROUS_FAULT_COMPETENCY_OUTCOME = '[Single Fault Competency] Remove Dangerous Outcome';
 export const ADD_SINGLE_FAULT_COMPETENCY_COMMENT = '[Single Fault Competency] Add Comment';
 
 export class SetSingleFaultCompetencyOutcome implements Action {
