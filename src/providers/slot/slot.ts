@@ -73,7 +73,7 @@ export class SlotProvider {
       numberOfDaysToView,
       (d: number): string => this.dateTimeProvider.now().add(d, Duration.DAY).format('YYYY-MM-DD'),
     );
-    const emptyDays = days.reduce((days: { [k: string]: SlotItem[] }, day: string) => ({...days, [day]: []}), {});
+    const emptyDays = days.reduce((days: { [k: string]: SlotItem[] }, day: string) => ({ ...days, [day]: [] }), {});
 
     return {
       ...emptyDays,
@@ -99,7 +99,7 @@ export class SlotProvider {
   getSlotDate = (slot: SlotItem): string => DateTime.at(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
 
   canStartTest(testSlot: TestSlot): boolean {
-    const {testPermissionPeriods} = this.appConfigProvider.getAppConfig().journal;
+    const { testPermissionPeriods } = this.appConfigProvider.getAppConfig().journal;
     const testCategory = get(testSlot, 'booking.application.testCategory');
     const startDate = new DateTime(testSlot.slotDetail.start);
     const slotStartDate: Date = new Date(testSlot.slotDetail.start);
@@ -116,19 +116,20 @@ export class SlotProvider {
     return periodsPermittingStart.length > 0;
   }
 
-  private dateDiffInDays = (startDate: Date, periodDate: Date) => {
-    if (!periodDate) {
-      // Discard the time and time-zone information.
-      const utc1: number = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-      const utc2: number = Date.UTC(periodDate.getFullYear(), periodDate.getMonth(), periodDate.getDate());
-      return Math.floor((utc2 - utc1) / MS_PER_DAY);
-    }
-    return false;
+  private dateDiffInDays = (startDate: Date, periodDate: Date): number => {
+    // Discard the time and time-zone information.
+    const utc1: number = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    const utc2: number = Date.UTC(periodDate.getFullYear(), periodDate.getMonth(), periodDate.getDate());
+    return Math.floor((utc2 - utc1) / MS_PER_DAY);
   }
 
   private hasPeriodStartCriteria = (slotDate: Date, periodFrom: string): boolean =>
-    this.dateDiffInDays(slotDate, new Date(periodFrom)) <= 0;
+    this.dateDiffInDays(slotDate, new Date(periodFrom)) <= 0
 
-  private hasPeriodEndCriteria = (slotDate: Date, periodFrom: string): boolean =>
-    this.dateDiffInDays(slotDate, new Date(periodFrom)) >= 0;
+  private hasPeriodEndCriteria = (slotDate: Date, periodFrom: string): boolean => {
+    if (!periodFrom) {
+      return true;
+    }
+    return this.dateDiffInDays(slotDate, new Date(periodFrom)) >= 0;
+  }
 }
