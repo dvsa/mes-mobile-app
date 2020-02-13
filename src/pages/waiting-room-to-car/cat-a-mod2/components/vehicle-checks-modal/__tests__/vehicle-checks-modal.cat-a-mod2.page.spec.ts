@@ -103,19 +103,17 @@ describe('VehicleChecksCatAMod2Modal', () => {
     });
 
     describe('shouldDisplayBanner', () => {
-      it('should return false if there are no 4 driving faults and 1 serious', () => {
+      it('should return false if there are no riding faults', () => {
         component.safetyAndBalanceQuestionsScore = {
-          drivingFaults: 3,
-          seriousFaults: 0,
+          drivingFaults: 0,
         };
 
         expect(component.shouldDisplayBanner()).toBeFalsy();
       });
 
-      it('should return true if there are 4 driving faults and 1 serious', () => {
+      it('should return true if there is 1 riding fault', () => {
         component.safetyAndBalanceQuestionsScore = {
-          drivingFaults: 4,
-          seriousFaults: 1,
+          drivingFaults: 1,
         };
 
         expect(component.shouldDisplayBanner()).toBeTruthy();

@@ -201,17 +201,8 @@ describe('TestDataSelectors CAT A Mod 2', () => {
             {
               outcome: CompetencyOutcome.P,
             },
-            {
-              outcome: CompetencyOutcome.P,
-            },
           ],
           balanceQuestions: [
-            {
-              outcome: CompetencyOutcome.P,
-            },
-            {
-              outcome: CompetencyOutcome.P,
-            },
             {
               outcome: CompetencyOutcome.P,
             },
@@ -220,6 +211,7 @@ describe('TestDataSelectors CAT A Mod 2', () => {
 
         expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
+
       it('should return true if vehicle checks have been completed with a driving fault', () => {
         const state = {
           safetyQuestions: [
@@ -229,17 +221,8 @@ describe('TestDataSelectors CAT A Mod 2', () => {
             {
               outcome: CompetencyOutcome.DF,
             },
-            {
-              outcome: CompetencyOutcome.DF,
-            },
           ],
           balanceQuestions: [
-            {
-              outcome: CompetencyOutcome.DF,
-            },
-            {
-              outcome: CompetencyOutcome.DF,
-            },
             {
               outcome: CompetencyOutcome.DF,
             },
@@ -248,63 +231,8 @@ describe('TestDataSelectors CAT A Mod 2', () => {
 
         expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
-      it('should return true if vehicle checks have been completed with a serious fault', () => {
-        const state = {
-          safetyQuestions: [
-            {
-              outcome: CompetencyOutcome.S,
-            },
-            {
-              outcome: CompetencyOutcome.S,
-            },
-            {
-              outcome: CompetencyOutcome.S,
-            },
-          ],
-          balanceQuestions: [
-            {
-              outcome: CompetencyOutcome.S,
-            },
-            {
-              outcome: CompetencyOutcome.S,
-            },
-            {
-              outcome: CompetencyOutcome.S,
-            },
-          ],
-        } as SafetyAndBalanceQuestions;
 
-        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
-      });
-      it('should return true if vehicle checks have been completed with a dangerous fault', () => {
-        const state = {
-          safetyQuestions: [
-            {
-              outcome: CompetencyOutcome.D,
-            },
-            {
-              outcome: CompetencyOutcome.D,
-            },
-            {
-              outcome: CompetencyOutcome.D,
-            },
-          ],
-          balanceQuestions: [
-            {
-              outcome: CompetencyOutcome.D,
-            },
-            {
-              outcome: CompetencyOutcome.D,
-            },
-            {
-              outcome: CompetencyOutcome.D,
-            },
-          ],
-        } as SafetyAndBalanceQuestions;
-
-        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
-      });
-      it('should return false if show me question outcome is not defined', () => {
+      it('should return false if safety question outcome is not defined', () => {
         const state = {
           safetyQuestions: [
           ],

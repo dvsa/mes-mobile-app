@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { CAT_A_MOD2 } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
 import { App } from '../../../../../app/app.component';
-import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
+import { SafetyQuestionsScore } from '../../../../../shared/models/safety-questions-score.model';
 import { SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
 import { get } from 'lodash';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
@@ -16,7 +16,7 @@ export class VehicleChecksCatAMod2Component implements OnChanges {
 
   @Input() onCloseVehicleChecksModal: () => {};
 
-  @Input() safetyAndBalanceQuestionsScore: VehicleChecksScore;
+  @Input() safetyAndBalanceQuestionsScore: SafetyQuestionsScore;
 
   @Input() safetyAndBalanceQuestions: SafetyAndBalanceQuestions;
 
@@ -53,10 +53,6 @@ export class VehicleChecksCatAMod2Component implements OnChanges {
     };
     return this.safetyAndBalanceQuestions.safetyQuestions.reduce((res, question) => res && hasOutcome(question), true)
       && this.safetyAndBalanceQuestions.balanceQuestions.reduce((res, question) => res && hasOutcome(question), true);
-  }
-
-  hasSeriousFault(): boolean {
-    return this.safetyAndBalanceQuestionsScore.seriousFaults > 0;
   }
 
   hasDrivingFault(): boolean {

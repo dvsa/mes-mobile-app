@@ -50,7 +50,7 @@ import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_A_MOD2 } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
+import { SafetyQuestionsScore } from '../../../shared/models/safety-questions-score.model';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { VehicleChecksCatAMod2Component } from './components/vehicle-checks/vehicle-checks';
 import { VehicleRegistrationChanged, GearboxCategoryChanged } from
@@ -74,7 +74,7 @@ interface WaitingRoomToCarPageState {
   interpreterAccompaniment$: Observable<boolean>;
   eyesightTestComplete$: Observable<boolean>;
   eyesightTestFailed$: Observable<boolean>;
-  safetyAndBalanceQuestionsScore$: Observable<VehicleChecksScore>;
+  safetyAndBalanceQuestionsScore$: Observable<SafetyQuestionsScore>;
   safetyAndBalanceQuestions$: Observable<any>;
   testCategory$: Observable<CategoryCode>;
 }
@@ -160,7 +160,7 @@ export class WaitingRoomToCarCatAMod2Page extends BasePageComponent {
         select(getTestData),
         select(getSafetyAndBalanceQuestions),
         map((safetyAndBalanceQuestions) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.EUAM2, safetyAndBalanceQuestions);
+          return this.faultCountProvider.getSafetyAndBalanceFaultCount(TestCategory.EUAM2, safetyAndBalanceQuestions);
         }),
       ),
       safetyAndBalanceQuestions$: currentTest$.pipe(
