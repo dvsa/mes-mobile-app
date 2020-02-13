@@ -29,9 +29,9 @@ export class ReverseDiagramModalMock implements OnInit {
       [TestCategory.CE, { vLength: 10, vWidth: 2.75, expStartDist: 40, expMidDist: 20, expWidthDist: 4.13 }],
       [TestCategory.C1, { vLength: 10, vWidth: 2.75, expStartDist: 35, expMidDist: 20, expWidthDist: 4.13 }],
       [TestCategory.C1E, { vLength: 10, vWidth: 2.75, expStartDist: 40, expMidDist: 20, expWidthDist: 4.13 }],
-      [TestCategory.D, { vLength: 10, vWidth: 2.75, expStartDist: 40, expMidDist: 20, expWidthDist: 4.13 }],
+      [TestCategory.D, { vLength: 10, vWidth: 2.75, expStartDist: 35, expMidDist: 20, expWidthDist: 4.13 }],
       [TestCategory.DE, { vLength: 10, vWidth: 2.75, expStartDist: 40, expMidDist: 20, expWidthDist: 4.13 }],
-      [TestCategory.D1, { vLength: 10, vWidth: 2.75, expStartDist: 40, expMidDist: 20, expWidthDist: 4.13 }],
+      [TestCategory.D1, { vLength: 10, vWidth: 2.75, expStartDist: 35, expMidDist: 20, expWidthDist: 4.13 }],
       [TestCategory.D1E, { vLength: 10, vWidth: 2.75, expStartDist: 40, expMidDist: 20, expWidthDist: 4.13 }],
     ]);
   }

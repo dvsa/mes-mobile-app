@@ -40,9 +40,9 @@ export class ReversingDistancesProvider {
         [TestCategory.CE, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
         [TestCategory.C1, { lengthMultiplier: 3.5, widthMultiplier: 1.5 }],
         [TestCategory.C1E, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
-        [TestCategory.D, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
+        [TestCategory.D, { lengthMultiplier: 3.5, widthMultiplier: 1.5 }],
         [TestCategory.DE, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
-        [TestCategory.D1, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
+        [TestCategory.D1, { lengthMultiplier: 3.5, widthMultiplier: 1.5 }],
         [TestCategory.D1E, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
       ]);
     }
