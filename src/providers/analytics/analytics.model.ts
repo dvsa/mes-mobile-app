@@ -144,9 +144,8 @@ export enum AnalyticsEvents {
   ADD_SERIOUS_SINGLE_FAULT = 'add serious fault',
   ADD_SINGLE_FAULT = 'add driving fault',
   REMOVE_SINGLE_FAULT = 'remove driving fault',
-  REMOVE_SERIOUS_SINGLE_FAULT = 'remove serious driving fault',
-  REMOVE_DANGEROUS_SINGLE_FAULT = 'remove dangerous driving fault',
-
+  REMOVE_SERIOUS_SINGLE_FAULT = 'remove serious fault',
+  REMOVE_DANGEROUS_SINGLE_FAULT = 'remove dangerous fault',
 }
 
 export enum AnalyticsLabels {
