@@ -121,7 +121,7 @@ export class FaultCountProvider {
       case TestCategory.D1:
       case TestCategory.D1E:
       case TestCategory.DE:
-      case TestCategory.D: return FaultCountDHelper.getSafetyQuestionsFaultCountCatD(data);
+      case TestCategory.D: return FaultCountDHelper.getSafetyQuestionsFaultCount(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }

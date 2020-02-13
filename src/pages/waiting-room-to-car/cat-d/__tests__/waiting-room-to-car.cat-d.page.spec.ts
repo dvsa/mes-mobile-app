@@ -57,6 +57,7 @@ describe('WaitingRoomToCarCatDPage', () => {
             testStatus: {},
             startedTests: {
               123: {
+                category: 'D',
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {

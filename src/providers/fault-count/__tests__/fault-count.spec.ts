@@ -88,7 +88,7 @@ describe('FaultCountProvider', () => {
     spyOn(FaultCountDHelper, 'getSeriousFaultSumCountCatD1E').and.callThrough();
     spyOn(FaultCountDHelper, 'getDangerousFaultSumCountCatD1E').and.callThrough();
 
-    spyOn(FaultCountDHelper, 'getSafetyQuestionsFaultCountCatD').and.callThrough();
+    spyOn(FaultCountDHelper, 'getSafetyQuestionsFaultCount').and.callThrough();
   });
 
   describe('getDrivingFaultSumCount', () => {
@@ -316,19 +316,19 @@ describe('FaultCountProvider', () => {
     describe('CAT D', () => {
       it('should call the category D method for getting the safetyQuestions fault sum count', () => {
         faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.D, catDTestDataStateObject.safetyQuestions);
-        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCountCatD).toHaveBeenCalled();
+        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount).toHaveBeenCalled();
       });
       it('should call the category D method for getting the safetyQuestions fault sum count', () => {
         faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.DE, catDTestDataStateObject.safetyQuestions);
-        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCountCatD).toHaveBeenCalled();
+        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount).toHaveBeenCalled();
       });
       it('should call the category D method for getting the safetyQuestions fault sum count', () => {
         faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.D1E, catDTestDataStateObject.safetyQuestions);
-        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCountCatD).toHaveBeenCalled();
+        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount).toHaveBeenCalled();
       });
       it('should call the category D method for getting the safetyQuestions fault sum count', () => {
         faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.D1, catDTestDataStateObject.safetyQuestions);
-        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCountCatD).toHaveBeenCalled();
+        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount).toHaveBeenCalled();
       });
 
       it('should return the correct number of driving faults', () => {
@@ -348,7 +348,7 @@ describe('FaultCountProvider', () => {
             },
           ],
         };
-        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCountCatD(faultsState)).toEqual({ drivingFaults: 1 });
+        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount(faultsState)).toEqual({ drivingFaults: 1 });
       });
     });
   });
