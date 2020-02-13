@@ -22,7 +22,7 @@ export class ReverseDiagramModalMock implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cappedStartDistance = [TestCategory.C1E, TestCategory.CE];
+    this.cappedStartDistance = [TestCategory.C1E, TestCategory.CE, TestCategory.DE, TestCategory.D1E];
     this.vehicleDetails = new Map([
       [TestCategory.BE, { vLength: 10, vWidth: 2.75, expStartDist: 40, expMidDist: 20, expWidthDist: 4.13 }],
       [TestCategory.C, { vLength: 10, vWidth: 2.75, expStartDist: 35, expMidDist: 20, expWidthDist: 4.13 }],
