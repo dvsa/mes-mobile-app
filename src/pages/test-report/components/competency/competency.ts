@@ -242,10 +242,6 @@ export class CompetencyComponent {
     return this.hasDangerousFault || this.hasSeriousFault || this.hasDrivingFault();
   }
 
-  canAddSingleDrivingFault = (wasPress: boolean = false): boolean => {
-    return wasPress && !this.hasDrivingFault();
-  }
-
   hasDrivingFault = (): boolean => {
     return this.faultCount !== undefined;
   }

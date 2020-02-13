@@ -147,6 +147,7 @@ export class SingleFaultCompetencyComponent implements OnInit, OnDestroy {
 
     if (this.competencyHasFault()) {
       this.allowRipple = false;
+      return;
     }
 
     this.allowRipple = true;
@@ -163,21 +164,21 @@ export class SingleFaultCompetencyComponent implements OnInit, OnDestroy {
   }
 
   removeFault = (): void => {
-    if (this.hasDangerousFault && this.isDangerousMode && this.isRemoveFaultMode) {
+    if (this.hasDangerousFault && this.isDangerousMode) {
       this.store$.dispatch(new RemoveSingleFaultCompetencyOutcome(this.competency));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
-    if (this.hasSeriousFault && this.isSeriousMode && this.isRemoveFaultMode) {
+    if (this.hasSeriousFault && this.isSeriousMode) {
       this.store$.dispatch(new RemoveSingleFaultCompetencyOutcome(this.competency));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
-    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.hasDrivingFault) {
+    if (!this.isSeriousMode && !this.isDangerousMode && this.hasDrivingFault) {
       this.store$.dispatch(new RemoveSingleFaultCompetencyOutcome(this.competency));
       this.store$.dispatch(new ToggleRemoveFaultMode());
     }
