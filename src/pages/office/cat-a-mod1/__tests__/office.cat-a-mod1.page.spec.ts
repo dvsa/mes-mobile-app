@@ -67,7 +67,7 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
 import { configureTestSuite } from 'ng-bullet';
 import { CircuitComponent } from '../components/circuit/circuit';
-import { SpeedCheckDebriefCardComponent } 
+import { SpeedCheckDebriefCardComponent }
 from '../../../debrief/cat-a-mod1/components/speed-check-debrief-card/speed-check-debrief-card';
 
 describe('OfficeAMod1Page', () => {
@@ -104,32 +104,23 @@ describe('OfficeAMod1Page', () => {
             testStatus: {},
             startedTests: {
               123: {
-
-                // TODO - PREP-AMOD1: Change this to TestCategory A Mod1
-                category: TestCategory.BE,
+                category: TestCategory.A1,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
-                  dangerousFaults: {},
-                  drivingFaults: {},
-                  manoeuvres: {},
-                  seriousFaults: {},
-                  testRequirements: {},
                   ETA: {},
-                  eco: {},
-                  vehicleChecks: {
-                    showMeQuestions: [{
-                      code: 'S3',
-                      description: '',
-                      outcome: '',
-                    }],
-                    tellMeQuestions: [{
-                      code: '',
-                      description: '',
-                      outcome: '',
-                    }],
+                  singleFaultCompetencies: {},
+                  dangerousFaults: {},
+                  seriousFaults: {},
+                  drivingFaults: {},
+                  emergencyStop: {
+                    firstAttempt: 0,
+                    secondAttempt: 0,
                   },
-                  eyesightTest: {},
+                  avoidance: {
+                    firstAttempt: 0,
+                    secondAttempt: 0,
+                  },
                 },
                 activityCode: '28',
                 journalData: {
