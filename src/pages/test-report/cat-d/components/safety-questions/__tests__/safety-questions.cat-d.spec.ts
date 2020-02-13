@@ -2,8 +2,6 @@ import { StoreModel } from '../../../../../../shared/models/store.model';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
-import { SeriousFaultBadgeComponent }
-  from '../../../../../../components/common/serious-fault-badge/serious-fault-badge';
 import { IonicModule } from 'ionic-angular';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
@@ -12,24 +10,23 @@ import { DrivingFaultsBadgeComponent }
   from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 import { TestDataByCategoryProvider } from '../../../../../../providers/test-data-by-category/test-data-by-category';
-import { VehicleChecksScore } from '../../../../../../shared/models/vehicle-checks-score.model';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
 import { configureTestSuite } from 'ng-bullet';
 import {
-  VehicleChecksTestReportCatDComponent,
-} from '../vehicle-checks-test-report.cat-d';
+  SafetyQuestionsCatDComponent,
+} from '../safety-questions.cat-d';
+import { SafetyQuestionsScore } from '../../../../../../shared/models/safety-questions-score.model';
 
-describe('VehicleChecksComponent', () => {
-  let fixture: ComponentFixture<VehicleChecksTestReportCatDComponent>;
-  let component: VehicleChecksTestReportCatDComponent;
+describe('SafetyQuestionsComponent', () => {
+  let fixture: ComponentFixture<SafetyQuestionsCatDComponent>;
+  let component: SafetyQuestionsCatDComponent;
   let store$: Store<StoreModel>;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        VehicleChecksTestReportCatDComponent,
-        MockComponent(SeriousFaultBadgeComponent),
+        SafetyQuestionsCatDComponent,
         MockComponent(DrivingFaultsBadgeComponent),
       ],
       imports: [
@@ -46,36 +43,35 @@ describe('VehicleChecksComponent', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(VehicleChecksTestReportCatDComponent);
+    fixture = TestBed.createComponent(SafetyQuestionsCatDComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
     store$.dispatch(new StartTest(105, TestCategory.D));
   }));
 
   describe('Class', () => {
-    const vehicleChecksScore: VehicleChecksScore = {
-      drivingFaults: 4,
-      seriousFaults: 1,
+    const safetyQuestionsScore: SafetyQuestionsScore = {
+      drivingFaults: 1,
     };
 
     beforeEach(() => {
-      spyOn(component.faultCountProvider, 'getVehicleChecksFaultCount').and.returnValue(vehicleChecksScore);
+      spyOn(component.faultCountProvider, 'getSafetyQuestionsFaultCount').and.returnValue(safetyQuestionsScore);
     });
 
-    it('should set the vehicle checks driving fault count', (done: DoneFn) => {
+    it('should set the safety questions driving fault count', (done: DoneFn) => {
       component.testCategory = TestCategory.D;
       component.ngOnInit();
-      component.componentState.vehicleChecksDrivingFaultCount$.subscribe((result) => {
-        expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
+      component.componentState.safetyQuestionsDrivingFaultCount$.subscribe((result) => {
+        expect(component.faultCountProvider.getSafetyQuestionsFaultCount).toHaveBeenCalled();
         expect(result).toEqual(4);
         done();
       });
     });
-    it('should set the vehicle checks serious fault count', (done: DoneFn) => {
+    it('should set the safetyQuestions serious fault count', (done: DoneFn) => {
       component.testCategory = TestCategory.D;
       component.ngOnInit();
-      component.componentState.vehicleChecksSeriousFaultCount$.subscribe((result) => {
-        expect(component.faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalled();
+      component.componentState.safetyQuestionsDrivingFaultCount$.subscribe((result) => {
+        expect(component.faultCountProvider.getSafetyQuestionsFaultCount).toHaveBeenCalled();
         expect(result).toEqual(1);
         done();
       });
@@ -84,26 +80,15 @@ describe('VehicleChecksComponent', () => {
 
   describe('DOM', () => {
 
-    it('should pass the number of VC driving faults to the driving faults component', () => {
+    it('should pass the number of safety Question driving faults to the driving faults component', () => {
       component.testCategory = TestCategory.D;
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
-      component.componentState.vehicleChecksDrivingFaultCount$ = of(3);
+      component.componentState.safetyQuestionsDrivingFaultCount$ = of(3);
       fixture.detectChanges();
-      expect(drivingFaultsBadge.count).toBe(3);
+      expect(drivingFaultsBadge.count).toBe(1);
     });
-
-    it('should pass true to the serious faults badge if there are serious VC faults', () => {
-      component.testCategory = TestCategory.D;
-      fixture.detectChanges();
-      const seriousFaultsBadge = fixture.debugElement.query(By.css('serious-fault-badge'))
-        .componentInstance as SeriousFaultBadgeComponent;
-      component.componentState.vehicleChecksSeriousFaultCount$ = of(1);
-      fixture.detectChanges();
-      expect(seriousFaultsBadge.showBadge).toEqual(true);
-    });
-
   });
 
 });
