@@ -39,7 +39,7 @@ export class FaultSummaryCatDHelper {
       ...getCompetencyFaults(data.drivingFaults),
       ...this.getManoeuvreFaultsCatD(data.manoeuvres, CompetencyOutcome.DF),
       ...this.getVehicleCheckDrivingFaultsCatD(data.vehicleChecks, category, vehicleChecksScore),
-      ...this.getPCVDoorExericeDrivingFault(data.pcvDoorExercise),
+      ...this.getPCVDoorExerciseDrivingFault(data.pcvDoorExercise),
       ...this.getSafetyQuestionsDrivingFault(data.safetyQuestions),
     ];
   }
@@ -51,7 +51,7 @@ export class FaultSummaryCatDHelper {
       ...getCompetencyFaults(data.seriousFaults),
       ...this.getManoeuvreFaultsCatD(data.manoeuvres, CompetencyOutcome.S),
       ...this.getVehicleCheckSeriousFaultsNonTrailer(data.vehicleChecks),
-      ...this.getPCVDoorExericeSeriousFault(data.pcvDoorExercise),
+      ...this.getPCVDoorExerciseSeriousFault(data.pcvDoorExercise),
     ];
   }
 
@@ -61,7 +61,7 @@ export class FaultSummaryCatDHelper {
     return [
       ...getCompetencyFaults(data.dangerousFaults),
       ...this.getManoeuvreFaultsCatD(data.manoeuvres, CompetencyOutcome.D),
-      ...this.getPCVDoorExericeDangerousFault(data.pcvDoorExercise),
+      ...this.getPCVDoorExerciseDangerousFault(data.pcvDoorExercise),
     ];
   }
 
@@ -75,7 +75,7 @@ export class FaultSummaryCatDHelper {
       ...this.getManoeuvreFaultsCatD(data.manoeuvres, CompetencyOutcome.DF),
       ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.DF),
       ...this.getVehicleCheckDrivingFaultsCatD(data.vehicleChecks, category, vehicleChecksScore),
-      ... this.getPCVDoorExericeDrivingFault(data.pcvDoorExercise),
+      ... this.getPCVDoorExerciseDrivingFault(data.pcvDoorExercise),
       ...this.getSafetyQuestionsDrivingFault(data.safetyQuestions),
     ];
   }
@@ -88,7 +88,7 @@ export class FaultSummaryCatDHelper {
       ...this.getManoeuvreFaultsCatD(data.manoeuvres, CompetencyOutcome.S),
       ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.S),
       ...this.getVehicleCheckSeriousFaultsTrailer(data.vehicleChecks),
-      ...this.getPCVDoorExericeSeriousFault(data.pcvDoorExercise),
+      ...this.getPCVDoorExerciseSeriousFault(data.pcvDoorExercise),
     ];
   }
 
@@ -99,7 +99,7 @@ export class FaultSummaryCatDHelper {
       ...getCompetencyFaults(data.dangerousFaults),
       ...this.getManoeuvreFaultsCatD(data.manoeuvres, CompetencyOutcome.D),
       ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.D),
-      ...this.getPCVDoorExericeDangerousFault(data.pcvDoorExercise),
+      ...this.getPCVDoorExerciseDangerousFault(data.pcvDoorExercise),
     ];
   }
 
@@ -244,7 +244,7 @@ export class FaultSummaryCatDHelper {
     return returnCompetencies;
   }
 
-  private static getPCVDoorExericeDrivingFault(pcvDoorExercise: PcvDoorExerciseTypes) {
+  private static getPCVDoorExerciseDrivingFault(pcvDoorExercise: PcvDoorExerciseTypes) {
     if (!pcvDoorExercise || !pcvDoorExercise.drivingFault) {
       return [];
     }
@@ -257,7 +257,7 @@ export class FaultSummaryCatDHelper {
     }];
   }
 
-  private static getPCVDoorExericeSeriousFault(pcvDoorExercise: PcvDoorExerciseTypes) {
+  private static getPCVDoorExerciseSeriousFault(pcvDoorExercise: PcvDoorExerciseTypes) {
     if (!pcvDoorExercise || !pcvDoorExercise.seriousFault) {
       return [];
     }
@@ -270,7 +270,7 @@ export class FaultSummaryCatDHelper {
     }];
   }
 
-  private static getPCVDoorExericeDangerousFault(pcvDoorExercise: PcvDoorExerciseTypes) {
+  private static getPCVDoorExerciseDangerousFault(pcvDoorExercise: PcvDoorExerciseTypes) {
     if (!pcvDoorExercise || !pcvDoorExercise.dangerousFault) {
       return [];
     }
