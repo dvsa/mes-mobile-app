@@ -10,13 +10,11 @@ const {
   setDefaultTimeout,
   After,
   Status,
-  AfterAll,
 } = require('cucumber');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
-const fs = require('fs');
 
 this.testCategory = 'b';
 
@@ -25,6 +23,14 @@ Before({ tags: '@catbe' }, () => {
 });
 
 Before({ tags: '@catc' }, () => {
+  this.testCategory = 'c';
+});
+
+Before({ tags: '@catce' }, () => {
+  this.testCategory = 'c';
+});
+
+Before({ tags: '@catc1' }, () => {
   this.testCategory = 'c';
 });
 
@@ -247,19 +253,6 @@ After(function (testCase) {
       this.attach(screenShot, 'image/png');
     });
   }
-});
-
-/**
- * Output the UI processed config so it may be included in the HTML report.
- */
-AfterAll(() => {
-  browser.getProcessedConfig().then((config) => {
-    fs.writeFile('./test-reports/e2e-test-config.json', JSON.stringify(config), (err) => {
-      if (err) {
-        return console.log(err);
-      }
-    });
-  });
 });
 
 //////////////////////////////////////////// SHARED FUNCTIONS ////////////////////////////////////////////

@@ -18,6 +18,14 @@ Before({ tags: '@catc' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catce' }, () => {
+  this.testCategory = 'c';
+});
+
+Before({ tags: '@catc1' }, () => {
+  this.testCategory = 'c';
+});
+
 When('the candidate enters a new email address', () => {
   const newEmailRadio = getElement(by.id('newEmail'));
   clickElement(newEmailRadio);

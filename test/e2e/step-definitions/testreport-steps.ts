@@ -20,6 +20,14 @@ Before({ tags: '@catc' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catce' }, () => {
+  this.testCategory = 'c';
+});
+
+Before({ tags: '@catc1' }, () => {
+  this.testCategory = 'c';
+});
+
 const endTest = () => {
   const endTestButton = getElement(by.id('end-test-button'));
   clickElement(endTestButton);

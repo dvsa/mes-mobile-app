@@ -17,6 +17,14 @@ Before({ tags: '@catc' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catce' }, () => {
+  this.testCategory = 'c';
+});
+
+Before({ tags: '@catc1' }, () => {
+  this.testCategory = 'c';
+});
+
 When('I continue to the back to office page', () => {
   enterD255();
   enterDebriefWitnessed();
