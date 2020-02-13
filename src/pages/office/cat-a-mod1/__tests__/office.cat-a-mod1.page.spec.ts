@@ -67,6 +67,8 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
 import { configureTestSuite } from 'ng-bullet';
 import { CircuitComponent } from '../components/circuit/circuit';
+import { SpeedCheckDebriefCardComponent } 
+from '../../../debrief/cat-a-mod1/components/speed-check-debrief-card/speed-check-debrief-card';
 
 describe('OfficeAMod1Page', () => {
   let fixture: ComponentFixture<OfficeCatAMod1Page>;
@@ -87,6 +89,7 @@ describe('OfficeAMod1Page', () => {
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
         MockComponent(VehicleChecksOfficeCardComponent),
+        MockComponent(SpeedCheckDebriefCardComponent),
         MockComponent(CircuitComponent),
       ],
       imports: [
