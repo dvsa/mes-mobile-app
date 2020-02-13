@@ -13,6 +13,8 @@ export enum CommentSource {
   MANOEUVRES = 'Manoeuvres',
   EYESIGHT_TEST = 'eyesightTest',
   UNCOUPLE_RECOUPLE = 'uncoupleRecouple',
+  PCV_DOOR_EXERCISE = 'pcvDoorExercise',
+  SAFETY_QUESTIONS = 'safetyQuestions',
 }
 
 export enum CompetencyIdentifiers {

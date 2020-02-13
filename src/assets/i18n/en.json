@@ -298,7 +298,9 @@
       "emergencyStop": "Emergency Stop",
       "avoidance": "Avoidance",
       "speedCheckEmergency": "Speed Requirement - Emergency Stop",
-      "speedCheckAvoidance": "Speed Requirement - Avoidance"
+      "speedCheckAvoidance": "Speed Requirement - Avoidance",
+      "safetyQuestions": "Safety questions",
+      "pcvDoorExercise": "PCV Door Exercise"
     },
     "dangerousFault": "Dangerous fault",
     "dangerousFaultsCardDescription": "dangerous faults",

@@ -294,7 +294,8 @@
       "manualHandling": "Codi a chario",
       "slalom": "Slalom / Ffigwr 8",
       "slowControl": "Rheolydd araf",
-      "uTurn": "Ymarfer tro 'U'"
+      "uTurn": "Ymarfer tro 'U'",
+      "safetyQuestions": "[CY] Safety questions"
     },
     "dangerousFault": "Nam peryglus",
     "dangerousFaultsCardDescription": "Namau peryglus",
