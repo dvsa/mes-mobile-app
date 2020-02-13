@@ -64,7 +64,6 @@ import { NavigationStateProviderMock } from '../../../../providers/navigation-st
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
-import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
 import { configureTestSuite } from 'ng-bullet';
 import { CircuitComponent } from '../components/circuit/circuit';
 import { SpeedCheckDebriefCardComponent }
@@ -88,7 +87,6 @@ describe('OfficeAMod1Page', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
-        MockComponent(VehicleChecksOfficeCardComponent),
         MockComponent(SpeedCheckDebriefCardComponent),
         MockComponent(CircuitComponent),
       ],
@@ -104,7 +102,7 @@ describe('OfficeAMod1Page', () => {
             testStatus: {},
             startedTests: {
               123: {
-                category: TestCategory.A1,
+                category: TestCategory.EUA1M1,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
