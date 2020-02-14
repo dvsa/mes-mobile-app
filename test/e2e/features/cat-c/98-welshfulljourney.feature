@@ -1,10 +1,10 @@
-@catc		
-Feature: Full Welsh end to end journey		
+@catc
+Feature: Full Welsh end to end journey
 
     @full_smoke		
-    Scenario: Examiner completes a passed welsh test with no faults		
-        Given I am logged in as "desexaminerw" and I have a test for "Miss Luella Lowery"		
-        When I start the test for "Miss Luella Lowery"		
+    Scenario: Examiner completes a passed welsh test with no faults
+        Given I am logged in as "desexaminerw" and I have a test for "Miss Luella Lowery"
+        When I start the test for "Miss Luella Lowery"
         And the candidate completes the declaration page
         And the candidate confirms their declaration
         Then I should see the "Datganiad - Luella Lowery" page
@@ -28,4 +28,4 @@ Feature: Full Welsh end to end journey
         When I complete the office write up
         And I upload the test
         Then I should see the "Journal" page
-        And the test result for "Miss Luella Lowery" is "1" 
+        And the test result for "Miss Luella Lowery" is "1"
