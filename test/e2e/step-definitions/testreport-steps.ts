@@ -159,6 +159,25 @@ Then('the {string} button does not display the serious badge', (competency: stri
   expect(seriousBadge.isPresent()).to.eventually.be.false;
 });
 
+When('I open the reversing diagram', () => {
+  openReverseDropDown();
+  const reversingDigramLink = getElement(by.id('reverse-diagram-link'));
+  expect(reversingDigramLink.isPresent()).to.eventually.be.true;
+  clickElement(reversingDigramLink);
+  const diagramModalTitle = getElement(by.xpath('//div/reverse-diagram-modal-cat-c//div[2]//div'));
+  expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - articulated vehicle');
+});
+
+Then('I should see the reversing diagram modal', () => {
+  const diagramModalTitle = getElement(by.xpath('//div/reverse-diagram-modal-cat-c//div[2]//div'));
+  expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - articulated vehicle');
+});
+
+const openReverseDropDown = () => {
+  const reverseButton = getElement(by.xpath('//reverse-left//button/driving-faults-badge'));
+  clickElement(reverseButton);
+};
+
 const clickRemove = () => {
   clickElement(getElement(by.id('remove-button')));
 };
