@@ -115,7 +115,6 @@ export const categoryAM1TestResultMock: TestResultCatAM1Schema = {
   examinerBooked:10000010,
   passCompletion:{
     passCertificateNumber:'A123456x',
-    provisionalLicenceProvided: false,
   },
   vehicleDetails:{
     gearboxCategory:'Manual',

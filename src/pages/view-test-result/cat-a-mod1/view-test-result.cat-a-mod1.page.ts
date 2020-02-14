@@ -17,7 +17,6 @@ import { DateTime } from '../../../shared/helpers/date-time';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { getCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
-import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ErrorTypes } from '../../../shared/models/error-message';
@@ -34,6 +33,8 @@ import { ViewTestHeaderModel } from '../components/view-test-header/view-test-he
 import { get } from 'lodash';
 import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
 import { categoryAM1TestResultMock } from '../../../shared/mocks/cat-a-mod1-test-result.mock';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { TestOutcome } from '../../../modules/tests/tests.constants';
 
 @IonicPage()
 @Component({
@@ -117,7 +118,7 @@ export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnI
       this.loadingSpinner.dismiss();
       this.loadingSpinner = null;
     }
-  };
+  }
 
   getTestDetails(): TestDetailsModel {
     if (!this.testResult) {
@@ -130,7 +131,7 @@ export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnI
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
       applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
-      category: TestCategory.BE,
+      category: TestCategory.EUAM1,
       specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
       entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
       slotType: this.testResult.journalData.testSlotAttributes.slotType,
@@ -158,8 +159,25 @@ export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnI
       candidateName: getCandidateName(this.testResult.journalData.candidate),
       candidateDriverNumber: this.testResult.journalData.candidate.driverNumber,
       activityCode: this.testResult.activityCode,
-      testOutcome: getTestOutcomeText(this.testResult),
+      testOutcome: this.getTestOutcomeTextAM1(this.testResult),
     };
+  }
+
+  getTestOutcomeTextAM1 = (test: TestResultCatAM1Schema) => {
+    if (test.activityCode === ActivityCodes.PASS) {
+      return TestOutcome.Passed;
+    }
+
+    if (
+      test.activityCode === ActivityCodes.FAIL ||
+      test.activityCode === ActivityCodes.FAIL_CANDIDATE_STOPS_TEST ||
+      test.activityCode === ActivityCodes.FAIL_EYESIGHT ||
+      test.activityCode === ActivityCodes.FAIL_PUBLIC_SAFETY
+    ) {
+      return TestOutcome.Failed;
+    }
+
+    return TestOutcome.Terminated;
   }
 
   // on exit error modal
