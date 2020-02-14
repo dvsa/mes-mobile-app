@@ -164,14 +164,14 @@ export class VehicleChecksCatDModal {
         select(getTestData),
         select(getVehicleChecksCatD),
         map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.D, vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(this.category, vehicleChecks);
         }),
       ),
       safetyQuestionsScore$: currentTest$.pipe(
         select(getTestData),
         select(getSafetyQuestionsCatD),
         map((safetyQuestions) => {
-          return this.faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.D, safetyQuestions);
+          return this.faultCountProvider.getSafetyQuestionsFaultCount(this.category, safetyQuestions);
         }),
       ),
     };
@@ -222,10 +222,23 @@ export class VehicleChecksCatDModal {
     this.store$.dispatch(new SafetyQuestionOutcomeChanged(result, index));
   }
 
-  shouldDisplayBanner = (): boolean => {
+  nonTrailerBanner() {
     return (
       this.vehicleChecksScore.drivingFaults === 4 &&
-      this.vehicleChecksScore.seriousFaults === 1
+      this.vehicleChecksScore.seriousFaults === 1 &&
+      (this.category === TestCategory.D || this.category === TestCategory.D1)
     );
+  }
+
+  trailerBanner() {
+    return (
+      this.vehicleChecksScore.drivingFaults === 1 &&
+      this.vehicleChecksScore.seriousFaults === 1 &&
+      (this.category === TestCategory.DE || this.category === TestCategory.D1E)
+    );
+  }
+
+  shouldDisplayBanner = (): boolean => {
+    return this.trailerBanner() || this.nonTrailerBanner();
   }
 }
