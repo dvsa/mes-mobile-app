@@ -1,32 +1,25 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { ReverseLeftPopoverOpened, ReverseLeftPopoverClosed } from './reverse-left.actions';
+import { ReverseLeftPopoverClosed, ReverseLeftPopoverOpened } from './reverse-left.actions';
 import { getTests } from '../../../../modules/tests/tests.reducer';
-import { RecordManoeuvresSelection } from '../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+import {
+  RecordManoeuvresDeselection,
+  RecordManoeuvresSelection,
+} from '../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { OverlayCallback } from '../../test-report.model';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { ManoeuvreTypes } from '../../../../modules/tests/test-data/test-data.constants';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { FaultCountProvider } from '../../../../providers/fault-count/fault-count';
-import { DeselectReverseLeftManoeuvreCatC }
- from '../../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.actions';
-import { DeselectReverseLeftManoeuvreCatD }
- from '../../../../modules/tests/test-data/cat-d/manoeuvres/manoeuvres.cat-d.actions';
-import { DeselectReverseLeftManoeuvre }
- from '../../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 import { TestDataByCategoryProvider } from '../../../../providers/test-data-by-category/test-data-by-category';
-import { getReverseLeftSelected as getReverseLeftSelectedBE }
- from '../../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.selectors';
-import { getReverseLeftSelected as getReverseLeftSelectedC }
- from '../../../../modules/tests/test-data/cat-c/manoeuvres/manoeuvres.cat-c.selectors';
-import { getReverseLeftSelected as getReverseLeftSelectedD }
- from '../../../../modules/tests/test-data/cat-d/manoeuvres/manoeuvres.cat-d.selectors';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
-import { ManoeuvresByCategoryProvider, ManoeuvreUnion }
-  from '../../../../providers/manoeuvres-by-category/manoeuvres-by-category';
+import {
+  ManoeuvresByCategoryProvider,
+  ManoeuvreUnion,
+} from '../../../../providers/manoeuvres-by-category/manoeuvres-by-category';
+import { getReverseLeftSelected } from '../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.selectors';
 
 @Component({
   selector: 'reverse-left',
@@ -55,7 +48,6 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
   subscription: Subscription;
 
   displayPopover: boolean = false;
-  reducerInfo: any;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -65,7 +57,6 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
   ) {}
 
   ngOnInit(): void {
-    this.reducerInfo = this.getReducerInfo(this.testCategory);
     const manoeuvres$ = this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
@@ -80,7 +71,7 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
           this.faultCountProvider.getManoeuvreFaultCount(this.testCategory, manoeuvres, CompetencyOutcome.S) > 0;
       this.hasDangerousFault =
           this.faultCountProvider.getManoeuvreFaultCount(this.testCategory, manoeuvres, CompetencyOutcome.D) > 0;
-      this.completedReverseLeft = this.reducerInfo.completedReverseLeft.call(this, manoeuvres);
+      this.completedReverseLeft = getReverseLeftSelected(manoeuvres);
     });
   }
 
@@ -92,7 +83,7 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
 
   toggleReverseLeft = (): void => {
     if (this.completedReverseLeft && !this.hasFaults()) {
-      this.store$.dispatch(this.reducerInfo.deselectReverseLeftManoeuvre);
+      this.store$.dispatch(new RecordManoeuvresDeselection(ManoeuvreTypes.reverseLeft));
       return;
     }
     this.store$.dispatch(new RecordManoeuvresSelection(ManoeuvreTypes.reverseLeft));
@@ -116,33 +107,6 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
   toggleOverlay(): void {
     if (this.clickCallback) {
       this.clickCallback.callbackMethod();
-    }
-  }
-
-  getReducerInfo(categoryCode: CategoryCode) {
-    const testCategory = categoryCode as TestCategory;
-    switch (testCategory) {
-      case TestCategory.C:
-      case TestCategory.C1:
-      case TestCategory.C1E:
-      case TestCategory.CE:
-        return {
-          completedReverseLeft: getReverseLeftSelectedC,
-          deselectReverseLeftManoeuvre: new DeselectReverseLeftManoeuvreCatC(),
-        };
-      case TestCategory.D1:
-      case TestCategory.D1E:
-      case TestCategory.D:
-      case TestCategory.DE:
-        return {
-          completedReverseLeft: getReverseLeftSelectedD,
-          deselectReverseLeftManoeuvre: new DeselectReverseLeftManoeuvreCatD(),
-        };
-      default:
-        return {
-          completedReverseLeft: getReverseLeftSelectedBE,
-          deselectReverseLeftManoeuvre: new DeselectReverseLeftManoeuvre(),
-        };
     }
   }
 }

@@ -8,6 +8,7 @@ import {
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] Record Manoeuvres Selection';
+export const RECORD_MANOEUVRES_DESELECTION = '[Manoeuvres] Deselect Reverse Left Manoeuvre';
 export const ADD_MANOEUVRE_DRIVING_FAULT = '[Manoeuvres] Add Manoeuvre Driving Fault';
 export const ADD_MANOEUVRE_SERIOUS_FAULT = '[Manoeuvres] Add Manoeuvre Serious Fault';
 export const ADD_MANOEUVRE_DANGEROUS_FAULT = '[Manoeuvres] Add Manoeuvre Dangerous Fault';
@@ -17,6 +18,11 @@ export const REMOVE_MANOEUVRE_FAULT = '[Manoeuvres] Remove Manoeuvre Fault';
 export interface ManoeuvrePayload {
   manoeuvre: ManoeuvreTypes;
   competency: ManoeuvreCompetencies;
+}
+
+export class RecordManoeuvresDeselection implements Action {
+  constructor(public manoeuvre: ManoeuvreTypes) { }
+  readonly type = RECORD_MANOEUVRES_DESELECTION;
 }
 
 export class RecordManoeuvresSelection implements Action {
@@ -54,6 +60,7 @@ export class RemoveManoeuvreFault implements Action {
 }
 
 export type Types =
+  | RecordManoeuvresDeselection
   | RecordManoeuvresSelection
   | AddManoeuvreDrivingFault
   | AddManoeuvreSeriousFault
