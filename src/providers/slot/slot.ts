@@ -116,7 +116,7 @@ export class SlotProvider {
     return periodsPermittingStart.length > 0;
   }
 
-  private dateDiffInDays = (startDate: Date, periodDate: Date): number => {
+  public dateDiffInDays = (startDate: Date, periodDate: Date): number => {
     // Discard the time and time-zone information.
     const utc1: number = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
     const utc2: number = Date.UTC(periodDate.getFullYear(), periodDate.getMonth(), periodDate.getDate());
@@ -126,10 +126,10 @@ export class SlotProvider {
   private hasPeriodStartCriteria = (slotDate: Date, periodFrom: string): boolean =>
     this.dateDiffInDays(slotDate, new Date(periodFrom)) <= 0
 
-  private hasPeriodEndCriteria = (slotDate: Date, periodFrom: string): boolean => {
-    if (!periodFrom) {
+  private hasPeriodEndCriteria = (slotDate: Date, periodTo: string): boolean => {
+    if (!periodTo) {
       return true;
     }
-    return this.dateDiffInDays(slotDate, new Date(periodFrom)) >= 0;
+    return this.dateDiffInDays(slotDate, new Date(periodTo)) >= 0;
   }
 }
