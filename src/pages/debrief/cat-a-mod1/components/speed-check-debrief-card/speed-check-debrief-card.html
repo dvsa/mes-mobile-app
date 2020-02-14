@@ -1,4 +1,4 @@
-<ion-card id="speed-check">
+<ion-card id="speed-check" *ngIf="emergencyStop.firstAttempt || avoidance.firstAttempt">
   <ion-card-header>
     <ion-card-title>
       <h4 class="fault-heading">{{ 'debrief.speedRequirementsHeader' | translate }}</h4>
