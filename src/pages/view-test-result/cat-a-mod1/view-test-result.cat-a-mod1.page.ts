@@ -31,10 +31,9 @@ import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-// todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { categoryBETestResultMock } from '../../../shared/mocks/cat-be-test-result.mock';
 import { get } from 'lodash';
+import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
+import { categoryAM1TestResultMock } from '../../../shared/mocks/cat-a-mod1-test-result.mock';
 
 @IonicPage()
 @Component({
@@ -44,8 +43,7 @@ import { get } from 'lodash';
 export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
-  // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
-  testResult: CatBEUniqueTypes.TestResult;
+  testResult: TestResultCatAM1Schema;
 
   isLoading: boolean;
   loadingSpinner: Loading;
@@ -78,11 +76,11 @@ export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnI
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
         map((response: HttpResponse<any>): string => response.body),
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
-        map(data => this.testResult = this.compressionProvider.extractTestResult(data) as CatBEUniqueTypes.TestResult),
+        map(data => this.testResult = this.compressionProvider.extractTestResult(data) as TestResultCatAM1Schema),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
-          this.testResult = categoryBETestResultMock;
+          this.testResult = categoryAM1TestResultMock;
+          console.log('this.testResult', this.testResult);
           this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
           this.errorLink = ErrorTypes.SEARCH_RESULT;
@@ -119,7 +117,7 @@ export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnI
       this.loadingSpinner.dismiss();
       this.loadingSpinner = null;
     }
-  }
+  };
 
   getTestDetails(): TestDetailsModel {
     if (!this.testResult) {
