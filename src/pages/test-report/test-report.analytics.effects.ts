@@ -36,7 +36,7 @@ import { getEco, getTestRequirements } from '../../modules/tests/test-data/commo
 import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/common';
 import * as uncoupleRecoupleActions
   from '../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
-import * as reverseLeftActions from './cat-be/components/reverse-left/reverse-left.actions';
+import * as reverseLeftActions from './components/reverse-left/reverse-left.actions';
 import * as catBEManoeuversActions
   from '../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 import * as avoidanceActions from '../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';

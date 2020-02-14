@@ -72,10 +72,10 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <reverse-left-cat-d [completed]="manoeuvresCompleted" [controlLabel]="'Reverse Left'"
+            <reverse-left [completed]="manoeuvresCompleted" [controlLabel]="'Reverse Left'"
                                 [clickCallback]="getCallback()" [testCategory]="pageState.testCategory$ | async">
-              <reverse-left-popover-cat-d></reverse-left-popover-cat-d>
-            </reverse-left-cat-d>
+              <reverse-left-popover></reverse-left-popover>
+            </reverse-left>
           </ion-col>
         </ion-row>
         <ion-row>
