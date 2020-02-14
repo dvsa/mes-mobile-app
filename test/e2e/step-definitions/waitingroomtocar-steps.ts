@@ -22,6 +22,14 @@ Before({ tags: '@catc' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catce' }, () => {
+  this.testCategory = 'ce';
+});
+
+Before({ tags: '@catc1' }, () => {
+  this.testCategory = 'c';
+});
+
 When('I select a tell me question', () => {
   selectTellMeQuestion('T2 - Tyre pressures');
 });
@@ -56,6 +64,8 @@ const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, te
     multiShowAndTell(UI_TEST_DATA.testData.be, questionResult);
   } else if (this.testCategory === 'c') {
     multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
+  } else if (this.testCategory === 'ce') {
+    multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
   } else {
     eyeSightResult(true);
     standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
