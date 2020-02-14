@@ -100,9 +100,6 @@ describe('reverseLeftComponent', () => {
     store$ = TestBed.get(Store);
   }));
 
-  describe('DOM', () => {
-
-  });
   describe('Class', () => {
     describe('hasFaults', () => {
       it('should return TRUE if there are any driving faults', () => {
@@ -140,14 +137,14 @@ describe('reverseLeftComponent', () => {
         component.displayPopover = true;
         component.togglePopoverDisplay();
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ReverseLeftPopoverClosed());
-        expect(component.displayPopover).toBeFalsy();
+        expect(component.displayPopover).toEqual(false);
         expect(toggleOverlaySpy).toHaveBeenCalled();
       });
       it('should dispatch ReverseLeftPopoverOpened and set displayPopover to true', () => {
         component.displayPopover = false;
         component.togglePopoverDisplay();
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ReverseLeftPopoverOpened());
-        expect(component.displayPopover).toBeTruthy();
+        expect(component.displayPopover).toEqual(true);
         expect(toggleOverlaySpy).toHaveBeenCalled();
       });
     });

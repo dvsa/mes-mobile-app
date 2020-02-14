@@ -96,11 +96,6 @@ describe('reverseDiagramLink', () => {
     modalController = TestBed.get(ModalController);
     store$ = TestBed.get(Store);
   }));
-
-  describe('DOM', () => {
-
-  });
-
   describe('Class', () => {
     describe('ngOnInit', () => {
       it('should set the testCategory to Cat D', () => {

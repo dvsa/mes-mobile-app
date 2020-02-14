@@ -32,16 +32,16 @@ export class ManoeuvresByCategoryProvider {
 
   public getManoeuvresByCategoryCode(category: CategoryCode): (testData: TestDataUnion) => ManoeuvreUnion {
     switch (category) {
-      case TestCategory.B: return getManoeuvresB;
+      case TestCategory.B:
       case TestCategory.B1: return getManoeuvresB;
       case TestCategory.BE: return getManoeuvresBE;
-      case TestCategory.C: return getManoeuvresC;
-      case TestCategory.C1: return getManoeuvresC;
-      case TestCategory.CE: return getManoeuvresC;
+      case TestCategory.C:
+      case TestCategory.C1:
+      case TestCategory.CE:
       case TestCategory.C1E: return getManoeuvresC;
-      case TestCategory.D: return getManoeuvresD;
-      case TestCategory.D1: return getManoeuvresD;
-      case TestCategory.DE: return getManoeuvresD;
+      case TestCategory.D:
+      case TestCategory.D1:
+      case TestCategory.DE:
       case TestCategory.D1E: return getManoeuvresD;
       default: throw new Error(ManoeuvresByCategoryProvider.getManoeuvresByCategoryCodeErrMsg);
     }
