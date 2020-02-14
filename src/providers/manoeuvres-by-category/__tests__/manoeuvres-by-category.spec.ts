@@ -11,9 +11,10 @@ describe('ManoeuvresByCategoryProvider', () => {
 
   describe('getManoeuvresByCategoryCode', () => {
     it('should return Cat C manoeuvre information for a C Category Code', () => {
-      const manoeuvreData = provider.getManoeuvresByCategoryCode(TestCategory.C);
-      expect(manoeuvreData).toEqual(selector.getManoeuvres);
-      expect(manoeuvreData).not.toThrowError('Error getting test category manoeuvres');
+      expect(() => {
+        const manoeuvreData = provider.getManoeuvresByCategoryCode(TestCategory.C);
+        expect(manoeuvreData).toEqual(selector.getManoeuvres);
+      }).not.toThrowError('Error getting test category manoeuvres');
     });
     it('should throw an error when there is no matching test category', () => {
       expect(() => {
