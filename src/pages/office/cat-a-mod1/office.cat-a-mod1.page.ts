@@ -185,7 +185,8 @@ export class OfficeCatAMod1Page extends BasePageComponent {
     );
     const testCategory$ = currentTest$.pipe(
       select(getTestCategory),
-      map(_ => <TestCategory>_),
+      // We need this as TestCategory but it comes as CategoryCode.
+      map(testCategory => testCategory as TestCategory),
     );
 
     this.pageState = {
