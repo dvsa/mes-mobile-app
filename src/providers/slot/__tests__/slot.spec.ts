@@ -443,4 +443,18 @@ describe('SlotProvider', () => {
     });
   });
 
+  describe('dateDiffInDays', () => {
+    it('should return 0 days as the date is the same as the periodDate', () => {
+      const date: Date = new Date('2019-01-10');
+      const periodDate: Date = new Date('2019-01-10');
+      expect(slotProvider.dateDiffInDays(date, periodDate)).toEqual(0);
+    });
+
+    it('should return 3 days difference between the date and the periodDate', () => {
+      const date: Date = new Date('2019-01-07');
+      const periodDate: Date = new Date('2019-01-10');
+      expect(slotProvider.dateDiffInDays(date, periodDate)).toEqual(3);
+    });
+  });
+
 });
