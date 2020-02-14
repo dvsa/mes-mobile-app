@@ -3,7 +3,7 @@ import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { DateTime } from '../../../../shared/helpers/date-time';
 import { Name } from '@dvsa/mes-test-schema/categories/common';
 import { ModalController } from 'ionic-angular';
-import { CAT_B, CAT_BE, CAT_C } from '../../../page-names.constants';
+import { CAT_A_MOD1, CAT_B, CAT_BE, CAT_C } from '../../../page-names.constants';
 import { App } from '../../../../app/app.component';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
@@ -17,6 +17,10 @@ export class SearchResultComponent {
   searchResult: SearchResultTestSchema;
 
   constructor(public modalController: ModalController, private app: App) { }
+
+  ngOnInit() {
+    console.log('searchResult', this.searchResult);
+  }
 
   getDate(): string {
     return new DateTime(this.searchResult.testDate).format('DD/MM/YYYY');
@@ -47,6 +51,9 @@ export class SearchResultComponent {
       case TestCategory.C1:
       case TestCategory.C1E:
         pageToOpen = CAT_C.VIEW_TEST_RESULT_PAGE;
+        break;
+      case TestCategory.EUAM1:
+        pageToOpen = CAT_A_MOD1.VIEW_TEST_RESULT_PAGE;
         break;
     }
 
