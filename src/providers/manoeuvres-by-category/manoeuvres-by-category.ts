@@ -1,4 +1,3 @@
-import { getManoeuvres as getManoeuvresB } from '../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import {
   CatCManoeuvres, CatCTestData,
   getManoeuvres as getManoeuvresC,
@@ -20,7 +19,6 @@ export type TestDataUnion =
   | CatCTestData
   | CatDTestData;
 export type ManoeuvreUnion =
-  | CatBUniqueTypes.Manoeuvres
   | CatBEUniqueTypes.Manoeuvres
   | CatCManoeuvres
   | CatDManoeuvres;
@@ -32,8 +30,6 @@ export class ManoeuvresByCategoryProvider {
 
   public getManoeuvresByCategoryCode(category: CategoryCode): (testData: TestDataUnion) => ManoeuvreUnion {
     switch (category) {
-      case TestCategory.B:
-      case TestCategory.B1: return getManoeuvresB;
       case TestCategory.BE: return getManoeuvresBE;
       case TestCategory.C:
       case TestCategory.C1:

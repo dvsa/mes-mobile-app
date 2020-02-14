@@ -6,11 +6,11 @@ import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.re
 import { ecoReducer } from '../common/eco/eco.reducer';
 import { etaReducer } from '../common/eta/eta.reducer';
 import { eyesightTestReducer } from '../common/eyesight-test/eyesight-test.reducer';
-import { manoeuvresCatBEReducer } from './manoeuvres/manoeuvres.cat-be.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { vehicleChecksCatBEReducer } from './vehicle-checks/vehicle-checks.cat-be.reducer';
 import { testRequirementsCatBEReducer } from './test-requirements/test-requirements.cat-be.reducer';
 import { uncoupleRecoupleReducer } from './uncouple-recouple/uncouple-recouple.reducer';
+import { manoeuvresReducer } from '../common/manoeuvres/manoeuvres.reducer';
 
 export const initialState: CatBEUniqueTypes.TestData = {
   dangerousFaults: {},
@@ -40,7 +40,7 @@ export function testDataCatBEReducer(
     eco: ecoReducer,
     ETA: etaReducer,
     eyesightTest: eyesightTestReducer,
-    manoeuvres: manoeuvresCatBEReducer,
+    manoeuvres: manoeuvresReducer,
     testRequirements: testRequirementsCatBEReducer,
   })(state as Required<CatBEUniqueTypes.TestData>, action);
 }
