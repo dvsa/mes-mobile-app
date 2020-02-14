@@ -10,18 +10,13 @@ const {
   setDefaultTimeout,
   After,
   Status,
-  AfterAll,		
- } = require('cucumber');		 } = require('cucumber');
-   const chai = require('chai');		 const chai = require('chai');
-   const chaiAsPromised = require('chai-as-promised');		 const chaiAsPromised = require('chai-as-promised');
-   chai.use(chaiAsPromised);		 chai.use(chaiAsPromised);
-   const expect = chai.expect;		 const expect = chai.expect;
-   const fs = require('fs');
+  AfterAll,
 } = require('cucumber');
-  const chai = require('chai');
-  const chaiAsPromised = require('chai-as-promised');
-  chai.use(chaiAsPromised);
-  const expect = chai.expect;
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+const expect = chai.expect;
+const fs = require('fs');
 
 this.testCategory = 'b';
 
