@@ -4,7 +4,7 @@ import * as fromMod1TestSummaryActions from './test-summary.cat-a-mod1.actions';
 import * as fromTestSummaryActions from '../common/test-summary.actions';
 
 export const initialState : TestSummary = {
-  routeNumber: null,
+  routeNumber: 88,
   candidateDescription: null,
   additionalInformation: null,
   weatherConditions: [],
@@ -27,11 +27,6 @@ export function testSummaryMod1Reducer(
       return {
         ...state,
         candidateDescription: action.description,
-      };
-    case fromTestSummaryActions.ROUTE_NUMBER_CHANGED:
-      return {
-        ...state,
-        routeNumber: action.routeNumber,
       };
     case fromTestSummaryActions.DEBRIEF_WITNESSED:
       return {

@@ -38,7 +38,6 @@ import {
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import { map, withLatestFrom } from 'rxjs/operators';
 import {
-  RouteNumberChanged,
   IdentificationUsedChanged,
   CandidateDescriptionChanged,
   WeatherConditionsChanged,
@@ -382,9 +381,6 @@ export class OfficeCatAMod1Page extends BasePageComponent {
         select(getAvoidanceAttempted),
       ),
     };
-
-    // Route number is not display and always set to 88 in 'Cat A MOD1' tests
-    this.store$.dispatch(new RouteNumberChanged(88));
   }
 
   popToRoot() {
