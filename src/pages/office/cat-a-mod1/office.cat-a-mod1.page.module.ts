@@ -7,10 +7,14 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { OfficeComponentsModule } from '../components/office.components.module';
 import { OfficeEffects } from '../office.effects';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
+import { CircuitComponent } from './components/circuit/circuit';
+import { DebriefCatAMod1ComponentsModule }
+  from '../../debrief/cat-a-mod1/components/debrief.cat-a-mod1.components.module';
 
 @NgModule({
   declarations: [
     OfficeCatAMod1Page,
+    CircuitComponent,
   ],
   imports: [
     IonicPageModule.forChild(OfficeCatAMod1Page),
@@ -20,6 +24,7 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
     ]),
     ComponentsModule,
     OfficeComponentsModule,
+    DebriefCatAMod1ComponentsModule,
   ],
   providers: [
     FaultSummaryProvider,

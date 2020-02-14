@@ -27,7 +27,7 @@ import {
 } from '../../pass-finalisation.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
-  '../../../../modules/tests/test-summary/test-summary.actions';
+  '../../../../modules/tests/test-summary/common/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
   '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PassFinalisationCatCPage } from '../pass-finalisation.cat-c.page';

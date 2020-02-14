@@ -38,7 +38,7 @@
         <h4>Test summary</h4>
       </ion-card-header>
 
-      <ion-card-content class="card-content-ios" no-bounce>
+      <ion-card-content class="card-content-ios" no-bounce no-padding>
         <ion-grid class="grid">
           <activity-code id="activity-code-card" [formGroup]="form" [activityCodeModel]="pageState.activityCode$ | async"
             [activityCodeOptions]="activityCodeOptions" (activityCodeChange)="activityCodeChanged($event)" [disabled]="true"></activity-code>

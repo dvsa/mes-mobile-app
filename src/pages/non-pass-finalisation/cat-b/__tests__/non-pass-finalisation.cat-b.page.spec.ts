@@ -21,7 +21,7 @@ import { D255Component } from '../../../../components/test-finalisation/d255/d25
 import { LanguagePreferencesComponent } from
     '../../../../components/test-finalisation/language-preference/language-preferences';
 import { DebriefWitnessed, D255Yes, D255No, DebriefUnwitnessed } from
-    '../../../../modules/tests/test-summary/test-summary.actions';
+    '../../../../modules/tests/test-summary/common/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
     '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { DebriefWitnessedComponent } from

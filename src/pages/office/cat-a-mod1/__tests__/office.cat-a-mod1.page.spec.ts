@@ -36,7 +36,7 @@ import { By } from '@angular/platform-browser';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import {
   WeatherConditionsChanged,
-} from '../../../../modules/tests/test-summary/test-summary.actions';
+} from '../../../../modules/tests/test-summary/common/test-summary.actions';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/common';
 import { of } from 'rxjs/observable/of';
 import { MockComponent } from 'ng-mocks';
@@ -64,8 +64,10 @@ import { NavigationStateProviderMock } from '../../../../providers/navigation-st
 import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
-import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
 import { configureTestSuite } from 'ng-bullet';
+import { CircuitComponent } from '../components/circuit/circuit';
+import { SpeedCheckDebriefCardComponent }
+from '../../../debrief/cat-a-mod1/components/speed-check-debrief-card/speed-check-debrief-card';
 
 describe('OfficeAMod1Page', () => {
   let fixture: ComponentFixture<OfficeCatAMod1Page>;
@@ -85,7 +87,8 @@ describe('OfficeAMod1Page', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
-        MockComponent(VehicleChecksOfficeCardComponent),
+        MockComponent(SpeedCheckDebriefCardComponent),
+        MockComponent(CircuitComponent),
       ],
       imports: [
         IonicModule,
@@ -99,32 +102,23 @@ describe('OfficeAMod1Page', () => {
             testStatus: {},
             startedTests: {
               123: {
-
-                // TODO - PREP-AMOD1: Change this to TestCategory A Mod1
-                category: TestCategory.BE,
+                category: TestCategory.EUA1M1,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
-                  dangerousFaults: {},
-                  drivingFaults: {},
-                  manoeuvres: {},
-                  seriousFaults: {},
-                  testRequirements: {},
                   ETA: {},
-                  eco: {},
-                  vehicleChecks: {
-                    showMeQuestions: [{
-                      code: 'S3',
-                      description: '',
-                      outcome: '',
-                    }],
-                    tellMeQuestions: [{
-                      code: '',
-                      description: '',
-                      outcome: '',
-                    }],
+                  singleFaultCompetencies: {},
+                  dangerousFaults: {},
+                  seriousFaults: {},
+                  drivingFaults: {},
+                  emergencyStop: {
+                    firstAttempt: 0,
+                    secondAttempt: 0,
                   },
-                  eyesightTest: {},
+                  avoidance: {
+                    firstAttempt: 0,
+                    secondAttempt: 0,
+                  },
                 },
                 activityCode: '28',
                 journalData: {

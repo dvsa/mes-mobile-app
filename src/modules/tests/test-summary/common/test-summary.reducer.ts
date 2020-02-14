@@ -1,6 +1,6 @@
 import { TestSummary } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
-import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
+import * as testSummaryActions from './test-summary.actions';
 
 export const initialState : TestSummary = {
   routeNumber: null,

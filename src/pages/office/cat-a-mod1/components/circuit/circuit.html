@@ -1,0 +1,46 @@
+<ion-row
+  *ngIf="display"
+  class="mes-validated-row mes-row-separator"
+  id="circuit-card"
+  [formGroup]="formGroup"
+>
+  <div class="validation-bar"></div>
+  <ion-col class="component-label" col-32 align-self-center>
+    <label>Circuit</label>
+  </ion-col>
+  <ion-col align-self-center padding-left>
+    <ion-row class="spacing-row"></ion-row>
+    <ion-row>
+      <ion-col align-self-center col-48>
+        <input
+          type="radio"
+          id="circuit-left"
+          class="gds-radio-button"
+          name="circuit"
+          formControlName="circuit"
+          value="Left"
+          [checked]="circuit === 'Left'"
+          (change)="circuitChanged($event.target.value)"
+        />
+        <label for="circuit-left" class="radio-label">Left</label>
+      </ion-col>
+      <ion-col align-self-center>
+        <input
+          type="radio"
+          id="circuit-right"
+          class="gds-radio-button"
+          name="circuit"
+          formControlName="circuit"
+          [class.ng-invalid]="invalid"
+          value="Right"
+          [checked]="circuit === 'Right'"
+          (change)="circuitChanged($event.target.value)"
+        />
+        <label for="circuit-right" class="radio-label">Right</label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="validation-message-row" align-items-center>
+      <div class="validation-text"></div>
+    </ion-row>
+  </ion-col>
+</ion-row>

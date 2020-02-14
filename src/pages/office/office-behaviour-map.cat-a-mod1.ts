@@ -12,6 +12,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'A' },
     ['eco']: { display: 'A' },
+    ['circuit']: { display: 'Y' },
   },
   ['2']: {
     ['routeNumber']: { display: 'N' },
@@ -24,19 +25,20 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'A' },
     ['eco']: { display: 'A' },
+    ['circuit']: { display: 'Y' },
   },
   ['3']: {
     ['routeNumber']: { display: 'N' },
     ['candidateDescription']: { display: 'Y' },
     ['debriefWitnessed']: { display: 'Y' },
     ['identification']: { display: 'Y' },
-
     ['weatherConditions']: { display: 'Y' },
     ['d255']: { display: 'Y', defaultValue: 'Yes' },
     ['eta']: { display: 'A' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'A' },
     ['eco']: { display: 'A' },
+    ['circuit']: { display: 'Y' },
   },
   ['4']: {
     ['routeNumber']: { display: 'N' },
@@ -49,6 +51,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'A' },
     ['eco']: { display: 'A' },
+    ['circuit']: { display: 'Y' },
   },
   ['5']: {
     ['routeNumber']: { display: 'N' },
@@ -61,19 +64,19 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'A' },
     ['eco']: { display: 'A' },
+    ['circuit']: { display: 'Y' },
   },
   ['11']: {
     ['routeNumber']: { display: 'N' },
     ['candidateDescription']: { display: 'Y' },
     ['debriefWitnessed']: { display: 'Y' },
     ['identification']: { display: 'Y' },
-
     ['weatherConditions']: { display: 'Y' },
     ['d255']: { display: 'Y' },
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
-
+    ['circuit']: { display: 'Y' },
   },
   ['20']: {
     ['routeNumber']: { display: 'N' },
@@ -85,30 +88,31 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
   ['21']: {
     ['routeNumber']: { display: 'N' },
     ['candidateDescription']: { display: 'Y' },
     ['debriefWitnessed']: { display: 'N' },
     ['identification']: { display: 'Y' },
-
     ['weatherConditions']: { display: 'Y' },
     ['d255']: { display: 'Y' },
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['22']: {
     ['routeNumber']: { display: 'N' },
     ['candidateDescription']: { display: 'Y' },
     ['debriefWitnessed']: { display: 'Y' },
     ['identification']: { display: 'Y' },
-
     ['weatherConditions']: { display: 'Y' },
     ['d255']: { display: 'Y' },
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['23']: {
     ['routeNumber']: { display: 'N' },
@@ -131,6 +135,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['25']: {
     ['routeNumber']: { display: 'N' },
@@ -164,6 +169,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['28']: {
     ['routeNumber']: { display: 'N' },
@@ -175,6 +181,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['32']: {
     ['routeNumber']: { display: 'N' },
@@ -203,12 +210,12 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['candidateDescription']: { display: 'Y' },
     ['debriefWitnessed']: { display: 'Y' },
     ['identification']: { display: 'Y' },
-
     ['weatherConditions']: { display: 'Y' },
     ['d255']: { display: 'Y' },
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['35']: {
     ['routeNumber']: { display: 'N' },
@@ -220,6 +227,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['36']: {
     ['routeNumber']: { display: 'N' },
@@ -231,6 +239,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['37']: {
     ['routeNumber']: { display: 'N' },
@@ -242,6 +251,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['38']: {
     ['routeNumber']: { display: 'N' },
@@ -253,6 +263,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['40']: {
     ['routeNumber']: { display: 'N' },
@@ -264,6 +275,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['41']: {
     ['routeNumber']: { display: 'N' },
@@ -275,6 +287,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['84']: {
     ['routeNumber']: { display: 'N' },
@@ -286,6 +299,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['51']: {
     ['routeNumber']: { display: 'N' },
@@ -297,6 +311,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
   ['52']: {
     ['routeNumber']: { display: 'N' },
@@ -308,6 +323,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
   ['55']: {
     ['routeNumber']: { display: 'N' },
@@ -319,6 +335,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
   ['58']: {
     ['routeNumber']: { display: 'N' },
@@ -330,6 +347,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
   ['59']: {
     ['routeNumber']: { display: 'N' },
@@ -385,6 +403,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
   ['64']: {
     ['routeNumber']: { display: 'N' },
@@ -396,6 +415,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
   ['66']: {
     ['routeNumber']: { display: 'N' },
@@ -407,6 +427,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
   ['67']: {
     ['routeNumber']: { display: 'N' },
@@ -418,6 +439,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['68']: {
     ['routeNumber']: { display: 'N' },
@@ -429,6 +451,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['69']: {
     ['routeNumber']: { display: 'N' },
@@ -440,6 +463,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
   ['70']: {
     ['routeNumber']: { display: 'N' },
@@ -451,6 +475,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
   ['71']: {
     ['routeNumber']: { display: 'N' },
@@ -462,6 +487,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['73']: {
     ['routeNumber']: { display: 'N' },
@@ -473,6 +499,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['74']: {
     ['routeNumber']: { display: 'N' },
@@ -484,6 +511,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
   ['75']: {
     ['routeNumber']: { display: 'N' },
@@ -495,6 +523,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'Y' },
   },
   ['82']: {
     ['routeNumber']: { display: 'N' },
@@ -517,5 +546,6 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['eta']: { display: 'N' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'N' },
+    ['circuit']: { display: 'N' },
   },
 };

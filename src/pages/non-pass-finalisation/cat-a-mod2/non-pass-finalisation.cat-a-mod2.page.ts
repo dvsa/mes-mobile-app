@@ -27,8 +27,8 @@ import {
   NonPassFinalisationValidationError,
 } from '../non-pass-finalisation.actions';
 import { map, withLatestFrom } from 'rxjs/operators';
-import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
-import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
+import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
+import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/common/test-summary.selector';
 import {
   getTestSlotAttributes,
 } from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
@@ -49,7 +49,7 @@ import {
   DebriefUnwitnessed,
   D255Yes,
   D255No,
-} from '../../../modules/tests/test-summary/test-summary.actions';
+} from '../../../modules/tests/test-summary/common/test-summary.actions';
 import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,

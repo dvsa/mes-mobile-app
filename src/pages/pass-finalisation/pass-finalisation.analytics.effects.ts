@@ -22,7 +22,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { AnalyticRecorded, AnalyticNotRecorded } from '../../providers/analytics/analytics.actions';
 import * as passCompletionActions from '../../modules/tests/pass-completion/pass-completion.actions';
-import * as testSummaryActions from '../../modules/tests/test-summary/test-summary.actions';
+import * as testSummaryActions from '../../modules/tests/test-summary/common/test-summary.actions';
 import * as vehicleDetailsActions from '../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { getActivityCode } from '../../modules/tests/activity-code/activity-code.reducer';
 import { getCurrentTest } from '../../modules/tests/tests.selector';

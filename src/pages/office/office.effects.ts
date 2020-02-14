@@ -6,7 +6,7 @@ import * as dangerousFaultsActions
   from '../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import * as seriousFaultsActions from '../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import * as drivingFaultsActions from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-import * as testSummaryActions from '../../modules/tests/test-summary/test-summary.actions';
+import * as testSummaryActions from '../../modules/tests/test-summary/common/test-summary.actions';
 import * as officeActions from './office.actions';
 import * as testStatusActions from '../../modules/tests/test-status/test-status.actions';
 import * as testsActions from '../../modules/tests/tests.actions';
