@@ -1,6 +1,5 @@
 import { DrivingFaults, SeriousFaults, DangerousFaults } from '@dvsa/mes-test-schema/categories/common';
 import { CompetencyIdentifiers, FaultSummary, CommentSource } from '../../shared/models/fault-marking.model';
-import { competencyLabels } from '../../pages/test-report/components/competency/competency.constants';
 import { fullCompetencyLabels } from '../constants/competencies/competencies';
 import { forOwn, isBoolean, isNumber } from 'lodash';
 
@@ -10,7 +9,7 @@ export const getCompetencyFaults = (faults: DrivingFaults | SeriousFaults | Dang
   forOwn(faults, (value: number, key: string, obj: DrivingFaults| SeriousFaults | DangerousFaults) => {
     const faultCount = calculateFaultCount(value);
     if (faultCount > 0  && !key.endsWith(CompetencyIdentifiers.COMMENTS_SUFFIX)) {
-      const label = key as keyof typeof competencyLabels;
+      const label = key as keyof typeof fullCompetencyLabels;
       const comment = obj[`${key}${CompetencyIdentifiers.COMMENTS_SUFFIX}`] || null;
       const faultSummary: FaultSummary = {
         comment,

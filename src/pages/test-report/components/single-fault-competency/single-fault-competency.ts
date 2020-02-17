@@ -10,7 +10,6 @@ import { map, tap } from 'rxjs/operators';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
-import { singleFaultCompetencyLables } from './single-fault-competency.constants';
 import { ToggleDangerousFaultMode, ToggleRemoveFaultMode, ToggleSeriousFaultMode } from '../../test-report.actions';
 import {
   RemoveSingleFaultCompetencyOutcome,
@@ -28,6 +27,7 @@ import {
   hasCompetencySeriousFault,
   hasCompetencyDangerousFault,
 } from '../../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.selector';
+import { fullCompetencyLabels } from '../../../../shared/constants/competencies/competencies';
 
 interface SingleFaultCompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -155,7 +155,7 @@ export class SingleFaultCompetencyComponent implements OnInit, OnDestroy {
     this.allowRipple = true;
   }
 
-  getLabel = (): string => singleFaultCompetencyLables[this.competency];
+  getLabel = (): string => fullCompetencyLabels[this.competency];
 
   addOrRemoveFault = (wasPress: boolean = false): void => {
     if (this.isRemoveFaultMode) {

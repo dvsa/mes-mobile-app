@@ -125,7 +125,7 @@ describe('CompetencyComponent', () => {
     describe('getLabel', () => {
       it('should get the correct label for a competency', () => {
         component.competency = Competencies.controlsSteering;
-        expect(component.getLabel()).toBe('Steering');
+        expect(component.getLabel()).toBe('Controls - Steering');
       });
     });
 
@@ -608,7 +608,7 @@ describe('CompetencyComponent', () => {
       component.competency = Competencies.controlsGears;
       fixture.detectChanges();
       const label = fixture.debugElement.query(By.css('.competency-label'));
-      expect(label.nativeElement.innerHTML).toBe('Gears');
+      expect(label.nativeElement.innerHTML).toBe('Controls - Gears');
     });
 
     it('should pass the number of driving faults to the driving faults badge component', () => {
