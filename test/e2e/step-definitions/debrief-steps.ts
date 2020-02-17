@@ -19,7 +19,7 @@ Before({ tags: '@catc' }, () => {
 });
 
 Before({ tags: '@catc1' }, () => {
-  this.testCategory = 'c1';
+  this.testCategory = 'c';
 });
 
 When('I end the debrief', () => {
@@ -35,7 +35,7 @@ When('I end the welsh debrief', () => {
 When('I complete the pass details', () => {
   completePassdetails();
   selectTransmission('manual');
-  if (this.testCategory === 'c' || this.testCategory === 'c1') {
+  if (this.testCategory === 'c') {
     code78onLicence(false);
   }
   continuePassFinalisation();

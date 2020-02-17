@@ -19,7 +19,7 @@ Before({ tags: '@catc' }, () => {
 });
 
 Before({ tags: '@catc1' }, () => {
-  this.testCategory = 'c1';
+
 });
 
 When('the candidate enters a new email address', () => {

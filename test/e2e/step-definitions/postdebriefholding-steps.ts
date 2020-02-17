@@ -13,7 +13,7 @@ Before({ tags: '@catc' }, () => {
 });
 
 Before({ tags: '@catc1' }, () => {
-  this.testCategory = 'c1';
+  this.testCategory = 'c';
 });
 
 Then('I am on the post debrief holding page', () => {

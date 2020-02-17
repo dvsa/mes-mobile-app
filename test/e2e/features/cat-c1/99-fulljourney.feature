@@ -1,5 +1,5 @@
 @catc1
-Feature: Full end to end journey for Category c1
+Feature: Full end to end journey for Category C1
 
    Scenario: Examiner completes a passed test with no faults
       Given I am logged in as "mobexaminer5" and I have a test for "Ms Deanna Wolf"

@@ -18,7 +18,7 @@ Before({ tags: '@catc' }, () => {
 });
 
 Before({ tags: '@catc1' }, () => {
-  this.testCategory = 'c1';
+  this.testCategory = 'c';
 });
 
 When('I complete the office write up', () => {

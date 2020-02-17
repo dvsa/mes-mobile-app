@@ -18,7 +18,7 @@ Before({ tags: '@catc' }, () => {
 });
 
 Before({ tags: '@catc1' }, () => {
-  this.testCategory = 'c1';
+  this.testCategory = 'c';
 });
 
 Then('the pass certificate number should be {string}', (certificateNumber) => {
