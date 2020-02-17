@@ -222,7 +222,7 @@ export class VehicleChecksCatDModal {
     this.store$.dispatch(new SafetyQuestionOutcomeChanged(result, index));
   }
 
-  nonTrailerBanner() {
+  isNonTrailerBanner(): boolean {
     return (
       this.vehicleChecksScore.drivingFaults === 4 &&
       this.vehicleChecksScore.seriousFaults === 1 &&
@@ -230,7 +230,7 @@ export class VehicleChecksCatDModal {
     );
   }
 
-  trailerBanner() {
+  isTrailerBanner(): boolean {
     return (
       this.vehicleChecksScore.drivingFaults === 1 &&
       this.vehicleChecksScore.seriousFaults === 1 &&
@@ -239,6 +239,6 @@ export class VehicleChecksCatDModal {
   }
 
   shouldDisplayBanner = (): boolean => {
-    return this.trailerBanner() || this.nonTrailerBanner();
+    return this.isTrailerBanner() || this.isNonTrailerBanner();
   }
 }

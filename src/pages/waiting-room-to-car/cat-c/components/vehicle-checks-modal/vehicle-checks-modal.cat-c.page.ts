@@ -185,15 +185,15 @@ export class VehicleChecksCatCModal {
     this.store$.dispatch(new TellMeQuestionOutcomeChanged(result, index));
   }
 
-  nonTrailerBanner() {
+  isNonTrailerBanner(): boolean {
     return (
       this.vehicleChecksScore.drivingFaults === 4 &&
-       this.vehicleChecksScore.seriousFaults === 1 &&
-       (this.category === TestCategory.C || this.category === TestCategory.C1)
+      this.vehicleChecksScore.seriousFaults === 1 &&
+      (this.category === TestCategory.C || this.category === TestCategory.C1)
     );
   }
 
-  trailerBanner() {
+  isTrailerBanner(): boolean {
     return (
       this.vehicleChecksScore.drivingFaults === 1 &&
       this.vehicleChecksScore.seriousFaults === 1 &&
@@ -202,6 +202,6 @@ export class VehicleChecksCatCModal {
   }
 
   shouldDisplayBanner = (): boolean => {
-    return this.trailerBanner() || this.nonTrailerBanner();
+    return this.isTrailerBanner() || this.isNonTrailerBanner();
   }
 }
