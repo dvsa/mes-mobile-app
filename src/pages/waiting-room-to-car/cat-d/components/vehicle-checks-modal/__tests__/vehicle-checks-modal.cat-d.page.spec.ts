@@ -21,11 +21,29 @@ import {
 } from '../../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 import { configureTestSuite } from 'ng-bullet';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('VehicleChecksCatDModal', () => {
   let fixture: ComponentFixture<VehicleChecksCatDModal>;
   let component: VehicleChecksCatDModal;
   let store$: Store<StoreModel>;
+
+  const bannerDisplayLogic = [
+    { category: TestCategory.D, drivingFaults: 0, seriousFaults: 0, showBanner: false },
+    { category: TestCategory.D, drivingFaults: 1, seriousFaults: 0, showBanner: false },
+    { category: TestCategory.D, drivingFaults: 4, seriousFaults: 1, showBanner: true },
+    { category: TestCategory.D, drivingFaults: 3, seriousFaults: 0, showBanner: false },
+    { category: TestCategory.D1, drivingFaults: 0, seriousFaults: 0, showBanner: false },
+    { category: TestCategory.D1, drivingFaults: 1, seriousFaults: 0, showBanner: false },
+    { category: TestCategory.D1, drivingFaults: 4, seriousFaults: 1, showBanner: true },
+    { category: TestCategory.D1, drivingFaults: 3, seriousFaults: 0, showBanner: false },
+    { category: TestCategory.DE, drivingFaults: 0, seriousFaults: 0, showBanner: false },
+    { category: TestCategory.DE, drivingFaults: 1, seriousFaults: 0, showBanner: false },
+    { category: TestCategory.DE, drivingFaults: 1, seriousFaults: 1, showBanner: true },
+    { category: TestCategory.D1E, drivingFaults: 0, seriousFaults: 0, showBanner: false },
+    { category: TestCategory.D1E, drivingFaults: 1, seriousFaults: 0, showBanner: false },
+    { category: TestCategory.D1E, drivingFaults: 1, seriousFaults: 1, showBanner: true },
+  ];
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -108,22 +126,18 @@ describe('VehicleChecksCatDModal', () => {
     });
 
     describe('shouldDisplayBanner', () => {
-      it('should return false if there are no 4 driving faults and 1 serious', () => {
-        component.vehicleChecksScore = {
-          drivingFaults: 3,
-          seriousFaults: 0,
-        };
+      bannerDisplayLogic.forEach((bannerLogic) => {
 
-        expect(component.shouldDisplayBanner()).toBeFalsy();
-      });
+        it(`Cat ${bannerLogic.category} should return ${bannerLogic.showBanner} if there are
+ ${bannerLogic.drivingFaults} driving faults and ${bannerLogic.seriousFaults} serious`, () => {
+          component.vehicleChecksScore = {
+            drivingFaults: bannerLogic.drivingFaults,
+            seriousFaults: bannerLogic.seriousFaults,
+          };
+          component.category = bannerLogic.category;
+          expect(component.shouldDisplayBanner()).toBe(bannerLogic.showBanner);
+        });
 
-      it('should return true if there are 4 driving faults and 1 serious', () => {
-        component.vehicleChecksScore = {
-          drivingFaults: 4,
-          seriousFaults: 1,
-        };
-
-        expect(component.shouldDisplayBanner()).toBeTruthy();
       });
     });
   });
