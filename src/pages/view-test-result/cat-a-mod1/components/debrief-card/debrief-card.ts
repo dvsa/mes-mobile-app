@@ -4,7 +4,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { FaultSummaryProvider } from '../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
-import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
+import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 
 @Component({
   selector: 'debrief-card',
@@ -13,12 +13,16 @@ import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
 export class DebriefCardComponent {
 
   @Input()
-  data: TestResultCatAM1Schema;
+  data: TestData;
 
   constructor(
     private faultSummaryProvider: FaultSummaryProvider,
     private faultCountProvider: FaultCountProvider,
   ) {}
+
+  ngOnInit() {
+    console.log('this.data', this.data);
+  }
 
   public getDrivingFaults(): FaultSummary[] {
     return this.faultSummaryProvider.getDrivingFaultsList(this.data, TestCategory.EUAM1);

@@ -87,8 +87,6 @@ export class FaultCountAM1Helper {
     // Because of this we need to pay extra attention on summing up all of them
     const { drivingFaults, singleFaultCompetencies, emergencyStop, avoidance } = data;
 
-    console.log('singleFaultCompetencies', singleFaultCompetencies);
-
     const drivingFaultSumOfSimpleCompetencies = getCompetencyFaults(drivingFaults)
       .reduce(((res, faultSummary) => res + faultSummary.faultCount), 0);
     Object.keys(pickBy(drivingFaults)).length;

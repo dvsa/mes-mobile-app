@@ -81,7 +81,6 @@ export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnI
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
           this.testResult = categoryAM1TestResultMock;
-          console.log('this.testResult', this.testResult);
           this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
           this.errorLink = ErrorTypes.SEARCH_RESULT;

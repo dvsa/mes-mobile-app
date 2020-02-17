@@ -11,14 +11,10 @@
         [dangerousFaults]="getDangerousFaults()"
         [drivingFaultCount]="getDrivingFaultCount()">
       </faults-data-row>
-      <faults-data-row
-        [label]="'Fault descriptions'"
-        [drivingFaults]="getDrivingFaults()"
-        [seriousFaults]="getSeriousFaults()"
-        [dangerousFaults]="getDangerousFaults()"
-        [drivingFaultCount]="getDrivingFaultCount()">
-      </faults-data-row>
-
+      <speed-card
+        [emergencyStop]="data.emergencyStop"
+        [avoidance]="data.avoidance">
+      </speed-card>
     </ion-grid>
   </ion-card-content>
 </ion-card>
