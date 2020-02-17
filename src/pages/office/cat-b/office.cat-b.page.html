@@ -124,17 +124,17 @@
       </ion-card>
 
       <fault-comment-card [formGroup]="form" [faultComments]="pageState.dangerousFaults$ | async" [shouldRender]="(pageState.dangerousFaults$ | async).length > 0 && pageState.displayDangerousFault$ | async"
-        [outcome]="pageState.testOutcome$ | async" faultType="dangerous" header="Dangerous faults" [maxFaultCount]=15
+        [outcome]="pageState.testOutcome$ | async" faultType="dangerous" header="Dangerous faults" [maxFaultCount]="maxFaultCount"
         (faultCommentsChange)="dangerousFaultCommentChanged($event)">
       </fault-comment-card>
 
       <fault-comment-card [formGroup]="form" [faultComments]="pageState.seriousFaults$ | async" [shouldRender]="(pageState.seriousFaults$ | async).length > 0  && pageState.displaySeriousFault$ | async"
-        [outcome]="pageState.testOutcome$ | async" faultType="serious" header="Serious faults" (faultCommentsChange)="seriousFaultCommentChanged($event)" [maxFaultCount]=15>
+        [outcome]="pageState.testOutcome$ | async" faultType="serious" header="Serious faults" (faultCommentsChange)="seriousFaultCommentChanged($event)" [maxFaultCount]="maxFaultCount">
       </fault-comment-card>
 
       <fault-comment-card id="driving-fault-comment-card" [formGroup]="form" [faultComments]="pageState.drivingFaults$ | async"
         [shouldRender]="(pageState.displayDrivingFaultComments$ | async) && pageState.displayDrivingFault$ | async"
-        [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults" [faultCount]="pageState.drivingFaultCount$ | async" [maxFaultCount]=15
+        [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults" [faultCount]="pageState.drivingFaultCount$ | async" [maxFaultCount]="maxFaultCount"
         (faultCommentsChange)="drivingFaultCommentChanged($event)">
       </fault-comment-card>
 

@@ -148,6 +148,7 @@ export class OfficeCatAMod1Page extends BasePageComponent {
   drivingFaultCtrl: String = 'drivingFaultCtrl';
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
+  static readonly maxFaultCount = 5;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
