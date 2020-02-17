@@ -18,7 +18,6 @@ import {
   AddDangerousFault,
   RemoveDangerousFault,
 } from '../../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
-import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
 import { getTests } from '../../../../modules/tests/tests.reducer';
@@ -31,6 +30,7 @@ import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
+import { fullCompetencyLabels } from '../../../../shared/constants/competencies/competencies';
 
 interface CompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -174,7 +174,7 @@ export class CompetencyComponent {
     this.allowRipple = true;
   }
 
-  getLabel = (): string => competencyLabels[this.competency];
+  getLabel = (): string => fullCompetencyLabels[this.competency];
 
   addOrRemoveFault = (wasPress: boolean = false): void => {
     if (this.isRemoveFaultMode) {

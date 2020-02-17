@@ -22,13 +22,13 @@ export class FaultSummaryCatAM1Helper {
   }
 
   public static getSeriousFaultsCatAM1(data: TestData): FaultSummary[] {
-    const singleFaultCompetenciesWithDangerousFaults: SingleFaultCompetencies = pickBy(
+    const singleFaultCompetenciesWithSeriousFaults: SingleFaultCompetencies = pickBy(
       data.singleFaultCompetencies, val => val === CompetencyOutcome.S,
     );
 
     return [
-      ...getCompetencyFaults(data.dangerousFaults),
-      ...getCompetencyFaults(singleFaultCompetenciesWithDangerousFaults),
+      ...getCompetencyFaults(data.seriousFaults),
+      ...getCompetencyFaults(singleFaultCompetenciesWithSeriousFaults),
       ...FaultSummaryCatAM1Helper.getAvoidanceFaults(data.avoidance, CompetencyOutcome.S),
       ...FaultSummaryCatAM1Helper.getEmergencyStopFaults(data.emergencyStop, CompetencyOutcome.S),
       ...FaultSummaryCatAM1Helper.getSpeedCheckAvoidance(data.avoidance),

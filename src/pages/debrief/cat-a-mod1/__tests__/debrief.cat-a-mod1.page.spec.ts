@@ -38,8 +38,7 @@ import { SpeedCheckDebriefCardComponent } from '../components/speed-check-debrie
 import { SetSingleFaultCompetencyOutcome }
   from '../../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
-import { singleFaultCompetencyLables }
-  from '../../../test-report/components/single-fault-competency/single-fault-competency.constants';
+import { fullCompetencyLabels } from '../../../../shared/constants/competencies/competencies';
 
 describe('DebriefCatAMod1Page', () => {
   let fixture: ComponentFixture<DebriefCatAMod1Page>;
@@ -246,9 +245,9 @@ describe('DebriefCatAMod1Page', () => {
       const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
       const dangerousLabel = fixture.debugElement.query(By.css('#dangerous-fault .counter-label')).nativeElement;
 
-      expect(drivingFaultLabel.innerHTML).toBe(singleFaultCompetencyLables[SingleFaultCompetencyNames.useOfStand]);
-      expect(seriousLabel.innerHTML).toBe(singleFaultCompetencyLables[SingleFaultCompetencyNames.slalom]);
-      expect(dangerousLabel.innerHTML).toBe(singleFaultCompetencyLables[SingleFaultCompetencyNames.slowControl]);
+      expect(drivingFaultLabel.innerHTML).toBe(fullCompetencyLabels[SingleFaultCompetencyNames.useOfStand]);
+      expect(seriousLabel.innerHTML).toBe(fullCompetencyLabels[SingleFaultCompetencyNames.slalom]);
+      expect(dangerousLabel.innerHTML).toBe(fullCompetencyLabels[SingleFaultCompetencyNames.slowControl]);
     });
 
     // TODO: Debrief needs updating
