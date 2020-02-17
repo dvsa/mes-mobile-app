@@ -33,3 +33,7 @@ export const scrollToElement = (element) => {
     expect(element.isPresent()).to.eventually.be.true;
   });
 };
+
+export const waitForPresenceOfElement = (element) => {
+  browser.wait(ExpectedConditions.presenceOf(element));
+};
