@@ -35,10 +35,11 @@ When('I end the welsh debrief', () => {
 When('I complete the pass details', () => {
   completePassdetails();
   selectTransmission('manual');
-  if (this.testCategory === 'c') {
-    code78onLicence(false);
-  }
   continuePassFinalisation();
+});
+
+When('I select the code 78 option', () => {
+  code78onLicence(false);
 });
 
 When('I complete the pass details with an automatic transmission', () => {

@@ -21,6 +21,7 @@ Feature: Full end to end journey for Category c
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
       Then I should see the "Test debrief - Right Ford" page
+      And  I select the code 78 option
       And I complete the pass details
       And I complete the health declaration
       Then I am on the back to office page
