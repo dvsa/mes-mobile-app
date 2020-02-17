@@ -21,9 +21,7 @@ export class DebriefCardComponent {
   ) {}
 
   public getDrivingFaults(): FaultSummary[] {
-    const temp = this.faultSummaryProvider.getDrivingFaultsList(this.data, TestCategory.EUAM1)
-    console.log('drivingFaults', temp);
-    return temp;
+    return this.faultSummaryProvider.getDrivingFaultsList(this.data, TestCategory.EUAM1);
   }
 
   public getSeriousFaults(): FaultSummary[] {
