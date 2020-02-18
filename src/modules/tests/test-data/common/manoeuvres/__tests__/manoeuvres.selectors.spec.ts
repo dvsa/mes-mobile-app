@@ -1,10 +1,10 @@
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
-import { getReverseLeftSelected } from '../manoeuvres.cat-c.selectors';
+import { ManoeuvreUnion } from '../../../../../../providers/manoeuvres-by-category/manoeuvres-by-category';
+import { getReverseLeftSelected } from '../../../common/manoeuvres/manoeuvres.selectors';
 
-describe('Manoeuvres CatC Selectors', () => {
+describe('Manoeuvres Selectors', () => {
   describe('getReverseLeftSelected', () => {
     it('should return true when reverse left is selected', () => {
-      const manoeuvres: CatCUniqueTypes.Manoeuvres = {
+      const manoeuvres: ManoeuvreUnion = {
         reverseLeft: {
           selected: true,
         },
@@ -14,7 +14,7 @@ describe('Manoeuvres CatC Selectors', () => {
     });
 
     it('should return false when reverse left is not selected', () => {
-      const manoeuvres: CatCUniqueTypes.Manoeuvres = {
+      const manoeuvres: ManoeuvreUnion = {
         reverseLeft: {
           selected: false,
         },
@@ -24,7 +24,7 @@ describe('Manoeuvres CatC Selectors', () => {
     });
 
     it('should return false when reverse left is undefined', () => {
-      const manoeuvres: CatCUniqueTypes.Manoeuvres = {
+      const manoeuvres: ManoeuvreUnion = {
         reverseLeft: undefined,
       };
       const result = getReverseLeftSelected(manoeuvres);

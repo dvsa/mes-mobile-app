@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { StoreModule, Store } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { TestReportAnalyticsEffects } from '../test-report.analytics.effects';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as controlledStopActions from '../../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
@@ -18,36 +18,35 @@ import * as testReportActions from '../test-report.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
   Competencies,
+  LegalRequirements,
   ManoeuvreCompetencies,
   ManoeuvreTypes,
-  LegalRequirements,
   SingleFaultCompetencyNames,
 } from '../../../modules/tests/test-data/test-data.constants';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import {
-  AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsEvents,
   AnalyticsLabels,
+  AnalyticsScreenNames,
 } from '../../../providers/analytics/analytics.model';
 import { fullCompetencyLabels } from '../../../shared/constants/competencies/competencies';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import { testReportPracticeModeSlot, candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
+import { candidateMock, testReportPracticeModeSlot } from '../../../modules/tests/__mocks__/tests.mock';
 import {
-  manoeuvreTypeLabels,
   manoeuvreCompetencyLabels,
+  manoeuvreTypeLabels,
 } from '../../../shared/constants/competencies/catb-manoeuvres';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
-import { legalRequirementsLabels, legalRequirementToggleValues }
-  from '../../../shared/constants/legal-requirements/legal-requirements.constants';
+import {
+  legalRequirementsLabels,
+  legalRequirementToggleValues,
+} from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import * as uncoupleRecoupleActions
   from '../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
-import * as reverseLeftActions
-  from '../components/reverse-left/reverse-left.actions';
+import * as reverseLeftActions from '../components/reverse-left/reverse-left.actions';
 import { configureTestSuite } from 'ng-bullet';
-import * as catBEManoeuversActions
-  from '../../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import * as avoidanceActions from '../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import {
@@ -56,14 +55,14 @@ import {
 } from '../../../shared/constants/competencies/cata-mod1-speed-checks';
 import * as testReportCatAMod1Actions from '../cat-a-mod1/test-report.cat-a-mod1.actions';
 import { ModalReason } from '../cat-a-mod1/components/activity-code-4-modal/activity-code-4-modal.constants';
-import * as emergencyStopActions from
-  '../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
+import * as emergencyStopActions
+  from '../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
 import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/common/candidate/candidate.actions';
-import * as singleFaultCompetencyActions from
-'../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
+import * as singleFaultCompetencyActions
+  from '../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 describe('Test Report Analytics Effects', () => {
@@ -1093,7 +1092,7 @@ describe('Test Report Analytics Effects', () => {
       store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       actions$.next(new manoeuvresActions.RecordManoeuvresSelection(ManoeuvreTypes.reverseParkRoad));
       // ACT
-      actions$.next(new catBEManoeuversActions.DeselectReverseLeftManoeuvre());
+      actions$.next(new manoeuvresActions.RecordManoeuvresDeselection(ManoeuvreTypes.reverseParkRoad));
       // ASSERT
       effects.deselectReverseLeftManoeuvreEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);

@@ -13,22 +13,12 @@ import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
-import { getVehicleDetails as getVehicleDetailsBE }
-  from '../../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
-import { getVehicleDetails as getVehicleDetailsC }
-  from '../../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
-import { getVehicleDetails as getVehicleDetailsD }
-  from '../../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.reducer';
-import { getVehicleWidth as getVehicleWidthBE, getVehicleLength as getVehicleLengthBE }
- from '../../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.selector';
-import { getVehicleWidth as getVehicleWidthC, getVehicleLength as getVehicleLengthC }
- from '../../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.selector';
-import { getVehicleWidth as getVehicleWidthD, getVehicleLength as getVehicleLengthD }
- from '../../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.selector';
 import {
   ReverseDiagramLengthChanged,
   ReverseDiagramWidthChanged,
 } from './reverse-diagram-modal.actions';
+import { CategorySpecificVehicleDetails, VehicleDetailsByCategoryProvider }
+  from '../../../../providers/vehicle-details-by-category/vehicle-details-by-category';
 
 interface ReverseDiagramPageState {
   vehicleLength$: Observable<number>;
@@ -58,11 +48,13 @@ export class ReverseDiagramPage implements OnInit {
   reversingWidth: number;
   category: TestCategory;
   onClose: OnCloseFunc;
+  vehicleDetails: CategorySpecificVehicleDetails;
 
   constructor(
     private navParams: NavParams,
     public store$: Store<StoreModel>,
     public reversingDistancesProvider: ReversingDistancesProvider,
+    public vehicleDetailsProvider: VehicleDetailsByCategoryProvider,
   ) {
     this.onClose = this.navParams.get('onClose');
   }
@@ -76,15 +68,15 @@ export class ReverseDiagramPage implements OnInit {
     let category: TestCategory;
     currentTest$.pipe(select(getTestCategory)).subscribe((value) => {
       category = value as TestCategory;
-      const reducerInfo = this.getReducerInfo(category);
+      const vehicleDetails = this.vehicleDetailsProvider.getVehicleDetailsByCategoryCode(category);
       this.componentState = {
         vehicleLength$: currentTest$.pipe(
-          select(reducerInfo.vehicleDetails),
-          select(reducerInfo.vehicleLength),
+          select(vehicleDetails.vehicleDetails),
+          select(vehicleDetails.vehicleLength),
         ),
         vehicleWidth$: currentTest$.pipe(
-          select(reducerInfo.vehicleDetails),
-          select(reducerInfo.vehicleWidth),
+          select(vehicleDetails.vehicleDetails),
+          select(vehicleDetails.vehicleWidth),
         ),
         category$: currentTest$.pipe(
           select(getTestCategory),
@@ -151,34 +143,5 @@ export class ReverseDiagramPage implements OnInit {
   onWidthKeyup(vehicleWidth: number) : void {
     this.store$.dispatch(new ReverseDiagramWidthChanged(this.vehicleWidth, vehicleWidth));
     this.calculateReversingWidth(vehicleWidth);
-  }
-
-  getReducerInfo(testCategory: TestCategory) {
-    switch (testCategory){
-      case TestCategory.C:
-      case TestCategory.C1:
-      case TestCategory.C1E:
-      case TestCategory.CE:
-        return {
-          vehicleDetails: getVehicleDetailsC,
-          vehicleWidth: getVehicleWidthC,
-          vehicleLength: getVehicleLengthC,
-        };
-      case TestCategory.D1:
-      case TestCategory.D1E:
-      case TestCategory.D:
-      case TestCategory.DE:
-        return {
-          vehicleDetails: getVehicleDetailsD,
-          vehicleWidth: getVehicleWidthD,
-          vehicleLength: getVehicleLengthD,
-        };
-      default:
-        return {
-          vehicleDetails: getVehicleDetailsBE,
-          vehicleWidth: getVehicleWidthBE,
-          vehicleLength: getVehicleLengthBE,
-        };
-    }
   }
 }

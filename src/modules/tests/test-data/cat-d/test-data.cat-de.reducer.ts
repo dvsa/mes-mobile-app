@@ -5,12 +5,12 @@ import { dangerousFaultsReducer } from '../common/dangerous-faults/dangerous-fau
 import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.reducer';
 import { ecoReducer } from '../common/eco/eco.reducer';
 import { etaReducer } from '../common/eta/eta.reducer';
-import { manoeuvresCatDReducer } from './manoeuvres/manoeuvres.cat-d.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { testRequirementsCatDReducer } from './test-requirements/test-requirements.cat-d.reducer';
 import { vehicleChecksCatDReducer } from './vehicle-checks/vehicle-checks.cat-d.reducer';
 import { safetyQuestionsCatDReducer } from './safety-questions/safety-questions.cat-d.reducer';
 import { uncoupleRecoupleCatDEReducer } from './uncouple-recouple/uncouple-recouple.cat-de.reducer';
+import { manoeuvresReducer } from '../common/manoeuvres/manoeuvres.reducer';
 
 export const initialState: CatDEUniqueTypes.TestData = {
   dangerousFaults: {},
@@ -42,7 +42,7 @@ export function testDataCatDEReducer(
     safetyQuestions: safetyQuestionsCatDReducer,
     eco: ecoReducer,
     ETA: etaReducer,
-    manoeuvres: manoeuvresCatDReducer,
+    manoeuvres: manoeuvresReducer,
     testRequirements: testRequirementsCatDReducer,
     uncoupleRecouple: uncoupleRecoupleCatDEReducer,
     // TODO - Cat D - To be implmented by relevant ticket MES-4129

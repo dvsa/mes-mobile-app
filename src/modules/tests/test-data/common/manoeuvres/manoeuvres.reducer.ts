@@ -1,17 +1,16 @@
-import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import * as manoeuvresActions from '../../common/manoeuvres/manoeuvres.actions';
-import * as catDManoeuvresActions from './manoeuvres.cat-d.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { ManoeuvreTypes } from '../../test-data.constants';
+import { ManoeuvreUnion } from '../../../../../providers/manoeuvres-by-category/manoeuvres-by-category';
 
-export const initialState: CatDUniqueTypes.Manoeuvres = {
+export const initialState: ManoeuvreUnion = {
   reverseLeft: {},
 };
 
-export function manoeuvresCatDReducer(
+export function manoeuvresReducer(
   state = initialState,
-  action: manoeuvresActions.Types | catDManoeuvresActions.Types,
-): CatDUniqueTypes.Manoeuvres {
+  action: manoeuvresActions.Types,
+): ManoeuvreUnion {
   switch (action.type) {
     case manoeuvresActions.RECORD_MANOEUVRES_SELECTION:
       return {
@@ -63,7 +62,7 @@ export function manoeuvresCatDReducer(
         ...state,
         [action.payload.manoeuvre]: stateToPreserve,
       };
-    case catDManoeuvresActions.DESELECT_REVERSE_LEFT_MANOEUVRE_CAT_D:
+    case manoeuvresActions.RECORD_MANOEUVRES_DESELECTION:
       return {
         ...state,
         [ManoeuvreTypes.reverseLeft]: {

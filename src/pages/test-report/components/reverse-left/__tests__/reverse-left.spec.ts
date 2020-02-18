@@ -7,27 +7,25 @@ import { TickIndicatorComponent } from '../../../../../components/common/tick-in
 import { DrivingFaultsBadgeComponent }
  from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { MockComponent } from 'ng-mocks';
-import { SeriousFaultBadgeComponent }
- from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
+import { SeriousFaultBadgeComponent } from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
 import { DangerousFaultBadgeComponent }
  from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
-import { CompetencyButtonComponent }
-  from '../../competency-button/competency-button';
+import { CompetencyButtonComponent } from '../../competency-button/competency-button';
 import { testReportReducer } from '../../../test-report.reducer';
 import { AppModule } from '../../../../../app/app.module';
 import { IonicModule } from 'ionic-angular';
 import { ReverseLeftPopoverClosed, ReverseLeftPopoverOpened } from '../reverse-left.actions';
-import { ReverseLeftMock, ReverseLeftMockData } from '../__mocks__/reverse-left.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { RecordManoeuvresSelection } from '../../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+import {
+  RecordManoeuvresDeselection,
+  RecordManoeuvresSelection,
+} from '../../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
 
 describe('reverseLeftComponent', () => {
   let fixture: ComponentFixture<ReverseLeftComponent>;
   let component: ReverseLeftComponent;
   let store$: Store<StoreModel>;
-  const mockFile: ReverseLeftMock = new ReverseLeftMock();
-  mockFile.ngOnInit();
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -151,20 +149,15 @@ describe('reverseLeftComponent', () => {
 
     describe('toggleReverseLeft', () => {
       describe('when reverseLeft is selected and there are no faults', () => {
-        const mockData: Map<TestCategory, ReverseLeftMockData> = mockFile.getMockData();
-        const mockDataKeys = Array.from(mockData.keys());
-        for (const index in mockDataKeys) {
-          it('should deselect the manoeuvre', () => {
-            const testCategory = mockDataKeys[index];
-            const categorySpecificData = mockData.get(testCategory);
-            const storeDispatchSpy = spyOn(store$, 'dispatch');
-            component.testCategory = testCategory;
-            component.ngOnInit();
-            component.completedReverseLeft = true;
-            component.toggleReverseLeft();
-            expect(storeDispatchSpy).toHaveBeenCalledWith(categorySpecificData.deselectReverseLeftManoeuvre);
-          });
-        }
+        it('should deselect the manoeuvre', () => {
+          const storeDispatchSpy = spyOn(store$, 'dispatch');
+          component.testCategory = TestCategory.C;
+          // Test category has to be defined otherwise provider will throw an error trying to fetch an undefined cat
+          component.ngOnInit();
+          component.completedReverseLeft = true;
+          component.toggleReverseLeft();
+          expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordManoeuvresDeselection(ManoeuvreTypes.reverseLeft));
+        });
       });
       describe('when reverseLeft is not selected', () => {
         it('should record the manoeuvre', () => {
@@ -179,7 +172,8 @@ describe('reverseLeftComponent', () => {
     describe('toggleOverlay', () => {
       it('should call clickCallback when clickCallback exists', () => {
         component.clickCallback = {
-          callbackMethod: () => {},
+          callbackMethod: () => {
+          },
         };
         const callbackMethodSpy = spyOn(component.clickCallback, 'callbackMethod');
         component.toggleOverlay();
