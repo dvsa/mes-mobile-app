@@ -23,6 +23,7 @@ import { FaultCountProvider } from '../../../../../../providers/fault-count/faul
 import { configureTestSuite } from 'ng-bullet';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { SpeedCardComponent } from '../../speed-card/speed-card';
+import { By } from '@angular/platform-browser';
 
 describe('DebriefCardComponent', () => {
   let fixture: ComponentFixture<DebriefCardComponent>;
@@ -132,6 +133,27 @@ describe('DebriefCardComponent', () => {
       it('should return None if no ETA is present', () => {
         expect(component.getETA()).toEqual('None');
       });
+    });
+  });
+
+  describe('DOM', () => {
+    it('should show speed card', () => {
+
+      const data: TestData = {
+        emergencyStop: {
+          firstAttempt: 22,
+          secondAttempt: 33,
+        },
+        avoidance: {
+          firstAttempt: 23,
+          secondAttempt: 34,
+        },
+      };
+
+      component.data = data;
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.query(By.css('speed-card'))).not.toBeNull();
     });
   });
 });

@@ -17,6 +17,7 @@ import { DateTime } from '../../../shared/helpers/date-time';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { getCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
+import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ErrorTypes } from '../../../shared/models/error-message';
@@ -32,9 +33,7 @@ import { ExaminerDetailsModel } from '../components/examiner-details-card/examin
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { get } from 'lodash';
 import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
-import { categoryAM1TestResultMock } from '../../../shared/mocks/cat-a-mod1-test-result.mock';
-import { ActivityCodes } from '../../../shared/models/activity-codes';
-import { TestOutcome } from '../../../modules/tests/tests.constants';
+import { TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/common';
 
 @IonicPage()
 @Component({
@@ -80,7 +79,6 @@ export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnI
         map(data => this.testResult = this.compressionProvider.extractTestResult(data) as TestResultCatAM1Schema),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
-          this.testResult = categoryAM1TestResultMock;
           this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
           this.errorLink = ErrorTypes.SEARCH_RESULT;
@@ -158,25 +156,8 @@ export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnI
       candidateName: getCandidateName(this.testResult.journalData.candidate),
       candidateDriverNumber: this.testResult.journalData.candidate.driverNumber,
       activityCode: this.testResult.activityCode,
-      testOutcome: this.getTestOutcomeTextAM1(this.testResult),
+      testOutcome: getTestOutcomeText(this.testResult as TestResultCommonSchema),
     };
-  }
-
-  getTestOutcomeTextAM1 = (test: TestResultCatAM1Schema) => {
-    if (test.activityCode === ActivityCodes.PASS) {
-      return TestOutcome.Passed;
-    }
-
-    if (
-      test.activityCode === ActivityCodes.FAIL ||
-      test.activityCode === ActivityCodes.FAIL_CANDIDATE_STOPS_TEST ||
-      test.activityCode === ActivityCodes.FAIL_EYESIGHT ||
-      test.activityCode === ActivityCodes.FAIL_PUBLIC_SAFETY
-    ) {
-      return TestOutcome.Failed;
-    }
-
-    return TestOutcome.Terminated;
   }
 
   // on exit error modal

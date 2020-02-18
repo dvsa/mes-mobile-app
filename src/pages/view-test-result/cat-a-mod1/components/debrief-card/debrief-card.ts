@@ -21,10 +21,6 @@ export class DebriefCardComponent {
     private faultCountProvider: FaultCountProvider,
   ) {}
 
-  ngOnInit() {
-    console.log('this.data', this.data);
-  }
-
   public getDrivingFaults(): FaultSummary[] {
     return this.faultSummaryProvider.getDrivingFaultsList(this.data, TestCategory.EUAM1);
   }
