@@ -122,7 +122,7 @@ export const categoryAM1TestResultMock: TestResultCatAM1Schema = {
   },
   examinerConducted:10000010,
   communicationPreferences:{
-    updatedEmail:'Szabi.keresztes@bjss.com',
+    updatedEmail:'test@test.com',
     conductedLanguage:'English',
     communicationMethod:'Email',
   },
