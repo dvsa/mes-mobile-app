@@ -18,7 +18,7 @@ enum ValidFaultTypes {
 })
 
 export class FaultCommentComponent implements OnChanges {
-  static readonly maxFaultCount = 15;
+
   @Input()
   outcome: string;
 
@@ -36,6 +36,9 @@ export class FaultCommentComponent implements OnChanges {
 
   @Input()
   shouldRender: boolean;
+
+  @Input()
+  maxFaultCount: number;
 
   @Output()
   faultCommentChange = new EventEmitter<FaultSummary>();
@@ -65,7 +68,7 @@ export class FaultCommentComponent implements OnChanges {
       return true;
     }
 
-    if (this.faultCount && this.faultCount <= FaultCommentComponent.maxFaultCount) {
+    if (this.faultCount && this.maxFaultCount && this.faultCount <= this.maxFaultCount) {
       return true;
     }
   }
