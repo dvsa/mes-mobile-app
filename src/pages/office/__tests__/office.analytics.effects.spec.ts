@@ -4,6 +4,8 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as officeActions from '../office.actions';
+import * as catAMod1TestSummaryActions
+  from '../../../modules/tests/test-summary/cat-a-mod1/test-summary.cat-a-mod1.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import {
@@ -29,6 +31,7 @@ import * as activityCodeActions from '../../../modules/tests/activity-code/activ
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { CircuitType } from '../../../shared/models/circuit-type';
 
 describe('Office Analytics Effects', () => {
 
@@ -368,6 +371,29 @@ describe('Office Analytics Effects', () => {
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
+        done();
+      });
+    });
+  });
+
+  describe('circuitChanged', () => {
+    it('should log a CIRCUIT_TYPE_CHANGED event', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.EUAM1));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
+      // ACT
+      actions$.next(new catAMod1TestSummaryActions.CircuitTypeChanged(CircuitType.Left));
+      // ASSERT
+      effects.setCircuit$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.OFFICE,
+            AnalyticsEvents.CIRCUIT_CHANGED,
+            `Circuit type ${CircuitType.Left} selected`,
+          );
         done();
       });
     });
