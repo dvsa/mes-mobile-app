@@ -72,11 +72,6 @@ import {
 } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-
-// TODO - PREP-AMOD1: Use cat a mod1 actions
-import {
-  AddShowMeTellMeComment,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
@@ -134,6 +129,7 @@ interface OfficePageState {
   emergencyStop$: Observable<EmergencyStop>;
   avoidance$: Observable<Avoidance>;
   avoidanceAttempted$: Observable<boolean>;
+  displaySpeedRequirements$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -382,6 +378,17 @@ export class OfficeCatAMod1Page extends BasePageComponent {
         select(getAvoidance),
         select(getAvoidanceAttempted),
       ),
+      displaySpeedRequirements$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(
+          currentTest$.pipe(
+            select(getTestData),
+            select(getEmergencyStop),
+          ),
+        ),
+        map(([outcome, emergencyStop]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'speedRequirement', emergencyStop.firstAttempt)),
+      ),
     };
   }
 
@@ -439,8 +446,6 @@ export class OfficeCatAMod1Page extends BasePageComponent {
           dangerousFaultComment.comment),
       );
 
-    } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
-      this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
     }
   }
 
