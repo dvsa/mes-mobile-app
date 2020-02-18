@@ -11,6 +11,7 @@
         [dangerousFaults]="getDangerousFaults()"
         [drivingFaultCount]="getDrivingFaultCount()">
       </faults-data-row>
+      <data-row [label]="'ETA'" [value]="getETA()"></data-row>
       <speed-card
         [emergencyStop]="data.emergencyStop"
         [avoidance]="data.avoidance">

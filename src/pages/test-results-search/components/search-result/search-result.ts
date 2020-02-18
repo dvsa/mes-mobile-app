@@ -18,10 +18,6 @@ export class SearchResultComponent {
 
   constructor(public modalController: ModalController, private app: App) { }
 
-  ngOnInit() {
-    console.log('searchResult', this.searchResult);
-  }
-
   getDate(): string {
     return new DateTime(this.searchResult.testDate).format('DD/MM/YYYY');
   }
@@ -39,8 +35,6 @@ export class SearchResultComponent {
     // Modals are at the same level as the ion-nav so are not getting the zoom level class,
     // this needs to be passed in the create options.
     let pageToOpen: string = '';
-
-    console.log('this.searchResult', this.searchResult);
 
     switch (this.searchResult.category) {
       case TestCategory.B:
