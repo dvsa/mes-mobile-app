@@ -2,12 +2,13 @@ import { FaultSummaryCatAM1Helper } from '../fault-summary.cat-a-mod1';
 import { catAM1TestDataStateObject } from './cat-AM1-test-data-mock';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
+import { fullCompetencyLabels } from '../../../../shared/constants/competencies/competencies';
 
 describe('FaultSummaryCatAM1Helper', () => {
   const expectedEmergencyStopFault = [
     {
       competencyIdentifier: Competencies.emergencyStop,
-      competencyDisplayName: null,
+      competencyDisplayName: fullCompetencyLabels.speedCheckEmergency,
       comment: null,
       faultCount: 1,
     },
@@ -16,7 +17,7 @@ describe('FaultSummaryCatAM1Helper', () => {
   const expectedAvoidanceFault = [
     {
       competencyIdentifier: Competencies.avoidance,
-      competencyDisplayName: null,
+      competencyDisplayName: fullCompetencyLabels.speedCheckAvoidance,
       comment: null,
       faultCount: 1,
     },

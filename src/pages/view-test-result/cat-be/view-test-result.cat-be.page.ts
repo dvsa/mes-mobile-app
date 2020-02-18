@@ -32,7 +32,6 @@ import { TestDetailsModel } from '../components/test-details-card/test-details-c
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { categoryBETestResultMock } from '../../../shared/mocks/cat-be-test-result.mock';
 import { get } from 'lodash';
 
 @IonicPage()
@@ -79,7 +78,6 @@ export class ViewTestResultCatBEPage extends BasePageComponent implements OnInit
         map(data => this.testResult = this.compressionProvider.extractTestResult(data) as CatBEUniqueTypes.TestResult),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
-          this.testResult = categoryBETestResultMock;
           this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
           this.errorLink = ErrorTypes.SEARCH_RESULT;
