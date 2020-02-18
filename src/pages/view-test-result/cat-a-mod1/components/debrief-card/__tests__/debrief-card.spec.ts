@@ -20,20 +20,11 @@ import { FaultsDataRowComponent } from '../../../../components/faults-data-row/f
 import { VehicleChecksDataRowComponent } from '../../../../components/vehicle-checks-data-row/vehicle-checks-data-row';
 import { FaultSummaryProvider } from '../../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
-// todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import {
-  DataRowListItem,
-  TestRequirementsLabels,
-  ViewTestResultLabels,
-} from '../../../../components/data-row-with-list/data-list-with-row.model';
-// todo: PREP-AMOD1 change to manoeuvreTypeLabels from Cat A Mod 1
-import { manoeuvreTypeLabels } from '../../../../../../shared/constants/competencies/catbe-manoeuvres';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
+import { SpeedCardComponent } from '../../speed-card/speed-card';
 
-fdescribe('DebriefCardComponent', () => {
+describe('DebriefCardComponent', () => {
   let fixture: ComponentFixture<DebriefCardComponent>;
   let component: DebriefCardComponent;
   let faultSummaryProvider: FaultSummaryProvider;
@@ -52,6 +43,7 @@ fdescribe('DebriefCardComponent', () => {
         MockComponent(DataRowWithListComponent),
         MockComponent(FaultsDataRowComponent),
         MockComponent(VehicleChecksDataRowComponent),
+        MockComponent(SpeedCardComponent),
       ],
       imports: [
         IonicModule,
@@ -106,7 +98,6 @@ fdescribe('DebriefCardComponent', () => {
     });
     describe('getETA', () => {
       it('should return the correct data if all eta options have been selected', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
         const data: TestData = {
           ETA: {
             physical: true,
@@ -118,7 +109,6 @@ fdescribe('DebriefCardComponent', () => {
         expect(component.getETA()).toEqual('Physical and Verbal');
       });
       it('should return the correct data if only a physical eta has been selected', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
         const data: TestData = {
           ETA: {
             physical: true,
@@ -130,7 +120,6 @@ fdescribe('DebriefCardComponent', () => {
         expect(component.getETA()).toEqual('Physical');
       });
       it('should return the correct data if only a verbal eta has been selected', () => {
-        // todo: PREP-AMOD1 change to CatAMod1UniqueTypes when schema changes are ready
         const data: TestData = {
           ETA: {
             verbal: true,
