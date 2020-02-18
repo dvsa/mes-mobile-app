@@ -9,6 +9,7 @@ import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.re
 import { vehicleChecksCatDReducer } from './vehicle-checks/vehicle-checks.cat-d.reducer';
 import { safetyQuestionsCatDReducer } from './safety-questions/safety-questions.cat-d.reducer';
 import { testRequirementsCatDReducer } from './test-requirements/test-requirements.cat-d.reducer';
+import { pcvDoorExerciseReducer } from './pcv-door-exercise/pcv-door-exercise.reducer';
 import { manoeuvresReducer } from '../common/manoeuvres/manoeuvres.reducer';
 
 export const initialState: CatDUniqueTypes.TestData = {
@@ -42,8 +43,8 @@ export function testDataCatDReducer(
     ETA: etaReducer,
     manoeuvres: manoeuvresReducer,
     testRequirements: testRequirementsCatDReducer,
-    // TODO - Cat D - To be implmented by relevant ticket MES-4129
-    pcvDoorExercise: () => { return null; },
+    pcvDoorExercise: pcvDoorExerciseReducer,
+
   })(state as Required<CatDUniqueTypes.TestData>, action);
 }
 

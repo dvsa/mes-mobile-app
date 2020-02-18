@@ -11,24 +11,30 @@ import {
   PcvDoorExerciseRemoveSeriousFault, PcvDoorExerciseRemoveDangerousFault, PcvDoorExerciseRemoveDrivingFault,
 } from '../../../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
+
 import { getTests } from '../../../../../modules/tests/tests.reducer';
-import {
-  hasSeriousFault,
-  hasDangerousFault,
-} from '../../../../../modules/tests/test-data/common/test-data.selector';
-import { getDrivingFaultCount } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+// import {
+//   hasSeriousFault,
+//   hasDangerousFault,
+// } from '../../../../../modules/tests/test-data/common/test-data.selector';
+// import { getDrivingFaultCount } from '../../../../../modules/tests/test-data/cat-d/test-data.cat-d.selector';
 import { getTestReportState } from '../../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { getPcvDoorExercise }
+from '../../../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.reducer';
+import { get } from 'lodash';
 
 interface CompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
-  drivingFaultCount$: Observable<number>;
-  hasSeriousFault$: Observable<boolean>;
-  hasDangerousFault$: Observable<boolean>;
+  // drivingFaultCount$: Observable<number>;
+  // hasSeriousFault$: Observable<boolean>;
+  // hasDangerousFault$: Observable<boolean>;
+  pcvDoorExercise$: Observable<CatDUniqueTypes.PcvDoorExercise>;
 }
 
 @Component({
@@ -42,18 +48,12 @@ export class PcvDoorExerciseComponent {
 
   @Input()
   oneFaultLimit: boolean = false;
-
   competencyState: CompetencyState;
   subscription: Subscription;
-
   isRemoveFaultMode: boolean = false;
-  faultCount: number;
   isSeriousMode: boolean = false;
-  hasSeriousFault: boolean = false;
-
   isDangerousMode: boolean = false;
-  hasDangerousFault: boolean = false;
-
+  pcvDoorExercise: CatDUniqueTypes.PcvDoorExercise;
   allowRipple: boolean = true;
 
   constructor(
@@ -76,34 +76,38 @@ export class PcvDoorExerciseComponent {
       isDangerousMode$: this.store$.pipe(
         select(getTestReportState),
         select(isDangerousMode)),
-      drivingFaultCount$: currentTest$.pipe(
+      // drivingFaultCount$: currentTest$.pipe(
+      //   select(getTestData),
+      //   select(testData => getDrivingFaultCount(testData, this.competency))),
+      // hasSeriousFault$: currentTest$.pipe(
+      //   select(getTestData),
+      //   select(testData => hasSeriousFault(testData, this.hasSeriousFault))),
+      // hasDangerousFault$: currentTest$.pipe(
+      //   select(getTestData),
+      //   select(testData => hasDangerousFault(testData, this.competency)),
+      // ),
+      pcvDoorExercise$: currentTest$.pipe(
         select(getTestData),
-        select(testData => getDrivingFaultCount(testData, this.competency))),
-      hasSeriousFault$: currentTest$.pipe(
-        select(getTestData),
-        select(testData => hasSeriousFault(testData, this.competency))),
-      hasDangerousFault$: currentTest$.pipe(
-        select(getTestData),
-        select(testData => hasDangerousFault(testData, this.competency)),
+        map((data) => { console.log(data); return data; }),
+        select(getPcvDoorExercise),
       ),
     };
 
     const {
-      drivingFaultCount$,
+      // drivingFaultCount$,
       isRemoveFaultMode$,
       isSeriousMode$,
-      hasSeriousFault$,
+      // hasSeriousFault$,
       isDangerousMode$,
-      hasDangerousFault$,
+      // hasDangerousFault$,
+      pcvDoorExercise$,
     } = this.competencyState;
 
     const merged$ = merge(
-      drivingFaultCount$.pipe(map(count => this.faultCount = count)),
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
-      hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
-      hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
+      pcvDoorExercise$.pipe(map(toggle => this.pcvDoorExercise = toggle)),
     ).pipe(tap(this.canButtonRipple));
 
     this.subscription = merged$.subscribe();
@@ -125,17 +129,17 @@ export class PcvDoorExerciseComponent {
 
   canButtonRipple = (): void => {
     if (this.isRemoveFaultMode) {
-      if (this.hasDangerousFault && this.isDangerousMode) {
+      if (this.hasDangerousFault() && this.isDangerousMode) {
         this.allowRipple = true;
         return;
       }
 
-      if (this.hasSeriousFault && this.isSeriousMode) {
+      if (this.hasSeriousFault() && this.isSeriousMode) {
         this.allowRipple = true;
         return;
       }
 
-      if (!this.isSeriousMode && !this.isDangerousMode && this.faultCount > 0) {
+      if (!this.isSeriousMode && !this.isDangerousMode && this.hasDrivingFault()) {
         this.allowRipple = true;
         return;
       }
@@ -146,7 +150,7 @@ export class PcvDoorExerciseComponent {
         return;
       }
 
-      if (this.hasDangerousFault) {
+      if (this.hasDangerousFault()) {
         this.allowRipple = false;
         return;
       }
@@ -156,7 +160,7 @@ export class PcvDoorExerciseComponent {
         return;
       }
 
-      if (this.hasSeriousFault) {
+      if (this.hasSeriousFault()) {
         this.allowRipple = false;
         return;
       }
@@ -179,25 +183,25 @@ export class PcvDoorExerciseComponent {
   }
 
   addFault = (wasPress: boolean): void => {
-    console.log('this.faultcount', this.faultCount);
-    if (this.hasDangerousFault) {
+    // console.log('this.faultcount', this.faultCount);
+    if (this.hasDangerousFault()) {
       return;
     }
 
     if (this.isDangerousMode) {
       this.store$.dispatch(new PcvDoorExerciseAddDangerousFault());
-      this.hasDangerousFault = true;
+      // this.pcvDoorExercise.dangerousFault = true;
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
     }
 
-    if (this.hasSeriousFault) {
+    if (this.hasSeriousFault()) {
       return;
     }
 
     if (this.isSeriousMode) {
       this.store$.dispatch(new PcvDoorExerciseAddSeriousFault());
-      this.hasSeriousFault = true;
+      // this.pcvDoorExercise.seriousFault = true;
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
@@ -212,33 +216,33 @@ export class PcvDoorExerciseComponent {
 
     if (wasPress) {
       this.store$.dispatch(new PcvDoorExerciseAddDrivingFault());
-      this.faultCount = 1;
+      // this.hasDrivingFault() = true;
       return;
     }
   }
 
   removeFault = (): void => {
-    if (this.hasDangerousFault && this.isDangerousMode && this.isRemoveFaultMode) {
+    if (this.hasDangerousFault() && this.isDangerousMode && this.isRemoveFaultMode) {
       this.store$.dispatch(new PcvDoorExerciseRemoveDangerousFault());
-      this.hasDangerousFault = false;
+      // this.pcvDoorExercise.dangerousFault = false;
       this.store$.dispatch(new ToggleDangerousFaultMode());
 
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
-    if (this.hasSeriousFault && this.isSeriousMode && this.isRemoveFaultMode) {
+    if (this.hasSeriousFault() && this.isSeriousMode && this.isRemoveFaultMode) {
       this.store$.dispatch(new PcvDoorExerciseRemoveSeriousFault());
-      this.hasSeriousFault = false;
+      // this.pcvDoorExercise.seriousFault = false;
       this.store$.dispatch(new ToggleSeriousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
 
       return;
     }
-    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.faultCount > 0) {
+    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.hasDrivingFault()) {
       this.store$.dispatch(new PcvDoorExerciseRemoveDrivingFault());
       this.store$.dispatch(new ToggleRemoveFaultMode());
-      this.faultCount = 0;
+      // this.pcvDoorExercise.drivingFault = true;
       return;
     }
   }
@@ -274,7 +278,7 @@ export class PcvDoorExerciseComponent {
   // }
 
   competencyHasFault = (): boolean => {
-    return this.hasDangerousFault || this.hasSeriousFault || this.hasDrivingFault();
+    return this.hasDangerousFault() || this.hasSeriousFault() || this.hasDrivingFault();
   }
 
   canAddSingleDrivingFault = (wasPress: boolean = false): boolean => {
@@ -282,10 +286,20 @@ export class PcvDoorExerciseComponent {
   }
 
   shouldDisableRippleForOneFaultLimit = (): boolean => {
-    return this.faultCount > 0 && this.oneFaultLimit;
+    return this.hasDrivingFault();
   }
 
   hasDrivingFault = (): boolean => {
-    return this.faultCount !== undefined;
+    return get(this.pcvDoorExercise, 'drivingFault', false);
+  }
+
+  hasSeriousFault = (): boolean => {
+
+    return get(this.pcvDoorExercise, 'seriousFault', false);
+  }
+
+  hasDangerousFault = (): boolean => {
+
+    return get(this.pcvDoorExercise, 'dangerousFault', false);
   }
 }

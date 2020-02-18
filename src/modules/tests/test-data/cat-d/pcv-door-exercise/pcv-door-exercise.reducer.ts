@@ -1,13 +1,21 @@
 import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import * as pcvDoorExerciseActions from './pcv-door-exercise.actions';
+import { createFeatureSelector } from '@ngrx/store';
 // import {PCV_DOOR_EXERCISE_REMOVE_DRIVING_FAULT} from './pcv-door-exercise.actions';
 // import {PCV_DOOR_EXERCISE_REMOVE_SERIOUS_FAULT} from './pcv-door-exercise.actions';
 // import {PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT} from './pcv-door-exercise.actions';
 // import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
-export const initialState: CatDUniqueTypes.PcvDoorExercise = {};
+export const initialState: CatDUniqueTypes.PcvDoorExercise = {
+  dangerousFault: null,
+  seriousFault: null,
+  drivingFault: null,
+  dangerousFaultComments: null,
+  seriousFaultComments: null,
+  drivingFaultComments: null,
+};
 
-export function controlledStopReducer(
+export function pcvDoorExerciseReducer(
   state = initialState,
   action: pcvDoorExerciseActions.Types,
 ): CatDUniqueTypes.PcvDoorExercise {
@@ -68,3 +76,5 @@ export function controlledStopReducer(
       return state;
   }
 }
+
+export const getPcvDoorExercise = createFeatureSelector<CatDUniqueTypes.PcvDoorExercise>('pcvDoorExercise');

@@ -46,6 +46,9 @@ import {
 } from '../components/vehicle-checks-compact/vehicle-checks-compact.cat-d';
 import { MultiLegalRequirementComponent } from '../../components/multi-legal-requirement/multi-legal-requirement';
 import { SafetyQuestionsCatDComponent } from '../components/safety-questions/safety-questions.cat-d';
+import { PcvDoorExerciseComponent } from '../components/pcv-door-exercise/pcv-door-exercise';
+
+
 
 describe('TestReportCatDPage', () => {
   let fixture: ComponentFixture<TestReportCatDPage>;
@@ -69,6 +72,7 @@ describe('TestReportCatDPage', () => {
         MockComponent(ReverseLeftPopoverComponent),
         MockComponent(VehicleChecksCompactCatDComponent),
         MockComponent(SafetyQuestionsCatDComponent),
+        MockComponent(PcvDoorExerciseComponent),
       ],
       imports: [
         IonicModule,
