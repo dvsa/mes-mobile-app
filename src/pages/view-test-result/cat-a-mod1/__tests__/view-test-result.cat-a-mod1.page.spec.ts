@@ -186,9 +186,6 @@ describe('ViewTestResultCatAMod1Page', () => {
       expect(
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).toBeNull();
-      expect(
-        fixture.debugElement.query(By.css('vehicle-details-card')),
-      ).toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).toBeNull();
       expect(
         fixture.debugElement.query(By.css('test-summary-card')),
