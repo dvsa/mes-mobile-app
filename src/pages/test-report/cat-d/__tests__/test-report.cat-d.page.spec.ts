@@ -48,8 +48,6 @@ import { MultiLegalRequirementComponent } from '../../components/multi-legal-req
 import { SafetyQuestionsCatDComponent } from '../components/safety-questions/safety-questions.cat-d';
 import { PcvDoorExerciseComponent } from '../components/pcv-door-exercise/pcv-door-exercise';
 
-
-
 describe('TestReportCatDPage', () => {
   let fixture: ComponentFixture<TestReportCatDPage>;
   let component: TestReportCatDPage;
