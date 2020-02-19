@@ -8,12 +8,12 @@ import { DebriefComponentsModule } from '../components/debrief-components.module
 import { TranslateModule } from 'ng2-translate';
 import { DebriefEffects } from '../debrief.effects';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
-import { VehicleChecksCardCatAMod2Component } from
-'../cat-a-mod2/components/vehicle-checks-card/vehicle-checks-card.cat-a-mod2';
+import { SafetyAndBalanceCardCatAMod2Component } from
+'./components/safety-and-balance-card/safety-and-balance-card.cat-a-mod2';
 
 @NgModule({
   declarations: [
-    VehicleChecksCardCatAMod2Component,
+    SafetyAndBalanceCardCatAMod2Component,
     DebriefCatAMod2Page,
   ],
   imports: [

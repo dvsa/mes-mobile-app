@@ -15,7 +15,7 @@ import { StoreModel } from '../../../../../../shared/models/store.model';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 import { configureTestSuite } from 'ng-bullet';
 import { SafetyQuestionOutcomeChanged, BalanceQuestionSelected, SafetyQuestionSelected, BalanceQuestionOutcomeChanged }
-from '../../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.actions';
+from '../../../../../../modules/tests/test-data/cat-a-mod2/safety-and-balance/safety-and-balance.cat-a-mod2.actions';
 
 describe('VehicleChecksCatAMod2Modal', () => {
   let fixture: ComponentFixture<VehicleChecksCatAMod2Modal>;

@@ -40,12 +40,12 @@ import { CAT_A_MOD2 } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-
-// TODO - PREP-AMOD2 - Implement category specific schema
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
-import { VehicleChecksCardCatAMod2Component } from '../components/vehicle-checks-card/vehicle-checks-card.cat-a-mod2';
+import {
+  SafetyAndBalanceCardCatAMod2Component,
+} from '../components/safety-and-balance-card/safety-and-balance-card.cat-a-mod2';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
 
@@ -65,26 +65,21 @@ describe('DebriefCatAMod2Page', () => {
     vehicleTypeCode: '',
   };
 
-  // TODO - PREP-AMOD2 - replace cat BE unique types
-  const exampleTestData: CatBEUniqueTypes.TestData  = {
+  const exampleTestData: TestData  = {
     dangerousFaults: {},
     drivingFaults: {},
-    manoeuvres: {},
     seriousFaults: {},
-    testRequirements: {},
     ETA: {},
     eco: {},
-    vehicleChecks: {
-      tellMeQuestions: [{}],
-      showMeQuestions: [{}],
+    safetyAndBalanceQuestions: {
+      safetyQuestions: [{}],
+      balanceQuestions: [{}],
     },
-    uncoupleRecouple: {},
   };
 
   configureTestSuite(() => {
-    // TODO - PREP-AMOD2 - replace test category
     TestBed.configureTestingModule({
-      declarations: [DebriefCatAMod2Page, VehicleChecksCardCatAMod2Component],
+      declarations: [DebriefCatAMod2Page, SafetyAndBalanceCardCatAMod2Component],
       imports: [
         IonicModule,
         AppModule,
@@ -99,7 +94,7 @@ describe('DebriefCatAMod2Page', () => {
             startedTests: {
               123: {
                 testSlotAttributes,
-                category: TestCategory.BE,
+                category: TestCategory.EUA2M2,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: exampleTestData,
@@ -134,7 +129,6 @@ describe('DebriefCatAMod2Page', () => {
     });
   });
 
-  // TODO - PREP-AMOD2 - replace cat BE unique types
   beforeEach(async(() => {
     fixture = TestBed.createComponent(DebriefCatAMod2Page);
     component = fixture.componentInstance;
@@ -194,10 +188,11 @@ describe('DebriefCatAMod2Page', () => {
     expect(fixture.debugElement.query(By.css('#serious-fault'))).toBeNull();
   });
 
-  it('should not display driving faults container if there are no driving faults', () => {
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
-  });
+  //  TODO: Uncomment once fault count provider implementation completed
+  // it('should not display riding faults container if there are no riding faults', () => {
+  //   fixture.detectChanges();
+  //   expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
+  // });
 
   it('should display dangerous faults container if there are dangerous faults', () => {
     store$.dispatch(new AddDangerousFault(Competencies.controlsClutch));
@@ -211,7 +206,7 @@ describe('DebriefCatAMod2Page', () => {
     expect(fixture.debugElement.query(By.css('#serious-fault'))).not.toBeNull();
   });
 
-  it('should display driving faults container if there are driving faults', () => {
+  it('should display driving faults container if there are riding faults', () => {
     store$.dispatch(new AddDrivingFault({ competency: Competencies.controlsClutch, newFaultCount: 1 }));
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('#driving-fault'))).not.toBeNull();

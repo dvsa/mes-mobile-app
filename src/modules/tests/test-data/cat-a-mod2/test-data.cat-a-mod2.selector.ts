@@ -10,7 +10,7 @@ import { get } from 'lodash';
 export const getDrivingFaultCount = (
   data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
-export const getVehicleChecks = (
+export const getSafetyAndBalanceQuestions = (
   state: TestData): SafetyAndBalanceQuestions => state.safetyAndBalanceQuestions;
 
 export const areBalanceQuestionsCorrect = (state: SafetyAndBalanceQuestions) => {
@@ -37,7 +37,7 @@ export const getEyesightTest = (data: TestData) => data.eyesightTest;
 export const areBalanceQuestionsSelected = (
   state: SafetyAndBalanceQuestions) => typeof get(state, 'balanceQuestions') !== 'undefined';
 
-export const hasVehicleChecksBeenCompleted = (data: SafetyAndBalanceQuestions): boolean => {
+export const haveSafetyAndBalanceQuestionsBeenCompleted = (data: SafetyAndBalanceQuestions): boolean => {
   let safetyQuestionComplete = true;
   let balanceQuestionComplete = true;
 

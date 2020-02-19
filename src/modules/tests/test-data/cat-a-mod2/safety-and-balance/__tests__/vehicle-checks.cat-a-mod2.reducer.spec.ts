@@ -1,13 +1,13 @@
 import {
   initialState,
-  vehicleChecksCatAMod2Reducer,
-} from '../vehicle-checks.cat-a-mod2.reducer';
+  safetyAndBalanceCatAMod2Reducer,
+} from '../safety-and-balance.cat-a-mod2.reducer';
 import {
   SafetyQuestionSelected,
   SafetyQuestionOutcomeChanged,
   BalanceQuestionSelected,
   BalanceQuestionOutcomeChanged,
-} from '../vehicle-checks.cat-a-mod2.actions';
+} from '../safety-and-balance.cat-a-mod2.actions';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
 import { cloneDeep } from 'lodash';
@@ -21,7 +21,7 @@ describe('Vehicle Checks Cat A Mod2 Reducer', () => {
         description: 'desc',
       };
       const state: SafetyAndBalanceQuestions = cloneDeep(initialState);
-      const result = vehicleChecksCatAMod2Reducer(state, new SafetyQuestionSelected(newQuestionPayload, 1));
+      const result = safetyAndBalanceCatAMod2Reducer(state, new SafetyQuestionSelected(newQuestionPayload, 1));
       expect(result.safetyQuestions[1].code).toEqual('S1');
       expect(result.safetyQuestions[1].description).toEqual('desc');
     });
@@ -35,7 +35,7 @@ describe('Vehicle Checks Cat A Mod2 Reducer', () => {
         description: 'desc',
         outcome: 'P',
       };
-      const result = vehicleChecksCatAMod2Reducer(state, new SafetyQuestionOutcomeChanged('DF', 1));
+      const result = safetyAndBalanceCatAMod2Reducer(state, new SafetyQuestionOutcomeChanged('DF', 1));
       expect(result.safetyQuestions[1].outcome).toEqual('DF');
     });
   });
@@ -47,7 +47,7 @@ describe('Vehicle Checks Cat A Mod2 Reducer', () => {
         description: 'desc',
       };
       const state: SafetyAndBalanceQuestions = cloneDeep(initialState);
-      const result = vehicleChecksCatAMod2Reducer(state, new BalanceQuestionSelected(newQuestionPayload, 0));
+      const result = safetyAndBalanceCatAMod2Reducer(state, new BalanceQuestionSelected(newQuestionPayload, 0));
       expect(result.balanceQuestions[0].code).toEqual('B01');
       expect(result.balanceQuestions[0].description).toEqual('desc');
     });
@@ -61,7 +61,7 @@ describe('Vehicle Checks Cat A Mod2 Reducer', () => {
         description: 'desc',
         outcome: 'P',
       };
-      const result = vehicleChecksCatAMod2Reducer(state, new BalanceQuestionOutcomeChanged('DF', 1));
+      const result = safetyAndBalanceCatAMod2Reducer(state, new BalanceQuestionOutcomeChanged('DF', 1));
       expect(result.balanceQuestions[1].outcome).toEqual('DF');
     });
   });

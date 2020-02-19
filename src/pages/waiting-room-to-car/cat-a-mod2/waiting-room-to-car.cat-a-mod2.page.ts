@@ -58,7 +58,7 @@ import { VehicleRegistrationChanged, GearboxCategoryChanged } from
 import { getEyesightTest }
 from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
 import { getSafetyAndBalanceQuestions } from
-'../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.selector';
+'../../../modules/tests/test-data/cat-a-mod2/safety-and-balance/safety-and-balance.cat-a-mod2.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';

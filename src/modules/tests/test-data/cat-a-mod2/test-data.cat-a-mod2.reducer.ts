@@ -1,7 +1,7 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
-import { vehicleChecksCatAMod2Reducer } from './vehicle-checks/vehicle-checks.cat-a-mod2.reducer';
+import { safetyAndBalanceCatAMod2Reducer } from './safety-and-balance/safety-and-balance.cat-a-mod2.reducer';
 import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.reducer';
 import { dangerousFaultsReducer } from '../common/dangerous-faults/dangerous-faults.reducer';
 import { ecoReducer } from '../common/eco/eco.reducer';
@@ -31,7 +31,7 @@ export function testDataCatAMod2Reducer(
     seriousFaults: seriousFaultsReducer,
     eco: ecoReducer,
     ETA: etaReducer,
-    safetyAndBalanceQuestions: vehicleChecksCatAMod2Reducer,
+    safetyAndBalanceQuestions: safetyAndBalanceCatAMod2Reducer,
     eyesightTest: eyesightTestReducer,
   })(state as Required<TestData>, action);
 }

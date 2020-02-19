@@ -1,5 +1,5 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { VehicleChecksCardCatAMod2Component } from '../vehicle-checks-card.cat-a-mod2';
+import { SafetyAndBalanceCardCatAMod2Component } from '../safety-and-balance-card.cat-a-mod2';
 import { IonicModule, Config } from 'ionic-angular';
 import { StoreModule, Store } from '@ngrx/store';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
@@ -7,9 +7,9 @@ import { StoreModel } from '../../../../../../shared/models/store.model';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 // TODO - PREP-AMOD2 - Implement category specific actions
 import {
-  ShowMeQuestionSelected,
-  ShowMeQuestionOutcomeChanged,
-} from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+  SafetyQuestionSelected,
+  SafetyQuestionOutcomeChanged,
+} from '../../../../../../modules/tests/test-data/cat-a-mod2/safety-and-balance/safety-and-balance.cat-a-mod2.actions';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
 import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
@@ -25,15 +25,15 @@ import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.m
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('VehicleChecksCardCatAMod2Component', () => {
-  let fixture: ComponentFixture<VehicleChecksCardCatAMod2Component>;
+describe('SafetyAndBalanceCardCatAMod2Component', () => {
+  let fixture: ComponentFixture<SafetyAndBalanceCardCatAMod2Component>;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        VehicleChecksCardCatAMod2Component,
+        SafetyAndBalanceCardCatAMod2Component,
       ],
       imports: [
         IonicModule,
@@ -51,56 +51,56 @@ describe('VehicleChecksCardCatAMod2Component', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(VehicleChecksCardCatAMod2Component);
+    fixture = TestBed.createComponent(SafetyAndBalanceCardCatAMod2Component);
     store$ = TestBed.get(Store);
-// TODO - PREP-AMOD2 - implement correct test category
-    store$.dispatch(new StartTest(105, TestCategory.BE));
-    store$.dispatch(new PopulateTestCategory(TestCategory.BE));
+    store$.dispatch(new StartTest(105, TestCategory.EUA2M2));
+    store$.dispatch(new PopulateTestCategory(TestCategory.EUA2M2));
     store$.dispatch(new PopulateCandidateDetails(candidateMock));
     translate = TestBed.get(TranslateService);
     translate.setDefaultLang('en');
   }));
 
-  // TODO - PREP-AMOD2 - update test category and question number when feature implemented
-  xdescribe('DOM', () => {
-    describe('Vehicle check reporting', () => {
+  describe('DOM', () => {
+    describe('Safety and balance question reporting', () => {
       it('should show results', () => {
-        const showMeQuestion: QuestionResult = {
-          code: 'S01',
-          description: 'Show me how you would check that the direction indicators are working.',
+        const safetyQuestion: QuestionResult = {
+          code: 'SQ4',
+          description: 'Tell me how you would check that the lights and reflectors are clean and working.',
         };
-        // Configure show me/tell me questions
-        store$.dispatch(new ShowMeQuestionSelected(showMeQuestion, 1));
-        store$.dispatch(new ShowMeQuestionOutcomeChanged('P', 1));
+        // Configure show safety and balance questions
+        store$.dispatch(new SafetyQuestionSelected(safetyQuestion, 1));
+        store$.dispatch(new SafetyQuestionOutcomeChanged('P', 1));
 
         fixture.detectChanges();
 
-        const tellMeQuestionText = fixture.debugElement
-          .query(By.css('#vehicle-checks .counter-label')).nativeElement;
+        const safetyQuestionText = fixture.debugElement
+          .query(By.css('#safety-and-balance-questions .counter-label')).nativeElement;
 
-        expect(tellMeQuestionText.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions[TestCategory.BE].S01);
+        expect(safetyQuestionText.innerHTML.trim())
+          .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.SQ4);
       });
 
       it('should show results in Welsh for a Welsh test', (done) => {
-        const showMeQuestion: QuestionResult = {
-          code: 'S01',
-          description: 'Show me how you would check that the direction indicators are working.',
+        const safetyQuestion: QuestionResult = {
+          code: 'SQ4',
+          description: 'Tell me how you would check that the lights and reflectors are clean and working.',
         };
-        // Configure show me/tell me questions
-        store$.dispatch(new ShowMeQuestionSelected(showMeQuestion, 1));
-        store$.dispatch(new ShowMeQuestionOutcomeChanged('P', 1));
+        // Configure show safety and balance questions
+        store$.dispatch(new SafetyQuestionSelected(safetyQuestion, 1));
+        store$.dispatch(new SafetyQuestionOutcomeChanged('P', 1));
 
         fixture.detectChanges();
 
         // Language change handled by parent page component, force the switch
         translate.use('cy').subscribe(() => {
-          fixture.detectChanges();
-          const tellMeQuestionText = fixture.debugElement
-            .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
-          expect(tellMeQuestionText.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions[TestCategory.BE].S01);
+          fixture.detectChanges();
+
+          const safetyQuestionText = fixture.debugElement
+            .query(By.css('#safety-and-balance-questions .counter-label')).nativeElement;
+
+          expect(safetyQuestionText.innerHTML.trim())
+            .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.SQ4);
           done();
         });
       });

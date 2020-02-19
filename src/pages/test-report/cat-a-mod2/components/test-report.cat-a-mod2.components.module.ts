@@ -4,11 +4,11 @@ import { IonicModule } from 'ionic-angular';
 import { DirectivesModule } from '../../../../directives/directives.module';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { TestReportComponentsModule } from '../../components/test-report-components.module';
-import { VehicleChecksComponent } from './vehicle-checks/vehicle-checks';
+import { SafetyAndBalanceComponent } from './safety-and-balance/safety-and-balance';
 
 @NgModule({
   declarations: [
-    VehicleChecksComponent,
+    SafetyAndBalanceComponent,
   ],
   imports: [
     CommonModule,
@@ -18,7 +18,7 @@ import { VehicleChecksComponent } from './vehicle-checks/vehicle-checks';
     DirectivesModule,
   ],
   exports: [
-    VehicleChecksComponent,
+    SafetyAndBalanceComponent,
   ],
 })
 export class TestReportCatAMod2ComponentsModule { }

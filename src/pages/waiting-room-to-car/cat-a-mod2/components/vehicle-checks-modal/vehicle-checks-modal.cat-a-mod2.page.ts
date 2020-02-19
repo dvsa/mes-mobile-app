@@ -14,7 +14,7 @@ import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle
 import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import * as safetyAndBalance from
-'../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.selector';
+'../../../../../modules/tests/test-data/cat-a-mod2/safety-and-balance/safety-and-balance.cat-a-mod2.selector';
 import {
   NUMBER_OF_BALANCE_QUESTIONS,
 } from '../../../../../shared/constants/balance-questions.cat-a-mod2.constants';
@@ -34,7 +34,7 @@ import {
   BalanceQuestionSelected,
   BalanceQuestionOutcomeChanged,
 } from
-'../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.actions';
+'../../../../../modules/tests/test-data/cat-a-mod2/safety-and-balance/safety-and-balance.cat-a-mod2.actions';
 
 interface VehicleChecksModalState {
   candidateName$: Observable<string>;
