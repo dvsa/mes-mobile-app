@@ -1,6 +1,10 @@
 <ion-header>
   <ion-navbar hideBackButton>
     <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="passTest()" >Pass Test</button>
+      <button ion-button (click)="failTest()" >Fail Test</button>
+    </ion-buttons>
     <ion-buttons end>
       <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>
     </ion-buttons>
@@ -8,17 +12,17 @@
 </ion-header>
 
 <ion-content no-padding no-bounce>
-  <toolbar></toolbar>
-  <ion-grid no-padding class="grid-layout" [ngClass]="{
+  <!-- <toolbar></toolbar> -->
+  <!-- <ion-grid no-padding class="grid-layout" [ngClass]="{
       'remove-mode': isRemoveFaultMode,
       'add-mode': !isRemoveFaultMode,
       'fault-mode': !isSeriousMode && !isDangerousMode,
       'serious-mode': isSeriousMode,
       'dangerous-mode': isDangerousMode
-    }">
-    <ion-row class="first-row-adjust">
+    }"> -->
+    <!-- <ion-row class="first-row-adjust"> -->
       <!-- Column 1-->
-      <ion-col col-32>
+      <!-- <ion-col col-32>
         <ion-row>
           <ion-col no-padding>
             <span class="section-header">Test requirements</span>
@@ -163,9 +167,9 @@
             <competency [competency]="competencies.ancillaryControls"></competency>
           </ion-col>
         </ion-row>
-      </ion-col>
+      </ion-col> -->
       <!-- Column 2-->
-      <ion-col col-32>
+      <!-- <ion-col col-32>
         <ion-row>
           <ion-col no-padding>
             <span class="section-header">Move off</span>
@@ -204,8 +208,8 @@
         <ion-row>
           <ion-col no-padding>
             <span class="section-header">Signals</span>
-          </ion-col>
-        </ion-row>
+          </ion-col> -->
+        <!-- </ion-row>
         <ion-row>
           <ion-col>
             <competency [competency]="competencies.signalsNecessary"></competency>
@@ -271,9 +275,9 @@
             <competency [competency]="competencies.judgementCrossing"></competency>
           </ion-col>
         </ion-row>
-      </ion-col>
+  <--</ion-col>-->
       <!-- Column 3-->
-      <ion-col col-32>
+      <!-- <ion-col col-32>
         <ion-row>
           <ion-col no-padding>
             <span class="section-header">Positioning</span>
@@ -396,9 +400,9 @@
         </ion-row>
       </ion-col>
     </ion-row>
-  </ion-grid>
-  <div class="report-overlay report-overlay-modal" [class.contract]="isSeriousMode || isDangerousMode"
+  </ion-grid> -->
+  <!-- <div class="report-overlay report-overlay-modal" [class.contract]="isSeriousMode || isDangerousMode"
     [class.show-overlay]="displayOverlay" [class.hide-overlay]="!displayOverlay"></div>
   <div class="report-overlay report-overlay-remove" [class.contract]="isSeriousMode || isDangerousMode"
-    [class.show-overlay]="isRemoveFaultMode" [class.hide-overlay]="!isRemoveFaultMode"></div>
+    [class.show-overlay]="isRemoveFaultMode" [class.hide-overlay]="!isRemoveFaultMode"></div> -->
 </ion-content>
