@@ -626,7 +626,7 @@ describe('CompetencyComponent', () => {
       expect(drivingFaultsBadge.count).toBe(5);
     });
   });
-  //
+  // TODO:  these test temproarliy disabled. will be follwoed up in a seperate ticket
   // describe('addSingleFault', () => {
   //   it('should not dispatch an ADD_SERIOUS_FAULT action if a dangerous fault exists on competency', () => {
   //     component.competency = Competencies.useOfStand;

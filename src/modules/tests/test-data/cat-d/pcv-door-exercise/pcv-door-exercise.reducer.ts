@@ -1,10 +1,6 @@
 import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import * as pcvDoorExerciseActions from './pcv-door-exercise.actions';
 import { createFeatureSelector } from '@ngrx/store';
-// import {PCV_DOOR_EXERCISE_REMOVE_DRIVING_FAULT} from './pcv-door-exercise.actions';
-// import {PCV_DOOR_EXERCISE_REMOVE_SERIOUS_FAULT} from './pcv-door-exercise.actions';
-// import {PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT} from './pcv-door-exercise.actions';
-// import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 export const initialState: CatDUniqueTypes.PcvDoorExercise = {
   dangerousFault: null,
@@ -20,11 +16,6 @@ export function pcvDoorExerciseReducer(
   action: pcvDoorExerciseActions.Types,
 ): CatDUniqueTypes.PcvDoorExercise {
   switch (action.type) {
-    // case pcvDoorExerciseActions.TOGGLE_PCV_DOOR_EXERCISE:
-    //   return {
-    //     ...state,
-    //     selected: !state.selected,
-    //   };
     case pcvDoorExerciseActions.PCV_DOOR_EXERCISE_ADD_DRIVING_FAULT:
       return {
         ...state,
@@ -62,16 +53,6 @@ export function pcvDoorExerciseReducer(
         dangerousFault: false,
 
       };
-
-    // case pcvDoorExerciseActions.PCV_DOOR_EXERCISE_REMOVE_FAULT:
-    //   return {
-    //     selected: state.selected,
-    //   };
-    // case pcvDoorExerciseActions.ADD_PCV_DOOR_EXERCISE_COMMENT:
-    //   return {
-    //     ...state,
-    //     faultComments: action.comment,
-    //   };
     default:
       return state;
   }
