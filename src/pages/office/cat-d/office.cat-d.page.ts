@@ -113,6 +113,9 @@ import { getTestCategory } from '../../../modules/tests/category/category.reduce
 import {
   AddSafetyQuestionComment,
 } from '../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.action';
+import {
+  AddPcvDoorExerciseComment,
+} from '../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -496,7 +499,8 @@ export class OfficeCatDPage extends BasePageComponent {
     } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
     } else if (dangerousFaultComment.source === CommentSource.PCV_DOOR_EXERCISE) {
-      // this.store$.dispatch(new AddPcvDoorExercise(dangerousFaultComment.comment));
+      this.store$.dispatch(new AddPcvDoorExerciseComment(
+        CompetencyOutcome.D, 'dangerousFaultComments', dangerousFaultComment.comment));
     }
   }
 
@@ -524,7 +528,8 @@ export class OfficeCatDPage extends BasePageComponent {
     } else if (seriousFaultComment.source === CommentSource.EYESIGHT_TEST) {
       this.store$.dispatch(new EyesightTestAddComment(seriousFaultComment.comment));
     } else if (seriousFaultComment.source === CommentSource.PCV_DOOR_EXERCISE) {
-      // this.store$.dispatch(new AddPcvDoorExercise(seriousFaultComment.comment));
+      this.store$.dispatch(new AddPcvDoorExerciseComment(
+        CompetencyOutcome.S, 'seriousFaultComments', seriousFaultComment.comment));
     }
   }
 
@@ -552,7 +557,8 @@ export class OfficeCatDPage extends BasePageComponent {
     } else if (drivingFaultComment.source === CommentSource.SAFETY_QUESTIONS) {
       this.store$.dispatch(new AddSafetyQuestionComment(drivingFaultComment.comment));
     } else if (drivingFaultComment.source === CommentSource.PCV_DOOR_EXERCISE) {
-      // this.store$.dispatch(new AddPcvDoorExercise(drivingFaultComment.comment));
+      this.store$.dispatch(new AddPcvDoorExerciseComment(
+        CompetencyOutcome.DF, 'drivingFaultComments', drivingFaultComment.comment));
     }
 
   }

@@ -53,6 +53,11 @@ export function pcvDoorExerciseReducer(
         dangerousFault: false,
 
       };
+    case pcvDoorExerciseActions.ADD_PCV_DOOR_EXERCISE_COMMENT:
+      return {
+        ...state,
+        [action.fieldName]: action.comment,
+      };
     default:
       return state;
   }
