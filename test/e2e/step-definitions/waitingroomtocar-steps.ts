@@ -62,7 +62,7 @@ const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, te
   if (this.testCategory === 'be') {
     eyeSightResult(true);
     multiShowAndTell(UI_TEST_DATA.testData.be, questionResult);
-  } else if (this.testCategory === 'c') {
+  } else if (this.testCategory === 'c' || this.testCategory === 'c1') {
     multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
   } else if (this.testCategory === 'ce') {
     multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
