@@ -1,8 +1,8 @@
-import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import * as pcvDoorExerciseActions from './pcv-door-exercise.actions';
 import { createFeatureSelector } from '@ngrx/store';
+import { PcvDoorExerciseTypes } from '../../../../../providers/fault-summary/cat-d/fault-summary.cat-d';
 
-export const initialState: CatDUniqueTypes.PcvDoorExercise = {
+export const initialState: PcvDoorExerciseTypes = {
   dangerousFault: null,
   seriousFault: null,
   drivingFault: null,
@@ -14,7 +14,7 @@ export const initialState: CatDUniqueTypes.PcvDoorExercise = {
 export function pcvDoorExerciseReducer(
   state = initialState,
   action: pcvDoorExerciseActions.Types,
-): CatDUniqueTypes.PcvDoorExercise {
+): PcvDoorExerciseTypes {
   switch (action.type) {
     case pcvDoorExerciseActions.PCV_DOOR_EXERCISE_ADD_DRIVING_FAULT:
       return {
@@ -58,4 +58,4 @@ export function pcvDoorExerciseReducer(
   }
 }
 
-export const getPcvDoorExercise = createFeatureSelector<CatDUniqueTypes.PcvDoorExercise>('pcvDoorExercise');
+export const getPcvDoorExercise = createFeatureSelector<PcvDoorExerciseTypes>('pcvDoorExercise');

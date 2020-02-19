@@ -17,7 +17,9 @@ import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';
-import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+
+import { PcvDoorExerciseTypes } from '../../../../../providers/fault-summary/cat-d/fault-summary.cat-d';
+
 import { getPcvDoorExercise }
 from '../../../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.reducer';
 import { get } from 'lodash';
@@ -26,7 +28,7 @@ interface CompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
-  pcvDoorExercise$: Observable<CatDUniqueTypes.PcvDoorExercise>;
+  pcvDoorExercise$: Observable<PcvDoorExerciseTypes>;
 }
 
 @Component({
@@ -42,7 +44,7 @@ export class PcvDoorExerciseComponent {
   isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
-  pcvDoorExercise: CatDUniqueTypes.PcvDoorExercise;
+  pcvDoorExercise: PcvDoorExerciseTypes;
   allowRipple: boolean = true;
 
   constructor(
@@ -67,7 +69,6 @@ export class PcvDoorExerciseComponent {
         select(isDangerousMode)),
       pcvDoorExercise$: currentTest$.pipe(
         select(getTestData),
-        map((data) => { console.log(data); return data; }),
         select(getPcvDoorExercise),
       ),
     };
