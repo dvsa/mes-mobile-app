@@ -165,9 +165,9 @@ export class TestReportCatAMod2Page extends BasePageComponent {
 
     // it is possible that we come back to the page from the terminate screen
     // so need to re-establish the subscription if it doesn't exists or is closed
-    // if (!this.subscription || this.subscription.closed) {
-    //   this.setupSubscription();
-    // }
+    if (!this.subscription || this.subscription.closed) {
+      this.setupSubscription();
+    }
     this.store$.dispatch(new TestReportViewDidEnter());
   }
 
