@@ -95,6 +95,10 @@ import {
   getAvoidance,
   getAvoidanceAttempted,
 } from '../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.selector';
+import {
+  CANDIDATE_DESCRIPTION_MAX_LENGTH,
+  CANDIDATE_DESCRIPTION_CONTROL,
+} from '../components/candidate-description/candidate-description.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -540,7 +544,15 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       return true;
     }
     Object.keys(this.form.controls).forEach((controlName) => {
-      if (this.form.controls[controlName].invalid) {
+      if (
+        controlName === CANDIDATE_DESCRIPTION_CONTROL
+        && this.form.controls[controlName].value !== null
+        && this.form.controls[controlName].value.length > CANDIDATE_DESCRIPTION_MAX_LENGTH
+      ) {
+        this.store$.dispatch(
+          new OfficeValidationError(`${controlName} exceeds max length of ${CANDIDATE_DESCRIPTION_MAX_LENGTH}`),
+        );
+      } else if (this.form.controls[controlName].invalid) {
         this.store$.dispatch(new OfficeValidationError(`${controlName} is blank`));
       }
     });

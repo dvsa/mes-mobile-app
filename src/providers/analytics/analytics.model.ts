@@ -62,6 +62,7 @@ export enum AnalyticsEventCategories {
   VEHICLE_CHECKS = 'vehicle checks',
   WAITING_ROOM = 'waiting room',
   WAITING_ROOM_TO_CAR = 'waiting room to car',
+  OFFICE = 'office',
 }
 
 export enum AnalyticsEvents {
@@ -146,6 +147,7 @@ export enum AnalyticsEvents {
   REMOVE_SINGLE_FAULT = 'remove driving fault',
   REMOVE_SERIOUS_SINGLE_FAULT = 'remove serious fault',
   REMOVE_DANGEROUS_SINGLE_FAULT = 'remove dangerous fault',
+  CIRCUIT_CHANGED = 'circuit changed',
 }
 
 export enum AnalyticsLabels {

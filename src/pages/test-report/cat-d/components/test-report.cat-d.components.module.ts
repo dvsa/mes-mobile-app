@@ -6,11 +6,13 @@ import { ComponentsModule } from '../../../../components/common/common-component
 import { TestReportComponentsModule } from '../../components/test-report-components.module';
 import { VehicleChecksCompactCatDComponent } from './vehicle-checks-compact/vehicle-checks-compact.cat-d';
 import { SafetyQuestionsCatDComponent } from './safety-questions/safety-questions.cat-d';
+import { PcvDoorExerciseComponent } from './pcv-door-exercise/pcv-door-exercise';
 
 @NgModule({
   declarations: [
     VehicleChecksCompactCatDComponent,
     SafetyQuestionsCatDComponent,
+    PcvDoorExerciseComponent,
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,7 @@ import { SafetyQuestionsCatDComponent } from './safety-questions/safety-question
   exports: [
     VehicleChecksCompactCatDComponent,
     SafetyQuestionsCatDComponent,
+    PcvDoorExerciseComponent,
   ],
 })
 export class TestReportCatDComponentsModule { }

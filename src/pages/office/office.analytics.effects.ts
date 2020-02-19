@@ -15,6 +15,10 @@ import {
   COMPLETE_TEST,
   CompleteTest,
 } from '../../pages/office/office.actions';
+import {
+  CIRCUIT_TYPE_CHANGED,
+  CircuitTypeChanged,
+} from '../../modules/tests/test-summary/cat-a-mod1/test-summary.cat-a-mod1.actions';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -33,6 +37,8 @@ import {
 import {
   getApplicationNumber,
 } from '../../modules/tests/journal-data/common/application-reference/application-reference.selector';
+import { getTestCategory } from '../../modules/tests/category/category.reducer';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
 @Injectable()
 export class OfficeAnalyticsEffects {
@@ -200,6 +206,32 @@ export class OfficeAnalyticsEffects {
         isPassed ? 'pass' : 'fail',
       );
 
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  setCircuit$ = this.actions$.pipe(
+    ofType(CIRCUIT_TYPE_CHANGED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestCategory),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, category]: [CircuitTypeChanged, TestsModel, CategoryCode]) => {
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.OFFICE, tests),
+        formatAnalyticsText(AnalyticsEvents.CIRCUIT_CHANGED, tests),
+        `Circuit type ${action.circuitType} selected`,
+      );
       return of(new AnalyticRecorded());
     }),
   );
