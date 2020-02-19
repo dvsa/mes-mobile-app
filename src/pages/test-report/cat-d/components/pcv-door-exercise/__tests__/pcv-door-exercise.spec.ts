@@ -1,6 +1,4 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-// import { PcvDoorExerciseComponent } from '../pcv-door-exercise';
-
 import { AppModule } from '../../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { Competencies } from '../../../../../../modules/tests/test-data/test-data.constants';
