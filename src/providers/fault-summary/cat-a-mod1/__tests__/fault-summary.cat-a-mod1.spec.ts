@@ -5,10 +5,11 @@ import { Competencies } from '../../../../modules/tests/test-data/test-data.cons
 import { fullCompetencyLabels } from '../../../../shared/constants/competencies/competencies';
 
 describe('FaultSummaryCatAM1Helper', () => {
+
   const expectedEmergencyStopFault = [
     {
       competencyIdentifier: Competencies.emergencyStop,
-      competencyDisplayName: fullCompetencyLabels.speedCheckEmergency,
+      competencyDisplayName: fullCompetencyLabels.emergencyStop,
       comment: null,
       faultCount: 1,
     },
@@ -17,7 +18,7 @@ describe('FaultSummaryCatAM1Helper', () => {
   const expectedAvoidanceFault = [
     {
       competencyIdentifier: Competencies.avoidance,
-      competencyDisplayName: fullCompetencyLabels.speedCheckAvoidance,
+      competencyDisplayName: fullCompetencyLabels.avoidance,
       comment: null,
       faultCount: 1,
     },
