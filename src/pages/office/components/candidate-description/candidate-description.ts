@@ -4,6 +4,7 @@ import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
 } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { CANDIDATE_DESCRIPTION_MAX_LENGTH, CANDIDATE_DESCRIPTION_CONTROL } from './candidate-description.constants';
 
 @Component({
   selector: 'candidate-description',
@@ -26,7 +27,6 @@ export class CandidateDescriptionComponent implements OnChanges {
   candidateDescriptionChange = new EventEmitter<string>();
 
   private formControl: FormControl;
-  static readonly fieldName: string = 'candidateDescription';
   candidateDescriptionCharsRemaining: number = null;
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
@@ -34,16 +34,16 @@ export class CandidateDescriptionComponent implements OnChanges {
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
-      this.formGroup.addControl(CandidateDescriptionComponent.fieldName, this.formControl);
+      this.formGroup.addControl(CANDIDATE_DESCRIPTION_CONTROL, this.formControl);
     }
     const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome,
-      CandidateDescriptionComponent.fieldName);
+      CANDIDATE_DESCRIPTION_CONTROL);
 
     if (visibilityType === VisibilityType.NotVisible) {
-      this.formGroup.get(CandidateDescriptionComponent.fieldName).clearValidators();
+      this.formGroup.get(CANDIDATE_DESCRIPTION_CONTROL).clearValidators();
     } else {
-      this.formGroup.get(CandidateDescriptionComponent.fieldName).setValidators([
-        Validators.required, Validators.maxLength(1000)]);
+      this.formGroup.get(CANDIDATE_DESCRIPTION_CONTROL).setValidators([
+        Validators.required, Validators.maxLength(CANDIDATE_DESCRIPTION_MAX_LENGTH)]);
     }
     this.formControl.patchValue(this.candidateDescription);
   }

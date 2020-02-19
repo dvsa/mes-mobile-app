@@ -6,6 +6,7 @@ import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
 } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { CircuitType } from '../../../../../shared/models/circuit-type';
 
 @Component({
   selector: 'circuit',
@@ -33,7 +34,7 @@ export class CircuitComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl('Left');
+      this.formControl = new FormControl(CircuitType.Left);
       this.formGroup.addControl(this.formField, this.formControl);
     }
     const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.formField);
