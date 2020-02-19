@@ -10,7 +10,7 @@ describe('FaultSummaryCatAM1Helper', () => {
     {
       competencyIdentifier: Competencies.emergencyStop,
       competencyDisplayName: fullCompetencyLabels.emergencyStop,
-      comment: null,
+      comment: 'comment1',
       faultCount: 1,
     },
   ];
@@ -19,7 +19,7 @@ describe('FaultSummaryCatAM1Helper', () => {
     {
       competencyIdentifier: Competencies.avoidance,
       competencyDisplayName: fullCompetencyLabels.avoidance,
-      comment: null,
+      comment: 'comment2',
       faultCount: 1,
     },
   ];

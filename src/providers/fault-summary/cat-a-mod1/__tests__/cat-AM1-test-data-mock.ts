@@ -13,9 +13,11 @@ export const catAM1TestDataStateObject: TestData = {
   },
   emergencyStop: {
     outcome: CompetencyOutcome.D,
+    comments: 'comment1',
   },
   avoidance: {
     outcome: CompetencyOutcome.S,
+    comments: 'comment2',
   },
   drivingFaults: {
     precautions: 2,
