@@ -26,6 +26,11 @@ export const vehicleDetailsCatAMod1Reducer = (
         ...state,
         gearboxCategory: null,
       };
+    case vehicleDetailsActions.SCHOOL_BIKE_TOGGLED:
+      return {
+        ...state,
+        schoolBike: !state.schoolBike,
+      };
     default:
       return state;
   }

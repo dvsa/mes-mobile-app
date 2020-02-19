@@ -1,0 +1,67 @@
+<ion-row class="mes-data-row-with-separator">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-40>
+        <label>Emergency Stop</label>
+      </ion-col>
+      <ion-col col-20 no-padding>
+        <div *ngIf=emergencyStop.firstAttempt>
+          1st: {{emergencyStop.firstAttempt}}km/h
+        </div>
+      </ion-col>
+      <ion-col col-20 no-padding>
+        <div *ngIf=emergencyStop.secondAttempt>
+          2nd: {{emergencyStop.secondAttempt}}km/h
+        </div>
+      </ion-col>
+      <ion-col col-4 no-padding align-self-start>
+        <div class="counter-icon">
+          <img *ngIf=!emergencyStop.speedNotMetSeriousFault src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met"
+               class="tick-icon"/>
+          <img *ngIf=emergencyStop.speedNotMetSeriousFault src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met"
+               class="cross-icon"/>
+        </div>
+      </ion-col>
+      <ion-col col-12 no-padding>
+        <div class="counter-label" *ngIf=!emergencyStop.speedNotMetSeriousFault>
+          Met
+        </div>
+        <div class="counter-label" *ngIf=emergencyStop.speedNotMetSeriousFault>
+          Not met
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-40>
+        <label>Avoidance</label>
+      </ion-col>
+      <ion-col col-20 no-padding>
+        <div *ngIf=avoidance.firstAttempt>
+          1st: {{avoidance.firstAttempt}}km/h
+        </div>
+      </ion-col>
+      <ion-col col-20 no-padding>
+        <div *ngIf=avoidance.secondAttempt>
+          2nd: {{avoidance.secondAttempt}}km/h
+        </div>
+      </ion-col>
+      <ion-col col-4 no-padding align-self-start>
+        <div class="counter-icon">
+          <img *ngIf=!avoidance.speedNotMetSeriousFault src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met"
+               class="tick-icon"/>
+          <img *ngIf=avoidance.speedNotMetSeriousFault src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met"
+               class="cross-icon"/>
+        </div>
+      </ion-col>
+      <ion-col col-12 no-padding>
+        <div class="counter-label" *ngIf=!avoidance.speedNotMetSeriousFault>
+          Met
+        </div>
+        <div class="counter-label" *ngIf=avoidance.speedNotMetSeriousFault>
+          Not met
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-row>

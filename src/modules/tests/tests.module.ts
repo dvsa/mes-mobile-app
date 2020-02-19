@@ -13,6 +13,9 @@ import { ExaminerConductedEffects } from './examiner-conducted/examiner-conducte
 import { FaultCountProvider } from '../../providers/fault-count/fault-count';
 import { TestStatusAnalyticsEffects } from './test-status/test-status.analytics.effects';
 import { TestDataByCategoryProvider } from '../../providers/test-data-by-category/test-data-by-category';
+import { ManoeuvresByCategoryProvider } from '../../providers/manoeuvres-by-category/manoeuvres-by-category';
+import { VehicleDetailsByCategoryProvider }
+ from '../../providers/vehicle-details-by-category/vehicle-details-by-category';
 
 @NgModule({
   imports: [
@@ -32,6 +35,8 @@ import { TestDataByCategoryProvider } from '../../providers/test-data-by-categor
     NavigationProvider,
     NavigationStateProvider,
     TestDataByCategoryProvider,
+    ManoeuvresByCategoryProvider,
+    VehicleDetailsByCategoryProvider,
   ],
 })
 export class TestsModule {}

@@ -28,6 +28,9 @@ export class FaultCommentCardComponent {
   @Input()
   faultCount: number;
 
+  @Input()
+  maxFaultCount: number;
+
   @Output()
   faultCommentsChange = new EventEmitter<FaultSummary>();
 

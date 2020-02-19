@@ -71,7 +71,7 @@
         <ion-row>
           <ion-col>
             <reverse-left [completed]="manoeuvresCompleted" [controlLabel]="'Reverse Left'"
-              [clickCallback]="getCallback()">
+              [clickCallback]="getCallback()" [testCategory]="pageState.testCategory$ | async">
               <reverse-left-popover></reverse-left-popover>
             </reverse-left>
           </ion-col>

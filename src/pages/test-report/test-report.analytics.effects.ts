@@ -36,9 +36,7 @@ import { getEco, getTestRequirements } from '../../modules/tests/test-data/commo
 import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/common';
 import * as uncoupleRecoupleActions
   from '../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
-import * as reverseLeftActions from './cat-be/components/reverse-left/reverse-left.actions';
-import * as catBEManoeuversActions
-  from '../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
+import * as reverseLeftActions from './components/reverse-left/reverse-left.actions';
 import * as avoidanceActions from '../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import { getTestData as getCatAmod1TestData } from
   '../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
@@ -659,7 +657,7 @@ export class TestReportAnalyticsEffects {
 
   @Effect()
   deselectReverseLeftManoeuvreEffect$ = this.actions$.pipe(
-    ofType(catBEManoeuversActions.DESELECT_REVERSE_LEFT_MANOEUVRE),
+    ofType(manoeuvresActions.RECORD_MANOEUVRES_DESELECTION),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -667,7 +665,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests]: [catBEManoeuversActions.DeselectReverseLeftManoeuvre, TestsModel]) => {
+    switchMap(([action, tests]: [manoeuvresActions.RecordManoeuvresDeselection, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),

@@ -10,7 +10,6 @@ import * as testsActions from '../../modules/tests/tests.actions';
 import * as testRequirementsActions
   from '../../modules/tests/test-data/common/test-requirements/test-requirements.actions';
 import * as manoeuvresActions from '../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
-import * as manoeuvresCatBEActions from '../../modules/tests/test-data/cat-be/manoeuvres/manoeuvres.cat-be.actions';
 import * as uncoupleRecoupleActions
   from '../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import * as vehicleChecksActions from '../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
@@ -81,7 +80,7 @@ export class TestReportEffects {
       manoeuvresActions.ADD_MANOEUVRE_SERIOUS_FAULT,
       manoeuvresActions.ADD_MANOEUVRE_DANGEROUS_FAULT,
       manoeuvresActions.REMOVE_MANOEUVRE_FAULT,
-      manoeuvresCatBEActions.DESELECT_REVERSE_LEFT_MANOEUVRE,
+      manoeuvresActions.RECORD_MANOEUVRES_DESELECTION,
       uncoupleRecoupleActions.TOGGLE_UNCOUPLE_RECOUPLE,
       uncoupleRecoupleActions.UNCOUPLE_RECOUPLE_ADD_DRIVING_FAULT,
       uncoupleRecoupleActions.UNCOUPLE_RECOUPLE_ADD_SERIOUS_FAULT,

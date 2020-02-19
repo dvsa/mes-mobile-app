@@ -38,10 +38,10 @@ import { NavigationStateProvider } from '../../../../providers/navigation-state/
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/uncouple-recouple';
-import { ReverseLeftComponent } from '../components/reverse-left/reverse-left';
-import { ReverseLeftPopoverComponent } from '../components/reverse-left-popover/reverse-left-popover';
 import { VehicleChecksComponent } from '../components/vehicle-checks/vehicle-checks';
 import { configureTestSuite } from 'ng-bullet';
+import { ReverseLeftComponent } from '../../components/reverse-left/reverse-left';
+import { ReverseLeftPopoverComponent } from '../../components/reverse-left-popover/reverse-left-popover';
 
 describe('TestReportCatBEPage', () => {
   let fixture: ComponentFixture<TestReportCatBEPage>;

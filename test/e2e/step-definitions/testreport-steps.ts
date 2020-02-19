@@ -1,6 +1,7 @@
 import { Then, When, Before } from 'cucumber';
 import { getElement, clickElement } from './generic-steps';
-import { browser, by, element } from 'protractor';
+import { browser, by, element, ExpectedConditions } from 'protractor';
+import { waitForPresenceOfElement } from '../../helpers/helpers';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -27,33 +28,6 @@ Before({ tags: '@catce' }, () => {
 Before({ tags: '@catc1' }, () => {
   this.testCategory = 'c';
 });
-
-const endTest = () => {
-  const endTestButton = getElement(by.id('end-test-button'));
-  clickElement(endTestButton);
-};
-
-const completeLegalRequirements = () => {
-  const legalRequirements = element.all(by.xpath('//legal-requirement/competency-button[@class="legal-button"]'));
-  legalRequirements.each((legalRequirement) => {
-    longPressButton(legalRequirement);
-  });
-};
-
-const completeEco = () => {
-  const ecoCheckmark = getElement(by.xpath('//competency-button[contains(@class, "eco-tick")]'));
-  longPressButton(ecoCheckmark);
-};
-
-const completeShowMe = () => {
-  const showMeCheckmark = getElement(by.xpath('//competency-button[contains(@class, "show-me-question-tick")]'));
-  longPressButton(showMeCheckmark);
-};
-
-const completeControlledStop = () => {
-  const controlledStopCheckmark = getElement(by.xpath('//competency-button[contains(@class, "controlled-stop-tick")]'));
-  longPressButton(controlledStopCheckmark);
-};
 
 When('I end the test', () => {
   endTest();
@@ -159,13 +133,28 @@ Then('the {string} button does not display the serious badge', (competency: stri
   expect(seriousBadge.isPresent()).to.eventually.be.false;
 });
 
-const clickRemove = () => {
-  clickElement(getElement(by.id('remove-button')));
-};
+When('I open the reversing diagram', () => {
+  reverseDropDown();
+  const reversingDiagramLink = getElement(by.xpath('//*[@id="reverse-diagram-link"]/span'));
+  waitForPresenceOfElement(reversingDiagramLink);
+  clickElement(reversingDiagramLink);
+});
 
-const clickSeriousMode = () => {
-  clickElement(getElement(by.id('serious-button')));
-};
+Then('I should see the reversing diagram modal', () => {
+  const diagramModalTitle = getElement(by.xpath('//reverse-diagram-modal-cat-c//div[2]'));
+  waitForPresenceOfElement(diagramModalTitle);
+  expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - articulated vehicle');
+});
+
+When('I close the reversing diagram modal', () => {
+  const reverseModalCloseButton = getElement(by.xpath('//*[@id="closeReverseDiagramModal"]/span/ion-icon'));
+  clickElement(reverseModalCloseButton);
+});
+
+Then('I close the revresing diagram drop down', () => {
+  reverseDropDown();
+  waitForPresenceOfElement(getCompetencyButton('Control'));
+});
 
 When('I remove a driver fault for {string} with a tap', (competency: string) => {
   clickRemove();
@@ -189,16 +178,8 @@ When('I remove a serious fault for {string} with a long press', (competency: str
   longPressCompetency(competency);
 });
 
-const clickManoeuvresButton = () => {
-  const manoeuvresButton = getElement(
-    by.xpath('//manoeuvres/button'));
-
-  clickElement(manoeuvresButton);
-};
-
 When('I add a manoeuvre', () => {
   clickManoeuvresButton();
-
   const reverseRightRadio = getElement(by.id('manoeuvres-reverse-right-radio'));
   clickElement(reverseRightRadio);
 });
@@ -237,35 +218,74 @@ Then('the competency {string} driver fault count is {string}', (competency, driv
 When('I terminate the test from the test report page', () => {
   const endTestButton = getElement(by.id('end-test-button'));
   clickElement(endTestButton);
-
   const terminateTestButton = getElement(by.xpath('//button/span[text() = "Terminate test"]'));
   clickElement(terminateTestButton);
 });
 
 Then('the legal requirements pop up is present', () => {
   const legalRequirementPopUp = getElement(by.xpath('//div/legal-requirements-modal'));
-  expect(legalRequirementPopUp.isPresent()).to.eventually.be.true
+  expect(legalRequirementPopUp.isPresent()).to.eventually.be.true;
 });
 
 When('the required test observation is present {string}', (legal_requirement: string) => {
   expect(getElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legal_requirement}']`)).isPresent()).to.eventually.be.true;
 });
 
-Then('I return to the test report page',() =>   {
+Then('I return to the test report page', () =>   {
   const returnToTestBtn = getElement(by.xpath('//div/legal-requirements-modal//modal-return-button//span'));
-  clickElement(returnToTestBtn)
+  clickElement(returnToTestBtn);
 });
 
-When('I enter the legal requirements',() => {
+When('I enter the legal requirements', () => {
   completeLegalRequirements();
   completeManouveure();
   completeEco();
 });
 
-When('I add the Uncouple and Recouple fault',() => {
+When('I add the Uncouple and Recouple fault', () => {
   const uncoupleRecoupleFault = getElement(by.xpath('//uncouple-recouple//competency-button/div/div[1]'));
   longPressButton(uncoupleRecoupleFault);
 });
+
+const endTest = () => {
+  const endTestButton = getElement(by.id('end-test-button'));
+  clickElement(endTestButton);
+};
+
+const completeLegalRequirements = () => {
+  const legalRequirements = element.all(by.xpath('//legal-requirement/competency-button[@class="legal-button"]'));
+  legalRequirements.each((legalRequirement) => {
+    longPressButton(legalRequirement);
+  });
+};
+
+const completeEco = () => {
+  const ecoCheckmark = getElement(by.xpath('//competency-button[contains(@class, "eco-tick")]'));
+  longPressButton(ecoCheckmark);
+};
+
+const completeShowMe = () => {
+  const showMeCheckmark = getElement(by.xpath('//competency-button[contains(@class, "show-me-question-tick")]'));
+  longPressButton(showMeCheckmark);
+};
+
+const completeControlledStop = () => {
+  const controlledStopCheckmark = getElement(by.xpath('//competency-button[contains(@class, "controlled-stop-tick")]'));
+  longPressButton(controlledStopCheckmark);
+};
+
+const reverseDropDown = () => {
+  const reverseButton = getElement(by.xpath('//*[@id="reverse-left-label"]'));
+  clickElement(reverseButton);
+};
+
+const clickRemove = () => {
+  clickElement(getElement(by.id('remove-button')));
+};
+
+const clickSeriousMode = () => {
+  clickElement(getElement(by.id('serious-button')));
+};
 
 const getCompetencyButton = (competency: string) => {
   return getElement(by.xpath(`//competency-button/div/span[text() = '${competency}']`));
@@ -274,6 +294,12 @@ const getCompetencyButton = (competency: string) => {
 const longPressCompetency = (competency: string) => {
   const competencyButton = getCompetencyButton(competency);
   longPressButton(competencyButton);
+};
+
+const clickManoeuvresButton = () => {
+  const manoeuvresButton = getElement(
+    by.xpath('//manoeuvres/button'));
+  clickElement(manoeuvresButton);
 };
 
 /**

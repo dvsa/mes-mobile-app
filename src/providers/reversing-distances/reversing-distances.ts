@@ -6,84 +6,78 @@ import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
+import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
+import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
 
-export type CatCVehicleDetailsUnion =
+export type VehicleDetailsUnion =
+  | CatBEUniqueTypes.VehicleDetails
   | CatCUniqueTypes.VehicleDetails
   | CatC1UniqueTypes.VehicleDetails
   | CatCEUniqueTypes.VehicleDetails
-  | CatC1EUniqueTypes.VehicleDetails;
+  | CatC1EUniqueTypes.VehicleDetails
+  | CatDUniqueTypes.VehicleDetails
+  | CatD1UniqueTypes.VehicleDetails
+  | CatDEUniqueTypes.VehicleDetails
+  | CatD1EUniqueTypes.VehicleDetails;
+
+interface VehicleMultipliers {
+  widthMultiplier: number;
+  lengthMultiplier: number;
+}
 
 @Injectable()
 export class ReversingDistancesProvider {
 
-  public getDistanceLength(data: object, category: TestCategory): ReversingLengths {
+  distanceValues: Map<TestCategory, VehicleMultipliers>;
+
+  public getDistanceValues() : Map<TestCategory, VehicleMultipliers> {
+    if (!this.distanceValues) {
+      this.distanceValues = new Map([
+        [TestCategory.BE, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
+        [TestCategory.C, { lengthMultiplier: 3.5, widthMultiplier: 1.5 }],
+        [TestCategory.CE, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
+        [TestCategory.C1, { lengthMultiplier: 3.5, widthMultiplier: 1.5 }],
+        [TestCategory.C1E, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
+        [TestCategory.D, { lengthMultiplier: 3.5, widthMultiplier: 1.5 }],
+        [TestCategory.DE, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
+        [TestCategory.D1, { lengthMultiplier: 3.5, widthMultiplier: 1.5 }],
+        [TestCategory.D1E, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
+      ]);
+    }
+    return this.distanceValues;
+  }
+
+  public getDistanceLength(data: VehicleDetailsUnion, category: TestCategory): ReversingLengths {
+    if (!this.getDistanceValues().has(category)) {
+      return { startDistance: 52.5, middleDistance: 30 };
+    }
+    const distanceFromStart = data.vehicleLength * this.distanceValues.get(category).lengthMultiplier;
+    const distanceFromMiddle = data.vehicleLength * 2;
     switch (category) {
-      case TestCategory.BE:
-        return this.getDistanceLengthCatBE(data);
-      case TestCategory.C:
-        return this.getDistanceLengthCatC(data, 3.5);
       case TestCategory.CE:
-        return this.getDistanceLengthCatCE(data, 4);
-      case TestCategory.C1:
-        return this.getDistanceLengthCatC(data, 3.5);
       case TestCategory.C1E:
-        return this.getDistanceLengthCatCE(data, 4);
+      case TestCategory.DE:
+      case TestCategory.D1E:
+        return ({
+          startDistance: data.vehicleLength > 16.5 ? 66 : Math.round(distanceFromStart * 100) / 100,
+          middleDistance: Math.round(distanceFromMiddle * 100) / 100,
+        });
       default:
-        return { startDistance: 52.5, middleDistance: 30 };
+        return ({
+          startDistance:  Math.round(distanceFromStart * 100) / 100,
+          middleDistance: Math.round(distanceFromMiddle * 100) / 100,
+        });
     }
   }
 
-  public getDistanceWidth(data: object, category: TestCategory): number {
-    switch (category) {
-      case TestCategory.BE:
-        return this.getDistanceWidthCatBE(data);
-      case TestCategory.C:
-        return this.getDistanceWidthCatC(data);
-      case TestCategory.CE:
-        return this.getDistanceWidthCatC(data);
-      case TestCategory.C1:
-        return this.getDistanceWidthCatC(data);
-      case TestCategory.C1E:
-        return this.getDistanceWidthCatC(data);
-      default:
-        return 3;
+  public getDistanceWidth(data: VehicleDetailsUnion, category: TestCategory): number {
+    if (!this.getDistanceValues().has(category)) {
+      return 3;
     }
-  }
-
-  private getDistanceWidthCatC(data: CatCVehicleDetailsUnion): number {
-    const distanceOfBayWidth = data.vehicleWidth * 1.5;
+    const distanceOfBayWidth = data.vehicleWidth * this.distanceValues.get(category).widthMultiplier;
     return Math.round(distanceOfBayWidth * 100) / 100;
   }
 
-  private getDistanceLengthCatC(data: CatCVehicleDetailsUnion, multiplier: number): ReversingLengths {
-    const distanceFromStart = data.vehicleLength * multiplier;
-    const distanceFromMiddle = data.vehicleLength * 2;
-    return ({
-      startDistance:  Math.round(distanceFromStart * 100) / 100,
-      middleDistance: Math.round(distanceFromMiddle * 100) / 100,
-    });
-  }
-
-  private getDistanceLengthCatCE(data: CatCVehicleDetailsUnion, multiplier: number): ReversingLengths {
-    const distanceFromStart = data.vehicleLength * multiplier;
-    const distanceFromMiddle = data.vehicleLength * 2;
-    return ({
-      startDistance: data.vehicleLength > 16.5 ? 66 : Math.round(distanceFromStart * 100) / 100,
-      middleDistance: Math.round(distanceFromMiddle * 100) / 100,
-    });
-  }
-
-  private getDistanceWidthCatBE(data: CatBEUniqueTypes.VehicleDetails): number {
-    const distanceOfBayWidth = data.vehicleWidth * 1.5;
-    return Math.round(distanceOfBayWidth * 100) / 100;
-  }
-
-  private getDistanceLengthCatBE(data: CatBEUniqueTypes.VehicleDetails): ReversingLengths {
-    const distanceFromStart = data.vehicleLength * 4;
-    const distanceFromMiddle = data.vehicleLength * 2;
-    return ({
-      startDistance: Math.round(distanceFromStart * 100) / 100,
-      middleDistance: Math.round(distanceFromMiddle * 100) / 100,
-    });
-  }
 }

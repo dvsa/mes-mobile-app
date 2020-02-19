@@ -166,6 +166,7 @@ export class OfficeCatBPage extends PracticeableBasePageComponent {
   drivingFaultCtrl: String = 'drivingFaultCtrl';
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
+  static readonly maxFaultCount = 15;
 
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: VehicleChecksQuestion[];

@@ -10,6 +10,7 @@ export const DASHBOARD_PAGE = 'DashboardPage';
 export const REKEY_SEARCH_PAGE = 'RekeySearchPage';
 export const TEST_RESULTS_SEARCH_PAGE = 'TestResultsSearchPage';
 export const LEGAL_REQUIREMENTS_MODAL = 'LegalRequirementsModal';
+export const REVERSE_DIAGRAM_PAGE = 'ReverseDiagramPage';
 
 export const CAT_B = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBPage',
@@ -35,7 +36,6 @@ export const CAT_BE = {
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatBEPage',
   OFFICE_PAGE: 'OfficeCatBEPage',
   PASS_FINALISATION_PAGE: 'PassFinalisationCatBEPage',
-  REVERSE_DIAGRAM_PAGE: 'ReverseDiagramCatBEPage',
   TEST_REPORT_PAGE: 'TestReportCatBEPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatBEPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBEPage',
@@ -54,7 +54,6 @@ export const CAT_C = {
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatCPage',
   OFFICE_PAGE: 'OfficeCatCPage',
   PASS_FINALISATION_PAGE: 'PassFinalisationCatCPage',
-  REVERSE_DIAGRAM_PAGE: 'ReverseDiagramCatCPage',
   TEST_REPORT_PAGE: 'TestReportCatCPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatCPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatCPage',
@@ -111,7 +110,6 @@ export const CAT_D = {
   OFFICE_PAGE: 'OfficeCatDPage',
   PASS_FINALISATION_PAGE: 'PassFinalisationCatDPage',
   TEST_REPORT_PAGE: 'TestReportCatDPage',
-  REVERSE_DIAGRAM_PAGE: 'ReverseDiagramCatDPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatDPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatDPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatDPage',

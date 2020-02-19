@@ -50,7 +50,8 @@
       </vehicle-checks-question-cat-d>
     </ion-card-content>
   </ion-card>
-  <warning-banner warningText="This will result in 4 driving faults and 1 serious fault" *ngIf="shouldDisplayBanner()"></warning-banner>
+  <warning-banner warningText="This will result in {{vehicleChecksScore.drivingFaults}} driving faults and {{vehicleChecksScore.seriousFaults}} serious fault"
+      *ngIf="shouldDisplayBanner()"></warning-banner>
   <ion-card>
     <ion-card-header>
       <ion-card-title>

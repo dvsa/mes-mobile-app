@@ -42,6 +42,7 @@ export class PopulateVehicleDimensions implements Action {
 export type Types =
   | VehicleRegistrationChanged
   | SchoolCarToggled
+  | SchoolBikeToggled
   | DualControlsToggled
   | GearboxCategoryChanged
   | ClearGearboxCategory

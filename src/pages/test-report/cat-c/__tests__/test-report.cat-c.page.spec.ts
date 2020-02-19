@@ -38,11 +38,11 @@ import { NavigationStateProvider } from '../../../../providers/navigation-state/
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/uncouple-recouple';
-import { ReverseLeftComponent } from '../components/reverse-left/reverse-left';
-import { ReverseLeftPopoverComponent } from '../components/reverse-left-popover/reverse-left-popover';
 import { VehicleChecksComponent } from '../components/vehicle-checks/vehicle-checks';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { ReverseLeftPopoverComponent } from '../../components/reverse-left-popover/reverse-left-popover';
+import { ReverseLeftComponent } from '../../components/reverse-left/reverse-left';
 
 describe('TestReportCatCPage', () => {
   let fixture: ComponentFixture<TestReportCatCPage>;

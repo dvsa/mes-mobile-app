@@ -12,6 +12,10 @@ Feature: Full end to end journey
       Then I should see the "Right Ford" page
       And I complete the waiting room to car page
       Then I should see the "Test report - Right Ford" page
+      When I open the reversing diagram
+      Then I should see the reversing diagram modal
+      And I close the reversing diagram modal
+      Then I close the revresing diagram drop down
       And I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"

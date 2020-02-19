@@ -1,5 +1,5 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
-import { pickBy } from 'lodash';
+import { pickBy, get } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 
@@ -13,25 +13,21 @@ export class FaultCountAM1Helper {
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
     const controlledStopDangerousFaults = (
-      singleFaultCompetencies.controlledStop &&
-      singleFaultCompetencies.controlledStop === CompetencyOutcome.D) ? 1 : 0;
+      get(singleFaultCompetencies, 'controlledStop') === CompetencyOutcome.D) ? 1 : 0;
     const useOfStandDangerousFaults = (
-      singleFaultCompetencies.useOfStand &&
-      singleFaultCompetencies.useOfStand === CompetencyOutcome.D) ? 1 : 0;
+      get(singleFaultCompetencies, 'useOfStand') === CompetencyOutcome.D) ? 1 : 0;
     const manualHandlingDangerousFaults = (
-      singleFaultCompetencies.manualHandling &&
-      singleFaultCompetencies.manualHandling === CompetencyOutcome.D) ? 1 : 0;
+      get(singleFaultCompetencies, 'manualHandling') === CompetencyOutcome.D) ? 1 : 0;
     const slalomDangerousFaults = (
-      singleFaultCompetencies.slalom &&
-      singleFaultCompetencies.slalom === CompetencyOutcome.D) ? 1 : 0;
+      get(singleFaultCompetencies, 'slalom') === CompetencyOutcome.D) ? 1 : 0;
     const slowControlDangerousFaults = (
-      singleFaultCompetencies.slowControl &&
-      singleFaultCompetencies.slowControl === CompetencyOutcome.D) ? 1 : 0;
+      get(singleFaultCompetencies, 'slowControl') === CompetencyOutcome.D) ? 1 : 0;
     const uTurnDangerousFaults = (
-      singleFaultCompetencies.uTurn &&
-      singleFaultCompetencies.uTurn === CompetencyOutcome.D) ? 1 : 0;
-    const emergencyStopDangerousFaults = (emergencyStop && emergencyStop.outcome === CompetencyOutcome.D) ? 1 : 0;
-    const avoidanceDangerousFaults = (avoidance && avoidance.outcome === CompetencyOutcome.D) ? 1 : 0;
+      get(singleFaultCompetencies, 'uTurn') === CompetencyOutcome.D) ? 1 : 0;
+    const emergencyStopDangerousFaults = (
+      get(emergencyStop, 'outcome') === CompetencyOutcome.D) ? 1 : 0;
+    const avoidanceDangerousFaults = (
+      get(avoidance, 'outcome') === CompetencyOutcome.D) ? 1 : 0;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
@@ -55,25 +51,21 @@ export class FaultCountAM1Helper {
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
     const controlledStopSeriousFaults = (
-      singleFaultCompetencies.controlledStop &&
-      singleFaultCompetencies.controlledStop === CompetencyOutcome.S) ? 1 : 0;
+      get(singleFaultCompetencies, 'controlledStop') === CompetencyOutcome.S) ? 1 : 0;
     const useOfStandSeriousFaults = (
-      singleFaultCompetencies.useOfStand &&
-      singleFaultCompetencies.useOfStand === CompetencyOutcome.S) ? 1 : 0;
+      get(singleFaultCompetencies, 'useOfStand') === CompetencyOutcome.S) ? 1 : 0;
     const manualHandlingSeriousFaults = (
-      singleFaultCompetencies.manualHandling &&
-      singleFaultCompetencies.manualHandling === CompetencyOutcome.S) ? 1 : 0;
+      get(singleFaultCompetencies, 'manualHandling') === CompetencyOutcome.S) ? 1 : 0;
     const slalomSeriousFaults = (
-      singleFaultCompetencies.slalom &&
-      singleFaultCompetencies.slalom === CompetencyOutcome.S) ? 1 : 0;
+      get(singleFaultCompetencies, 'slalom') === CompetencyOutcome.S) ? 1 : 0;
     const slowControlSeriousFaults = (
-      singleFaultCompetencies.slowControl &&
-      singleFaultCompetencies.slowControl === CompetencyOutcome.S) ? 1 : 0;
+      get(singleFaultCompetencies, 'slowControl') === CompetencyOutcome.S) ? 1 : 0;
     const uTurnSeriousFaults = (
-      singleFaultCompetencies.uTurn &&
-      singleFaultCompetencies.uTurn === CompetencyOutcome.S) ? 1 : 0;
-    const emergencyStopSeriousFaults = (emergencyStop && emergencyStop.outcome === CompetencyOutcome.S) ? 1 : 0;
-    const avoidanceSeriousFaults = (avoidance && avoidance.outcome === CompetencyOutcome.S) ? 1 : 0;
+      get(singleFaultCompetencies, 'uTurn') === CompetencyOutcome.S) ? 1 : 0;
+    const emergencyStopSeriousFaults = (
+      get(emergencyStop, 'outcome') === CompetencyOutcome.S) ? 1 : 0;
+    const avoidanceSeriousFaults = (
+      get(avoidance, 'outcome') === CompetencyOutcome.S) ? 1 : 0;
 
     const result =
       seriousFaultSumOfSimpleCompetencies +
@@ -99,25 +91,21 @@ export class FaultCountAM1Helper {
       .reduce(((res, faultSummary) => res + faultSummary.faultCount), 0);
     Object.keys(pickBy(drivingFaults)).length;
     const controlledStopDrivingFaults = (
-      singleFaultCompetencies.controlledStop &&
-      singleFaultCompetencies.controlledStop === CompetencyOutcome.DF) ? 1 : 0;
+      get(singleFaultCompetencies, 'controlledStop') === CompetencyOutcome.DF) ? 1 : 0;
     const useOfStandDrivingFaults = (
-      singleFaultCompetencies.useOfStand &&
-      singleFaultCompetencies.useOfStand === CompetencyOutcome.DF) ? 1 : 0;
+      get(singleFaultCompetencies, 'useOfStand') === CompetencyOutcome.DF) ? 1 : 0;
     const manualHandlingDrivingFaults = (
-      singleFaultCompetencies.manualHandling &&
-      singleFaultCompetencies.manualHandling === CompetencyOutcome.DF) ? 1 : 0;
+      get(singleFaultCompetencies, 'manualHandling') === CompetencyOutcome.DF) ? 1 : 0;
     const slalomDrivingFaults = (
-      singleFaultCompetencies.slalom &&
-      singleFaultCompetencies.slalom === CompetencyOutcome.DF) ? 1 : 0;
+      get(singleFaultCompetencies, 'slalom') === CompetencyOutcome.DF) ? 1 : 0;
     const slowControlDrivingFaults = (
-      singleFaultCompetencies.slowControl &&
-      singleFaultCompetencies.slowControl === CompetencyOutcome.DF) ? 1 : 0;
+      get(singleFaultCompetencies, 'slowControl') === CompetencyOutcome.DF) ? 1 : 0;
     const uTurnDrivingFaults = (
-      singleFaultCompetencies.uTurn &&
-      singleFaultCompetencies.uTurn === CompetencyOutcome.DF) ? 1 : 0;
-    const emergencyStopRidingFaults = (emergencyStop && emergencyStop.outcome === CompetencyOutcome.DF) ? 1 : 0;
-    const avoidanceRidingFaults = (avoidance && avoidance.outcome === CompetencyOutcome.DF) ? 1 : 0;
+      get(singleFaultCompetencies, 'uTurn') === CompetencyOutcome.DF) ? 1 : 0;
+    const emergencyStopRidingFaults = (
+      get(emergencyStop, 'outcome') === CompetencyOutcome.DF) ? 1 : 0;
+    const avoidanceRidingFaults = (
+      get(avoidance, 'outcome') === CompetencyOutcome.DF) ? 1 : 0;
 
     const result =
       drivingFaultSumOfSimpleCompetencies +
