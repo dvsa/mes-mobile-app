@@ -54,7 +54,7 @@ export class FaultSummaryCatAM1Helper {
     const result = [];
     if (get(avoidance, 'outcome') === outcome) {
       result.push(FaultSummaryCatAM1Helper.createFaultSummary(
-        Competencies.avoidance, fullCompetencyLabels.speedCheckAvoidance));
+        Competencies.avoidance, fullCompetencyLabels.avoidance));
     }
 
     return result;
@@ -64,7 +64,7 @@ export class FaultSummaryCatAM1Helper {
     const result = [];
     if (get(emergencyStop, 'outcome') === outcome) {
       result.push(FaultSummaryCatAM1Helper.createFaultSummary(
-        Competencies.emergencyStop, fullCompetencyLabels.speedCheckEmergency));
+        Competencies.emergencyStop, fullCompetencyLabels.emergencyStop));
     }
 
     return result;
