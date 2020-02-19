@@ -11,6 +11,7 @@ import { vehicleChecksCatDReducer } from './vehicle-checks/vehicle-checks.cat-d.
 import { safetyQuestionsCatDReducer } from './safety-questions/safety-questions.cat-d.reducer';
 import { uncoupleRecoupleCatD1EReducer } from './uncouple-recouple/uncouple-recouple.cat-d1e.reducer';
 import { manoeuvresReducer } from '../common/manoeuvres/manoeuvres.reducer';
+import { pcvDoorExerciseReducer } from './pcv-door-exercise/pcv-door-exercise.reducer';
 
 export const initialState: CatD1EUniqueTypes.TestData = {
   dangerousFaults: {},
@@ -45,8 +46,7 @@ export function testDataCatD1EReducer(
     manoeuvres: manoeuvresReducer,
     testRequirements: testRequirementsCatDReducer,
     uncoupleRecouple: uncoupleRecoupleCatD1EReducer,
-    // TODO - Cat D - To be implmented by relevant ticket MES-4129
-    pcvDoorExercise: () => { return null; },
+    pcvDoorExercise: pcvDoorExerciseReducer,
   })(state as Required<CatD1EUniqueTypes.TestData>, action);
 }
 
