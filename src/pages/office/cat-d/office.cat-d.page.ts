@@ -110,6 +110,9 @@ import {
 } from '../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.selector';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import {
+  AddSafetyQuestionComment,
+} from '../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.action';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -491,6 +494,8 @@ export class OfficeCatDPage extends BasePageComponent {
 
     } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
+    } else if (dangerousFaultComment.source === CommentSource.PCV_DOOR_EXERCISE) {
+      // this.store$.dispatch(new AddPcvDoorExercise(dangerousFaultComment.comment));
     }
   }
 
@@ -517,6 +522,8 @@ export class OfficeCatDPage extends BasePageComponent {
       this.store$.dispatch(new AddShowMeTellMeComment(seriousFaultComment.comment));
     } else if (seriousFaultComment.source === CommentSource.EYESIGHT_TEST) {
       this.store$.dispatch(new EyesightTestAddComment(seriousFaultComment.comment));
+    } else if (seriousFaultComment.source === CommentSource.PCV_DOOR_EXERCISE) {
+      // this.store$.dispatch(new AddPcvDoorExercise(seriousFaultComment.comment));
     }
   }
 
@@ -541,6 +548,10 @@ export class OfficeCatDPage extends BasePageComponent {
       this.store$.dispatch(new AddUncoupleRecoupleComment(drivingFaultComment.comment));
     } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(drivingFaultComment.comment));
+    } else if (drivingFaultComment.source === CommentSource.SAFETY_QUESTIONS) {
+      this.store$.dispatch(new AddSafetyQuestionComment(drivingFaultComment.comment));
+    } else if (drivingFaultComment.source === CommentSource.PCV_DOOR_EXERCISE) {
+      // this.store$.dispatch(new AddPcvDoorExercise(drivingFaultComment.comment));
     }
 
   }
