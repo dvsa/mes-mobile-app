@@ -13,7 +13,7 @@ import {
   PassCertificateNumberChanged,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from
-'../../../modules/tests/pass-completion/cat-a-mod2/pass-completion.cat-a-mod2.reducer';
+'../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
@@ -49,7 +49,7 @@ import {
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
-// TODO - PREP-AMOD2 - Implement category specific behaviour map
+// TODO - MES - 4602 - PREP-AMOD2 - Implement category specific behaviour map
 import { behaviourMap } from '../../office/office-behaviour-map.cat-be';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
