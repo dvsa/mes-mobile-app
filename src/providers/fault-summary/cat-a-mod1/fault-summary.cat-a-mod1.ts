@@ -54,7 +54,7 @@ export class FaultSummaryCatAM1Helper {
     const result = [];
     if (get(avoidance, 'outcome') === outcome) {
       result.push(FaultSummaryCatAM1Helper.createFaultSummary(
-        Competencies.avoidance, fullCompetencyLabels.speedCheckAvoidance));
+        Competencies.avoidance, fullCompetencyLabels.avoidance, avoidance.comments));
     }
 
     return result;
@@ -64,7 +64,7 @@ export class FaultSummaryCatAM1Helper {
     const result = [];
     if (get(emergencyStop, 'outcome') === outcome) {
       result.push(FaultSummaryCatAM1Helper.createFaultSummary(
-        Competencies.emergencyStop, fullCompetencyLabels.speedCheckEmergency));
+        Competencies.emergencyStop, fullCompetencyLabels.emergencyStop, emergencyStop.comments));
     }
 
     return result;
@@ -74,7 +74,7 @@ export class FaultSummaryCatAM1Helper {
     const result = [];
     if (get(avoidance, 'speedNotMetSeriousFault')) {
       result.push(FaultSummaryCatAM1Helper.createFaultSummary(
-        Competencies.speedCheckAvoidance, fullCompetencyLabels.speedCheckAvoidance));
+        Competencies.speedCheckAvoidance, fullCompetencyLabels.speedCheckAvoidance, avoidance.comments));
     }
 
     return result;
@@ -84,17 +84,19 @@ export class FaultSummaryCatAM1Helper {
     const result = [];
     if (get(emergencyStop, 'speedNotMetSeriousFault')) {
       result.push(FaultSummaryCatAM1Helper.createFaultSummary(
-        Competencies.speedCheckEmergency, fullCompetencyLabels.speedCheckEmergency));
+        Competencies.speedCheckEmergency, fullCompetencyLabels.speedCheckEmergency, emergencyStop.comments));
     }
 
     return result;
   }
 
-  public static createFaultSummary(competencyIdentifier: string, competencyName: string): FaultSummary {
+  public static createFaultSummary(competencyIdentifier: string,
+                                   competencyName: string,
+                                   competencyComments: string): FaultSummary {
     return {
       competencyIdentifier,
       competencyDisplayName: competencyName,
-      comment: null,
+      comment: competencyComments,
       faultCount: 1,
     };
   }
