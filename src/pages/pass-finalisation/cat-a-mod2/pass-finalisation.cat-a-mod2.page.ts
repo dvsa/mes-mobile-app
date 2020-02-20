@@ -12,7 +12,8 @@ import {
   ProvisionalLicenseNotReceived,
   PassCertificateNumberChanged,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
-import { getPassCompletion } from '../../../modules/tests/pass-completion/cat-a-mod2/pass-completion.cat-a-mod2.reducer';
+import { getPassCompletion } from
+'../../../modules/tests/pass-completion/cat-a-mod2/pass-completion.cat-a-mod2.reducer';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
