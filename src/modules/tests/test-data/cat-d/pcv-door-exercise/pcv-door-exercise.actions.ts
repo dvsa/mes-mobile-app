@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 export const PCV_DOOR_EXERCISE_ADD_DRIVING_FAULT = '[PcvDoorExercise] Add Driving Fault';
 export const PCV_DOOR_EXERCISE_ADD_SERIOUS_FAULT = '[PcvDoorExercise] Add Serious Fault';
@@ -34,7 +35,10 @@ export class PcvDoorExerciseRemoveDangerousFault implements Action {
 
 export class AddPcvDoorExerciseComment implements Action {
   readonly type = ADD_PCV_DOOR_EXERCISE_COMMENT;
-  constructor(public comment: string) { }
+  constructor(
+    public faultType: CompetencyOutcome,
+    public fieldName: string,
+    public comment: string) { }
 }
 
 export type Types =
