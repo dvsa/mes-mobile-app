@@ -1,27 +1,22 @@
-@catc
-Feature: Full end to end journey for Category c
+@catc1
+Feature: Full end to end journey for Category C1
 
    Scenario: Examiner completes a passed test with no faults
-      Given I am logged in as "mobexaminer5" and I have a test for "Mr Right Ford"
-      When I start the test for "Mr Right Ford"
+      Given I am logged in as "mobexaminer5" and I have a test for "Ms Deanna Wolf"
+      When I start the test for "Ms Deanna Wolf"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Declaration - Right Ford" page
+      Then I should see the "Declaration - Deanna Wolf" page
       And the candidate enters a new email address
       And I proceed to the car
-      Then I should see the "Right Ford" page
+      Then I should see the "Deanna Wolf" page
       And I complete the waiting room to car page
-      Then I should see the "Test report - Right Ford" page
-      When I open the reversing diagram
-      Then I should see the reversing diagram modal
-      And I close the reversing diagram modal
-      Then I close the revresing diagram drop down
+      Then I should see the "Test report - Deanna Wolf" page
       And I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
-      Then I should see the "Test debrief - Right Ford" page
-      And  I select the code 78 option
+      Then I should see the "Test debrief - Deanna Wolf" page
       And I complete the pass details
       And I complete the health declaration
       Then I am on the back to office page
@@ -31,22 +26,22 @@ Feature: Full end to end journey for Category c
       When I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Mr Right Ford" is "1"
+      And the test result for "Ms Deanna Wolf" is "1"
 
    Scenario: Examiner completes a failed test with various faults
-      Given I am logged in as "mobexaminer5" and I have a test for "Mr Tanner Holman"
-      When I check candidate details for "Mr Tanner Holman"
-      And I start the test for "Mr Tanner Holman"
+      Given I am logged in as "mobexaminer5" and I have a test for "Ms Diaz Barber"
+      When I check candidate details for "Ms Diaz Barber"
+      And I start the test for "Ms Diaz Barber"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Declaration - Tanner Holman" page
+      Then I should see the "Declaration - Diaz Barber" page
       And the candidate enters a new email address
       And I proceed to the car
-      Then I should see the "Tanner Holman" page
+      Then I should see the "Diaz Barber" page
       And I complete the waiting room to car page with the following vehicle checks
         | show_me_1   | show_me_2   | show_me_3   | show_me_4   | show_me_5   |
         | true        | true        | true        | false       | false       |   
-      Then I should see the "Test report - Tanner Holman" page
+      Then I should see the "Test report - Diaz Barber" page
       And the driver fault count is "3"
       When I end the test
       Then the legal requirements pop up is present
@@ -56,7 +51,7 @@ Feature: Full end to end journey for Category c
       And the required test observation is present "Manoeuvres"
       And the required test observation is present "Eco (control and planning)"
       Then I return to the test report page
-      And I should see the "Test report - Tanner Holman" page
+      And I should see the "Test report - Diaz Barber" page
       And I enter the legal requirements
       When I add a "Timed" driver fault
       And the driver fault count is "4"
@@ -86,4 +81,4 @@ Feature: Full end to end journey for Category c
       And I enter a comment for "serious" fault "Move off - Control"
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Mr Tanner Holman" is "2"
+      And the test result for "Ms Diaz Barber" is "2"

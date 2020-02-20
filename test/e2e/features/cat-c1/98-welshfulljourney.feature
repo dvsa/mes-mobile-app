@@ -1,5 +1,5 @@
 @catc1
-Feature: Full Welsh end to end journey
+Feature: Full Welsh end to end journey for Category C1
 
     @full_smoke
     Scenario: Examiner completes a failed welsh C1 test with various faults

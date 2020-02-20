@@ -1,5 +1,5 @@
 @catce
-Feature: Full Welsh end to end journey
+Feature: Full Welsh end to end journey for category CE
 
     @full_smoke
     Scenario: Examiner completes a failed welsh test with various faults
