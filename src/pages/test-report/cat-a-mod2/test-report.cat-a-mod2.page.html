@@ -1,6 +1,10 @@
 <ion-header>
   <ion-navbar hideBackButton>
     <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="passTest()" >Pass Test</button>
+      <button ion-button (click)="failTest()" >Fail Test</button>
+    </ion-buttons>
     <ion-buttons end>
       <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>
     </ion-buttons>
@@ -20,7 +24,7 @@
       <!-- Column 1-->
       <ion-col col-32>
         <ion-row>
-          <ion-col no-padding>
+          <ion-col class="only-top-padding">
             <span class="section-header">Test requirements</span>
           </ion-col>
         </ion-row>
@@ -28,44 +32,32 @@
           <ion-col>
             <legal-requirement
               [legalRequirement]="legalRequirements.normalStart1"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart1]"
+              [ticked]="false"
             >
             </legal-requirement>
           </ion-col>
           <ion-col>
             <legal-requirement
               [legalRequirement]="legalRequirements.normalStart2"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart2]"
+              [ticked]="false"
             >
             </legal-requirement>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-28>
+          <ion-col>
             <legal-requirement
-              [legalRequirement]="legalRequirements.uphillStart"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.uphillStart]"
+              [legalRequirement]="legalRequirements.angledStart"
+              [ticked]="false"
             >
             </legal-requirement>
           </ion-col>
-          <ion-col col-28>
+          <ion-col>
             <legal-requirement
-              [legalRequirement]="legalRequirements.downhillStart"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.downhillStart]"
+              [legalRequirement]="legalRequirements.hillStart"
+              [ticked]="false"
             >
             </legal-requirement>
-          </ion-col>
-          <ion-col col-40>
-            <legal-requirement
-              [legalRequirement]="legalRequirements.angledStartControlledStop"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.angledStartControlledStop]"
-            >
-            </legal-requirement>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="padding-top-18 only-top-padding">
-            <div class="dark-divider"></div>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -80,22 +72,22 @@
         </ion-row>
         <ion-row>
           <ion-col no-padding>
-            <span class="section-header">Vehicle check</span>
+            <div class="dark-divider"></div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="only-top-padding">
+            <span class="section-header">Safety questions</span>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <vehicle-checks></vehicle-checks>
+            <safety-and-balance></safety-and-balance>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col no-padding>
-            <div class="dark-divider"></div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col no-padding>
-            <div class="dark-divider"></div>
+            <div class="divider"></div>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -103,19 +95,35 @@
             <eta [eta]="eta.verbal">
             </eta>
           </ion-col>
-          <ion-col>
-            <eta [eta]="eta.physical">
-            </eta>
-          </ion-col>
         </ion-row>
         <ion-row>
           <ion-col no-padding>
+            <div class="divider"></div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="only-top-padding">
+            <span class="section-header">Move away</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.moveOffSafety"></competency>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.moveOffControl"></competency>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="only-top-padding">
             <span class="section-header">Control</span>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency [competency]="competencies.controlsAccelerator"></competency>
+            <competency [competency]="competencies.controlsThrottle"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -130,12 +138,12 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency [competency]="competencies.controlsFootbrake"></competency>
+            <competency [competency]="competencies.controlsFrontBrake"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency [competency]="competencies.controlsParkingBrake"></competency>
+            <competency [competency]="competencies.controlsRearBrake"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -144,18 +152,8 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col class="padding-top-21 only-top-padding">
-            <div class="dark-divider"></div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
           <ion-col>
-            <competency [competency]="competencies.precautions"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col no-padding>
-            <div class="dark-divider"></div>
+            <competency [competency]="competencies.controlsBalanceSlowControl"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -167,23 +165,16 @@
       <!-- Column 2-->
       <ion-col col-32>
         <ion-row>
-          <ion-col no-padding>
-            <span class="section-header">Move off</span>
-          </ion-col>
+          <ion-col class="padding-top-18 only-top-padding"></ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency [competency]="competencies.moveOffSafety"></competency>
+            <competency [competency]="competencies.precautions"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col>
-            <competency [competency]="competencies.moveOffControl"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col no-padding>
-            <span class="section-header">Use of mirrors</span>
+          <ion-col class="only-top-padding">
+            <span class="section-header">Rear observation</span>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -202,7 +193,7 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col no-padding>
+          <ion-col class="only-top-padding">
             <span class="section-header">Signals</span>
           </ion-col>
         </ion-row>
@@ -223,6 +214,84 @@
         </ion-row>
         <ion-row>
           <ion-col no-padding>
+            <div class="divider"></div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.clearance"></competency>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="only-top-padding">
+            <span class="section-header">Response to signs/signals</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.responseToSignsTrafficSigns"></competency>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.responseToSignsRoadMarkings"></competency>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.responseToSignsTrafficLights"></competency>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.responseToSignsTrafficControllers"></competency>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.responseToSignsOtherRoadUsers"></competency>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col no-padding>
+            <div class="divider"></div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.useOfSpeed"></competency>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col no-padding>
+            <div class="divider"></div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.followingDistance"></competency>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <!-- Column 3-->
+      <ion-col col-32>
+        <ion-row>
+          <ion-col class="only-top-padding">
+            <span class="section-header">Progress</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.progressAppropriateSpeed"></competency>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <competency [competency]="competencies.progressUndueHesitation"></competency>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="only-top-padding">
             <span class="section-header">Junctions</span>
           </ion-col>
         </ion-row>
@@ -252,7 +321,7 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col no-padding>
+          <ion-col class="only-top-padding">
             <span class="section-header">Judgement</span>
           </ion-col>
         </ion-row>
@@ -271,11 +340,8 @@
             <competency [competency]="competencies.judgementCrossing"></competency>
           </ion-col>
         </ion-row>
-      </ion-col>
-      <!-- Column 3-->
-      <ion-col col-32>
         <ion-row>
-          <ion-col no-padding>
+          <ion-col class="only-top-padding">
             <span class="section-header">Positioning</span>
           </ion-col>
         </ion-row>
@@ -290,7 +356,7 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col class="padding-top-22 only-top-padding">
+          <ion-col>
             <div class="dark-divider"></div>
           </ion-col>
         </ion-row>
@@ -300,18 +366,8 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col no-padding>
-            <div class="divider"></div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
           <ion-col>
             <competency [competency]="competencies.positionNormalStops"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col no-padding>
-            <div class="divider"></div>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -320,85 +376,23 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col no-padding>
-            <div class="divider"></div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
           <ion-col>
-            <competency [competency]="competencies.clearance"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col no-padding>
-            <div class="divider"></div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <competency [competency]="competencies.followingDistance"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col no-padding>
-            <div class="divider"></div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <competency [competency]="competencies.useOfSpeed"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col no-padding>
-            <span class="section-header">Progress</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <competency [competency]="competencies.progressAppropriateSpeed"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <competency [competency]="competencies.progressUndueHesitation"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col no-padding>
-            <span class="section-header">Response to signs/signals</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <competency [competency]="competencies.responseToSignsTrafficSigns"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <competency [competency]="competencies.responseToSignsRoadMarkings"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <competency [competency]="competencies.responseToSignsTrafficLights"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <competency [competency]="competencies.responseToSignsTrafficControllers"></competency>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <competency [competency]="competencies.responseToSignsOtherRoadUsers"></competency>
+            <competency [competency]="competencies.bends"></competency>
           </ion-col>
         </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div class="report-overlay report-overlay-modal" [class.contract]="isSeriousMode || isDangerousMode"
-    [class.show-overlay]="displayOverlay" [class.hide-overlay]="!displayOverlay"></div>
-  <div class="report-overlay report-overlay-remove" [class.contract]="isSeriousMode || isDangerousMode"
-    [class.show-overlay]="isRemoveFaultMode" [class.hide-overlay]="!isRemoveFaultMode"></div>
+  <div
+    class="report-overlay report-overlay-modal"
+    [class.contract]="isSeriousMode || isDangerousMode"
+    [class.show-overlay]="displayOverlay"
+    [class.hide-overlay]="!displayOverlay"
+  ></div>
+  <div
+    class="report-overlay report-overlay-remove"
+    [class.contract]="isSeriousMode || isDangerousMode"
+    [class.show-overlay]="isRemoveFaultMode"
+    [class.hide-overlay]="!isRemoveFaultMode"
+  ></div>
 </ion-content>

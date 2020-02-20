@@ -61,12 +61,12 @@ export class CommunicationAnalyticsEffects {
           select(getJournalData),
           select(getCandidate),
           select(getCandidateId),
-          ),
-          this.store$.pipe(
-            select(getTests),
-            select(getCurrentTest),
-            select(getTestCategory),
-          ),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestCategory),
+        ),
       ),
     )),
     switchMap((

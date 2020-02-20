@@ -20,6 +20,24 @@
     "privacyNotice": "Rwy'n cytuno i DVSA gasglu, defnyddio, storio a rhannu fy ngwybodaeth bersonol at ddibenion cynnal y prawf {{drivingOrRiding}}"
   },
   "debrief": {
+    "safetyAndBalanceQuestions": {
+      "SQ1": "Lefel olew",
+      "SQ2": "Corn yn gweithio",
+      "SQ3": "Hylif Brêc",
+      "SQ4": "Goleuadau",
+      "SQ5": "Goleuadau Brêc",
+      "SQ6": "Cadwyn",
+      "SQ7": "Llywio",
+      "SQ8": "Teiars",
+      "SQ9": "Brêc Blaen",
+      "SQ10": "Breciau",
+      "SQ11": "Switsh Torri Allan Injan",
+      "SQ12": "Golau Niwl",
+      "SQ13": "Wedi Gostwng / Prif Belydr ",
+      "BQ1": "Problemau teithwyr piliwn",
+      "BQ2": "Cludo teithiwr",
+      "BQ3": "Cydbwysedd gyda theithiwr"
+    },
     "showMeTellMeQuestions": {
       "B+E": {
         "T01": "Breciau",
@@ -285,6 +303,7 @@
       "forwardParkControl": "Parcio Ymlaen - dan reolaeth",
       "forwardParkObservation": "Parcio Ymlaen - gwyliadwriaeth",
       "vehicleChecks": "Gwirio’r cerbyd",
+      "safetyAndBalance": "Safety and balance questions",
       "controlledStop": "Stopio dan Reolaeth",
       "eyesightTest": "Prawf Golwg",
       "uncoupleRecouple": "Dadfachu / Ailfachu",

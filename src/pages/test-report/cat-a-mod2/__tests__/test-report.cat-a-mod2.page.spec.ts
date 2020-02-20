@@ -37,7 +37,7 @@ import { CAT_A_MOD2 } from '../../../page-names.constants';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
-import { VehicleChecksComponent } from '../components/vehicle-checks/vehicle-checks';
+import { SafetyAndBalanceComponent } from '../components/safety-and-balance/safety-and-balance';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('TestReportCatAMod2Page', () => {
@@ -56,7 +56,7 @@ describe('TestReportCatAMod2Page', () => {
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),
         MockComponent(EcoComponent),
-        MockComponent(VehicleChecksComponent),
+        MockComponent(SafetyAndBalanceComponent),
       ],
       imports: [
         IonicModule,

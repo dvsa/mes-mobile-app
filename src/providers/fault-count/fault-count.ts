@@ -33,6 +33,10 @@ export class FaultCountProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1: return FaultCountAM1Helper.getRidingFaultSumCountCatAM1(data);
+      case TestCategory.EUAM2:
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAMM2: return FaultCountAM2Helper.getRidingFaultSumCountCatAM2(data);
       case TestCategory.D1: return FaultCountDHelper.getDrivingFaultSumCountCatD1(data);
       case TestCategory.D1E: return FaultCountDHelper.getDrivingFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getDrivingFaultSumCountCatDE(data);
@@ -118,7 +122,10 @@ export class FaultCountProvider {
 
   public getSafetyAndBalanceFaultCount = (category: TestCategory, data: object): SafetyQuestionsScore => {
     switch (category) {
-      case TestCategory.EUAM2: return FaultCountAM2Helper.getSafetyAndBalanceFaultCountCatAM2(data);
+      case TestCategory.EUAM2:
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAMM2: return FaultCountAM2Helper.getSafetyAndBalanceFaultCountCatAM2(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }

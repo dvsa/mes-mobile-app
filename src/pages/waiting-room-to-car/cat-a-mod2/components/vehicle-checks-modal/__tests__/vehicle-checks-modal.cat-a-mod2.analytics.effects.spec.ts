@@ -13,7 +13,7 @@ import { VehicleChecksViewDidEnter } from '../vehicle-checks-modal.cat-a-mod2.ac
 import { AnalyticRecorded } from '../../../../../../providers/analytics/analytics.actions';
 import { AnalyticsEventCategories, AnalyticsScreenNames } from '../../../../../../providers/analytics/analytics.model';
 import * as SafetyAndBalanceQuestionsActions
-  from '../../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.actions';
+  from '../../../../../../modules/tests/test-data/cat-a-mod2/safety-and-balance/safety-and-balance.cat-a-mod2.actions';
 import {
   QuestionOutcome,
   QuestionResult,

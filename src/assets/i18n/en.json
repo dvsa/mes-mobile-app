@@ -20,6 +20,24 @@
     "privacyNotice": "I agree to DVSA collecting, using, storing and sharing my personal information for the purpose of carrying out the {{drivingOrRiding}} test."
   },
   "debrief": {
+    "safetyAndBalanceQuestions": {
+      "SQ1": "Oil level",
+      "SQ2": "Horn working",
+      "SQ3": "Brake Fluid",
+      "SQ4": "Lights",
+      "SQ5": "Brake Lights",
+      "SQ6": "Chain",
+      "SQ7": "Steering",
+      "SQ8": "Tyres",
+      "SQ9": "Front Brake",
+      "SQ10": "Brakes",
+      "SQ11": "Engine Cut Out Switch",
+      "SQ12": "Fog Light",
+      "SQ13": "Dipped / Main Beam",
+      "BQ1": "Pillion passenger problems",
+      "BQ2": "Carrying a passenger",
+      "BQ3": "Balance with passenger"
+    },
     "showMeTellMeQuestions": {
       "B+E": {
         "T01": "Brakes",
@@ -326,6 +344,7 @@
     "terminatedStatus": "Terminated",
     "title": "Debrief",
     "vehicleChecks": "Vehicle checks",
+    "safetyAndBalance": "Safety and balance questions",
     "speedRequirementsHeader": "Speed requirements",
     "avoidanceHeader": "Avoidance exercise",
     "emergencyStopHeader": "Emergency stop",

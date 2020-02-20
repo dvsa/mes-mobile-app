@@ -25,7 +25,7 @@ import {
   BALANCE_QUESTION_SELECTED,
   BalanceQuestionOutcomeChanged,
   BalanceQuestionSelected,
-} from '../../../../../modules/tests/test-data/cat-a-mod2/vehicle-checks/vehicle-checks.cat-a-mod2.actions';
+} from '../../../../../modules/tests/test-data/cat-a-mod2/safety-and-balance/safety-and-balance.cat-a-mod2.actions';
 
 @Injectable()
 export class VehicleChecksModalCatAMod2AnalyticsEffects {
