@@ -52,6 +52,9 @@ import * as singleFaultCompetencyActions from
   '../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 
+import * as pcvDoorExerciseActions from
+    '../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
+
 @Injectable()
 export class TestReportAnalyticsEffects {
 
@@ -1459,5 +1462,125 @@ export class TestReportAnalyticsEffects {
         );
         return of(new AnalyticRecorded());
       }),
+  );
+
+  @Effect()
+  pcvDoorExerciseAddDrivingFault$ = this.actions$.pipe(
+    ofType(pcvDoorExerciseActions.PCV_DOOR_EXERCISE_ADD_DRIVING_FAULT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [pcvDoorExerciseActions.PcvDoorExerciseAddDrivingFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_DRIVING_FAULT, tests),
+        fullCompetencyLabels.pcvDoorExercise,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  pcvDoorExerciseAddSeriousFault$ = this.actions$.pipe(
+    ofType(pcvDoorExerciseActions.PCV_DOOR_EXERCISE_ADD_SERIOUS_FAULT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [pcvDoorExerciseActions.PcvDoorExerciseAddSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_SERIOUS_FAULT, tests),
+        fullCompetencyLabels.pcvDoorExercise,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  pcvDoorExerciseAddDangerousFault$ = this.actions$.pipe(
+    ofType(pcvDoorExerciseActions.PCV_DOOR_EXERCISE_ADD_DANGEROUS_FAULT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [pcvDoorExerciseActions.PcvDoorExerciseAddDangerousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_DANGEROUS_FAULT, tests),
+        fullCompetencyLabels.pcvDoorExercise,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  pcvDoorExerciseRemoveDrivingFault$ = this.actions$.pipe(
+    ofType(pcvDoorExerciseActions.PCV_DOOR_EXERCISE_REMOVE_DRIVING_FAULT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [pcvDoorExerciseActions.PcvDoorExerciseRemoveDrivingFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DRIVING_FAULT, tests),
+        fullCompetencyLabels.pcvDoorExercise,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  pcvDoorExerciseRemoveSeriousFault$ = this.actions$.pipe(
+    ofType(pcvDoorExerciseActions.PCV_DOOR_EXERCISE_REMOVE_SERIOUS_FAULT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [pcvDoorExerciseActions.PcvDoorExerciseRemoveSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_SERIOUS_FAULT, tests),
+        fullCompetencyLabels.pcvDoorExercise,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  pcvDoorExerciseRemoveDangerousFault$ = this.actions$.pipe(
+    ofType(pcvDoorExerciseActions.PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [pcvDoorExerciseActions.PcvDoorExerciseRemoveDangerousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT, tests),
+        fullCompetencyLabels.pcvDoorExercise,
+      );
+      return of(new AnalyticRecorded());
+    }),
   );
 }
