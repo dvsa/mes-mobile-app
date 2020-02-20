@@ -100,6 +100,7 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
   merged$: Observable<string>;
   transmission: GearboxCategory;
   subscription: Subscription;
+  passCertificateNumberLabel: string = "Pass certificate number";
 
   constructor(
     store$: Store<StoreModel>,

@@ -40,6 +40,7 @@
 
         <pass-certificate-number
           [form]="form"
+          [passCertificateNumberLabel]="'Mod 2 Pass certificate number'"
           [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
           (passCertificateNumberChange)="passCertificateNumberChanged($event)">
         </pass-certificate-number>

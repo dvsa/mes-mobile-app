@@ -41,6 +41,7 @@
         <pass-certificate-number
           [form]="form"
           [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
+          [passCertificateNumberLabel]="'Pass certificate number'"
           (passCertificateNumberChange)="passCertificateNumberChanged($event)">
         </pass-certificate-number>
 
