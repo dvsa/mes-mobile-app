@@ -1,7 +1,6 @@
 import { passCompletionCatAMod1Reducer, initialState } from '../pass-completion.cat-a-mod1.reducer';
 import {
   PassCertificateNumberChanged,
-
 } from '../../pass-completion.actions';
 
 describe('pass completion reducer', () => {
