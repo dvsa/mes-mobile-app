@@ -34,6 +34,9 @@ export class LicenseProvidedComponent implements OnChanges {
   @Output()
   licenseReceived = new EventEmitter<ProvisionalLicenseReceived>();
 
+  @Input()
+  licenseReceivedLabel: string;
+
   @Output()
   licenseNotReceived = new EventEmitter<ProvisionalLicenseNotReceived>();
 

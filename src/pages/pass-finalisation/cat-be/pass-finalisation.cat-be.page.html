@@ -25,6 +25,7 @@
         <license-provided
           [form]="form"
           [license]="pageState.provisionalLicense$ | async"
+          [licenseReceivedLabel] = "'Licence Received'"
           (licenseReceived)="provisionalLicenseReceived()"
           (licenseNotReceived)="provisionalLicenseNotReceived()">
         </license-provided>
@@ -41,7 +42,6 @@
         <pass-certificate-number
           [form]="form"
           [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
-          [passCertificateNumberLabel]="'Pass certificate number'"
           (passCertificateNumberChange)="passCertificateNumberChanged($event)">
         </pass-certificate-number>
 

@@ -1,10 +1,11 @@
 import * as passCompletionActions from '../pass-completion.actions';
 
 import { createFeatureSelector } from '@ngrx/store';
-import { PassCompletion } from '@dvsa/mes-test-schema/categories/AM1';
+import { PassCompletion } from '@dvsa/mes-test-schema/categories/AM2';
 
 export const initialState: PassCompletion = {
   passCertificateNumber: null,
+  provisionalLicenceProvided: null,
 };
 
 export const passCompletionCatAMod1Reducer = (state = initialState, action: passCompletionActions.Types) => {
@@ -13,6 +14,16 @@ export const passCompletionCatAMod1Reducer = (state = initialState, action: pass
       return {
         ...state,
         passCertificateNumber: action.passCertificateNumber,
+      };
+    case passCompletionActions.PROVISIONAL_LICENSE_RECEIVED:
+      return {
+        ...state,
+        provisionalLicenceProvided: true,
+      };
+    case passCompletionActions.PROVISIONAL_LICENSE_NOT_RECEIVED:
+      return {
+        ...state,
+        provisionalLicenceProvided: false,
       };
     default:
       return state;

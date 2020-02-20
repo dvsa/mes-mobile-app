@@ -23,9 +23,6 @@ export class PassCertificateNumberComponent implements OnChanges {
   @Input()
   form: FormGroup;
 
-  @Input()
-  passCertificateNumberLabel: string;
-
   @Output()
   passCertificateNumberChange = new EventEmitter<string>();
 
