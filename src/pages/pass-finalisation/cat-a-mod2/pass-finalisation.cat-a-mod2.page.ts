@@ -12,15 +12,14 @@ import {
   ProvisionalLicenseNotReceived,
   PassCertificateNumberChanged,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
-import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
+import { getPassCompletion } from
+'../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
-
-// TODO - PREP-AMOD2 - implement category specific reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
@@ -35,9 +34,8 @@ import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-
-// TODO - PREP-AMOD2 - Implement category specific reducer
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
+import { getVehicleDetails } from
+'../../../modules/tests/vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.reducer';
 import { getGearboxCategory } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { CAT_A_MOD2 } from '../../page-names.constants';
@@ -50,9 +48,7 @@ import {
   DebriefUnwitnessed,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-
-// TODO - PREP-AMOD2 - Implement category specific behaviour map
-import { behaviourMap } from '../../office/office-behaviour-map.cat-be';
+import { behaviourMap } from '../../office/office-behaviour-map.cat-a-mod2';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
   CandidateChoseToProceedWithTestInWelsh,
@@ -70,6 +66,7 @@ import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { merge } from 'rxjs/observable/merge';
 import { TransmissionType } from '../../../shared/models/transmission-type';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -236,8 +233,8 @@ export class PassFinalisationCatAMod2Page extends BasePageComponent {
   isWelshChanged(isWelsh: boolean) {
     this.store$.dispatch(
       isWelsh ?
-        new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
-        : new CandidateChoseToProceedWithTestInEnglish('English'),
+        new CandidateChoseToProceedWithTestInWelsh(Language.CYMRAEG)
+        : new CandidateChoseToProceedWithTestInEnglish(Language.ENGLISH),
     );
   }
 

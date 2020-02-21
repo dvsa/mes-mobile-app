@@ -10,10 +10,11 @@ import {
 import {
   PassCertificateNumberChanged,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
-import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
+import { getPassCompletion } from
+'../../../modules/tests/pass-completion/cat-a-mod1/pass-completion.cat-a-mod1.reducer';
 import {
   getPassCertificateNumber,
-} from '../../../modules/tests/pass-completion/pass-completion.selector';
+} from '../../../modules/tests/pass-completion/cat-a-mod1/pass-completion.cat-a-mod1.selector';
 import { Observable } from 'rxjs/Observable';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {

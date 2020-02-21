@@ -18,7 +18,7 @@ import { testDataCatAMod1Reducer } from './test-data/cat-a-mod1/test-data.cat-a-
 import { vehicleDetailsCatAMod1Reducer } from './vehicle-details/cat-a-mod1/vehicle-details.cat-a-mod1.reducer';
 import { preTestDeclarationsCatAMod1Reducer } from
 './pre-test-declarations/cat-a-mod1/pre-test-declarations.cat-a-mod1.reducer';
-import { passCompletionCatAMod1Reducer } from './pass-completion/cat-a-mod1/pass-completionl.cat-a-mod1.reducer';
+import { passCompletionCatAMod1Reducer } from './pass-completion/cat-a-mod1/pass-completion.cat-a-mod1.reducer';
 import { testSummaryMod1Reducer } from './test-summary/cat-a-mod1/test-summary.cat-a-mod1.reducer';
 
 export function testsCatAMod1Reducer(

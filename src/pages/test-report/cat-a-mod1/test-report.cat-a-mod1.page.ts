@@ -15,9 +15,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { StoreModel } from '../../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
-
-// TODO - PREP-AMOD1: Use cat amod1 reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   TestReportViewDidEnter, TerminateTestFromTestReport, CalculateTestResult,
 } from '../test-report.actions';
