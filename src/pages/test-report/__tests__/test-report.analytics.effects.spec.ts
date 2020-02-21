@@ -68,7 +68,6 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import * as pcvDoorExerciseActions from
     '../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
 
-
 describe('Test Report Analytics Effects', () => {
 
   let effects: TestReportAnalyticsEffects;
