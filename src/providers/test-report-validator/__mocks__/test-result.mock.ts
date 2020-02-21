@@ -1,3 +1,4 @@
+import { TestData as CatAMod2TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
@@ -10,6 +11,39 @@ import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
 import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
+
+export const validTestCatAMod2: CatAMod2TestData = {
+  testRequirements: {
+    angledStart: true,
+    hillStart: true,
+    normalStart1: true,
+    normalStart2: true,
+  },
+  safetyAndBalanceQuestions: {
+    safetyQuestions: [
+      {
+        code: 'S03',
+        description: 'Mock safety question number 1.',
+        outcome: CompetencyOutcome.P,
+      },
+      {
+        code: 'S04',
+        description: 'Mock safety question number 2.',
+        outcome: CompetencyOutcome.P,
+      },
+    ],
+    balanceQuestions: [
+      {
+        code: 'B03',
+        description: 'Mock balance question.',
+        outcome: CompetencyOutcome.P,
+      },
+    ],
+  },
+  eco: {
+    completed: true,
+  },
+};
 
 export const validTestCatB: CatBUniqueTypes.TestData = {
   testRequirements: {
@@ -198,6 +232,15 @@ export const validTestCatD1E: CatD1EUniqueTypes.TestData = {
     selected: true,
   },
 };
+
+export const legalRequirementsAMod2 = [
+  legalRequirementsLabels.normalStart1,
+  legalRequirementsLabels.normalStart2,
+  legalRequirementsLabels.angledStart,
+  legalRequirementsLabels.hillStart,
+  legalRequirementsLabels.safetyAndBalanceQuestions,
+  legalRequirementsLabels.eco,
+];
 
 export const legalRequirementsB = [
   legalRequirementsLabels.normalStart1,
