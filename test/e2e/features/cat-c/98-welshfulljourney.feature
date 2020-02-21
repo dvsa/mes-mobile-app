@@ -18,6 +18,7 @@ Feature: Full Welsh end to end journey for category C
         Then I should see the Debrief page with outcome "Wedi pasio"
         When I end the welsh debrief
         Then I should see the "Test debrief - Luella Lowery" page
+        And I select the code 78 option
         And I complete the pass details
         Then I should see the "Ôl-drafodaeth y prawf - Luella Lowery" page
         And I complete the health declaration
