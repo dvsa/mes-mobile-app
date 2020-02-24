@@ -2083,7 +2083,7 @@ describe('Test Report Analytics Effects', () => {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_DRIVING_FAULT,
           fullCompetencyLabels.pcvDoorExercise,
-          1,
+
         );
         done();
       });
@@ -2101,28 +2101,27 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_DRIVING_FAULT}`,
           fullCompetencyLabels.pcvDoorExercise,
-          1,
         );
         done();
       });
     });
   });
 
-  describe('pcvDoorExerciseAddSeriousFault', () => {
+  describe('PcvDoorExerciseSeriousDrivingFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456, TestCategory.D));
       // ACT
       actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseAddSeriousFault());
       // ASSERT
-      effects.pcvDoorExerciseAddDrivingFault$.subscribe((result) => {
+      effects.pcvDoorExerciseAddSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_SERIOUS_FAULT,
           fullCompetencyLabels.pcvDoorExercise,
-          1,
+
         );
         done();
       });
@@ -2133,14 +2132,13 @@ describe('Test Report Analytics Effects', () => {
       // ACT
       actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseAddSeriousFault());
       // ASSERT
-      effects.pcvDoorExerciseAddDrivingFault$.subscribe((result) => {
+      effects.pcvDoorExerciseAddSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_SERIOUS_FAULT}`,
           fullCompetencyLabels.pcvDoorExercise,
-          1,
         );
         done();
       });
@@ -2161,7 +2159,6 @@ describe('Test Report Analytics Effects', () => {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_DANGEROUS_FAULT,
            fullCompetencyLabels.pcvDoorExercise,
-          1,
         );
         done();
       });
@@ -2179,7 +2176,6 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_DANGEROUS_FAULT}`,
            fullCompetencyLabels.pcvDoorExercise,
-          1,
         );
         done();
       });
@@ -2200,7 +2196,6 @@ describe('Test Report Analytics Effects', () => {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DRIVING_FAULT,
           fullCompetencyLabels.pcvDoorExercise,
-          1,
         );
         done();
       });
@@ -2218,28 +2213,26 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DRIVING_FAULT}`,
           fullCompetencyLabels.pcvDoorExercise,
-          1,
         );
         done();
       });
     });
   });
 
-  describe('pcvDoorExerciseRemoveSeriousFault', () => {
+  describe('pcvDoorExerciseRemoveSeriousFaultX', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456, TestCategory.D));
       // ACT
       actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseRemoveSeriousFault());
       // ASSERT
-      effects.pcvDoorExerciseRemoveDrivingFault$.subscribe((result) => {
+      effects.pcvDoorExerciseRemoveSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_SERIOUS_FAULT,
           fullCompetencyLabels.pcvDoorExercise,
-          1,
         );
         done();
       });
@@ -2250,14 +2243,13 @@ describe('Test Report Analytics Effects', () => {
       // ACT
       actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseRemoveSeriousFault());
       // ASSERT
-      effects.pcvDoorExerciseRemoveDrivingFault$.subscribe((result) => {
+      effects.pcvDoorExerciseRemoveSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_SERIOUS_FAULT}`,
           fullCompetencyLabels.pcvDoorExercise,
-          1,
         );
         done();
       });
@@ -2278,7 +2270,6 @@ describe('Test Report Analytics Effects', () => {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT,
           fullCompetencyLabels.pcvDoorExercise,
-          1,
         );
         done();
       });
@@ -2296,7 +2287,6 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT}`,
           fullCompetencyLabels.pcvDoorExercise,
-          1,
         );
         done();
       });
