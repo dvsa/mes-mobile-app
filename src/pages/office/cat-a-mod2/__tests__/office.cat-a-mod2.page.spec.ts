@@ -17,7 +17,9 @@ import {
 } from 'ionic-mocks';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { AppModule } from '../../../../app/app.module';
+import { TranslateModule } from 'ng2-translate';
 import { OfficeCatAMod2Page } from '../office.cat-a-mod2.page';
+import { SafetyAndBalanceCardCatAMod2Component } from '../components/safety-and-balance/safety-and-balance.cat-a-mod2';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
@@ -77,6 +79,7 @@ describe('OfficePage', () => {
     TestBed.configureTestingModule({
       declarations: [
         OfficeCatAMod2Page,
+        SafetyAndBalanceCardCatAMod2Component,
         MockComponent(RouteNumberComponent),
         MockComponent(CandidateDescriptionComponent),
         MockComponent(IdentificationComponent),
@@ -99,7 +102,7 @@ describe('OfficePage', () => {
             testStatus: {},
             startedTests: {
               123: {
-                category: TestCategory.BE, // TODO - PREP-AMOD2: update to cat a mod 2
+                category: TestCategory.EUA2M2,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
@@ -136,6 +139,7 @@ describe('OfficePage', () => {
             },
           }),
         }),
+        TranslateModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },

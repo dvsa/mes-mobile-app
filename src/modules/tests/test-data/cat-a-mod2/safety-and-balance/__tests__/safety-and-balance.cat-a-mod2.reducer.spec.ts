@@ -7,6 +7,7 @@ import {
   SafetyQuestionOutcomeChanged,
   BalanceQuestionSelected,
   BalanceQuestionOutcomeChanged,
+  AddSafetyAndBalanceComment,
 } from '../safety-and-balance.cat-a-mod2.actions';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
@@ -63,6 +64,15 @@ describe('Vehicle Checks Cat A Mod2 Reducer', () => {
       };
       const result = safetyAndBalanceCatAMod2Reducer(state, new BalanceQuestionOutcomeChanged('DF', 1));
       expect(result.balanceQuestions[1].outcome).toEqual('DF');
+    });
+  });
+
+  describe('ADD_SAFETY_AND_BALANCE_COMMENT' , () => {
+    it('should update the safety and balance comments', () => {
+      const state: SafetyAndBalanceQuestions = cloneDeep(initialState);
+      const result = safetyAndBalanceCatAMod2Reducer(state, new AddSafetyAndBalanceComment('Fell over twice.'));
+
+      expect(result.safetyComments).toEqual('Fell over twice.');
     });
   });
 });

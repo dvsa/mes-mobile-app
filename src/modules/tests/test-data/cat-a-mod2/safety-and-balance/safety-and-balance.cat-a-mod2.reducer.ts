@@ -54,15 +54,10 @@ export function safetyAndBalanceCatAMod2Reducer(
             : item,
         ),
       };
-    case vehicleChecksCatAMod2ActionTypes.ADD_SAFETY_COMMENT:
+    case vehicleChecksCatAMod2ActionTypes.ADD_SAFETY_AND_BALANCE_COMMENT:
       return {
         ...state,
         safetyComments: action.comment,
-      };
-    case vehicleChecksCatAMod2ActionTypes.ADD_BALANCE_COMMENT:
-      return {
-        ...state,
-        balanceComments: action.comment,
       };
     default:
       return state;

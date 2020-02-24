@@ -129,49 +129,46 @@
       </ion-card>
 
       <fault-comment-card
+        faultType="dangerous"
+        header="Dangerous faults"
         [formGroup]="form"
         [faultComments]="pageState.dangerousFaults$ | async"
         [shouldRender]="(pageState.dangerousFaults$ | async).length > 0 && pageState.displayDangerousFault$ | async"
         [outcome]="pageState.testOutcome$ | async"
-        faultType="dangerous"
-        header="Dangerous faults"
         [maxFaultCount]="maxFaultCount"
         (faultCommentsChange)="dangerousFaultCommentChanged($event)"
-      >
-      </fault-comment-card>
+      ></fault-comment-card>
 
       <fault-comment-card
+        faultType="serious"
+        header="Serious faults"
         [formGroup]="form"
         [faultComments]="pageState.seriousFaults$ | async"
         [shouldRender]="(pageState.seriousFaults$ | async).length > 0  && pageState.displaySeriousFault$ | async"
         [outcome]="pageState.testOutcome$ | async"
         [maxFaultCount]="maxFaultCount"
-        faultType="serious"
-        header="Serious faults"
         (faultCommentsChange)="seriousFaultCommentChanged($event)"
-      >
-      </fault-comment-card>
+      ></fault-comment-card>
 
       <fault-comment-card
         id="driving-fault-comment-card"
+        faultType="driving"
+        header="Riding faults"
         [formGroup]="form"
         [faultComments]="pageState.drivingFaults$ | async"
         [shouldRender]="(pageState.displayDrivingFaultComments$ | async) && (pageState.displayDrivingFault$ | async)"
         [outcome]="pageState.testOutcome$ | async"
         [maxFaultCount]="maxFaultCount"
-        faultType="driving"
-        header="Driving faults"
         [faultCount]="pageState.drivingFaultCount$ | async"
         (faultCommentsChange)="drivingFaultCommentChanged($event)"
-      >
-      </fault-comment-card>
+      ></fault-comment-card>
 
       <ion-card
         id="driving-fault-no-commentary"
         *ngIf="!(pageState.displayDrivingFaultComments$ | async) && (pageState.drivingFaultCount$ | async) > 0 && pageState.displayDrivingFault$ | async"
       >
         <ion-card-header>
-          <h4>Rider faults</h4>
+          <h4>Riding faults</h4>
         </ion-card-header>
         <ion-card-content>
           <ion-row

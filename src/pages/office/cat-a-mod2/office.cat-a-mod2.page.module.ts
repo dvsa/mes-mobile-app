@@ -5,12 +5,15 @@ import { EffectsModule } from '@ngrx/effects';
 import { OfficeAnalyticsEffects } from '../office.analytics.effects';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { OfficeComponentsModule } from '../components/office.components.module';
+import { TranslateModule } from 'ng2-translate';
+import { SafetyAndBalanceCardCatAMod2Component } from './components/safety-and-balance/safety-and-balance.cat-a-mod2';
 import { OfficeEffects } from '../office.effects';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 
 @NgModule({
   declarations: [
     OfficeCatAMod2Page,
+    SafetyAndBalanceCardCatAMod2Component,
   ],
   imports: [
     IonicPageModule.forChild(OfficeCatAMod2Page),
@@ -20,6 +23,7 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
     ]),
     ComponentsModule,
     OfficeComponentsModule,
+    TranslateModule,
   ],
   providers: [
     FaultSummaryProvider,
