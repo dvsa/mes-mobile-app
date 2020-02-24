@@ -65,6 +65,9 @@ import * as singleFaultCompetencyActions
   from '../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
+import * as pcvDoorExerciseActions from
+    '../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
+
 describe('Test Report Analytics Effects', () => {
 
   let effects: TestReportAnalyticsEffects;
@@ -2060,6 +2063,230 @@ describe('Test Report Analytics Effects', () => {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_SERIOUS_SINGLE_FAULT,
           fullCompetencyLabels.slalom,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('PcvDoorExerciseAddDrivingFault', () => {
+    it('should call logEvent for this competency', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.D));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseAddDrivingFault());
+      // ASSERT
+      effects.pcvDoorExerciseAddDrivingFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_DRIVING_FAULT,
+          fullCompetencyLabels.pcvDoorExercise,
+
+        );
+        done();
+      });
+    });
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseAddDrivingFault());
+      // ASSERT
+      effects.pcvDoorExerciseAddDrivingFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_DRIVING_FAULT}`,
+          fullCompetencyLabels.pcvDoorExercise,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('PcvDoorExerciseSeriousDrivingFault', () => {
+    it('should call logEvent for this competency', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.D));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseAddSeriousFault());
+      // ASSERT
+      effects.pcvDoorExerciseAddSeriousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_SERIOUS_FAULT,
+          fullCompetencyLabels.pcvDoorExercise,
+
+        );
+        done();
+      });
+    });
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseAddSeriousFault());
+      // ASSERT
+      effects.pcvDoorExerciseAddSeriousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_SERIOUS_FAULT}`,
+          fullCompetencyLabels.pcvDoorExercise,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('pcvDoorExerciseAddDangerousFault', () => {
+    it('should call logEvent for this competency', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.D));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseAddDangerousFault());
+      // ASSERT
+      effects.pcvDoorExerciseAddDangerousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_DANGEROUS_FAULT,
+           fullCompetencyLabels.pcvDoorExercise,
+        );
+        done();
+      });
+    });
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseAddDangerousFault());
+      // ASSERT
+      effects.pcvDoorExerciseAddDangerousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_ADD_DANGEROUS_FAULT}`,
+           fullCompetencyLabels.pcvDoorExercise,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('PcvDoorExerciseRemoveDrivingFault', () => {
+    it('should call logEvent for this competency', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.D));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseRemoveDrivingFault());
+      // ASSERT
+      effects.pcvDoorExerciseRemoveDrivingFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DRIVING_FAULT,
+          fullCompetencyLabels.pcvDoorExercise,
+        );
+        done();
+      });
+    });
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseRemoveDrivingFault());
+      // ASSERT
+      effects.pcvDoorExerciseRemoveDrivingFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DRIVING_FAULT}`,
+          fullCompetencyLabels.pcvDoorExercise,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('pcvDoorExerciseRemoveSeriousFaultX', () => {
+    it('should call logEvent for this competency', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.D));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseRemoveSeriousFault());
+      // ASSERT
+      effects.pcvDoorExerciseRemoveSeriousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_SERIOUS_FAULT,
+          fullCompetencyLabels.pcvDoorExercise,
+        );
+        done();
+      });
+    });
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseRemoveSeriousFault());
+      // ASSERT
+      effects.pcvDoorExerciseRemoveSeriousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_SERIOUS_FAULT}`,
+          fullCompetencyLabels.pcvDoorExercise,
+        );
+        done();
+      });
+    });
+  });
+
+  describe('pcvDoorExerciseRemoveDangerousFault', () => {
+    it('should call logEvent for this competency', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.D));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseRemoveDangerousFault());
+      // ASSERT
+      effects.pcvDoorExerciseRemoveDangerousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT,
+          fullCompetencyLabels.pcvDoorExercise,
+        );
+        done();
+      });
+    });
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseRemoveDangerousFault());
+      // ASSERT
+      effects.pcvDoorExerciseRemoveDangerousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT}`,
+          fullCompetencyLabels.pcvDoorExercise,
         );
         done();
       });

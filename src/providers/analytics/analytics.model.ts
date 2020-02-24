@@ -139,6 +139,14 @@ export enum AnalyticsEvents {
   EMERGENCY_STOP_SERIOUS_FAULT_MODAL_OPENED = 'emergency stop serious fault model opened',
   REMOVE_EMERGENCY_STOP_DANGEROUS_FAULT = 'remove dangerous fault',
   REMOVE_EMERGENCY_STOP_SERIOUS_FAULT = 'remove serious fault',
+
+  PCV_DOOR_EXERCISE_ADD_DRIVING_FAULT = 'add driving fault',
+  PCV_DOOR_EXERCISE_ADD_SERIOUS_FAULT = 'add serious fault',
+  PCV_DOOR_EXERCISE_ADD_DANGEROUS_FAULT = 'add dangerous fault',
+  PCV_DOOR_EXERCISE_REMOVE_DRIVING_FAULT = 'remove driving fault',
+  PCV_DOOR_EXERCISE_REMOVE_SERIOUS_FAULT = 'remove serious fault',
+  PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT = 'remove dangerous fault',
+
   REMOVE_SERIOUS_AVOIDANCE_FAULT = 'remove serious fault',
   REMOVE_DANGEROUS_AVOIDANCE_FAULT = 'remove dangerous fault',
   ADD_DANGEROUS_SINGLE_FAULT = 'add dangerous fault',
