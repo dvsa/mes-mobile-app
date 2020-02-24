@@ -96,6 +96,10 @@ import {
   CANDIDATE_DESCRIPTION_MAX_LENGTH,
   CANDIDATE_DESCRIPTION_CONTROL,
 } from '../components/candidate-description/candidate-description.constants';
+import {
+  AddSingleFaultCompetencyComment,
+} from '../../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
+import { SingleFaultCompetencyNames } from '../../../modules/tests/test-data/test-data.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -436,7 +440,9 @@ export class OfficeCatAMod1Page extends BasePageComponent {
         new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
       );
     } else if (dangerousFaultComment.source === CommentSource.SINGLE_FAULT_COMPETENCY) {
-      console.log('Single fault competency');
+      this.store$.dispatch(new AddSingleFaultCompetencyComment(
+        dangerousFaultComment.competencyIdentifier as SingleFaultCompetencyNames, dangerousFaultComment.comment),
+      );
     }
   }
 
@@ -446,7 +452,9 @@ export class OfficeCatAMod1Page extends BasePageComponent {
         new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
       );
     } else if (seriousFaultComment.source === CommentSource.SINGLE_FAULT_COMPETENCY) {
-      console.log('Single fault competency');
+      this.store$.dispatch(new AddSingleFaultCompetencyComment(
+        seriousFaultComment.competencyIdentifier as SingleFaultCompetencyNames, seriousFaultComment.comment),
+      );
     }
   }
 
@@ -456,7 +464,9 @@ export class OfficeCatAMod1Page extends BasePageComponent {
         new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
       );
     } else if (drivingFaultComment.source === CommentSource.SINGLE_FAULT_COMPETENCY) {
-      console.log('Single fault competency');
+      this.store$.dispatch(new AddSingleFaultCompetencyComment(
+        drivingFaultComment.competencyIdentifier as SingleFaultCompetencyNames, drivingFaultComment.comment),
+      );
     }
   }
 
