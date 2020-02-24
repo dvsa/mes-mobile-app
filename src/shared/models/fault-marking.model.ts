@@ -16,6 +16,7 @@ export enum CommentSource {
   PCV_DOOR_EXERCISE = 'pcvDoorExercise',
   SAFETY_QUESTIONS = 'safetyQuestions',
   SINGLE_FAULT_COMPETENCY = 'singleFaultCompetency',
+  SPEED_REQUIREMENTS = 'speedRequirements',
 }
 
 export enum CompetencyIdentifiers {

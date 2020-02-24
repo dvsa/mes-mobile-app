@@ -1,4 +1,4 @@
-import { FaultSummary } from '../../../shared/models/fault-marking.model';
+import { FaultSummary, CommentSource } from '../../../shared/models/fault-marking.model';
 import { TestData, SingleFaultCompetencies, Avoidance, EmergencyStop } from '@dvsa/mes-test-schema/categories/AM1';
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 import { get, pickBy, startsWith } from 'lodash';
@@ -77,8 +77,10 @@ export class FaultSummaryCatAM1Helper {
   public static getSpeedCheckAvoidance(avoidance: Avoidance): FaultSummary[] {
     const result = [];
     if (get(avoidance, 'speedNotMetSeriousFault')) {
+      const source = `${CommentSource.SPEED_REQUIREMENTS}-${Competencies.speedCheckAvoidance}`;
+
       result.push(FaultSummaryCatAM1Helper.createFaultSummary(
-        Competencies.speedCheckAvoidance, fullCompetencyLabels.speedCheckAvoidance, avoidance.comments));
+        Competencies.speedCheckAvoidance, fullCompetencyLabels.speedCheckAvoidance, avoidance.comments, source));
     }
 
     return result;
@@ -87,8 +89,10 @@ export class FaultSummaryCatAM1Helper {
   public static getSpeedCheckEmergencyStop(emergencyStop: EmergencyStop): FaultSummary[] {
     const result = [];
     if (get(emergencyStop, 'speedNotMetSeriousFault')) {
+      const source = `${CommentSource.SPEED_REQUIREMENTS}-${Competencies.speedCheckEmergency}`;
+
       result.push(FaultSummaryCatAM1Helper.createFaultSummary(
-        Competencies.speedCheckEmergency, fullCompetencyLabels.speedCheckEmergency, emergencyStop.comments));
+        Competencies.speedCheckEmergency, fullCompetencyLabels.speedCheckEmergency, emergencyStop.comments, source));
     }
 
     return result;
@@ -114,11 +118,13 @@ export class FaultSummaryCatAM1Helper {
 
   public static createFaultSummary(competencyIdentifier: string,
                                    competencyName: string,
-                                   competencyComments: string): FaultSummary {
+                                   competencyComments: string,
+                                   source: string = CommentSource.SIMPLE): FaultSummary {
     return {
       competencyIdentifier,
+      source,
       competencyDisplayName: competencyName,
-      comment: competencyComments,
+      comment: competencyComments || '',
       faultCount: 1,
     };
   }

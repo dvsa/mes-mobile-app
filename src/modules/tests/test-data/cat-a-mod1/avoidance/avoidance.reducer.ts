@@ -56,6 +56,11 @@ export function avoidanceReducer(
         ...state,
         outcome: undefined,
       };
+    case avoidanceActions.ADD_AVOIDANCE_COMMENT:
+      return {
+        ...state,
+        comments: action.comment,
+      };
     default:
       return state;
   }

@@ -3,11 +3,13 @@ import { catAM1TestDataStateObject } from './cat-AM1-test-data-mock';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
 import { fullCompetencyLabels } from '../../../../shared/constants/competencies/competencies';
+import { CommentSource } from '../../../../shared/models/fault-marking.model';
 
 describe('FaultSummaryCatAM1Helper', () => {
 
   const expectedEmergencyStopFault = [
     {
+      source: CommentSource.SIMPLE,
       competencyIdentifier: Competencies.emergencyStop,
       competencyDisplayName: fullCompetencyLabels.emergencyStop,
       comment: 'comment1',
@@ -17,6 +19,7 @@ describe('FaultSummaryCatAM1Helper', () => {
 
   const expectedAvoidanceFault = [
     {
+      source: CommentSource.SIMPLE,
       competencyIdentifier: Competencies.avoidance,
       competencyDisplayName: fullCompetencyLabels.avoidance,
       comment: 'comment2',
