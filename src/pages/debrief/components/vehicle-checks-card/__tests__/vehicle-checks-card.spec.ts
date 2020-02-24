@@ -10,11 +10,13 @@ import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import * as englishTranslations from '../../../../../assets/i18n/en.json';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { VehicleChecksCardMock } from '../__mocks__/vehicle-checks-card.mock';
 
 describe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardComponent>;
   let component: VehicleChecksCardComponent;
   let translate: TranslateService;
+  const mockFile: VehicleChecksCardMock = VehicleChecksCardMock.getInstance();
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -44,6 +46,13 @@ describe('VehicleChecksCardComponent', () => {
 
   describe('DOM', () => {
     describe('Vehicle check reporting', () => {
+      it('should remove any SMTM questions which have no outcome provided', () => {
+        component.category = TestCategory.BE;
+        // 2 questions are provided with an outcome here.
+        component.tellMeShowMeQuestions = mockFile.getMalformedVehicleChecks();
+        component.ngOnInit();
+        expect(component.tellMeShowMeQuestions.length).toEqual(2);
+      });
       it('should show results', () => {
         component.category = TestCategory.BE;
         component.tellMeShowMeQuestions = [
