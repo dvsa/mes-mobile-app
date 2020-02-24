@@ -19,10 +19,8 @@ export class VehicleChecksCardComponent implements OnInit {
   questionHasFault = (result: QuestionResult): boolean => result.outcome !== CompetencyOutcome.P;
 
   ngOnInit(): void {
-    this.tellMeShowMeQuestions.forEach((value: QuestionResult, index: number, array: QuestionResult[]): void => {
-      if (!value.hasOwnProperty('outcome')) {
-        this.tellMeShowMeQuestions.splice(index, 1);
-      }
+    this.tellMeShowMeQuestions = this.tellMeShowMeQuestions.filter((result: QuestionResult) => {
+      return result.hasOwnProperty('outcome');
     });
   }
 }
