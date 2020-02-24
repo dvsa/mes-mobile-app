@@ -1,7 +1,7 @@
 import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { TestData, SingleFaultCompetencies, Avoidance, EmergencyStop } from '@dvsa/mes-test-schema/categories/AM1';
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
-import { get, pickBy } from 'lodash';
+import { get, pickBy, startsWith } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { Competencies } from '../../../modules/tests/test-data/test-data.constants';
 import { fullCompetencyLabels } from '../../../shared/constants/competencies/competencies';
@@ -10,9 +10,10 @@ export class FaultSummaryCatAM1Helper {
 
   public static getDrivingFaultsCatAM1(data: TestData): FaultSummary[] {
 
-    const singleFaultCompetenciesWithDrivingFaults: SingleFaultCompetencies = pickBy(
-      data.singleFaultCompetencies, val => val === CompetencyOutcome.DF,
-    );
+    const singleFaultCompetenciesWithDrivingFaults: SingleFaultCompetencies = FaultSummaryCatAM1Helper
+      .matchCompetenciesIncludingComments(
+        data.singleFaultCompetencies, CompetencyOutcome.DF,
+      );
 
     return [
       ...getCompetencyFaults(data.drivingFaults),
@@ -23,9 +24,11 @@ export class FaultSummaryCatAM1Helper {
   }
 
   public static getSeriousFaultsCatAM1(data: TestData): FaultSummary[] {
-    const singleFaultCompetenciesWithSeriousFaults: SingleFaultCompetencies = pickBy(
-      data.singleFaultCompetencies, val => val === CompetencyOutcome.S,
-    );
+
+    const singleFaultCompetenciesWithSeriousFaults: SingleFaultCompetencies = FaultSummaryCatAM1Helper
+      .matchCompetenciesIncludingComments(
+        data.singleFaultCompetencies, CompetencyOutcome.S,
+      );
 
     return [
       ...getCompetencyFaults(data.seriousFaults),
@@ -38,9 +41,10 @@ export class FaultSummaryCatAM1Helper {
   }
 
   public static getDangerousFaultsCatAM1(data: TestData): FaultSummary[] {
-    const singleFaultCompetenciesWithDangerousFaults: SingleFaultCompetencies = pickBy(
-      data.singleFaultCompetencies, val => val === CompetencyOutcome.D,
-    );
+    const singleFaultCompetenciesWithDangerousFaults: SingleFaultCompetencies = FaultSummaryCatAM1Helper
+     .matchCompetenciesIncludingComments(
+        data.singleFaultCompetencies, CompetencyOutcome.D,
+      );
 
     return [
       ...getCompetencyFaults(data.dangerousFaults),
@@ -88,6 +92,24 @@ export class FaultSummaryCatAM1Helper {
     }
 
     return result;
+  }
+
+  public static matchCompetenciesIncludingComments(
+    singleFaultCompetencies: SingleFaultCompetencies,
+    outcome: CompetencyOutcome,
+  ): Partial<SingleFaultCompetencies> {
+
+    const matchedCompetencies = pickBy(singleFaultCompetencies, val => val === outcome);
+    const matchedComments = pickBy(
+      singleFaultCompetencies,
+      (val, key) => Object.keys(matchedCompetencies).filter(val => startsWith(key, val)).length > 0,
+    );
+
+    return {
+      ...matchedCompetencies,
+      ...matchedComments,
+    };
+
   }
 
   public static createFaultSummary(competencyIdentifier: string,
