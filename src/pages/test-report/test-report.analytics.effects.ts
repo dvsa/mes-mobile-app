@@ -49,7 +49,7 @@ import * as activityCodeActions from '../../modules/tests/activity-code/activity
 import * as testReportCatAMod1Actions from './cat-a-mod1/test-report.cat-a-mod1.actions';
 import { ModalReason } from './cat-a-mod1/components/activity-code-4-modal/activity-code-4-modal.constants';
 import * as singleFaultCompetencyActions from
-  '../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
+  '../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 
 @Injectable()

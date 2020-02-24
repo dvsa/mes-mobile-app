@@ -16,7 +16,7 @@ import {
   SetSingleFaultCompetencyOutcome,
   RemoveSingleDangerousFaultCompetencyOutcome,
   RemoveSingleSeriousFaultCompetencyOutcome,
-} from '../../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
+} from '../../../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
@@ -26,7 +26,7 @@ import {
   hasCompetencyDrivingFault,
   hasCompetencySeriousFault,
   hasCompetencyDangerousFault,
-} from '../../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.selector';
+} from '../../../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.selector';
 import { competencyLabels } from '../../../../shared/constants/competencies/competencies';
 
 interface SingleFaultCompetencyState {
