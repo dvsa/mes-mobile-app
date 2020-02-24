@@ -441,8 +441,9 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       );
     } else if (dangerousFaultComment.source === CommentSource.SINGLE_FAULT_COMPETENCY) {
       this.store$.dispatch(new AddSingleFaultCompetencyComment(
-        dangerousFaultComment.competencyIdentifier as SingleFaultCompetencyNames, dangerousFaultComment.comment),
-      );
+        dangerousFaultComment.competencyIdentifier as SingleFaultCompetencyNames,
+        dangerousFaultComment.comment,
+      ));
     }
   }
 
@@ -453,8 +454,9 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       );
     } else if (seriousFaultComment.source === CommentSource.SINGLE_FAULT_COMPETENCY) {
       this.store$.dispatch(new AddSingleFaultCompetencyComment(
-        seriousFaultComment.competencyIdentifier as SingleFaultCompetencyNames, seriousFaultComment.comment),
-      );
+        seriousFaultComment.competencyIdentifier as SingleFaultCompetencyNames,
+        seriousFaultComment.comment,
+      ));
     }
   }
 
@@ -465,7 +467,8 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       );
     } else if (drivingFaultComment.source === CommentSource.SINGLE_FAULT_COMPETENCY) {
       this.store$.dispatch(new AddSingleFaultCompetencyComment(
-        drivingFaultComment.competencyIdentifier as SingleFaultCompetencyNames, drivingFaultComment.comment),
+        drivingFaultComment.competencyIdentifier as SingleFaultCompetencyNames,
+        drivingFaultComment.comment),
       );
     }
   }
