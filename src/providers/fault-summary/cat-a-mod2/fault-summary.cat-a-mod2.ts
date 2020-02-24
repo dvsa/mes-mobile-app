@@ -58,7 +58,7 @@ export class FaultSummaryCatAM2Helper {
         competencyDisplayName: CompetencyDisplayName.SAFETY_AND_BALANCE_QUESTIONS,
         competencyIdentifier: 'safetyAndBalanceQuestions',
         source: CommentSource.SAFETY_AND_BALANCE_QUESTIONS,
-        comment: safetyAndBalance.safetyComments || '',
+        comment: safetyAndBalance.safetyAndBalanceComments || '',
         faultCount: 1,
       }];
     }
