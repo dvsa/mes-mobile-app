@@ -26,6 +26,10 @@ Before({ tags: '@catce' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catc1e' }, () => {
+  this.testCategory = 'c';
+});
+
 When('the candidate enters a new email address', () => {
   const newEmailRadio = getElement(by.id('newEmail'));
   clickElement(newEmailRadio);
@@ -39,10 +43,18 @@ When('the candidate requests to receive results by post', () => {
 });
 
 When(/^the candidate confirms their (communication preference|declaration)$/, (pageName) => {
+  console.log('page name', pageName);
+  console.log('--------------------------------------------------------------------------------');
   const pageType = (pageName === 'communication preference' ? `communication-cat-${this.testCategory}-page`
   : `waiting-room-cat-${this.testCategory}-page`);
+  console.log('pageType', pageType);
+  console.log('--------------------------------------------------------------------------------');
+
   const continueButton = getElement(
     by.xpath(`//div[contains(@class, '${pageType}')]//button[@id = 'continue-button']`));
+  console.log('continue button', continueButton);
+  console.log('--------------------------------------------------------------------------------');
+
   clickElement(continueButton);
 });
 
@@ -58,7 +70,8 @@ When('the candidate completes the declaration page', () => {
 When('I proceed to the car', () => {
   // Examiner clicks continue button then enters passcode
   const continueButton = getElement(by.xpath(
-    `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
+    `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id ="continue-button"]`));
+
   clickElement(continueButton);
   enterPasscode();
 });
