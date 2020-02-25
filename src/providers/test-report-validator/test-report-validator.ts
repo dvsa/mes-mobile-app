@@ -10,6 +10,7 @@ import { FaultCountProvider } from '../fault-count/fault-count';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { TestData } from '@dvsa/mes-test-schema/categories/common';
 import { TestData as CatAMod1TestData } from '@dvsa/mes-test-schema/categories/AM1';
+import { TestData as CatAMod2TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import {
   hasManoeuvreBeenCompletedCatB,
   hasVehicleChecksBeenCompletedCatB,
@@ -74,6 +75,11 @@ export class TestReportValidatorProvider {
         return this.getMissingLegalRequirementsCatDE(data);
       case TestCategory.D1E:
         return this.getMissingLegalRequirementsCatD1E(data);
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAM2:
+      case TestCategory.EUAMM2:
+        return this.getMissingLegalRequirementsCatEUAM2(data);
       default:
         return [];
     }
@@ -430,6 +436,22 @@ export class TestReportValidatorProvider {
     !get(data, 'uncoupleRecouple.selected' , false)
       && result.push(legalRequirementsLabels.uncoupleRecouple);
 
+    return result;
+  }
+
+  private getMissingLegalRequirementsCatEUAM2(data: CatAMod2TestData): legalRequirementsLabels[] {
+    const result: legalRequirementsLabels[] = [];
+
+    !get(data, 'testRequirements.normalStart1', false)
+    && result.push(legalRequirementsLabels.normalStart1);
+    !get(data, 'testRequirements.normalStart2', false)
+    && result.push(legalRequirementsLabels.normalStart2);
+    !get(data, 'testRequirements.uphillStart', false)
+    && result.push(legalRequirementsLabels.uphillStart);
+    !get(data, 'testRequirements.angledStartControlledStop', false)
+    && result.push(legalRequirementsLabels.angledStartControlledStop);
+    !get(data, 'eco.completed', false)
+    && result.push(legalRequirementsLabels.eco);
     return result;
   }
 }

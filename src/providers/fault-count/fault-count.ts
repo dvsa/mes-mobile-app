@@ -57,6 +57,10 @@ export class FaultCountProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1: return FaultCountAM1Helper.getSeriousFaultSumCountCatAM1(data);
+      case TestCategory.EUAM2:
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAMM2: return FaultCountAM2Helper.getSeriousFaultSumCountCatAM2(data);
       case TestCategory.D1: return FaultCountDHelper.getSeriousFaultSumCountCatD1(data);
       case TestCategory.D1E: return FaultCountDHelper.getSeriousFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getSeriousFaultSumCountCatDE(data);
@@ -77,6 +81,10 @@ export class FaultCountProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1: return FaultCountAM1Helper.getDangerousFaultSumCountCatAM1(data);
+      case TestCategory.EUAM2:
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAMM2: return FaultCountAM2Helper.getDangerousFaultSumCountCatAM2(data);
       case TestCategory.D1: return FaultCountDHelper.getDangerousFaultSumCountCatD1(data);
       case TestCategory.D1E: return FaultCountDHelper.getDangerousFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getDangerousFaultSumCountCatDE(data);

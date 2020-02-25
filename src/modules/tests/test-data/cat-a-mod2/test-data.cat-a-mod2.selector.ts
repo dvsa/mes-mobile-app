@@ -69,3 +69,5 @@ export const haveSafetyAndBalanceQuestionsBeenCompleted = (data: SafetyAndBalanc
 
   return (safetyQuestionComplete && balanceQuestionComplete);
 };
+
+export const getTestRequirements = (data: TestData) => data.testRequirements;

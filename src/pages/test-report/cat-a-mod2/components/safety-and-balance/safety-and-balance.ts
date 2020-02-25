@@ -22,7 +22,7 @@ interface ComponentState {
 })
 export class SafetyAndBalanceComponent implements OnInit {
   componentState: ComponentState;
-  category: TestCategory = TestCategory.EUAM1;
+  category: TestCategory = TestCategory.EUAM2;
 
   constructor(
     private store$: Store<StoreModel>,

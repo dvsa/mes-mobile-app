@@ -11,7 +11,8 @@ import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
-import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
+import { TestData as TestDataAM1 } from '@dvsa/mes-test-schema/categories/AM1';
+import { TestData as TestDataAM2 } from '@dvsa/mes-test-schema/categories/AM2';
 import { getSpeedRequirementNotMet } from '../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.selector';
 import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
@@ -38,7 +39,12 @@ export class TestResultProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
-        return this.calculateCatAAndSubCategoryTestResult(TestCategory.EUAM1, testData as TestData);
+        return this.calculateCatEUAM1AndSubCategoryTestResult(TestCategory.EUAM1, testData as TestDataAM1);
+      case TestCategory.EUAM2:
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAMM2:
+        return this.calculateCatEUAM2AndSubCategoryTestResult(TestCategory.EUAM2, testData as TestDataAM2);
       case TestCategory.D:
       case TestCategory.D1:
       case TestCategory.DE:
@@ -107,13 +113,30 @@ export class TestResultProvider {
     return of(ActivityCodes.PASS);
   }
 
-  private calculateCatAAndSubCategoryTestResult = (
+  private calculateCatEUAM1AndSubCategoryTestResult = (
     category: TestCategory,
-    testData: TestData,
+    testData: TestDataAM1,
   ): Observable<ActivityCode> => {
     if (getSpeedRequirementNotMet(testData)) {
       return of(ActivityCodes.FAIL_PUBLIC_SAFETY);
     }
+    if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+    if (this.faultCountProvider.getSeriousFaultSumCount(category, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) >= 6) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    return of(ActivityCodes.PASS);
+  }
+
+  private calculateCatEUAM2AndSubCategoryTestResult = (
+    category: TestCategory,
+    testData: TestDataAM2,
+  ): Observable<ActivityCode> => {
     if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }

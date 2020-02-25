@@ -10,7 +10,7 @@ import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.
 import { SafetyQuestionsScore } from '../../../shared/models/safety-questions-score.model';
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 
-export class FaultCountDHelper {
+export class  FaultCountDHelper {
 
   public static getDangerousFaultSumCountCatD = (data: CatDUniqueTypes.TestData): number => {
     return FaultCountDHelper.getDangerousFaultSumCountNonTrailer(data);
