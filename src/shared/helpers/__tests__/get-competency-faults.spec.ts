@@ -24,7 +24,7 @@ describe('calculateFaultCount', () => {
   });
 
 });
-fdescribe('getCompetencyFaults', () => {
+describe('getCompetencyFaults', () => {
   it('should return an empty FaultSummary when no driving faults', () => {
     const drivingFaults: DrivingFaults = {};
 
