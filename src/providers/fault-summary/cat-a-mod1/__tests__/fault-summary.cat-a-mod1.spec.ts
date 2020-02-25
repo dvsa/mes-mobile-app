@@ -138,4 +138,28 @@ describe('FaultSummaryCatAM1Helper', () => {
       )).toEqual([]);
     });
   });
+
+  describe('matchCompetenciesIncludingComments', () => {
+    it('should match competencies with its corresponding comments', () => {
+      const { singleFaultCompetencies } = catAM1TestDataStateObject;
+      const expected = {
+        slowControl: CompetencyOutcome.S,
+        slowControlComments: 'slowControlComments',
+        controlledStop: CompetencyOutcome.S,
+        controlledStopComments: 'controlledStopComments',
+      };
+      const result = FaultSummaryCatAM1Helper.matchCompetenciesIncludingComments(
+        singleFaultCompetencies,
+        CompetencyOutcome.S,
+      );
+      expect(result).toEqual(expected);
+    });
+    it('should get called whenever the helper\'s main methods are used', () => {
+      spyOn(FaultSummaryCatAM1Helper, 'matchCompetenciesIncludingComments').and.callThrough();
+      FaultSummaryCatAM1Helper.getDrivingFaultsCatAM1(catAM1TestDataStateObject);
+      FaultSummaryCatAM1Helper.getSeriousFaultsCatAM1(catAM1TestDataStateObject);
+      FaultSummaryCatAM1Helper.getDangerousFaultsCatAM1(catAM1TestDataStateObject);
+      expect(FaultSummaryCatAM1Helper.matchCompetenciesIncludingComments).toHaveBeenCalledTimes(3);
+    });
+  });
 });
