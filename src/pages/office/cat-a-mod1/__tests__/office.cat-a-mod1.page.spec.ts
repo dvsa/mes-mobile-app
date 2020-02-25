@@ -288,7 +288,7 @@ describe('OfficeAMod1Page', () => {
         });
       });
 
-      it('should dispatch the correecnt action when a fault comment is added', () => {
+      it('should dispatch the correct action when a fault comment is added to a single fault competency', () => {
         const seriousFaultSummary: FaultSummary = {
           competencyIdentifier: 'useOfStand',
           competencyDisplayName: 'test',
