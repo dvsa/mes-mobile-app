@@ -27,7 +27,7 @@ import {
   SetSingleFaultCompetencyOutcome,
   RemoveSingleSeriousFaultCompetencyOutcome,
   RemoveSingleDangerousFaultCompetencyOutcome,
-} from '../../../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
+} from '../../../../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
 import { ToggleSeriousFaultMode, ToggleRemoveFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 

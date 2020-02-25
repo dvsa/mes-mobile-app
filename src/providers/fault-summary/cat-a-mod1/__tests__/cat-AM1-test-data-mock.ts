@@ -8,8 +8,11 @@ export const catAM1TestDataStateObject: TestData = {
     manualHandling: CompetencyOutcome.DF,
     slalom: CompetencyOutcome.D,
     slowControl: CompetencyOutcome.S,
+    slowControlComments: 'slowControlComments',
     uTurn: CompetencyOutcome.D,
+    uTurnComments: 'uTurnComments',
     controlledStop: CompetencyOutcome.S,
+    controlledStopComments: 'controlledStopComments',
   },
   emergencyStop: {
     outcome: CompetencyOutcome.D,

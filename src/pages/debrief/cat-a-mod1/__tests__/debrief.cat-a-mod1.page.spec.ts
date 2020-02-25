@@ -36,7 +36,7 @@ import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { MockComponent } from 'ng-mocks';
 import { SpeedCheckDebriefCardComponent } from '../components/speed-check-debrief-card/speed-check-debrief-card';
 import { SetSingleFaultCompetencyOutcome }
-  from '../../../../modules/tests/test-data/cat-a-mod1/single-fault-competencies/single-fault-competencies.actions';
+  from '../../../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { fullCompetencyLabels } from '../../../../shared/constants/competencies/competencies';
 

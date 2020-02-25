@@ -31,7 +31,11 @@ import {
 } from '../../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFault } from '../../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { EyesightTestFailed } from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
-import { ExaminerActions, Competencies } from '../../../../modules/tests/test-data/test-data.constants';
+import {
+  ExaminerActions,
+  Competencies,
+  SingleFaultCompetencyNames,
+} from '../../../../modules/tests/test-data/test-data.constants';
 import { By } from '@angular/platform-browser';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import {
@@ -48,7 +52,7 @@ import { AdditionalInformationComponent } from '../../components/additional-info
 import { IdentificationComponent } from '../../components/identification/identification';
 import { IndependentDrivingComponent } from '../../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../../components/fault-comment-card/fault-comment-card';
-import { FaultSummary } from '../../../../shared/models/fault-marking.model';
+import { FaultSummary, CommentSource } from '../../../../shared/models/fault-marking.model';
 import { ActivityCodeComponent } from '../../components/activity-code/activity-code';
 import {
   ActivityCodeModel,
@@ -67,7 +71,9 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { configureTestSuite } from 'ng-bullet';
 import { CircuitComponent } from '../components/circuit/circuit';
 import { SpeedCheckDebriefCardComponent }
-from '../../../debrief/cat-a-mod1/components/speed-check-debrief-card/speed-check-debrief-card';
+  from '../../../debrief/cat-a-mod1/components/speed-check-debrief-card/speed-check-debrief-card';
+import { AddSingleFaultCompetencyComment }
+  from '../../../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
 
 describe('OfficeAMod1Page', () => {
   let fixture: ComponentFixture<OfficeCatAMod1Page>;
@@ -107,7 +113,10 @@ describe('OfficeAMod1Page', () => {
                 accompaniment: {},
                 testData: {
                   ETA: {},
-                  singleFaultCompetencies: {},
+                  singleFaultCompetencies: {
+                    useOfStand: 'S',
+                    useOfStandComments: 'example comment',
+                  },
                   dangerousFaults: {},
                   seriousFaults: {},
                   drivingFaults: {},
@@ -256,8 +265,8 @@ describe('OfficeAMod1Page', () => {
       });
     });
 
-    describe('driving fault commentary', () => {
-      it('should pass whether to render driving fault commentary to fault-comment-card', () => {
+    describe('Fault comments', () => {
+      it('should pass whether to render driving fault comments to fault-comment-card', () => {
         const drivingFaultCommentCard: FaultCommentCardComponent = fixture.debugElement
           .query(By.css('#driving-fault-comment-card')).componentInstance;
         fixture.detectChanges();
@@ -269,6 +278,39 @@ describe('OfficeAMod1Page', () => {
         component.pageState.displayDrivingFaultComments$ = of(false);
         fixture.detectChanges();
         expect(drivingFaultCommentCard.shouldRender).toBeFalsy();
+      });
+
+      it('should set the correct seriousFaults$ value in order to render serious fault comments', (done) => {
+        fixture.detectChanges();
+        const expected = [{
+          comment: 'example comment',
+          faultCount: 1,
+          competencyIdentifier: 'useOfStand',
+          competencyDisplayName: 'Use of stand',
+          source: 'singleFaultCompetency',
+        }];
+
+        component.pageState.seriousFaults$.subscribe((result) => {
+          expect(result).toEqual(expected);
+          done();
+        });
+      });
+
+      it('should dispatch the correct action when a fault comment is added to a single fault competency', () => {
+        const seriousFaultSummary: FaultSummary = {
+          competencyIdentifier: 'useOfStand',
+          competencyDisplayName: 'test',
+          source: CommentSource.SINGLE_FAULT_COMPETENCY,
+          faultCount: 1,
+          comment: 'testComment',
+        };
+        fixture.detectChanges();
+        component.seriousFaultCommentChanged(seriousFaultSummary);
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new AddSingleFaultCompetencyComment(
+            SingleFaultCompetencyNames.useOfStand,
+            'testComment',
+          ));
       });
     });
 

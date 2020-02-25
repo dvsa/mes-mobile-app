@@ -72,13 +72,10 @@ import {
 } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-import { AddManoeuvreComment } from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map.cat-a-mod1';
 import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
-import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
-import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_A_MOD1, JOURNAL_PAGE } from '../../page-names.constants';
@@ -99,6 +96,10 @@ import {
   CANDIDATE_DESCRIPTION_MAX_LENGTH,
   CANDIDATE_DESCRIPTION_CONTROL,
 } from '../components/candidate-description/candidate-description.constants';
+import {
+  AddSingleFaultCompetencyComment,
+} from '../../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
+import { SingleFaultCompetencyNames } from '../../../modules/tests/test-data/test-data.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -438,18 +439,11 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       this.store$.dispatch(
         new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
       );
-    } else if (startsWith(dangerousFaultComment.source, CommentSource.MANOEUVRES)) {
-      const segments = dangerousFaultComment.source.split('-');
-      const fieldName = segments[1];
-      const controlOrObservation = segments[2];
-      this.store$.dispatch(
-        new AddManoeuvreComment(
-          fieldName,
-          CompetencyOutcome.D,
-          controlOrObservation,
-          dangerousFaultComment.comment),
-      );
-
+    } else if (dangerousFaultComment.source === CommentSource.SINGLE_FAULT_COMPETENCY) {
+      this.store$.dispatch(new AddSingleFaultCompetencyComment(
+        dangerousFaultComment.competencyIdentifier as SingleFaultCompetencyNames,
+        dangerousFaultComment.comment,
+      ));
     }
   }
 
@@ -458,17 +452,11 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       this.store$.dispatch(
         new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
       );
-    } else if (startsWith(seriousFaultComment.source, CommentSource.MANOEUVRES)) {
-      const segments = seriousFaultComment.source.split('-');
-      const fieldName = segments[1];
-      const controlOrObservation = segments[2];
-      this.store$.dispatch(
-        new AddManoeuvreComment(
-          fieldName,
-          CompetencyOutcome.S,
-          controlOrObservation,
-          seriousFaultComment.comment),
-      );
+    } else if (seriousFaultComment.source === CommentSource.SINGLE_FAULT_COMPETENCY) {
+      this.store$.dispatch(new AddSingleFaultCompetencyComment(
+        seriousFaultComment.competencyIdentifier as SingleFaultCompetencyNames,
+        seriousFaultComment.comment,
+      ));
     }
   }
 
@@ -477,18 +465,11 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       this.store$.dispatch(
         new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
       );
-    } else if (startsWith(drivingFaultComment.source, CommentSource.MANOEUVRES)) {
-      const segments = drivingFaultComment.source.split('-');
-      const fieldName = segments[1];
-      const controlOrObservation = segments[2];
-      this.store$.dispatch(
-        new AddManoeuvreComment(
-          fieldName,
-          CompetencyOutcome.DF,
-          controlOrObservation,
-          drivingFaultComment.comment),
+    } else if (drivingFaultComment.source === CommentSource.SINGLE_FAULT_COMPETENCY) {
+      this.store$.dispatch(new AddSingleFaultCompetencyComment(
+        drivingFaultComment.competencyIdentifier as SingleFaultCompetencyNames,
+        drivingFaultComment.comment),
       );
-
     }
   }
 
