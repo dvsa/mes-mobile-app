@@ -2,6 +2,9 @@ import { DrivingFaults, SeriousFaults, DangerousFaults } from '@dvsa/mes-test-sc
 import { getCompetencyFaults, calculateFaultCount } from '../get-competency-faults';
 import { Competencies } from '../../../modules/tests/test-data/test-data.constants';
 import { fullCompetencyLabels } from '../../constants/competencies/competencies';
+import { SingleFaultCompetencies } from '@dvsa/mes-test-schema/categories/AM1';
+import { CompetencyOutcome } from '../../models/competency-outcome';
+import { CommentSource } from '../../models/fault-marking.model';
 
 // note: although competency labels come from a file called catb-competencies, these are in fact
 // common to all competencies
@@ -43,11 +46,11 @@ describe('getCompetencyFaults', () => {
   });
 
   it('should return a FaultSummary containing the driving faults', () => {
-    const drivingFaults: DrivingFaults =
-      { controlsAccelerator: 4,
-        controlsClutch: 3,
-        ancillaryControls: 2,
-      };
+    const drivingFaults: DrivingFaults = {
+      controlsAccelerator: 4,
+      controlsClutch: 3,
+      ancillaryControls: 2,
+    };
 
     const result = getCompetencyFaults(drivingFaults);
 
@@ -79,11 +82,11 @@ describe('getCompetencyFaults', () => {
   });
 
   it('should return a FaultSummary containing the serious faults', () => {
-    const seriousFaults: SeriousFaults =
-      { controlsAccelerator: true,
-        controlsClutch: true,
-        ancillaryControls: true,
-      };
+    const seriousFaults: SeriousFaults = {
+      controlsAccelerator: true,
+      controlsClutch: true,
+      ancillaryControls: true,
+    };
 
     const result = getCompetencyFaults(seriousFaults);
 
@@ -115,11 +118,11 @@ describe('getCompetencyFaults', () => {
   });
 
   it('should return a FaultSummary containing the dangerous faults', () => {
-    const dangerousFaults: DangerousFaults =
-      { controlsAccelerator: true,
-        controlsClutch: true,
-        ancillaryControls: true,
-      };
+    const dangerousFaults: DangerousFaults = {
+      controlsAccelerator: true,
+      controlsClutch: true,
+      ancillaryControls: true,
+    };
 
     const result = getCompetencyFaults(dangerousFaults);
 
@@ -148,6 +151,24 @@ describe('getCompetencyFaults', () => {
         competencyDisplayName: fullCompetencyLabels.ancillaryControls,
         source: 'simple',
       });
+  });
+
+  it('should set the source value correctly if it is a single fault competency', () => {
+    const faults: DrivingFaults | SingleFaultCompetencies = {
+      controlsAccelerator: 1,
+      controlsClutch: 2,
+      useOfStand: CompetencyOutcome.S,
+    };
+
+    const result = getCompetencyFaults(faults);
+
+    expect(result).toContain({
+      comment: null,
+      faultCount: 1,
+      competencyIdentifier: 'useOfStand',
+      competencyDisplayName: fullCompetencyLabels.useOfStand,
+      source: CommentSource.SINGLE_FAULT_COMPETENCY,
+    });
   });
 
 });

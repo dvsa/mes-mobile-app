@@ -15,6 +15,7 @@ export enum CommentSource {
   UNCOUPLE_RECOUPLE = 'uncoupleRecouple',
   PCV_DOOR_EXERCISE = 'pcvDoorExercise',
   SAFETY_QUESTIONS = 'safetyQuestions',
+  SINGLE_FAULT_COMPETENCY = 'singleFaultCompetency',
 }
 
 export enum CompetencyIdentifiers {

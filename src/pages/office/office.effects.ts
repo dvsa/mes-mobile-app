@@ -6,6 +6,8 @@ import * as dangerousFaultsActions
   from '../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import * as seriousFaultsActions from '../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import * as drivingFaultsActions from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
+import * as singleFaultCompetencyActions
+  from '../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
 import * as testSummaryActions from '../../modules/tests/test-summary/common/test-summary.actions';
 import * as officeActions from './office.actions';
 import * as testStatusActions from '../../modules/tests/test-status/test-status.actions';
@@ -29,6 +31,7 @@ export class OfficeEffects {
       dangerousFaultsActions.ADD_DANGEROUS_FAULT_COMMENT,
       seriousFaultsActions.ADD_SERIOUS_FAULT_COMMENT,
       drivingFaultsActions.ADD_DRIVING_FAULT_COMMENT,
+      singleFaultCompetencyActions.ADD_SINGLE_FAULT_COMPETENCY_COMMENT,
       testSummaryActions.DEBRIEF_WITNESSED,
       testSummaryActions.DEBRIEF_UNWITNESSED,
       testSummaryActions.IDENTIFICATION_USED_CHANGED,

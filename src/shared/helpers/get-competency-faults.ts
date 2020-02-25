@@ -15,7 +15,10 @@ export const getCompetencyFaults = (
   forOwn(
     faults,
     (value: number | boolean | CompetencyOutcome, key: string, obj: DrivingFaults| SeriousFaults | DangerousFaults) => {
+
       const faultCount = calculateFaultCount(value);
+      const isSingleFaultCompetency: boolean = competencyOutcomes.includes(value as CompetencyOutcome);
+
       if (faultCount > 0  && !key.endsWith(CompetencyIdentifiers.COMMENTS_SUFFIX)) {
         const label = key as keyof typeof fullCompetencyLabels;
         const comment = obj[`${key}${CompetencyIdentifiers.COMMENTS_SUFFIX}`] || null;
@@ -24,7 +27,7 @@ export const getCompetencyFaults = (
           faultCount,
           competencyIdentifier: key,
           competencyDisplayName: fullCompetencyLabels[label],
-          source: CommentSource.SIMPLE,
+          source: isSingleFaultCompetency ? CommentSource.SINGLE_FAULT_COMPETENCY : CommentSource.SIMPLE,
         };
         faultsEncountered.push(faultSummary);
       }
