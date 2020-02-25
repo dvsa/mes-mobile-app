@@ -116,7 +116,7 @@ describe('OutcomeBehaviourMapProvider', () => {
         expect(candidate).toBe('Y');
         expect(debrief).toBe('Y');
         expect(identification).toBe('Y');
-        expect(vehicleChecks).toBe('Y');
+        expect(vehicleChecks).toBe('A');
         expect(weather).toBe('Y');
         expect(d255).toBe('Y');
         expect(additional).toBe('Y');
@@ -138,13 +138,12 @@ describe('OutcomeBehaviourMapProvider', () => {
       });
     });
     describe('outcome 11', () => {
-      it(`should return visibility Y for all fields but eta,faultComment and eco`, () => {
+      it(`should return visibility Y for all fields but eta,faultComment, vehicleChecks and eco`, () => {
         const route = outcomeBehaviourMapProvider.getVisibilityType('11', 'routeNumber');
         const independent = outcomeBehaviourMapProvider.getVisibilityType('11', 'independentDriving');
         const candidate = outcomeBehaviourMapProvider.getVisibilityType('11', 'candidateDescription');
         const debrief = outcomeBehaviourMapProvider.getVisibilityType('11', 'debriefWitnessed');
         const identification = outcomeBehaviourMapProvider.getVisibilityType('11', 'identification');
-        const vehicleChecks = outcomeBehaviourMapProvider.getVisibilityType('11', 'vehicleChecks');
         const weather = outcomeBehaviourMapProvider.getVisibilityType('11', 'weatherConditions');
         const d255 = outcomeBehaviourMapProvider.getVisibilityType('11', 'd255');
         const additional = outcomeBehaviourMapProvider.getVisibilityType('11', 'additionalInformation');
@@ -154,7 +153,6 @@ describe('OutcomeBehaviourMapProvider', () => {
         expect(candidate).toBe('Y');
         expect(debrief).toBe('Y');
         expect(identification).toBe('Y');
-        expect(vehicleChecks).toBe('Y');
         expect(weather).toBe('Y');
         expect(d255).toBe('Y');
         expect(additional).toBe('Y');
@@ -307,7 +305,7 @@ describe('OutcomeBehaviourMapProvider', () => {
         expect(faultComment).toBe('N');
         expect(eco).toBe('N');
       });
-      it(`should return visibility Y for all other fields`, () => {
+      it(`should return visibility Y or A for all other fields`, () => {
         const route = outcomeBehaviourMapProvider.getVisibilityType('23', 'routeNumber');
         const independent = outcomeBehaviourMapProvider.getVisibilityType('23', 'independentDriving');
         const candidate = outcomeBehaviourMapProvider.getVisibilityType('23', 'candidateDescription');
@@ -323,7 +321,7 @@ describe('OutcomeBehaviourMapProvider', () => {
         expect(candidate).toBe('Y');
         expect(debrief).toBe('Y');
         expect(identification).toBe('Y');
-        expect(vehicleChecks).toBe('Y');
+        expect(vehicleChecks).toBe('A');
         expect(weather).toBe('Y');
         expect(d255).toBe('Y');
         expect(additional).toBe('Y');
