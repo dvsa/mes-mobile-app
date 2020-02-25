@@ -74,7 +74,6 @@ export class TestResultProvider {
   }
 
   private calculateCatBETestResult = (testData: CatBEUniqueTypes.TestData): Observable<ActivityCode> => {
-
     if (this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
@@ -97,7 +96,6 @@ export class TestResultProvider {
       CatC1EUniqueTypes.TestData |
       CatC1UniqueTypes.TestData,
   ): Observable<ActivityCode> => {
-
     if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
@@ -157,7 +155,6 @@ export class TestResultProvider {
       CatD1EUniqueTypes.TestData |
       CatD1UniqueTypes.TestData,
   ): Observable<ActivityCode> => {
-
     if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }

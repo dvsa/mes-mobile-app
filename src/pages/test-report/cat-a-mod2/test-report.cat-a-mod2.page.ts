@@ -175,8 +175,6 @@ export class TestReportCatAMod2Page extends BasePageComponent {
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       testData$.pipe(
         map((data) => {
-
-          // TODO - PREP-AMOD2: Use a mod2 test category
           this.isTestReportValid =
             this.testReportValidatorProvider.isTestReportValid(data, TestCategory.EUAM2);
           this.missingLegalRequirements =
