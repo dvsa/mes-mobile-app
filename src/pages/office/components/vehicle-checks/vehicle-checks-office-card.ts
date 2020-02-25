@@ -14,4 +14,9 @@ export class VehicleChecksOfficeCardComponent {
     checks: QuestionResult[];
 
   questionHasFault = (result: QuestionResult): boolean => result.outcome !== CompetencyOutcome.P;
+  ngOnInit(): void {
+    this.checks = this.checks.filter((result: QuestionResult) => {
+      return result.hasOwnProperty('outcome');
+    });
+  }
 }
