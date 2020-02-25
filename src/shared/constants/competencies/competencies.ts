@@ -48,8 +48,8 @@ export enum fullCompetencyLabels {
   slowControl = 'Slow control',
   controlledStop = 'Controlled stop',
   uTurn = '\'U\' Turn Exercise',
-  emergencyStop = 'Speed check emergency',
-  avoidance = 'Speed check avoidance',
+  emergencyStop = 'Emergency stop',
+  avoidance = 'Avoidance',
   speedCheckEmergency = 'Speed Requirement - Emergency Stop',
   speedCheckAvoidance = 'Speed Requirement - Avoidance',
 }
