@@ -282,8 +282,16 @@ describe('OfficeAMod1Page', () => {
 
       it('should set the correct seriousFaults$ value in order to render serious fault comments', (done) => {
         fixture.detectChanges();
+        const expected = [{
+          comment: 'example comment',
+          faultCount: 1,
+          competencyIdentifier: 'useOfStand',
+          competencyDisplayName: 'Use of stand',
+          source: 'singleFaultCompetency',
+        }];
+
         component.pageState.seriousFaults$.subscribe((result) => {
-          expect(result.length > 0).toBe(true);
+          expect(result).toEqual(expected);
           done();
         });
       });
