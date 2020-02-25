@@ -31,7 +31,7 @@ Before({ tags: '@catc1' }, () => {
 });
 
 Before({ tags: '@catc1e' }, () => {
-  this.testCategory = 'c';
+  this.testCategory = 'ce';
 });
 
 When('I select a tell me question', () => {

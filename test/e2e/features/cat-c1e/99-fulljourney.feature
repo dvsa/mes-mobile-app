@@ -16,12 +16,11 @@ Feature: Full end to end journey for C1E
     Then I should see the reversing diagram modal
     And I close the reversing diagram modal
     Then I close the revresing diagram drop down
-    And I complete the test
+    And I complete the test with uncouple recouple
     And I continue to debrief
     Then I should see the Debrief page with outcome "Passed"
     When I end the debrief
     Then I should see the "Test debrief - Denny Carlson" page
-    And  I select the code 78 option
     And I complete the pass details
     And I complete the health declaration
     Then I am on the back to office page

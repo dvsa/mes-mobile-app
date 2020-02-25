@@ -37,7 +37,7 @@ Before({ tags: '@catce' }, () => {
 });
 
 Before({ tags: '@catc1e' }, () => {
-  this.testCategory = 'c';
+  this.testCategory = 'ce';
 });
 
 // We need this much timeout for the login process to complete

@@ -43,17 +43,11 @@ When('the candidate requests to receive results by post', () => {
 });
 
 When(/^the candidate confirms their (communication preference|declaration)$/, (pageName) => {
-  console.log('page name', pageName);
-  console.log('--------------------------------------------------------------------------------');
   const pageType = (pageName === 'communication preference' ? `communication-cat-${this.testCategory}-page`
   : `waiting-room-cat-${this.testCategory}-page`);
-  console.log('pageType', pageType);
-  console.log('--------------------------------------------------------------------------------');
 
   const continueButton = getElement(
     by.xpath(`//div[contains(@class, '${pageType}')]//button[@id = 'continue-button']`));
-  console.log('continue button', continueButton);
-  console.log('--------------------------------------------------------------------------------');
 
   clickElement(continueButton);
 });
