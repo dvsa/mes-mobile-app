@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CategoryCode, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
@@ -6,7 +6,7 @@ import { CompetencyOutcome } from '../../../../shared/models/competency-outcome'
   selector: 'vehicle-checks-card',
   templateUrl: 'vehicle-checks-card.html',
 })
-export class VehicleChecksCardComponent {
+export class VehicleChecksCardComponent implements OnInit {
 
   @Input()
   category: CategoryCode;
@@ -17,4 +17,10 @@ export class VehicleChecksCardComponent {
   constructor() { }
 
   questionHasFault = (result: QuestionResult): boolean => result.outcome !== CompetencyOutcome.P;
+
+  ngOnInit(): void {
+    this.tellMeShowMeQuestions = this.tellMeShowMeQuestions.filter((result: QuestionResult) => {
+      return result.hasOwnProperty('outcome');
+    });
+  }
 }
