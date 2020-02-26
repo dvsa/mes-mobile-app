@@ -39,7 +39,6 @@ import {
 import { getTestData } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
-import { getTestRequirements } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 
@@ -54,6 +53,8 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { getTestRequirementsCatEUAM2 } from
+'../../../modules/tests/test-data/cat-a-mod2/test-requirements/test-requirements.cat-a-mod-2.reducer';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -137,7 +138,7 @@ export class TestReportCatAMod2Page extends BasePageComponent {
       ),
       testRequirements$: currentTest$.pipe(
         select(getTestData),
-        select(getTestRequirements),
+        select(getTestRequirementsCatEUAM2),
       ),
       testCategory$: currentTest$.pipe(
         select(getTestCategory),
