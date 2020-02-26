@@ -56,6 +56,8 @@ describe('Test Outcome', () => {
     { category: TestCategory.EUA2M2, pageConstant: CAT_A_MOD2 },
     { category: TestCategory.EUAM2, pageConstant: CAT_A_MOD2 },
     { category: TestCategory.EUAMM2, pageConstant: CAT_A_MOD2 },
+    { category: TestCategory.EUA1M1, pageConstant: CAT_A_MOD1 },
+    { category: TestCategory.EUA1M2, pageConstant: CAT_A_MOD2 },
   ];
 
   configureTestSuite(() => {
