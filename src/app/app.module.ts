@@ -13,8 +13,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { Http } from '@angular/http';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { localStorageSync } from 'ngrx-store-localstorage';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthInterceptor } from '../providers/authentication/interceptor';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -56,7 +57,25 @@ export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
 }
 
+export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+  return localStorageSync({
+    keys: ['appInfo', 'logs', 'tests', 'journal'],
+    rehydrate: true,
+    syncCondition: (state) => {
+      const slots = state.journal.slots;
+      const slotDates = Object.keys(slots);
+
+      return !slotDates.every(date => !slots[date].length);
+    },
+  })(reducer);
+}
+const metaReducers: MetaReducer<any, any>[] = [];
 const enableDevTools = environment && environment.enableDevTools;
+const enableRehydrationPlugin = environment && environment.enableRehydrationPlugin;
+
+if (enableRehydrationPlugin) {
+  metaReducers.push(localStorageSyncReducer);
+}
 
 // Register our remote devtools if we're on-device and not in a browser and dev tools enabled
 if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
@@ -77,7 +96,10 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
   imports: [
     BrowserModule,
     IonicModule.forRoot(App, { mode: 'ios' }),
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(
+      {},
+      { metaReducers },
+    ),
     ...(enableDevTools ? [StoreDevtoolsModule.instrument()] : []),
     EffectsModule.forRoot([]),
     AppInfoModule,

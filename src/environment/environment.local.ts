@@ -6,6 +6,7 @@ export const environment: LocalEnvironmentFile = {
   configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev',
   daysToCacheLogs: 7,
   enableDevTools: true,
+  enableRehydrationPlugin: true,
   googleAnalyticsId: 'UA-129489007-3',
   logsPostApiKey: '',
   logsApiUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/logs',

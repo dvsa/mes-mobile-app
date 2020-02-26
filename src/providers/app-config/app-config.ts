@@ -87,7 +87,13 @@ export class AppConfigProvider {
     }
   }
 
-  public getAppConfig = (): AppConfig => this.appConfig;
+  public getAppConfig = (): AppConfig => {
+    if (!this.appConfig) {
+      this.initialiseAppConfig();
+    }
+
+    return this.appConfig;
+  }
 
   public loadRemoteConfig = (): Promise<any> =>
     this.getRemoteData()
