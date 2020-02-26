@@ -33,7 +33,7 @@ export function emergencyStopReducer(
       return {
         ...state,
         comments: action.comment,
-      }
+      };
     default:
       return state;
   }

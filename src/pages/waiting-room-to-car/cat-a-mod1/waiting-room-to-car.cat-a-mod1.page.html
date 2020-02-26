@@ -2,8 +2,7 @@
   <ion-navbar hideBackButton>
     <ion-title>{{pageState.candidateName$ | async}}</ion-title>
     <ion-buttons end>
-      <!-- TODO - PREP-AMOD1: update to cat A -->
-      <end-test-link category="B+E"></end-test-link>
+      <end-test-link [category]="pageState.testCategory$ | async"></end-test-link>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -46,10 +45,3 @@
     </form>
   </div>
 </ion-content>
-<ion-footer [hidden]="pageState.eyesightTestFailed$ | async">
-  <ion-row class="mes-full-width-card box-shadow">
-    <button type="submit" class="mes-primary-button" id="continue-to-test-report-button" ion-button (click)="onSubmit()">
-      <h3>Continue to test report</h3>
-    </button>
-  </ion-row>
-</ion-footer>

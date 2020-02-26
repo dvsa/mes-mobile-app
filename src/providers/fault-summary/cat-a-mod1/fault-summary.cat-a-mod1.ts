@@ -50,7 +50,7 @@ export class FaultSummaryCatAM1Helper {
 
   public static getSpeedCheckAvoidance(avoidance: Avoidance): FaultSummary[] {
     const result = [];
-    if (get(avoidance, 'oputcome') === CompetencyOutcome.S) {
+    if (get(avoidance, 'outcome') === CompetencyOutcome.S) {
       const source = `${CommentSource.SPEED_REQUIREMENTS}-${Competencies.speedCheckAvoidance}`;
 
       result.push(FaultSummaryCatAM1Helper.createFaultSummary(

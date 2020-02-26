@@ -7,7 +7,7 @@ import {
   SpeedRequirementCompetencyOutcome,
 } from '@dvsa/mes-test-schema/categories/AM1';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { Store, select, Action } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { map } from 'rxjs/operators';
@@ -23,9 +23,10 @@ import {
   RecordEmergencyStopSecondAttempt,
 } from '../../../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
 import {
-  ToggleAvoidanceSpeedReq,
   RecordAvoidanceFirstAttempt,
   RecordAvoidanceSecondAttempt,
+  RemoveAvoidanceSeriousFault,
+  AddAvoidanceSeriousFault,
 } from '../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
@@ -98,7 +99,11 @@ export class SpeedCheckComponent {
         this.store$.dispatch(new AddEmergencyStopSeriousFault());
       }
     } else if (this.competency === Competencies.speedCheckAvoidance) {
-
+      if (this.outcome === CompetencyOutcome.S) {
+        this.store$.dispatch(new RemoveAvoidanceSeriousFault());
+      } else {
+        this.store$.dispatch(new AddAvoidanceSeriousFault());
+      }
     }
   }
 

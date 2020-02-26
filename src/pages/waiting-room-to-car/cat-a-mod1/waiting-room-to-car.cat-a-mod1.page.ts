@@ -19,8 +19,8 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-// TODO - PREP-AMOD1: update to cat A
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
+import { getVehicleDetails }
+from '../../../modules/tests/vehicle-details/cat-a-mod1/vehicle-details.cat-a-mod1.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,
@@ -28,21 +28,19 @@ import {
   isAutomatic,
   isManual,
 } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
-// TODO - PREP-AMOD1: update to cat A
 import {
-  getSchoolCar,
-} from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.selector';
+  getSchoolBike,
+} from '../../../modules/tests/vehicle-details/cat-a-mod1/vehicle-details.cat-a-mod1.selector';
 
-// TODO - PREP-AMOD1: update to cat A
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
   getOtherAccompaniment,
   getInterpreterAccompaniment,
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
-// TODO - PREP-AMOD1: update to cat A
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
-import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
+import { getUntitledCandidateName }
+from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../providers/question/question';
@@ -60,7 +58,7 @@ interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
-  schoolCar$: Observable<boolean>;
+  schoolBike$: Observable<boolean>;
   instructorAccompaniment$: Observable<boolean>;
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
@@ -118,9 +116,9 @@ export class WaitingRoomToCarCatAMod1Page extends BasePageComponent {
         select(getVehicleDetails),
         select(getGearboxCategory),
       ),
-      schoolCar$: currentTest$.pipe(
+      schoolBike$: currentTest$.pipe(
         select(getVehicleDetails),
-        select(getSchoolCar),
+        select(getSchoolBike),
       ),
       instructorAccompaniment$: currentTest$.pipe(
         select(getAccompaniment),

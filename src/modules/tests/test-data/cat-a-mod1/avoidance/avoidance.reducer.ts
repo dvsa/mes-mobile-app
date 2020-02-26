@@ -33,7 +33,7 @@ export function avoidanceReducer(
       return {
         ...state,
         comments: action.comment,
-      }
+      };
     default:
       return state;
   }

@@ -1,17 +1,14 @@
 
 import { getAvoidance, getAvoidanceAttempted } from '../avoidance.selector';
 import { TestData, Avoidance } from '@dvsa/mes-test-schema/categories/AM1';
-import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 
 describe('emergency stop selector', () => {
   describe('getEmergencyStop', () => {
     it('should return emergencyStop from testData', () => {
       const testData: TestData = {
         avoidance: {
-          outcome: CompetencyOutcome.DF,
           firstAttempt: 44,
           secondAttempt: 50,
-          speedNotMetSeriousFault: false,
         } as Avoidance,
       };
 
@@ -25,7 +22,6 @@ describe('emergency stop selector', () => {
     it('should return false when first and second attempted are not set', () => {
       const testData: TestData = {
         avoidance: {
-          speedNotMetSeriousFault: false,
         } as Avoidance,
       };
 
@@ -38,7 +34,6 @@ describe('emergency stop selector', () => {
       const testData: TestData = {
         avoidance: {
           firstAttempt: 54,
-          speedNotMetSeriousFault: false,
         } as Avoidance,
       };
 
@@ -52,7 +47,6 @@ describe('emergency stop selector', () => {
         avoidance: {
           firstAttempt: 45,
           secondAttempt: 51,
-          speedNotMetSeriousFault: false,
         } as Avoidance,
       };
 

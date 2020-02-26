@@ -27,7 +27,7 @@ import {
   RecordAvoidanceFirstAttempt,
   RecordAvoidanceSecondAttempt,
 } from '../../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
-import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
+import { SingleFaultCompetencyComponent } from '../../../../components/single-fault-competency/single-fault-competency';
 
 describe('SpeedCheckComponent', () => {
 
@@ -43,6 +43,7 @@ describe('SpeedCheckComponent', () => {
         MockComponent(SeriousFaultBadgeComponent),
         MockComponent(DangerousFaultBadgeComponent),
         MockComponent(CompetencyButtonComponent),
+        MockComponent(SingleFaultCompetencyComponent),
       ],
       imports: [
         IonicModule,
@@ -62,7 +63,7 @@ describe('SpeedCheckComponent', () => {
     describe('toggleNotMet function dispatching right actions', () => {
       it('should dispatch AddEmergencyStopSeriousFault when Emergency Stop is the speed check', () => {
         component.competency = Competencies.speedCheckEmergency;
-        component.outcome = CompetencyOutcome.S;
+        component.outcome = null;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
 
@@ -73,31 +74,13 @@ describe('SpeedCheckComponent', () => {
 
       it('should dispatch AddAvoidanceSeriousFault when Avoidance is the speed check', () => {
         component.competency = Competencies.speedCheckAvoidance;
-        component.outcome = CompetencyOutcome.S;
+        component.outcome = null;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
 
         component.toggleNotMet();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddAvoidanceSeriousFault());
-      });
-    });
-
-    describe('getLabel returning correct labels', () => {
-      it('should return Emergency stop when competency is EmergencyStop', () => {
-        component.competency = Competencies.speedCheckEmergency;
-
-        const result = component.getLabel();
-
-        expect(result).toEqual('Emergency stop');
-      });
-
-      it('should return Avoidance Ex. Control Stop when competency is Avoidance', () => {
-        component.competency = Competencies.speedCheckAvoidance;
-
-        const result = component.getLabel();
-
-        expect(result).toEqual('Avoidance Ex. Control Stop');
       });
     });
 

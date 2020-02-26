@@ -182,10 +182,11 @@ describe('TestReportValidator', () => {
 
     it('should return VALID when avoidance speed not met first attempt is recorded but has Serious fault', () => {
       const testData = {
-        avoidance: {
-          firstAttempt: 48,
-          speedNotMetSeriousFault: true,
-          outcome: CompetencyOutcome.S,
+        emergencyStop:{
+          firstAttempt: 56,
+        },
+        singleFaultCompetencies: {
+          avoidance: CompetencyOutcome.S,
         },
       } as CatAMod1TestData;
 
@@ -225,7 +226,7 @@ describe('TestReportValidator', () => {
     it('should return SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT', () => {
       const testData = {
         emergencyStop: {
-          outcome: CompetencyOutcome.S,
+          firstAttempt: 55,
         },
         singleFaultCompetencies:{
           emergencyStop: CompetencyOutcome.D,

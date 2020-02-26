@@ -42,9 +42,9 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { SpeedCheckState } from '../../../providers/test-report-validator/test-report-validator.constants';
 import { ModalReason } from './components/activity-code-4-modal/activity-code-4-modal.constants';
-import { speedCheckLabels } from '../../../shared/constants/competencies/cata-mod1-speed-checks';
 import { SpeedRequirementNotMetModalOpened, EmergencyStopDangerousFaultModelOpened,
 EmergencyStopSeriousFaultModelOpened } from './test-report.cat-a-mod1.actions';
+import { competencyLabels } from '../../../shared/constants/competencies/competencies';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -231,19 +231,19 @@ export class TestReportCatAMod1Page extends BasePageComponent {
       case SpeedCheckState.EMERGENCY_STOP_AND_AVOIDANCE_MISSING:
         return this.modalController.create(
           'SpeedCheckModal',
-          { speedChecksNeedCompleting: [speedCheckLabels.speedCheckEmergency, speedCheckLabels.speedCheckAvoidance] },
+          { speedChecksNeedCompleting: [competencyLabels.speedCheckEmergency, competencyLabels.speedCheckAvoidance] },
           options,
         );
       case SpeedCheckState.EMERGENCY_STOP_MISSING:
         return this.modalController.create(
           'SpeedCheckModal',
-          { speedChecksNeedCompleting: [speedCheckLabels.speedCheckEmergency] },
+          { speedChecksNeedCompleting: [competencyLabels.speedCheckEmergency] },
           options,
         );
       case SpeedCheckState.AVOIDANCE_MISSING:
         return this.modalController.create(
           'SpeedCheckModal',
-          { speedChecksNeedCompleting: [speedCheckLabels.speedCheckAvoidance] },
+          { speedChecksNeedCompleting: [competencyLabels.speedCheckAvoidance] },
           options,
         );
       default:
