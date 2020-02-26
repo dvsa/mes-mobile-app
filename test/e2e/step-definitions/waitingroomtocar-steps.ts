@@ -5,6 +5,7 @@ import { UI_TEST_DATA } from '../../test_data/ui_test_data';
 
 import { threadId } from 'worker_threads';
 import { boolean, number } from '@hapi/joi';
+import { addListener } from 'cluster';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -29,8 +30,8 @@ Before({ tags: '@catc1' }, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catc1e' }, () => {
-  this.testCategory = 'ce';
+Before({ tags: '@catam1' }, () => {
+  this.testCategory = 'a-mod1';
 });
 
 When('I select a tell me question', () => {
@@ -62,21 +63,34 @@ When('I complete the waiting room to car page with the following vehicle checks'
 });
 
 const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, tellMeQuestion?: string) => {
-  if (this.testCategory === 'be') {
-    eyeSightResult(true);
-    multiShowAndTell(UI_TEST_DATA.testData.be, questionResult);
-  } else if (this.testCategory === 'c' || this.testCategory === 'c1') {
-    multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
-  } else if (this.testCategory === 'ce') {
-    multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
-  } else {
-    eyeSightResult(true);
-    standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
+  switch(this.testCategory) {
+    case 'b':
+      eyeSightResult(true);
+      standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
+      break;
+    case 'be':
+      eyeSightResult(true);
+      multiShowAndTell(UI_TEST_DATA.testData.be, questionResult);
+      break;
+    case 'c': 
+    case 'c1':
+      multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
+      break;
+    case 'ce':
+      multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
+      break;
+    case 'a-mod1':
+      transmissionSelect(true);
+      break;
+    default:
+      console.log('Category not set');
+      break;
   }
-  textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Vehicle registration number"]]/' +
-  'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'AB12CDE');
-  const submitWRTC = getElement(by.xpath('//button[span[h3[text()="Continue to test report"]]]'));
-  clickElement(submitWRTC);
+      textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Vehicle registration number"]]/' +
+      'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'AB12CDE');
+      const submitWRTC = getElement(by.xpath('//button[span[h3[text()="Continue to test report"]]]'));
+      clickElement(submitWRTC);
+    
 };
 
 const multiShowAndTell = (questions, questionResult) => {
@@ -97,6 +111,10 @@ const standardUserJourney = (withDriverFault: boolean, manualTransmission: boole
   const tellMeRadioSelector = (withDriverFault) ? 'tellme-fault' : 'tellme-correct';
   const tellMeRadio = getElement(by.id(tellMeRadioSelector));
   clickElement(tellMeRadio);
+  transmissionSelect(true);
+};
+
+const transmissionSelect = (manualTransmission: boolean) => {
   const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
   const transmissionRadio = getElement(by.id(transmissionSelector));
   clickElement(transmissionRadio);
@@ -130,4 +148,37 @@ const eyeSightResult = (result: boolean) => {
   const eyeSight = result ? 'eyesight-pass' : 'eyesight-fail';
   const eyesightRadio = getElement(by.id(`${eyeSight}`));
   clickElement(eyesightRadio);
+};
+
+When('I choose category {string} test', (categoryType: string) => {
+  openSelectCategoryOverlay();
+  selectCategoryType(categoryType, categoryType);
+});
+
+const openSelectCategoryOverlay = () => {
+  const categoryTypeButton = getElement(by.xpath(`//*[@id="category-type"]/ion-col[2]/ion-row[2]/ion-col/input`));
+  expect(categoryTypeButton.isPresent()).to.eventually.be.true;
+  clickElement(categoryTypeButton);
+};
+
+const selectCategoryType = (categoryTypeSelector, categoryType: string) => {
+  switch(categoryType) {
+    case 'AM': 
+      categoryTypeSelector = getElement(by.xpath('//*[@id="alert-input-0-0"]'));
+      break;
+    case 'A1':
+      categoryTypeSelector = getElement(by.xpath('//*[@id="alert-input-0-1"]'));
+      break;
+    case 'A2':
+      categoryTypeSelector = getElement(by.xpath('//*[@id="alert-input-0-2"]')); 
+      break;
+    case 'A':
+      categoryTypeSelector = getElement(by.xpath('//*[@id="alert-input-0-3"]'));
+      break;
+    default:
+      console.log('Unexpected category');
+  }
+  clickElement(categoryTypeSelector);
+  const submitDialog = getElement(by.xpath('/html/body/ion-app/ion-alert/div/div[4]/button[2]'));
+  clickElement(submitDialog);
 };

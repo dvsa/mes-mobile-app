@@ -23,12 +23,8 @@ Before({ tags: '@catc1' }, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catce' }, () => {
-  this.testCategory = 'c';
-});
-
-Before({ tags: '@catc1e' }, () => {
-  this.testCategory = 'c';
+Before({ tags: '@catam1' }, () => {
+  this.testCategory = 'a-mod1';
 });
 
 When('the candidate enters a new email address', () => {

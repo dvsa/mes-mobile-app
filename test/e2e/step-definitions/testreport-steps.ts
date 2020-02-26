@@ -30,6 +30,11 @@ Before({ tags: '@catce' }, () => {
 
 Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
+
+});
+
+Before({ tags: '@catam1' }, () => {
+  this.testCategory = 'a-mod1';
 });
 
 When('I end the test', () => {
