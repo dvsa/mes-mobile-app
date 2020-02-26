@@ -10,15 +10,16 @@ import { etaReducer } from '../common/eta/eta.reducer';
 import { eyesightTestReducer } from '../common/eyesight-test/eyesight-test.reducer';
 
 export const initialState: TestData = {
-  dangerousFaults: {},
+  testRequirements: {},
+  ETA: {},
   drivingFaults: {},
   seriousFaults: {},
-  ETA: {},
-  eco: {},
+  dangerousFaults: {},
   safetyAndBalanceQuestions:{
     safetyQuestions: [],
     balanceQuestions: [],
   },
+  eco: {},
   eyesightTest: {},
 };
 

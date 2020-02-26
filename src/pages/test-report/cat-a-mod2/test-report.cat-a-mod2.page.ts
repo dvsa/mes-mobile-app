@@ -20,8 +20,7 @@ import { SetActivityCode } from '../../../modules/tests/activity-code/activity-c
 import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 
-// TODO - PREP-AMOD2: Use cat a mod2 reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   CalculateTestResult,
   TerminateTestFromTestReport,
@@ -37,42 +36,33 @@ import {
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
 
-// TODO - PREP-AMOD2: Use cat a mod2 reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
+import { getTestRequirements } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 
-// TODO - PREP-AMOD2: Use cat a mod2 selector
-import { hasManoeuvreBeenCompletedCatBE } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ModalEvent } from '../test-report.constants';
 import { CAT_A_MOD2, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 
-// TODO - PREP-AMOD2: Use cat a mod2 types
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { TestData, TestRequirements } from '@dvsa/mes-test-schema/categories/AM2';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-// TODO - PREP-AMOD2: Use cat a mod2 reducer
-import {
-  getTestRequirementsCatBE,
-} from '../../../modules/tests/test-data/cat-be/test-requirements/test-requirements.cat-be.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
-  manoeuvres$: Observable<boolean>;
-
-  // TODO - AMOD2-PREP: Use cat a mod2 type
-  testData$: Observable<CatBEUniqueTypes.TestData>;
-
-  // TODO - AMOD2-PREP: Use cat a mod2 type
-  testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
+  testData$: Observable<TestData>;
+  testRequirements$: Observable<TestRequirements>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -90,9 +80,9 @@ export class TestReportCatAMod2Page extends BasePageComponent {
   isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
-  manoeuvresCompleted: boolean = false;
   isTestReportValid: boolean = false;
   isEtaValid: boolean = true;
+  testCategory: CategoryCode;
 
   modal: Modal;
   missingLegalRequirements: legalRequirementsLabels[] = [];
@@ -142,20 +132,15 @@ export class TestReportCatAMod2Page extends BasePageComponent {
         select(getTestReportState),
         select(isDangerousMode),
       ),
-      manoeuvres$: currentTest$.pipe(
-        select(getTestData),
-
-        // TODO - PREP-AMOD2: Use cat a mod2 selector
-        select(hasManoeuvreBeenCompletedCatBE),
-      ),
       testData$: currentTest$.pipe(
         select(getTestData),
       ),
       testRequirements$: currentTest$.pipe(
         select(getTestData),
-
-        // TODO - PREP-AMOD2: Use cat a mod2 selector
-        select(getTestRequirementsCatBE),
+        select(getTestRequirements),
+      ),
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
       ),
     };
     this.setupSubscription();
@@ -187,8 +172,8 @@ export class TestReportCatAMod2Page extends BasePageComponent {
       isRemoveFaultMode$,
       isSeriousMode$,
       isDangerousMode$,
-      manoeuvres$,
       testData$,
+      testCategory$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -196,16 +181,14 @@ export class TestReportCatAMod2Page extends BasePageComponent {
       isRemoveFaultMode$.pipe(map(result => (this.isRemoveFaultMode = result))),
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
-      manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
+      testCategory$.pipe(map(result => (this.testCategory = result))),
       testData$.pipe(
         map((data) => {
-
-          // TODO - PREP-AMOD2: Use a mod2 test category
           this.isTestReportValid =
-            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.BE);
+            this.testReportValidatorProvider.isTestReportValid(data, this.testCategory as TestCategory);
           this.missingLegalRequirements =
-            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.BE);
-          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.BE);
+            this.testReportValidatorProvider.getMissingLegalRequirements(data, this.testCategory as TestCategory);
+          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, this.testCategory as TestCategory);
         }),
       ),
     ).subscribe();

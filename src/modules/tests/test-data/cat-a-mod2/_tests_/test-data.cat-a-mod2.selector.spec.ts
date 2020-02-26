@@ -1,3 +1,4 @@
+//TODO reenable tests with MOD2
 // import { TestData, SafetyAndBalanceQuestions } from '@dvsa/mes-test-schema/categories/AM2';
 // import {
 //   hasSeriousFault,
@@ -17,7 +18,7 @@
 // import { OutcomeBehaviourMapProvider } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 // import { behaviourMap } from '../../../../../pages/office/office-behaviour-map';
 // import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
-
+//
 // describe('TestDataSelectors CAT A Mod 2', () => {
 //   const state: TestData = {
 //     drivingFaults: {
@@ -51,11 +52,11 @@
 //       ],
 //     },
 //   };
-
+//
 //   describe('getSafetyQuestionOptions', () => {
 //     const outcomeBehaviourMapProvider = new OutcomeBehaviourMapProvider();
 //     outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
-
+//
 //     const safetyQuestions: VehicleChecksQuestion[] = [
 //       {
 //         code: 'S1',
@@ -81,7 +82,7 @@
 //       expect(result[1].code).toBe('S2');
 //     });
 //   });
-
+//
 //   describe('getDrivingFaultCount', () => {
 //     it('should return the driving fault count', () => {
 //       expect(getDrivingFaultCount(state, Competencies.controlsGears)).toBe(1);
@@ -90,7 +91,7 @@
 //       expect(getDrivingFaultCount(state, Competencies.controlsParkingBrake)).toBeUndefined();
 //     });
 //   });
-
+//
 //   describe('hasSeriousFault', () => {
 //     it('should return true if a competency has a serious fault', () => {
 //       expect(hasSeriousFault(state, Competencies.awarenessPlanning)).toEqual(true);
@@ -99,7 +100,7 @@
 //       expect(hasSeriousFault(state, Competencies.controlsClutch)).toBeFalsy();
 //     });
 //   });
-
+//
 //   describe('hasDangerousFault', () => {
 //     it('should return true if a competency has a dangerous fault', () => {
 //       expect(hasDangerousFault(state, Competencies.useOfSpeed)).toEqual(true);
@@ -108,7 +109,7 @@
 //       expect(hasDangerousFault(state, Competencies.useOfMirrorsSignalling)).toBeFalsy();
 //     });
 //   });
-
+//
 //   describe('getETAFaultText', () => {
 //     it('should return null if no ETA faults', () => {
 //       const result = getETAFaultText(state.ETA);
@@ -120,7 +121,7 @@
 //       expect(result).toEqual('Verbal');
 //     });
 //   });
-
+//
 //   describe('getEcoFaultText', () => {
 //     it('should return null if no eco faults', () => {
 //       const result = getEcoFaultText(state.eco);
@@ -145,7 +146,7 @@
 //       expect(result).toEqual('Planning');
 //     });
 //   });
-
+//
 //   describe('safety and balance questions selector', () => {
 //     describe('areSafetyQuestionsSelected', () => {
 //       it('should return true if there is a safety question selected', () => {
@@ -174,7 +175,7 @@
 //           },
 //         ],
 //       };
-
+//
 //       it('should return true if the tell me question is marked as a pass', () => {
 //         expect(areBalanceQuestionsCorrect(passedState)).toBe(true);
 //       });
@@ -191,7 +192,7 @@
 //         expect(areBalanceQuestionsCorrect(failedState)).toBe(false);
 //       });
 //     });
-
+//
 //     describe('hasVehicleChecksBeenCompleted', () => {
 //       it('should return true if vehicle checks have been completed with a pass', () => {
 //         const state = {
@@ -209,10 +210,10 @@
 //             },
 //           ],
 //         } as SafetyAndBalanceQuestions;
-
+//
 //         expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
 //       });
-
+//
 //       it('should return true if vehicle checks have been completed with a driving fault', () => {
 //         const state = {
 //           safetyQuestions: [
@@ -229,10 +230,10 @@
 //             },
 //           ],
 //         } as SafetyAndBalanceQuestions;
-
+//
 //         expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
 //       });
-
+//
 //       it('should return false if safety question outcome is not defined', () => {
 //         const state = {
 //           safetyQuestions: [
@@ -246,7 +247,7 @@
 //             },
 //           ],
 //         } as SafetyAndBalanceQuestions;
-
+//
 //         expect(hasVehicleChecksBeenCompleted(state)).toEqual(false);
 //       });
 //     });
