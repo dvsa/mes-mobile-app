@@ -5,7 +5,6 @@ import { TestBed } from '@angular/core/testing';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
-import { SafetyAndBalanceQuestions, QuestionResult } from '@dvsa/mes-test-schema/categories/AM2';
 
 import { catAM1TestDataStateObject } from '../__mocks__/cat-AM1-test-data-state-object';
 import { catBTestDataStateObject } from '../__mocks__/cat-B-test-data-state-object';
@@ -356,31 +355,6 @@ describe('FaultCountProvider', () => {
           ],
         };
         expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount(faultsState)).toEqual({ drivingFaults: 1 });
-      });
-    });
-  });
-
-  describe('getSafetyAndBalanceFaultCount', () => {
-    describe('CAT A Mod 2', () => {
-      it('should return the correct number of driving faults', () => {
-        const safetyAndBalanceQuestions: SafetyAndBalanceQuestions = {
-          safetyQuestions: [
-            {
-              outcome: 'DF',
-            },
-            {
-              outcome: 'DF',
-            },
-          ] as QuestionResult[],
-          balanceQuestions: [
-            {
-              outcome: 'DF',
-            },
-          ] as QuestionResult[],
-        };
-
-        expect((FaultCountAM2Helper as any).getSafetyAndBalanceFaultCountCatAM2(safetyAndBalanceQuestions))
-          .toEqual({ drivingFaults: 1 });
       });
     });
   });

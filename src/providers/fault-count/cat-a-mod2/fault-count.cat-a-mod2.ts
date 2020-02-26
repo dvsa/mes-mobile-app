@@ -35,35 +35,24 @@ export class FaultCountAM2Helper {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { drivingFaults } = data;
+    const { drivingFaults, safetyAndBalanceQuestions } = data;
     let faultTotal: number = 0;
     getCompetencyFaults(drivingFaults).forEach(fault => faultTotal = faultTotal + fault.faultCount);
+    faultTotal += FaultCountAM2Helper.getSafetyAndBalanceFaultCountCatAM2(safetyAndBalanceQuestions).drivingFaults;
 
     return faultTotal;
   }
 
   public static getSeriousFaultSumCountCatAM2 = (data: TestData): number => {
 
-    const { seriousFaults, safetyAndBalanceQuestions, eyesightTest } = data;
+    const { seriousFaults, eyesightTest } = data;
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
-
-    const safetyQuestionsSeriousFaults =
-      safetyAndBalanceQuestions && safetyAndBalanceQuestions.safetyQuestions.filter((question) => {
-        return question.outcome === CompetencyOutcome.D;
-      });
-
-    const balanceQuestionsSeriousFaults =
-      safetyAndBalanceQuestions && safetyAndBalanceQuestions.balanceQuestions.filter((question) => {
-        return question.outcome === CompetencyOutcome.D;
-      });
 
     const eyesightTestSeriousFaults = (eyesightTest && eyesightTest.seriousFault) ? 1 : 0;
 
     const result =
       seriousFaultSumOfSimpleCompetencies +
-      safetyQuestionsSeriousFaults.length +
-      balanceQuestionsSeriousFaults.length +
       eyesightTestSeriousFaults;
 
     return result;
@@ -71,24 +60,12 @@ export class FaultCountAM2Helper {
 
   public static getDangerousFaultSumCountCatAM2 = (data: TestData): number => {
 
-    const { dangerousFaults, safetyAndBalanceQuestions } = data;
+    const { dangerousFaults } = data;
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
 
-    const safetyQuestionsDangerousFaults =
-      safetyAndBalanceQuestions && safetyAndBalanceQuestions.safetyQuestions.filter((question) => {
-        return question.outcome === CompetencyOutcome.D;
-      });
-
-    const balanceQuestionsDangerousFaults =
-      safetyAndBalanceQuestions && safetyAndBalanceQuestions.balanceQuestions.filter((question) => {
-        return question.outcome === CompetencyOutcome.D;
-      });
-
     const result =
-      dangerousFaultSumOfSimpleCompetencies +
-      safetyQuestionsDangerousFaults.length +
-      balanceQuestionsDangerousFaults.length;
+      dangerousFaultSumOfSimpleCompetencies;
 
     return result;
   }
