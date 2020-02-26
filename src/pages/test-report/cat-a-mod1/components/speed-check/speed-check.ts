@@ -1,9 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { Competencies } from '../../../../../modules/tests/test-data/test-data.constants';
-import { speedCheckLabels } from '../../../../../shared/constants/competencies/cata-mod1-speed-checks';
-import { EmergencyStop, Avoidance, TestData, SingleFaultCompetencyOutcome } from '@dvsa/mes-test-schema/categories/AM1';
+import { Competencies, SingleFaultCompetencyNames } from '../../../../../modules/tests/test-data/test-data.constants';
+import {
+  EmergencyStop,
+  Avoidance,
+  TestData,
+  SpeedRequirementCompetencyOutcome,
+} from '@dvsa/mes-test-schema/categories/AM1';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { Store, select } from '@ngrx/store';
+import { Store, select, Action } from '@ngrx/store';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { map } from 'rxjs/operators';
@@ -13,33 +17,20 @@ import { getTestData } from '../../../../../modules/tests/test-data/cat-a-mod1/t
 import { getAvoidance } from '../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.selector';
 import { isEmpty } from 'lodash';
 import {
-  ToggleEmergencyStopSpeedReq,
+  AddEmergencyStopSeriousFault,
+  RemoveEmergencyStopSeriousFault,
   RecordEmergencyStopFirstAttempt,
   RecordEmergencyStopSecondAttempt,
-  AddEmergencyStopRidingFault,
-  AddEmergencyStopSeriousFault,
-  AddEmergencyStopDangerousFault,
-  RemoveEmergencyStopFault,
-  RemoveEmergencyStopDangerousFault,
-  RemoveEmergencyStopSeriousFault,
 } from '../../../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
 import {
   ToggleAvoidanceSpeedReq,
   RecordAvoidanceFirstAttempt,
   RecordAvoidanceSecondAttempt,
-  AddAvoidanceDangerousFault,
-  AddAvoidanceSeriousFault,
-  AddAvoidanceRidingFault,
-  RemoveAvoidanceFault,
-  RemoveDangerousAvoidanceFault,
-  RemoveSeriousAvoidanceFault,
 } from '../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
-import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Subscription } from 'rxjs/Subscription';
-import { getTestReportState } from '../../../test-report.reducer';
-import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../../test-report.selector';
 import { merge } from 'rxjs/observable/merge';
-import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
+import { competencyLabels } from '../../../../../shared/constants/competencies/competencies';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 @Component({
   selector: 'speed-check',
@@ -51,15 +42,13 @@ export class SpeedCheckComponent {
 
   firstAttempt: number;
   secondAttempt: number;
-  outcome: SingleFaultCompetencyOutcome;
-  speedNotMetSeriousFault: boolean;
-
-  isRemoveFaultMode: boolean;
-  isSeriousMode: boolean;
-  isDangerousMode: boolean;
+  outcome: SpeedRequirementCompetencyOutcome;
 
   @Input()
   competency: Competencies;
+
+  @Input()
+  pairedCompetency?: SingleFaultCompetencyNames;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -86,31 +75,12 @@ export class SpeedCheckComponent {
 
         this.firstAttempt = speedCheckData.firstAttempt;
         this.secondAttempt = speedCheckData.secondAttempt;
-        this.speedNotMetSeriousFault = speedCheckData.speedNotMetSeriousFault;
         this.outcome = speedCheckData.outcome;
       }),
     );
 
-    const isRemoveFaultMode$ = this.store$.pipe(
-      select(getTestReportState),
-      select(isRemoveFaultMode),
-      map(isRemoveFaultMode => this.isRemoveFaultMode = isRemoveFaultMode));
-
-    const isSeriousMode$ = this.store$.pipe(
-      select(getTestReportState),
-      select(isSeriousMode),
-      map(isSeriousMode => this.isSeriousMode = isSeriousMode));
-
-    const isDangerousMode$ = this.store$.pipe(
-      select(getTestReportState),
-      select(isDangerousMode),
-      map(isDangerousMode => this.isDangerousMode = isDangerousMode));
-
     this.subscription = merge(
       speedCheckData$,
-      isRemoveFaultMode$,
-      isSeriousMode$,
-      isDangerousMode$,
     ).subscribe();
   }
 
@@ -122,15 +92,17 @@ export class SpeedCheckComponent {
 
   toggleNotMet = (): void => {
     if (this.competency === Competencies.speedCheckEmergency) {
-      this.store$.dispatch(new ToggleEmergencyStopSpeedReq());
-    }
+      if (this.outcome === CompetencyOutcome.S) {
+        this.store$.dispatch(new RemoveEmergencyStopSeriousFault());
+      } else {
+        this.store$.dispatch(new AddEmergencyStopSeriousFault());
+      }
+    } else if (this.competency === Competencies.speedCheckAvoidance) {
 
-    if (this.competency === Competencies.speedCheckAvoidance) {
-      this.store$.dispatch(new ToggleAvoidanceSpeedReq());
     }
   }
 
-  getLabel = (): string => speedCheckLabels[this.competency];
+  getLabel = (): string => competencyLabels[this.competency];
 
   getFirstAttempt = (): number | null => {
     return this.firstAttempt || null;
@@ -138,155 +110,6 @@ export class SpeedCheckComponent {
 
   getSecondAttempt = (): number | null => {
     return this.secondAttempt || null;
-  }
-
-  onTap = () => {
-    if (this.competency === Competencies.speedCheckEmergency) {
-      this.addOrRemoveEmergencyStopFault();
-    }
-
-    if (this.competency === Competencies.speedCheckAvoidance) {
-      this.addOrRemoveAvoidanceFault();
-    }
-  }
-
-  onPress = () => {
-    const wasPress = true;
-    if (this.competency === Competencies.speedCheckEmergency) {
-      this.addOrRemoveEmergencyStopFault(wasPress);
-    }
-
-    if (this.competency === Competencies.speedCheckAvoidance) {
-      this.addOrRemoveAvoidanceFault(wasPress);
-    }
-  }
-
-  addOrRemoveEmergencyStopFault = (wasPress: boolean = false) => {
-    if (this.isRemoveFaultMode) {
-      this.removeEmergencyStopFault();
-    }
-    this.addEmergencyStopFault(wasPress);
-  }
-
-  addOrRemoveAvoidanceFault = (wasPress: boolean = false) => {
-    if (this.isRemoveFaultMode) {
-      this.removeAvoidanceFault();
-    }
-    this.addAvoidanceFault(wasPress);
-  }
-
-  removeEmergencyStopFault = () => {
-    if (this.hasDangerousFault() && this.isDangerousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveEmergencyStopDangerousFault());
-      this.store$.dispatch(new ToggleDangerousFaultMode());
-      this.store$.dispatch(new ToggleRemoveFaultMode());
-      return;
-    }
-
-    if (this.hasSeriousFault() && this.isSeriousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveEmergencyStopSeriousFault());
-      this.store$.dispatch(new ToggleSeriousFaultMode());
-      this.store$.dispatch(new ToggleRemoveFaultMode());
-      return;
-    }
-    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.faultCount() > 0) {
-      this.store$.dispatch(new RemoveEmergencyStopFault());
-      this.store$.dispatch(new ToggleRemoveFaultMode());
-    }
-  }
-
-  removeAvoidanceFault = () => {
-    if (this.hasDangerousFault() && this.isDangerousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveDangerousAvoidanceFault());
-      this.store$.dispatch(new ToggleDangerousFaultMode());
-      this.store$.dispatch(new ToggleRemoveFaultMode());
-      return;
-    }
-
-    if (this.hasSeriousFault() && this.isSeriousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveSeriousAvoidanceFault());
-      this.store$.dispatch(new ToggleSeriousFaultMode());
-      this.store$.dispatch(new ToggleRemoveFaultMode());
-      return;
-    }
-    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.faultCount() > 0) {
-      this.store$.dispatch(new RemoveAvoidanceFault());
-      this.store$.dispatch(new ToggleRemoveFaultMode());
-    }
-  }
-
-  addEmergencyStopFault = (wasPress: boolean) => {
-    if (this.hasDangerousFault() || this.hasSeriousFault() || this.faultCount() > 0) {
-      return;
-    }
-
-    if (this.isDangerousMode) {
-      this.store$.dispatch(new AddEmergencyStopDangerousFault());
-      this.store$.dispatch(new ToggleDangerousFaultMode());
-      return;
-    }
-
-    if (this.isSeriousMode) {
-      this.store$.dispatch(new AddEmergencyStopSeriousFault());
-      this.store$.dispatch(new ToggleSeriousFaultMode());
-      return;
-    }
-
-    if (wasPress) {
-      this.store$.dispatch(new AddEmergencyStopRidingFault());
-    }
-  }
-
-  addAvoidanceFault = (wasPress: boolean = false) => {
-    if (this.hasDangerousFault() || this.hasSeriousFault() || this.faultCount() > 0) {
-      return;
-    }
-
-    if (this.isDangerousMode) {
-      this.store$.dispatch(new AddAvoidanceDangerousFault());
-      this.store$.dispatch(new ToggleDangerousFaultMode());
-      return;
-    }
-
-    if (this.isSeriousMode) {
-      this.store$.dispatch(new AddAvoidanceSeriousFault());
-      this.store$.dispatch(new ToggleSeriousFaultMode());
-      return;
-    }
-
-    if (wasPress) {
-      this.store$.dispatch(new AddAvoidanceRidingFault());
-    }
-  }
-
-  canButtonRipple = (): boolean => {
-    if (this.isRemoveFaultMode) {
-      if (this.hasDangerousFault() && this.isDangerousMode) {
-        return true;
-      }
-
-      if (this.hasSeriousFault() && this.isSeriousMode) {
-        return true;
-      }
-
-      if (!this.isSeriousMode && !this.isDangerousMode && this.faultCount() > 0) {
-        return true;
-      }
-      return false;
-    }
-    return !(this.hasDangerousFault() || this.hasSeriousFault() || this.faultCount() > 0);
-  }
-
-  faultCount = (): number => {
-    return this.outcome === CompetencyOutcome.DF ? 1 : 0;
-  }
-
-  hasSeriousFault = (): boolean => {
-    return this.outcome === CompetencyOutcome.S;
-  }
-
-  hasDangerousFault = (): boolean => {
-    return this.outcome === CompetencyOutcome.D;
   }
 
   onFirstAttemptChange = (attemptedSpeed: string): void => {
@@ -311,6 +134,10 @@ export class SpeedCheckComponent {
     if (this.competency === Competencies.speedCheckAvoidance) {
       this.store$.dispatch(new RecordAvoidanceSecondAttempt(secondAttempt));
     }
+  }
+
+  getNotMet(): boolean {
+    return this.outcome === CompetencyOutcome.S;
   }
 
   firstAttemptValid(): boolean {

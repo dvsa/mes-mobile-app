@@ -110,4 +110,6 @@ export enum competencyLabels  {
   uTurn = '\'U\' Turn Exercise',
   controlledStop = 'Controlled stop',
   pcvDoorExercise = 'PCV Door Exercise',
+  emergencyStop = 'Emergency stop',
+  avoidance = 'Avoidance ex. control stop',
 }

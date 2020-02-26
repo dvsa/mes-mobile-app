@@ -44,8 +44,6 @@ export enum Competencies {
   pedestrianCrossings = 'pedestrianCrossings',
   positionNormalStops = 'positionNormalStops',
   awarenessPlanning = 'awarenessPlanning',
-  emergencyStop = 'emergencyStop',
-  avoidance = 'avoidance',
   speedCheckEmergency = 'speedCheckEmergency',
   speedCheckAvoidance = 'speedCheckAvoidance',
 }
@@ -57,6 +55,8 @@ export enum SingleFaultCompetencyNames {
   slowControl = 'slowControl',
   uTurn = 'uTurn',
   controlledStop = 'controlledStop',
+  emergencyStop = 'emergencyStop',
+  avoidance = 'avoidance',
 }
 
 export enum ManoeuvreTypes {

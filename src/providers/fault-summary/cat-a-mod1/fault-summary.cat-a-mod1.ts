@@ -18,8 +18,6 @@ export class FaultSummaryCatAM1Helper {
     return [
       ...getCompetencyFaults(data.drivingFaults),
       ...getCompetencyFaults(singleFaultCompetenciesWithDrivingFaults),
-      ...FaultSummaryCatAM1Helper.getAvoidanceFaults(data.avoidance, CompetencyOutcome.DF),
-      ...FaultSummaryCatAM1Helper.getEmergencyStopFaults(data.emergencyStop, CompetencyOutcome.DF),
     ];
   }
 
@@ -33,8 +31,6 @@ export class FaultSummaryCatAM1Helper {
     return [
       ...getCompetencyFaults(data.seriousFaults),
       ...getCompetencyFaults(singleFaultCompetenciesWithSeriousFaults),
-      ...FaultSummaryCatAM1Helper.getAvoidanceFaults(data.avoidance, CompetencyOutcome.S),
-      ...FaultSummaryCatAM1Helper.getEmergencyStopFaults(data.emergencyStop, CompetencyOutcome.S),
       ...FaultSummaryCatAM1Helper.getSpeedCheckAvoidance(data.avoidance),
       ...FaultSummaryCatAM1Helper.getSpeedCheckEmergencyStop(data.emergencyStop),
     ];
@@ -49,34 +45,12 @@ export class FaultSummaryCatAM1Helper {
     return [
       ...getCompetencyFaults(data.dangerousFaults),
       ...getCompetencyFaults(singleFaultCompetenciesWithDangerousFaults),
-      ...FaultSummaryCatAM1Helper.getAvoidanceFaults(data.avoidance, CompetencyOutcome.D),
-      ...FaultSummaryCatAM1Helper.getEmergencyStopFaults(data.emergencyStop, CompetencyOutcome.D),
     ];
-  }
-
-  public static getAvoidanceFaults(avoidance: Avoidance, outcome: CompetencyOutcome): FaultSummary[] {
-    const result = [];
-    if (get(avoidance, 'outcome') === outcome) {
-      result.push(FaultSummaryCatAM1Helper.createFaultSummary(
-        Competencies.avoidance, fullCompetencyLabels.avoidance, avoidance.comments));
-    }
-
-    return result;
-  }
-
-  public static getEmergencyStopFaults(emergencyStop: EmergencyStop, outcome: CompetencyOutcome): FaultSummary[] {
-    const result = [];
-    if (get(emergencyStop, 'outcome') === outcome) {
-      result.push(FaultSummaryCatAM1Helper.createFaultSummary(
-        Competencies.emergencyStop, fullCompetencyLabels.emergencyStop, emergencyStop.comments));
-    }
-
-    return result;
   }
 
   public static getSpeedCheckAvoidance(avoidance: Avoidance): FaultSummary[] {
     const result = [];
-    if (get(avoidance, 'speedNotMetSeriousFault')) {
+    if (get(avoidance, 'oputcome') === CompetencyOutcome.S) {
       const source = `${CommentSource.SPEED_REQUIREMENTS}-${Competencies.speedCheckAvoidance}`;
 
       result.push(FaultSummaryCatAM1Helper.createFaultSummary(
@@ -88,7 +62,7 @@ export class FaultSummaryCatAM1Helper {
 
   public static getSpeedCheckEmergencyStop(emergencyStop: EmergencyStop): FaultSummary[] {
     const result = [];
-    if (get(emergencyStop, 'speedNotMetSeriousFault')) {
+    if (get(emergencyStop, 'outcome') === CompetencyOutcome.S) {
       const source = `${CommentSource.SPEED_REQUIREMENTS}-${Competencies.speedCheckEmergency}`;
 
       result.push(FaultSummaryCatAM1Helper.createFaultSummary(
