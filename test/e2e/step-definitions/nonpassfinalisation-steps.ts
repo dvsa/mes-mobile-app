@@ -45,15 +45,38 @@ When('I complete debrief witnessed', () => {
 
 When('I select activity code {string}', (activityCodeDesc) => {
   selectActivityCode(activityCodeDesc);
-  const transmissionSelector = (true) ? 'transmission-manual' : 'transmission-automatic';
-  const transmissionRadio = getElement(by.id(transmissionSelector));
-  clickElement(transmissionRadio);
 });
 
 When('the D255 Radio is pre-selected to yes', () => {
   const d255PreselectedToYes = getElement(by.id('d255-yes'));
   expect(d255PreselectedToYes.isSelected()).to.eventually.be.true;
 });
+
+Then('the activity code should be {string}', (activityCode) => {
+  const acitivityCodeField = getElement(by.id('activity-code-selector'));
+  return expect(acitivityCodeField.getText()).to.eventually.equal(activityCode);
+});
+
+Then('the nonpassfinalisation page test outcome is {string}', (testOutcome : string) => {
+  const testOutcomeField = getElement(by.id('office-page-test-outcome'));
+  return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
+});
+
+Then('the transmission is selected', () => {
+  selectTransmission(true);
+});
+
+const clickContinue = () => {
+  const continueToBackToOfficeButton = getElement(by.xpath(
+    `//div[contains(@class, "non-pass-finalisation-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
+  clickElement(continueToBackToOfficeButton);
+};
+
+const selectTransmission = (transmission: boolean) => {
+  const transmissionSelector = (transmission) ? 'transmission-manual' : 'transmission-automatic';
+  const transmissionRadio = getElement(by.id(transmissionSelector));
+  clickElement(transmissionRadio);
+};
 
 const selectActivityCode = (activityCodeDesc) => {
   const activitySelector = getElement(by.id('activity-code-selector'));
@@ -73,20 +96,4 @@ const enterD255 = () => {
 const enterDebriefWitnessed = () => {
   const debriefWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
   clickElement(debriefWitnessedRadio);
-};
-
-Then('the activity code should be {string}', (activityCode) => {
-  const acitivityCodeField = getElement(by.id('activity-code-selector'));
-  return expect(acitivityCodeField.getText()).to.eventually.equal(activityCode);
-});
-
-Then('the nonpassfinalisation page test outcome is {string}', (testOutcome : string) => {
-  const testOutcomeField = getElement(by.id('office-page-test-outcome'));
-  return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
-});
-
-const clickContinue = () => {
-  const continueToBackToOfficeButton = getElement(by.xpath(
-    `//div[contains(@class, "non-pass-finalisation-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
-  clickElement(continueToBackToOfficeButton);
 };

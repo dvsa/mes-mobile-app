@@ -25,6 +25,10 @@ Before({ tags: '@catc1' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catce' }, () => {
+  this.testCategory = 'c';
+});
+
 When('I end the test', () => {
   endTest();
 });

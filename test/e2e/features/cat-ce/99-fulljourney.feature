@@ -20,20 +20,12 @@ Feature: Full end to end journey for Category C+E
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome C - Bright Wilson" page
       When I select activity code "11 - Mechanical failure"
+      Then the transmission is selected
       And I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Terminated"
-      And I try to upload the test
-      Then validation item "office-route-number-validation-text" should be "Enter the route number (max 2 digits)"
-      And validation item "office-route-number-validation-text" should be visible
-      And validation item "office-independent-driving-validation-text" should be "Select the method of independent driving"
-      And validation item "office-independent-driving-validation-text" should be visible
-      And validation item "office-candidate-description-validation-text" should be "Describe the candidate"
-      And validation item "office-candidate-description-validation-text" should be visible
-      And validation item "office-weather-validation-text" should be "Select weather conditions"
-      And validation item "office-weather-validation-text" should be visible
       When I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
