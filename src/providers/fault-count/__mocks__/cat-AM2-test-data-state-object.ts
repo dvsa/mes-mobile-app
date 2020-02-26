@@ -40,14 +40,32 @@ export const safetyAndBalanceMock2FaultsSafety: SafetyAndBalanceQuestions = {
     },
     {
       outcome: CompetencyOutcome.DF,
-    }],
+    },
+  ],
 };
 
 export const safetyAndBalanceMock2FaultsSafetyAndBalance: SafetyAndBalanceQuestions = {
   safetyQuestions: [
     {
       outcome: CompetencyOutcome.DF,
-    }],
+    },
+  ],
+  balanceQuestions: [
+    {
+      outcome: CompetencyOutcome.DF,
+    },
+  ],
+};
+
+export const safetyAndBalanceMock3FaultsSafetyAndBalance: SafetyAndBalanceQuestions = {
+  safetyQuestions: [
+    {
+      outcome: CompetencyOutcome.DF,
+    },
+    {
+      outcome: CompetencyOutcome.DF,
+    },
+  ],
   balanceQuestions: [
     {
       outcome: CompetencyOutcome.DF,
