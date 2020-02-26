@@ -9,7 +9,7 @@ import { By } from '@angular/platform-browser';
 class TestAlphaNumComponent {
 }
 
-fdescribe('Directive: InputRestrictionUppercaseAlphanumDirective', () => {
+describe('Directive: InputRestrictionUppercaseAlphanumDirective', () => {
   let fixture: ComponentFixture<TestAlphaNumComponent>;
   let inputElement: DebugElement;
 
@@ -25,9 +25,8 @@ fdescribe('Directive: InputRestrictionUppercaseAlphanumDirective', () => {
   it('should remove spaces, non alpha numeric chars and upper case input', () => {
     fixture.detectChanges();
     inputElement = fixture.debugElement.query(By.css('input'));
-
-    inputElement.nativeElement.value = 'aBc!@ £$%^&123';
+    inputElement.nativeElement.value = '_aBc!@ £$%^&123)(*&^%$£@   []{}`~';
     inputElement.nativeElement.dispatchEvent(new Event('input'));
-    expect(inputElement.nativeElement.value).toEqual('ABC123')
+    expect(inputElement.nativeElement.value).toEqual('ABC123');
   });
 });

@@ -4,11 +4,12 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
   selector: '[uppercaseAlphanumOnly]',
 })
 export class InputRestrictionUppercaseAlphanumDirective {
-  constructor(public ref: ElementRef) { }
+  constructor(public ref: ElementRef) {
+  }
 
   @HostListener('input', ['$event']) onInput(event) {
     this.ref.nativeElement.value = event.target.value
-      .replace(/[^\w\s]/gi, '')
+      .replace(/[^0-9a-z]/gi, '')
       .trim()
       .toUpperCase();
   }
