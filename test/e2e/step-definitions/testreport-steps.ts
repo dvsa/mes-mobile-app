@@ -1,6 +1,6 @@
 import { Then, When, Before } from 'cucumber';
 import { browser, by, element } from 'protractor';
-import { waitForPresenceOfElement, getElement, clickElement } from '../../helpers/interactionHelpers';
+import { textFieldInputViaNativeMode, waitForPresenceOfElement, getElement, clickElement } from '../../helpers/interactionHelpers';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -261,6 +261,17 @@ When('I enter the legal requirements', () => {
 When('I add the Uncouple and Recouple fault', () => {
   const uncoupleRecoupleFault = getElement(by.xpath('//uncouple-recouple//competency-button/div/div[1]'));
   longPressButton(uncoupleRecoupleFault);
+});
+
+When('I enter recorded speed for Emergency Stop', () => {
+ // const speed = getElement(by.xpath('//speed-check[1]/ion-row[1]/ion-col[2]/input[1]'));
+  //speed.sendKeys('52');
+  browser.sleep(5000);
+  //textFieldInputViaNativeMode('//speed-check[1]/ion-row[1]/ion-col[2]/input[1]', '52');
+});
+
+When('I enter recorded speed for Avoidance', () => {
+  textFieldInputViaNativeMode('/html/body/ion-app/ng-component/ion-nav/div[2]/ion-content/div[2]/ion-grid/speed-check[2]/ion-row[1]/ion-col[2]/input[1]', '52');
 });
 
 const endTest = () => {
