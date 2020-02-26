@@ -1,4 +1,4 @@
-//TODO reenable tests with MOD2
+// TODO reenable tests with MOD2
 
 // import { TestBed } from '@angular/core/testing';
 // import { configureTestSuite } from 'ng-bullet';
@@ -10,7 +10,7 @@
 //   safetyAndBalanceMock2FaultsSafetyAndBalance,
 // } from '../../__mocks__/cat-AM2-test-data-state-object';
 //
-// fdescribe('FaultCountAM2Helper', () => {
+// describe('FaultCountAM2Helper', () => {
 //
 //   configureTestSuite(() => {
 //     TestBed.configureTestingModule({
@@ -41,7 +41,8 @@
 //
 //     it('2 driving faults', () => {
 //       const output =  { drivingFaults: 2 };
-//       const temp = FaultCountAM2Helper.getSafetyAndBalanceFaultCountCatAM2(safetyAndBalanceMock2FaultsSafetyAndBalance);
+//       const temp =
+//        FaultCountAM2Helper.getSafetyAndBalanceFaultCountCatAM2(safetyAndBalanceMock2FaultsSafetyAndBalance);
 //       expect(temp).toEqual(output);
 //     });
 //   });
