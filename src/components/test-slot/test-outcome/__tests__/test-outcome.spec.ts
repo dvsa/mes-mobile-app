@@ -7,7 +7,7 @@ import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';
 import { StartTest, ActivateTest } from '../../../../modules/tests/tests.actions';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
-import { CAT_B, CAT_BE, CAT_C } from '../../../../pages/page-names.constants';
+import { CAT_B, CAT_BE, CAT_C, CAT_D, CAT_A_MOD1, CAT_A_MOD2 } from '../../../../pages/page-names.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
@@ -36,6 +36,27 @@ describe('Test Outcome', () => {
     selectedDate: 'dummy',
     examiner: { staffNumber: '123', individualId: 456 },
   };
+
+  const categoryPages = [
+    { category: TestCategory.B, pageConstant: CAT_B },
+    { category: TestCategory.BE, pageConstant: CAT_BE },
+    { category: TestCategory.C, pageConstant: CAT_C },
+    { category: TestCategory.CE, pageConstant: CAT_C },
+    { category: TestCategory.C1, pageConstant: CAT_C },
+    { category: TestCategory.C1E, pageConstant: CAT_C },
+    { category: TestCategory.D, pageConstant: CAT_D },
+    { category: TestCategory.DE, pageConstant: CAT_D },
+    { category: TestCategory.D1, pageConstant: CAT_D },
+    { category: TestCategory.D1E, pageConstant: CAT_D },
+    { category: TestCategory.EUAM1, pageConstant: CAT_A_MOD1 },
+    { category: TestCategory.EUA2M1, pageConstant: CAT_A_MOD1 },
+    { category: TestCategory.EUAM1, pageConstant: CAT_A_MOD1 },
+    { category: TestCategory.EUAMM1, pageConstant: CAT_A_MOD1 },
+    { category: TestCategory.EUAM2, pageConstant: CAT_A_MOD2 },
+    { category: TestCategory.EUA2M2, pageConstant: CAT_A_MOD2 },
+    { category: TestCategory.EUAM2, pageConstant: CAT_A_MOD2 },
+    { category: TestCategory.EUAMM2, pageConstant: CAT_A_MOD2 },
+  ];
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -119,91 +140,55 @@ describe('Test Outcome', () => {
     });
 
     describe('writeUpTest', () => {
-      it('should dispatch an ActivateTest action and navigate to the Office Cat B page', () => {
-        component.slotDetail = testSlotDetail;
-        component.category = TestCategory.B;
-        component.writeUpTest();
+      categoryPages.forEach((cat) => {
+        it(`should dispatch an ActivateTest action and navigate to the Office Cat ${cat.category} page`, () => {
+          component.slotDetail = testSlotDetail;
+          component.category = cat.category;
+          component.writeUpTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
-        const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_B.OFFICE_PAGE);
-      });
-      it('should dispatch an ActivateTest action and navigate to the Office Cat BE page', () => {
-        component.slotDetail = testSlotDetail;
-        component.category = TestCategory.BE;
-        component.writeUpTest();
-
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
-        const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_BE.OFFICE_PAGE);
+          expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, cat.category));
+          const { calls } = navController.push as jasmine.Spy;
+          expect(calls.argsFor(0)[0]).toBe(cat.pageConstant.OFFICE_PAGE);
+        });
       });
     });
 
     describe('resumeTest', () => {
-      it('should dispatch an ActivateTest action and navigate to the Waiting Room page', () => {
-        component.testStatus = TestStatus.Started;
-        component.slotDetail = testSlotDetail;
-        component.category = TestCategory.B;
-        component.resumeTest();
+      categoryPages.forEach((cat) => {
+        it(`Cat ${cat.category} should dispatch an ActivateTest action and navigate to the Waiting Room page`, () => {
+          component.testStatus = TestStatus.Started;
+          component.slotDetail = testSlotDetail;
+          component.category = cat.category;
+          component.resumeTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
-        const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_B.WAITING_ROOM_PAGE);
-      });
-      it('should dispatch an ActivateTest action and navigate to the Pass Finalisation page', () => {
-        component.testStatus = TestStatus.Decided;
-        component.slotDetail = testSlotDetail;
-        component.activityCode = ActivityCodes.PASS;
-        component.category = TestCategory.B;
-        component.resumeTest();
+          expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, cat.category));
+          const { calls } = navController.push as jasmine.Spy;
+          expect(calls.argsFor(0)[0]).toBe(cat.pageConstant.WAITING_ROOM_PAGE);
+        });
+        it(`Cat ${cat.category} should dispatch an ActivateTest action and
+         navigate to the Pass Finalisation page`, () => {
+          component.testStatus = TestStatus.Decided;
+          component.slotDetail = testSlotDetail;
+          component.activityCode = ActivityCodes.PASS;
+          component.category = cat.category;
+          component.resumeTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
-        const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_B.PASS_FINALISATION_PAGE);
-      });
-      it('should dispatch an ActivateTest action and navigate to the Non Pass Finalisation page', () => {
-        component.testStatus = TestStatus.Decided;
-        component.slotDetail = testSlotDetail;
-        component.activityCode = ActivityCodes.FAIL;
-        component.category = TestCategory.B;
-        component.resumeTest();
+          expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, cat.category));
+          const { calls } = navController.push as jasmine.Spy;
+          expect(calls.argsFor(0)[0]).toBe(cat.pageConstant.PASS_FINALISATION_PAGE);
+        });
+        it(`Cat ${cat.category} should dispatch an ActivateTest action
+        and navigate to the Non Pass Finalisation page`, () => {
+          component.testStatus = TestStatus.Decided;
+          component.slotDetail = testSlotDetail;
+          component.activityCode = ActivityCodes.FAIL;
+          component.category = cat.category;
+          component.resumeTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
-        const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_B.NON_PASS_FINALISATION_PAGE);
-      });
-
-      it('should dispatch an ActivateTest action and navigate to the Waiting Room page', () => {
-        component.testStatus = TestStatus.Started;
-        component.slotDetail = testSlotDetail;
-        component.category = TestCategory.C;
-        component.resumeTest();
-
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
-        const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_C.WAITING_ROOM_PAGE);
-      });
-      it('should dispatch an ActivateTest action and navigate to the Pass Finalisation page', () => {
-        component.testStatus = TestStatus.Decided;
-        component.slotDetail = testSlotDetail;
-        component.activityCode = ActivityCodes.PASS;
-        component.category = TestCategory.C;
-        component.resumeTest();
-
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
-        const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_C.PASS_FINALISATION_PAGE);
-      });
-      it('should dispatch an ActivateTest action and navigate to the Non Pass Finalisation page', () => {
-        component.testStatus = TestStatus.Decided;
-        component.slotDetail = testSlotDetail;
-        component.activityCode = ActivityCodes.FAIL;
-        component.category = TestCategory.C;
-        component.resumeTest();
-
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
-        const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_C.NON_PASS_FINALISATION_PAGE);
+          expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, cat.category));
+          const { calls } = navController.push as jasmine.Spy;
+          expect(calls.argsFor(0)[0]).toBe(cat.pageConstant.NON_PASS_FINALISATION_PAGE);
+        });
       });
     });
 
@@ -323,37 +308,27 @@ describe('Test Outcome', () => {
       });
     });
     describe('getTestStartingPage', () => {
-      it('should return the correct value for a Category B Test', () => {
-        component.category = TestCategory.B;
-        expect(component.getTestStartingPage()).toEqual(CAT_B.WAITING_ROOM_PAGE);
-      });
-      it('should return the correct value for a Category B+E Test', () => {
-        component.category = TestCategory.BE;
-        expect(component.getTestStartingPage()).toEqual(CAT_BE.WAITING_ROOM_PAGE);
-      });
-      it('should return the correct value for a Category C Test', () => {
-        component.category = TestCategory.C;
-        expect(component.getTestStartingPage()).toEqual(CAT_C.WAITING_ROOM_PAGE);
+      categoryPages.forEach((cat) => {
+        it(`should return the correct value for a Category ${cat.category} Test`, () => {
+          component.category = cat.category;
+          expect(component.getTestStartingPage()).toEqual(cat.pageConstant.WAITING_ROOM_PAGE);
+        });
       });
     });
     describe('getPassFinalisationPage', () => {
-      it('should return the correct value for a Category B Test', () => {
-        component.category = TestCategory.B;
-        expect(component.getPassFinalisationPage()).toEqual(CAT_B.PASS_FINALISATION_PAGE);
-      });
-      it('should return the correct value for a Category B+E Test', () => {
-        component.category = TestCategory.BE;
-        expect(component.getPassFinalisationPage()).toEqual(CAT_BE.PASS_FINALISATION_PAGE);
+      categoryPages.forEach((cat) => {
+        it(`should return the correct value for a Category ${cat.category} Test`, () => {
+          component.category = cat.category;
+          expect(component.getPassFinalisationPage()).toEqual(cat.pageConstant.PASS_FINALISATION_PAGE);
+        });
       });
     });
-    describe('getPassFinalisationPage', () => {
-      it('should return the correct value for a Category B Test', () => {
-        component.category = TestCategory.B;
-        expect(component.getNonPassFinalisationPage()).toEqual(CAT_B.NON_PASS_FINALISATION_PAGE);
-      });
-      it('should return the correct value for a Category B+E Test', () => {
-        component.category = TestCategory.BE;
-        expect(component.getNonPassFinalisationPage()).toEqual(CAT_BE.NON_PASS_FINALISATION_PAGE);
+    describe('getNonPassFinalisationPage', () => {
+      categoryPages.forEach((cat) => {
+        it(`should return the correct value for a Category ${cat.category} Test`, () => {
+          component.category = cat.category;
+          expect(component.getNonPassFinalisationPage()).toEqual(cat.pageConstant.NON_PASS_FINALISATION_PAGE);
+        });
       });
     });
   });
@@ -408,21 +383,14 @@ describe('Test Outcome', () => {
 
         expect(component.rekeyTest).toHaveBeenCalled();
       });
-
-      it('should navigate to cat B waiting room page when `Rekey` is clicked', () => {
-        component.slotDetail = testSlotDetail;
-        component.category = TestCategory.B;
-        component.rekeyTest();
-        const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_B.WAITING_ROOM_PAGE);
-      });
-
-      it('should navigate to cat BE waiting room page when `Rekey` is clicked', () => {
-        component.slotDetail = testSlotDetail;
-        component.category = TestCategory.BE;
-        component.rekeyTest();
-        const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_BE.WAITING_ROOM_PAGE);
+      categoryPages.forEach((cat) => {
+        it(`should navigate to cat ${cat.category} waiting room page when "Rekey" is clicked`, () => {
+          component.slotDetail = testSlotDetail;
+          component.category = cat.category;
+          component.rekeyTest();
+          const { calls } = navController.push as jasmine.Spy;
+          expect(calls.argsFor(0)[0]).toBe(cat.pageConstant.WAITING_ROOM_PAGE);
+        });
       });
     });
 
