@@ -1,4 +1,5 @@
-import { TestData } from '@dvsa/mes-test-schema/categories/AM2';
+import { SafetyAndBalanceQuestions, TestData } from '@dvsa/mes-test-schema/categories/AM2';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const catAM2TestDataStateObject: TestData = {
   drivingFaults: {
@@ -28,4 +29,27 @@ export const catAM2TestDataStateObject: TestData = {
     complete: true,
     seriousFault: false,
   },
+};
+
+export const safetyAndBalanceMock0Faults: SafetyAndBalanceQuestions = {};
+
+export const safetyAndBalanceMock2FaultsSafety: SafetyAndBalanceQuestions = {
+  safetyQuestions: [
+    {
+      outcome: CompetencyOutcome.DF,
+    },
+    {
+      outcome: CompetencyOutcome.DF,
+    }],
+};
+
+export const safetyAndBalanceMock2FaultsSafetyAndBalance: SafetyAndBalanceQuestions = {
+  safetyQuestions: [
+    {
+      outcome: CompetencyOutcome.DF,
+    }],
+  balanceQuestions: [
+    {
+      outcome: CompetencyOutcome.DF,
+    }],
 };

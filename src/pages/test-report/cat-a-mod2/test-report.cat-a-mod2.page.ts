@@ -52,6 +52,8 @@ import { TestData, TestRequirements } from '@dvsa/mes-test-schema/categories/AM2
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -60,6 +62,7 @@ interface TestReportPageState {
   isDangerousMode$: Observable<boolean>;
   testData$: Observable<TestData>;
   testRequirements$: Observable<TestRequirements>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -79,6 +82,7 @@ export class TestReportCatAMod2Page extends BasePageComponent {
   isDangerousMode: boolean = false;
   isTestReportValid: boolean = false;
   isEtaValid: boolean = true;
+  testCategory: CategoryCode;
 
   modal: Modal;
   missingLegalRequirements: legalRequirementsLabels[] = [];
@@ -135,6 +139,9 @@ export class TestReportCatAMod2Page extends BasePageComponent {
         select(getTestData),
         select(getTestRequirements),
       ),
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
+      ),
     };
     this.setupSubscription();
 
@@ -166,6 +173,7 @@ export class TestReportCatAMod2Page extends BasePageComponent {
       isSeriousMode$,
       isDangerousMode$,
       testData$,
+      testCategory$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -173,13 +181,14 @@ export class TestReportCatAMod2Page extends BasePageComponent {
       isRemoveFaultMode$.pipe(map(result => (this.isRemoveFaultMode = result))),
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
+      testCategory$.pipe(map(result => (this.testCategory = result))),
       testData$.pipe(
         map((data) => {
           this.isTestReportValid =
-            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.EUAM2);
+            this.testReportValidatorProvider.isTestReportValid(data, this.testCategory as TestCategory);
           this.missingLegalRequirements =
-            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.EUAM2);
-          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.EUAM2);
+            this.testReportValidatorProvider.getMissingLegalRequirements(data, this.testCategory as TestCategory);
+          this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, this.testCategory as TestCategory);
         }),
       ),
     ).subscribe();

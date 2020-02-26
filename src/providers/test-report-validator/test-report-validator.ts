@@ -50,6 +50,11 @@ export class TestReportValidatorProvider {
         return this.validateLegalRequirementsCatDE(data);
       case TestCategory.D1E:
         return this.validateLegalRequirementsCatD1E(data);
+      case TestCategory.EUAM2:
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAMM2:
+        return this.validateLegalRequirementsCatEUAM2(data);
       default:
         return false;
     }
@@ -415,6 +420,19 @@ export class TestReportValidatorProvider {
       manoeuvre &&
       eco &&
       uncoupleRecouple
+    );
+  }
+
+  private validateLegalRequirementsCatEUAM2(data: CatD1EUniqueTypes.TestData): boolean {
+    const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
+    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
+    const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
+    const angledStartControlledStop: boolean = get(data, 'testRequirements.angledStartControlledStop', false);
+    return (
+      normalStart1 &&
+      normalStart2 &&
+      uphillStart &&
+      angledStartControlledStop
     );
   }
 

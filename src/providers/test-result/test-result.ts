@@ -141,7 +141,7 @@ export class TestResultProvider {
     if (this.faultCountProvider.getSeriousFaultSumCount(category, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
-    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) >= 6) {
+    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) > 10) {
       return of(ActivityCodes.FAIL);
     }
 
