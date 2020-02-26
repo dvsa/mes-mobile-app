@@ -21,6 +21,10 @@ Before({ tags: '@catc1' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catce' }, () => {
+  this.testCategory = 'c';
+});
+
 When('I continue to the back to office page', () => {
   enterD255();
   enterDebriefWitnessed();
@@ -41,6 +45,9 @@ When('I complete debrief witnessed', () => {
 
 When('I select activity code {string}', (activityCodeDesc) => {
   selectActivityCode(activityCodeDesc);
+  const transmissionSelector = (true) ? 'transmission-manual' : 'transmission-automatic';
+  const transmissionRadio = getElement(by.id(transmissionSelector));
+  clickElement(transmissionRadio);
 });
 
 When('the D255 Radio is pre-selected to yes', () => {

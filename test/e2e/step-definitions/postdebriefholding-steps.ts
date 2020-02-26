@@ -16,6 +16,10 @@ Before({ tags: '@catc1' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catce' }, () => {
+  this.testCategory = 'c';
+});
+
 Then('I am on the post debrief holding page', () => {
   // No page title so need to check something else exists that exists on the page
   const postDebriefHoldingPage = getElement(by.id(`post-debrief-holding-cat-${this.testCategory}-page`));

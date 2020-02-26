@@ -22,6 +22,10 @@ Before({ tags: '@catc1' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catce' }, () => {
+  this.testCategory = 'c';
+});
+
 When('I end the debrief', () => {
   const endDebriefButton = getElement(by.xpath('//button[span[h3[text()="End debrief"]]]'));
   clickElement(endDebriefButton);
