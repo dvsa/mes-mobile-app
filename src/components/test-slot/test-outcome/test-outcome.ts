@@ -182,6 +182,12 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.C:
         this.navController.push(CAT_C.WAITING_ROOM_PAGE);
         break;
+      case TestCategory.DE:
+      case TestCategory.D1E:
+      case TestCategory.D1:
+      case TestCategory.D:
+        this.navController.push(CAT_D.WAITING_ROOM_PAGE);
+        break;
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
