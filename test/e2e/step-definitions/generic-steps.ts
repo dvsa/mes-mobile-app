@@ -1,7 +1,8 @@
 import { Before } from 'cucumber';
 import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-import { waitForOverlay, getParentContext, getElement, isReady, clickElement, clickBackButton } from '../../helpers/interactionHelpers';
+import { waitForOverlay, getParentContext } from '../../helpers/helpers';
+import LoginPage from '../pages/loginPage';
 
 const {
   Given,
@@ -93,7 +94,7 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
       // Logout
       logout();
       // Login
-      logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
+      LoginPage.login(username);
       // Refresh application
       loadApplication().then(() => {
       // Small wait to make sure the action has initiated
@@ -160,7 +161,7 @@ Given(/^I start full practice mode$/, () => {
 });
 
 When('I log in to the application as {string}', (username) => {
-  logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
+  LoginPage.login(username);
 
   // If the dashboard has loaded we should see the employee id
   const employeeId = element(
@@ -277,40 +278,6 @@ AfterAll(() => {
 //////////////////////////////////////////// SHARED FUNCTIONS ////////////////////////////////////////////
 
 /**
- * Logs into the application with the given username and password. Assumes we will be on the Microsoft login page.
- * @param username the username
- * @param password the password
- */
-export const logInToApplication = (username, password) => {
-  // To be able to fill in the Authenticator login we need to switch to NATIVE context then switch back to WEBVIEW after
-  browser.driver.getCurrentContext().then((webviewContext) => {
-    // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP').then(() => {
-      // Fill in username and click Next
-      const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-      browser.wait(ExpectedConditions.presenceOf(usernameFld));
-      usernameFld.sendKeys(username);
-      const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));
-      nextButtonElement.click();
-
-      // Fill in password and click Sign in
-      const pFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
-      browser.wait(ExpectedConditions.presenceOf(pFld));
-      pFld.sendKeys(password);
-      const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
-      signInButtonElement.click();
-
-      // Switch back to WEBVIEW context
-      browser.driver.selectContext(getParentContext(webviewContext));
-
-      // Wait for dashboard page to load
-      const employeeId = element(by.xpath('//span[@class="employee-id"]'));
-      browser.wait(ExpectedConditions.presenceOf(employeeId));
-    });
-  });
-};
-
-/**
  * Checks whether the user is logged in.
  * @param staffNumber the staff number of the user we wish to be logged in
  */
@@ -412,7 +379,7 @@ const onLandingPageAs = (username) => {
     if (!response) {
         // If not logged in as the right user logout and log in as the correct user
       logout();
-      logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
+      LoginPage.login(username);
 
       // Refresh application
       loadApplication().then(() => {
