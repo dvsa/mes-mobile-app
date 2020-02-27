@@ -2,6 +2,7 @@ import { When, Before } from 'cucumber';
 import { by, element, browser } from 'protractor';
 import { textFieldInputViaNativeMode, getElement, clickElement } from '../../helpers/interactionHelpers';
 import { UI_TEST_DATA } from '../../test_data/ui_test_data';
+import TempPage from '../pages/tempPage';
 
 import { threadId } from 'worker_threads';
 import { boolean, number } from '@hapi/joi';
@@ -54,7 +55,7 @@ When('I fail the eye sight test', () => {
   const eyesightConfirmation = getElement(by.id('eyesight-failure-confirmation'));
   expect(eyesightConfirmation.isPresent()).to.eventually.be.true;
   const eyesightFailConfirmButton = getElement(by.id('confirm-eyesight-failure'));
-  clickElement(eyesightFailConfirmButton);
+  TempPage.clickElement(eyesightFailConfirmButton);
 });
 
 When('I complete the waiting room to car page with the following vehicle checks', function (table) {
@@ -76,58 +77,58 @@ const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, te
   textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Vehicle registration number"]]/' +
   'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'AB12CDE');
   const submitWRTC = getElement(by.xpath('//button[span[h3[text()="Continue to test report"]]]'));
-  clickElement(submitWRTC);
+  TempPage.clickElement(submitWRTC);
 };
 
 const multiShowAndTell = (questions, questionResult) => {
   openSelectQuestionsOverlay();
   showMeQuestions(questions, questionResult);
   const submitVehicleChecksButton = getElement(by.id('submit-vehicle-checks'));
-  clickElement(submitVehicleChecksButton);
+  TempPage.clickElement(submitVehicleChecksButton);
 };
 
 const openSelectQuestionsOverlay = () => {
   const selectQuestionsButton = getElement(by.css('input[value="Select questions"]'));
   expect(selectQuestionsButton.isPresent()).to.eventually.be.true;
-  clickElement(selectQuestionsButton);
+  TempPage.clickElement(selectQuestionsButton);
 };
 
 const standardUserJourney = (withDriverFault: boolean, manualTransmission: boolean, tellMeQuestion: string) => {
   selectTellMeQuestion(tellMeQuestion);
   const tellMeRadioSelector = (withDriverFault) ? 'tellme-fault' : 'tellme-correct';
   const tellMeRadio = getElement(by.id(tellMeRadioSelector));
-  clickElement(tellMeRadio);
+  TempPage.clickElement(tellMeRadio);
   const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
   const transmissionRadio = getElement(by.id(transmissionSelector));
-  clickElement(transmissionRadio);
+  TempPage.clickElement(transmissionRadio);
 };
 
 const showMeQuestions = (questions, questionResult) => {
   const showMeQuestionsArray = [questions, questionResult];
   const elements = element.all(by.id('vehicle-checks-question-selector'));
   elements.each((element, index) => {
-    clickElement(element);
+    TempPage.clickElement(element);
     const vehicleCheck = getElement(by.xpath(`//button//div[normalize-space(text()) =  "${showMeQuestionsArray[0][index]}"]`));
-    clickElement(vehicleCheck);
+    TempPage.clickElement(vehicleCheck);
     const submitDialog = getElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
-    clickElement(submitDialog);
+    TempPage.clickElement(submitDialog);
     const resultFromQuestions = (showMeQuestionsArray[1][index] === "true") ? 'vehicleChecksFault' : 'vehicleChecksCorrect';
     const vehicleCheckAnswer = getElement(by.id(`${resultFromQuestions}_${index + 1}`));
-    clickElement(vehicleCheckAnswer);
+    TempPage.clickElement(vehicleCheckAnswer);
   });
 };
 
 const selectTellMeQuestion = (tellMeQuestion: string) => {
   const tellMeSelector = getElement(by.id('tell-me-selector'));
-  clickElement(tellMeSelector);
+  TempPage.clickElement(tellMeSelector);
   const tellMe = getElement(by.xpath(`//button/span/div[normalize-space(text()) = "${tellMeQuestion}"]`));
-  clickElement(tellMe);
+  TempPage.clickElement(tellMe);
   const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
-  clickElement(submitDialog);
+  TempPage.clickElement(submitDialog);
 };
 
 const eyeSightResult = (result: boolean) => {
   const eyeSight = result ? 'eyesight-pass' : 'eyesight-fail';
   const eyesightRadio = getElement(by.id(`${eyeSight}`));
-  clickElement(eyesightRadio);
+  TempPage.clickElement(eyesightRadio);
 };

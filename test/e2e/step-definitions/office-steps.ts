@@ -1,6 +1,7 @@
 import { Then, When, Before } from 'cucumber';
 import { by } from 'protractor';
 import { getElement, clickElement } from '../../helpers/interactionHelpers';
+import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -116,37 +117,37 @@ Then('the rekey is successfully uploaded', () => {
 
 When('I return to the journal', () => {
   const returnToJournalButton = getElement(by.xpath('//button/span/h3[text() = "Return to journal"]'));
-  clickElement(returnToJournalButton);
+  TempPage.clickElement(returnToJournalButton);
 });
 
 const clickUploadButton = () => {
   const submitTestButton = getElement(by.xpath('//button[span[h3[text() = "Upload"]]]'));
-  clickElement(submitTestButton);
+  TempPage.clickElement(submitTestButton);
 };
 
 const uploadTest = () => {
   clickUploadButton();
 
   const uploadConfirmationButton = getElement(by.xpath('//ion-alert//button/span[text() = "Upload"]'));
-  clickElement(uploadConfirmationButton);
+  TempPage.clickElement(uploadConfirmationButton);
 };
 
 const completeRekey = () => {
   const continueButton = getElement(
     by.xpath(`//div[contains(@class, "office-cat-${this.testCategory}-page")]//button//h3[text()="Continue"]`));
-  clickElement(continueButton);
+    TempPage.clickElement(continueButton);
 
   const iPadIssueCheckbox = getElement(by.id('ipadIssueSelected'));
-  clickElement(iPadIssueCheckbox);
+  TempPage.clickElement(iPadIssueCheckbox);
 
   const ipadIssueTechnicalFault = getElement(by.id('ipadIssueTechnicalFault'));
-  clickElement(ipadIssueTechnicalFault);
+  TempPage.clickElement(ipadIssueTechnicalFault);
 
   const uploadButton = getElement(by.xpath('//button/span/h3[text() = "Upload rekeyed test"]'));
-  clickElement(uploadButton);
+  TempPage.clickElement(uploadButton);
 
   const uploadConfirmationButton = getElement(by.xpath('//button/span[text() = "Upload"]'));
-  clickElement(uploadConfirmationButton);
+  TempPage.clickElement(uploadConfirmationButton);
 };
 
 const enterCandidateDescription = () => {
@@ -161,25 +162,25 @@ const enterRouteNumber = (routeNumber) => {
 
 const enterIndependentDriving = (type) => {
   const satnavRadio = getElement(by.id(`independent-driving-${type}`));
-  clickElement(satnavRadio);
+  TempPage.clickElement(satnavRadio);
 };
 
 const enterShowMe = (value) => {
   const showMeSelector = getElement(by.id('show-me-selector'));
-  clickElement(showMeSelector);
+  TempPage.clickElement(showMeSelector);
   const showMeItem = getElement(by.xpath(`//button/span/div[normalize-space(text()) = '${value}']`));
-  clickElement(showMeItem);
+  TempPage.clickElement(showMeItem);
   const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
-  clickElement(submitDialog);
+  TempPage.clickElement(submitDialog);
 };
 
 const enterWeatherConditions = () => {
   const weatherSelector = getElement(by.xpath('//ion-select[@formcontrolname="weatherConditions"]'));
-  clickElement(weatherSelector);
+  TempPage.clickElement(weatherSelector);
   const weatherItem1 = getElement(by.xpath('//button/span/div[normalize-space(text()) = "2 - Bright / wet roads"]'));
-  clickElement(weatherItem1);
+  TempPage.clickElement(weatherItem1);
   const weatherItem2 = getElement(by.xpath('//button/span/div[normalize-space(text()) = "4 - Showers"]'));
-  clickElement(weatherItem2);
+  TempPage.clickElement(weatherItem2);
   const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
-  clickElement(submitDialog);
+  TempPage.clickElement(submitDialog);
 };

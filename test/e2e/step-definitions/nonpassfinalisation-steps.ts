@@ -1,6 +1,7 @@
 import { Then, When, Before } from 'cucumber';
 import { by } from 'protractor';
-import { getElement, clickElement } from '../../helpers/interactionHelpers';
+import { getElement } from '../../helpers/interactionHelpers';
+import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -69,31 +70,31 @@ Then('the transmission is selected', () => {
 const clickContinue = () => {
   const continueToBackToOfficeButton = getElement(by.xpath(
     `//div[contains(@class, "non-pass-finalisation-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
-  clickElement(continueToBackToOfficeButton);
+    TempPage.clickElement(continueToBackToOfficeButton);
 };
 
 const selectTransmission = (transmission: boolean) => {
   const transmissionSelector = (transmission) ? 'transmission-manual' : 'transmission-automatic';
   const transmissionRadio = getElement(by.id(transmissionSelector));
-  clickElement(transmissionRadio);
+  TempPage.clickElement(transmissionRadio);
 };
 
 const selectActivityCode = (activityCodeDesc) => {
   const activitySelector = getElement(by.id('activity-code-selector'));
-  clickElement(activitySelector);
+  TempPage.clickElement(activitySelector);
   const activityItem = getElement(by.xpath(`//button/span/div[@class='alert-radio-label']
   [normalize-space(text()) = '${activityCodeDesc}']`));
-  clickElement(activityItem);
+  TempPage.clickElement(activityItem);
   const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
-  clickElement(submitDialog);
+  TempPage.clickElement(submitDialog);
 };
 
 const enterD255 = () => {
   const d255Radio = getElement(by.id('d255-yes'));
-  clickElement(d255Radio);
+  TempPage.clickElement(d255Radio);
 };
 
 const enterDebriefWitnessed = () => {
   const debriefWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
-  clickElement(debriefWitnessedRadio);
+  TempPage.clickElement(debriefWitnessedRadio);
 };

@@ -2,6 +2,7 @@ import { Then, When, Before } from 'cucumber';
 import { enterPasscode } from './generic-steps';
 import { by } from 'protractor';
 import { getElement, clickElement } from '../../helpers/interactionHelpers';
+import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -33,14 +34,14 @@ Before({ tags: '@catc1e' }, () => {
 
 When('the candidate enters a new email address', () => {
   const newEmailRadio = getElement(by.id('newEmail'));
-  clickElement(newEmailRadio);
+  TempPage.clickElement(newEmailRadio);
   const newEmailAddressField = getElement(by.id('newEmailInput'));
   newEmailAddressField.sendKeys('testemail@example.com');
 });
 
 When('the candidate requests to receive results by post', () => {
   const postalAddressRadio = getElement(by.id('postalAddress'));
-  clickElement(postalAddressRadio);
+  TempPage.clickElement(postalAddressRadio);
 });
 
 When(/^the candidate confirms their (communication preference|declaration)$/, (pageName) => {
@@ -48,23 +49,23 @@ When(/^the candidate confirms their (communication preference|declaration)$/, (p
   : `waiting-room-cat-${this.testCategory}-page`);
   const continueButton = getElement(
     by.xpath(`//div[contains(@class, '${pageType}')]//button[@id = 'continue-button']`));
-  clickElement(continueButton);
+    TempPage.clickElement(continueButton);
 });
 
 When('the candidate completes the declaration page', () => {
   const declarationCheckbox = getElement(by.id('insurance-declaration-checkbox'));
-  clickElement(declarationCheckbox);
+  TempPage.clickElement(declarationCheckbox);
   const residencyCheckbox = getElement(by.id('residency-declaration-checkbox'));
-  clickElement(residencyCheckbox);
+  TempPage.clickElement(residencyCheckbox);
   const signatureField = getElement(by.xpath('//signature-pad/canvas'));
-  clickElement(signatureField);
+  TempPage.clickElement(signatureField);
 });
 
 When('I proceed to the car', () => {
   // Examiner clicks continue button then enters passcode
   const continueButton = getElement(by.xpath(
-    `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id ="continue-button"]`));
-  clickElement(continueButton);
+    `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
+  TempPage.clickElement(continueButton);
   enterPasscode();
 });
 
