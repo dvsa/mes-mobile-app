@@ -20,7 +20,7 @@ export default class Page {
 
   clickElementByXPath(xpath){
     //this.clickElement(this.getElement(by.xpath(xpath)));
-    this.clickElementByXPath(this.getElementByXPath(xpath));
+    this.clickElement(this.getElementByXPath(xpath));
   }
 
   getElementByXPath(xpath){
@@ -35,7 +35,7 @@ getElement(elementBy) {
   const foundElement = element(elementBy);
   browser.wait(ExpectedConditions.presenceOf(foundElement));
   return foundElement;
-};
+}
 
   /**
  * Checks whether the page is ready to be interacted with.
