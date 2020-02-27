@@ -19,7 +19,7 @@ Before({ tags: '@catc' }, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catc1' }, () => {
+Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'c';
 });
 
