@@ -1,7 +1,8 @@
 import { Then, When, Before } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
+import { getElement } from './generic-steps';
 import { by } from 'protractor';
 import { textFieldInputViaNativeMode } from '../../helpers/helpers';
+import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -32,12 +33,12 @@ Before({ tags: '@catc1e' }, () => {
 
 When('I end the debrief', () => {
   const endDebriefButton = getElement(by.xpath('//button[span[h3[text()="End debrief"]]]'));
-  clickElement(endDebriefButton);
+  TempPage.clickElement(endDebriefButton);
 });
 
 When('I end the welsh debrief', () => {
   const endDebriefButton = getElement(by.xpath('//button[span[h3[text()="Diwedd ôl-drafodaeth"]]]'));
-  clickElement(endDebriefButton);
+  TempPage.clickElement(endDebriefButton);
 });
 
 When('I complete the pass details', () => {
@@ -61,11 +62,11 @@ When('I complete the fail details', () => {
     selectTransmission('manual');
   }
   const d255NoRadio = getElement(by.id('d255-no'));
-  clickElement(d255NoRadio);
+  TempPage.clickElement(d255NoRadio);
   const debriefWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
-  clickElement(debriefWitnessedRadio);
+  TempPage.clickElement(debriefWitnessedRadio);
   const submitButton = getElement(by.id('continue-button'));
-  clickElement(submitButton);
+  TempPage.clickElement(submitButton);
 });
 
 When('I try to confirm the pass certificate details', () => {
@@ -92,27 +93,27 @@ Then('I should see the application reference {string}', (applicationRef) => {
 const continuePassFinalisation = () => {
   const continueButton = getElement(by.xpath(
   `//div[contains(@class, "pass-finalisation-cat-${this.testCategory}-page")]//button[span[h3[text() = "Continue"]]]`));
-  clickElement(continueButton);
+  TempPage.clickElement(continueButton);
 };
 
 const completePassdetails = () => {
   textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
   + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
   const licenceRecievedRadio = getElement(by.id('license-received'));
-  clickElement(licenceRecievedRadio);
+  TempPage.clickElement(licenceRecievedRadio);
   const d255YesRadio = getElement(by.id('d255-yes'));
-  clickElement(d255YesRadio);
+  TempPage.clickElement(d255YesRadio);
   const debreifWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
-  clickElement(debreifWitnessedRadio);
+  TempPage.clickElement(debreifWitnessedRadio);
 };
 
 const code78onLicence = (result: boolean) => {
   const radio = result ? 'code-78-received' : 'code-78-not-received';
   const code78Radio = getElement(by.id(`${radio}`));
-  clickElement(code78Radio);
+  TempPage.clickElement(code78Radio);
 };
 
 const selectTransmission = (transmissionType: string) => {
   const transmissionRadio = getElement(by.id(`transmission-${transmissionType}`));
-  clickElement(transmissionRadio);
+  TempPage.clickElement(transmissionRadio);
 };

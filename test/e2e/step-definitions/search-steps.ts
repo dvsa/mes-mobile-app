@@ -1,7 +1,8 @@
 import { When, Then } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
+import { getElement } from './generic-steps';
 import { by } from 'protractor';
 import { textFieldInputViaNativeMode, scrollToElement } from '../../helpers/helpers';
+import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -10,19 +11,19 @@ const expect = chai.expect;
 
 When('I click search completed tests', () => {
   const searchForCompletedTestsBtn = getElement(by.xpath('//page-dashboard//test-results-search-card//span'));
-  clickElement(searchForCompletedTestsBtn);
+  TempPage.clickElement(searchForCompletedTestsBtn);
 });
 
 When('I search for a completed test with the application reference of {string}', (searchTerm) => {
   textFieldInputViaNativeMode(
     '//XCUIElementTypeWindow//XCUIElementTypeTextField[@value="Enter an application reference"]', searchTerm);
   const searchButton = getElement(by.xpath('//*[@id="tab-search-candidate-details"]//ion-row[3]/button/span'));
-  clickElement(searchButton);
+  TempPage.clickElement(searchButton);
 });
 
 When('the search result is clicked', () => {
   const searchResult = getElement(by.xpath('//page-test-results-search//search-result/ion-card/ion-grid/ion-row[2]'));
-  clickElement(searchResult);
+  TempPage.clickElement(searchResult);
 });
 
 Then('the test result outcome is {string}', (testOutcome) => {
@@ -50,12 +51,12 @@ Then('the Debrief has the correct test information, {string}, {string}', (cat, c
 
 Then('I click the close button', () => {
   const closeButton = getElement(by.xpath('//div[2]/ion-header/ion-navbar/ion-buttons/button'));
-  clickElement(closeButton);
+  TempPage.clickElement(closeButton);
 });
 
 Then('I click the back button on the search submitted test page', () => {
   const backButton = getElement(by.xpath('//page-test-results-search/ion-header/ion-navbar/button'));
-  clickElement(backButton);
+  TempPage.clickElement(backButton);
 });
 
 const assertElementIsPresent = (elements) => {

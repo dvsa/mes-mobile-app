@@ -1,6 +1,7 @@
 import { Then, When, Before } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
+import { getElement } from './generic-steps';
 import { browser, by, ExpectedConditions } from 'protractor';
+import TempPage from '../pages/tempPage';
 
 this.testCategory = 'b';
 
@@ -28,5 +29,5 @@ Then('I am on the post debrief holding page', () => {
 
 When('I continue to the non pass finalisation page', () => {
   const continueToNonPassFinalisationButton = getElement(by.id('continue-to-non-pass-finalisation'));
-  clickElement(continueToNonPassFinalisationButton);
+  TempPage.clickElement(continueToNonPassFinalisationButton);
 });
