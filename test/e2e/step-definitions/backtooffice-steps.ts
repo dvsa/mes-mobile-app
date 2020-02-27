@@ -1,6 +1,7 @@
 import { Then, When } from 'cucumber';
 import { browser, by, ExpectedConditions } from 'protractor';
 import { getElement, clickElement } from '../../helpers/interactionHelpers';
+import TempPage from '../pages/tempPage';
 
 Then('I am on the back to office page', () => {
   // No page title so need to check something else exists that exists on the page
@@ -10,5 +11,5 @@ Then('I am on the back to office page', () => {
 
 When('I continue to the office write up', () => {
   const continueToWriteUpButton = getElement(by.id('continue-to-write-up'));
-  clickElement(continueToWriteUpButton);
+  TempPage.clickElement(continueToWriteUpButton);
 });
