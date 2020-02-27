@@ -27,17 +27,17 @@ logInToApplication(username : string, password : string) {
         usernameFld.sendKeys(username);
         const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));
         nextButtonElement.click();
-  
+
         // Fill in password and click Sign in
         const pFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
         browser.wait(ExpectedConditions.presenceOf(pFld));
         pFld.sendKeys(password);
         const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
         signInButtonElement.click();
-  
+
         // Switch back to WEBVIEW context
         browser.driver.selectContext(this.getParentContext(webviewContext));
-  
+
         // Wait for dashboard page to load
         const employeeId = element(by.xpath('//span[@class="employee-id"]'));
         browser.wait(ExpectedConditions.presenceOf(employeeId));
