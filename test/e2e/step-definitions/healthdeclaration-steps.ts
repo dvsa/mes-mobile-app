@@ -1,6 +1,7 @@
 import { When, Then, Before } from 'cucumber';
-import { getElement, clickElement, enterPasscode } from './generic-steps';
+import { getElement, enterPasscode } from './generic-steps';
 import { by } from 'protractor';
+import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -34,12 +35,12 @@ When('I try to confirm the health declaration', () => {
 
 When('I complete the health declaration', () => {
   const healthDeclarationCheckbox = getElement(by.id('health-declaration-checkbox'));
-  clickElement(healthDeclarationCheckbox);
+  TempPage.clickElement(healthDeclarationCheckbox);
   const receiptDeclarationCheckbox = getElement(by.id('receipt-declaration-checkbox'));
-  clickElement(receiptDeclarationCheckbox);
+  TempPage.clickElement(receiptDeclarationCheckbox);
   const healthSignatureField = getElement(by.xpath(
     `//div[contains(@class, "health-declaration-cat-${this.testCategory}-page")]//signature-pad/canvas`));
-  clickElement(healthSignatureField);
+    TempPage.clickElement(healthSignatureField);
 
   // Examiner clicks continue button then enters passcode - Note button has same id as another on page
   confirmHealthDeclaration();
@@ -49,5 +50,5 @@ When('I complete the health declaration', () => {
 const confirmHealthDeclaration = () => {
   const buttonElement = getElement(by.xpath(
     `//div[contains(@class, "health-declaration-cat-${this.testCategory}-page")]//button[@id="continue-button"]`));
-  clickElement(buttonElement);
+    TempPage.clickElement(buttonElement);
 };

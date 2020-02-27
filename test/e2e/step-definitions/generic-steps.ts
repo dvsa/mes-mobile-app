@@ -3,6 +3,7 @@ import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
 import { waitForOverlay, getParentContext } from '../../helpers/helpers';
 import LoginPage from '../pages/loginPage';
+import TempPage from '../pages/tempPage';
 
 const {
   Given,
@@ -55,7 +56,7 @@ Given('I am not logged in', () => {
   browser.waitForAngular();
 
   // Log out if we are logged in
-  logout();
+  LoginPage.logout();
 
   browser.driver.getCurrentContext().then((webviewContext) => {
     // Switch to NATIVE context
@@ -88,7 +89,7 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
       waitForOverlay('click-block-active');
       clickBackButton();
       // Logout
-      logout();
+      LoginPage.logout();
       // Login
       LoginPage.login(username);
       // Refresh application
@@ -104,7 +105,7 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
 
       // Navigate to journal page
       const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
-      clickElement(goToJournalButton);
+      TempPage.clickElement(goToJournalButton);
 
       // If the journal page is loaded we should have a refresh button
       const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
@@ -141,15 +142,15 @@ Given('I am on the landing page as {string}', (username) => {
 
 When(/^I start marking a practice test (with|without) a driving fault$/, (drivingFault) => {
   const practiceMarking = getElement(by.xpath('//button/span/h3[text() = "Practice marking a test (cat B)"]'));
-  clickElement(practiceMarking);
+  TempPage.clickElement(practiceMarking);
 
   const withDriverFault = getElement(by.xpath(`//button/span/h3[text() = "Start ${drivingFault} a driving fault"]`));
-  clickElement(withDriverFault);
+  TempPage.clickElement(withDriverFault);
 });
 
 Given(/^I start full practice mode$/, () => {
   const practiceMarking = getElement(by.xpath('//button/span/h3[text() = "Practice marking a full test (cat B)"]'));
-  clickElement(practiceMarking);
+  TempPage.clickElement(practiceMarking);
 
   const practiceModeBanner = element(by.className('practice-mode-top-banner'));
   browser.wait(ExpectedConditions.presenceOf(practiceModeBanner));
@@ -181,7 +182,7 @@ Then('I should see the {string} contains {string}', (rowName, rowValue) => {
 
 When('I click on the {string} button', (buttonId) => {
   const buttonElement = getElement(by.css(`#${buttonId}`));
-  return clickElement(buttonElement);
+  return TempPage.clickElement(buttonElement);
 });
 
 Then('validation item {string} should be visible', (validationId: string) => {
@@ -207,17 +208,17 @@ Then('validation item {string} should be {string}', (validationId: string, valid
 
 When('I terminate the test', () => {
   const lastEndTestButton = element.all(by.xpath('//end-test-link/button/span[text() = "End test"]')).last();
-  clickElement(lastEndTestButton);
+  TempPage.clickElement(lastEndTestButton);
 
   const terminateTestButton = getElement(by.xpath('//button/span[text() = "Terminate test"]'));
-  clickElement(terminateTestButton);
+  TempPage.clickElement(terminateTestButton);
 
   enterPasscode();
 });
 
 When('I exit practice mode', () => {
   const lastExitPracticeButton = element.all(by.className('exit-text')).last();
-  clickElement(lastExitPracticeButton);
+  TempPage.clickElement(lastExitPracticeButton);
 });
 
 Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be \"(.+)\"$/, (
@@ -236,7 +237,7 @@ Then(/^the (communication page|waiting room|debrief|health declaration) candidat
 
 Then('I return to the Journal Page', () => {
   const returnToJournalBtn = getElement(by.xpath('//*[@id="back-to-office-page"]//div[3]/button/span'));
-  clickElement(returnToJournalBtn);
+  TempPage.clickElement(returnToJournalBtn);
 });
 
 When('I click the back button', () => {
@@ -284,65 +285,13 @@ export const loggedInAs = (staffNumber) => {
 };
 
 /**
- * Logs out of the application and takes them to the login page if they were logged in else returns current page
- */
-export const logout = () => {
-  browser.driver.getCurrentContext().then((webviewContext) => {
-    browser.driver.selectContext(getParentContext(webviewContext));
-    browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
-    browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-    const logout = element(by.xpath('//button/span/span[contains(text(), "Sign Out")]'));
-    logout.isPresent().then((result) => {
-      if (result) {
-        browser.wait(ExpectedConditions.elementToBeClickable(logout));
-        logout.click().then(() => {
-          // After logout click sign in to get us to the login screen
-          browser.sleep(TEST_CONFIG.ACTION_WAIT);
-          browser.driver.selectContext(getParentContext(webviewContext));
-          browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-          const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
-          clickElement(signIn);
-        });
-      } else {
-        return Promise.resolve();
-      }
-    });
-  });
-};
-
-/**
- * A framework safe click method.
- * @param fieldElement the element to click
- */
-export const clickElement = (fieldElement) => {
-  browser.wait(ExpectedConditions.elementToBeClickable(fieldElement));
-  fieldElement.click().then((promise) => {
-    return isReady(promise);
-  });
-};
-
-/**
  * Load application.
  * Goes to the home page which will be the journal for logged in Examiners.
  * This essentially reloads the application.
  */
 export const loadApplication = () => {
   const promise = browser.get('ionic://localhost');
-  return isReady(promise);
-};
-
-/**
- * Checks whether the page is ready to be interacted with.
- * Ionic adds an overlay preventing clicking until the page is ready so we need to wait for that to disappear.
- * @param promise the promise to return when the page is ready
- */
-const isReady = (promise) => {
-  // There is a 200ms transition duration we have to account for
-  browser.sleep(TEST_CONFIG.ACTION_WAIT);
-  // Then wait for the page to become active again
-  browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-  // Then return the original promise
-  return promise;
+  return TempPage.isReady(promise);
 };
 
 /**
@@ -404,7 +353,7 @@ const onLandingPageAs = (username) => {
   loggedInAs(TEST_CONFIG.users[username].employeeId).then((response) => {
     if (!response) {
         // If not logged in as the right user logout and log in as the correct user
-      logout();
+      LoginPage.logout();
       LoginPage.login(username);
 
       // Refresh application
@@ -448,10 +397,10 @@ const getPageType = (pageName : string) => {
 
 const clickBackButton = () => {
   const backButton = getElement(by.xpath('//page-journal//button//span[text()="Back"]'));
-  clickElement(backButton);
+  TempPage.clickElement(backButton);
 };
 
 const clickGoToMyJournalButton = () => {
   const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
-  clickElement(goToJournalButton);
+  TempPage.clickElement(goToJournalButton);
 };
