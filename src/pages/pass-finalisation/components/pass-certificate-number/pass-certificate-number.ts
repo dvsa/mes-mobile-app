@@ -35,12 +35,13 @@ export class PassCertificateNumberComponent implements OnChanges {
         Validators.maxLength(PASS_CERTIFICATE_LENGTH),
         Validators.minLength(PASS_CERTIFICATE_LENGTH),
         Validators.required,
-        this.validatePassCertificate.bind(this)]);
+        this.validatePassCertificate]);
       this.form.addControl(PassCertificateNumberComponent.fieldName, this.formControl);
     }
     this.formControl.patchValue(this.passCertificateNumberInput);
   }
-  validatePassCertificate(c: FormControl) {
+
+  validatePassCertificate = (c: FormControl) => {
     return this.passCertficateValidationProvider.isPassCertificateValid(c.value) ? null :
       {
         validatePassCertificate: {
