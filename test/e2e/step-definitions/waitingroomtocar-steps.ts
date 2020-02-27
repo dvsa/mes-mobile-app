@@ -23,11 +23,19 @@ Before({ tags: '@catc' }, () => {
 });
 
 Before({ tags: '@catce' }, () => {
-  this.testCategory = 'ce';
+  this.testCategory = 'c';
 });
 
 Before({ tags: '@catc1' }, () => {
   this.testCategory = 'c';
+});
+
+Before({ tags: '@catc1' }, () => {
+  this.testCategory = 'c';
+});
+
+Before({ tags: '@catce' }, () => {
+  this.testCategory = 'ce';
 });
 
 When('I select a tell me question', () => {
