@@ -22,7 +22,7 @@ describe('Directive: InputRestrictionUppercaseAlphanumDirective', () => {
     });
     fixture = TestBed.createComponent(TestAlphaNumComponent);
   });
-  it('should remove spaces, non alpha numeric chars and upper case input', () => {
+  it('should upper case input and remove spaces and non alpha numeric chars', () => {
     fixture.detectChanges();
     inputElement = fixture.debugElement.query(By.css('input'));
     inputElement.nativeElement.value = '_aBc!@ £$%^&123)(*&^%$£@   []{}`~';
