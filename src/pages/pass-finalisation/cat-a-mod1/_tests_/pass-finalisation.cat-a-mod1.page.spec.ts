@@ -10,7 +10,6 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { MockComponent } from 'ng-mocks';
-import { PassCertificateNumberComponent } from '../../components/pass-certificate-number/pass-certificate-number';
 import { LicenseProvidedComponent } from '../../components/license-provided/license-provided';
 import { D255Component } from '../../../../components/test-finalisation/d255/d255';
 import { DebriefWitnessedComponent } from
@@ -38,6 +37,8 @@ import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
 import { Subscription } from 'rxjs/Subscription';
 import { configureTestSuite } from 'ng-bullet';
+import { PassCertificateNumberCatAMod1Component }
+  from '../components/pass-certificate-number/pass-certificate-number.cat-a-mod1';
 
 describe('PassFinalisationCatAMod1Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatAMod1Page>;
@@ -48,7 +49,7 @@ describe('PassFinalisationCatAMod1Page', () => {
     TestBed.configureTestingModule({
       declarations: [
         PassFinalisationCatAMod1Page,
-        MockComponent(PassCertificateNumberComponent),
+        MockComponent(PassCertificateNumberCatAMod1Component),
         MockComponent(LicenseProvidedComponent),
         MockComponent(TransmissionComponent),
         MockComponent(D255Component),

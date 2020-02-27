@@ -30,11 +30,11 @@
         <warning-banner *ngIf="displayTransmissionBanner()" warningText="An automatic licence will be issued.">
         </warning-banner>
 
-        <pass-certificate-number
+        <pass-certificate-number-cat-a-mod1
           [form]="form"
           [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
           (passCertificateNumberChange)="passCertificateNumberChanged($event)">
-        </pass-certificate-number>
+        </pass-certificate-number-cat-a-mod1>
 
         <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
           (d255Change)="d255Changed($event)"></d255>
