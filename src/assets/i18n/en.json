@@ -317,7 +317,7 @@
       "avoidance": "Avoidance",
       "speedCheckEmergency": "Speed Requirement - Emergency Stop",
       "speedCheckAvoidance": "Speed Requirement - Avoidance",
-      "safetyQuestions": "Safety questions",
+      "safetyAndBalanceQuestions": "Safety and balance questions",
       "pcvDoorExercise": "PCV Door Exercise"
     },
     "dangerousFault": "Dangerous fault",

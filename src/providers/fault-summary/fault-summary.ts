@@ -16,6 +16,7 @@ import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
 import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
 import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 import { FaultSummaryCatAM1Helper } from './cat-a-mod1/fault-summary.cat-a-mod1';
+import { FaultSummaryCatAM2Helper } from './cat-a-mod2/fault-summary.cat-a-mod2';
 
 @Injectable()
 export class FaultSummaryProvider {
@@ -102,6 +103,11 @@ export class FaultSummaryProvider {
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
         return FaultSummaryCatAM1Helper.getDrivingFaultsCatAM1(data);
+      case TestCategory.EUAM2:
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAMM2:
+        return FaultSummaryCatAM2Helper.getDrivingFaultsCatAM2(data);
       default:
         return [];
     }
@@ -130,6 +136,11 @@ export class FaultSummaryProvider {
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
         return FaultSummaryCatAM1Helper.getSeriousFaultsCatAM1(data);
+      case TestCategory.EUAM2:
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAMM2:
+        return FaultSummaryCatAM2Helper.getSeriousFaultsCatAM2(data);
       default:
         return [];
     }
@@ -158,6 +169,11 @@ export class FaultSummaryProvider {
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1:
         return FaultSummaryCatAM1Helper.getDangerousFaultsCatAM1(data);
+      case TestCategory.EUAM2:
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAMM2:
+        return FaultSummaryCatAM2Helper.getDangerousFaultsCatAM2(data);
       default:
         return [];
     }
