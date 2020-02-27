@@ -60,7 +60,7 @@ export default [
   {
     code: 'CD22',
     description: 'Identify where the windscreen washer reservoir is and tell me how you would check the windscreen washer level.',
-    shortName: 'Windscreen washer'
+    shortName: 'Windscreen washer reservoir'
   },
 ] as VehicleChecksQuestion[];
 
