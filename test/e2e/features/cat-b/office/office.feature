@@ -1,4 +1,4 @@
-@catb @full_smoke
+@catb @full_smoke @regression
 Feature: Office page
 
    Scenario: Office page validation for pass

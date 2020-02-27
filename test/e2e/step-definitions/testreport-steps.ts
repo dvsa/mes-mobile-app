@@ -239,8 +239,8 @@ Then('the legal requirements pop up is present', () => {
   expect(legalRequirementPopUp.isPresent()).to.eventually.be.true;
 });
 
-When('the required test observation is present {string}', (legal_requirement: string) => {
-  expect(getElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legal_requirement}']`)).isPresent()).to.eventually.be.true;
+When('the required test observation is present {string}', (legalRequirement: string) => {
+  expect(getElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`)).isPresent()).to.eventually.be.true;
 });
 
 Then('I return to the test report page', () =>   {
