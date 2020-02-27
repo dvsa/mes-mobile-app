@@ -1,7 +1,8 @@
 import { Then, When, Before } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
+import { getElement } from './generic-steps';
 import { browser, by, element, ExpectedConditions } from 'protractor';
 import { waitForPresenceOfElement } from '../../helpers/helpers';
+import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -39,13 +40,13 @@ When('I end the test', () => {
 
 When('I continue to debrief', () => {
   const continueToDebriefButton = getElement(by.xpath('//button[span[h3[text() = "Continue to debrief"]]]'));
-  clickElement(continueToDebriefButton);
+  TempPage.clickElement(continueToDebriefButton);
 });
 
 When('I end and terminate the test', () => {
   endTest();
   const terminateTestButton = getElement(by.xpath('//button[span[text() = "Terminate test"]]'));
-  clickElement(terminateTestButton);
+  TempPage.clickElement(terminateTestButton);
 });
 
 When('I complete the test', () => {
@@ -114,12 +115,12 @@ When('I add an ETA with type {string}', (etaType: 'Verbal' | 'Physical') => {
 
 When('I add a {string} dangerous fault', (competency) => {
   const dangerousButton = getElement(by.id('dangerous-button'));
-  clickElement(dangerousButton);
+  TempPage.clickElement(dangerousButton);
   clickCompetency(competency);
 });
 
 When('I close the ETA modal', () => {
-  clickElement(getElement(by.className('modal-return-button')));
+  TempPage.clickElement(getElement(by.className('modal-return-button')));
 });
 
 Then('the ETA invalid modal is shown', () => {
@@ -149,7 +150,7 @@ When('I open the reversing diagram', () => {
   reverseDropDown();
   const reversingDiagramLink = getElement(by.xpath('//*[@id="reverse-diagram-link"]/span'));
   waitForPresenceOfElement(reversingDiagramLink);
-  clickElement(reversingDiagramLink);
+  TempPage.clickElement(reversingDiagramLink);
 });
 
 Then('I should see the reversing diagram modal', () => {
@@ -160,7 +161,7 @@ Then('I should see the reversing diagram modal', () => {
 
 When('I close the reversing diagram modal', () => {
   const reverseModalCloseButton = getElement(by.xpath('//*[@id="closeReverseDiagramModal"]/span/ion-icon'));
-  clickElement(reverseModalCloseButton);
+  TempPage.clickElement(reverseModalCloseButton);
 });
 
 Then('I close the revresing diagram drop down', () => {
@@ -193,7 +194,7 @@ When('I remove a serious fault for {string} with a long press', (competency: str
 When('I add a manoeuvre', () => {
   clickManoeuvresButton();
   const reverseRightRadio = getElement(by.id('manoeuvres-reverse-right-radio'));
-  clickElement(reverseRightRadio);
+  TempPage.clickElement(reverseRightRadio);
 });
 
 When('I click the manoeuvres button', () => {
@@ -229,9 +230,9 @@ Then('the competency {string} driver fault count is {string}', (competency, driv
 
 When('I terminate the test from the test report page', () => {
   const endTestButton = getElement(by.id('end-test-button'));
-  clickElement(endTestButton);
+  TempPage.clickElement(endTestButton);
   const terminateTestButton = getElement(by.xpath('//button/span[text() = "Terminate test"]'));
-  clickElement(terminateTestButton);
+  TempPage.clickElement(terminateTestButton);
 });
 
 Then('the legal requirements pop up is present', () => {
@@ -245,7 +246,7 @@ When('the required test observation is present {string}', (legalRequirement: str
 
 Then('I return to the test report page', () =>   {
   const returnToTestBtn = getElement(by.xpath('//div/legal-requirements-modal//modal-return-button//span'));
-  clickElement(returnToTestBtn);
+  TempPage.clickElement(returnToTestBtn);
 });
 
 When('I enter the legal requirements', () => {
@@ -261,7 +262,7 @@ When('I add the Uncouple and Recouple fault', () => {
 
 const endTest = () => {
   const endTestButton = getElement(by.id('end-test-button'));
-  clickElement(endTestButton);
+  TempPage.clickElement(endTestButton);
 };
 
 const completeLegalRequirements = () => {
@@ -288,15 +289,15 @@ const completeControlledStop = () => {
 
 const reverseDropDown = () => {
   const reverseButton = getElement(by.xpath('//*[@id="reverse-left-label"]'));
-  clickElement(reverseButton);
+  TempPage.clickElement(reverseButton);
 };
 
 const clickRemove = () => {
-  clickElement(getElement(by.id('remove-button')));
+  TempPage.clickElement(getElement(by.id('remove-button')));
 };
 
 const clickSeriousMode = () => {
-  clickElement(getElement(by.id('serious-button')));
+  TempPage.clickElement(getElement(by.id('serious-button')));
 };
 
 const getCompetencyButton = (competency: string) => {
@@ -311,7 +312,7 @@ const longPressCompetency = (competency: string) => {
 const clickManoeuvresButton = () => {
   const manoeuvresButton = getElement(
     by.xpath('//manoeuvres/button'));
-  clickElement(manoeuvresButton);
+    TempPage.clickElement(manoeuvresButton);
 };
 
 /**
@@ -388,10 +389,10 @@ const completeManouveure = () => {
     longPressButton(manoeuvresButton);
   } else {
     const manoeuvresButton = getElement(by.xpath('//manoeuvres/button'));
-    clickElement(manoeuvresButton);
+    TempPage.clickElement(manoeuvresButton);
     const reverseRightRadio = getElement(by.id('manoeuvres-reverse-right-radio'));
-    clickElement(reverseRightRadio);
-    clickElement(manoeuvresButton);
+    TempPage.clickElement(reverseRightRadio);
+    TempPage.clickElement(manoeuvresButton);
   }
 };
 

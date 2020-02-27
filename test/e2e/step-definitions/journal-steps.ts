@@ -1,5 +1,6 @@
 import { by, element } from 'protractor';
-import { getElement, clickElement, onJournalPageAs } from './generic-steps';
+import { getElement, onJournalPageAs } from './generic-steps';
+import TempPage from '../pages/tempPage';
 
 const {
   Given,
@@ -32,13 +33,13 @@ When('I start the test for {string}', (candidateName) => {
   const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
-  clickElement(buttonElement);
+  TempPage.clickElement(buttonElement);
 
   // If the rekey dialog is shown so just select start test normally
   const rekeyStartTestButton = element(by.id('rekey-start-test-button'));
   rekeyStartTestButton.isPresent().then((result) => {
     if (result) {
-      clickElement(rekeyStartTestButton);
+      TempPage.clickElement(rekeyStartTestButton);
     }
   });
 
@@ -46,7 +47,7 @@ When('I start the test for {string}', (candidateName) => {
   const startTestEarlyButton = element(by.id('early-start-start-test-button'));
   startTestEarlyButton.isPresent().then((result) => {
     if (result) {
-      clickElement(startTestEarlyButton);
+      TempPage.clickElement(startTestEarlyButton);
     }
   });
 });
@@ -55,17 +56,17 @@ When('I rekey a test for {string}', (candidateName) => {
   const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
-  clickElement(buttonElement);
+  TempPage.clickElement(buttonElement);
 });
 
 When('I navigate to next day', () => {
   const nextDayButtonElement = getElement(by.id('next-day-container'));
-  return clickElement(nextDayButtonElement);
+  return TempPage.clickElement(nextDayButtonElement);
 });
 
 When('I navigate to previous day', () => {
   const previousDayButtonElement = getElement(by.id('previous-day-container'));
-  return clickElement(previousDayButtonElement);
+  return TempPage.clickElement(previousDayButtonElement);
 });
 
 Then('I have a special needs slot for {string}', (candidateName) => {
@@ -84,7 +85,7 @@ Then('I have a welsh slot for {string}', (candidateName) => {
 
 When('I refresh the journal', () => {
   const refreshButton = getElement(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-  return clickElement(refreshButton);
+  return TempPage.clickElement(refreshButton);
 });
 
 Then('I have a non-test slot for {string} with code {string} at {string}', (description, code, time) => {
@@ -138,15 +139,15 @@ Then('I continue the write up for {string}', (candidateName) => {
   const continueWriteUp = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Write-up"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
-  clickElement(continueWriteUp);
+  TempPage.clickElement(continueWriteUp);
 });
 
 const viewCandidateDetails = (candidateName) => {
   const buttonElement = getElement(by.xpath(`//h3[text()[normalize-space(.) = "${candidateName}"]]`));
-  return clickElement(buttonElement);
+  return TempPage.clickElement(buttonElement);
 };
 
 const closeCandidateDetailsDialog = () => {
   const closeCandidateDetailDialog = element(by.id('closeCandidateDetails'));
-  clickElement(closeCandidateDetailDialog);
+  TempPage.clickElement(closeCandidateDetailDialog);
 };
