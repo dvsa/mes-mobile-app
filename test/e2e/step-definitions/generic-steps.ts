@@ -1,7 +1,7 @@
 import { Before } from 'cucumber';
 import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-import { waitForOverlay, getParentContext } from '../../helpers/helpers';
+import { waitForOverlay } from '../../helpers/helpers';
 import LoginPage from '../pages/loginPage';
 import TempPage from '../pages/tempPage';
 
@@ -66,7 +66,7 @@ Given('I am not logged in', () => {
       browser.wait(ExpectedConditions.presenceOf(usernameFld));
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(getParentContext(webviewContext));
+      browser.driver.selectContext(TempPage.getParentContext(webviewContext));
     });
   });
 });
@@ -104,7 +104,7 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
       browser.wait(ExpectedConditions.presenceOf(employeeId));
 
       // Navigate to journal page
-      const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
+      const goToJournalButton = TempPage.getElementByXPath('//go-to-journal-card/button');
       TempPage.clickElement(goToJournalButton);
 
       // If the journal page is loaded we should have a refresh button
@@ -131,7 +131,7 @@ Then('I should see the Microsoft login page', () => {
       expect(usernameFld.isPresent()).to.eventually.be.true;
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(getParentContext(webviewContext));
+      browser.driver.selectContext(TempPage.getParentContext(webviewContext));
     });
   });
 });
@@ -141,16 +141,16 @@ Given('I am on the landing page as {string}', (username) => {
 });
 
 When(/^I start marking a practice test (with|without) a driving fault$/, (drivingFault) => {
-  const practiceMarking = getElement(by.xpath('//button/span/h3[text() = "Practice marking a test (cat B)"]'));
-  TempPage.clickElement(practiceMarking);
+  const practiceMarkingXPath = '//button/span/h3[text() = "Practice marking a test (cat B)"]';
+  TempPage.clickElementByXPath(practiceMarkingXPath);
 
-  const withDriverFault = getElement(by.xpath(`//button/span/h3[text() = "Start ${drivingFault} a driving fault"]`));
-  TempPage.clickElement(withDriverFault);
+  const withDriverFaultXPath = `//button/span/h3[text() = "Start ${drivingFault} a driving fault"]`;
+  TempPage.clickElementByXPath(withDriverFaultXPath);
 });
 
 Given(/^I start full practice mode$/, () => {
-  const practiceMarking = getElement(by.xpath('//button/span/h3[text() = "Practice marking a full test (cat B)"]'));
-  TempPage.clickElement(practiceMarking);
+  const practiceMarkingXPath = '//button/span/h3[text() = "Practice marking a test (cat B)"]';
+  TempPage.clickElementByXPath(practiceMarkingXPath);
 
   const practiceModeBanner = element(by.className('practice-mode-top-banner'));
   browser.wait(ExpectedConditions.presenceOf(practiceModeBanner));
@@ -169,29 +169,29 @@ When('I log in to the application as {string}', (username) => {
 
 Then('I should see the {string} page', (pageTitle) => {
   // Wait for the page title to exist
-  getElement(by.xpath(`//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`));
+  TempPage.getPageTitle(pageTitle);
   // Check that it is the last page title i.e. the displayed one
   return expect(element.all(by.className('toolbar-title')).last().getText()).to.eventually.equal(pageTitle);
 });
 
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {
-  const dataRow = getElement(by.xpath(`//ion-col/label[text()= "${rowName}"]
-    [parent::ion-col/parent::ion-row//*[normalize-space(text()) = "${rowValue}"]]`));
+  const dataRow = TempPage.getElementByXPath(`//ion-col/label[text()= "${rowName}"]
+    [parent::ion-col/parent::ion-row//*[normalize-space(text()) = "${rowValue}"]]`);
   return expect(dataRow.isPresent()).to.eventually.be.true;
 });
 
 When('I click on the {string} button', (buttonId) => {
-  const buttonElement = getElement(by.css(`#${buttonId}`));
+  const buttonElement = TempPage.getElement(by.css(`#${buttonId}`));
   return TempPage.clickElement(buttonElement);
 });
 
 Then('validation item {string} should be visible', (validationId: string) => {
-  const validationElement = getElement(by.css(`#${validationId}`));
+  const validationElement = TempPage.getElement(by.css(`#${validationId}`));
   return expect(validationElement.getAttribute('class')).to.eventually.contain('ng-invalid');
 });
 
 Then('validation item {string} should not be visible', (validationId: string) => {
-  const validationElement = getElement(by.css(`#${validationId}`));
+  const validationElement = TempPage.getElement(by.css(`#${validationId}`));
   return expect(validationElement.getAttribute('class')).to.eventually.not.contain('ng-invalid');
 });
 
@@ -202,7 +202,7 @@ Then('validation item {string} should not exist', (validationId: string) => {
 });
 
 Then('validation item {string} should be {string}', (validationId: string, validationText: string) => {
-  const validationElement = getElement(by.css(`#${validationId}`));
+  const validationElement = TempPage.getElement(by.css(`#${validationId}`));
   return expect(validationElement.getText()).to.eventually.equal(validationText);
 });
 
@@ -210,7 +210,7 @@ When('I terminate the test', () => {
   const lastEndTestButton = element.all(by.xpath('//end-test-link/button/span[text() = "End test"]')).last();
   TempPage.clickElement(lastEndTestButton);
 
-  const terminateTestButton = getElement(by.xpath('//button/span[text() = "Terminate test"]'));
+  const terminateTestButton = TempPage.getElementByXPath('//button/span[text() = "Terminate test"]');
   TempPage.clickElement(terminateTestButton);
 
   enterPasscode();
@@ -223,20 +223,18 @@ When('I exit practice mode', () => {
 
 Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be \"(.+)\"$/, (
   pageName: string, candidateName: string) => {
-  const candidateNameElement = getElement(
-    by.xpath(`//div[contains(@class, '${getPageType(pageName)}')]//h2[@id = 'candidate-name']`));
+  const candidateNameElement = TempPage.getElementByXPath(`//div[contains(@class, '${getPageType(pageName)}')]//h2[@id = 'candidate-name']`);
   return expect(candidateNameElement.getText()).to.eventually.equal(candidateName);
 });
 
 Then(/^the (communication page|waiting room|debrief|health declaration) candidate driver number should be \"(.+)\"$/, (
   pageName: string, driverNumber: string) => {
-  const candidateDriverNumberElement = getElement(
-    by.xpath(`//div[contains(@class, '${getPageType(pageName)}')]//h3[@id = 'candidate-driver-number']`));
+  const candidateDriverNumberElement = TempPage.getElementByXPath(`//div[contains(@class, '${getPageType(pageName)}')]//h3[@id = 'candidate-driver-number']`);
   return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
 });
 
 Then('I return to the Journal Page', () => {
-  const returnToJournalBtn = getElement(by.xpath('//*[@id="back-to-office-page"]//div[3]/button/span'));
+  const returnToJournalBtn = TempPage.getElementByXPath('//*[@id="back-to-office-page"]//div[3]/button/span');
   TempPage.clickElement(returnToJournalBtn);
 });
 
@@ -295,16 +293,6 @@ export const loadApplication = () => {
 };
 
 /**
- * Waits for the element to exist on the page before returning it.
- * @param elementBy the element finder
- */
-export const getElement = (elementBy) => {
-  const foundElement = element(elementBy);
-  browser.wait(ExpectedConditions.presenceOf(foundElement));
-  return foundElement;
-};
-
-/**
  * Enters a generic password into the iOS passcode field.
  * Note: This will not work on the physical device but the simulator will accept any code.
  */
@@ -321,7 +309,7 @@ export const enterPasscode = () => {
       browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(getParentContext(webviewContext)).then(() => {
+      browser.driver.selectContext(TempPage.getParentContext(webviewContext)).then(() => {
         browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
       });
     });
@@ -396,11 +384,11 @@ const getPageType = (pageName : string) => {
 };
 
 const clickBackButton = () => {
-  const backButton = getElement(by.xpath('//page-journal//button//span[text()="Back"]'));
+  const backButton = TempPage.getElementByXPath('//page-journal//button//span[text()="Back"]');
   TempPage.clickElement(backButton);
 };
 
 const clickGoToMyJournalButton = () => {
-  const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
+  const goToJournalButton = TempPage.getElementByXPath(by.xpath('//go-to-journal-card/button'));
   TempPage.clickElement(goToJournalButton);
 };

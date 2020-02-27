@@ -1,5 +1,4 @@
 import { browser, ExpectedConditions, element, by } from 'protractor';
-import { getParentContext } from '../../helpers/helpers';
 import { TEST_CONFIG } from '../test.config';
 import Page from './page'
 
@@ -37,7 +36,7 @@ logInToApplication(username : string, password : string) {
         signInButtonElement.click();
   
         // Switch back to WEBVIEW context
-        browser.driver.selectContext(getParentContext(webviewContext));
+        browser.driver.selectContext(this.getParentContext(webviewContext));
   
         // Wait for dashboard page to load
         const employeeId = element(by.xpath('//span[@class="employee-id"]'));
@@ -52,7 +51,7 @@ logInToApplication(username : string, password : string) {
 //todo: should this method really be here?  If not here then where?
 logout() {
     browser.driver.getCurrentContext().then((webviewContext) => {
-      browser.driver.selectContext(getParentContext(webviewContext));
+      browser.driver.selectContext(this.getParentContext(webviewContext));
       browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
       browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
       const logout = element(by.xpath('//button/span/span[contains(text(), "Sign Out")]'));
@@ -62,7 +61,7 @@ logout() {
           logout.click().then(() => {
             // After logout click sign in to get us to the login screen
             browser.sleep(TEST_CONFIG.ACTION_WAIT);
-            browser.driver.selectContext(getParentContext(webviewContext));
+            browser.driver.selectContext(this.getParentContext(webviewContext));
             browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
             const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
             this.clickElement(signIn);
