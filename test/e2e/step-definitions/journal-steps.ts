@@ -51,7 +51,7 @@ When('I start the test for {string}', (candidateName) => {
   });
 });
 
-When('I rekey a test for {string}', (candidateName, unitname) => {
+When('I rekey a test for {string}', (candidateName) => {
   const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
