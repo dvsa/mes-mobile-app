@@ -24,6 +24,10 @@ Before({ tags: '@catce' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catc1e' }, () => {
+  this.testCategory = 'c';
+});
+
 When('I end the debrief', () => {
   DebriefPage.clickEndDebriefButton();
 });

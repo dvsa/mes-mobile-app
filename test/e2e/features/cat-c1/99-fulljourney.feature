@@ -40,7 +40,7 @@ Feature: Full end to end journey for Category C1
       Then I should see the "Bright Wilson" page
       And I complete the waiting room to car page with the following vehicle checks
         | show_me_1   | show_me_2   | show_me_3   | show_me_4   | show_me_5   |
-        | true        | true        | true        | false       | false       |   
+        | true        | true        | true        | false       | false       |
       Then I should see the "Test report - Bright Wilson" page
       And the driver fault count is "3"
       When I end the test

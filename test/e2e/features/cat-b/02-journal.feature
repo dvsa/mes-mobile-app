@@ -32,7 +32,7 @@ Feature: Journal
     Given I am on the journal page as "mobexaminer1"
      When I view candidate details for "Mr James Brown"
      Then I should see the "Slot type" contains "Extended Test Special Needs"
-   
+
    Scenario: Examiner is informed that the test is Single Slot (Special Needs)
     Given I am on the journal page as "mobexaminer1"
      When I navigate to next day
