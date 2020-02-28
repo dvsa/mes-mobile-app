@@ -131,7 +131,7 @@
         "E15": "Rear fog lights",
         "E16": "Dipped to main beam",
         "E17": "Brake lights"
-      },
+      }
     },
     "competencies": {
       "controlsAccelerator": "Controls - Accelerator",
