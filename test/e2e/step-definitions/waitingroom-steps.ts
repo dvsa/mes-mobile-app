@@ -65,7 +65,6 @@ When('I proceed to the car', () => {
   // Examiner clicks continue button then enters passcode
   const continueButton = getElement(by.xpath(
     `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id ="continue-button"]`));
-
   clickElement(continueButton);
   enterPasscode();
 });

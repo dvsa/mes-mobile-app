@@ -107,7 +107,6 @@ const showMeQuestions = (questions, questionResult) => {
   const showMeQuestionsArray = [questions, questionResult];
   const elements = element.all(by.id('vehicle-checks-question-selector'));
   elements.each((element, index) => {
-
     clickElement(element);
     const vehicleCheck = getElement(by.xpath(`//button//div[normalize-space(text()) =  "${showMeQuestionsArray[0][index]}"]`));
     clickElement(vehicleCheck);
