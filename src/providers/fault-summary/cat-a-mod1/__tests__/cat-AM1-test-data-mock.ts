@@ -13,9 +13,13 @@ export const catAM1TestDataStateObject: TestData = {
     uTurnComments: 'uTurnComments',
     controlledStop: CompetencyOutcome.S,
     controlledStopComments: 'controlledStopComments',
+    emergencyStop: CompetencyOutcome.S,
+    emergencyStopComments: 'emergencyStopComments',
+    avoidance: CompetencyOutcome.S,
+    avoidanceComments: 'avoidanceComments',
   },
   emergencyStop: {
-    outcome: CompetencyOutcome.D,
+    outcome: CompetencyOutcome.S,
     comments: 'comment1',
   },
   avoidance: {

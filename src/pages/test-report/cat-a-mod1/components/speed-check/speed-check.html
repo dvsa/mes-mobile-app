@@ -1,27 +1,6 @@
 <ion-row class="speed-check-wrapper">
   <ion-col col-32 class="competency-button-wrapper">
-    <competency-button
-      [onTap]="onTap"
-      [onPress]="onPress"
-      [ripple]="canButtonRipple()"
-      class="speed-check-competency"
-      [ngClass]="{
-        'fault': faultCount() > 0,
-        'serious-fault': hasSeriousFault(),
-        'dangerous-fault': hasDangerousFault()
-      }"
-    >
-      <driving-faults-badge class="driving-faults" [count]="faultCount()"></driving-faults-badge>
-      <span class='competency-label'>{{ getLabel() }}</span>
-      <div class="fault-wrapper">
-        
-        <!-- The reason we have that extra logic in the ngIf is purely for visual reasons
-             By that expression we make sure that the space for the badge will stay there even if there is nothing to render
-             So that we can have the label of the button centered at all times  -->
-        <serious-fault-badge *ngIf="hasSeriousFault() || (!hasSeriousFault() && !hasDangerousFault())" [showBadge]="hasSeriousFault()"></serious-fault-badge>
-        <dangerous-fault-badge *ngIf="hasDangerousFault()" [showBadge]="hasDangerousFault()"></dangerous-fault-badge>
-      </div>
-    </competency-button>
+    <single-fault-competency [competency]="pairedCompetency"></single-fault-competency>
   </ion-col>
   <ion-col col-32>
     <input (change)="onFirstAttemptChange($event.target.value)" [value]="getFirstAttempt()" type="text" class="speed-input first-speed-input" maxlength="3" numbersOnly>
@@ -31,7 +10,7 @@
     <competency-button
       [onTap]="toggleNotMet"
       [ngClass]="{
-        'not-met': speedNotMetSeriousFault
+        'not-met': getNotMet()
       }">
         <span class='competency-label'>Not met</span>
     </competency-button>

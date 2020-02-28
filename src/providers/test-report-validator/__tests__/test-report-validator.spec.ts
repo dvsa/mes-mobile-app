@@ -132,9 +132,9 @@ describe('TestReportValidator', () => {
       const testData = {
         emergencyStop: {
           firstAttempt: undefined,
-          speedNotMetSeriousFault: true,
+          outcome: CompetencyOutcome.S,
         },
-      };
+      } as CatAMod1TestData;
 
       const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
 
@@ -145,9 +145,9 @@ describe('TestReportValidator', () => {
       const testData = {
         emergencyStop: {
           firstAttempt: 48,
-          speedNotMetSeriousFault: true,
+          outcome: CompetencyOutcome.S,
         },
-      };
+      } as CatAMod1TestData;
 
       const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
 
@@ -158,7 +158,7 @@ describe('TestReportValidator', () => {
       const testData = {
         avoidance: {
           firstAttempt: undefined,
-          speedNotMetSeriousFault: true,
+          outcome: CompetencyOutcome.S,
         },
       } as CatAMod1TestData;
 
@@ -171,7 +171,7 @@ describe('TestReportValidator', () => {
       const testData = {
         avoidance: {
           firstAttempt: 48,
-          speedNotMetSeriousFault: true,
+          outcome: CompetencyOutcome.S,
         },
       } as CatAMod1TestData;
 
@@ -182,10 +182,11 @@ describe('TestReportValidator', () => {
 
     it('should return VALID when avoidance speed not met first attempt is recorded but has Serious fault', () => {
       const testData = {
-        avoidance: {
-          firstAttempt: 48,
-          speedNotMetSeriousFault: true,
-          outcome: CompetencyOutcome.S,
+        emergencyStop:{
+          firstAttempt: 56,
+        },
+        singleFaultCompetencies: {
+          avoidance: CompetencyOutcome.S,
         },
       } as CatAMod1TestData;
 
@@ -198,8 +199,10 @@ describe('TestReportValidator', () => {
       const testData = {
         avoidance: {
           firstAttempt: 48,
-          speedNotMetSeriousFault: true,
-          outcome: CompetencyOutcome.D,
+          outcome: CompetencyOutcome.S,
+        },
+        singleFaultCompetencies:{
+          avoidance: CompetencyOutcome.D,
         },
       } as CatAMod1TestData;
 
@@ -210,9 +213,8 @@ describe('TestReportValidator', () => {
 
     it('should return SpeedCheckState.EMERGENCY_STOP_SERIOUS_FAULT', () => {
       const testData = {
-        emergencyStop: {
-          outcome: CompetencyOutcome.S,
-          speedNotMetSeriousFault: false,
+        singleFaultCompetencies:{
+          emergencyStop: CompetencyOutcome.S,
         },
       } as CatAMod1TestData;
 
@@ -224,8 +226,10 @@ describe('TestReportValidator', () => {
     it('should return SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT', () => {
       const testData = {
         emergencyStop: {
-          outcome: CompetencyOutcome.D,
-          speedNotMetSeriousFault: false,
+          firstAttempt: 55,
+        },
+        singleFaultCompetencies:{
+          emergencyStop: CompetencyOutcome.D,
         },
       } as CatAMod1TestData;
 
@@ -271,7 +275,9 @@ describe('TestReportValidator', () => {
         },
         avoidance: {
           firstAttempt: undefined,
-          outcome: CompetencyOutcome.S,
+        },
+        singleFaultCompetencies:{
+          avoidance: CompetencyOutcome.S,
         },
       } as CatAMod1TestData;
 
@@ -287,7 +293,9 @@ describe('TestReportValidator', () => {
         },
         avoidance: {
           firstAttempt: undefined,
-          outcome: CompetencyOutcome.D,
+        },
+        singleFaultCompetencies:{
+          avoidance: CompetencyOutcome.D,
         },
       } as CatAMod1TestData;
 

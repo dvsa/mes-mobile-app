@@ -549,7 +549,7 @@ describe('FaultCountProvider', () => {
 
   describe('getSeriousFaultSumCountCatAM1', () => {
     it('should return the serious faults count', () => {
-      expect((FaultCountAM1Helper as any).getSeriousFaultSumCountCatAM1(catAM1TestDataStateObject)).toBe(3);
+      expect((FaultCountAM1Helper as any).getSeriousFaultSumCountCatAM1(catAM1TestDataStateObject)).toBe(5);
     });
   });
 });

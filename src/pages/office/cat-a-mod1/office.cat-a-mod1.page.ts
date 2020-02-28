@@ -99,7 +99,11 @@ import {
 import {
   AddSingleFaultCompetencyComment,
 } from '../../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
-import { SingleFaultCompetencyNames } from '../../../modules/tests/test-data/test-data.constants';
+import { SingleFaultCompetencyNames, Competencies } from '../../../modules/tests/test-data/test-data.constants';
+import { AddAvoidanceComment } from '../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
+import { AddAnEmergencyStopComment }
+from '../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
+import { startsWith } from 'lodash';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -457,6 +461,15 @@ export class OfficeCatAMod1Page extends BasePageComponent {
         seriousFaultComment.competencyIdentifier as SingleFaultCompetencyNames,
         seriousFaultComment.comment,
       ));
+    } else if (startsWith(seriousFaultComment.source, CommentSource.SPEED_REQUIREMENTS)) {
+      const segments = seriousFaultComment.source.split('-');
+      const fieldName = segments[1];
+      switch (fieldName) {
+        case Competencies.speedCheckAvoidance:
+          this.store$.dispatch(new AddAvoidanceComment(seriousFaultComment.comment));
+        case Competencies.speedCheckEmergency:
+          this.store$.dispatch(new AddAnEmergencyStopComment(seriousFaultComment.comment));
+      }
     }
   }
 
