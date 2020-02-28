@@ -45,38 +45,62 @@
             (activityCodeChange)="activityCodeChanged($event)" [disabled]="true"></activity-code>
 
           <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
-            <route-number [display]="pageState.displayRouteNumber$ | async"
-              [routeNumber]="pageState.routeNumber$ | async" [outcome]="pageState.testOutcome$ | async"
-              (routeNumberChange)="routeNumberChanged($event)" [formGroup]="form">
-            </route-number>
+            <route-number
+              [display]="pageState.displayRouteNumber$ | async"
+              [routeNumber]="pageState.routeNumber$ | async"
+              [outcome]="pageState.testOutcome$ | async"
+              [formGroup]="form"
+              (routeNumberChange)="routeNumberChanged($event)"
+            ></route-number>
 
-            <independent-driving [display]="pageState.displayIndependentDriving$ | async" option1="Diagram" option1label="Diagram" option2="Traffic signs" option2label="Traffic Signs" [formGroup]="form"
-              [outcome]="pageState.testOutcome$ | async" [independentDriving]="pageState.independentDriving$ | async"
-              (independentDrivingChange)="independentDrivingChanged($event)"></independent-driving>
+            <independent-driving
+              option1="Diagram"
+              option1label="Diagram"
+              option2="Traffic signs"
+              option2label="Traffic Signs"
+              [display]="pageState.displayIndependentDriving$ | async"
+              [formGroup]="form"
+              [outcome]="pageState.testOutcome$ | async"
+              [independentDriving]="pageState.independentDriving$ | async"
+              (independentDrivingChange)="independentDrivingChanged($event)"
+            ></independent-driving>
 
-            <candidate-description [display]="pageState.displayCandidateDescription$ | async" [formGroup]="form"
+            <candidate-description
+              [display]="pageState.displayCandidateDescription$ | async"
+              [formGroup]="form"
               [candidateDescription]="pageState.candidateDescription$ | async"
               [outcome]="pageState.testOutcome$ | async"
-              (candidateDescriptionChange)="candidateDescriptionChanged($event)"></candidate-description>
+              (candidateDescriptionChange)="candidateDescriptionChanged($event)"
+            ></candidate-description>
 
-            <identification [display]="pageState.displayIdentification$ | async" [formGroup]="form"
-              [identification]="pageState.identification$ | async" [outcome]="pageState.testOutcome$ | async"
-              (identificationChange)="identificationChanged($event)">
-            </identification>
-
-            <vehicle-checks-office-card [display]="pageState.displayVehicleChecks$ | async"
-              [checks]="pageState.vehicleChecks$ | async"></vehicle-checks-office-card>
-
-            <weather-conditions [display]="pageState.displayWeatherConditions$ | async"
-              [weatherConditions]="pageState.weatherConditions$ | async" [formGroup]="form"
-              [outcome]="pageState.testOutcome$ | async" [weatherConditionsOptions]="weatherConditions"
-              (weatherConditionsChange)="weatherConditionsChanged($event)">
-            </weather-conditions>
-
-            <additional-information [display]="pageState.displayAdditionalInformation$ | async"
-              [additionalInformation]="pageState.additionalInformation$ | async" [formGroup]="form"
+            <identification
+              [display]="pageState.displayIdentification$ | async"
+              [formGroup]="form"
+              [identification]="pageState.identification$ | async"
               [outcome]="pageState.testOutcome$ | async"
-              (additionalInformationChange)="additionalInformationChanged($event)"></additional-information>
+              (identificationChange)="identificationChanged($event)"
+            ></identification>
+
+            <safety-and-balance-cat-a-mod2
+              *ngIf="pageState.displaySafetyAndBalance$ | async"
+            ></safety-and-balance-cat-a-mod2>
+
+            <weather-conditions
+              [display]="pageState.displayWeatherConditions$ | async"
+              [weatherConditions]="pageState.weatherConditions$ | async"
+              [formGroup]="form"
+              [outcome]="pageState.testOutcome$ | async"
+              [weatherConditionsOptions]="weatherConditions"
+              (weatherConditionsChange)="weatherConditionsChanged($event)"
+            ></weather-conditions>
+
+            <additional-information
+              [display]="pageState.displayAdditionalInformation$ | async"
+              [additionalInformation]="pageState.additionalInformation$ | async"
+              [formGroup]="form"
+              [outcome]="pageState.testOutcome$ | async"
+              (additionalInformationChange)="additionalInformationChanged($event)"
+            ></additional-information>
 
           </div>
         </ion-grid>
@@ -114,31 +138,45 @@
         </ion-card-content>
       </ion-card>
 
-      <fault-comment-card [formGroup]="form" [faultComments]="pageState.dangerousFaults$ | async"
+      <fault-comment-card
+        faultType="dangerous"
+        header="Dangerous faults"
+        [formGroup]="form"
+        [faultComments]="pageState.dangerousFaults$ | async"
         [shouldRender]="(pageState.dangerousFaults$ | async).length > 0 && pageState.displayDangerousFault$ | async"
-        [outcome]="pageState.testOutcome$ | async" faultType="dangerous" header="Dangerous faults"
+        [outcome]="pageState.testOutcome$ | async"
         [maxFaultCount]="maxFaultCount"
-        (faultCommentsChange)="dangerousFaultCommentChanged($event)">
-      </fault-comment-card>
+        (faultCommentsChange)="dangerousFaultCommentChanged($event)"
+      ></fault-comment-card>
 
-      <fault-comment-card [formGroup]="form" [faultComments]="pageState.seriousFaults$ | async"
+      <fault-comment-card
+        faultType="serious"
+        header="Serious faults"
+        [formGroup]="form"
+        [faultComments]="pageState.seriousFaults$ | async"
         [shouldRender]="(pageState.seriousFaults$ | async).length > 0  && pageState.displaySeriousFault$ | async"
-        [outcome]="pageState.testOutcome$ | async" faultType="serious" header="Serious faults"
+        [outcome]="pageState.testOutcome$ | async"
         [maxFaultCount]="maxFaultCount"
-        (faultCommentsChange)="seriousFaultCommentChanged($event)">
-      </fault-comment-card>
+        (faultCommentsChange)="seriousFaultCommentChanged($event)"
+      ></fault-comment-card>
 
-      <fault-comment-card id="driving-fault-comment-card" [formGroup]="form" [faultComments]="pageState.drivingFaults$ | async"
+      <fault-comment-card
+        id="driving-fault-comment-card"
+        faultType="driving"
+        header="Riding faults"
+        [formGroup]="form"
+        [faultComments]="pageState.drivingFaults$ | async"
         [shouldRender]="(pageState.displayDrivingFaultComments$ | async) && (pageState.displayDrivingFault$ | async)"
-        [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults" [faultCount]="pageState.drivingFaultCount$ | async"
+        [outcome]="pageState.testOutcome$ | async"
+        [faultCount]="pageState.drivingFaultCount$ | async"
         [maxFaultCount]="maxFaultCount"
-        (faultCommentsChange)="drivingFaultCommentChanged($event)">
-      </fault-comment-card>
+        (faultCommentsChange)="drivingFaultCommentChanged($event)"
+      ></fault-comment-card>
 
       <ion-card id="driving-fault-no-commentary"
         *ngIf="!(pageState.displayDrivingFaultComments$ | async) && (pageState.drivingFaultCount$ | async) > 0 && pageState.displayDrivingFault$ | async">
         <ion-card-header>
-          <h4>Driving faults</h4>
+          <h4>Riding faults</h4>
         </ion-card-header>
         <ion-card-content>
           <ion-row class="driving-fault-no-commentary-row" id="driving-fault-commentary-label"

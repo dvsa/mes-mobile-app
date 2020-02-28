@@ -19,8 +19,9 @@ describe('FaultSummaryCatAM2Helper', () => {
   const expectedSafetyAndBalanceQuestionsFault = [
     {
       competencyIdentifier: 'safetyAndBalanceQuestions',
-      competencyDisplayName: CompetencyDisplayName.SAFETY_QUESTIONS,
+      competencyDisplayName: CompetencyDisplayName.SAFETY_AND_BALANCE_QUESTIONS,
       comment: 'Fell over. A lot!',
+      source: CommentSource.SAFETY_AND_BALANCE_QUESTIONS,
       faultCount: 1,
     },
   ];

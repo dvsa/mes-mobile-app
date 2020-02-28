@@ -54,26 +54,15 @@ export class FaultSummaryCatAM2Helper {
     const allBalanceQuestionsFailed = allBalanceQuestions.every(v => v.outcome === CompetencyOutcome.DF);
 
     if (allSafetyQuestionsFailed && allBalanceQuestionsFailed) {
-      return [
-        this.createFaultSummary(
-          'safetyAndBalanceQuestions',
-          CompetencyDisplayName.SAFETY_QUESTIONS,
-          safetyAndBalance.safetyComments || '',
-        ),
-      ];
+      return [{
+        competencyDisplayName: CompetencyDisplayName.SAFETY_AND_BALANCE_QUESTIONS,
+        competencyIdentifier: 'safetyAndBalanceQuestions',
+        source: CommentSource.SAFETY_AND_BALANCE_QUESTIONS,
+        comment: safetyAndBalance.safetyComments || '',
+        faultCount: 1,
+      }];
     }
 
     return [];
-  }
-
-  public static createFaultSummary(competencyIdentifier: string,
-                                   competencyName: string,
-                                   competencyComments: string): FaultSummary {
-    return {
-      competencyIdentifier,
-      competencyDisplayName: competencyName,
-      comment: competencyComments,
-      faultCount: 1,
-    };
   }
 }

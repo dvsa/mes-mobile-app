@@ -7,6 +7,7 @@ import {
   ShowMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
+  AddShowMeTellMeComment,
 } from '../vehicle-checks.cat-be.action';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
@@ -63,6 +64,15 @@ describe('Vehicle Checks Cat B+E Reducer', () => {
       };
       const result = vehicleChecksCatBEReducer(state, new TellMeQuestionOutcomeChanged('DF', 1));
       expect(result.tellMeQuestions[1].outcome).toEqual('DF');
+    });
+  });
+
+  describe('ADD_SHOW_ME_TELL_ME_COMMENT' , () => {
+    it('should update the vehicle checks comments', () => {
+      const state: CatBEUniqueTypes.VehicleChecks = cloneDeep(initialState);
+      const result = vehicleChecksCatBEReducer(state, new AddShowMeTellMeComment('So many mistakes.'));
+
+      expect(result.showMeTellMeComments).toEqual('So many mistakes.');
     });
   });
 });

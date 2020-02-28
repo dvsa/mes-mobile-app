@@ -1,14 +1,15 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { SafetyAndBalanceCardCatAMod2Component } from '../safety-and-balance-card.cat-a-mod2';
+import { SafetyAndBalanceCardCatAMod2Component } from '../safety-and-balance.cat-a-mod2';
 import { IonicModule, Config } from 'ionic-angular';
 import { StoreModule, Store } from '@ngrx/store';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
-// TODO - PREP-AMOD2 - Implement category specific actions
 import {
   SafetyQuestionSelected,
   SafetyQuestionOutcomeChanged,
+  BalanceQuestionSelected,
+  BalanceQuestionOutcomeChanged,
 } from '../../../../../../modules/tests/test-data/cat-a-mod2/safety-and-balance/safety-and-balance.cat-a-mod2.actions';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
@@ -56,6 +57,30 @@ describe('SafetyAndBalanceCardCatAMod2Component', () => {
     store$.dispatch(new StartTest(105, TestCategory.EUA2M2));
     store$.dispatch(new PopulateTestCategory(TestCategory.EUA2M2));
     store$.dispatch(new PopulateCandidateDetails(candidateMock));
+
+    const safetyQuestions: QuestionResult[] = [{
+      code: 'SQ4',
+      description: 'Tell me how you would check that the lights and reflectors are clean and working.',
+    }, {
+      code: 'SQ6',
+      description: 'Tell me how you would check the condition of the chain on this machine.',
+    }];
+
+    const balanceQuestions: QuestionResult[] = [{
+      code: 'BQ1',
+      description: 'What problems could arise from carrying a pillion passenger?',
+    }];
+
+    safetyQuestions.forEach((question, index) => {
+      store$.dispatch(new SafetyQuestionSelected(question, index));
+      store$.dispatch(new SafetyQuestionOutcomeChanged('P', index));
+    });
+
+    balanceQuestions.forEach((question, index) => {
+      store$.dispatch(new BalanceQuestionSelected(question, index));
+      store$.dispatch(new BalanceQuestionOutcomeChanged('P', index));
+    });
+
     translate = TestBed.get(TranslateService);
     translate.setDefaultLang('en');
   }));
@@ -63,32 +88,21 @@ describe('SafetyAndBalanceCardCatAMod2Component', () => {
   describe('DOM', () => {
     describe('Safety and balance question reporting', () => {
       it('should show results', () => {
-        const safetyQuestion: QuestionResult = {
-          code: 'SQ4',
-          description: 'Tell me how you would check that the lights and reflectors are clean and working.',
-        };
-        // Configure show safety and balance questions
-        store$.dispatch(new SafetyQuestionSelected(safetyQuestion, 1));
-        store$.dispatch(new SafetyQuestionOutcomeChanged('P', 1));
-
         fixture.detectChanges();
 
-        const safetyQuestionText = fixture.debugElement
-          .query(By.css('#safety-and-balance-questions .counter-label')).nativeElement;
+        const safetyAndBalanceQuestions = fixture.debugElement
+          .queryAll(By.css('.counter-label'));
 
-        expect(safetyQuestionText.innerHTML.trim())
+        expect(safetyAndBalanceQuestions.length).toBe(3);
+        expect(safetyAndBalanceQuestions[0].nativeElement.innerHTML.trim())
           .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.SQ4);
+        expect(safetyAndBalanceQuestions[1].nativeElement.innerHTML.trim())
+          .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.SQ6);
+        expect(safetyAndBalanceQuestions[2].nativeElement.innerHTML.trim())
+          .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.BQ1);
       });
 
       it('should show results in Welsh for a Welsh test', (done) => {
-        const safetyQuestion: QuestionResult = {
-          code: 'SQ4',
-          description: 'Tell me how you would check that the lights and reflectors are clean and working.',
-        };
-        // Configure show safety and balance questions
-        store$.dispatch(new SafetyQuestionSelected(safetyQuestion, 1));
-        store$.dispatch(new SafetyQuestionOutcomeChanged('P', 1));
-
         fixture.detectChanges();
 
         // Language change handled by parent page component, force the switch
@@ -96,11 +110,15 @@ describe('SafetyAndBalanceCardCatAMod2Component', () => {
 
           fixture.detectChanges();
 
-          const safetyQuestionText = fixture.debugElement
-            .query(By.css('#safety-and-balance-questions .counter-label')).nativeElement;
+          const safetyAndBalanceQuestions = fixture.debugElement
+            .queryAll(By.css('.counter-label'));
 
-          expect(safetyQuestionText.innerHTML.trim())
+          expect(safetyAndBalanceQuestions[0].nativeElement.innerHTML.trim())
             .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.SQ4);
+          expect(safetyAndBalanceQuestions[1].nativeElement.innerHTML.trim())
+            .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.SQ6);
+          expect(safetyAndBalanceQuestions[2].nativeElement.innerHTML.trim())
+            .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.BQ1);
           done();
         });
       });

@@ -1,0 +1,23 @@
+<ion-row
+  id="safety-and-balance-questions"
+  class="mes-validated-row mes-row-separator"
+>
+  <ion-col class="component-label" col-32 align-self-center>
+    <label>Safety / Balance questions</label>
+  </ion-col>
+  <ion-col align-self-center padding-left>
+    <ion-row class="spacing-row"></ion-row>
+    <ion-row align-items-center *ngFor="let question of safetyAndBalanceQuestions$| async" class="mes-data">
+      <ion-col col-8 no-padding align-self-start>
+        <div class="counter-icon">
+          <img *ngIf="!questionHasFault(question)" src="assets/imgs/greenCorrectAnswer.png" alt="Correct Answer" class="correct-icon"/>
+          <img *ngIf="questionHasFault(question)" src="assets/imgs/redWrongAnswer.png" alt="Wrong Answer" class="wrong-icon"/>
+        </div>
+      </ion-col>
+      <ion-col no-padding>
+        <div class="counter-label">{{question.code}} - {{ 'debrief.safetyAndBalanceQuestions.' + question.code | translate }}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="spacing-row"></ion-row>
+  </ion-col>
+</ion-row>
