@@ -23,7 +23,7 @@ Feature: A Driving Examiner Completes An Failed Journey for Category B in Welsh
       And the required test observation is present "Manoeuvres"
       And the required test observation is present "Show me / Tell me"
       And the required test observation is present "Eco (control and planning)"
-      Then I return to the test report pag
+      Then I return to the test report page
       When I add a Show me / Tell me driver fault
       Then the driver fault count is "1"
       When I add a "Accelerator" driver fault
