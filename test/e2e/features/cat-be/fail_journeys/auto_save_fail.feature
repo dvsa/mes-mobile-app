@@ -1,7 +1,6 @@
-@catbe
-Feature: Autosave end to end failed journey
+@catbe @full_smoke @regression
+Feature: Autosave end to end failed journey for Category B+E
 
-   @full_smoke
    Scenario: Examiner completes a failed test for autosave
    Given I am logged in as "mobexaminer2" and I have a test for "Mr Dillon Jennings"
    When I check candidate details for "Mr Dillon Jennings"
