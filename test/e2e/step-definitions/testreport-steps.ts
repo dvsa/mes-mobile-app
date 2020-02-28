@@ -29,6 +29,10 @@ Before({ tags: '@catce' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catc1e' }, () => {
+  this.testCategory = 'ce';
+});
+
 When('I end the test', () => {
   endTest();
 });
@@ -54,6 +58,14 @@ When('I complete the test', () => {
   if (this.testCategory === 'be') {
     completeUncoupleRecouple();
   }
+  endTest();
+});
+
+When('I complete the test with uncouple recouple', () => {
+  completeLegalRequirements();
+  completeManouveure();
+  completeEco();
+  completeUncoupleRecouple();
   endTest();
 });
 
@@ -141,7 +153,7 @@ When('I open the reversing diagram', () => {
 });
 
 Then('I should see the reversing diagram modal', () => {
-  const diagramModalTitle = getElement(by.xpath('//reverse-diagram-modal-cat-c//div[2]'));
+  const diagramModalTitle = getElement(by.xpath('//reverse-diagram-modal//div[2]'));
   waitForPresenceOfElement(diagramModalTitle);
   expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - articulated vehicle');
 });
@@ -371,7 +383,7 @@ const clickCompetency = (competency) => {
 };
 
 const completeManouveure = () => {
-  if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1') {
+  if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'ce') {
     const manoeuvresButton = getElement(by.xpath('//competency-button[contains(@class, "reverse-left-tick")]'));
     longPressButton(manoeuvresButton);
   } else {

@@ -26,6 +26,10 @@ Before({ tags: '@catce' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catc1e' }, () => {
+  this.testCategory = 'c';
+});
+
 When('the candidate enters a new email address', () => {
   const newEmailRadio = getElement(by.id('newEmail'));
   clickElement(newEmailRadio);
@@ -58,7 +62,7 @@ When('the candidate completes the declaration page', () => {
 When('I proceed to the car', () => {
   // Examiner clicks continue button then enters passcode
   const continueButton = getElement(by.xpath(
-    `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
+    `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id ="continue-button"]`));
   clickElement(continueButton);
   enterPasscode();
 });

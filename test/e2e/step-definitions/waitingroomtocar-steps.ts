@@ -30,11 +30,7 @@ Before({ tags: '@catc1' }, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catc1' }, () => {
-  this.testCategory = 'c';
-});
-
-Before({ tags: '@catce' }, () => {
+Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
 });
 
