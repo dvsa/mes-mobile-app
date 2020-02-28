@@ -315,7 +315,11 @@
       "slowControl": "Rheolydd araf",
       "uTurn": "Ymarfer tro 'U'",
       "safetyQuestions": "Cwestiynau diogelwch",
-      "pcvDoorExercise": "Ymarfer Drws PCV"
+      "pcvDoorExercise": "Ymarfer Drws PCV",
+      "emergencyStop": "CY - Emergency Stop",
+      "avoidance": "CY - Avoidance ex. control stop",
+      "speedCheckEmergency": "CY - Emergency stop - Speed requirement not met",
+      "speedCheckAvoidance": "CY - Avoidance ex. control stop - Speed requirement not met"
     },
     "dangerousFault": "Nam peryglus",
     "dangerousFaultsCardDescription": "Namau peryglus",
@@ -343,11 +347,11 @@
     "vehicleChecks": "Gwirio’r cerbyd",
     "safetyAndBalance": "CY - Safety and balance questions",
     "speedRequirementsHeader": "CY - Speed requirements",
-    "avoidanceHeader": "CY - Avoidance exercise",
     "emergencyStopHeader": "CY - Emergency stop",
     "speedRequirementMet": "CY - Met",
     "speedRequirementNotMet": "CY - Not Met",
-    "speedRequirementAborted": "CY - Aborted attempt"
+    "speedRequirementAborted": "CY - Aborted attempt",
+    "avoidanceHeader": "Avoidance ex. control stop"
   },
   "healthDeclaration": {
     "confirm": "Rwy'n cadarnhau",

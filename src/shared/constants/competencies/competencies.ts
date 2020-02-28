@@ -50,7 +50,7 @@ export enum fullCompetencyLabels {
   uTurn = '\'U\' Turn Exercise',
   pcvDoorExercise = 'PCV Door Exercise',
   emergencyStop = 'Emergency stop',
-  avoidance = 'Avoidance ex. control stop',
+  avoidance = 'Avoidance ex. C/Stop',
   speedCheckEmergency= 'Emergency stop - Speed requirement not met',
   speedCheckAvoidance= 'Avoidance ex. control stop - Speed requirement not met',
 }
@@ -111,5 +111,5 @@ export enum competencyLabels  {
   controlledStop = 'Controlled stop',
   pcvDoorExercise = 'PCV Door Exercise',
   emergencyStop = 'Emergency stop',
-  avoidance = 'Avoidance ex. control stop',
+  avoidance = 'Avoidance ex. C/Stop',
 }

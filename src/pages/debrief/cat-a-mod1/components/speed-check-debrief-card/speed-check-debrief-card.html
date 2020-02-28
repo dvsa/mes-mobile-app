@@ -1,31 +1,73 @@
-<ion-card id="speed-check" *ngIf="emergencyStop.firstAttempt !== undefined || avoidance.firstAttempt !== undefined">
+<ion-card
+  id="speed-check"
+  *ngIf="emergencyStop.firstAttempt !== undefined || avoidance.firstAttempt !== undefined"
+>
   <ion-card-header>
     <ion-card-title>
-      <h4 class="fault-heading">{{ 'debrief.speedRequirementsHeader' | translate }}</h4>
+      <h4>
+        {{ 'debrief.speedRequirementsHeader' | translate }}
+      </h4>
     </ion-card-title>
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
       <ion-row padding>
         <ion-col col-32 no-padding>
-          <h4>{{ 'debrief.emergencyStopHeader' | translate }}</h4>
+          <label>{{ 'debrief.emergencyStopHeader' | translate }}</label>
         </ion-col>
-        <ion-col col-5 no-padding></ion-col>
-        <ion-col col-20 no-padding>
-          <div *ngIf="emergencyStop.firstAttempt !== undefined">
-            1st: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: emergencyStop.firstAttempt}"></ng-container>
-          </div>
+        <ion-col
+          col-22
+          no-padding
+          *ngIf="emergencyStop.firstAttempt !== undefined"
+        >
+          <ion-row no-padding>
+            <ion-col col-24 no-padding>
+              <div>1st:</div>
+            </ion-col>
+            <ion-col col-2 no-padding></ion-col>
+            <ion-col no-padding>
+              <div>
+                <ng-container
+                  *ngTemplateOutlet="SpeedFormat; context: {speed: emergencyStop.firstAttempt}"
+                ></ng-container>
+              </div>
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col col-20 no-padding>
-          <div *ngIf="emergencyStop.secondAttempt !== undefined">
-            2nd: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: emergencyStop.secondAttempt}"></ng-container>
-          </div>
+        <ion-col
+          col-22
+          no-padding
+          *ngIf="emergencyStop.secondAttempt !== undefined"
+        >
+          <ion-row no-padding>
+            <ion-col col-24 no-padding>
+              <div>2nd:</div>
+            </ion-col>
+            <ion-col col-2 no-padding></ion-col>
+            <ion-col no-padding>
+              <div>
+                <ng-container
+                  *ngTemplateOutlet="SpeedFormat; context: {speed: emergencyStop.secondAttempt}"
+                ></ng-container>
+              </div>
+            </ion-col>
+          </ion-row>
         </ion-col>
         <ion-col col-4 no-padding align-self-start>
-            <div class="counter-icon">
-              <img *ngIf="!emergencyStop.outcome" src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met" class="tick-icon"/>
-              <img *ngIf="emergencyStop.outcome" src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met" class="cross-icon"/>
-            </div>
+          <div class="counter-icon">
+            <img
+              *ngIf="!emergencyStop.outcome"
+              src="assets/imgs/greenCorrectAnswer.png"
+              alt="Speed Met"
+              class="tick-icon"
+            />
+            <img
+              *ngIf="emergencyStop.outcome"
+              src="assets/imgs/redWrongAnswer.png"
+              alt="Speed Not Met"
+              class="cross-icon"
+            />
+          </div>
         </ion-col>
         <ion-col col-13 no-padding>
           <div class="counter-label" *ngIf="!emergencyStop.outcome">
@@ -36,26 +78,59 @@
           </div>
         </ion-col>
       </ion-row>
-
       <ion-row padding *ngIf="avoidanceAttempted">
         <ion-col col-32 no-padding>
-          <h4>{{ 'debrief.avoidanceHeader' | translate }}</h4>
+          <label>{{ 'debrief.avoidanceHeader' | translate }}</label>
         </ion-col>
-        <ion-col col-5 no-padding></ion-col>
-        <ion-col col-20 no-padding>
-          <div *ngIf="avoidance.firstAttempt !== undefined">
-            1st: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: avoidance.firstAttempt}"></ng-container>
-          </div>
+        <ion-col col-22 no-padding *ngIf="avoidance.firstAttempt !== undefined">
+          <ion-row no-padding>
+            <ion-col col-24 no-padding>
+              <div>1st:</div>
+            </ion-col>
+            <ion-col col-2 no-padding></ion-col>
+            <ion-col no-padding>
+              <div>
+                <ng-container
+                  *ngTemplateOutlet="SpeedFormat; context: {speed: avoidance.firstAttempt}"
+                ></ng-container>
+              </div>
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col col-20 no-padding>
-          <div *ngIf="avoidance.secondAttempt !== undefined">
-            2nd: <ng-container *ngTemplateOutlet="SpeedFormat; context: {speed: avoidance.secondAttempt}"></ng-container>
-          </div>
+
+        <ion-col
+          col-22
+          no-padding
+          *ngIf="avoidance.secondAttempt !== undefined"
+        >
+          <ion-row no-padding>
+            <ion-col col-24 no-padding>
+              <div>2nd:</div>
+            </ion-col>
+            <ion-col col-2 no-padding></ion-col>
+            <ion-col no-padding>
+              <div>
+                <ng-container
+                  *ngTemplateOutlet="SpeedFormat; context: {speed: avoidance.secondAttempt}"
+                ></ng-container>
+              </div>
+            </ion-col>
+          </ion-row>
         </ion-col>
         <ion-col col-4 no-padding align-self-start>
           <div class="counter-icon">
-            <img *ngIf=!avoidance.outcome src="assets/imgs/greenCorrectAnswer.png" alt="Speed Met" class="tick-icon"/>
-            <img *ngIf=avoidance.outcome src="assets/imgs/redWrongAnswer.png" alt="Speed Not Met" class="cross-icon"/>
+            <img
+              *ngIf="!avoidance.outcome"
+              src="assets/imgs/greenCorrectAnswer.png"
+              alt="Speed Met"
+              class="tick-icon"
+            />
+            <img
+              *ngIf="avoidance.outcome"
+              src="assets/imgs/redWrongAnswer.png"
+              alt="Speed Not Met"
+              class="cross-icon"
+            />
           </div>
         </ion-col>
         <ion-col col-13 no-padding>
@@ -67,6 +142,7 @@
           </div>
         </ion-col>
       </ion-row>
+      <ion-row class="spacing-row"></ion-row>
     </ion-grid>
   </ion-card-content>
 </ion-card>
