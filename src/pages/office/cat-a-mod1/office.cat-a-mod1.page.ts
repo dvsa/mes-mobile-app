@@ -566,6 +566,6 @@ export class OfficeCatAMod1Page extends BasePageComponent {
     const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(category, data);
     const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(category, data);
 
-    return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 5;
+    return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > OfficeCatAMod1Page.maxFaultCount;
   }
 }
