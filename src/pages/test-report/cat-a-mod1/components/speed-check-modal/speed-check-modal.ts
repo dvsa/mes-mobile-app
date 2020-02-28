@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 import { ModalEvent } from '../../../test-report.constants';
-import { speedCheckLabels } from '../../../../../shared/constants/competencies/cata-mod1-speed-checks';
+import { competencyLabels } from '../../../../../shared/constants/competencies/competencies';
 
 @IonicPage()
 @Component({
@@ -10,7 +10,7 @@ import { speedCheckLabels } from '../../../../../shared/constants/competencies/c
 })
 export class SpeedCheckModal {
 
-  speedChecksNeedCompleting: speedCheckLabels[];
+  speedChecksNeedCompleting: competencyLabels[];
 
   constructor(
     private viewCtrl: ViewController,

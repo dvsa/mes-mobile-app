@@ -100,16 +100,16 @@ export class TestReportValidatorProvider {
 
   public validateSpeedChecksCatAMod1(data: CatAMod1TestData): SpeedCheckState {
 
-    const emergencyStopNotMet = get(data, 'emergencyStop.speedNotMetSeriousFault');
-    const avoidanceNotMet = get(data, 'avoidance.speedNotMetSeriousFault');
+    const emergencyStopNotMet = get(data, 'emergencyStop.outcome');
+    const avoidanceNotMet = get(data, 'avoidance.outcome');
 
     const emergencyStopFirstAttempt = get(data, 'emergencyStop.firstAttempt');
     const avoidanceFirstAttempt = get(data, 'avoidance.firstAttempt');
 
-    const emergencyStopOutcome = get(data, 'emergencyStop.outcome');
-    const avoidanceOutcome = get(data, 'avoidance.outcome');
+    const emergencyStopOutcome = get(data, 'singleFaultCompetencies.emergencyStop');
+    const avoidanceOutcome = get(data, 'singleFaultCompetencies.avoidance');
 
-    if (emergencyStopNotMet) {
+    if (emergencyStopNotMet === CompetencyOutcome.S) {
       if (emergencyStopFirstAttempt === undefined) {
         return SpeedCheckState.EMERGENCY_STOP_MISSING;
       }
@@ -125,7 +125,7 @@ export class TestReportValidatorProvider {
       return SpeedCheckState.EMERGENCY_STOP_DANGEROUS_FAULT;
     }
 
-    if (avoidanceNotMet) {
+    if (avoidanceNotMet === CompetencyOutcome.S) {
       if (avoidanceFirstAttempt === undefined) {
         return SpeedCheckState.AVOIDANCE_MISSING;
       }

@@ -9,7 +9,7 @@ export class FaultCountAM1Helper {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { singleFaultCompetencies, dangerousFaults, emergencyStop, avoidance } = data;
+    const { singleFaultCompetencies, dangerousFaults } = data;
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
     const controlledStopDangerousFaults = (
@@ -25,9 +25,9 @@ export class FaultCountAM1Helper {
     const uTurnDangerousFaults = (
       get(singleFaultCompetencies, 'uTurn') === CompetencyOutcome.D) ? 1 : 0;
     const emergencyStopDangerousFaults = (
-      get(emergencyStop, 'outcome') === CompetencyOutcome.D) ? 1 : 0;
+      get(singleFaultCompetencies, 'emergencyStop') === CompetencyOutcome.D) ? 1 : 0;
     const avoidanceDangerousFaults = (
-      get(avoidance, 'outcome') === CompetencyOutcome.D) ? 1 : 0;
+      get(singleFaultCompetencies, 'avoidance') === CompetencyOutcome.D) ? 1 : 0;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
@@ -63,8 +63,12 @@ export class FaultCountAM1Helper {
     const uTurnSeriousFaults = (
       get(singleFaultCompetencies, 'uTurn') === CompetencyOutcome.S) ? 1 : 0;
     const emergencyStopSeriousFaults = (
-      get(emergencyStop, 'outcome') === CompetencyOutcome.S) ? 1 : 0;
+      get(singleFaultCompetencies, 'emergeencyStop') === CompetencyOutcome.S) ? 1 : 0;
     const avoidanceSeriousFaults = (
+      get(singleFaultCompetencies, 'avoidance') === CompetencyOutcome.S) ? 1 : 0;
+    const emergencyStopSpeedRequirementSeriousFaults = (
+      get(emergencyStop, 'outcome') === CompetencyOutcome.S) ? 1 : 0;
+    const avoidanceSpeedRequirementSeriousFaults = (
       get(avoidance, 'outcome') === CompetencyOutcome.S) ? 1 : 0;
 
     const result =
@@ -76,7 +80,9 @@ export class FaultCountAM1Helper {
       slowControlSeriousFaults +
       uTurnSeriousFaults +
       emergencyStopSeriousFaults +
-      avoidanceSeriousFaults;
+      avoidanceSeriousFaults +
+      emergencyStopSpeedRequirementSeriousFaults +
+      avoidanceSpeedRequirementSeriousFaults;
 
     return result;
   }
@@ -85,7 +91,7 @@ export class FaultCountAM1Helper {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { drivingFaults, singleFaultCompetencies, emergencyStop, avoidance } = data;
+    const { drivingFaults, singleFaultCompetencies } = data;
 
     const drivingFaultSumOfSimpleCompetencies = getCompetencyFaults(drivingFaults)
       .reduce(((res, faultSummary) => res + faultSummary.faultCount), 0);
@@ -103,9 +109,9 @@ export class FaultCountAM1Helper {
     const uTurnDrivingFaults = (
       get(singleFaultCompetencies, 'uTurn') === CompetencyOutcome.DF) ? 1 : 0;
     const emergencyStopRidingFaults = (
-      get(emergencyStop, 'outcome') === CompetencyOutcome.DF) ? 1 : 0;
+      get(singleFaultCompetencies, 'emergencyStop') === CompetencyOutcome.DF) ? 1 : 0;
     const avoidanceRidingFaults = (
-      get(avoidance, 'outcome') === CompetencyOutcome.DF) ? 1 : 0;
+      get(singleFaultCompetencies, 'avoidance') === CompetencyOutcome.DF) ? 1 : 0;
 
     const result =
       drivingFaultSumOfSimpleCompetencies +

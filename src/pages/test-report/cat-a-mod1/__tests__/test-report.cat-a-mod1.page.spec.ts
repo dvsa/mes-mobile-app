@@ -26,9 +26,7 @@ import { StoreModule, Store } from '@ngrx/store';
 import { testReportReducer } from '../../test-report.reducer';
 import { LegalRequirementComponent } from '../../components/legal-requirement/legal-requirement';
 import { EtaComponent } from '../../components/examiner-takes-action/eta';
-
-// TODO - PREP-AMOD1: Use cat amod1 reducer
-import { initialState } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { initialState } from '../../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
 import { EcoComponent } from '../../components/eco/eco';
 import { TestReportValidatorProvider } from '../../../../providers/test-report-validator/test-report-validator';
 import {
@@ -46,9 +44,9 @@ import { SetActivityCode } from '../../../../modules/tests/activity-code/activit
 import { StoreModel } from '../../../../shared/models/store.model';
 import { CalculateTestResult, TerminateTestFromTestReport } from '../../test-report.actions';
 import { SpeedCheckState } from '../../../../providers/test-report-validator/test-report-validator.constants';
-import { speedCheckLabels } from '../../../../shared/constants/competencies/cata-mod1-speed-checks';
 import { ModalReason } from '../components/activity-code-4-modal/activity-code-4-modal.constants';
 import { SingleFaultCompetencyComponent } from '../../components/single-fault-competency/single-fault-competency';
+import { competencyLabels } from '../../../../shared/constants/competencies/competencies';
 
 describe('TestReportCatAMod1Page', () => {
   let fixture: ComponentFixture<TestReportCatAMod1Page>;
@@ -233,8 +231,8 @@ describe('TestReportCatAMod1Page', () => {
         expect(calls.argsFor(0)[0]).toBe(modalName);
         expect(calls.argsFor(0)[1]).toEqual({
           speedChecksNeedCompleting: [
-            speedCheckLabels.speedCheckEmergency,
-            speedCheckLabels.speedCheckAvoidance,
+            competencyLabels.speedCheckEmergency,
+            competencyLabels.speedCheckAvoidance,
           ],
         });
         expect(calls.argsFor(0)[2]).toEqual(options);
@@ -255,7 +253,7 @@ describe('TestReportCatAMod1Page', () => {
         expect(calls.argsFor(0)[0]).toBe(modalName);
         expect(calls.argsFor(0)[1]).toEqual({
           speedChecksNeedCompleting: [
-            speedCheckLabels.speedCheckEmergency,
+            competencyLabels.speedCheckEmergency,
           ],
         });
         expect(calls.argsFor(0)[2]).toEqual(options);
@@ -276,7 +274,7 @@ describe('TestReportCatAMod1Page', () => {
         expect(calls.argsFor(0)[0]).toBe(modalName);
         expect(calls.argsFor(0)[1]).toEqual({
           speedChecksNeedCompleting: [
-            speedCheckLabels.speedCheckAvoidance,
+            competencyLabels.speedCheckAvoidance,
           ],
         });
         expect(calls.argsFor(0)[2]).toEqual(options);

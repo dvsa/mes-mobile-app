@@ -106,8 +106,8 @@
       </ion-col>
     </ion-row>
     <speed-check-header></speed-check-header>
-    <speed-check [competency]="competencies.speedCheckEmergency"></speed-check>
-    <speed-check [competency]="competencies.speedCheckAvoidance"></speed-check>
+    <speed-check [competency]="competencies.speedCheckEmergency" [pairedCompetency]="singleFaultCompetencyNames.emergencyStop"></speed-check>
+    <speed-check [competency]="competencies.speedCheckAvoidance" [pairedCompetency]="singleFaultCompetencyNames.avoidance"></speed-check>
   </ion-grid>
   <div class="report-overlay report-overlay-modal" [class.contract]="isSeriousMode || isDangerousMode"
     [class.show-overlay]="displayOverlay" [class.hide-overlay]="!displayOverlay"></div>

@@ -2,20 +2,13 @@ import { Avoidance } from '@dvsa/mes-test-schema/categories/AM1';
 import * as avoidanceActions from './avoidance.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
-export const initialState: Avoidance = {
-  speedNotMetSeriousFault: false,
-};
+export const initialState: Avoidance = {};
 
 export function avoidanceReducer(
   state: Avoidance = initialState,
   action: avoidanceActions.Types,
 ): Avoidance {
   switch (action.type) {
-    case avoidanceActions.TOGGLE_AVOIDANCE_SPEED_REQ:
-      return {
-        ...state,
-        speedNotMetSeriousFault: !state.speedNotMetSeriousFault,
-      };
     case avoidanceActions.RECORD_AVOIDANCE_FIRST_ATTEMPT:
       return {
         ...state,
@@ -26,35 +19,20 @@ export function avoidanceReducer(
         ...state,
         secondAttempt: action.attemptedSpeed,
       };
-    case avoidanceActions.ADD_AVOIDANCE_RIDING_FAULT:
-      return {
-        ...state,
-        outcome: CompetencyOutcome.DF,
-      };
     case avoidanceActions.ADD_AVOIDANCE_SERIOUS_FAULT:
       return {
         ...state,
         outcome: CompetencyOutcome.S,
       };
-    case avoidanceActions.ADD_AVOIDANCE_DANGEROUS_FAULT:
+    case avoidanceActions.REMOVE_AVOIDANCE_SERIOUS_FAULT:
       return {
         ...state,
-        outcome: CompetencyOutcome.D,
+        outcome: null,
       };
-    case avoidanceActions.REMOVE_AVOIDANCE_FAULT:
+    case avoidanceActions.ADD_AVOIDANCE_SPEED_REQUIREMENT_COMMENT:
       return {
         ...state,
-        outcome: undefined,
-      };
-    case avoidanceActions.REMOVE_DANGEROUS_AVOIDANCE_FAULT:
-      return {
-        ...state,
-        outcome: undefined,
-      };
-    case avoidanceActions.REMOVE_SERIOUS_AVOIDANCE_FAULT:
-      return {
-        ...state,
-        outcome: undefined,
+        comments: action.comment,
       };
     default:
       return state;

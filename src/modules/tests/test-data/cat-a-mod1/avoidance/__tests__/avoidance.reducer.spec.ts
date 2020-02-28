@@ -6,26 +6,26 @@ import { CompetencyOutcome } from '../../../../../../shared/models/competency-ou
 
 describe('avoidance reducer', () => {
   describe('handle ToggleEmergencyStopSpeedReq', () => {
-    it('should toggle speedNotMetSeriousFault to true', () => {
+    it('should set outcome to S', () => {
       const state = { ...initialState };
-      const action = new avoidanceActions.ToggleAvoidanceSpeedReq();
+      const action = new avoidanceActions.AddAvoidanceSeriousFault();
       const result = avoidanceReducer(state, action);
       expect(result).toEqual({
         ...initialState,
-        speedNotMetSeriousFault: true,
+        outcome: CompetencyOutcome.S,
       } as Avoidance);
     });
 
-    it('should toggle speedNotMetSeriusFault to false', () => {
-      const state = {
+    it('should set outcome to null', () => {
+      const state : Avoidance = {
         ...initialState,
-        speedNotMetSeriousFault: true,
+        outcome: CompetencyOutcome.S,
       };
-      const action = new avoidanceActions.ToggleAvoidanceSpeedReq();
+      const action = new avoidanceActions.RemoveAvoidanceSeriousFault();
       const result = avoidanceReducer(state, action);
       expect(result).toEqual({
         ...initialState,
-        speedNotMetSeriousFault: false,
+        outcome: null,
       } as Avoidance);
     });
   });
@@ -52,57 +52,6 @@ describe('avoidance reducer', () => {
       expect(result).toEqual({
         ...initialState,
         secondAttempt: attemptedSpeed,
-      } as Avoidance);
-    });
-  });
-
-  describe('handle AddAvoidanceRidingFault', () => {
-    it('should add a riding fault', () => {
-      const state = { ...initialState };
-      const action = new avoidanceActions.AddAvoidanceRidingFault();
-      const result = avoidanceReducer(state, action);
-      expect(result).toEqual({
-        ...initialState,
-        outcome: CompetencyOutcome.DF,
-      } as Avoidance);
-    });
-  });
-
-  describe('handle AddAvoidanceSeriousFault', () => {
-    it('should add a serious fault', () => {
-      const state = { ...initialState };
-      const action = new avoidanceActions.AddAvoidanceSeriousFault();
-      const result = avoidanceReducer(state, action);
-      expect(result).toEqual({
-        ...initialState,
-        outcome: CompetencyOutcome.S,
-      } as Avoidance);
-    });
-  });
-
-  describe('handle AddAvoidanceDangerousFault', () => {
-    it('should add a riding fault', () => {
-      const state = { ...initialState };
-      const action = new avoidanceActions.AddAvoidanceDangerousFault();
-      const result = avoidanceReducer(state, action);
-      expect(result).toEqual({
-        ...initialState,
-        outcome: CompetencyOutcome.D,
-      } as Avoidance);
-    });
-  });
-
-  describe('handle RemoveAvoidanceFault', () => {
-    it('shoud remove any fault from the outcome', () => {
-      const state = {
-        ...initialState,
-        outcome: CompetencyOutcome.DF,
-      } as Avoidance;
-      const action = new avoidanceActions.RemoveAvoidanceFault();
-      const result = avoidanceReducer(state, action);
-      expect(result).toEqual({
-        ...initialState,
-        outcome: undefined,
       } as Avoidance);
     });
   });

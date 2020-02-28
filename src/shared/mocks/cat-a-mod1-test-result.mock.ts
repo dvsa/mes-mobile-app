@@ -10,14 +10,12 @@ export const categoryAM1TestResultMock: TestResultCatAM1Schema = {
     },
     avoidance:{
       firstAttempt:14,
-      speedNotMetSeriousFault:false,
     },
     drivingFaults:{
 
     },
     emergencyStop:{
       firstAttempt:13,
-      speedNotMetSeriousFault:false,
     },
     seriousFaults:{
 
