@@ -72,7 +72,7 @@ describe('Vehicle Checks Cat A Mod2 Reducer', () => {
       const state: SafetyAndBalanceQuestions = cloneDeep(initialState);
       const result = safetyAndBalanceCatAMod2Reducer(state, new AddSafetyAndBalanceComment('Fell over twice.'));
 
-      expect(result.safetyComments).toEqual('Fell over twice.');
+      expect(result.safetyAndBalanceComments).toEqual('Fell over twice.');
     });
   });
 });
