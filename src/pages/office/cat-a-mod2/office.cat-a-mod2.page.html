@@ -53,6 +53,18 @@
               (routeNumberChange)="routeNumberChanged($event)"
             ></route-number>
 
+            <mode-of-transport
+              *ngIf="pageState.displayModeOfTransport$ | async"
+              option1="Car to bike"
+              option1label="Car to bike"
+              option2="Bike to bike"
+              option2label="Bike to bike"
+              [formGroup]="form"
+              [outcome]="pageState.testOutcome$ | async"
+              [modeOfTransport]="pageState.modeOfTransport$ | async"
+              (modeOfTransportChange)="modeOfTransportChanged($event)"
+            ></mode-of-transport>
+
             <independent-driving
               option1="Diagram"
               option1label="Diagram"

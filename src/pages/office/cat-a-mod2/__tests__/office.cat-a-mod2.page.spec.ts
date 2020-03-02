@@ -20,6 +20,7 @@ import { AppModule } from '../../../../app/app.module';
 import { TranslateModule } from 'ng2-translate';
 import { OfficeCatAMod2Page } from '../office.cat-a-mod2.page';
 import { SafetyAndBalanceCardCatAMod2Component } from '../components/safety-and-balance/safety-and-balance.cat-a-mod2';
+import { ModeOfTransportCatAMod2Component } from '../components/mode-of-transport/mode-of-transport.cat-a-mod2';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
@@ -38,8 +39,16 @@ import { By } from '@angular/platform-browser';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import {
   WeatherConditionsChanged,
+  RouteNumberChanged,
+  IdentificationUsedChanged,
+  IndependentDrivingTypeChanged,
+  CandidateDescriptionChanged,
+  AdditionalInformationChanged,
 } from '../../../../modules/tests/test-summary/common/test-summary.actions';
-import { WeatherConditions } from '@dvsa/mes-test-schema/categories/common';
+import {
+  ModeOfTransportChanged,
+} from '../../../../modules/tests/test-summary/cat-a-mod2/test-summary.cat-a-mod2.actions';
+import { WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/common';
 import { of } from 'rxjs/observable/of';
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../../components/route-number/route-number';
@@ -68,6 +77,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
 import { configureTestSuite } from 'ng-bullet';
+import { ModeOfTransport } from '@dvsa/mes-test-schema/categories/AM2';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatAMod2Page>;
@@ -79,7 +89,8 @@ describe('OfficePage', () => {
     TestBed.configureTestingModule({
       declarations: [
         OfficeCatAMod2Page,
-        SafetyAndBalanceCardCatAMod2Component,
+        MockComponent(SafetyAndBalanceCardCatAMod2Component),
+        MockComponent(ModeOfTransportCatAMod2Component),
         MockComponent(RouteNumberComponent),
         MockComponent(CandidateDescriptionComponent),
         MockComponent(IdentificationComponent),
@@ -165,17 +176,66 @@ describe('OfficePage', () => {
   }));
 
   describe('Class', () => {
+    describe('identificationChanged', () => {
+      it('should dispatch an Identification change action with the new value', () => {
+        const idType: Identification = 'Passport';
+        component.identificationChanged(idType);
 
+        expect(store$.dispatch).toHaveBeenCalledWith(new IdentificationUsedChanged(idType));
+      });
+    });
+    describe('independentDrivingChanged', () => {
+      it('should dispatch an Independent Driving change action with the new value', () => {
+        const drivingAid: IndependentDriving = 'Diagram';
+        component.independentDrivingChanged(drivingAid);
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new IndependentDrivingTypeChanged(drivingAid));
+      });
+    });
+    describe('modeOfTransportChanged', () => {
+      it('should dispatch a Mode Of Transport change action with the new value', () => {
+        const mode: ModeOfTransport = 'Car to bike';
+        component.modeOfTransportChanged(mode);
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new ModeOfTransportChanged(mode));
+      });
+    });
+    describe('routeNumberChanged', () => {
+      it('should dispatch a Route change action with the new value', () => {
+        const route: number = 17;
+        component.routeNumberChanged(route);
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new RouteNumberChanged(route));
+      });
+    });
+    describe('candidateDescriptionChanged', () => {
+      it('should dispatch a Candidate Description change action with the new value', () => {
+        const desc: string = 'Tall but deceptively short.';
+        component.candidateDescriptionChanged(desc);
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new CandidateDescriptionChanged(desc));
+      });
+    });
+    describe('additionalInformationChanged', () => {
+      it('should dispatch an Additional Information change action with the new value', () => {
+        const info: string = 'Nothing more to say.';
+        component.additionalInformationChanged(info);
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new AdditionalInformationChanged(info));
+      });
+    });
     describe('weatherConditionsChanged', () => {
       it('should dispatch a weather conditions changed action with the weather condition values', () => {
         const conditions: WeatherConditions[] = ['Showers'];
         component.weatherConditionsChanged(conditions);
+
         expect(store$.dispatch).toHaveBeenCalledWith(new WeatherConditionsChanged(conditions));
       });
     });
     describe('selecting a activity code', () => {
       it('should dispatch a SetActivityCode action with the activity code', () => {
         component.activityCodeChanged(activityCodeModelList[0]);
+
         expect(store$.dispatch).toHaveBeenCalledWith(new SetActivityCode(activityCodeModelList[0].activityCode));
       });
     });
