@@ -17,6 +17,7 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const fs = require('fs');
+const request = require('request');
 
 this.testCategory = 'b';
 
@@ -288,15 +289,23 @@ export const logInToApplication = (username, password) => {
     browser.driver.selectContext('NATIVE_APP').then(() => {
       // Fill in username and click Next
       const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-      browser.wait(ExpectedConditions.presenceOf(usernameFld));
-      usernameFld.sendKeys(username);
+      browser.wait(ExpectedConditions.presenceOf(usernameFld)).then(() => {
+        // Put focus on field and paste in username
+        usernameFld.click();
+        pasteValue(username);
+        browser.wait(ExpectedConditions.textToBePresentInElementValue(usernameFld, username));
+      });
       const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));
       nextButtonElement.click();
 
       // Fill in password and click Sign in
       const pFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
-      browser.wait(ExpectedConditions.presenceOf(pFld));
-      pFld.sendKeys(password);
+      browser.wait(ExpectedConditions.presenceOf(pFld)).then(() => {
+        // Put focus on field and paste in username
+        pFld.click();
+        pasteValue(password);
+        browser.wait(ExpectedConditions.textToBePresentInElementValue(pFld, obfuscatedPassword(password)));
+      });
       const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
       signInButtonElement.click();
 
@@ -491,4 +500,40 @@ const clickBackButton = () => {
 const clickGoToMyJournalButton = () => {
   const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
   clickElement(goToJournalButton);
+};
+
+const base64EncodeString = (value) => {
+  return new Buffer(value).toString('base64');
+};
+
+const obfuscatedPassword = (password) => {
+  return password.replace(/./g, '•');
+};
+
+/**
+ * Enters the value into the clipboard and initiates the keyboard paste.
+ * The paste does not appear to have been implemented in protractor but exists in Appium.
+ * @param value The value to paste in
+ */
+const pasteValue = (value) => {
+  browser.getProcessedConfig().then((config) => {
+    browser.driver.getSession().then((session) => {
+      request.post(`${config.seleniumAddress}/session/${session.getId()}/appium/device/set_clipboard`, {
+        json: {
+          content: base64EncodeString(value),
+          contentType: 'plaintext',
+        },
+      }, (error, res, body) => {
+        if (error) {
+          console.error(error);
+          return;
+        }
+
+        // Press the paste button
+        const pasteButton = element(by.xpath('//XCUIElementTypeButton[@label="Paste"]'));
+        browser.wait(ExpectedConditions.presenceOf(pasteButton));
+        pasteButton.click();
+      });
+    });
+  });
 };
