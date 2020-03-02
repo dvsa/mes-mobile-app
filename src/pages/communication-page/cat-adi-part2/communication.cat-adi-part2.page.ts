@@ -35,8 +35,7 @@ import {
   CandidateChosePostAsCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { TranslateService } from 'ng2-translate';
-// TODO - ADI Part 2: use correct page names
-import { CAT_BE } from '../../page-names.constants';
+import { CAT_ADI_PART2 } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
@@ -199,17 +198,15 @@ export class CommunicationCatADIPart2Page extends BasePageComponent implements O
       this.deviceAuthenticationProvider.triggerLockScreen()
         .then(() => {
           this.store$.dispatch(new CommunicationSubmitInfo());
-          // TODO - ADI Part 2: use correct page names
-          this.navController.push(CAT_BE.WAITING_ROOM_TO_CAR_PAGE)
+          this.navController.push(CAT_ADI_PART2.WAITING_ROOM_TO_CAR_PAGE)
             .then(() => {
-              // TODO - ADI Part 2: use correct page names
-              const waitingRoomPage = this.navController.getViews().find(view => view.id === CAT_BE.WAITING_ROOM_PAGE);
+              const waitingRoomPage =
+              this.navController.getViews().find(view => view.id === CAT_ADI_PART2.WAITING_ROOM_PAGE);
               if (waitingRoomPage) {
                 this.navController.removeView(waitingRoomPage);
               }
               const communicationPage =
-              // TODO - ADI Part 2: use correct page names
-                this.navController.getViews().find(view => view.id === CAT_BE.COMMUNICATION_PAGE);
+                this.navController.getViews().find(view => view.id === CAT_ADI_PART2.COMMUNICATION_PAGE);
               if (communicationPage) {
                 this.navController.removeView(communicationPage);
               }
