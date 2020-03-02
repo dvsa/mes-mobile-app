@@ -1,4 +1,4 @@
-@catbe @full_smoke
+@catbe @full_smoke @regression
 Feature: Cat B+E Journal
 
    Scenario: Examiner has a Cat B + E test with dimensions
