@@ -1,4 +1,4 @@
-@catb
+@catb @regression
 Feature: Debrief including Health Declaration
 
    Scenario: On a pass test debrief the correct candidate details are displayed and validation is enforced

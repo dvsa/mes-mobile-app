@@ -1,4 +1,4 @@
-@catb
+@catb @regression
 Feature: Journal
 
    @full_smoke

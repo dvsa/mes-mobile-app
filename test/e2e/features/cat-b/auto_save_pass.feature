@@ -1,5 +1,5 @@
-@catb @full_smoke
-Feature: Autosave end to end journey
+@catb @full_smoke @regression
+Feature: A Driving Examiner Completes a Passed Journey for Category B Using Autosave
 
    Scenario: Examiner completes a passed test for autosave
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"

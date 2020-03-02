@@ -1,5 +1,5 @@
-@catbe
-Feature: Autosave end to end terminate journey
+@catbe @regression
+Feature: Autosave end to end terminate journey for Category B+E
 
    Scenario: Examiner terminates test as candidate failed eye sight test and completes write-up later using autosave
       Given I am logged in as "mobexaminer2" and I have a test for "Miss Jeannette Bender"

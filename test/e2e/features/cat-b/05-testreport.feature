@@ -1,2 +1,0 @@
-@catb
-Feature: Test report

@@ -1,4 +1,4 @@
-@catb @full_smoke
+@catb @full_smoke @regression
 Feature: Waiting Room to Car
 
    Scenario: Waiting room to Car validation

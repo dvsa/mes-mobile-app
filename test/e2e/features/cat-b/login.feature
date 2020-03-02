@@ -1,4 +1,4 @@
-@catb
+@catb @regression
 Feature: Login
     
   Scenario: User logs into the application
