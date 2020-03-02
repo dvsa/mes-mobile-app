@@ -51,6 +51,35 @@ When('I start the test for {string}', (candidateName) => {
   });
 });
 
+When('I start the test [early|late] for {string}', (testTime, candidateName) => {
+
+  if(testTime === 'late'){
+    const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
+    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    h3[text() = "${candidateName}"]]`));
+    clickElement(buttonElement);
+
+    const 
+  }
+
+  // If the rekey dialog is shown so just select start test normally
+  const rekeyStartTestButton = element(by.id('rekey-start-test-button'));
+  rekeyStartTestButton.isPresent().then((result) => {
+    if (result) {
+      clickElement(rekeyStartTestButton);
+    }
+  });
+
+  // If the start test early dialog is shown just select continue
+  const startTestEarlyButton = element(by.id('early-start-start-test-button'));
+  startTestEarlyButton.isPresent().then((result) => {
+    if (result) {
+      clickElement(startTestEarlyButton);
+    }
+  });
+});
+
+
 When('I rekey a test for {string}', (candidateName) => {
   const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
