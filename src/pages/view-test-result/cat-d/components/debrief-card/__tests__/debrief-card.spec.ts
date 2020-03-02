@@ -74,7 +74,7 @@ describe('DebriefCardComponent', () => {
 
   describe('Class', () => {
     describe('getTestRequirements', () => {
-      it('should return the correct values for all test requirements for Cat C', () => {
+      it('should return the correct values for all test requirements for Cat D', () => {
         const data: CatDUniqueTypes.TestData = {
           testRequirements: {
             angledStartControlledStop: true,
@@ -95,7 +95,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
       });
-      it('should return the correct values for all test requirements for Cat CE', () => {
+      it('should return the correct values for all test requirements for Cat DE', () => {
         const data: CatDEUniqueTypes.TestData = {
           testRequirements: {
             angledStartControlledStop: true,
@@ -120,7 +120,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.uncoupleRecouple, checked: true });
       });
-      it('should return the correct values for all test requirements for Cat C1', () => {
+      it('should return the correct values for all test requirements for Cat D1', () => {
         const data: CatD1UniqueTypes.TestData = {
           testRequirements: {
             angledStartControlledStop: true,
@@ -141,7 +141,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
       });
-      it('should return the correct values for all test requirements for Cat C1E', () => {
+      it('should return the correct values for all test requirements for Cat D1E', () => {
         const data: CatD1EUniqueTypes.TestData = {
           testRequirements: {
             angledStartControlledStop: true,
