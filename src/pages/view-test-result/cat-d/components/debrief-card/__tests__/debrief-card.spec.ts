@@ -1,6 +1,6 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
-import { DebriefCardComponent, CatCTestData } from '../debrief-card';
+import { DebriefCardComponent, CatDTestData } from '../debrief-card';
 import { ConfigMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 import { TickIndicatorComponent } from '../../../../../../components/common/tick-indicator/tick-indicator';
@@ -29,10 +29,10 @@ import { manoeuvreTypeLabels } from '../../../../../../shared/constants/competen
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
-import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
-import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
-import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
+import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
+import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 
 describe('DebriefCardComponent', () => {
   let fixture: ComponentFixture<DebriefCardComponent>;
@@ -75,7 +75,7 @@ describe('DebriefCardComponent', () => {
   describe('Class', () => {
     describe('getTestRequirements', () => {
       it('should return the correct values for all test requirements for Cat C', () => {
-        const data: CatCUniqueTypes.TestData = {
+        const data: CatDUniqueTypes.TestData = {
           testRequirements: {
             angledStartControlledStop: true,
             downhillStart: false,
@@ -96,7 +96,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
       });
       it('should return the correct values for all test requirements for Cat CE', () => {
-        const data: CatCEUniqueTypes.TestData = {
+        const data: CatDEUniqueTypes.TestData = {
           testRequirements: {
             angledStartControlledStop: true,
             downhillStart: false,
@@ -121,7 +121,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toContain({ label: TestRequirementsLabels.uncoupleRecouple, checked: true });
       });
       it('should return the correct values for all test requirements for Cat C1', () => {
-        const data: CatC1UniqueTypes.TestData = {
+        const data: CatD1UniqueTypes.TestData = {
           testRequirements: {
             angledStartControlledStop: true,
             downhillStart: false,
@@ -142,7 +142,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
       });
       it('should return the correct values for all test requirements for Cat C1E', () => {
-        const data: CatC1EUniqueTypes.TestData = {
+        const data: CatD1EUniqueTypes.TestData = {
           testRequirements: {
             angledStartControlledStop: true,
             downhillStart: false,
@@ -166,7 +166,7 @@ describe('DebriefCardComponent', () => {
     });
     describe('getManoeuvre', () => {
       it('should return Reverse Left if the manoeuvre has been completed', () => {
-        const data: CatCTestData = {
+        const data: CatDTestData = {
           manoeuvres: {
             reverseLeft: {
               selected: true,
@@ -179,7 +179,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getManoeuvre()).toEqual(manoeuvreTypeLabels.reverseLeft);
       });
       it('should return None if the manoeuvre has not been completed', () => {
-        const data: CatCTestData = {
+        const data: CatDTestData = {
           manoeuvres: {
             reverseLeft: {
               selected: false,
@@ -197,7 +197,7 @@ describe('DebriefCardComponent', () => {
     });
     describe('getEco', () => {
       it('should return the correct data for eco', () => {
-        const data: CatCTestData = {
+        const data: CatDTestData = {
           eco: {
             adviceGivenControl: true,
           },
@@ -246,7 +246,7 @@ describe('DebriefCardComponent', () => {
     });
     describe('getETA', () => {
       it('should return the correct data if all eta options have been selected', () => {
-        const data: CatCTestData = {
+        const data: CatDTestData = {
           ETA: {
             physical: true,
             verbal: true,
@@ -258,7 +258,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getETA()).toEqual('Physical and Verbal');
       });
       it('should return the correct data if only a physical eta has been selected', () => {
-        const data: CatCTestData = {
+        const data: CatDTestData = {
           ETA: {
             physical: true,
             verbal: false,
@@ -270,7 +270,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getETA()).toEqual('Physical');
       });
       it('should return the correct data if only a verbal eta has been selected', () => {
-        const data: CatCTestData = {
+        const data: CatDTestData = {
           ETA: {
             verbal: true,
           },
@@ -289,7 +289,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getShowMeQuestions()).toEqual([]);
       });
       it('should return the correct data when present', () => {
-        const data: CatCTestData = {
+        const data: CatDTestData = {
           vehicleChecks: {
             showMeQuestions: [
               {
@@ -313,7 +313,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getTellMeQuestions()).toEqual([]);
       });
       it('should return the correct data when present', () => {
-        const data: CatCTestData = {
+        const data: CatDTestData = {
           vehicleChecks: {
             tellMeQuestions: [
               {

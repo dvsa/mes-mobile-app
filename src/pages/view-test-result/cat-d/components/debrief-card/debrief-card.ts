@@ -2,26 +2,26 @@ import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
 import { flattenArray } from '../../../view-test-result-helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
-import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
-import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
-import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
+import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
+import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 import {
   DataRowListItem,
   ViewTestResultLabels,
   TestRequirementsLabels,
 } from '../../../components/data-row-with-list/data-list-with-row.model';
-import { manoeuvreTypeLabelsCatC } from '../../../../../shared/constants/competencies/catc-manoeuvres';
+import { manoeuvreTypeLabelsCatD } from '../../../../../shared/constants/competencies/catd-manoeuvres';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { FaultSummaryProvider } from '../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
-export type CatCTestData =
-  | CatCUniqueTypes.TestData
-  | CatC1UniqueTypes.TestData
-  | CatCEUniqueTypes.TestData
-  | CatC1EUniqueTypes.TestData;
+export type CatDTestData =
+  | CatDUniqueTypes.TestData
+  | CatD1UniqueTypes.TestData
+  | CatDEUniqueTypes.TestData
+  | CatD1EUniqueTypes.TestData;
 
 @Component({
   selector: 'debrief-card',
@@ -30,7 +30,7 @@ export type CatCTestData =
 export class DebriefCardComponent {
 
   @Input()
-  data: CatCTestData;
+  data: CatDTestData;
 
   @Input()
   category: TestCategory;
@@ -76,7 +76,7 @@ export class DebriefCardComponent {
 
   public getManoeuvre(): string {
     const isReverseLeftSelected = get(this.data, 'manoeuvres.reverseLeft.selected', false);
-    return isReverseLeftSelected ? manoeuvreTypeLabelsCatC.reverseLeft : 'None' ;
+    return isReverseLeftSelected ? manoeuvreTypeLabelsCatD.reverseLeft : 'None' ;
   }
 
   public getEco(): DataRowListItem[] {
