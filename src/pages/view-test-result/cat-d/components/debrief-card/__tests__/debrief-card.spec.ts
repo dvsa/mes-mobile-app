@@ -84,7 +84,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.C;
+        component.category = TestCategory.D;
         fixture.detectChanges();
         const result: DataRowListItem[] = component.getTestRequirements();
 
@@ -108,7 +108,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.CE;
+        component.category = TestCategory.DE;
         fixture.detectChanges();
         const result: DataRowListItem[] = component.getTestRequirements();
 
@@ -130,7 +130,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.C1;
+        component.category = TestCategory.D1;
         fixture.detectChanges();
         const result: DataRowListItem[] = component.getTestRequirements();
 
@@ -151,7 +151,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.C1E;
+        component.category = TestCategory.D1E;
         fixture.detectChanges();
         const result: DataRowListItem[] = component.getTestRequirements();
 
@@ -174,7 +174,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.C;
+        component.category = TestCategory.D;
         fixture.detectChanges();
         expect(component.getManoeuvre()).toEqual(manoeuvreTypeLabels.reverseLeft);
       });
@@ -187,7 +187,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.C;
+        component.category = TestCategory.D;
         fixture.detectChanges();
         expect(component.getManoeuvre()).toEqual('None');
       });
@@ -203,7 +203,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.C;
+        component.category = TestCategory.D;
         fixture.detectChanges();
         const result: DataRowListItem[] = component.getEco();
 
@@ -253,7 +253,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.C;
+        component.category = TestCategory.D;
         fixture.detectChanges();
         expect(component.getETA()).toEqual('Physical and Verbal');
       });
@@ -265,7 +265,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.C;
+        component.category = TestCategory.D;
         fixture.detectChanges();
         expect(component.getETA()).toEqual('Physical');
       });
@@ -276,7 +276,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.C;
+        component.category = TestCategory.D;
         fixture.detectChanges();
         expect(component.getETA()).toEqual('Verbal');
       });
@@ -301,7 +301,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.C;
+        component.category = TestCategory.D;
         fixture.detectChanges();
         const result: QuestionResult[] = component.getShowMeQuestions();
         expect(result.length).toEqual(1);
@@ -325,7 +325,7 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        component.category = TestCategory.C;
+        component.category = TestCategory.D;
         fixture.detectChanges();
         const result: QuestionResult[] = component.getTellMeQuestions();
         expect(result.length).toEqual(1);

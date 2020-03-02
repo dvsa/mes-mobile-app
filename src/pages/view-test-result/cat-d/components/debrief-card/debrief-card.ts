@@ -64,7 +64,7 @@ export class DebriefCardComponent {
       },
     ];
 
-    if (this.category === TestCategory.C1E || this.category === TestCategory.CE) {
+    if (this.category === TestCategory.D1E || this.category === TestCategory.DE) {
       testRequirements.push({
         label: TestRequirementsLabels.uncoupleRecouple,
         checked: get(this.data, 'uncoupleRecouple.selected', false),
