@@ -11,8 +11,10 @@ export const REKEY_SEARCH_PAGE = 'RekeySearchPage';
 export const TEST_RESULTS_SEARCH_PAGE = 'TestResultsSearchPage';
 export const LEGAL_REQUIREMENTS_MODAL = 'LegalRequirementsModal';
 export const REVERSE_DIAGRAM_PAGE = 'ReverseDiagramPage';
+export const REKEY_UPLOAD_OUTCOME_PAGE = 'RekeyUploadOutcomePage';
 
 export const CAT_B = {
+  REKEY_UPLOAD_OUTCOME_PAGE,
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBPage',
   COMMUNICATION_PAGE: 'CommunicationCatBPage',
   DEBRIEF_PAGE: 'DebriefCatBPage',
@@ -24,12 +26,12 @@ export const CAT_B = {
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatBPage',
   REKEY_REASON_PAGE: 'RekeyReasonCatBPage',
-  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBPage',
   VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatBPage',
 };
 
 export const CAT_BE = {
+  REKEY_UPLOAD_OUTCOME_PAGE,
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBEPage',
   COMMUNICATION_PAGE: 'CommunicationCatBEPage',
   DEBRIEF_PAGE: 'DebriefCatBEPage',
@@ -41,13 +43,13 @@ export const CAT_BE = {
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBEPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatBEPage',
   REKEY_REASON_PAGE: 'RekeyReasonCatBEPage',
-  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBEPage',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatBEModal',
   VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatBEPage',
 };
 
 export const CAT_C = {
+  REKEY_UPLOAD_OUTCOME_PAGE,
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatCPage',
   COMMUNICATION_PAGE: 'CommunicationCatCPage',
   DEBRIEF_PAGE: 'DebriefCatCPage',
@@ -59,13 +61,13 @@ export const CAT_C = {
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatCPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatCPage',
   REKEY_REASON_PAGE: 'RekeyReasonCatCPage',
-  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatCPage',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatCModal',
   VIEW_TEST_RESULT_PAGE:'ViewTestResultCatCPage',
 };
 
 export const CAT_A_MOD1 = {
+  REKEY_UPLOAD_OUTCOME_PAGE,
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatAMod1Page',
   COMMUNICATION_PAGE: 'CommunicationCatAMod1Page',
   DEBRIEF_PAGE: 'DebriefCatAMod1Page',
@@ -78,13 +80,13 @@ export const CAT_A_MOD1 = {
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatAMod1Page',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatAMod1Page',
   REKEY_REASON_PAGE: 'RekeyReasonCatAMod1Page',
-  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatAMod1Page',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatAMod1Modal',
   VIEW_TEST_RESULT_PAGE:'ViewTestResultCatAMod1Page',
 };
 
 export const CAT_A_MOD2 = {
+  REKEY_UPLOAD_OUTCOME_PAGE,
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatAMod2Page',
   COMMUNICATION_PAGE: 'CommunicationCatAMod2Page',
   DEBRIEF_PAGE: 'DebriefCatAMod2Page',
@@ -96,13 +98,13 @@ export const CAT_A_MOD2 = {
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatAMod2Page',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatAMod2Page',
   REKEY_REASON_PAGE: 'RekeyReasonCatAMod2Page',
-  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatAMod2Page',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatAMod2Modal',
   VIEW_TEST_RESULT_PAGE:'ViewTestResultCatAMod2Page',
 };
 
 export const CAT_D = {
+  REKEY_UPLOAD_OUTCOME_PAGE,
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatDPage',
   COMMUNICATION_PAGE: 'CommunicationCatDPage',
   DEBRIEF_PAGE: 'DebriefCatDPage',
@@ -114,8 +116,25 @@ export const CAT_D = {
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatDPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatDPage',
   REKEY_REASON_PAGE: 'RekeyReasonCatDPage',
-  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatDPage',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatDModal',
   VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatDPage',
+};
+
+export const CAT_ADI_PART2 = {
+  REKEY_UPLOAD_OUTCOME_PAGE,
+  BACK_TO_OFFICE_PAGE: 'BackToOfficeCatADIPart2Page',
+  COMMUNICATION_PAGE: 'CommunicationCatADIPart2Page',
+  DEBRIEF_PAGE: 'DebriefCatADIPart2Page',
+  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatADIPart2Page',
+  OFFICE_PAGE: 'OfficeCatADIPart2Page',
+  PASS_FINALISATION_PAGE: 'PassFinalisationCatADIPart2Page',
+  TEST_REPORT_PAGE: 'TestReportCatADIPart2Page',
+  WAITING_ROOM_PAGE: 'WaitingRoomCatADIPart2Page',
+  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatADIPart2Page',
+  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatADIPart2Page',
+  REKEY_REASON_PAGE: 'RekeyReasonCatADIPart2Page',
+  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatADIPart2Page',
+  VEHICLE_CHECKS_MODAL: 'VehicleChecksCatADIPart2Modal',
+  VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatADIPart2Page',
 };
