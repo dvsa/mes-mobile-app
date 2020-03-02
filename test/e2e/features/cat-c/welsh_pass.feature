@@ -1,7 +1,6 @@
-@catc
-Feature: Full Welsh end to end journey for category C
+@catc @regression
+Feature: A Driving Examiner Completes a Passed User Journey for Caetegory C in Welsh
 
-    @full_smoke
     Scenario: Examiner completes a passed welsh test with no faults
         Given I am logged in as "desexaminerw" and I have a test for "Miss Luella Lowery"
         When I start the test for "Miss Luella Lowery"
