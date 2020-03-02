@@ -1,5 +1,5 @@
-import { by, element } from 'protractor';
-import { getElement, clickElement, onJournalPageAs } from './generic-steps';
+import {by, element} from 'protractor';
+import {getElement, clickElement, onJournalPageAs} from './generic-steps';
 
 const {
   Given,
@@ -42,7 +42,7 @@ When('I start the test for {string}', (candidateName) => {
     }
   });
 
-    // If the start test early dialog is shown just select continue
+  // If the start test early dialog is shown just select continue
   const startTestEarlyButton = element(by.id('early-start-start-test-button'));
   startTestEarlyButton.isPresent().then((result) => {
     if (result) {
@@ -53,8 +53,8 @@ When('I start the test for {string}', (candidateName) => {
 
 When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidateName: string) => {
   console.log('testTime', testTime);
-  if(testTime === 'late'){
-    startingTest(candidateName);
+  if (testTime === 'late') {
+    startingExpiredTest(candidateName);
 
     // If the rekey dialog is shown so just select start test normally
     const lateStartTestButton = element(by.id('rekey-start-test-button'));
@@ -123,31 +123,31 @@ Then('I should have a category {string} test for {string}', (category, candidate
 });
 
 Then('The vehicle for {string} has length {string}, width {string}, height {string} and seats {string}',
-(candidateName, length, width, height, seats) => {
-  const lengthValue = getElement(
-    by.xpath(`//vehicle-details/div/span/span[text()= 'L: ']/following-sibling::span
+  (candidateName, length, width, height, seats) => {
+    const lengthValue = getElement(
+      by.xpath(`//vehicle-details/div/span/span[text()= 'L: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
       [text() = "${candidateName}"]]`));
-  expect(lengthValue.getText()).to.eventually.equal(length);
+    expect(lengthValue.getText()).to.eventually.equal(length);
 
-  const widthValue = getElement(
-    by.xpath(`//vehicle-details/div/span/span[text()= 'W: ']/following-sibling::span
+    const widthValue = getElement(
+      by.xpath(`//vehicle-details/div/span/span[text()= 'W: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
       [text() = "${candidateName}"]]`));
-  expect(widthValue.getText()).to.eventually.equal(width);
+    expect(widthValue.getText()).to.eventually.equal(width);
 
-  const heightValue = getElement(
-    by.xpath(`//vehicle-details/div/span/span[text()= 'H: ']/following-sibling::span
+    const heightValue = getElement(
+      by.xpath(`//vehicle-details/div/span/span[text()= 'H: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
       [text() = "${candidateName}"]]`));
-  expect(heightValue.getText()).to.eventually.equal(height);
+    expect(heightValue.getText()).to.eventually.equal(height);
 
-  const seatValue = getElement(
-    by.xpath(`//vehicle-details/div/span/span[text() = 'Seats: ']/following-sibling::span
+    const seatValue = getElement(
+      by.xpath(`//vehicle-details/div/span/span[text() = 'Seats: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
       [text() = "${candidateName}"]]`));
-  return expect(seatValue.getText()).to.eventually.equal(seats);
-});
+    return expect(seatValue.getText()).to.eventually.equal(seats);
+  });
 
 Then('I continue the write up for {string}', (candidateName) => {
   const continueWriteUp = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Write-up"]]
@@ -166,7 +166,7 @@ const closeCandidateDetailsDialog = () => {
   clickElement(closeCandidateDetailDialog);
 };
 
-const startingTest = (candidateName) => {
+const startingExpiredTest = (candidateName) => {
   const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
@@ -175,5 +175,4 @@ const startingTest = (candidateName) => {
   const testExpireDialog = getElement(by.xpath(`/html/body/ion-app/ion-modal/div/journal-rekey-modal/ion-card/
     modal-alert-title/ion-row[2]/ion-col/h2`));
   return expect(testExpireDialog.isPresent()).to.eventually.be.true;
-
 };

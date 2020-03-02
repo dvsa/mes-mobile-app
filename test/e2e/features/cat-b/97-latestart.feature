@@ -1,3 +1,4 @@
+@catb
 Feature: Late start
 
   Scenario: completes a passed test which is late
@@ -26,4 +27,3 @@ Feature: Late start
     And I upload the test
     Then I should see the "Journal" page
     And the test result for "Miss Florence Pearson" is "1"
-
