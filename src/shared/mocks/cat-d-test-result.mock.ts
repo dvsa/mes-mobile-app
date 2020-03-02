@@ -2,7 +2,7 @@ import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 
 export const categoryDTestResultMock : CatDUniqueTypes.TestResult = {
   version: '0.0.1',
-  category: 'C',
+  category: 'D',
   activityCode: '2',
   rekey: true,
   rekeyDate: '2019-08-05T09:00:00',
