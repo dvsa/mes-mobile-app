@@ -36,7 +36,7 @@ export const catAM2TestDataStateObject: TestData = {
       description: '',
       outcome: CompetencyOutcome.DF,
     }],
-    safetyComments: 'Fell over. A lot!',
+    safetyAndBalanceComments: 'Fell over. A lot!',
   },
   eyesightTest: {
     complete: true,
