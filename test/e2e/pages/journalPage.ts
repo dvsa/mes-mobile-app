@@ -1,7 +1,6 @@
 import Page from './page';
 import LandingPage from './landingPage';
 import DashboardPage from './dashboardPage';
-import { browser, by, element, ExpectedConditions } from 'protractor';
 
 class JournalPage extends Page {
   // todo: kc on LandingPage there is a method onLandingPageAs.
@@ -14,8 +13,9 @@ class JournalPage extends Page {
     DashboardPage.clickGoToMyJournalButton();
 
     // If the journal page is loaded we should have a refresh button
-    const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-    browser.wait(ExpectedConditions.presenceOf(refreshButton));
+    // const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
+    // browser.wait(ExpectedConditions.presenceOf(refreshButton));
+    this.waitForRefreshButton();
   }
 
   // todo: kc find a better name
@@ -72,12 +72,12 @@ class JournalPage extends Page {
       [text() = "${candidateName}"]]`);
   }
 
-  getRefreshButton() {
+  waitForRefreshButton() {
     return this.getElementByXPath('//button/span/span/span[text() = "Refresh"]');
   }
 
   clickRefreshButton() {
-    this.clickElement(this.getRefreshButton());
+    this.clickElement(this.waitForRefreshButton());
   }
 
   getRekeyStartTestButton() {
@@ -124,10 +124,14 @@ class JournalPage extends Page {
     this.clickElementById('closeCandidateDetails');
   }
 
-  startTestFor(candidateName) {
-    this.clickElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
+  getStartTestButtonFor(candidateName) {
+    return this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`);
+  }
+
+  startTestFor(candidateName) {
+    this.clickElementByXPath(this.getStartTestButtonFor(candidateName));
   }
 }
 

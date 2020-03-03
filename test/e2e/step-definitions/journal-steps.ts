@@ -15,7 +15,7 @@ Given('I am on the journal page as {string}', (username) => {
 
   // If the journal page is loaded we should have a refresh button
   // todo: kc should this be put in an isLoaded() method on the JournalPage?
-  const refreshButton = JournalPage.getRefreshButton();
+  const refreshButton = JournalPage.waitForRefreshButton();
   return expect(refreshButton.isPresent()).to.eventually.be.true;
 });
 
@@ -72,7 +72,7 @@ Then('I have a welsh slot for {string}', (candidateName) => {
 });
 
 When('I refresh the journal', () => {
-  JournalPage.clickRefreshButton();
+  return JournalPage.clickRefreshButton();
   // todo: kc do we need to return the result of this call as per the original line below?
   // return TempPage.clickElement(refreshButton);
 });
