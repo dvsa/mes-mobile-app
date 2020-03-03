@@ -1,6 +1,5 @@
 import { browser, ExpectedConditions, element, by, Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-import TempPage from './tempPage';
 
 export default class Page {
 /**
