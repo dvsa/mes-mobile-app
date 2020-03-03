@@ -15,7 +15,7 @@ export default class Page {
   };
 
   clickElementById(elementId){
-    this.clickElement(this.getElement(by.id(elementId)));
+    this.clickElement(this.getElementById(elementId));
   }
 
   clickElementByXPath(xpath){
@@ -25,6 +25,10 @@ export default class Page {
 
   getElementByXPath(xpath){
     return this.getElement(by.xpath(xpath));
+  }
+
+  getElementById(elementId){
+    return this.getElement(by.id(elementId));
   }
 
 /**
