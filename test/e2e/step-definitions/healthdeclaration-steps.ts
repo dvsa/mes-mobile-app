@@ -1,8 +1,5 @@
 import { When, Then, Before } from 'cucumber';
-import { enterPasscode } from './generic-steps';
-import { by } from 'protractor';
-import { getElement, clickElement } from '../../helpers/interactionHelpers';
-import TempPage from '../pages/tempPage';
+import HealthDeclarationPage from '../pages/healthDeclarationPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -32,32 +29,20 @@ Before({ tags: '@catce' }, () => {
 });
 
 Then('the pass certificate number should be {string}', (certificateNumber) => {
-  const passCertificateNumber = TempPage.getElement(by.id('declaration-pass-certificate-number'));
+  const passCertificateNumber = HealthDeclarationPage.getPassCertificateNumber();
   passCertificateNumber.getText().then((textValue) => {
     expect(textValue.trim().endsWith(`: ${certificateNumber}`)).to.be.true;
   });
 });
 
 When('I try to confirm the health declaration', () => {
-  confirmHealthDeclaration();
+  HealthDeclarationPage.confirmHealthDeclaration(this.testCategory);
 });
 
 When('I complete the health declaration', () => {
-  const healthDeclarationCheckbox = TempPage.getElement(by.id('health-declaration-checkbox'));
-  TempPage.clickElement(healthDeclarationCheckbox);
-  const receiptDeclarationCheckbox = TempPage.getElement(by.id('receipt-declaration-checkbox'));
-  TempPage.clickElement(receiptDeclarationCheckbox);
-  const healthSignatureField = TempPage.getElement(by.xpath(
-    `//div[contains(@class, "health-declaration-cat-${this.testCategory}-page")]//signature-pad/canvas`));
-    TempPage.clickElement(healthSignatureField);
-
-  // Examiner clicks continue button then enters passcode - Note button has same id as another on page
-  confirmHealthDeclaration();
-  enterPasscode();
+  HealthDeclarationPage.clickHealthDeclarationCheckbox();
+  HealthDeclarationPage.clickReceiptDeclarationCheckbox();
+  HealthDeclarationPage.clickHealthSignatureField(this.testCategory);
+  HealthDeclarationPage.confirmHealthDeclaration(this.testCategory);
+  HealthDeclarationPage.enterPasscode();
 });
-
-const confirmHealthDeclaration = () => {
-  const buttonElement = TempPage.getElement(by.xpath(
-    `//div[contains(@class, "health-declaration-cat-${this.testCategory}-page")]//button[@id="continue-button"]`));
-    TempPage.clickElement(buttonElement);
-};
