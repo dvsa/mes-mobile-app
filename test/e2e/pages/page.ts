@@ -76,6 +76,18 @@ export default class Page {
     return this.getElementByXPath(`//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
   }
 
+  // todo: kc only used in healthdeclaration-steps.ts and waitingroom-steps.ts, so could potentially be moved elsewhere.
+  getPassCodeField() {
+    return this.getElementByXPath('//XCUIElementTypeSecureTextField[@label="Passcode field"]');
+  }
+
+  /**
+   * Send the fake passcode using native browser actions
+   */
+  sendFakePasscode() {
+    browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
+  }
+
   /**
    * Enters a generic password into the iOS passcode field.
    * Note: This will not work on the physical device but the simulator will accept any code.
@@ -87,11 +99,8 @@ export default class Page {
       // Switch to NATIVE context
       browser.driver.selectContext('NATIVE_APP').then(() => {
         // Get the passcode field
-        const passcodeField = element(by.xpath('//XCUIElementTypeSecureTextField[@label="Passcode field"]'));
-        browser.wait(ExpectedConditions.presenceOf(passcodeField));
-
-        // Send the fake passcode using native browser actions
-        browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
+        this.getPassCodeField();
+        this.sendFakePasscode();
 
         // Switch back to WEBVIEW context
         browser.driver.selectContext(this.getParentContext(webviewContext)).then(() => {
