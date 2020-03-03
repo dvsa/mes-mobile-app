@@ -1,6 +1,6 @@
 import { When, Then } from 'cucumber';
 import { by } from 'protractor';
-import {  scrollToElement } from '../../helpers/helpers';
+import { scrollToElement } from '../../helpers/helpers';
 import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
