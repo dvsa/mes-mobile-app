@@ -58,6 +58,7 @@ export enum fullCompetencyLabels {
   controlsRearBrake = 'Rear brake',
   positioningNormalRiding  = 'Normal riding',
   bends = 'Bends',
+  controlsBalanceSlowControl = 'Balance / Slow control',
 }
 
 export enum competencyLabels  {
