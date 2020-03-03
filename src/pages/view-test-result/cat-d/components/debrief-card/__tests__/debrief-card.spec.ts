@@ -93,6 +93,8 @@ describe('DebriefCardComponent', () => {
         expect(result.length).toEqual(7);
         expect(result).toContain({ label: TestRequirementsLabels.normalStart1, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.normalStart2, checked: false });
+        expect(result).toContain({ label: TestRequirementsLabels.busStop1, checked: true });
+        expect(result).toContain({ label: TestRequirementsLabels.busStop2, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.uphillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
@@ -119,6 +121,8 @@ describe('DebriefCardComponent', () => {
         expect(result.length).toEqual(8);
         expect(result).toContain({ label: TestRequirementsLabels.normalStart1, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.normalStart2, checked: false });
+        expect(result).toContain({ label: TestRequirementsLabels.busStop1, checked: true });
+        expect(result).toContain({ label: TestRequirementsLabels.busStop2, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.uphillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
@@ -143,6 +147,8 @@ describe('DebriefCardComponent', () => {
         expect(result.length).toEqual(7);
         expect(result).toContain({ label: TestRequirementsLabels.normalStart1, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.normalStart2, checked: false });
+        expect(result).toContain({ label: TestRequirementsLabels.busStop1, checked: true });
+        expect(result).toContain({ label: TestRequirementsLabels.busStop2, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.uphillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
@@ -166,6 +172,8 @@ describe('DebriefCardComponent', () => {
         expect(result.length).toEqual(8);
         expect(result).toContain({ label: TestRequirementsLabels.normalStart1, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.normalStart2, checked: false });
+        expect(result).toContain({ label: TestRequirementsLabels.busStop1, checked: true });
+        expect(result).toContain({ label: TestRequirementsLabels.busStop2, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.uphillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
