@@ -1,5 +1,5 @@
 import { Before } from 'cucumber';
-import { browser, ExpectedConditions, element, by , Key } from 'protractor';
+import { browser, ExpectedConditions, element, by } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
 import { waitForOverlay } from '../../helpers/helpers';
 import LoginPage from '../pages/loginPage';
@@ -217,7 +217,7 @@ When('I terminate the test', () => {
   const terminateTestButton = TempPage.getElementByXPath('//button/span[text() = "Terminate test"]');
   TempPage.clickElement(terminateTestButton);
 
-  enterPasscode();
+  TempPage.enterPasscode();
 });
 
 When('I exit practice mode', () => {
@@ -225,13 +225,13 @@ When('I exit practice mode', () => {
   TempPage.clickElement(lastExitPracticeButton);
 });
 
-Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be \"(.+)\"$/, (
+Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be "(.+)"$/, (
   pageName: string, candidateName: string) => {
   const candidateNameElement = TempPage.getElementByXPath(`//div[contains(@class, '${getPageType(pageName)}')]//h2[@id = 'candidate-name']`);
   return expect(candidateNameElement.getText()).to.eventually.equal(candidateName);
 });
 
-Then(/^the (communication page|waiting room|debrief|health declaration) candidate driver number should be \"(.+)\"$/, (
+Then(/^the (communication page|waiting room|debrief|health declaration) candidate driver number should be "(.+)"$/, (
   pageName: string, driverNumber: string) => {
   const candidateDriverNumberElement = TempPage.getElementByXPath(`//div[contains(@class, '${getPageType(pageName)}')]//h3[@id = 'candidate-driver-number']`);
   return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
@@ -294,30 +294,6 @@ export const loggedInAs = (staffNumber) => {
 export const loadApplication = () => {
   const promise = browser.get('ionic://localhost');
   return TempPage.isReady(promise);
-};
-
-/**
- * Enters a generic password into the iOS passcode field.
- * Note: This will not work on the physical device but the simulator will accept any code.
- */
-export const enterPasscode = () => {
-  // To be able to fill in the passcode we need to switch to NATIVE context then switch back to WEBVIEW after
-  browser.driver.getCurrentContext().then((webviewContext) => {
-    // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP').then(() => {
-      // Get the passcode field
-      const passcodeField = element(by.xpath('//XCUIElementTypeSecureTextField[@label="Passcode field"]'));
-      browser.wait(ExpectedConditions.presenceOf(passcodeField));
-
-      // Send the fake passcode using native browser actions
-      browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
-
-      // Switch back to WEBVIEW context
-      browser.driver.selectContext(TempPage.getParentContext(webviewContext)).then(() => {
-        browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
-      });
-    });
-  });
 };
 
 /**
