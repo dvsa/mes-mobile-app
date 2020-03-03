@@ -1,5 +1,6 @@
-import { browser, ExpectedConditions, element, by } from 'protractor';
+import { browser, ExpectedConditions, element, by, Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
+import TempPage from './tempPage';
 
 export default class Page {
 /**
@@ -42,11 +43,10 @@ export default class Page {
   }
 
   /**
- * Checks whether the page is ready to be interacted with.
- * Ionic adds an overlay preventing clicking until the page is ready so we need to wait for that to disappear.
- * @param promise the promise to return when the page is ready
- */
-// todo: check what type promise is
+  * Checks whether the page is ready to be interacted with.
+  * Ionic adds an overlay preventing clicking until the page is ready so we need to wait for that to disappear.
+  * @param promise the promise to return when the page is ready
+  */
   isReady(promise) {
     // There is a 200ms transition duration we have to account for
     browser.sleep(TEST_CONFIG.ACTION_WAIT);
@@ -76,5 +76,30 @@ export default class Page {
 
   getPageTitle(pageTitle) {
     return this.getElementByXPath(`//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
+  }
+
+  /**
+   * Enters a generic password into the iOS passcode field.
+   * Note: This will not work on the physical device but the simulator will accept any code.
+   */
+  // todo: kc only used in healthdeclaration-steps.ts and waitingroom-steps.ts, so could potentially be moved elsewhere.
+  enterPasscode() {
+    // To be able to fill in the passcode we need to switch to NATIVE context then switch back to WEBVIEW after
+    browser.driver.getCurrentContext().then((webviewContext) => {
+      // Switch to NATIVE context
+      browser.driver.selectContext('NATIVE_APP').then(() => {
+        // Get the passcode field
+        const passcodeField = element(by.xpath('//XCUIElementTypeSecureTextField[@label="Passcode field"]'));
+        browser.wait(ExpectedConditions.presenceOf(passcodeField));
+
+        // Send the fake passcode using native browser actions
+        browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
+
+        // Switch back to WEBVIEW context
+        browser.driver.selectContext(TempPage.getParentContext(webviewContext)).then(() => {
+          browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+        });
+      });
+    });
   }
 }
