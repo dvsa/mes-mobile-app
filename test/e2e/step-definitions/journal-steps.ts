@@ -52,7 +52,6 @@ When('I start the test for {string}', (candidateName) => {
 });
 
 When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidateName: string) => {
-  console.log('testTime', testTime);
   if (testTime === 'late') {
     startingExpiredTest(candidateName);
 
