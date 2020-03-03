@@ -218,6 +218,7 @@ describe('WaitingRoomCatBEPage', () => {
     });
 
     describe('isJournalDataInvalid', () => {
+      // TODO - ADI Part 2: use correct schema
       const journalData: CatBEUniqueTypes.JournalData = {
         examiner: {
           staffNumber: 'real-staff-number',
@@ -240,6 +241,7 @@ describe('WaitingRoomCatBEPage', () => {
             firstName: 'fname',
             lastName: 'lname',
           },
+        // TODO - ADI Part 2: use correct schema
         } as CatBEUniqueTypes.Candidate,
         applicationReference: {
           applicationId: 11223344141414,
@@ -264,6 +266,7 @@ describe('WaitingRoomCatBEPage', () => {
           candidate: {
             candidateName: {},
             driverNumber: '',
+          // TODO - ADI Part 2: use correct schema
           } as CatBEUniqueTypes.Candidate,
         });
         expect(result).toBeTruthy;
