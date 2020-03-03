@@ -10,7 +10,7 @@ import { getCompetencyFaults, getCompetencyComment } from '../../../shared/helpe
 import {
   manoeuvreCompetencyLabelsCatD,
   manoeuvreTypeLabelsCatD,
-} from '../../../shared/constants/competencies/CatD-manoeuvres';
+} from '../../../shared/constants/competencies/catd-manoeuvres';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
