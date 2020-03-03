@@ -11,6 +11,7 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 describe('TestReportValidator', () => {
   const categories = [
+    { category: TestCategory.EUAM2, validTest: mocks.validTestCatAMod2, legalReqs: mocks.legalRequirementsAMod2 },
     { category: TestCategory.B, validTest: mocks.validTestCatB, legalReqs: mocks.legalRequirementsB },
     { category: TestCategory.BE, validTest: mocks.validTestCatBE, legalReqs: mocks.legalRequirementsBE },
     { category: TestCategory.C, validTest: mocks.validTestCatC, legalReqs: mocks.legalRequirementsCatCAndC1 },
@@ -55,7 +56,7 @@ describe('TestReportValidator', () => {
     categories.forEach((cat) => {
       it(`should return an empty array if the legal requirements are met for a Cat ${cat.category} test`, () => {
         const result = testReportValidatorProvider.getMissingLegalRequirements(cat.validTest, cat.category);
-        expect(result.length).toEqual(0);
+        expect(result).toEqual([]);
       });
       it(`should return any missing legal requirements for a Cat ${cat.category} test`, () => {
         const result = testReportValidatorProvider.getMissingLegalRequirements({}, cat.category);

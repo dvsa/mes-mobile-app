@@ -15,6 +15,8 @@ import {
   hasManoeuvreBeenCompletedCatB,
   hasVehicleChecksBeenCompletedCatB,
 } from '../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+import { haveSafetyAndBalanceQuestionsBeenCompleted }
+  from '../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
 import { hasManoeuvreBeenCompletedCatBE } from '../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { hasManoeuvreBeenCompletedCatC } from '../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import { legalRequirementsLabels } from '../../shared/constants/legal-requirements/legal-requirements.constants';
@@ -423,17 +425,16 @@ export class TestReportValidatorProvider {
     );
   }
 
-  private validateLegalRequirementsCatEUAM2(data: CatD1EUniqueTypes.TestData): boolean {
+  private validateLegalRequirementsCatEUAM2(data: CatAMod2TestData): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
     const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
-    const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
-    const angledStartControlledStop: boolean = get(data, 'testRequirements.angledStartControlledStop', false);
-    return (
-      normalStart1 &&
-      normalStart2 &&
-      uphillStart &&
-      angledStartControlledStop
-    );
+    const angledStart: boolean = get(data, 'testRequirements.angledStart', false);
+    const hillStart: boolean = get(data, 'testRequirements.hillStart', false);
+    const safteyAndBalanceQuestions: boolean =
+      haveSafetyAndBalanceQuestionsBeenCompleted(data.safetyAndBalanceQuestions);
+    const eco: boolean = get(data, 'eco.completed', false);
+
+    return normalStart1 && normalStart2 && angledStart && hillStart && safteyAndBalanceQuestions && eco;
   }
 
   private getMissingLegalRequirementsCatD1E(data: CatD1EUniqueTypes.TestData): legalRequirementsLabels[] {
@@ -460,16 +461,14 @@ export class TestReportValidatorProvider {
   private getMissingLegalRequirementsCatEUAM2(data: CatAMod2TestData): legalRequirementsLabels[] {
     const result: legalRequirementsLabels[] = [];
 
-    !get(data, 'testRequirements.normalStart1', false)
-    && result.push(legalRequirementsLabels.normalStart1);
-    !get(data, 'testRequirements.normalStart2', false)
-    && result.push(legalRequirementsLabels.normalStart2);
-    !get(data, 'testRequirements.uphillStart', false)
-    && result.push(legalRequirementsLabels.uphillStart);
-    !get(data, 'testRequirements.angledStartControlledStop', false)
-    && result.push(legalRequirementsLabels.angledStartControlledStop);
-    !get(data, 'eco.completed', false)
-    && result.push(legalRequirementsLabels.eco);
+    !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
+    !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);
+    !get(data, 'testRequirements.angledStart', false) && result.push(legalRequirementsLabels.angledStart);
+    !get(data, 'testRequirements.hillStart', false) && result.push(legalRequirementsLabels.hillStart);
+    !haveSafetyAndBalanceQuestionsBeenCompleted(data.safetyAndBalanceQuestions)
+      && result.push(legalRequirementsLabels.safetyAndBalanceQuestions);
+    !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
+
     return result;
   }
 }

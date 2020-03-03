@@ -12,6 +12,7 @@ export enum legalRequirementsLabels {
   uncoupleRecouple = 'Uncouple / Recouple',
   busStop1 = 'BS (bus stop)',
   busStop2 = 'BS (bus stop)',
+  safetyAndBalanceQuestions = 'Safety and Balance',
 }
 
 export enum legalRequirementToggleValues {

@@ -5,7 +5,6 @@ import { TestData, SafetyAndBalanceQuestions, QuestionResult } from '@dvsa/mes-t
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 
 export class FaultCountAM2Helper {
-
   public static getSafetyAndBalanceFaultCountCatAM2 = (
     safetyAndBalanceQuestions: SafetyAndBalanceQuestions,
     ): SafetyQuestionsScore => {
@@ -62,11 +61,6 @@ export class FaultCountAM2Helper {
 
     const { dangerousFaults } = data;
 
-    const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
-
-    const result =
-      dangerousFaultSumOfSimpleCompetencies;
-
-    return result;
+    return Object.keys(pickBy(dangerousFaults)).length;
   }
 }

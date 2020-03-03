@@ -319,7 +319,13 @@
       "emergencyStop": "CY - Emergency Stop",
       "avoidance": "CY - Avoidance ex. control stop",
       "speedCheckEmergency": "CY - Emergency stop - Speed requirement not met",
-      "speedCheckAvoidance": "CY - Avoidance ex. control stop - Speed requirement not met"
+      "speedCheckAvoidance": "CY - Avoidance ex. control stop - Speed requirement not met",
+      "controlsFrontBrake": "[CY] Controls - Front brake",
+      "controlsRearBrake": "[CY] Controls - Rear brake",
+      "controlsThrottle": "[CY] Controls - Throttle",
+      "controlsBalanceSlowControl": "[CY] Controls - Balance / Slow control",
+      "positioningNormalRiding": "[CY] Positioning - Normal riding",
+      "bends": "[CY] Bends"
     },
     "dangerousFault": "Nam peryglus",
     "dangerousFaultsCardDescription": "Namau peryglus",

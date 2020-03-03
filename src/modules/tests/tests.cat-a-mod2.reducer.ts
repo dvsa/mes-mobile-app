@@ -1,4 +1,3 @@
-
 import { Action, combineReducers } from '@ngrx/store';
 import { TestResultCatAM2Schema } from '@dvsa/mes-test-schema/categories/AM2';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
