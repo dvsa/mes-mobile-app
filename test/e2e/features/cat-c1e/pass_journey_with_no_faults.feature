@@ -1,5 +1,5 @@
-@catc1e
-Feature: Full end to end journey for C1E
+@catc1e @regression
+Feature: A Driving Examiner Completes a Passed User Journey in Category C1E
 
   Scenario: Examiner completes a passed test with no faults
     Given I am logged in as "mobexaminer5" and I have a test for "Mr Denny Carlson"
