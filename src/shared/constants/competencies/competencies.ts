@@ -53,6 +53,11 @@ export enum fullCompetencyLabels {
   avoidance = 'Avoidance ex. C/Stop',
   speedCheckEmergency= 'Emergency stop - Speed requirement not met',
   speedCheckAvoidance= 'Avoidance ex. control stop - Speed requirement not met',
+  controlsThrottle = 'Throttle',
+  controlsFrontBrake = 'Front brake',
+  controlsRearBrake = 'Rear brake',
+  positioningNormalRiding  = 'Normal riding',
+  bends = 'Bends',
 }
 
 export enum competencyLabels  {
