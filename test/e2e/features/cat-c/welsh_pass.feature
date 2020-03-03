@@ -1,5 +1,5 @@
 @catc @regression
-Feature: A Driving Examiner Completes a Passed User Journey for Caetegory C in Welsh
+Feature: A Driving Examiner Completes a Passed User Journey for Category C in Welsh
 
     Scenario: Examiner completes a passed welsh test with no faults
         Given I am logged in as "desexaminerw" and I have a test for "Miss Luella Lowery"
