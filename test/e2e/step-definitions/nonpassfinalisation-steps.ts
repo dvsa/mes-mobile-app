@@ -69,7 +69,7 @@ Then('the transmission is selected', () => {
 const clickContinue = () => {
   const continueToBackToOfficeButton = TempPage.getElement(by.xpath(
     `//div[contains(@class, "non-pass-finalisation-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
-    TempPage.clickElement(continueToBackToOfficeButton);
+  TempPage.clickElement(continueToBackToOfficeButton);
 };
 
 const selectTransmission = (transmission: boolean) => {

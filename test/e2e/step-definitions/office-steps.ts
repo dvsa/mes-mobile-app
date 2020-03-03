@@ -31,7 +31,8 @@ Before({ tags: '@catc1e' }, () => {
 
 When('I complete the office write up', () => {
   enterRouteNumber('2');
-  if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'ce') {
+  if (this.testCategory === 'be' || this.testCategory === 'c' ||
+    this.testCategory === 'c1' || this.testCategory === 'ce') {
     enterIndependentDriving('diagram');
   } else {
     enterIndependentDriving('satnav');
@@ -134,7 +135,7 @@ const uploadTest = () => {
 const completeRekey = () => {
   const continueButton = TempPage.getElement(
     by.xpath(`//div[contains(@class, "office-cat-${this.testCategory}-page")]//button//h3[text()="Continue"]`));
-    TempPage.clickElement(continueButton);
+  TempPage.clickElement(continueButton);
 
   const iPadIssueCheckbox = TempPage.getElement(by.id('ipadIssueSelected'));
   TempPage.clickElement(iPadIssueCheckbox);

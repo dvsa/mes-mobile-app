@@ -216,8 +216,8 @@ Then('the driver fault count is {string}', (driverFaultCount) => {
 });
 
 Then('a serious fault is present along the driver fault count of {string}', (driverFaultCount) => {
-  // tslint:disable-next-line:max-line-length
-  expect(TempPage.getElement(by.xpath('//vehicle-checks//serious-fault-badge//span')).isPresent()).to.eventually.be.true;
+  expect(TempPage.getElement(by.xpath(
+    '//vehicle-checks//serious-fault-badge//span')).isPresent()).to.eventually.be.true;
   const summaryCountField = TempPage.getElement(by.id('summary-count'));
   return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
 });
@@ -240,10 +240,9 @@ Then('the legal requirements pop up is present', () => {
   expect(legalRequirementPopUp.isPresent()).to.eventually.be.true;
 });
 
-// tslint:disable-next-line:variable-name
-When('the required test observation is present {string}', (legal_requirement: string) => {
-  // tslint:disable-next-line:max-line-length
-  expect(TempPage.getElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legal_requirement}']`)).isPresent()).to.eventually.be.true;
+When('the required test observation is present {string}', (legalRequirement: string) => {
+  expect(TempPage.getElement(by.xpath(
+    `//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`)).isPresent()).to.eventually.be.true;
 });
 
 Then('I return to the test report page', () =>   {
@@ -280,14 +279,14 @@ const completeEco = () => {
 };
 
 const completeShowMe = () => {
-  // tslint:disable-next-line:max-line-length
-  const showMeCheckmark = TempPage.getElement(by.xpath('//competency-button[contains(@class, "show-me-question-tick")]'));
+  const showMeCheckmark = TempPage.getElement(by.xpath(
+    '//competency-button[contains(@class, "show-me-question-tick")]'));
   longPressButton(showMeCheckmark);
 };
 
 const completeControlledStop = () => {
-  // tslint:disable-next-line:max-line-length
-  const controlledStopCheckmark = TempPage.getElement(by.xpath('//competency-button[contains(@class, "controlled-stop-tick")]'));
+  const controlledStopCheckmark = TempPage.getElement(by.xpath(
+    '//competency-button[contains(@class, "controlled-stop-tick")]'));
   longPressButton(controlledStopCheckmark);
 };
 
@@ -314,7 +313,8 @@ const longPressCompetency = (competency: string) => {
 };
 
 const clickManoeuvresButton = () => {
-  const manoeuvresButton = TempPage.getElement(by.xpath('//manoeuvres/button'));
+  const manoeuvresButton = TempPage.getElement(
+    by.xpath('//manoeuvres/button'));
   TempPage.clickElement(manoeuvresButton);
 };
 
@@ -387,9 +387,12 @@ const clickCompetency = (competency) => {
 };
 
 const completeManouveure = () => {
-  if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1') {
-    // tslint:disable-next-line:max-line-length
-    const manoeuvresButton = TempPage.getElement(by.xpath('//competency-button[contains(@class, "reverse-left-tick")]'));
+  if (this.testCategory === 'be' ||
+    this.testCategory === 'c' ||
+    this.testCategory === 'c1' ||
+    this.testCategory === 'ce') {
+    const manoeuvresButton = TempPage.getElement(by.xpath(
+      '//competency-button[contains(@class, "reverse-left-tick")]'));
     longPressButton(manoeuvresButton);
   } else {
     const manoeuvresButton = TempPage.getElement(by.xpath('//manoeuvres/button'));
@@ -401,7 +404,7 @@ const completeManouveure = () => {
 };
 
 const completeUncoupleRecouple = () => {
-  // tslint:disable-next-line:max-line-length
-  const uncoupleRecouple = TempPage.getElement(by.xpath('//competency-button[contains(@class, "uncouple-recouple-tick")]'));
+  const uncoupleRecouple = TempPage.getElement(by.xpath(
+    '//competency-button[contains(@class, "uncouple-recouple-tick")]'));
   longPressButton(uncoupleRecouple);
 };
