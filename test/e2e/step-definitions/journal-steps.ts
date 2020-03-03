@@ -52,6 +52,18 @@ When('I start the test for {string}', (candidateName) => {
 });
 
 When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidateName: string) => {
+  if (testTime === 'early') {
+    startingEarlyTest(candidateName);
+
+    // If the start test early dialog is shown just select continue
+    const startTestEarlyButton = element(by.id('early-start-start-test-button'));
+    startTestEarlyButton.isPresent().then((result) => {
+      if (result) {
+        clickElement(startTestEarlyButton);
+      }
+    });
+  }
+
   if (testTime === 'late') {
     startingExpiredTest(candidateName);
 
@@ -163,6 +175,18 @@ const viewCandidateDetails = (candidateName) => {
 const closeCandidateDetailsDialog = () => {
   const closeCandidateDetailDialog = element(by.id('closeCandidateDetails'));
   clickElement(closeCandidateDetailDialog);
+};
+
+const startingEarlyTest = (candidateName) => {
+  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
+    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    h3[text() = "${candidateName}"]]`));
+  clickElement(buttonElement);
+
+  console.log('Dialog Seen');
+  const testEarlyDialog = getElement(by.xpath(`/html/body/ion-app/ion-modal/div/journal-early-start-modal/ion-card/
+  modal-alert-title/ion-row[2]/ion-col/h2`));
+  return expect(testEarlyDialog.isPresent()).to.eventually.be.true;
 };
 
 const startingExpiredTest = (candidateName) => {
