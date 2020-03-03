@@ -7,7 +7,6 @@ import { preTestDeclarationsCatAMod2Reducer }
   from './pre-test-declarations/cat-a-mod2/pre-test-declarations.cat-a-mod2.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
-import { testSummaryReducer } from './test-summary/common/test-summary.reducer';
 import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';
 import { rekeyReducer } from './rekey/rekey.reducer';
 import { rekeyDateReducer } from './rekey-date/rekey-date.reducer';
@@ -21,6 +20,7 @@ import { journalDataCatAMod2Reducer } from './journal-data/cat-a-mod2/journal-da
 import { testDataCatAMod2Reducer } from './test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
 import { vehicleDetailsCatAMod2Reducer } from './vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
+import { testSummaryMod2Reducer } from './test-summary/cat-a-mod2/test-summary.cat-a-mod2.reducer';
 
 export function testsCatAMod2Reducer(
   action: Action, state: TestResultCatAM2Schema): Required<TestResultCatAM2Schema> {
@@ -36,7 +36,7 @@ export function testsCatAMod2Reducer(
       testData: testDataCatAMod2Reducer,
       passCompletion: passCompletionReducer,
       postTestDeclarations: postTestDeclarationsReducer,
-      testSummary: testSummaryReducer,
+      testSummary: testSummaryMod2Reducer,
       communicationPreferences: communicationPreferencesReducer,
       rekey: rekeyReducer,
       rekeyDate: rekeyDateReducer,

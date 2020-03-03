@@ -38,7 +38,10 @@ import {
   getIdentification,
   getIndependentDriving,
 } from '../../../modules/tests/test-summary/common/test-summary.selector';
-import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
+import {
+  getModeOfTransport,
+} from '../../../modules/tests/test-summary/cat-a-mod2/test-summary.cat-a-mod2.selector';
+import { getTestSummary } from '../../../modules/tests/test-summary/cat-a-mod2/test-summary.cat-a-mod2.reducer';
 import { map, withLatestFrom } from 'rxjs/operators';
 import {
   RouteNumberChanged,
@@ -48,6 +51,9 @@ import {
   WeatherConditionsChanged,
   AdditionalInformationChanged,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
+import {
+  ModeOfTransportChanged,
+} from '../../../modules/tests/test-summary/cat-a-mod2/test-summary.cat-a-mod2.actions';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName,
@@ -95,7 +101,7 @@ import { CAT_A_MOD2, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
-import { TestData } from '@dvsa/mes-test-schema/categories/AM2';
+import { TestData, ModeOfTransport } from '@dvsa/mes-test-schema/categories/AM2';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import {
   safetyAndBalanceQuestionsExist,
@@ -116,6 +122,7 @@ interface OfficePageState {
   routeNumber$: Observable<number>;
   displayRouteNumber$: Observable<boolean>;
   displayIndependentDriving$: Observable<boolean>;
+  displayModeOfTransport$: Observable<boolean>;
   displayCandidateDescription$: Observable<boolean>;
   displayIdentification$: Observable<boolean>;
   displaySafetyAndBalance$: Observable<boolean>;
@@ -128,6 +135,7 @@ interface OfficePageState {
   displayDangerousFault$: Observable<boolean>;
   identification$: Observable<Identification>;
   independentDriving$: Observable<IndependentDriving>;
+  modeOfTransport$: Observable<ModeOfTransport>;
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
   etaFaults$: Observable<string>;
@@ -250,6 +258,14 @@ export class OfficeCatAMod2Page extends BasePageComponent {
         map(([outcome, independent]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'independentDriving', independent)),
       ),
+      displayModeOfTransport$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getModeOfTransport))),
+        map(([outcome, modeOfTransport]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'modeOfTransport', modeOfTransport)),
+      ),
       displayCandidateDescription$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
@@ -360,6 +376,10 @@ export class OfficeCatAMod2Page extends BasePageComponent {
         select(getTestSummary),
         select(getIndependentDriving),
       ),
+      modeOfTransport$: currentTest$.pipe(
+        select(getTestSummary),
+        select(getModeOfTransport),
+      ),
       identification$: currentTest$.pipe(
         select(getTestSummary),
         select(getIdentification),
@@ -448,6 +468,10 @@ export class OfficeCatAMod2Page extends BasePageComponent {
 
   independentDrivingChanged(independentDriving: IndependentDriving): void {
     this.store$.dispatch(new IndependentDrivingTypeChanged(independentDriving));
+  }
+
+  modeOfTransportChanged(modeOfTransport: ModeOfTransport): void {
+    this.store$.dispatch(new ModeOfTransportChanged(modeOfTransport));
   }
 
   weatherConditionsChanged(weatherConditions: WeatherConditions[]): void {
