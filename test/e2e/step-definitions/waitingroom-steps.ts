@@ -1,5 +1,4 @@
 import { Then, When, Before } from 'cucumber';
-import { enterPasscode } from './generic-steps';
 import { by } from 'protractor';
 import TempPage from '../pages/tempPage';
 
@@ -46,18 +45,14 @@ When('the candidate requests to receive results by post', () => {
 When(/^the candidate confirms their (communication preference|declaration)$/, (pageName) => {
   const pageType = (pageName === 'communication preference' ? `communication-cat-${this.testCategory}-page`
   : `waiting-room-cat-${this.testCategory}-page`);
-  const continueButton = TempPage.getElement(
-    by.xpath(`//div[contains(@class, '${pageType}')]//button[@id = 'continue-button']`));
-    TempPage.clickElement(continueButton);
+  TempPage.clickElementByXPath(
+    `//div[contains(@class, '${pageType}')]//button[@id = 'continue-button']`);
 });
 
 When('the candidate completes the declaration page', () => {
-  const declarationCheckbox = TempPage.getElement(by.id('insurance-declaration-checkbox'));
-  TempPage.clickElement(declarationCheckbox);
-  const residencyCheckbox = TempPage.getElement(by.id('residency-declaration-checkbox'));
-  TempPage.clickElement(residencyCheckbox);
-  const signatureField = TempPage.getElement(by.xpath('//signature-pad/canvas'));
-  TempPage.clickElement(signatureField);
+  TempPage.clickElementById('insurance-declaration-checkbox');
+  TempPage.clickElementById('residency-declaration-checkbox');
+  TempPage.clickElementByXPath('//signature-pad/canvas');
 });
 
 When('I proceed to the car', () => {
@@ -65,7 +60,7 @@ When('I proceed to the car', () => {
   const continueButton = TempPage.getElement(by.xpath(
     `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
   TempPage.clickElement(continueButton);
-  enterPasscode();
+  TempPage.enterPasscode();
 });
 
 Then('the email {string} has been provided and is preselected', (emailAddress) => {
