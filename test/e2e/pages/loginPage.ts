@@ -23,7 +23,8 @@ class LoginPage extends Page {
       // Switch to NATIVE context
       browser.driver.selectContext('NATIVE_APP').then(() => {
         // Fill in username and click Next
-        const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+        const usernameFld = element(by.xpath(
+          '//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
         browser.wait(ExpectedConditions.presenceOf(usernameFld));
         usernameFld.sendKeys(username);
         const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));

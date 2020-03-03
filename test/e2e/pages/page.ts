@@ -109,4 +109,22 @@ export default class Page {
       });
     });
   }
+
+  getStaffNumberField(staffNumber) {
+    return this.getElementByXPath(`//span[@class="employee-id" and text()="${staffNumber}"]`);
+  }
+
+  /**
+   * Checks whether the user is logged in.
+   * @param staffNumber the staff number of the user we wish to be logged in
+   */
+  loggedInAs(staffNumber) {
+    browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app')))); // same code used by logout()
+    const staffNumberField = this.getStaffNumberField(staffNumber);
+    return staffNumberField.isPresent();
+  }
+
+  elementIsLoaded(element) {
+    browser.wait(ExpectedConditions.presenceOf(element));
+  }
 }
