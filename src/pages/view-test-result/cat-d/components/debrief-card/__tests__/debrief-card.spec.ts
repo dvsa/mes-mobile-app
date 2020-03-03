@@ -81,6 +81,8 @@ describe('DebriefCardComponent', () => {
             downhillStart: false,
             normalStart1: true,
             normalStart2: false,
+            busStop1: true,
+            busStop2: true,
           },
         };
         component.data = data;
@@ -102,6 +104,8 @@ describe('DebriefCardComponent', () => {
             downhillStart: false,
             normalStart1: true,
             normalStart2: false,
+            busStop1: true,
+            busStop2: true,
           },
           uncoupleRecouple: {
             selected: true,
@@ -127,6 +131,8 @@ describe('DebriefCardComponent', () => {
             downhillStart: false,
             normalStart1: true,
             normalStart2: false,
+            busStop1: true,
+            busStop2: true,
           },
         };
         component.data = data;
@@ -148,6 +154,8 @@ describe('DebriefCardComponent', () => {
             downhillStart: false,
             normalStart1: true,
             normalStart2: false,
+            busStop1: true,
+            busStop2: true,
           },
         };
         component.data = data;
