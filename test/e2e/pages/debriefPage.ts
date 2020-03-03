@@ -1,5 +1,4 @@
 import Page from './page'
-import { by } from 'protractor';
 
 class DebriefPage extends Page {
   clickEndDebriefButton(){
