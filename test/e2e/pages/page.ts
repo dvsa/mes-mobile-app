@@ -7,14 +7,14 @@ export default class Page {
  * @param fieldElement the element to click
  */
 // todo: check what type fieldElement is
- clickElement(fieldElement) {
+  clickElement(fieldElement) {
     browser.wait(ExpectedConditions.elementToBeClickable(fieldElement));
     fieldElement.click().then((promise) => {
       return this.isReady(promise);
     });
-  };
+  }
 
-  clickElementById(elementId){
+  clickElementById(elementId) {
     this.clickElement(this.getElementById(elementId));
   }
 
@@ -23,11 +23,11 @@ export default class Page {
     this.clickElement(this.getElementByXPath(xpath));
   }
 
-  getElementByXPath(xpath){
+  getElementByXPath(xpath) {
     return this.getElement(by.xpath(xpath));
   }
 
-  getElementById(elementId){
+  getElementById(elementId) {
     return this.getElement(by.id(elementId));
   }
 
@@ -47,34 +47,34 @@ getElement(elementBy) {
  * @param promise the promise to return when the page is ready
  */
 // todo: check what type promise is
- isReady(promise) {
+  isReady(promise) {
     // There is a 200ms transition duration we have to account for
     browser.sleep(TEST_CONFIG.ACTION_WAIT);
     // Then wait for the page to become active again
     browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
     // Then return the original promise
     return promise;
-  };
+  }
 
-getParentContext(currentContext: string) {
-  return `${currentContext.substring(0, currentContext.indexOf('.'))}.1`;
-};
+  getParentContext(currentContext: string) {
+    return `${currentContext.substring(0, currentContext.indexOf('.'))}.1`;
+  }
 
-textFieldInputViaNativeMode(xpathString: string, searchTerm) {
-  browser.driver.getCurrentContext().then((webviewContext) => {
+  textFieldInputViaNativeMode(xpathString: string, searchTerm) {
+    browser.driver.getCurrentContext().then((webviewContext) => {
     // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP').then(() => {
-      const nativeField = element(by.xpath(xpathString));
-      nativeField.sendKeys(searchTerm);
+      browser.driver.selectContext('NATIVE_APP').then(() => {
+        const nativeField = element(by.xpath(xpathString));
+        nativeField.sendKeys(searchTerm);
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(this.getParentContext(webviewContext)).then(() => {
-        browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+        browser.driver.selectContext(this.getParentContext(webviewContext)).then(() => {
+          browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+        });
       });
     });
-  });
-};
+  }
 
-getPageTitle(pageTitle){
-  return this.getElementByXPath(`//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
-}
+  getPageTitle(pageTitle) {
+    return this.getElementByXPath(`//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
+  }
 }
