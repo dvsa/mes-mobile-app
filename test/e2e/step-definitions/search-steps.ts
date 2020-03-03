@@ -1,7 +1,6 @@
 import { When, Then } from 'cucumber';
-import { getElement } from './generic-steps';
 import { by } from 'protractor';
-import { textFieldInputViaNativeMode, scrollToElement } from '../../helpers/helpers';
+import { scrollToElement } from '../../helpers/helpers';
 import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
@@ -10,52 +9,52 @@ chai.use(chaiAsPromised);
 const expect = chai.expect;
 
 When('I click search completed tests', () => {
-  const searchForCompletedTestsBtn = getElement(by.xpath('//page-dashboard//test-results-search-card//span'));
+  const searchForCompletedTestsBtn = TempPage.getElement(by.xpath('//page-dashboard//test-results-search-card//span'));
   TempPage.clickElement(searchForCompletedTestsBtn);
 });
 
 When('I search for a completed test with the application reference of {string}', (searchTerm) => {
-  textFieldInputViaNativeMode(
+  TempPage.textFieldInputViaNativeMode(
     '//XCUIElementTypeWindow//XCUIElementTypeTextField[@value="Enter an application reference"]', searchTerm);
-  const searchButton = getElement(by.xpath('//*[@id="tab-search-candidate-details"]//ion-row[3]/button/span'));
+  const searchButton = TempPage.getElement(by.xpath('//*[@id="tab-search-candidate-details"]//ion-row[3]/button/span'));
   TempPage.clickElement(searchButton);
 });
 
 When('the search result is clicked', () => {
-  const searchResult = getElement(by.xpath('//page-test-results-search//search-result/ion-card/ion-grid/ion-row[2]'));
+  const searchResult = TempPage.getElement(by.xpath('//page-test-results-search//search-result/ion-card/ion-grid/ion-row[2]'));
   TempPage.clickElement(searchResult);
 });
 
 Then('the test result outcome is {string}', (testOutcome) => {
-  const testOutcomeField = getElement(by.id('testOutcome'));
+  const testOutcomeField = TempPage.getElement(by.id('testOutcome'));
   expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
 
 Then('the test result has the following data present', (table) => {
   table.rows().forEach((row: string[]) => {
-    const dataRow = getElement(
+    const dataRow = TempPage.getElement(
       by.xpath(`//data-row/ion-row[ion-col/label[text() = '${row[0]}'] and ion-col/span[text() = '${row[1]}']]`));
     expect(dataRow.isPresent()).to.eventually.be.true;
   });
 });
 
 Then('the Debrief has the correct test information, {string}, {string}', (cat, categoryText) => {
-  const debriefSection = getElement(by.xpath('//debrief-card'));
+  const debriefSection = TempPage.getElement(by.xpath('//debrief-card'));
   scrollToElement(debriefSection);
-  const catTellMeQuestion = getElement(by.xpath(
+  const catTellMeQuestion = TempPage.getElement(by.xpath(
     `//debrief-card//data-row-custom[1]/ion-row/ion-col[2]/span/span[@class="mes-data bold" and text() = "${cat}"]`));
-  const textTellMeQuestion = getElement(by.xpath(
+  const textTellMeQuestion = TempPage.getElement(by.xpath(
     `//debrief-card//data-row-custom[1]/ion-row/ion-col[2]/span[@class="mes-data" and text() = "${categoryText}"]`));
   assertElementIsPresent([catTellMeQuestion, textTellMeQuestion]);
 });
 
 Then('I click the close button', () => {
-  const closeButton = getElement(by.xpath('//div[2]/ion-header/ion-navbar/ion-buttons/button'));
+  const closeButton = TempPage.getElement(by.xpath('//div[2]/ion-header/ion-navbar/ion-buttons/button'));
   TempPage.clickElement(closeButton);
 });
 
 Then('I click the back button on the search submitted test page', () => {
-  const backButton = getElement(by.xpath('//page-test-results-search/ion-header/ion-navbar/button'));
+  const backButton = TempPage.getElement(by.xpath('//page-test-results-search/ion-header/ion-navbar/button'));
   TempPage.clickElement(backButton);
 });
 

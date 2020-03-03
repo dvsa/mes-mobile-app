@@ -393,6 +393,6 @@ const clickBackButton = () => {
 };
 
 const clickGoToMyJournalButton = () => {
-  const goToJournalButton = TempPage.getElementByXPath(by.xpath('//go-to-journal-card/button'));
+  const goToJournalButton = TempPage.getElementByXPath('//go-to-journal-card/button');
   TempPage.clickElement(goToJournalButton);
 };
