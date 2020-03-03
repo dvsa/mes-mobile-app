@@ -318,7 +318,14 @@
       "speedCheckEmergency": "Emergency stop - Speed requirement not met",
       "speedCheckAvoidance": "Avoidance ex. control stop - Speed requirement not met",
       "safetyAndBalanceQuestions": "Safety and balance questions",
-      "pcvDoorExercise": "PCV Door Exercise"
+      "pcvDoorExercise": "PCV Door Exercise",
+      "controlsFrontBrake": "Controls - Front brake",
+      "controlsRearBrake": "Controls - Rear brake",
+      "controlsThrottle": "Controls - Throttle",
+      "controlsBalanceSlowControl": "Controls - Balance / Slow control",
+      "positioningNormalRiding": "Positioning - Normal riding",
+      "bends": "Bends"
+
     },
     "dangerousFault": "Dangerous fault",
     "dangerousFaultsCardDescription": "dangerous faults",

@@ -15,10 +15,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { StoreModel } from '../../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
-import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
-import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
-import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
@@ -237,41 +233,5 @@ export class TestReportCatAMod2Page extends BasePageComponent {
 
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_A_MOD2.DEBRIEF_PAGE));
-  }
-
-  passTest = (): void => {
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.clearance,
-      newFaultCount: 3,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.followingDistance,
-      newFaultCount: 1,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.useOfSpeed,
-      newFaultCount: 2,
-    }));
-    this.store$.dispatch(new SetActivityCode('1'));
-    this.navController.push(CAT_A_MOD2.DEBRIEF_PAGE);
-  }
-
-  failTest = (): void => {
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.pedestrianCrossings,
-      newFaultCount: 3,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.controlsClutch,
-      newFaultCount: 1,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.signalsCorrectly,
-      newFaultCount: 2,
-    }));
-    this.store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsChangeSpeed));
-    this.store$.dispatch(new AddSeriousFault(Competencies.useOfSpeed));
-    this.store$.dispatch(new AddDangerousFault(Competencies.responseToSignsTrafficLights));
-    this.navController.push(CAT_A_MOD2.DEBRIEF_PAGE);
   }
 }

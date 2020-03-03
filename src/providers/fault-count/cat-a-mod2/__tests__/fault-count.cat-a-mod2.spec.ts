@@ -2,10 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { configureTestSuite } from 'ng-bullet';
 import { FaultCountAM2Helper } from '../fault-count.cat-a-mod2';
 import {
-  safetyAndBalanceMock0Faults,
-  safetyAndBalanceMock2FaultsSafety,
-  safetyAndBalanceMock2FaultsSafetyAndBalance,
-  safetyAndBalanceMock3FaultsSafetyAndBalance,
+    catAM2TestDataStateObject,
+    safetyAndBalanceMock0Faults,
+    safetyAndBalanceMock2FaultsSafety,
+    safetyAndBalanceMock2FaultsSafetyAndBalance,
+    safetyAndBalanceMock3FaultsSafetyAndBalance,
 } from '../../__mocks__/cat-AM2-test-data-state-object';
 
 describe('FaultCountAM2Helper', () => {
@@ -39,5 +40,23 @@ describe('FaultCountAM2Helper', () => {
     const output =  { drivingFaults: 1 };
     const temp = FaultCountAM2Helper.getSafetyAndBalanceFaultCountCatAM2(safetyAndBalanceMock3FaultsSafetyAndBalance);
     expect(temp).toEqual(output);
+  });
+
+  describe('getDangerousFaultSumCountCatAM2', () => {
+    it('should return the dangerous faults count for cat AM2', () => {
+      expect(FaultCountAM2Helper.getDangerousFaultSumCountCatAM2(catAM2TestDataStateObject)).toBe(1);
+    });
+  });
+
+  describe('getSeriousFaultSumCountCatAM2', () => {
+    it('should return the serious faults count for cat AM2', () => {
+      expect(FaultCountAM2Helper.getSeriousFaultSumCountCatAM2(catAM2TestDataStateObject)).toBe(1);
+    });
+  });
+
+  describe('getRidingFaultSumCountCatAM2', () => {
+    it('should return the driving fault for cat AM2 count correctly', () => {
+      expect(FaultCountAM2Helper.getRidingFaultSumCountCatAM2(catAM2TestDataStateObject)).toBe(2);
+    });
   });
 });
