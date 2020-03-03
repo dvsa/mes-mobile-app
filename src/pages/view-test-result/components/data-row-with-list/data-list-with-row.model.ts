@@ -6,6 +6,8 @@ export type DataRowListItem = {
 export enum TestRequirementsLabels {
   normalStart1 = 'Normal start (NS)',
   normalStart2 = 'Normal start (NS)',
+  busStop1 = 'Bus Stop (BS)',
+  busStop2 = 'Bus Stop (BS)',
   angledStart = 'Angled start (AS)',
   hillStart = 'Hill start (HS) / Designated start (DS)',
   uphillStart = 'Uphill start (US)',

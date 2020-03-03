@@ -1,0 +1,29 @@
+<ion-card>
+  <ion-card-header>
+    <h4>Debrief</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <data-row-with-list [label]="'Test requirements'" [data]="getTestRequirements()"></data-row-with-list>
+      <data-row [label]="'Manoeuvre'" [value]="getManoeuvre()"></data-row>
+      <data-row-with-list [label]="'ECO'" [data]="getEco()"></data-row-with-list>
+      <faults-data-row
+        [label]="'Fault descriptions'"
+        [drivingFaults]="getDrivingFaults()"
+        [seriousFaults]="getSeriousFaults()"
+        [dangerousFaults]="getDangerousFaults()"
+        [drivingFaultCount]="getDrivingFaultCount()">
+    </faults-data-row>
+      <data-row [label]="'ETA'" [value]="getETA()"></data-row>
+      <vehicle-checks-data-row
+        [label]="'Tell me question(s)'"
+        [data]="getTellMeQuestions()">
+      </vehicle-checks-data-row>
+      <vehicle-checks-data-row
+        [label]="'Show me question(s)'"
+        [data]="getShowMeQuestions()"
+        [shouldHaveSeperator]="false">
+      </vehicle-checks-data-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
