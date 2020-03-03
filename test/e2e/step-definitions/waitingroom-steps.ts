@@ -1,5 +1,4 @@
 import { Then, When, Before } from 'cucumber';
-import { enterPasscode } from './generic-steps';
 import { by } from 'protractor';
 import { getElement, clickElement } from '../../helpers/interactionHelpers';
 import TempPage from '../pages/tempPage';
@@ -66,7 +65,7 @@ When('I proceed to the car', () => {
   const continueButton = TempPage.getElement(by.xpath(
     `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
   TempPage.clickElement(continueButton);
-  enterPasscode();
+  TempPage.enterPasscode();
 });
 
 Then('the email {string} has been provided and is preselected', (emailAddress) => {
