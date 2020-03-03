@@ -1,5 +1,5 @@
 import { Then, When, Before } from 'cucumber';
-import { browser, by, element, ExpectedConditions } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { waitForPresenceOfElement } from '../../helpers/helpers';
 import TempPage from '../pages/tempPage';
 
@@ -216,6 +216,7 @@ Then('the driver fault count is {string}', (driverFaultCount) => {
 });
 
 Then('a serious fault is present along the driver fault count of {string}', (driverFaultCount) => {
+  // tslint:disable-next-line:max-line-length
   expect(TempPage.getElement(by.xpath('//vehicle-checks//serious-fault-badge//span')).isPresent()).to.eventually.be.true;
   const summaryCountField = TempPage.getElement(by.id('summary-count'));
   return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
@@ -239,7 +240,9 @@ Then('the legal requirements pop up is present', () => {
   expect(legalRequirementPopUp.isPresent()).to.eventually.be.true;
 });
 
+// tslint:disable-next-line:variable-name
 When('the required test observation is present {string}', (legal_requirement: string) => {
+  // tslint:disable-next-line:max-line-length
   expect(TempPage.getElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legal_requirement}']`)).isPresent()).to.eventually.be.true;
 });
 
@@ -277,11 +280,13 @@ const completeEco = () => {
 };
 
 const completeShowMe = () => {
+  // tslint:disable-next-line:max-line-length
   const showMeCheckmark = TempPage.getElement(by.xpath('//competency-button[contains(@class, "show-me-question-tick")]'));
   longPressButton(showMeCheckmark);
 };
 
 const completeControlledStop = () => {
+  // tslint:disable-next-line:max-line-length
   const controlledStopCheckmark = TempPage.getElement(by.xpath('//competency-button[contains(@class, "controlled-stop-tick")]'));
   longPressButton(controlledStopCheckmark);
 };
@@ -309,9 +314,8 @@ const longPressCompetency = (competency: string) => {
 };
 
 const clickManoeuvresButton = () => {
-  const manoeuvresButton = TempPage.getElement(
-    by.xpath('//manoeuvres/button'));
-    TempPage.clickElement(manoeuvresButton);
+  const manoeuvresButton = TempPage.getElement(by.xpath('//manoeuvres/button'));
+  TempPage.clickElement(manoeuvresButton);
 };
 
 /**
@@ -384,6 +388,7 @@ const clickCompetency = (competency) => {
 
 const completeManouveure = () => {
   if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1') {
+    // tslint:disable-next-line:max-line-length
     const manoeuvresButton = TempPage.getElement(by.xpath('//competency-button[contains(@class, "reverse-left-tick")]'));
     longPressButton(manoeuvresButton);
   } else {
@@ -396,6 +401,7 @@ const completeManouveure = () => {
 };
 
 const completeUncoupleRecouple = () => {
+  // tslint:disable-next-line:max-line-length
   const uncoupleRecouple = TempPage.getElement(by.xpath('//competency-button[contains(@class, "uncouple-recouple-tick")]'));
   longPressButton(uncoupleRecouple);
 };
