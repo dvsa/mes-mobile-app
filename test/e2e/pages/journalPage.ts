@@ -11,9 +11,6 @@ class JournalPage extends Page {
 
     // Navigate to journal page
     DashboardPage.clickGoToMyJournalButton();
-
-    // If the journal page is loaded we should have a refresh button
-    this.waitForRefreshButton();
   }
 
   // todo: kc find a better name
@@ -70,12 +67,12 @@ class JournalPage extends Page {
       [text() = "${candidateName}"]]`);
   }
 
-  waitForRefreshButton() {
+  getRefreshButton() {
     return this.getElementByXPath('//button/span/span/span[text() = "Refresh"]');
   }
 
   clickRefreshButton() {
-    this.clickElement(this.waitForRefreshButton());
+    this.clickElement(this.getRefreshButton());
   }
 
   getRekeyStartTestButton() {
