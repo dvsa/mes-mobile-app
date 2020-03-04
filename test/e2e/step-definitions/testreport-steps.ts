@@ -1,6 +1,5 @@
 import { Then, When, Before } from 'cucumber';
 import { browser, by, element } from 'protractor';
-import { waitForPresenceOfElement } from '../../helpers/interactionHelpers';
 import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
@@ -38,7 +37,8 @@ When('I end the test', () => {
 });
 
 When('I continue to debrief', () => {
-  const continueToDebriefButton = TempPage.getAndAwaitElement(by.xpath('//button[span[h3[text() = "Continue to debrief"]]]'));
+  const continueToDebriefButton = TempPage.getAndAwaitElement(
+    by.xpath('//button[span[h3[text() = "Continue to debrief"]]]'));
   TempPage.clickElement(continueToDebriefButton);
 });
 
@@ -148,24 +148,25 @@ Then('the {string} button does not display the serious badge', (competency: stri
 When('I open the reversing diagram', () => {
   reverseDropDown();
   const reversingDiagramLink = TempPage.getAndAwaitElement(by.xpath('//*[@id="reverse-diagram-link"]/span'));
-  waitForPresenceOfElement(reversingDiagramLink);
+  TempPage.waitForPresenceOfElement(reversingDiagramLink);
   TempPage.clickElement(reversingDiagramLink);
 });
 
 Then('I should see the reversing diagram modal', () => {
   const diagramModalTitle = TempPage.getAndAwaitElement(by.xpath('//reverse-diagram-modal-cat-c//div[2]'));
-  waitForPresenceOfElement(diagramModalTitle);
+  TempPage.waitForPresenceOfElement(diagramModalTitle);
   expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - articulated vehicle');
 });
 
 When('I close the reversing diagram modal', () => {
-  const reverseModalCloseButton = TempPage.getAndAwaitElement(by.xpath('//*[@id="closeReverseDiagramModal"]/span/ion-icon'));
+  const reverseModalCloseButton = TempPage.getAndAwaitElement(
+    by.xpath('//*[@id="closeReverseDiagramModal"]/span/ion-icon'));
   TempPage.clickElement(reverseModalCloseButton);
 });
 
 Then('I close the revresing diagram drop down', () => {
   reverseDropDown();
-  waitForPresenceOfElement(getCompetencyButton('Control'));
+  TempPage.waitForPresenceOfElement(getCompetencyButton('Control'));
 });
 
 When('I remove a driver fault for {string} with a tap', (competency: string) => {
@@ -223,7 +224,8 @@ Then('a serious fault is present along the driver fault count of {string}', (dri
 });
 
 Then('the competency {string} driver fault count is {string}', (competency, driverFaultCount) => {
-  const competencyCountField = TempPage.getAndAwaitElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
+  const competencyCountField =
+    TempPage.getAndAwaitElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
   and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`));
   return expect(competencyCountField.getText()).to.eventually.equal(driverFaultCount);
 });
@@ -245,7 +247,8 @@ When('the required test observation is present {string}', (legalRequirement: str
 });
 
 Then('I return to the test report page', () =>   {
-  const returnToTestBtn = TempPage.getAndAwaitElement(by.xpath('//div/legal-requirements-modal//modal-return-button//span'));
+  const returnToTestBtn =
+    TempPage.getAndAwaitElement(by.xpath('//div/legal-requirements-modal//modal-return-button//span'));
   TempPage.clickElement(returnToTestBtn);
 });
 
@@ -256,7 +259,8 @@ When('I enter the legal requirements', () => {
 });
 
 When('I add the Uncouple and Recouple fault', () => {
-  const uncoupleRecoupleFault = TempPage.getAndAwaitElement(by.xpath('//uncouple-recouple//competency-button/div/div[1]'));
+  const uncoupleRecoupleFault =
+    TempPage.getAndAwaitElement(by.xpath('//uncouple-recouple//competency-button/div/div[1]'));
   longPressButton(uncoupleRecoupleFault);
 });
 
