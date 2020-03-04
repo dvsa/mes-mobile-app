@@ -87,7 +87,6 @@ You can run the Appium testsuite against an iOS simulator.
 Pre-requisites
 
 - iPad Pro 10.5 Simulator running iOS 12.1 (If you are running the latest version of XCode you will need to manually download this `XCode > Preferences ... > Components > iOS 12.1 Simulator`). iOS 12.1 is the default but there is now support for 12.2 which may save you having to download the 12.1 simulator (see below)
-- XCode 11: If you are running XCode 11 you will need to use the latest version of appium to support iOS 13 (v1.16.0 at time of writing `npm install -g appium@latest`) and run this using `appium` rather than `npx appium` which uses the version specified in package.json
 - Carthage (`brew install carthage` - https://github.com/appium/appium/blob/HEAD/docs/en/drivers/ios-xcuitest.md - dependancy of XCUITest driver)
 - Notes : if you get /usr/local/share/man issues 
           try: sudo chown -R $(whoami):admin /usr/local/share/man (don't sudo brew)
