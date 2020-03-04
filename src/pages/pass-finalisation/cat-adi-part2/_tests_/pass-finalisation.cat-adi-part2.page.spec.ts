@@ -30,7 +30,7 @@ import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
     '../../../../modules/tests/test-summary/common/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
     '../../../../modules/tests/communication-preferences/communication-preferences.actions';
-import { PassFinalisationCatBEPage } from '../pass-finalisation.cat-be.page';
+import { PassFinalisationCatADIPart2Page } from '../pass-finalisation.cat-adi-part2.page';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -38,16 +38,17 @@ import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
 import { Subscription } from 'rxjs/Subscription';
 import { configureTestSuite } from 'ng-bullet';
+import { TransmissionType } from '../../../../shared/models/transmission-type';
 
-describe('PassFinalisationCatBEPage', () => {
-  let fixture: ComponentFixture<PassFinalisationCatBEPage>;
-  let component: PassFinalisationCatBEPage;
+describe('PassFinalisationCatADIPart2Page', () => {
+  let fixture: ComponentFixture<PassFinalisationCatADIPart2Page>;
+  let component: PassFinalisationCatADIPart2Page;
   let store$: Store<StoreModel>;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        PassFinalisationCatBEPage,
+        PassFinalisationCatADIPart2Page,
         MockComponent(PassCertificateNumberComponent),
         MockComponent(LicenseProvidedComponent),
         MockComponent(TransmissionComponent),
@@ -70,7 +71,7 @@ describe('PassFinalisationCatBEPage', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(PassFinalisationCatBEPage);
+    fixture = TestBed.createComponent(PassFinalisationCatADIPart2Page);
     component = fixture.componentInstance;
     component.subscription = new Subscription();
     store$ = TestBed.get(Store);
@@ -101,8 +102,8 @@ describe('PassFinalisationCatBEPage', () => {
     });
     describe('transmissionChanged', () => {
       it('should dispatch the correct action when called', () => {
-        component.transmissionChanged('Manual');
-        expect(store$.dispatch).toHaveBeenCalledWith(new GearboxCategoryChanged('Manual'));
+        component.transmissionChanged(TransmissionType.Manual);
+        expect(store$.dispatch).toHaveBeenCalledWith(new GearboxCategoryChanged(TransmissionType.Manual));
         expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });
