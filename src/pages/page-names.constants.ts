@@ -119,3 +119,9 @@ export const CAT_D = {
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatDModal',
   VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatDPage',
 };
+
+export const CAT_F_G_H_K = {
+  COMMUNICATION_PAGE: 'CommunicationCatFGHKPage',
+  WAITING_ROOM_PAGE: 'WaitingRoomCatFGHKPage',
+  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatFGHKPage',
+};
