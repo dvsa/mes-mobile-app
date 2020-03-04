@@ -23,11 +23,11 @@ Before({ tags: '@catce' }, () => {
 
 Then('I am on the post debrief holding page', () => {
   // No page title so need to check something else exists that exists on the page
-  const postDebriefHoldingPage = TempPage.getElement(by.id(`post-debrief-holding-cat-${this.testCategory}-page`));
+  const postDebriefHoldingPage = TempPage.getAndAwaitElement(by.id(`post-debrief-holding-cat-${this.testCategory}-page`));
   return browser.wait(ExpectedConditions.presenceOf(postDebriefHoldingPage));
 });
 
 When('I continue to the non pass finalisation page', () => {
-  const continueToNonPassFinalisationButton = TempPage.getElement(by.id('continue-to-non-pass-finalisation'));
+  const continueToNonPassFinalisationButton = TempPage.getAndAwaitElement(by.id('continue-to-non-pass-finalisation'));
   TempPage.clickElement(continueToNonPassFinalisationButton);
 });
