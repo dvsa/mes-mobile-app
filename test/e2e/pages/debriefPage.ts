@@ -22,15 +22,19 @@ class DebriefPage extends Page {
   }
 
   continuePassFinalisation(testCategory: string) {
-    this.clickContinueButton(testCategory);
+    this.clickContinueToPassFinalisationButton(testCategory);
   }
 
   clickProvisionalLicenceReceived() {
     this.clickElementById('license-received');
   }
 
+  getD255Yes() {
+    return this.getElementById('d255-yes');
+  }
+
   clickD255Yes() {
-    this.clickElementById('d255-yes');
+    this.clickElement(this.getD255Yes());
   }
 
   clickD255No() {
@@ -41,8 +45,15 @@ class DebriefPage extends Page {
     this.clickElementById('debrief-witnessed-yes');
   }
 
-  clickContinueButton(testCategory: string) {
-    const xpath = `//div[contains(@class, "pass-finalisation-cat-${testCategory}-page")]//button[span[h3[text() = "Continue"]]]`;
+  clickContinueToPassFinalisationButton(testCategory: string) {
+    const xpath =
+      `//div[contains(@class, "pass-finalisation-cat-${testCategory}-page")]//button[span[h3[text() = "Continue"]]]`;
+    this.clickElementByXPath(xpath);
+  }
+
+  clickContinueToNonPassFinalisationButton(testCategory: string) {
+    const xpath =
+      `//div[contains(@class, "non-pass-finalisation-cat-${testCategory}-page")]//button[@id = "continue-button"]`;
     this.clickElementByXPath(xpath);
   }
 

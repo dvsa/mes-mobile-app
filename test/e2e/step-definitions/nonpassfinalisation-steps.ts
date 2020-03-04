@@ -1,6 +1,6 @@
 import { Then, When, Before } from 'cucumber';
-import { by } from 'protractor';
-import TempPage from '../pages/tempPage';
+import DebriefPage from '../pages/debriefPage';
+import NonPassFinalisationPage from '../pages/nonPassFinalisationPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -26,74 +26,42 @@ Before({ tags: '@catce' }, () => {
 });
 
 When('I continue to the back to office page', () => {
-  enterD255();
-  enterDebriefWitnessed();
-  clickContinue();
+  DebriefPage.clickD255Yes();
+  DebriefPage.clickDebriefWitnessedYes();
+  DebriefPage.clickContinueToNonPassFinalisationButton(this.testCategory);
 });
 
 When('I click continue to proceed to the back to office page', () => {
-  clickContinue();
+  DebriefPage.clickContinueToNonPassFinalisationButton(this.testCategory);
 });
 
 When('I complete d255', () => {
-  enterD255();
+  DebriefPage.clickD255Yes();
 });
 
 When('I complete debrief witnessed', () => {
-  enterDebriefWitnessed();
+  DebriefPage.clickDebriefWitnessedYes();
 });
 
 When('I select activity code {string}', (activityCodeDesc) => {
-  selectActivityCode(activityCodeDesc);
+  NonPassFinalisationPage.selectActivityCode(activityCodeDesc);
 });
 
 When('the D255 Radio is pre-selected to yes', () => {
-  const d255PreselectedToYes = TempPage.getElement(by.id('d255-yes'));
+  const d255PreselectedToYes = DebriefPage.getD255Yes();
   expect(d255PreselectedToYes.isSelected()).to.eventually.be.true;
 });
 
 Then('the activity code should be {string}', (activityCode) => {
-  const acitivityCodeField = TempPage.getElement(by.id('activity-code-selector'));
-  return expect(acitivityCodeField.getText()).to.eventually.equal(activityCode);
+  const activityCodeField = NonPassFinalisationPage.getActivityCodeSelector();
+  return expect(activityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
 Then('the nonpassfinalisation page test outcome is {string}', (testOutcome : string) => {
-  const testOutcomeField = TempPage.getElement(by.id('office-page-test-outcome'));
+  const testOutcomeField = NonPassFinalisationPage.getTestOutcome();
   return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
 
 Then('the transmission is selected', () => {
-  selectTransmission(true);
+  NonPassFinalisationPage.selectManualTransmission();
 });
-
-const clickContinue = () => {
-  const continueToBackToOfficeButton = TempPage.getElement(by.xpath(
-    `//div[contains(@class, "non-pass-finalisation-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
-  TempPage.clickElement(continueToBackToOfficeButton);
-};
-
-const selectTransmission = (transmission: boolean) => {
-  const transmissionSelector = (transmission) ? 'transmission-manual' : 'transmission-automatic';
-  const transmissionRadio = TempPage.getElement(by.id(transmissionSelector));
-  TempPage.clickElement(transmissionRadio);
-};
-
-const selectActivityCode = (activityCodeDesc) => {
-  const activitySelector = TempPage.getElement(by.id('activity-code-selector'));
-  TempPage.clickElement(activitySelector);
-  const activityItem = TempPage.getElement(by.xpath(`//button/span/div[@class='alert-radio-label']
-  [normalize-space(text()) = '${activityCodeDesc}']`));
-  TempPage.clickElement(activityItem);
-  const submitDialog = TempPage.getElement(by.xpath('//button[span[text() = "Submit"]]'));
-  TempPage.clickElement(submitDialog);
-};
-
-const enterD255 = () => {
-  const d255Radio = TempPage.getElement(by.id('d255-yes'));
-  TempPage.clickElement(d255Radio);
-};
-
-const enterDebriefWitnessed = () => {
-  const debriefWitnessedRadio = TempPage.getElement(by.id('debrief-witnessed-yes'));
-  TempPage.clickElement(debriefWitnessedRadio);
-};
