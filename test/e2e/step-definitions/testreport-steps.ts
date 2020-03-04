@@ -38,13 +38,13 @@ When('I end the test', () => {
 });
 
 When('I continue to debrief', () => {
-  const continueToDebriefButton = TempPage.getElement(by.xpath('//button[span[h3[text() = "Continue to debrief"]]]'));
+  const continueToDebriefButton = TempPage.getAndAwaitElement(by.xpath('//button[span[h3[text() = "Continue to debrief"]]]'));
   TempPage.clickElement(continueToDebriefButton);
 });
 
 When('I end and terminate the test', () => {
   endTest();
-  const terminateTestButton = TempPage.getElement(by.xpath('//button[span[text() = "Terminate test"]]'));
+  const terminateTestButton = TempPage.getAndAwaitElement(by.xpath('//button[span[text() = "Terminate test"]]'));
   TempPage.clickElement(terminateTestButton);
 });
 
@@ -79,11 +79,11 @@ When('I complete the test with controlled stop', () => {
 });
 
 When('I add a Show me / Tell me driver fault', () => {
-  longPressButton(TempPage.getElement(by.className('vehicle-check-competency')));
+  longPressButton(TempPage.getAndAwaitElement(by.className('vehicle-check-competency')));
 });
 
 When('I add a Controlled Stop driver fault', () => {
-  longPressButton(TempPage.getElement(by.className('controlled-stop-competency')));
+  longPressButton(TempPage.getAndAwaitElement(by.className('controlled-stop-competency')));
 });
 
 When('I add a {string} driver fault', (competency) => {
@@ -101,40 +101,40 @@ When('I add a {string} serious fault with a long press', (competency: string) =>
 });
 
 Then('the competency {string} driver fault count is not displayed', (competency: string) => {
-  const driverBadge = TempPage.getElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
+  const driverBadge = TempPage.getAndAwaitElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
   and text() = '${competency}']]/div/driving-faults-badge`));
   expect(driverBadge.getAttribute('ng-reflect-count')).to.eventually.equal(null);
 });
 
 When('I add an ETA with type {string}', (etaType: 'Verbal' | 'Physical') => {
   const etaText = `ETA: ${etaType}`;
-  const etaButton = TempPage.getElement(by.xpath(`//competency-button/div/div/span[text() = '${etaText}']`));
+  const etaButton = TempPage.getAndAwaitElement(by.xpath(`//competency-button/div/div/span[text() = '${etaText}']`));
   longPressButton(etaButton);
 });
 
 When('I add a {string} dangerous fault', (competency) => {
-  const dangerousButton = TempPage.getElement(by.id('dangerous-button'));
+  const dangerousButton = TempPage.getAndAwaitElement(by.id('dangerous-button'));
   TempPage.clickElement(dangerousButton);
   clickCompetency(competency);
 });
 
 When('I close the ETA modal', () => {
-  TempPage.clickElement(TempPage.getElement(by.className('modal-return-button')));
+  TempPage.clickElement(TempPage.getAndAwaitElement(by.className('modal-return-button')));
 });
 
 Then('the ETA invalid modal is shown', () => {
-  const modalTitle = TempPage.getElement(by.className('modal-alert-header'));
+  const modalTitle = TempPage.getAndAwaitElement(by.className('modal-alert-header'));
   expect(modalTitle.getText()).to.eventually.equal('ETA recorded');
 });
 
 Then('the {string} button displays the serious badge', (competency: string) => {
-  const seriousBadge = TempPage.getElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
+  const seriousBadge = TempPage.getAndAwaitElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
   and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`));
   expect(seriousBadge.isPresent()).to.eventually.be.true;
 });
 
 Then('the {string} button displays the dangerous badge', (competency: string) => {
-  const dangerousBadge = TempPage.getElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
+  const dangerousBadge = TempPage.getAndAwaitElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
   and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`));
   expect(dangerousBadge.isPresent()).to.eventually.be.true;
 });
@@ -147,19 +147,19 @@ Then('the {string} button does not display the serious badge', (competency: stri
 
 When('I open the reversing diagram', () => {
   reverseDropDown();
-  const reversingDiagramLink = TempPage.getElement(by.xpath('//*[@id="reverse-diagram-link"]/span'));
+  const reversingDiagramLink = TempPage.getAndAwaitElement(by.xpath('//*[@id="reverse-diagram-link"]/span'));
   waitForPresenceOfElement(reversingDiagramLink);
   TempPage.clickElement(reversingDiagramLink);
 });
 
 Then('I should see the reversing diagram modal', () => {
-  const diagramModalTitle = TempPage.getElement(by.xpath('//reverse-diagram-modal//div[2]'));
+  const diagramModalTitle = TempPage.getAndAwaitElement(by.xpath('//reverse-diagram-modal-cat-c//div[2]'));
   waitForPresenceOfElement(diagramModalTitle);
   expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - articulated vehicle');
 });
 
 When('I close the reversing diagram modal', () => {
-  const reverseModalCloseButton = TempPage.getElement(by.xpath('//*[@id="closeReverseDiagramModal"]/span/ion-icon'));
+  const reverseModalCloseButton = TempPage.getAndAwaitElement(by.xpath('//*[@id="closeReverseDiagramModal"]/span/ion-icon'));
   TempPage.clickElement(reverseModalCloseButton);
 });
 
@@ -192,7 +192,7 @@ When('I remove a serious fault for {string} with a long press', (competency: str
 
 When('I add a manoeuvre', () => {
   clickManoeuvresButton();
-  const reverseRightRadio = TempPage.getElement(by.id('manoeuvres-reverse-right-radio'));
+  const reverseRightRadio = TempPage.getAndAwaitElement(by.id('manoeuvres-reverse-right-radio'));
   TempPage.clickElement(reverseRightRadio);
 });
 
@@ -201,51 +201,51 @@ When('I click the manoeuvres button', () => {
 });
 
 When('I mark the manoeuvre as a {string} driver fault', (faultName: 'Control' | 'Observation') => {
-  const button = TempPage.getElement(by.xpath(`//manoeuvre-competency/div/span[text() = '${faultName}']`));
+  const button = TempPage.getAndAwaitElement(by.xpath(`//manoeuvre-competency/div/span[text() = '${faultName}']`));
   longPressButton(button);
 });
 
 Then('the controlled stop requirement is ticked', () => {
-  const controlledStopTick = TempPage.getElement(by.css('.controlled-stop-tick.checked'));
+  const controlledStopTick = TempPage.getAndAwaitElement(by.css('.controlled-stop-tick.checked'));
   expect(controlledStopTick.isPresent()).to.eventually.be.true;
 });
 
 Then('the driver fault count is {string}', (driverFaultCount) => {
-  const summaryCountField = TempPage.getElement(by.id('summary-count'));
+  const summaryCountField = TempPage.getAndAwaitElement(by.id('summary-count'));
   return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
 Then('a serious fault is present along the driver fault count of {string}', (driverFaultCount) => {
   // tslint:disable-next-line:max-line-length
-  expect(TempPage.getElement(by.xpath('//vehicle-checks//serious-fault-badge//span')).isPresent()).to.eventually.be.true;
-  const summaryCountField = TempPage.getElement(by.id('summary-count'));
+  expect(TempPage.getAndAwaitElement(by.xpath('//vehicle-checks//serious-fault-badge//span')).isPresent()).to.eventually.be.true;
+  const summaryCountField = TempPage.getAndAwaitElement(by.id('summary-count'));
   return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
 Then('the competency {string} driver fault count is {string}', (competency, driverFaultCount) => {
-  const competencyCountField = TempPage.getElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
+  const competencyCountField = TempPage.getAndAwaitElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
   and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`));
   return expect(competencyCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
 When('I terminate the test from the test report page', () => {
-  const endTestButton = TempPage.getElement(by.id('end-test-button'));
+  const endTestButton = TempPage.getAndAwaitElement(by.id('end-test-button'));
   TempPage.clickElement(endTestButton);
-  const terminateTestButton = TempPage.getElement(by.xpath('//button/span[text() = "Terminate test"]'));
+  const terminateTestButton = TempPage.getAndAwaitElement(by.xpath('//button/span[text() = "Terminate test"]'));
   TempPage.clickElement(terminateTestButton);
 });
 
 Then('the legal requirements pop up is present', () => {
-  const legalRequirementPopUp = TempPage.getElement(by.xpath('//div/legal-requirements-modal'));
+  const legalRequirementPopUp = TempPage.getAndAwaitElement(by.xpath('//div/legal-requirements-modal'));
   expect(legalRequirementPopUp.isPresent()).to.eventually.be.true;
 });
 
 When('the required test observation is present {string}', (legalRequirement: string) => {
-  expect(TempPage.getElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`)).isPresent()).to.eventually.be.true;
+  expect(TempPage.getAndAwaitElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`)).isPresent()).to.eventually.be.true;
 });
 
 Then('I return to the test report page', () =>   {
-  const returnToTestBtn = TempPage.getElement(by.xpath('//div/legal-requirements-modal//modal-return-button//span'));
+  const returnToTestBtn = TempPage.getAndAwaitElement(by.xpath('//div/legal-requirements-modal//modal-return-button//span'));
   TempPage.clickElement(returnToTestBtn);
 });
 
@@ -256,12 +256,12 @@ When('I enter the legal requirements', () => {
 });
 
 When('I add the Uncouple and Recouple fault', () => {
-  const uncoupleRecoupleFault = TempPage.getElement(by.xpath('//uncouple-recouple//competency-button/div/div[1]'));
+  const uncoupleRecoupleFault = TempPage.getAndAwaitElement(by.xpath('//uncouple-recouple//competency-button/div/div[1]'));
   longPressButton(uncoupleRecoupleFault);
 });
 
 const endTest = () => {
-  const endTestButton = TempPage.getElement(by.id('end-test-button'));
+  const endTestButton = TempPage.getAndAwaitElement(by.id('end-test-button'));
   TempPage.clickElement(endTestButton);
 };
 
@@ -273,37 +273,37 @@ const completeLegalRequirements = () => {
 };
 
 const completeEco = () => {
-  const ecoCheckmark = TempPage.getElement(by.xpath('//competency-button[contains(@class, "eco-tick")]'));
+  const ecoCheckmark = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "eco-tick")]'));
   longPressButton(ecoCheckmark);
 };
 
 const completeShowMe = () => {
   // tslint:disable-next-line:max-line-length
-  const showMeCheckmark = TempPage.getElement(by.xpath('//competency-button[contains(@class, "show-me-question-tick")]'));
+  const showMeCheckmark = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "show-me-question-tick")]'));
   longPressButton(showMeCheckmark);
 };
 
 const completeControlledStop = () => {
   // tslint:disable-next-line:max-line-length
-  const controlledStopCheckmark = TempPage.getElement(by.xpath('//competency-button[contains(@class, "controlled-stop-tick")]'));
+  const controlledStopCheckmark = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "controlled-stop-tick")]'));
   longPressButton(controlledStopCheckmark);
 };
 
 const reverseDropDown = () => {
-  const reverseButton = TempPage.getElement(by.xpath('//*[@id="reverse-left-label"]'));
+  const reverseButton = TempPage.getAndAwaitElement(by.xpath('//*[@id="reverse-left-label"]'));
   TempPage.clickElement(reverseButton);
 };
 
 const clickRemove = () => {
-  TempPage.clickElement(TempPage.getElement(by.id('remove-button')));
+  TempPage.clickElement(TempPage.getAndAwaitElement(by.id('remove-button')));
 };
 
 const clickSeriousMode = () => {
-  TempPage.clickElement(TempPage.getElement(by.id('serious-button')));
+  TempPage.clickElement(TempPage.getAndAwaitElement(by.id('serious-button')));
 };
 
 const getCompetencyButton = (competency: string) => {
-  return TempPage.getElement(by.xpath(`//competency-button/div/span[text() = '${competency}']`));
+  return TempPage.getAndAwaitElement(by.xpath(`//competency-button/div/span[text() = '${competency}']`));
 };
 
 const longPressCompetency = (competency: string) => {
@@ -312,7 +312,7 @@ const longPressCompetency = (competency: string) => {
 };
 
 const clickManoeuvresButton = () => {
-  const manoeuvresButton = TempPage.getElement(by.xpath('//manoeuvres/button'));
+  const manoeuvresButton = TempPage.getAndAwaitElement(by.xpath('//manoeuvres/button'));
   TempPage.clickElement(manoeuvresButton);
 };
 
@@ -385,20 +385,19 @@ const clickCompetency = (competency) => {
 };
 
 const completeManouveure = () => {
-  if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'ce') {
-    const manoeuvresButton = TempPage.getElement(by.xpath('//competency-button[contains(@class, "reverse-left-tick")]'));
+  if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1') {
+    const manoeuvresButton = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "reverse-left-tick")]'));
     longPressButton(manoeuvresButton);
   } else {
-    const manoeuvresButton = TempPage.getElement(by.xpath('//manoeuvres/button'));
+    const manoeuvresButton = TempPage.getAndAwaitElement(by.xpath('//manoeuvres/button'));
     TempPage.clickElement(manoeuvresButton);
-    const reverseRightRadio = TempPage.getElement(by.id('manoeuvres-reverse-right-radio'));
+    const reverseRightRadio = TempPage.getAndAwaitElement(by.id('manoeuvres-reverse-right-radio'));
     TempPage.clickElement(reverseRightRadio);
     TempPage.clickElement(manoeuvresButton);
   }
 };
 
 const completeUncoupleRecouple = () => {
-  // tslint:disable-next-line:max-line-length
-  const uncoupleRecouple = TempPage.getElement(by.xpath('//competency-button[contains(@class, "uncouple-recouple-tick")]'));
+  const uncoupleRecouple = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "uncouple-recouple-tick")]'));
   longPressButton(uncoupleRecouple);
 };
