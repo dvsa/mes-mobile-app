@@ -1,5 +1,5 @@
-import { by, element } from 'protractor';
-import { onJournalPageAs } from './generic-steps';
+import { browser, by, element, ExpectedConditions } from 'protractor';
+import JournalPage from '../pages/journalPage';
 import TempPage from '../pages/tempPage';
 
 const {
@@ -13,10 +13,11 @@ chai.use(chaiAsPromised);
 const expect = chai.expect;
 
 Given('I am on the journal page as {string}', (username) => {
-  onJournalPageAs(username);
+  JournalPage.onJournalPageAs(username);
 
   // If the journal page is loaded we should have a refresh button
-  const refreshButton = TempPage.getAndAwaitElement(by.xpath('//button/span/span/span[text() = "Refresh"]'));
+  const refreshButton = JournalPage.getRefreshButton();
+  browser.wait(ExpectedConditions.presenceOf(refreshButton));
   return expect(refreshButton.isPresent()).to.eventually.be.true;
 });
 
@@ -30,7 +31,8 @@ When('I check candidate details for {string}', (candidateName) => {
 });
 
 When('I start the test for {string}', (candidateName) => {
-  const buttonElement = TempPage.getAndAwaitElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
+  const buttonElement = TempPage.getAndAwaitElement(
+    by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
   TempPage.clickElement(buttonElement);
@@ -70,7 +72,8 @@ When('I navigate to previous day', () => {
 });
 
 Then('I have a special needs slot for {string}', (candidateName) => {
-  const exclamationIndicator = TempPage.getAndAwaitElement(by.xpath(`//indicators/div/img[@class = "exclamation-indicator"]
+  const exclamationIndicator = TempPage.getAndAwaitElement(
+    by.xpath(`//indicators/div/img[@class = "exclamation-indicator"]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
   return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
@@ -103,7 +106,8 @@ Then('the test result for {string} is {string}', (candidateName, testResult) => 
 });
 
 Then('I should have a category {string} test for {string}', (category, candidateName) => {
-  const testCategory = TempPage.getAndAwaitElement(by.xpath(`//test-category/h2[ancestor::ion-row/ion-col/ion-grid/ion-row/
+  const testCategory = TempPage.getAndAwaitElement(
+    by.xpath(`//test-category/h2[ancestor::ion-row/ion-col/ion-grid/ion-row/
     ion-col/candidate-link/div/button/span/h3[text() = "${candidateName}"]]`));
   return expect(testCategory.getText()).to.eventually.equal(category);
 });
@@ -136,7 +140,8 @@ Then('The vehicle for {string} has length {string}, width {string}, height {stri
 });
 
 Then('I continue the write up for {string}', (candidateName) => {
-  const continueWriteUp = TempPage.getAndAwaitElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Write-up"]]
+  const continueWriteUp = TempPage.getAndAwaitElement(
+    by.xpath(`//button/span/h3[text()[normalize-space(.) = "Write-up"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
   TempPage.clickElement(continueWriteUp);
