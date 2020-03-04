@@ -3,8 +3,11 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
+// TO-DO ADI Part2: implement correct category
 import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
+// TO-DO ADI Part2: implement correct category
 import { getVehicleChecks } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+// TO-DO ADI Part2: implement correct category
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Subscription } from 'rxjs/Subscription';
@@ -69,6 +72,7 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
     );
 
     this.subscription = merge(
+      // TO-DO ADI Part2: implement correct category
       vehicleChecks$.pipe(map((vehicleChecks: CatBUniqueTypes.VehicleChecks) => {
         this.tellMeQuestionFault = vehicleChecks.tellMeQuestion.outcome;
         this.showMeQuestionFault = vehicleChecks.showMeQuestion.outcome;

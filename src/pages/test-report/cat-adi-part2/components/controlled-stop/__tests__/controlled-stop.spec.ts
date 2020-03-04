@@ -18,6 +18,7 @@ import {
   DangerousFaultBadgeComponent,
 } from '../../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
+// TO-DO ADI Part2: implement correct actions
 import {
   ControlledStopAddDrivingFault,
   ControlledStopRemoveFault,
@@ -52,6 +53,7 @@ describe('ControlledStopComponent', () => {
     fixture = TestBed.createComponent(ControlledStopComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
+    // TO-DO ADI Part2: implement correct category
     store$.dispatch(new StartTest(105, TestCategory.B));
   }));
 

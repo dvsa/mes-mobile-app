@@ -8,10 +8,13 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
+// TO-DO ADI Part2: implement correct reducer
 import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
+// TO-DO ADI Part2: implement correct selector
 import {
   hasControlledStopBeenCompleted,
 } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+// TO-DO ADI Part2: implement correct actions
 import {
   ToggleControlledStop,
   ControlledStopAddDangerousFault,

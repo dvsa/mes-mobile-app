@@ -1,8 +1,11 @@
+// TO-DO ADI Part2: implement correct category
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
+// TO-DO ADI Part2: implement correct reducer
 import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
+// TO-DO ADI Part2: implement correct selector
 import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
@@ -51,6 +54,7 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
       select(getManoeuvres),
     );
 
+    // TO-DO ADI Part2: implement correct categories
     this.subscription = this.manoeuvres$.subscribe((manoeuvres: CatBUniqueTypes.Manoeuvres) => {
       this.drivingFaults =
         this.faultCountProvider.getManoeuvreFaultCount(TestCategory.B, manoeuvres, CompetencyOutcome.DF);

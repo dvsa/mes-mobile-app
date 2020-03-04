@@ -19,6 +19,7 @@ import {
 } from '../../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { By } from '@angular/platform-browser';
+// TO-DO ADI Part2: implement correct category
 import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,

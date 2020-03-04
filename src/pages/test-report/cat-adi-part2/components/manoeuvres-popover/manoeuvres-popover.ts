@@ -1,9 +1,12 @@
+// TO-DO ADI Part2: implement correct category
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
+// TO-DO ADI Part2: implement correct category
 import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
+// TO-DO ADI Part2: implement correct category
 import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
@@ -40,6 +43,8 @@ export class ManoeuvresPopoverComponent {
       select(getManoeuvres),
     );
     this.manoeuvresWithFaults$ = this.manoeuvres$.pipe(
+      // TO-DO ADI Part2: implement correct category
+
       map((manoeuvres: CatBUniqueTypes.Manoeuvres) => ({
         reverseRight: this.manoeuvreHasFaults(manoeuvres.reverseRight),
         reverseParkRoad: this.manoeuvreHasFaults(manoeuvres.reverseParkRoad),
@@ -62,6 +67,7 @@ export class ManoeuvresPopoverComponent {
   shouldManoeuvreDisable(manoeuvre: ManoeuvreTypes): Observable<boolean> {
     return this.manoeuvresWithFaults$.pipe(
       map((manoeuvresWithFaults: ManoeuvresFaultState) => {
+        // TO-DO ADI Part2: implement correct category
         const { [manoeuvre]: manoeuvreToOmit, ...otherManoeuvres } = manoeuvresWithFaults;
         return some(otherManoeuvres, (value: boolean) => value);
       }),
