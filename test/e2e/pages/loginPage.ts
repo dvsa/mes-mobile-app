@@ -3,19 +3,19 @@ import { TEST_CONFIG } from '../test.config';
 import Page from './page';
 
 class LoginPage extends Page {
- /**
- * Logs into the application with the given username and password. Assumes we will be on the Microsoft login page.
- * @param user the user
- */
+  /**
+   * Logs into the application with the given username and password. Assumes we will be on the Microsoft login page.
+   * @param user the user
+   */
   login(user : string) {
     this.logInToApplication(TEST_CONFIG.users[user].username, TEST_CONFIG.users[user].password);
   }
 
   /**
-  * Logs into the application with the given username and password. Assumes we will be on the Microsoft login page.
-  * @param username the username
-  * @param password the password
-  */
+   * Logs into the application with the given username and password. Assumes we will be on the Microsoft login page.
+   * @param username the username
+   * @param password the password
+   */
   logInToApplication(username : string, password : string) {
     // tslint:disable-next-line:max-line-length
     // To be able to fill in the Authenticator login we need to switch to NATIVE context then switch back to WEBVIEW after
@@ -23,7 +23,8 @@ class LoginPage extends Page {
       // Switch to NATIVE context
       browser.driver.selectContext('NATIVE_APP').then(() => {
         // Fill in username and click Next
-        const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+        const usernameFld = element(by.xpath(
+          '//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
         browser.wait(ExpectedConditions.presenceOf(usernameFld));
         usernameFld.sendKeys(username);
         const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));
@@ -47,8 +48,8 @@ class LoginPage extends Page {
   }
 
   /**
-  * Logs out of the application and takes them to the login page if they were logged in else returns current page
-  */
+   * Logs out of the application and takes them to the login page if they were logged in else returns current page
+   */
   // todo: kc should this method really be here?  If not here then where?
   logout() {
     browser.driver.getCurrentContext().then((webviewContext) => {

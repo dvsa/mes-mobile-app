@@ -11,7 +11,7 @@ class DebriefPage extends Page {
 
   completePassdetails() {
     this.textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
-    + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
+      + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
     this.clickProvisionalLicenceReceived();
     this.clickD255Yes();
     this.clickDebriefWitnessedYes();
@@ -22,15 +22,19 @@ class DebriefPage extends Page {
   }
 
   continuePassFinalisation(testCategory: string) {
-    this.clickContinueButton(testCategory);
+    this.clickContinueToPassFinalisationButton(testCategory);
   }
 
   clickProvisionalLicenceReceived() {
     this.clickElementById('license-received');
   }
 
+  getD255Yes() {
+    return this.getElementById('d255-yes');
+  }
+
   clickD255Yes() {
-    this.clickElementById('d255-yes');
+    this.clickElement(this.getD255Yes());
   }
 
   clickD255No() {
@@ -41,12 +45,19 @@ class DebriefPage extends Page {
     this.clickElementById('debrief-witnessed-yes');
   }
 
-  clickContinueButton(testCategory: string) {
-    const xpath = `//div[contains(@class, "pass-finalisation-cat-${testCategory}-page")]//button[span[h3[text() = "Continue"]]]`;
+  clickContinueToPassFinalisationButton(testCategory: string) {
+    const xpath =
+      `//div[contains(@class, "pass-finalisation-cat-${testCategory}-page")]//button[span[h3[text() = "Continue"]]]`;
     this.clickElementByXPath(xpath);
   }
 
-  // todo: there seem to be 2 continue buttons....why?  Are they on different pages?
+  clickContinueToNonPassFinalisationButton(testCategory: string) {
+    const xpath =
+      `//div[contains(@class, "non-pass-finalisation-cat-${testCategory}-page")]//button[@id = "continue-button"]`;
+    this.clickElementByXPath(xpath);
+  }
+
+  // todo: kc there seem to be 2 continue buttons....why?  Are they on different pages?
   // todo: is it different ways of calling the same button?
   clickContinueButton2() {
     this.clickElementById('continue-button');
@@ -70,8 +81,8 @@ class DebriefPage extends Page {
   }
 
   getTestOutcome(testCategory) {
-    // tslint:disable-next-line:max-line-length
-    const xpath = `//div[contains(@class, "debrief-cat-${testCategory}-page")]//div[@id = "test-outcome-background"]/div/h1`;
+    const xpath =
+      `//div[contains(@class, "debrief-cat-${testCategory}-page")]//div[@id = "test-outcome-background"]/div/h1`;
     return this.getElementByXPath(xpath);
   }
 }
