@@ -108,7 +108,7 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
       browser.wait(ExpectedConditions.presenceOf(employeeId));
 
       // Navigate to journal page
-      const goToJournalButton = TempPage.getElement(by.xpath('//go-to-journal-card/button'));
+      const goToJournalButton = TempPage.getAndAwaitElement(by.xpath('//go-to-journal-card/button'));
       TempPage.clickElement(goToJournalButton);
 
       // If the journal page is loaded we should have a refresh button
@@ -185,17 +185,17 @@ Then('I should see the {string} contains {string}', (rowName, rowValue) => {
 });
 
 When('I click on the {string} button', (buttonId) => {
-  const buttonElement = TempPage.getElement(by.css(`#${buttonId}`));
+  const buttonElement = TempPage.getAndAwaitElement(by.css(`#${buttonId}`));
   return TempPage.clickElement(buttonElement);
 });
 
 Then('validation item {string} should be visible', (validationId: string) => {
-  const validationElement = TempPage.getElement(by.css(`#${validationId}`));
+  const validationElement = TempPage.getAndAwaitElement(by.css(`#${validationId}`));
   return expect(validationElement.getAttribute('class')).to.eventually.contain('ng-invalid');
 });
 
 Then('validation item {string} should not be visible', (validationId: string) => {
-  const validationElement = TempPage.getElement(by.css(`#${validationId}`));
+  const validationElement = TempPage.getAndAwaitElement(by.css(`#${validationId}`));
   return expect(validationElement.getAttribute('class')).to.eventually.not.contain('ng-invalid');
 });
 
@@ -206,7 +206,7 @@ Then('validation item {string} should not exist', (validationId: string) => {
 });
 
 Then('validation item {string} should be {string}', (validationId: string, validationText: string) => {
-  const validationElement = TempPage.getElement(by.css(`#${validationId}`));
+  const validationElement = TempPage.getAndAwaitElement(by.css(`#${validationId}`));
   return expect(validationElement.getText()).to.eventually.equal(validationText);
 });
 
@@ -369,6 +369,6 @@ const clickBackButton = () => {
 };
 
 const clickGoToMyJournalButton = () => {
-  const goToJournalButton = TempPage.getElement(by.xpath('//go-to-journal-card/button'));
+  const goToJournalButton = TempPage.getAndAwaitElement(by.xpath('//go-to-journal-card/button'));
   TempPage.clickElement(goToJournalButton);
 };
