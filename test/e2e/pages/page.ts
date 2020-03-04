@@ -75,7 +75,10 @@ export default class Page {
   }
 
   getPageTitle(pageTitle) {
-    return this.getElementByXPath(`//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
+    // return this.getElementByXPath(
+    // `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
+    return this.getAndAwaitElement(by.xpath(
+      `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`));
   }
 
   // todo: kc only used in healthdeclaration-steps.ts and waitingroom-steps.ts, so could potentially be moved elsewhere.
@@ -110,5 +113,19 @@ export default class Page {
         });
       });
     });
+  }
+
+  waitForPresenceOfElement(element) {
+    browser.wait(ExpectedConditions.presenceOf(element));
+  }
+
+  /**
+   * Checks whether the user is logged in.
+   * @param staffNumber the staff number of the user we wish to be logged in
+   */
+  loggedInAs(staffNumber) {
+    browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
+    const staffNumberField = element(by.xpath(`//span[@class="employee-id" and text()="${staffNumber}"]`));
+    return staffNumberField.isPresent();
   }
 }

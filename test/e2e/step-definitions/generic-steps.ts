@@ -3,6 +3,7 @@ import { browser, ExpectedConditions, element, by } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
 import { waitForOverlay } from '../../helpers/helpers';
 import LoginPage from '../pages/loginPage';
+import LandingPage from '../pages/landingPage';
 import TempPage from '../pages/tempPage';
 
 const {
@@ -97,7 +98,7 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
       // Login
       LoginPage.login(username);
       // Refresh application
-      loadApplication().then(() => {
+      LandingPage.loadApplication().then(() => {
       // Small wait to make sure the action has initiated
         browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
       });
@@ -141,7 +142,7 @@ Then('I should see the Microsoft login page', () => {
 });
 
 Given('I am on the landing page as {string}', (username) => {
-  onLandingPageAs(username);
+  LandingPage.onLandingPageAs(username);
 });
 
 When(/^I start marking a practice test (with|without) a driving fault$/, (drivingFault) => {
@@ -227,13 +228,15 @@ When('I exit practice mode', () => {
 
 Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be "(.+)"$/, (
   pageName: string, candidateName: string) => {
-  const candidateNameElement = TempPage.getElementByXPath(`//div[contains(@class, '${getPageType(pageName)}')]//h2[@id = 'candidate-name']`);
+  const candidateNameElement = TempPage.getElementByXPath(
+    `//div[contains(@class, '${getPageType(pageName)}')]//h2[@id = 'candidate-name']`);
   return expect(candidateNameElement.getText()).to.eventually.equal(candidateName);
 });
 
 Then(/^the (communication page|waiting room|debrief|health declaration) candidate driver number should be "(.+)"$/, (
   pageName: string, driverNumber: string) => {
-  const candidateDriverNumberElement = TempPage.getElementByXPath(`//div[contains(@class, '${getPageType(pageName)}')]//h3[@id = 'candidate-driver-number']`);
+  const candidateDriverNumberElement = TempPage.getElementByXPath(
+    `//div[contains(@class, '${getPageType(pageName)}')]//h3[@id = 'candidate-driver-number']`);
   return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
 });
 
@@ -277,26 +280,6 @@ AfterAll(() => {
 //////////////////////////////////////////// SHARED FUNCTIONS ////////////////////////////////////////////
 
 /**
- * Checks whether the user is logged in.
- * @param staffNumber the staff number of the user we wish to be logged in
- */
-export const loggedInAs = (staffNumber) => {
-  browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
-  const staffNumberField = element(by.xpath(`//span[@class="employee-id" and text()="${staffNumber}"]`));
-  return staffNumberField.isPresent();
-};
-
-/**
- * Load application.
- * Goes to the home page which will be the journal for logged in Examiners.
- * This essentially reloads the application.
- */
-export const loadApplication = () => {
-  const promise = browser.get('ionic://localhost');
-  return TempPage.isReady(promise);
-};
-
-/**
  * Output the page source to a file - For debug purposes only
  * @param fileName the name of the file to output to
  */
@@ -312,35 +295,9 @@ export const logPageSource = (fileName: string) => {
   });
 };
 
-const onLandingPageAs = (username) => {
-  loadApplication().then(() => {
-    // Small wait to make sure the action has initiated
-    browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
-  });
-
-  loggedInAs(TEST_CONFIG.users[username].employeeId).then((response) => {
-    if (!response) {
-        // If not logged in as the right user logout and log in as the correct user
-      LoginPage.logout();
-      LoginPage.login(username);
-
-      // Refresh application
-      loadApplication().then(() => {
-      // Small wait to make sure the action has initiated
-        browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
-      });
-    }
-  });
-
-  // I should first hit the landing page
-  const employeeId = element(
-    by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
-  browser.wait(ExpectedConditions.presenceOf(employeeId));
-};
-
 export const onJournalPageAs = (username) => {
   // Load the landing page
-  onLandingPageAs(username);
+  LandingPage.onLandingPageAs(username);
 
   // Navigate to journal page
   clickGoToMyJournalButton();
