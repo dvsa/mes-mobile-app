@@ -23,18 +23,20 @@ export default class Page {
   }
 
   getElementByXPath(xpath) {
-    return this.getElement(by.xpath(xpath));
+    return this.getAndAwaitElement(by.xpath(xpath));
+    // return element(by.xpath(xpath)); stops ali campbell debrieffrom working
   }
 
   getElementById(elementId) {
-    return this.getElement(by.id(elementId));
+    return this.getAndAwaitElement(by.id(elementId));
+    // return element(by.id(elementId)); stops ali campbell debrief from working
   }
 
 /**
  * Waits for the element to exist on the page before returning it.
  * @param elementBy the element finder
  */
-  getElement(elementBy) {
+  getAndAwaitElement(elementBy) {
     const foundElement = element(elementBy);
     browser.wait(ExpectedConditions.presenceOf(foundElement));
     return foundElement;

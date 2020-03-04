@@ -31,14 +31,14 @@ Before({ tags: '@catc1e' }, () => {
 });
 
 When('the candidate enters a new email address', () => {
-  const newEmailRadio = TempPage.getElement(by.id('newEmail'));
+  const newEmailRadio = TempPage.getAndAwaitElement(by.id('newEmail'));
   TempPage.clickElement(newEmailRadio);
-  const newEmailAddressField = TempPage.getElement(by.id('newEmailInput'));
+  const newEmailAddressField = TempPage.getAndAwaitElement(by.id('newEmailInput'));
   newEmailAddressField.sendKeys('testemail@example.com');
 });
 
 When('the candidate requests to receive results by post', () => {
-  const postalAddressRadio = TempPage.getElement(by.id('postalAddress'));
+  const postalAddressRadio = TempPage.getAndAwaitElement(by.id('postalAddress'));
   TempPage.clickElement(postalAddressRadio);
 });
 
@@ -57,15 +57,15 @@ When('the candidate completes the declaration page', () => {
 
 When('I proceed to the car', () => {
   // Examiner clicks continue button then enters passcode
-  const continueButton = TempPage.getElement(by.xpath(
+  const continueButton = TempPage.getAndAwaitElement(by.xpath(
     `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
   TempPage.clickElement(continueButton);
   TempPage.enterPasscode();
 });
 
 Then('the email {string} has been provided and is preselected', (emailAddress) => {
-  const providedEmailRadio = TempPage.getElement(by.id('providedEmail'));
+  const providedEmailRadio = TempPage.getAndAwaitElement(by.id('providedEmail'));
   expect(providedEmailRadio.isSelected()).to.eventually.be.true;
-  const providedEmailValue = TempPage.getElement(by.id('providedEmailInput'));
+  const providedEmailValue = TempPage.getAndAwaitElement(by.id('providedEmailInput'));
   return expect(providedEmailValue.getText()).to.eventually.equal(emailAddress);
 });
