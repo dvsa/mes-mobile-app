@@ -45,6 +45,7 @@ interface DebriefPageState {
   testResult$: Observable<string>;
   conductedLanguage$: Observable<string>;
   candidateName$: Observable<string>;
+  category$: Observable<TestCategory>;
 }
 
 @IonicPage()
@@ -90,32 +91,34 @@ export class DebriefCatAMod2Page extends BasePageComponent {
     );
     const category$ = currentTest$.pipe(
       select(getTestCategory),
+      map(c => c as TestCategory),
     );
     this.pageState = {
+      category$,
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
         withLatestFrom(category$),
         map(([data, category]) =>
-          this.faultSummaryProvider.getSeriousFaultsList(data, category as TestCategory)
+          this.faultSummaryProvider.getSeriousFaultsList(data, category)
           .map(fault => fault.competencyIdentifier)),
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         withLatestFrom(category$),
         map(([data, category]) =>
-          this.faultSummaryProvider.getDangerousFaultsList(data, category as TestCategory)
+          this.faultSummaryProvider.getDangerousFaultsList(data, category)
           .map(fault => fault.competencyIdentifier)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
         withLatestFrom(category$),
-        map(([data, category]) => this.faultSummaryProvider.getDrivingFaultsList(data, category as TestCategory)),
+        map(([data, category]) => this.faultSummaryProvider.getDrivingFaultsList(data, category)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
         withLatestFrom(category$),
         map(([testData, category]) => {
-          return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
+          return this.faultCountProvider.getDrivingFaultSumCount(category, testData);
         }),
       ),
       etaFaults$: currentTest$.pipe(

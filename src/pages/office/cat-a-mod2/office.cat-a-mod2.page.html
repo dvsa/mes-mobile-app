@@ -70,6 +70,7 @@
               option1label="Diagram"
               option2="Traffic signs"
               option2label="Traffic Signs"
+              [category]="pageState.testCategory$ | async"
               [display]="pageState.displayIndependentDriving$ | async"
               [formGroup]="form"
               [outcome]="pageState.testOutcome$ | async"
