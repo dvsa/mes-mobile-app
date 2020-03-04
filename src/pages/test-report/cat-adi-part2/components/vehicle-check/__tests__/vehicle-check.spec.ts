@@ -60,6 +60,7 @@ describe('VehicleCheckComponent', () => {
     fixture = TestBed.createComponent(VehicleCheckComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
+    // TO-DO ADI Part2: implement correct category
     store$.dispatch(new StartTest(105, TestCategory.B));
   }));
 
