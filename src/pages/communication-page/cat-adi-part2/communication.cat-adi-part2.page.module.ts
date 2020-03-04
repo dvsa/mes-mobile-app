@@ -23,4 +23,4 @@ import { CommunicationComponentsModule } from '../components/communication.compo
     CommunicationComponentsModule,
   ],
 })
-export class CommunicationCatBEPageModule { }
+export class CommunicationCatADIPart2PageModule { }
