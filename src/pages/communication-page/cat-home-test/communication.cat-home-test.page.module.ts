@@ -1,4 +1,4 @@
-import { CommunicationCatFGHKPage } from './communication.cat-f-g-h-k.page';
+import { CommunicationCatHomeTestPage } from './communication.cat-home-test.page';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { CommunicationEffects } from '../communication.effects';
@@ -10,10 +10,10 @@ import { CommunicationComponentsModule } from '../components/communication.compo
 
 @NgModule({
   declarations: [
-    CommunicationCatFGHKPage,
+    CommunicationCatHomeTestPage,
   ],
   imports: [
-    IonicPageModule.forChild(CommunicationCatFGHKPage),
+    IonicPageModule.forChild(CommunicationCatHomeTestPage),
     EffectsModule.forFeature([
       CommunicationEffects,
       CommunicationAnalyticsEffects,
@@ -23,4 +23,4 @@ import { CommunicationComponentsModule } from '../components/communication.compo
     CommunicationComponentsModule,
   ],
 })
-export class CommunicationCatFGHKPageModule { }
+export class CommunicationCatHomeTestPageModule { }

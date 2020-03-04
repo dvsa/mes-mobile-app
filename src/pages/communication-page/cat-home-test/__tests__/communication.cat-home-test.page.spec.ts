@@ -33,11 +33,11 @@ import { Language } from '../../../../modules/tests/communication-preferences/co
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { configureTestSuite } from 'ng-bullet';
-import { CommunicationCatFGHKPage } from '../communication.cat-f-g-h-k.page';
+import { CommunicationCatHomeTestPage } from '../communication.cat-home-test.page';
 
-describe('CommunicationCatFGHKPage', () => {
-  let fixture: ComponentFixture<CommunicationCatFGHKPage>;
-  let component: CommunicationCatFGHKPage;
+describe('CommunicationCatHomeTestPage', () => {
+  let fixture: ComponentFixture<CommunicationCatHomeTestPage>;
+  let component: CommunicationCatHomeTestPage;
   let store$: Store<StoreModel>;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let translate: TranslateService;
@@ -54,7 +54,7 @@ describe('CommunicationCatFGHKPage', () => {
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        CommunicationCatFGHKPage,
+        CommunicationCatHomeTestPage,
         ProvidedEmailComponent,
         NewEmailComponent,
         MockComponent(PostalAddressComponent),
@@ -106,7 +106,7 @@ describe('CommunicationCatFGHKPage', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(CommunicationCatFGHKPage);
+    fixture = TestBed.createComponent(CommunicationCatHomeTestPage);
     component = fixture.componentInstance;
     deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
     store$ = TestBed.get(Store);
@@ -154,7 +154,7 @@ describe('CommunicationCatFGHKPage', () => {
         component.dispatchCandidateChoseProvidedEmail();
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
-            candidateMock.emailAddress, CommunicationCatFGHKPage.email,
+            candidateMock.emailAddress, CommunicationCatHomeTestPage.email,
           ));
       });
     });
@@ -164,7 +164,7 @@ describe('CommunicationCatFGHKPage', () => {
         component.dispatchCandidateChoseNewEmail(candidateMock.emailAddress);
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
-            candidateMock.emailAddress, CommunicationCatFGHKPage.email,
+            candidateMock.emailAddress, CommunicationCatHomeTestPage.email,
           ));
       });
     });
@@ -174,21 +174,21 @@ describe('CommunicationCatFGHKPage', () => {
         component.dispatchCandidateChosePost();
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChosePostAsCommunicationPreference(
-            CommunicationCatFGHKPage.post,
+            CommunicationCatHomeTestPage.post,
           ));
       });
     });
 
     describe('Communication class level funcitons', () => {
       it('should set setCommunicationType', () => {
-        component.setCommunicationType(CommunicationCatFGHKPage.email, CommunicationCatFGHKPage.providedEmail);
-        expect(component.communicationType).toEqual(CommunicationCatFGHKPage.email);
-        expect(component.emailType).toEqual(CommunicationCatFGHKPage.providedEmail);
+        component.setCommunicationType(CommunicationCatHomeTestPage.email, CommunicationCatHomeTestPage.providedEmail);
+        expect(component.communicationType).toEqual(CommunicationCatHomeTestPage.email);
+        expect(component.emailType).toEqual(CommunicationCatHomeTestPage.providedEmail);
       });
 
       it('should return true for isProvidedEmailSelected() if appropriate properties are defined', () => {
-        component.communicationType = CommunicationCatFGHKPage.email;
-        component.emailType = CommunicationCatFGHKPage.providedEmail;
+        component.communicationType = CommunicationCatHomeTestPage.email;
+        component.emailType = CommunicationCatHomeTestPage.providedEmail;
         const returnValue = component.isProvidedEmailSelected();
         expect(returnValue).toBe(true);
       });
@@ -201,8 +201,8 @@ describe('CommunicationCatFGHKPage', () => {
       });
 
       it('should return true for isNewEmailSelected() if appropriate properties are defined', () => {
-        component.communicationType = CommunicationCatFGHKPage.email;
-        component.emailType = CommunicationCatFGHKPage.updatedEmail;
+        component.communicationType = CommunicationCatHomeTestPage.email;
+        component.emailType = CommunicationCatHomeTestPage.updatedEmail;
         const returnValue = component.isNewEmailSelected();
         expect(returnValue).toBe(true);
       });
@@ -215,7 +215,7 @@ describe('CommunicationCatFGHKPage', () => {
       });
 
       it('should return false for shouldPreselectADefaultValue() if communication type is defined', () => {
-        component.communicationType = CommunicationCatFGHKPage.email;
+        component.communicationType = CommunicationCatHomeTestPage.email;
         const returnValue = component.shouldPreselectADefaultValue();
         expect(returnValue).toBe(false);
       });
