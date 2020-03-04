@@ -13,8 +13,6 @@ class JournalPage extends Page {
     DashboardPage.clickGoToMyJournalButton();
 
     // If the journal page is loaded we should have a refresh button
-    // const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-    // browser.wait(ExpectedConditions.presenceOf(refreshButton));
     this.waitForRefreshButton();
   }
 

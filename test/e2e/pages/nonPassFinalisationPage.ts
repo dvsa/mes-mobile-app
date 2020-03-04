@@ -7,6 +7,7 @@ class NonPassFinalisationPage extends Page {
     this.submitDialog();
   }
 
+  // 2 getTestOutcomes - one is in debriefPage.ts.
   getTestOutcome() {
     return this.getElementById('office-page-test-outcome');
   }

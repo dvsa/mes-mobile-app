@@ -57,7 +57,7 @@ class DebriefPage extends Page {
     this.clickElementByXPath(xpath);
   }
 
-  // todo: there seem to be 2 continue buttons....why?  Are they on different pages?
+  // todo: kc there seem to be 2 continue buttons....why?  Are they on different pages?
   // todo: is it different ways of calling the same button?
   clickContinueButton2() {
     this.clickElementById('continue-button');
@@ -81,8 +81,8 @@ class DebriefPage extends Page {
   }
 
   getTestOutcome(testCategory) {
-    // tslint:disable-next-line:max-line-length
-    const xpath = `//div[contains(@class, "debrief-cat-${testCategory}-page")]//div[@id = "test-outcome-background"]/div/h1`;
+    const xpath =
+      `//div[contains(@class, "debrief-cat-${testCategory}-page")]//div[@id = "test-outcome-background"]/div/h1`;
     return this.getElementByXPath(xpath);
   }
 }
