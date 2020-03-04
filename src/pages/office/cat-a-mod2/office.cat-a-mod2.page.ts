@@ -115,6 +115,7 @@ interface OfficePageState {
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
+  testCategory$: Observable<TestCategory>;
   isPassed$: Observable<boolean>;
   isTestOutcomeSet$: Observable<boolean>;
   candidateName$: Observable<string>;
@@ -204,6 +205,7 @@ export class OfficeCatAMod2Page extends BasePageComponent {
     );
 
     this.pageState = {
+      testCategory$,
       activityCode$: currentTest$.pipe(
         select(getActivityCode),
       ),
