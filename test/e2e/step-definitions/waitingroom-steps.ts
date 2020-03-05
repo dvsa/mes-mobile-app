@@ -58,6 +58,8 @@ When('the candidate completes the declaration page', () => {
 
 When('I proceed to the car', () => {
   // Examiner clicks continue button then enters passcode
+  // todo: kc the line below is stopping the ali campbell tests from passing.
+  // but if it's not here then the florence pearson tests fail.
   const continueButton = TempPage.getAndAwaitElement(by.xpath(
     `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
   TempPage.clickElement(continueButton);

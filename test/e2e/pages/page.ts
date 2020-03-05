@@ -15,11 +15,15 @@ export default class Page {
   }
 
   clickElementById(elementId) {
-    this.clickElement(this.getElementById(elementId));
+    const element = this.getElementById(elementId);
+    this.waitForPresenceOfElement(element);
+    this.clickElement(element);
   }
 
   clickElementByXPath(xpath) {
-    this.clickElement(this.getElementByXPath(xpath));
+    const element = this.getElementByXPath(xpath);
+    this.waitForPresenceOfElement(element);
+    this.clickElement(element);
   }
 
   getElementByXPath(xpath) {
