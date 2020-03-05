@@ -1,5 +1,5 @@
 import { When, Then, Before } from 'cucumber';
-import { getElement, enterPasscode } from './generic-steps';
+import { enterPasscode } from './generic-steps';
 import { by } from 'protractor';
 import TempPage from '../pages/tempPage';
 
@@ -27,7 +27,7 @@ Before({ tags: '@catc1e' }, () => {
 });
 
 Then('the pass certificate number should be {string}', (certificateNumber) => {
-  const passCertificateNumber = getElement(by.id('declaration-pass-certificate-number'));
+  const passCertificateNumber = TempPage.getElement(by.id('declaration-pass-certificate-number'));
   passCertificateNumber.getText().then((textValue) => {
     expect(textValue.trim().endsWith(`: ${certificateNumber}`)).to.be.true;
   });
@@ -38,11 +38,11 @@ When('I try to confirm the health declaration', () => {
 });
 
 When('I complete the health declaration', () => {
-  const healthDeclarationCheckbox = getElement(by.id('health-declaration-checkbox'));
+  const healthDeclarationCheckbox = TempPage.getElement(by.id('health-declaration-checkbox'));
   TempPage.clickElement(healthDeclarationCheckbox);
-  const receiptDeclarationCheckbox = getElement(by.id('receipt-declaration-checkbox'));
+  const receiptDeclarationCheckbox = TempPage.getElement(by.id('receipt-declaration-checkbox'));
   TempPage.clickElement(receiptDeclarationCheckbox);
-  const healthSignatureField = getElement(by.xpath(
+  const healthSignatureField = TempPage.getElement(by.xpath(
     `//div[contains(@class, "health-declaration-cat-${this.testCategory}-page")]//signature-pad/canvas`));
     TempPage.clickElement(healthSignatureField);
 
@@ -52,7 +52,7 @@ When('I complete the health declaration', () => {
 });
 
 const confirmHealthDeclaration = () => {
-  const buttonElement = getElement(by.xpath(
+  const buttonElement = TempPage.getElement(by.xpath(
     `//div[contains(@class, "health-declaration-cat-${this.testCategory}-page")]//button[@id="continue-button"]`));
     TempPage.clickElement(buttonElement);
 };
