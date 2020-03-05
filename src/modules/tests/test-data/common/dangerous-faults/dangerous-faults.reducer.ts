@@ -1,6 +1,5 @@
 import { DangerousFaults } from '@dvsa/mes-test-schema/categories/common';
 import * as dangerousFaultsActions from './dangerous-faults.actions';
-import { Competencies } from '../../test-data.constants';
 
 export const initialState: DangerousFaults = {};
 
@@ -15,7 +14,7 @@ export function dangerousFaultsReducer(
         [action.payload]: true,
       };
     case dangerousFaultsActions.REMOVE_DANGEROUS_FAULT:
-      const dangerousCompetency = action.payload as Competencies;
+      const dangerousCompetency = action.payload;
       const { [dangerousCompetency]: removedDangerousFault, ...updatedDangerousFaults } = state;
       return {
         ...updatedDangerousFaults,

@@ -166,9 +166,9 @@ export class OfficeCatDPage extends BasePageComponent {
   subscription: Subscription;
   form: FormGroup;
   toast: Toast;
-  drivingFaultCtrl: String = 'drivingFaultCtrl';
-  seriousFaultCtrl: String = 'seriousFaultCtrl';
-  dangerousFaultCtrl: String = 'dangerousFaultCtrl';
+  drivingFaultCtrl: string = 'drivingFaultCtrl';
+  seriousFaultCtrl: string = 'seriousFaultCtrl';
+  dangerousFaultCtrl: string = 'dangerousFaultCtrl';
   static readonly maxFaultCount = 15;
 
   weatherConditions: WeatherConditionSelection[];

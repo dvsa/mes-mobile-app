@@ -150,9 +150,9 @@ export class OfficeCatAMod1Page extends BasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
   toast: Toast;
-  drivingFaultCtrl: String = 'drivingFaultCtrl';
-  seriousFaultCtrl: String = 'seriousFaultCtrl';
-  dangerousFaultCtrl: String = 'dangerousFaultCtrl';
+  drivingFaultCtrl: string = 'drivingFaultCtrl';
+  seriousFaultCtrl: string = 'seriousFaultCtrl';
+  dangerousFaultCtrl: string = 'dangerousFaultCtrl';
   static readonly maxFaultCount = 5;
 
   weatherConditions: WeatherConditionSelection[];

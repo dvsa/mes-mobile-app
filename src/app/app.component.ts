@@ -19,7 +19,7 @@ declare let window: any;
 export class App {
   rootPage: any = LOGIN_PAGE;
   textZoom: number = 100;
-  increasedContrast: Boolean = false;
+  increasedContrast: boolean = false;
 
   private platformSubscription: Subscription;
   private subscription: Subscription;
