@@ -40,6 +40,23 @@ class NonPassFinalisationPage extends Page {
   selectManualTransmission() {
     this.clickElementById('transmission-manual');
   }
+
+  // todo: kc also on debriefPage.
+  getD255Yes() {
+    const element = this.getElementById('d255-yes');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  // todo: kc also on debriefPage.
+  clickD255Yes() {
+    this.clickElement(this.getD255Yes());
+  }
+
+  clickContinueToBackOfficeButton(testCategory) {
+    this.clickElementByXPath(
+      `//div[contains(@class, "non-pass-finalisation-cat-${testCategory}-page")]//button[@id = "continue-button"]`);
+  }
 }
 
 export default new NonPassFinalisationPage();

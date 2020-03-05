@@ -29,12 +29,14 @@ class DebriefPage extends Page {
     this.clickElementById('license-received');
   }
 
+  // todo: kc also on nonPassFinalisationPage
   getD255Yes() {
     const element = this.getElementById('d255-yes');
     this.waitForPresenceOfElement(element);
     return element;
   }
 
+  // todo: kc also on nonPassFinalisationPage
   clickD255Yes() {
     this.clickElement(this.getD255Yes());
   }
