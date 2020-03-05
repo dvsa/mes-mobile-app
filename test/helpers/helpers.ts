@@ -1,5 +1,4 @@
-import { browser, ExpectedConditions, element, by , Key } from 'protractor';
-import { TEST_CONFIG } from '../../test/e2e/test.config';
+import { browser, ExpectedConditions, element, by } from 'protractor';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
