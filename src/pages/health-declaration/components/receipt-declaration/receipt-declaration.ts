@@ -24,7 +24,7 @@ export class ReceiptDeclarationComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl('', [Validators.requiredTrue]),
+      this.formControl = new FormControl('', [Validators.requiredTrue]);
 
       this.formGroup.addControl(ReceiptDeclarationComponent.fieldName, this.formControl);
     }

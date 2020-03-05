@@ -33,7 +33,7 @@ export class SignatureComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl('', [Validators.required]),
+      this.formControl = new FormControl('', [Validators.required]);
 
       this.formGroup.addControl(SignatureComponent.fieldName, this.formControl);
     }
