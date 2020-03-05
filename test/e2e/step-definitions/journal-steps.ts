@@ -22,12 +22,12 @@ Given('I am on the journal page as {string}', (username) => {
 });
 
 When('I view candidate details for {string}', (candidateName) => {
-  return viewCandidateDetails(candidateName);
+  return JournalPage.viewCandidateDetails(candidateName);
 });
 
 When('I check candidate details for {string}', (candidateName) => {
-  viewCandidateDetails(candidateName);
-  closeCandidateDetailsDialog();
+  JournalPage.viewCandidateDetails(candidateName);
+  JournalPage.closeCandidateDetailsDialog();
 });
 
 When('I start the test for {string}', (candidateName) => {
@@ -146,13 +146,3 @@ Then('I continue the write up for {string}', (candidateName) => {
     h3[text() = "${candidateName}"]]`));
   TempPage.clickElement(continueWriteUp);
 });
-
-const viewCandidateDetails = (candidateName) => {
-  const buttonElement = TempPage.getAndAwaitElement(by.xpath(`//h3[text()[normalize-space(.) = "${candidateName}"]]`));
-  return TempPage.clickElement(buttonElement);
-};
-
-const closeCandidateDetailsDialog = () => {
-  const closeCandidateDetailDialog = element(by.id('closeCandidateDetails'));
-  TempPage.clickElement(closeCandidateDetailDialog);
-};
