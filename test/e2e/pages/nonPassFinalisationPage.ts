@@ -9,11 +9,15 @@ class NonPassFinalisationPage extends Page {
 
   // 2 getTestOutcomes - one is in debriefPage.ts.
   getTestOutcome() {
-    return this.getElementById('office-page-test-outcome');
+    const element = this.getElementById('office-page-test-outcome');
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getActivityCodeSelector() {
-    return this.getElementById('activity-code-selector');
+    const element = this.getElementById('activity-code-selector');
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   clickActivityCodeSelector() {
@@ -26,7 +30,7 @@ class NonPassFinalisationPage extends Page {
   }
 
   submitDialog() {
-    this.getElementByXPath('//button[span[text() = "Submit"]]');
+    this.clickElementByXPath('//button[span[text() = "Submit"]]');
   }
 
   selectAutomaticTransmission() {
