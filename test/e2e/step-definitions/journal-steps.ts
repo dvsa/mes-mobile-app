@@ -1,4 +1,3 @@
-import { by, element  } from 'protractor';
 import JournalPage from '../pages/journalPage';
 import TempPage from '../pages/tempPage';
 
@@ -30,25 +29,21 @@ When('I check candidate details for {string}', (candidateName) => {
 });
 
 When('I start the test for {string}', (candidateName) => {
-  const buttonElement = TempPage.getAndAwaitElement(
-    by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-  TempPage.clickElement(buttonElement);
+  JournalPage.startTestFor(candidateName);
 
   // If the rekey dialog is shown so just select start test normally
-  const rekeyStartTestButton = element(by.id('rekey-start-test-button'));
+  const rekeyStartTestButton = JournalPage.getRekeyStartTestButton();
   rekeyStartTestButton.isPresent().then((result) => {
     if (result) {
-      TempPage.clickElement(rekeyStartTestButton);
+      JournalPage.clickRekeyStartTestButton();
     }
   });
 
     // If the start test early dialog is shown just select continue
-  const startTestEarlyButton = element(by.id('early-start-start-test-button'));
+  const startTestEarlyButton = JournalPage.getStartTestEarlyButton();
   startTestEarlyButton.isPresent().then((result) => {
     if (result) {
-      TempPage.clickElement(startTestEarlyButton);
+      JournalPage.clickStartTestEarlyButton();
     }
   });
 });
@@ -57,10 +52,13 @@ When('I rekey a test for {string}', (candidateName) => {
   const previousDayButtonElement = TempPage.getAndAwaitElement(by.id('previous-day-container'));
   TempPage.clickElement(previousDayButtonElement);
 
-  const buttonElement = TempPage.getAndAwaitElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
-  [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-  h3[text() = "${candidateName}"]]`));
-  TempPage.clickElement(buttonElement);
+  JournalPage.clickRekeyTestButtonFor(candidateName);
+  // todo: added as part of an independent commit.  Left in to make
+  // sure that the merge works correctly.
+  // const buttonElement = TempPage.getAndAwaitElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
+  // [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+  // h3[text() = "${candidateName}"]]`));
+  // TempPage.clickElement(buttonElement);
 });
 
 When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidateName: string) => {
@@ -97,89 +95,63 @@ When('I rekey a late test for {string}',(candidateName) => {
 });
 
 When('I navigate to next day', () => {
-  const nextDayButtonElement = TempPage.getAndAwaitElement(by.id('next-day-container'));
-  return TempPage.clickElement(nextDayButtonElement);
+  JournalPage.clickNextDayButton();
 });
 
 When('I navigate to previous day', () => {
-  const previousDayButtonElement = TempPage.getAndAwaitElement(by.id('previous-day-container'));
-  return TempPage.clickElement(previousDayButtonElement);
+  JournalPage.clickNextDayButton();
 });
 
 Then('I have a special needs slot for {string}', (candidateName) => {
-  const exclamationIndicator = TempPage.getAndAwaitElement(
-    by.xpath(`//indicators/div/img[@class = "exclamation-indicator"]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
+  const exclamationIndicator = JournalPage.getSpecialNeedsIndicatorFor(candidateName);
   return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
 });
 
 Then('I have a welsh slot for {string}', (candidateName) => {
-  const exclamationIndicator = TempPage.getAndAwaitElement(by.xpath(`//ion-grid/ion-row/ion-col/language/
-  div[@class = "welsh-language-indicator"][ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link
-    /div/button/span/h3[text() = "${candidateName}"]]`));
+  const exclamationIndicator = JournalPage.getWelshIndicatorFor(candidateName);
   return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
 });
 
 When('I refresh the journal', () => {
-  const refreshButton = TempPage.getAndAwaitElement(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-  return TempPage.clickElement(refreshButton);
+  JournalPage.clickRefreshButton();
 });
 
 Then('I have a non-test slot for {string} with code {string} at {string}', (description, code, time) => {
-  const slotLocator = TempPage.getAndAwaitElement(by.xpath(`//ion-row[ion-col/div/time/div/h2[text() = '${time}']]
-  [ion-col/h3[normalize-space(text()) = '${description}']][ion-col[h2[text() = '${code}']]]`));
+  const slotLocator = JournalPage.getSlotLocator(description, code, time);
+  // todo: kc does getSlotLocator need this.waitForPresenceOfElement(element)
+  //  if it is being used with isPresent()to.eventually.be.true?
   return expect(slotLocator.isPresent()).to.eventually.be.true;
 });
 
 Then('the test result for {string} is {string}', (candidateName, testResult) => {
-  const testResultElement = TempPage.getAndAwaitElement(by.xpath(`//test-outcome//span[@class='outcome']/h2
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-
+  const testResultElement = JournalPage.getTestResultElementFor(candidateName);
+  // todo: kc does getTestResultElementFor need this.waitForPresenceOfElement(element)
+  //  if it is being used with isPresent()to.eventually.be.true?
   return expect(testResultElement.getText()).to.eventually.equal(testResult);
 });
 
 Then('I should have a category {string} test for {string}', (category, candidateName) => {
-  const testCategory = TempPage.getAndAwaitElement(
-    by.xpath(`//test-category/h2[ancestor::ion-row/ion-col/ion-grid/ion-row/
-    ion-col/candidate-link/div/button/span/h3[text() = "${candidateName}"]]`));
+  const testCategory = JournalPage.getTestCategoryElementFor(candidateName);
   return expect(testCategory.getText()).to.eventually.equal(category);
 });
 
 Then('The vehicle for {string} has length {string}, width {string}, height {string} and seats {string}',
 (candidateName, length, width, height, seats) => {
-  const lengthValue = TempPage.getAndAwaitElement(
-    by.xpath(`//vehicle-details/div/span/span[text()= 'L: ']/following-sibling::span
-    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`));
+  const lengthValue = JournalPage.getVehicleLengthElementFor(candidateName);
   expect(lengthValue.getText()).to.eventually.equal(length);
 
-  const widthValue = TempPage.getAndAwaitElement(
-    by.xpath(`//vehicle-details/div/span/span[text()= 'W: ']/following-sibling::span
-    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`));
+  const widthValue = JournalPage.getVehicleWidthElementFor(candidateName);
   expect(widthValue.getText()).to.eventually.equal(width);
 
-  const heightValue = TempPage.getAndAwaitElement(
-    by.xpath(`//vehicle-details/div/span/span[text()= 'H: ']/following-sibling::span
-    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`));
+  const heightValue = JournalPage.getVehicleHeightElementFor(candidateName);
   expect(heightValue.getText()).to.eventually.equal(height);
 
-  const seatValue = TempPage.getAndAwaitElement(
-    by.xpath(`//vehicle-details/div/span/span[text() = 'Seats: ']/following-sibling::span
-    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`));
+  const seatValue = JournalPage.getSeatElementFor(candidateName);
   return expect(seatValue.getText()).to.eventually.equal(seats);
 });
 
 Then('I continue the write up for {string}', (candidateName) => {
-  const continueWriteUp = TempPage.getAndAwaitElement(
-    by.xpath(`//button/span/h3[text()[normalize-space(.) = "Write-up"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-  TempPage.clickElement(continueWriteUp);
+  JournalPage.clickContinueWriteupButton(candidateName);
 });
 
 const rekeyIsPresent = () => {

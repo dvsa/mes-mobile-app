@@ -13,8 +13,7 @@ class JournalPage extends Page {
     DashboardPage.clickGoToMyJournalButton();
   }
 
-  // todo: kc find a better name
-  getExclamationIndicatorSpecialNeedsFor(candidateName) {
+  getSpecialNeedsIndicatorFor(candidateName) {
     const element = this.getElementByXPath(`//indicators/div/img[@class = "exclamation-indicator"]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`);
@@ -22,8 +21,7 @@ class JournalPage extends Page {
     return element;
   }
 
-  // todo: kc find a better name
-  getExclamationIndicatorWelshfor(candidateName) {
+  getWelshIndicatorFor(candidateName) {
     const element = this.getElementByXPath(`//ion-grid/ion-row/ion-col/language/
   div[@class = "welsh-language-indicator"][ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link
     /div/button/span/h3[text() = "${candidateName}"]]`);
@@ -78,7 +76,7 @@ class JournalPage extends Page {
   }
 
   getSeatElementFor(candidateName) {
-    const element = this.getElementByXPath(`//vehicle-details/Fdiv/span/span[text() = 'Seats: ']/following-sibling::span
+    const element = this.getElementByXPath(`//vehicle-details/div/span/span[text() = 'Seats: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
       [text() = "${candidateName}"]]`);
     this.waitForPresenceOfElement(element);
@@ -97,7 +95,8 @@ class JournalPage extends Page {
 
   getRekeyStartTestButton() {
     return this.getElementById('rekey-start-test-button');
-    // no need to call this.waitForPresenceOfElement(element) - uses element() in orig code instead of getElement()
+    // no need to call this.waitForPresenceOfElement(element) - this element may or may not be present.  If it is
+    // present we want to click it.  If it isn't present we don't care.
   }
 
   clickRekeyStartTestButton() {
@@ -118,7 +117,8 @@ class JournalPage extends Page {
 
   getStartTestEarlyButton() {
     return this.getElementById('early-start-start-test-button');
-    // no need to call this.waitForPresenceOfElement(element) - uses element() in orig code instead of getElement()
+    // no need to call this.waitForPresenceOfElement(element) - this element may or may not be present.  If it is
+    // present we want to click it.  If it isn't present we don't care.
   }
 
   clickStartTestEarlyButton() {
