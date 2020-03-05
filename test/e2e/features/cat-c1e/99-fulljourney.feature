@@ -2,7 +2,7 @@
 Feature: Full end to end journey for Category c
 
   Scenario: Examiner completes a failed test with various faults
-    Given I am logged in as "desexaminerc1e" and I have a test for "Mr Denny Carlson"
+    Given I am logged in as "mobexaminer1" and I have a test for "Mr Denny Carlson"
     When I check candidate details for "Mr Denny Carlson"
     And I start the test for "Mr Denny Carlson"
     And the candidate completes the declaration page
