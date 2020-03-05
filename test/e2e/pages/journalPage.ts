@@ -15,60 +15,80 @@ class JournalPage extends Page {
 
   // todo: kc find a better name
   getExclamationIndicatorSpecialNeedsFor(candidateName) {
-    return this.getElementByXPath(`//indicators/div/img[@class = "exclamation-indicator"]
+    const element = this.getElementByXPath(`//indicators/div/img[@class = "exclamation-indicator"]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   // todo: kc find a better name
   getExclamationIndicatorWelshfor(candidateName) {
-    return this.getElementByXPath(`//ion-grid/ion-row/ion-col/language/
+    const element = this.getElementByXPath(`//ion-grid/ion-row/ion-col/language/
   div[@class = "welsh-language-indicator"][ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link
     /div/button/span/h3[text() = "${candidateName}"]]`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getSlotLocator(description, code, time) {
-    return this.getElementByXPath(`//ion-row[ion-col/div/time/div/h2[text() = '${time}']]
+    const element = this.getElementByXPath(`//ion-row[ion-col/div/time/div/h2[text() = '${time}']]
     [ion-col/h3[normalize-space(text()) = '${description}']][ion-col[h2[text() = '${code}']]]`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getTestResultElementFor(candidateName) {
-    return this.getElementByXPath(`//test-outcome//span[@class='outcome']/h2
+    const element = this.getElementByXPath(`//test-outcome//span[@class='outcome']/h2
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getTestCategoryElementFor(candidateName) {
-    return this.getElementByXPath(`//test-category/h2[ancestor::ion-row/ion-col/ion-grid/ion-row/
+    const element = this.getElementByXPath(`//test-category/h2[ancestor::ion-row/ion-col/ion-grid/ion-row/
     ion-col/candidate-link/div/button/span/h3[text() = "${candidateName}"]]`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getVehicleLengthElementFor(candidateName) {
-    return this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'L: ']/following-sibling::span
+    const element = this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'L: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
       [text() = "${candidateName}"]]`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getVehicleWidthElementFor(candidateName) {
-    return this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'W: ']/following-sibling::span
+    const element = this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'W: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
       [text() = "${candidateName}"]]`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getVehicleHeightElementFor(candidateName) {
-    return this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'H: ']/following-sibling::span
+    const element = this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'H: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
       [text() = "${candidateName}"]]`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getSeatElementFor(candidateName) {
-    return this.getElementByXPath(`//vehicle-details/div/span/span[text() = 'Seats: ']/following-sibling::span
+    const element = this.getElementByXPath(`//vehicle-details/Fdiv/span/span[text() = 'Seats: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
       [text() = "${candidateName}"]]`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getRefreshButton() {
-    return this.getElementByXPath('//button/span/span/span[text() = "Refresh"]');
+    const element = this.getElementByXPath('//button/span/span/span[text() = "Refresh"]');
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   clickRefreshButton() {
@@ -77,6 +97,7 @@ class JournalPage extends Page {
 
   getRekeyStartTestButton() {
     return this.getElementById('rekey-start-test-button');
+    // no need to call this.waitForPresenceOfElement(element) - uses element() in orig code instead of getElement()
   }
 
   clickRekeyStartTestButton() {
@@ -97,6 +118,7 @@ class JournalPage extends Page {
 
   getStartTestEarlyButton() {
     return this.getElementById('early-start-start-test-button');
+    // no need to call this.waitForPresenceOfElement(element) - uses element() in orig code instead of getElement()
   }
 
   clickStartTestEarlyButton() {
@@ -120,9 +142,11 @@ class JournalPage extends Page {
   }
 
   getStartTestButtonFor(candidateName) {
-    return this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
+    const element = this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   startTestFor(candidateName) {
