@@ -137,3 +137,21 @@ export const CAT_HOME_TEST = {
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatDModal',
   VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatDPage',
 };
+
+export const CAT_HOME_TEST = {
+  BACK_TO_OFFICE_PAGE: 'BackToOfficeCatHomeTestPage',
+  COMMUNICATION_PAGE: 'CommunicationCatDPage',
+  DEBRIEF_PAGE: 'DebriefCatDPage',
+  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatDPage',
+  OFFICE_PAGE: 'OfficeCatDPage',
+  PASS_FINALISATION_PAGE: 'PassFinalisationCatDPage',
+  TEST_REPORT_PAGE: 'TestReportCatDPage',
+  WAITING_ROOM_PAGE: 'WaitingRoomCatHomeTestPage',
+  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatDPage',
+  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatHomeTestPage',
+  REKEY_REASON_PAGE: 'RekeyReasonCatDPage',
+  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
+  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatDPage',
+  VEHICLE_CHECKS_MODAL: 'VehicleChecksCatDModal',
+  VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatDPage',
+};
