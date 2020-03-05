@@ -5,8 +5,10 @@ import LoginPage from './loginPage';
 
 class LandingPage extends Page {
   getEmployeeId(username) {
-    return this.getElementByXPath(
+    const element = this.getElementByXPath(
       `//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   // todo: kc on journalPage there is a method onJournalPageAs.

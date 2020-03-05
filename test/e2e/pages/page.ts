@@ -27,13 +27,12 @@ export default class Page {
   }
 
   getElementByXPath(xpath) {
-    return this.getAndAwaitElement(by.xpath(xpath));
-    // return element(by.xpath(xpath)); stops ali campbell debrieffrom working
+    // return this.getAndAwaitElement(by.xpath(xpath));
+    return element(by.xpath(xpath)); // used to stop ali campbell debrieffrom working
   }
 
   getElementById(elementId) {
-    return this.getAndAwaitElement(by.id(elementId));
-    // return element(by.id(elementId)); stops ali campbell debrief from working
+    return element(by.id(elementId));
   }
 
 /**
@@ -87,7 +86,9 @@ export default class Page {
 
   // todo: kc only used in healthdeclaration-steps.ts and waitingroom-steps.ts, so could potentially be moved elsewhere.
   getPassCodeField() {
-    return this.getElementByXPath('//XCUIElementTypeSecureTextField[@label="Passcode field"]');
+    const element = this.getElementByXPath('//XCUIElementTypeSecureTextField[@label="Passcode field"]');
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   /**
