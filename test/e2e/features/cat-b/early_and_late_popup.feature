@@ -11,4 +11,3 @@ Feature: early and late popup
     Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
     When I start the test late for "Miss Florence Pearson"
     Then I should see the "Declaration - Florence Pearson" page
-    And I click the back button
