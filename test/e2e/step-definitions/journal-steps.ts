@@ -54,16 +54,12 @@ When('I start the test for {string}', (candidateName) => {
 When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidateName: string) => {
   if (testTime === 'early') {
     startingEarlyTest(candidateName);
-    console.log('Dialog Seen');
 
     // If the start test early dialog is shown just select continue
     const startTestEarlyButton = element(by.id('early-start-start-test-button'));
     startTestEarlyButton.isPresent().then((result) => {
       if (result) {
         clickElement(startTestEarlyButton);
-         console.log('Continue Button Clicked')
-      } else {
-        console.log('Continue Button ---NOT--- Clicked')
       }
     });
   }

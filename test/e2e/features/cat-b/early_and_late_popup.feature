@@ -6,7 +6,6 @@ Feature: early and late popup
     When I check candidate details for "Mr James Brown"
     And I start the test early for "Mr James Brown"
     Then I should see the "Declaration - James Brown" page
-    And I click the back button
 
   Scenario: Late start popup
     Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
