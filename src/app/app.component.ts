@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 import { StoreModel } from '../shared/models/store.model';
 import { LoadAppInfo, AppSuspended, AppResumed } from '../modules/app-info/app-info.actions';
@@ -10,6 +10,7 @@ import { LOGIN_PAGE } from '../pages/page-names.constants';
 import { Subscription } from 'rxjs/Subscription';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
+import { getTests } from '../modules/tests/tests.reducer';
 
 declare let window: any;
 
@@ -38,6 +39,9 @@ export class App {
         if (this.platform.is('ios')) {
           this.configureAccessibility();
           this.configurePlatformSubscriptions();
+          store$
+          .pipe(select(getTests))
+          .subscribe(res => window.store = res);
         }
       });
   }

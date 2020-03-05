@@ -25,6 +25,7 @@ Feature: A Driving Examiner Completes a pass test for category B
       And the office page test outcome is "Passed"
       When I complete the office write up
       And I upload the test
+      Then the schema object is validated
       Then I should see the "Journal" page
       And the test result for "Miss Florence Pearson" is "1"
       

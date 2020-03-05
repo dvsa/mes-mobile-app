@@ -37,3 +37,9 @@ export const scrollToElement = (element) => {
 export const waitForPresenceOfElement = (element) => {
   browser.wait(ExpectedConditions.presenceOf(element));
 };
+
+export const schemaValidator = () => {
+  browser.executeScript('return window.store;').then((result) => {
+    console.log(result);
+  });
+};

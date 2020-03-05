@@ -1,7 +1,7 @@
 import { Before } from 'cucumber';
 import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-import { waitForOverlay, getParentContext } from '../../helpers/helpers';
+import { waitForOverlay, getParentContext, schemaValidator } from '../../helpers/helpers';
 
 const {
   Given,
@@ -248,6 +248,10 @@ When('I click the back button', () => {
 
 When('I click go to my Journal', () => {
   clickGoToMyJournalButton();
+});
+
+Then('the schema object is validated', () => {
+  schemaValidator();
 });
 
 /**
