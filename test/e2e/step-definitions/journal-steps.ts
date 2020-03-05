@@ -1,4 +1,4 @@
-import { browser, by, element, ExpectedConditions } from 'protractor';
+import { by, element  } from 'protractor';
 import JournalPage from '../pages/journalPage';
 import TempPage from '../pages/tempPage';
 
@@ -17,7 +17,6 @@ Given('I am on the journal page as {string}', (username) => {
 
   // If the journal page is loaded we should have a refresh button
   const refreshButton = JournalPage.getRefreshButton();
-  browser.wait(ExpectedConditions.presenceOf(refreshButton));
   return expect(refreshButton.isPresent()).to.eventually.be.true;
 });
 

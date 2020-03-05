@@ -216,6 +216,7 @@ When('I terminate the test', () => {
   TempPage.clickElement(lastEndTestButton);
 
   const terminateTestButton = TempPage.getElementByXPath('//button/span[text() = "Terminate test"]');
+  TempPage.waitForPresenceOfElement(terminateTestButton);
   TempPage.clickElement(terminateTestButton);
 
   TempPage.enterPasscode();
@@ -230,6 +231,7 @@ Then(/^the (communication page|waiting room|debrief|health declaration) candidat
   pageName: string, candidateName: string) => {
   const candidateNameElement = TempPage.getElementByXPath(
     `//div[contains(@class, '${getPageType(pageName)}')]//h2[@id = 'candidate-name']`);
+  TempPage.waitForPresenceOfElement(candidateNameElement);
   return expect(candidateNameElement.getText()).to.eventually.equal(candidateName);
 });
 
@@ -237,11 +239,13 @@ Then(/^the (communication page|waiting room|debrief|health declaration) candidat
   pageName: string, driverNumber: string) => {
   const candidateDriverNumberElement = TempPage.getElementByXPath(
     `//div[contains(@class, '${getPageType(pageName)}')]//h3[@id = 'candidate-driver-number']`);
+  TempPage.waitForPresenceOfElement(candidateDriverNumberElement);
   return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
 });
 
 Then('I return to the Journal Page', () => {
   const returnToJournalBtn = TempPage.getElementByXPath('//*[@id="back-to-office-page"]//div[3]/button/span');
+  TempPage.waitForPresenceOfElement(returnToJournalBtn);
   TempPage.clickElement(returnToJournalBtn);
 });
 
@@ -322,6 +326,7 @@ const getPageType = (pageName : string) => {
 
 const clickBackButton = () => {
   const backButton = TempPage.getElementByXPath('//page-journal//button//span[text()="Back"]');
+  TempPage.waitForPresenceOfElement(backButton);
   TempPage.clickElement(backButton);
 };
 

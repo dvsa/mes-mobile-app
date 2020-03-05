@@ -30,7 +30,9 @@ class DebriefPage extends Page {
   }
 
   getD255Yes() {
-    return this.getElementById('d255-yes');
+    const element = this.getElementById('d255-yes');
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   clickD255Yes() {
@@ -72,18 +74,24 @@ class DebriefPage extends Page {
   }
 
   getApplicationRefField() {
-    return this.getElementByXPath('//ion-row[@id="application-reference-card"]/ion-col/span');
+    const element = this.getElementByXPath('//ion-row[@id="application-reference-card"]/ion-col/span');
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getFaultElement(faultSeverity: string, faultDescription:string) {
-    return this.getElementByXPath(`//ion-card[@id = '${faultSeverity}-fault']
+    const element = this.getElementByXPath(`//ion-card[@id = '${faultSeverity}-fault']
       //div[text() = '${faultDescription}']`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getTestOutcome(testCategory) {
     const xpath =
       `//div[contains(@class, "debrief-cat-${testCategory}-page")]//div[@id = "test-outcome-background"]/div/h1`;
-    return this.getElementByXPath(xpath);
+    const element = this.getElementByXPath(xpath);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 }
 
