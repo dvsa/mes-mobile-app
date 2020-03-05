@@ -1,9 +1,8 @@
 @catc1e
-Feature: Full end to end journey for Category c
+Feature: Full end to end journey for Category c1e
 
   Scenario: Examiner completes a failed test with various faults
-    Given I am logged in as "mobexaminer1" and I have a test for "Mr Denny Carlson"
-    When I check candidate details for "Mr Denny Carlson"
+    Given I am logged in as "mobexaminer5" and I have a test for "Mr Denny Carlson"
     And I start the test for "Mr Denny Carlson"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
@@ -12,10 +11,10 @@ Feature: Full end to end journey for Category c
     And I proceed to the car
     Then I should see the "Denny Carlson" page
     And I complete the waiting room to car page with the following vehicle checks
-      | show_me_1 | show_me_2 | show_me_3 | show_me_4 | show_me_5 |
-      | true      | true      | true      | false     | false     |
+      | show_me_1  | show_me_2  |
+      | true      | true      |
     Then I should see the "Test report - Denny Carlson" page
-    And the driver fault count is "3"
+    And the driver fault count is "1"
     When I end the test
     Then the legal requirements pop up is present
     And the required test observation is present "NS (normal start)"
@@ -26,12 +25,13 @@ Feature: Full end to end journey for Category c
     Then I return to the test report page
     And I should see the "Test report - Denny Carlson" page
     And I enter the legal requirements
+    When I add the Uncouple and Recouple fault
     When I add a "Timed" driver fault
-    And the driver fault count is "4"
+    And the driver fault count is "3"
     When I add a "Correctly" driver fault
-    And the driver fault count is "5"
+    And the driver fault count is "4"
     When I add a "Safety" driver fault
-    And the driver fault count is "6"
+    And the driver fault count is "5"
     When I add a "Control" serious fault with a long press
     Then the "Control" button displays the serious badge
     When I end the test
@@ -43,7 +43,6 @@ Feature: Full end to end journey for Category c
     And I see a "driving" fault for "Move off - Safety"
     And I see a "driving" fault for "Vehicle checks"
     When I end the debrief
-    Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
     And I complete the fail details
     And I am on the back to office page
@@ -52,6 +51,7 @@ Feature: Full end to end journey for Category c
     And the office page test outcome is "Unsuccessful"
     When I complete the office write up
     And I enter a comment for "serious" fault "Move off - Control"
+    And I enter a comment for "serious" fault "Vehicle checks"
     And I upload the test
     Then I should see the "Journal" page
     And the test result for "Mr Denny Carlson" is "2"
