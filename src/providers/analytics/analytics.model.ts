@@ -156,6 +156,8 @@ export enum AnalyticsEvents {
   REMOVE_SERIOUS_SINGLE_FAULT = 'remove serious fault',
   REMOVE_DANGEROUS_SINGLE_FAULT = 'remove dangerous fault',
   CIRCUIT_CHANGED = 'circuit changed',
+  INDEPENDENT_DRIVING_TYPE_CHANGED = 'independent driving type changed',
+  MODE_OF_TRANSPORT_CHANGED = 'mode of transport changed',
 }
 
 export enum AnalyticsLabels {
