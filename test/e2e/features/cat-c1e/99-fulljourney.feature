@@ -1,9 +1,8 @@
 @catc1e
-Feature: Full end to end journey for Category c
+Feature: Full end to end journey for Category c1e
 
   Scenario: Examiner completes a failed test with various faults
-    Given I am logged in as "mobexaminer1" and I have a test for "Mr Denny Carlson"
-    When I check candidate details for "Mr Denny Carlson"
+    Given I am logged in as "mobexaminer5" and I have a test for "Mr Denny Carlson"
     And I start the test for "Mr Denny Carlson"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
@@ -12,10 +11,10 @@ Feature: Full end to end journey for Category c
     And I proceed to the car
     Then I should see the "Denny Carlson" page
     And I complete the waiting room to car page with the following vehicle checks
-      | show_me_1 | show_me_2 | show_me_3 | show_me_4 | show_me_5 |
-      | true      | true      | true      | false     | false     |
+      | show_me_1  | show_me_2  |
+      | true      | true      |
     Then I should see the "Test report - Denny Carlson" page
-    And the driver fault count is "3"
+    And the driver fault count is "1"
     When I end the test
     Then the legal requirements pop up is present
     And the required test observation is present "NS (normal start)"
@@ -26,12 +25,13 @@ Feature: Full end to end journey for Category c
     Then I return to the test report page
     And I should see the "Test report - Denny Carlson" page
     And I enter the legal requirements
+    When I add the Uncouple and Recouple fault
     When I add a "Timed" driver fault
-    And the driver fault count is "4"
+    And the driver fault count is "3"
     When I add a "Correctly" driver fault
-    And the driver fault count is "5"
+    And the driver fault count is "4"
     When I add a "Safety" driver fault
-    And the driver fault count is "6"
+    And the driver fault count is "5"
     When I add a "Control" serious fault with a long press
     Then the "Control" button displays the serious badge
     When I end the test
