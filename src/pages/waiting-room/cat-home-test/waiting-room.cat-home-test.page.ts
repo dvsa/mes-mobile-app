@@ -54,6 +54,8 @@ import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { App } from '../../../app/app.component';
 import { DeviceProvider } from '../../../providers/device/device';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -64,6 +66,7 @@ interface WaitingRoomPageState {
   candidateDriverNumber$: Observable<string>;
   welshTest$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
+  category$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -168,6 +171,9 @@ export class WaitingRoomCatHomeTestPage extends BasePageComponent implements OnI
       conductedLanguage$: currentTest$.pipe(
         select(getCommunicationPreference),
         select(getConductedLanguage),
+      ),
+      category$: currentTest$.pipe(
+        select(getTestCategory),
       ),
     };
     const { welshTest$, conductedLanguage$ } = this.pageState;

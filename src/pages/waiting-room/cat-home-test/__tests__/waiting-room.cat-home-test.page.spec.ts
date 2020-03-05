@@ -42,7 +42,7 @@ import { LockScreenIndicator } from '../../../../components/common/screen-lock-i
 import { CandidateSectionComponent } from '../../../../components/common/candidate-section/candidate-section';
 import { FormControl, Validators } from '@angular/forms';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
-import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 import { configureTestSuite } from 'ng-bullet';
@@ -214,7 +214,7 @@ describe('WaitingRoomCatHomeTestPage', () => {
     });
 
     describe('isJournalDataInvalid', () => {
-      const journalData: CatDUniqueTypes.JournalData = {
+      const journalData: CatFUniqueTypes.JournalData = {
         examiner: {
           staffNumber: 'real-staff-number',
         },
@@ -236,7 +236,7 @@ describe('WaitingRoomCatHomeTestPage', () => {
             firstName: 'fname',
             lastName: 'lname',
           },
-        } as CatDUniqueTypes.Candidate,
+        } as CatFUniqueTypes.Candidate,
         applicationReference: {
           applicationId: 11223344141414,
           bookingSequence: 112,
@@ -260,7 +260,7 @@ describe('WaitingRoomCatHomeTestPage', () => {
           candidate: {
             candidateName: {},
             driverNumber: '',
-          } as CatDUniqueTypes.Candidate,
+          } as CatFUniqueTypes.Candidate,
         });
         expect(result).toBeTruthy;
       });
