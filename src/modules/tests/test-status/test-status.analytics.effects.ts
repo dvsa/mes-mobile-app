@@ -4,7 +4,7 @@ import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import * as testStatusActions from './test-status.actions';
 import { concatMap } from 'rxjs/operators';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { AnalyticsEventCategories, AnalyticsEvents } from '../../../providers/analytics/analytics.model';
 
 @Injectable()

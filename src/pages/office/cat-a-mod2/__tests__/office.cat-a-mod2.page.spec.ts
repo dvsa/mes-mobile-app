@@ -49,7 +49,7 @@ import {
   ModeOfTransportChanged,
 } from '../../../../modules/tests/test-summary/cat-a-mod2/test-summary.cat-a-mod2.actions';
 import { WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/common';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../../components/candidate-description/candidate-description';

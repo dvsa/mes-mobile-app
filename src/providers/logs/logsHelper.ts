@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber, getEmployeeId } from '../../modules/app-info/app-info.selector';
 import { map } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
+import { merge } from 'rxjs';
 import { StoreModel } from '../../shared/models/store.model';
 import { Device } from '@ionic-native/device';
 import { Injectable } from '@angular/core';

@@ -1,9 +1,7 @@
 import { async, TestBed } from '@angular/core/testing';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject, Observable, EMPTY, of } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
-import { Observable } from 'rxjs/Observable';
-import { empty } from 'rxjs/observable/empty';
 import { StoreModule, Store } from '@ngrx/store';
 import { TestReportEffects } from '../test-report.effects';
 import * as etaActions from '../../../modules/tests/test-data/common/eta/eta.actions';
@@ -14,7 +12,6 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
-import { of } from 'rxjs/observable/of';
 import { ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
@@ -23,7 +20,7 @@ import { configureTestSuite } from 'ng-bullet';
 
 export class TestActions extends Actions {
   constructor() {
-    super(empty());
+    super(EMPTY);
   }
 
   set stream$(source$: Observable<any>) {

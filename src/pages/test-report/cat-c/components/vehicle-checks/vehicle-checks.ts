@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { getVehicleChecksCatC }
   from '../../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { TestDataByCategoryProvider } from '../../../../../providers/test-data-by-category/test-data-by-category';
 

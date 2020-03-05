@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, Observable, merge } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController, ModalController, Modal } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
@@ -17,11 +17,9 @@ import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
 import { StoreModel } from '../../../shared/models/store.model';
 import { getRekeySearchState } from '../../../pages/rekey-search/rekey-search.reducer';
 import { getBookedTestSlot } from '../../../pages/rekey-search/rekey-search.selector';
-import { merge } from 'rxjs/observable/merge';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { MarkAsNonRekey } from '../../../modules/tests/rekey/rekey.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';

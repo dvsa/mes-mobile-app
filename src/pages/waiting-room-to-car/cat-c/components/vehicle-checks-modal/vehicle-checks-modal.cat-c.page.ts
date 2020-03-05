@@ -7,7 +7,7 @@ import { getCurrentTest, getJournalData } from '../../../../../modules/tests/tes
 import { getCandidate } from '../../../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
 import { getUntitledCandidateName }
   from '../../../../../modules/tests/journal-data/common/candidate/candidate.selector';
-import { Observable } from 'rxjs/Observable';
+import { Observable, merge, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../../../providers/question/question';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
@@ -42,8 +42,6 @@ import {
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { map } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
-import { Subscription } from 'rxjs/Subscription';
 import * as vehicleChecksModalActions from './vehicle-checks-modal.cat-c.actions';
 import {
   getVehicleChecksCatC,

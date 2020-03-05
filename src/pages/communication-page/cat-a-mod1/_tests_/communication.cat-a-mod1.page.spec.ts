@@ -20,7 +20,7 @@ import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/
 import { ProvidedEmailComponent } from '../../components/provided-email/provided-email';
 import { NewEmailComponent } from '../../components/new-email/new-email';
 import { By } from '@angular/platform-browser';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import * as communicationPreferenceActions
   from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PostalAddressComponent } from '../../components/postal-address/postal-address';

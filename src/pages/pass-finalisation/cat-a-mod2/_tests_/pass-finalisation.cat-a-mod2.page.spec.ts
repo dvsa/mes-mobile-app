@@ -36,7 +36,7 @@ import { TransmissionComponent } from '../../../../components/common/transmissio
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('PassFinalisationCatAMod2Page', () => {

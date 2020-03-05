@@ -9,7 +9,7 @@ import {
   ContinueFromDeclaration,
   HealthDeclarationValidationError,
 } from '../health-declaration.actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, merge } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
 import * as postTestDeclarationsActions
@@ -34,8 +34,6 @@ import {
   isProvisionalLicenseProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
-import { Subscription } from 'rxjs/Subscription';
-import { merge } from 'rxjs/observable/merge';
 import { TranslateService } from 'ng2-translate';
 import { ProvisionalLicenseNotReceived } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import {

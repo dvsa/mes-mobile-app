@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { ConnectionStatus } from '../network-state';
-import { of } from 'rxjs/observable/of';
 
 export class NetworkStateProviderMock {
 

@@ -1,6 +1,5 @@
-import { of } from 'rxjs/observable/of';
+import { of, Observable } from 'rxjs';
 import { searchResultsMock } from './search-results.mock';
-import { Observable } from 'rxjs/Observable';
 import { HttpResponse } from '@angular/common/http';
 
 export class SearchProviderMock {

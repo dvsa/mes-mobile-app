@@ -6,7 +6,7 @@ import { IonicModule, Config } from 'ionic-angular';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StartTest } from '../../../../../modules/tests/tests.actions';
 import { AddDrivingFault } from '../../../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';

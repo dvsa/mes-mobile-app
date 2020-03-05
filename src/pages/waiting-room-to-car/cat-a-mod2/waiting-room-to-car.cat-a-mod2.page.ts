@@ -4,7 +4,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { GearboxCategory, CategoryCode } from '@dvsa/mes-test-schema/categories/AM2';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {

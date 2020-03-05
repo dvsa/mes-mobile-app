@@ -7,7 +7,7 @@ import { BackToOfficeViewDidEnter, DeferWriteUp } from '../back-to-office.action
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { JOURNAL_PAGE, CAT_A_MOD1 } from '../../page-names.constants';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../modules/tests/tests.selector';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';

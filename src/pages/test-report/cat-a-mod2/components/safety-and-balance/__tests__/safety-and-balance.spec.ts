@@ -12,7 +12,7 @@ import { DrivingFaultsBadgeComponent }
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 import { SafetyQuestionsScore } from '../../../../../../shared/models/safety-questions-score.model';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('SafetyAndBalanceComponent', () => {

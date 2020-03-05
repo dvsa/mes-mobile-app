@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
@@ -6,7 +6,6 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { RekeySearchViewDidEnter, SearchBookedTest, RekeySearchClearState } from './rekey-search.actions';
-import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import { getIsLoading, getHasSearched, getBookedTestSlot, getRekeySearchError } from './rekey-search.selector';
 import { getRekeySearchState } from './rekey-search.reducer';

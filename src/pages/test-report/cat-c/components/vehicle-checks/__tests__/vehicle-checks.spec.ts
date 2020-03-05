@@ -15,7 +15,7 @@ import { FaultCountProvider } from '../../../../../../providers/fault-count/faul
 import { TestDataByCategoryProvider } from '../../../../../../providers/test-data-by-category/test-data-by-category';
 import { VehicleChecksScore } from '../../../../../../shared/models/vehicle-checks-score.model';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleChecksComponent', () => {

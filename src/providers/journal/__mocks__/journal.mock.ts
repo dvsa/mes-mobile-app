@@ -1,6 +1,5 @@
 import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
-import { of } from 'rxjs/observable/of';
-import { Observable } from 'rxjs/Observable';
+import { of, Observable } from 'rxjs';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 const localJournalJson = require('../../../../mock/local-journal.json');

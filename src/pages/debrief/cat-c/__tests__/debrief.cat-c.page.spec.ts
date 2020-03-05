@@ -36,7 +36,7 @@ import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
 

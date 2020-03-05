@@ -8,10 +8,8 @@ import {
   Modal,
 } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { merge } from 'rxjs/observable/merge';
+import { Observable, merge, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { StoreModel } from '../../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';

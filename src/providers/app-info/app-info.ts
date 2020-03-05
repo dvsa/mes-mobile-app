@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppVersion } from '@ionic-native/app-version';
-import { fromPromise } from 'rxjs/observable/fromPromise';
-import { Observable } from 'rxjs/Observable';
+import { from, Observable } from 'rxjs';
 
 @Injectable()
 export class AppInfoProvider {
@@ -9,7 +8,7 @@ export class AppInfoProvider {
   constructor(private appVersion: AppVersion) { }
 
   public getVersionNumber(): Observable<string> {
-    return fromPromise(this.appVersion.getVersionNumber());
+    return from(this.appVersion.getVersionNumber());
   }
 
   public async getMajorAndMinorVersionNumber (): Promise<string> {

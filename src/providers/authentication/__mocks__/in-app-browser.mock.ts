@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 
 export class InAppBrowserMock {

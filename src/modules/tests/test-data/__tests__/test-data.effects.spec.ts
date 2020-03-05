@@ -1,5 +1,5 @@
 import { TestDataEffects } from '../test-data.effects';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as drivingFaultsActions from '../common/driving-faults/driving-faults.actions';

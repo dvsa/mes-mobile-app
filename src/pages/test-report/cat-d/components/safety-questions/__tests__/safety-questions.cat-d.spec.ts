@@ -11,7 +11,7 @@ import { DrivingFaultsBadgeComponent }
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 import { TestDataByCategoryProvider } from '../../../../../../providers/test-data-by-category/test-data-by-category';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 import {
   SafetyQuestionsCatDComponent,

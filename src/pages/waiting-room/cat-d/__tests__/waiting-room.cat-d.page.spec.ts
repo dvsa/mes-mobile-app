@@ -24,7 +24,7 @@ import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { WaitingRoomValidationError } from '../../waiting-room.actions';
 import { TranslateModule, TranslateService } from 'ng2-translate';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import * as communicationPreferenceActions
   from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';

@@ -3,7 +3,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { catchError, concatMap, withLatestFrom, switchMap } from 'rxjs/operators';
 
 import * as rekeyActions from './rekey-reason.actions';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { FindUserProvider } from '../../providers/find-user/find-user';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import * as testActions from '../../modules/tests/tests.actions';

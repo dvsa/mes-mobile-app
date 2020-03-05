@@ -23,7 +23,7 @@ import { testsReducer } from '../../../../modules/tests/tests.reducer';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { SetTestStatusDecided } from '../../../../modules/tests/test-status/test-status.actions';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { StartTest } from '../../../../modules/tests/tests.actions';
 import { SubmissionStatusComponent } from '../../submission-status/submission-status';
 import { ProgressiveAccessComponent } from '../../progressive-access/progressive-access';

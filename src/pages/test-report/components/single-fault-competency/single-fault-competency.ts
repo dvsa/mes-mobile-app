@@ -1,10 +1,8 @@
 
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, merge } from 'rxjs';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { SingleFaultCompetencyNames } from '../../../../modules/tests/test-data/test-data.constants';
-import { Subscription } from 'rxjs/Subscription';
 import { Store, select } from '@ngrx/store';
-import { merge } from 'rxjs/observable/merge';
 import { map, tap } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../shared/models/store.model';

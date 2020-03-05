@@ -17,7 +17,7 @@ import { DeviceProviderMock } from '../../../../providers/device/__mocks__/devic
 import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('BackToOfficeCatDPage', () => {

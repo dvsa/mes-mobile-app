@@ -1,5 +1,5 @@
 import { RekeySearchEffects } from '../rekey-search.effects';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject, defer } from 'rxjs';
 import { async, TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { rekeySearchReducer } from '../rekey-search.reducer';
@@ -8,7 +8,6 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { RekeySearchProvider } from '../../../providers/rekey-search/rekey-search';
 import { RekeySearchProviderMock } from '../../../providers/rekey-search/__mocks__/rekey-search.mock';
 import * as rekeySearchActions from '../rekey-search.actions';
-import { defer } from 'rxjs/observable/defer';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../providers/compression/__mocks__/compression.mock';
 import { SearchProvider } from '../../../providers/search/search';

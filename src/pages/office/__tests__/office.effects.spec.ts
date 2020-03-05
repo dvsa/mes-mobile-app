@@ -1,5 +1,5 @@
 import { OfficeEffects } from '../office.effects';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject ,  Observable } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as testSummaryActions from '../../../modules/tests/test-summary/common/test-summary.actions';
@@ -14,7 +14,6 @@ import * as officeActions from '../office.actions';
 import { StoreModule, Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { empty } from 'rxjs/Observable/empty';
-import { Observable } from 'rxjs/Observable';
 import { Competencies } from '../../../modules/tests/test-data/test-data.constants';
 import { configureTestSuite } from 'ng-bullet';
 

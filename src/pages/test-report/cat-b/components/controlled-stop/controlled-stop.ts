@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { merge } from 'rxjs/observable/merge';
+import { Observable, Subscription, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../../shared/models/store.model';
