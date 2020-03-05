@@ -49,17 +49,17 @@ When('I select activity code {string}', (activityCodeDesc) => {
 });
 
 When('the D255 Radio is pre-selected to yes', () => {
-  const d255PreselectedToYes = getElement(by.id('d255-yes'));
+  const d255PreselectedToYes = TempPage.getElement(by.id('d255-yes'));
   expect(d255PreselectedToYes.isSelected()).to.eventually.be.true;
 });
 
 Then('the activity code should be {string}', (activityCode) => {
-  const acitivityCodeField = getElement(by.id('activity-code-selector'));
+  const acitivityCodeField = TempPage.getElement(by.id('activity-code-selector'));
   return expect(acitivityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
 Then('the nonpassfinalisation page test outcome is {string}', (testOutcome : string) => {
-  const testOutcomeField = getElement(by.id('office-page-test-outcome'));
+  const testOutcomeField = TempPage.getElement(by.id('office-page-test-outcome'));
   return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
 
@@ -68,33 +68,33 @@ Then('the transmission is selected', () => {
 });
 
 const clickContinue = () => {
-  const continueToBackToOfficeButton = getElement(by.xpath(
+  const continueToBackToOfficeButton = TempPage.getElement(by.xpath(
     `//div[contains(@class, "non-pass-finalisation-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
     TempPage.clickElement(continueToBackToOfficeButton);
 };
 
 const selectTransmission = (transmission: boolean) => {
   const transmissionSelector = (transmission) ? 'transmission-manual' : 'transmission-automatic';
-  const transmissionRadio = getElement(by.id(transmissionSelector));
+  const transmissionRadio = TempPage.getElement(by.id(transmissionSelector));
   TempPage.clickElement(transmissionRadio);
 };
 
 const selectActivityCode = (activityCodeDesc) => {
-  const activitySelector = getElement(by.id('activity-code-selector'));
+  const activitySelector = TempPage.getElement(by.id('activity-code-selector'));
   TempPage.clickElement(activitySelector);
-  const activityItem = getElement(by.xpath(`//button/span/div[@class='alert-radio-label']
+  const activityItem = TempPage.getElement(by.xpath(`//button/span/div[@class='alert-radio-label']
   [normalize-space(text()) = '${activityCodeDesc}']`));
   TempPage.clickElement(activityItem);
-  const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
+  const submitDialog = TempPage.getElement(by.xpath('//button[span[text() = "Submit"]]'));
   TempPage.clickElement(submitDialog);
 };
 
 const enterD255 = () => {
-  const d255Radio = getElement(by.id('d255-yes'));
+  const d255Radio = TempPage.getElement(by.id('d255-yes'));
   TempPage.clickElement(d255Radio);
 };
 
 const enterDebriefWitnessed = () => {
-  const debriefWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
+  const debriefWitnessedRadio = TempPage.getElement(by.id('debrief-witnessed-yes'));
   TempPage.clickElement(debriefWitnessedRadio);
 };
