@@ -161,7 +161,7 @@ export class OfficeCatCPage extends BasePageComponent {
   form: FormGroup;
   toast: Toast;
   drivingFaultCtrl: string = 'drivingFaultCtrl';
-  seriousFaultCtrl: String = 'seriousFaultCtrl';
+  seriousFaultCtrl: string = 'seriousFaultCtrl';
   dangerousFaultCtrl: string = 'dangerousFaultCtrl';
   static readonly maxFaultCount = 15;
 
