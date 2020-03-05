@@ -108,7 +108,7 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
       browser.wait(ExpectedConditions.presenceOf(employeeId));
 
       // Navigate to journal page
-      const goToJournalButton = TempPage.getElementByXPath('//go-to-journal-card/button');
+      const goToJournalButton = TempPage.getElement(by.xpath('//go-to-journal-card/button'));
       TempPage.clickElement(goToJournalButton);
 
       // If the journal page is loaded we should have a refresh button
@@ -393,6 +393,6 @@ const clickBackButton = () => {
 };
 
 const clickGoToMyJournalButton = () => {
-  const goToJournalButton = TempPage.getElementByXPath(by.xpath('//go-to-journal-card/button'));
+  const goToJournalButton = TempPage.getElement(by.xpath('//go-to-journal-card/button'));
   TempPage.clickElement(goToJournalButton);
 };
