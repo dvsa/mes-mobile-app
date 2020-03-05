@@ -43,7 +43,6 @@ Feature: Full end to end journey for Category c1e
     And I see a "driving" fault for "Move off - Safety"
     And I see a "driving" fault for "Vehicle checks"
     When I end the debrief
-    Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
     And I complete the fail details
     And I am on the back to office page
@@ -52,6 +51,7 @@ Feature: Full end to end journey for Category c1e
     And the office page test outcome is "Unsuccessful"
     When I complete the office write up
     And I enter a comment for "serious" fault "Move off - Control"
+    And I enter a comment for "serious" fault "Vehicle checks"
     And I upload the test
     Then I should see the "Journal" page
     And the test result for "Mr Denny Carlson" is "2"
