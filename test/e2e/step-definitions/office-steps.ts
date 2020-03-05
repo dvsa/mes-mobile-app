@@ -1,5 +1,4 @@
 import { Then, When, Before } from 'cucumber';
-import { getElement } from './generic-steps';
 import { by } from 'protractor';
 import TempPage from '../pages/tempPage';
 
@@ -67,20 +66,20 @@ When('I complete the weather conditions', () => {
 });
 
 When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel) => {
-  const commentsField = getElement(by.xpath(`//fault-comment-card[@faulttype='${faultSeverity}']
+  const commentsField = TempPage.getElement(by.xpath(`//fault-comment-card[@faulttype='${faultSeverity}']
   //ion-row[ion-col/label[text() = '${faultLabel}']]//textarea`));
 
   commentsField.sendKeys(`Comment for ${faultSeverity} fault: ${faultLabel}`);
 });
 
 Then('the office activity code should be {string}', (activityCode) => {
-  const activityCodeField = getElement(by.xpath(`//div[contains(@class, "office-cat-${this.testCategory}-page")]`
+  const activityCodeField = TempPage.getElement(by.xpath(`//div[contains(@class, "office-cat-${this.testCategory}-page")]`
     + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`));
   return expect(activityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
 Then('I have a {string} fault for {string} requiring a comment', (faultSeverity, faultLabel) => {
-  const commentsValidationText = getElement(by.xpath(`//fault-comment-card[@faulttype='${faultSeverity}'
+  const commentsValidationText = TempPage.getElement(by.xpath(`//fault-comment-card[@faulttype='${faultSeverity}'
   and //label[@class = 'fault-label' and text() = '${faultLabel}']]//div[@class='validation-text ng-invalid']`));
 
   expect(commentsValidationText.getText()).to.eventually.equal('Provide a comment');
@@ -89,17 +88,17 @@ Then('I have a {string} fault for {string} requiring a comment', (faultSeverity,
 });
 
 Then('the tell me question should be {string}', (tellMeQuestion : string) => {
-  const tellMeQuestionField = getElement(by.id('tell-me-question-text'));
+  const tellMeQuestionField = TempPage.getElement(by.id('tell-me-question-text'));
   return expect(tellMeQuestionField.getText()).to.eventually.equal(tellMeQuestion);
 });
 
 Then('the office page test outcome is {string}', (testOutcome : string) => {
-  const testOutcomeField = getElement(by.xpath('//div[@id="test-outcome-text"]/span'));
+  const testOutcomeField = TempPage.getElement(by.xpath('//div[@id="test-outcome-text"]/span'));
   return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
 
 Then(/^there (?:is|are) \"(.+)\" driver faults? listed for \"(.+)\"$/, (faultCount : string, faultTest : string) => {
-  const driverFault = getElement(by.xpath(`//ion-row[@id = 'driving-fault-commentary-label']
+  const driverFault = TempPage.getElement(by.xpath(`//ion-row[@id = 'driving-fault-commentary-label']
   [descendant::span[@class='count' and text() = '${faultCount}'] and descendant::label[@class='fault-label'
   and text() = '${faultTest}']]`));
 
@@ -111,76 +110,76 @@ When('I complete the rekey', () => {
 });
 
 Then('the rekey is successfully uploaded', () => {
-  const uploadRekeyMessage = getElement(by.className('modal-alert-header'));
+  const uploadRekeyMessage = TempPage.getElement(by.className('modal-alert-header'));
   return expect(uploadRekeyMessage.getText()).to.eventually.equal('Rekeyed test uploaded successfully');
 });
 
 When('I return to the journal', () => {
-  const returnToJournalButton = getElement(by.xpath('//button/span/h3[text() = "Return to journal"]'));
+  const returnToJournalButton = TempPage.getElement(by.xpath('//button/span/h3[text() = "Return to journal"]'));
   TempPage.clickElement(returnToJournalButton);
 });
 
 const clickUploadButton = () => {
-  const submitTestButton = getElement(by.xpath('//button[span[h3[text() = "Upload"]]]'));
+  const submitTestButton = TempPage.getElement(by.xpath('//button[span[h3[text() = "Upload"]]]'));
   TempPage.clickElement(submitTestButton);
 };
 
 const uploadTest = () => {
   clickUploadButton();
 
-  const uploadConfirmationButton = getElement(by.xpath('//ion-alert//button/span[text() = "Upload"]'));
+  const uploadConfirmationButton = TempPage.getElement(by.xpath('//ion-alert//button/span[text() = "Upload"]'));
   TempPage.clickElement(uploadConfirmationButton);
 };
 
 const completeRekey = () => {
-  const continueButton = getElement(
+  const continueButton = TempPage.getElement(
     by.xpath(`//div[contains(@class, "office-cat-${this.testCategory}-page")]//button//h3[text()="Continue"]`));
     TempPage.clickElement(continueButton);
 
-  const iPadIssueCheckbox = getElement(by.id('ipadIssueSelected'));
+  const iPadIssueCheckbox = TempPage.getElement(by.id('ipadIssueSelected'));
   TempPage.clickElement(iPadIssueCheckbox);
 
-  const ipadIssueTechnicalFault = getElement(by.id('ipadIssueTechnicalFault'));
+  const ipadIssueTechnicalFault = TempPage.getElement(by.id('ipadIssueTechnicalFault'));
   TempPage.clickElement(ipadIssueTechnicalFault);
 
-  const uploadButton = getElement(by.xpath('//button/span/h3[text() = "Upload rekeyed test"]'));
+  const uploadButton = TempPage.getElement(by.xpath('//button/span/h3[text() = "Upload rekeyed test"]'));
   TempPage.clickElement(uploadButton);
 
-  const uploadConfirmationButton = getElement(by.xpath('//button/span[text() = "Upload"]'));
+  const uploadConfirmationButton = TempPage.getElement(by.xpath('//button/span[text() = "Upload"]'));
   TempPage.clickElement(uploadConfirmationButton);
 };
 
 const enterCandidateDescription = () => {
-  const physicalDescriptionField = getElement(by.id('physical-description'));
+  const physicalDescriptionField = TempPage.getElement(by.id('physical-description'));
   physicalDescriptionField.sendKeys('Tall, slim build with dark brown hair.');
 };
 
 const enterRouteNumber = (routeNumber) => {
-  const routeField = getElement(by.id('route'));
+  const routeField = TempPage.getElement(by.id('route'));
   routeField.sendKeys(routeNumber);
 };
 
 const enterIndependentDriving = (type) => {
-  const satnavRadio = getElement(by.id(`independent-driving-${type}`));
+  const satnavRadio = TempPage.getElement(by.id(`independent-driving-${type}`));
   TempPage.clickElement(satnavRadio);
 };
 
 const enterShowMe = (value) => {
-  const showMeSelector = getElement(by.id('show-me-selector'));
+  const showMeSelector = TempPage.getElement(by.id('show-me-selector'));
   TempPage.clickElement(showMeSelector);
-  const showMeItem = getElement(by.xpath(`//button/span/div[normalize-space(text()) = '${value}']`));
+  const showMeItem = TempPage.getElement(by.xpath(`//button/span/div[normalize-space(text()) = '${value}']`));
   TempPage.clickElement(showMeItem);
-  const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
+  const submitDialog = TempPage.getElement(by.xpath('//button[span[text() = "Submit"]]'));
   TempPage.clickElement(submitDialog);
 };
 
 const enterWeatherConditions = () => {
-  const weatherSelector = getElement(by.xpath('//ion-select[@formcontrolname="weatherConditions"]'));
+  const weatherSelector = TempPage.getElement(by.xpath('//ion-select[@formcontrolname="weatherConditions"]'));
   TempPage.clickElement(weatherSelector);
-  const weatherItem1 = getElement(by.xpath('//button/span/div[normalize-space(text()) = "2 - Bright / wet roads"]'));
+  const weatherItem1 = TempPage.getElement(by.xpath('//button/span/div[normalize-space(text()) = "2 - Bright / wet roads"]'));
   TempPage.clickElement(weatherItem1);
-  const weatherItem2 = getElement(by.xpath('//button/span/div[normalize-space(text()) = "4 - Showers"]'));
+  const weatherItem2 = TempPage.getElement(by.xpath('//button/span/div[normalize-space(text()) = "4 - Showers"]'));
   TempPage.clickElement(weatherItem2);
-  const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
+  const submitDialog = TempPage.getElement(by.xpath('//button[span[text() = "Submit"]]'));
   TempPage.clickElement(submitDialog);
 };
