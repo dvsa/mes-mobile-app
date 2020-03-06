@@ -12,9 +12,8 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { SearchProvider } from '../../../providers/search/search';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError, map } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { of, Subscription } from 'rxjs';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
-import { Subscription } from 'rxjs/Subscription';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.cat-b.model';

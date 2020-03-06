@@ -18,7 +18,7 @@ import {
   ResetStaffNumberValidationError,
 } from '../rekey-reason.actions';
 import { UploadRekeyModalEvent } from '../components/upload-rekey-modal/upload-rekey-modal.constants';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, merge } from 'rxjs';
 import {
   IpadIssueSelected,
   IpadIssueTechFaultSelected,
@@ -29,11 +29,9 @@ import {
   OtherReasonUpdated,
   TransferSelected,
 } from '../../../modules/tests/rekey-reason/rekey-reason.actions';
-import { Subscription } from 'rxjs/Subscription';
 import { CAT_B, REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../../page-names.constants';
 import { getRekeyReasonState } from '../rekey-reason.reducer';
 import { map } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
 import { SendCurrentTest } from '../../../modules/tests/tests.actions';
 import { RekeyReasonUploadModel } from '../rekey-reason.model';
 import { getUploadStatus } from '../rekey-reason.selector';

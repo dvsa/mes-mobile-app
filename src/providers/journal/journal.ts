@@ -4,13 +4,12 @@ import { AuthenticationProvider } from '../authentication/authentication';
 import { UrlProvider } from '../url/url';
 import { DateTime } from '../../shared/helpers/date-time';
 import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from } from 'rxjs';
 import { DataStoreProvider } from '../data-store/data-store';
 import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
-import { from } from 'rxjs/observable/from';
 import { AppConfigProvider } from '../app-config/app-config';
 import { DateTimeProvider } from '../date-time/date-time';
-import { timeout } from 'rxjs/operators/timeout';
+import { timeout } from 'rxjs/operators';
 
 type JournalCache = {
   dateStored: string,

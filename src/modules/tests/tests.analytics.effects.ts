@@ -22,7 +22,7 @@ import {
   SEND_PARTIAL_TESTS_FAILURE,
   SendPartialTestsFailure,
 } from './tests.actions';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { TestsModel } from './tests.model';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import { formatApplicationReference } from '../../shared/helpers/formatters';

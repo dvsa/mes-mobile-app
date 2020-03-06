@@ -1,10 +1,7 @@
 import { Platform, NavController } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable, merge, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
-import { Subscription } from 'rxjs/Subscription';
-
 import { BasePageComponent } from './base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { StoreModel } from '../models/store.model';

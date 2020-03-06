@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Log } from '../../shared/models/log.model';
 import { UrlProvider } from '../url/url';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class LogsProvider {

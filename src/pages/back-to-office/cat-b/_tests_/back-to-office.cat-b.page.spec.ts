@@ -19,7 +19,7 @@ import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientati
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('BackToOfficePage', () => {

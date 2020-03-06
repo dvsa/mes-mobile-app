@@ -23,7 +23,7 @@ import * as controlledStopActions from '../../modules/tests/test-data/cat-b/cont
 import * as activityCodeActions from '../../modules/tests/activity-code/activity-code.actions';
 import { TestResultProvider } from '../../providers/test-result/test-result';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { isEmpty } from 'lodash';
 
 @Injectable()

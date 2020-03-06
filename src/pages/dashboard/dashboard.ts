@@ -4,9 +4,8 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { DashboardViewDidEnter } from './dashboard.actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription } from 'rxjs';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
-import { Subscription } from 'rxjs/Subscription';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { map } from 'rxjs/operators';
 import { getAppInfoState } from '../../modules/app-info/app-info.reducer';

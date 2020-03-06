@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, merge } from 'rxjs';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../modules/tests/test-data/test-data.constants';
 import {
@@ -17,8 +17,6 @@ import { manoeuvreCompetencyLabels } from '../../../../shared/constants/competen
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Subscription } from 'rxjs/Subscription';
-import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';

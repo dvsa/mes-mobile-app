@@ -6,8 +6,7 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import { from } from 'rxjs/observable/from';
+import { Observable, from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { Platform } from 'ionic-angular';

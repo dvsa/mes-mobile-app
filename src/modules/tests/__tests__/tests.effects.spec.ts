@@ -1,5 +1,5 @@
 import { TestsEffects } from '../tests.effects';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { TestPersistenceProvider } from '../../../providers/test-persistence/test-persistence';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';

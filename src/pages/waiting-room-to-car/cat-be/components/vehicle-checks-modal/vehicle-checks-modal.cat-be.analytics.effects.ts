@@ -1,4 +1,4 @@
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import {
   VEHICLE_CHECKS_VIEW_DID_ENTER, VehicleChecksViewDidEnter,

@@ -5,7 +5,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, merge } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
 import {
@@ -14,8 +14,6 @@ import {
 } from '../../../modules/tests/test-data/common/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { merge } from 'rxjs/observable/merge';
 import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';

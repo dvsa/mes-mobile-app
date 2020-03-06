@@ -1,6 +1,6 @@
 import { DashboardAnalyticsEffects } from '../dashboard.analytics.effects';
 import { TestBed } from '@angular/core/testing';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
