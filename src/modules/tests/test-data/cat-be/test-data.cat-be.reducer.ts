@@ -9,8 +9,8 @@ import { eyesightTestReducer } from '../common/eyesight-test/eyesight-test.reduc
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { vehicleChecksCatBEReducer } from './vehicle-checks/vehicle-checks.cat-be.reducer';
 import { testRequirementsCatBEReducer } from './test-requirements/test-requirements.cat-be.reducer';
-import { uncoupleRecoupleReducer } from './uncouple-recouple/uncouple-recouple.reducer';
 import { manoeuvresReducer } from '../common/manoeuvres/manoeuvres.reducer';
+import { uncoupleRecoupleReducer } from '../common/uncouple-recouple/uncouple-recouple.reducer';
 
 export const initialState: CatBEUniqueTypes.TestData = {
   dangerousFaults: {},
