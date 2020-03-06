@@ -1,5 +1,5 @@
-import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
-import { uncoupleRecoupleCatDEReducer } from '../uncouple-recouple.cat-de.reducer';
+
+import { UncoupleRecouple, uncoupleRecoupleReducer } from '../uncouple-recouple.reducer';
 import {
   ToggleUncoupleRecouple,
   UncoupleRecoupleAddDrivingFault,
@@ -10,26 +10,26 @@ import {
 } from '../../../common/uncouple-recouple/uncouple-recouple.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 
-describe('uncoupleRecoupleCatDEReducer' , () => {
+describe('uncoupleRecoupleReducer' , () => {
 
   describe('TOGGLE_UNCOUPLE_RECOUPLE', () => {
     it('should toggle the uncouple recouple (true when dispatched first time)', () => {
-      const state: CatDEUniqueTypes.UncoupleRecouple = {};
-      const result = uncoupleRecoupleCatDEReducer(state, new ToggleUncoupleRecouple());
+      const state: UncoupleRecouple = {};
+      const result = uncoupleRecoupleReducer(state, new ToggleUncoupleRecouple());
       expect(result.selected).toEqual(true);
     });
     it('should remove the uncouple recouple property when dispatched second time', () => {
-      const state: CatDEUniqueTypes.UncoupleRecouple = {};
-      const modifiedState = uncoupleRecoupleCatDEReducer(state, new ToggleUncoupleRecouple());
-      const result = uncoupleRecoupleCatDEReducer(modifiedState, new ToggleUncoupleRecouple());
+      const state: UncoupleRecouple = {};
+      const modifiedState = uncoupleRecoupleReducer(state, new ToggleUncoupleRecouple());
+      const result = uncoupleRecoupleReducer(modifiedState, new ToggleUncoupleRecouple());
       expect(result.selected).toEqual(false);
     });
   });
 
   describe('UNCOUPLE_RECOUPLE_ADD_DRIVING_FAULT', () => {
     it('should add the correct fault', () => {
-      const state: CatDEUniqueTypes.UncoupleRecouple = {};
-      const result = uncoupleRecoupleCatDEReducer(state, new UncoupleRecoupleAddDrivingFault());
+      const state: UncoupleRecouple = {};
+      const result = uncoupleRecoupleReducer(state, new UncoupleRecoupleAddDrivingFault());
       expect(result.selected).toEqual(true);
       expect(result.fault).toEqual(CompetencyOutcome.DF);
     });
@@ -37,8 +37,8 @@ describe('uncoupleRecoupleCatDEReducer' , () => {
 
   describe('UNCOUPLE_RECOUPLE_ADD_SERIOUS_FAULT', () => {
     it('should add the correct fault', () => {
-      const state: CatDEUniqueTypes.UncoupleRecouple = {};
-      const result = uncoupleRecoupleCatDEReducer(state, new UncoupleRecoupleAddSeriousFault());
+      const state: UncoupleRecouple = {};
+      const result = uncoupleRecoupleReducer(state, new UncoupleRecoupleAddSeriousFault());
       expect(result.selected).toEqual(true);
       expect(result.fault).toEqual(CompetencyOutcome.S);
     });
@@ -46,8 +46,8 @@ describe('uncoupleRecoupleCatDEReducer' , () => {
 
   describe('UNCOUPLE_RECOUPLE_ADD_DANGEROUS_FAULT', () => {
     it('should add the correct fault', () => {
-      const state: CatDEUniqueTypes.UncoupleRecouple = {};
-      const result = uncoupleRecoupleCatDEReducer(state, new UncoupleRecoupleAddDangerousFault());
+      const state: UncoupleRecouple = {};
+      const result = uncoupleRecoupleReducer(state, new UncoupleRecoupleAddDangerousFault());
       expect(result.selected).toEqual(true);
       expect(result.fault).toEqual(CompetencyOutcome.D);
     });
@@ -55,9 +55,9 @@ describe('uncoupleRecoupleCatDEReducer' , () => {
 
   describe('UNCOUPLE_RECOUPLE_REMOVE_FAULT', () => {
     it('should remove the fault', () => {
-      const state: CatDEUniqueTypes.UncoupleRecouple = {};
-      const modifiedState = uncoupleRecoupleCatDEReducer(state, new UncoupleRecoupleAddDangerousFault());
-      const result = uncoupleRecoupleCatDEReducer(modifiedState, new UncoupleRecoupleRemoveFault());
+      const state: UncoupleRecouple = {};
+      const modifiedState = uncoupleRecoupleReducer(state, new UncoupleRecoupleAddDangerousFault());
+      const result = uncoupleRecoupleReducer(modifiedState, new UncoupleRecoupleRemoveFault());
       expect(result.selected).toEqual(true);
       expect(result.fault).toBeUndefined();
       expect(result.faultComments).toBeUndefined();
@@ -66,8 +66,8 @@ describe('uncoupleRecoupleCatDEReducer' , () => {
 
   describe('ADD_UNCOUPLE_RECOUPLE_COMMENT', () => {
     it('should add a fault comment', () => {
-      const state: CatDEUniqueTypes.UncoupleRecouple = {};
-      const result = uncoupleRecoupleCatDEReducer(state, new AddUncoupleRecoupleComment('Test'));
+      const state: UncoupleRecouple = {};
+      const result = uncoupleRecoupleReducer(state, new AddUncoupleRecoupleComment('Test'));
       expect(result.faultComments).toEqual('Test');
     });
   });

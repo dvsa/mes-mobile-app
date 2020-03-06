@@ -1,13 +1,25 @@
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
+import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
-import * as uncoupleRecoupleActions from '../../common/uncouple-recouple/uncouple-recouple.actions';
+import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
+import * as uncoupleRecoupleActions from './uncouple-recouple.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
-export const initialState: CatDEUniqueTypes.UncoupleRecouple = {};
+// TODO - We should make a common type in the schema for Uncouple Recouple;
+export type UncoupleRecouple =
+  | CatBEUniqueTypes.UncoupleRecouple
+  | CatCEUniqueTypes.UncoupleRecouple
+  | CatC1EUniqueTypes.UncoupleRecouple
+  | CatDEUniqueTypes.UncoupleRecouple
+  | CatD1EUniqueTypes.UncoupleRecouple;
 
-export function uncoupleRecoupleCatDEReducer(
+export const initialState: UncoupleRecouple = {};
+
+export function uncoupleRecoupleReducer(
   state = initialState,
   action: uncoupleRecoupleActions.Types,
-): CatDEUniqueTypes.UncoupleRecouple {
+): UncoupleRecouple {
   switch (action.type) {
     case uncoupleRecoupleActions.TOGGLE_UNCOUPLE_RECOUPLE:
       return {
