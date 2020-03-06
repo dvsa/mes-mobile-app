@@ -6,8 +6,6 @@ import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.sel
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
-// TODO - CAT HOME , Switch to using the Test Data Provider
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { getETA, getEco } from '../../../modules/tests/test-data/common/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';
@@ -37,6 +35,7 @@ import { getUntitledCandidateName } from '../../../modules/tests/journal-data/co
 import { TestOutcome } from '../../../shared/models/test-outcome';
 // TODO - Cat HOME - needs to use correct reducers
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -84,6 +83,7 @@ export class DebriefCatHomeTestPage extends BasePageComponent {
     private translate: TranslateService,
     private faultCountProvider: FaultCountProvider,
     private faultSummaryProvider: FaultSummaryProvider,
+    private testDataByCategoryProvider: TestDataByCategoryProvider,
   ) {
     super(platform, navController, authenticationProvider);
   }
@@ -96,39 +96,47 @@ export class DebriefCatHomeTestPage extends BasePageComponent {
     const category$ = currentTest$.pipe(
       select(getTestCategory),
     );
+
     this.pageState = {
       seriousFaults$: currentTest$.pipe(
-        select(getTestData),
         withLatestFrom(category$),
-        map(([data, category]) =>
-          this.faultSummaryProvider.getSeriousFaultsList(data, category as TestCategory)
-          .map(fault => fault.competencyIdentifier)),
+        map(([data, category]) => {
+          const testData = this.testDataByCategoryProvider.getTestDataByCategoryCode(category)(data);
+          return this.faultSummaryProvider.getSeriousFaultsList(testData, category as TestCategory)
+          .map(fault => fault.competencyIdentifier);
+        }),
       ),
       dangerousFaults$: currentTest$.pipe(
-        select(getTestData),
         withLatestFrom(category$),
-        map(([data, category]) =>
-          this.faultSummaryProvider.getDangerousFaultsList(data, category as TestCategory)
-          .map(fault => fault.competencyIdentifier)),
+        map(([data, category]) => {
+          const testData = this.testDataByCategoryProvider.getTestDataByCategoryCode(category)(data);
+          return this.faultSummaryProvider.getDangerousFaultsList(testData, category as TestCategory)
+          .map(fault => fault.competencyIdentifier);
+        }),
+
       ),
       drivingFaults$: currentTest$.pipe(
-        select(getTestData),
         withLatestFrom(category$),
-        map(([data, category]) => this.faultSummaryProvider.getDrivingFaultsList(data, category as TestCategory)),
+        map(([data, category]) => {
+          const testData = this.testDataByCategoryProvider.getTestDataByCategoryCode(category)(data);
+          return this.faultSummaryProvider.getDrivingFaultsList(testData, category as TestCategory);
+        }),
       ),
       drivingFaultCount$: currentTest$.pipe(
-        select(getTestData),
         withLatestFrom(category$),
-        map(([testData, category]) => {
+        map(([data, category]) => {
+          const testData = this.testDataByCategoryProvider.getTestDataByCategoryCode(category)(data);
           return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
         }),
       ),
       etaFaults$: currentTest$.pipe(
-        select(getTestData),
+        withLatestFrom(category$),
+        map(([data, category]) => this.testDataByCategoryProvider.getTestDataByCategoryCode(category)(data)),
         select(getETA),
       ),
       ecoFaults$: currentTest$.pipe(
-        select(getTestData),
+        withLatestFrom(category$),
+        map(([data, category]) => this.testDataByCategoryProvider.getTestDataByCategoryCode(category)(data)),
         select(getEco),
       ),
       testResult$: currentTest$.pipe(
@@ -147,7 +155,8 @@ export class DebriefCatHomeTestPage extends BasePageComponent {
         select(getTestCategory),
       ),
       tellMeShowMeQuestions$: currentTest$.pipe(
-        select(getTestData),
+        withLatestFrom(category$),
+        map(([data, category]) => this.testDataByCategoryProvider.getTestDataByCategoryCode(category)(data)),
         select(getVehicleChecks),
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
         map(checks => checks.filter(c => c.code !== undefined)),

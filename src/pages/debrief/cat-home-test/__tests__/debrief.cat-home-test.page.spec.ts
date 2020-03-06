@@ -43,6 +43,7 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { of } from 'rxjs/observable/of';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
+import { TestDataByCategoryProvider } from '../../../../providers/test-data-by-category/test-data-by-category';
 
 describe('DebriefCatHomeTestPage', () => {
   let fixture: ComponentFixture<DebriefCatHomeTestPage>;
@@ -122,6 +123,7 @@ describe('DebriefCatHomeTestPage', () => {
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
+        TestDataByCategoryProvider,
       ],
     });
   });
