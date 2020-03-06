@@ -38,13 +38,14 @@ import { CAT_BE } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+// TODO - ADI Part 2: use correct category
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs/observable/of';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('DebriefCatBEPage', () => {
+describe('DebriefCatADIPart1Page', () => {
   let fixture: ComponentFixture<DebriefCatADIPart2Page>;
   let component: DebriefCatADIPart2Page;
   let navController: NavController;
@@ -59,7 +60,7 @@ describe('DebriefCatBEPage', () => {
     start: '',
     vehicleTypeCode: '',
   };
-
+  // TODO - ADI Part 2: use correct category
   const exampleTestData: CatBEUniqueTypes.TestData  = {
     dangerousFaults: {},
     drivingFaults: {},
