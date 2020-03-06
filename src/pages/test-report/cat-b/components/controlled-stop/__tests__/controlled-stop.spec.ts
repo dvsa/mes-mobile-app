@@ -21,7 +21,7 @@ import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import {
   ControlledStopAddDrivingFault,
   ControlledStopRemoveFault,
-} from '../../../../../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
+} from '../../../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';

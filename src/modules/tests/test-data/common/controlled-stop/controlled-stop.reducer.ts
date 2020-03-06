@@ -1,13 +1,26 @@
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
+import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
+import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
+import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
+
 import * as controlledStopActions from './controlled-stop.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 export const initialState: CatFUniqueTypes.ControlledStop = {};
 
+// TODO: Update schemas to create common controlled stop
+export type ControlledStopUnion =
+  | CatBUniqueTypes.ControlledStop
+  | CatFUniqueTypes.ControlledStop
+  | CatGUniqueTypes.ControlledStop
+  | CatHUniqueTypes.ControlledStop
+  | CatKUniqueTypes.ControlledStop;
+
 export function controlledStopReducer(
   state = initialState,
   action: controlledStopActions.Types,
-): CatFUniqueTypes.ControlledStop {
+): ControlledStopUnion {
   switch (action.type) {
     case controlledStopActions.TOGGLE_CONTROLLED_STOP:
       return {

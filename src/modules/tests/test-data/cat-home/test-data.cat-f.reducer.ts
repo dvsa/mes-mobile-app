@@ -6,7 +6,7 @@ import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.re
 import { ecoReducer } from '../common/eco/eco.reducer';
 import { etaReducer } from '../common/eta/eta.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
-import { controlledStopReducer } from './controlled-stop/controlled-stop.reducer';
+import { controlledStopReducer } from '../common//controlled-stop/controlled-stop.reducer';
 import { testRequirementsCatHomeReducer } from './test-requirements/test-requirements.cat-home.reducer';
 import { eyesightTestReducer } from '../common/eyesight-test/eyesight-test.reducer';
 import { manoeuvresReducer } from '../common/manoeuvres/manoeuvres.reducer';

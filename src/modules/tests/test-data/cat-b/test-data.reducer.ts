@@ -4,7 +4,7 @@ import { drivingFaultsReducer } from '../common/driving-faults/driving-faults.re
 import { dangerousFaultsReducer } from '../common/dangerous-faults/dangerous-faults.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { vehicleChecksReducer } from './vehicle-checks/vehicle-checks.reducer';
-import { controlledStopReducer } from './controlled-stop/controlled-stop.reducer';
+import { controlledStopReducer } from '../common/controlled-stop/controlled-stop.reducer';
 import { ecoReducer } from '../common/eco/eco.reducer';
 import { etaReducer } from '../common/eta/eta.reducer';
 import { eyesightTestReducer } from '../common/eyesight-test/eyesight-test.reducer';

@@ -19,7 +19,7 @@ import * as dangerousFaultsActions
   from '../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import * as seriousFaultsActions from '../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import * as drivingFaultsActions from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-import * as controlledStopActions from '../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
+import * as controlledStopActions from '../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
 import * as activityCodeActions from '../../modules/tests/activity-code/activity-code.actions';
 import { TestResultProvider } from '../../providers/test-result/test-result';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
