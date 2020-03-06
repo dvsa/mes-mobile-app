@@ -185,11 +185,7 @@ const startingEarlyTest = (candidateName) => {
 
   const testEarlyDialog = getElement(by.xpath(`/html/body/ion-app/ion-modal/div/
   journal-early-start-modal/ion-card/modal-alert-title/ion-row[2]/ion-col/h2`));
-  return expect(testEarlyDialog.isPresent()).to.eventually.be.true;
-};
-
-const startingExpiredOrEalryTest = (candidate) => {
-  const
+  timeDialog(testEarlyDialog)
 };
 
 const startingExpiredTest = (candidateName) => {
@@ -200,5 +196,9 @@ const startingExpiredTest = (candidateName) => {
 
   const testExpireDialog = getElement(by.xpath(`/html/body/ion-app/ion-modal/div/journal-rekey-modal/ion-card/
     modal-alert-title/ion-row[2]/ion-col/h2`));
-  return expect(testExpireDialog.isPresent()).to.eventually.be.true;
+  timeDialog(testExpireDialog);
+};
+
+const timeDialog = (dialog) => {
+  return expect(dialog.isPresent()).to.eventually.be.true;
 };
