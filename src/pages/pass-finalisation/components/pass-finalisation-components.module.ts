@@ -5,11 +5,13 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { Code78Component } from './code-78/code-78';
 
 @NgModule({
   declarations: [
     LicenseProvidedComponent,
     PassCertificateNumberComponent,
+    Code78Component,
   ],
   imports: [
     CommonModule,
@@ -20,6 +22,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
   exports: [
     LicenseProvidedComponent,
     PassCertificateNumberComponent,
+    Code78Component,
   ],
 })
 export class PassFinalisationComponentsModule { }

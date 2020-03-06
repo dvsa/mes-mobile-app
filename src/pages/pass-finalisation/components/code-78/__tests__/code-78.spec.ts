@@ -2,8 +2,6 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
 import { Code78Component } from '../code-78';
-import { MockComponent } from 'ng-mocks';
-import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('code78Component', () => {
@@ -14,7 +12,6 @@ describe('code78Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         Code78Component,
-        MockComponent(WarningBannerComponent),
       ],
       imports: [
         IonicModule,
