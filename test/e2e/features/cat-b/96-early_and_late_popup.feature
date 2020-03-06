@@ -1,5 +1,5 @@
-@catb
-Feature: early and late popup
+@catb @regression
+Feature: A Driving Examiner starts an early and late test to see is appropriate dialog appears
 
   Scenario: Early start popup
     Given I am logged in as "mobexaminer1" and I have a test for "Mr James Brown"
