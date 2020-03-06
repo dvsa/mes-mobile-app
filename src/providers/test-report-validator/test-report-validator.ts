@@ -132,11 +132,11 @@ export class TestReportValidatorProvider {
         return SpeedCheckState.AVOIDANCE_MISSING;
       }
 
-      if (avoidanceOutcome === CompetencyOutcome.S || avoidanceOutcome === CompetencyOutcome.D) {
-        return SpeedCheckState.VALID;
-      }
+      // if (avoidanceOutcome === CompetencyOutcome.S || avoidanceOutcome === CompetencyOutcome.D) {
+      //   return SpeedCheckState.VALID;
+      // }
 
-      return SpeedCheckState.NOT_MET;
+      return SpeedCheckState.VALID;
     }
 
     if (emergencyStopFirstAttempt === undefined && avoidanceFirstAttempt === undefined) {
