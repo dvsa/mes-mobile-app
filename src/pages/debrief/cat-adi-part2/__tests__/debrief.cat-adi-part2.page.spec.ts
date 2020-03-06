@@ -41,7 +41,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 // TODO - ADI Part 2: use correct category
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
 

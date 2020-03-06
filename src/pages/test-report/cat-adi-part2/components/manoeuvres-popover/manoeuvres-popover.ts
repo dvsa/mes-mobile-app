@@ -1,7 +1,7 @@
 // TO-DO ADI Part2: implement correct category
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 // TO-DO ADI Part2: implement correct category
