@@ -34,7 +34,7 @@ import { PopulateTestSlotAttributes }
   from '../../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
 import { EndDebrief } from '../../debrief.actions';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
-import { CAT_BE } from '../../../page-names.constants';
+import { CAT_ADI_PART2 } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -93,6 +93,7 @@ describe('DebriefCatADIPart1Page', () => {
             startedTests: {
               123: {
                 testSlotAttributes,
+                // TODO - ADI Part 2: use correct category
                 category: TestCategory.BE,
                 vehicleDetails: {},
                 accompaniment: {},
@@ -218,17 +219,17 @@ describe('DebriefCatADIPart1Page', () => {
     it('should navigate to PassFinalisationPage when outcome = pass', () => {
       component.outcome = TestOutcome.PASS;
       component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_BE.PASS_FINALISATION_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.PASS_FINALISATION_PAGE);
     });
     it('should navigate to BackToOfficePage when outcome = fail', () => {
       component.outcome = TestOutcome.FAIL;
       component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_BE.POST_DEBRIEF_HOLDING_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.POST_DEBRIEF_HOLDING_PAGE);
     });
     it('should navigate to the BackToOfficePage when outcomes = terminated', () => {
       component.outcome = 'Terminated';
       component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_BE.POST_DEBRIEF_HOLDING_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.POST_DEBRIEF_HOLDING_PAGE);
     });
   });
 
