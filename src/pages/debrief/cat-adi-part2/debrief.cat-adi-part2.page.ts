@@ -98,18 +98,18 @@ export class DebriefCatADIPart2Page extends BasePageComponent {
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.ADI2)
+          this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)
           .map(fault => fault.competencyIdentifier)),
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
-          this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.ADI2)
+          this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)
           .map(fault => fault.competencyIdentifier)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.ADI2)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),

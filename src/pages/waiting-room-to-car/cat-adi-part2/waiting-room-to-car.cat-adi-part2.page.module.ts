@@ -5,7 +5,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { WaitingRoomToCarAnalyticsEffects } from '../waiting-room-to-car.analytics.effects';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { WaitingRoomToCarComponentsModule } from '../components/waiting-room-to-car.components.module';
-import { WaitingRoomToCarCatADIPart2ComponentsModule } from './components/waiting-room-to-car.cat-adi-part2.components.module';
+import { WaitingRoomToCarCatADIPart2ComponentsModule }
+from './components/waiting-room-to-car.cat-adi-part2.components.module';
 
 @NgModule({
   declarations: [
