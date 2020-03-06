@@ -22,7 +22,6 @@ import {
   EyesightTestPassed,
 } from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
-import { DebriefComponentsModule } from '../../components/debrief-components.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
@@ -44,6 +43,22 @@ import { of } from 'rxjs/observable/of';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
 import { TestDataByCategoryProvider } from '../../../../providers/test-data-by-category/test-data-by-category';
+import { MockComponent } from 'ng-mocks';
+import { VehicleChecksCardComponent } from '../../components/vehicle-checks-card/vehicle-checks-card';
+import { EtaDebriefCardComponent } from '../../components/eta-debrief-card/eta-debrief-card';
+import {
+  DangerousFaultsDebriefCardComponent,
+} from '../../components/dangerous-faults-debrief-card/dangerous-faults-debrief-card';
+import {
+  SeriousFaultsDebriefCardComponent,
+} from '../../components/serious-faults-debrief-card/serious-faults-debrief-card';
+import {
+  DrivingFaultsDebriefCardComponent,
+} from '../../components/driving-faults-debrief-card/driving-faults-debrief-card';
+import {
+  TestOutcomeDebriefCardComponent,
+} from '../../components/test-outcome-debrief-card/test-outcome-debrief-card';
+import { EcoDebriefCardComponent } from '../../components/eco-debrief-card/eco-debrief-card';
 
 describe('DebriefCatHomeTestPage', () => {
   let fixture: ComponentFixture<DebriefCatHomeTestPage>;
@@ -77,12 +92,20 @@ describe('DebriefCatHomeTestPage', () => {
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      declarations: [DebriefCatHomeTestPage],
+      declarations: [
+        DebriefCatHomeTestPage,
+        MockComponent(VehicleChecksCardComponent),
+        MockComponent(EtaDebriefCardComponent),
+        MockComponent(DangerousFaultsDebriefCardComponent),
+        MockComponent(SeriousFaultsDebriefCardComponent),
+        MockComponent(DrivingFaultsDebriefCardComponent),
+        MockComponent(EcoDebriefCardComponent),
+        MockComponent(TestOutcomeDebriefCardComponent),
+      ],
       imports: [
         IonicModule,
         AppModule,
         ComponentsModule,
-        DebriefComponentsModule,
         StoreModule.forRoot({
           tests: () => ({
             currentTest: {
@@ -138,35 +161,31 @@ describe('DebriefCatHomeTestPage', () => {
     translate.setDefaultLang('en');
   }));
 
+  describe('Class', () => {
+    describe('endDebrief', () => {
+      it('should dispatch the PersistTests action', () => {
+        component.endDebrief();
+        expect(store$.dispatch).toHaveBeenCalledWith(new EndDebrief);
+      });
+      it('should navigate to PassFinalisationPage when outcome = pass', () => {
+        component.outcome = TestOutcome.PASS;
+        component.endDebrief();
+        expect(navController.push).toHaveBeenCalledWith(CAT_HOME_TEST.PASS_FINALISATION_PAGE);
+      });
+      it('should navigate to BackToOfficePage when outcome = fail', () => {
+        component.outcome = TestOutcome.FAIL;
+        component.endDebrief();
+        expect(navController.push).toHaveBeenCalledWith(CAT_HOME_TEST.POST_DEBRIEF_HOLDING_PAGE);
+      });
+      it('should navigate to the BackToOfficePage when outcomes = terminated', () => {
+        component.outcome = 'Terminated';
+        component.endDebrief();
+        expect(navController.push).toHaveBeenCalledWith(CAT_HOME_TEST.POST_DEBRIEF_HOLDING_PAGE);
+      });
+    });
+  });
+
   describe('DOM', () => {
-    it('should display passed container if outcome is `passed`', () => {
-      fixture.detectChanges();
-      component.outcome = TestOutcome.PASS;
-      fixture.detectChanges();
-
-      expect(fixture.debugElement.query(By.css('.passed'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('.terminated'))).toBeNull();
-    });
-    it('should display failed container if outcome is `fail`', () => {
-      fixture.detectChanges();
-      component.outcome = TestOutcome.FAIL;
-      fixture.detectChanges();
-
-      expect(fixture.debugElement.query(By.css('.failed'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('.terminated'))).toBeNull();
-    });
-    it('should display terminated container if outcome is `terminated`', () => {
-      fixture.detectChanges();
-      component.outcome = 'Terminated';
-      fixture.detectChanges();
-
-      expect(fixture.debugElement.query(By.css('.terminated'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
-    });
-
     it('should display the candidate name in the title', () => {
       fixture.detectChanges();
       component.pageState.candidateName$ = of('John Doe');
@@ -175,116 +194,5 @@ describe('DebriefCatHomeTestPage', () => {
       expect(title.nativeElement.textContent).toEqual('Debrief - John Doe');
     });
 
-  });
-
-  it('should not display dangerous faults container if there are no dangerous faults', () => {
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#dangerous-fault'))).toBeNull();
-  });
-
-  it('should not display serious faults container if there are no serious faults', () => {
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#serious-fault'))).toBeNull();
-  });
-
-  it('should not display driving faults container if there are no driving faults', () => {
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
-  });
-
-  it('should display dangerous faults container if there are dangerous faults', () => {
-    store$.dispatch(new AddDangerousFault(Competencies.controlsClutch));
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#dangerous-fault'))).not.toBeNull();
-  });
-
-  it('should display serious faults container if there are serious faults', () => {
-    store$.dispatch(new AddSeriousFault(Competencies.controlsClutch));
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#serious-fault'))).not.toBeNull();
-  });
-
-  it('should display driving faults container if there are driving faults', () => {
-    store$.dispatch(new AddDrivingFault({ competency: Competencies.controlsClutch, newFaultCount: 1 }));
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#driving-fault'))).not.toBeNull();
-  });
-
-  describe('endDebrief', () => {
-    it('should dispatch the PersistTests action', () => {
-      component.endDebrief();
-      expect(store$.dispatch).toHaveBeenCalledWith(new EndDebrief);
-    });
-    it('should navigate to PassFinalisationPage when outcome = pass', () => {
-      component.outcome = TestOutcome.PASS;
-      component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_HOME_TEST.PASS_FINALISATION_PAGE);
-    });
-    it('should navigate to BackToOfficePage when outcome = fail', () => {
-      component.outcome = TestOutcome.FAIL;
-      component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_HOME_TEST.POST_DEBRIEF_HOLDING_PAGE);
-    });
-    it('should navigate to the BackToOfficePage when outcomes = terminated', () => {
-      component.outcome = 'Terminated';
-      component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_HOME_TEST.POST_DEBRIEF_HOLDING_PAGE);
-    });
-  });
-
-  describe('translation of fault competencies', () => {
-    it('should display fault competencies in English by default', () => {
-      store$.dispatch(new AddDrivingFault({ competency: Competencies.moveOffSafety, newFaultCount: 1 }));
-      store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsSignalling));
-      store$.dispatch(new AddDangerousFault(Competencies.useOfMirrorsChangeDirection));
-      fixture.detectChanges();
-      const drivingFaultLabel = fixture.debugElement.query(By.css('#driving-fault .counter-label')).nativeElement;
-      const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
-      const dangerousLabel = fixture.debugElement.query(By.css('#dangerous-fault .counter-label')).nativeElement;
-
-      expect(drivingFaultLabel.innerHTML).toBe(fullCompetencyLabels.moveOffSafety);
-      expect(seriousLabel.innerHTML).toBe(fullCompetencyLabels.useOfMirrorsSignalling);
-      expect(dangerousLabel.innerHTML).toBe(fullCompetencyLabels.useOfMirrorsChangeDirection);
-    });
-    it('should display fault competencies in Welsh for a Welsh test', (done) => {
-      store$.dispatch(new AddDrivingFault({ competency: Competencies.moveOffSafety, newFaultCount: 1 }));
-      store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsSignalling));
-      store$.dispatch(new AddDangerousFault(Competencies.useOfMirrorsChangeDirection));
-      fixture.detectChanges();
-      configureI18N(Language.CYMRAEG, translate);
-      translate.onLangChange.subscribe(() => {
-        fixture.detectChanges();
-        const drivingFaultLabel = fixture.debugElement.query(By.css('#driving-fault .counter-label')).nativeElement;
-        const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
-        const dangerousLabel = fixture.debugElement.query(By.css('#dangerous-fault .counter-label')).nativeElement;
-
-        const expectedDrivingFaultTranslation = (<any>welshTranslations).debrief.competencies.moveOffSafety;
-        const expectedSeriousFaultTranslation = (<any>welshTranslations).debrief.competencies.useOfMirrorsSignalling;
-        const expectedDangerousFaultTranslation =
-          (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
-
-        expect(drivingFaultLabel.innerHTML).toBe(expectedDrivingFaultTranslation);
-        expect(seriousLabel.innerHTML).toBe(expectedSeriousFaultTranslation);
-        expect(dangerousLabel.innerHTML).toBe(expectedDangerousFaultTranslation);
-        done();
-      });
-      store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
-    });
-  });
-
-  describe('Eyesight Test', () => {
-    it('should display the eyesight test serious fault', () => {
-      store$.dispatch(new EyesightTestFailed());
-      fixture.detectChanges();
-      const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
-      expect(seriousLabel.innerHTML).toBe(fullCompetencyLabels.eyesightTest);
-    });
-
-    it('should not display a eyesight test serious fault if the test is passed', () => {
-      store$.dispatch(new EyesightTestPassed());
-      fixture.detectChanges();
-      const label = fixture.debugElement.query(By.css('#serious-fault .counter-label'));
-      expect(label).toBeNull();
-    });
   });
 });
