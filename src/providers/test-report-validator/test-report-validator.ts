@@ -132,10 +132,6 @@ export class TestReportValidatorProvider {
         return SpeedCheckState.AVOIDANCE_MISSING;
       }
 
-      // if (avoidanceOutcome === CompetencyOutcome.S || avoidanceOutcome === CompetencyOutcome.D) {
-      //   return SpeedCheckState.VALID;
-      // }
-
       return SpeedCheckState.VALID;
     }
 
