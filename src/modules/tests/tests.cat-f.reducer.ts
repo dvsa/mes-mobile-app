@@ -18,7 +18,7 @@ import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatHomeReducer } from './journal-data/cat-home/journal-data.cat-home.reducer';
 import { testDataCatFReducer } from './test-data/cat-home/test-data.cat-f.reducer';
-import { vehicleDetailsCatHomeReducer } from './vehicle-details/cat-home/vehicle-details.cat-home.reducer';
+import { vehicleDetailsReducer } from './vehicle-details/common/vehicle-details.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 
 export function testsCatFReducer(
@@ -31,7 +31,7 @@ export function testsCatFReducer(
       journalData: journalDataCatHomeReducer,
       preTestDeclarations: preTestDeclarationsReducer,
       accompaniment: accompanimentReducer,
-      vehicleDetails: vehicleDetailsCatHomeReducer,
+      vehicleDetails: vehicleDetailsReducer,
       testData: testDataCatFReducer,
       passCompletion: passCompletionReducer,
       postTestDeclarations: postTestDeclarationsReducer,

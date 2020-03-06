@@ -1,4 +1,4 @@
-import * as vehicleDetailsActions from '../common/vehicle-details.actions';
+import * as vehicleDetailsActions from './vehicle-details.actions';
 import { VehicleDetails } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
 
@@ -6,7 +6,7 @@ const initialState: VehicleDetails = {
   registrationNumber: '',
 };
 
-export const vehicleDetailsCatHomeReducer = (
+export const vehicleDetailsReducer = (
   state: VehicleDetails = initialState,
   action: vehicleDetailsActions.Types,
 ): VehicleDetails => {
