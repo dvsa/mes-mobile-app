@@ -12,30 +12,14 @@ import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { StoreModule, Store } from '@ngrx/store';
-import {
-  AddDangerousFault,
-} from '../../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
-import { AddSeriousFault } from '../../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
-import { AddDrivingFault } from '../../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-import {
-  EyesightTestFailed,
-  EyesightTestPassed,
-} from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
-import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { TranslateModule, TranslateService } from 'ng2-translate';
-import { fullCompetencyLabels } from '../../../../shared/constants/competencies/competencies';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
-import { PopulateTestSlotAttributes }
-  from '../../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
 import { EndDebrief } from '../../debrief.actions';
-import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { CAT_HOME_TEST } from '../../../page-names.constants';
-import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
-import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
