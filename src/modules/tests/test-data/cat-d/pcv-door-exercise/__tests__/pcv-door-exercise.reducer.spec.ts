@@ -1,74 +1,102 @@
-// import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-// import { controlledStopReducer } from '../controlled-stop.reducer';
-// import {
-//   ToggleControlledStop,
-//   ControlledStopAddDrivingFault,
-//   ControlledStopAddSeriousFault,
-//   ControlledStopAddDangerousFault,
-//   ControlledStopRemoveFault,
-//   AddControlledStopComment,
-// } from '../controlled-stop.actions';
-// import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
-//
-// describe('Controlled Stop Reducer' , () => {
-//
-//   describe('TOGGLE_CONTROLLED_STOP', () => {
-//     it('should toggle the controlled stop (true when dispatched first time)', () => {
-//       const state: CatBUniqueTypes.ControlledStop = {};
-//       const result = controlledStopReducer(state, new ToggleControlledStop());
-//       expect(result.selected).toEqual(true);
-//     });
-//     it('should remove the controlled stop property when dispatched second time', () => {
-//       const state: CatBUniqueTypes.ControlledStop = {};
-//       const modifiedState = controlledStopReducer(state, new ToggleControlledStop());
-//       const result = controlledStopReducer(modifiedState, new ToggleControlledStop());
-//       expect(result.selected).toEqual(false);
-//     });
-//   });
-//
-//   describe('CONTROLLED_STOP_ADD_DRIVING_FAULT', () => {
-//     it('should add the correct fault', () => {
-//       const state: CatBUniqueTypes.ControlledStop = {};
-//       const result = controlledStopReducer(state, new ControlledStopAddDrivingFault());
-//       expect(result.selected).toEqual(true);
-//       expect(result.fault).toEqual(CompetencyOutcome.DF);
-//     });
-//   });
-//
-//   describe('CONTROLLED_STOP_ADD_SERIOUS_FAULT', () => {
-//     it('should add the correct fault', () => {
-//       const state: CatBUniqueTypes.ControlledStop = {};
-//       const result = controlledStopReducer(state, new ControlledStopAddSeriousFault());
-//       expect(result.selected).toEqual(true);
-//       expect(result.fault).toEqual(CompetencyOutcome.S);
-//     });
-//   });
-//
-//   describe('CONTROLLED_STOP_ADD_DANGEROUS_FAULT', () => {
-//     it('should add the correct fault', () => {
-//       const state: CatBUniqueTypes.ControlledStop = {};
-//       const result = controlledStopReducer(state, new ControlledStopAddDangerousFault());
-//       expect(result.selected).toEqual(true);
-//       expect(result.fault).toEqual(CompetencyOutcome.D);
-//     });
-//   });
-//
-//   describe('CONTROLLED_STOP_REMOVE_FAULT', () => {
-//     it('should remove the fault', () => {
-//       const state: CatBUniqueTypes.ControlledStop = {};
-//       const modifiedState = controlledStopReducer(state, new ControlledStopAddDangerousFault());
-//       const result = controlledStopReducer(modifiedState, new ControlledStopRemoveFault());
-//       expect(result.selected).toEqual(true);
-//       expect(result.fault).toBeUndefined();
-//       expect(result.faultComments).toBeUndefined();
-//     });
-//   });
-//
-//   describe('ADD_CONTROLLED_STOP_COMMENT', () => {
-//     it('should add a fault comment', () => {
-//       const state: CatBUniqueTypes.ControlledStop = {};
-//       const result = controlledStopReducer(state, new AddControlledStopComment('Test'));
-//       expect(result.faultComments).toEqual('Test');
-//     });
-//   });
-// });
+import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
+import { pcvDoorExerciseReducer } from '../pcv-door-exercise.reducer';
+import {
+  PcvDoorExerciseAddDrivingFault,
+  PcvDoorExerciseAddSeriousFault,
+  PcvDoorExerciseAddDangerousFault,
+  PcvDoorExerciseRemoveDrivingFault,
+  PcvDoorExerciseRemoveSeriousFault,
+  PcvDoorExerciseRemoveDangerousFault,
+  AddPcvDoorExerciseComment,
+} from '../pcv-door-exercise.actions';
+import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
+
+describe('pcvDoorExerciseReducer' , () => {
+
+  describe('Driving Fault', () => {
+
+    describe('PCV_DOOR_EXERCISE_ADD_DRIVING_FAULT', () => {
+      it('should add the correct fault', () => {
+        const state: CatDUniqueTypes.PcvDoorExercise = {};
+        const result = pcvDoorExerciseReducer(state, new PcvDoorExerciseAddDrivingFault());
+        expect(result.drivingFault).toEqual(true);
+      });
+    });
+
+    describe('PCV_DOOR_EXERCISE_REMOVE_DRIVING_FAULT', () => {
+      it('should remove the fault', () => {
+        const state: CatDUniqueTypes.PcvDoorExercise = {};
+        const modifiedState = pcvDoorExerciseReducer(state, new PcvDoorExerciseAddDrivingFault());
+        const result = pcvDoorExerciseReducer(modifiedState, new PcvDoorExerciseRemoveDrivingFault());
+        expect(result.drivingFault).toBeFalsy();
+        expect(result.drivingFaultComments).toBeUndefined();
+      });
+    });
+  });
+
+  describe('seriousFault', () => {
+
+    describe('PCV_DOOR_EXERCISE_ADD_SERIOUS_FAULT', () => {
+      it('should add the correct fault', () => {
+        const state: CatDUniqueTypes.PcvDoorExercise = {};
+        const result = pcvDoorExerciseReducer(state, new PcvDoorExerciseAddSeriousFault());
+        expect(result.seriousFault).toEqual(true);
+      });
+    });
+
+    describe('PCV_DOOR_EXERCISE_REMOVE_SERIOUS_FAULT', () => {
+      it('should remove the fault', () => {
+        const state: CatDUniqueTypes.PcvDoorExercise = {};
+        const modifiedState = pcvDoorExerciseReducer(state, new PcvDoorExerciseAddSeriousFault());
+        const result = pcvDoorExerciseReducer(modifiedState, new PcvDoorExerciseRemoveSeriousFault());
+        expect(result.seriousFault).toEqual(false);
+        expect(result.seriousFaultComments).toBeUndefined();
+      });
+    });
+  });
+
+  describe('dangerousFault', () => {
+
+    describe('PCV_DOOR_EXERCISE_ADD_DANGEROUS_FAULT', () => {
+      it('should add the correct fault', () => {
+        const state: CatDUniqueTypes.PcvDoorExercise = {};
+        const result = pcvDoorExerciseReducer(state, new PcvDoorExerciseAddDangerousFault());
+        expect(result.dangerousFault).toEqual(true);
+      });
+    });
+
+    describe('PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT', () => {
+      it('should remove the fault', () => {
+        const state: CatDUniqueTypes.PcvDoorExercise = {};
+        const modifiedState = pcvDoorExerciseReducer(state, new PcvDoorExerciseAddDangerousFault());
+        const result = pcvDoorExerciseReducer(modifiedState, new PcvDoorExerciseRemoveDangerousFault());
+        expect(result.dangerousFault).toEqual(false);
+        expect(result.dangerousFaultComments).toBeUndefined();
+      });
+    });
+  });
+
+  describe('Comments', () => {
+
+    describe('ADD_PCV_DOOR_EXERCISE_COMMENT', () => {
+      it('should add a fault comment', () => {
+        const state: CatDUniqueTypes.PcvDoorExercise = {};
+        const resultDF = pcvDoorExerciseReducer(
+          state,
+          new AddPcvDoorExerciseComment(CompetencyOutcome.DF, 'drivingFaultComments', 'Test DF'),
+        );
+        const resultS = pcvDoorExerciseReducer(
+          state,
+          new AddPcvDoorExerciseComment(CompetencyOutcome.S, 'seriousFaultComments', 'Test S'),
+        );
+        const resultD = pcvDoorExerciseReducer(
+          state,
+          new AddPcvDoorExerciseComment(CompetencyOutcome.D, 'dangerousFaultComments', 'Test D'),
+        );
+        expect(resultDF.drivingFaultComments).toEqual('Test DF');
+        expect(resultS.seriousFaultComments).toEqual('Test S');
+        expect(resultD.dangerousFaultComments).toEqual('Test D');
+      });
+    });
+  });
+});
