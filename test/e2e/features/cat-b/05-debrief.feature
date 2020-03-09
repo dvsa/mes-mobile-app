@@ -14,7 +14,8 @@ Feature: Debrief including Health Declaration
       Then I should see the "Test report - Florence Pearson" page
       And I complete the test
       And I continue to debrief
-      Then I should see the Debrief page with outcome "Passed"
+      Then I should see the "Debrief - Florence Pearson" page
+      And I should see the Debrief page with outcome "Passed"
       When I end the debrief
       Then I should see the "Test debrief - Florence Pearson" page
       And the debrief candidate name should be "Miss Florence Pearson"
@@ -42,9 +43,10 @@ Feature: Debrief including Health Declaration
       Then I should see the "Test report - Jane Doe" page
       And I complete the test
       And I continue to debrief
-      Then I should see the Debrief page with outcome "Passed"
-      When I end the debrief
-      Then I should see the "Test debrief - Jane Doe" page
+     Then I should see the Debrief page with outcome "Passed"
+     And I should see the "Debrief - Jane Doe" page
+     When I end the debrief
+     Then I should see the "Test debrief - Jane Doe" page
 
    Scenario: For a pass the health declaration shows the correct information and validation is enforced
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
@@ -62,6 +64,7 @@ Feature: Debrief including Health Declaration
       And I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
+      And I should see the "Debrief - Ali Campbell" page
       When I end the debrief
       Then I should see the "Test debrief - Ali Campbell" page
       And I complete the pass details
