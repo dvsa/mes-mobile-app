@@ -44,7 +44,8 @@ import { getCandidate } from '../../../modules/tests/journal-data/cat-home/candi
 import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
 // TODO Implement Home Test selector
 import { hasManoeuvreBeenCompletedCatC } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
-import { getTestRequirementsCatHome } from '../../../modules/tests/test-data/cat-home/test-requirements/test-requirements.cat-home.reducer';
+import { getTestRequirementsCatHome }
+from '../../../modules/tests/test-data/cat-home/test-requirements/test-requirements.cat-home.reducer';
 import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
 import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
 import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
