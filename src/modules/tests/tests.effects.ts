@@ -206,6 +206,14 @@ export class TestsEffects {
         startTestAction.category === TestCategory.DE) {
         arrayOfActions.push(new InitializeVehicleChecksCatD(startTestAction.category));
       }
+      if (
+        startTestAction.category === TestCategory.F ||
+        startTestAction.category === TestCategory.G ||
+        startTestAction.category === TestCategory.H ||
+        startTestAction.category === TestCategory.K) {
+        // TODO Replace this with Home Test action
+        arrayOfActions.push(new InitializeVehicleChecksCatD(startTestAction.category));
+      }
       return arrayOfActions;
     }),
   );

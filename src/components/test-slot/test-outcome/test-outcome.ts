@@ -6,7 +6,7 @@ import { StartTest, ActivateTest } from '../../../modules/tests/tests.actions';
 import { EarlyStartModalDidEnter, ResumingWriteUp } from '../../../modules/journal/journal.actions';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
 import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
-import { startsWith, isEmpty } from 'lodash';
+import { isEmpty, startsWith } from 'lodash';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import {
   JOURNAL_EARLY_START_MODAL,
@@ -18,10 +18,10 @@ import {
   CAT_A_MOD2,
   CAT_D,
   CAT_ADI_PART2,
+  CAT_HOME_TEST,
 } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
-import { ModalEvent as EarlyStartModalEvent }
-from '../../../pages/journal/components/journal-early-start-modal/journal-early-start-modal.constants';
+import { ModalEvent as EarlyStartModalEvent } from '../../../pages/journal/components/journal-early-start-modal/journal-early-start-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
@@ -210,6 +210,12 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.EUAMM2:
         this.navController.push(CAT_A_MOD2.WAITING_ROOM_PAGE);
         break;
+      case TestCategory.K:
+      case TestCategory.H:
+      case TestCategory.G:
+      case TestCategory.F:
+        this.navController.push(CAT_HOME_TEST.WAITING_ROOM_PAGE);
+        break;
     }
   }
 
@@ -347,6 +353,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.D1E:
       case TestCategory.DE:
         return CAT_D.WAITING_ROOM_PAGE;
+      case TestCategory.K:
+      case TestCategory.H:
+      case TestCategory.G:
+      case TestCategory.F:
+        return CAT_HOME_TEST.WAITING_ROOM_PAGE;
     }
   }
 
@@ -378,6 +389,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.D1E:
       case TestCategory.DE:
         return CAT_D.PASS_FINALISATION_PAGE;
+      case TestCategory.K:
+      case TestCategory.H:
+      case TestCategory.G:
+      case TestCategory.F:
+        return CAT_HOME_TEST.PASS_FINALISATION_PAGE;
     }
   }
 
@@ -409,6 +425,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.D1E:
       case TestCategory.DE:
         return CAT_D.NON_PASS_FINALISATION_PAGE;
+      case TestCategory.K:
+      case TestCategory.H:
+      case TestCategory.G:
+      case TestCategory.F:
+        return CAT_HOME_TEST.NON_PASS_FINALISATION_PAGE;
     }
   }
 
@@ -440,6 +461,11 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.D1E:
       case TestCategory.DE:
         return CAT_D.OFFICE_PAGE;
+      case TestCategory.K:
+      case TestCategory.H:
+      case TestCategory.G:
+      case TestCategory.F:
+        return CAT_HOME_TEST.OFFICE_PAGE;
     }
   }
 }
