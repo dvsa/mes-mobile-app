@@ -1,6 +1,7 @@
 import { Then, When, Before } from 'cucumber';
-import { getElement, clickElement, enterPasscode } from './generic-steps';
+import { enterPasscode } from './generic-steps';
 import { by } from 'protractor';
+import { getElement, clickElement } from '../../helpers/helpers';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');

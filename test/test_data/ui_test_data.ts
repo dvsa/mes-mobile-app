@@ -2,7 +2,7 @@ export const UI_TEST_DATA = {
   testData: {
     be: ['S01 - Direction indicators', 'S02 - Doors secure', 'S03 - Horn', 'T01 - Brakes',
       'T02 - Safety factors while loading'],
-    c: ['CD1 - All doors secure', 'CD2 - Air leaks', 'CD10 - Air pressure', 'CD7 - Sufficient tread', 'CD9 - Body safety'],
+    c: ['Q1 - All doors secure', 'Q2 - Air leaks', 'Q10 - Air pressure', 'Q7 - Sufficient tread', 'Q9 - Body safety'],
     ce: ['E2 - Change tacho', 'E3 - Loading mechanism'],
   },
 };

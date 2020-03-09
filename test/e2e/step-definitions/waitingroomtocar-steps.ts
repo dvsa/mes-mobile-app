@@ -1,7 +1,6 @@
 import { When, Before } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
 import { by, element, browser } from 'protractor';
-import { textFieldInputViaNativeMode } from '../../helpers/helpers';
+import { textFieldInputViaNativeMode, getElement, clickElement } from '../../helpers/helpers';
 import { UI_TEST_DATA } from '../../test_data/ui_test_data';
 
 import { threadId } from 'worker_threads';
@@ -23,7 +22,7 @@ Before({ tags: '@catc' }, () => {
 });
 
 Before({ tags: '@catce' }, () => {
-  this.testCategory = 'c';
+  this.testCategory = 'ce';
 });
 
 Before({ tags: '@catc1' }, () => {

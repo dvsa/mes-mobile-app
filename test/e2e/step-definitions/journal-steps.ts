@@ -1,5 +1,6 @@
 import { by, element } from 'protractor';
-import { getElement, clickElement, onJournalPageAs } from './generic-steps';
+import { onJournalPageAs } from './generic-steps';
+import { getElement, clickElement } from '../../helpers/helpers';
 
 const {
   Given,
@@ -51,7 +52,7 @@ When('I start the test for {string}', (candidateName) => {
   });
 });
 
-When('I rekey a test for {string}', (candidateName) => {
+When('I rekey a test for {string} in the {string} ', (candidateName, username) => {
   const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));

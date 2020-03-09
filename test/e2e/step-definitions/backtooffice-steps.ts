@@ -1,6 +1,6 @@
 import { Then, When } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
 import { browser, by, ExpectedConditions } from 'protractor';
+import { getElement, clickElement  } from '../../helpers/helpers';
 
 Then('I am on the back to office page', () => {
   // No page title so need to check something else exists that exists on the page

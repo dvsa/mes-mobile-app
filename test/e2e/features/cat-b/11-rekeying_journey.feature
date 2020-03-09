@@ -4,7 +4,7 @@ Feature: A Driving Examiner Rekeys Category B tests
    Scenario: User can rekey a test pass for the previous day
       Given I am on the journal page as "mobexaminer1"
       When I navigate to previous day
-      And I rekey a test for "Miss Doris Pearson"
+      And I rekey a test for "Miss Doris Pearson" in the "mobexaminer1"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
       Then I should see the "Declaration - Doris Pearson" page

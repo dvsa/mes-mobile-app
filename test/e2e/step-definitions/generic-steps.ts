@@ -1,7 +1,8 @@
 import { Before } from 'cucumber';
 import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-import { waitForOverlay, getParentContext } from '../../helpers/helpers';
+// tslint:disable-next-line:max-line-length
+import { waitForOverlay, getParentContext, getElement, isReady, clickElement, clickBackButton } from '../../helpers/helpers';
 
 const {
   Given,
@@ -348,17 +349,6 @@ export const logout = () => {
 };
 
 /**
- * A framework safe click method.
- * @param fieldElement the element to click
- */
-export const clickElement = (fieldElement) => {
-  browser.wait(ExpectedConditions.elementToBeClickable(fieldElement));
-  fieldElement.click().then((promise) => {
-    return isReady(promise);
-  });
-};
-
-/**
  * Load application.
  * Goes to the home page which will be the journal for logged in Examiners.
  * This essentially reloads the application.
@@ -369,28 +359,9 @@ export const loadApplication = () => {
 };
 
 /**
- * Checks whether the page is ready to be interacted with.
- * Ionic adds an overlay preventing clicking until the page is ready so we need to wait for that to disappear.
- * @param promise the promise to return when the page is ready
- */
-const isReady = (promise) => {
-  // There is a 200ms transition duration we have to account for
-  browser.sleep(TEST_CONFIG.ACTION_WAIT);
-  // Then wait for the page to become active again
-  browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-  // Then return the original promise
-  return promise;
-};
-
-/**
  * Waits for the element to exist on the page before returning it.
  * @param elementBy the element finder
  */
-export const getElement = (elementBy) => {
-  const foundElement = element(elementBy);
-  browser.wait(ExpectedConditions.presenceOf(foundElement));
-  return foundElement;
-};
 
 /**
  * Enters a generic password into the iOS passcode field.
@@ -481,11 +452,6 @@ const getPageType = (pageName : string) => {
     default:
       return `waiting-room-cat-${this.testCategory}-page`;
   }
-};
-
-const clickBackButton = () => {
-  const backButton = getElement(by.xpath('//page-journal//button//span[text()="Back"]'));
-  clickElement(backButton);
 };
 
 const clickGoToMyJournalButton = () => {
