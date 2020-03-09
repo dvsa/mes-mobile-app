@@ -35,7 +35,6 @@ import { ModalEvent } from '../test-report.constants';
 import { CAT_HOME_TEST, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { legalRequirementsLabels }
  from '../../../shared/constants/legal-requirements/legal-requirements.constants';
@@ -46,15 +45,29 @@ import { TestDataByCategoryProvider } from '../../../providers/test-data-by-cate
 // TODO Implement Home Test selector
 import { hasManoeuvreBeenCompletedCatC } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import { getTestRequirementsCatHome } from '../../../modules/tests/test-data/cat-home/test-requirements/test-requirements.cat-home.reducer';
+import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
+import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
+import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
+import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
 
+type HomeTestDataUnion =
+  | CatFUniqueTypes.TestData
+  | CatGUniqueTypes.TestData
+  | CatHUniqueTypes.TestData
+  | CatKUniqueTypes.TestData;
+type HomeTestRequirementsUnion =
+  | CatFUniqueTypes.TestRequirements
+  | CatGUniqueTypes.TestRequirements
+  | CatHUniqueTypes.TestRequirements
+  | CatKUniqueTypes.TestRequirements;
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  testData$: Observable<CatCUniqueTypes.TestData>;
-  testRequirements$: Observable<CatCUniqueTypes.TestRequirements>;
+  testData$: Observable<HomeTestDataUnion>;
+  testRequirements$: Observable<HomeTestRequirementsUnion>;
   testCategory$: Observable<CategoryCode>;
 }
 
