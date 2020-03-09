@@ -68,7 +68,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
 import { TestDataByCategoryProvider } from '../../../../providers/test-data-by-category/test-data-by-category';
 
-describe('OfficePage', () => {
+describe('OfficeCatHomeTestPage', () => {
   let fixture: ComponentFixture<OfficeCatHomeTestPage>;
   let component: OfficeCatHomeTestPage;
   let navController: NavController;
