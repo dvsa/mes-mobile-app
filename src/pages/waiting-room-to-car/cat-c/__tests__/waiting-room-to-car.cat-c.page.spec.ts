@@ -20,7 +20,6 @@ import { VehicleDetailsCardComponent } from '../../components/vehicle-details-ca
 import { VehicleDetailsComponent } from '../../components/vehicle-details/vehicle-details';
 import { AccompanimentCardComponent } from '../../components/accompaniment-card/accompaniment-card';
 import { AccompanimentComponent } from '../../components/accompaniment/accompaniment';
-import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
@@ -42,7 +41,6 @@ describe('WaitingRoomToCarCatCPage', () => {
         MockComponent(VehicleDetailsComponent),
         MockComponent(AccompanimentCardComponent),
         MockComponent(AccompanimentComponent),
-        MockComponent(PracticeModeBanner),
         MockComponent(VehicleChecksCatCComponent),
         MockComponent(WarningBannerComponent),
       ],
