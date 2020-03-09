@@ -167,7 +167,7 @@ describe('TestReportValidator', () => {
       expect(result).toBe(SpeedCheckState.AVOIDANCE_MISSING);
     });
 
-    it('should return SpeedCheckState.NOT_MET when avoidance speed not met is true & speed is recorded', () => {
+    it('should return SpeedCheckState.VALID when avoidance speed not met is true & speed is recorded', () => {
       const testData = {
         avoidance: {
           firstAttempt: 48,
@@ -177,7 +177,7 @@ describe('TestReportValidator', () => {
 
       const result = testReportValidatorProvider.validateSpeedChecksCatAMod1(testData);
 
-      expect(result).toBe(SpeedCheckState.NOT_MET);
+      expect(result).toBe(SpeedCheckState.VALID);
     });
 
     it('should return VALID when avoidance speed not met first attempt is recorded but has Serious fault', () => {
