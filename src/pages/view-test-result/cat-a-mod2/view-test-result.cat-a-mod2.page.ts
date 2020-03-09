@@ -30,8 +30,7 @@ import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-// todo: PREP-AMOD2 change to CatAMod2UniqueTypes when schema changes are ready
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { TestResultCatAM2Schema } from '@dvsa/mes-test-schema/categories/AM2';
 import { categoryBETestResultMock } from '../../../shared/mocks/cat-be-test-result.mock';
 import { get } from 'lodash';
 
@@ -43,8 +42,7 @@ import { get } from 'lodash';
 export class ViewTestResultCatAMod2Page extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
-  // todo: PREP-AMOD2 change to CatAMod2UniqueTypes when schema changes are ready
-  testResult: CatBEUniqueTypes.TestResult;
+  testResult: TestResultCatAM2Schema;
 
   isLoading: boolean;
   loadingSpinner: Loading;
@@ -77,8 +75,7 @@ export class ViewTestResultCatAMod2Page extends BasePageComponent implements OnI
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
         map((response: HttpResponse<any>): string => response.body),
-        // todo: PREP-AMOD2 change to CatAMod2UniqueTypes when schema changes are ready
-        map(data => this.testResult = this.compressionProvider.extractTestResult(data) as CatBEUniqueTypes.TestResult),
+        map(data => this.testResult = this.compressionProvider.extractTestResult(data) as TestResultCatAM2Schema),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
           this.testResult = categoryBETestResultMock;
@@ -131,7 +128,7 @@ export class ViewTestResultCatAMod2Page extends BasePageComponent implements OnI
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
       applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
-      category: TestCategory.BE,
+      category: TestCategory.EUAM2,
       specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
       entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
       slotType: this.testResult.journalData.testSlotAttributes.slotType,
