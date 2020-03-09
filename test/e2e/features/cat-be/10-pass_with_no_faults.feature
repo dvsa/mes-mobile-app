@@ -16,6 +16,7 @@ Feature: Driving Exmainer Completes a Pass Journey With no Faults for Category B
       And I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
+      And I should see the "Debrief - Callahan Eaton" page
       When I end the debrief
       Then I should see the "Test debrief - Callahan Eaton" page
       And I complete the pass details
