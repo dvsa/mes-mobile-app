@@ -14,8 +14,7 @@ import {
   isTestOutcomeSet,
   getTestOutcomeText,
 } from '../../../modules/tests/tests.selector';
-// TODO - Cat HOME , Use correct reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-home/candidate/candidate.cat-home.reducer';
 import {
   getUntitledCandidateName,
   getCandidateDriverNumber,
