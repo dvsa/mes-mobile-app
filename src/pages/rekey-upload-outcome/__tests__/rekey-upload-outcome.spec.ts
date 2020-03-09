@@ -18,7 +18,7 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { rekeyReasonReducer } from '../../rekey-reason/rekey-reason.reducer';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite } from 'ng-bullet';
 

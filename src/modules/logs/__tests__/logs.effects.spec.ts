@@ -1,11 +1,9 @@
 
 import { TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject, Observable, EMPTY, of } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { LogsEffects } from '../logs.effects';
 import { Actions } from '@ngrx/effects';
-import { Observable } from 'rxjs/Observable';
-import { empty } from 'rxjs/observable/empty';
 import { StoreModule, Store } from '@ngrx/store';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
@@ -18,7 +16,6 @@ import { logsReducer } from '../logs.reducer';
 import { LogsProvider } from '../../../providers/logs/logs';
 import { LogsProviderMock } from '../../../providers/logs/__mocks__/log.mock';
 import { Log, LogType } from '../../../shared/models/log.model';
-import { of } from 'rxjs/observable/of';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
@@ -26,7 +23,7 @@ import { configureTestSuite } from 'ng-bullet';
 
 export class TestActions extends Actions {
   constructor() {
-    super(empty());
+    super(EMPTY);
   }
 
   set stream$(source$: Observable<any>) {

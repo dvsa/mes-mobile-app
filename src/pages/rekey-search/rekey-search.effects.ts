@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { RekeySearchProvider } from '../../providers/rekey-search/rekey-search';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { of, Observable } from 'rxjs';
 import { CompressionProvider } from '../../providers/compression/compression';
 import { SearchProvider } from '../../providers/search/search';
 import {
@@ -11,7 +11,6 @@ import {
 import { RekeySearchErrorMessages } from './rekey-search-error-model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
-import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RekeySearchEffects {

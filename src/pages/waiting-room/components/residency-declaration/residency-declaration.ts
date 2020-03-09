@@ -21,7 +21,7 @@ export class ResidencyDeclarationComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl('', [Validators.requiredTrue]),
+      this.formControl = new FormControl('', [Validators.requiredTrue]);
 
       this.formGroup.addControl(ResidencyDeclarationComponent.fieldName, this.formControl);
     }

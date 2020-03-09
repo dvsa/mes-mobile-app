@@ -1,10 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { TestReportAnalyticsEffects } from '../test-report.analytics.effects';
 import * as testsActions from '../../../modules/tests/tests.actions';
-import * as controlledStopActions from '../../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
+import * as controlledStopActions
+  from '../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
 import * as dangerousFaultsActions
   from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import * as drivingFaultsActions from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';

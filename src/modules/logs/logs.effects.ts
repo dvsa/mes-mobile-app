@@ -3,8 +3,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 
 import { switchMap, map, catchError, withLatestFrom, concatMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import { interval } from 'rxjs/observable/interval';
+import { of, interval, Observable, from } from 'rxjs';
 
 import * as logsActions from './logs.actions';
 import { LogsProvider } from '../../providers/logs/logs';
@@ -15,8 +14,6 @@ import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-
 import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { Log } from '../../shared/models/log.model';
 import { DateTime } from '../../shared/helpers/date-time';
-import { Observable } from 'rxjs/Observable';
-import { from } from 'rxjs/observable/from';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { HttpErrorResponse } from '@angular/common/http';
 

@@ -9,7 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTestSlotId } from '../../modules/tests/tests.selector';
 import { CONTINUE_FROM_DECLARATION } from './health-declaration.actions';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 
 @Injectable()
 export class HealthDeclarationEffects {

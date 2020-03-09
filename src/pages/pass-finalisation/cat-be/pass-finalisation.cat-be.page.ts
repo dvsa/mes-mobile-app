@@ -17,7 +17,7 @@ import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, merge } from 'rxjs';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
@@ -30,7 +30,6 @@ import {
 } from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
 import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
@@ -62,7 +61,6 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
-import { merge } from 'rxjs/observable/merge';
 import { TransmissionType } from '../../../shared/models/transmission-type';
 
 interface PassFinalisationPageState {

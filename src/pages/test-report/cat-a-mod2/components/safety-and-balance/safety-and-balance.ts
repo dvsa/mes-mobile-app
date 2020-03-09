@@ -9,7 +9,7 @@ import { map, withLatestFrom } from 'rxjs/operators';
 import { getSafetyAndBalanceQuestions }
   from '../../../../../modules/tests/test-data/cat-a-mod2/safety-and-balance/safety-and-balance.cat-a-mod2.selector';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface ComponentState {

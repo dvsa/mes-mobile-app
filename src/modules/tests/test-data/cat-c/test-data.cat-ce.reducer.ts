@@ -8,8 +8,8 @@ import { etaReducer } from '../common/eta/eta.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { testRequirementsCatCReducer } from './test-requirements/test-requirements.cat-c.reducer';
 import { vehicleChecksCatCReducer } from './vehicle-checks/vehicle-checks.cat-c.reducer';
-import { uncoupleRecoupleCatCEReducer } from './uncouple-recouple/uncouple-recouple.cat-ce.reducer';
 import { manoeuvresReducer } from '../common/manoeuvres/manoeuvres.reducer';
+import { uncoupleRecoupleReducer } from '../common/uncouple-recouple/uncouple-recouple.reducer';
 
 export const initialState: CatCEUniqueTypes.TestData = {
   dangerousFaults: {},
@@ -39,7 +39,7 @@ export function testDataCatCEReducer(
     ETA: etaReducer,
     manoeuvres: manoeuvresReducer,
     testRequirements: testRequirementsCatCReducer,
-    uncoupleRecouple: uncoupleRecoupleCatCEReducer,
+    uncoupleRecouple: uncoupleRecoupleReducer,
   })(state as Required<CatCEUniqueTypes.TestData>, action);
 }
 

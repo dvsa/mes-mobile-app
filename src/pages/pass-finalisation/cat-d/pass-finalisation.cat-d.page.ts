@@ -18,7 +18,7 @@ import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, merge } from 'rxjs';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-d/candidate/candidate.cat-d.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
@@ -31,7 +31,6 @@ import {
 } from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
 import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.reducer';
@@ -64,7 +63,6 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { TransmissionType } from '../../../shared/models/transmission-type';
-import { merge } from 'rxjs/observable/merge';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/cat-d/pass-completion.cat-d.reducer';
 import { getCode78 } from '../../../modules/tests/pass-completion/cat-d/pass-completion.cat-d.selector';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';

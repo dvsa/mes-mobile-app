@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { merge } from 'rxjs/observable/merge';
+import { Observable, Subscription, merge } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../shared/models/store.model';

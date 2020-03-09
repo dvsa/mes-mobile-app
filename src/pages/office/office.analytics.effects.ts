@@ -23,7 +23,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest, isPassed, getJournalData } from '../../modules/tests/tests.selector';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';

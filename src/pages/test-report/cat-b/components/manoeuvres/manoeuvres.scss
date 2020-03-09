@@ -51,6 +51,7 @@ manoeuvres {
     .tickwrapper {
       display: flex;
       justify-content: center;
+      margin-right: 5px;
     }
     .label-wrapper {
       display: flex;
@@ -87,10 +88,6 @@ manoeuvres {
     }
     .fault-wrapper {
       display: flex;
-    }
-
-    .tickwrapper {
-      margin-right: 5px;
     }
 
     serious-fault-badge {

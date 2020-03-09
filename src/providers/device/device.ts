@@ -8,8 +8,7 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { LogHelper } from '../logs/logsHelper';
 import { timeout, retry, map } from 'rxjs/operators';
-import { defer } from 'rxjs/observable/defer';
-import { Observable } from 'rxjs/Observable';
+import { defer, Observable } from 'rxjs';
 
 declare let cordova: any;
 

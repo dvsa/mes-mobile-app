@@ -8,7 +8,7 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestStatus, getActivityCodeBySlotId, getTestById } from '../../../modules/tests/tests.selector';
 import { SlotTypes } from '../../../shared/models/slot-types';

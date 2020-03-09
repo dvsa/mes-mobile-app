@@ -10,6 +10,10 @@ import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
 import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
 import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
+import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
+import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
+import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
+import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
 import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
 import { TestResultCatAM2Schema } from '@dvsa/mes-test-schema/categories/AM2';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories/index';
@@ -26,6 +30,11 @@ import { testsCatDReducer } from './tests.cat-d.reducer';
 import { testsCatDEReducer } from './tests.cat-de.reducer';
 import { testsCatD1Reducer } from './tests.cat-d1.reducer';
 import { testsCatD1EReducer } from './tests.cat-d1e.reducer';
+import { testsCatFReducer } from './tests.cat-f.reducer';
+import { testsCatGReducer } from './tests.cat-g.reducer';
+import { testsCatHReducer } from './tests.cat-h.reducer';
+import { testsCatKReducer } from './tests.cat-k.reducer';
+
 export function testsReducerFactory(
   category: TestCategory | null, action: Action, state: TestResultSchemasUnion,
 ): TestResultSchemasUnion {
@@ -60,6 +69,14 @@ export function testsReducerFactory(
       return testsCatD1Reducer(action, state as Required<CatD1UniqueTypes.TestResult>);
     case TestCategory.D1E:
       return testsCatD1EReducer(action, state as Required<CatD1EUniqueTypes.TestResult>);
+    case TestCategory.F:
+      return testsCatFReducer(action, state as Required<CatFUniqueTypes.TestResult>);
+    case TestCategory.G:
+      return testsCatGReducer(action, state as Required<CatGUniqueTypes.TestResult>);
+    case TestCategory.H:
+      return testsCatHReducer(action, state as Required<CatHUniqueTypes.TestResult>);
+    case TestCategory.K:
+      return testsCatKReducer(action, state as Required<CatKUniqueTypes.TestResult>);
     default:
       // TODO (low priority): throw an exception here instead of using category b reducer
       return testsCatBReducer(action, state as Required<CatBUniqueTypes.TestResult>);

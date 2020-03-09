@@ -7,9 +7,8 @@ import { StoreModel } from '../shared/models/store.model';
 import { LoadAppInfo, AppSuspended, AppResumed } from '../modules/app-info/app-info.actions';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { LOGIN_PAGE } from '../pages/page-names.constants';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
 
 declare let window: any;
 
@@ -19,7 +18,7 @@ declare let window: any;
 export class App {
   rootPage: any = LOGIN_PAGE;
   textZoom: number = 100;
-  increasedContrast: Boolean = false;
+  increasedContrast: boolean = false;
 
   private platformSubscription: Subscription;
   private subscription: Subscription;

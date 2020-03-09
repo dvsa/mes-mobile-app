@@ -1,9 +1,8 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, merge } from 'rxjs';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { Component, Input } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { ReversingDistancesProvider } from '../../../../providers/reversing-distances/reversing-distances';
 import { select, Store } from '@ngrx/store';
@@ -11,7 +10,6 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
-import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import {
   ReverseDiagramLengthChanged,

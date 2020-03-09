@@ -1,4 +1,4 @@
-import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
+import { EMPTY } from 'rxjs';
 export class ScreenOrientationMock  {
 
   ORIENTATIONS: {
@@ -21,7 +21,7 @@ export class ScreenOrientationMock  {
 
   type: string = this.ORIENTATIONS.ANY;
 
-  onChange = jasmine.createSpy('onChange').and.returnValue(new EmptyObservable);
+  onChange = jasmine.createSpy('onChange').and.returnValue(EMPTY);
 
   lock = jasmine.createSpy('lock').and.returnValue(Promise.resolve());
 

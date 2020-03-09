@@ -6,6 +6,8 @@ import {
   VisibilityType,
 } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { removeNonAlphaNumeric } from '../../../../shared/helpers/formatters';
+import { getDrivingOrRidingLabel } from '../../../../shared/helpers/driver-type';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'independent-driving',
@@ -17,6 +19,9 @@ export class IndependentDrivingComponent implements OnChanges {
 
   @Input()
   outcome: string;
+
+  @Input()
+  category: TestCategory | null;
 
   @Input()
   option1: IndependentDriving;
@@ -71,6 +76,14 @@ export class IndependentDrivingComponent implements OnChanges {
 
   getIndependentDrivingInputId(inputLabel: string): string {
     return `independent-driving-${removeNonAlphaNumeric(inputLabel).toLowerCase()}`;
+  }
+
+  get componentTitle(): string {
+    return `Independent ${getDrivingOrRidingLabel(this.category)}`;
+  }
+
+  get componentWarningMessage(): string {
+    return `Select the method of independent ${getDrivingOrRidingLabel(this.category)}`;
   }
 
   get invalid(): boolean {

@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription, merge } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { isDangerousMode, isRemoveFaultMode, isSeriousMode } from '../../test-report.selector';
 import { map } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../../test-report.reducer';

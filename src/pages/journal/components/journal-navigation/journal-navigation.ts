@@ -5,7 +5,7 @@ import { getJournalState } from '../../../../modules/journal/journal.reducer';
 import { map } from 'rxjs/operators';
 import { getSelectedDate, canNavigateToPreviousDay, canNavigateToNextDay }
   from '../../../../modules/journal/journal.selector';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { SelectPreviousDay, SelectNextDay } from '../../../../modules/journal/journal.actions';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';

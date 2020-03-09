@@ -3,7 +3,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { Observable } from 'rxjs/Observable';
+import { Observable, merge, Subscription } from 'rxjs';
 import { StoreModel } from '../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
@@ -28,9 +28,7 @@ import {
 import {
   getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType, getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
-import { merge } from 'rxjs/observable/merge';
 import { CommunicationMethod, Address, ConductedLanguage } from '@dvsa/mes-test-schema/categories/common';
-import { Subscription } from 'rxjs/Subscription';
 import {
   CandidateChoseEmailAsCommunicationPreference,
   CandidateChosePostAsCommunicationPreference,

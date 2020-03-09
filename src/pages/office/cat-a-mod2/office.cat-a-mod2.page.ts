@@ -17,7 +17,7 @@ import {
   SavingWriteUpForLater,
   OfficeValidationError,
 } from '../office.actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
@@ -115,6 +115,7 @@ interface OfficePageState {
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
+  testCategory$: Observable<TestCategory>;
   isPassed$: Observable<boolean>;
   isTestOutcomeSet$: Observable<boolean>;
   candidateName$: Observable<string>;
@@ -159,9 +160,9 @@ export class OfficeCatAMod2Page extends BasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
   toast: Toast;
-  drivingFaultCtrl: String = 'drivingFaultCtrl';
-  seriousFaultCtrl: String = 'seriousFaultCtrl';
-  dangerousFaultCtrl: String = 'dangerousFaultCtrl';
+  drivingFaultCtrl: string = 'drivingFaultCtrl';
+  seriousFaultCtrl: string = 'seriousFaultCtrl';
+  dangerousFaultCtrl: string = 'dangerousFaultCtrl';
   static readonly maxFaultCount = 10;
 
   weatherConditions: WeatherConditionSelection[];
@@ -204,6 +205,7 @@ export class OfficeCatAMod2Page extends BasePageComponent {
     );
 
     this.pageState = {
+      testCategory$,
       activityCode$: currentTest$.pipe(
         select(getActivityCode),
       ),

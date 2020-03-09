@@ -17,8 +17,8 @@ export function vehicleChecksReducer(
       return {
         ...state,
         tellMeQuestion: {
-          code: action.tellMeQuestion.code as string,
-          description: action.tellMeQuestion.shortName as string,
+          code: action.tellMeQuestion.code,
+          description: action.tellMeQuestion.shortName,
         },
       };
     case vehicleChecksActions.TELL_ME_QUESTION_CORRECT:
@@ -42,8 +42,8 @@ export function vehicleChecksReducer(
         ...state,
         showMeQuestion: {
           ...state.showMeQuestion,
-          code: action.showMeQuestion.code as string,
-          description: action.showMeQuestion.shortName as string,
+          code: action.showMeQuestion.code,
+          description: action.showMeQuestion.shortName,
         },
       };
     case vehicleChecksActions.SHOW_ME_QUESTION_PASSED:

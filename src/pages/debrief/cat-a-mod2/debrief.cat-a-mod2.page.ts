@@ -4,14 +4,12 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, merge } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestData } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
 import { getETA, getEco } from '../../../modules/tests/test-data/common/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { merge } from 'rxjs/observable/merge';
 import { getTestOutcome } from '../debrief.selector';
 import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -45,6 +43,7 @@ interface DebriefPageState {
   testResult$: Observable<string>;
   conductedLanguage$: Observable<string>;
   candidateName$: Observable<string>;
+  category$: Observable<TestCategory>;
 }
 
 @IonicPage()
@@ -90,32 +89,34 @@ export class DebriefCatAMod2Page extends BasePageComponent {
     );
     const category$ = currentTest$.pipe(
       select(getTestCategory),
+      map(c => c as TestCategory),
     );
     this.pageState = {
+      category$,
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
         withLatestFrom(category$),
         map(([data, category]) =>
-          this.faultSummaryProvider.getSeriousFaultsList(data, category as TestCategory)
+          this.faultSummaryProvider.getSeriousFaultsList(data, category)
           .map(fault => fault.competencyIdentifier)),
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         withLatestFrom(category$),
         map(([data, category]) =>
-          this.faultSummaryProvider.getDangerousFaultsList(data, category as TestCategory)
+          this.faultSummaryProvider.getDangerousFaultsList(data, category)
           .map(fault => fault.competencyIdentifier)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
         withLatestFrom(category$),
-        map(([data, category]) => this.faultSummaryProvider.getDrivingFaultsList(data, category as TestCategory)),
+        map(([data, category]) => this.faultSummaryProvider.getDrivingFaultsList(data, category)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
         withLatestFrom(category$),
         map(([testData, category]) => {
-          return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
+          return this.faultCountProvider.getDrivingFaultSumCount(category, testData);
         }),
       ),
       etaFaults$: currentTest$.pipe(

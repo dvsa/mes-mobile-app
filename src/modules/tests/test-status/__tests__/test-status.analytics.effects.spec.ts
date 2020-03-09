@@ -3,7 +3,7 @@ import { AnalyticsProvider } from '../../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../../providers/analytics/__mocks__/analytics.mock';
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { testsReducer } from '../../tests.reducer';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as testStatusActions from '../test-status.actions';

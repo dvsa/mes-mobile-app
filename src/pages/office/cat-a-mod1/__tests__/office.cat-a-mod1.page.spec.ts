@@ -42,7 +42,7 @@ import {
   WeatherConditionsChanged,
 } from '../../../../modules/tests/test-summary/common/test-summary.actions';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/common';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../../components/candidate-description/candidate-description';

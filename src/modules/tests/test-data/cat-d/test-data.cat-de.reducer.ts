@@ -9,9 +9,9 @@ import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.re
 import { testRequirementsCatDReducer } from './test-requirements/test-requirements.cat-d.reducer';
 import { vehicleChecksCatDReducer } from './vehicle-checks/vehicle-checks.cat-d.reducer';
 import { safetyQuestionsCatDReducer } from './safety-questions/safety-questions.cat-d.reducer';
-import { uncoupleRecoupleCatDEReducer } from './uncouple-recouple/uncouple-recouple.cat-de.reducer';
 import { manoeuvresReducer } from '../common/manoeuvres/manoeuvres.reducer';
 import { pcvDoorExerciseReducer } from './pcv-door-exercise/pcv-door-exercise.reducer';
+import { uncoupleRecoupleReducer } from '../common/uncouple-recouple/uncouple-recouple.reducer';
 
 export const initialState: CatDEUniqueTypes.TestData = {
   dangerousFaults: {},
@@ -45,7 +45,7 @@ export function testDataCatDEReducer(
     ETA: etaReducer,
     manoeuvres: manoeuvresReducer,
     testRequirements: testRequirementsCatDReducer,
-    uncoupleRecouple: uncoupleRecoupleCatDEReducer,
+    uncoupleRecouple: uncoupleRecoupleReducer,
     pcvDoorExercise: pcvDoorExerciseReducer,
   })(state as Required<CatDEUniqueTypes.TestData>, action);
 }

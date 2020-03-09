@@ -1,4 +1,8 @@
 {
+  "extends": [
+    "tslint-config-airbnb",
+    "rxjs-tslint-rules"
+  ],
   "rules": {
     "no-duplicate-variable": true,
     "no-unused-variable": false,
@@ -9,7 +13,7 @@
     "rxjs-add": { "severity": "error" },
     "rxjs-no-operator": { "severity": "error" },
     "rxjs-no-patched": { "severity": "error" },
-    "rxjs-no-wholesale": { "severity": "error" },
+    "rxjs-no-wholesale": false,
     "rxjs-no-unused-add": { "severity": "error" },
     "rxjs-no-unsafe-switchmap": { "severity": "error" },
     "rxjs-finnish": {
@@ -23,6 +27,5 @@
       "severity": "error"
     }
   },
-  "rulesDirectory": ["node_modules/tslint-eslint-rules/dist/rules"],
-  "extends": ["tslint-config-airbnb", "rxjs-tslint-rules"]
+  "rulesDirectory": ["node_modules/tslint-eslint-rules/dist/rules"]
 }

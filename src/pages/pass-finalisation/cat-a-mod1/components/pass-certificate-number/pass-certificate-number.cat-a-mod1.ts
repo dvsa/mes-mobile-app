@@ -12,7 +12,7 @@ import { PASS_CERTIFICATE_NUMBER_CTRL } from './pass-certificate-number.cat-a-mo
 export class PassCertificateNumberCatAMod1Component implements OnChanges {
 
   @Input()
-  passCertificateNumberInput: String;
+  passCertificateNumberInput: string;
 
   @Input()
   form: FormGroup;

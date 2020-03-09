@@ -1,6 +1,5 @@
 import { ElementRef } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { fromEvent } from 'rxjs/Observable/fromEvent';
+import { Subscription, fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { extractPropertyNameFromId } from '../helpers/property-name-extraction';
 import { StoreModel } from '../models/store.model';

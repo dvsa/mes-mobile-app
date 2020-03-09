@@ -1,6 +1,6 @@
 import { OfficeAnalyticsEffects } from '../office.analytics.effects';
 import { TestBed } from '@angular/core/testing';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as officeActions from '../office.actions';

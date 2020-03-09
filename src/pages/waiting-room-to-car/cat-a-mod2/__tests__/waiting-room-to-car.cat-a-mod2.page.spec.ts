@@ -15,7 +15,7 @@ import { MockComponent } from 'ng-mocks';
 import {
   EyesightFailureConfirmationComponent,
 } from '../../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { QuestionProvider } from '../../../../providers/question/question';
 import { QuestionProviderMock } from '../../../../providers/question/__mocks__/question.mock';
 import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';

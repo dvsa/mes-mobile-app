@@ -18,7 +18,7 @@ export class PassCertificateNumberComponent implements OnChanges {
   }
 
   @Input()
-  passCertificateNumberInput: String;
+  passCertificateNumberInput: string;
 
   @Input()
   form: FormGroup;

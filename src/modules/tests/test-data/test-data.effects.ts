@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { withLatestFrom, concatMap, switchMap, throttleTime } from 'rxjs/operators';
 import * as drivingFaultsActions from './common/driving-faults/driving-faults.actions';
 import * as ecoActions from './common/eco/eco.actions';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { StoreModel } from '../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from './../tests.reducer';

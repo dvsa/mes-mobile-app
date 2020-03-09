@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { merge } from 'rxjs/observable/merge';
+import { Observable, Subscription, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../../shared/models/store.model';
@@ -18,7 +16,7 @@ import {
   ControlledStopAddSeriousFault,
   ControlledStopAddDrivingFault,
   ControlledStopRemoveFault,
-} from '../../../../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
+} from '../../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
 import { getTestReportState } from '../../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';

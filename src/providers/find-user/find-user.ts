@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UrlProvider } from '../url/url';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { timeout } from 'rxjs/operators';
 import { AppConfigProvider } from '../app-config/app-config';
 

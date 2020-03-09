@@ -42,7 +42,7 @@ import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import {
   SafetyAndBalanceCardCatAMod2Component,
 } from '../components/safety-and-balance-card/safety-and-balance-card.cat-a-mod2';

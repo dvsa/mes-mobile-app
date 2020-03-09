@@ -121,7 +121,19 @@ export const CAT_D = {
 };
 
 export const CAT_HOME_TEST = {
+  BACK_TO_OFFICE_PAGE: 'BackToOfficeCatHomeTestPage',
   COMMUNICATION_PAGE: 'CommunicationCatHomeTestPage',
+  DEBRIEF_PAGE: 'DebriefCatHomeTestPage',
+  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatHomeTestPage',
+  OFFICE_PAGE: 'OfficeCatHomeTestPage',
+  PASS_FINALISATION_PAGE: 'PassFinalisationCatHomeTestPage',
+  TEST_REPORT_PAGE: 'TestReportCatHomeTestPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatHomeTestPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatHomeTestPage',
+  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatHomeTestPage',
+  REKEY_REASON_PAGE: 'RekeyReasonCatDHomeTestPage',
+  REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
+  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatHomeTestPage',
+  VEHICLE_CHECKS_MODAL: 'VehicleChecksCatHomeTestModal',
+  VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatHomeTestPage',
 };

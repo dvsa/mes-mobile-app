@@ -14,7 +14,7 @@ from '../../../../../../components/common/driving-faults-badge/driving-faults-ba
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 import { VehicleChecksScore } from '../../../../../../shared/models/vehicle-checks-score.model';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('VehicleChecksComponent', () => {

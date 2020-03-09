@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, forkJoin, of } from 'rxjs';
 import { UrlProvider } from '../url/url';
 import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { gzipSync } from 'zlib';
 import { catchError, timeout } from 'rxjs/operators';
-import { forkJoin } from 'rxjs/observable/forkJoin';
-import { of } from 'rxjs/observable/of';
 import { isNull, unset, isObject, cloneDeep } from 'lodash';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';

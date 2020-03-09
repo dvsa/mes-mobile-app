@@ -21,7 +21,7 @@ export class InsuranceDeclarationComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl('', [Validators.requiredTrue]),
+      this.formControl = new FormControl('', [Validators.requiredTrue]);
 
       this.formGroup.addControl(InsuranceDeclarationComponent.fieldName, this.formControl);
     }

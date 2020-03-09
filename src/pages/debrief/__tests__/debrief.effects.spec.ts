@@ -1,6 +1,6 @@
 import { DebriefEffects } from '../debrief.effects';
 import { TestBed, async } from '@angular/core/testing';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as debriefActions from '../debrief.actions';

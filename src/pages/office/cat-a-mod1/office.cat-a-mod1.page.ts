@@ -17,7 +17,7 @@ import {
   SavingWriteUpForLater,
   OfficeValidationError,
 } from '../office.actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
@@ -150,9 +150,9 @@ export class OfficeCatAMod1Page extends BasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
   toast: Toast;
-  drivingFaultCtrl: String = 'drivingFaultCtrl';
-  seriousFaultCtrl: String = 'seriousFaultCtrl';
-  dangerousFaultCtrl: String = 'dangerousFaultCtrl';
+  drivingFaultCtrl: string = 'drivingFaultCtrl';
+  seriousFaultCtrl: string = 'seriousFaultCtrl';
+  dangerousFaultCtrl: string = 'dangerousFaultCtrl';
   static readonly maxFaultCount = 5;
 
   weatherConditions: WeatherConditionSelection[];

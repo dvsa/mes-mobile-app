@@ -1,5 +1,5 @@
 import { ErrorTypes } from './../../shared/models/error-message';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, of } from 'rxjs';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController, ViewController } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
@@ -7,7 +7,6 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { SearchProvider } from '../../providers/search/search';
 import { tap, catchError, map } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { AdvancedSearchParams } from '../../providers/search/search.models';
 import { ExaminerRole } from '../../providers/app-config/constants/examiner-role.constants';
