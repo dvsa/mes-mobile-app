@@ -10,6 +10,10 @@ import { getTestData as getTestDataCatD } from '../../modules/tests/test-data/ca
 import { getTestData as getTestDataCatD1 } from '../../modules/tests/test-data/cat-d/test-data.cat-d1.reducer';
 import { getTestData as getTestDataCatDE } from '../../modules/tests/test-data/cat-d/test-data.cat-de.reducer';
 import { getTestData as getTestDataCatD1E } from '../../modules/tests/test-data/cat-d/test-data.cat-d1e.reducer';
+import { getTestData as getTestDataCatF } from '../../modules/tests/test-data/cat-home/test-data.cat-f.reducer';
+import { getTestData as getTestDataCatG } from '../../modules/tests/test-data/cat-home/test-data.cat-g.reducer';
+import { getTestData as getTestDataCatH } from '../../modules/tests/test-data/cat-home/test-data.cat-h.reducer';
+import { getTestData as getTestDataCatK } from '../../modules/tests/test-data/cat-home/test-data.cat-k.reducer';
 
 @Injectable()
 export class TestDataByCategoryProvider {
@@ -27,6 +31,10 @@ export class TestDataByCategoryProvider {
       case TestCategory.D1: return getTestDataCatD1;
       case TestCategory.DE: return getTestDataCatDE;
       case TestCategory.D1E: return getTestDataCatD1E;
+      case TestCategory.F: return getTestDataCatF;
+      case TestCategory.G: return getTestDataCatG;
+      case TestCategory.H: return getTestDataCatH;
+      case TestCategory.K: return getTestDataCatK;
       default: throw new Error(TestDataByCategoryProvider.getTestDataByCategoryCodeErrMsg);
     }
   }

@@ -41,6 +41,10 @@ export class FaultCountProvider {
       case TestCategory.D1E: return FaultCountDHelper.getDrivingFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getDrivingFaultSumCountCatDE(data);
       case TestCategory.D: return FaultCountDHelper.getDrivingFaultSumCountCatD(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K: return 0;
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -65,6 +69,10 @@ export class FaultCountProvider {
       case TestCategory.D1E: return FaultCountDHelper.getSeriousFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getSeriousFaultSumCountCatDE(data);
       case TestCategory.D: return FaultCountDHelper.getSeriousFaultSumCountCatD(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K: return 0;
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -89,6 +97,10 @@ export class FaultCountProvider {
       case TestCategory.D1E: return FaultCountDHelper.getDangerousFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getDangerousFaultSumCountCatDE(data);
       case TestCategory.D: return FaultCountDHelper.getDangerousFaultSumCountCatD(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K: return 0;
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -109,6 +121,10 @@ export class FaultCountProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1: return sumManoeuvreFaults(data, faultType);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K: return 0;
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -124,6 +140,10 @@ export class FaultCountProvider {
       case TestCategory.D1E: return FaultCountDHelper.getVehicleChecksFaultCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getVehicleChecksFaultCountCatDE(data);
       case TestCategory.D: return FaultCountDHelper.getVehicleChecksFaultCountCatD(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K: return { drivingFaults: 0 , seriousFaults: 0 };
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
