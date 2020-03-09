@@ -16,7 +16,6 @@
 
 @import '../theme/sass-partials/reset.scss';
 
-@import '../theme/mixins/_box-shadow.scss';
 @import '../theme/sass-partials/_alert.scss';
 @import '../theme/sass-partials/_typography.scss';
 @import '../theme/sass-partials/_fonts.scss';
@@ -25,11 +24,11 @@
 @import '../theme/sass-partials/_box.scss';
 @import '../theme/sass-partials/_row.scss';
 @import '../theme/sass-partials/_modal.scss';
-@import '../theme/sass-partials/buttons.scss';
+@import '../theme/sass-partials/_buttons.scss';
 @import '../theme/sass-partials/_checkbox.scss';
 @import '../theme/sass-partials/_radio.scss';
 @import '../theme/sass-partials/_input.scss';
-@import '../theme/sass-partials/spacing';
+@import '../theme/sass-partials/_spacing';
 @import '../theme/sass-partials/_validation.scss';
 @import '../theme/sass-partials/_textarea.scss';
 

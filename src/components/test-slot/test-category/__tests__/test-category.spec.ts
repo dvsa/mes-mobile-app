@@ -27,8 +27,4 @@ describe('TestCategoryComponent', () => {
       expect(component).toBeDefined();
     });
   });
-
-  describe('DOM', () => {
-  });
-
 });

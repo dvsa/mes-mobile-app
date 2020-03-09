@@ -1,23 +1,23 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
-import { VehicleDetailsComponent } from '../vehicle-details';
+import { AdditionalCandidateDetailsComponent } from '../additional-candidate-details';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('VehicleDetailsComponent', () => {
-  let fixture: ComponentFixture<VehicleDetailsComponent>;
-  let component: VehicleDetailsComponent;
+xdescribe('VehicleDetailsComponent', () => {
+  let fixture: ComponentFixture<AdditionalCandidateDetailsComponent>;
+  let component: AdditionalCandidateDetailsComponent;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        VehicleDetailsComponent,
+        AdditionalCandidateDetailsComponent,
       ],
       imports: [IonicModule],
     });
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(VehicleDetailsComponent);
+    fixture = TestBed.createComponent(AdditionalCandidateDetailsComponent);
     component = fixture.componentInstance;
   }));
 

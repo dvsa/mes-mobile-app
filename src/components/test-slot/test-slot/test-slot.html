@@ -14,7 +14,7 @@
         </ion-col>
       </ion-row>
       <ion-row class="slot-main" align-items-center>
-        <ion-col class="time-exclamation-col" col-32>
+        <ion-col class="time-exclamation-col">
           <ion-grid no-padding>
             <ion-row align-items-center nowrap>
               <ion-col class="exclamation-col">
@@ -31,19 +31,19 @@
         <ion-col class="candidate-details-col" no-padding>
           <ion-grid no-padding>
             <ion-row align-items-center>
-              <ion-col col-64>
+              <ion-col>
                 <ng-content *ngIf="slot.booking.candidate; then candidateLink else unknownCandidate">
                 </ng-content>
               </ion-col>
-              <ion-col col-32 text-end>
+              <ion-col class="category-col">
                 <test-category [category]="slot.booking.application.testCategory"></test-category>
               </ion-col>
             </ion-row>
           </ion-grid>
         </ion-col>
         <ion-col class="test-outcome-col" no-padding padding-right>
-          <test-outcome 
-            [slotDetail]="slot.slotDetail" [canStartTest]="canStartTest()" 
+          <test-outcome
+            [slotDetail]="slot.slotDetail" [canStartTest]="canStartTest()"
             [testStatus]="componentState.testStatus$ | async"
             [activityCode]="componentState.testActivityCode$ | async"
             [specialRequirements]="isIndicatorNeededForSlot()"
@@ -52,16 +52,26 @@
         </ion-col>
       </ion-row>
       <ion-row class="slot-footer" [ngClass]="{'vehicle-details-displayed': showVehicleDetails()}" align-items-center>
-        <ion-col class="progressive-access-col" col-32>
+        <ion-col class="progressive-access-col">
           <progressive-access align-items-center [progressiveAccess]="slot.booking.application.progressiveAccess">
           </progressive-access>
         </ion-col>
         <ion-col class="vehicle-details-col" no-padding>
-          <vehicle-details [height]="slot.booking.application.vehicleHeight" [width]="slot.booking.application.vehicleWidth"
-            [length]="slot.booking.application.vehicleLength" [seats]="slot.booking.application.vehicleSeats"
-            [transmission]="slot.booking.application.vehicleGearbox" [showDimensions]="showVehicleDetails()"
-            [showNumberOfSeats]="showVehicleDetails()">
-          </vehicle-details>
+          <vehicle-details
+            *ngIf="showVehicleDetails()"
+            [height]="slot.booking.application.vehicleHeight"
+            [width]="slot.booking.application.vehicleWidth"
+            [length]="slot.booking.application.vehicleLength"
+            [seats]="slot.booking.application.vehicleSeats"
+            [transmission]="slot.booking.application.vehicleGearbox"
+            [showNumberOfSeats]="showVehicleDetails()"
+          ></vehicle-details>
+
+          <additional-candidate-details
+            *ngIf="showAdditionalCandidateDetails()"
+            [prn]="slot.booking.candidate.prn"
+            [attempts]="slot.booking.candidate.previousADITests"
+          ></additional-candidate-details>
         </ion-col>
       </ion-row>
     </ion-grid>

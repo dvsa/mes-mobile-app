@@ -8,8 +8,17 @@ import { TestStatus } from '../../../modules/tests/test-status/test-status.model
 import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
 import { startsWith, isEmpty } from 'lodash';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
-import { JOURNAL_EARLY_START_MODAL, JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE, CAT_C, CAT_A_MOD1, CAT_A_MOD2, CAT_D }
-  from '../../../pages/page-names.constants';
+import {
+  JOURNAL_EARLY_START_MODAL,
+  JOURNAL_FORCE_CHECK_MODAL,
+  CAT_B,
+  CAT_BE,
+  CAT_C,
+  CAT_A_MOD1,
+  CAT_A_MOD2,
+  CAT_D,
+  CAT_ADI_PART2,
+} from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import { ModalEvent as EarlyStartModalEvent }
 from '../../../pages/journal/components/journal-early-start-modal/journal-early-start-modal.constants';
@@ -168,6 +177,9 @@ export class TestOutcomeComponent implements OnInit {
       this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.category, true));
     }
     switch (this.category) {
+      case TestCategory.ADI2:
+        this.navController.push(CAT_ADI_PART2.WAITING_ROOM_PAGE);
+        break;
       case TestCategory.B:
         this.navController.push(CAT_B.WAITING_ROOM_PAGE);
         break;
@@ -309,6 +321,8 @@ export class TestOutcomeComponent implements OnInit {
 
   getTestStartingPage(): string {
     switch (this.category as TestCategory) {
+      case TestCategory.ADI2:
+        return CAT_ADI_PART2.WAITING_ROOM_PAGE;
       case TestCategory.B:
         return CAT_B.WAITING_ROOM_PAGE;
       case TestCategory.BE:
@@ -338,6 +352,8 @@ export class TestOutcomeComponent implements OnInit {
 
   getPassFinalisationPage(): string {
     switch (this.category as TestCategory) {
+      case TestCategory.ADI2:
+        return CAT_ADI_PART2.PASS_FINALISATION_PAGE;
       case TestCategory.B:
         return CAT_B.PASS_FINALISATION_PAGE;
       case TestCategory.BE:
@@ -367,6 +383,8 @@ export class TestOutcomeComponent implements OnInit {
 
   getNonPassFinalisationPage(): string {
     switch (this.category as TestCategory) {
+      case TestCategory.ADI2:
+        return CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE;
       case TestCategory.B:
         return CAT_B.NON_PASS_FINALISATION_PAGE;
       case TestCategory.BE:
@@ -396,6 +414,8 @@ export class TestOutcomeComponent implements OnInit {
 
   getOfficePage(): string {
     switch (this.category as TestCategory) {
+      case TestCategory.ADI2:
+        return CAT_ADI_PART2.OFFICE_PAGE;
       case TestCategory.B:
         return CAT_B.OFFICE_PAGE;
       case TestCategory.BE:
