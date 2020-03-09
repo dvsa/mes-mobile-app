@@ -15,6 +15,7 @@ Feature: A Driving Examiner Completes a pass test for category B
       And I complete the test with controlled stop
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
+      And I should see the "Debrief - Florence Pearson" page
       When I end the debrief
       Then I should see the "Test debrief - Florence Pearson" page
       And I complete the pass details
@@ -27,4 +28,3 @@ Feature: A Driving Examiner Completes a pass test for category B
       And I upload the test
       Then I should see the "Journal" page
       And the test result for "Miss Florence Pearson" is "1"
-      
