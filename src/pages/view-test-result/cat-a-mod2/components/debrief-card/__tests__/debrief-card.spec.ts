@@ -28,6 +28,7 @@ import {
 } from '../../../../components/data-row-with-list/data-list-with-row.model';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('DebriefCardComponent', () => {
   let fixture: ComponentFixture<DebriefCardComponent>;
@@ -65,6 +66,7 @@ describe('DebriefCardComponent', () => {
     component = fixture.componentInstance;
     faultSummaryProvider = TestBed.get(FaultSummaryProvider);
     faultCountProvider = TestBed.get(FaultCountProvider);
+    component.category = TestCategory.EUAM2
   }));
 
   describe('Class', () => {
@@ -89,6 +91,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toContain({ label: TestRequirementsLabels.angledStart, checked: true });
       });
     });
+
     describe('getEco', () => {
       it('should return the correct data for eco', () => {
         const data: TestData = {
@@ -105,6 +108,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toContain({ label: ViewTestResultLabels.planning, checked: false });
       });
     });
+
     describe('getDrivingFaults', () => {
       it('should call the fault summary provider and return the result', () => {
         spyOn(faultSummaryProvider, 'getDrivingFaultsList').and.returnValue([]);
@@ -113,6 +117,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toEqual([]);
       });
     });
+
     describe('getSeriousFaults', () => {
       it('should call the fault summary provider and return the result', () => {
         spyOn(faultSummaryProvider, 'getSeriousFaultsList').and.returnValue([]);
@@ -121,6 +126,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toEqual([]);
       });
     });
+
     describe('getDangerousFaults', () => {
       it('should call the fault summary provider and return the result', () => {
         spyOn(faultSummaryProvider, 'getDangerousFaultsList').and.returnValue([]);
@@ -129,6 +135,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toEqual([]);
       });
     });
+
     describe('getDrivingFaultCount', () => {
       it('should call the fault summary provider and return the result', () => {
         spyOn(faultCountProvider, 'getDrivingFaultSumCount').and.returnValue(1);
@@ -137,6 +144,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toEqual(1);
       });
     });
+
     describe('getETA', () => {
       it('should return the correct data if only a verbal eta has been selected', () => {
         const data: TestData = {
@@ -152,8 +160,10 @@ describe('DebriefCardComponent', () => {
         expect(component.getETA()).toEqual('None');
       });
     });
+
     describe('getSafetyQuestions', () => {
       it('should return an empty array if no data is present', () => {
+        component.data = null;
         expect(component.getSafetyQuestions()).toEqual([]);
       });
       it('should return the correct data when present', () => {
@@ -166,6 +176,13 @@ describe('DebriefCardComponent', () => {
                 outcome: 'P',
               },
             ],
+            balanceQuestions: [
+              {
+                code: 'BQ2',
+                description: 'Carrying a passenger',
+                outcome: 'DF',
+              },
+            ],
           },
         };
         component.data = data;
@@ -175,13 +192,22 @@ describe('DebriefCardComponent', () => {
         expect(result).toContain({ code: 'SQ2', description: 'Horn working', outcome: 'P' });
       });
     });
+
     describe('getBalanceQuestions', () => {
       it('should return an empty array if no data is present', () => {
+        component.data = null;
         expect(component.getBalanceQuestions()).toEqual([]);
       });
       it('should return the correct data when present', () => {
         const data: TestData = {
           safetyAndBalanceQuestions: {
+            safetyQuestions: [
+              {
+                code: 'SQ2',
+                description: 'Horn working',
+                outcome: 'P',
+              },
+            ],
             balanceQuestions: [
               {
                 code: 'BQ2',
