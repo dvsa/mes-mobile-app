@@ -180,7 +180,8 @@ export class TestsEffects {
         new PopulateTestSchemaVersion(version),
       ];
 
-      if (startTestAction.category !== TestCategory.B) {
+      if (startTestAction.category !== TestCategory.B
+        && startTestAction.category !== TestCategory.ADI2) {
         arrayOfActions.push(new PopulateVehicleDimensions(
           slot.booking.application.vehicleWidth,
           slot.booking.application.vehicleLength,
