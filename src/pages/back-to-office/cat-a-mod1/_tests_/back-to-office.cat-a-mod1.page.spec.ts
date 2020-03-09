@@ -16,8 +16,6 @@ import { DeviceProvider } from '../../../../providers/device/device';
 import { DeviceProviderMock } from '../../../../providers/device/__mocks__/device.mock';
 import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
-import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
@@ -35,7 +33,6 @@ describe('BackToOfficeCatAMod1Page', () => {
     TestBed.configureTestingModule({
       declarations: [
         BackToOfficeCatAMod1Page,
-        MockComponent(PracticeModeBanner),
       ],
       imports: [
         IonicModule,
