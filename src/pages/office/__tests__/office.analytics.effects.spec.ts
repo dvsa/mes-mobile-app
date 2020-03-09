@@ -6,6 +6,10 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import * as officeActions from '../office.actions';
 import * as catAMod1TestSummaryActions
   from '../../../modules/tests/test-summary/cat-a-mod1/test-summary.cat-a-mod1.actions';
+import * as catAMod2TestSummaryActions
+  from '../../../modules/tests/test-summary/cat-a-mod2/test-summary.cat-a-mod2.actions';
+import * as testSummaryActions
+  from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import {
@@ -32,6 +36,7 @@ import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 import { CircuitType } from '../../../shared/models/circuit-type';
+import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 
 describe('Office Analytics Effects', () => {
 
@@ -393,6 +398,54 @@ describe('Office Analytics Effects', () => {
             AnalyticsEventCategories.OFFICE,
             AnalyticsEvents.CIRCUIT_CHANGED,
             `Circuit type ${CircuitType.Left} selected`,
+          );
+        done();
+      });
+    });
+  });
+
+  describe('independentDrivingTypeChanged', () => {
+    it('should log a INDEPENDENT_DRIVING_TYPE_CHANGED event', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.EUAM2));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM2));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
+      // ACT
+      actions$.next(new testSummaryActions.IndependentDrivingTypeChanged('Sat nav'));
+      // ASSERT
+      effects.setIndependentDrivingType$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.OFFICE,
+            AnalyticsEvents.INDEPENDENT_DRIVING_TYPE_CHANGED,
+            `Sat nav selected`,
+          );
+        done();
+      });
+    });
+  });
+
+  describe('modeOfTransportChanged', () => {
+    it('should log a MODE_OF_TRANSPORT_CHANGED event', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.EUAM2));
+      store$.dispatch(new PopulateTestCategory(TestCategory.EUAM2));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
+      // ACT
+      actions$.next(new catAMod2TestSummaryActions.ModeOfTransportChanged('Car to bike'));
+      // ASSERT
+      effects.setModeOfTransport$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.OFFICE,
+            AnalyticsEvents.MODE_OF_TRANSPORT_CHANGED,
+            `Car to bike selected`,
           );
         done();
       });
