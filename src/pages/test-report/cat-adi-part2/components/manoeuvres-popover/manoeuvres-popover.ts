@@ -29,6 +29,7 @@ interface ManoeuvresFaultState {
 export class ManoeuvresPopoverComponent {
 
   manoeuvreTypes = ManoeuvreTypes;
+  // TO-DO ADI Part2: Implement correct category
   manoeuvres$: Observable<CatBUniqueTypes.Manoeuvres>;
   competencies = ManoeuvreCompetencies;
   manoeuvresWithFaults$: Observable<ManoeuvresFaultState>;

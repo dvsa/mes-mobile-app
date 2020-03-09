@@ -36,6 +36,7 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   displayPopover: boolean;
+  // TO-DO ADI Part2: Implement correct category
   manoeuvres$: Observable<CatBUniqueTypes.Manoeuvres>;
 
   constructor(

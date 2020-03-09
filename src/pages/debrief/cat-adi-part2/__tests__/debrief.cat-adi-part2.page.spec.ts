@@ -45,7 +45,7 @@ import { of } from 'rxjs';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('DebriefCatADIPart1Page', () => {
+describe('DebriefCatADIPart2Page', () => {
   let fixture: ComponentFixture<DebriefCatADIPart2Page>;
   let component: DebriefCatADIPart2Page;
   let navController: NavController;

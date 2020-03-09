@@ -39,18 +39,18 @@ import { ConductedLanguageComponent } from '../../components/conducted-language/
 import { InsuranceDeclarationComponent } from '../../components/insurance-declaration/insurance-declaration';
 import { ResidencyDeclarationComponent } from '../../components/residency-declaration/residency-declaration';
 import { SignatureComponent } from '../../components/signature/signature';
-import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';
 import { LockScreenIndicator } from '../../../../components/common/screen-lock-indicator/lock-screen-indicator';
 import { CandidateSectionComponent } from '../../../../components/common/candidate-section/candidate-section';
 import { FormControl, Validators } from '@angular/forms';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
+// TO-DO ADI Part2: Implement correct category
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('WaitingRoomCatBEPage', () => {
+describe('WaitingRoomCatADIPart2Page', () => {
   let fixture: ComponentFixture<WaitingRoomCatADIPart2Page>;
   let component: WaitingRoomCatADIPart2Page;
   let store$: Store<StoreModel>;
@@ -65,7 +65,6 @@ describe('WaitingRoomCatBEPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         WaitingRoomCatADIPart2Page,
-        MockComponent(PracticeModeBanner),
         MockComponent(EndTestLinkComponent),
         MockComponent(LockScreenIndicator),
         MockComponent(CandidateSectionComponent),

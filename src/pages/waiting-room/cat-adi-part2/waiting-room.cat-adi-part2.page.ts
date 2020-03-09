@@ -80,7 +80,7 @@ export class WaitingRoomCatADIPart2Page extends BasePageComponent implements OnI
 
   subscription: Subscription;
 
-  merged$: Observable<boolean | string | CatBEUniqueTypes.JournalData>;
+  merged$: Observable<boolean | string | CatBEUniqueTypes.JournalData>; // TO-DO ADI Part2: Implement correct category
 
   constructor(
     public store$: Store<StoreModel>,
@@ -173,7 +173,7 @@ export class WaitingRoomCatADIPart2Page extends BasePageComponent implements OnI
     this.merged$ = merge(
       currentTest$.pipe(
         select(getJournalData),
-        tap((journalData: CatBEUniqueTypes.JournalData) => {
+        tap((journalData: CatBEUniqueTypes.JournalData) => { // TO-DO ADI Part2: Implement correct category type
           if (this.isJournalDataInvalid(journalData)) {
             this.showCandidateDataMissingError();
           }
@@ -198,6 +198,7 @@ export class WaitingRoomCatADIPart2Page extends BasePageComponent implements OnI
     }
   }
 
+  // TO-DO ADI Part2: Implement correct category type
   isJournalDataInvalid = (journalData: CatBEUniqueTypes.JournalData): boolean => {
     return isEmpty(journalData.examiner.staffNumber) ||
       (isEmpty(journalData.candidate.candidateName) && isEmpty(journalData.candidate.driverNumber));

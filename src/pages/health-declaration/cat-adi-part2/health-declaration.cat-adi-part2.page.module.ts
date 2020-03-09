@@ -25,4 +25,4 @@ import { HealthDeclarationComponentsModule } from '../components/health-declarat
     TranslateModule,
   ],
 })
-export class HealthDeclarationCatBEPageModule { }
+export class HealthDeclarationCatADIPart2PageModule { }

@@ -38,7 +38,7 @@ import { ReceiptDeclarationComponent } from '../../components/receipt-declaratio
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('HealthDeclarationCatBEPage', () => {
+describe('HealthDeclarationCatADIPart2Page', () => {
   let fixture: ComponentFixture<HealthDeclarationCatADIPart2Page>;
   let component: HealthDeclarationCatADIPart2Page;
   let store$: Store<StoreModel>;
