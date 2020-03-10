@@ -31,7 +31,7 @@ Before({ tags: '@catc1e' }, () => {
 });
 
 When('I end the test', () => {
-  TestReportPage.endTest();
+  TestReportPage.clickEndTestButton();
 });
 
 When('I continue to debrief', () => {
@@ -41,7 +41,7 @@ When('I continue to debrief', () => {
 });
 
 When('I end and terminate the test', () => {
-  TestReportPage.endTest();
+  TestReportPage.clickEndTestButton();
   const terminateTestButton = TempPage.getAndAwaitElement(by.xpath('//button[span[text() = "Terminate test"]]'));
   TempPage.clickElement(terminateTestButton);
 });
@@ -56,7 +56,7 @@ When('I complete the test', () => {
   if (this.testCategory === 'be' || this.testCategory === 'ce') {
     TestReportPage.completeUncoupleRecouple();
   }
-  TestReportPage.endTest();
+  TestReportPage.clickEndTestButton();
 });
 
 When('I complete the test with uncouple recouple', () => {
@@ -64,7 +64,7 @@ When('I complete the test with uncouple recouple', () => {
   TestReportPage.completeManouveure(this.testCategory);
   TestReportPage.completeEco();
   TestReportPage.completeUncoupleRecouple();
-  TestReportPage.endTest();
+  TestReportPage.clickEndTestButton();
 });
 
 When('I complete the test with controlled stop', () => {
@@ -73,7 +73,7 @@ When('I complete the test with controlled stop', () => {
   TestReportPage.completeEco();
   TestReportPage.completeShowMe();
   TestReportPage.completeControlledStop();
-  TestReportPage.endTest();
+  TestReportPage.clickEndTestButton();
 });
 
 When('I add a Show me / Tell me driver fault', () => {
@@ -205,49 +205,42 @@ When('I mark the manoeuvre as a {string} driver fault', (faultName: 'Control' | 
 });
 
 Then('the controlled stop requirement is ticked', () => {
-  const controlledStopTick = TempPage.getAndAwaitElement(by.css('.controlled-stop-tick.checked'));
+  const controlledStopTick = TestReportPage.getControlledStopTick();
   expect(controlledStopTick.isPresent()).to.eventually.be.true;
 });
 
 Then('the driver fault count is {string}', (driverFaultCount) => {
-  const summaryCountField = TempPage.getAndAwaitElement(by.id('summary-count'));
+  const summaryCountField = TestReportPage.getSummaryCountField();
   return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
 Then('a serious fault is present along the driver fault count of {string}', (driverFaultCount) => {
-  // tslint:disable-next-line:max-line-length
-  expect(TempPage.getAndAwaitElement(by.xpath('//vehicle-checks//serious-fault-badge//span')).isPresent()).to.eventually.be.true;
-  const summaryCountField = TempPage.getAndAwaitElement(by.id('summary-count'));
+  expect(TestReportPage.getSeriousFaultBadge().isPresent()).to.eventually.be.true;
+  const summaryCountField = TestReportPage.getSummaryCountField();
   return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
 Then('the competency {string} driver fault count is {string}', (competency, driverFaultCount) => {
-  const competencyCountField =
-    TempPage.getAndAwaitElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`));
+  const competencyCountField = TestReportPage.getCompetencyCountField(competency);
   return expect(competencyCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
 When('I terminate the test from the test report page', () => {
-  const endTestButton = TempPage.getAndAwaitElement(by.id('end-test-button'));
-  TempPage.clickElement(endTestButton);
-  const terminateTestButton = TempPage.getAndAwaitElement(by.xpath('//button/span[text() = "Terminate test"]'));
-  TempPage.clickElement(terminateTestButton);
+  TestReportPage.clickEndTestButton();
+  TestReportPage.clickTerminateTestButton();
 });
 
 Then('the legal requirements pop up is present', () => {
-  const legalRequirementPopUp = TempPage.getAndAwaitElement(by.xpath('//div/legal-requirements-modal'));
+  const legalRequirementPopUp = TestReportPage.getLegalRequrementsPopup();
   expect(legalRequirementPopUp.isPresent()).to.eventually.be.true;
 });
 
 When('the required test observation is present {string}', (legalRequirement: string) => {
-  expect(TempPage.getAndAwaitElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`)).isPresent()).to.eventually.be.true;
+  expect(TestReportPage.getLegalRequirement(legalRequirement)).isPresent().to.eventually.be.true;
 });
 
 Then('I return to the test report page', () =>   {
-  const returnToTestBtn =
-    TempPage.getAndAwaitElement(by.xpath('//div/legal-requirements-modal//modal-return-button//span'));
-  TempPage.clickElement(returnToTestBtn);
+  TestReportPage.clickReturnToTestButton();
 });
 
 When('I enter the legal requirements', () => {
@@ -257,7 +250,5 @@ When('I enter the legal requirements', () => {
 });
 
 When('I add the Uncouple and Recouple fault', () => {
-  const uncoupleRecoupleFault =
-    TempPage.getAndAwaitElement(by.xpath('//uncouple-recouple//competency-button/div/div[1]'));
-  TestReportPage.longPressButton(uncoupleRecoupleFault);
+  TestReportPage.addUncoupleRecoupleFault();
 });
