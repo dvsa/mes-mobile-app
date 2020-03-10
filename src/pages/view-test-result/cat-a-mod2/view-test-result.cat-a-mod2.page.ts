@@ -31,8 +31,8 @@ import { TestDetailsModel } from '../components/test-details-card/test-details-c
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { TestResultCatAM2Schema } from '@dvsa/mes-test-schema/categories/AM2';
-import { categoryBETestResultMock } from '../../../shared/mocks/cat-be-test-result.mock';
 import { get } from 'lodash';
+import { categoryAM2TestResultMock } from '../../../shared/mocks/cat-a-mod2-test-result.mock';
 
 @IonicPage()
 @Component({
@@ -78,7 +78,7 @@ export class ViewTestResultCatAMod2Page extends BasePageComponent implements OnI
         map(data => this.testResult = this.compressionProvider.extractTestResult(data) as TestResultCatAM2Schema),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
-          this.testResult = categoryBETestResultMock;
+          this.testResult = categoryAM2TestResultMock;
           this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
           this.errorLink = ErrorTypes.SEARCH_RESULT;

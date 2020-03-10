@@ -25,7 +25,6 @@ import { ExaminerDetailsCardComponent } from '../../components/examiner-details-
 import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
-import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
 import { categoryAM2TestResultMock } from '../../../../shared/mocks/cat-a-mod2-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
@@ -39,6 +38,8 @@ import { BusinessDetailsCardComponent } from '../../components/business-details-
 import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
 import { ViewTestResultCatAMod2Page } from '../view-test-result.cat-a-mod2.page';
 import { configureTestSuite } from 'ng-bullet';
+import { VehicleDetailsCardCatAComponent } from
+'../../components/vehicle-details-card-cat-a/vehicle-details-card-cat-a';
 
 describe('ViewTestResultCatAMod2Page', () => {
   let fixture: ComponentFixture<ViewTestResultCatAMod2Page>;
@@ -53,13 +54,13 @@ describe('ViewTestResultCatAMod2Page', () => {
         MockComponent(RekeyDetailsCardComponent),
         MockComponent(RekeyReasonCardComponent),
         MockComponent(ExaminerDetailsCardComponent),
-        MockComponent(VehicleDetailsCardComponent),
         MockComponent(TestSummaryCardComponent),
         MockComponent(ViewTestHeaderComponent),
         MockComponent(DebriefCardComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(BusinessDetailsCardComponent),
         MockComponent(ContactDetailsCardComponent),
+        MockComponent(VehicleDetailsCardCatAComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
@@ -242,7 +243,7 @@ describe('ViewTestResultCatAMod2Page', () => {
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).not.toBeNull();
       expect(
-        fixture.debugElement.query(By.css('vehicle-details-card')),
+        fixture.debugElement.query(By.css('vehicle-details-card-cat-a')),
       ).not.toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).not.toBeNull();
       expect(
