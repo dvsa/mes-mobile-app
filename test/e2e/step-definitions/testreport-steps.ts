@@ -1,5 +1,5 @@
 import { Then, When, Before } from 'cucumber';
-import { by, element } from 'protractor';
+import { by } from 'protractor';
 import TempPage from '../pages/tempPage';
 import TestReportPage from '../pages/testReportPage';
 
@@ -31,7 +31,7 @@ Before({ tags: '@catc1e' }, () => {
 });
 
 When('I end the test', () => {
-  endTest();
+  TestReportPage.endTest();
 });
 
 When('I continue to debrief', () => {
@@ -41,39 +41,39 @@ When('I continue to debrief', () => {
 });
 
 When('I end and terminate the test', () => {
-  endTest();
+  TestReportPage.endTest();
   const terminateTestButton = TempPage.getAndAwaitElement(by.xpath('//button[span[text() = "Terminate test"]]'));
   TempPage.clickElement(terminateTestButton);
 });
 
 When('I complete the test', () => {
-  completeLegalRequirements();
+  TestReportPage.completeLegalRequirements();
   TestReportPage.completeManouveure(this.testCategory);
-  completeEco();
+  TestReportPage.completeEco();
   if (this.testCategory === 'b') {
-    completeShowMe();
+    TestReportPage.completeShowMe();
   }
   if (this.testCategory === 'be' || this.testCategory === 'ce') {
     TestReportPage.completeUncoupleRecouple();
   }
-  endTest();
+  TestReportPage.endTest();
 });
 
 When('I complete the test with uncouple recouple', () => {
-  completeLegalRequirements();
+  TestReportPage.completeLegalRequirements();
   TestReportPage.completeManouveure(this.testCategory);
-  completeEco();
+  TestReportPage.completeEco();
   TestReportPage.completeUncoupleRecouple();
-  endTest();
+  TestReportPage.endTest();
 });
 
 When('I complete the test with controlled stop', () => {
-  completeLegalRequirements();
+  TestReportPage.completeLegalRequirements();
   TestReportPage.completeManouveure(this.testCategory);
-  completeEco();
-  completeShowMe();
-  completeControlledStop();
-  endTest();
+  TestReportPage.completeEco();
+  TestReportPage.completeShowMe();
+  TestReportPage.completeControlledStop();
+  TestReportPage.endTest();
 });
 
 When('I add a Show me / Tell me driver fault', () => {
@@ -85,17 +85,17 @@ When('I add a Controlled Stop driver fault', () => {
 });
 
 When('I add a {string} driver fault', (competency) => {
-  longPressCompetency(competency);
+  TestReportPage.longPressCompetency(competency);
 });
 
 When('I add a {string} serious fault', (competency) => {
-  clickSeriousMode();
+  TestReportPage.clickSeriousMode();
   TestReportPage.clickCompetency(competency);
 });
 
 When('I add a {string} serious fault with a long press', (competency: string) => {
-  clickSeriousMode();
-  longPressCompetency(competency);
+  TestReportPage.clickSeriousMode();
+  TestReportPage.longPressCompetency(competency);
 });
 
 Then('the competency {string} driver fault count is not displayed', (competency: string) => {
@@ -144,7 +144,7 @@ Then('the {string} button does not display the serious badge', (competency: stri
 });
 
 When('I open the reversing diagram', () => {
-  reverseDropDown();
+  TestReportPage.reverseDropDown();
   const reversingDiagramLink = TempPage.getAndAwaitElement(by.xpath('//*[@id="reverse-diagram-link"]/span'));
   TempPage.waitForPresenceOfElement(reversingDiagramLink);
   TempPage.clickElement(reversingDiagramLink);
@@ -163,40 +163,40 @@ When('I close the reversing diagram modal', () => {
 });
 
 Then('I close the revresing diagram drop down', () => {
-  reverseDropDown();
+  TestReportPage.reverseDropDown();
   TempPage.waitForPresenceOfElement(TestReportPage.getCompetencyButton('Control'));
 });
 
 When('I remove a driver fault for {string} with a tap', (competency: string) => {
-  clickRemove();
+  TestReportPage.clickRemove();
   TestReportPage.clickCompetency(competency);
 });
 
 When('I remove a driver fault for {string} with a long press', (competency: string) => {
-  clickRemove();
-  longPressCompetency(competency);
+  TestReportPage.clickRemove();
+  TestReportPage.longPressCompetency(competency);
 });
 
 When('I remove a serious fault for {string} with a tap', (competency: string) => {
-  clickRemove();
-  clickSeriousMode();
+  TestReportPage.clickRemove();
+  TestReportPage.clickSeriousMode();
   TestReportPage.clickCompetency(competency);
 });
 
 When('I remove a serious fault for {string} with a long press', (competency: string) => {
-  clickSeriousMode();
-  clickRemove();
-  longPressCompetency(competency);
+  TestReportPage.clickSeriousMode();
+  TestReportPage.clickRemove();
+  TestReportPage.longPressCompetency(competency);
 });
 
 When('I add a manoeuvre', () => {
-  clickManoeuvresButton();
+  TestReportPage.clickManoeuvresButton();
   const reverseRightRadio = TempPage.getAndAwaitElement(by.id('manoeuvres-reverse-right-radio'));
   TempPage.clickElement(reverseRightRadio);
 });
 
 When('I click the manoeuvres button', () => {
-  clickManoeuvresButton();
+  TestReportPage.clickManoeuvresButton();
 });
 
 When('I mark the manoeuvre as a {string} driver fault', (faultName: 'Control' | 'Observation') => {
@@ -251,9 +251,9 @@ Then('I return to the test report page', () =>   {
 });
 
 When('I enter the legal requirements', () => {
-  completeLegalRequirements();
+  TestReportPage.completeLegalRequirements();
   TestReportPage.completeManouveure(this.testCategory);
-  completeEco();
+  TestReportPage.completeEco();
 });
 
 When('I add the Uncouple and Recouple fault', () => {
@@ -261,55 +261,3 @@ When('I add the Uncouple and Recouple fault', () => {
     TempPage.getAndAwaitElement(by.xpath('//uncouple-recouple//competency-button/div/div[1]'));
   TestReportPage.longPressButton(uncoupleRecoupleFault);
 });
-
-const endTest = () => {
-  const endTestButton = TempPage.getAndAwaitElement(by.id('end-test-button'));
-  TempPage.clickElement(endTestButton);
-};
-
-const completeLegalRequirements = () => {
-  const legalRequirements = element.all(by.xpath('//legal-requirement/competency-button[@class="legal-button"]'));
-  legalRequirements.each((legalRequirement) => {
-    TestReportPage.longPressButton(legalRequirement);
-  });
-};
-
-const completeEco = () => {
-  const ecoCheckmark = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "eco-tick")]'));
-  TestReportPage.longPressButton(ecoCheckmark);
-};
-
-const completeShowMe = () => {
-  // tslint:disable-next-line:max-line-length
-  const showMeCheckmark = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "show-me-question-tick")]'));
-  TestReportPage.longPressButton(showMeCheckmark);
-};
-
-const completeControlledStop = () => {
-  // tslint:disable-next-line:max-line-length
-  const controlledStopCheckmark = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "controlled-stop-tick")]'));
-  TestReportPage.longPressButton(controlledStopCheckmark);
-};
-
-const reverseDropDown = () => {
-  const reverseButton = TempPage.getAndAwaitElement(by.xpath('//*[@id="reverse-left-label"]'));
-  TempPage.clickElement(reverseButton);
-};
-
-const clickRemove = () => {
-  TempPage.clickElement(TempPage.getAndAwaitElement(by.id('remove-button')));
-};
-
-const clickSeriousMode = () => {
-  TempPage.clickElement(TempPage.getAndAwaitElement(by.id('serious-button')));
-};
-
-const longPressCompetency = (competency: string) => {
-  const competencyButton = TestReportPage.getCompetencyButton(competency);
-  TestReportPage.longPressButton(competencyButton);
-};
-
-const clickManoeuvresButton = () => {
-  const manoeuvresButton = TempPage.getAndAwaitElement(by.xpath('//manoeuvres/button'));
-  TempPage.clickElement(manoeuvresButton);
-};
