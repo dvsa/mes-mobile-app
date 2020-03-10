@@ -44,6 +44,10 @@ export default class Page {
     return element(by.className(elementClassName));
   }
 
+  getElementByCss(css) {
+    return element(by.css(css));
+  }
+
 /**
  * Waits for the element to exist on the page before returning it.
  * @param elementBy the element finder
