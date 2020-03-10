@@ -56,8 +56,6 @@ When('I rekey a test for {string}', (candidateName) => {
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
   clickElement(buttonElement);
-
-
 });
 
 When('I rekey a late test for {string}',(candidateName) => {
