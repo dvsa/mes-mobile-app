@@ -1,6 +1,11 @@
 import { browser, ExpectedConditions, element, by, Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
 
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+const expect = chai.expect;
+
 export default class Page {
 /**
  * A framework safe click method.
@@ -124,10 +129,6 @@ export default class Page {
     });
   }
 
-  waitForPresenceOfElement(element) {
-    browser.wait(ExpectedConditions.presenceOf(element));
-  }
-
   /**
    * Checks whether the user is logged in.
    * @param staffNumber the staff number of the user we wish to be logged in
@@ -136,5 +137,15 @@ export default class Page {
     browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
     const staffNumberField = element(by.xpath(`//span[@class="employee-id" and text()="${staffNumber}"]`));
     return staffNumberField.isPresent();
+  }
+
+  scrollToElement(element) {
+    browser.executeScript('arguments[0].scrollIntoView(true);', element).then(() => {
+      expect(element.isPresent()).to.eventually.be.true;
+    });
+  }
+
+  waitForPresenceOfElement(element) {
+    browser.wait(ExpectedConditions.presenceOf(element));
   }
 }
