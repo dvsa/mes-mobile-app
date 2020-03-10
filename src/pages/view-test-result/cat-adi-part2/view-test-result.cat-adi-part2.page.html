@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons ion-buttons start navPop>
+      <button ion-button center class="nav-close"><ion-icon name="md-close"></ion-icon>Close</button>
+    </ion-buttons>
+    <ion-title>
+      Test information
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <error-message *ngIf="!isLoading && showErrorMessage" class="error" returnTo="{{errorLink}}" (exitModal)="goBack()">
+  </error-message>
+  <div *ngIf="!isLoading && !showErrorMessage">
+    <view-test-header [data]="getHeaderDetails()"></view-test-header>
+    <test-details-card [data]="getTestDetails()"></test-details-card>
+    <contact-details-card
+      [candidateData]="testResult.journalData.candidate"
+      [communicationPreferencesData]="testResult.communicationPreferences">
+    </contact-details-card>
+    <business-details-card [data]="testResult.journalData.candidate"></business-details-card>
+    <div *ngIf="testResult.rekey">
+      <rekey-details-card [data]='testResult'></rekey-details-card>
+      <rekey-reason-card [data]='testResult.rekeyReason'></rekey-reason-card>
+    </div>
+    <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
+    <vehicle-details-card [data]='testResult.vehicleDetails'></vehicle-details-card>
+    <debrief-card [data]='testResult.testData'></debrief-card>
+    <test-summary-card
+      [accompaniment]='testResult.accompaniment'
+      [passCompletion]='testResult.passCompletion'
+      [testSummary]='testResult.testSummary'
+      ></test-summary-card>
+  </div>
+</ion-content>
