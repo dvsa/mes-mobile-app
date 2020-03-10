@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ControlledStopComponent } from './controlled-stop/controlled-stop';
 import { ManoeuvresComponent } from './manoeuvres/manoeuvres';
 import { VehicleCheckComponent } from './vehicle-check/vehicle-check';
 import { ManoeuvresPopoverComponent } from './manoeuvres-popover/manoeuvres-popover';
@@ -10,7 +9,6 @@ import { TestReportComponentsModule } from '../../components/test-report-compone
 
 @NgModule({
   declarations: [
-    ControlledStopComponent,
     ManoeuvresComponent,
     ManoeuvresPopoverComponent,
     VehicleCheckComponent,
@@ -22,7 +20,6 @@ import { TestReportComponentsModule } from '../../components/test-report-compone
     TestReportComponentsModule,
   ],
   exports:[
-    ControlledStopComponent,
     ManoeuvresComponent,
     ManoeuvresPopoverComponent,
     VehicleCheckComponent,

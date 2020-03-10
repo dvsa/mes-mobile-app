@@ -31,7 +31,7 @@ import { LegalRequirementComponent } from '../../components/legal-requirement/le
 import { EtaComponent } from '../../components/examiner-takes-action/eta';
 // TO-DO ADI PART2: Use correct reducer
 import { initialState } from '../../../../modules/tests/test-data/cat-b/test-data.reducer';
-import { ControlledStopComponent } from '../components/controlled-stop/controlled-stop';
+import { ControlledStopComponent } from '../../components/controlled-stop/controlled-stop';
 import { ManoeuvreCompetencyComponent } from '../../components/manoeuvre-competency/manoeuvre-competency';
 import { VehicleCheckComponent } from '../components/vehicle-check/vehicle-check';
 import { EcoComponent } from '../../components/eco/eco';

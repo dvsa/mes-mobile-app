@@ -1,27 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subscription, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { StoreModel } from '../../../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
-import { getTests } from '../../../../../modules/tests/tests.reducer';
-import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
-import {
-  hasControlledStopBeenCompleted,
-} from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-import {
-  ToggleControlledStop,
-  ControlledStopAddDangerousFault,
-  ControlledStopAddSeriousFault,
-  ControlledStopAddDrivingFault,
-  ControlledStopRemoveFault,
-} from '../../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
-import { getTestReportState } from '../../../test-report.reducer';
-import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../../test-report.selector';
-import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';
-import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
-import { get } from 'lodash';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { getCurrentTest } from '../../../../modules/tests/tests.selector';
+import * as controlledStopAction from '../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
+import { getTestReportState } from '../../test-report.reducer';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
+import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { TestDataByCategoryProvider } from '../../../../providers/test-data-by-category/test-data-by-category';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { getControlledStop } from '../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.reducer';
+import { isControlledStopSelected, getControlledStopFault } from '../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.selectors';
 
 interface ControlledStopComponentState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -38,6 +31,9 @@ interface ControlledStopComponentState {
 })
 export class ControlledStopComponent implements OnInit, OnDestroy {
 
+  @Input()
+  testCategory: TestCategory;
+
   componentState: ControlledStopComponentState;
   subscription: Subscription;
 
@@ -49,7 +45,10 @@ export class ControlledStopComponent implements OnInit, OnDestroy {
   controlledStopOutcome: CompetencyOutcome;
   merged$: Observable<boolean | CompetencyOutcome>;
 
-  constructor(private store$: Store<StoreModel>) { }
+  constructor(
+    private store$: Store<StoreModel>,
+    private testDataByCategoryProvider : TestDataByCategoryProvider,
+    ) { }
 
   ngOnInit(): void {
     const currentTest$ = this.store$.pipe(
@@ -68,12 +67,14 @@ export class ControlledStopComponent implements OnInit, OnDestroy {
         select(getTestReportState),
         select(isDangerousMode)),
       selectedControlledStop$: currentTest$.pipe(
-        select(getTestData),
-        select(hasControlledStopBeenCompleted),
+        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        select(getControlledStop),
+        select(isControlledStopSelected),
       ),
       controlledStopOutcome$: currentTest$.pipe(
-        select(getTestData),
-        select(testData => get(testData, 'controlledStop.fault')),
+        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        select(getControlledStop),
+        select(getControlledStopFault),
       ),
     };
 
@@ -131,7 +132,7 @@ export class ControlledStopComponent implements OnInit, OnDestroy {
     if (this.hasDangerousFault() || this.hasSeriousFault() || this.faultCount() > 0) {
       return;
     }
-    this.store$.dispatch(new ToggleControlledStop());
+    this.store$.dispatch(new controlledStopAction.ToggleControlledStop());
   }
 
   addOrRemoveFault = (wasPress: boolean = false): void => {
@@ -148,39 +149,39 @@ export class ControlledStopComponent implements OnInit, OnDestroy {
     }
 
     if (this.isDangerousMode) {
-      this.store$.dispatch(new ControlledStopAddDangerousFault());
+      this.store$.dispatch(new controlledStopAction.ControlledStopAddDangerousFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
     }
 
     if (this.isSeriousMode) {
-      this.store$.dispatch(new ControlledStopAddSeriousFault());
+      this.store$.dispatch(new controlledStopAction.ControlledStopAddSeriousFault());
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
 
     if (wasPress) {
-      this.store$.dispatch(new ControlledStopAddDrivingFault());
+      this.store$.dispatch(new controlledStopAction.ControlledStopAddDrivingFault());
     }
   }
 
   removeFault = (): void => {
 
     if (this.hasDangerousFault() && this.isDangerousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new ControlledStopRemoveFault());
+      this.store$.dispatch(new controlledStopAction.ControlledStopRemoveFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
     if (this.hasSeriousFault() && this.isSeriousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new ControlledStopRemoveFault());
+      this.store$.dispatch(new controlledStopAction.ControlledStopRemoveFault());
       this.store$.dispatch(new ToggleSeriousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
     if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.faultCount() > 0) {
-      this.store$.dispatch(new ControlledStopRemoveFault());
+      this.store$.dispatch(new controlledStopAction.ControlledStopRemoveFault());
       this.store$.dispatch(new ToggleRemoveFaultMode());
     }
   }

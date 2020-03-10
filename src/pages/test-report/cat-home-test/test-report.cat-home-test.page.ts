@@ -125,7 +125,7 @@ export class TestReportCatHomeTestPage extends BasePageComponent {
     );
 
     const testData$ = currentTest$.pipe(
-      select(this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)),
+      map(data => this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)(data)),
     );
 
     this.pageState = {

@@ -3,26 +3,26 @@ import { By } from '@angular/platform-browser';
 import { ControlledStopComponent } from '../controlled-stop';
 import { IonicModule } from 'ionic-angular';
 import { StoreModule, Store } from '@ngrx/store';
-import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
-import { testReportReducer } from '../../../../test-report.reducer';
-import { StoreModel } from '../../../../../../shared/models/store.model';
+import { testsReducer } from '../../../../../modules/tests/tests.reducer';
+import { testReportReducer } from '../../../test-report.reducer';
+import { StoreModel } from '../../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
-import { CompetencyButtonComponent } from '../../../../components/competency-button/competency-button';
-import { TickIndicatorComponent } from '../../../../../../components/common/tick-indicator/tick-indicator';
+import { CompetencyButtonComponent } from '../../competency-button/competency-button';
+import { TickIndicatorComponent } from '../../../../../components/common/tick-indicator/tick-indicator';
 import {
-  DrivingFaultsBadgeComponent } from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
+  DrivingFaultsBadgeComponent } from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import {
   SeriousFaultBadgeComponent,
-} from '../../../../../../components/common/serious-fault-badge/serious-fault-badge';
+} from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
 import {
   DangerousFaultBadgeComponent,
-} from '../../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
-import { StartTest } from '../../../../../../modules/tests/tests.actions';
+} from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
+import { StartTest } from '../../../../../modules/tests/tests.actions';
 import {
   ControlledStopAddDrivingFault,
   ControlledStopRemoveFault,
-} from '../../../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
-import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
+} from '../../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 
