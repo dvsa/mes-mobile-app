@@ -926,6 +926,16 @@ const localJournal: ExaminerWorkSchedule = {
           dateOfBirth: '1950-02-27',
           ethnicityCode: 'A',
         },
+        business: {
+          businessAddress: {
+            addressLine1: '1 Business Street',
+            addressLine2: 'Businessplace',
+            addressLine3: 'Businesstown',
+            postcode: 'BUSI N ESS',
+          },
+          businessName: 'Business Name',
+          telephone: '0234 234433',
+        },
       },
       slotDetail: {
         duration: 57,
@@ -982,6 +992,16 @@ const localJournal: ExaminerWorkSchedule = {
           secondaryTelephone: '04321 098765',
           dateOfBirth: '1950-02-27',
           ethnicityCode: 'A',
+        },
+        business: {
+          businessAddress: {
+            addressLine1: '1 Business Street',
+            addressLine2: 'Businessplace',
+            addressLine3: 'Businesstown',
+            postcode: 'BUSI N ESS',
+          },
+          businessName: 'Business Name',
+          telephone: '0234 234433',
         },
       },
       slotDetail: {
@@ -1040,6 +1060,16 @@ const localJournal: ExaminerWorkSchedule = {
           dateOfBirth: '1950-02-27',
           ethnicityCode: 'A',
         },
+        business: {
+          businessAddress: {
+            addressLine1: '1 Business Street',
+            addressLine2: 'Businessplace',
+            addressLine3: 'Businesstown',
+            postcode: 'BUSI N ESS',
+          },
+          businessName: 'Business Name',
+          telephone: '0234 234433',
+        },
       },
       slotDetail: {
         duration: 57,
@@ -1096,6 +1126,16 @@ const localJournal: ExaminerWorkSchedule = {
           secondaryTelephone: '04321 098765',
           dateOfBirth: '1950-02-27',
           ethnicityCode: 'A',
+        },
+        business: {
+          businessAddress: {
+            addressLine1: '1 Business Street',
+            addressLine2: 'Businessplace',
+            addressLine3: 'Businesstown',
+            postcode: 'BUSI N ESS',
+          },
+          businessName: 'Business Name',
+          telephone: '0234 234433',
         },
       },
       slotDetail: {
