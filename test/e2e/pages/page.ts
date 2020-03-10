@@ -35,6 +35,10 @@ export default class Page {
     return element(by.id(elementId));
   }
 
+  getElementByClassName(elementClassName) {
+    return element(by.className(elementClassName));
+  }
+
 /**
  * Waits for the element to exist on the page before returning it.
  * @param elementBy the element finder
