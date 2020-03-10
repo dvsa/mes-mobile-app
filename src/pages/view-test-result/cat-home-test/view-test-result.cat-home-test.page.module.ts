@@ -8,7 +8,9 @@ import { ViewTestResultAnalyticsEffects } from '../view-test-result.analytics.ef
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { ViewTestResultComponentsModule } from '../components/view-test-result.components.module';
-import { ViewTestResultCatHomeTestComponentsModule } from './components/view-test-result.cat-home-test.components.module';
+import {
+ViewTestResultCatHomeTestComponentsModule,
+} from './components/view-test-result.cat-home-test.components.module';
 
 @NgModule({
   declarations: [
