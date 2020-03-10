@@ -41,7 +41,7 @@ When('I end and terminate the test', () => {
 });
 
 When('I complete the test', () => {
-  TestReportPage.completeLegalRequirements();
+  TestReportPage.legalRequirements.completeLegalRequirements();
   TestReportPage.completeManouveure(this.testCategory);
   TestReportPage.completeEco();
   if (this.testCategory === 'b') {
@@ -54,7 +54,7 @@ When('I complete the test', () => {
 });
 
 When('I complete the test with uncouple recouple', () => {
-  TestReportPage.completeLegalRequirements();
+  TestReportPage.legalRequirements.completeLegalRequirements();
   TestReportPage.completeManouveure(this.testCategory);
   TestReportPage.completeEco();
   TestReportPage.completeUncoupleRecouple();
@@ -62,7 +62,7 @@ When('I complete the test with uncouple recouple', () => {
 });
 
 When('I complete the test with controlled stop', () => {
-  TestReportPage.completeLegalRequirements();
+  TestReportPage.legalRequirements.completeLegalRequirements();
   TestReportPage.completeManouveure(this.testCategory);
   TestReportPage.completeEco();
   TestReportPage.completeShowMe();
@@ -71,106 +71,106 @@ When('I complete the test with controlled stop', () => {
 });
 
 When('I add a Show me / Tell me driver fault', () => {
-  TestReportPage.addShowMeTellMeDriverFault();
+  TestReportPage.driverFaults.addShowMeTellMeDriverFault();
 });
 
 When('I add a Controlled Stop driver fault', () => {
-  TestReportPage.addControlledStopDriverFault();
+  TestReportPage.driverFaults.addControlledStopDriverFault();
 });
 
 When('I add a {string} driver fault', (competency) => {
-  TestReportPage.longPressCompetency(competency);
+  TestReportPage.competency.longPressCompetency(competency);
 });
 
 When('I add a {string} serious fault', (competency) => {
   TestReportPage.clickSeriousMode();
-  TestReportPage.clickCompetency(competency);
+  TestReportPage.competency.clickCompetency(competency);
 });
 
 When('I add a {string} serious fault with a long press', (competency: string) => {
   TestReportPage.clickSeriousMode();
-  TestReportPage.longPressCompetency(competency);
+  TestReportPage.competency.longPressCompetency(competency);
 });
 
 Then('the competency {string} driver fault count is not displayed', (competency: string) => {
-  const driverBadge = TestReportPage.getDriverBadge(competency);
-  expect(TestReportPage.getDrivingFaults(driverBadge)).to.eventually.equal(null);
+  const driverBadge = TestReportPage.driverFaults.getDriverBadge(competency);
+  expect(TestReportPage.driverFaults.getDrivingFaults(driverBadge)).to.eventually.equal(null);
 });
 
 When('I add an ETA with type {string}', (etaType: 'Verbal' | 'Physical') => {
   const etaText = `ETA: ${etaType}`;
-  TestReportPage.longPressETAButton(etaText);
+  TestReportPage.ETA.longPressETAButton(etaText);
 });
 
 When('I add a {string} dangerous fault', (competency) => {
   TestReportPage.clickDangerousButton();
-  TestReportPage.clickCompetency(competency);
+  TestReportPage.competency.clickCompetency(competency);
 });
 
 When('I close the ETA modal', () => {
-  TestReportPage.closeETAModal();
+  TestReportPage.ETA.closeETAModal();
 });
 
 Then('the ETA invalid modal is shown', () => {
-  const modalTitle = TestReportPage.getETAModalTitle();
+  const modalTitle = TestReportPage.ETA.getETAModalTitle();
   expect(modalTitle.getText()).to.eventually.equal('ETA recorded');
 });
 
 Then('the {string} button displays the serious badge', (competency: string) => {
-  const seriousBadge = TestReportPage.getSeriousFaultBadge(competency);
+  const seriousBadge = TestReportPage.driverFaults.getSeriousFaultBadge(competency);
   expect(seriousBadge.isPresent()).to.eventually.be.true;
 });
 
 Then('the {string} button displays the dangerous badge', (competency: string) => {
-  const dangerousBadge = TestReportPage.getDangerousFaultBadge(competency);
+  const dangerousBadge = TestReportPage.driverFaults.getDangerousFaultBadge(competency);
   expect(dangerousBadge.isPresent()).to.eventually.be.true;
 });
 
 Then('the {string} button does not display the serious badge', (competency: string) => {
-  const button = TestReportPage.getCompetencyButton(competency);
-  const seriousBadge = TestReportPage.getSeriousFaultBadgeByTagName(button);
+  const button = TestReportPage.competency.getCompetencyButton(competency);
+  const seriousBadge = TestReportPage.driverFaults.getSeriousFaultBadgeByTagName(button);
   expect(seriousBadge.isPresent()).to.eventually.be.false;
 });
 
 When('I open the reversing diagram', () => {
   TestReportPage.reverseDropDown();
-  TestReportPage.openReversingDiagramModal();
+  TestReportPage.reversingDiagramModal.openReversingDiagramModal();
 });
 
 Then('I should see the reversing diagram modal', () => {
-  const diagramModalTitle = TestReportPage.getReversingDiagramModalTitle();
+  const diagramModalTitle = TestReportPage.reversingDiagramModal.getReversingDiagramModalTitle();
   expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - articulated vehicle');
 });
 
 When('I close the reversing diagram modal', () => {
-  TestReportPage.closeReversingDialogModal();
+  TestReportPage.reversingDiagramModal.closeReversingDialogModal();
 });
 
 Then('I close the revresing diagram drop down', () => {
   TestReportPage.reverseDropDown();
-  TestReportPage.waitForPresenceOfElement(TestReportPage.getCompetencyButton('Control'));
+  TestReportPage.waitForPresenceOfElement(TestReportPage.competency.getCompetencyButton('Control'));
 });
 
 When('I remove a driver fault for {string} with a tap', (competency: string) => {
   TestReportPage.clickRemove();
-  TestReportPage.clickCompetency(competency);
+  TestReportPage.competency.clickCompetency(competency);
 });
 
 When('I remove a driver fault for {string} with a long press', (competency: string) => {
   TestReportPage.clickRemove();
-  TestReportPage.longPressCompetency(competency);
+  TestReportPage.competency.longPressCompetency(competency);
 });
 
 When('I remove a serious fault for {string} with a tap', (competency: string) => {
   TestReportPage.clickRemove();
   TestReportPage.clickSeriousMode();
-  TestReportPage.clickCompetency(competency);
+  TestReportPage.competency.clickCompetency(competency);
 });
 
 When('I remove a serious fault for {string} with a long press', (competency: string) => {
   TestReportPage.clickSeriousMode();
   TestReportPage.clickRemove();
-  TestReportPage.longPressCompetency(competency);
+  TestReportPage.competency.longPressCompetency(competency);
 });
 
 When('I add a manoeuvre', () => {
@@ -183,7 +183,7 @@ When('I click the manoeuvres button', () => {
 });
 
 When('I mark the manoeuvre as a {string} driver fault', (faultName: 'Control' | 'Observation') => {
-  TestReportPage.markDriverFault(faultName);
+  TestReportPage.driverFaults.markDriverFault(faultName);
 });
 
 Then('the controlled stop requirement is ticked', () => {
@@ -197,13 +197,13 @@ Then('the driver fault count is {string}', (driverFaultCount) => {
 });
 
 Then('a serious fault is present along the driver fault count of {string}', (driverFaultCount) => {
-  expect(TestReportPage.getSeriousFaultBadgeForVehicleChecks().isPresent()).to.eventually.be.true;
+  expect(TestReportPage.driverFaults.getSeriousFaultBadgeForVehicleChecks().isPresent()).to.eventually.be.true;
   const summaryCountField = TestReportPage.getSummaryCountField();
   return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
 Then('the competency {string} driver fault count is {string}', (competency, driverFaultCount) => {
-  const competencyCountField = TestReportPage.getCompetencyCountField(competency);
+  const competencyCountField = TestReportPage.driverFaults.getCompetencyCountField(competency);
   return expect(competencyCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
@@ -213,12 +213,12 @@ When('I terminate the test from the test report page', () => {
 });
 
 Then('the legal requirements pop up is present', () => {
-  const legalRequirementPopUp = TestReportPage.getLegalRequrementsPopup();
+  const legalRequirementPopUp = TestReportPage.legalRequirements.getLegalRequrementsPopup();
   expect(legalRequirementPopUp.isPresent()).to.eventually.be.true;
 });
 
 When('the required test observation is present {string}', (legalRequirement: string) => {
-  expect(TestReportPage.getLegalRequirement(legalRequirement).isPresent()).to.eventually.be.true;
+  expect(TestReportPage.legalRequirements.getLegalRequirement(legalRequirement).isPresent()).to.eventually.be.true;
 });
 
 Then('I return to the test report page', () =>   {
@@ -226,7 +226,7 @@ Then('I return to the test report page', () =>   {
 });
 
 When('I enter the legal requirements', () => {
-  TestReportPage.completeLegalRequirements();
+  TestReportPage.legalRequirements.completeLegalRequirements();
   TestReportPage.completeManouveure(this.testCategory);
   TestReportPage.completeEco();
 });
