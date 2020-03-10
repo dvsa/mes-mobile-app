@@ -115,6 +115,46 @@ class OfficePage extends Page {
     this.clickElementByXPath('//button/span/h3[text() = "Return to journal"]');
   }
 
+  getDriverFault(faultCount, faultTest) {
+    const element = this.getElementByXPath(`//ion-row[@id = 'driving-fault-commentary-label']
+  [descendant::span[@class='count' and text() = '${faultCount}'] and descendant::label[@class='fault-label'
+  and text() = '${faultTest}']]`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getTestOutcomeField() {
+    const element = this.getElementByXPath('//div[@id="test-outcome-text"]/span');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getTellMeQuestionField() {
+    const element = this.getElementById('tell-me-question-text');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getCommentsValidationText(faultSeverity, faultLabel) {
+    const element = this.getElementByXPath(`//fault-comment-card[@faulttype='${faultSeverity}'
+  and //label[@class = 'fault-label' and text() = '${faultLabel}']]//div[@class='validation-text ng-invalid']`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getCommentsField(faultSeverity, faultLabel) {
+    const element = this.getElementByXPath(`//fault-comment-card[@faulttype='${faultSeverity}']
+  //ion-row[ion-col/label[text() = '${faultLabel}']]//textarea`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getActivityCodeField(testCategory) {
+    const element = this.getElementByXPath(`//div[contains(@class, "office-cat-${testCategory}-page")]`
+      + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
 }
 
 export default new OfficePage();
