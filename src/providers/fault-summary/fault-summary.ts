@@ -7,6 +7,7 @@ import { FaultSummaryCatBHelper } from './cat-b/fault-summary.cat-b';
 import { FaultSummaryCatBEHelper } from './cat-be/fault-summary.cat-be';
 import { FaultSummaryCatCHelper } from './cat-c/fault-summary.cat-c';
 import { FaultSummaryCatDHelper } from './cat-d/fault-summary.cat-d';
+import { FaultSummaryCatHomeTestHelper } from './cat-home-test/fault-summary.cat-home-test';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
@@ -108,6 +109,11 @@ export class FaultSummaryProvider {
       case TestCategory.EUA2M2:
       case TestCategory.EUAMM2:
         return FaultSummaryCatAM2Helper.getDrivingFaultsCatAM2(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K:
+        return FaultSummaryCatHomeTestHelper.getDrivingFaultsCatHomeTest(data);
       default:
         return [];
     }
@@ -141,6 +147,11 @@ export class FaultSummaryProvider {
       case TestCategory.EUA2M2:
       case TestCategory.EUAMM2:
         return FaultSummaryCatAM2Helper.getSeriousFaultsCatAM2(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K:
+        return FaultSummaryCatHomeTestHelper.getSeriousFaultsCatHomeTest(data);
       default:
         return [];
     }
@@ -174,6 +185,11 @@ export class FaultSummaryProvider {
       case TestCategory.EUA2M2:
       case TestCategory.EUAMM2:
         return FaultSummaryCatAM2Helper.getDangerousFaultsCatAM2(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K:
+        return FaultSummaryCatHomeTestHelper.getDangerousFaultsCatHomeTest(data);
       default:
         return [];
     }

@@ -13,6 +13,7 @@ import { FaultCountDHelper } from './cat-d/fault-count.cat-d';
 import { sumManoeuvreFaults } from '../../shared/helpers/faults';
 import { FaultCountAM1Helper } from './cat-a-mod1/fault-count.cat-a-mod1';
 import { FaultCountAM2Helper } from './cat-a-mod2/fault-count.cat-a-mod2';
+import { FaultCountHomeTestHelper } from './cat-home-test/fault-count.cat-home-test';
 
 // TODO: Remove category from helper functions as the name of the helper class already contains the category
 
@@ -41,6 +42,10 @@ export class FaultCountProvider {
       case TestCategory.D1E: return FaultCountDHelper.getDrivingFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getDrivingFaultSumCountCatDE(data);
       case TestCategory.D: return FaultCountDHelper.getDrivingFaultSumCountCatD(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K: return FaultCountHomeTestHelper.getDrivingFaultSumCountCatHomeTest(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -65,6 +70,10 @@ export class FaultCountProvider {
       case TestCategory.D1E: return FaultCountDHelper.getSeriousFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getSeriousFaultSumCountCatDE(data);
       case TestCategory.D: return FaultCountDHelper.getSeriousFaultSumCountCatD(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K: return FaultCountHomeTestHelper.getSeriousFaultSumCountHomeTest(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -89,6 +98,10 @@ export class FaultCountProvider {
       case TestCategory.D1E: return FaultCountDHelper.getDangerousFaultSumCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getDangerousFaultSumCountCatDE(data);
       case TestCategory.D: return FaultCountDHelper.getDangerousFaultSumCountCatD(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K: return FaultCountHomeTestHelper.getDangerousFaultSumCountHomeTest(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -109,6 +122,10 @@ export class FaultCountProvider {
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAMM1: return sumManoeuvreFaults(data, faultType);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H: return sumManoeuvreFaults(data, faultType);
+      case TestCategory.K: return 0;   // NOTE: no manoeuvres on cat K
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
@@ -124,6 +141,10 @@ export class FaultCountProvider {
       case TestCategory.D1E: return FaultCountDHelper.getVehicleChecksFaultCountCatD1E(data);
       case TestCategory.DE: return FaultCountDHelper.getVehicleChecksFaultCountCatDE(data);
       case TestCategory.D: return FaultCountDHelper.getVehicleChecksFaultCountCatD(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K: return FaultCountHomeTestHelper.getVehicleChecksFaultCountCatHomeTest(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
