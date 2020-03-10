@@ -99,72 +99,62 @@ When('I add a {string} serious fault with a long press', (competency: string) =>
 });
 
 Then('the competency {string} driver fault count is not displayed', (competency: string) => {
-  const driverBadge = TempPage.getAndAwaitElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/driving-faults-badge`));
+  const driverBadge = TestReportPage.getDriverBadge(competency);
   expect(driverBadge.getAttribute('ng-reflect-count')).to.eventually.equal(null);
 });
 
 When('I add an ETA with type {string}', (etaType: 'Verbal' | 'Physical') => {
   const etaText = `ETA: ${etaType}`;
-  const etaButton = TempPage.getAndAwaitElement(by.xpath(`//competency-button/div/div/span[text() = '${etaText}']`));
-  TestReportPage.longPressButton(etaButton);
+  TestReportPage.longPressETAButton(etaText);
 });
 
 When('I add a {string} dangerous fault', (competency) => {
-  const dangerousButton = TempPage.getAndAwaitElement(by.id('dangerous-button'));
-  TempPage.clickElement(dangerousButton);
+  TestReportPage.clickDangerousButton();
   TestReportPage.clickCompetency(competency);
 });
 
 When('I close the ETA modal', () => {
-  TempPage.clickElement(TempPage.getAndAwaitElement(by.className('modal-return-button')));
+  TestReportPage.closeETAModal();
 });
 
 Then('the ETA invalid modal is shown', () => {
-  const modalTitle = TempPage.getAndAwaitElement(by.className('modal-alert-header'));
+  const modalTitle = TestReportPage.getETAModalTitle();
   expect(modalTitle.getText()).to.eventually.equal('ETA recorded');
 });
 
 Then('the {string} button displays the serious badge', (competency: string) => {
-  const seriousBadge = TempPage.getAndAwaitElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`));
+  const seriousBadge = TestReportPage.getSeriousFaultBadge(competency);
   expect(seriousBadge.isPresent()).to.eventually.be.true;
 });
 
 Then('the {string} button displays the dangerous badge', (competency: string) => {
-  const dangerousBadge = TempPage.getAndAwaitElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`));
+  const dangerousBadge = TestReportPage.getDangerousFaultBadge(competency);
   expect(dangerousBadge.isPresent()).to.eventually.be.true;
 });
 
 Then('the {string} button does not display the serious badge', (competency: string) => {
   const button = TestReportPage.getCompetencyButton(competency);
-  const seriousBadge = button.element(by.tagName('serious-fault-badge'));
+  const seriousBadge = TestReportPage.getSeriousFaultBadgeByTagName(button);
   expect(seriousBadge.isPresent()).to.eventually.be.false;
 });
 
 When('I open the reversing diagram', () => {
   TestReportPage.reverseDropDown();
-  const reversingDiagramLink = TempPage.getAndAwaitElement(by.xpath('//*[@id="reverse-diagram-link"]/span'));
-  TempPage.waitForPresenceOfElement(reversingDiagramLink);
-  TempPage.clickElement(reversingDiagramLink);
+  TestReportPage.openReversingDiagramModal();
 });
 
 Then('I should see the reversing diagram modal', () => {
-  const diagramModalTitle = TempPage.getAndAwaitElement(by.xpath('//reverse-diagram-modal-cat-c//div[2]'));
-  TempPage.waitForPresenceOfElement(diagramModalTitle);
+  const diagramModalTitle = TestReportPage.getReversingDiagramModalTitle();
   expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - articulated vehicle');
 });
 
 When('I close the reversing diagram modal', () => {
-  const reverseModalCloseButton = TempPage.getAndAwaitElement(
-    by.xpath('//*[@id="closeReverseDiagramModal"]/span/ion-icon'));
-  TempPage.clickElement(reverseModalCloseButton);
+  TestReportPage.closeReversingDialogModal();
 });
 
 Then('I close the revresing diagram drop down', () => {
   TestReportPage.reverseDropDown();
-  TempPage.waitForPresenceOfElement(TestReportPage.getCompetencyButton('Control'));
+  TestReportPage.waitForPresenceOfElement(TestReportPage.getCompetencyButton('Control'));
 });
 
 When('I remove a driver fault for {string} with a tap', (competency: string) => {
@@ -200,8 +190,7 @@ When('I click the manoeuvres button', () => {
 });
 
 When('I mark the manoeuvre as a {string} driver fault', (faultName: 'Control' | 'Observation') => {
-  const button = TempPage.getAndAwaitElement(by.xpath(`//manoeuvre-competency/div/span[text() = '${faultName}']`));
-  TestReportPage.longPressButton(button);
+  TestReportPage.markDriverFault(faultName);
 });
 
 Then('the controlled stop requirement is ticked', () => {
@@ -215,7 +204,7 @@ Then('the driver fault count is {string}', (driverFaultCount) => {
 });
 
 Then('a serious fault is present along the driver fault count of {string}', (driverFaultCount) => {
-  expect(TestReportPage.getSeriousFaultBadge().isPresent()).to.eventually.be.true;
+  expect(TestReportPage.getSeriousFaultBadgeForVehicleChecks().isPresent()).to.eventually.be.true;
   const summaryCountField = TestReportPage.getSummaryCountField();
   return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
 });
