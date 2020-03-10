@@ -263,6 +263,7 @@ describe('ViewTestResultCatADIPart2Page', () => {
   });
   it('should show rekey cards only when rekey is true', () => {
     component.isLoading = false;
+  // TO-DO ADI Part2: Implement correct category
     component.testResult = categoryBETestResultMock;
 
     fixture.detectChanges();
