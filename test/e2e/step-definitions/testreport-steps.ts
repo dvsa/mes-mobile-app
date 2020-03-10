@@ -1,14 +1,12 @@
 import { Then, When, Before } from 'cucumber';
-import { browser, by, element } from 'protractor';
+import { by, element } from 'protractor';
 import TempPage from '../pages/tempPage';
+import TestReportPage from '../pages/testReportPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
-
-const buttonPadding = 30;
-const request = require('request');
 
 this.testCategory = 'b';
 
@@ -50,28 +48,28 @@ When('I end and terminate the test', () => {
 
 When('I complete the test', () => {
   completeLegalRequirements();
-  completeManouveure();
+  TestReportPage.completeManouveure(this.testCategory);
   completeEco();
   if (this.testCategory === 'b') {
     completeShowMe();
   }
   if (this.testCategory === 'be' || this.testCategory === 'ce') {
-    completeUncoupleRecouple();
+    TestReportPage.completeUncoupleRecouple();
   }
   endTest();
 });
 
 When('I complete the test with uncouple recouple', () => {
   completeLegalRequirements();
-  completeManouveure();
+  TestReportPage.completeManouveure(this.testCategory);
   completeEco();
-  completeUncoupleRecouple();
+  TestReportPage.completeUncoupleRecouple();
   endTest();
 });
 
 When('I complete the test with controlled stop', () => {
   completeLegalRequirements();
-  completeManouveure();
+  TestReportPage.completeManouveure(this.testCategory);
   completeEco();
   completeShowMe();
   completeControlledStop();
@@ -79,11 +77,11 @@ When('I complete the test with controlled stop', () => {
 });
 
 When('I add a Show me / Tell me driver fault', () => {
-  longPressButton(TempPage.getAndAwaitElement(by.className('vehicle-check-competency')));
+  TestReportPage.longPressButton(TempPage.getAndAwaitElement(by.className('vehicle-check-competency')));
 });
 
 When('I add a Controlled Stop driver fault', () => {
-  longPressButton(TempPage.getAndAwaitElement(by.className('controlled-stop-competency')));
+  TestReportPage.longPressButton(TempPage.getAndAwaitElement(by.className('controlled-stop-competency')));
 });
 
 When('I add a {string} driver fault', (competency) => {
@@ -92,7 +90,7 @@ When('I add a {string} driver fault', (competency) => {
 
 When('I add a {string} serious fault', (competency) => {
   clickSeriousMode();
-  clickCompetency(competency);
+  TestReportPage.clickCompetency(competency);
 });
 
 When('I add a {string} serious fault with a long press', (competency: string) => {
@@ -109,13 +107,13 @@ Then('the competency {string} driver fault count is not displayed', (competency:
 When('I add an ETA with type {string}', (etaType: 'Verbal' | 'Physical') => {
   const etaText = `ETA: ${etaType}`;
   const etaButton = TempPage.getAndAwaitElement(by.xpath(`//competency-button/div/div/span[text() = '${etaText}']`));
-  longPressButton(etaButton);
+  TestReportPage.longPressButton(etaButton);
 });
 
 When('I add a {string} dangerous fault', (competency) => {
   const dangerousButton = TempPage.getAndAwaitElement(by.id('dangerous-button'));
   TempPage.clickElement(dangerousButton);
-  clickCompetency(competency);
+  TestReportPage.clickCompetency(competency);
 });
 
 When('I close the ETA modal', () => {
@@ -140,7 +138,7 @@ Then('the {string} button displays the dangerous badge', (competency: string) =>
 });
 
 Then('the {string} button does not display the serious badge', (competency: string) => {
-  const button = getCompetencyButton(competency);
+  const button = TestReportPage.getCompetencyButton(competency);
   const seriousBadge = button.element(by.tagName('serious-fault-badge'));
   expect(seriousBadge.isPresent()).to.eventually.be.false;
 });
@@ -166,12 +164,12 @@ When('I close the reversing diagram modal', () => {
 
 Then('I close the revresing diagram drop down', () => {
   reverseDropDown();
-  TempPage.waitForPresenceOfElement(getCompetencyButton('Control'));
+  TempPage.waitForPresenceOfElement(TestReportPage.getCompetencyButton('Control'));
 });
 
 When('I remove a driver fault for {string} with a tap', (competency: string) => {
   clickRemove();
-  clickCompetency(competency);
+  TestReportPage.clickCompetency(competency);
 });
 
 When('I remove a driver fault for {string} with a long press', (competency: string) => {
@@ -182,7 +180,7 @@ When('I remove a driver fault for {string} with a long press', (competency: stri
 When('I remove a serious fault for {string} with a tap', (competency: string) => {
   clickRemove();
   clickSeriousMode();
-  clickCompetency(competency);
+  TestReportPage.clickCompetency(competency);
 });
 
 When('I remove a serious fault for {string} with a long press', (competency: string) => {
@@ -203,7 +201,7 @@ When('I click the manoeuvres button', () => {
 
 When('I mark the manoeuvre as a {string} driver fault', (faultName: 'Control' | 'Observation') => {
   const button = TempPage.getAndAwaitElement(by.xpath(`//manoeuvre-competency/div/span[text() = '${faultName}']`));
-  longPressButton(button);
+  TestReportPage.longPressButton(button);
 });
 
 Then('the controlled stop requirement is ticked', () => {
@@ -254,14 +252,14 @@ Then('I return to the test report page', () =>   {
 
 When('I enter the legal requirements', () => {
   completeLegalRequirements();
-  completeManouveure();
+  TestReportPage.completeManouveure(this.testCategory);
   completeEco();
 });
 
 When('I add the Uncouple and Recouple fault', () => {
   const uncoupleRecoupleFault =
     TempPage.getAndAwaitElement(by.xpath('//uncouple-recouple//competency-button/div/div[1]'));
-  longPressButton(uncoupleRecoupleFault);
+  TestReportPage.longPressButton(uncoupleRecoupleFault);
 });
 
 const endTest = () => {
@@ -272,25 +270,25 @@ const endTest = () => {
 const completeLegalRequirements = () => {
   const legalRequirements = element.all(by.xpath('//legal-requirement/competency-button[@class="legal-button"]'));
   legalRequirements.each((legalRequirement) => {
-    longPressButton(legalRequirement);
+    TestReportPage.longPressButton(legalRequirement);
   });
 };
 
 const completeEco = () => {
   const ecoCheckmark = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "eco-tick")]'));
-  longPressButton(ecoCheckmark);
+  TestReportPage.longPressButton(ecoCheckmark);
 };
 
 const completeShowMe = () => {
   // tslint:disable-next-line:max-line-length
   const showMeCheckmark = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "show-me-question-tick")]'));
-  longPressButton(showMeCheckmark);
+  TestReportPage.longPressButton(showMeCheckmark);
 };
 
 const completeControlledStop = () => {
   // tslint:disable-next-line:max-line-length
   const controlledStopCheckmark = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "controlled-stop-tick")]'));
-  longPressButton(controlledStopCheckmark);
+  TestReportPage.longPressButton(controlledStopCheckmark);
 };
 
 const reverseDropDown = () => {
@@ -306,102 +304,12 @@ const clickSeriousMode = () => {
   TempPage.clickElement(TempPage.getAndAwaitElement(by.id('serious-button')));
 };
 
-const getCompetencyButton = (competency: string) => {
-  return TempPage.getAndAwaitElement(by.xpath(`//competency-button/div/span[text() = '${competency}']`));
-};
-
 const longPressCompetency = (competency: string) => {
-  const competencyButton = getCompetencyButton(competency);
-  longPressButton(competencyButton);
+  const competencyButton = TestReportPage.getCompetencyButton(competency);
+  TestReportPage.longPressButton(competencyButton);
 };
 
 const clickManoeuvresButton = () => {
   const manoeuvresButton = TempPage.getAndAwaitElement(by.xpath('//manoeuvres/button'));
   TempPage.clickElement(manoeuvresButton);
-};
-
-/**
- * Performs the long press action on the competency to add a driver fault.
- * The long press does not appear to have been implemented so calling appiums touch perform action directly.
- * @param driverFault The competency to apply the driver fault to
- */
-const longPressButton = (button) => {
-  browser.getProcessedConfig().then((config) => {
-    browser.driver.getSession().then((session) => {
-      button.getLocation().then((buttonLocation) => {
-        request.post(`${config.seleniumAddress}/session/${session.getId()}/touch/perform`, {
-          json: {
-            actions: [
-              {
-                action: 'longPress',
-                options: {
-                  x: Math.ceil(buttonLocation.x) + buttonPadding,
-                  y: Math.ceil(buttonLocation.y) + buttonPadding,
-                },
-              },
-              {
-                action: 'release',
-              },
-            ],
-          },
-        }, (error, res, body) => {
-          if (error) {
-            console.error(error);
-            return;
-          }
-        });
-      });
-    });
-  });
-};
-
-/**
- * Clicks the competency to add a fault or remove where the relevant S/D/Remove has been selected in advance.
- * Note: not for use with driver faults as this requires a long press
- * @param competency The competency to add the fault to
- */
-const clickCompetency = (competency) => {
-  browser.getProcessedConfig().then((config) => {
-    browser.driver.getSession().then((session) => {
-      const competencyButton = getCompetencyButton(competency);
-      competencyButton.getLocation().then((buttonLocation) => {
-        request.post(`${config.seleniumAddress}/session/${session.getId()}/touch/perform`, {
-          json: {
-            actions: [
-              {
-                action: 'tap',
-                options: {
-                  x: Math.ceil(buttonLocation.x) + buttonPadding,
-                  y: Math.ceil(buttonLocation.y) + buttonPadding,
-                },
-              },
-            ],
-          },
-        }, (error, res, body) => {
-          if (error) {
-            console.error(error);
-            return;
-          }
-        });
-      });
-    });
-  });
-};
-
-const completeManouveure = () => {
-  if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1') {
-    const manoeuvresButton = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "reverse-left-tick")]'));
-    longPressButton(manoeuvresButton);
-  } else {
-    const manoeuvresButton = TempPage.getAndAwaitElement(by.xpath('//manoeuvres/button'));
-    TempPage.clickElement(manoeuvresButton);
-    const reverseRightRadio = TempPage.getAndAwaitElement(by.id('manoeuvres-reverse-right-radio'));
-    TempPage.clickElement(reverseRightRadio);
-    TempPage.clickElement(manoeuvresButton);
-  }
-};
-
-const completeUncoupleRecouple = () => {
-  const uncoupleRecouple = TempPage.getAndAwaitElement(by.xpath('//competency-button[contains(@class, "uncouple-recouple-tick")]'));
-  longPressButton(uncoupleRecouple);
 };
