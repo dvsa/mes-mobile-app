@@ -1,7 +1,5 @@
 import { Then, When, Before } from 'cucumber';
-import { by } from 'protractor';
-import { getElement, clickElement } from '../../helpers/interactionHelpers';
-import TempPage from '../pages/tempPage';
+import WaitingRoomPage from '../pages/waitingRoomPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -32,43 +30,37 @@ Before({ tags: '@catc1e' }, () => {
 });
 
 When('the candidate enters a new email address', () => {
-  const newEmailRadio = TempPage.getAndAwaitElement(by.id('newEmail'));
-  TempPage.clickElement(newEmailRadio);
-  const newEmailAddressField = TempPage.getAndAwaitElement(by.id('newEmailInput'));
-  newEmailAddressField.sendKeys('testemail@example.com');
+  WaitingRoomPage.clickNewEmailRadioButton();
+  WaitingRoomPage.enterNewEmail('testemail@example.com');
 });
 
 When('the candidate requests to receive results by post', () => {
-  const postalAddressRadio = TempPage.getAndAwaitElement(by.id('postalAddress'));
-  TempPage.clickElement(postalAddressRadio);
+  WaitingRoomPage.clickPostalAddressRadioButton();
 });
 
-When(/^the candidate confirms their (communication preference|declaration)$/, (pageName) => {
-  const pageType = (pageName === 'communication preference' ? `communication-cat-${this.testCategory}-page`
-  : `waiting-room-cat-${this.testCategory}-page`);
-  TempPage.clickElementByXPath(
-    `//div[contains(@class, '${pageType}')]//button[@id = 'continue-button']`);
+When(/^the candidate confirms their declaration$/, () => {
+  WaitingRoomPage.candidateConfirmsDeclaration(this.testCategory);
+});
+
+When(/^the candidate confirms their communication preference$/, () => {
+  WaitingRoomPage.candidateConfirmsCommunicationPreference(this.testCategory);
 });
 
 When('the candidate completes the declaration page', () => {
-  TempPage.clickElementById('insurance-declaration-checkbox');
-  TempPage.clickElementById('residency-declaration-checkbox');
-  TempPage.clickElementByXPath('//signature-pad/canvas');
+  WaitingRoomPage.checkInsuranceDeclaration();
+  WaitingRoomPage.checkResidencyDeclaration();
+  WaitingRoomPage.clickSignaturePad();
 });
 
 When('I proceed to the car', () => {
   // Examiner clicks continue button then enters passcode
-  // todo: kc the line below is stopping the ali campbell tests from passing.
-  // but if it's not here then the florence pearson tests fail.
-  const continueButton = TempPage.getAndAwaitElement(by.xpath(
-    `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id = "continue-button"]`));
-  TempPage.clickElement(continueButton);
-  TempPage.enterPasscode();
+  WaitingRoomPage.clickContinueButton(this.testCategory);
+  WaitingRoomPage.enterPasscode();
 });
 
 Then('the email {string} has been provided and is preselected', (emailAddress) => {
-  const providedEmailRadio = TempPage.getAndAwaitElement(by.id('providedEmail'));
+  const providedEmailRadio = WaitingRoomPage.getProvidedEmailRadioButton();
   expect(providedEmailRadio.isSelected()).to.eventually.be.true;
-  const providedEmailValue = TempPage.getAndAwaitElement(by.id('providedEmailInput'));
+  const providedEmailValue = WaitingRoomPage.getProvidedEmailValue();
   return expect(providedEmailValue.getText()).to.eventually.equal(emailAddress);
 });
