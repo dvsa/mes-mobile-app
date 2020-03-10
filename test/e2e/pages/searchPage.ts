@@ -12,7 +12,6 @@ class SearchPage extends Page {
     });
   }
 
-  // todo: kc should this method be here or on another page?
   clickBackButton() {
     this.clickElementByXPath('//page-test-results-search/ion-header/ion-navbar/button');
   }
@@ -64,6 +63,24 @@ class SearchPage extends Page {
       const dataRow = this.getDataRow(row);
       expect(dataRow.isPresent()).to.eventually.be.true;
     });
+  }
+
+  clickSearchResult(index) {
+    this.clickElementByXPath(`//page-test-results-search//search-result/ion-card/ion-grid/ion-row[${index}]`);
+  }
+
+  enterSearchTerm(searchTerm) {
+    this.textFieldInputViaNativeMode(
+      '//XCUIElementTypeWindow//XCUIElementTypeTextField[@value="Enter an application reference"]',
+      searchTerm);
+  }
+
+  clickSearchButton() {
+    this.clickElementByXPath('//*[@id="tab-search-candidate-details"]//ion-row[3]/button/span');
+  }
+
+  clickSearchForCompletedTestsButton() {
+    this.clickElementByXPath('//page-dashboard//test-results-search-card//span');
   }
 }
 
