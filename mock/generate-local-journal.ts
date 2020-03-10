@@ -716,7 +716,7 @@ const localJournal: ExaminerWorkSchedule = {
     {
       booking: {
         application: {
-          applicationId: 1284472,
+          applicationId: 1284470,
           bookingSequence: 1,
           checkDigit: 3,
           entitlementCheck: false,
@@ -773,7 +773,7 @@ const localJournal: ExaminerWorkSchedule = {
     {
       booking: {
         application: {
-          applicationId: 1284472,
+          applicationId: 1284479,
           bookingSequence: 1,
           checkDigit: 3,
           entitlementCheck: false,
@@ -830,7 +830,7 @@ const localJournal: ExaminerWorkSchedule = {
     {
       booking: {
         application: {
-          applicationId: 1284472,
+          applicationId: 1284478,
           bookingSequence: 1,
           checkDigit: 3,
           entitlementCheck: false,
@@ -887,7 +887,7 @@ const localJournal: ExaminerWorkSchedule = {
     {
       booking: {
         application: {
-          applicationId: 1284472,
+          applicationId: 1284477,
           bookingSequence: 1,
           checkDigit: 3,
           entitlementCheck: false,
@@ -954,7 +954,7 @@ const localJournal: ExaminerWorkSchedule = {
     {
       booking: {
         application: {
-          applicationId: 1284472,
+          applicationId: 1284476,
           bookingSequence: 1,
           checkDigit: 3,
           entitlementCheck: false,
@@ -1021,7 +1021,7 @@ const localJournal: ExaminerWorkSchedule = {
     {
       booking: {
         application: {
-          applicationId: 1284472,
+          applicationId: 1284475,
           bookingSequence: 1,
           checkDigit: 3,
           entitlementCheck: false,
@@ -1088,7 +1088,7 @@ const localJournal: ExaminerWorkSchedule = {
     {
       booking: {
         application: {
-          applicationId: 1284472,
+          applicationId: 1284474,
           bookingSequence: 1,
           checkDigit: 3,
           entitlementCheck: false,
@@ -1155,7 +1155,7 @@ const localJournal: ExaminerWorkSchedule = {
     {
       booking: {
         application: {
-          applicationId: 1284472,
+          applicationId: 1284473,
           bookingSequence: 1,
           checkDigit: 3,
           entitlementCheck: false,
