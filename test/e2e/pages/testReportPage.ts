@@ -4,42 +4,119 @@ import { browser, by, element } from 'protractor';
 const buttonPadding = 30;
 const request = require('request');
 
-class TestReportPage extends Page {
-  /**
-   * Performs the long press action on the competency to add a driver fault.
-   * The long press does not appear to have been implemented so calling appiums touch perform action directly.
-   * @param button The button to longpress
-   */
-  longPressButton(button) {
-    browser.getProcessedConfig().then((config) => {
-      browser.driver.getSession().then((session) => {
-        button.getLocation().then((buttonLocation) => {
-          request.post(`${config.seleniumAddress}/session/${session.getId()}/touch/perform`, {
-            json: {
-              actions: [
-                {
-                  action: 'longPress',
-                  options: {
-                    x: Math.ceil(buttonLocation.x) + buttonPadding,
-                    y: Math.ceil(buttonLocation.y) + buttonPadding,
-                  },
-                },
-                {
-                  action: 'release',
-                },
-              ],
-            },
-          }, (error) => {
-            if (error) {
-              console.error(error);
-              return;
-            }
-          });
-        });
-      });
-    });
+class ETA extends Page {
+  getETAModalTitle() {
+    const element = this.getElementByClassName('modal-alert-header');
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
+  closeETAModal() {
+    this.clickElementByClassName('modal-return-button');
+  }
+
+  longPressETAButton(etaText) {
+    this.longPressElementByXPath(`//competency-button/div/div/span[text() = '${etaText}']`);
+  }
+}
+
+class DriverFaults extends Page {
+  markDriverFault(faultName) {
+    this.longPressElementByXPath(`//manoeuvre-competency/div/span[text() = '${faultName}']`);
+  }
+
+  getDrivingFaults(driverBadge) {
+    return driverBadge.getAttribute('ng-reflect-count');
+  }
+
+  addShowMeTellMeDriverFault() {
+    this.longPressElementByClassName('vehicle-check-competency');
+  }
+
+  addControlledStopDriverFault() {
+    this.longPressElementByClassName('controlled-stop-competency');
+  }
+
+  getSeriousFaultBadgeForVehicleChecks() {
+    const element = this.getElementByXPath('//vehicle-checks//serious-fault-badge//span');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getSeriousFaultBadge(competency) {
+    const element =  this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getSeriousFaultBadgeByTagName(button) {
+    return button.element(by.tagName('serious-fault-badge'));
+  }
+
+  getDangerousFaultBadge(competency) {
+    return this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`);
+  }
+
+  getCompetencyCountField(competency) {
+    const element = this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getDriverBadge(competency) {
+    const element = this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/driving-faults-badge`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+}
+
+class ReversingDiagramModal extends Page {
+  getReversingDiagramModalTitle() {
+    const element = this.getElementByXPath('//reverse-diagram-modal-cat-c//div[2]');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  closeReversingDialogModal() {
+    this.clickElementByXPath('//*[@id="closeReverseDiagramModal"]/span/ion-icon');
+  }
+
+  openReversingDiagramModal() {
+    this.clickElementByXPath('//*[@id="reverse-diagram-link"]/span');
+  }
+}
+
+class LegalRequirements extends Page {
+
+  getLegalRequrementsPopup() {
+    const element = this.getElementByXPath('//div/legal-requirements-modal');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getLegalRequirement(legalRequirement) {
+    const element = this.getElementByXPath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getLegalRequirements() {
+    return element.all(by.xpath('//legal-requirement/competency-button[@class="legal-button"]'));
+  }
+
+  completeLegalRequirements() {
+    const legalRequirements = this.getLegalRequirements();
+    legalRequirements.each((legalRequirement) => {
+      this.longPressButton(legalRequirement);
+    });
+  }
+}
+
+class Competency extends Page {
   /**
    * Clicks the competency to add a fault or remove where the relevant S/D/Remove has been selected in advance.
    * Note: not for use with driver faults as this requires a long press
@@ -83,17 +160,22 @@ class TestReportPage extends Page {
     const competencyButton = this.getCompetencyButton(competency);
     this.longPressButton(competencyButton);
   }
+}
 
-  longPressElementByXPath(xpath) {
-    const element = this.getElementByXPath(xpath);
-    this.waitForPresenceOfElement(element);
-    this.longPressButton(element);
-  }
+class TestReportPage extends Page {
+  public ETA: ETA;
+  public driverFaults: DriverFaults;
+  public reversingDiagramModal: ReversingDiagramModal;
+  public legalRequirements: LegalRequirements;
+  public competency: Competency;
 
-  longPressElementByClassName(className) {
-    const element = this.getElementByClassName(className);
-    this.waitForPresenceOfElement(element);
-    this.longPressButton(element);
+  constructor() {
+    super();
+    this.ETA = new ETA();
+    this.driverFaults = new DriverFaults();
+    this.reversingDiagramModal = new ReversingDiagramModal();
+    this.legalRequirements = new LegalRequirements();
+    this.competency = new Competency();
   }
 
   completeUncoupleRecouple() {
@@ -146,72 +228,6 @@ class TestReportPage extends Page {
     this.longPressElementByXPath('//competency-button[contains(@class, "eco-tick")]');
   }
 
-  longPressETAButton(etaText) {
-    this.longPressElementByXPath(`//competency-button/div/div/span[text() = '${etaText}']`);
-  }
-
-  getETAModalTitle() {
-    const element = this.getElementByClassName('modal-alert-header');
-    this.waitForPresenceOfElement(element);
-    return element;
-  }
-
-  closeETAModal() {
-    this.clickElementByClassName('modal-return-button');
-  }
-
-  getDriverBadge(competency) {
-    const element = this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/driving-faults-badge`);
-    this.waitForPresenceOfElement(element);
-    return element;
-  }
-
-  getLegalRequrementsPopup() {
-    const element = this.getElementByXPath('//div/legal-requirements-modal');
-    this.waitForPresenceOfElement(element);
-    return element;
-  }
-
-  getLegalRequirement(legalRequirement) {
-    const element = this.getElementByXPath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`);
-    this.waitForPresenceOfElement(element);
-    return element;
-  }
-
-  getLegalRequirements() {
-    return element.all(by.xpath('//legal-requirement/competency-button[@class="legal-button"]'));
-  }
-
-  getCompetencyCountField(competency) {
-    const element = this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`);
-    this.waitForPresenceOfElement(element);
-    return element;
-  }
-
-  getSeriousFaultBadgeForVehicleChecks() {
-    const element = this.getElementByXPath('//vehicle-checks//serious-fault-badge//span');
-    this.waitForPresenceOfElement(element);
-    return element;
-  }
-
-  getSeriousFaultBadge(competency) {
-    const element =  this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`);
-    this.waitForPresenceOfElement(element);
-    return element;
-  }
-
-  getSeriousFaultBadgeByTagName(button) {
-    return button.element(by.tagName('serious-fault-badge'));
-  }
-
-  getDangerousFaultBadge(competency) {
-    return this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`);
-  }
-
   getSummaryCountField() {
     const element = this.getElementById('summary-count');
     this.waitForPresenceOfElement(element);
@@ -222,19 +238,6 @@ class TestReportPage extends Page {
     const element =  this.getElementByCss('.controlled-stop-tick.checked');
     this.waitForPresenceOfElement(element);
     return element;
-  }
-
-  getReversingDiagramModalTitle() {
-    const element = this.getElementByXPath('//reverse-diagram-modal-cat-c//div[2]');
-    this.waitForPresenceOfElement(element);
-    return element;
-  }
-
-  completeLegalRequirements() {
-    const legalRequirements = this.getLegalRequirements();
-    legalRequirements.each((legalRequirement) => {
-      this.longPressButton(legalRequirement);
-    });
   }
 
   clickEndTestButton() {
@@ -258,32 +261,8 @@ class TestReportPage extends Page {
     this.clickElementById('dangerous-button');
   }
 
-  markDriverFault(faultName) {
-    this.longPressElementByXPath(`//manoeuvre-competency/div/span[text() = '${faultName}']`);
-  }
-
-  closeReversingDialogModal() {
-    this.clickElementByXPath('//*[@id="closeReverseDiagramModal"]/span/ion-icon');
-  }
-
-  openReversingDiagramModal() {
-    this.clickElementByXPath('//*[@id="reverse-diagram-link"]/span');
-  }
-
   clickContinueToDebriefbutton() {
     this.clickElementByXPath('//button[span[h3[text() = "Continue to debrief"]]]');
-  }
-
-  getDrivingFaults(driverBadge) {
-    return driverBadge.getAttribute('ng-reflect-count');
-  }
-
-  addShowMeTellMeDriverFault() {
-    this.longPressElementByClassName('vehicle-check-competency');
-  }
-
-  addControlledStopDriverFault() {
-    this.longPressElementByClassName('controlled-stop-competency');
   }
 }
 export default new TestReportPage();

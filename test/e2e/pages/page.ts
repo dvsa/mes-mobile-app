@@ -6,6 +6,9 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
+const buttonPadding = 30;
+const request = require('request');
+
 export default class Page {
 /**
  * A framework safe click method.
@@ -157,5 +160,52 @@ export default class Page {
 
   waitForPresenceOfElement(element) {
     browser.wait(ExpectedConditions.presenceOf(element));
+  }
+
+  /**
+   * Performs the long press action on the competency to add a driver fault.
+   * The long press does not appear to have been implemented so calling appiums touch perform action directly.
+   * @param button The button to longpress
+   */
+  longPressButton(button) {
+    browser.getProcessedConfig().then((config) => {
+      browser.driver.getSession().then((session) => {
+        button.getLocation().then((buttonLocation) => {
+          request.post(`${config.seleniumAddress}/session/${session.getId()}/touch/perform`, {
+            json: {
+              actions: [
+                {
+                  action: 'longPress',
+                  options: {
+                    x: Math.ceil(buttonLocation.x) + buttonPadding,
+                    y: Math.ceil(buttonLocation.y) + buttonPadding,
+                  },
+                },
+                {
+                  action: 'release',
+                },
+              ],
+            },
+          }, (error) => {
+            if (error) {
+              console.error(error);
+              return;
+            }
+          });
+        });
+      });
+    });
+  }
+
+  longPressElementByXPath(xpath) {
+    const element = this.getElementByXPath(xpath);
+    this.waitForPresenceOfElement(element);
+    this.longPressButton(element);
+  }
+
+  longPressElementByClassName(className) {
+    const element = this.getElementByClassName(className);
+    this.waitForPresenceOfElement(element);
+    this.longPressButton(element);
   }
 }
