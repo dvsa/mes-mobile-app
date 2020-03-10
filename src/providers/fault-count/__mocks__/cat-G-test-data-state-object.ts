@@ -97,7 +97,7 @@ export const catGTestDataVCStateObject: CatGUniqueTypes.TestData = {
   },
 };
 
-export const vehicleChecksNoFaults = {
+export const vehicleChecksNoFaults: CatGUniqueTypes.VehicleChecks = {
   tellMeQuestions: [{
     code: 'string',
     description: 'string',
@@ -110,7 +110,7 @@ export const vehicleChecksNoFaults = {
   }] as QuestionResult[],
 };
 
-export const vehicleChecksTwoFaults = {
+export const vehicleChecksTwoFaults: CatGUniqueTypes.VehicleChecks = {
   tellMeQuestions: [{
     code: 'string',
     description: 'string',

@@ -27,7 +27,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
   });
 
   describe('getDrivingFaultsCatHomeTest (No VehicleChecks)', () => {
-    it(`should return 3 driving fault count for category F`, () => {
+    it('should return 3 driving fault count for category F', () => {
       const result = FaultSummaryCatHomeTestHelper.getDrivingFaultsCatHomeTest(catFTestDataStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -40,7 +40,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('controlledStop');
     });
 
-    it(`should return 5 driving fault count for category G`, () => {
+    it('should return 5 driving fault count for category G', () => {
       const result = FaultSummaryCatHomeTestHelper.getDrivingFaultsCatHomeTest(catGTestDataStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -53,13 +53,13 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('controlsGears');
     });
 
-    it(`should return 0 driving fault count for category H`, () => {
+    it('should return 0 driving fault count for category H', () => {
       const result = FaultSummaryCatHomeTestHelper.getDrivingFaultsCatHomeTest(catHTestDataStateObject);
       let faultCount = 0;
       result.map(fault => faultCount = faultCount + fault.faultCount);
       expect(faultCount).toEqual(0);
     });
-    it(`should return 4 driving fault count for category K`, () => {
+    it('should return 4 driving fault count for category K', () => {
       const result = FaultSummaryCatHomeTestHelper.getDrivingFaultsCatHomeTest(catKTestDataStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -75,7 +75,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
   });
 
   describe('getDrivingFaultsCatHomeTest (Including VehicleChecks)', () => {
-    it(`should return 3 driving fault count for category F`, () => {
+    it('should return 3 driving fault count for category F', () => {
       const result = FaultSummaryCatHomeTestHelper.getDrivingFaultsCatHomeTest(catFTestDataVCStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -88,7 +88,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('vehicleChecks');
     });
 
-    it(`should return 6 driving fault count for category G`, () => {
+    it('should return 6 driving fault count for category G', () => {
       const result = FaultSummaryCatHomeTestHelper.getDrivingFaultsCatHomeTest(catGTestDataVCStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -102,7 +102,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('vehicleChecks');
     });
 
-    it(`should return 1 driving fault count for category H`, () => {
+    it('should return 1 driving fault count for category H', () => {
       const result = FaultSummaryCatHomeTestHelper.getDrivingFaultsCatHomeTest(catHTestDataVCStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -112,7 +112,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults.length).toBe(1);
       expect(competenciesWithFaults).toContain('vehicleChecks');
     });
-    it(`should return 5 driving fault count for category K`, () => {
+    it('should return 5 driving fault count for category K', () => {
       const result = FaultSummaryCatHomeTestHelper.getDrivingFaultsCatHomeTest(catKTestDataVCStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -128,7 +128,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
   });
 
   describe('getSeriousFaultsCatHomeTest (No VehicleChecks)', () => {
-    it(`should return 2 serious fault count for category F`, () => {
+    it('should return 2 serious fault count for category F', () => {
       const result = FaultSummaryCatHomeTestHelper.getSeriousFaultsCatHomeTest(catFTestDataStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -140,7 +140,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('pedestrianCrossings');
     });
 
-    it(`should return 5 serious fault count for category G`, () => {
+    it('should return 5 serious fault count for category G', () => {
       const result = FaultSummaryCatHomeTestHelper.getSeriousFaultsCatHomeTest(catGTestDataStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -155,7 +155,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('reverseLeftControl');
     });
 
-    it(`should return 2 serious fault count for category H`, () => {
+    it('should return 2 serious fault count for category H', () => {
       const result = FaultSummaryCatHomeTestHelper.getSeriousFaultsCatHomeTest(catHTestDataStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -167,7 +167,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('controlledStop');
 
     });
-    it(`should return 0 serious fault count for category K`, () => {
+    it('should return 0 serious fault count for category K', () => {
       const result = FaultSummaryCatHomeTestHelper.getSeriousFaultsCatHomeTest(catKTestDataStateObject);
       let faultCount = 0;
       result.map(fault => faultCount = faultCount + fault.faultCount);
@@ -177,7 +177,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
   });
 
   describe('getSeriousFaultsCatHomeTest (Including VehicleChecks)', () => {
-    it(`should return 2 serious fault count for category F`, () => {
+    it('should return 2 serious fault count for category F', () => {
       const result = FaultSummaryCatHomeTestHelper.getSeriousFaultsCatHomeTest(catFTestDataVCStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -189,7 +189,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('pedestrianCrossings');
     });
 
-    it(`should return 5 serious fault count for category G`, () => {
+    it('should return 5 serious fault count for category G', () => {
       const result = FaultSummaryCatHomeTestHelper.getSeriousFaultsCatHomeTest(catGTestDataVCStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -204,7 +204,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('reverseLeftControl');
     });
 
-    it(`should return 1 serious fault count for category H`, () => {
+    it('should return 1 serious fault count for category H', () => {
       const result = FaultSummaryCatHomeTestHelper.getSeriousFaultsCatHomeTest(catHTestDataVCStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -214,7 +214,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults.length).toBe(1);
       expect(competenciesWithFaults).toContain('awarenessPlanning');
     });
-    it(`should return 0 serious fault count for category K`, () => {
+    it('should return 0 serious fault count for category K', () => {
       const result = FaultSummaryCatHomeTestHelper.getSeriousFaultsCatHomeTest(catKTestDataVCStateObject);
       let faultCount = 0;
       result.map(fault => faultCount = faultCount + fault.faultCount);
@@ -223,7 +223,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
   });
 
   describe('getDangerousFaultsCatHomeTest (No VehicleChecks)', () => {
-    it(`should return 2 dangerous fault count for category F`, () => {
+    it('should return 2 dangerous fault count for category F', () => {
       const result = FaultSummaryCatHomeTestHelper.getDangerousFaultsCatHomeTest(catFTestDataStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -235,7 +235,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('ancillaryControls');
     });
 
-    it(`should return 5 dangerous fault count for category G`, () => {
+    it('should return 5 dangerous fault count for category G', () => {
       const result = FaultSummaryCatHomeTestHelper.getDangerousFaultsCatHomeTest(catGTestDataStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -250,7 +250,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('controlledStop');
     });
 
-    it(`should return 2 dangerous fault count for category H`, () => {
+    it('should return 2 dangerous fault count for category H', () => {
       const result = FaultSummaryCatHomeTestHelper.getDangerousFaultsCatHomeTest(catHTestDataStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -262,7 +262,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('reverseLeftControl');
 
     });
-    it(`should return 0 dangerous fault count for category K`, () => {
+    it('should return 0 dangerous fault count for category K', () => {
       const result = FaultSummaryCatHomeTestHelper.getDangerousFaultsCatHomeTest(catKTestDataStateObject);
       let faultCount = 0;
       result.map(fault => faultCount = faultCount + fault.faultCount);
@@ -271,7 +271,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
   });
 
   describe('getDangerousFaultsCatHomeTest (Including VehicleChecks)', () => {
-    it(`should return 2 dangerous fault count for category F`, () => {
+    it('should return 2 dangerous fault count for category F', () => {
       const result = FaultSummaryCatHomeTestHelper.getDangerousFaultsCatHomeTest(catFTestDataVCStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -283,7 +283,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('ancillaryControls');
     });
 
-    it(`should return 4 dangerous fault count for category G`, () => {
+    it('should return 4 dangerous fault count for category G', () => {
       const result = FaultSummaryCatHomeTestHelper.getDangerousFaultsCatHomeTest(catGTestDataVCStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -297,7 +297,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('awarenessPlanning');
     });
 
-    it(`should return 2 dangerous fault count for category H`, () => {
+    it('should return 2 dangerous fault count for category H', () => {
       const result = FaultSummaryCatHomeTestHelper.getDangerousFaultsCatHomeTest(catHTestDataVCStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
@@ -308,7 +308,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('useOfSpeed');
       expect(competenciesWithFaults).toContain('reverseLeftControl');
     });
-    it(`should return 0 dangerous fault count for category K`, () => {
+    it('should return 0 dangerous fault count for category K', () => {
       const result = FaultSummaryCatHomeTestHelper.getDangerousFaultsCatHomeTest(catKTestDataVCStateObject);
       let faultCount = 0;
       result.map(fault => faultCount = faultCount + fault.faultCount);

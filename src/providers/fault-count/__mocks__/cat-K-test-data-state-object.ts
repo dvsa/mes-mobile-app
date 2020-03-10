@@ -48,6 +48,7 @@ export const catKTestDataVCStateObject: CatKUniqueTypes.TestData = {
     adviceGivenControl: false,
     adviceGivenPlanning: false,
   },
+  controlledStop: {},
   vehicleChecks: {
     tellMeQuestions: [{
       code: 'string',
@@ -62,7 +63,7 @@ export const catKTestDataVCStateObject: CatKUniqueTypes.TestData = {
   },
 };
 
-export const vehicleChecksNoFaults = {
+export const vehicleChecksNoFaults: CatKUniqueTypes.VehicleChecks = {
   tellMeQuestions: [{
     code: 'string',
     description: 'string',
@@ -75,7 +76,7 @@ export const vehicleChecksNoFaults = {
   }] as QuestionResult[],
 };
 
-export const vehicleChecksTwoFaults = {
+export const vehicleChecksTwoFaults: CatKUniqueTypes.VehicleChecks = {
   tellMeQuestions: [{
     code: 'string',
     description: 'string',

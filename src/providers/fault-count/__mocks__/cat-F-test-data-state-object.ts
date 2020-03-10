@@ -85,7 +85,7 @@ export const catFTestDataVCStateObject: CatFUniqueTypes.TestData = {
     }] as QuestionResult[],
   },
 };
-export const vehicleChecksNoFaults:CatFUniqueTypes.VehicleChecks = {
+export const vehicleChecksNoFaults: CatFUniqueTypes.VehicleChecks = {
   tellMeQuestions: [{
     code: 'string',
     description: 'string',
@@ -98,7 +98,7 @@ export const vehicleChecksNoFaults:CatFUniqueTypes.VehicleChecks = {
   }] as QuestionResult[],
 };
 
-export const vehicleChecksTwoFaults:CatFUniqueTypes.VehicleChecks = {
+export const vehicleChecksTwoFaults: CatFUniqueTypes.VehicleChecks = {
   tellMeQuestions: [{
     code: 'string',
     description: 'string',
