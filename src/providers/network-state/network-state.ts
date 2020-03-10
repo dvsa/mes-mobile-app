@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Network } from '@ionic-native/network';
 import { Platform } from 'ionic-angular';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export enum ConnectionStatus {
   ONLINE = 0,

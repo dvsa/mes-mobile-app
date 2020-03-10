@@ -2,7 +2,7 @@ import { FakeJournalEffects } from '../fake-journal.effects';
 import * as fakeJournalActions from '../fake-journal.actions';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { TestBed, async } from '@angular/core/testing';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { provideMockActions } from '@ngrx/effects/testing';

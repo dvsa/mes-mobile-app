@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { getIncompleteTestsCount } from './incomplete-tests-banner.selector';
 import { SlotProvider } from '../../../providers/slot/slot';
 import { DateTime } from '../../../shared/helpers/date-time';

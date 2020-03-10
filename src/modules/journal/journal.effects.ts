@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, catchError, startWith, tap, concatMap }
   from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import { interval } from 'rxjs/observable/interval';
+import { of, interval } from 'rxjs';
 
 import { groupBy } from 'lodash';
 

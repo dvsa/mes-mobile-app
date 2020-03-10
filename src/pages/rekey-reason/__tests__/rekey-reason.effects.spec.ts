@@ -1,5 +1,5 @@
 import { RekeyReasonEffects } from '../rekey-reason.effects';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject ,  defer } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as testActions  from '../../../modules/tests/tests.actions';
@@ -14,7 +14,6 @@ import { FindUserProviderMock } from '../../../providers/find-user/__mocks__/fin
 import { SetExaminerBooked } from '../../../modules/tests/examiner-booked/examiner-booked.actions';
 import { SetExaminerConducted } from '../../../modules/tests/examiner-conducted/examiner-conducted.actions';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { defer } from 'rxjs/observable/defer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 

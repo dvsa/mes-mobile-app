@@ -4,8 +4,7 @@ import {
   NavParams, Platform, Refresher, ModalController,
 } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { BasePageComponent } from '../../shared/classes/base-page';
@@ -20,7 +19,6 @@ import { getJournalState } from './../../modules/journal/journal.reducer';
 import { MesError } from '../../shared/models/mes-error.model';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
 import { SlotComponent } from '../../components/test-slot/slot/slot';
-import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber } from '../../modules/app-info/app-info.selector';

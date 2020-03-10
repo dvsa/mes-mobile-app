@@ -5,7 +5,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { CAT_B } from '../../page-names.constants';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
   getCurrentTest,

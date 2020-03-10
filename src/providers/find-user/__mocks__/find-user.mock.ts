@@ -1,6 +1,6 @@
 
 import { Observable } from 'rxjs/observable';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 
 export class FindUserProviderMock {
   constructor(

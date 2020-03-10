@@ -4,7 +4,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable, merge, Subscription } from 'rxjs';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   VehicleRegistrationChanged,
@@ -47,8 +47,6 @@ import { VehicleChecksCatCComponent } from './components/vehicle-checks/vehicle-
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
-import { merge } from 'rxjs/observable/merge';
-import { Subscription } from 'rxjs/Subscription';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;

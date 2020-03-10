@@ -24,7 +24,7 @@ import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { WaitingRoomValidationError } from '../../waiting-room.actions';
 import { TranslateModule, TranslateService } from 'ng2-translate';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import * as communicationPreferenceActions
   from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
@@ -39,7 +39,6 @@ import { ConductedLanguageComponent } from '../../components/conducted-language/
 import { InsuranceDeclarationComponent } from '../../components/insurance-declaration/insurance-declaration';
 import { ResidencyDeclarationComponent } from '../../components/residency-declaration/residency-declaration';
 import { SignatureComponent } from '../../components/signature/signature';
-import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';
 import { LockScreenIndicator } from '../../../../components/common/screen-lock-indicator/lock-screen-indicator';
 import { CandidateSectionComponent } from '../../../../components/common/candidate-section/candidate-section';
@@ -65,7 +64,6 @@ describe('WaitingRoomCatBEPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         WaitingRoomCatBEPage,
-        MockComponent(PracticeModeBanner),
         MockComponent(EndTestLinkComponent),
         MockComponent(LockScreenIndicator),
         MockComponent(CandidateSectionComponent),

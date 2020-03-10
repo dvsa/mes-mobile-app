@@ -6,7 +6,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomActions from '../waiting-room.actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable, merge, Subscription } from 'rxjs';
 import {
    getPreTestDeclarations,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
@@ -26,8 +26,6 @@ import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.sel
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { TranslateService } from 'ng2-translate';
-import { merge } from 'rxjs/observable/merge';
-import { Subscription } from 'rxjs/Subscription';
 import {
   getTestSlotAttributes,
 } from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';

@@ -19,11 +19,19 @@ import {
   CIRCUIT_TYPE_CHANGED,
   CircuitTypeChanged,
 } from '../../modules/tests/test-summary/cat-a-mod1/test-summary.cat-a-mod1.actions';
+import {
+  MODE_OF_TRANSPORT_CHANGED,
+  ModeOfTransportChanged,
+} from '../../modules/tests/test-summary/cat-a-mod2/test-summary.cat-a-mod2.actions';
+import {
+  INDEPENDENT_DRIVING_TYPE_CHANGED,
+  IndependentDrivingTypeChanged,
+} from '../../modules/tests/test-summary/common/test-summary.actions';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest, isPassed, getJournalData } from '../../modules/tests/tests.selector';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
@@ -231,6 +239,58 @@ export class OfficeAnalyticsEffects {
         formatAnalyticsText(AnalyticsEventCategories.OFFICE, tests),
         formatAnalyticsText(AnalyticsEvents.CIRCUIT_CHANGED, tests),
         `Circuit type ${action.circuitType} selected`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  setIndependentDrivingType$ = this.actions$.pipe(
+    ofType(INDEPENDENT_DRIVING_TYPE_CHANGED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestCategory),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, category]: [IndependentDrivingTypeChanged, TestsModel, CategoryCode]) => {
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.OFFICE, tests),
+        formatAnalyticsText(AnalyticsEvents.INDEPENDENT_DRIVING_TYPE_CHANGED, tests),
+        `${action.drivingType} selected`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  setModeOfTransport$ = this.actions$.pipe(
+    ofType(MODE_OF_TRANSPORT_CHANGED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestCategory),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, category]: [ModeOfTransportChanged, TestsModel, CategoryCode]) => {
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.OFFICE, tests),
+        formatAnalyticsText(AnalyticsEvents.MODE_OF_TRANSPORT_CHANGED, tests),
+        `${action.modeOfTransport} selected`,
       );
       return of(new AnalyticRecorded());
     }),

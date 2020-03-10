@@ -15,7 +15,7 @@ import { MockComponent } from 'ng-mocks';
 import {
   EyesightFailureConfirmationComponent,
 } from '../../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { QuestionProvider } from '../../../../providers/question/question';
 import { QuestionProviderMock } from '../../../../providers/question/__mocks__/question.mock';
 import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';
@@ -27,7 +27,6 @@ import { AccompanimentCardComponent } from '../../components/accompaniment-card/
 import { AccompanimentComponent } from '../../components/accompaniment/accompaniment';
 import { EyesightTestComponent } from '../../components/eyesight-test/eyesight-test';
 import { EyesightTestReset } from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
-import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
@@ -51,7 +50,6 @@ describe('WaitingRoomToCarCatBEPage', () => {
         MockComponent(VehicleDetailsComponent),
         MockComponent(AccompanimentCardComponent),
         MockComponent(AccompanimentComponent),
-        MockComponent(PracticeModeBanner),
         MockComponent(VehicleChecksCatBEComponent),
         MockComponent(WarningBannerComponent),
       ],

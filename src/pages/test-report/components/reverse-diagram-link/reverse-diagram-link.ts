@@ -7,7 +7,7 @@ import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
 import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { REVERSE_DIAGRAM_PAGE } from '../../../page-names.constants';
 import {
   ReverseDiagramClosed,

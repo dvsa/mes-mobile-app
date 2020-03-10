@@ -1,6 +1,6 @@
 import { RekeyUploadOutcomeAnalyticsEffects } from '../rekey-upload-outcome.analytics.effects';
 import { async, TestBed } from '@angular/core/testing';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as rekeyUploadedActions from '../rekey-upload-outcome.actions';

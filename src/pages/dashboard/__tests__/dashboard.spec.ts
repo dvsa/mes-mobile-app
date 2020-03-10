@@ -15,7 +15,7 @@ import { DashboardPage } from '../dashboard';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { Store, StoreModule } from '@ngrx/store';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { StoreModel } from '../../../shared/models/store.model';
 import { By } from '@angular/platform-browser';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';

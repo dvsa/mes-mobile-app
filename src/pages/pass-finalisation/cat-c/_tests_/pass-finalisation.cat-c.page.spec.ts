@@ -36,7 +36,7 @@ import { TransmissionComponent } from '../../../../components/common/transmissio
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
-import { Code78Component } from '../components/code-78/code-78';
+import { Code78Component } from '../../components/code-78/code-78';
 import { TransmissionType } from '../../../../shared/models/transmission-type';
 import { configureTestSuite } from 'ng-bullet';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';

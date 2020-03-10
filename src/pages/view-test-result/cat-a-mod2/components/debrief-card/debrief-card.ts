@@ -2,14 +2,12 @@ import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
 import { flattenArray } from '../../../view-test-result-helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-// todo: PREP-AMOD2 change to CatAMod2UniqueTypes when schema changes are ready
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CategoryCode, TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import {
   DataRowListItem,
   ViewTestResultLabels,
   TestRequirementsLabels,
 } from '../../../components/data-row-with-list/data-list-with-row.model';
-import { manoeuvreTypeLabels } from '../../../../../shared/constants/competencies/catbe-manoeuvres';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { FaultSummaryProvider } from '../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
@@ -22,8 +20,10 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 export class DebriefCardComponent {
 
   @Input()
-  // todo: PREP-AMOD2 change to CatAMod2UniqueTypes when schema changes are ready
-  data: CatBEUniqueTypes.TestData;
+  data: TestData;
+
+  @Input()
+  category: CategoryCode;
 
   constructor(
     private faultSummaryProvider: FaultSummaryProvider,
@@ -41,27 +41,14 @@ export class DebriefCardComponent {
         checked: get(this.data, 'testRequirements.normalStart2', false),
       },
       {
-        label: TestRequirementsLabels.uphillStart,
-        checked: get(this.data, 'testRequirements.uphillStart', false),
+        label: TestRequirementsLabels.hillStart,
+        checked: get(this.data, 'testRequirements.hillStart', false),
       },
       {
-        label: TestRequirementsLabels.downhillStart,
-        checked: get(this.data, 'testRequirements.downhillStart', false),
-      },
-      {
-        label: TestRequirementsLabels.angledStartControlledStop,
-        checked: get(this.data, 'testRequirements.angledStartControlledStop', false),
-      },
-      {
-        label: TestRequirementsLabels.uncoupleRecouple,
-        checked: get(this.data, 'uncoupleRecouple.selected', false),
+        label: TestRequirementsLabels.angledStart,
+        checked: get(this.data, 'testRequirements.angledStart', false),
       },
     ];
-  }
-
-  public getManoeuvre(): string {
-    const isReverseLeftSelected = get(this.data, 'manoeuvres.reverseLeft.selected', false);
-    return isReverseLeftSelected ? manoeuvreTypeLabels.reverseLeft : 'None' ;
   }
 
   public getEco(): DataRowListItem[] {
@@ -78,41 +65,37 @@ export class DebriefCardComponent {
   }
 
   public getDrivingFaults(): FaultSummary[] {
-    return this.faultSummaryProvider.getDrivingFaultsList(this.data, TestCategory.BE);
+    return this.faultSummaryProvider.getDrivingFaultsList(this.data, this.category as TestCategory);
   }
 
   public getSeriousFaults(): FaultSummary[] {
-    return this.faultSummaryProvider.getSeriousFaultsList(this.data, TestCategory.BE);
+    return this.faultSummaryProvider.getSeriousFaultsList(this.data, this.category as TestCategory);
   }
 
   public getDangerousFaults(): FaultSummary[] {
-    return this.faultSummaryProvider.getDangerousFaultsList(this.data, TestCategory.BE);
+    return this.faultSummaryProvider.getDangerousFaultsList(this.data, this.category as TestCategory);
   }
 
   public getDrivingFaultCount(): number {
-    return this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, this.data);
+    return this.faultCountProvider.getDrivingFaultSumCount(this.category as TestCategory, this.data);
   }
 
   public getETA(): string {
     const eta: string[] = [];
-
-    if (get(this.data, 'ETA.physical')) {
-      eta.push('Physical');
-    }
     if (get(this.data, 'ETA.verbal')) {
       eta.push('Verbal');
     }
     if (eta.length === 0) {
       eta.push('None');
     }
-    return   flattenArray(eta);
+    return flattenArray(eta);
   }
 
-  public getShowMeQuestions(): QuestionResult[] {
-    return get(this.data, 'vehicleChecks.showMeQuestions', []);
+  public getSafetyQuestions(): QuestionResult[] {
+    return get(this.data, 'safetyAndBalanceQuestions.safetyQuestions', []);
   }
 
-  public getTellMeQuestions(): QuestionResult[] {
-    return get(this.data, 'vehicleChecks.tellMeQuestions', []);
+  public getBalanceQuestions(): QuestionResult[] {
+    return get(this.data, 'safetyAndBalanceQuestions.balanceQuestions', []);
   }
 }

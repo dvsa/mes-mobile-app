@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { map, withLatestFrom, concatMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { StoreModel } from '../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from './../tests.reducer';

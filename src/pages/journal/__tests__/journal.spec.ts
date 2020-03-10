@@ -17,7 +17,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { StoreModule, Store } from '@ngrx/store';
 import { journalReducer } from '../../../modules/journal/journal.reducer';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { SlotSelectorProvider } from '../../../providers/slot-selector/slot-selector';
 import { MockedJournalModule } from '../../../modules/journal/__mocks__/journal.module.mock';
 import { UnloadJournal, LoadJournal, LoadJournalSuccess } from '../../../modules/journal/journal.actions';

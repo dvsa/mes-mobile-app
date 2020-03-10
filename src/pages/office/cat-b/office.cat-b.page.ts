@@ -17,7 +17,7 @@ import {
   SavingWriteUpForLater,
   OfficeValidationError,
 } from '../office.actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
@@ -93,7 +93,7 @@ import {
 } from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import {
   AddControlledStopComment,
-} from '../../../modules/tests/test-data/cat-b/controlled-stop/controlled-stop.actions';
+} from '../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';

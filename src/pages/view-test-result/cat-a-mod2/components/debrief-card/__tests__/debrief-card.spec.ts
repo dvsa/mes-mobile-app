@@ -20,17 +20,15 @@ import { FaultsDataRowComponent } from '../../../../components/faults-data-row/f
 import { VehicleChecksDataRowComponent } from '../../../../components/vehicle-checks-data-row/vehicle-checks-data-row';
 import { FaultSummaryProvider } from '../../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
-// todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import {
   DataRowListItem,
   TestRequirementsLabels,
   ViewTestResultLabels,
 } from '../../../../components/data-row-with-list/data-list-with-row.model';
-// todo: PREP-AMOD2 change to manoeuvreTypeLabels from Cat A Mod 2
-import { manoeuvreTypeLabels } from '../../../../../../shared/constants/competencies/catbe-manoeuvres';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('DebriefCardComponent', () => {
   let fixture: ComponentFixture<DebriefCardComponent>;
@@ -68,68 +66,35 @@ describe('DebriefCardComponent', () => {
     component = fixture.componentInstance;
     faultSummaryProvider = TestBed.get(FaultSummaryProvider);
     faultCountProvider = TestBed.get(FaultCountProvider);
+    component.category = TestCategory.EUAM2;
   }));
 
   describe('Class', () => {
     describe('getTestRequirements', () => {
       it('should return the correct values for all test requirements', () => {
-        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
-        const data: CatBEUniqueTypes.TestData = {
+        const data: TestData = {
           testRequirements: {
-            angledStartControlledStop: true,
-            downhillStart: false,
             normalStart1: true,
             normalStart2: false,
+            hillStart: false,
+            angledStart: true,
           },
         };
         component.data = data;
         fixture.detectChanges();
         const result: DataRowListItem[] = component.getTestRequirements();
 
-        expect(result.length).toEqual(6);
+        expect(result.length).toEqual(4);
         expect(result).toContain({ label: TestRequirementsLabels.normalStart1, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.normalStart2, checked: false });
-        expect(result).toContain({ label: TestRequirementsLabels.uphillStart, checked: false });
-        expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
-        expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
-        expect(result).toContain({ label: TestRequirementsLabels.uncoupleRecouple, checked: false });
+        expect(result).toContain({ label: TestRequirementsLabels.hillStart, checked: false });
+        expect(result).toContain({ label: TestRequirementsLabels.angledStart, checked: true });
       });
     });
-    describe('getManoeuvre', () => {
-      it('should return Reverse Left if the manoeuvre has been completed', () => {
-        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
-        const data: CatBEUniqueTypes.TestData = {
-          manoeuvres: {
-            reverseLeft: {
-              selected: true,
-            },
-          },
-        };
-        component.data = data;
-        fixture.detectChanges();
-        expect(component.getManoeuvre()).toEqual(manoeuvreTypeLabels.reverseLeft);
-      });
-      it('should return None if the manoeuvre has not been completed', () => {
-        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
-        const data: CatBEUniqueTypes.TestData = {
-          manoeuvres: {
-            reverseLeft: {
-              selected: false,
-            },
-          },
-        };
-        component.data = data;
-        fixture.detectChanges();
-        expect(component.getManoeuvre()).toEqual('None');
-      });
-      it('should return None if the data does not exist', () => {
-        expect(component.getManoeuvre()).toEqual('None');
-      });
-    });
+
     describe('getEco', () => {
       it('should return the correct data for eco', () => {
-        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
-        const data: CatBEUniqueTypes.TestData = {
+        const data: TestData = {
           eco: {
             adviceGivenControl: true,
           },
@@ -143,6 +108,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toContain({ label: ViewTestResultLabels.planning, checked: false });
       });
     });
+
     describe('getDrivingFaults', () => {
       it('should call the fault summary provider and return the result', () => {
         spyOn(faultSummaryProvider, 'getDrivingFaultsList').and.returnValue([]);
@@ -151,6 +117,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toEqual([]);
       });
     });
+
     describe('getSeriousFaults', () => {
       it('should call the fault summary provider and return the result', () => {
         spyOn(faultSummaryProvider, 'getSeriousFaultsList').and.returnValue([]);
@@ -159,6 +126,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toEqual([]);
       });
     });
+
     describe('getDangerousFaults', () => {
       it('should call the fault summary provider and return the result', () => {
         spyOn(faultSummaryProvider, 'getDangerousFaultsList').and.returnValue([]);
@@ -167,6 +135,7 @@ describe('DebriefCardComponent', () => {
         expect(result).toEqual([]);
       });
     });
+
     describe('getDrivingFaultCount', () => {
       it('should call the fault summary provider and return the result', () => {
         spyOn(faultCountProvider, 'getDrivingFaultSumCount').and.returnValue(1);
@@ -175,34 +144,10 @@ describe('DebriefCardComponent', () => {
         expect(result).toEqual(1);
       });
     });
+
     describe('getETA', () => {
-      it('should return the correct data if all eta options have been selected', () => {
-        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
-        const data: CatBEUniqueTypes.TestData = {
-          ETA: {
-            physical: true,
-            verbal: true,
-          },
-        };
-        component.data = data;
-        fixture.detectChanges();
-        expect(component.getETA()).toEqual('Physical and Verbal');
-      });
-      it('should return the correct data if only a physical eta has been selected', () => {
-        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
-        const data: CatBEUniqueTypes.TestData = {
-          ETA: {
-            physical: true,
-            verbal: false,
-          },
-        };
-        component.data = data;
-        fixture.detectChanges();
-        expect(component.getETA()).toEqual('Physical');
-      });
       it('should return the correct data if only a verbal eta has been selected', () => {
-        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
-        const data: CatBEUniqueTypes.TestData = {
+        const data: TestData = {
           ETA: {
             verbal: true,
           },
@@ -215,52 +160,68 @@ describe('DebriefCardComponent', () => {
         expect(component.getETA()).toEqual('None');
       });
     });
-    describe('getShowMeQuestions', () => {
+
+    describe('getSafetyQuestions', () => {
       it('should return an empty array if no data is present', () => {
-        expect(component.getShowMeQuestions()).toEqual([]);
+        component.data = null;
+        expect(component.getSafetyQuestions()).toEqual([]);
       });
       it('should return the correct data when present', () => {
-        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
-        const data: CatBEUniqueTypes.TestData = {
-          vehicleChecks: {
-            showMeQuestions: [
+        const data: TestData = {
+          safetyAndBalanceQuestions: {
+            safetyQuestions: [
               {
-                code: '1',
-                description: '2',
+                code: 'SQ2',
+                description: 'Horn working',
                 outcome: 'P',
+              },
+            ],
+            balanceQuestions: [
+              {
+                code: 'BQ2',
+                description: 'Carrying a passenger',
+                outcome: 'DF',
               },
             ],
           },
         };
         component.data = data;
         fixture.detectChanges();
-        const result: QuestionResult[] = component.getShowMeQuestions();
+        const result: QuestionResult[] = component.getSafetyQuestions();
         expect(result.length).toEqual(1);
-        expect(result).toContain({ code: '1', description: '2', outcome: 'P' });
+        expect(result).toContain({ code: 'SQ2', description: 'Horn working', outcome: 'P' });
       });
     });
-    describe('getTellMeQuestions', () => {
+
+    describe('getBalanceQuestions', () => {
       it('should return an empty array if no data is present', () => {
-        expect(component.getTellMeQuestions()).toEqual([]);
+        component.data = null;
+        expect(component.getBalanceQuestions()).toEqual([]);
       });
       it('should return the correct data when present', () => {
-        // todo: PREP-AMOD2 change to CatAmod2UniqueTypes when schema changes are ready
-        const data: CatBEUniqueTypes.TestData = {
-          vehicleChecks: {
-            tellMeQuestions: [
+        const data: TestData = {
+          safetyAndBalanceQuestions: {
+            safetyQuestions: [
               {
-                code: '1',
-                description: '2',
+                code: 'SQ2',
+                description: 'Horn working',
                 outcome: 'P',
+              },
+            ],
+            balanceQuestions: [
+              {
+                code: 'BQ2',
+                description: 'Carrying a passenger',
+                outcome: 'DF',
               },
             ],
           },
         };
         component.data = data;
         fixture.detectChanges();
-        const result: QuestionResult[] = component.getTellMeQuestions();
+        const result: QuestionResult[] = component.getBalanceQuestions();
         expect(result.length).toEqual(1);
-        expect(result).toContain({ code: '1', description: '2', outcome: 'P' });
+        expect(result).toContain({ code: 'BQ2', description: 'Carrying a passenger', outcome: 'DF' });
       });
     });
   });

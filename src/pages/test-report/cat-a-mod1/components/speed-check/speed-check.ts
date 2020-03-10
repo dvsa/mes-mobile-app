@@ -28,8 +28,7 @@ import {
   RemoveAvoidanceSeriousFault,
   AddAvoidanceSeriousFault,
 } from '../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
-import { Subscription } from 'rxjs/Subscription';
-import { merge } from 'rxjs/observable/merge';
+import { Subscription, merge } from 'rxjs';
 import { competencyLabels } from '../../../../../shared/constants/competencies/competencies';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 

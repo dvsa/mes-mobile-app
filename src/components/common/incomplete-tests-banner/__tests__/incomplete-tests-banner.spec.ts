@@ -3,7 +3,7 @@ import { IncompleteTestsBanner } from '../incomplete-tests-banner';
 import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';

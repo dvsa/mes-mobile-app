@@ -1,6 +1,6 @@
 import { ExaminerConductedEffects } from '../examiner-conducted.effects';
 import { SetExaminerConducted } from '../examiner-conducted.actions';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { testsReducer } from '../../tests.reducer';

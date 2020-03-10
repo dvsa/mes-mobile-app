@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { VehicleChecksModalAnalyticsEffects } from '../vehicle-checks-modal.cat-be.analytics.effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../../../shared/models/store.model';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { AnalyticsProvider } from '../../../../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../../../../providers/analytics/__mocks__/analytics.mock';

@@ -1,10 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject, Observable, EMPTY, of, defer } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { JournalEffects } from '../journal.effects';
 import { Actions } from '@ngrx/effects';
-import { Observable } from 'rxjs/Observable';
-import { empty } from 'rxjs/observable/empty';
 import { JournalProvider } from '../../../providers/journal/journal';
 import { JournalProviderMock } from '../../../providers/journal/__mocks__/journal.mock';
 import { SlotProvider } from '../../../providers/slot/slot';
@@ -18,7 +16,6 @@ import * as journalActions from '../journal.actions';
 import { JournalModel } from '../journal.model';
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
-import { of } from 'rxjs/observable/of';
 import { DataStoreProvider } from '../../../providers/data-store/data-store';
 import { DataStoreProviderMock } from '../../../providers/data-store/__mocks__/data-store.mock';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -30,12 +27,11 @@ import { LogHelper } from '../../../providers/logs/logsHelper';
 import { Device } from '@ionic-native/device';
 import { LogHelperMock } from '../../../providers/logs/__mocks__/logsHelper.mock';
 import { HttpErrorResponse } from '@angular/common/http';
-import { defer } from 'rxjs/observable/defer';
 import { configureTestSuite } from 'ng-bullet';
 
 export class TestActions extends Actions {
   constructor() {
-    super(empty());
+    super(EMPTY);
   }
 
   set stream$(source$: Observable<any>) {

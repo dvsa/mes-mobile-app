@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, Observable, merge } from 'rxjs';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../../../modules/tests/tests.reducer';
@@ -11,9 +11,7 @@ import {
   ToggleControlEco,
   TogglePlanningEco,
 } from '../../../../modules/tests/test-data/common/eco/eco.actions';
-import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
 
 interface EcoComponentState {
   completed$: Observable<boolean>;

@@ -22,11 +22,10 @@ import * as postTestDeclarationsActions
   from '../../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import * as passCompletionActions
   from '../../../../modules/tests/pass-completion/pass-completion.actions';
-import { of } from 'rxjs/observable/of';
+import { of, Subscription } from 'rxjs';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { By } from '@angular/platform-browser';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
-import { Subscription } from 'rxjs/Subscription';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { MockComponent } from 'ng-mocks';

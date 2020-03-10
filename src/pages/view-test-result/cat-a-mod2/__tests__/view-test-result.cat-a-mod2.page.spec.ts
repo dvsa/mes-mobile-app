@@ -26,8 +26,7 @@ import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
 import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
-// todo: PREP-AMOD2 chage to Cat A Mod 2 mock
-import { categoryBETestResultMock } from '../../../../shared/mocks/cat-be-test-result.mock';
+import { categoryAM2TestResultMock } from '../../../../shared/mocks/cat-a-mod2-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
 import { TestSummaryCardComponent } from '../../components/test-summary-card/test-summary-card';
@@ -109,23 +108,17 @@ describe('ViewTestResultCatAMod2Page', () => {
     });
     describe('getTestDetails', () => {
       it('should correctly generate the data', () => {
-        // todo: PREP-AMOD2 chage to Cat A Mod 2 mock
-        component.testResult = categoryBETestResultMock;
+        component.testResult = categoryAM2TestResultMock;
 
         const result: TestDetailsModel = component.getTestDetails();
 
-        expect(result.applicationReference).toBe('12345672013');
-        expect(result.category).toBe('B+E');
-        expect(result.date).toBe('Friday 5th July 2019');
-        expect(result.time).toBe('09:00');
-        expect(result.specialNeeds).toEqual(
-          [
-            'Candidate is heavily pregnant',
-            'Candidate whishes to be called a different name',
-          ]);
-        expect(result.entitlementCheck).toBe(true);
-        expect(result.slotType).toBe('Double Slot Special Needs');
-        expect(result.previousCancellations).toEqual(['Act of nature', 'DSA']);
+        expect(result.applicationReference).toBe('10123433011');
+        expect(result.category).toBe('EUAM2');
+        expect(result.date).toBe('Thursday 5th March 2020');
+        expect(result.time).toBe('10:40');
+        expect(result.entitlementCheck).toBe(false);
+        expect(result.slotType).toBe('Standard Test');
+        expect(result.previousCancellations).toEqual(['Act of nature']);
       });
       it('should return null when there is no test result', () => {
         const result: TestDetailsModel = component.getTestDetails();
@@ -134,12 +127,11 @@ describe('ViewTestResultCatAMod2Page', () => {
     });
     describe('getExaminerDetails', () => {
       it('should correctly generate the data', () => {
-        // todo: PREP-AMOD2 chage to Cat A Mod 2 mock
-        component.testResult = categoryBETestResultMock;
+        component.testResult = categoryAM2TestResultMock;
 
         const result: ExaminerDetailsModel = component.getExaminerDetails();
 
-        expect(result.staffNumber).toBe('12345678');
+        expect(result.staffNumber).toBe('10000000');
         expect(result.costCode).toBe('EXTC1');
         expect(result.testCentreName).toBe('Example Test Centre');
       });
@@ -150,14 +142,13 @@ describe('ViewTestResultCatAMod2Page', () => {
     });
     describe('getHeaderDetails', () => {
       it('should return the correct data', () => {
-        // todo: PREP-AMOD2 chage to Cat A Mod 2 mock
-        component.testResult = categoryBETestResultMock;
+        component.testResult = categoryAM2TestResultMock;
         const result: ViewTestHeaderModel = component.getHeaderDetails();
 
-        expect(result.activityCode).toBe('2');
-        expect(result.candidateName).toBe('Miss Florence Pearson');
-        expect(result.candidateDriverNumber).toBe('PEARSL6767655777BN');
-        expect(result.testOutcome).toBe(TestOutcome.Failed);
+        expect(result.activityCode).toBe('1');
+        expect(result.candidateName).toBe('Dr Fox Farrell');
+        expect(result.candidateDriverNumber).toBe('CATA123456789DO4');
+        expect(result.testOutcome).toBe(TestOutcome.Passed);
       });
       it('should return null when there is no test result', () => {
         const result: ViewTestHeaderModel = component.getHeaderDetails();
@@ -229,8 +220,7 @@ describe('ViewTestResultCatAMod2Page', () => {
     });
     it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
-      // todo: PREP-AMOD2 chage to Cat A Mod 2 mock
-      component.testResult = categoryBETestResultMock;
+      component.testResult = categoryAM2TestResultMock;
 
       fixture.detectChanges();
 
@@ -262,8 +252,7 @@ describe('ViewTestResultCatAMod2Page', () => {
   });
   it('should show rekey cards only when rekey is true', () => {
     component.isLoading = false;
-    // todo: PREP-AMOD2 chage to Cat A Mod 2 mock
-    component.testResult = categoryBETestResultMock;
+    component.testResult = categoryAM2TestResultMock;
 
     fixture.detectChanges();
 

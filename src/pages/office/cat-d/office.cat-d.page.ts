@@ -17,9 +17,7 @@ import {
   SavingWriteUpForLater,
   OfficeValidationError,
 } from '../office.actions';
-import { Observable } from 'rxjs/Observable';
-import { merge } from 'rxjs/observable/merge';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, merge, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,

@@ -1,4 +1,4 @@
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 export class TestSubmissionProviderMock {

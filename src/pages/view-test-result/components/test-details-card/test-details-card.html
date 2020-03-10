@@ -25,8 +25,8 @@
         [shouldShowIndicator]="true">
       </data-row>
       <data-row-custom [label]="'Additional information'">
-          <div class="mes-data" *ngIf="data.previousCancellations.length === 0">None</div>
-        <div class="mes-data" *ngIf="data.previousCancellations.length > 0">Previous cancellations</div>
+          <div class="mes-data" *ngIf="data.previousCancellations.length === 0">- None</div>
+        <div class="mes-data" *ngIf="data.previousCancellations.length > 0">- Previous cancellations</div>
         <div *ngFor="let previousCancellation of data.previousCancellations" class="mes-data">
           - {{previousCancellation}}
         </div>

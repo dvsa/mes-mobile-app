@@ -7,8 +7,8 @@ import * as nonPassFinalisationActions from './non-pass-finalisation.actions';
 import * as vehicleDetailsActions from '../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import * as testSummaryActions from '../../modules/tests/test-summary/common/test-summary.actions';
 import * as commsActions from '../../modules/tests/communication-preferences/communication-preferences.actions';
-import { of } from 'rxjs/observable/of';
-import { withLatestFrom } from 'rxjs/operators/withLatestFrom';
+import { of } from 'rxjs';
+import { withLatestFrom, switchMap, concatMap } from 'rxjs/operators';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { AnalyticRecorded, AnalyticNotRecorded } from '../../providers/analytics/analytics.actions';
 import { TestsModel } from '../../modules/tests/tests.model';
@@ -19,7 +19,6 @@ import {
   AnalyticsEventCategories,
   AnalyticsEvents,
 } from '../../providers/analytics/analytics.model';
-import { switchMap, concatMap } from 'rxjs/operators';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { getActivityCode } from '../../modules/tests/activity-code/activity-code.reducer';

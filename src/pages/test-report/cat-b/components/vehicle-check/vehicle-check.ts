@@ -7,7 +7,7 @@ import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-d
 import { getVehicleChecks } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, merge, Observable } from 'rxjs';
 import {
   ShowMeQuestionSeriousFault,
   ShowMeQuestionDangerousFault,
@@ -19,9 +19,7 @@ import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode
 import { getTestReportState } from '../../../test-report.reducer';
 import { isSeriousMode, isDangerousMode, isRemoveFaultMode } from '../../../test-report.selector';
 import { map } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
 import { isEmpty } from 'lodash';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'vehicle-check',
