@@ -184,7 +184,7 @@ describe('ViewTestResultCatAMod2Page', () => {
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).toBeNull();
       expect(
-        fixture.debugElement.query(By.css('vehicle-details-card')),
+        fixture.debugElement.query(By.css('vehicle-details-card-cat-a')),
       ).toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).toBeNull();
       expect(
@@ -212,7 +212,7 @@ describe('ViewTestResultCatAMod2Page', () => {
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).toBeNull();
       expect(
-        fixture.debugElement.query(By.css('vehicle-details-card')),
+        fixture.debugElement.query(By.css('vehicle-details-card-cat-a')),
       ).toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).toBeNull();
       expect(

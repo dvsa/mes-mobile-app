@@ -193,6 +193,9 @@ describe('ViewTestResultCatAMod1Page', () => {
       expect(
         fixture.debugElement.query(By.css('test-summary-card')),
       ).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('vehicle-details-card-cat-a')),
+      ).toBeNull();
     });
     it('should hide the cards and show the error message when there has been an error', () => {
       component.isLoading = false;
@@ -217,6 +220,9 @@ describe('ViewTestResultCatAMod1Page', () => {
       expect(fixture.debugElement.query(By.css('debrief-card'))).toBeNull();
       expect(
         fixture.debugElement.query(By.css('test-summary-card')),
+      ).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('vehicle-details-card-cat-a')),
       ).toBeNull();
     });
     it('should show the cards when the data is not loading and there is no error', () => {
