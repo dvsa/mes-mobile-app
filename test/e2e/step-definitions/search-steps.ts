@@ -10,7 +10,7 @@ When('I click search completed tests', () => {
   SearchPage.clickSearchForCompletedTestsButton();
 });
 
-When('I search for a completed test with the applicat;ion reference of {string}', (searchTerm) => {
+When('I search for a completed test with the application reference of {string}', (searchTerm) => {
   SearchPage.enterSearchTerm(searchTerm)
   SearchPage.clickSearchButton();
 });
