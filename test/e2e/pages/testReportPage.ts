@@ -90,6 +90,12 @@ class TestReportPage extends Page {
     this.longPressButton(element);
   }
 
+  longPressElementByClassName(className) {
+    const element = this.getElementByClassName(className);
+    this.waitForPresenceOfElement(element);
+    this.longPressButton(element);
+  }
+
   completeUncoupleRecouple() {
     this.longPressElementByXPath('//competency-button[contains(@class, "uncouple-recouple-tick")]');
   }
@@ -239,6 +245,11 @@ class TestReportPage extends Page {
     this.clickElementByXPath('//button/span[text() = "Terminate test"]');
   }
 
+  endAndTerminateTest() {
+    this.clickEndTestButton();
+    this.clickTerminateTestButton();
+  }
+
   clickReturnToTestButton() {
     this.clickElementByXPath('//div/legal-requirements-modal//modal-return-button//span');
   }
@@ -257,6 +268,22 @@ class TestReportPage extends Page {
 
   openReversingDiagramModal() {
     this.clickElementByXPath('//*[@id="reverse-diagram-link"]/span');
+  }
+
+  clickContinueToDebriefbutton() {
+    this.clickElementByXPath('//button[span[h3[text() = "Continue to debrief"]]]');
+  }
+
+  getDrivingFaults(driverBadge) {
+    return driverBadge.getAttribute('ng-reflect-count');
+  }
+
+  addShowMeTellMeDriverFault() {
+    this.longPressElementByClassName('vehicle-check-competency');
+  }
+
+  addControlledStopDriverFault() {
+    this.longPressElementByClassName('controlled-stop-competency');
   }
 }
 export default new TestReportPage();

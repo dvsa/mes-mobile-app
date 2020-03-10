@@ -1,6 +1,4 @@
 import { Then, When, Before } from 'cucumber';
-import { by } from 'protractor';
-import TempPage from '../pages/tempPage';
 import TestReportPage from '../pages/testReportPage';
 
 const chai = require('chai');
@@ -35,15 +33,11 @@ When('I end the test', () => {
 });
 
 When('I continue to debrief', () => {
-  const continueToDebriefButton = TempPage.getAndAwaitElement(
-    by.xpath('//button[span[h3[text() = "Continue to debrief"]]]'));
-  TempPage.clickElement(continueToDebriefButton);
+  TestReportPage.clickContinueToDebriefbutton();
 });
 
 When('I end and terminate the test', () => {
-  TestReportPage.clickEndTestButton();
-  const terminateTestButton = TempPage.getAndAwaitElement(by.xpath('//button[span[text() = "Terminate test"]]'));
-  TempPage.clickElement(terminateTestButton);
+  TestReportPage.endAndTerminateTest();
 });
 
 When('I complete the test', () => {
@@ -77,11 +71,11 @@ When('I complete the test with controlled stop', () => {
 });
 
 When('I add a Show me / Tell me driver fault', () => {
-  TestReportPage.longPressButton(TempPage.getAndAwaitElement(by.className('vehicle-check-competency')));
+  TestReportPage.addShowMeTellMeDriverFault();
 });
 
 When('I add a Controlled Stop driver fault', () => {
-  TestReportPage.longPressButton(TempPage.getAndAwaitElement(by.className('controlled-stop-competency')));
+  TestReportPage.addControlledStopDriverFault();
 });
 
 When('I add a {string} driver fault', (competency) => {
@@ -100,7 +94,7 @@ When('I add a {string} serious fault with a long press', (competency: string) =>
 
 Then('the competency {string} driver fault count is not displayed', (competency: string) => {
   const driverBadge = TestReportPage.getDriverBadge(competency);
-  expect(driverBadge.getAttribute('ng-reflect-count')).to.eventually.equal(null);
+  expect(TestReportPage.getDrivingFaults(driverBadge)).to.eventually.equal(null);
 });
 
 When('I add an ETA with type {string}', (etaType: 'Verbal' | 'Physical') => {
@@ -181,8 +175,7 @@ When('I remove a serious fault for {string} with a long press', (competency: str
 
 When('I add a manoeuvre', () => {
   TestReportPage.clickManoeuvresButton();
-  const reverseRightRadio = TempPage.getAndAwaitElement(by.id('manoeuvres-reverse-right-radio'));
-  TempPage.clickElement(reverseRightRadio);
+  TestReportPage.clickReverseRightRadio();
 });
 
 When('I click the manoeuvres button', () => {
@@ -225,7 +218,7 @@ Then('the legal requirements pop up is present', () => {
 });
 
 When('the required test observation is present {string}', (legalRequirement: string) => {
-  expect(TestReportPage.getLegalRequirement(legalRequirement)).isPresent().to.eventually.be.true;
+  expect(TestReportPage.getLegalRequirement(legalRequirement).isPresent()).to.eventually.be.true;
 });
 
 Then('I return to the test report page', () =>   {
