@@ -467,8 +467,10 @@ export class OfficeCatAMod1Page extends BasePageComponent {
       switch (fieldName) {
         case Competencies.speedCheckAvoidance:
           this.store$.dispatch(new AddAvoidanceComment(seriousFaultComment.comment));
+          break;
         case Competencies.speedCheckEmergency:
           this.store$.dispatch(new AddAnEmergencyStopComment(seriousFaultComment.comment));
+          break;
       }
     }
   }
