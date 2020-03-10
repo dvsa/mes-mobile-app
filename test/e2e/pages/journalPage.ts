@@ -150,7 +150,7 @@ class JournalPage extends Page {
   }
 
   startTestFor(candidateName) {
-    this.clickElementByXPath(this.getStartTestButtonFor(candidateName));
+    this.clickElement(this.getStartTestButtonFor(candidateName));
   }
 }
 
