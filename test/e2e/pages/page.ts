@@ -31,6 +31,12 @@ export default class Page {
     this.clickElement(element);
   }
 
+  clickElementByClassName(className) {
+    const element = this.getElementByClassName(className);
+    this.waitForPresenceOfElement(element);
+    this.clickElement(element);
+  }
+
   getElementByXPath(xpath) {
     // return this.getAndAwaitElement(by.xpath(xpath));
     return element(by.xpath(xpath)); // used to stop ali campbell debrieffrom working

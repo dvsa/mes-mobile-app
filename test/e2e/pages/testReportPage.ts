@@ -140,11 +140,33 @@ class TestReportPage extends Page {
     this.longPressElementByXPath('//competency-button[contains(@class, "eco-tick")]');
   }
 
+  longPressETAButton(etaText) {
+    this.longPressElementByXPath(`//competency-button/div/div/span[text() = '${etaText}']`);
+  }
+
+  getETAModalTitle() {
+    const element = this.getElementByClassName('modal-alert-header');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  closeETAModal() {
+    this.clickElementByClassName('modal-return-button');
+  }
+
+  getDriverBadge(competency) {
+    const element = this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/driving-faults-badge`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
   getLegalRequrementsPopup() {
     const element = this.getElementByXPath('//div/legal-requirements-modal');
     this.waitForPresenceOfElement(element);
     return element;
   }
+
   getLegalRequirement(legalRequirement) {
     const element = this.getElementByXPath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`);
     this.waitForPresenceOfElement(element);
@@ -162,10 +184,26 @@ class TestReportPage extends Page {
     return element;
   }
 
-  getSeriousFaultBadge() {
+  getSeriousFaultBadgeForVehicleChecks() {
     const element = this.getElementByXPath('//vehicle-checks//serious-fault-badge//span');
     this.waitForPresenceOfElement(element);
     return element;
+  }
+
+  getSeriousFaultBadge(competency) {
+    const element =  this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getSeriousFaultBadgeByTagName(button) {
+    return button.element(by.tagName('serious-fault-badge'));
+  }
+
+  getDangerousFaultBadge(competency) {
+    return this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`);
   }
 
   getSummaryCountField() {
@@ -176,6 +214,12 @@ class TestReportPage extends Page {
 
   getControlledStopTick() {
     const element =  this.getElementByCss('.controlled-stop-tick.checked');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getReversingDiagramModalTitle() {
+    const element = this.getElementByXPath('//reverse-diagram-modal-cat-c//div[2]');
     this.waitForPresenceOfElement(element);
     return element;
   }
@@ -199,5 +243,20 @@ class TestReportPage extends Page {
     this.clickElementByXPath('//div/legal-requirements-modal//modal-return-button//span');
   }
 
+  clickDangerousButton() {
+    this.clickElementById('dangerous-button');
+  }
+
+  markDriverFault(faultName) {
+    this.longPressElementByXPath(`//manoeuvre-competency/div/span[text() = '${faultName}']`);
+  }
+
+  closeReversingDialogModal() {
+    this.clickElementByXPath('//*[@id="closeReverseDiagramModal"]/span/ion-icon');
+  }
+
+  openReversingDiagramModal() {
+    this.clickElementByXPath('//*[@id="reverse-diagram-link"]/span');
+  }
 }
 export default new TestReportPage();
