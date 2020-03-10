@@ -21,6 +21,10 @@ import * as seriousFaultsActions from '../../modules/tests/test-data/common/seri
 import * as drivingFaultsActions from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import * as controlledStopActions from '../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
 import * as activityCodeActions from '../../modules/tests/activity-code/activity-code.actions';
+import * as avoidanceActions from '../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
+import * as emergencyStopActions from '../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
+import * as singleFaultCompetenciesActions
+  from '../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
 import { TestResultProvider } from '../../providers/test-result/test-result';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import { of } from 'rxjs';
@@ -101,6 +105,18 @@ export class TestReportEffects {
       ecoActions.TOGGLE_PLANNING_ECO,
       etaActions.TOGGLE_ETA,
       testRequirementsActions.TOGGLE_LEGAL_REQUIREMENT,
+      avoidanceActions.ADD_AVOIDANCE_SERIOUS_FAULT,
+      avoidanceActions.REMOVE_AVOIDANCE_SERIOUS_FAULT,
+      avoidanceActions.RECORD_AVOIDANCE_FIRST_ATTEMPT,
+      avoidanceActions.RECORD_AVOIDANCE_SECOND_ATTEMPT,
+      emergencyStopActions.ADD_EMERGENCY_STOP_SERIOUS_FAULT,
+      emergencyStopActions.REMOVE_EMERGENCY_STOP_SERIOUS_FAULT,
+      emergencyStopActions.RECORD_EMERGENCY_STOP_FIRST_ATTEMPT,
+      emergencyStopActions.RECORD_EMERGENCY_STOP_SECOND_ATTEMPT,
+      singleFaultCompetenciesActions.SET_SINGLE_FAULT_COMPETENCY_OUTCOME,
+      singleFaultCompetenciesActions.REMOVE_SINGLE_FAULT_COMPETENCY_OUTCOME,
+      singleFaultCompetenciesActions.REMOVE_SINGLE_SERIOUS_FAULT_COMPETENCY_OUTCOME,
+      singleFaultCompetenciesActions.REMOVE_SINGLE_DANGEROUS_FAULT_COMPETENCY_OUTCOME,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
