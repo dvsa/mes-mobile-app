@@ -1,7 +1,5 @@
 import { Then, When, Before } from 'cucumber';
-import { by } from 'protractor';
 import OfficePage from '../pages/OfficePage';
-import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -67,42 +65,33 @@ When('I complete the weather conditions', () => {
 });
 
 When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel) => {
-  const commentsField = TempPage.getAndAwaitElement(by.xpath(`//fault-comment-card[@faulttype='${faultSeverity}']
-  //ion-row[ion-col/label[text() = '${faultLabel}']]//textarea`));
-
+  const commentsField = OfficePage.getCommentsField(faultSeverity, faultLabel);
   commentsField.sendKeys(`Comment for ${faultSeverity} fault: ${faultLabel}`);
 });
 
 Then('the office activity code should be {string}', (activityCode) => {
-  const activityCodeField = TempPage.getAndAwaitElement(by.xpath(`//div[contains(@class, "office-cat-${this.testCategory}-page")]`
-    + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`));
+  const activityCodeField = OfficePage.getActivityCodeField(this.testCategory);
   return expect(activityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
 Then('I have a {string} fault for {string} requiring a comment', (faultSeverity, faultLabel) => {
-  const commentsValidationText = TempPage.getAndAwaitElement(by.xpath(`//fault-comment-card[@faulttype='${faultSeverity}'
-  and //label[@class = 'fault-label' and text() = '${faultLabel}']]//div[@class='validation-text ng-invalid']`));
-
+  const commentsValidationText = OfficePage.getCommentsValidationText(faultSeverity, faultLabel);
   expect(commentsValidationText.getText()).to.eventually.equal('Provide a comment');
-
   return expect(commentsValidationText.getAttribute('class')).to.eventually.contain('ng-invalid');
 });
 
 Then('the tell me question should be {string}', (tellMeQuestion : string) => {
-  const tellMeQuestionField = TempPage.getAndAwaitElement(by.id('tell-me-question-text'));
+  const tellMeQuestionField = OfficePage.getTellMeQuestionField();
   return expect(tellMeQuestionField.getText()).to.eventually.equal(tellMeQuestion);
 });
 
 Then('the office page test outcome is {string}', (testOutcome : string) => {
-  const testOutcomeField = TempPage.getAndAwaitElement(by.xpath('//div[@id="test-outcome-text"]/span'));
+  const testOutcomeField = OfficePage.getTestOutcomeField();
   return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
 
 Then(/^there (?:is|are) \"(.+)\" driver faults? listed for \"(.+)\"$/, (faultCount : string, faultTest : string) => {
-  const driverFault = TempPage.getAndAwaitElement(by.xpath(`//ion-row[@id = 'driving-fault-commentary-label']
-  [descendant::span[@class='count' and text() = '${faultCount}'] and descendant::label[@class='fault-label'
-  and text() = '${faultTest}']]`));
-
+  const driverFault = OfficePage.getDriverFault(faultCount, faultTest);
   return expect(driverFault.isPresent()).to.eventually.be.true;
 });
 
