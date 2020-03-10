@@ -90,8 +90,12 @@ class TestReportPage extends Page {
     this.longPressButton(element);
   }
 
-  completeUncoupleRecouple () {
+  completeUncoupleRecouple() {
     this.longPressElementByXPath('//competency-button[contains(@class, "uncouple-recouple-tick")]');
+  }
+
+  addUncoupleRecoupleFault() {
+    this.longPressElementByXPath('//uncouple-recouple//competency-button/div/div[1]');
   }
 
   completeManouveure(testCategory) {
@@ -136,8 +140,44 @@ class TestReportPage extends Page {
     this.longPressElementByXPath('//competency-button[contains(@class, "eco-tick")]');
   }
 
+  getLegalRequrementsPopup() {
+    const element = this.getElementByXPath('//div/legal-requirements-modal');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+  getLegalRequirement(legalRequirement) {
+    const element = this.getElementByXPath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
   getLegalRequirements() {
     return element.all(by.xpath('//legal-requirement/competency-button[@class="legal-button"]'));
+  }
+
+  getCompetencyCountField(competency) {
+    const element = this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getSeriousFaultBadge() {
+    const element = this.getElementByXPath('//vehicle-checks//serious-fault-badge//span');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getSummaryCountField() {
+    const element = this.getElementById('summary-count');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getControlledStopTick() {
+    const element =  this.getElementByCss('.controlled-stop-tick.checked');
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   completeLegalRequirements() {
@@ -147,8 +187,16 @@ class TestReportPage extends Page {
     });
   }
 
-  endTest() {
+  clickEndTestButton() {
     this.clickElementById('end-test-button');
+  }
+
+  clickTerminateTestButton() {
+    this.clickElementByXPath('//button/span[text() = "Terminate test"]');
+  }
+
+  clickReturnToTestButton() {
+    this.clickElementByXPath('//div/legal-requirements-modal//modal-return-button//span');
   }
 
 }
