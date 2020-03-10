@@ -47,17 +47,20 @@ test-slot {
       }
     }
     &.vehicle-details-col {
-      margin-top: -6px;
-      margin-left: -100px;
+      margin-top: -10px;
       .text-zoom-large & {
-        padding-left: 110px;
+        padding-left: 20px;
       }
       .text-zoom-x-large & {
-        padding-left: 110px;
+        padding-left: 40px;
       }
     }
     &.progressive-access-col {
+      max-width: 152px;
       margin-top: -6px;
+    }
+    &.category-col {
+      flex-grow: 0;
     }
   }
   .slot-changed-indicator {

@@ -11,6 +11,7 @@ import { TestOutcomeComponent } from '../../test-outcome/test-outcome';
 import { CandidateLinkComponent } from '../../candidate-link/candidate-link';
 import { TestCategoryComponent } from '../../test-category/test-category';
 import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details';
+import { AdditionalCandidateDetailsComponent } from '../../additional-candidate-details/additional-candidate-details';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { LanguageComponent } from '../../language/language';
@@ -73,6 +74,8 @@ describe('TestSlotComponent', () => {
         primaryTelephone: '01234 567890',
         secondaryTelephone: '04321 098765',
         mobileTelephone: '07654 123456',
+        prn: 123456,
+        previousADITests: 2,
       },
       application: {
         applicationId: 1234567,
@@ -109,6 +112,7 @@ describe('TestSlotComponent', () => {
         MockComponent(TestCategoryComponent),
         MockComponent(TestOutcomeComponent),
         MockComponent(VehicleDetailsComponent),
+        MockComponent(AdditionalCandidateDetailsComponent),
         MockComponent(CandidateLinkComponent),
         MockComponent(SubmissionStatusComponent),
         MockComponent(ProgressiveAccessComponent),
@@ -184,6 +188,8 @@ describe('TestSlotComponent', () => {
       });
 
       it('should return correct value for showing vehicle details', () => {
+        component.slot.booking.application.testCategory = 'ADI2';
+        expect(component.showVehicleDetails()).toEqual(false);
         component.slot.booking.application.testCategory = 'A';
         expect(component.showVehicleDetails()).toEqual(false);
         component.slot.booking.application.testCategory = 'A1';
@@ -311,15 +317,17 @@ describe('TestSlotComponent', () => {
       });
 
       it('should pass something to sub-component vehicle-details input', () => {
+        spyOn(component, 'showVehicleDetails').and.returnValue(true);
         fixture.detectChanges();
+
         const subByDirective = fixture.debugElement.query(
           By.directive(MockComponent(VehicleDetailsComponent))).componentInstance;
+
         expect(subByDirective.height).toBe(4);
         expect(subByDirective.width).toBe(3);
         expect(subByDirective.length).toBe(2);
         expect(subByDirective.seats).toBe(5);
         expect(subByDirective.transmission).toBe('Manual');
-        expect(subByDirective.showDimensions).toBeFalsy();
         expect(subByDirective.showVehicleDetails).toBeFalsy();
       });
 

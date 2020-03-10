@@ -97,6 +97,10 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     return vehicleDetails[this.slot.booking.application.testCategory as TestCategory];
   }
 
+  showAdditionalCandidateDetails(): boolean {
+    return this.slot.booking.application.testCategory === TestCategory.ADI2;
+  }
+
   canStartTest(): boolean {
     return this.slotProvider.canStartTest(this.slot);
   }

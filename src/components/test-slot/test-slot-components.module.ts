@@ -12,9 +12,11 @@ import { TestSlotComponent } from './test-slot/test-slot';
 import { TimeComponent } from './time/time';
 import { VehicleDetailsComponent } from './vehicle-details/vehicle-details';
 import { LocationComponent } from './location/location';
+import { AdditionalCandidateDetailsComponent } from './additional-candidate-details/additional-candidate-details';
 
 @NgModule({
   declarations: [
+    AdditionalCandidateDetailsComponent,
     CandidateLinkComponent,
     IndicatorsComponent,
     LanguageComponent,
@@ -35,6 +37,7 @@ import { LocationComponent } from './location/location';
     TestSlotComponent,
   ],
   exports: [
+    AdditionalCandidateDetailsComponent,
     CandidateLinkComponent,
     IndicatorsComponent,
     LanguageComponent,

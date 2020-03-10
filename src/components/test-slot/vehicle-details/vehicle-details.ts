@@ -16,8 +16,6 @@ export class VehicleDetailsComponent {
   @Input()
   transmission: string;
   @Input()
-  showDimensions: boolean;
-  @Input()
   showNumberOfSeats: boolean;
 
   constructor() {}

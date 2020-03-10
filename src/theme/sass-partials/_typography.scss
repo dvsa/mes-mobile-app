@@ -8,17 +8,17 @@
 }
 
 .heavy-font-family {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto";
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Roboto';
   font-weight: 800;
 }
 
 .semibold-font-family {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto";
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Roboto';
   font-weight: 600;
 }
 
 .regular-font-family {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto";
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Roboto';
   font-weight: 400;
 };
 
@@ -59,7 +59,7 @@ html .text-zoom-regular {
     @extend .semibold-font-family;
     font-size: 20px;
     line-height: 26px;
-  }    
+  }
   label {
     @extend .semibold-font-family;
     font-size: 23px;
@@ -118,7 +118,7 @@ html .text-zoom-regular {
     @extend .semibold-font-family;
     font-size: 24px;
     line-height: 30px;
-  }    
+  }
   label {
     @extend .semibold-font-family;
     font-size: 24px;
@@ -178,7 +178,7 @@ html .text-zoom-regular {
     @extend .semibold-font-family;
     font-size: 28px;
     line-height: 36px;
-  }    
+  }
   label {
     @extend .semibold-font-family;
     font-size: 28px;

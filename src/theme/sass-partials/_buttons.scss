@@ -68,6 +68,7 @@
   padding: 0 0.8rem;
   margin: 0 0.2rem;
   line-height: 2.6rem;
+  z-index: 10;
   &.activated {
     background: map-get($colors-gds, gds-grey-4);
     h3,

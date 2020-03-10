@@ -7,5 +7,10 @@ h1, h2, h3, h4, h5, h6, a, a:hover, label {
 	font: inherit;
   vertical-align: baseline;
   text-decoration: none;
-  color: black;
+  color: map-get($colors-gds, 'gds-black');
+}
+
+abbr[title] {
+  border-bottom: none;
+  text-decoration: none;
 }

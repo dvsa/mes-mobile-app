@@ -38,6 +38,11 @@ export const environment: LocalEnvironmentFile = {
     enableLogoutButton: true,
     testPermissionPeriods: [
       {
+        testCategory: 'ADI2',
+        from: '2019-01-01',
+        to: null,
+      },
+      {
         testCategory: 'B',
         from: '2019-01-01',
         to: null,
