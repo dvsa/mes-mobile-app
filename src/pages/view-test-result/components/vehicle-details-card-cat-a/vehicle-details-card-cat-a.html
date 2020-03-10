@@ -1,0 +1,20 @@
+<ion-card *ngIf="!shouldHideCard()">
+  <ion-card-header>
+    <h4>Vehicle details</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <data-row [label]="'Transmission'" [value]="getTransmission()" *ngIf="getTransmission()"></data-row>
+      <data-row
+        [label]="'Vehicle registration number'"
+        [value]="getRegistrationNumber()"
+        *ngIf="getRegistrationNumber()">
+      </data-row>
+      <data-row
+        [label]="'School Bike'"
+        [value]="getSchoolBike()"
+        *ngIf="getSchoolBike()">
+      </data-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

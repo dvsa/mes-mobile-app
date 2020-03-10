@@ -14,6 +14,7 @@ import { TestSummaryCardComponent } from './test-summary-card/test-summary-card'
 import { ContactDetailsCardComponent } from './contact-details-card/contact-details-card';
 import { BusinessDetailsCardComponent } from './business-details-card/business-details-card';
 import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
+import { VehicleDetailsCardCatAComponent } from './vehicle-details-card-cat-a/vehicle-details-card-cat-a';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-deta
     ContactDetailsCardComponent,
     BusinessDetailsCardComponent,
     VehicleDetailsCardComponent,
-
+    VehicleDetailsCardCatAComponent,
   ],
   imports: [
     CommonModule,
@@ -49,6 +50,7 @@ import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-deta
     ContactDetailsCardComponent,
     BusinessDetailsCardComponent,
     VehicleDetailsCardComponent,
+    VehicleDetailsCardCatAComponent,
   ],
 })
 export class ViewTestResultComponentsModule {}
