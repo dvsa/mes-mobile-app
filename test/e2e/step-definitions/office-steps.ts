@@ -1,6 +1,6 @@
 import { Then, When, Before } from 'cucumber';
 import { by } from 'protractor';
-import { getElement, clickElement } from '../../helpers/interactionHelpers';
+import OfficePage from '../pages/OfficePage';
 import TempPage from '../pages/tempPage';
 
 const chai = require('chai');
@@ -31,39 +31,39 @@ Before({ tags: '@catc1e' }, () => {
 });
 
 When('I complete the office write up', () => {
-  enterRouteNumber('2');
+  OfficePage.enterRouteNumber('2');
   if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'ce') {
-    enterIndependentDriving('diagram');
+    OfficePage.enterIndependentDriving('diagram');
   } else {
-    enterIndependentDriving('satnav');
-    enterShowMe('S5 - Horn');
+    OfficePage.enterIndependentDriving('satnav');
+    OfficePage.enterShowMe('S5 - Horn');
   }
-  enterCandidateDescription();
-  enterWeatherConditions();
+  OfficePage.enterCandidateDescription();
+  OfficePage.enterWeatherConditions();
 });
 
 When('I complete the office write up with Not applicable to independent driving and show me question', () => {
-  enterRouteNumber('4');
-  enterIndependentDriving('na');
-  enterCandidateDescription();
-  enterShowMe('N/A - Not applicable');
-  enterWeatherConditions();
+  OfficePage.enterRouteNumber('4');
+  OfficePage.enterIndependentDriving('na');
+  OfficePage.enterCandidateDescription();
+  OfficePage.enterShowMe('N/A - Not applicable');
+  OfficePage.enterWeatherConditions();
 });
 
 When('I upload the test', () => {
-  uploadTest();
+  OfficePage.uploadTest();
 });
 
 When('I try to upload the test', () => {
-  clickUploadButton();
+  OfficePage.clickUploadButton();
 });
 
 When('I enter a candidate description', () => {
-  enterCandidateDescription();
+  OfficePage.enterCandidateDescription();
 });
 
 When('I complete the weather conditions', () => {
-  enterWeatherConditions();
+  OfficePage.enterWeatherConditions();
 });
 
 When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel) => {
@@ -107,80 +107,14 @@ Then(/^there (?:is|are) \"(.+)\" driver faults? listed for \"(.+)\"$/, (faultCou
 });
 
 When('I complete the rekey', () => {
-  completeRekey();
+  OfficePage.completeRekey(this.testCategory);
 });
 
 Then('the rekey is successfully uploaded', () => {
-  const uploadRekeyMessage = TempPage.getAndAwaitElement(by.className('modal-alert-header'));
+  const uploadRekeyMessage = OfficePage.getUploadRekeyMessage();
   return expect(uploadRekeyMessage.getText()).to.eventually.equal('Rekeyed test uploaded successfully');
 });
 
 When('I return to the journal', () => {
-  const returnToJournalButton = TempPage.getAndAwaitElement(by.xpath('//button/span/h3[text() = "Return to journal"]'));
-  TempPage.clickElement(returnToJournalButton);
+  OfficePage.clickReturnToJournalButton();
 });
-
-const clickUploadButton = () => {
-  const submitTestButton = TempPage.getAndAwaitElement(by.xpath('//button[span[h3[text() = "Upload"]]]'));
-  TempPage.clickElement(submitTestButton);
-};
-
-const uploadTest = () => {
-  clickUploadButton();
-
-  const uploadConfirmationButton = TempPage.getAndAwaitElement(by.xpath('//ion-alert//button/span[text() = "Upload"]'));
-  TempPage.clickElement(uploadConfirmationButton);
-};
-
-const completeRekey = () => {
-  const continueButton = TempPage.getAndAwaitElement(
-    by.xpath(`//div[contains(@class, "office-cat-${this.testCategory}-page")]//button//h3[text()="Continue"]`));
-  TempPage.clickElement(continueButton);
-
-  const iPadIssueCheckbox = TempPage.getAndAwaitElement(by.id('ipadIssueSelected'));
-  TempPage.clickElement(iPadIssueCheckbox);
-
-  const ipadIssueTechnicalFault = TempPage.getAndAwaitElement(by.id('ipadIssueTechnicalFault'));
-  TempPage.clickElement(ipadIssueTechnicalFault);
-
-  const uploadButton = TempPage.getAndAwaitElement(by.xpath('//button/span/h3[text() = "Upload rekeyed test"]'));
-  TempPage.clickElement(uploadButton);
-
-  const uploadConfirmationButton = TempPage.getAndAwaitElement(by.xpath('//button/span[text() = "Upload"]'));
-  TempPage.clickElement(uploadConfirmationButton);
-};
-
-const enterCandidateDescription = () => {
-  const physicalDescriptionField = TempPage.getAndAwaitElement(by.id('physical-description'));
-  physicalDescriptionField.sendKeys('Tall, slim build with dark brown hair.');
-};
-
-const enterRouteNumber = (routeNumber) => {
-  const routeField = TempPage.getAndAwaitElement(by.id('route'));
-  routeField.sendKeys(routeNumber);
-};
-
-const enterIndependentDriving = (type) => {
-  const satnavRadio = TempPage.getAndAwaitElement(by.id(`independent-driving-${type}`));
-  TempPage.clickElement(satnavRadio);
-};
-
-const enterShowMe = (value) => {
-  const showMeSelector = TempPage.getAndAwaitElement(by.id('show-me-selector'));
-  TempPage.clickElement(showMeSelector);
-  const showMeItem = TempPage.getAndAwaitElement(by.xpath(`//button/span/div[normalize-space(text()) = '${value}']`));
-  TempPage.clickElement(showMeItem);
-  const submitDialog = TempPage.getAndAwaitElement(by.xpath('//button[span[text() = "Submit"]]'));
-  TempPage.clickElement(submitDialog);
-};
-
-const enterWeatherConditions = () => {
-  const weatherSelector = TempPage.getAndAwaitElement(by.xpath('//ion-select[@formcontrolname="weatherConditions"]'));
-  TempPage.clickElement(weatherSelector);
-  const weatherItem1 = TempPage.getAndAwaitElement(by.xpath('//button/span/div[normalize-space(text()) = "2 - Bright / wet roads"]'));
-  TempPage.clickElement(weatherItem1);
-  const weatherItem2 = TempPage.getAndAwaitElement(by.xpath('//button/span/div[normalize-space(text()) = "4 - Showers"]'));
-  TempPage.clickElement(weatherItem2);
-  const submitDialog = TempPage.getAndAwaitElement(by.xpath('//button[span[text() = "Submit"]]'));
-  TempPage.clickElement(submitDialog);
-};
