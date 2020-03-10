@@ -25,6 +25,7 @@ import {
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { TestDataByCategoryProvider } from '../../../../../providers/test-data-by-category/test-data-by-category';
 
 describe('ControlledStopComponent', () => {
   let fixture: ComponentFixture<ControlledStopComponent>;
@@ -40,6 +41,9 @@ describe('ControlledStopComponent', () => {
         MockComponent(SeriousFaultBadgeComponent),
         MockComponent(DangerousFaultBadgeComponent),
         MockComponent(CompetencyButtonComponent),
+      ],
+      providers: [
+        TestDataByCategoryProvider,
       ],
       imports: [
         IonicModule,
