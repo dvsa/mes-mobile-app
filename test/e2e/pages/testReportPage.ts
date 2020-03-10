@@ -1,6 +1,5 @@
 import Page from './page';
-import TempPage from './tempPage';
-import { browser, by } from 'protractor';
+import { browser, by, element } from 'protractor';
 
 const buttonPadding = 30;
 const request = require('request');
@@ -9,7 +8,7 @@ class TestReportPage extends Page {
   /**
    * Performs the long press action on the competency to add a driver fault.
    * The long press does not appear to have been implemented so calling appiums touch perform action directly.
-   * @param driverFault The competency to apply the driver fault to
+   * @param button The button to longpress
    */
   longPressButton(button) {
     browser.getProcessedConfig().then((config) => {
@@ -80,6 +79,11 @@ class TestReportPage extends Page {
     return element;
   }
 
+  longPressCompetency (competency: string) {
+    const competencyButton = this.getCompetencyButton(competency);
+    this.longPressButton(competencyButton);
+  }
+
   longPressElementByXPath(xpath) {
     const element = this.getElementByXPath(xpath);
     this.waitForPresenceOfElement(element);
@@ -94,12 +98,58 @@ class TestReportPage extends Page {
     if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1') {
       this.longPressElementByXPath('//competency-button[contains(@class, "reverse-left-tick")]');
     } else {
-      const manoeuvresButton = TempPage.getAndAwaitElement(by.xpath('//manoeuvres/button'));
-      TempPage.clickElement(manoeuvresButton);
-      const reverseRightRadio = TempPage.getAndAwaitElement(by.id('manoeuvres-reverse-right-radio'));
-      TempPage.clickElement(reverseRightRadio);
-      TempPage.clickElement(manoeuvresButton);
+      this.clickManoeuvresButton();
+      this.clickReverseRightRadio();
+      this.clickManoeuvresButton();
     }
   }
+
+  clickReverseRightRadio() {
+    this.clickElementById('manoeuvres-reverse-right-radio');
+  }
+
+  clickManoeuvresButton() {
+    this.clickElementByXPath('//manoeuvres/button');
+  }
+
+  clickSeriousMode() {
+    this.clickElementById('serious-button');
+  }
+
+  clickRemove() {
+    this.clickElementById('remove-button');
+  }
+
+  reverseDropDown() {
+    this.clickElementByXPath('//*[@id="reverse-left-label"]');
+  }
+
+  completeControlledStop() {
+    this.longPressElementByXPath('//competency-button[contains(@class, "controlled-stop-tick")]');
+  }
+
+  completeShowMe() {
+    this.longPressElementByXPath('//competency-button[contains(@class, "show-me-question-tick")]');
+  }
+
+  completeEco() {
+    this.longPressElementByXPath('//competency-button[contains(@class, "eco-tick")]');
+  }
+
+  getLegalRequirements() {
+    return element.all(by.xpath('//legal-requirement/competency-button[@class="legal-button"]'));
+  }
+
+  completeLegalRequirements() {
+    const legalRequirements = this.getLegalRequirements();
+    legalRequirements.each((legalRequirement) => {
+      this.longPressButton(legalRequirement);
+    });
+  }
+
+  endTest() {
+    this.clickElementById('end-test-button');
+  }
+
 }
 export default new TestReportPage();
