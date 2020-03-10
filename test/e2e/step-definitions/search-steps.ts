@@ -1,6 +1,4 @@
 import { When, Then } from 'cucumber';
-import { by } from 'protractor';
-import TempPage from '../pages/tempPage';
 import SearchPage from '../pages/SearchPage';
 
 const chai = require('chai');
@@ -9,20 +7,16 @@ chai.use(chaiAsPromised);
 const expect = chai.expect;
 
 When('I click search completed tests', () => {
-  const searchForCompletedTestsBtn = TempPage.getAndAwaitElement(by.xpath('//page-dashboard//test-results-search-card//span'));
-  TempPage.clickElement(searchForCompletedTestsBtn);
+  SearchPage.clickSearchForCompletedTestsButton();
 });
 
-When('I search for a completed test with the application reference of {string}', (searchTerm) => {
-  TempPage.textFieldInputViaNativeMode(
-    '//XCUIElementTypeWindow//XCUIElementTypeTextField[@value="Enter an application reference"]', searchTerm);
-  const searchButton = TempPage.getAndAwaitElement(by.xpath('//*[@id="tab-search-candidate-details"]//ion-row[3]/button/span'));
-  TempPage.clickElement(searchButton);
+When('I search for a completed test with the applicat;ion reference of {string}', (searchTerm) => {
+  SearchPage.enterSearchTerm(searchTerm)
+  SearchPage.clickSearchButton();
 });
 
 When('the search result is clicked', () => {
-  const searchResult = TempPage.getAndAwaitElement(by.xpath('//page-test-results-search//search-result/ion-card/ion-grid/ion-row[2]'));
-  TempPage.clickElement(searchResult);
+  SearchPage.clickSearchResult(2);
 });
 
 Then('the test result outcome is {string}', (testOutcome) => {
