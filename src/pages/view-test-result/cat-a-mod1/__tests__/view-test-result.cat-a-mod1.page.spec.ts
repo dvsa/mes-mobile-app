@@ -39,6 +39,8 @@ import { ContactDetailsCardComponent } from '../../components/contact-details-ca
 import { ViewTestResultCatAMod1Page }from '../view-test-result.cat-a-mod1.page';
 import { configureTestSuite } from 'ng-bullet';
 import { categoryAM1TestResultMock } from '../../../../shared/mocks/cat-a-mod1-test-result.mock';
+import { VehicleDetailsCardCatAComponent }
+from '../../components/vehicle-details-card-cat-a/vehicle-details-card-cat-a';
 
 describe('ViewTestResultCatAMod1Page', () => {
   let fixture: ComponentFixture<ViewTestResultCatAMod1Page>;
@@ -60,6 +62,7 @@ describe('ViewTestResultCatAMod1Page', () => {
         MockComponent(ErrorMessageComponent),
         MockComponent(BusinessDetailsCardComponent),
         MockComponent(ContactDetailsCardComponent),
+        MockComponent(VehicleDetailsCardCatAComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
@@ -190,6 +193,9 @@ describe('ViewTestResultCatAMod1Page', () => {
       expect(
         fixture.debugElement.query(By.css('test-summary-card')),
       ).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('vehicle-details-card-cat-a')),
+      ).toBeNull();
     });
     it('should hide the cards and show the error message when there has been an error', () => {
       component.isLoading = false;
@@ -215,6 +221,9 @@ describe('ViewTestResultCatAMod1Page', () => {
       expect(
         fixture.debugElement.query(By.css('test-summary-card')),
       ).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('vehicle-details-card-cat-a')),
+      ).toBeNull();
     });
     it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
@@ -238,6 +247,9 @@ describe('ViewTestResultCatAMod1Page', () => {
       ).not.toBeNull();
       expect(
         fixture.debugElement.query(By.css('examiner-details-card')),
+      ).not.toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('vehicle-details-card-cat-a')),
       ).not.toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).not.toBeNull();
       expect(
