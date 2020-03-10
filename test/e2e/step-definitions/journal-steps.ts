@@ -1,7 +1,8 @@
-import { by, element } from 'protractor';
+import { by, element, browser, ExpectedConditions } from 'protractor';
 import { onJournalPageAs } from './generic-steps';
-import { getElement, clickElement } from '../../helpers/helpers';
-
+import { getElement, clickElement, resetTestDataState, clickBackButton, waitForOverlay } from '../../helpers/helpers';
+import { logout, logInToApplication, loadApplication } from '././generic-steps';
+import { TEST_CONFIG } from '../test.config';
 const {
   Given,
   Then,
@@ -52,10 +53,14 @@ When('I start the test for {string}', (candidateName) => {
   });
 });
 
-When('I rekey a test for {string} in the {string} ', (candidateName, username) => {
+When('I rekey a test for {string}', (candidateName) => {
+  browser.sleep(6000);
+  const previousDayButtonElement = getElement(by.id('previous-day-container'));
+  clickElement(previousDayButtonElement);
+
   const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
+  [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+  h3[text() = "${candidateName}"]]`));
   clickElement(buttonElement);
 });
 
