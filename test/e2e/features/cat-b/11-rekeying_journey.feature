@@ -49,7 +49,6 @@ Feature: A Driving Examiner Rekeys Category B tests
    Scenario: Driving Examiner rekeys a failed test for two days ago
       Given I am on the journal page as "mobexaminer1"
       When I navigate to previous day
-      And I navigate to previous day
       And I rekey a test for "Mrs Carly Doe"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
