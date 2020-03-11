@@ -8,7 +8,7 @@ export const questions: VehicleChecksQuestion[] = [
   {
     code: 'E1',
     description: 'Tell me how you would check the condition of the body is safe on this vehicle.',
-    shortName: 'Body condition'
+    shortName: 'Body condition',
   },
   {
     code: 'E3',

@@ -14,8 +14,8 @@ export const getDrivingFaultCount = (
 export const getManoeuvresADI2 = (data: CatADI2UniqueTypes.TestData) : CatADI2UniqueTypes.Manoeuvres[] =>
   data.manoeuvres;
 
-// TODO - We should pass a Manoeuvre object here instead of TestData
-export const hasManoeuvreBeenCompletedCatADIPart2 = (data: CatADI2UniqueTypes.TestData) => (data.manoeuvres.length > 0);
+export const hasManoeuvreBeenCompletedCatADIPart2 = (manoeuvres: CatADI2UniqueTypes.Manoeuvres[]) =>
+(manoeuvres.length > 0);
 
 export const hasEyesightTestBeenCompleted = (data: CatADI2UniqueTypes.TestData) => data.eyesightTest.complete;
 
@@ -32,7 +32,7 @@ export const getVehicleChecks = (
 export const getTellMeQuestion = (state: CatADI2UniqueTypes.VehicleChecks): VehicleChecksQuestion => {
   const questionProvider: QuestionProvider = new QuestionProvider();
   return questionProvider
-    .getTellMeQuestions(TestCategory.BE)
+    .getTellMeQuestions(TestCategory.ADI2)
     .find(question => question.code === get(state, 'tellMeQuestion.code'));
 };
 
@@ -56,17 +56,16 @@ export const areTellMeQuestionsCorrect = (state: CatADI2UniqueTypes.VehicleCheck
   return correct;
 };
 
-// TODO - We should really pass a Vehicle Checks object here and not Test Data
-export const hasVehicleChecksBeenCompletedCatADI2 = (data: CatADI2UniqueTypes.TestData): boolean => {
+export const hasVehicleChecksBeenCompletedCatADI2 = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): boolean => {
 
   if (
-    !(data.vehicleChecks && data.vehicleChecks.tellMeQuestions instanceof Array) ||
-    data.vehicleChecks.tellMeQuestions.length !== NUMBER_OF_TELL_ME_QUESTIONS
+    !(vehicleChecks && vehicleChecks.tellMeQuestions instanceof Array) ||
+    vehicleChecks.tellMeQuestions.length !== NUMBER_OF_TELL_ME_QUESTIONS
   ) {
     return false;
   }
 
-  data.vehicleChecks.tellMeQuestions.forEach((element) => {
+  vehicleChecks.tellMeQuestions.forEach((element) => {
     if (element.outcome == null) {
       return false;
     }
