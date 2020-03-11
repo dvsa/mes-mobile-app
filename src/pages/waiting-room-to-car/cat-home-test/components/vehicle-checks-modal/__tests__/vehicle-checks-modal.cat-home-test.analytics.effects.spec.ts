@@ -54,7 +54,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
 
   describe('vehicleChecksModalViewDidEnter$ effect', () => {
     it('should call analytics.setCurrentPage', (done) => {
-      store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.F));
       actions$.next(new VehicleChecksViewDidEnter());
       effects.vehicleChecksModalViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -70,7 +70,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
       code: 'S01',
     };
     it('should log an analyics event with show me question info', (done) => {
-      store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.F));
       actions$.next(new VehicleChecksActions.ShowMeQuestionSelected(showMeQuestion, questionNumber));
       effects.showMeQuestionChanged$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -88,7 +88,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
     const questionOutcome: QuestionOutcome = 'P';
     const questionNumber: number = 1;
     it('should log an analytics event with show me question outcome info', (done) => {
-      store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.F));
       actions$.next(new VehicleChecksActions.ShowMeQuestionOutcomeChanged(questionOutcome, questionNumber));
       effects.showMeQuestionOutComeChanged$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -108,7 +108,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
       code: 'T01',
     };
     it('should log an analyics event with tell me question info', (done) => {
-      store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.F));
       actions$.next(new VehicleChecksActions.TellMeQuestionSelected(tellMeQuestion, questionNumber));
       effects.tellMeQuestionChanged$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -126,7 +126,7 @@ describe('Vehicle Checks Modal Analytics Effects', () => {
     const questionOutcome: QuestionOutcome = 'DF';
     const questionNumber: number = 1;
     it('should log an analytics event with tell me question outcome info', (done) => {
-      store$.dispatch(new testsActions.StartTest(12345, TestCategory.BE));
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.F));
       actions$.next(new VehicleChecksActions.TellMeQuestionOutcomeChanged(questionOutcome, questionNumber));
       effects.tellMeQuestionOutComeChanged$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
