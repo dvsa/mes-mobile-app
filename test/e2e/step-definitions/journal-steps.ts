@@ -54,7 +54,6 @@ When('I start the test for {string}', (candidateName) => {
 });
 
 When('I rekey a test for {string}', (candidateName) => {
-  browser.sleep(6000);
   const previousDayButtonElement = getElement(by.id('previous-day-container'));
   clickElement(previousDayButtonElement);
 

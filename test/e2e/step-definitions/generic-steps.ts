@@ -1,7 +1,6 @@
 import { Before } from 'cucumber';
 import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-// tslint:disable-next-line:max-line-length
 import { waitForOverlay, getParentContext, getElement, isReady, clickElement, clickBackButton } from '../../helpers/helpers';
 
 const {
