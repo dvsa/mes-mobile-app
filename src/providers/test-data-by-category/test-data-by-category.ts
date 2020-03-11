@@ -10,12 +10,11 @@ import { getTestData as getTestDataCatD } from '../../modules/tests/test-data/ca
 import { getTestData as getTestDataCatD1 } from '../../modules/tests/test-data/cat-d/test-data.cat-d1.reducer';
 import { getTestData as getTestDataCatDE } from '../../modules/tests/test-data/cat-d/test-data.cat-de.reducer';
 import { getTestData as getTestDataCatD1E } from '../../modules/tests/test-data/cat-d/test-data.cat-d1e.reducer';
-import { getTestData as getTestDataCatF } from '../../modules/tests/test-data/cat-home/test-data.cat-f.reducer';
-import { getTestData as getTestDataCatG } from '../../modules/tests/test-data/cat-home/test-data.cat-g.reducer';
-import { getTestData as getTestDataCatH } from '../../modules/tests/test-data/cat-home/test-data.cat-h.reducer';
-import { getTestData as getTestDataCatK } from '../../modules/tests/test-data/cat-home/test-data.cat-k.reducer';
+import { getTestData as getTestDataCatF } from '../../modules/tests/test-data/cat-home-test/test-data.cat-f.reducer';
+import { getTestData as getTestDataCatG } from '../../modules/tests/test-data/cat-home-test/test-data.cat-g.reducer';
+import { getTestData as getTestDataCatH } from '../../modules/tests/test-data/cat-home-test/test-data.cat-h.reducer';
+import { getTestData as getTestDataCatK } from '../../modules/tests/test-data/cat-home-test/test-data.cat-k.reducer';
 import { getTestData as getTestDataCatB } from '../../modules/tests/test-data/cat-b/test-data.reducer';
-
 @Injectable()
 export class TestDataByCategoryProvider {
 

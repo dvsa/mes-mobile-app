@@ -17,7 +17,7 @@ import {
   getVehicleChecksCatHomeTest,
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
-} from '../../../../../modules/tests/test-data/cat-home/vehicle-checks/vehicle-checks.cat-home-test.selector';
+} from '../../../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import {
   ShowMeQuestionSelected,
