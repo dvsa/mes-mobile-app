@@ -41,7 +41,6 @@ export class ControlledStopComponent implements OnInit, OnDestroy {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
 
-  selectedControlledStop: boolean = false;
   controlledStopOutcome: CompetencyOutcome;
   merged$: Observable<boolean | CompetencyOutcome>;
 
@@ -82,7 +81,6 @@ export class ControlledStopComponent implements OnInit, OnDestroy {
       isRemoveFaultMode$,
       isSeriousMode$,
       isDangerousMode$,
-      selectedControlledStop$,
       controlledStopOutcome$,
     } = this.componentState;
 
@@ -90,7 +88,6 @@ export class ControlledStopComponent implements OnInit, OnDestroy {
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
-      selectedControlledStop$.pipe(map(value => this.selectedControlledStop = value)),
       controlledStopOutcome$.pipe(map(outcome => this.controlledStopOutcome = outcome)),
     ).subscribe();
 
