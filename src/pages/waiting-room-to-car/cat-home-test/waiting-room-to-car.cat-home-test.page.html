@@ -24,12 +24,12 @@
             <vehicle-registration [formGroup]="form" [vehicleRegistration]="pageState.registrationNumber$ | async"
               (vehicleRegistrationChange)="vehicleRegistrationChanged($event)"></vehicle-registration>
 
-            <vehicle-checks-cat-be
+            <vehicle-checks-cat-home-test
               [formGroup]="form"
               [vehicleChecksScore]="pageState.vehicleChecksScore$ | async"
               [vehicleChecks]="pageState.vehicleChecks$ | async"
               [onCloseVehicleChecksModal]="closeVehicleChecksModal"
-            ></vehicle-checks-cat-be>
+            ></vehicle-checks-cat-home-test>
 
             <accompaniment-card [formGroup]="form" [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"
               [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async" [otherAccompaniment]="pageState.otherAccompaniment$ | async"
@@ -43,7 +43,6 @@
               (dualVehicleDetailsChange)="dualControlsToggled()"></vehicle-details-card>
           </ion-col>
         </ion-row>
-        <warning-banner warningText="Is the load secure?"></warning-banner>
       </ion-grid>
     </form>
   </div>

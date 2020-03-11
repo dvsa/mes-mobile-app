@@ -21,7 +21,7 @@ import {
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('VehicleChecksCatBEModal', () => {
+describe('VehicleChecksCatHomeTestModal', () => {
   let fixture: ComponentFixture<VehicleChecksCatHomeTestModal>;
   let component: VehicleChecksCatHomeTestModal;
   let store$: Store<StoreModel>;

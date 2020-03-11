@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { IonicModule, ModalController, Config } from 'ionic-angular';
 import { ModalControllerMock, ConfigMock } from 'ionic-mocks';
 import { VehicleChecksCatHomeTestComponent } from '../vehicle-checks';
-import { CAT_BE } from '../../../../../page-names.constants';
+import { CAT_HOME_TEST } from '../../../../../page-names.constants';
 import { App } from '../../../../../../app/app.component';
 import { Store } from '@ngrx/store';
 import { MockAppComponent } from '../../../../../../app/__mocks__/app.component.mock';
@@ -53,7 +53,7 @@ describe('VehicleChecksCatBEComponent', () => {
         component.openVehicleChecksModal();
         expect(modalController.create).toHaveBeenCalledTimes(1);
         expect(modalController.create).toHaveBeenCalledWith(
-          CAT_BE.VEHICLE_CHECKS_MODAL,
+          CAT_HOME_TEST.VEHICLE_CHECKS_MODAL,
           {},
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );

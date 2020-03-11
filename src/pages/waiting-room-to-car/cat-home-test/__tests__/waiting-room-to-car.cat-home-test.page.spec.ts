@@ -134,11 +134,6 @@ describe('WaitingRoomToCarCatHomeTestPage', () => {
         component.eyesightFailCancelled();
         expect(store$.dispatch).toHaveBeenCalledWith(new EyesightTestReset());
       });
-      it('should show the is load secure warning banner', () => {
-        fixture.detectChanges();
-        const warningBanner = fixture.debugElement.query(By.css('warning-banner'));
-        expect(warningBanner).not.toBeNull();
-      });
     });
 
   });
@@ -180,7 +175,7 @@ describe('WaitingRoomToCarCatHomeTestPage', () => {
 
       component.onSubmit();
       tick();
-      expect(component.navController.push).toHaveBeenCalledWith('TestReportCatBEPage');
+      expect(component.navController.push).toHaveBeenCalledWith('TestReportCatHomeTestPage');
     }));
   });
 });
