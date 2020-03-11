@@ -99,7 +99,7 @@ When('I navigate to next day', () => {
 });
 
 When('I navigate to previous day', () => {
-  JournalPage.clickNextDayButton();
+  JournalPage.clickPreviousDayButton();
 });
 
 Then('I have a special needs slot for {string}', (candidateName) => {
