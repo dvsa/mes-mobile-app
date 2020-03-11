@@ -12,18 +12,14 @@ import { Injectable } from '@angular/core';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
-import { getManoeuvresADI2 } from '../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.selector';
 
 export type TestDataUnion =
-  | CatADI2UniqueTypes.TestData
   | CatBUniqueTypes.TestData
   | CatBEUniqueTypes.TestData
   | CatCTestData
   | CatDTestData;
 
 export type ManoeuvreUnion =
-  | CatADI2UniqueTypes.Manoeuvres[]
   | CatBEUniqueTypes.Manoeuvres
   | CatCManoeuvres
   | CatDManoeuvres;
@@ -35,7 +31,6 @@ export class ManoeuvresByCategoryProvider {
 
   public getManoeuvresByCategoryCode(category: CategoryCode): (testData: TestDataUnion) => ManoeuvreUnion {
     switch (category) {
-      case TestCategory.ADI2: return getManoeuvresADI2;
       case TestCategory.BE: return getManoeuvresBE;
       case TestCategory.C:
       case TestCategory.C1:

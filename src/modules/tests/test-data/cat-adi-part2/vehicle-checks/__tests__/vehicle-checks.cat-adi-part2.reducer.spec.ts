@@ -11,7 +11,7 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { cloneDeep } from 'lodash';
 
-describe('Vehicle Checks Cat ADI Part2 Reducer', () => {
+describe('Vehicle Checks Cat ADI2 Reducer', () => {
 
   describe('TELL_ME_QUESTION_SELECTED' , () => {
     it('should add the tell me question in the payload to the array at the specified index', () => {

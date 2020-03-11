@@ -10,7 +10,7 @@ import {
 } from '../controlled-stop.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 
-describe('Controlled Stop Reducer' , () => {
+describe('Controlled Stop ADI2 Reducer' , () => {
 
   describe('TOGGLE_CONTROLLED_STOP', () => {
     it('should toggle the controlled stop (true when dispatched first time)', () => {

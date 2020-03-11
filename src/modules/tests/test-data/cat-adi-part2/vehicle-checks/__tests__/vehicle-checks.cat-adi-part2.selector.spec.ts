@@ -1,7 +1,7 @@
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { vehicleChecksExist } from '../vehicle-checks.cat-adi-part2.selector';
 
-describe('Vehicle Checks Selector Cat BE', () => {
+describe('Vehicle Checks Selector Cat ADI2', () => {
 
   describe('vehicleChecksExist', () => {
     it('should return false if there are no vehicle checks entered', ()  => {

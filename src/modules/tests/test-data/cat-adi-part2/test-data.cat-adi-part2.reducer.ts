@@ -9,9 +9,8 @@ import { eyesightTestReducer } from '../common/eyesight-test/eyesight-test.reduc
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { vehicleChecksCatADIPart2Reducer } from './vehicle-checks/vehicle-checks.cat-adi-part2.reducer';
 import { testRequirementsCatADIPart2Reducer } from './test-requirements/test-requirements.cat-adi-part2.reducer';
-import { manoeuvresReducer } from './manoeuvres/manoeuvres.reducer';
-import { uncoupleRecoupleReducer } from '../common/uncouple-recouple/uncouple-recouple.reducer';
 import { controlledStopReducer } from './controlled-stop/controlled-stop.reducer';
+import { manoeuvresReducer } from './manoeuvres/manoeuvres.reducer';
 
 export const initialState: CatADI2UniqueTypes.TestData = {
   dangerousFaults: {},

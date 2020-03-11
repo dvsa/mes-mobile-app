@@ -1,11 +1,9 @@
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
-import * as manoeuvresActions from '../../common/manoeuvres/manoeuvres.actions';
-import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
-import { ManoeuvreTypes } from '../../test-data.constants';
-import { ManoeuvreUnion } from '../../../../../providers/manoeuvres-by-category/manoeuvres-by-category';
+import * as manoeuvresActions from './manoeuvres.actions';
 
 export const initialState: CatADI2UniqueTypes.Manoeuvres[] = [];
 
+// TODO - ADI2: impliment manoeuvres reducer
 export function manoeuvresReducer(
   state = initialState,
   action: manoeuvresActions.Types,

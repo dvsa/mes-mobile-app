@@ -19,7 +19,7 @@ import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatADIPart2Reducer } from './journal-data/cat-adi-part2/journal-data.cat-adi-part2.reducer';
 import { testDataCatADIPart2Reducer } from './test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
-import { vehicleDetailsCatADIPart2Reducer } 
+import { vehicleDetailsCatADIPart2Reducer }
 from './vehicle-details/cat-adi-part2/vehicle-details.cat-adi-part2.reducer';
 
 export function testsCatADIPart2Reducer(
