@@ -17,11 +17,9 @@ export const getParentContext = (currentContext: string) => {
 
 export const textFieldInputViaNativeMode = (xpathString: string, searchTerm) => {
   browser.driver.getCurrentContext().then((webviewContext) => {
-    // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP').then(() => {
       const nativeField = element(by.xpath(xpathString));
       nativeField.sendKeys(searchTerm);
-      // Switch back to WEBVIEW context
       browser.driver.selectContext(getParentContext(webviewContext)).then(() => {
         browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
       });
@@ -42,13 +40,9 @@ export const waitForPresenceOfElement = (element) => {
 export const resetTestDataState = (username) => {
   waitForOverlay('click-block-active');
   clickBackButton();
-  // Logout
   logout();
-  // Login
   logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
-  // Refresh application
   loadApplication().then(() => {
-  // Small wait to make sure the action has initiated
     browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
   });
 };
