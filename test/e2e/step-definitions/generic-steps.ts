@@ -154,7 +154,7 @@ When(/^I start marking a practice test (with|without) a driving fault$/, (drivin
 });
 
 Given(/^I start full practice mode$/, () => {
-  const practiceMarkingXPath = '//button/span/h3[text() = "Practice marking a test (cat B)"]';
+  const practiceMarkingXPath = '//button/span/h3[text() = "Practice marking a full test (cat B)"]';
   TempPage.clickElementByXPath(practiceMarkingXPath);
 
   const practiceModeBanner = element(by.className('practice-mode-top-banner'));
