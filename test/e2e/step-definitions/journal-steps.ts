@@ -242,6 +242,5 @@ const startingExpiredTest = (candidateName) => {
 
   const testExpireDialog = getElement(by.xpath(`/html/body/ion-app/ion-modal/div/journal-rekey-modal/ion-card/
     modal-alert-title/ion-row[2]/ion-col/h2`));
-  return expect(testExpireDialog.isPresent()).to.eventually.be.true;
   timeDialog(testExpireDialog);
 };
