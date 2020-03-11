@@ -299,22 +299,6 @@ describe('TestDataSelectors Cat ADI2', () => {
 
         expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
       });
-      it('should return false if show me question outcome is not defined', () => {
-        const state: CatADI2UniqueTypes.TestData = {
-          vehicleChecks: {
-            tellMeQuestions: [
-              {
-                outcome: CompetencyOutcome.DF,
-              },
-              {
-                outcome: CompetencyOutcome.DF,
-              },
-            ],
-          },
-        };
-
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(false);
-      });
     });
   });
 });
