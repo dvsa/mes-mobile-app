@@ -65,7 +65,7 @@ import { VehicleChecksQuestion } from '../../../providers/question/vehicle-check
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import {
-  getVehicleChecksCatHomeTest
+  getVehicleChecksCatHomeTest,
 } from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
