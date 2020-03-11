@@ -89,3 +89,48 @@ Feature: A Driving Examiner Rekeys Category B tests
       And I return to the journal
       Then I should see the "Journal" page
       And the test result for "Mrs Carly Doe" is "2"
+
+     Scenario: Driver Examiner rekeys a late test from paper
+       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
+       And I rekey a late test for "Miss Florence Pearson"
+       And the candidate completes the declaration page
+       And the candidate confirms their declaration
+       Then I should see the "Declaration - Florence Pearson" page
+       And the candidate enters a new email address
+       And I proceed to the car
+       Then I should see the "Florence Pearson" page
+       And I complete the waiting room to car page
+       Then I should see the "Test report - Florence Pearson" page
+       When I add a "Undue hesitation" driver fault
+       And I add a "Traffic lights" driver fault
+       And I add a "Crossing" driver fault
+       And I add a "Ancillary controls" driver fault
+       And I add a "Gears" driver fault
+       Then the driver fault count is "5"
+       And I complete the test
+       And I continue to debrief
+       Then I should see the Debrief page with outcome "Passed"
+       And I see a "driving" fault for "Progress - Undue hesitation"
+       And I see a "driving" fault for "Response to signs / signals - Traffic lights"
+       And I see a "driving" fault for "Judgement - Crossing"
+       And I see a "driving" fault for "Ancillary Controls"
+       And I see a "driving" fault for "Controls - Gears"
+       When I end the debrief
+       Then I should see the "Test debrief - Florence Pearson" page
+       And I complete the pass details
+       And I complete the health declaration
+       Then I am on the back to office page
+       And I continue to the office write up
+       Then I should see the "Office" page
+       And the office page test outcome is "Passed"
+       And there is "1" driver fault listed for "Progress - Undue hesitation"
+       And there is "1" driver fault listed for "Response to signs / signals - Traffic lights"
+       And there is "1" driver fault listed for "Judgement - Crossing"
+       And there is "1" driver fault listed for "Ancillary Controls"
+       And there is "1" driver fault listed for "Controls - Gears"
+       When I complete the office write up
+       And I complete the rekey
+       Then the rekey is successfully uploaded
+       And I return to the journal
+       Then I should see the "Journal" page
+       And the test result for "Miss Florence Pearson" is "1"

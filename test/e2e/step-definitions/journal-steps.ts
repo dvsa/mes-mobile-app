@@ -58,6 +58,22 @@ When('I rekey a test for {string}', (candidateName) => {
   clickElement(buttonElement);
 });
 
+When('I rekey a late test for {string}',(candidateName) => {
+  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
+    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    h3[text() = "${candidateName}"]]`));
+  clickElement(buttonElement);
+
+  // If the rekey dialog is shown so just select start test normally
+  const rekeyStartTestButton = element(by.id('rekey-rekey-test-button'));
+  rekeyIsPresent();
+  rekeyStartTestButton.isPresent().then((result) => {
+    if (result) {
+      clickElement(rekeyStartTestButton);
+    }
+  });
+});
+
 When('I navigate to next day', () => {
   const nextDayButtonElement = getElement(by.id('next-day-container'));
   return clickElement(nextDayButtonElement);
@@ -149,4 +165,9 @@ const viewCandidateDetails = (candidateName) => {
 const closeCandidateDetailsDialog = () => {
   const closeCandidateDetailDialog = element(by.id('closeCandidateDetails'));
   clickElement(closeCandidateDetailDialog);
+};
+
+const rekeyIsPresent = () => {
+  const rekeyStartTestButton = element(by.id('rekey-start-test-button'));
+  return expect(rekeyStartTestButton.isPresent()).to.eventually.be.true;
 };
