@@ -59,7 +59,7 @@ import {
 } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import { CAT_BE } from '../../page-names.constants';
+import { CAT_HOME_TEST } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -69,7 +69,7 @@ import {
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { VehicleChecksCatBEComponent } from './components/vehicle-checks/vehicle-checks';
+import { VehicleChecksCatHomeTestComponent } from './components/vehicle-checks/vehicle-checks';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -98,8 +98,8 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
 
-  @ViewChild(VehicleChecksCatBEComponent)
-  vehicleChecks: VehicleChecksCatBEComponent;
+  @ViewChild(VehicleChecksCatHomeTestComponent)
+  vehicleChecks: VehicleChecksCatHomeTestComponent;
 
   showEyesightFailureConfirmation: boolean = false;
 
@@ -243,9 +243,9 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push(CAT_BE.TEST_REPORT_PAGE).then(() => {
+      this.navController.push(CAT_HOME_TEST.TEST_REPORT_PAGE).then(() => {
         // remove Waiting Room To Car Page
-        const view = this.navController.getViews().find(view => view.id === CAT_BE.WAITING_ROOM_TO_CAR_PAGE);
+        const view = this.navController.getViews().find(view => view.id === CAT_HOME_TEST.WAITING_ROOM_TO_CAR_PAGE);
         if (view) {
           this.navController.removeView(view);
         }
@@ -300,7 +300,7 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
   }
 
   getDebriefPage() {
-    return CAT_BE.DEBRIEF_PAGE;
+    return CAT_HOME_TEST.DEBRIEF_PAGE;
   }
 
 }

@@ -1,15 +1,15 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { CAT_BE } from '../../../../page-names.constants';
+import { CAT_HOME_TEST } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
 import { App } from '../../../../../app/app.component';
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
 import { get } from 'lodash';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
-  selector: 'vehicle-checks-cat-be',
+  selector: 'vehicle-checks-cat-home-test',
   templateUrl: 'vehicle-checks.html',
 })
 export class VehicleChecksCatHomeTestComponent implements OnChanges {
@@ -17,7 +17,7 @@ export class VehicleChecksCatHomeTestComponent implements OnChanges {
   @Input() onCloseVehicleChecksModal: () => {};
 
   @Input() vehicleChecksScore: VehicleChecksScore;
-  @Input() vehicleChecks: CatBEUniqueTypes.VehicleChecks;
+  @Input() vehicleChecks: CatFUniqueTypes.VehicleChecks;
 
   @Input()
   vehicleChecksSelectQuestions: string;
@@ -35,7 +35,7 @@ export class VehicleChecksCatHomeTestComponent implements OnChanges {
   openVehicleChecksModal(): void {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const modal = this.modalController.create(
-      CAT_BE.VEHICLE_CHECKS_MODAL,
+      CAT_HOME_TEST.VEHICLE_CHECKS_MODAL,
       {},
       { cssClass: zoomClass },
     );
