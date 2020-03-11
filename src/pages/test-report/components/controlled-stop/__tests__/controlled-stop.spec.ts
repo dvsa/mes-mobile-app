@@ -208,15 +208,13 @@ describe('ControlledStopComponent', () => {
     describe('Tick button effects', () => {
       it('should have added no classes to the tick button', () => {
         const tickButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-tick'));
-
         fixture.detectChanges();
         expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick');
       });
 
-      xit('should have added a checked class to the tick button', () => {
-        component.toggleControlledStop();
+      it('should have added a checked class to the tick button', () => {
         const tickButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-tick'));
-
+        component.selectedControlledStop = true;
         fixture.detectChanges();
         console.log(tickButton.nativeElement);
         expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick checked');
