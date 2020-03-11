@@ -8,6 +8,7 @@ import { get } from 'lodash';
 
 export const createPopulateCandidateDetailsAction = (testCategory: string, booking: Booking) => {
   switch (testCategory) {
+    case TestCategory.ADI2:
     case TestCategory.B:
     case TestCategory.EUAMM1:
     case TestCategory.EUA1M1:
