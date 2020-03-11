@@ -1,6 +1,6 @@
-import Page from './page';
+import BasePage from './basePage';
 
-class DebriefPage extends Page {
+class DebriefPage extends BasePage {
   clickEndDebriefButton() {
     this.clickElementByXPath('//button[span[h3[text()="End debrief"]]]');
   }

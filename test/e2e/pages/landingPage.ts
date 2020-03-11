@@ -1,9 +1,11 @@
 import { browser, by, element, ExpectedConditions } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-import Page from './page';
+import BasePage from './basePage';
 import LoginPage from './loginPage';
 
-class LandingPage extends Page {
+class LandingPage extends BasePage {
+  // todo: kc both pages (dashboard and landing) seem to look for employee id to check the page is loaded.  This
+  // sounds wrong - how do we tell if a user is on landing or dashboard page?  Are these the same thing?
   isCurrentPage(username) {
     this.getEmployeeId(username);
   }

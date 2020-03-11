@@ -1,6 +1,6 @@
-import Page from './page';
+import BasePage from './basePage';
 
-class HealthDeclarationPage extends Page {
+class HealthDeclarationPage extends BasePage {
   getPassCertificateNumber() {
     const element = this.getElementById('declaration-pass-certificate-number');
     this.waitForPresenceOfElement(element);

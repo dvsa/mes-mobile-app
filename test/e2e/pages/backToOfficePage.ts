@@ -1,7 +1,7 @@
-import Page from './page';
+import BasePage from './basePage';
 import { browser, ExpectedConditions } from 'protractor';
 
-class BackToOfficePage extends Page {
+class BackToOfficePage extends BasePage {
   isCurrentPage() {
     // No page title so need to check something else exists that exists on the page
     const backToOfficePage = this.getElementById('back-to-office-page');
@@ -11,6 +11,10 @@ class BackToOfficePage extends Page {
 
   clickContinueToWriteUpButton() {
     this.clickElementById('continue-to-write-up');
+  }
+
+  clickBackToJournalButton() {
+    this.clickElementByXPath('//*[@id="back-to-office-page"]//div[3]/button/span');
   }
 }
 

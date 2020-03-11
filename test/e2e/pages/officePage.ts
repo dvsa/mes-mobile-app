@@ -1,5 +1,5 @@
-import Page from './page';
-class OfficePage extends Page {
+import BasePage from './basePage';
+class OfficePage extends BasePage {
   clickUploadButton() {
     this.clickElementByXPath('//button[span[h3[text() = "Upload"]]]');
   }

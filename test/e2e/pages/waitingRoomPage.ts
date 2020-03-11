@@ -1,6 +1,6 @@
-import Page from './page';
+import BasePage from './basePage';
 
-class WaitingRoomPage extends Page {
+class WaitingRoomPage extends BasePage {
   clickNewEmailRadioButton() {
     this.clickElementById('newEmail');
   }

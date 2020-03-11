@@ -1,10 +1,10 @@
-import Page from './page';
+import BasePage from './basePage';
 import { browser, by, element } from 'protractor';
 
 const buttonPadding = 30;
 const request = require('request');
 
-class ETA extends Page {
+class ETA extends BasePage {
   getETAModalTitle() {
     const element = this.getElementByClassName('modal-alert-header');
     this.waitForPresenceOfElement(element);
@@ -20,7 +20,7 @@ class ETA extends Page {
   }
 }
 
-class DriverFaults extends Page {
+class DriverFaults extends BasePage {
   markDriverFault(faultName) {
     this.longPressElementByXPath(`//manoeuvre-competency/div/span[text() = '${faultName}']`);
   }
@@ -74,7 +74,7 @@ class DriverFaults extends Page {
   }
 }
 
-class ReversingDiagramModal extends Page {
+class ReversingDiagramModal extends BasePage {
   getReversingDiagramModalTitle() {
     const element = this.getElementByXPath('//reverse-diagram-modal-cat-c//div[2]');
     this.waitForPresenceOfElement(element);
@@ -90,7 +90,7 @@ class ReversingDiagramModal extends Page {
   }
 }
 
-class LegalRequirements extends Page {
+class LegalRequirements extends BasePage {
 
   getLegalRequrementsPopup() {
     const element = this.getElementByXPath('//div/legal-requirements-modal');
@@ -116,7 +116,7 @@ class LegalRequirements extends Page {
   }
 }
 
-class Competency extends Page {
+class Competency extends BasePage {
   /**
    * Clicks the competency to add a fault or remove where the relevant S/D/Remove has been selected in advance.
    * Note: not for use with driver faults as this requires a long press
@@ -162,7 +162,7 @@ class Competency extends Page {
   }
 }
 
-class TestReportPage extends Page {
+class TestReportPage extends BasePage {
   public ETA: ETA;
   public driverFaults: DriverFaults;
   public reversingDiagramModal: ReversingDiagramModal;
@@ -244,6 +244,16 @@ class TestReportPage extends Page {
     this.clickElementById('end-test-button');
   }
 
+  clickLastEndTestButton() {
+    const lastEndTestButton = element.all(by.xpath('//end-test-link/button/span[text() = "End test"]')).last();
+    this.clickElement(lastEndTestButton);
+  }
+
+  clickLastExitPracticeButton() {
+    const lastExitPracticeButton = element.all(by.className('exit-text')).last();
+    this.clickElement(lastExitPracticeButton);
+  }
+
   clickTerminateTestButton() {
     this.clickElementByXPath('//button/span[text() = "Terminate test"]');
   }
@@ -264,5 +274,12 @@ class TestReportPage extends Page {
   clickContinueToDebriefbutton() {
     this.clickElementByXPath('//button[span[h3[text() = "Continue to debrief"]]]');
   }
+
+  getPracticeModeBanner() {
+    const element = this.getElementByClassName('practice-mode-top-banner');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
 }
+
 export default new TestReportPage();

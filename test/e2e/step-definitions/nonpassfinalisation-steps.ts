@@ -1,6 +1,4 @@
 import { Then, When, Before } from 'cucumber';
-import { by } from 'protractor';
-import TempPage from '../pages/tempPage';
 import NonPassFinalisationPage from '../pages/nonPassFinalisationPage';
 import DebriefPage from '../pages/debriefPage';
 
@@ -60,11 +58,10 @@ Then('the activity code should be {string}', (activityCode) => {
 });
 
 Then('the nonpassfinalisation page test outcome is {string}', (testOutcome : string) => {
-  const testOutcomeField = TempPage.getAndAwaitElement(by.id('office-page-test-outcome'));
+  const testOutcomeField = NonPassFinalisationPage.getTestOutcome();
   return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
 
 Then('the transmission is selected', () => {
   NonPassFinalisationPage.selectManualTransmission();
 });
-

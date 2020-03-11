@@ -1,4 +1,4 @@
-import Page from './page';
+import BasePage from './basePage';
 import { by, element } from 'protractor';
 import { UI_TEST_DATA } from '../../test_data/ui_test_data';
 
@@ -7,7 +7,7 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-class WaitingRoomToCarPage extends Page {
+class WaitingRoomToCarPage extends BasePage {
   eyeSightResultPass() {
     this.clickElementById('eyesight-pass');
   }
@@ -44,7 +44,7 @@ class WaitingRoomToCarPage extends Page {
     this.clickSubmitButton();
   }
 
-  getVehicleChecksQuestions(){
+  getVehicleChecksQuestions() {
     return element.all(by.id('vehicle-checks-question-selector'));
   }
 

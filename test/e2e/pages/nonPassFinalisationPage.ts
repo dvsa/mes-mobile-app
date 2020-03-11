@@ -1,13 +1,13 @@
-import Page from './page';
+import BasePage from './basePage';
 
-class NonPassFinalisationPage extends Page {
+class NonPassFinalisationPage extends BasePage {
   selectActivityCode(activityCodeDesc) {
     this.clickActivityCodeSelector();
     this.clickActivityItem(activityCodeDesc);
     this.submitDialog();
   }
 
-  // 2 getTestOutcomes - one is in debriefPage.ts.
+  // todo: kc - 2 getTestOutcomes - one is in debriefPage.ts.
   getTestOutcome() {
     const element = this.getElementById('office-page-test-outcome');
     this.waitForPresenceOfElement(element);

@@ -1,4 +1,4 @@
-import Page from './page';
+import BasePage from './basePage';
 import LandingPage from './landingPage';
 import DashboardPage from './dashboardPage';
 
@@ -7,7 +7,7 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-class JournalPage extends Page {
+class JournalPage extends BasePage {
   /**
    * If the journal page is loaded we should have a refresh button
    */
@@ -165,6 +165,10 @@ class JournalPage extends Page {
 
   startTestFor(candidateName) {
     this.clickElement(this.getStartTestButtonFor(candidateName));
+  }
+
+  clickBackButton() {
+    this.clickElementByXPath('//page-journal//button//span[text()="Back"]');
   }
 }
 

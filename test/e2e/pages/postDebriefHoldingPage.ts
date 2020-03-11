@@ -1,6 +1,6 @@
-import Page from './page';
+import BasePage from './basePage';
 
-class PostDebriefHoldingPage extends Page {
+class PostDebriefHoldingPage extends BasePage {
   isCurrentPage(testCategory) {
     // No page title so need to check something else exists that exists on the page
     const postDebriefHoldingPage = this.getElementById(`post-debrief-holding-cat-${testCategory}-page`);

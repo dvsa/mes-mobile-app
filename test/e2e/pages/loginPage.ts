@@ -1,8 +1,8 @@
 import { browser, ExpectedConditions, element, by } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-import Page from './page';
+import BasePage from './basePage';
 
-class LoginPage extends Page {
+class LoginPage extends BasePage {
   isCurrentPage() {
     // wait for username field to appear
     this.getUsernameField();

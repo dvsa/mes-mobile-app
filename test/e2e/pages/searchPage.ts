@@ -1,11 +1,11 @@
-import Page from './page';
+import BasePage from './basePage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-class SearchPage extends Page {
+class SearchPage extends BasePage {
   assertElementIsPresent(elements) {
     elements.forEach((e) => {
       expect(e.isPresent()).to.eventually.be.true;
