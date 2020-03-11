@@ -18,6 +18,7 @@ export type TestDataUnion =
   | CatBEUniqueTypes.TestData
   | CatCTestData
   | CatDTestData;
+
 export type ManoeuvreUnion =
   | CatBEUniqueTypes.Manoeuvres
   | CatCManoeuvres
