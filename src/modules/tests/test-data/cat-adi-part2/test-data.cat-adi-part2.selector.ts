@@ -15,11 +15,7 @@ export const getManoeuvresADI2 = (data: CatADI2UniqueTypes.TestData) : CatADI2Un
   data.manoeuvres;
 
 // TODO - We should pass a Manoeuvre object here instead of TestData
-export const hasManoeuvreBeenCompletedCatADIPart2 = (data: CatADI2UniqueTypes.TestData) => {
-  return (
-    data.manoeuvres.length > 0
-  );
-};
+export const hasManoeuvreBeenCompletedCatADIPart2 = (data: CatADI2UniqueTypes.TestData) => (data.manoeuvres.length > 0);
 
 export const hasEyesightTestBeenCompleted = (data: CatADI2UniqueTypes.TestData) => data.eyesightTest.complete;
 
@@ -61,7 +57,7 @@ export const areTellMeQuestionsCorrect = (state: CatADI2UniqueTypes.VehicleCheck
 };
 
 // TODO - We should really pass a Vehicle Checks object here and not Test Data
-export const hasVehicleChecksBeenCompletedCatBE = (data: CatADI2UniqueTypes.TestData): boolean => {
+export const hasVehicleChecksBeenCompletedCatADI2 = (data: CatADI2UniqueTypes.TestData): boolean => {
 
   if (
     !(data.vehicleChecks && data.vehicleChecks.tellMeQuestions instanceof Array) ||

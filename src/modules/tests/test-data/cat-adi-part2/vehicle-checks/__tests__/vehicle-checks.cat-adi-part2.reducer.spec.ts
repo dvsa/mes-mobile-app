@@ -1,6 +1,6 @@
 import {
   initialState,
-  vehicleChecksCatADIPart2Reducer,
+  vehicleChecksCatADI2Reducer,
 } from '../vehicle-checks.cat-adi-part2.reducer';
 import {
   TellMeQuestionSelected,
@@ -20,7 +20,7 @@ describe('Vehicle Checks Cat ADI2 Reducer', () => {
         description: 'desc',
       };
       const state: CatADI2UniqueTypes.VehicleChecks = cloneDeep(initialState);
-      const result = vehicleChecksCatADIPart2Reducer(state, new TellMeQuestionSelected(newQuestionPayload, 1));
+      const result = vehicleChecksCatADI2Reducer(state, new TellMeQuestionSelected(newQuestionPayload, 1));
       expect(result.tellMeQuestions[1].code).toEqual('T01');
       expect(result.tellMeQuestions[1].description).toEqual('desc');
     });
@@ -34,7 +34,7 @@ describe('Vehicle Checks Cat ADI2 Reducer', () => {
         description: 'desc',
         outcome: 'P',
       };
-      const result = vehicleChecksCatADIPart2Reducer(state, new TellMeQuestionOutcomeChanged('DF', 1));
+      const result = vehicleChecksCatADI2Reducer(state, new TellMeQuestionOutcomeChanged('DF', 1));
       expect(result.tellMeQuestions[1].outcome).toEqual('DF');
     });
   });
@@ -42,7 +42,7 @@ describe('Vehicle Checks Cat ADI2 Reducer', () => {
   describe('ADD_TELL_ME_COMMENT' , () => {
     it('should update the vehicle checks comments', () => {
       const state: CatADI2UniqueTypes.VehicleChecks = cloneDeep(initialState);
-      const result = vehicleChecksCatADIPart2Reducer(state, new AddTellMeComment('So many mistakes.'));
+      const result = vehicleChecksCatADI2Reducer(state, new AddTellMeComment('So many mistakes.'));
 
       expect(result.tellMeComments).toEqual('So many mistakes.');
     });

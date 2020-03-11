@@ -4,7 +4,7 @@ import { createFeatureSelector } from '@ngrx/store';
 
 export const initialState: CatADI2UniqueTypes.TestRequirements = {};
 
-export function testRequirementsCatADIPart2Reducer(
+export function testRequirementsCatADI2Reducer(
   state = initialState,
   action: testRequirementsActions.Types,
 ): CatADI2UniqueTypes.TestRequirements {
@@ -19,5 +19,5 @@ export function testRequirementsCatADIPart2Reducer(
   }
 }
 
-export const getTestRequirementsCatADIPart2 =
+export const getTestRequirementsCatADI2 =
   createFeatureSelector<CatADI2UniqueTypes.TestRequirements>('testRequirements');

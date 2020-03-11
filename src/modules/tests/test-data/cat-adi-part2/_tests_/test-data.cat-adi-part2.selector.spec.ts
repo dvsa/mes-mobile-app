@@ -12,7 +12,7 @@ import {
   // hasManoeuvreBeenCompletedCatBE,
   areTellMeQuestionsSelected,
   areTellMeQuestionsCorrect,
-  hasVehicleChecksBeenCompletedCatBE,
+  hasVehicleChecksBeenCompletedCatADI2,
   hasEyesightTestGotSeriousFault,
   hasEyesightTestBeenCompleted,
 } from '../test-data.cat-adi-part2.selector';
@@ -249,7 +249,7 @@ describe('TestDataSelectors Cat ADI2', () => {
           },
         };
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a driving fault', () => {
         const state: CatADI2UniqueTypes.TestData = {
@@ -265,7 +265,7 @@ describe('TestDataSelectors Cat ADI2', () => {
           },
         };
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a serious fault', () => {
         const state: CatADI2UniqueTypes.TestData = {
@@ -281,7 +281,7 @@ describe('TestDataSelectors Cat ADI2', () => {
           },
         };
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a dangerous fault', () => {
         const state : CatADI2UniqueTypes.TestData = {
@@ -297,7 +297,7 @@ describe('TestDataSelectors Cat ADI2', () => {
           },
         };
 
-        expect(hasVehicleChecksBeenCompletedCatBE(state)).toEqual(true);
+        expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);
       });
     });
   });

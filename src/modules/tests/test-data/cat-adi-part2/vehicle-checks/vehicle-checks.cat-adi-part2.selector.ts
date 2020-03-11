@@ -10,5 +10,5 @@ export const getSelectedTellMeQuestions = (
 export const vehicleChecksExist = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): boolean =>
   some(vehicleChecks.tellMeQuestions, fault => fault.outcome != null);
 
-export const getVehicleChecksCatADIPart2 =
+export const getVehicleChecksCatADI2 =
   createFeatureSelector<CatADI2UniqueTypes.VehicleChecks>('vehicleChecks');
