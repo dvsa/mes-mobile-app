@@ -1,6 +1,6 @@
 import { Then, When, Before } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
 import { by } from 'protractor';
+import { getElement, clickElement } from '../../helpers/interactionHelpers';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');

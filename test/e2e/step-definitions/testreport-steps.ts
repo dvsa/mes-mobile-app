@@ -1,7 +1,6 @@
 import { Then, When, Before } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
-import { browser, by, element, ExpectedConditions } from 'protractor';
-import { waitForPresenceOfElement } from '../../helpers/helpers';
+import { browser, by, element } from 'protractor';
+import { waitForPresenceOfElement, getElement, clickElement } from '../../helpers/interactionHelpers';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -26,7 +25,7 @@ Before({ tags: '@catc1' }, () => {
 });
 
 Before({ tags: '@catce' }, () => {
-  this.testCategory = 'c';
+  this.testCategory = 'ce';
 });
 
 Before({ tags: '@catc1e' }, () => {
@@ -55,7 +54,7 @@ When('I complete the test', () => {
   if (this.testCategory === 'b') {
     completeShowMe();
   }
-  if (this.testCategory === 'be') {
+  if (this.testCategory === 'be' || this.testCategory === 'ce') {
     completeUncoupleRecouple();
   }
   endTest();

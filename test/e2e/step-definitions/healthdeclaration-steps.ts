@@ -1,6 +1,7 @@
 import { When, Then, Before } from 'cucumber';
-import { getElement, clickElement, enterPasscode } from './generic-steps';
+import { enterPasscode } from './generic-steps';
 import { by } from 'protractor';
+import { getElement, clickElement } from '../../helpers/interactionHelpers';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -22,6 +23,10 @@ Before({ tags: '@catc1' }, () => {
 });
 
 Before({ tags: '@catc1e' }, () => {
+  this.testCategory = 'c';
+});
+
+Before({ tags: '@catce' }, () => {
   this.testCategory = 'c';
 });
 

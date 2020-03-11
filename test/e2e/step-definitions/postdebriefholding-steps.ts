@@ -1,6 +1,6 @@
 import { Then, When, Before } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
 import { browser, by, ExpectedConditions } from 'protractor';
+import { getElement, clickElement } from '../../helpers/interactionHelpers';
 
 this.testCategory = 'b';
 

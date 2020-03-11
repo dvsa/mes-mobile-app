@@ -1,6 +1,8 @@
-import { by, element } from 'protractor';
-import { getElement, clickElement, onJournalPageAs } from './generic-steps';
+import { by, element, browser, ExpectedConditions } from 'protractor';
+import { onJournalPageAs } from './generic-steps';
+import { getElement, clickElement } from '../../helpers/interactionHelpers';
 
+import { TEST_CONFIG } from '../test.config';
 const {
   Given,
   Then,
@@ -52,9 +54,12 @@ When('I start the test for {string}', (candidateName) => {
 });
 
 When('I rekey a test for {string}', (candidateName) => {
+  const previousDayButtonElement = getElement(by.id('previous-day-container'));
+  clickElement(previousDayButtonElement);
+
   const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
+  [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+  h3[text() = "${candidateName}"]]`));
   clickElement(buttonElement);
 });
 
