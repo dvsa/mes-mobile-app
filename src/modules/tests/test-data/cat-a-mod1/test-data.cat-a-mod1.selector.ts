@@ -6,4 +6,4 @@ export const getDrivingFaultCount = (
   data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
 export const getSpeedRequirementNotMet = (testData: TestData) =>
-  testData.emergencyStop.outcome ===  CompetencyOutcome.S || testData.avoidance.outcome === CompetencyOutcome.S;
+  testData.emergencyStop.outcome ===  CompetencyOutcome.S;
