@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { StoreModel } from '../shared/models/store.model';
 import { LoadAppInfo, AppSuspended, AppResumed } from '../modules/app-info/app-info.actions';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TranslateService } from '@ngx-translate/core';
 import { LOGIN_PAGE } from '../pages/page-names.constants';
 import { Subscription, merge } from 'rxjs';
 import { map } from 'rxjs/operators';

@@ -13,12 +13,12 @@ import { AuthenticationProviderMock } from '../../../../../providers/authenticat
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 import { By } from '@angular/platform-browser';
-import { TranslateModule, TranslateLoader, TranslateService } from 'ng2-translate';
-import { Http } from '@angular/http';
+import { TranslateModule, TranslateService, TranslateLoader } from '@ngx-translate/core';
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import { candidateMock } from '../../../../../modules/tests/__mocks__/tests.mock';
 import { configureTestSuite } from 'ng-bullet';
 import { StoreModel } from '../../../../../shared/models/store.model';
+import { HttpClient } from '@angular/common/http';
 
 describe('PostalAddressComponent', () => {
   let fixture: ComponentFixture<PostalAddressComponent>;
@@ -68,9 +68,11 @@ describe('PostalAddressComponent', () => {
           },
         })),
         TranslateModule.forRoot({
-          provide: TranslateLoader,
-          useFactory: createTranslateLoader,
-          deps: [Http],
+          loader: {
+            provide: TranslateLoader,
+            useFactory: createTranslateLoader,
+            deps: [HttpClient],
+          },
         }),
       ],
       providers: [

@@ -15,12 +15,12 @@ import {
 } from '../../../../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
-import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
+import { TranslateModule, TranslateService, TranslateLoader } from '@ngx-translate/core';
 import { createTranslateLoader } from '../../../../../../app/app.module';
-import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 describe('VehicleChecksCardCatBComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardCatBComponent>;
@@ -34,11 +34,14 @@ describe('VehicleChecksCardCatBComponent', () => {
       ],
       imports: [
         IonicModule,
+        HttpClientModule,
         StoreModule.forRoot({ tests: testsReducer }),
         TranslateModule.forRoot({
-          provide: TranslateLoader,
-          useFactory: createTranslateLoader,
-          deps: [Http],
+          loader: {
+            provide: TranslateLoader,
+            useFactory: createTranslateLoader,
+            deps: [HttpClient],
+          },
         }),
       ],
       providers: [

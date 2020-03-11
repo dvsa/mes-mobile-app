@@ -3,7 +3,9 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { EventEmitter } from '@angular/core';
 import { ReceiptDeclarationComponent } from '../receipt-declaration';
-import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate';
+import {
+  TranslateModule,
+} from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
 
@@ -18,12 +20,7 @@ describe('ReceiptDeclarationComponent', () => {
       ],
       imports: [
         IonicModule,
-        TranslateModule,
-      ],
-      providers: [
-        TranslateService,
-        TranslateLoader,
-        TranslateParser,
+        TranslateModule.forRoot(),
       ],
     });
   });

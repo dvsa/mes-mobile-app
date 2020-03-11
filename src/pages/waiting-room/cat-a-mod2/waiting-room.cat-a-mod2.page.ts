@@ -28,7 +28,7 @@ import { map, tap } from 'rxjs/operators';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from '@ngx-translate/core';
 import {
   getTestSlotAttributes,
 } from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';

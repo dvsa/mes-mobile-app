@@ -11,9 +11,8 @@ import {
 } from '../../../../../../modules/tests/test-data/cat-a-mod2/safety-and-balance/safety-and-balance.cat-a-mod2.actions';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
-import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
+import { TranslateModule, TranslateService, TranslateLoader } from '@ngx-translate/core';
 import { createTranslateLoader } from '../../../../../../app/app.module';
-import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import * as englishTranslations from '../../../../../../assets/i18n/en.json';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
@@ -23,6 +22,7 @@ import { PopulateCandidateDetails }
 import { candidateMock } from '../../../../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 describe('SafetyAndBalanceCardCatAMod2Component', () => {
   let fixture: ComponentFixture<SafetyAndBalanceCardCatAMod2Component>;
@@ -36,11 +36,14 @@ describe('SafetyAndBalanceCardCatAMod2Component', () => {
       ],
       imports: [
         IonicModule,
+        HttpClientModule,
         StoreModule.forRoot({ tests: testsReducer }),
         TranslateModule.forRoot({
-          provide: TranslateLoader,
-          useFactory: createTranslateLoader,
-          deps: [Http],
+          loader: {
+            provide: TranslateLoader,
+            useFactory: createTranslateLoader,
+            deps: [HttpClient],
+          },
         }),
       ],
       providers: [

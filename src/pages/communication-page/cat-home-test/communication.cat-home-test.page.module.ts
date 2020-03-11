@@ -5,7 +5,7 @@ import { CommunicationEffects } from '../communication.effects';
 import { CommunicationAnalyticsEffects } from '../communication.analytics.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { ComponentsModule } from '../../../components/common/common-components.module';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule } from '@ngx-translate/core';
 import { CommunicationComponentsModule } from '../components/communication.components.module';
 
 @NgModule({

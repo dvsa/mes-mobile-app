@@ -13,7 +13,7 @@ import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { DataStoreProviderMock } from '../../providers/data-store/__mocks__/data-store.mock';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { translateServiceMock } from '../../shared/__mocks__/translate';
 import { LOGIN_PAGE } from '../../pages/page-names.constants';
 import { configureTestSuite } from 'ng-bullet';
@@ -30,6 +30,7 @@ describe('App', () => {
       declarations: [App],
       imports: [
         StoreModule.forRoot({}),
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: Platform, useFactory: () => PlatformMock.instance() },

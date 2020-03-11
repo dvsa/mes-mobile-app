@@ -18,7 +18,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
-import { TranslateModule, TranslateService } from 'ng2-translate';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestSlotAttributes }
   from '../../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';

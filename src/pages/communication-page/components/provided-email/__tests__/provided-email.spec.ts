@@ -3,11 +3,11 @@ import { ProvidedEmailComponent } from '../provided-email';
 import { FormGroup, FormControl } from '@angular/forms';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
-import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
+import { TranslateModule, TranslateService, TranslateLoader } from '@ngx-translate/core';
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import { createTranslateLoader } from '../../../../../app/app.module';
-import { Http } from '@angular/http';
 import { configureTestSuite } from 'ng-bullet';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 describe('ProvidedEmailComponent', () => {
   let fixture: ComponentFixture<ProvidedEmailComponent>;
@@ -21,10 +21,13 @@ describe('ProvidedEmailComponent', () => {
       ],
       imports: [
         IonicModule,
+        HttpClientModule,
         TranslateModule.forRoot({
-          provide: TranslateLoader,
-          useFactory: createTranslateLoader,
-          deps: [Http],
+          loader: {
+            provide: TranslateLoader,
+            useFactory: createTranslateLoader,
+            deps: [HttpClient],
+          },
         }),
       ],
     });

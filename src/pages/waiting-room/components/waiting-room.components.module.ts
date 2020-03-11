@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { ConductedLanguageComponent } from './conducted-language/conducted-language';
 import { IonicModule } from 'ionic-angular';
 import { InsuranceDeclarationComponent } from './insurance-declaration/insurance-declaration';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule } from '@ngx-translate/core';
 import { ResidencyDeclarationComponent } from './residency-declaration/residency-declaration';
 import { SignatureComponent } from './signature/signature';
 import { ComponentsModule } from '../../../components/common/common-components.module';

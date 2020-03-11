@@ -27,7 +27,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
-import { TranslateModule, TranslateService } from 'ng2-translate';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 // TODO - PREP-AMOD2 - Implement category specific competencies
 import { fullCompetencyLabels } from '../../../../shared/constants/competencies/competencies';

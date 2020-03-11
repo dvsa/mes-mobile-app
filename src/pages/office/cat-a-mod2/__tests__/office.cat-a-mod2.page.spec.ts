@@ -17,7 +17,7 @@ import {
 } from 'ionic-mocks';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { AppModule } from '../../../../app/app.module';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule } from '@ngx-translate/core';
 import { OfficeCatAMod2Page } from '../office.cat-a-mod2.page';
 import { SafetyAndBalanceCardCatAMod2Component } from '../components/safety-and-balance/safety-and-balance.cat-a-mod2';
 import { ModeOfTransportCatAMod2Component } from '../components/mode-of-transport/mode-of-transport.cat-a-mod2';

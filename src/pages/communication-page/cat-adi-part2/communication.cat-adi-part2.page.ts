@@ -32,7 +32,7 @@ import {
   CandidateChoseEmailAsCommunicationPreference,
   CandidateChosePostAsCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from '@ngx-translate/core';
 import { CAT_ADI_PART2 } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';

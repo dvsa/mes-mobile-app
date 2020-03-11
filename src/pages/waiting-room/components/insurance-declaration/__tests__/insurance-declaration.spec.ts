@@ -3,7 +3,12 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { EventEmitter } from '@angular/core';
 import { InsuranceDeclarationComponent } from '../insurance-declaration';
-import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate';
+import {
+  TranslateModule,
+  TranslateService,
+  TranslateLoader,
+  TranslateParser,
+} from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
 
@@ -18,7 +23,7 @@ describe('InsuranceDeclarationComponent', () => {
       ],
       imports: [
         IonicModule,
-        TranslateModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         TranslateService,

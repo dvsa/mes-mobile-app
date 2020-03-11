@@ -31,7 +31,7 @@ import {
   isProvisionalLicenseProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from '@ngx-translate/core';
 import { ProvisionalLicenseNotReceived } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import {
   getCommunicationPreference,

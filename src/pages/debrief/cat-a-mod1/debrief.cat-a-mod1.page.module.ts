@@ -5,7 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { DebriefAnalyticsEffects } from '../debrief.analytics.effects';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { DebriefComponentsModule } from '../components/debrief-components.module';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule } from '@ngx-translate/core';
 import { DebriefEffects } from '../debrief.effects';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { DebriefCatAMod1ComponentsModule } from './components/debrief.cat-a-mod1.components.module';
