@@ -17,7 +17,7 @@ import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatHomeReducer } from './journal-data/cat-home/journal-data.cat-home.reducer';
-import { testDataCatHReducer } from './test-data/cat-home/test-data.cat-h.reducer';
+import { testDataCatHReducer } from './test-data/cat-home-test/test-data.cat-h.reducer';
 import { vehicleDetailsReducer } from './vehicle-details/common/vehicle-details.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 

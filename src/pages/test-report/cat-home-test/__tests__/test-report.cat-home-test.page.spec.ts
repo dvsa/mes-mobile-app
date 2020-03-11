@@ -40,7 +40,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { ReverseLeftPopoverComponent } from '../../components/reverse-left-popover/reverse-left-popover';
 import { ReverseLeftComponent } from '../../components/reverse-left/reverse-left';
 import { TestReportCatHomeTestPage } from '../test-report.cat-home-test.page';
-import { initialState } from '../../../../modules/tests/test-data/cat-home/test-data.cat-f.reducer';
+import { initialState } from '../../../../modules/tests/test-data/cat-home-test/test-data.cat-f.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('TestReportCatHomeTestPage', () => {
