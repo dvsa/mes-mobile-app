@@ -58,9 +58,6 @@ When('I fail the eye sight test', () => {
 });
 
 When('I complete the waiting room to car page with the following vehicle checks', function (table) {
-  console.log('table', table);
-  console.log('--------------------');
-  console.log('table raw', table.raw()[1]);
   completeWaitingRoomPage(table.raw()[1], true);
 });
 
@@ -71,7 +68,6 @@ const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, te
   } else if (this.testCategory === 'c' || this.testCategory === 'c1') {
     multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
   } else if (this.testCategory === 'ce') {
-    console.log('UI TEST DATA ce: ', UI_TEST_DATA.testData.ce);
     multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
   } else {
     eyeSightResult(true);
@@ -108,13 +104,8 @@ const standardUserJourney = (withDriverFault: boolean, manualTransmission: boole
 
 const showMeQuestions = (questions, questionResult) => {
   const showMeQuestionsArray = [questions, questionResult];
-  console.log('SHOWMEQUESTIONSARRAY: ', showMeQuestionsArray);
   const elements = element.all(by.id('vehicle-checks-question-selector'));
   elements.each((element, index) => {
-    console.log('------------------------------------------------------------');
-    console.log('element', element);
-    console.log('------------------------------------------------------------');
-    console.log('index', index);
     clickElement(element);
     const vehicleCheck = getElement(by.xpath(`//button//div[normalize-space(text()) =  "${showMeQuestionsArray[0][index]}"]`));
     clickElement(vehicleCheck);

@@ -1,5 +1,5 @@
-@catc1e
-Feature: Full end to end journey for Category c1e
+@catc1e @regression
+Feature:  A Driving Examiner Completes a Failed User Journey in Category C1E
 
   Scenario: Examiner completes a failed test with various faults
     Given I am logged in as "mobexaminer5" and I have a test for "Mr Denny Carlson"
@@ -11,7 +11,7 @@ Feature: Full end to end journey for Category c1e
     And I proceed to the car
     Then I should see the "Denny Carlson" page
     And I complete the waiting room to car page with the following vehicle checks
-      | show_me_1  | show_me_2  |
+      | show_me_1 | show_me_2 |
       | true      | true      |
     Then I should see the "Test report - Denny Carlson" page
     And the driver fault count is "1"
