@@ -132,11 +132,11 @@ describe('WaitingRoomToCarCatBEPage', () => {
         component.eyesightFailCancelled();
         expect(store$.dispatch).toHaveBeenCalledWith(new EyesightTestReset());
       });
-      // it('should show the is load secure warning banner', () => {
-      //   fixture.detectChanges();
-      //   const warningBanner = fixture.debugElement.query(By.css('warning-banner'));
-      //   expect(warningBanner).not.toBeNull();
-      // });
+      it('should show the is load secure warning banner', () => {
+        fixture.detectChanges();
+        const warningBanner = fixture.debugElement.query(By.css('warning-banner'));
+        expect(warningBanner).not.toBeNull();
+      });
     });
 
   });
