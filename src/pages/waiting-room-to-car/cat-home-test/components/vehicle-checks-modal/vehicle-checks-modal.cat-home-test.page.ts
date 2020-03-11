@@ -14,10 +14,10 @@ import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle
 import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
-  getVehicleChecksCatBE,
+  getVehicleChecksCatHomeTest,
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
-} from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
+} from '../../../../../modules/tests/test-data/cat-home/vehicle-checks/vehicle-checks.cat-home-test.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import {
   ShowMeQuestionSelected,
@@ -88,17 +88,17 @@ export class VehicleChecksCatHomeTestModal {
       ),
       showMeQuestions$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatHomeTest),
         select(getSelectedShowMeQuestions),
       ),
       tellMeQuestions$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatHomeTest),
         select(getSelectedTellMeQuestions),
       ),
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatHomeTest),
         map((vehicleChecks) => {
           return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
         }),

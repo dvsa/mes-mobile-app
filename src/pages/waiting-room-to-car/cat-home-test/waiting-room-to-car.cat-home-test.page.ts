@@ -65,8 +65,8 @@ import { VehicleChecksQuestion } from '../../../providers/question/vehicle-check
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import {
-  getVehicleChecksCatBE,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
+  getVehicleChecksCatHomeTest
+} from '../../../modules/tests/test-data/cat-home/vehicle-checks/vehicle-checks.cat-home-test.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { VehicleChecksCatHomeTestComponent } from './components/vehicle-checks/vehicle-checks';
@@ -184,14 +184,14 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
       ),
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatHomeTest),
         map((vehicleChecks) => {
           return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
         }),
       ),
       vehicleChecks$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCatHomeTest),
       ),
     };
   }
