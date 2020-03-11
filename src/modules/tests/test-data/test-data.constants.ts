@@ -46,6 +46,7 @@ export enum Competencies {
   awarenessPlanning = 'awarenessPlanning',
   speedCheckEmergency = 'speedCheckEmergency',
   speedCheckAvoidance = 'speedCheckAvoidance',
+  clearanceOrObstructions = 'clearanceOrObstructions',
 }
 
 export enum SingleFaultCompetencyNames {

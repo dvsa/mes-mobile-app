@@ -215,7 +215,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency [competency]="competencies.clearance"></competency>
+            <competency [competency]="competencies.clearanceOrObstructions"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -343,7 +343,10 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency [competency]="competencies.positioningNormalRiding"></competency>
+            <competency
+              [competency]="competencies.positioningNormalDriving"
+              [labelOverride]="competencies.positioningNormalRiding"
+            ></competency>
           </ion-col>
         </ion-row>
         <ion-row>
