@@ -5,11 +5,11 @@
       [onPress]="toggleControlledStop"
       [ripple]="false"
       [ngClass]="{
-        'checked': componentState.selectedControlledStop$ | async
+        'checked': selectedControlledStop
       }"
     >
       <span class='tickwrapper'>
-        <tick-indicator [ticked]="componentState.selectedControlledStop$ | async"></tick-indicator>
+        <tick-indicator [ticked]="selectedControlledStop"></tick-indicator>
       </span>
     </competency-button>
   </ion-col>
@@ -19,7 +19,7 @@
       [onPress]="onPress"
       [ripple]="canButtonRipple()"
       [ngClass]="{
-        'checked': componentState.selectedControlledStop$ | async,
+        'checked': selectedControlledStop,
         'fault': faultCount() > 0,
         'serious-fault': hasSeriousFault(),
         'dangerous-fault': hasDangerousFault()
