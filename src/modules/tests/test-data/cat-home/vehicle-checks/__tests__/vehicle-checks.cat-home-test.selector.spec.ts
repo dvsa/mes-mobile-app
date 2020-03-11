@@ -1,7 +1,7 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { vehicleChecksExist } from '../vehicle-checks.cat-home-test.selector';
 
-describe('Vehicle Checks Selector Cat BE', () => {
+describe('Vehicle Checks Selector Cat HOME', () => {
 
   describe('vehicleChecksExist', () => {
     it('should return false if there are no vehicle checks entered', ()  => {

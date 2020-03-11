@@ -10,9 +10,9 @@ export const getSelectedShowMeQuestions = (
 };
 
 export const getSelectedTellMeQuestions = (
-  vehicleChecksCatBEReducer: CatFUniqueTypes.VehicleChecks,
+  vehicleChecksCatHomeTestReducer: CatFUniqueTypes.VehicleChecks,
 ): QuestionResult[] => {
-  return vehicleChecksCatBEReducer.tellMeQuestions;
+  return vehicleChecksCatHomeTestReducer.tellMeQuestions;
 };
 
 export const vehicleChecksExist = (vehicleChecks: CatFUniqueTypes.VehicleChecks): boolean => {
@@ -20,5 +20,5 @@ export const vehicleChecksExist = (vehicleChecks: CatFUniqueTypes.VehicleChecks)
   return some(questions, fault => fault.outcome != null);
 };
 
-export const getVehicleChecksCatBE =
+export const getVehicleChecksCatHomeTest =
   createFeatureSelector<CatFUniqueTypes.VehicleChecks>('vehicleChecks');
