@@ -20,6 +20,7 @@ import {
   ManoeuvreUnion,
 } from '../../../../providers/manoeuvres-by-category/manoeuvres-by-category';
 import { getReverseLeftSelected } from '../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.selectors';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'reverse-left',
@@ -60,7 +61,7 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
     const manoeuvres$ = this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
-        select(this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)),
+        map(data => this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)(data)),
         select(this.manoeuvresByCategory.getManoeuvresByCategoryCode(this.testCategory)),
       );
 

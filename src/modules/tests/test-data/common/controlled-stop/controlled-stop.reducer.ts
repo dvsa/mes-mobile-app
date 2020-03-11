@@ -6,6 +6,7 @@ import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
 
 import * as controlledStopActions from './controlled-stop.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import { createFeatureSelector } from '@ngrx/store';
 
 export const initialState: CatFUniqueTypes.ControlledStop = {};
 
@@ -58,3 +59,5 @@ export function controlledStopReducer(
       return state;
   }
 }
+
+export const getControlledStop = createFeatureSelector<ControlledStopUnion>('controlledStop');

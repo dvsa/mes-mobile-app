@@ -41,14 +41,14 @@ export class VehicleChecksCompactCatDComponent implements OnInit {
 
     this.componentState = {
       vehicleChecksDrivingFaultCount$: currentTest$.pipe(
-        select(this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)),
+        map(data => this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)(data)),
         select(getVehicleChecksCatD),
         map((vehicleChecks) => {
           return this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory, vehicleChecks).drivingFaults;
         }),
       ),
       vehicleChecksSeriousFaultCount$: currentTest$.pipe(
-        select(this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)),
+        map(data => this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)(data)),
         select(getVehicleChecksCatD),
         map((vehicleChecks) => {
           return this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory, vehicleChecks).seriousFaults;

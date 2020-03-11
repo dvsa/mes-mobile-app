@@ -20,6 +20,7 @@ import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-c
 import { UncoupleRecoupleComponent } from './uncouple-recouple/uncouple-recouple';
 import { MultiLegalRequirementComponent } from './multi-legal-requirement/multi-legal-requirement';
 import { SingleFaultCompetencyComponent } from './single-fault-competency/single-fault-competency';
+import { ControlledStopComponent } from './controlled-stop/controlled-stop';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { SingleFaultCompetencyComponent } from './single-fault-competency/single
     EcoComponent,
     TimerComponent,
     UncoupleRecoupleComponent,
+    ControlledStopComponent,
   ],
   imports: [
     ComponentsModule,
@@ -61,6 +63,7 @@ import { SingleFaultCompetencyComponent } from './single-fault-competency/single
     EcoComponent,
     TimerComponent,
     UncoupleRecoupleComponent,
+    ControlledStopComponent,
   ],
 })
 export class TestReportComponentsModule {}

@@ -72,11 +72,11 @@ export class UncoupleRecoupleComponent implements OnInit, OnDestroy {
         select(getTestReportState),
         select(isDangerousMode)),
       selectedUncoupleRecouple$: currentTest$.pipe(
-        select(this.testDataByCategory.getTestDataByCategoryCode(this.category)),
+        map(data => this.testDataByCategory.getTestDataByCategoryCode(this.category)(data)),
         select(testData => get(testData, 'uncoupleRecouple.selected')),
       ),
       uncoupleRecoupleOutcome$: currentTest$.pipe(
-        select(this.testDataByCategory.getTestDataByCategoryCode(this.category)),
+        map(data => this.testDataByCategory.getTestDataByCategoryCode(this.category)(data)),
         select(testData => get(testData, 'uncoupleRecouple.fault')),
       ),
     };

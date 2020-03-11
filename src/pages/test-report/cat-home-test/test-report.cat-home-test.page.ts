@@ -9,7 +9,7 @@ import {
 } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
 import { Observable, merge, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, withLatestFrom } from 'rxjs/operators';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { StoreModel } from '../../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
@@ -124,8 +124,9 @@ export class TestReportCatHomeTestPage extends BasePageComponent {
       select(getCurrentTest),
     );
 
-    const testData$ = currentTest$.pipe(
-      select(this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)),
+    const category$ = currentTest$.pipe(
+      select(getTestCategory),
+      map(category => category as TestCategory),
     );
 
     this.pageState = {
@@ -146,11 +147,18 @@ export class TestReportCatHomeTestPage extends BasePageComponent {
         select(getTestReportState),
         select(isDangerousMode),
       ),
-      manoeuvres$: testData$.pipe(
+      manoeuvres$: currentTest$.pipe(
+        withLatestFrom(category$),
+        map(([data , category])  => this.testDataByCategory.getTestDataByCategoryCode(category)(data)),
         select(hasManoeuvreBeenCompletedCatC),
       ),
-      testData$: testData$.pipe(),
-      testRequirements$: testData$.pipe(
+      testData$: currentTest$.pipe(
+        withLatestFrom(category$),
+        map(([data , category])  => this.testDataByCategory.getTestDataByCategoryCode(category)(data)),
+      ),
+      testRequirements$: currentTest$.pipe(
+        withLatestFrom(category$),
+        map(([data , category])  => this.testDataByCategory.getTestDataByCategoryCode(category)(data)),
         select(getTestRequirementsCatHome),
       ),
       testCategory$: currentTest$.pipe(

@@ -38,7 +38,7 @@ export class SafetyQuestionsCatDComponent implements OnInit {
       safetyQuestionsDrivingFaultCount$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
-        select(this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)),
+        map(data => this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)(data)),
         select(getSafetyQuestionsCatD),
         map((safetyQuestions) => {
           return this.faultCountProvider.getSafetyQuestionsFaultCount(this.testCategory, safetyQuestions).drivingFaults;

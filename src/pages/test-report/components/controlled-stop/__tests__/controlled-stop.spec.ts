@@ -3,28 +3,29 @@ import { By } from '@angular/platform-browser';
 import { ControlledStopComponent } from '../controlled-stop';
 import { IonicModule } from 'ionic-angular';
 import { StoreModule, Store } from '@ngrx/store';
-import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
-import { testReportReducer } from '../../../../test-report.reducer';
-import { StoreModel } from '../../../../../../shared/models/store.model';
+import { testsReducer } from '../../../../../modules/tests/tests.reducer';
+import { testReportReducer } from '../../../test-report.reducer';
+import { StoreModel } from '../../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
-import { CompetencyButtonComponent } from '../../../../components/competency-button/competency-button';
-import { TickIndicatorComponent } from '../../../../../../components/common/tick-indicator/tick-indicator';
+import { CompetencyButtonComponent } from '../../competency-button/competency-button';
+import { TickIndicatorComponent } from '../../../../../components/common/tick-indicator/tick-indicator';
 import {
-  DrivingFaultsBadgeComponent } from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
+  DrivingFaultsBadgeComponent } from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import {
   SeriousFaultBadgeComponent,
-} from '../../../../../../components/common/serious-fault-badge/serious-fault-badge';
+} from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
 import {
   DangerousFaultBadgeComponent,
-} from '../../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
-import { StartTest } from '../../../../../../modules/tests/tests.actions';
+} from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
+import { StartTest } from '../../../../../modules/tests/tests.actions';
 import {
   ControlledStopAddDrivingFault,
   ControlledStopRemoveFault,
-} from '../../../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
-import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
+} from '../../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { TestDataByCategoryProvider } from '../../../../../providers/test-data-by-category/test-data-by-category';
 
 describe('ControlledStopComponent', () => {
   let fixture: ComponentFixture<ControlledStopComponent>;
@@ -40,6 +41,9 @@ describe('ControlledStopComponent', () => {
         MockComponent(SeriousFaultBadgeComponent),
         MockComponent(DangerousFaultBadgeComponent),
         MockComponent(CompetencyButtonComponent),
+      ],
+      providers: [
+        TestDataByCategoryProvider,
       ],
       imports: [
         IonicModule,
@@ -204,16 +208,15 @@ describe('ControlledStopComponent', () => {
     describe('Tick button effects', () => {
       it('should have added no classes to the tick button', () => {
         const tickButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-tick'));
-
         fixture.detectChanges();
         expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick');
       });
 
       it('should have added a checked class to the tick button', () => {
-        component.toggleControlledStop();
         const tickButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-tick'));
-
+        component.selectedControlledStop = true;
         fixture.detectChanges();
+        console.log(tickButton.nativeElement);
         expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick checked');
       });
 

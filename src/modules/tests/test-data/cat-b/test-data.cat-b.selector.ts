@@ -21,8 +21,6 @@ export const hasManoeuvreBeenCompletedCatB = (data: CatBUniqueTypes.TestData) =>
   );
 };
 
-export const hasControlledStopBeenCompleted = (data: CatBUniqueTypes.TestData) => data.controlledStop.selected;
-
 export const hasEyesightTestGotSeriousFault = (data: CatBUniqueTypes.TestData) => data.eyesightTest.seriousFault;
 
 export const hasEyesightTestBeenCompleted = (data: CatBUniqueTypes.TestData) => data.eyesightTest.complete;
