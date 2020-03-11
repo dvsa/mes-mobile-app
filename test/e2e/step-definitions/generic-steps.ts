@@ -4,6 +4,8 @@ import { TEST_CONFIG } from '../test.config';
 import { waitForOverlay } from '../../helpers/helpers';
 import LoginPage from '../pages/loginPage';
 import LandingPage from '../pages/landingPage';
+import DashboardPage from '../pages/DashboardPage';
+import JournalPage from '../pages/JournalPage';
 import TempPage from '../pages/tempPage';
 
 const {
@@ -67,11 +69,10 @@ Given('I am not logged in', () => {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP').then(() => {
       // Wait until we are on the login page before proceeding
-      const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-      browser.wait(ExpectedConditions.presenceOf(usernameFld));
+      LoginPage.isCurrentPage();
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(TempPage.getParentContext(webviewContext));
+      browser.driver.selectContext(LoginPage.getParentContext(webviewContext));
     });
   });
 });
@@ -81,12 +82,10 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
   onJournalPageAs(username);
 
   // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
-  const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-  browser.wait(ExpectedConditions.presenceOf(refreshButton));
+  // JournalPage.getRefreshButton();
+  JournalPage.isCurrentPage();
 
-  const buttonElement = element(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
+  const buttonElement = JournalPage.getStartTestButtonFor(candidateName);
 
   buttonElement.isPresent().then((isStartPresent) => {
     if (!isStartPresent) {
@@ -99,23 +98,16 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
       LoginPage.login(username);
       // Refresh application
       LandingPage.loadApplication().then(() => {
-      // Small wait to make sure the action has initiated
-        browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
+        LandingPage.waitForActionToInitiate();
       });
 
       // I should first hit the landing page
-      const employeeId = element(
-        by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
-      browser.wait(ExpectedConditions.presenceOf(employeeId));
+      // LandingPage.getEmployeeId(username);
+      LandingPage.isCurrentPage(username);
 
       // Navigate to journal page
-      const goToJournalButton = TempPage.getAndAwaitElement(by.xpath('//go-to-journal-card/button'));
-      TempPage.clickElement(goToJournalButton);
-
-      // If the journal page is loaded we should have a refresh button
-      const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-      browser.wait(ExpectedConditions.presenceOf(refreshButton));
-      return expect(refreshButton.isPresent()).to.eventually.be.true;
+      DashboardPage.clickGoToMyJournalButton();
+      JournalPage.isCurrentPage();
     }
   });
   return expect(buttonElement.isPresent()).to.eventually.be.true;
@@ -132,7 +124,7 @@ Then('I should see the Microsoft login page', () => {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP').then(() => {
       // Check for Microsoft login username field
-      const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+      const usernameFld = LoginPage.getUsernameField();
       expect(usernameFld.isPresent()).to.eventually.be.true;
 
       // Switch back to WEBVIEW context
@@ -146,11 +138,8 @@ Given('I am on the landing page as {string}', (username) => {
 });
 
 When(/^I start marking a practice test (with|without) a driving fault$/, (drivingFault) => {
-  const practiceMarkingXPath = '//button/span/h3[text() = "Practice marking a test (cat B)"]';
-  TempPage.clickElementByXPath(practiceMarkingXPath);
-
-  const withDriverFaultXPath = `//button/span/h3[text() = "Start ${drivingFault} a driving fault"]`;
-  TempPage.clickElementByXPath(withDriverFaultXPath);
+  DashboardPage.clickPracticeMarkingATestCatB();
+  DashboardPage.clickStartWithOrWithoutADrivingFault(drivingFault);
 });
 
 Given(/^I start full practice mode$/, () => {

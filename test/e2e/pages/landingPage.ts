@@ -4,6 +4,10 @@ import Page from './page';
 import LoginPage from './loginPage';
 
 class LandingPage extends Page {
+  isCurrentPage(username) {
+    this.getEmployeeId(username);
+  }
+
   getEmployeeId(username) {
     const element = this.getElementByXPath(
       `//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`);
@@ -15,8 +19,7 @@ class LandingPage extends Page {
   // would be good to have a polymorphic method name here for both methods.
   onLandingPageAs(username) {
     this.loadApplication().then(() => {
-      // Small wait to make sure the action has initiated
-      browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
+      this.waitForActionToInitiate();
     });
 
     this.loggedInAs(TEST_CONFIG.users[username].employeeId).then((response) => {
@@ -27,8 +30,7 @@ class LandingPage extends Page {
 
         // Refresh application
         this.loadApplication().then(() => {
-          // Small wait to make sure the action has initiated
-          browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
+          this.waitForActionToInitiate();
         });
       }
     });

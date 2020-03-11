@@ -10,10 +10,10 @@ const buttonPadding = 30;
 const request = require('request');
 
 export default class Page {
-/**
- * A framework safe click method.
- * @param fieldElement the element to click
- */
+  /**
+   * A framework safe click method.
+   * @param fieldElement the element to click
+   */
 // todo: check what type fieldElement is
   clickElement(fieldElement) {
     browser.wait(ExpectedConditions.elementToBeClickable(fieldElement));
@@ -57,10 +57,10 @@ export default class Page {
     return element(by.css(css));
   }
 
-/**
- * Waits for the element to exist on the page before returning it.
- * @param elementBy the element finder
- */
+  /**
+   * Waits for the element to exist on the page before returning it.
+   * @param elementBy the element finder
+   */
   getAndAwaitElement(elementBy) {
     const foundElement = element(elementBy);
     browser.wait(ExpectedConditions.presenceOf(foundElement));
@@ -68,10 +68,10 @@ export default class Page {
   }
 
   /**
-  * Checks whether the page is ready to be interacted with.
-  * Ionic adds an overlay preventing clicking until the page is ready so we need to wait for that to disappear.
-  * @param promise the promise to return when the page is ready
-  */
+   * Checks whether the page is ready to be interacted with.
+   * Ionic adds an overlay preventing clicking until the page is ready so we need to wait for that to disappear.
+   * @param promise the promise to return when the page is ready
+   */
   isReady(promise) {
     // There is a 200ms transition duration we have to account for
     browser.sleep(TEST_CONFIG.ACTION_WAIT);
@@ -87,11 +87,11 @@ export default class Page {
 
   textFieldInputViaNativeMode(xpathString: string, searchTerm) {
     browser.driver.getCurrentContext().then((webviewContext) => {
-    // Switch to NATIVE context
+      // Switch to NATIVE context
       browser.driver.selectContext('NATIVE_APP').then(() => {
         const nativeField = element(by.xpath(xpathString));
         nativeField.sendKeys(searchTerm);
-      // Switch back to WEBVIEW context
+        // Switch back to WEBVIEW context
         browser.driver.selectContext(this.getParentContext(webviewContext)).then(() => {
           browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
         });
@@ -207,5 +207,12 @@ export default class Page {
     const element = this.getElementByClassName(className);
     this.waitForPresenceOfElement(element);
     this.longPressButton(element);
+  }
+
+  /**
+   * Small wait to make sure the action has initiated
+   */
+  waitForActionToInitiate() {
+    browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
   }
 }
