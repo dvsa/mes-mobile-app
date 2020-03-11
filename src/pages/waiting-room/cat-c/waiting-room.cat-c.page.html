@@ -25,13 +25,14 @@
           <h4>{{ 'waitingRoom.declarationIntent' | translate}}:</h4>
         </ion-col>
       </ion-row>
-      <insurance-declaration [formGroup]="formGroup" [selected]="pageState.insuranceDeclarationAccepted$ | async"
-        (insuranceDeclarationChange)="insuranceDeclarationChanged()">
-      </insurance-declaration>
-      <residency-declaration [formGroup]="formGroup" [selected]="pageState.residencyDeclarationAccepted$ | async"
-        (residencyDeclarationChange)="residencyDeclarationChanged()">
-      </residency-declaration>
-      <div class="signature-area-padding"></div>
+      <div class="waiting-room-declarations">
+        <insurance-declaration [formGroup]="formGroup" [selected]="pageState.insuranceDeclarationAccepted$ | async"
+          (insuranceDeclarationChange)="insuranceDeclarationChanged()">
+        </insurance-declaration>
+        <residency-declaration [formGroup]="formGroup" [selected]="pageState.residencyDeclarationAccepted$ | async"
+          (residencyDeclarationChange)="residencyDeclarationChanged()">
+        </residency-declaration>
+      </div>
       <signature [formGroup]="formGroup" [signature]="pageState.signature$ | async"
         [drawCompleteAction]="getSignatureDrawCompleteAction()" [clearAction]="getSignatureClearAction()">
       </signature>

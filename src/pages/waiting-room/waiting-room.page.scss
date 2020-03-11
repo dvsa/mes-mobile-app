@@ -1,7 +1,7 @@
 div[class^="waiting-room-cat-"] {
 
   ion-content > div {
-    background-color: map-get($colors, "mes-white");
+    background-color: map-get($colors, 'mes-white');
 
     #candidate-section {
       display: flex;
@@ -14,8 +14,25 @@ div[class^="waiting-room-cat-"] {
       }
     }
 
-    .signature-area-padding {
-      height: 18px;
+    signature {
+      display: block;
+      margin-top: 18px;
+    }
+  }
+
+  .scroll-content {
+    display: flex;
+    flex-direction: column;
+
+    form,
+    .mes-full-width-card {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .waiting-room-declarations {
+      flex-grow: 1;
     }
   }
 }
