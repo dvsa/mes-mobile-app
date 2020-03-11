@@ -1,7 +1,7 @@
 import { by, element, browser, ExpectedConditions } from 'protractor';
 import { onJournalPageAs } from './generic-steps';
-import { getElement, clickElement, resetTestDataState, clickBackButton, waitForOverlay } from '../../helpers/helpers';
-import { logout, logInToApplication, loadApplication } from '././generic-steps';
+import { getElement, clickElement } from '../../helpers/interactionHelpers';
+
 import { TEST_CONFIG } from '../test.config';
 const {
   Given,

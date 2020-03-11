@@ -1,6 +1,6 @@
 import { When, Before } from 'cucumber';
 import { by, element, browser } from 'protractor';
-import { textFieldInputViaNativeMode, getElement, clickElement } from '../../helpers/helpers';
+import { textFieldInputViaNativeMode, getElement, clickElement } from '../../helpers/interactionHelpers';
 import { UI_TEST_DATA } from '../../test_data/ui_test_data';
 
 import { threadId } from 'worker_threads';

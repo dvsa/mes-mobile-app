@@ -1,6 +1,6 @@
 import { When, Then } from 'cucumber';
 import { by } from 'protractor';
-import { textFieldInputViaNativeMode, scrollToElement, getElement, clickElement } from '../../helpers/helpers';
+import { textFieldInputViaNativeMode, scrollToElement, getElement, clickElement } from '../../helpers/interactionHelpers';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');

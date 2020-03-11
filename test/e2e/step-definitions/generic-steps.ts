@@ -1,7 +1,7 @@
 import { Before } from 'cucumber';
 import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-import { waitForOverlay, getParentContext, getElement, isReady, clickElement, clickBackButton } from '../../helpers/helpers';
+import { waitForOverlay, getParentContext, getElement, isReady, clickElement, clickBackButton } from '../../helpers/interactionHelpers';
 
 const {
   Given,
