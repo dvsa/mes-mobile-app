@@ -1,9 +1,12 @@
 import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
 
-export default [
+export const NUMBER_OF_BALANCE_QUESTIONS = 1;
+
+// Questions can be long; we disable max-line-length lint rule to keep things clean.
+// tslint:disable: max-line-length
+export const questions: VehicleChecksQuestion[] = [
   {
     code: 'BQ1',
-    // tslint:disable-next-line:max-line-length
     description: 'What problems could arise from carrying a pillion passenger?',
     shortName: 'Pillion passenger problems',
   },
@@ -17,6 +20,6 @@ export default [
     description: 'How would the balance of the machine be affected if you carried a pillion passenger?',
     shortName: 'Balance with passenger',
   },
-] as VehicleChecksQuestion[];
+];
 
-export const NUMBER_OF_BALANCE_QUESTIONS = 1;
+export default questions;

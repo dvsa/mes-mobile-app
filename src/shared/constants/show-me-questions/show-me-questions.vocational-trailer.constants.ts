@@ -1,7 +1,10 @@
-/* tslint:disable */
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
-export default [
+export const NUMBER_OF_SHOW_ME_QUESTIONS = 1;
+
+// Questions can be long; we disable max-line-length lint rule to keep things clean.
+// tslint:disable: max-line-length
+export const questions: VehicleChecksQuestion[] = [
   {
     code: 'E2',
     description: 'Show me how you would replace the tachograph disc on this vehicle.',
@@ -61,6 +64,6 @@ export default [
     description: 'Show me how you would check that the brake lights are working on this vehicle. (I can assist you, if you need to switch the ignition on, please don’t start the engine)',
     shortName: 'Brake lights',
   },
-] as VehicleChecksQuestion[];
+];
 
-export const NUMBER_OF_SHOW_ME_QUESTIONS = 1;
+export default questions;

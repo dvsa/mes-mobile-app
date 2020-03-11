@@ -1,7 +1,10 @@
-/* tslint:disable */
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
-export default [
+export const NUMBER_OF_SHOW_ME_QUESTIONS = 3;
+
+// Questions can be long; we disable max-line-length lint rule to keep things clean.
+// tslint:disable: max-line-length
+export const questions: VehicleChecksQuestion[] = [
   {
     code: 'Q1',
     description: 'Show me how you would check that all doors including cargo doors are secure.',
@@ -85,6 +88,6 @@ export default [
     description: 'Show me how you switch your headlight from dipped to main beam',
     shortName: 'Dipped to main beam',
   },
-] as VehicleChecksQuestion[];
+];
 
-export const NUMBER_OF_SHOW_ME_QUESTIONS = 3;
+export default questions;
