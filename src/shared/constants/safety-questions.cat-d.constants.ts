@@ -1,6 +1,10 @@
 import { SafetyQuestion } from '../../providers/question/safety-question.model';
 
-export default [
+export const NUMBER_OF_SAFETY_QUESTIONS = 3;
+
+// Questions can be long; we disable max-line-length lint rule to keep things clean.
+/* tslint:disable:max-line-length */
+export const questions: SafetyQuestion[] = [
   {
     description: 'Fire extinguisher',
   },
@@ -10,6 +14,7 @@ export default [
   {
     description: 'Fuel cutoff',
   },
-] as SafetyQuestion[];
+];
+/* tslint:enable:max-line-length */
 
-export const NUMBER_OF_SAFETY_QUESTIONS = 3;
+export default questions;

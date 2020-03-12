@@ -1,9 +1,12 @@
 import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
 
-export default [
+export const NUMBER_OF_SAFETY_QUESTIONS = 2;
+
+// Questions can be long; we disable max-line-length lint rule to keep things clean.
+/* tslint:disable:max-line-length */
+export const questions: VehicleChecksQuestion[] = [
   {
     code: 'SQ1',
-    // tslint:disable-next-line:max-line-length
     description: 'Identify where you would check the engine oil level and tell me how you would check that the engine has sufficient oil.',
     shortName: 'Oil level',
   },
@@ -14,7 +17,6 @@ export default [
   },
   {
     code: 'SQ3',
-    // tslint:disable-next-line:max-line-length
     description: 'Identify where the brake fluid reservoir is and tell me how you would check that you have a safe level of hydraulic fluid.',
     shortName: 'Brake Fluid',
   },
@@ -69,6 +71,7 @@ export default [
     description: 'Show me how you switch your headlight from dipped to main beam.',
     shortName: 'Dipped / Main Beam',
   },
-] as VehicleChecksQuestion[];
+];
+/* tslint:enable:max-line-length */
 
-export const NUMBER_OF_SAFETY_QUESTIONS = 2;
+export default questions;

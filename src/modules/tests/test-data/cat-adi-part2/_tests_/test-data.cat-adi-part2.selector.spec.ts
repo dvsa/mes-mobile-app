@@ -236,65 +236,69 @@ describe('TestDataSelectors Cat ADI2', () => {
 
     describe('hasVehicleChecksBeenCompleted', () => {
       it('should return true if vehicle checks have been completed with a pass', () => {
-        const state: CatADI2UniqueTypes.TestData = {
-          vehicleChecks: {
-            tellMeQuestions: [
-              {
-                outcome: CompetencyOutcome.P,
-              },
-              {
-                outcome: CompetencyOutcome.P,
-              },
-            ],
-          },
+        const state: CatADI2UniqueTypes.VehicleChecks = {
+          tellMeQuestions: [
+            {
+              outcome: CompetencyOutcome.P,
+            },
+            {
+              outcome: CompetencyOutcome.P,
+            },
+            {
+              outcome: CompetencyOutcome.P,
+            },
+          ],
         };
 
         expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a driving fault', () => {
-        const state: CatADI2UniqueTypes.TestData = {
-          vehicleChecks: {
-            tellMeQuestions: [
-              {
-                outcome: CompetencyOutcome.DF,
-              },
-              {
-                outcome: CompetencyOutcome.DF,
-              },
-            ],
-          },
+        const state: CatADI2UniqueTypes.VehicleChecks = {
+          tellMeQuestions: [
+            {
+              outcome: CompetencyOutcome.DF,
+            },
+            {
+              outcome: CompetencyOutcome.DF,
+            },
+            {
+              outcome: CompetencyOutcome.DF,
+            },
+          ],
         };
 
         expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a serious fault', () => {
-        const state: CatADI2UniqueTypes.TestData = {
-          vehicleChecks: {
-            tellMeQuestions: [
-              {
-                outcome: CompetencyOutcome.S,
-              },
-              {
-                outcome: CompetencyOutcome.S,
-              },
-            ],
-          },
+        const state: CatADI2UniqueTypes.VehicleChecks = {
+          tellMeQuestions: [
+            {
+              outcome: CompetencyOutcome.S,
+            },
+            {
+              outcome: CompetencyOutcome.S,
+            },
+            {
+              outcome: CompetencyOutcome.S,
+            },
+          ],
         };
 
         expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a dangerous fault', () => {
-        const state : CatADI2UniqueTypes.TestData = {
-          vehicleChecks: {
-            tellMeQuestions: [
-              {
-                outcome: CompetencyOutcome.D,
-              },
-              {
-                outcome: CompetencyOutcome.D,
-              },
-            ],
-          },
+        const state : CatADI2UniqueTypes.VehicleChecks = {
+          tellMeQuestions: [
+            {
+              outcome: CompetencyOutcome.D,
+            },
+            {
+              outcome: CompetencyOutcome.D,
+            },
+            {
+              outcome: CompetencyOutcome.D,
+            },
+          ],
         };
 
         expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);

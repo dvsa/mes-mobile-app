@@ -1,7 +1,8 @@
-/* tslint:disable */
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
-export default [
+// Questions can be long; we disable max-line-length lint rule to keep things clean.
+/* tslint:disable:max-line-length */
+export const questions: VehicleChecksQuestion[] = [
   {
     code: 'S1',
     description: 'When it is safe to do so can you show me how you wash and clean the rear windscreen.',
@@ -45,5 +46,7 @@ export default [
     description: 'Not applicable.',
     shortName: 'Not applicable',
   },
+];
+/* tslint:enable:max-line-length */
 
-] as VehicleChecksQuestion[];
+export default questions;

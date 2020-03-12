@@ -1,7 +1,8 @@
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
-/* tslint:disable */
-export default [
+// Questions can be long; we disable max-line-length lint rule to keep things clean.
+/* tslint:disable:max-line-length */
+export const questions: VehicleChecksQuestion[] = [
   {
     code: 'T1',
     description: 'Tell me how you would check that the brakes are working before starting a journey.',
@@ -72,4 +73,7 @@ export default [
     description: 'Open the bonnet and tell me how you would check that you have a safe level of hydraulic brake fluid.',
     shortName: 'Brake fluid',
   },
-] as VehicleChecksQuestion[];
+];
+/* tslint:enable:max-line-length */
+
+export default questions;
