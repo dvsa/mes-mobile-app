@@ -1,6 +1,10 @@
 <ion-header>
   <ion-navbar hideBackButton>
     <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="passTest()" >Pass Test</button>
+      <button ion-button (click)="failTest()" >Fail Test</button>
+    </ion-buttons>
     <ion-buttons end>
       <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>
     </ion-buttons>
@@ -46,15 +50,22 @@
         <ion-row>
           <ion-col>
             <legal-requirement
-              [legalRequirement]="legalRequirements.angledStart"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.angledStart]"
+              [legalRequirement]="legalRequirements.uphillStart"
+              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.uphillStart]"
             >
             </legal-requirement>
           </ion-col>
           <ion-col>
             <legal-requirement
-              [legalRequirement]="legalRequirements.hillStart"
-              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.hillStart]"
+              [legalRequirement]="legalRequirements.downhillStart"
+              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.downhillStart]"
+            >
+            </legal-requirement>
+          </ion-col>
+          <ion-col>
+            <legal-requirement
+              [legalRequirement]="legalRequirements.angledStart"
+              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.angledStart]"
             >
             </legal-requirement>
           </ion-col>
@@ -82,6 +93,8 @@
             <eco></eco>
           </ion-col>
         </ion-row>
+        <!--
+        TODO(ADI2): Reintroduce as part of MES-5034
         <ion-row>
           <ion-col no-padding>
             <span class="section-header">Vehicle check</span>
@@ -92,6 +105,7 @@
             <vehicle-check></vehicle-check>
           </ion-col>
         </ion-row>
+        -->
         <ion-row>
           <ion-col no-padding>
             <div class="dark-divider"></div>

@@ -29,8 +29,7 @@ import {
   LegalRequirements,
   ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
-// TO-DO ADI Part2: Implement correct reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode  } from '../test-report.selector';
@@ -41,17 +40,20 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { StatusBar } from '@ionic-native/status-bar';
 import { CAT_ADI_PART2, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
-// TO-DO ADI Part2: Implement correct schema
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-// TO-DO ADI Part2: Implement correct selector
-import { hasManoeuvreBeenCompletedCatB } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-// TO-DO ADI Part2: Implement correct reducer
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import {
-  getTestRequirementsCatB,
-} from '../../../modules/tests/test-data/cat-b/test-requirements/test-requirements.reducer';
+  getManoeuvresADI2,
+  hasManoeuvreBeenCompletedCatADIPart2,
+} from '../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.selector';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { getTestRequirementsCatADI2 } from '../../../modules/tests/test-data/cat-adi-part2/test-requirements/test-requirements.cat-adi-part2.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+
+import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
+import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
+import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
+import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -59,9 +61,8 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  // TO-DO ADI Part2: Implement correct schema
-  testData$: Observable<CatBUniqueTypes.TestData>;
-  testRequirements$: Observable<CatBUniqueTypes.TestRequirements>;
+  testData$: Observable<CatADI2UniqueTypes.TestData>;
+  testRequirements$: Observable<CatADI2UniqueTypes.TestRequirements>;
 }
 
 @IonicPage()
@@ -137,16 +138,15 @@ export class TestReportCatADIPart2Page extends BasePageComponent {
       ),
       manoeuvres$: currentTest$.pipe(
         select(getTestData),
-        // TO-DO ADI Part2: Implement correct category
-        select(hasManoeuvreBeenCompletedCatB),
+        select(getManoeuvresADI2),
+        select(hasManoeuvreBeenCompletedCatADIPart2),
       ),
       testData$: currentTest$.pipe(
         select(getTestData),
       ),
       testRequirements$: currentTest$.pipe(
         select(getTestData),
-        // TO-DO ADI Part2: Implement correct category
-        select(getTestRequirementsCatB),
+        select(getTestRequirementsCatADI2),
       ),
     };
     this.setupSubscription();
@@ -242,5 +242,41 @@ export class TestReportCatADIPart2Page extends BasePageComponent {
 
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_ADI_PART2.DEBRIEF_PAGE));
+  }
+
+  passTest = (): void => {
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.clearance,
+      newFaultCount: 3,
+    }));
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.followingDistance,
+      newFaultCount: 1,
+    }));
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.useOfSpeed,
+      newFaultCount: 2,
+    }));
+    this.store$.dispatch(new SetActivityCode('1'));
+    this.navController.push(CAT_ADI_PART2.DEBRIEF_PAGE);
+  }
+
+  failTest = (): void => {
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.pedestrianCrossings,
+      newFaultCount: 3,
+    }));
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.controlsClutch,
+      newFaultCount: 1,
+    }));
+    this.store$.dispatch(new AddDrivingFault({
+      competency: Competencies.signalsCorrectly,
+      newFaultCount: 2,
+    }));
+    this.store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsChangeSpeed));
+    this.store$.dispatch(new AddSeriousFault(Competencies.useOfSpeed));
+    this.store$.dispatch(new AddDangerousFault(Competencies.responseToSignsTrafficLights));
+    this.navController.push(CAT_ADI_PART2.DEBRIEF_PAGE);
   }
 }

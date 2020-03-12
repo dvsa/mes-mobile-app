@@ -15,6 +15,8 @@ import { getTestData as getTestDataCatG } from '../../modules/tests/test-data/ca
 import { getTestData as getTestDataCatH } from '../../modules/tests/test-data/cat-home-test/test-data.cat-h.reducer';
 import { getTestData as getTestDataCatK } from '../../modules/tests/test-data/cat-home-test/test-data.cat-k.reducer';
 import { getTestData as getTestDataCatB } from '../../modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData as getTestDataCatADI2 } from '../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
+
 @Injectable()
 export class TestDataByCategoryProvider {
 
@@ -22,6 +24,7 @@ export class TestDataByCategoryProvider {
 
   public getTestDataByCategoryCode(category: CategoryCode) {
     switch (category) {
+      case TestCategory.ADI2: return getTestDataCatADI2;
       case TestCategory.B: return getTestDataCatB;
       case TestCategory.BE: return getTestDataCatBE;
       case TestCategory.C: return getTestDataC;

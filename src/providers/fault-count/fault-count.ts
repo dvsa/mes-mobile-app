@@ -14,6 +14,7 @@ import { sumManoeuvreFaults } from '../../shared/helpers/faults';
 import { FaultCountAM1Helper } from './cat-a-mod1/fault-count.cat-a-mod1';
 import { FaultCountAM2Helper } from './cat-a-mod2/fault-count.cat-a-mod2';
 import { FaultCountHomeTestHelper } from './cat-home-test/fault-count.cat-home-test';
+import { FaultCountADIPart2Helper } from './cat-adi-part2/fault-count.cat-adi-part2';
 
 // TODO: Remove category from helper functions as the name of the helper class already contains the category
 
@@ -24,6 +25,7 @@ export class FaultCountProvider {
 
   public getDrivingFaultSumCount = (category: TestCategory, data: object): number => {
     switch (category) {
+      case TestCategory.ADI2: return FaultCountADIPart2Helper.getDrivingFaultSumCountCatADIPart2(data);
       case TestCategory.B: return FaultCountBHelper.getDrivingFaultSumCountCatB(data);
       case TestCategory.BE: return FaultCountBEHelper.getDrivingFaultSumCountCatBE(data);
       case TestCategory.C1: return FaultCountCHelper.getDrivingFaultSumCountCatC1(data);
@@ -52,6 +54,7 @@ export class FaultCountProvider {
 
   public getSeriousFaultSumCount = (category: TestCategory, data: object): number => {
     switch (category) {
+      case TestCategory.ADI2: return FaultCountADIPart2Helper.getSeriousFaultSumCountCatADIPart2(data);
       case TestCategory.B: return FaultCountBHelper.getSeriousFaultSumCountCatB(data);
       case TestCategory.BE: return FaultCountBEHelper.getSeriousFaultSumCountCatBE(data);
       case TestCategory.C1: return FaultCountCHelper.getSeriousFaultSumCountCatC1(data);
@@ -80,6 +83,7 @@ export class FaultCountProvider {
 
   public getDangerousFaultSumCount = (category: TestCategory, data: object): number => {
     switch (category) {
+      case TestCategory.ADI2: return FaultCountADIPart2Helper.getDangerousFaultSumCountCatADIPart2(data);
       case TestCategory.B: return FaultCountBHelper.getDangerousFaultSumCountCatB(data);
       case TestCategory.BE: return FaultCountBEHelper.getDangerousFaultSumCountCatBE(data);
       case TestCategory.C1: return FaultCountCHelper.getDangerousFaultSumCountCatC1(data);
@@ -108,6 +112,8 @@ export class FaultCountProvider {
 
   public getManoeuvreFaultCount = (category: TestCategory, data: object, faultType: CompetencyOutcome): number => {
     switch (category) {
+      // TODO(ADI2): Replace with actual fault count helper
+      case TestCategory.ADI2: return sumManoeuvreFaults(data, faultType);
       case TestCategory.B: return sumManoeuvreFaults(data, faultType);
       case TestCategory.BE: return sumManoeuvreFaults(data, faultType);
       case TestCategory.C1:
@@ -132,6 +138,8 @@ export class FaultCountProvider {
 
   public getVehicleChecksFaultCount = (category: TestCategory, data: object): VehicleChecksScore => {
     switch (category) {
+      // TODO(ADI2): Replace with actual fault count helper
+      case TestCategory.ADI2: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
       case TestCategory.BE: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
       case TestCategory.C1: return FaultCountCHelper.getVehicleChecksFaultCountCatC1(data);
       case TestCategory.C1E: return FaultCountCHelper.getVehicleChecksFaultCountCatC1E(data);
