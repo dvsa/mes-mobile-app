@@ -325,8 +325,8 @@
       "controlsBalanceSlowControl": "Controls - Balance / Slow control",
       "positioningNormalRiding": "Positioning - Normal riding",
       "bends": "Bends",
-      "safetyQuestions": "Safety Questions"
-
+      "safetyQuestions": "Safety Questions",
+      "clearanceOrObstructions" : "Clearance/obstructions"
     },
     "dangerousFault": "Dangerous fault",
     "dangerousFaultsCardDescription": "dangerous faults",

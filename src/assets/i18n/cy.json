@@ -325,7 +325,8 @@
       "controlsThrottle": "[CY] Controls - Throttle",
       "controlsBalanceSlowControl": "[CY] Controls - Balance / Slow control",
       "positioningNormalRiding": "[CY] Positioning - Normal riding",
-      "bends": "[CY] Bends"
+      "bends": "[CY] Bends",
+      "clearanceOrObstructions" : "[CY] Clearance/obstructions"
     },
     "dangerousFault": "Nam peryglus",
     "dangerousFaultsCardDescription": "Namau peryglus",

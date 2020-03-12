@@ -47,6 +47,8 @@ export class CompetencyComponent {
 
   @Input()
   competency: Competencies;
+  @Input()
+  labelOverride: Competencies;
 
   competencyState: CompetencyState;
   subscription: Subscription;
@@ -172,7 +174,12 @@ export class CompetencyComponent {
     this.allowRipple = true;
   }
 
-  getLabel = (): string => competencyLabels[this.competency];
+  getLabel = (): string => {
+    if (this.labelOverride) {
+      return competencyLabels[this.labelOverride];
+    }
+    return competencyLabels[this.competency];
+  }
 
   addOrRemoveFault = (wasPress: boolean = false): void => {
     if (this.isRemoveFaultMode) {
