@@ -70,10 +70,10 @@ class TestReportPage extends Page {
     this.longPressElementByXPath('//competency-button[contains(@class, "eco-tick")]');
   }
 
-  getSummaryCountField() {
+  async getSummaryCountField() {
     const element = this.getElementById('summary-count');
     this.waitForPresenceOfElement(element);
-    return element;
+    return element.getText();
   }
 
   getControlledStopTick() {

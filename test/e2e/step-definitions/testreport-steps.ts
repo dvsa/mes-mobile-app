@@ -191,15 +191,15 @@ Then('the controlled stop requirement is ticked', () => {
   expect(controlledStopTick.isPresent()).to.eventually.be.true;
 });
 
-Then('the driver fault count is {string}', (driverFaultCount) => {
-  const summaryCountField = TestReportPage.getSummaryCountField();
-  return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
+Then('the driver fault count is {string}', async(driverFaultCount) => {
+  const summaryCountField = await TestReportPage.getSummaryCountField();
+  expect(summaryCountField).to.equal(driverFaultCount);
 });
 
-Then('a serious fault is present along the driver fault count of {string}', (driverFaultCount) => {
+Then('a serious fault is present along the driver fault count of {string}', async (driverFaultCount) => {
   expect(TestReportPage.driverFaults.getSeriousFaultBadgeForVehicleChecks().isPresent()).to.eventually.be.true;
-  const summaryCountField = TestReportPage.getSummaryCountField();
-  return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
+  const summaryCountField = await TestReportPage.getSummaryCountField();
+  expect(summaryCountField).to.equal(driverFaultCount);
 });
 
 Then('the competency {string} driver fault count is {string}', (competency, driverFaultCount) => {
