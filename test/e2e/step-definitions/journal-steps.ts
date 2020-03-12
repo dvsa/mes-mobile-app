@@ -65,7 +65,7 @@ When('I rekey a test for {string}', (candidateName) => {
 
 When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidateName: string) => {
   if (testTime === 'early') {
-    startingEarlyTest(candidateName);
+    startingExpiredOrEarlyTest(candidateName);
 
     // If the start test early dialog is shown just select continue
     const startTestEarlyButton = element(by.id('early-start-start-test-button'));
@@ -77,7 +77,7 @@ When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidat
   }
 
   if (testTime === 'late') {
-    startingExpiredTest(candidateName);
+    startingExpiredOrEarlyTest(candidateName);
 
     // If the rekey dialog is shown so just select start test normally
     const lateStartTestButton = element(by.id('rekey-start-test-button'));
@@ -87,22 +87,6 @@ When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidat
       }
     });
   }
-});
-
-When('I rekey a late test for {string}',(candidateName) => {
-  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-  clickElement(buttonElement);
-
-  // If the rekey dialog is shown so just select start test normally
-  const rekeyStartTestButton = element(by.id('rekey-rekey-test-button'));
-  rekeyIsPresent();
-  rekeyStartTestButton.isPresent().then((result) => {
-    if (result) {
-      clickElement(rekeyStartTestButton);
-    }
-  });
 });
 
 When('I rekey a late test for {string}',(candidateName) => {
@@ -219,28 +203,15 @@ const rekeyIsPresent = () => {
   return expect(rekeyStartTestButton.isPresent()).to.eventually.be.true;
 };
 
-const timeDialog = (dialog) => {
-  return expect(dialog.isPresent()).to.eventually.be.true;
+const timeDialog = () => {
+  const testDialog = getElement(by.className(`modal-alert-header`));
+  return expect(testDialog.isPresent()).to.eventually.be.true;
 };
 
-const startingEarlyTest = (candidateName) => {
+const startingExpiredOrEarlyTest = (candidateName) => {
   const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
   clickElement(buttonElement);
-
-  const testEarlyDialog = getElement(by.xpath(`/html/body/ion-app/ion-modal/div/
-  journal-early-start-modal/ion-card/modal-alert-title/ion-row[2]/ion-col/h2`));
-  timeDialog(testEarlyDialog);
-};
-
-const startingExpiredTest = (candidateName) => {
-  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-  clickElement(buttonElement);
-
-  const testExpireDialog = getElement(by.xpath(`/html/body/ion-app/ion-modal/div/journal-rekey-modal/ion-card/
-    modal-alert-title/ion-row[2]/ion-col/h2`));
-  timeDialog(testExpireDialog);
+  timeDialog();
 };
