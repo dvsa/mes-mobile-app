@@ -10,7 +10,6 @@ import { AuthenticationProviderMock } from '../../../../providers/authentication
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import {
-  ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
 } from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
@@ -37,15 +36,13 @@ import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { MockComponent } from 'ng-mocks';
 import { ConductedLanguageComponent } from '../../components/conducted-language/conducted-language';
 import { InsuranceDeclarationComponent } from '../../components/insurance-declaration/insurance-declaration';
-import { ResidencyDeclarationComponent } from '../../components/residency-declaration/residency-declaration';
 import { SignatureComponent } from '../../components/signature/signature';
 import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';
 import { LockScreenIndicator } from '../../../../components/common/screen-lock-indicator/lock-screen-indicator';
 import { CandidateSectionComponent } from '../../../../components/common/candidate-section/candidate-section';
 import { FormControl, Validators } from '@angular/forms';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
-// TO-DO ADI Part2: Implement correct category
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { JournalData, Candidate } from '@dvsa/mes-test-schema/categories/common';
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 import { configureTestSuite } from 'ng-bullet';
@@ -70,7 +67,6 @@ describe('WaitingRoomCatADIPart2Page', () => {
         MockComponent(CandidateSectionComponent),
         MockComponent(ConductedLanguageComponent),
         MockComponent(InsuranceDeclarationComponent),
-        MockComponent(ResidencyDeclarationComponent),
         MockComponent(SignatureComponent),
       ],
       imports: [
@@ -138,14 +134,6 @@ describe('WaitingRoomCatADIPart2Page', () => {
   }));
 
   describe('Class', () => {
-    describe('residencyDeclarationChanged', () => {
-      it('should emit a residency declaration toggle action when changed', () => {
-        component.residencyDeclarationChanged();
-
-        expect(store$.dispatch).toHaveBeenCalledWith(new ToggleResidencyDeclaration());
-      });
-    });
-
     describe('insuranceDeclarationChanged', () => {
       it('should emit an insurance declaration toggle action when changed', () => {
         component.insuranceDeclarationChanged();
@@ -217,8 +205,7 @@ describe('WaitingRoomCatADIPart2Page', () => {
     });
 
     describe('isJournalDataInvalid', () => {
-      // TODO - ADI Part 2: use correct schema
-      const journalData: CatBEUniqueTypes.JournalData = {
+      const journalData: JournalData = {
         examiner: {
           staffNumber: 'real-staff-number',
         },
@@ -240,8 +227,9 @@ describe('WaitingRoomCatADIPart2Page', () => {
             firstName: 'fname',
             lastName: 'lname',
           },
-        // TODO - ADI Part 2: use correct schema
-        } as CatBEUniqueTypes.Candidate,
+          prn: 123321,
+          previousADITests: 1,
+        } as Candidate,
         applicationReference: {
           applicationId: 11223344141414,
           bookingSequence: 112,
@@ -265,8 +253,7 @@ describe('WaitingRoomCatADIPart2Page', () => {
           candidate: {
             candidateName: {},
             driverNumber: '',
-          // TODO - ADI Part 2: use correct schema
-          } as CatBEUniqueTypes.Candidate,
+          } as Candidate,
         });
         expect(result).toBeTruthy;
       });

@@ -13,11 +13,9 @@ import * as preTestDeclarationsActions
   from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
   getInsuranceDeclarationStatus,
-  getResidencyDeclarationStatus,
   getSignatureStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
-// TODO - ADI Part 2: use adi part 2 reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
@@ -48,15 +46,13 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../../providers/device/device';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-// TODO - ADI Part 2: use correct schema
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { JournalData } from '@dvsa/mes-test-schema/categories/common';
 import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { App } from '../../../app/app.component';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
-  residencyDeclarationAccepted$: Observable<boolean>;
   signature$: Observable<string>;
   candidateName$: Observable<string>;
   candidateUntitledName$: Observable<string>;
@@ -80,7 +76,7 @@ export class WaitingRoomCatADIPart2Page extends BasePageComponent implements OnI
 
   subscription: Subscription;
 
-  merged$: Observable<boolean | string | CatBEUniqueTypes.JournalData>; // TO-DO ADI Part2: Implement correct category
+  merged$: Observable<boolean | string | JournalData>;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -135,10 +131,6 @@ export class WaitingRoomCatADIPart2Page extends BasePageComponent implements OnI
         select(getPreTestDeclarations),
         select(getInsuranceDeclarationStatus),
       ),
-      residencyDeclarationAccepted$: currentTest$.pipe(
-        select(getPreTestDeclarations),
-        select(getResidencyDeclarationStatus),
-      ),
       signature$: currentTest$.pipe(
         select(getPreTestDeclarations),
         select(getSignatureStatus),
@@ -173,7 +165,7 @@ export class WaitingRoomCatADIPart2Page extends BasePageComponent implements OnI
     this.merged$ = merge(
       currentTest$.pipe(
         select(getJournalData),
-        tap((journalData: CatBEUniqueTypes.JournalData) => { // TO-DO ADI Part2: Implement correct category type
+        tap((journalData: JournalData) => {
           if (this.isJournalDataInvalid(journalData)) {
             this.showCandidateDataMissingError();
           }
@@ -198,8 +190,7 @@ export class WaitingRoomCatADIPart2Page extends BasePageComponent implements OnI
     }
   }
 
-  // TO-DO ADI Part2: Implement correct category type
-  isJournalDataInvalid = (journalData: CatBEUniqueTypes.JournalData): boolean => {
+  isJournalDataInvalid = (journalData: JournalData): boolean => {
     return isEmpty(journalData.examiner.staffNumber) ||
       (isEmpty(journalData.candidate.candidateName) && isEmpty(journalData.candidate.driverNumber));
   }
@@ -214,10 +205,6 @@ export class WaitingRoomCatADIPart2Page extends BasePageComponent implements OnI
 
   insuranceDeclarationChanged(): void {
     this.store$.dispatch(new preTestDeclarationsActions.ToggleInsuranceDeclaration());
-  }
-
-  residencyDeclarationChanged(): void {
-    this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
   }
 
   dispatchCandidateChoseToProceedInWelsh() {
