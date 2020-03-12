@@ -4,6 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest, getJournalData } from '../../../../../modules/tests/tests.selector';
+// Todo add correct category
 import { getCandidate } from '../../../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import { getUntitledCandidateName }
   from '../../../../../modules/tests/journal-data/common/candidate/candidate.selector';
@@ -18,16 +19,20 @@ import {
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
 } from '../../../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.selector';
+// TODO add correct cstegory
 import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+// TODO add correct cstegory
 import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
 } from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+// TODO add correct cstegory
 import {
  NUMBER_OF_TELL_ME_QUESTIONS,
 } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+// TODO add correct cstegory
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS,
 } from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
@@ -71,8 +76,8 @@ export class VehicleChecksCatHomeTestModal {
     questionProvider: QuestionProvider,
   ) {
     this.formGroup = new FormGroup({});
-    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.BE);
-    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
+    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.F);
+    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.F);
   }
 
   ngOnInit(): void {
@@ -100,7 +105,7 @@ export class VehicleChecksCatHomeTestModal {
         select(getTestData),
         select(getVehicleChecksCatHomeTest),
         map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.F, vehicleChecks);
         }),
       ),
     };

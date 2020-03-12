@@ -12,6 +12,7 @@ import {
   QuestionResult,
 } from '@dvsa/mes-test-schema/categories/common';
 import { StoreModel } from '../../../../../../shared/models/store.model';
+// TODO make these work with correct category
 import {
   ShowMeQuestionOutcomeChanged,
   ShowMeQuestionSelected,
@@ -126,9 +127,5 @@ describe('VehicleChecksCatHomeTestModal', () => {
         expect(component.shouldDisplayBanner()).toBeTruthy();
       });
     });
-  });
-
-  describe('DOM', () => {
-
   });
 });

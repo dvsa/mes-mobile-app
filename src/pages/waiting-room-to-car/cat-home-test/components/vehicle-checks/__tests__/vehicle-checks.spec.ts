@@ -16,7 +16,7 @@ import { configureTestSuite } from 'ng-bullet';
 
 class MockStore { }
 
-describe('VehicleChecksCatBEComponent', () => {
+describe('VehicleChecksCatHomeTestComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCatHomeTestComponent>;
   let component: VehicleChecksCatHomeTestComponent;
   let modalController: ModalController;
@@ -228,10 +228,5 @@ describe('VehicleChecksCatBEComponent', () => {
         expect(component.formControl.value).toEqual('Select questions');
       });
     });
-
-    describe('DOM', () => {
-
-    });
-
   });
 });

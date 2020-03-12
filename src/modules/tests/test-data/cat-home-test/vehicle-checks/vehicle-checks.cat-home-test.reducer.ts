@@ -24,7 +24,7 @@ export const initialState: CatFUniqueTypes.VehicleChecks = {
   tellMeQuestions: Array(numberOfTellMeQuestions).fill({}),
   showMeQuestions: Array(numberOfShowMeQuestions).fill({}),
 };
-
+// TODO add all home type categories
 export function vehicleChecksCatHomeTestReducer(
   state: CatFUniqueTypes.VehicleChecks = initialState,
   action: vehicleChecksCatHomeTestActionTypes.Types): VechicleChecksUnion {
