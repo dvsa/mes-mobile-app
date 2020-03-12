@@ -154,12 +154,15 @@ class JournalPage extends Page {
     this.clickElementById('closeCandidateDetails');
   }
 
-  getStartTestButtonFor(candidateName) {
+  getStartTestButtonFor(candidateName, waitForElement : boolean = true) {
     const element = this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`);
 
-    this.waitForPresenceOfElement(element);
+    if (waitForElement) {
+      this.waitForPresenceOfElement(element);
+    }
+
     return element;
   }
 
