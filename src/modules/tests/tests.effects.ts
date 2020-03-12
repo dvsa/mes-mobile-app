@@ -214,11 +214,9 @@ export class TestsEffects {
         startTestAction.category === TestCategory.G ||
         startTestAction.category === TestCategory.H ||
         startTestAction.category === TestCategory.K) {
-        // TODO Replace this with Home Test action
         arrayOfActions.push(new GearboxCategoryChanged('Manual'));
         arrayOfActions.push(new RouteNumberChanged(88));
         arrayOfActions.push(new IndependentDrivingTypeChanged('N/A'));
-        arrayOfActions.push(new InitializeVehicleChecksCatD(startTestAction.category));
       }
       return arrayOfActions;
     }),
