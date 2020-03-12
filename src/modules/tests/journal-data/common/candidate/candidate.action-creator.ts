@@ -5,6 +5,7 @@ import { PopulateCandidateDetailsCatC } from '../../cat-c/candidate/candidate.ca
 import { PopulateCandidateDetailsCatD } from '../../cat-d/candidate/candidate.cat-d.actions';
 import { Booking } from '@dvsa/mes-journal-schema';
 import { get } from 'lodash';
+import { PopulateCandidateDetailsCatHome } from '../../cat-home/candidate/candidate.cat-home.actions';
 
 export const createPopulateCandidateDetailsAction = (testCategory: string, booking: Booking) => {
   switch (testCategory) {
@@ -41,6 +42,16 @@ export const createPopulateCandidateDetailsAction = (testCategory: string, booki
     case TestCategory.D1E:
     case TestCategory.DE:
       return new PopulateCandidateDetailsCatD({
+        ...booking.candidate,
+        businessAddress: get(booking, 'business.businessAddress'),
+        businessName: get(booking, 'business.businessName'),
+        businessTelephone: get(booking, 'business.telephone'),
+      });
+    case TestCategory.F:
+    case TestCategory.G:
+    case TestCategory.H:
+    case TestCategory.K:
+      return new PopulateCandidateDetailsCatHome({
         ...booking.candidate,
         businessAddress: get(booking, 'business.businessAddress'),
         businessName: get(booking, 'business.businessName'),

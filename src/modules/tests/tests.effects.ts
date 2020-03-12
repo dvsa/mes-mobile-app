@@ -38,7 +38,12 @@ import { SetExaminerKeyed } from './examiner-keyed/examiner-keyed.actions';
 import { MarkAsRekey } from './rekey/rekey.actions';
 import { getRekeySearchState, RekeySearchModel } from '../../pages/rekey-search/rekey-search.reducer';
 import { getBookedTestSlot, getStaffNumber } from '../../pages/rekey-search/rekey-search.selector';
-import { Examiner, TestSlotAttributes, ConductedLanguage, CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import {
+  Examiner,
+  TestSlotAttributes,
+  ConductedLanguage,
+  CategoryCode,
+} from '@dvsa/mes-test-schema/categories/common';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
 import { JournalModel } from '../journal/journal.model';
@@ -47,7 +52,7 @@ import { Language } from './communication-preferences/communication-preferences.
 import { version } from '../../environment/test-schema-version';
 import { createPopulateCandidateDetailsAction } from './journal-data/common/candidate/candidate.action-creator';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { PopulateVehicleDimensions } from './vehicle-details/common/vehicle-details.actions';
+import { GearboxCategoryChanged, PopulateVehicleDimensions } from './vehicle-details/common/vehicle-details.actions';
 import {
   InitializeVehicleChecks as InitializeVehicleChecksCatC,
 } from './test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
@@ -55,6 +60,7 @@ import {
   InitializeVehicleChecks as InitializeVehicleChecksCatD,
 }
 from './test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
+import { IndependentDrivingTypeChanged, RouteNumberChanged } from './test-summary/common/test-summary.actions';
 @Injectable()
 export class TestsEffects {
   constructor(
@@ -162,9 +168,7 @@ export class TestsEffects {
       }
       const testSlotAttributes: TestSlotAttributes = extractTestSlotAttributes(slot);
       const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
-
       examiner.individualId;
-
       const arrayOfActions: Action[] = [
         new PopulateTestCategory(startTestAction.category),
         new PopulateExaminer(examiner),
@@ -191,7 +195,6 @@ export class TestsEffects {
       if (startTestAction.rekey) {
         arrayOfActions.push(new MarkAsRekey());
       }
-
       if (
         startTestAction.category === TestCategory.C ||
         startTestAction.category === TestCategory.C1 ||
@@ -205,6 +208,15 @@ export class TestsEffects {
         startTestAction.category === TestCategory.D1E ||
         startTestAction.category === TestCategory.DE) {
         arrayOfActions.push(new InitializeVehicleChecksCatD(startTestAction.category));
+      }
+      if (
+        startTestAction.category === TestCategory.F ||
+        startTestAction.category === TestCategory.G ||
+        startTestAction.category === TestCategory.H ||
+        startTestAction.category === TestCategory.K) {
+        arrayOfActions.push(new GearboxCategoryChanged('Manual'));
+        arrayOfActions.push(new RouteNumberChanged(88));
+        arrayOfActions.push(new IndependentDrivingTypeChanged('N/A'));
       }
       return arrayOfActions;
     }),
