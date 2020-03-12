@@ -2,10 +2,9 @@
   <ion-navbar>
     <ion-title>
       {{ 'communication.title' | translate }} - {{pageState.candidateUntitledName$ | async}}
-      </ion-title>
+    </ion-title>
     <ion-buttons end>
-      <!-- TODO - ADI Part 2: use correct category -->
-      <end-test-link category="B+E"></end-test-link>
+      <end-test-link category="{{pageState.categoryCode$ | async}}"></end-test-link>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -14,16 +13,11 @@
   <lock-screen-indicator></lock-screen-indicator>
   <div>
     <form [formGroup]="form">
-      <candidate-section
-        [candidateName]="pageState.candidateName$ | async"
-        [candidateDriverNumber]="pageState.candidateDriverNumber$ | async"
-        (continueClickEvent)="onSubmit()"
-      >
+      <candidate-section [candidateName]="pageState.candidateName$ | async"
+        [candidateDriverNumber]="pageState.candidateDriverNumber$ | async" (continueClickEvent)="onSubmit()">
       </candidate-section>
       <div class="mes-full-width-card-separator"></div>
-      <privacy-notice
-        [language]="pageState.conductedLanguage$ | async"
-      ></privacy-notice>
+      <privacy-notice [language]="pageState.conductedLanguage$ | async"></privacy-notice>
       <div class="mes-full-width-card" id="declaration-section">
         <ion-row class="mes-validated-row">
           <ion-col>
@@ -32,30 +26,20 @@
             </div>
             <div class="validation-bar"></div>
             <ion-col align-self-center>
-              <provided-email
-                [formGroup]="form"
-                [shouldRender]="pageState.candidateProvidedEmail$ | async"
+              <provided-email [formGroup]="form" [shouldRender]="pageState.candidateProvidedEmail$ | async"
                 [providedEmailAddress]="pageState.candidateProvidedEmail$ | async"
                 [isProvidedEmailAddressChosen]="isProvidedEmailSelected()"
-                (providedEmailRadioSelect)="dispatchCandidateChoseProvidedEmail()"
-              >
+                (providedEmailRadioSelect)="dispatchCandidateChoseProvidedEmail()">
               </provided-email>
 
-              <new-email
-                [formGroup]="form"
-                [newEmailAddress]="getNewEmailAddressValue()"
+              <new-email [formGroup]="form" [newEmailAddress]="getNewEmailAddressValue()"
                 [isNewEmailAddressChosen]="isNewEmailSelected()"
                 (newEmailRadioSelect)="conditionalDispatchCandidateChoseNewEmail()"
-                (newEmailTextChange)="dispatchCandidateChoseNewEmail($event)"
-              >
+                (newEmailTextChange)="dispatchCandidateChoseNewEmail($event)">
               </new-email>
 
-              <postal-address
-                [formGroup]="form"
-                [postalAddress]="pageState.candidateAddress$ | async"
-                [isPostalAddressChosen]="isPostSelected()"
-                (postalRadioSelect)="dispatchCandidateChosePost($event)"
-              >
+              <postal-address [formGroup]="form" [postalAddress]="pageState.candidateAddress$ | async"
+                [isPostalAddressChosen]="isPostSelected()" (postalRadioSelect)="dispatchCandidateChosePost($event)">
               </postal-address>
 
               <ion-row class="validation-message-row" align-items-center>

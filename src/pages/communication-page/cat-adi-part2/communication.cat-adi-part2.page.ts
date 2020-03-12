@@ -27,7 +27,7 @@ import {
 import {
   getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType, getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
-import { CommunicationMethod, Address, ConductedLanguage } from '@dvsa/mes-test-schema/categories/common';
+import { CommunicationMethod, Address, ConductedLanguage, CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import {
   CandidateChoseEmailAsCommunicationPreference,
   CandidateChosePostAsCommunicationPreference,
@@ -37,6 +37,7 @@ import { CAT_ADI_PART2 } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -46,8 +47,8 @@ interface CommunicationPageState {
   communicationEmail$: Observable<string>;
   communicationType$: Observable<string>;
   candidateAddress$: Observable<Address>;
-
   conductedLanguage$: Observable<string>;
+  categoryCode$: Observable<CategoryCode>;
 }
 @IonicPage()
 @Component({
@@ -61,12 +62,11 @@ export class CommunicationCatADIPart2Page extends BasePageComponent implements O
   static readonly email: CommunicationMethod = 'Email';
   static readonly post: CommunicationMethod = 'Post';
   static readonly notProvided: CommunicationMethod = 'Not provided';
-  static readonly welshLanguage: ConductedLanguage = 'Cymraeg';
-  static readonly englishLanguage: ConductedLanguage = 'English';
+  static readonly welshLanguage: ConductedLanguage = Language.CYMRAEG;
+  static readonly englishLanguage: ConductedLanguage = Language.ENGLISH;
 
   @ViewChild(Navbar)
   navBar: Navbar;
-
   form: FormGroup;
   subscription: Subscription;
   emailType: string;
@@ -149,6 +149,9 @@ export class CommunicationCatADIPart2Page extends BasePageComponent implements O
       conductedLanguage$: currentTest$.pipe(
         select(getCommunicationPreference),
         select(getConductedLanguage),
+      ),
+      categoryCode$: currentTest$.pipe(
+        select(getTestCategory),
       ),
     };
 
