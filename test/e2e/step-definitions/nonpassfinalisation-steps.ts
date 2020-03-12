@@ -1,6 +1,4 @@
 import { Then, When, Before } from 'cucumber';
-import { by } from 'protractor';
-import TempPage from '../pages/pageHelper';
 import NonPassFinalisationPage from '../pages/nonPassFinalisationPage';
 import DebriefPage from '../pages/debriefPage';
 
@@ -59,10 +57,11 @@ Then('the activity code should be {string}', (activityCode) => {
   return expect(acitivityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
-Then('the nonpassfinalisation page test outcome is {string}', (testOutcome : string) => {
-  const testOutcomeField = TempPage.getAndAwaitElement(by.id('office-page-test-outcome'));
-  return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
-});
+// Todo: KC - Can't find where this is used.
+// Then('the nonpassfinalisation page test outcome is {string}', (testOutcome : string) => {
+//   const testOutcomeField = TempPage.getAndAwaitElement(by.id('office-page-test-outcome'));
+//   return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
+// });
 
 Then('the transmission is selected', () => {
   NonPassFinalisationPage.selectManualTransmission();

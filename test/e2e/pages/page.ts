@@ -1,4 +1,4 @@
-import { browser, ExpectedConditions, element, by, Key } from 'protractor';
+import { browser, ExpectedConditions, element, by } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
 
 const chai = require('chai');
@@ -64,16 +64,6 @@ export default class Page {
   }
 
   /**
-   * Waits for the element to exist on the page before returning it.
-   * @param elementBy the element finder
-   */
-  getAndAwaitElement(elementBy) {
-    const foundElement = element(elementBy);
-    browser.wait(ExpectedConditions.presenceOf(foundElement));
-    return foundElement;
-  }
-
-  /**
    * Checks whether the page is ready to be interacted with.
    * Ionic adds an overlay preventing clicking until the page is ready so we need to wait for that to disappear.
    * @param promise the promise to return when the page is ready
@@ -108,54 +98,10 @@ export default class Page {
   getPageTitle(pageTitle) {
     // return this.getElementByXPath(
     // `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
-    return this.getAndAwaitElement(by.xpath(
-      `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`));
-  }
-
-  // todo: kc only used in healthdeclaration-steps.ts and waitingroom-steps.ts, so could potentially be moved elsewhere.
-  getPassCodeField() {
-    const element = this.getElementByXPath('//XCUIElementTypeSecureTextField[@label="Passcode field"]');
+    const element = this.getElementByXPath(
+      `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
     this.waitForPresenceOfElement(element);
-    return element;
-  }
-
-  /**
-   * Send the fake passcode using native browser actions
-   */
-  sendFakePasscode() {
-    browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
-  }
-
-  /**
-   * Enters a generic password into the iOS passcode field.
-   * Note: This will not work on the physical device but the simulator will accept any code.
-   */
-  // todo: kc only used in healthdeclaration-steps.ts and waitingroom-steps.ts, so could potentially be moved elsewhere.
-  enterPasscode() {
-    // To be able to fill in the passcode we need to switch to NATIVE context then switch back to WEBVIEW after
-    browser.driver.getCurrentContext().then((webviewContext) => {
-      // Switch to NATIVE context
-      browser.driver.selectContext('NATIVE_APP').then(() => {
-        // Get the passcode field
-        this.getPassCodeField();
-        this.sendFakePasscode();
-
-        // Switch back to WEBVIEW context
-        browser.driver.selectContext(this.getParentContext(webviewContext)).then(() => {
-          browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
-        });
-      });
-    });
-  }
-
-  /**
-   * Checks whether the user is logged in.
-   * @param staffNumber the staff number of the user we wish to be logged in
-   */
-  loggedInAs(staffNumber) {
-    browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
-    const staffNumberField = element(by.xpath(`//span[@class="employee-id" and text()="${staffNumber}"]`));
-    return staffNumberField.isPresent();
+    this.longPressButton(element);
   }
 
   scrollToElement(element) {
