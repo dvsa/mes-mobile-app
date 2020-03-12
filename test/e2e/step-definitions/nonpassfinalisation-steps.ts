@@ -1,6 +1,5 @@
 import { Then, When, Before } from 'cucumber';
 import { by } from 'protractor';
-import { getElement } from '../../helpers/interactionHelpers';
 import TempPage from '../pages/tempPage';
 import NonPassFinalisationPage from '../pages/nonPassFinalisationPage';
 import DebriefPage from '../pages/debriefPage';
@@ -68,4 +67,3 @@ Then('the nonpassfinalisation page test outcome is {string}', (testOutcome : str
 Then('the transmission is selected', () => {
   NonPassFinalisationPage.selectManualTransmission();
 });
-

@@ -1,6 +1,5 @@
 import { Then, When, Before } from 'cucumber';
 import DebriefPage from '../pages/debriefPage';
-import DebriefPage from '../pages/debriefPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
