@@ -168,9 +168,8 @@ export class TestsEffects {
       }
       const testSlotAttributes: TestSlotAttributes = extractTestSlotAttributes(slot);
       const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
-
+      console.log('test');
       examiner.individualId;
-
       const arrayOfActions: Action[] = [
         new PopulateTestCategory(startTestAction.category),
         new PopulateExaminer(examiner),
@@ -185,6 +184,7 @@ export class TestsEffects {
         new PopulateConductedLanguage(conductedLanguage),
         new PopulateTestSchemaVersion(version),
       ];
+      console.log('test 2');
 
       if (startTestAction.category !== TestCategory.B
         && startTestAction.category !== TestCategory.ADI2) {
@@ -197,7 +197,6 @@ export class TestsEffects {
       if (startTestAction.rekey) {
         arrayOfActions.push(new MarkAsRekey());
       }
-
       if (
         startTestAction.category === TestCategory.C ||
         startTestAction.category === TestCategory.C1 ||
