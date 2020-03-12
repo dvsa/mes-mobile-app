@@ -1,7 +1,6 @@
 import { Before } from 'cucumber';
 import { browser, element, by } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-import { waitForOverlay } from '../../helpers/helpers';
 import LoginPage from '../pages/loginPage';
 import LandingPage from '../pages/landingPage';
 import DashboardPage from '../pages/dashboardPage';
@@ -85,31 +84,13 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
 
   // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
   // JournalPage.getRefreshButton();
-  JournalPage.isCurrentPage();
 
-  const buttonElement = JournalPage.getStartTestButtonFor(candidateName);
+  JournalPage.isCurrentPage();
+  const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
 
   buttonElement.isPresent().then((isStartPresent) => {
     if (!isStartPresent) {
-      // Go back to dashboard
-      waitForOverlay('click-block-active');
-      JournalPage.clickBackButton();
-      // Logout
-      LoginPage.logout();
-      // Login
-      LoginPage.login(username);
-      // Refresh application
-      LandingPage.loadApplication().then(() => {
-        LandingPage.waitForActionToInitiate();
-      });
-
-      // I should first hit the landing page
-      // LandingPage.getEmployeeId(username);
-      LandingPage.isCurrentPage(username);
-
-      // Navigate to journal page
-      DashboardPage.clickGoToMyJournalButton();
-      JournalPage.isCurrentPage();
+      PageHelper.resetApp(username);
     }
   });
   return expect(buttonElement.isPresent()).to.eventually.be.true;

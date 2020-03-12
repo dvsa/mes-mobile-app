@@ -258,4 +258,8 @@ export default class Page {
         return `waiting-room-cat-${testCategory}-page`;
     }
   }
+
+  waitForOverlay(elementName: string)  {
+    browser.wait(ExpectedConditions.stalenessOf(element(by.className(elementName))));
+  }
 }
