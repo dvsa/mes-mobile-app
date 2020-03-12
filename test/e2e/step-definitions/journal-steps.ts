@@ -1,5 +1,4 @@
 import JournalPage from '../pages/journalPage';
-import TempPage from '../pages/tempPage';
 
 const {
   Given,
@@ -49,8 +48,7 @@ When('I start the test for {string}', (candidateName) => {
 });
 
 When('I rekey a test for {string}', (candidateName) => {
-  const previousDayButtonElement = TempPage.getAndAwaitElement(by.id('previous-day-container'));
-  TempPage.clickElement(previousDayButtonElement);
+  JournalPage.clickPreviousDayButton();
 
   JournalPage.clickRekeyTestButtonFor(candidateName);
   // todo: added as part of an independent commit.  Left in to make
@@ -85,13 +83,12 @@ When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidat
       }
     });
   }
+
+  // JournalPage.getStartTestButtonFor(candidateName);
 });
 
 When('I rekey a late test for {string}',(candidateName) => {
-  const buttonElement = TempPage.getAndAwaitElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-  TempPage.clickElement(buttonElement);
+  JournalPage.getStartTestButtonFor(candidateName);
 });
 
 When('I navigate to next day', () => {
