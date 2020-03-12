@@ -3,12 +3,23 @@ import { TEST_CONFIG } from '../test.config';
 import Page from './page';
 
 class LoginPage extends Page {
+  isCurrentPage() {
+    // wait for username field to appear
+    this.getUsernameField();
+  }
+
   /**
    * Logs into the application with the given username and password. Assumes we will be on the Microsoft login page.
    * @param user the user
    */
   login(user : string) {
     this.logInToApplication(TEST_CONFIG.users[user].username, TEST_CONFIG.users[user].password);
+  }
+
+  getUsernameField() {
+    const element = this.getElementByXPath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]');
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   /**
@@ -23,9 +34,7 @@ class LoginPage extends Page {
       // Switch to NATIVE context
       browser.driver.selectContext('NATIVE_APP').then(() => {
         // Fill in username and click Next
-        const usernameFld = element(by.xpath(
-          '//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-        browser.wait(ExpectedConditions.presenceOf(usernameFld));
+        const usernameFld = this.getUsernameField();
         usernameFld.sendKeys(username);
         const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));
         nextButtonElement.click();

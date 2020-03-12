@@ -4,6 +4,126 @@ import { browser, by, element } from 'protractor';
 const buttonPadding = 30;
 const request = require('request');
 
+class TestReportPage extends Page {
+  public ETA: ETA;
+  public driverFaults: DriverFaults;
+  public reversingDiagramModal: ReversingDiagramModal;
+  public legalRequirements: LegalRequirements;
+  public competency: Competency;
+
+  constructor() {
+    super();
+    this.ETA = new ETA();
+    this.driverFaults = new DriverFaults();
+    this.reversingDiagramModal = new ReversingDiagramModal();
+    this.legalRequirements = new LegalRequirements();
+    this.competency = new Competency();
+  }
+
+  completeUncoupleRecouple() {
+    this.longPressElementByXPath('//competency-button[contains(@class, "uncouple-recouple-tick")]');
+  }
+
+  addUncoupleRecoupleFault() {
+    this.longPressElementByXPath('//uncouple-recouple//competency-button/div/div[1]');
+  }
+
+  completeManouveure(testCategory) {
+    if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1') {
+      this.longPressElementByXPath('//competency-button[contains(@class, "reverse-left-tick")]');
+    } else {
+      this.clickManoeuvresButton();
+      this.clickReverseRightRadio();
+      this.clickManoeuvresButton();
+    }
+  }
+
+  clickReverseRightRadio() {
+    this.clickElementById('manoeuvres-reverse-right-radio');
+  }
+
+  clickManoeuvresButton() {
+    this.clickElementByXPath('//manoeuvres/button');
+  }
+
+  clickSeriousMode() {
+    this.clickElementById('serious-button');
+  }
+
+  clickRemove() {
+    this.clickElementById('remove-button');
+  }
+
+  reverseDropDown() {
+    this.clickElementByXPath('//*[@id="reverse-left-label"]');
+  }
+
+  completeControlledStop() {
+    this.longPressElementByXPath('//competency-button[contains(@class, "controlled-stop-tick")]');
+  }
+
+  completeShowMe() {
+    this.longPressElementByXPath('//competency-button[contains(@class, "show-me-question-tick")]');
+  }
+
+  completeEco() {
+    this.longPressElementByXPath('//competency-button[contains(@class, "eco-tick")]');
+  }
+
+  getSummaryCountField() {
+    const element = this.getElementById('summary-count');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  getControlledStopTick() {
+    const element =  this.getElementByCss('.controlled-stop-tick.checked');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  clickEndTestButton() {
+    this.clickElementById('end-test-button');
+  }
+
+  clickLastEndTestButton() {
+    const lastEndTestButton = element.all(by.xpath('//end-test-link/button/span[text() = "End test"]')).last();
+    this.clickElement(lastEndTestButton);
+  }
+
+  clickLastExitPracticeButton() {
+    const lastExitPracticeButton = element.all(by.className('exit-text')).last();
+    this.clickElement(lastExitPracticeButton);
+  }
+
+  clickTerminateTestButton() {
+    this.clickElementByXPath('//button/span[text() = "Terminate test"]');
+  }
+
+  endAndTerminateTest() {
+    this.clickEndTestButton();
+    this.clickTerminateTestButton();
+  }
+
+  clickReturnToTestButton() {
+    this.clickElementByXPath('//div/legal-requirements-modal//modal-return-button//span');
+  }
+
+  clickDangerousButton() {
+    this.clickElementById('dangerous-button');
+  }
+
+  clickContinueToDebriefbutton() {
+    this.clickElementByXPath('//button[span[h3[text() = "Continue to debrief"]]]');
+  }
+
+  getPracticeModeBanner() {
+    const element = this.getElementByClassName('practice-mode-top-banner');
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+}
+
 class ETA extends Page {
   getETAModalTitle() {
     const element = this.getElementByClassName('modal-alert-header');
@@ -162,107 +282,4 @@ class Competency extends Page {
   }
 }
 
-class TestReportPage extends Page {
-  public ETA: ETA;
-  public driverFaults: DriverFaults;
-  public reversingDiagramModal: ReversingDiagramModal;
-  public legalRequirements: LegalRequirements;
-  public competency: Competency;
-
-  constructor() {
-    super();
-    this.ETA = new ETA();
-    this.driverFaults = new DriverFaults();
-    this.reversingDiagramModal = new ReversingDiagramModal();
-    this.legalRequirements = new LegalRequirements();
-    this.competency = new Competency();
-  }
-
-  completeUncoupleRecouple() {
-    this.longPressElementByXPath('//competency-button[contains(@class, "uncouple-recouple-tick")]');
-  }
-
-  addUncoupleRecoupleFault() {
-    this.longPressElementByXPath('//uncouple-recouple//competency-button/div/div[1]');
-  }
-
-  completeManouveure(testCategory) {
-    if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1') {
-      this.longPressElementByXPath('//competency-button[contains(@class, "reverse-left-tick")]');
-    } else {
-      this.clickManoeuvresButton();
-      this.clickReverseRightRadio();
-      this.clickManoeuvresButton();
-    }
-  }
-
-  clickReverseRightRadio() {
-    this.clickElementById('manoeuvres-reverse-right-radio');
-  }
-
-  clickManoeuvresButton() {
-    this.clickElementByXPath('//manoeuvres/button');
-  }
-
-  clickSeriousMode() {
-    this.clickElementById('serious-button');
-  }
-
-  clickRemove() {
-    this.clickElementById('remove-button');
-  }
-
-  reverseDropDown() {
-    this.clickElementByXPath('//*[@id="reverse-left-label"]');
-  }
-
-  completeControlledStop() {
-    this.longPressElementByXPath('//competency-button[contains(@class, "controlled-stop-tick")]');
-  }
-
-  completeShowMe() {
-    this.longPressElementByXPath('//competency-button[contains(@class, "show-me-question-tick")]');
-  }
-
-  completeEco() {
-    this.longPressElementByXPath('//competency-button[contains(@class, "eco-tick")]');
-  }
-
-  getSummaryCountField() {
-    const element = this.getElementById('summary-count');
-    this.waitForPresenceOfElement(element);
-    return element;
-  }
-
-  getControlledStopTick() {
-    const element =  this.getElementByCss('.controlled-stop-tick.checked');
-    this.waitForPresenceOfElement(element);
-    return element;
-  }
-
-  clickEndTestButton() {
-    this.clickElementById('end-test-button');
-  }
-
-  clickTerminateTestButton() {
-    this.clickElementByXPath('//button/span[text() = "Terminate test"]');
-  }
-
-  endAndTerminateTest() {
-    this.clickEndTestButton();
-    this.clickTerminateTestButton();
-  }
-
-  clickReturnToTestButton() {
-    this.clickElementByXPath('//div/legal-requirements-modal//modal-return-button//span');
-  }
-
-  clickDangerousButton() {
-    this.clickElementById('dangerous-button');
-  }
-
-  clickContinueToDebriefbutton() {
-    this.clickElementByXPath('//button[span[h3[text() = "Continue to debrief"]]]');
-  }
-}
 export default new TestReportPage();

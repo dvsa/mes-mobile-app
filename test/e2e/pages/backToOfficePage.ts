@@ -12,6 +12,10 @@ class BackToOfficePage extends Page {
   clickContinueToWriteUpButton() {
     this.clickElementById('continue-to-write-up');
   }
+
+  clickBackToJournalButton() {
+    this.clickElementByXPath('//*[@id="back-to-office-page"]//div[3]/button/span');
+  }
 }
 
 export default new BackToOfficePage();

@@ -1,10 +1,14 @@
 import { Before } from 'cucumber';
-import { browser, ExpectedConditions, element, by } from 'protractor';
+import { browser, element, by } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
 import { waitForOverlay } from '../../helpers/helpers';
 import LoginPage from '../pages/loginPage';
 import LandingPage from '../pages/landingPage';
-import TempPage from '../pages/tempPage';
+import DashboardPage from '../pages/dashboardPage';
+import JournalPage from '../pages/journalPage';
+import TestReportPage from '../pages/testReportPage';
+import BackToOfficePage from '../pages/backToOfficePage';
+import PageHelper from '../pages/pageHelper';
 
 const {
   Given,
@@ -67,55 +71,45 @@ Given('I am not logged in', () => {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP').then(() => {
       // Wait until we are on the login page before proceeding
-      const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-      browser.wait(ExpectedConditions.presenceOf(usernameFld));
+      LoginPage.isCurrentPage();
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(TempPage.getParentContext(webviewContext));
+      browser.driver.selectContext(LoginPage.getParentContext(webviewContext));
     });
   });
 });
 
 Given('I am logged in as {string} and I have a test for {string}', (username, candidateName) => {
   // Go to journal page as the user
-  onJournalPageAs(username);
+  JournalPage.onJournalPageAs(username);
 
   // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
-  const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-  browser.wait(ExpectedConditions.presenceOf(refreshButton));
+  // JournalPage.getRefreshButton();
+  JournalPage.isCurrentPage();
 
-  const buttonElement = element(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
+  const buttonElement = JournalPage.getStartTestButtonFor(candidateName);
 
   buttonElement.isPresent().then((isStartPresent) => {
     if (!isStartPresent) {
       // Go back to dashboard
       waitForOverlay('click-block-active');
-      clickBackButton();
+      JournalPage.clickBackButton();
       // Logout
       LoginPage.logout();
       // Login
       LoginPage.login(username);
       // Refresh application
       LandingPage.loadApplication().then(() => {
-      // Small wait to make sure the action has initiated
-        browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
+        LandingPage.waitForActionToInitiate();
       });
 
       // I should first hit the landing page
-      const employeeId = element(
-        by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
-      browser.wait(ExpectedConditions.presenceOf(employeeId));
+      // LandingPage.getEmployeeId(username);
+      LandingPage.isCurrentPage(username);
 
       // Navigate to journal page
-      const goToJournalButton = TempPage.getAndAwaitElement(by.xpath('//go-to-journal-card/button'));
-      TempPage.clickElement(goToJournalButton);
-
-      // If the journal page is loaded we should have a refresh button
-      const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-      browser.wait(ExpectedConditions.presenceOf(refreshButton));
-      return expect(refreshButton.isPresent()).to.eventually.be.true;
+      DashboardPage.clickGoToMyJournalButton();
+      JournalPage.isCurrentPage();
     }
   });
   return expect(buttonElement.isPresent()).to.eventually.be.true;
@@ -132,11 +126,11 @@ Then('I should see the Microsoft login page', () => {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP').then(() => {
       // Check for Microsoft login username field
-      const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+      const usernameFld = LoginPage.getUsernameField();
       expect(usernameFld.isPresent()).to.eventually.be.true;
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(TempPage.getParentContext(webviewContext));
+      browser.driver.selectContext(PageHelper.getParentContext(webviewContext));
     });
   });
 });
@@ -146,19 +140,14 @@ Given('I am on the landing page as {string}', (username) => {
 });
 
 When(/^I start marking a practice test (with|without) a driving fault$/, (drivingFault) => {
-  const practiceMarkingXPath = '//button/span/h3[text() = "Practice marking a test (cat B)"]';
-  TempPage.clickElementByXPath(practiceMarkingXPath);
-
-  const withDriverFaultXPath = `//button/span/h3[text() = "Start ${drivingFault} a driving fault"]`;
-  TempPage.clickElementByXPath(withDriverFaultXPath);
+  DashboardPage.clickPracticeMarkingATestCatB();
+  DashboardPage.clickStartWithOrWithoutADrivingFault(drivingFault);
 });
 
 Given(/^I start full practice mode$/, () => {
-  const practiceMarkingXPath = '//button/span/h3[text() = "Practice marking a full test (cat B)"]';
-  TempPage.clickElementByXPath(practiceMarkingXPath);
+  DashboardPage.clickStartFullPracticeMode();
 
-  const practiceModeBanner = element(by.className('practice-mode-top-banner'));
-  browser.wait(ExpectedConditions.presenceOf(practiceModeBanner));
+  const practiceModeBanner = TestReportPage.getPracticeModeBanner();
   return expect(practiceModeBanner.isPresent()).to.eventually.be.true;
 });
 
@@ -166,37 +155,37 @@ When('I log in to the application as {string}', (username) => {
   LoginPage.login(username);
 
   // If the dashboard has loaded we should see the employee id
-  const employeeId = element(
-    by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
-  browser.wait(ExpectedConditions.presenceOf(employeeId));
-  return expect(employeeId.isPresent()).to.eventually.be.true;
+  // todo: kc seems we should also see employee id if landing page is loaded (see ln 107) which is right?
+  DashboardPage.isCurrentPage(username);
 });
 
 Then('I should see the {string} page', (pageTitle) => {
   // Wait for the page title to exist
-  TempPage.getPageTitle(pageTitle);
+  // todo: kc how do we access getPageTitle?  From one of the existing pages? But they are specific to a particular
+  // page.  From Page via TempPage? That would need to be renamed.  What would it be renamed?
+  PageHelper.getPageTitle(pageTitle);
   // Check that it is the last page title i.e. the displayed one
   return expect(element.all(by.className('toolbar-title')).last().getText()).to.eventually.equal(pageTitle);
 });
 
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {
-  const dataRow = TempPage.getAndAwaitElement(by.xpath(`//ion-col/label[text()= "${rowName}"]
+  const dataRow = PageHelper.getAndAwaitElement(by.xpath(`//ion-col/label[text()= "${rowName}"]
     [parent::ion-col/parent::ion-row//*[normalize-space(text()) = "${rowValue}"]]`));
+
   return expect(dataRow.isPresent()).to.eventually.be.true;
 });
 
 When('I click on the {string} button', (buttonId) => {
-  const buttonElement = TempPage.getAndAwaitElement(by.css(`#${buttonId}`));
-  return TempPage.clickElement(buttonElement);
+  PageHelper.clickButtonByCssId(buttonId);
 });
 
 Then('validation item {string} should be visible', (validationId: string) => {
-  const validationElement = TempPage.getAndAwaitElement(by.css(`#${validationId}`));
+  const validationElement = PageHelper.getElementByCssId(validationId);
   return expect(validationElement.getAttribute('class')).to.eventually.contain('ng-invalid');
 });
 
 Then('validation item {string} should not be visible', (validationId: string) => {
-  const validationElement = TempPage.getAndAwaitElement(by.css(`#${validationId}`));
+  const validationElement = PageHelper.getElementByCssId(validationId);
   return expect(validationElement.getAttribute('class')).to.eventually.not.contain('ng-invalid');
 });
 
@@ -207,54 +196,42 @@ Then('validation item {string} should not exist', (validationId: string) => {
 });
 
 Then('validation item {string} should be {string}', (validationId: string, validationText: string) => {
-  const validationElement = TempPage.getAndAwaitElement(by.css(`#${validationId}`));
+  const validationElement = PageHelper.getElementByCssId(validationId);
   return expect(validationElement.getText()).to.eventually.equal(validationText);
 });
 
 When('I terminate the test', () => {
-  const lastEndTestButton = element.all(by.xpath('//end-test-link/button/span[text() = "End test"]')).last();
-  TempPage.clickElement(lastEndTestButton);
-
-  const terminateTestButton = TempPage.getElementByXPath('//button/span[text() = "Terminate test"]');
-  TempPage.waitForPresenceOfElement(terminateTestButton);
-  TempPage.clickElement(terminateTestButton);
-
-  TempPage.enterPasscode();
+  TestReportPage.clickLastEndTestButton();
+  TestReportPage.clickTerminateTestButton();
+  PageHelper.enterPasscode();
 });
 
 When('I exit practice mode', () => {
-  const lastExitPracticeButton = element.all(by.className('exit-text')).last();
-  TempPage.clickElement(lastExitPracticeButton);
+  TestReportPage.clickLastExitPracticeButton();
 });
 
 Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be "(.+)"$/, (
   pageName: string, candidateName: string) => {
-  const candidateNameElement = TempPage.getElementByXPath(
-    `//div[contains(@class, '${getPageType(pageName)}')]//h2[@id = 'candidate-name']`);
-  TempPage.waitForPresenceOfElement(candidateNameElement);
+  const candidateNameElement = PageHelper.getCandidateNameElement(pageName, this.testCategory);
   return expect(candidateNameElement.getText()).to.eventually.equal(candidateName);
 });
 
 Then(/^the (communication page|waiting room|debrief|health declaration) candidate driver number should be "(.+)"$/, (
   pageName: string, driverNumber: string) => {
-  const candidateDriverNumberElement = TempPage.getElementByXPath(
-    `//div[contains(@class, '${getPageType(pageName)}')]//h3[@id = 'candidate-driver-number']`);
-  TempPage.waitForPresenceOfElement(candidateDriverNumberElement);
+  const candidateDriverNumberElement = PageHelper.getCandidateDriveNumberElement(pageName, this.testCategory);
   return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
 });
 
 Then('I return to the Journal Page', () => {
-  const returnToJournalBtn = TempPage.getElementByXPath('//*[@id="back-to-office-page"]//div[3]/button/span');
-  TempPage.waitForPresenceOfElement(returnToJournalBtn);
-  TempPage.clickElement(returnToJournalBtn);
+  BackToOfficePage.clickBackToJournalButton();
 });
 
 When('I click the back button', () => {
-  clickBackButton();
+  JournalPage.clickBackButton();
 });
 
 When('I click go to my Journal', () => {
-  clickGoToMyJournalButton();
+  DashboardPage.clickGoToMyJournalButton();
 });
 
 /**
@@ -297,40 +274,4 @@ export const logPageSource = (fileName: string) => {
       console.log(`The page source was saved as ${fileName}`);
     });
   });
-};
-
-export const onJournalPageAs = (username) => {
-  // Load the landing page
-  LandingPage.onLandingPageAs(username);
-
-  // Navigate to journal page
-  clickGoToMyJournalButton();
-
-  // If the journal page is loaded we should have a refresh button
-  const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-  browser.wait(ExpectedConditions.presenceOf(refreshButton));
-};
-
-const getPageType = (pageName : string) => {
-  switch (pageName) {
-    case 'communication page':
-      return `communication-cat-${this.testCategory}-page`;
-    case 'debrief':
-      return `pass-finalisation-cat-${this.testCategory}-page`;
-    case 'health declaration':
-      return `health-declaration-cat-${this.testCategory}-page`;
-    default:
-      return `waiting-room-cat-${this.testCategory}-page`;
-  }
-};
-
-const clickBackButton = () => {
-  const backButton = TempPage.getElementByXPath('//page-journal//button//span[text()="Back"]');
-  TempPage.waitForPresenceOfElement(backButton);
-  TempPage.clickElement(backButton);
-};
-
-const clickGoToMyJournalButton = () => {
-  const goToJournalButton = TempPage.getAndAwaitElement(by.xpath('//go-to-journal-card/button'));
-  TempPage.clickElement(goToJournalButton);
 };
