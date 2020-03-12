@@ -24,9 +24,6 @@ import {
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.cat-b.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
-  InstructorRegistrationNumberChanged,
-} from '../../../modules/tests/instructor-details/instructor-details.actions';
-import {
   getRegistrationNumber,
   getGearboxCategory,
   isAutomatic,
@@ -48,8 +45,6 @@ import { getUntitledCandidateName } from '../../../modules/tests/journal-data/co
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../providers/question/question';
-import { getInstructorDetails } from '../../../modules/tests/instructor-details/instructor-details.reducer';
-import { getInstructorRegistrationNumber } from '../../../modules/tests/instructor-details/instructor-details.selector';
 import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
@@ -84,7 +79,6 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
-  instructorRegistrationNumber$: Observable<number>;
   transmission$: Observable<GearboxCategory>;
   schoolCar$: Observable<boolean>;
   dualControls$: Observable<boolean>;
@@ -151,10 +145,6 @@ export class WaitingRoomToCarCatADIPart2Page extends BasePageComponent {
       registrationNumber$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getRegistrationNumber),
-      ),
-      instructorRegistrationNumber$: currentTest$.pipe(
-        select(getInstructorDetails),
-        map(getInstructorRegistrationNumber),
       ),
       transmission$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -266,10 +256,6 @@ export class WaitingRoomToCarCatADIPart2Page extends BasePageComponent {
 
   vehicleRegistrationChanged(vehicleRegistration: string) {
     this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
-  }
-
-  instructorRegistrationChanged(instructorRegistration: number) {
-    this.store$.dispatch(new InstructorRegistrationNumberChanged(instructorRegistration));
   }
 
   onSubmit() {

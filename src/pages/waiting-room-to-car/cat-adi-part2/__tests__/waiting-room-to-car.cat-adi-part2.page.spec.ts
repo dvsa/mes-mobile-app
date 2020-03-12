@@ -38,7 +38,6 @@ import { TellMeQuestionCardComponent } from '../components/tell-me-question-card
 import { TellMeQuestionComponent } from '../components/tell-me-question/tell-me-question';
 import { TellMeQuestionOutcomeComponent } from '../components/tell-me-question-outcome/tell-me-question-outcome';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
-import { InstructorRegistrationComponent } from '../components/instructor-registration/instructor-registration';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 import { configureTestSuite } from 'ng-bullet';
 
@@ -58,7 +57,6 @@ describe('WaitingRoomToCarCatADIPart2Page', () => {
         MockComponent(TellMeQuestionComponent),
         MockComponent(TellMeQuestionOutcomeComponent),
         MockComponent(VehicleRegistrationComponent),
-        MockComponent(InstructorRegistrationComponent),
         MockComponent(TransmissionComponent),
         MockComponent(VehicleDetailsCardComponent),
         MockComponent(VehicleDetailsComponent),

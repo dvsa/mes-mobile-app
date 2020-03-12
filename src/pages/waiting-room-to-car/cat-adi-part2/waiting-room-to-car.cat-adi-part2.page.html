@@ -32,9 +32,6 @@
 
             <transmission [formGroup]="form" [transmission]="pageState.transmission$ | async" (transmissionChange)="transmissionChanged($event)"></transmission>
 
-            <instructor-registration [formGroup]="form" [instructorRegistration]="pageState.instructorRegistrationNumber$ | async"
-              (instructorRegistrationChange)="instructorRegistrationChanged($event)"></instructor-registration>
-
             <accompaniment-card [formGroup]="form" [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"
               [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async" [otherAccompaniment]="pageState.otherAccompaniment$ | async"
               [interpreterAccompaniment]="pageState.interpreterAccompaniment$ | async" (instructorAccompanimentChange)="instructorAccompanimentToggled()"
