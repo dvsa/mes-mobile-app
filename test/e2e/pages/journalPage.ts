@@ -2,7 +2,20 @@ import Page from './page';
 import LandingPage from './landingPage';
 import DashboardPage from './dashboardPage';
 
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+const expect = chai.expect;
+
 class JournalPage extends Page {
+  /**
+   * If the journal page is loaded we should have a refresh button
+   */
+  isCurrentPage() {
+    const refreshButton = this.getRefreshButton();
+    expect(refreshButton.isPresent()).to.eventually.be.true;
+  }
+
   // todo: kc on LandingPage there is a method onLandingPageAs.
   // would be good to have a polymorphic method name here for both methods.
   onJournalPageAs (username) {
@@ -145,12 +158,17 @@ class JournalPage extends Page {
     const element = this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`);
+
     this.waitForPresenceOfElement(element);
     return element;
   }
 
   startTestFor(candidateName) {
     this.clickElement(this.getStartTestButtonFor(candidateName));
+  }
+
+  clickBackButton() {
+    this.clickElementByXPath('//page-journal//button//span[text()="Back"]');
   }
 }
 

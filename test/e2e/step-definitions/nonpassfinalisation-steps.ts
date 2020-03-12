@@ -1,6 +1,6 @@
 import { Then, When, Before } from 'cucumber';
 import { by } from 'protractor';
-import TempPage from '../pages/tempPage';
+import TempPage from '../pages/pageHelper';
 import NonPassFinalisationPage from '../pages/nonPassFinalisationPage';
 import DebriefPage from '../pages/debriefPage';
 
