@@ -150,10 +150,7 @@ Then('I should see the {string} page', (pageTitle) => {
 });
 
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {
-  const dataRow = PageHelper.getAndAwaitElement(by.xpath(`//ion-col/label[text()= "${rowName}"]
-    [parent::ion-col/parent::ion-row//*[normalize-space(text()) = "${rowValue}"]]`));
-
-  return expect(dataRow.isPresent()).to.eventually.be.true;
+  JournalPage.rowContains(rowName, rowValue);
 });
 
 When('I click on the {string} button', (buttonId) => {

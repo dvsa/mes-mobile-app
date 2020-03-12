@@ -1,5 +1,6 @@
 import { When, Then, Before } from 'cucumber';
 import HealthDeclarationPage from '../pages/healthDeclarationPage';
+import PageHelper from '../pages/pageHelper';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -44,5 +45,5 @@ When('I complete the health declaration', () => {
   HealthDeclarationPage.clickReceiptDeclarationCheckbox();
   HealthDeclarationPage.clickHealthSignatureField(this.testCategory);
   HealthDeclarationPage.confirmHealthDeclaration(this.testCategory);
-  HealthDeclarationPage.enterPasscode();
+  PageHelper.enterPasscode();
 });

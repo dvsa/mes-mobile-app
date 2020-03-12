@@ -1,5 +1,6 @@
 import { Then, When, Before } from 'cucumber';
 import WaitingRoomPage from '../pages/waitingRoomPage';
+import PageHelper from '../pages/pageHelper';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -55,7 +56,7 @@ When('the candidate completes the declaration page', () => {
 When('I proceed to the car', () => {
   // Examiner clicks continue button then enters passcode
   WaitingRoomPage.clickContinueButton(this.testCategory);
-  WaitingRoomPage.enterPasscode();
+  PageHelper.enterPasscode();
 });
 
 Then('the email {string} has been provided and is preselected', (emailAddress) => {

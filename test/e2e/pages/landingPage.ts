@@ -17,6 +17,16 @@ class LandingPage extends Page {
     return element;
   }
 
+  /**
+   * Checks whether the user is logged in.
+   * @param staffNumber the staff number of the user we wish to be logged in
+   */
+  loggedInAs(staffNumber) {
+    browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
+    const staffNumberField = element(by.xpath(`//span[@class="employee-id" and text()="${staffNumber}"]`));
+    return staffNumberField.isPresent();
+  }
+
   // todo: kc on journalPage there is a method onJournalPageAs.
   // would be good to have a polymorphic method name here for both methods.
   onLandingPageAs(username) {

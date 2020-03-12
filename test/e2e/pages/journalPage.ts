@@ -173,6 +173,18 @@ class JournalPage extends Page {
   clickBackButton() {
     this.clickElementByXPath('//page-journal//button//span[text()="Back"]');
   }
+
+  getDataRow(rowName, rowValue) {
+    const element = this.getElementByXPath(`//ion-col/label[text()= "${rowName}"]
+    [parent::ion-col/parent::ion-row//*[normalize-space(text()) = "${rowValue}"]]`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  rowContains(rowName, rowValue) {
+    const dataRow = this.getDataRow(rowName, rowValue);
+    return expect(dataRow.isPresent()).to.eventually.be.true;
+  }
 }
 
 export default new JournalPage();
