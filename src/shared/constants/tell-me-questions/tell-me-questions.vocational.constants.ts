@@ -3,7 +3,7 @@ import { VehicleChecksQuestion } from '../../../providers/question/vehicle-check
 export const NUMBER_OF_TELL_ME_QUESTIONS = 2;
 
 // Questions can be long; we disable max-line-length lint rule to keep things clean.
-// tslint:disable: max-line-length
+/* tslint:disable:max-line-length */
 export const questions: VehicleChecksQuestion[] = [
   {
     code: 'Q3',
@@ -66,5 +66,6 @@ export const questions: VehicleChecksQuestion[] = [
     shortName: 'Windscreen washer reservoir',
   },
 ];
+/* tslint:enable:max-line-length */
 
 export default questions;

@@ -3,7 +3,7 @@ import { VehicleChecksQuestion } from '../../../providers/question/vehicle-check
 export const NUMBER_OF_SHOW_ME_QUESTIONS = 3;
 
 // Questions can be long; we disable max-line-length lint rule to keep things clean.
-// tslint:disable: max-line-length
+/* tslint:disable:max-line-length */
 export const questions: VehicleChecksQuestion[] = [
   {
     code: 'S01',
@@ -51,5 +51,6 @@ export const questions: VehicleChecksQuestion[] = [
     shortName: 'Brake lights',
   },
 ];
+/* tslint:enable:max-line-length */
 
 export default questions;

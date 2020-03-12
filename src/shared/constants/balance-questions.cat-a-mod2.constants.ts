@@ -3,7 +3,7 @@ import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-q
 export const NUMBER_OF_BALANCE_QUESTIONS = 1;
 
 // Questions can be long; we disable max-line-length lint rule to keep things clean.
-// tslint:disable: max-line-length
+/* tslint:disable:max-line-length */
 export const questions: VehicleChecksQuestion[] = [
   {
     code: 'BQ1',
@@ -21,5 +21,6 @@ export const questions: VehicleChecksQuestion[] = [
     shortName: 'Balance with passenger',
   },
 ];
+/* tslint:enable:max-line-length */
 
 export default questions;

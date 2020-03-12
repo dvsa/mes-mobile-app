@@ -3,7 +3,7 @@ import { VehicleChecksQuestion } from '../../../providers/question/vehicle-check
 export const NUMBER_OF_TELL_ME_QUESTIONS = 2;
 
 // Questions can be long; we disable max-line-length lint rule to keep things clean.
-// tslint:disable: max-line-length
+/* tslint:disable:max-line-length */
 export const questions : VehicleChecksQuestion[] = [
   {
     code: 'T01',
@@ -36,5 +36,6 @@ export const questions : VehicleChecksQuestion[] = [
     shortName: 'Head restraint',
   },
 ];
+/* tslint:enable:max-line-length */
 
 export default questions;

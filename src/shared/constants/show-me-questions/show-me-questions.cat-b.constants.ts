@@ -1,7 +1,7 @@
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
 // Questions can be long; we disable max-line-length lint rule to keep things clean.
-// tslint:disable: max-line-length
+/* tslint:disable:max-line-length */
 export const questions: VehicleChecksQuestion[] = [
   {
     code: 'S1',
@@ -46,7 +46,7 @@ export const questions: VehicleChecksQuestion[] = [
     description: 'Not applicable.',
     shortName: 'Not applicable',
   },
-
 ];
+/* tslint:enable:max-line-length */
 
 export default questions;
