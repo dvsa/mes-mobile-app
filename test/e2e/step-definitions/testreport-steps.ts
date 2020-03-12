@@ -116,14 +116,14 @@ Then('the ETA invalid modal is shown', () => {
   expect(modalTitle.getText()).to.eventually.equal('ETA recorded');
 });
 
-Then('the {string} button displays the serious badge', (competency: string) => {
-  const seriousBadge = TestReportPage.driverFaults.getSeriousFaultBadge(competency);
-  expect(seriousBadge.isPresent()).to.eventually.be.true;
+Then('the {string} button displays the serious badge', async (competency: string) => {
+  const seriousBadgeIsPresent = await TestReportPage.driverFaults.seriousFaultBadgeIsPresent(competency);
+  expect(seriousBadgeIsPresent).to.be.true;
 });
 
-Then('the {string} button displays the dangerous badge', (competency: string) => {
-  const dangerousBadge = TestReportPage.driverFaults.getDangerousFaultBadge(competency);
-  expect(dangerousBadge.isPresent()).to.eventually.be.true;
+Then('the {string} button displays the dangerous badge', async (competency: string) => {
+  const dangerousBadgeIsPresent = await TestReportPage.driverFaults.dangerousFaultBadgeIsPresent(competency);
+  expect(dangerousBadgeIsPresent).to.be.true;
 });
 
 Then('the {string} button does not display the serious badge', (competency: string) => {

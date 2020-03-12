@@ -140,13 +140,13 @@ When('I log in to the application as {string}', (username) => {
   DashboardPage.isCurrentPage(username);
 });
 
-Then('I should see the {string} page', (pageTitle) => {
+Then('I should see the {string} page', async (pageTitle) => {
   // Wait for the page title to exist
-  // todo: kc how do we access getPageTitle?  From one of the existing pages? But they are specific to a particular
-  // page.  From Page via TempPage? That would need to be renamed.  What would it be renamed?
   PageHelper.getPageTitle(pageTitle);
+
   // Check that it is the last page title i.e. the displayed one
-  return expect(element.all(by.className('toolbar-title')).last().getText()).to.eventually.equal(pageTitle);
+  const getDisplayedPageTitle = await PageHelper.getDisplayedPageTitle();
+  return expect(getDisplayedPageTitle).to.equal(pageTitle);
 });
 
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {

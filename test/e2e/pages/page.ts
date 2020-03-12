@@ -96,12 +96,22 @@ export default class Page {
   }
 
   getPageTitle(pageTitle) {
-    // return this.getElementByXPath(
-    // `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
     const element = this.getElementByXPath(
       `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
     this.waitForPresenceOfElement(element);
     this.longPressButton(element);
+  }
+
+  isCurrentPage(pageTitle) {
+    // Wait for the page title to exist
+    this.getPageTitle(pageTitle);
+  }
+
+  /**
+   *  Get the last page title i.e. the displayed one
+   */
+  async getDisplayedPageTitle() {
+    return element.all(by.className('toolbar-title')).last().getText();
   }
 
   scrollToElement(element) {

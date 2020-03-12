@@ -170,13 +170,25 @@ class DriverFaults extends Page {
     return element;
   }
 
+  async seriousFaultBadgeIsPresent(competency) {
+    const seriousFaultBadge = this.getSeriousFaultBadge(competency);
+    return seriousFaultBadge.isPresent();
+  }
+
   getSeriousFaultBadgeByTagName(button) {
     return button.element(by.tagName('serious-fault-badge'));
   }
 
   getDangerousFaultBadge(competency) {
-    return this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+    const element = this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
   and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`);
+    this.waitForPresenceOfElement(element);
+    return element;
+  }
+
+  async dangerousFaultBadgeIsPresent(competency) {
+    const dangerousFaultBadge = this.getDangerousFaultBadge(competency);
+    return dangerousFaultBadge.isPresent();
   }
 
   getCompetencyCountField(competency) {
