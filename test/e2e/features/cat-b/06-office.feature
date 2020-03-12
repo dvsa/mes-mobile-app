@@ -15,6 +15,7 @@ Feature: Office page
       And I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
+      And I should see the "Debrief - Florence Pearson" page
       When I end the debrief
       Then I should see the "Test debrief - Florence Pearson" page
       And I complete the pass details
