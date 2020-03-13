@@ -21,11 +21,13 @@
 
         <ion-row no-padding [hidden]="pageState.eyesightTestFailed$ | async" id="post-eyesight-form-content">
           <ion-col no-padding>
+            <!--
             <tell-me-question-card [formGroup]="form" [tellMeQuestion]="pageState.tellMeQuestion$ | async"
               [tellMeQuestions]="tellMeQuestions" [tellMeQuestionOutcome]="pageState.tellMeQuestionOutcome$ | async"
               [tellMeQuestionSelected]="pageState.tellMeQuestionSelected$ | async" (tellMeQuestionChange)="tellMeQuestionChanged($event)"
               (tellMeQuestionOutcomeChange)="tellMeQuestionOutcomeChanged($event)">
             </tell-me-question-card>
+            -->
 
             <vehicle-registration [formGroup]="form" [vehicleRegistration]="pageState.registrationNumber$ | async"
               (vehicleRegistrationChange)="vehicleRegistrationChanged($event)"></vehicle-registration>

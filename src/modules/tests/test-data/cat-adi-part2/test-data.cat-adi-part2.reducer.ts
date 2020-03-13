@@ -43,4 +43,4 @@ export function testDataCatADI2Reducer(
   })(state as Required<CatADI2UniqueTypes.TestData>, action);
 }
 
-export const getCatADI2TestData = createFeatureSelector<CatADI2UniqueTypes.TestData>('testData');
+export const getTestData = createFeatureSelector<CatADI2UniqueTypes.TestData>('testData');
