@@ -26,7 +26,7 @@ export const hasLegalRequirementBeenCompleted = (
   return data[legalRequirement];
 };
 
-export const getVehicleChecks = (
+export const getVehicleChecksCatADIPart2 = (
   state: CatADI2UniqueTypes.TestData): CatADI2UniqueTypes.VehicleChecks => state.vehicleChecks;
 
 export const getTellMeQuestion = (state: CatADI2UniqueTypes.VehicleChecks): VehicleChecksQuestion => {

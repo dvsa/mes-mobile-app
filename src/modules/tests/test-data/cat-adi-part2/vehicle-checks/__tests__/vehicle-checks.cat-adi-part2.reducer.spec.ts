@@ -5,7 +5,7 @@ import {
 import {
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
-  AddTellMeComment,
+  AddShowMeTellMeComment,
 } from '../vehicle-checks.cat-adi-part2.action';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
@@ -39,12 +39,12 @@ describe('Vehicle Checks Cat ADI2 Reducer', () => {
     });
   });
 
-  describe('ADD_TELL_ME_COMMENT' , () => {
+  describe('ADD_SHOW_ME_TELL_ME_COMMENT' , () => {
     it('should update the vehicle checks comments', () => {
       const state: CatADI2UniqueTypes.VehicleChecks = cloneDeep(initialState);
-      const result = vehicleChecksCatADI2Reducer(state, new AddTellMeComment('So many mistakes.'));
+      const result = vehicleChecksCatADI2Reducer(state, new AddShowMeTellMeComment('So many mistakes.'));
 
-      expect(result.tellMeComments).toEqual('So many mistakes.');
+      expect(result.showMeTellMeComments).toEqual('So many mistakes.');
     });
   });
 });

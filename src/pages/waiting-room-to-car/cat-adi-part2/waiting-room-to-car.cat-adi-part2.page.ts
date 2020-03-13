@@ -7,6 +7,7 @@ import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
+import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import {
   SchoolCarToggled,
   DualControlsToggled,
@@ -20,8 +21,7 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-// TO-DO ADI Part2: Implement correct category
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.cat-b.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-adi-part2/vehicle-details.cat-adi-part2.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,
@@ -32,8 +32,7 @@ import {
 import {
   getSchoolCar,
   getDualControls,
-// TO-DO ADI Part2: Implement correct category
-} from '../../../modules/tests/vehicle-details/cat-b/vehicle-details.cat-b.selector';
+} from '../../../modules/tests/vehicle-details/cat-adi-part2/vehicle-details.cat-adi-part2.selector';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
@@ -46,35 +45,23 @@ import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../providers/question/question';
 import {
-  TellMeQuestionSelected,
-  TellMeQuestionCorrect,
-  TellMeQuestionDrivingFault,
-  QuestionOutcomes,
-// TO-DO ADI Part2: Implement correct category
-} from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
-import {
   EyesightTestReset,
   EyesightTestPassed,
   EyesightTestFailed,
 } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import {
-  isTellMeQuestionSelected,
-  isTellMeQuestionDrivingFault,
-  isTellMeQuestionCorrect,
-  tellMeQuestionOutcome,
-  getVehicleChecks,
-  getTellMeQuestion,
+  getVehicleChecksCatADIPart2,
   hasEyesightTestGotSeriousFault,
   hasEyesightTestBeenCompleted,
-// TO-DO ADI Part2: Implement correct category
-} from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-// TO-DO ADI Part2: Implement correct category
-import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
+} from '../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.selector';
+import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import { getTestData } from '../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_ADI_PART2 } from '../../page-names.constants';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -90,11 +77,8 @@ interface WaitingRoomToCarPageState {
   eyesightTestFailed$: Observable<boolean>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
-  tellMeQuestionSelected$: Observable<boolean>;
-  tellMeQuestionCorrect$: Observable<boolean>;
-  tellMeQuestionDrivingFault$: Observable<boolean>;
-  tellMeQuestionOutcome$: Observable<string>;
-  tellMeQuestion$: Observable<VehicleChecksQuestion>;
+  vehicleChecksScore$: Observable<VehicleChecksScore>;
+  vehicleChecks$: Observable<CatADI2UniqueTypes.VehicleChecks>;
 }
 
 @IonicPage()
@@ -122,6 +106,7 @@ export class WaitingRoomToCarCatADIPart2Page extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    public faultCountProvider: FaultCountProvider,
     public questionProvider: QuestionProvider,
   ) {
     super(platform, navController, authenticationProvider);
@@ -190,30 +175,16 @@ export class WaitingRoomToCarCatADIPart2Page extends BasePageComponent {
         select(getVehicleDetails),
         map(isManual),
       ),
-      tellMeQuestionSelected$: currentTest$.pipe(
+      vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecks),
-        map(isTellMeQuestionSelected),
+        select(getVehicleChecksCatADIPart2),
+        map((vehicleChecks) => {
+          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.ADI2, vehicleChecks);
+        }),
       ),
-      tellMeQuestionOutcome$: currentTest$.pipe(
+      vehicleChecks$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecks),
-        map(tellMeQuestionOutcome),
-      ),
-      tellMeQuestionCorrect$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecks),
-        map(isTellMeQuestionCorrect),
-      ),
-      tellMeQuestionDrivingFault$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecks),
-        map(isTellMeQuestionDrivingFault),
-      ),
-      tellMeQuestion$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecks),
-        map(getTellMeQuestion),
+        select(getVehicleChecksCatADIPart2),
       ),
     };
   }
@@ -258,6 +229,10 @@ export class WaitingRoomToCarCatADIPart2Page extends BasePageComponent {
     this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
   }
 
+  closeVehicleChecksModal = () => {
+    this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
+  }
+
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
@@ -278,6 +253,7 @@ export class WaitingRoomToCarCatADIPart2Page extends BasePageComponent {
       });
     }
   }
+
   updateForm(ctrl: string, value: any) {
     this.form.patchValue({
       [ctrl]: value,
@@ -295,21 +271,6 @@ export class WaitingRoomToCarCatADIPart2Page extends BasePageComponent {
   eyesightFailCancelled = () => {
     this.form.get('eyesightCtrl') && this.form.get('eyesightCtrl').reset();
     this.store$.dispatch(new EyesightTestReset());
-  }
-
-  tellMeQuestionChanged(newTellMeQuestion: VehicleChecksQuestion): void {
-    this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
-    if (this.form.controls['tellMeQuestionOutcome']) {
-      this.form.controls['tellMeQuestionOutcome'].setValue('');
-    }
-  }
-
-  tellMeQuestionOutcomeChanged(outcome: string): void {
-    if (outcome === QuestionOutcomes.Pass) {
-      this.store$.dispatch(new TellMeQuestionCorrect());
-      return;
-    }
-    this.store$.dispatch(new TellMeQuestionDrivingFault());
   }
 
   eyesightTestResultChanged(passed: boolean): void {

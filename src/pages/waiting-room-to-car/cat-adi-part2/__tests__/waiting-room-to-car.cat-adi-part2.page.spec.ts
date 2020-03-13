@@ -27,21 +27,14 @@ import { VehicleDetailsComponent } from '../../components/vehicle-details/vehicl
 import { AccompanimentComponent } from '../../components/accompaniment/accompaniment';
 import { EyesightTestComponent } from '../../components/eyesight-test/eyesight-test';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
-import {
-  TellMeQuestionSelected,
-// TO-DO ADI Part2: Implement correct category
-} from '../../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import { EyesightTestReset } from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TellMeQuestionCardComponent } from '../components/tell-me-question-card/tell-me-question-card';
-import { TellMeQuestionComponent } from '../components/tell-me-question/tell-me-question';
-import { TellMeQuestionOutcomeComponent } from '../components/tell-me-question-outcome/tell-me-question-outcome';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
-import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 import { configureTestSuite } from 'ng-bullet';
 import {
   AccompanimentCardCatADIPart2Component,
 } from '../components/accompaniment-card/accompaniment-card.cat-adi-part2';
+import { VehicleChecksCatADIPart2Component } from '../components/vehicle-checks/vehicle-checks.cat-adi-part2';
 
 describe('WaitingRoomToCarCatADIPart2Page', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatADIPart2Page>;
@@ -55,15 +48,13 @@ describe('WaitingRoomToCarCatADIPart2Page', () => {
         MockComponent(EyesightTestComponent),
         MockComponent(EyesightFailureConfirmationComponent),
         MockComponent(EndTestLinkComponent),
-        MockComponent(TellMeQuestionCardComponent),
-        MockComponent(TellMeQuestionComponent),
-        MockComponent(TellMeQuestionOutcomeComponent),
         MockComponent(VehicleRegistrationComponent),
         MockComponent(TransmissionComponent),
         MockComponent(VehicleDetailsCardComponent),
         MockComponent(VehicleDetailsComponent),
         MockComponent(AccompanimentCardCatADIPart2Component),
         MockComponent(AccompanimentComponent),
+        MockComponent(VehicleChecksCatADIPart2Component),
       ],
       imports: [
         IonicModule,
@@ -121,18 +112,6 @@ describe('WaitingRoomToCarCatADIPart2Page', () => {
   describe('Class', () => {
     it('should get tell me question from the question provider', () => {
       expect(component.tellMeQuestions.length).toBe(2);
-    });
-
-    describe('selecting a tell me question', () => {
-      it('should dispatch an action when the tell me question change handler is called', () => {
-        const question: VehicleChecksQuestion = {
-          code: 'T1',
-          description: 'desc',
-          shortName: 'name',
-        };
-        component.tellMeQuestionChanged(question);
-        expect(store$.dispatch).toHaveBeenCalledWith(new TellMeQuestionSelected(question));
-      });
     });
   });
 

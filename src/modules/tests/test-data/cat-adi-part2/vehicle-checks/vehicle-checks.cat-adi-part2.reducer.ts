@@ -11,7 +11,8 @@ export const initialState: CatADI2UniqueTypes.VehicleChecks = {
 
 export function vehicleChecksCatADI2Reducer(
   state: CatADI2UniqueTypes.VehicleChecks = initialState,
-  action: vehicleChecksCatADI2ActionTypes.Types): CatADI2UniqueTypes.VehicleChecks {
+  action: vehicleChecksCatADI2ActionTypes.Types,
+): CatADI2UniqueTypes.VehicleChecks {
   switch (action.type) {
     case vehicleChecksCatADI2ActionTypes.TELL_ME_QUESTION_SELECTED:
       return {
@@ -28,11 +29,12 @@ export function vehicleChecksCatADI2Reducer(
           outcome: action.tellMeQuestionOutcome,
         } : item),
       };
-    case vehicleChecksCatADI2ActionTypes.ADD_TELL_ME_COMMENT:
+    case vehicleChecksCatADI2ActionTypes.ADD_SHOW_ME_TELL_ME_COMMENT:
       return {
         ...state,
-        tellMeComments: action.comment,
-      };    default:
+        showMeTellMeComments: action.comment,
+      };
+    default:
       return state;
   }
 }
