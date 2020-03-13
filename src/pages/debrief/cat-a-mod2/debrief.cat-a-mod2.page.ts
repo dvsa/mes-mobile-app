@@ -14,7 +14,7 @@ import { getTestOutcome } from '../debrief.selector';
 import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from '@ngx-translate/core';
 import { ETA, Eco } from '@dvsa/mes-test-schema/categories/common';
 import {
   getCommunicationPreference,

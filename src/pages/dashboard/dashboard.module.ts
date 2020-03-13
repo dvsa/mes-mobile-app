@@ -5,7 +5,7 @@ import { DashboardComponentsModule } from './components/dashboard-components.mod
 import { EffectsModule } from '@ngrx/effects';
 import { DashboardAnalyticsEffects } from './dashboard.analytics.effects';
 import { ComponentsModule } from '../../components/common/common-components.module';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [

@@ -3,7 +3,7 @@ import { SignatureComponent } from './signature/signature';
 import { HealthDeclarationComponent } from './health-declaration/health-declaration';
 import { ReceiptDeclarationComponent } from './receipt-declaration/receipt-declaration';
 import { IonicModule } from 'ionic-angular';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 
 @NgModule({

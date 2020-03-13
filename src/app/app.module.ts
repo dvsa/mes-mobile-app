@@ -9,8 +9,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
 
 import { App } from './app.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { Http } from '@angular/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient } from '@angular/common/http';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
@@ -39,7 +38,8 @@ import { TestPersistenceProvider } from '../providers/test-persistence/test-pers
 import { IonicGestureConfig } from '../gestures/ionic-gesture-config';
 import { WeatherConditionProvider } from '../providers/weather-conditions/weather-condition';
 import { OutcomeBehaviourMapProvider } from '../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { LogHelper } from '../providers/logs/logsHelper';
 import { environment } from '../environment/environment';
 import { AnalyticsProvider } from '../providers/analytics/analytics';
@@ -53,8 +53,8 @@ import {
   BikeCategoryDetailProvider,
 } from '../providers/bike-category-detail/bike-category-detail';
 
-export function createTranslateLoader(http: Http) {
-  return new TranslateStaticLoader(http, 'assets/i18n', '.json');
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -108,9 +108,11 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
     JournalModule,
     HttpClientModule,
     TranslateModule.forRoot({
-      provide: TranslateLoader,
-      useFactory: createTranslateLoader,
-      deps: [Http],
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient],
+      },
     }),
   ],
   bootstrap: [IonicApp],

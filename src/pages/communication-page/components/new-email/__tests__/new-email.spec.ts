@@ -2,9 +2,9 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
-import { TranslateModule, TranslateService, TranslateLoader } from 'ng2-translate';
+import { TranslateModule, TranslateService, TranslateLoader } from '@ngx-translate/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Http } from '@angular/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { createTranslateLoader } from '../../../../../app/app.module';
 import { NewEmailComponent } from '../new-email';
 import { configureTestSuite } from 'ng-bullet';
@@ -21,10 +21,13 @@ describe('NewEmailComponent', () => {
       ],
       imports: [
         IonicModule,
+        HttpClientModule,
         TranslateModule.forRoot({
-          provide: TranslateLoader,
-          useFactory: createTranslateLoader,
-          deps: [Http],
+          loader: {
+            provide: TranslateLoader,
+            useFactory: createTranslateLoader,
+            deps: [HttpClient],
+          },
         }),
       ],
     });

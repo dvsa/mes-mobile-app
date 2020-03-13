@@ -22,7 +22,7 @@ import {
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { WaitingRoomValidationError } from '../../waiting-room.actions';
-import { TranslateModule, TranslateService } from 'ng2-translate';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import * as communicationPreferenceActions
   from '../../../../modules/tests/communication-preferences/communication-preferences.actions';

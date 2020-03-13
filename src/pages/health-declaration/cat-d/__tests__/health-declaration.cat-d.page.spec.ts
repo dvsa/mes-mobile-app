@@ -23,7 +23,7 @@ import * as postTestDeclarationsActions
 import * as passCompletionActions
   from '../../../../modules/tests/pass-completion/pass-completion.actions';
 import { of, Subscription } from 'rxjs';
-import { TranslateModule, TranslateService } from 'ng2-translate';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';

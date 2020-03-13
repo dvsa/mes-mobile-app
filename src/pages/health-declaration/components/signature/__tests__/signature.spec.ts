@@ -1,7 +1,7 @@
 
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
-import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { SignatureComponent } from '../signature';
 import { MockComponent } from 'ng-mocks';
@@ -20,12 +20,7 @@ describe('SignatureComponent', () => {
       ],
       imports: [
         IonicModule,
-        TranslateModule,
-      ],
-      providers: [
-        TranslateService,
-        TranslateLoader,
-        TranslateParser,
+        TranslateModule.forRoot(),
       ],
     });
   });

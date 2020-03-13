@@ -1,7 +1,7 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { PrivacyNoticeComponent } from '../privacy-notice';
-import { TranslateService, TranslateModule } from 'ng2-translate';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { translateServiceMock } from '../../../../../shared/__mocks__/translate';
 import { ConfigMock } from 'ionic-mocks';
 import { configureTestSuite } from 'ng-bullet';

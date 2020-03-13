@@ -22,7 +22,9 @@ export class AuthInterceptor implements HttpInterceptor {
     public urlProvider: UrlProvider) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!this.platform.is('ios')) return next.handle(request);
+    if (!this.platform.is('ios') || !request.url.startsWith('http')) {
+      return next.handle(request);
+    }
 
     const logUrl = new URL(request.url);
 

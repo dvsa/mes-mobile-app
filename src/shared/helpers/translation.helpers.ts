@@ -1,5 +1,5 @@
 import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from '@ngx-translate/core';
 
 export const configureI18N = (language: Language, translateService: TranslateService) : void => {
   if (language === Language.CYMRAEG) {

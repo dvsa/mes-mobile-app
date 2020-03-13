@@ -1,6 +1,6 @@
 import { LockScreenIndicator } from '../lock-screen-indicator';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { TranslateModule, TranslateService } from 'ng2-translate';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { translateServiceMock } from '../../../../shared/__mocks__/translate';
 import { configureTestSuite } from 'ng-bullet';
 

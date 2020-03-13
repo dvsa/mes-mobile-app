@@ -5,7 +5,7 @@ import { DebriefCardComponent } from './debrief-card/debrief-card';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { ViewTestResultComponentsModule } from '../../components/view-test-result.components.module';
 import { SpeedCardComponent } from './speed-card/speed-card';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [

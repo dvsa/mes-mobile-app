@@ -9,7 +9,7 @@ import { select, Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from '@ngx-translate/core';
 import {
   CommunicationSubmitInfo,
   CommunicationSubmitInfoError, CommunicationValidationError,

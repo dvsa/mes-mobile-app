@@ -2,7 +2,7 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule, TranslateService } from 'ng2-translate';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../../components/common/common-components.module';

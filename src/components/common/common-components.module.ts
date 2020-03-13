@@ -10,7 +10,7 @@ import { IonicModule } from 'ionic-angular';
 import { EndTestLinkComponent } from './end-test-link/end-test-link';
 import { TerminateTestModalModule } from './terminate-test-modal/terminate-test-modal.module';
 import { CandidateSectionComponent } from './candidate-section/candidate-section';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule } from '@ngx-translate/core';
 import { DisplayAddressComponent } from './display-address/display-address';
 import { PracticeModeBanner } from './practice-mode-banner/practice-mode-banner';
 import { TickIndicatorComponent } from './tick-indicator/tick-indicator';
