@@ -1,6 +1,7 @@
 import { Then, When, Before } from 'cucumber';
 import { browser, by, element } from 'protractor';
-import { textFieldInputViaNativeMode, waitForPresenceOfElement, getElement, clickElement } from '../../helpers/interactionHelpers';
+import { textFieldInputViaNativeMode, waitForPresenceOfElement, getElement, clickElement, inputTextSendKeys }
+  from '../../helpers/interactionHelpers';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -264,10 +265,9 @@ When('I add the Uncouple and Recouple fault', () => {
 });
 
 When('I enter recorded speed for Emergency Stop', () => {
- // const speed = getElement(by.xpath('//speed-check[1]/ion-row[1]/ion-col[2]/input[1]'));
-  //speed.sendKeys('52');
-  browser.sleep(5000);
-  //textFieldInputViaNativeMode('//speed-check[1]/ion-row[1]/ion-col[2]/input[1]', '52');
+  const speed = getElement(by.xpath('//speed-check[1]/ion-row[1]/ion-col[2]/input[1]'));
+  expect(speed.isPresent()).to.eventually.be.true;
+  inputTextSendKeys(speed, '52');
 });
 
 When('I enter recorded speed for Avoidance', () => {

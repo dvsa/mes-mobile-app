@@ -56,7 +56,7 @@ When('the candidate completes the declaration page', () => {
   clickElement(signatureField);
 });
 
-When('I proceed to the car', () => {
+When(/^I proceed to the car|bike$/, () => {
   // Examiner clicks continue button then enters passcode
   const continueButton = getElement(by.xpath(
     `//div[contains(@class, "communication-cat-${this.testCategory}-page")]//button[@id ="continue-button"]`));

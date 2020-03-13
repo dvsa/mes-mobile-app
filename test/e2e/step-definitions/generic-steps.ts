@@ -166,9 +166,7 @@ When('I log in to the application as {string}', (username) => {
 });
 
 Then('I should see the {string} page', (pageTitle) => {
-  // Wait for the page title to exist
   getElement(by.xpath(`//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`));
-  // Check that it is the last page title i.e. the displayed one
   return expect(element.all(by.className('toolbar-title')).last().getText()).to.eventually.equal(pageTitle);
 });
 

@@ -63,7 +63,7 @@ When('I complete the waiting room to car page with the following vehicle checks'
 });
 
 const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, tellMeQuestion?: string) => {
-  switch(this.testCategory) {
+  switch (this.testCategory) {
     case 'b':
       eyeSightResult(true);
       standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
@@ -72,7 +72,7 @@ const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, te
       eyeSightResult(true);
       multiShowAndTell(UI_TEST_DATA.testData.be, questionResult);
       break;
-    case 'c': 
+    case 'c':
     case 'c1':
       multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
       break;
@@ -83,14 +83,12 @@ const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, te
       transmissionSelect(true);
       break;
     default:
-      console.log('Category not set');
       break;
   }
-      textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Vehicle registration number"]]/' +
-      'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'AB12CDE');
-      const submitWRTC = getElement(by.xpath('//button[span[h3[text()="Continue to test report"]]]'));
-      clickElement(submitWRTC);
-    
+  textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Vehicle registration number"]]/' +
+    'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'AB12CDE');
+  const submitWRTC = getElement(by.xpath('//button[span[h3[text()="Continue to test report"]]]'));
+  clickElement(submitWRTC);
 };
 
 const multiShowAndTell = (questions, questionResult) => {

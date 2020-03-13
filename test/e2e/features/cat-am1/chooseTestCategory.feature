@@ -56,7 +56,7 @@ Feature: Choose test subcategory
     And the candidate confirms their declaration
     Then I should see the "Declaration - Deanna Wolf" page
     When the candidate requests to receive results by post
-    And I proceed to the car
+    And I proceed to the bike
     Then I should see the "Deanna Wolf" page
     When I choose category "AM" test
     And I complete the waiting room to car page

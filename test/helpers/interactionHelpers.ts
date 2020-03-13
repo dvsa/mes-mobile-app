@@ -82,3 +82,7 @@ export const isReady = (promise) => {
   // Then return the original promise
   return promise;
 };
+
+export const inputTextSendKeys = (element, input) => {
+  element.sendKeys(input);
+};
