@@ -92,6 +92,7 @@ interface WaitingRoomToCarPageState {
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
+  // TODO add all home type categories
   vehicleChecks$: Observable<CatBEUniqueTypes.VehicleChecks>;
 }
 

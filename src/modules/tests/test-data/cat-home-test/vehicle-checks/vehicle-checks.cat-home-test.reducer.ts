@@ -5,10 +5,12 @@ import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
 import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
 
 import * as vehicleChecksCatHomeTestActionTypes from './vehicle-checks.cat-home-test.action';
+// TODO add all home type categories
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestions,
 }
   from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+// TODO add all home type categories
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS as numberOfShowMeQuestions,
 }
