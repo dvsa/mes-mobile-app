@@ -129,7 +129,7 @@ describe('CompetencyComponent', () => {
       });
       it('should get the correct label for a competency with an overridden label', () => {
         component.competency = Competencies.controlsSteering;
-        component.labelOverride = Competencies.signalsTimed
+        component.labelOverride = Competencies.signalsTimed;
         expect(component.getLabel()).toBe('Timed');
       });
     });

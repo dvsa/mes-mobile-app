@@ -24,7 +24,6 @@ import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { VehicleRegistrationComponent } from '../../components/vehicle-registration/vehicle-registration';
 import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
 import { VehicleDetailsComponent } from '../../components/vehicle-details/vehicle-details';
-import { AccompanimentCardComponent } from '../../components/accompaniment-card/accompaniment-card';
 import { AccompanimentComponent } from '../../components/accompaniment/accompaniment';
 import { EyesightTestComponent } from '../../components/eyesight-test/eyesight-test';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
@@ -40,6 +39,7 @@ import { TellMeQuestionOutcomeComponent } from '../components/tell-me-question-o
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 import { configureTestSuite } from 'ng-bullet';
+import { AccompanimentCardCatADIPart2Component } from '../components/accompaniment-card/accompaniment-card.cat-adi-part2';
 
 describe('WaitingRoomToCarCatADIPart2Page', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatADIPart2Page>;
@@ -60,7 +60,7 @@ describe('WaitingRoomToCarCatADIPart2Page', () => {
         MockComponent(TransmissionComponent),
         MockComponent(VehicleDetailsCardComponent),
         MockComponent(VehicleDetailsComponent),
-        MockComponent(AccompanimentCardComponent),
+        MockComponent(AccompanimentCardCatADIPart2Component),
         MockComponent(AccompanimentComponent),
       ],
       imports: [
