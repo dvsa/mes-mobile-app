@@ -46,6 +46,7 @@ export class ReverseDiagramPage implements OnInit {
   reversingLengthStart: number;
   reversingLengthMiddle: number;
   reversingWidth: number;
+  multiplierText: string;
   category: TestCategory;
   onClose: OnCloseFunc;
   vehicleDetails: CategorySpecificVehicleDetails;
@@ -115,11 +116,24 @@ export class ReverseDiagramPage implements OnInit {
     this.vehicleWidth = vehicleWidth;
   }
 
+  calculateAtoBMultiplierText() {
+    switch (this.category) {
+      case TestCategory.C:
+      case TestCategory.C1:
+      case TestCategory.D:
+      case TestCategory.D1:
+        return this.multiplierText = '1 1/2';
+      default:
+        return this.multiplierText = '2';
+    }
+  }
+
   ionViewWillEnter(): boolean {
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
       this.calculateReversingLengths(this.vehicleLength);
       this.calculateReversingWidth(this.vehicleWidth);
+      this.calculateAtoBMultiplierText();
     }
 
     return true;
