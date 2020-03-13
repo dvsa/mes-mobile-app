@@ -25,6 +25,7 @@ export type VehicleDetailsUnion =
 interface VehicleMultipliers {
   widthMultiplier: number;
   lengthMultiplier: number;
+  distanceMultiplier: number;
 }
 
 @Injectable()
@@ -35,15 +36,15 @@ export class ReversingDistancesProvider {
   public getDistanceValues() : Map<TestCategory, VehicleMultipliers> {
     if (!this.distanceValues) {
       this.distanceValues = new Map([
-        [TestCategory.BE, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
-        [TestCategory.C, { lengthMultiplier: 3.5, widthMultiplier: 1.5 }],
-        [TestCategory.CE, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
-        [TestCategory.C1, { lengthMultiplier: 3.5, widthMultiplier: 1.5 }],
-        [TestCategory.C1E, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
-        [TestCategory.D, { lengthMultiplier: 3.5, widthMultiplier: 1.5 }],
-        [TestCategory.DE, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
-        [TestCategory.D1, { lengthMultiplier: 3.5, widthMultiplier: 1.5 }],
-        [TestCategory.D1E, { lengthMultiplier: 4, widthMultiplier: 1.5 }],
+        [TestCategory.BE, { lengthMultiplier: 4, widthMultiplier: 1.5, distanceMultiplier: 2 }],
+        [TestCategory.C, { lengthMultiplier: 3.5, widthMultiplier: 1.5, distanceMultiplier: 1.5 }],
+        [TestCategory.CE, { lengthMultiplier: 4, widthMultiplier: 1.5, distanceMultiplier: 2 }],
+        [TestCategory.C1, { lengthMultiplier: 3.5, widthMultiplier: 1.5, distanceMultiplier: 1.5 }],
+        [TestCategory.C1E, { lengthMultiplier: 4, widthMultiplier: 1.5, distanceMultiplier: 2 }],
+        [TestCategory.D, { lengthMultiplier: 3.5, widthMultiplier: 1.5, distanceMultiplier: 1.5 }],
+        [TestCategory.DE, { lengthMultiplier: 4, widthMultiplier: 1.5, distanceMultiplier: 2 }],
+        [TestCategory.D1, { lengthMultiplier: 3.5, widthMultiplier: 1.5, distanceMultiplier: 1.5 }],
+        [TestCategory.D1E, { lengthMultiplier: 4, widthMultiplier: 1.5, distanceMultiplier: 2 }],
       ]);
     }
     return this.distanceValues;
@@ -54,7 +55,8 @@ export class ReversingDistancesProvider {
       return { startDistance: 52.5, middleDistance: 30 };
     }
     const distanceFromStart = data.vehicleLength * this.distanceValues.get(category).lengthMultiplier;
-    const distanceFromMiddle = data.vehicleLength * 2;
+    const distanceFromMiddle = data.vehicleLength * this.distanceValues.get(category).distanceMultiplier;
+
     switch (category) {
       case TestCategory.CE:
       case TestCategory.C1E:
@@ -62,7 +64,9 @@ export class ReversingDistancesProvider {
       case TestCategory.D1E:
         return ({
           startDistance: data.vehicleLength > 16.5 ? 66 : Math.round(distanceFromStart * 100) / 100,
-          middleDistance: Math.round(distanceFromMiddle * 100) / 100,
+          middleDistance: data.vehicleLength > 16.5
+            ? Math.round(66 - (data.vehicleLength * 2))
+            : Math.round(distanceFromMiddle * 100) / 100,
         });
       default:
         return ({
