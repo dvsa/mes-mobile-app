@@ -134,8 +134,4 @@ describe('VehicleChecksQuestionComponent', () => {
       });
     });
   });
-
-  describe('DOM', () => {
-
-  });
 });

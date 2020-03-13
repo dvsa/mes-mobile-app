@@ -63,7 +63,8 @@ export function vehicleChecksCatHomeTestReducer(
       return {
         ...state,
         showMeTellMeComments: action.comment,
-      };    default:
+      };
+    default:
       return state;
   }
 }
