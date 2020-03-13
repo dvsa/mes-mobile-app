@@ -33,6 +33,10 @@ Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
 });
 
+Before({ tags: '@cata1' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 When('I select a tell me question', () => {
   selectTellMeQuestion('T2 - Tyre pressures');
 });
@@ -69,6 +73,8 @@ const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, te
     multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
   } else if (this.testCategory === 'ce') {
     multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
+  } else if (this.testCategory === 'a-mod1') {
+    modCatConfirmation(UI_TEST_DATA.testData.a1)
   } else {
     eyeSightResult(true);
     standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
@@ -130,4 +136,18 @@ const eyeSightResult = (result: boolean) => {
   const eyeSight = result ? 'eyesight-pass' : 'eyesight-fail';
   const eyesightRadio = getElement(by.id(`${eyeSight}`));
   clickElement(eyesightRadio);
+};
+
+const modCatConfirmation = (catType) => {
+  openConfirmCatType();
+  selectCatType(catType);
+};
+
+const openConfirmCatType = () => {
+  const buttonElement = getElement(by.xpath(`//*[@id="category-type"]/ion-col[2]/ion-row[2]/ion-col/input`));
+  clickElement(buttonElement);
+};
+
+const selectCatType = (catType) => {
+
 };
