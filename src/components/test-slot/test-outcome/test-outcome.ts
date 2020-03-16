@@ -21,7 +21,9 @@ import {
   CAT_HOME_TEST,
 } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
-import { ModalEvent as EarlyStartModalEvent } from '../../../pages/journal/components/journal-early-start-modal/journal-early-start-modal.constants';
+import {
+  ModalEvent as EarlyStartModalEvent,
+} from '../../../pages/journal/components/journal-early-start-modal/journal-early-start-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';

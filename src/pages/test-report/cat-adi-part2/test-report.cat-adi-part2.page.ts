@@ -46,7 +46,9 @@ import {
   hasManoeuvreBeenCompletedCatADIPart2,
 } from '../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.selector';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { getTestRequirementsCatADI2 } from '../../../modules/tests/test-data/cat-adi-part2/test-requirements/test-requirements.cat-adi-part2.reducer';
+import {
+  getTestRequirementsCatADI2,
+} from '../../../modules/tests/test-data/cat-adi-part2/test-requirements/test-requirements.cat-adi-part2.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 

@@ -39,7 +39,9 @@ import { TellMeQuestionOutcomeComponent } from '../components/tell-me-question-o
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 import { configureTestSuite } from 'ng-bullet';
-import { AccompanimentCardCatADIPart2Component } from '../components/accompaniment-card/accompaniment-card.cat-adi-part2';
+import {
+  AccompanimentCardCatADIPart2Component,
+} from '../components/accompaniment-card/accompaniment-card.cat-adi-part2';
 
 describe('WaitingRoomToCarCatADIPart2Page', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatADIPart2Page>;
