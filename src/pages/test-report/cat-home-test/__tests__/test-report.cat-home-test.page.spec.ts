@@ -43,6 +43,7 @@ import { TestReportCatHomeTestPage } from '../test-report.cat-home-test.page';
 import { initialState } from '../../../../modules/tests/test-data/cat-home-test/test-data.cat-f.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { ControlledStopComponent } from '../../components/controlled-stop/controlled-stop';
+import { HighwayCodeSafetyComponent } from '../../components/highway-code-safety/highway-code-safety';
 
 describe('TestReportCatHomeTestPage', () => {
   let fixture: ComponentFixture<TestReportCatHomeTestPage>;
@@ -65,6 +66,7 @@ describe('TestReportCatHomeTestPage', () => {
         MockComponent(ReverseLeftPopoverComponent),
         MockComponent(VehicleChecksComponent),
         MockComponent(ControlledStopComponent),
+        MockComponent(HighwayCodeSafetyComponent),
       ],
       imports: [
         IonicModule,

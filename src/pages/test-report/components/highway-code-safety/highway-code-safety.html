@@ -1,0 +1,35 @@
+<ion-row>
+  <ion-col col-20 no-padding>
+    <competency-button class="highway-code-safety-tick"
+      [onTap]="toggleHighwayCodeSafety"
+      [onPress]="toggleHighwayCodeSafety"
+      [ripple]="false"
+      [ngClass]="{
+        'checked': selectedHighwayCodeSafety
+      }"
+    >
+      <span class='tickwrapper'>
+        <tick-indicator [ticked]="selectedHighwayCodeSafety"></tick-indicator>
+      </span>
+    </competency-button>
+  </ion-col>
+  <ion-col no-padding>
+    <competency-button class="highway-code-safety-competency"
+      [onTap]="onTap"
+      [onPress]="onPress"
+      [ripple]="canButtonRipple()"
+      [ngClass]="{
+        'checked': selectedHighwayCodeSafety,
+        'fault': faultCount() > 0,
+        'serious-fault': hasSeriousFault()
+      }"
+    >
+      <driving-faults-badge class="driving-faults" [count]="faultCount()"></driving-faults-badge>
+      <div class='competency-label'>H/Code / Safety</div>
+      <div class="fault-wrapper">
+        <serious-fault-badge [showBadge]="hasSeriousFault()"></serious-fault-badge>
+        <dangerous-fault-badge [showBadge]="hasDangerousFault()"></dangerous-fault-badge>
+      </div>
+    </competency-button>
+  </ion-col>
+</ion-row>
