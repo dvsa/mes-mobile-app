@@ -23,7 +23,7 @@ import { TestDataByCategoryProvider } from '../../../../../providers/test-data-b
 import { HighwayCodeSafetyComponent } from '../highway-code-safety';
 import { HighwayCodeSafetyAddDrivingFault, HighwayCodeSafetyRemoveFault } from '../../../../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
 
-describe('HighwayCodeSAfetyComponent', () => {
+describe('HighwayCodeSafetyComponent', () => {
   let fixture: ComponentFixture<HighwayCodeSafetyComponent>;
   let component: HighwayCodeSafetyComponent;
   let store$: Store<StoreModel>;
@@ -52,7 +52,7 @@ describe('HighwayCodeSAfetyComponent', () => {
     fixture = TestBed.createComponent(HighwayCodeSafetyComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
-    store$.dispatch(new StartTest(105, TestCategory.B));
+    store$.dispatch(new StartTest(105, TestCategory.F));
   }));
 
   describe('Class', () => {
