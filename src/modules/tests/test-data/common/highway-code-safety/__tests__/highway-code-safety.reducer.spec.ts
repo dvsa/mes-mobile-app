@@ -4,7 +4,7 @@ import {
   HighwayCodeSafetyAddDrivingFault,
   HighwayCodeSafetyAddSeriousFault,
   HighwayCodeSafetyRemoveFault,
-  AddHighwayCodeSafetyComment,
+  HighwayCodeSafetyAddComment,
 } from '../highway-code-safety.actions';
 
 describe('Highway Code Safety Reducer' , () => {
@@ -44,7 +44,7 @@ describe('Highway Code Safety Reducer' , () => {
   describe('ADD_HIGHWAY_CODE_SAFETY_COMMENT', () => {
     it('should add a fault comment', () => {
       const state: HighwayCodeSafetyUnion = {};
-      const result = highwayCodeSafetyReducer(state, new AddHighwayCodeSafetyComment('Test'));
+      const result = highwayCodeSafetyReducer(state, new HighwayCodeSafetyAddComment('Test'));
       expect(result.faultComments).toEqual('Test');
     });
   });

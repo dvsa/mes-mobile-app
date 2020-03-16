@@ -24,23 +24,23 @@ export function highwayCodeSafetyReducer(
         ...state,
         selected: !state.selected,
       };
-    case highwayCodeSafetyActions.HIGHWAYCODE_SAFETY_ADD_DRIVING_FAULT:
+    case highwayCodeSafetyActions.HIGHWAY_CODE_SAFETY_ADD_DRIVING_FAULT:
       return {
         ...state,
         drivingFault: true,
         selected: true,
       };
-    case highwayCodeSafetyActions.HIGHWAYCODE_SAFETY_ADD_SERIOUS_FAULT:
+    case highwayCodeSafetyActions.HIGHWAY_CODE_SAFETY_ADD_SERIOUS_FAULT:
       return {
         ...state,
         seriousFault: true,
         selected: true,
       };
-    case highwayCodeSafetyActions.HIGHWAYCODE_SAFETY_REMOVE_FAULT:
+    case highwayCodeSafetyActions.HIGHWAY_CODE_SAFETY_REMOVE_FAULT:
       return {
         selected: state.selected,
       };
-    case highwayCodeSafetyActions.ADD_HIGHWAYCODE_SAFETY_COMMENT:
+    case highwayCodeSafetyActions.ADD_HIGHWAY_CODE_SAFETY_COMMENT:
       return {
         ...state,
         faultComments: action.comment,

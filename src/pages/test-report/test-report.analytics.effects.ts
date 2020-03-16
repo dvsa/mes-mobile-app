@@ -346,50 +346,50 @@ export class TestReportAnalyticsEffects {
   );
 
   @Effect()
-highwayCodeSafetyAddDrivingFault$ = this.actions$.pipe(
-  ofType(
-    highwayCodeSafetyActions.HIGHWAYCODE_SAFETY_ADD_DRIVING_FAULT,
-  ),
-  concatMap(action => of(action).pipe(
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-      ),
+  highwayCodeSafetyAddDrivingFault$ = this.actions$.pipe(
+    ofType(
+      highwayCodeSafetyActions.HIGHWAY_CODE_SAFETY_ADD_DRIVING_FAULT,
     ),
-  )),
-  concatMap(([action, tests]: [highwayCodeSafetyActions.HighwayCodeSafetyAddDrivingFault, TestsModel]) => {
-    this.analytics.logEvent(
-      formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
-      formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
-      fullCompetencyLabels['outcomeHighwayCodeSafety'],
-      1,
-    );
-    return of(new AnalyticRecorded());
-  }),
-);
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [highwayCodeSafetyActions.HighwayCodeSafetyAddDrivingFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
+        fullCompetencyLabels['outcomeHighwayCodeSafety'],
+        1,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
 
   @Effect()
-highwayCodeSafetyAddSeriousFault$ = this.actions$.pipe(
-  ofType(
-    highwayCodeSafetyActions.HIGHWAYCODE_SAFETY_ADD_SERIOUS_FAULT,
-  ),
-  concatMap(action => of(action).pipe(
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-      ),
+  highwayCodeSafetyAddSeriousFault$ = this.actions$.pipe(
+    ofType(
+      highwayCodeSafetyActions.HIGHWAY_CODE_SAFETY_ADD_SERIOUS_FAULT,
     ),
-  )),
-  concatMap(([action, tests]: [highwayCodeSafetyActions.HighwayCodeSafetyAddSeriousFault, TestsModel]) => {
-    this.analytics.logEvent(
-      formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
-      formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
-      fullCompetencyLabels['outcomeHighwayCodeSafety'],
-      1,
-    );
-    return of(new AnalyticRecorded());
-  }),
-);
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [highwayCodeSafetyActions.HighwayCodeSafetyAddSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
+        fullCompetencyLabels['outcomeHighwayCodeSafety'],
+        1,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
 
   @Effect()
   showMeQuestionDrivingFault$ = this.actions$.pipe(
@@ -575,7 +575,7 @@ highwayCodeSafetyAddSeriousFault$ = this.actions$.pipe(
   @Effect()
   highwayCodeSafetyRemoveFault$ = this.actions$.pipe(
     ofType(
-      highwayCodeSafetyActions.HIGHWAYCODE_SAFETY_REMOVE_FAULT,
+      highwayCodeSafetyActions.HIGHWAY_CODE_SAFETY_REMOVE_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
