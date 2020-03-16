@@ -1,11 +1,18 @@
 import {
-  CatCManoeuvres, CatCTestData,
+  CatCManoeuvres,
+  CatCTestData,
   getManoeuvres as getManoeuvresC,
 } from '../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import {
-  CatDManoeuvres, CatDTestData,
+  CatDManoeuvres,
+  CatDTestData,
   getManoeuvres as getManoeuvresD,
 } from '../../modules/tests/test-data/cat-d/test-data.cat-d.selector';
+import {
+  CatHomeTestData,
+  CatHomeTestManoeuvres,
+  getManoeuvres as getManoeuvresHomeTest,
+} from '../../modules/tests/test-data/cat-home-test/test-data.cat-home.selector';
 import { getManoeuvres as getManoeuvresBE } from '../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { Injectable } from '@angular/core';
@@ -17,12 +24,14 @@ export type TestDataUnion =
   | CatBUniqueTypes.TestData
   | CatBEUniqueTypes.TestData
   | CatCTestData
-  | CatDTestData;
+  | CatDTestData
+  | CatHomeTestData;
 
 export type ManoeuvreUnion =
   | CatBEUniqueTypes.Manoeuvres
   | CatCManoeuvres
-  | CatDManoeuvres;
+  | CatDManoeuvres
+  | CatHomeTestManoeuvres;
 
 @Injectable()
 export class ManoeuvresByCategoryProvider {
@@ -40,6 +49,11 @@ export class ManoeuvresByCategoryProvider {
       case TestCategory.D1:
       case TestCategory.DE:
       case TestCategory.D1E: return getManoeuvresD;
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K: return getManoeuvresHomeTest;
+
       default: throw new Error(ManoeuvresByCategoryProvider.getManoeuvresByCategoryCodeErrMsg);
     }
   }
