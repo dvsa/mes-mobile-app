@@ -3,6 +3,7 @@ import { VehicleChecksQuestion } from './vehicle-checks-question.model';
 import { SafetyQuestion } from './safety-question.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
+import tellMeQuestionsCatAdiPart2Constants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-adi-part2.constants';
 import tellMeQuestionsCatBConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-b.constants';
 import showMeQuestionsCatBConstants from '../../shared/constants/show-me-questions/show-me-questions.cat-b.constants';
 import tellMeQuestionsCatBeConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
@@ -24,6 +25,8 @@ export class QuestionProvider {
 
   getTellMeQuestions(testCategory: TestCategory): VehicleChecksQuestion[] {
     switch (testCategory) {
+      case TestCategory.ADI2:
+        return tellMeQuestionsCatAdiPart2Constants;
       case TestCategory.B:
         return tellMeQuestionsCatBConstants;
       case TestCategory.BE:
@@ -42,6 +45,7 @@ export class QuestionProvider {
         return [];
     }
   }
+
   getShowMeQuestions(testCategory: TestCategory): VehicleChecksQuestion[] {
     switch (testCategory) {
       case TestCategory.B:
@@ -74,6 +78,7 @@ export class QuestionProvider {
         return [];
     }
   }
+
   getBalanceQuestions(testCategory: TestCategory): VehicleChecksQuestion[] {
     switch (testCategory) {
       case TestCategory.EUA1M2:

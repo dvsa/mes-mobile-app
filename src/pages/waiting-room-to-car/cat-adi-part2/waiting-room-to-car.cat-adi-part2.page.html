@@ -21,30 +21,43 @@
 
         <ion-row no-padding [hidden]="pageState.eyesightTestFailed$ | async" id="post-eyesight-form-content">
           <ion-col no-padding>
-            <!--
-            <tell-me-question-card [formGroup]="form" [tellMeQuestion]="pageState.tellMeQuestion$ | async"
-              [tellMeQuestions]="tellMeQuestions" [tellMeQuestionOutcome]="pageState.tellMeQuestionOutcome$ | async"
-              [tellMeQuestionSelected]="pageState.tellMeQuestionSelected$ | async" (tellMeQuestionChange)="tellMeQuestionChanged($event)"
-              (tellMeQuestionOutcomeChange)="tellMeQuestionOutcomeChanged($event)">
-            </tell-me-question-card>
-            -->
+            <vehicle-checks-cat-adi-part-2
+              [formGroup]="form"
+              [vehicleChecksScore]="pageState.vehicleChecksScore$ | async"
+              [vehicleChecks]="pageState.vehicleChecks$ | async"
+              [onCloseVehicleChecksModal]="closeVehicleChecksModal"
+            ></vehicle-checks-cat-adi-part-2>
 
-            <vehicle-registration [formGroup]="form" [vehicleRegistration]="pageState.registrationNumber$ | async"
-              (vehicleRegistrationChange)="vehicleRegistrationChanged($event)"></vehicle-registration>
+            <vehicle-registration
+              [formGroup]="form"
+              [vehicleRegistration]="pageState.registrationNumber$ | async"
+              (vehicleRegistrationChange)="vehicleRegistrationChanged($event)"
+            ></vehicle-registration>
 
-            <transmission [formGroup]="form" [transmission]="pageState.transmission$ | async" (transmissionChange)="transmissionChanged($event)"></transmission>
+            <transmission
+              [formGroup]="form"
+              [transmission]="pageState.transmission$ | async"
+              (transmissionChange)="transmissionChanged($event)"
+            ></transmission>
 
-            <accompaniment-card-cat-adi-part2 [formGroup]="form" 
+            <accompaniment-card-cat-adi-part2 [formGroup]="form"
               [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"
-              [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async" [otherAccompaniment]="pageState.otherAccompaniment$ | async"
-              [interpreterAccompaniment]="pageState.interpreterAccompaniment$ | async" (instructorAccompanimentChange)="instructorAccompanimentToggled()"
-              (supervisorAccompanimentChange)="supervisorAccompanimentToggled()" (otherAccompanimentChange)="otherAccompanimentToggled()"
-              (interpreterAccompanimentChange)="interpreterAccompanimentToggled()">
-            </accompaniment-card-cat-adi-part2>
+              [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async"
+              [otherAccompaniment]="pageState.otherAccompaniment$ | async"
+              [interpreterAccompaniment]="pageState.interpreterAccompaniment$ | async"
+              (instructorAccompanimentChange)="instructorAccompanimentToggled()"
+              (supervisorAccompanimentChange)="supervisorAccompanimentToggled()"
+              (otherAccompanimentChange)="otherAccompanimentToggled()"
+              (interpreterAccompanimentChange)="interpreterAccompanimentToggled()"
+            ></accompaniment-card-cat-adi-part2>
 
-            <vehicle-details-card [formGroup]="form" [schoolVehicleDetails]="pageState.schoolCar$ | async"
-              [dualVehicleDetails]="pageState.dualControls$ | async" (schoolVehicleDetailsChange)="schoolCarToggled()"
-              (dualVehicleDetailsChange)="dualControlsToggled()"></vehicle-details-card>
+            <vehicle-details-card
+              [formGroup]="form"
+              [schoolVehicleDetails]="pageState.schoolCar$ | async"
+              [dualVehicleDetails]="pageState.dualControls$ | async"
+              (schoolVehicleDetailsChange)="schoolCarToggled()"
+              (dualVehicleDetailsChange)="dualControlsToggled()"
+            ></vehicle-details-card>
           </ion-col>
         </ion-row>
 
