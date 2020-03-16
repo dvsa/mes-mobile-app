@@ -74,7 +74,7 @@ const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, te
   } else if (this.testCategory === 'ce') {
     multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
   } else if (this.testCategory === 'a-mod1') {
-    modCatConfirmation(UI_TEST_DATA.testData.a1)
+    modCatConfirmation(UI_TEST_DATA.testData.a1);
   } else {
     eyeSightResult(true);
     standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
