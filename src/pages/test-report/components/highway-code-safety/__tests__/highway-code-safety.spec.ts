@@ -164,7 +164,7 @@ describe('HighwayCodeSAfetyComponent', () => {
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
-      component.highwayCodeSafetySeriousFault = true;
+      component.highwayCodeSafetyDrivingFault = true;
 
       fixture.detectChanges();
       expect(drivingFaultsBadge.count).toBe(1);
@@ -174,7 +174,7 @@ describe('HighwayCodeSAfetyComponent', () => {
       fixture.detectChanges();
       component.isRemoveFaultMode = true;
       component.isSeriousMode = true;
-      const competencyButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-competency'))
+      const competencyButton = fixture.debugElement.query(By.css('competency-button.highway-code-safety-competency'))
         .componentInstance as CompetencyButtonComponent;
 
       fixture.detectChanges();
@@ -185,7 +185,7 @@ describe('HighwayCodeSAfetyComponent', () => {
       it('should have added no classes to the tick button', () => {
         const tickButton = fixture.debugElement.query(By.css('competency-button.highway-code-safety-tick'));
         fixture.detectChanges();
-        expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick');
+        expect(tickButton.nativeElement.className).toEqual('highway-code-safety-tick');
       });
 
       it('should have added a checked class to the tick button', () => {
