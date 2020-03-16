@@ -6,7 +6,8 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import * as controlledStopAction from '../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
+import * as controlledStopAction
+  from '../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
@@ -14,7 +15,10 @@ import { CompetencyOutcome } from '../../../../shared/models/competency-outcome'
 import { TestDataByCategoryProvider } from '../../../../providers/test-data-by-category/test-data-by-category';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { getControlledStop } from '../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.reducer';
-import { isControlledStopSelected, getControlledStopFault } from '../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.selectors';
+import {
+  isControlledStopSelected,
+  getControlledStopFault,
+} from '../../../../modules/tests/test-data/common/controlled-stop/controlled-stop.selectors';
 
 interface ControlledStopComponentState {
   isRemoveFaultMode$: Observable<boolean>;
