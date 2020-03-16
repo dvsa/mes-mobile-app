@@ -20,6 +20,7 @@ import safetyQuestionsCatAMod2Constants from '../../shared/constants/safety-ques
 import balanceQuestionsCatAMod2Constants from '../../shared/constants/balance-questions.cat-a-mod2.constants';
 import safetyQuestionsCatDConstants from '../../shared/constants/safety-questions.cat-d.constants';
 import showMeQuestionsCatHomeTestConstants from '../../shared/constants/show-me-questions/show-me-questions.cat-home-test.constants';
+import tellMeQuestionsCatHomeTestConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-home-test.constants';
 
 @Injectable()
 export class QuestionProvider {
@@ -42,6 +43,11 @@ export class QuestionProvider {
       case TestCategory.DE:
       case TestCategory.D1E:
         return tellMeQuestionsVocationalTrailerConstants;
+      case TestCategory.K:
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+        return tellMeQuestionsCatHomeTestConstants;
       default:
         return [];
     }

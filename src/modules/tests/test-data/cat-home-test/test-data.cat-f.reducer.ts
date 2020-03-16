@@ -10,6 +10,7 @@ import { controlledStopReducer } from '../common//controlled-stop/controlled-sto
 import { testRequirementsCatHomeReducer } from './test-requirements/test-requirements.cat-home.reducer';
 import { eyesightTestReducer } from '../common/eyesight-test/eyesight-test.reducer';
 import { manoeuvresReducer } from '../common/manoeuvres/manoeuvres.reducer';
+import { vehicleChecksCatHomeTestReducer } from './vehicle-checks/vehicle-checks.cat-home-test.reducer';
 
 export const initialState: CatFUniqueTypes.TestData = {
   dangerousFaults: {},
@@ -36,7 +37,7 @@ export function testDataCatFReducer(
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
     seriousFaults: seriousFaultsReducer,
-    vehicleChecks: null,
+    vehicleChecks: vehicleChecksCatHomeTestReducer,
     controlledStop: controlledStopReducer,
     highwayCodeSafety: null,
     eco: ecoReducer,

@@ -42,12 +42,6 @@ import {
   EyesightTestPassed,
   EyesightTestFailed,
 } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
-import {
-  TellMeQuestionSelected,
-  TellMeQuestionCorrect,
-  TellMeQuestionDrivingFault,
-  QuestionOutcomes,
-} from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_HOME_TEST } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
@@ -77,6 +71,7 @@ type HomeTestVehicleChecksUnion =
   | CatFUniqueTypes.VehicleChecks
   | CatGUniqueTypes.VehicleChecks
   | CatHUniqueTypes.VehicleChecks;
+
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
@@ -108,6 +103,7 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
   showEyesightFailureConfirmation: boolean = false;
 
   tellMeQuestions: VehicleChecksQuestion[];
+
   categoryCode: CategoryCode;
 
   constructor(
@@ -126,7 +122,6 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
-
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -138,12 +133,29 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
     );
     category$.subscribe((categoryCode) => {
       this.categoryCode = categoryCode;
+      console.log(this.categoryCode);
     });
+    currentTest$.subscribe((value) => {
+      console.log(value);
+    })
     this.tellMeQuestions = this.questionProvider.getTellMeQuestions(this.categoryCode as TestCategory);
 
     const testData$ = currentTest$.pipe(
       map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.categoryCode)(data)),
     );
+    console.log(this.testDataByCategoryProvider.getTestDataByCategoryCode(TestCategory.F as CategoryCode));
+
+    testData$.subscribe((value) => {
+      console.log(value);
+    });
+
+    testData$.pipe(
+      select(getVehicleChecksCatHomeTest),
+    ).subscribe((value) => {
+      console.log(value);
+      console.log(value.tellMeQuestions);
+      console.log(value.showMeQuestions);
+    });
 
     const vehicleDetails$ = currentTest$.pipe(
       map(data => this.vehicleDetailsByCategoryProvider
@@ -285,21 +297,6 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
   eyesightFailCancelled = () => {
     this.form.get('eyesightCtrl') && this.form.get('eyesightCtrl').reset();
     this.store$.dispatch(new EyesightTestReset());
-  }
-
-  tellMeQuestionChanged(newTellMeQuestion: VehicleChecksQuestion): void {
-    this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
-    if (this.form.controls['tellMeQuestionOutcome']) {
-      this.form.controls['tellMeQuestionOutcome'].setValue('');
-    }
-  }
-
-  tellMeQuestionOutcomeChanged(outcome: string): void {
-    if (outcome === QuestionOutcomes.Pass) {
-      this.store$.dispatch(new TellMeQuestionCorrect());
-      return;
-    }
-    this.store$.dispatch(new TellMeQuestionDrivingFault());
   }
 
   eyesightTestResultChanged(passed: boolean): void {

@@ -5,7 +5,6 @@ import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
 import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
 
 import * as vehicleChecksCatHomeTestActionTypes from './vehicle-checks.cat-home-test.action';
-// TODO add all home type categories
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestions,
 }
