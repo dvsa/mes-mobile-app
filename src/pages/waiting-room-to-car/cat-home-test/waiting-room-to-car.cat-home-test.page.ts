@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { CategoryCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   SchoolCarToggled,
@@ -20,8 +20,6 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-// TODO add correct category
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,
@@ -29,19 +27,12 @@ import {
   isAutomatic,
   isManual,
 } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
-// TODO add correct category
-import {
-  getSchoolCar,
-  getDualControls,
-} from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.selector';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
   getOtherAccompaniment,
   getInterpreterAccompaniment,
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
-// TODO add correct category
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
@@ -57,12 +48,6 @@ import {
   TellMeQuestionDrivingFault,
   QuestionOutcomes,
 } from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
-// TODO add correct category
-import {
-  hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
-// TODO add correct category
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_HOME_TEST } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
@@ -73,16 +58,29 @@ import {
   getVehicleChecksCatHomeTest,
 } from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
-// TODO add correct cstegory
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { VehicleChecksCatHomeTestComponent } from './components/vehicle-checks/vehicle-checks';
+import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
+import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
+import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
+import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
+import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { VehicleDetailsByCategoryProvider } from '../../../providers/vehicle-details-by-category/vehicle-details-by-category';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-home/candidate/candidate.cat-home.reducer';
+import {
+  hasEyesightTestBeenCompleted,
+  hasEyesightTestGotSeriousFault,
+} from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.selector';
 
+type HomeTestVehicleChecksUnion =
+  | CatKUniqueTypes.VehicleChecks
+  | CatFUniqueTypes.VehicleChecks
+  | CatGUniqueTypes.VehicleChecks
+  | CatHUniqueTypes.VehicleChecks;
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
-  schoolCar$: Observable<boolean>;
-  dualControls$: Observable<boolean>;
   instructorAccompaniment$: Observable<boolean>;
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
@@ -92,8 +90,7 @@ interface WaitingRoomToCarPageState {
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
-  // TODO add all home type categories
-  vehicleChecks$: Observable<CatBEUniqueTypes.VehicleChecks>;
+  vehicleChecks$: Observable<HomeTestVehicleChecksUnion>;
 }
 
 @IonicPage()
@@ -111,6 +108,7 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
   showEyesightFailureConfirmation: boolean = false;
 
   tellMeQuestions: VehicleChecksQuestion[];
+  categoryCode: CategoryCode;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -120,11 +118,10 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     public faultCountProvider: FaultCountProvider,
     public questionProvider: QuestionProvider,
+    private testDataByCategoryProvider: TestDataByCategoryProvider,
+    private vehicleDetailsByCategoryProvider: VehicleDetailsByCategoryProvider,
   ) {
     super(platform, navController, authenticationProvider);
-
-    // TODO does this need seperate questions?
-    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
     this.form = new FormGroup({});
   }
 
@@ -135,70 +132,73 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
       select(getCurrentTest),
     );
 
+    const category$ = currentTest$.pipe(
+      select(getTestCategory),
+      map(category => category as TestCategory),
+    );
+    category$.subscribe((categoryCode) => {
+      this.categoryCode = categoryCode;
+    });
+    this.tellMeQuestions = this.questionProvider.getTellMeQuestions(this.categoryCode as TestCategory);
+
+    const testData$ = currentTest$.pipe(
+      map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.categoryCode)(data)),
+    );
+
+    const vehicleDetails$ = currentTest$.pipe(
+      map(data => this.vehicleDetailsByCategoryProvider
+        .getVehicleDetailsByCategoryCode(this.categoryCode)
+        .vehicleDetails(data)),
+    );
+
+    const accompaniment$ = currentTest$.pipe(
+      select(getAccompaniment),
+    );
+
     this.pageState = {
       candidateName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
-      registrationNumber$: currentTest$.pipe(
-        select(getVehicleDetails),
+      registrationNumber$: vehicleDetails$.pipe(
         select(getRegistrationNumber),
       ),
-      transmission$: currentTest$.pipe(
-        select(getVehicleDetails),
+      transmission$: vehicleDetails$.pipe(
         select(getGearboxCategory),
       ),
-      schoolCar$: currentTest$.pipe(
-        select(getVehicleDetails),
-        select(getSchoolCar),
-      ),
-      dualControls$: currentTest$.pipe(
-        select(getVehicleDetails),
-        select(getDualControls),
-      ),
-      instructorAccompaniment$: currentTest$.pipe(
-        select(getAccompaniment),
+      instructorAccompaniment$: accompaniment$.pipe(
         select(getInstructorAccompaniment),
       ),
-      supervisorAccompaniment$: currentTest$.pipe(
-        select(getAccompaniment),
+      supervisorAccompaniment$: accompaniment$.pipe(
         select(getSupervisorAccompaniment),
       ),
-      otherAccompaniment$: currentTest$.pipe(
-        select(getAccompaniment),
+      otherAccompaniment$: accompaniment$.pipe(
         select(getOtherAccompaniment),
       ),
-      interpreterAccompaniment$: currentTest$.pipe(
-        select(getAccompaniment),
+      interpreterAccompaniment$: accompaniment$.pipe(
         select(getInterpreterAccompaniment),
       ),
-      eyesightTestComplete$: currentTest$.pipe(
-        select(getTestData),
+      eyesightTestComplete$: testData$.pipe(
         select(hasEyesightTestBeenCompleted),
       ),
-      eyesightTestFailed$: currentTest$.pipe(
-        select(getTestData),
+      eyesightTestFailed$: testData$.pipe(
         select(hasEyesightTestGotSeriousFault),
       ),
-      gearboxAutomaticRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
+      gearboxAutomaticRadioChecked$: vehicleDetails$.pipe(
         map(isAutomatic),
       ),
-      gearboxManualRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
+      gearboxManualRadioChecked$: vehicleDetails$.pipe(
         map(isManual),
       ),
-      // TODO add correct category
-      vehicleChecksScore$: currentTest$.pipe(
-        select(getTestData),
+      vehicleChecksScore$: testData$.pipe(
         select(getVehicleChecksCatHomeTest),
         map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
+          return this.faultCountProvider
+            .getVehicleChecksFaultCount(this.categoryCode as TestCategory, vehicleChecks);
         }),
       ),
-      vehicleChecks$: currentTest$.pipe(
-        select(getTestData),
+      vehicleChecks$: testData$.pipe(
         select(getVehicleChecksCatHomeTest),
       ),
     };

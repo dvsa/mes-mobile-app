@@ -16,7 +16,7 @@ import {
 }
   from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
 
-export type VechicleChecksUnion =
+export type VehicleChecksUnion =
   | CatFUniqueTypes.VehicleChecks
   | CatGUniqueTypes.VehicleChecks
   | CatHUniqueTypes.VehicleChecks
@@ -28,8 +28,8 @@ export const initialState: CatFUniqueTypes.VehicleChecks = {
 };
 // TODO add all home type categories
 export function vehicleChecksCatHomeTestReducer(
-  state: CatFUniqueTypes.VehicleChecks = initialState,
-  action: vehicleChecksCatHomeTestActionTypes.Types): VechicleChecksUnion {
+  state: VehicleChecksUnion = initialState,
+  action: vehicleChecksCatHomeTestActionTypes.Types): VehicleChecksUnion {
   switch (action.type) {
     case vehicleChecksCatHomeTestActionTypes.SHOW_ME_QUESTION_SELECTED:
       return {
