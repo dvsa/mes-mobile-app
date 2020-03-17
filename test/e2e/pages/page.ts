@@ -216,4 +216,8 @@ export default class Page {
   waitForOverlay(elementName: string)  {
     browser.wait(ExpectedConditions.stalenessOf(element(by.className(elementName))));
   }
+
+  async isButtonPresent(buttonElement) {
+    return buttonElement.isPresent();
+  }
 }

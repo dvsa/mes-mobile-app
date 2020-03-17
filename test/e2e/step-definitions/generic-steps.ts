@@ -78,7 +78,7 @@ Given('I am not logged in', () => {
   });
 });
 
-Given('I am logged in as {string} and I have a test for {string}', (username, candidateName) => {
+Given('I am logged in as {string} and I have a test for {string}', async (username, candidateName) => {
   // Go to journal page as the user
   JournalPage.onJournalPageAs(username);
 
@@ -87,13 +87,13 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
 
   JournalPage.isCurrentPage();
   const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
+  const buttonElementIsPresent = await JournalPage.isButtonPresent(buttonElement);
 
-  buttonElement.isPresent().then((isStartPresent) => {
-    if (!isStartPresent) {
-      PageHelper.resetApp(username);
-    }
-  });
-  return expect(buttonElement.isPresent()).to.eventually.be.true;
+  if (!buttonElementIsPresent) {
+    PageHelper.resetApp(username); // temp hardcoded string for testing.
+  }
+
+  return expect(buttonElementIsPresent).to.be.true;
 });
 
 When('I launch the mobile app', () => {

@@ -1,4 +1,5 @@
 import JournalPage from '../pages/journalPage';
+import PageHelper from '../pages/pageHelper';
 
 const {
   Given,
@@ -33,9 +34,16 @@ When('I start the test for {string}', (candidateName) => {
   JournalPage.clickStartTestEarlyContinueButtonIfPresent();
 });
 
-When('I rekey a test for {string}', (candidateName) => {
+When('I rekey a test for {string}', async (candidateName) => {
+  const buttonElement = JournalPage.getRekeyTestButtonFor(candidateName);
+
+  if (!await JournalPage.isButtonPresent(buttonElement)) {
+    PageHelper.resetApp('mobexaminer1'); // temp hardcoded string for testing.
+  }
+
   JournalPage.clickRekeyTestButtonFor(candidateName);
-  // todo: added as part of an independent commit.  Left in to make
+
+  // todo: kc added as part of an independent commit.  Left in to make
   // sure that the merge works correctly.
   // const buttonElement = TempPage.getAndAwaitElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
   // [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
@@ -45,13 +53,13 @@ When('I rekey a test for {string}', (candidateName) => {
 
 When(/^I start the test (early|late) for \"(.+)\"$/, async (testTime: string, candidateName: string) => {
   if (testTime === 'early') {
-    JournalPage.startingExpiredOrEarlyTest(candidateName);
-    JournalPage.clickStartTestEarlyContinueButtonIfPresent();
+    await JournalPage.startingExpiredOrEarlyTest(candidateName);
+    await JournalPage.clickStartTestEarlyContinueButtonIfPresent();
   }
 
   if (testTime === 'late') {
-    JournalPage.startingExpiredOrEarlyTest(candidateName);
-    JournalPage.clickRekeyStartTestButtonIfPresent();
+    await JournalPage.startingExpiredOrEarlyTest(candidateName);
+    await JournalPage.clickRekeyStartTestButtonIfPresent();
   }
 });
 
