@@ -99,9 +99,9 @@ When('I complete the rekey', () => {
   OfficePage.completeRekey(this.testCategory);
 });
 
-Then('the rekey is successfully uploaded', () => {
-  const uploadRekeyMessage = OfficePage.getUploadRekeyMessage();
-  return expect(uploadRekeyMessage.getText()).to.eventually.equal('Rekeyed test uploaded successfully');
+Then('the rekey is successfully uploaded', async () => {
+  const uploadRekeyMessage = await OfficePage.getUploadRekeyMessage();
+  return expect(uploadRekeyMessage).to.equal('Rekeyed test uploaded successfully');
 });
 
 When('I return to the journal', () => {

@@ -34,8 +34,6 @@ When('I start the test for {string}', (candidateName) => {
 });
 
 When('I rekey a test for {string}', (candidateName) => {
-  JournalPage.clickPreviousDayButton();
-
   JournalPage.clickRekeyTestButtonFor(candidateName);
   // todo: added as part of an independent commit.  Left in to make
   // sure that the merge works correctly.
