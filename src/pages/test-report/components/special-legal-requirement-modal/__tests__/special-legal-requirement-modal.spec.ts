@@ -42,7 +42,7 @@ describe('LegalRequirementsModal', () => {
   describe('Class', () => {
   });
 
-  fdescribe('DOM', () => {
+  describe('DOM', () => {
     it('should call onCancel when the Return to test button is clicked', () => {
       fixture.detectChanges();
       spyOn(component, 'onCancel');

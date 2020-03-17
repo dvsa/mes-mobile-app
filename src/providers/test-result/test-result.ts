@@ -17,6 +17,7 @@ import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
 import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
 import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
+import { HomeTestData } from '../../pages/office/cat-home-test/office.cat-home-test.page';
 
 @Injectable()
 export class TestResultProvider {
@@ -49,6 +50,12 @@ export class TestResultProvider {
       case TestCategory.DE:
       case TestCategory.D1E:
         return this.calculateCatDandSubCategoryTestResult(category, testData);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K:
+        return this.calculateCatHomeTestResult(category, testData);
+
       default:
         throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }
@@ -154,6 +161,22 @@ export class TestResultProvider {
       CatD1EUniqueTypes.TestData |
       CatD1UniqueTypes.TestData,
   ): Observable<ActivityCode> => {
+    if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    if (this.faultCountProvider.getSeriousFaultSumCount(category, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) > 15) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    return of(ActivityCodes.PASS);
+  }
+
+  private calculateCatHomeTestResult = (category: TestCategory, testData: HomeTestData): Observable<ActivityCode> => {
     if (this.faultCountProvider.getDangerousFaultSumCount(category, testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
