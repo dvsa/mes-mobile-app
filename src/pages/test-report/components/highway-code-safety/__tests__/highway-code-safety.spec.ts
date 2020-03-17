@@ -21,7 +21,10 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { configureTestSuite } from 'ng-bullet';
 import { TestDataByCategoryProvider } from '../../../../../providers/test-data-by-category/test-data-by-category';
 import { HighwayCodeSafetyComponent } from '../highway-code-safety';
-import { HighwayCodeSafetyAddDrivingFault, HighwayCodeSafetyRemoveFault } from '../../../../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
+import {
+  HighwayCodeSafetyAddDrivingFault,
+  HighwayCodeSafetyRemoveFault,
+} from '../../../../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
 
 describe('HighwayCodeSafetyComponent', () => {
   let fixture: ComponentFixture<HighwayCodeSafetyComponent>;
