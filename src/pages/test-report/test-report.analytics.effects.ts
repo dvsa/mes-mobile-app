@@ -10,7 +10,8 @@ import {
 } from '../../providers/analytics/analytics.model';
 import * as testReportActions from '../../pages/test-report/test-report.actions';
 import * as controlledStopActions from '../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
-import * as highwayCodeSafetyActions from '../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
+import * as highwayCodeSafetyActions
+  from '../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
 import * as dangerousFaultsActions
   from '../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import * as drivingFaultsActions from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';

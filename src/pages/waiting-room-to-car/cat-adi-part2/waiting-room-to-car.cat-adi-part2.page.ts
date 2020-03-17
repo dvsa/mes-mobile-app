@@ -21,7 +21,9 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-adi-part2/vehicle-details.cat-adi-part2.reducer';
+import {
+  getVehicleDetails,
+} from '../../../modules/tests/vehicle-details/cat-adi-part2/vehicle-details.cat-adi-part2.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,

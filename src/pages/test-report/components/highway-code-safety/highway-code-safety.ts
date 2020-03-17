@@ -6,7 +6,8 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import * as highwayCodeSafetyAction from '../../../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
+import * as highwayCodeSafetyAction
+  from '../../../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode } from '../../test-report.actions';

@@ -3,7 +3,8 @@ import { VehicleChecksQuestion } from './vehicle-checks-question.model';
 import { SafetyQuestion } from './safety-question.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-import tellMeQuestionsCatAdiPart2Constants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-adi-part2.constants';
+import tellMeQuestionsCatAdiPart2Constants
+  from '../../shared/constants/tell-me-questions/tell-me-questions.cat-adi-part2.constants';
 import tellMeQuestionsCatBConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-b.constants';
 import showMeQuestionsCatBConstants from '../../shared/constants/show-me-questions/show-me-questions.cat-b.constants';
 import tellMeQuestionsCatBeConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
