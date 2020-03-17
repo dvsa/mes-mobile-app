@@ -501,7 +501,7 @@ export class TestReportValidatorProvider {
     !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);
     !get(data, 'testRequirements.angledStart', false) && result.push(legalRequirementsLabels.angledStart);
     !get(data, 'testRequirements.uphillStartDesignatedStart', false)
-      && result.push(legalRequirementsLabels.uphillStart);
+      && result.push(legalRequirementsLabels.uphillStartDesignatedStart);
 
     !get(data, 'manoeuvres.reverseLeft.selected', false)
       && result.push(legalRequirementsLabels.manoeuvre);
