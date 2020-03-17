@@ -1,0 +1,23 @@
+{
+  "arrowParens": "avoid",
+  "htmlWhitespaceSensitivity": "css",
+  "endOfLine": "lf",
+  "singleQuote": true,
+  "quoteProps": "as-needed",
+  "trailingComma": "all",
+  "printWidth": 120,
+  "bracketSpacing": true,
+  "useTabs": false,
+  "tabWidth": 2,
+  "semi": true,
+  "overrides": [
+    {
+      "files": [
+        "*.html"
+      ],
+      "options": {
+        "parser": "angular"
+      }
+    }
+  ]
+}
