@@ -106,7 +106,6 @@ describe('PassFinalisationCatADIPart2Page', () => {
       it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
         component.form = new FormGroup({
           requiredControl1: new FormControl(null, [Validators.required]),
-          requiredControl2: new FormControl(null, [Validators.required]),
           notRequiredControl: new FormControl(null),
         });
 
@@ -114,8 +113,6 @@ describe('PassFinalisationCatADIPart2Page', () => {
         tick();
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new PassFinalisationValidationError('requiredControl1 is blank'));
-        expect(store$.dispatch)
-          .toHaveBeenCalledWith(new PassFinalisationValidationError('requiredControl2 is blank'));
         expect(store$.dispatch)
           .not
           .toHaveBeenCalledWith(new PassFinalisationValidationError('notRequiredControl is blank'));

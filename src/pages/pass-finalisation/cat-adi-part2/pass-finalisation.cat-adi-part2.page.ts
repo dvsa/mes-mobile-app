@@ -124,10 +124,6 @@ export class PassFinalisationCatADIPart2Page extends BasePageComponent {
       this.navController.push(CAT_ADI_PART2.HEALTH_DECLARATION_PAGE);
       return;
     }
-    Object.keys(this.form.controls).forEach((controlName) => {
-      if (this.form.controls[controlName].invalid) {
-      }
-    });
   }
 
   isWelshChanged(isWelsh: boolean) {
