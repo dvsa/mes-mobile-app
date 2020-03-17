@@ -60,7 +60,7 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     Then I should see the "Journal" page
     And the test result for "Mr Dillon Jennings" is "2"
 
-  Scenario: Examiner completes a failed test with multiple faults
+  Scenario: Examiner completes a failed test with multiple faults and search for the test
     Given I am logged in as "mobexaminer2" and I have a test for "Mr Dillon Jennings"
     When I check candidate details for "Mr Dillon Jennings"
     And I start the test for "Mr Dillon Jennings"
@@ -72,7 +72,7 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     Then I should see the "Dillon Jennings" page
     And I complete the waiting room to car page with the following vehicle checks
       | show_me_1   | show_me_2   | show_me_3   | show_me_4   | show_me_5   |
-      | true        | true        | true        | true       | false       |
+      | true        | true        | true        | true        | false       |
     Then I should see the "Test report - Dillon Jennings" page
     And the driver fault count is "4"
     When I end the test
@@ -110,7 +110,7 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     And the driver fault count is "15"
     When I add a "Turning left" driver fault
     And the driver fault count is "16"
-    When I add a "Cutting corners" driver fault
+    When I add the Uncouple and Recouple fault
     And the driver fault count is "17"
     When I add a "Clearance" serious fault with a long press
     Then the "Clearance" button displays the serious badge
@@ -130,7 +130,6 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     And I see a "driving" fault for "Junctions - Observation"
     And I see a "driving" fault for "Junctions - Turning right"
     And I see a "driving" fault for "Junctions - Turning left"
-    And I see a "driving" fault for "Junctions - Cutting corners"
     And I see a "driving" fault for "Uncouple / Recouple"
     And I see a "driving" fault for "Vehicle checks"
     When I end the debrief
@@ -146,3 +145,9 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     And I upload the test
     Then I should see the "Journal" page
     And the test result for "Mr Dillon Jennings" is "2"
+    And I click the back button
+    Then I should see the "My dashboard" page
+    And I click on the "Search for completed tests" button
+    Then I search for a completed test with the application reference of "22345622011"
+    When the search result is clicked
+    Then the test result outcome is "Unsuccessful"
