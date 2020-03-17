@@ -26,6 +26,7 @@ import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
 import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
 import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
+import { HomeTestData } from '../../pages/view-test-result/cat-home-test/components/debrief-card/debrief-card';
 
 @Injectable()
 export class TestReportValidatorProvider {
@@ -57,6 +58,11 @@ export class TestReportValidatorProvider {
       case TestCategory.EUA2M2:
       case TestCategory.EUAMM2:
         return this.validateLegalRequirementsCatEUAM2(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K:
+        return this.validateLegalRequirementsCatHomeTest(data);
       default:
         return false;
     }
@@ -87,6 +93,11 @@ export class TestReportValidatorProvider {
       case TestCategory.EUAM2:
       case TestCategory.EUAMM2:
         return this.getMissingLegalRequirementsCatEUAM2(data);
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K:
+        return this.getMissingLegalRequirementsCatHomeTest(data);
       default:
         return [];
     }
@@ -467,4 +478,37 @@ export class TestReportValidatorProvider {
 
     return result;
   }
+
+  private validateLegalRequirementsCatHomeTest(data: HomeTestData): boolean {
+    const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
+    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
+    const angledStart: boolean = get(data, 'testRequirements.angledStart', false);
+    const uphillStartDesignatedStart: boolean = get(data, 'testRequirements.uphillStartDesignatedStart', false);
+
+    const hCodeSafteyQuestions: boolean = get(data, 'highwayCodeSafety.selected', false);
+
+    const eco: boolean = get(data, 'eco.completed', false);
+
+    return normalStart1 && normalStart2 && angledStart && uphillStartDesignatedStart && hCodeSafteyQuestions && eco;
+  }
+
+  private getMissingLegalRequirementsCatHomeTest(data: HomeTestData): legalRequirementsLabels[] {
+    const result: legalRequirementsLabels[] = [];
+
+    !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
+    !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);
+    !get(data, 'testRequirements.angledStart', false) && result.push(legalRequirementsLabels.angledStart);
+    !get(data, 'testRequirements.uphillStartDesignatedStart', false)
+      && result.push(legalRequirementsLabels.uphillStart);
+
+    !get(data, 'manoeuvres.reverseLeft.selected', false)
+      && result.push(legalRequirementsLabels.manoeuvre);
+
+    !get(data, 'highwayCodeSafety.selected', false) && result.push(legalRequirementsLabels.highwayCodeSafety);
+
+    !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
+
+    return result;
+  }
+
 }
