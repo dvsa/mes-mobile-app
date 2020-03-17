@@ -15,6 +15,7 @@ Feature: Debrief including Health Declaration
       And I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
+      And I should see the "Debrief - Florence Pearson" page
       When I end the debrief
       Then I should see the "Test debrief - Florence Pearson" page
       And the debrief candidate name should be "Miss Florence Pearson"
@@ -43,6 +44,7 @@ Feature: Debrief including Health Declaration
       And I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
+     And I should see the "Debrief - Jane Doe" page
       When I end the debrief
       Then I should see the "Test debrief - Jane Doe" page
 
@@ -62,6 +64,7 @@ Feature: Debrief including Health Declaration
       And I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
+     And I should see the "Debrief - Ali Campbell" page
       When I end the debrief
       Then I should see the "Test debrief - Ali Campbell" page
       And I complete the pass details

@@ -62,6 +62,7 @@ Feature: A Driving Examiner Completes Multiple Terminated Journeys For Category 
       Then I should see the "James Brown" page
       And I fail the eye sight test
       Then I should see the Debrief page with outcome "Unsuccessful"
+      And I should see the "Debrief - James Brown" page
       When I end the debrief
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
