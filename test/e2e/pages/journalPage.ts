@@ -138,6 +138,30 @@ class JournalPage extends Page {
     this.clickElement(this.getStartTestEarlyButton());
   }
 
+  /**
+   * If the start test early dialog is shown just select continue
+   */
+  clickStartTestEarlyContinueButtonIfPresent() {
+    const startTestEarlyButton = this.getStartTestEarlyButton();
+    startTestEarlyButton.isPresent().then((result) => {
+      if (result) {
+        this.clickStartTestEarlyButton();
+      }
+    });
+  }
+
+  /**
+   * If the rekey dialog is shown so just select start test normally
+   */
+  clickRekeyStartTestButtonIfPresent() {
+    const lateStartTestButton = this.getRekeyStartTestButton();
+    lateStartTestButton.isPresent().then((result) => {
+      if (result) {
+        this.clickRekeyStartTestButton();
+      }
+    });
+  }
+
   clickNextDayButton() {
     this.clickElementById('next-day-container');
   }
@@ -184,6 +208,23 @@ class JournalPage extends Page {
   rowContains(rowName, rowValue) {
     const dataRow = this.getDataRow(rowName, rowValue);
     return expect(dataRow.isPresent()).to.eventually.be.true;
+  }
+
+  async startingExpiredOrEarlyTest(candidateName) {
+    // this.clickElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
+    // [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    // h3[text() = "${candidateName}"]]`);
+    this.startTestFor(candidateName);
+    const timeDialogIsPresent = await this.isTimeDialogPresent();
+    expect(timeDialogIsPresent).to.be.true;
+  }
+
+  getTimeDialog() {
+    return this.getElementByClassName(`modal-alert-header`);
+  }
+
+  async isTimeDialogPresent() {
+    return this.getTimeDialog().isPresent();
   }
 }
 

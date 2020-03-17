@@ -29,22 +29,8 @@ When('I check candidate details for {string}', (candidateName) => {
 
 When('I start the test for {string}', (candidateName) => {
   JournalPage.startTestFor(candidateName);
-
-  // If the rekey dialog is shown so just select start test normally
-  const rekeyStartTestButton = JournalPage.getRekeyStartTestButton();
-  rekeyStartTestButton.isPresent().then((result) => {
-    if (result) {
-      JournalPage.clickRekeyStartTestButton();
-    }
-  });
-
-    // If the start test early dialog is shown just select continue
-  const startTestEarlyButton = JournalPage.getStartTestEarlyButton();
-  startTestEarlyButton.isPresent().then((result) => {
-    if (result) {
-      JournalPage.clickStartTestEarlyButton();
-    }
-  });
+  JournalPage.clickRekeyStartTestButtonIfPresent();
+  JournalPage.clickStartTestEarlyContinueButtonIfPresent();
 });
 
 When('I rekey a test for {string}', (candidateName) => {
@@ -59,35 +45,19 @@ When('I rekey a test for {string}', (candidateName) => {
   // TempPage.clickElement(buttonElement);
 });
 
-When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidateName: string) => {
+When(/^I start the test (early|late) for \"(.+)\"$/, async (testTime: string, candidateName: string) => {
   if (testTime === 'early') {
-    startingExpiredOrEarlyTest(candidateName);
-
-    // If the start test early dialog is shown just select continue
-    const startTestEarlyButton = element(by.id('early-start-start-test-button'));
-    startTestEarlyButton.isPresent().then((result) => {
-      if (result) {
-        clickElement(startTestEarlyButton);
-      }
-    });
+    JournalPage.startingExpiredOrEarlyTest(candidateName);
+    JournalPage.clickStartTestEarlyContinueButtonIfPresent();
   }
 
   if (testTime === 'late') {
-    startingExpiredOrEarlyTest(candidateName);
-
-    // If the rekey dialog is shown so just select start test normally
-    const lateStartTestButton = element(by.id('rekey-start-test-button'));
-    lateStartTestButton.isPresent().then((result) => {
-      if (result) {
-        clickElement(lateStartTestButton);
-      }
-    });
+    JournalPage.startingExpiredOrEarlyTest(candidateName);
+    JournalPage.clickRekeyStartTestButtonIfPresent();
   }
-
-  // JournalPage.getStartTestButtonFor(candidateName);
 });
 
-When('I rekey a late test for {string}',(candidateName) => {
+When('I rekey a late test for {string}', (candidateName) => {
   JournalPage.getStartTestButtonFor(candidateName);
 });
 
@@ -150,21 +120,3 @@ Then('The vehicle for {string} has length {string}, width {string}, height {stri
 Then('I continue the write up for {string}', (candidateName) => {
   JournalPage.clickContinueWriteupButton(candidateName);
 });
-
-const rekeyIsPresent = () => {
-  const rekeyStartTestButton = element(by.id('rekey-start-test-button'));
-  return expect(rekeyStartTestButton.isPresent()).to.eventually.be.true;
-};
-
-const timeDialog = () => {
-  const testDialog = getElement(by.className(`modal-alert-header`));
-  return expect(testDialog.isPresent()).to.eventually.be.true;
-};
-
-const startingExpiredOrEarlyTest = (candidateName) => {
-  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-  clickElement(buttonElement);
-  timeDialog();
-};
