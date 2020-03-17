@@ -51,15 +51,6 @@ export class VehicleDetailsByCategoryProvider {
           vehicleWidth: getVehicleWidthD,
           vehicleLength: getVehicleLengthD,
         };
-      case TestCategory.F:
-      case TestCategory.G:
-      case TestCategory.H:
-      case TestCategory.K:
-        return {
-          vehicleDetails: getVehicleDetailsD,
-          vehicleWidth: getVehicleWidthD,
-          vehicleLength: getVehicleLengthD,
-        };
       default:
         throw new Error(VehicleDetailsByCategoryProvider.getVehicleDetailsByCategoryCodeErrMsg);
     }

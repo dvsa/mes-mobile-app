@@ -14,7 +14,7 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
 import { cloneDeep } from 'lodash';
 
-describe('Vehicle Checks Cat HOME Reducer', () => {
+fdescribe('Vehicle Checks Cat HOME Reducer', () => {
 
   describe('SHOW_ME_QUESTION_SELECTED', () => {
     it('should add the show me question in the payload to the array at the specified index', () => {
@@ -23,9 +23,9 @@ describe('Vehicle Checks Cat HOME Reducer', () => {
         description: 'desc',
       };
       const state: CatFUniqueTypes.VehicleChecks = cloneDeep(initialState);
-      const result = vehicleChecksCatHomeTestReducer(state, new ShowMeQuestionSelected(newQuestionPayload, 1));
-      expect(result.showMeQuestions[1].code).toEqual('S1');
-      expect(result.showMeQuestions[1].description).toEqual('desc');
+      const result = vehicleChecksCatHomeTestReducer(state, new ShowMeQuestionSelected(newQuestionPayload, 0));
+      expect(result.showMeQuestions[0].code).toEqual('S1');
+      expect(result.showMeQuestions[0].description).toEqual('desc');
     });
   });
 
@@ -49,9 +49,9 @@ describe('Vehicle Checks Cat HOME Reducer', () => {
         description: 'desc',
       };
       const state: CatFUniqueTypes.VehicleChecks = cloneDeep(initialState);
-      const result = vehicleChecksCatHomeTestReducer(state, new TellMeQuestionSelected(newQuestionPayload, 1));
-      expect(result.tellMeQuestions[1].code).toEqual('T01');
-      expect(result.tellMeQuestions[1].description).toEqual('desc');
+      const result = vehicleChecksCatHomeTestReducer(state, new TellMeQuestionSelected(newQuestionPayload, 0));
+      expect(result.tellMeQuestions[0].code).toEqual('T01');
+      expect(result.tellMeQuestions[0].description).toEqual('desc');
     });
   });
 

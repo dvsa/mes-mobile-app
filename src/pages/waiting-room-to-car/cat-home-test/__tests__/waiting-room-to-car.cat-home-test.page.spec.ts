@@ -32,6 +32,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { VehicleChecksCatHomeTestComponent } from '../components/vehicle-checks/vehicle-checks';
 import { configureTestSuite } from 'ng-bullet';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('WaitingRoomToCarCatHomeTestPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatHomeTestPage>;
@@ -109,6 +111,7 @@ describe('WaitingRoomToCarCatHomeTestPage', () => {
 
       // tslint:disable-next-line:max-line-length
       it('should hide the rest of the form and show eyesight failure confirmation when page state indicates fail is selected', () => {
+        component.categoryCode = TestCategory.F as CategoryCode;
         fixture.detectChanges();
         component.pageState.eyesightTestComplete$ = of(true);
         component.pageState.eyesightTestFailed$ = of(true);
@@ -120,6 +123,7 @@ describe('WaitingRoomToCarCatHomeTestPage', () => {
       });
       // tslint:disable-next-line:max-line-length
       it('should show the rest of the form and not render eyesight failure confirmation when page state indicates pass is selected', () => {
+        component.categoryCode = TestCategory.F as CategoryCode;
         fixture.detectChanges();
         component.pageState.eyesightTestComplete$ = of(true);
         fixture.detectChanges();
@@ -143,6 +147,7 @@ describe('WaitingRoomToCarCatHomeTestPage', () => {
   });
   describe('onSubmit', () => {
     it('should dispatch the appropriate WaitingRoomToCarValidationError actions', fakeAsync(() => {
+      component.categoryCode = TestCategory.F as CategoryCode;
       fixture.detectChanges();
 
       component.form = new FormGroup({
@@ -163,6 +168,7 @@ describe('WaitingRoomToCarCatHomeTestPage', () => {
     }));
 
     it('should navigate to the test report page', fakeAsync(() => {
+      component.categoryCode = TestCategory.F as CategoryCode;
       fixture.detectChanges();
 
       component.form = new FormGroup({

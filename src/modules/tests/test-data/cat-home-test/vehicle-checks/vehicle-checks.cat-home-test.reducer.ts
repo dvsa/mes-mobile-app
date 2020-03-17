@@ -6,14 +6,9 @@ import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
 
 import * as vehicleChecksCatHomeTestActionTypes from './vehicle-checks.cat-home-test.action';
 import {
-  NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestions,
-}
-  from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
-// TODO add all home type categories
-import {
-  NUMBER_OF_SHOW_ME_QUESTIONS as numberOfShowMeQuestions,
-}
-  from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
+  NUMBER_OF_SHOW_ME_QUESTIONS,
+  NUMBER_OF_TELL_ME_QUESTIONS,
+} from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-home-test.constants';
 
 export type VehicleChecksUnion =
   | CatFUniqueTypes.VehicleChecks
@@ -22,10 +17,9 @@ export type VehicleChecksUnion =
   | CatKUniqueTypes.VehicleChecks;
 
 export const initialState: CatFUniqueTypes.VehicleChecks = {
-  tellMeQuestions: Array(numberOfTellMeQuestions).fill({}),
-  showMeQuestions: Array(numberOfShowMeQuestions).fill({}),
+  tellMeQuestions: Array(NUMBER_OF_TELL_ME_QUESTIONS).fill({}),
+  showMeQuestions: Array(NUMBER_OF_SHOW_ME_QUESTIONS).fill({}),
 };
-// TODO add all home type categories
 export function vehicleChecksCatHomeTestReducer(
   state: VehicleChecksUnion = initialState,
   action: vehicleChecksCatHomeTestActionTypes.Types): VehicleChecksUnion {

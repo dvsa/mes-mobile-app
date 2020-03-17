@@ -9,9 +9,10 @@
 
 <ion-content>
   <div>
+    <warning-banner warningText="The eyesight test should be conducted at a distance of 12m or 12.3m"
+                    *ngIf="shouldDisplayEyesightBanner()"></warning-banner>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-grid>
-
         <eyesight-test [formGroup]="form" [eyesightPassRadioChecked]="(pageState.eyesightTestComplete$ | async) && !(pageState.eyesightTestFailed$ | async)"
           [eyesightFailRadioChecked]="pageState.eyesightTestFailed$ | async" (eyesightTestResultChange)="eyesightTestResultChanged($event)"></eyesight-test>
 

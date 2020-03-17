@@ -24,8 +24,6 @@ import { getAccompaniment } from '../../../modules/tests/accompaniment/accompani
 import {
   getRegistrationNumber,
   getGearboxCategory,
-  isAutomatic,
-  isManual,
 } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import {
   getInstructorAccompaniment,
@@ -59,12 +57,12 @@ import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
 import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
 import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
-import { VehicleDetailsByCategoryProvider } from '../../../providers/vehicle-details-by-category/vehicle-details-by-category';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-home/candidate/candidate.cat-home.reducer';
 import {
   hasEyesightTestBeenCompleted,
   hasEyesightTestGotSeriousFault,
 } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.selector';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/common/vehicle-details.reducer';
 
 type HomeTestVehicleChecksUnion =
   | CatKUniqueTypes.VehicleChecks
@@ -82,8 +80,6 @@ interface WaitingRoomToCarPageState {
   interpreterAccompaniment$: Observable<boolean>;
   eyesightTestComplete$: Observable<boolean>;
   eyesightTestFailed$: Observable<boolean>;
-  gearboxAutomaticRadioChecked$: Observable<boolean>;
-  gearboxManualRadioChecked$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
   vehicleChecks$: Observable<HomeTestVehicleChecksUnion>;
 }
@@ -115,7 +111,6 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
     public faultCountProvider: FaultCountProvider,
     public questionProvider: QuestionProvider,
     private testDataByCategoryProvider: TestDataByCategoryProvider,
-    private vehicleDetailsByCategoryProvider: VehicleDetailsByCategoryProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
@@ -132,35 +127,19 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
       map(category => category as TestCategory),
     );
     category$.subscribe((categoryCode) => {
-      this.categoryCode = categoryCode;
-      console.log(this.categoryCode);
+      // This is so that the UnitTests can set the categoryCode before the OnInit without being overridden.
+      if (!this.categoryCode) {
+        this.categoryCode = categoryCode;
+      }
     });
-    currentTest$.subscribe((value) => {
-      console.log(value);
-    })
     this.tellMeQuestions = this.questionProvider.getTellMeQuestions(this.categoryCode as TestCategory);
 
     const testData$ = currentTest$.pipe(
       map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.categoryCode)(data)),
     );
-    console.log(this.testDataByCategoryProvider.getTestDataByCategoryCode(TestCategory.F as CategoryCode));
-
-    testData$.subscribe((value) => {
-      console.log(value);
-    });
-
-    testData$.pipe(
-      select(getVehicleChecksCatHomeTest),
-    ).subscribe((value) => {
-      console.log(value);
-      console.log(value.tellMeQuestions);
-      console.log(value.showMeQuestions);
-    });
 
     const vehicleDetails$ = currentTest$.pipe(
-      map(data => this.vehicleDetailsByCategoryProvider
-        .getVehicleDetailsByCategoryCode(this.categoryCode)
-        .vehicleDetails(data)),
+      select(getVehicleDetails),
     );
 
     const accompaniment$ = currentTest$.pipe(
@@ -196,12 +175,6 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
       ),
       eyesightTestFailed$: testData$.pipe(
         select(hasEyesightTestGotSeriousFault),
-      ),
-      gearboxAutomaticRadioChecked$: vehicleDetails$.pipe(
-        map(isAutomatic),
-      ),
-      gearboxManualRadioChecked$: vehicleDetails$.pipe(
-        map(isManual),
       ),
       vehicleChecksScore$: testData$.pipe(
         select(getVehicleChecksCatHomeTest),
@@ -280,6 +253,7 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
       });
     }
   }
+
   updateForm(ctrl: string, value: any) {
     this.form.patchValue({
       [ctrl]: value,
@@ -308,4 +282,7 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
     return CAT_HOME_TEST.DEBRIEF_PAGE;
   }
 
+  shouldDisplayEyesightBanner = (): boolean => {
+    return this.categoryCode === TestCategory.K as CategoryCode;
+  }
 }

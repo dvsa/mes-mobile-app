@@ -1,5 +1,6 @@
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
-
+export const NUMBER_OF_SHOW_ME_QUESTIONS = 1;
+export const NUMBER_OF_TELL_ME_QUESTIONS = 1;
 export const questions: VehicleChecksQuestion[] = [
   {
     code: 'S1',

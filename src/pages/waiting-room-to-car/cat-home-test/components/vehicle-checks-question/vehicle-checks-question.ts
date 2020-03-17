@@ -43,6 +43,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
       this.questionFormControl = new FormControl({ disabled: true });
       this.formGroup.addControl(this.questionFieldName, this.questionFormControl);
     }
+    console.log(this.questions);
 
     if (!this.questionOutcomeFormControl) {
       this.questionOutcomeFormControl = new FormControl();

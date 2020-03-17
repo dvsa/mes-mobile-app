@@ -17,7 +17,6 @@ import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { TestsModel } from '../../../../../modules/tests/tests.model';
 import { formatAnalyticsText } from '../../../../../shared/helpers/format-analytics-text';
 
-// TODO need to implement for home categories
 import {
   SHOW_ME_QUESTION_OUTCOME_CHANGED,
   SHOW_ME_QUESTION_SELECTED,
@@ -27,7 +26,7 @@ import {
   TELL_ME_QUESTION_SELECTED,
   TellMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
-} from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+} from '../../../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.action';
 
 @Injectable()
 export class VehicleChecksModalAnalyticsEffects {
