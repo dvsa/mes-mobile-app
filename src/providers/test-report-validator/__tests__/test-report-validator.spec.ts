@@ -22,6 +22,10 @@ describe('TestReportValidator', () => {
     { category: TestCategory.D1, validTest: mocks.validTestCatD1, legalReqs: mocks.legalRequirementsCatD1 },
     { category: TestCategory.DE, validTest: mocks.validTestCatDE, legalReqs: mocks.legalRequirementsCatDE },
     { category: TestCategory.D1E, validTest: mocks.validTestCatD1E, legalReqs: mocks.legalRequirementsCatD1E },
+    { category: TestCategory.F, validTest: mocks.validTestCatF, legalReqs: mocks.legalRequirementsCatF },
+    { category: TestCategory.G, validTest: mocks.validTestCatG, legalReqs: mocks.legalRequirementsCatG },
+    { category: TestCategory.H, validTest: mocks.validTestCatH, legalReqs: mocks.legalRequirementsCatH },
+    { category: TestCategory.K, validTest: mocks.validTestCatK, legalReqs: mocks.legalRequirementsCatK },
   ];
 
   let testReportValidatorProvider: TestReportValidatorProvider;

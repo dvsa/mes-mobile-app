@@ -27,6 +27,7 @@ import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
 import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
 import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 import { HomeTestData } from '../../pages/view-test-result/cat-home-test/components/debrief-card/debrief-card';
+import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
 
 @Injectable()
 export class TestReportValidatorProvider {
@@ -96,8 +97,9 @@ export class TestReportValidatorProvider {
       case TestCategory.F:
       case TestCategory.G:
       case TestCategory.H:
-      case TestCategory.K:
         return this.getMissingLegalRequirementsCatHomeTest(data);
+      case TestCategory.K:
+        return this.getMissingLegalRequirementsCatK(data);
       default:
         return [];
     }
@@ -503,6 +505,22 @@ export class TestReportValidatorProvider {
 
     !get(data, 'manoeuvres.reverseLeft.selected', false)
       && result.push(legalRequirementsLabels.manoeuvre);
+
+    !get(data, 'highwayCodeSafety.selected', false) && result.push(legalRequirementsLabels.highwayCodeSafety);
+
+    !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
+
+    return result;
+  }
+
+  private getMissingLegalRequirementsCatK(data: CatKUniqueTypes.TestData): legalRequirementsLabels[] {
+    const result: legalRequirementsLabels[] = [];
+
+    !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
+    !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);
+    !get(data, 'testRequirements.angledStart', false) && result.push(legalRequirementsLabels.angledStart);
+    !get(data, 'testRequirements.uphillStartDesignatedStart', false)
+      && result.push(legalRequirementsLabels.uphillStartDesignatedStart);
 
     !get(data, 'highwayCodeSafety.selected', false) && result.push(legalRequirementsLabels.highwayCodeSafety);
 

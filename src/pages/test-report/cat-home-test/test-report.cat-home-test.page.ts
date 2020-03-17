@@ -230,7 +230,7 @@ export class TestReportCatHomeTestPage extends BasePageComponent {
       );
     }  else if (!this.isEtaValid) {
       this.modal = this.modalController.create('EtaInvalidModal', {}, options);
-    } else if (!this.manoeuvresCompleted) {
+    } else if (!this.manoeuvresCompleted && this.testCategory !== TestCategory.K) {
       this.modal = this.modalController.create(
         SPECIAL_REQUIREMENT_MODAL,
         null,
@@ -266,5 +266,9 @@ export class TestReportCatHomeTestPage extends BasePageComponent {
 
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_HOME_TEST.DEBRIEF_PAGE));
+  }
+
+  showManoeuvreButton = (): boolean => {
+    return this.testCategory !== TestCategory.K;
   }
 }

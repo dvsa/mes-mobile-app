@@ -82,9 +82,11 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
         select(getTestData),
         select(getManoeuvres),
         select((manoeuvres: CatBUniqueTypes.Manoeuvres) => {
-          const manoeuvre = manoeuvres[this.manoeuvre];
-          if (typeof manoeuvre !== 'undefined') {
-            return manoeuvre[this.competency];
+          if (manoeuvres) {
+            const manoeuvre = manoeuvres[this.manoeuvre];
+            if (typeof manoeuvre !== 'undefined') {
+              return manoeuvre[this.competency];
+            }
           }
           return null;
         }),
