@@ -51,10 +51,6 @@ import {
 } from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { VehicleChecksCatHomeTestComponent } from './components/vehicle-checks/vehicle-checks';
-import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
-import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
-import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
-import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
 import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-home/candidate/candidate.cat-home.reducer';
@@ -63,12 +59,7 @@ import {
   hasEyesightTestGotSeriousFault,
 } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.selector';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/common/vehicle-details.reducer';
-
-type HomeTestVehicleChecksUnion =
-  | CatKUniqueTypes.VehicleChecks
-  | CatFUniqueTypes.VehicleChecks
-  | CatGUniqueTypes.VehicleChecks
-  | CatHUniqueTypes.VehicleChecks;
+import { VehicleChecksUnion } from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.reducer';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -81,7 +72,7 @@ interface WaitingRoomToCarPageState {
   eyesightTestComplete$: Observable<boolean>;
   eyesightTestFailed$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
-  vehicleChecks$: Observable<HomeTestVehicleChecksUnion>;
+  vehicleChecks$: Observable<VehicleChecksUnion>;
 }
 
 @IonicPage()
@@ -131,7 +122,7 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
       if (!this.categoryCode) {
         this.categoryCode = categoryCode;
       }
-    });
+    }).unsubscribe();
     this.tellMeQuestions = this.questionProvider.getTellMeQuestions(this.categoryCode as TestCategory);
 
     const testData$ = currentTest$.pipe(

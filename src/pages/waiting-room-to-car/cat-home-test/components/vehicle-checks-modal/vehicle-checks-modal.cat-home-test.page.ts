@@ -84,7 +84,7 @@ export class VehicleChecksCatHomeTestModal {
       select(getTestCategory),
     ).subscribe((value) => {
       this.categoryCode = value;
-    });
+    }).unsubscribe();
 
     const testData$ = currentTest$.pipe(
       map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.categoryCode)(data)),
