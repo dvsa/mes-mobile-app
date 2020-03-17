@@ -250,6 +250,11 @@ export const validTestCatF: CatFUniqueTypes.TestData = {
   highwayCodeSafety: {
     selected: true,
   },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
 };
 
 export const validTestCatG: CatGUniqueTypes.TestData = {
@@ -265,6 +270,11 @@ export const validTestCatG: CatGUniqueTypes.TestData = {
   highwayCodeSafety: {
     selected: true,
   },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
 };
 
 export const validTestCatH: CatHUniqueTypes.TestData = {
@@ -279,6 +289,11 @@ export const validTestCatH: CatHUniqueTypes.TestData = {
   },
   highwayCodeSafety: {
     selected: true,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
   },
 };
 
@@ -386,8 +401,8 @@ export const legalRequirementsCatF = [
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.uphillStartDesignatedStart,
   legalRequirementsLabels.manoeuvre,
-  legalRequirementsLabels.eco,
   legalRequirementsLabels.highwayCodeSafety,
+  legalRequirementsLabels.eco,
 ];
 
 export const legalRequirementsCatG = [
@@ -396,8 +411,8 @@ export const legalRequirementsCatG = [
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.uphillStartDesignatedStart,
   legalRequirementsLabels.manoeuvre,
-  legalRequirementsLabels.eco,
   legalRequirementsLabels.highwayCodeSafety,
+  legalRequirementsLabels.eco,
 ];
 
 export const legalRequirementsCatH = [
@@ -406,8 +421,8 @@ export const legalRequirementsCatH = [
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.uphillStartDesignatedStart,
   legalRequirementsLabels.manoeuvre,
-  legalRequirementsLabels.eco,
   legalRequirementsLabels.highwayCodeSafety,
+  legalRequirementsLabels.eco,
 ];
 
 export const legalRequirementsCatK = [
@@ -415,6 +430,6 @@ export const legalRequirementsCatK = [
   legalRequirementsLabels.normalStart2,
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.uphillStartDesignatedStart,
-  legalRequirementsLabels.eco,
   legalRequirementsLabels.highwayCodeSafety,
+  legalRequirementsLabels.eco,
 ];

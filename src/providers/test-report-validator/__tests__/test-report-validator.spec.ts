@@ -49,7 +49,7 @@ describe('TestReportValidator', () => {
         const result = testReportValidatorProvider.isTestReportValid(cat.validTest, cat.category);
         expect(result).toEqual(true);
       });
-      it(`should return false if the test report is not valid for a Cat ${cat} test`, () => {
+      it(`should return false if the test report is not valid for a Cat ${cat.category} test`, () => {
         const result = testReportValidatorProvider.isTestReportValid({}, cat.category);
         expect(result).toEqual(false);
       });
