@@ -5,6 +5,7 @@ import { ActivityCodes } from '../../shared/models/activity-codes';
 import { Observable, of } from 'rxjs';
 import { FaultCountProvider } from '../fault-count/fault-count';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
@@ -26,6 +27,8 @@ export class TestResultProvider {
 
   public calculateTestResult(category: string, testData: object): Observable<ActivityCode> {
     switch (category) {
+      case TestCategory.ADI2:
+        return this.calculateCatAdiPart2TestResult(testData as CatADI2UniqueTypes.TestData);
       case TestCategory.B:
         return this.calculateCatBTestResult(testData as CatBUniqueTypes.TestData);
       case TestCategory.BE:
@@ -59,6 +62,24 @@ export class TestResultProvider {
       default:
         throw new Error(`Invalid Test Category when trying to calculate test result - ${category}`);
     }
+  }
+
+  private calculateCatAdiPart2TestResult = (testData: CatADI2UniqueTypes.TestData |
+    CatADI2UniqueTypes.TestData): Observable<ActivityCode> => {
+
+    if (this.faultCountProvider.getDangerousFaultSumCount(TestCategory.ADI2, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    if (this.faultCountProvider.getSeriousFaultSumCount(TestCategory.ADI2, testData) > 0) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    if (this.faultCountProvider.getDrivingFaultSumCount(TestCategory.ADI2, testData) > 6) {
+      return of(ActivityCodes.FAIL);
+    }
+
+    return of(ActivityCodes.PASS);
   }
 
   private calculateCatBTestResult = (testData: CatBUniqueTypes.TestData |

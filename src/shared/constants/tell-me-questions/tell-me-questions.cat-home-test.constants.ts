@@ -1,6 +1,9 @@
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
 export const NUMBER_OF_TELL_ME_QUESTIONS = 1;
+
+// Questions can be long; we disable max-line-length lint rule to keep things clean.
+/* tslint:disable:max-line-length */
 export const questions: VehicleChecksQuestion[] = [
   {
     code: 'H13',

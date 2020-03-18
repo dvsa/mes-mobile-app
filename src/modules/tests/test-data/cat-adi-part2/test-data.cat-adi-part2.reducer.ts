@@ -23,6 +23,7 @@ export const initialState: CatADI2UniqueTypes.TestData = {
   vehicleChecks: {
     tellMeQuestions: [],
   },
+  controlledStop: {},
 };
 
 export function testDataCatADI2Reducer(

@@ -8,9 +8,21 @@ export const dangerousFaultMock: TestData = {
   },
 };
 
-export const seriousFaultMock : TestData = {
+export const seriousFaultMock: TestData = {
   seriousFaults: {
     positioningNormalDriving: true,
+  },
+};
+
+export const sevenDrivingFaultsMock: TestData = {
+  drivingFaults: {
+    useOfMirrorsSignalling: 1,
+    useOfMirrorsChangeDirection: 1,
+    useOfMirrorsChangeSpeed: 1,
+    signalsNecessary: 1,
+    signalsCorrectly: 1,
+    signalsTimed: 1,
+    junctionsApproachSpeed: 1,
   },
 };
 
@@ -35,6 +47,13 @@ export const sixteenDrivingFaultsMock: TestData = {
   },
 };
 
+export const sevenDrivingFaultsWithDangerousMock: TestData = {
+  drivingFaults: sevenDrivingFaultsMock.drivingFaults,
+  dangerousFaults: {
+    clearance: true,
+  },
+};
+
 export const sixteenDrivingFaultsWithDangerousMock: TestData = {
   drivingFaults: sixteenDrivingFaultsMock.drivingFaults,
   dangerousFaults: {
@@ -42,10 +61,28 @@ export const sixteenDrivingFaultsWithDangerousMock: TestData = {
   },
 };
 
+export const sevenDrivingFaultsWithSeriousMock: TestData = {
+  drivingFaults: sevenDrivingFaultsMock.drivingFaults,
+  seriousFaults: {
+    positioningNormalDriving: true,
+  },
+};
+
 export const sixteenDrivingFaultsWithSeriousMock: TestData = {
   drivingFaults: sixteenDrivingFaultsMock.drivingFaults,
   seriousFaults: {
     positioningNormalDriving: true,
+  },
+};
+
+export const sixDrivingFaultsMock: TestData = {
+  drivingFaults: {
+    useOfMirrorsSignalling: 1,
+    useOfMirrorsChangeDirection: 1,
+    useOfMirrorsChangeSpeed: 1,
+    signalsNecessary: 1,
+    signalsCorrectly: 1,
+    signalsTimed: 1,
   },
 };
 
@@ -69,14 +106,28 @@ export const fifteenDrivingFaultsMock: TestData = {
   },
 };
 
-export const fifteenDrivingFaultsWithDangerousMock = {
+export const sixDrivingFaultsWithDangerousMock: TestData = {
+  drivingFaults: sixDrivingFaultsMock.drivingFaults,
+  dangerousFaults: {
+    positioningNormalDriving: true,
+  },
+};
+
+export const fifteenDrivingFaultsWithDangerousMock: TestData = {
   drivingFaults: fifteenDrivingFaultsMock.drivingFaults,
   dangerousFaults: {
     positioningNormalDriving: true,
   },
 };
 
-export const fifteenDrivingFaultsWithSeriousMock = {
+export const sixDrivingFaultsWithSeriousMock: TestData = {
+  drivingFaults: sixDrivingFaultsMock.drivingFaults,
+  seriousFaults: {
+    positioningNormalDriving: true,
+  },
+};
+
+export const fifteenDrivingFaultsWithSeriousMock: TestData = {
   drivingFaults: fifteenDrivingFaultsMock.drivingFaults,
   seriousFaults: {
     positioningNormalDriving: true,
