@@ -32,7 +32,7 @@ import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 import { ModalEvent } from '../test-report.constants';
-import { CAT_HOME_TEST, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
+import { CAT_HOME_TEST, LEGAL_REQUIREMENTS_MODAL, SPECIAL_REQUIREMENT_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -51,9 +51,6 @@ import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
 import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
 import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
 import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
-import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
-import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 
 type HomeTestDataUnion =
   | CatFUniqueTypes.TestData
@@ -231,8 +228,14 @@ export class TestReportCatHomeTestPage extends BasePageComponent {
         },
         options,
       );
-    } else if (!this.isEtaValid) {
+    }  else if (!this.isEtaValid) {
       this.modal = this.modalController.create('EtaInvalidModal', {}, options);
+    } else if (!this.manoeuvresCompleted && this.testCategory !== TestCategory.K) {
+      this.modal = this.modalController.create(
+        SPECIAL_REQUIREMENT_MODAL,
+        null,
+        options,
+      );
     } else {
       this.modal = this.modalController.create('EndTestModal', {}, options);
     }
@@ -265,39 +268,7 @@ export class TestReportCatHomeTestPage extends BasePageComponent {
     this.modal.dismiss().then(() => this.navController.push(CAT_HOME_TEST.DEBRIEF_PAGE));
   }
 
-  passTest = (): void => {
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.clearance,
-      newFaultCount: 3,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.moveOffSafety,
-      newFaultCount: 1,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.followingDistance,
-      newFaultCount: 2,
-    }));
-    this.store$.dispatch(new SetActivityCode('1'));
-    this.navController.push(CAT_HOME_TEST.DEBRIEF_PAGE);
-  }
-
-  failTest = (): void => {
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.pedestrianCrossings,
-      newFaultCount: 3,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.positioningLaneDiscipline,
-      newFaultCount: 1,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.signalsCorrectly,
-      newFaultCount: 2,
-    }));
-    this.store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsChangeSpeed));
-    this.store$.dispatch(new AddSeriousFault(Competencies.useOfSpeed));
-    this.store$.dispatch(new AddSeriousFault(Competencies.responseToSignsTrafficLights));
-    this.navController.push(CAT_HOME_TEST.DEBRIEF_PAGE);
+  showManoeuvreButton = (): boolean => {
+    return this.testCategory !== TestCategory.K;
   }
 }

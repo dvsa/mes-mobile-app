@@ -19,6 +19,10 @@ describe('TestResultCalculatorProvider', () => {
     TestCategory.D1,
     TestCategory.DE,
     TestCategory.D1E,
+    TestCategory.F,
+    TestCategory.G,
+    TestCategory.H,
+    TestCategory.K,
   ];
 
   let testResultProvider: TestResultProvider;

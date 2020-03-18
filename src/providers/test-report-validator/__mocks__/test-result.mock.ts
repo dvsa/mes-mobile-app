@@ -11,6 +11,10 @@ import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
 import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
+import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
+import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
+import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
+import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
 
 export const validTestCatAMod2: CatAMod2TestData = {
   testRequirements: {
@@ -233,6 +237,81 @@ export const validTestCatD1E: CatD1EUniqueTypes.TestData = {
   },
 };
 
+export const validTestCatF: CatFUniqueTypes.TestData = {
+  testRequirements: {
+    angledStart: true,
+    normalStart1: true,
+    normalStart2: true,
+    uphillStartDesignatedStart: true,
+  },
+  eco: {
+    completed: true,
+  },
+  highwayCodeSafety: {
+    selected: true,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+};
+
+export const validTestCatG: CatGUniqueTypes.TestData = {
+  testRequirements: {
+    angledStart: true,
+    normalStart1: true,
+    normalStart2: true,
+    uphillStartDesignatedStart: true,
+  },
+  eco: {
+    completed: true,
+  },
+  highwayCodeSafety: {
+    selected: true,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+};
+
+export const validTestCatH: CatHUniqueTypes.TestData = {
+  testRequirements: {
+    angledStart: true,
+    normalStart1: true,
+    normalStart2: true,
+    uphillStartDesignatedStart: true,
+  },
+  eco: {
+    completed: true,
+  },
+  highwayCodeSafety: {
+    selected: true,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+};
+
+export const validTestCatK: CatKUniqueTypes.TestData = {
+  testRequirements: {
+    angledStart: true,
+    normalStart1: true,
+    normalStart2: true,
+    uphillStartDesignatedStart: true,
+  },
+  eco: {
+    completed: true,
+  },
+  highwayCodeSafety: {
+    selected: true,
+  },
+};
+
 export const legalRequirementsAMod2 = [
   legalRequirementsLabels.normalStart1,
   legalRequirementsLabels.normalStart2,
@@ -314,4 +393,43 @@ export const legalRequirementsCatD1E = [
   legalRequirementsLabels.manoeuvre,
   legalRequirementsLabels.eco,
   legalRequirementsLabels.uncoupleRecouple,
+];
+
+export const legalRequirementsCatF = [
+  legalRequirementsLabels.normalStart1,
+  legalRequirementsLabels.normalStart2,
+  legalRequirementsLabels.angledStart,
+  legalRequirementsLabels.uphillStartDesignatedStart,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.highwayCodeSafety,
+  legalRequirementsLabels.eco,
+];
+
+export const legalRequirementsCatG = [
+  legalRequirementsLabels.normalStart1,
+  legalRequirementsLabels.normalStart2,
+  legalRequirementsLabels.angledStart,
+  legalRequirementsLabels.uphillStartDesignatedStart,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.highwayCodeSafety,
+  legalRequirementsLabels.eco,
+];
+
+export const legalRequirementsCatH = [
+  legalRequirementsLabels.normalStart1,
+  legalRequirementsLabels.normalStart2,
+  legalRequirementsLabels.angledStart,
+  legalRequirementsLabels.uphillStartDesignatedStart,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.highwayCodeSafety,
+  legalRequirementsLabels.eco,
+];
+
+export const legalRequirementsCatK = [
+  legalRequirementsLabels.normalStart1,
+  legalRequirementsLabels.normalStart2,
+  legalRequirementsLabels.angledStart,
+  legalRequirementsLabels.uphillStartDesignatedStart,
+  legalRequirementsLabels.highwayCodeSafety,
+  legalRequirementsLabels.eco,
 ];

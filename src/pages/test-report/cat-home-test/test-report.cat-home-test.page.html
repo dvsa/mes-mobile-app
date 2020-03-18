@@ -1,10 +1,6 @@
 <ion-header>
   <ion-navbar hideBackButton>
     <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
-    <ion-buttons start>
-      <button ion-button (click)="passTest()">Pass Test</button>
-      <button ion-button (click)="failTest()">Fail Test</button>
-    </ion-buttons>
     <ion-buttons end>
       <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>
     </ion-buttons>
@@ -65,15 +61,18 @@
             <div class="dark-divider"></div>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row [ngStyle]="{'visibility': showManoeuvreButton() ? 'visible' : 'hidden' }">
           <ion-col>
-            <reverse-left [completed]="manoeuvresCompleted" [controlLabel]="'Reverse Left'"
-                          [clickCallback]="getCallback()" [testCategory]="pageState.testCategory$ | async">
+            <reverse-left
+              [completed]="manoeuvresCompleted"
+              [controlLabel]="'Reverse Left'"
+              [clickCallback]="getCallback()"
+              [testCategory]="pageState.testCategory$ | async">
               <reverse-left-popover></reverse-left-popover>
             </reverse-left>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row [ngStyle]="{'visibility': showManoeuvreButton() ? 'visible' : 'hidden' }">
           <ion-col no-padding>
             <div class="dark-divider"></div>
           </ion-col>
