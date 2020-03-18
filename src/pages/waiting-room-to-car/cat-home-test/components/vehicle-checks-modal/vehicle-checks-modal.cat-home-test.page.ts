@@ -34,8 +34,8 @@ import { getTestCategory } from '../../../../../modules/tests/category/category.
 import { TestDataByCategoryProvider } from '../../../../../providers/test-data-by-category/test-data-by-category';
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS,
-  NUMBER_OF_TELL_ME_QUESTIONS,
 } from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-home-test.constants';
+import { NUMBER_OF_TELL_ME_QUESTIONS } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-home-test.constants';
 
 interface VehicleChecksModalCatHomeTestState {
   candidateName$: Observable<string>;
