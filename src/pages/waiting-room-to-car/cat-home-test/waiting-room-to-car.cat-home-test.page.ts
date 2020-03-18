@@ -188,7 +188,9 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
   }
 
   ionViewWillLeave(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
     this.store$.dispatch(new PersistTests());
   }
 

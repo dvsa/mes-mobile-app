@@ -56,13 +56,14 @@ export class VehicleChecksCatHomeTestModal {
 
   showMeQuestions: VehicleChecksQuestion[];
   tellMeQuestions: VehicleChecksQuestion[];
-  categoryCode: CategoryCode;
+  testCategory: TestCategory;
   readonly showMeQuestionsNumberArray: number[] = Array(NUMBER_OF_SHOW_ME_QUESTIONS);
   readonly tellMeQuestionsNumberArray: number[] = Array(NUMBER_OF_TELL_ME_QUESTIONS);
 
   vehicleChecksScore: VehicleChecksScore;
 
   subscription: Subscription;
+  categoryCodeSubscription: Subscription;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -80,18 +81,18 @@ export class VehicleChecksCatHomeTestModal {
       select(getCurrentTest),
     );
 
-    currentTest$.pipe(
+    this.categoryCodeSubscription = currentTest$.pipe(
       select(getTestCategory),
     ).subscribe((value) => {
-      this.categoryCode = value;
-    }).unsubscribe();
+      this.testCategory = value as TestCategory;
+    });
 
     const testData$ = currentTest$.pipe(
-      map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.categoryCode)(data)),
+      map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory as CategoryCode)(data)),
     );
 
-    this.showMeQuestions = this.questionProvider.getShowMeQuestions(this.categoryCode as TestCategory);
-    this.tellMeQuestions = this.questionProvider.getTellMeQuestions(this.categoryCode as TestCategory);
+    this.showMeQuestions = this.questionProvider.getShowMeQuestions(this.testCategory);
+    this.tellMeQuestions = this.questionProvider.getTellMeQuestions(this.testCategory);
     this.pageState = {
       candidateName$: currentTest$.pipe(
         select(getJournalData),
@@ -109,7 +110,7 @@ export class VehicleChecksCatHomeTestModal {
       vehicleChecksScore$: testData$.pipe(
         select(getVehicleChecksCatHomeTest),
         map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(this.categoryCode as TestCategory, vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory, vehicleChecks);
         }),
       ),
     };
@@ -128,6 +129,9 @@ export class VehicleChecksCatHomeTestModal {
   ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.categoryCodeSubscription) {
+      this.categoryCodeSubscription.unsubscribe();
     }
   }
 
