@@ -14,4 +14,14 @@ Feature: Driving Examiner Completes
     And I complete the waiting room to car page
     Then I should see the "Test report - Deanna Wolf" page
     And I enter recorded speed for Emergency Stop
-    When I complete the test
+    When I end the test
+    Then the legal requirements pop up is present
+    And the required test observation is present "NS (normal start)"
+    And the required test observation is present "UH (uphill start)"
+    And the required test observation is present "AS/CS (angled start/ controlled stop)"
+    And the required test observation is present "Manoeuvres"
+    And the required test observation is present "Eco (control and planning)"
+    And the required test observation is present "Uncouple / Recouple"
+    Then I return to the test report page
+    And I should see the "Test report - Dillon Jennings" page
+    And I enter the legal requirements
