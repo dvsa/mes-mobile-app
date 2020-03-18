@@ -140,6 +140,7 @@ describe('WaitingRoomToCarCatHomeTestPage', () => {
   });
   describe('ionViewWillLeave', () => {
     it('should dispatch the PersistTests action', () => {
+      fixture.detectChanges();
       component.ionViewWillLeave();
       expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
     });
