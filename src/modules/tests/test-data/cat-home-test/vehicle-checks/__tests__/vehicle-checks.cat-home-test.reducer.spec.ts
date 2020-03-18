@@ -14,7 +14,7 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
 import { cloneDeep } from 'lodash';
 
-fdescribe('Vehicle Checks Cat HOME Reducer', () => {
+describe('Vehicle Checks Cat HOME Reducer', () => {
 
   describe('SHOW_ME_QUESTION_SELECTED', () => {
     it('should add the show me question in the payload to the array at the specified index', () => {
