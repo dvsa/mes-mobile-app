@@ -7,7 +7,6 @@ import { ReverseDiagramLinkComponent } from '../../reverse-diagram-link/reverse-
 import { IonicModule } from 'ionic-angular';
 import { MockComponent } from 'ng-mocks';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
-import { By } from '@angular/platform-browser';
 import { ManoeuvreCompetencies } from '../../../../../modules/tests/test-data/test-data.constants';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
@@ -35,14 +34,6 @@ describe('reverseLeftComponent', () => {
     fixture = TestBed.createComponent(ReverseLeftPopoverComponent);
     component = fixture.componentInstance;
   }));
-
-  describe('DOM', () => {
-    it('should display a link to open the reverse diagram', () => {
-      const iconElement = fixture.debugElement.queryAll(By.css('reverse-diagram-link[id="reverse-diagram-link"]'));
-      fixture.detectChanges();
-      expect(iconElement.length).toBe(1);
-    });
-  });
 
   describe('Class', () => {
     describe('getId', () => {
