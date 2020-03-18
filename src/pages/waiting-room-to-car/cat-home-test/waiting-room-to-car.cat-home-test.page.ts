@@ -60,6 +60,7 @@ import {
 } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.selector';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/common/vehicle-details.reducer';
 import { VehicleChecksUnion } from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.reducer';
+import { Subscription } from 'rxjs';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -91,7 +92,9 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
 
   tellMeQuestions: VehicleChecksQuestion[];
 
-  categoryCode: CategoryCode;
+  testCategory: TestCategory;
+
+  subscription: Subscription;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -117,16 +120,16 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
       select(getTestCategory),
       map(category => category as TestCategory),
     );
-    category$.subscribe((categoryCode) => {
+    this.subscription = category$.subscribe((categoryCode) => {
       // This is so that the UnitTests can set the categoryCode before the OnInit without being overridden.
-      if (!this.categoryCode) {
-        this.categoryCode = categoryCode;
+      if (!this.testCategory) {
+        this.testCategory = categoryCode as TestCategory;
       }
-    }).unsubscribe();
-    this.tellMeQuestions = this.questionProvider.getTellMeQuestions(this.categoryCode as TestCategory);
+    });
+    this.tellMeQuestions = this.questionProvider.getTellMeQuestions(this.testCategory);
 
     const testData$ = currentTest$.pipe(
-      map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.categoryCode)(data)),
+      map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory as CategoryCode)(data)),
     );
 
     const vehicleDetails$ = currentTest$.pipe(
@@ -171,7 +174,7 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
         select(getVehicleChecksCatHomeTest),
         map((vehicleChecks) => {
           return this.faultCountProvider
-            .getVehicleChecksFaultCount(this.categoryCode as TestCategory, vehicleChecks);
+            .getVehicleChecksFaultCount(this.testCategory, vehicleChecks);
         }),
       ),
       vehicleChecks$: testData$.pipe(
@@ -185,6 +188,7 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
   }
 
   ionViewWillLeave(): void {
+    this.subscription.unsubscribe();
     this.store$.dispatch(new PersistTests());
   }
 
@@ -274,6 +278,6 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
   }
 
   shouldDisplayEyesightBanner = (): boolean => {
-    return this.categoryCode === TestCategory.K as CategoryCode;
+    return this.testCategory === TestCategory.K;
   }
 }
