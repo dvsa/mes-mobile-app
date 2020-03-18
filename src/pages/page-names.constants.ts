@@ -151,7 +151,6 @@ export const CAT_ADI_PART2 = {
   TEST_REPORT_PAGE: 'TestReportCatADIPart2Page',
   WAITING_ROOM_PAGE: 'WaitingRoomCatADIPart2Page',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatADIPart2Page',
-  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatADIPart2Page',
   REKEY_REASON_PAGE: 'RekeyReasonCatADIPart2Page',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatADIPart2Page',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatADIPart2Modal',

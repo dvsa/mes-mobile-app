@@ -4,6 +4,7 @@ import { NavControllerMock, PlatformMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
+import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
@@ -16,14 +17,13 @@ import { ActivityCodeComponent } from '../../../office/components/activity-code/
 import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
 import * as testActions from '../../../../modules/tests/tests.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { D255Component } from '../../../../components/test-finalisation/d255/d255';
 import { LanguagePreferencesComponent } from
 '../../../../components/test-finalisation/language-preference/language-preferences';
 import { DebriefWitnessedComponent } from
 '../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
 import { FinalisationHeaderComponent } from
 '../../../../components/test-finalisation/finalisation-header/finalisation-header';
-import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
+import { DebriefWitnessed, DebriefUnwitnessed } from
 '../../../../modules/tests/test-summary/common/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
 '../../../../modules/tests/communication-preferences/communication-preferences.actions';
@@ -40,10 +40,10 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
       declarations: [
         NonPassFinalisationCatADIPart2Page,
         MockComponent(ActivityCodeComponent),
-        MockComponent(D255Component),
         MockComponent(LanguagePreferencesComponent),
         MockComponent(DebriefWitnessedComponent),
         MockComponent(FinalisationHeaderComponent),
+        MockComponent(WarningBannerComponent),
       ],
       imports: [
         IonicModule,
@@ -69,18 +69,6 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
       it('should dispatch a view did enter action', () => {
         component.ionViewDidEnter();
         expect(store$.dispatch).toHaveBeenCalledWith(new NonPassFinalisationViewDidEnter());
-      });
-    });
-    describe('d255Changed', () => {
-      it('should dispatch the correct action if the inputted value is true', () => {
-        component.d255Changed(true);
-        expect(store$.dispatch).toHaveBeenCalledWith(new D255Yes());
-        expect(store$.dispatch).toHaveBeenCalledTimes(1);
-      });
-      it('should dispatch the correct action if the inputted value is false', () => {
-        component.d255Changed(false);
-        expect(store$.dispatch).toHaveBeenCalledWith(new D255No());
-        expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });
     describe('debriefWitnessedChanged', () => {
@@ -110,8 +98,7 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
     describe('OnContinue', () => {
       it('should dispatch a change test state to WriteUp action', () => {
         // Arrange
-        // TO-DO ADI Part2: Implement correct category
-        store$.dispatch(new testActions.StartTest(123, TestCategory.BE));
+        store$.dispatch(new testActions.StartTest(123, TestCategory.ADI2));
         component.slotId = '123';
 
         // Act

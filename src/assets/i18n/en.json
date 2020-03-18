@@ -39,6 +39,22 @@
       "BQ3": "Balance with passenger"
     },
     "showMeTellMeQuestions": {
+      "ADI2": {
+        "T1": "Brakes",
+        "T2": "Tyre pressures",
+        "T3": "Head restraint",
+        "T4": "Sufficient tread",
+        "T5": "Headlights & tail lights",
+        "T6": "Antilock braking system",
+        "T7": "Direction indicators",
+        "T8": "Brake lights",
+        "T9": "Power assisted steering",
+        "T10": "Rear fog light(s)",
+        "T11": "Dipped to main beam",
+        "T12": "Engine has sufficient oil",
+        "T13": "Engine coolant",
+        "T14": "Brake fluid"
+      },
       "B+E": {
         "T01": "Brakes",
         "T02": "Safety factors while loading",

@@ -39,6 +39,22 @@
       "BQ3": "Cydbwysedd gyda theithiwr"
     },
     "showMeTellMeQuestions": {
+      "ADI2": {
+        "T1": "Breciau",
+        "T2": "CY - Tyre pressures",
+        "T3": "Ataliad pen",
+        "T4": "Digon o wadn",
+        "T5": "CY - Headlights & tail lights",
+        "T6": "CY - Antilock braking system",
+        "T7": "Dangosyddion cyfeiriad",
+        "T8": "Goleuadau brêciau",
+        "T9": "Llywio â chymorth pŵer",
+        "T10": "CY - Rear fog light(s)",
+        "T11": "Wedi'u gostwng i'r prif belydryn",
+        "T12": "Mae gan yr injan ddigon o olew",
+        "T13": "Oerydd y peiriant",
+        "T14": "Hylif Brêc"
+      },
       "B+E": {
         "T01": "Breciau",
         "T02": "Ffactorau diogelwch wrth lwytho",
