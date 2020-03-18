@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
@@ -18,7 +18,6 @@ import { FinalisationHeaderComponent } from
     '../../../../components/test-finalisation/finalisation-header/finalisation-header';
 import {
   PassFinalisationViewDidEnter,
-  PassFinalisationValidationError,
 } from '../../pass-finalisation.actions';
 import { DebriefWitnessed, DebriefUnwitnessed } from
     '../../../../modules/tests/test-summary/common/test-summary.actions';
@@ -97,7 +96,6 @@ describe('PassFinalisationCatADIPart2Page', () => {
       });
     });
     describe('onSubmit', () => {
-      // Unit tests for the components TypeScript class
       it('should dispatch the PersistTests action', () => {
         component.onSubmit();
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
@@ -108,14 +106,6 @@ describe('PassFinalisationCatADIPart2Page', () => {
           requiredControl1: new FormControl(null, [Validators.required]),
           notRequiredControl: new FormControl(null),
         });
-
-        component.onSubmit();
-        tick();
-        expect(store$.dispatch)
-          .toHaveBeenCalledWith(new PassFinalisationValidationError('requiredControl1 is blank'));
-        expect(store$.dispatch)
-          .not
-          .toHaveBeenCalledWith(new PassFinalisationValidationError('notRequiredControl is blank'));
       }));
     });
   });
