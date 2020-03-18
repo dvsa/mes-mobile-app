@@ -83,6 +83,7 @@ export enum LegalRequirements {
   angledStartControlledStop = 'angledStartControlledStop',
   uphillStart = 'uphillStart',
   downhillStart = 'downhillStart',
+  uphillStartDesignatedStart = 'uphillStartDesignatedStart',
 }
 
 export enum ExaminerActions {

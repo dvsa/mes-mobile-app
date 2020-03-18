@@ -10,6 +10,7 @@ export const DASHBOARD_PAGE = 'DashboardPage';
 export const REKEY_SEARCH_PAGE = 'RekeySearchPage';
 export const TEST_RESULTS_SEARCH_PAGE = 'TestResultsSearchPage';
 export const LEGAL_REQUIREMENTS_MODAL = 'LegalRequirementsModal';
+export const SPECIAL_REQUIREMENT_MODAL = 'SpecialLegalRequirementModal';
 export const REVERSE_DIAGRAM_PAGE = 'ReverseDiagramPage';
 export const REKEY_UPLOAD_OUTCOME_PAGE = 'RekeyUploadOutcomePage';
 

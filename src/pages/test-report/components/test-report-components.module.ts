@@ -21,6 +21,9 @@ import { UncoupleRecoupleComponent } from './uncouple-recouple/uncouple-recouple
 import { MultiLegalRequirementComponent } from './multi-legal-requirement/multi-legal-requirement';
 import { SingleFaultCompetencyComponent } from './single-fault-competency/single-fault-competency';
 import { ControlledStopComponent } from './controlled-stop/controlled-stop';
+import {
+  SpecialLegalRequirementModalModule,
+} from './special-legal-requirement-modal/special-legal-requirement-modal.module';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,7 @@ import { ControlledStopComponent } from './controlled-stop/controlled-stop';
     IonicModule,
     EndTestModalModule,
     LegalRequirementsModalModule,
+    SpecialLegalRequirementModalModule,
     EtaInvalidModalModule,
   ],
   exports:[

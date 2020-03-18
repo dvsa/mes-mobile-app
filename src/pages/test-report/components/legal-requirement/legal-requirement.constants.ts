@@ -7,4 +7,5 @@ export enum legalRequirementLabels  {
     angledStartControlledStop = 'AS/CS',
     uphillStart = 'UH',
     downhillStart = 'DH',
+    uphillStartDesignatedStart = 'UH / DS',
 }

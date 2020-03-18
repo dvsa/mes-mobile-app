@@ -13,6 +13,8 @@ export enum legalRequirementsLabels {
   busStop1 = 'BS (bus stop)',
   busStop2 = 'BS (bus stop)',
   safetyAndBalanceQuestions = 'Safety and Balance',
+  uphillStartDesignatedStart = 'UH (uphill) / DS (designated) start',
+  highwayCodeSafety = 'H/Code / Safety',
 }
 
 export enum legalRequirementToggleValues {

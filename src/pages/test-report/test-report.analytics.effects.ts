@@ -10,6 +10,8 @@ import {
 } from '../../providers/analytics/analytics.model';
 import * as testReportActions from '../../pages/test-report/test-report.actions';
 import * as controlledStopActions from '../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
+import * as highwayCodeSafetyActions
+  from '../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
 import * as dangerousFaultsActions
   from '../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import * as drivingFaultsActions from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
@@ -345,6 +347,52 @@ export class TestReportAnalyticsEffects {
   );
 
   @Effect()
+  highwayCodeSafetyAddDrivingFault$ = this.actions$.pipe(
+    ofType(
+      highwayCodeSafetyActions.HIGHWAY_CODE_SAFETY_ADD_DRIVING_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [highwayCodeSafetyActions.HighwayCodeSafetyAddDrivingFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
+        fullCompetencyLabels['outcomeHighwayCodeSafety'],
+        1,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  highwayCodeSafetyAddSeriousFault$ = this.actions$.pipe(
+    ofType(
+      highwayCodeSafetyActions.HIGHWAY_CODE_SAFETY_ADD_SERIOUS_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [highwayCodeSafetyActions.HighwayCodeSafetyAddSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
+        fullCompetencyLabels['outcomeHighwayCodeSafety'],
+        1,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
   showMeQuestionDrivingFault$ = this.actions$.pipe(
     ofType(
       vehicleChecksActions.SHOW_ME_QUESTION_DRIVING_FAULT,
@@ -525,7 +573,27 @@ export class TestReportAnalyticsEffects {
       return of(new AnalyticRecorded());
     }),
   );
-
+  @Effect()
+  highwayCodeSafetyRemoveFault$ = this.actions$.pipe(
+    ofType(
+      highwayCodeSafetyActions.HIGHWAY_CODE_SAFETY_REMOVE_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [highwayCodeSafetyActions.HighwayCodeSafetyRemoveFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REMOVE_FAULT, tests),
+        fullCompetencyLabels['outcomeHighwayCodeSafety'],
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
   @Effect()
   showMeQuestionRemoveFault$ = this.actions$.pipe(
     ofType(

@@ -32,7 +32,7 @@ import { getTestReportState } from '../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 import { ModalEvent } from '../test-report.constants';
-import { CAT_HOME_TEST, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
+import { CAT_HOME_TEST, LEGAL_REQUIREMENTS_MODAL, SPECIAL_REQUIREMENT_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -228,8 +228,14 @@ export class TestReportCatHomeTestPage extends BasePageComponent {
         },
         options,
       );
-    } else if (!this.isEtaValid) {
+    }  else if (!this.isEtaValid) {
       this.modal = this.modalController.create('EtaInvalidModal', {}, options);
+    } else if (!this.manoeuvresCompleted && this.testCategory !== TestCategory.K) {
+      this.modal = this.modalController.create(
+        SPECIAL_REQUIREMENT_MODAL,
+        null,
+        options,
+      );
     } else {
       this.modal = this.modalController.create('EndTestModal', {}, options);
     }
@@ -260,5 +266,9 @@ export class TestReportCatHomeTestPage extends BasePageComponent {
 
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_HOME_TEST.DEBRIEF_PAGE));
+  }
+
+  showManoeuvreButton = (): boolean => {
+    return this.testCategory !== TestCategory.K;
   }
 }

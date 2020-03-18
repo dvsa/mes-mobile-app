@@ -10,6 +10,7 @@ import { controlledStopReducer } from '../common/controlled-stop/controlled-stop
 import { testRequirementsCatHomeReducer } from './test-requirements/test-requirements.cat-home.reducer';
 import { eyesightTestReducer } from '../common/eyesight-test/eyesight-test.reducer';
 import { vehicleChecksCatHomeTestReducer } from './vehicle-checks/vehicle-checks.cat-home-test.reducer';
+import { highwayCodeSafetyReducer } from '../common/highway-code-safety/highway-code-safety.reducer';
 
 export const initialState: CatKUniqueTypes.TestData = {
   dangerousFaults: {},
@@ -37,7 +38,7 @@ export function testDataCatKReducer(
     seriousFaults: seriousFaultsReducer,
     vehicleChecks: vehicleChecksCatHomeTestReducer,
     controlledStop: controlledStopReducer,
-    highwayCodeSafety: null,
+    highwayCodeSafety: highwayCodeSafetyReducer,
     eco: ecoReducer,
     ETA: etaReducer,
     eyesightTest: eyesightTestReducer,

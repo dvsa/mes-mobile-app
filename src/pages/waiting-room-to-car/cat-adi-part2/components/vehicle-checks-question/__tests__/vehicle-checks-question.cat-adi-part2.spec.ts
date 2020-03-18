@@ -9,7 +9,8 @@ import { configureTestSuite } from 'ng-bullet';
 
 const vehicleChecksQuestion: VehicleChecksQuestion = {
   code: 'T4',
-  description: 'Tell me how you would check the tyres to ensure that they have sufficient tread depth and that their general condition is safe to use on the road.',
+  // tslint:disable-next-line:max-line-length
+  description: `Tell me how you would check the tyres to ensure that they have sufficient tread depth and that their general condition is safe to use on the road.`,
   shortName: 'Sufficient tread',
 };
 

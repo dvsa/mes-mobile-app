@@ -6,7 +6,9 @@ import { Store, StoreModule } from '@ngrx/store';
 import { ConfigMock, NavControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../../app/app.module';
 import { MockComponent } from 'ng-mocks';
-import { VehicleChecksQuestionComponent } from '../../../../cat-adi-part2/components/vehicle-checks-question/vehicle-checks-question.cat-adi-part2';
+import {
+  VehicleChecksQuestionComponent,
+} from '../../../../cat-adi-part2/components/vehicle-checks-question/vehicle-checks-question.cat-adi-part2';
 import {
   QuestionOutcome,
   QuestionResult,
