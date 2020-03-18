@@ -279,6 +279,7 @@ export class TestReportCatADIPart2Page extends BasePageComponent {
     this.store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsChangeSpeed));
     this.store$.dispatch(new AddSeriousFault(Competencies.useOfSpeed));
     this.store$.dispatch(new AddDangerousFault(Competencies.responseToSignsTrafficLights));
+    this.store$.dispatch(new SetActivityCode('2'));
     this.navController.push(CAT_ADI_PART2.DEBRIEF_PAGE);
   }
 }

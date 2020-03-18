@@ -38,8 +38,7 @@ import { CAT_ADI_PART2 } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-// TODO - ADI Part 2: use correct category
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { of } from 'rxjs';
 import { TestOutcome } from '../../../../shared/models/test-outcome';
@@ -60,11 +59,11 @@ describe('DebriefCatADIPart2Page', () => {
     start: '',
     vehicleTypeCode: '',
   };
-  // TODO - ADI Part 2: use correct category
-  const exampleTestData: CatBEUniqueTypes.TestData  = {
+
+  const exampleTestData: CatADI2UniqueTypes.TestData  = {
     dangerousFaults: {},
     drivingFaults: {},
-    manoeuvres: {},
+    manoeuvres: [{}, {}],
     seriousFaults: {},
     testRequirements: {},
     ETA: {},
@@ -73,7 +72,6 @@ describe('DebriefCatADIPart2Page', () => {
       tellMeQuestions: [{}],
       showMeQuestions: [{}],
     },
-    uncoupleRecouple: {},
   };
 
   configureTestSuite(() => {
@@ -93,8 +91,7 @@ describe('DebriefCatADIPart2Page', () => {
             startedTests: {
               123: {
                 testSlotAttributes,
-                // TODO - ADI Part 2: use correct category
-                category: TestCategory.BE,
+                category: TestCategory.ADI2,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: exampleTestData,
@@ -224,12 +221,12 @@ describe('DebriefCatADIPart2Page', () => {
     it('should navigate to BackToOfficePage when outcome = fail', () => {
       component.outcome = TestOutcome.FAIL;
       component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.POST_DEBRIEF_HOLDING_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE);
     });
     it('should navigate to the BackToOfficePage when outcomes = terminated', () => {
       component.outcome = 'Terminated';
       component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.POST_DEBRIEF_HOLDING_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE);
     });
   });
 

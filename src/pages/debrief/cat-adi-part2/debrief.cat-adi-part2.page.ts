@@ -6,8 +6,7 @@ import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.sel
 import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable, Subscription, merge } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
-// TODO - ADI Part 2: use correct reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
 import { getETA, getEco } from '../../../modules/tests/test-data/common/test-data.selector';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';
@@ -33,8 +32,9 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { TestOutcome } from '../../../shared/models/test-outcome';
-// TODO - ADI Part 2: use correct selector
-import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import {
+  getVehicleChecksCatADI2,
+} from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.selector';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -146,8 +146,8 @@ export class DebriefCatADIPart2Page extends BasePageComponent {
       ),
       tellMeShowMeQuestions$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecks),
-        map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
+        select(getVehicleChecksCatADI2),
+        map(checks => checks.tellMeQuestions),
         map(checks => checks.filter(c => c.code !== undefined)),
       ),
     };
@@ -189,7 +189,7 @@ export class DebriefCatADIPart2Page extends BasePageComponent {
       this.navController.push(CAT_ADI_PART2.PASS_FINALISATION_PAGE);
       return;
     }
-    this.navController.push(CAT_ADI_PART2.POST_DEBRIEF_HOLDING_PAGE).then(() => {
+    this.navController.push(CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE).then(() => {
       const testReportPage = this.navController.getViews().find(view => view.id === CAT_ADI_PART2.TEST_REPORT_PAGE);
       if (testReportPage) {
         this.navController.removeView(testReportPage);

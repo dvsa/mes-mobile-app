@@ -14,8 +14,7 @@ import {
   isTestOutcomeSet,
   getTestOutcomeText,
 } from '../../../modules/tests/tests.selector';
-// TO-DO ADI Part2: Implement correct category
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getUntitledCandidateName,
   getCandidateDriverNumber,
@@ -27,7 +26,7 @@ import {
 } from '../non-pass-finalisation.actions';
 import { map, withLatestFrom } from 'rxjs/operators';
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
-import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/common/test-summary.selector';
+import { isDebriefWitnessed } from '../../../modules/tests/test-summary/common/test-summary.selector';
 import {
   getTestSlotAttributes,
 } from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
@@ -40,13 +39,10 @@ import {
 import { FormGroup } from '@angular/forms';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-// TO-DO ADI Part2: Implement correct category
-import { behaviourMap } from '../../office/office-behaviour-map.cat-be';
+import { behaviourMap } from '../../office/office-behaviour-map.cat-adi-part2';
 import {
   DebriefWitnessed,
   DebriefUnwitnessed,
-  D255Yes,
-  D255No,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import {
   CandidateChoseToProceedWithTestInWelsh,
@@ -65,8 +61,6 @@ interface NonPassFinalisationPageState {
   activityCode$: Observable<ActivityCodeModel>;
   displayDebriefWitnessed$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
-  displayD255$: Observable<boolean>;
-  d255$: Observable<boolean>;
   isWelshTest$: Observable<boolean>;
 }
 
@@ -141,18 +135,6 @@ export class NonPassFinalisationCatADIPart2Page extends BasePageComponent implem
         select(getTestSummary),
         select(isDebriefWitnessed),
       ),
-      displayD255$: currentTest$.pipe(
-        select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getD255))),
-        map(([outcome, d255]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'd255', d255)),
-      ),
-      d255$: currentTest$.pipe(
-        select(getTestSummary),
-        select(getD255),
-      ),
       isWelshTest$: currentTest$.pipe(
         select(getJournalData),
         select(getTestSlotAttributes),
@@ -186,10 +168,6 @@ export class NonPassFinalisationCatADIPart2Page extends BasePageComponent implem
 
   debriefWitnessedChanged(debriefWitnessed: boolean) {
     this.store$.dispatch(debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed());
-  }
-
-  d255Changed(d255: boolean): void {
-    this.store$.dispatch(d255 ? new D255Yes() : new D255No());
   }
 
   isWelshChanged(isWelsh: boolean) {
