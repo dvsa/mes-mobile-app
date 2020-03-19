@@ -17,7 +17,7 @@ import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
-import { Observable, Subscription, merge } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 // TODO - Cat HOME - Use correct selector
 import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import {
@@ -33,9 +33,6 @@ import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../mod
 import { map } from 'rxjs/operators';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/common/vehicle-details.reducer';
-import { getGearboxCategory } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
-import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { CAT_HOME_TEST } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/common/test-summary.selector';
@@ -61,9 +58,7 @@ import {
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
-import { TransmissionType } from '../../../shared/models/transmission-type';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -73,7 +68,6 @@ interface PassFinalisationPageState {
   applicationNumber$: Observable<string>;
   provisionalLicense$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
-  transmission$: Observable<GearboxCategory>;
   d255$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
@@ -92,7 +86,6 @@ export class PassFinalisationCatHomeTestPage extends BasePageComponent {
   testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
   merged$: Observable<string>;
-  transmission: GearboxCategory;
   subscription: Subscription;
 
   constructor(
@@ -148,10 +141,6 @@ export class PassFinalisationCatHomeTestPage extends BasePageComponent {
         select(getPassCompletion),
         select(getPassCertificateNumber),
       ),
-      transmission$: currentTest$.pipe(
-        select(getVehicleDetails),
-        select(getGearboxCategory),
-      ),
       debriefWitnessed$: currentTest$.pipe(
         select(getTestSummary),
         select(isDebriefWitnessed),
@@ -165,25 +154,10 @@ export class PassFinalisationCatHomeTestPage extends BasePageComponent {
         select(getConductedLanguage),
       ),
     };
-    const { transmission$ } = this.pageState;
-
-    this.merged$ = merge(
-      transmission$.pipe(map(value => this.transmission = value)),
-    );
-    this.subscription = this.merged$.subscribe();
-  }
-
-  ionViewDidLeave(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new PassFinalisationViewDidEnter());
-    if (this.subscription.closed && this.merged$) {
-      this.subscription = this.merged$.subscribe();
-    }
   }
 
   provisionalLicenseReceived(): void {
@@ -192,10 +166,6 @@ export class PassFinalisationCatHomeTestPage extends BasePageComponent {
 
   provisionalLicenseNotReceived(): void {
     this.store$.dispatch(new ProvisionalLicenseNotReceived());
-  }
-
-  transmissionChanged(transmission: GearboxCategory): void {
-    this.store$.dispatch(new GearboxCategoryChanged(transmission));
   }
 
   onSubmit() {
@@ -233,9 +203,5 @@ export class PassFinalisationCatHomeTestPage extends BasePageComponent {
         new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
         : new CandidateChoseToProceedWithTestInEnglish('English'),
     );
-  }
-
-  displayTransmissionBanner(): boolean {
-    return !this.form.controls['transmissionCtrl'].pristine && this.transmission === TransmissionType.Automatic;
   }
 }
