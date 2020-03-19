@@ -13,7 +13,7 @@ class JournalPage extends Page {
    */
   isCurrentPage() {
     const refreshButton = this.getRefreshButton();
-    expect(refreshButton.isPresent()).to.eventually.be.true;
+    return refreshButton.isPresent();
   }
 
   // todo: kc on LandingPage there is a method onLandingPageAs.
@@ -116,10 +116,14 @@ class JournalPage extends Page {
     this.clickElement(this.getRekeyStartTestButton());
   }
 
-  clickRekeyTestButtonFor(candidateName) {
-    this.clickElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
+  getRekeyTestButtonFor(candidateName) {
+    return this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`);
+  }
+
+  clickRekeyTestButtonFor(candidateName) {
+    this.clickElement(this.getRekeyTestButtonFor(candidateName));
   }
 
   clickContinueWriteupButton(candidateName) {

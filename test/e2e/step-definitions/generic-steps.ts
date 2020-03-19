@@ -78,14 +78,30 @@ Given('I am not logged in', () => {
   });
 });
 
+// Given('I am logged in as {string} and I have a test for {string}', async (username, candidateName) => {
+//   // Go to journal page as the user
+//   JournalPage.onJournalPageAs(username);
+//
+//   // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
+//   // JournalPage.getRefreshButton();
+//
+//   JournalPage.isCurrentPage();
+//   const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
+//   //const buttonElementIsPresent = await JournalPage.isButtonPresent(buttonElement);
+//
+//   // if (!buttonElementIsPresent) {
+//   //   PageHelper.resetApp(username); // temp hardcoded string for testing.
+//   // }
+//   //
+//   // return expect(buttonElementIsPresent).to.be.true;
+// });
+
 Given('I am logged in as {string} and I have a test for {string}', (username, candidateName) => {
   // Go to journal page as the user
   JournalPage.onJournalPageAs(username);
 
-  // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
-  // JournalPage.getRefreshButton();
+  expect(JournalPage.isCurrentPage()).to.eventually.be.true;
 
-  JournalPage.isCurrentPage();
   const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
 
   buttonElement.isPresent().then((isStartPresent) => {
