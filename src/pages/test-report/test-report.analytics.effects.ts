@@ -714,6 +714,68 @@ export class TestReportAnalyticsEffects {
   );
 
   @Effect()
+  toggleEcoControl$ = this.actions$.pipe(
+    ofType(
+      ecoActions.TOGGLE_CONTROL_ECO,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          select(getEco),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, eco]: [ecoActions.ToggleEco, TestsModel, Eco]) => {
+      const toggleValue = eco.adviceGivenControl
+      ? 'selected'
+      : 'unselected';
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_ECO_CONTROL, tests),
+        `${toggleValue}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  toggleEcoPlanning$ = this.actions$.pipe(
+    ofType(
+      ecoActions.TOGGLE_PLANNING_ECO,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          select(getEco),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, eco]: [ecoActions.ToggleEco, TestsModel, Eco]) => {
+      const toggleValue = eco.adviceGivenPlanning
+        ? 'selected'
+        : 'unselected';
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_ECO_PLANNING, tests),
+        `${toggleValue}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
   toggleControlledStop$ = this.actions$.pipe(
     ofType(
       controlledStopActions.TOGGLE_CONTROLLED_STOP,

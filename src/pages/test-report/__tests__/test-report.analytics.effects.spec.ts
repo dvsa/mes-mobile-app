@@ -2079,4 +2079,82 @@ describe('Test Report Analytics Effects', () => {
       });
     });
   });
+  describe('toggleEcoControl', () => {
+    it('should call log event with toggle eco control selected', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new ecoActions.ToggleControlEco());
+      // ACT
+      actions$.next(new ecoActions.ToggleControlEco());
+      // ASSERT
+      effects.toggleEcoControl$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ECO_CONTROL,
+            'selected',
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle eco control unselected ', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new ecoActions.ToggleControlEco());
+      store$.dispatch(new ecoActions.ToggleControlEco());
+      // ACT
+      actions$.next(new ecoActions.ToggleControlEco());
+      // ASSERT
+      effects.toggleEcoControl$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ECO_CONTROL,
+            'unselected',
+          );
+        done();
+      });
+    });
+  });
+  describe('toggleEcoPlanning', () => {
+    it('should call log event with toggle eco control selected', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new ecoActions.TogglePlanningEco());
+      // ACT
+      actions$.next(new ecoActions.TogglePlanningEco());
+      // ASSERT
+      effects.toggleEcoPlanning$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ECO_PLANNING,
+            'selected',
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle eco control unselected ', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new ecoActions.TogglePlanningEco());
+      store$.dispatch(new ecoActions.TogglePlanningEco());
+      // ACT
+      actions$.next(new ecoActions.TogglePlanningEco());
+      // ASSERT
+      effects.toggleEcoPlanning$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ECO_PLANNING,
+            'unselected',
+          );
+        done();
+      });
+    });
+  });
 });
