@@ -162,7 +162,7 @@ When('I close the reversing diagram modal', () => {
   clickElement(reverseModalCloseButton);
 });
 
-Then('I close the revresing diagram drop down', () => {
+Then('I close the reversing diagram drop down', () => {
   reverseDropDown();
   waitForPresenceOfElement(getCompetencyButton('Control'));
 });
