@@ -63,6 +63,7 @@ import {
   VehicleChecksUnion,
 } from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.reducer';
 import { Subscription } from 'rxjs';
+import { getEyesightTest } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -167,9 +168,11 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
         select(getInterpreterAccompaniment),
       ),
       eyesightTestComplete$: testData$.pipe(
+        select(getEyesightTest),
         select(hasEyesightTestBeenCompleted),
       ),
       eyesightTestFailed$: testData$.pipe(
+        select(getEyesightTest),
         select(hasEyesightTestGotSeriousFault),
       ),
       vehicleChecksScore$: testData$.pipe(
