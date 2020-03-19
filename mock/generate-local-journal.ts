@@ -992,6 +992,7 @@ const localJournal: ExaminerWorkSchedule = {
           secondaryTelephone: '04321 098765',
           dateOfBirth: '1950-02-27',
           ethnicityCode: 'A',
+          emailAddress: 'test@test.com',
         },
         business: {
           businessAddress: {
@@ -1059,6 +1060,7 @@ const localJournal: ExaminerWorkSchedule = {
           secondaryTelephone: '04321 098765',
           dateOfBirth: '1950-02-27',
           ethnicityCode: 'A',
+          emailAddress: 'test@test.com',
         },
         business: {
           businessAddress: {
@@ -1126,6 +1128,7 @@ const localJournal: ExaminerWorkSchedule = {
           secondaryTelephone: '04321 098765',
           dateOfBirth: '1950-02-27',
           ethnicityCode: 'A',
+          emailAddress: 'test@test.com',
         },
         business: {
           businessAddress: {
@@ -1193,6 +1196,7 @@ const localJournal: ExaminerWorkSchedule = {
           secondaryTelephone: '04321 098765',
           dateOfBirth: '1950-02-27',
           ethnicityCode: 'A',
+          emailAddress: 'test@test.com',
         },
       },
       slotDetail: {
