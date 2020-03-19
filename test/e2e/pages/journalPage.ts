@@ -126,6 +126,22 @@ class JournalPage extends Page {
     this.clickElement(this.getRekeyTestButtonFor(candidateName));
   }
 
+  getStartTestButtonFor(candidateName, waitForElement : boolean = true) {
+    const element = this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
+    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    h3[text() = "${candidateName}"]]`);
+
+    if (waitForElement) {
+      this.waitForPresenceOfElement(element);
+    }
+
+    return element;
+  }
+
+  startTestFor(candidateName) {
+    this.clickElement(this.getStartTestButtonFor(candidateName));
+  }
+
   clickContinueWriteupButton(candidateName) {
     this.clickElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Write-up"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
@@ -158,27 +174,6 @@ class JournalPage extends Page {
     this.clickElementById('closeCandidateDetails');
   }
 
-  getStartTestButtonFor(candidateName, waitForElement : boolean = true) {
-    const element = this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`);
-
-    if (waitForElement) {
-      this.waitForPresenceOfElement(element);
-    }
-
-    return element;
-  }
-
-  clickStartTestButtonFor(candidateName) {
-    const element = this.getStartTestButtonFor(candidateName);
-    this.clickElement(element);
-  }
-
-  startTestFor(candidateName) {
-    this.clickElement(this.getStartTestButtonFor(candidateName));
-  }
-
   clickBackButton() {
     this.clickElementByXPath('//page-journal//button//span[text()="Back"]');
   }
@@ -195,14 +190,16 @@ class JournalPage extends Page {
     return expect(dataRow.isPresent()).to.eventually.be.true;
   }
 
-  timeDialog() {
-    const testDialog = this.getElementByClassName(`modal-alert-header`);
+  startingExpiredOrEarlyTest = (candidateName) => {
+    this.startTestFor(candidateName);
+    const testDialog = this.getTimeDialog();
     return expect(testDialog.isPresent()).to.eventually.be.true;
   }
 
-  startingExpiredOrEarlyTest = (candidateName) => {
-    this.clickStartTestButtonFor(candidateName);
-    this.timeDialog();
+  getTimeDialog() {
+    const element = this.getElementByClassName(`modal-alert-header`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 }
 

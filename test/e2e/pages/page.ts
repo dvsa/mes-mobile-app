@@ -10,6 +10,11 @@ const buttonPadding = 30;
 const request = require('request');
 
 export default class Page {
+  isCurrentPage(pageTitle) {
+    // Wait for the page title to exist
+    this.getPageTitle(pageTitle);
+  }
+
   /**
    * A framework safe click method.
    * @param fieldElement the element to click
@@ -100,6 +105,13 @@ export default class Page {
       `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
     this.waitForPresenceOfElement(element);
     return element;
+  }
+
+  /**
+   *  Get the last page title i.e. the displayed one
+   */
+  getDisplayedPageTitle() {
+    return element.all(by.className('toolbar-title')).last();
   }
 
   scrollToElement(element) {

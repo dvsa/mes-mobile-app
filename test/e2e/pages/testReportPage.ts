@@ -175,8 +175,10 @@ class DriverFaults extends Page {
   }
 
   getDangerousFaultBadge(competency) {
-    return this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+    const element = this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
   and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`);
+    this.waitForPresenceOfElement(element);
+    return element;
   }
 
   getCompetencyCountField(competency) {

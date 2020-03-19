@@ -13,10 +13,7 @@ const expect = chai.expect;
 
 Given('I am on the journal page as {string}', (username) => {
   JournalPage.onJournalPageAs(username);
-
-  // If the journal page is loaded we should have a refresh button
-  const refreshButton = JournalPage.getRefreshButton();
-  return expect(refreshButton.isPresent()).to.eventually.be.true;
+  return expect(JournalPage.isCurrentPage()).to.eventually.be.true;
 });
 
 When('I view candidate details for {string}', (candidateName) => {
@@ -88,12 +85,6 @@ When('I rekey a test for {string}', (candidateName) => {
   expect(buttonElement.isPresent()).to.eventually.be.true;
 
   JournalPage.clickRekeyTestButtonFor(candidateName);
-  // todo: added as part of an independent commit.  Left in to make
-  // sure that the merge works correctly.
-  // const buttonElement = TempPage.getAndAwaitElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
-  // [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-  // h3[text() = "${candidateName}"]]`));
-  // TempPage.clickElement(buttonElement);
 });
 
 When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidateName: string) => {
