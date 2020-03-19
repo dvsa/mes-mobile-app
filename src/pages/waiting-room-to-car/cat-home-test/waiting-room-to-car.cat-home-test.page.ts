@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { CategoryCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   SchoolCarToggled,
@@ -20,28 +20,17 @@ import {
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
-// TODO add correct category
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   getRegistrationNumber,
   getGearboxCategory,
-  isAutomatic,
-  isManual,
 } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
-// TODO add correct category
-import {
-  getSchoolCar,
-  getDualControls,
-} from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.selector';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
   getOtherAccompaniment,
   getInterpreterAccompaniment,
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
-// TODO add correct category
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
@@ -51,18 +40,6 @@ import {
   EyesightTestPassed,
   EyesightTestFailed,
 } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
-import {
-  TellMeQuestionSelected,
-  TellMeQuestionCorrect,
-  TellMeQuestionDrivingFault,
-  QuestionOutcomes,
-} from '../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
-// TODO add correct category
-import {
-  hasEyesightTestGotSeriousFault, hasEyesightTestBeenCompleted,
-} from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
-// TODO add correct category
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_HOME_TEST } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
@@ -73,27 +50,30 @@ import {
   getVehicleChecksCatHomeTest,
 } from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
-// TODO add correct cstegory
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { VehicleChecksCatHomeTestComponent } from './components/vehicle-checks/vehicle-checks';
+import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-home/candidate/candidate.cat-home.reducer';
+import {
+  hasEyesightTestBeenCompleted,
+  hasEyesightTestGotSeriousFault,
+} from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.selector';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/common/vehicle-details.reducer';
+import { VehicleChecksUnion } from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.reducer';
+import { Subscription } from 'rxjs';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
-  schoolCar$: Observable<boolean>;
-  dualControls$: Observable<boolean>;
   instructorAccompaniment$: Observable<boolean>;
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
   eyesightTestComplete$: Observable<boolean>;
   eyesightTestFailed$: Observable<boolean>;
-  gearboxAutomaticRadioChecked$: Observable<boolean>;
-  gearboxManualRadioChecked$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
-  // TODO add all home type categories
-  vehicleChecks$: Observable<CatBEUniqueTypes.VehicleChecks>;
+  vehicleChecks$: Observable<VehicleChecksUnion>;
 }
 
 @IonicPage()
@@ -112,6 +92,10 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
 
   tellMeQuestions: VehicleChecksQuestion[];
 
+  testCategory: TestCategory;
+
+  subscription: Subscription;
+
   constructor(
     public store$: Store<StoreModel>,
     public navController: NavController,
@@ -120,19 +104,40 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     public faultCountProvider: FaultCountProvider,
     public questionProvider: QuestionProvider,
+    private testDataByCategoryProvider: TestDataByCategoryProvider,
   ) {
     super(platform, navController, authenticationProvider);
-
-    // TODO does this need seperate questions?
-    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
     this.form = new FormGroup({});
   }
 
   ngOnInit(): void {
-
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
+    );
+
+    const category$ = currentTest$.pipe(
+      select(getTestCategory),
+      map(category => category as TestCategory),
+    );
+    this.subscription = category$.subscribe((categoryCode) => {
+      // This is so that the UnitTests can set the categoryCode before the OnInit without being overridden.
+      if (!this.testCategory) {
+        this.testCategory = categoryCode as TestCategory;
+      }
+    });
+    this.tellMeQuestions = this.questionProvider.getTellMeQuestions(this.testCategory);
+
+    const testData$ = currentTest$.pipe(
+      map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory as CategoryCode)(data)),
+    );
+
+    const vehicleDetails$ = currentTest$.pipe(
+      select(getVehicleDetails),
+    );
+
+    const accompaniment$ = currentTest$.pipe(
+      select(getAccompaniment),
     );
 
     this.pageState = {
@@ -141,64 +146,38 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
-      registrationNumber$: currentTest$.pipe(
-        select(getVehicleDetails),
+      registrationNumber$: vehicleDetails$.pipe(
         select(getRegistrationNumber),
       ),
-      transmission$: currentTest$.pipe(
-        select(getVehicleDetails),
+      transmission$: vehicleDetails$.pipe(
         select(getGearboxCategory),
       ),
-      schoolCar$: currentTest$.pipe(
-        select(getVehicleDetails),
-        select(getSchoolCar),
-      ),
-      dualControls$: currentTest$.pipe(
-        select(getVehicleDetails),
-        select(getDualControls),
-      ),
-      instructorAccompaniment$: currentTest$.pipe(
-        select(getAccompaniment),
+      instructorAccompaniment$: accompaniment$.pipe(
         select(getInstructorAccompaniment),
       ),
-      supervisorAccompaniment$: currentTest$.pipe(
-        select(getAccompaniment),
+      supervisorAccompaniment$: accompaniment$.pipe(
         select(getSupervisorAccompaniment),
       ),
-      otherAccompaniment$: currentTest$.pipe(
-        select(getAccompaniment),
+      otherAccompaniment$: accompaniment$.pipe(
         select(getOtherAccompaniment),
       ),
-      interpreterAccompaniment$: currentTest$.pipe(
-        select(getAccompaniment),
+      interpreterAccompaniment$: accompaniment$.pipe(
         select(getInterpreterAccompaniment),
       ),
-      eyesightTestComplete$: currentTest$.pipe(
-        select(getTestData),
+      eyesightTestComplete$: testData$.pipe(
         select(hasEyesightTestBeenCompleted),
       ),
-      eyesightTestFailed$: currentTest$.pipe(
-        select(getTestData),
+      eyesightTestFailed$: testData$.pipe(
         select(hasEyesightTestGotSeriousFault),
       ),
-      gearboxAutomaticRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
-        map(isAutomatic),
-      ),
-      gearboxManualRadioChecked$: currentTest$.pipe(
-        select(getVehicleDetails),
-        map(isManual),
-      ),
-      // TODO add correct category
-      vehicleChecksScore$: currentTest$.pipe(
-        select(getTestData),
+      vehicleChecksScore$: testData$.pipe(
         select(getVehicleChecksCatHomeTest),
         map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.BE, vehicleChecks);
+          return this.faultCountProvider
+            .getVehicleChecksFaultCount(this.testCategory, vehicleChecks);
         }),
       ),
-      vehicleChecks$: currentTest$.pipe(
-        select(getTestData),
+      vehicleChecks$: testData$.pipe(
         select(getVehicleChecksCatHomeTest),
       ),
     };
@@ -209,6 +188,9 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
   }
 
   ionViewWillLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
     this.store$.dispatch(new PersistTests());
   }
 
@@ -268,6 +250,7 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
       });
     }
   }
+
   updateForm(ctrl: string, value: any) {
     this.form.patchValue({
       [ctrl]: value,
@@ -287,21 +270,6 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
     this.store$.dispatch(new EyesightTestReset());
   }
 
-  tellMeQuestionChanged(newTellMeQuestion: VehicleChecksQuestion): void {
-    this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
-    if (this.form.controls['tellMeQuestionOutcome']) {
-      this.form.controls['tellMeQuestionOutcome'].setValue('');
-    }
-  }
-
-  tellMeQuestionOutcomeChanged(outcome: string): void {
-    if (outcome === QuestionOutcomes.Pass) {
-      this.store$.dispatch(new TellMeQuestionCorrect());
-      return;
-    }
-    this.store$.dispatch(new TellMeQuestionDrivingFault());
-  }
-
   eyesightTestResultChanged(passed: boolean): void {
     const action = passed ? new EyesightTestPassed() : new EyesightTestFailed();
     this.store$.dispatch(action);
@@ -311,4 +279,7 @@ export class WaitingRoomToCarCatHomeTestPage extends BasePageComponent {
     return CAT_HOME_TEST.DEBRIEF_PAGE;
   }
 
+  shouldDisplayEyesightBanner = (): boolean => {
+    return this.testCategory === TestCategory.K;
+  }
 }

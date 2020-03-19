@@ -4,44 +4,38 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest, getJournalData } from '../../../../../modules/tests/tests.selector';
-// Todo add correct category
-import { getCandidate } from '../../../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../../../modules/tests/journal-data/cat-home/candidate/candidate.cat-home.reducer';
 import { getUntitledCandidateName }
   from '../../../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../../../providers/question/question';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
-import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
+import { QuestionResult, QuestionOutcome, CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
   getVehicleChecksCatHomeTest,
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
 } from '../../../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.selector';
-// TODO add correct cstegory
-import { getTestData } from '../../../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
-// TODO add correct cstegory
 import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
-} from '../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
-// TODO add correct cstegory
-import {
- NUMBER_OF_TELL_ME_QUESTIONS,
-} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
-// TODO add correct cstegory
-import {
-  NUMBER_OF_SHOW_ME_QUESTIONS,
-} from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
+} from '../../../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.action';
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
 import * as vehicleChecksModalActions from './vehicle-checks-modal.cat-home-test.actions';
+import { getTestCategory } from '../../../../../modules/tests/category/category.reducer';
+import { TestDataByCategoryProvider } from '../../../../../providers/test-data-by-category/test-data-by-category';
+import {
+  NUMBER_OF_SHOW_ME_QUESTIONS,
+} from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-home-test.constants';
+import { NUMBER_OF_TELL_ME_QUESTIONS } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-home-test.constants';
 
 interface VehicleChecksModalCatHomeTestState {
   candidateName$: Observable<string>;
@@ -62,22 +56,23 @@ export class VehicleChecksCatHomeTestModal {
 
   showMeQuestions: VehicleChecksQuestion[];
   tellMeQuestions: VehicleChecksQuestion[];
+  testCategory: TestCategory;
   readonly showMeQuestionsNumberArray: number[] = Array(NUMBER_OF_SHOW_ME_QUESTIONS);
   readonly tellMeQuestionsNumberArray: number[] = Array(NUMBER_OF_TELL_ME_QUESTIONS);
 
   vehicleChecksScore: VehicleChecksScore;
 
   subscription: Subscription;
+  categoryCodeSubscription: Subscription;
 
   constructor(
     public store$: Store<StoreModel>,
     private navController: NavController,
     private faultCountProvider: FaultCountProvider,
-    questionProvider: QuestionProvider,
+    private testDataByCategoryProvider: TestDataByCategoryProvider,
+    private questionProvider: QuestionProvider,
   ) {
     this.formGroup = new FormGroup({});
-    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.F);
-    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.F);
   }
 
   ngOnInit(): void {
@@ -85,27 +80,37 @@ export class VehicleChecksCatHomeTestModal {
       select(getTests),
       select(getCurrentTest),
     );
+
+    this.categoryCodeSubscription = currentTest$.pipe(
+      select(getTestCategory),
+    ).subscribe((value) => {
+      this.testCategory = value as TestCategory;
+    });
+
+    const testData$ = currentTest$.pipe(
+      map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory as CategoryCode)(data)),
+    );
+
+    this.showMeQuestions = this.questionProvider.getShowMeQuestions(this.testCategory);
+    this.tellMeQuestions = this.questionProvider.getTellMeQuestions(this.testCategory);
     this.pageState = {
       candidateName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
-      showMeQuestions$: currentTest$.pipe(
-        select(getTestData),
+      showMeQuestions$: testData$.pipe(
         select(getVehicleChecksCatHomeTest),
         select(getSelectedShowMeQuestions),
       ),
-      tellMeQuestions$: currentTest$.pipe(
-        select(getTestData),
+      tellMeQuestions$: testData$.pipe(
         select(getVehicleChecksCatHomeTest),
         select(getSelectedTellMeQuestions),
       ),
-      vehicleChecksScore$: currentTest$.pipe(
-        select(getTestData),
+      vehicleChecksScore$: testData$.pipe(
         select(getVehicleChecksCatHomeTest),
         map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.F, vehicleChecks);
+          return this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory, vehicleChecks);
         }),
       ),
     };
@@ -124,6 +129,9 @@ export class VehicleChecksCatHomeTestModal {
   ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.categoryCodeSubscription) {
+      this.categoryCodeSubscription.unsubscribe();
     }
   }
 

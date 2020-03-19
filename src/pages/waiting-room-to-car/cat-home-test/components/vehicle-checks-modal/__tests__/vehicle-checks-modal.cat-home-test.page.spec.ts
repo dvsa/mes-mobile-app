@@ -12,13 +12,12 @@ import {
   QuestionResult,
 } from '@dvsa/mes-test-schema/categories/common';
 import { StoreModel } from '../../../../../../shared/models/store.model';
-// TODO make these work with correct category
 import {
   ShowMeQuestionOutcomeChanged,
   ShowMeQuestionSelected,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
-} from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+} from '../../../../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.action';
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 import { configureTestSuite } from 'ng-bullet';
 

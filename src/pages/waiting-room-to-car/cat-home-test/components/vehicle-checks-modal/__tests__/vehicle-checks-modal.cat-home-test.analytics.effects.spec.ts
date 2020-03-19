@@ -12,10 +12,8 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { VehicleChecksViewDidEnter } from '../vehicle-checks-modal.cat-home-test.actions';
 import { AnalyticRecorded } from '../../../../../../providers/analytics/analytics.actions';
 import { AnalyticsEventCategories, AnalyticsScreenNames } from '../../../../../../providers/analytics/analytics.model';
-
-// TODO must get it working for home categories
 import * as VehicleChecksActions
-  from '../../../../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+  from '../../../../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.action';
 
 import {
   QuestionOutcome,

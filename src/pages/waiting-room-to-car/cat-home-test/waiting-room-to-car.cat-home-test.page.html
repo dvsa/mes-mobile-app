@@ -2,17 +2,17 @@
   <ion-navbar hideBackButton>
     <ion-title>{{pageState.candidateName$ | async}}</ion-title>
     <ion-buttons end>
-      <!-- TODO add correct categories -->
-      <end-test-link category="B+E"></end-test-link>
+      <end-test-link category="{{this.testCategory}}"></end-test-link>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <div>
+    <warning-banner warningText="The eyesight test should be conducted at a distance of 12m or 12.3m"
+                    *ngIf="shouldDisplayEyesightBanner()"></warning-banner>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-grid>
-
         <eyesight-test [formGroup]="form" [eyesightPassRadioChecked]="(pageState.eyesightTestComplete$ | async) && !(pageState.eyesightTestFailed$ | async)"
           [eyesightFailRadioChecked]="pageState.eyesightTestFailed$ | async" (eyesightTestResultChange)="eyesightTestResultChanged($event)"></eyesight-test>
 
@@ -38,10 +38,6 @@
               (supervisorAccompanimentChange)="supervisorAccompanimentToggled()" (otherAccompanimentChange)="otherAccompanimentToggled()"
               (interpreterAccompanimentChange)="interpreterAccompanimentToggled()">
             </accompaniment-card>
-
-            <vehicle-details-card [formGroup]="form" [schoolVehicleDetails]="pageState.schoolCar$ | async"
-              [dualVehicleDetails]="pageState.dualControls$ | async" (schoolVehicleDetailsChange)="schoolCarToggled()"
-              (dualVehicleDetailsChange)="dualControlsToggled()"></vehicle-details-card>
           </ion-col>
         </ion-row>
       </ion-grid>

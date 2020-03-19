@@ -23,9 +23,9 @@ describe('Vehicle Checks Cat HOME Reducer', () => {
         description: 'desc',
       };
       const state: CatFUniqueTypes.VehicleChecks = cloneDeep(initialState);
-      const result = vehicleChecksCatHomeTestReducer(state, new ShowMeQuestionSelected(newQuestionPayload, 1));
-      expect(result.showMeQuestions[1].code).toEqual('S1');
-      expect(result.showMeQuestions[1].description).toEqual('desc');
+      const result = vehicleChecksCatHomeTestReducer(state, new ShowMeQuestionSelected(newQuestionPayload, 0));
+      expect(result.showMeQuestions[0].code).toEqual('S1');
+      expect(result.showMeQuestions[0].description).toEqual('desc');
     });
   });
 
@@ -49,9 +49,9 @@ describe('Vehicle Checks Cat HOME Reducer', () => {
         description: 'desc',
       };
       const state: CatFUniqueTypes.VehicleChecks = cloneDeep(initialState);
-      const result = vehicleChecksCatHomeTestReducer(state, new TellMeQuestionSelected(newQuestionPayload, 1));
-      expect(result.tellMeQuestions[1].code).toEqual('T01');
-      expect(result.tellMeQuestions[1].description).toEqual('desc');
+      const result = vehicleChecksCatHomeTestReducer(state, new TellMeQuestionSelected(newQuestionPayload, 0));
+      expect(result.tellMeQuestions[0].code).toEqual('T01');
+      expect(result.tellMeQuestions[0].description).toEqual('desc');
     });
   });
 

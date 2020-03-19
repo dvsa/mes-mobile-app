@@ -20,5 +20,4 @@ import { VehicleChecksModalAnalyticsEffects } from './vehicle-checks-modal.cat-h
     ComponentsModule,
   ],
 })
-// TODO add all home type categories
-export class VehicleChecksModalCatBEModule { }
+export class VehicleChecksModalCatHomeTestModule { }
