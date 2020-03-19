@@ -2,6 +2,14 @@ import { FaultsDataRowComponent } from '../faults-data-row';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 
 describe('FaultsDataRowComponent', () => {
+  describe('deafultSettings', () => {
+    it('should have 15 as minDrivingFaultCount when the component is created', () => {
+      const component = new FaultsDataRowComponent();
+
+      expect(component.minDrivingFaultCount).toBe(15);
+    });
+  });
+
   describe('showFaultComment', () => {
     const faultSummary: FaultSummary = {
       competencyIdentifier: 'compId',
