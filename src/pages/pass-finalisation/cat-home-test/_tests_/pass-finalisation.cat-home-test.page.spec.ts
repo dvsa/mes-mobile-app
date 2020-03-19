@@ -30,7 +30,6 @@ import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
     '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PassFinalisationCatHomeTestPage } from '../pass-finalisation.cat-home-test.page';
-import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
@@ -52,7 +51,6 @@ describe('PassFinalisationCatHomeTestPage', () => {
         MockComponent(DebriefWitnessedComponent),
         MockComponent(FinalisationHeaderComponent),
         MockComponent(LanguagePreferencesComponent),
-        MockComponent(WarningBannerComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
