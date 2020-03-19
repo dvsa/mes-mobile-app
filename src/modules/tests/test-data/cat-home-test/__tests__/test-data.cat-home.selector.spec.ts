@@ -54,14 +54,14 @@ describe('TestDataSelectors', () => {
   };
 
   describe('getManoeuvres', () => {
-    it('should retrive the manoeuvres data when requested', () => {
+    it('should retrieve the manoeuvres data when requested', () => {
       const result = getManoeuvres(state);
       expect(result).toEqual(state.manoeuvres);
     });
   });
 
   describe('getVehicleChecks', () => {
-    it('should retrive the vehicle checks data when requested', () => {
+    it('should retrieve the vehicle checks data when requested', () => {
       const result = getVehicleChecks(state);
       expect(result).toEqual(state.vehicleChecks);
     });
