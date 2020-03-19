@@ -27,17 +27,18 @@ describe('FaultSummaryCatHomeTestHelper', () => {
   });
 
   describe('getDrivingFaultsCatHomeTest (No VehicleChecks)', () => {
-    it('should return 3 driving fault count for category F', () => {
+    it('should return 4 driving fault count for category F', () => {
       const result = FaultSummaryCatHomeTestHelper.getDrivingFaultsCatHomeTest(catFTestDataStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
       result.map(fault => faultCount = faultCount + fault.faultCount);
-      expect(faultCount).toEqual(3);
+      expect(faultCount).toEqual(4);
       result.map(fault => competenciesWithFaults.push(fault.competencyIdentifier));
-      expect(competenciesWithFaults.length).toBe(3);
+      expect(competenciesWithFaults.length).toBe(4);
       expect(competenciesWithFaults).toContain('controlsGears');
       expect(competenciesWithFaults).toContain('reverseLeftControl');
       expect(competenciesWithFaults).toContain('controlledStop');
+      expect(competenciesWithFaults).toContain('highwayCodeSafety');
     });
 
     it('should return 5 driving fault count for category G', () => {
@@ -140,19 +141,20 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       expect(competenciesWithFaults).toContain('pedestrianCrossings');
     });
 
-    it('should return 5 serious fault count for category G', () => {
+    it('should return 6 serious fault count for category G', () => {
       const result = FaultSummaryCatHomeTestHelper.getSeriousFaultsCatHomeTest(catGTestDataStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
       result.map(fault => faultCount = faultCount + fault.faultCount);
-      expect(faultCount).toEqual(5);
+      expect(faultCount).toEqual(6);
       result.map(fault => competenciesWithFaults.push(fault.competencyIdentifier));
-      expect(competenciesWithFaults.length).toBe(5);
+      expect(competenciesWithFaults.length).toBe(6);
       expect(competenciesWithFaults).toContain('controlsGears');
       expect(competenciesWithFaults).toContain('pedestrianCrossings');
       expect(competenciesWithFaults).toContain('ancillaryControls');
       expect(competenciesWithFaults).toContain('awarenessPlanning');
       expect(competenciesWithFaults).toContain('reverseLeftControl');
+      expect(competenciesWithFaults).toContain('highwayCodeSafety');
     });
 
     it('should return 2 serious fault count for category H', () => {

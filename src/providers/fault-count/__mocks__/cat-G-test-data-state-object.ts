@@ -43,6 +43,10 @@ export const catGTestDataStateObject: CatGUniqueTypes.TestData = {
     fault: 'D',
     selected: true,
   },
+  highwayCodeSafety: {
+    selected: true,
+    seriousFault: true,
+  },
   vehicleChecks: this.vehicleChecksNoFaults,
 };
 export const catGTestDataVCStateObject: CatGUniqueTypes.TestData = {

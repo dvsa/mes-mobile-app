@@ -7,4 +7,5 @@ export enum CompetencyDisplayName {
   PCV_DOOR_EXERCISE = 'PCV Door Exercise',
   SAFETY_QUESTIONS = 'Safety Questions',
   SAFETY_AND_BALANCE_QUESTIONS = 'Safety and balance questions',
+  HIGHWAY_CODE_SAFETY = 'Highway Code / Safety',
 }

@@ -35,6 +35,7 @@ export class FaultSummaryCatHomeTestHelper {
       ...getCompetencyFaults(data.drivingFaults),
       ...this.getManoeuvreFaultsIfAny(data, CompetencyOutcome.DF),
       ...this.getControlledStop(data, CompetencyOutcome.DF),
+      ...this.getHighwayCodeSafety(data, 'drivingFault'),
       ...this.getVehicleCheckFaultsCatHomeTest(data.vehicleChecks, CompetencyOutcome.DF),
     ];
   }
@@ -45,6 +46,7 @@ export class FaultSummaryCatHomeTestHelper {
       ...this.getManoeuvreFaultsIfAny(data, CompetencyOutcome.S),
       ...this.getVehicleCheckFaultsCatHomeTest(data.vehicleChecks, CompetencyOutcome.S),
       ...this.getControlledStop(data, CompetencyOutcome.S),
+      ...this.getHighwayCodeSafety(data, 'seriousFault'),
       ...this.getEyesightTestSeriousFault(data.eyesightTest),
     ];
   }
@@ -78,6 +80,27 @@ export class FaultSummaryCatHomeTestHelper {
     return [];
   }
 
+  private static getHighwayCodeSafety(data: HomeTestData, property: string): FaultSummary[] {
+    const { highwayCodeSafety } = data;
+    if (! highwayCodeSafety) {
+      return [];
+    }
+
+    const gotHighwayCodeSafetyFault: boolean = get(data, `highwayCodeSafety.${property}`, false);
+    const highwayCodeSafetyCount = (gotHighwayCodeSafetyFault) ? 1 : 0;
+
+    if (highwayCodeSafetyCount > 0) {
+      return [{
+        competencyDisplayName: CompetencyDisplayName.HIGHWAY_CODE_SAFETY,
+        competencyIdentifier: CompetencyIdentifiers.HIGHWAY_CODE_SAFETY,
+        comment: highwayCodeSafety.faultComments || '',
+        source: CommentSource.HIGHWAY_CODE_SAFETY,
+        faultCount: highwayCodeSafetyCount,
+      }];
+    }
+
+    return [];
+  }
   private static getEyesightTestSeriousFault(eyesightTest: EyesightTest): FaultSummary[] {
     if (!eyesightTest || !eyesightTest.seriousFault) {
       return [];

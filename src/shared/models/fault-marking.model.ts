@@ -18,6 +18,7 @@ export enum CommentSource {
   SAFETY_AND_BALANCE_QUESTIONS = 'safetyAndBalanceQuestions',
   SINGLE_FAULT_COMPETENCY = 'singleFaultCompetency',
   SPEED_REQUIREMENTS = 'speedRequirements',
+  HIGHWAY_CODE_SAFETY = 'highwayCodeSafety',
 }
 
 export enum CompetencyIdentifiers {
@@ -26,4 +27,5 @@ export enum CompetencyIdentifiers {
   EYESIGHT_TEST = 'eyesightTest',
   CONTROLLED_STOP = 'controlledStop',
   CONTROL_FAULT = 'controlFault',
+  HIGHWAY_CODE_SAFETY = 'highwayCodeSafety',
 }
