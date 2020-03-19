@@ -9,7 +9,8 @@
         [drivingFaults]="getDrivingFaults()"
         [seriousFaults]="getSeriousFaults()"
         [dangerousFaults]="getDangerousFaults()"
-        [drivingFaultCount]="getDrivingFaultCount()">
+        [drivingFaultCount]="getDrivingFaultCount()"
+        [minDrivingFaultCount]="5">
       </faults-data-row>
       <data-row [label]="'ETA'" [value]="getETA()"></data-row>
       <speed-card
