@@ -96,12 +96,10 @@ export default class Page {
   }
 
   getPageTitle(pageTitle) {
-    // return this.getElementByXPath(
-    // `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
     const element = this.getElementByXPath(
       `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
     this.waitForPresenceOfElement(element);
-    this.longPressButton(element);
+    return element;
   }
 
   scrollToElement(element) {
