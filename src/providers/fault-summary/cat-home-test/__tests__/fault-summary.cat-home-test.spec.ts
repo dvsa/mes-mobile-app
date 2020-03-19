@@ -148,7 +148,6 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       result.map(fault => faultCount = faultCount + fault.faultCount);
       expect(faultCount).toEqual(6);
       result.map(fault => competenciesWithFaults.push(fault.competencyIdentifier));
-      console.log(`faults ${JSON.stringify(competenciesWithFaults)}`);
       expect(competenciesWithFaults.length).toBe(6);
       expect(competenciesWithFaults).toContain('controlsGears');
       expect(competenciesWithFaults).toContain('pedestrianCrossings');
