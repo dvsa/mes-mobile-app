@@ -23,6 +23,7 @@ import {
   ManoeuvreCompetencies,
   ManoeuvreTypes,
   SingleFaultCompetencyNames,
+  ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
@@ -69,6 +70,7 @@ import * as pcvDoorExerciseActions from
     '../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
 import * as highwayCodeActions
   from '../../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
+import * as etaActions from '../../../modules/tests/test-data/common/eta/eta.actions';
 
 describe('Test Report Analytics Effects', () => {
 
@@ -2151,6 +2153,82 @@ describe('Test Report Analytics Effects', () => {
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
             AnalyticsEventCategories.TEST_REPORT,
             AnalyticsEvents.TOGGLE_ECO_PLANNING,
+            'unselected',
+          );
+        done();
+      });
+    });
+  });
+  describe('toggleETA', () => {
+    it('should call log event with toggle eta physical selected', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.physical));
+      // ACT
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.physical));
+      // ASSERT
+      effects.toggleETA$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ETA_PHYSICAL,
+            'selected',
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle eta physical unselected ', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.physical));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.physical));
+      // ACT
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.physical));
+      // ASSERT
+      effects.toggleETA$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ETA_PHYSICAL,
+            'unselected',
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle eta verbal selected', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.verbal));
+      // ACT
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.verbal));
+      // ASSERT
+      effects.toggleETA$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ETA_VERBAL,
+            'selected',
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle eta verba unselected ', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.verbal));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.verbal));
+      // ACT
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.verbal));
+      // ASSERT
+      effects.toggleETA$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ETA_VERBAL,
             'unselected',
           );
         done();

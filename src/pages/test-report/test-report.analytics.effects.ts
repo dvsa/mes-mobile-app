@@ -34,8 +34,8 @@ import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../shared/constants/legal-requirements/legal-requirements.constants';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { getTestData } from '../../modules/tests/test-data/cat-b/test-data.reducer';
-import { getEco, getTestRequirements } from '../../modules/tests/test-data/common/test-data.selector';
-import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/common';
+import { getEco, getTestRequirements, getETA } from '../../modules/tests/test-data/common/test-data.selector';
+import { Eco, TestRequirements, ETA } from '@dvsa/mes-test-schema/categories/common';
 import * as uncoupleRecoupleActions
   from '../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import * as reverseLeftActions from './components/reverse-left/reverse-left.actions';
@@ -63,6 +63,8 @@ import {
   getHighwayCodeSafety,
   HighwayCodeSafetyUnion,
 } from '../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.reducer';
+import * as etaActions from '../../modules/tests/test-data/common/eta/eta.actions';
+import { ExaminerActions } from '../../modules/tests/test-data/test-data.constants';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -769,6 +771,43 @@ export class TestReportAnalyticsEffects {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_ECO_PLANNING, tests),
+        `${toggleValue}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  toggleETA$ = this.actions$.pipe(
+    ofType(
+      etaActions.TOGGLE_ETA,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          select(getETA),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, eta]: [etaActions.ToggleETA, TestsModel, ETA]) => {
+
+      const event: string = action.payload === ExaminerActions.physical ?
+        AnalyticsEvents.TOGGLE_ETA_PHYSICAL : AnalyticsEvents.TOGGLE_ETA_VERBAL;
+
+      const etaValue: boolean = action.payload === ExaminerActions.physical ? eta.physical : eta.verbal;
+
+      const toggleValue = etaValue
+        ? 'selected'
+        : 'unselected';
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(event, tests),
         `${toggleValue}`,
       );
       return of(new AnalyticRecorded());

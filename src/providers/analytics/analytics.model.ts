@@ -161,6 +161,8 @@ export enum AnalyticsEvents {
   TOGGLE_CONTROLLED_STOP = 'toggle controlled stop',
   TOGGLE_ECO_PLANNING = 'toggle ECO planning',
   TOGGLE_ECO_CONTROL = 'toggle ECO control',
+  TOGGLE_ETA_VERBAL = 'toggle ETA verbal',
+  TOGGLE_ETA_PHYSICAL = 'toggle ETA physical',
 }
 
 export enum AnalyticsLabels {
