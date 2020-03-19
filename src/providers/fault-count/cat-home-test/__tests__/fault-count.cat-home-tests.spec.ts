@@ -50,7 +50,7 @@ describe('FaultCountHomeTestHelper', () => {
   });
   describe('getDrivingFaultSumCountCatHomeTest (No VehicleChecks)', () => {
     const drivingFaultTests = [
-      {  category: 'F', data: catFTestDataStateObject, expected: 3 },
+      {  category: 'F', data: catFTestDataStateObject, expected: 4 },
       {  category: 'G', data: catGTestDataStateObject, expected: 5 },
       {  category: 'H', data: catHTestDataStateObject, expected: 0 },
       {  category: 'K', data: catKTestDataStateObject, expected: 4 },
@@ -82,7 +82,7 @@ describe('FaultCountHomeTestHelper', () => {
   describe('getSeriousFaultSumCountCatHomeTest', () => {
     const seriousFaultTests = [
       {  category: 'F', data: catFTestDataStateObject, expected: 2 },
-      {  category: 'G', data: catGTestDataStateObject, expected: 5 },
+      {  category: 'G', data: catGTestDataStateObject, expected: 6 },
       {  category: 'H', data: catHTestDataStateObject, expected: 2 },
       {  category: 'K', data: catKTestDataStateObject, expected: 0 },
     ];

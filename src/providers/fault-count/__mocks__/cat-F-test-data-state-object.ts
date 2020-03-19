@@ -37,6 +37,10 @@ export const catFTestDataStateObject: CatFUniqueTypes.TestData = {
     fault: 'DF',
     selected: true,
   },
+  highwayCodeSafety: {
+    selected: true,
+    drivingFault: true,
+  },
   vehicleChecks: this.vehicleChecksNoFaults,
 };
 

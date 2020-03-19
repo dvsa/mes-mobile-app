@@ -35,17 +35,18 @@ export class FaultCountHomeTestHelper {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { drivingFaults,  controlledStop, vehicleChecks } = data;
+    const { drivingFaults,  controlledStop, vehicleChecks, highwayCodeSafety } = data;
     let faultTotal: number = 0;
     getCompetencyFaults(drivingFaults).forEach(fault => faultTotal = faultTotal + fault.faultCount);
 
     const controlledStopHasDrivingFault = (controlledStop && controlledStop.fault === CompetencyOutcome.DF) ? 1 : 0;
-
+    const hcodeSafetyHasDrivingFault = (highwayCodeSafety && highwayCodeSafety.drivingFault) ? 1 : 0;
     const result =
       faultTotal +
       FaultCountHomeTestHelper.getManoeuvreCountIfAny(data, CompetencyOutcome.DF) +
       FaultCountHomeTestHelper.getVehicleChecksFaultCountCatHomeTest(vehicleChecks).drivingFaults +
-      controlledStopHasDrivingFault;
+      controlledStopHasDrivingFault +
+      hcodeSafetyHasDrivingFault;
 
     return result;
   }
@@ -54,16 +55,18 @@ export class FaultCountHomeTestHelper {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { seriousFaults, controlledStop, eyesightTest } = data;
+    const { seriousFaults, controlledStop, eyesightTest, highwayCodeSafety } = data;
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
     const eyesightTestSeriousFaults = (eyesightTest && eyesightTest.seriousFault) ? 1 : 0;
     const controlledStopSeriousFaults = (controlledStop && controlledStop.fault === CompetencyOutcome.S) ? 1 : 0;
+    const hcodeSafetyHasSeriousFault = (highwayCodeSafety && highwayCodeSafety.seriousFault) ? 1 : 0;
 
     const result =
       seriousFaultSumOfSimpleCompetencies +
       FaultCountHomeTestHelper.getManoeuvreCountIfAny(data, CompetencyOutcome.S) +
       controlledStopSeriousFaults +
+      hcodeSafetyHasSeriousFault +
       eyesightTestSeriousFaults;
 
     return result;
