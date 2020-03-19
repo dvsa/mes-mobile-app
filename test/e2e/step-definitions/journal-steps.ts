@@ -61,25 +61,25 @@ When('I rekey a test for {string}', (candidateName) => {
 
 When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidateName: string) => {
   if (testTime === 'early') {
-    startingExpiredOrEarlyTest(candidateName);
+    JournalPage.startingExpiredOrEarlyTest(candidateName);
 
     // If the start test early dialog is shown just select continue
-    const startTestEarlyButton = element(by.id('early-start-start-test-button'));
+    const startTestEarlyButton = JournalPage.getStartTestEarlyButton();
     startTestEarlyButton.isPresent().then((result) => {
       if (result) {
-        clickElement(startTestEarlyButton);
+        JournalPage.clickStartTestEarlyButton();
       }
     });
   }
 
   if (testTime === 'late') {
-    startingExpiredOrEarlyTest(candidateName);
+    JournalPage.startingExpiredOrEarlyTest(candidateName);
 
     // If the rekey dialog is shown so just select start test normally
-    const lateStartTestButton = element(by.id('rekey-start-test-button'));
+    const lateStartTestButton = JournalPage.getRekeyStartTestButton();
     lateStartTestButton.isPresent().then((result) => {
       if (result) {
-        clickElement(lateStartTestButton);
+        JournalPage.clickRekeyStartTestButton();
       }
     });
   }
@@ -150,21 +150,3 @@ Then('The vehicle for {string} has length {string}, width {string}, height {stri
 Then('I continue the write up for {string}', (candidateName) => {
   JournalPage.clickContinueWriteupButton(candidateName);
 });
-
-const rekeyIsPresent = () => {
-  const rekeyStartTestButton = element(by.id('rekey-start-test-button'));
-  return expect(rekeyStartTestButton.isPresent()).to.eventually.be.true;
-};
-
-const timeDialog = () => {
-  const testDialog = getElement(by.className(`modal-alert-header`));
-  return expect(testDialog.isPresent()).to.eventually.be.true;
-};
-
-const startingExpiredOrEarlyTest = (candidateName) => {
-  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-  clickElement(buttonElement);
-  timeDialog();
-};

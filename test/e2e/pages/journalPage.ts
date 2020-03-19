@@ -166,6 +166,11 @@ class JournalPage extends Page {
     return element;
   }
 
+  clickStartTestButtonFor(candidateName) {
+    const element = this.getStartTestButtonFor(candidateName);
+    this.clickElement(element);
+  }
+
   startTestFor(candidateName) {
     this.clickElement(this.getStartTestButtonFor(candidateName));
   }
@@ -184,6 +189,16 @@ class JournalPage extends Page {
   rowContains(rowName, rowValue) {
     const dataRow = this.getDataRow(rowName, rowValue);
     return expect(dataRow.isPresent()).to.eventually.be.true;
+  }
+
+  timeDialog() {
+    const testDialog = this.getElementByClassName(`modal-alert-header`);
+    return expect(testDialog.isPresent()).to.eventually.be.true;
+  }
+
+  startingExpiredOrEarlyTest = (candidateName) => {
+    this.clickStartTestButtonFor(candidateName);
+    this.timeDialog();
   }
 }
 
