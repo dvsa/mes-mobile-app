@@ -81,7 +81,7 @@ describe('FaultSummaryCatHomeTestHelper', () => {
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
       result.map(fault => faultCount = faultCount + fault.faultCount);
-      expect(faultCount).toEqual(3);
+      expect(faultCount).toEqual(4);
       result.map(fault => competenciesWithFaults.push(fault.competencyIdentifier));
       expect(competenciesWithFaults.length).toBe(4);
       expect(competenciesWithFaults).toContain('controlsGears');
