@@ -1,6 +1,7 @@
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 export const NUMBER_OF_SHOW_ME_QUESTIONS = 1;
 export const questions: VehicleChecksQuestion[] = [
+// tslint:disable:max-line-length
   {
     code: 'H1',
     description: 'Show me how you would check that the direction indicators are working.',
@@ -64,3 +65,4 @@ export const questions: VehicleChecksQuestion[] = [
 ];
 
 export default questions;
+// tslint:enable:max-line-length

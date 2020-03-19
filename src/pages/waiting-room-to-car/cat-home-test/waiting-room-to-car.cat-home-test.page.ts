@@ -57,9 +57,11 @@ import { getCandidate } from '../../../modules/tests/journal-data/cat-home/candi
 import {
   hasEyesightTestBeenCompleted,
   hasEyesightTestGotSeriousFault,
-} from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.selector';
+ } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.selector';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/common/vehicle-details.reducer';
-import { VehicleChecksUnion } from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.reducer';
+import {
+  VehicleChecksUnion,
+} from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.reducer';
 import { Subscription } from 'rxjs';
 
 interface WaitingRoomToCarPageState {

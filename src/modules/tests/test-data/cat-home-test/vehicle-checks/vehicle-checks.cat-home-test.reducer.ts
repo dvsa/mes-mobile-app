@@ -8,7 +8,9 @@ import * as vehicleChecksCatHomeTestActionTypes from './vehicle-checks.cat-home-
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS,
 } from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-home-test.constants';
-import { NUMBER_OF_TELL_ME_QUESTIONS } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-home-test.constants';
+import {
+  NUMBER_OF_TELL_ME_QUESTIONS,
+} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-home-test.constants';
 
 export type VehicleChecksUnion =
   | CatFUniqueTypes.VehicleChecks
