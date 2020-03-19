@@ -7,8 +7,8 @@ import { ReverseDiagramLinkComponent } from '../../reverse-diagram-link/reverse-
 import { IonicModule } from 'ionic-angular';
 import { MockComponent } from 'ng-mocks';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
-import { By } from '@angular/platform-browser';
 import { ManoeuvreCompetencies } from '../../../../../modules/tests/test-data/test-data.constants';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('reverseLeftComponent', () => {
   let fixture: ComponentFixture<ReverseLeftPopoverComponent>;
@@ -35,14 +35,6 @@ describe('reverseLeftComponent', () => {
     component = fixture.componentInstance;
   }));
 
-  describe('DOM', () => {
-    it('should display a link to open the reverse diagram', () => {
-      const iconElement = fixture.debugElement.queryAll(By.css('reverse-diagram-link[id="reverse-diagram-link"]'));
-      fixture.detectChanges();
-      expect(iconElement.length).toBe(1);
-    });
-  });
-
   describe('Class', () => {
     describe('getId', () => {
       it('should return reverseLeft-controlFault', () => {
@@ -53,6 +45,31 @@ describe('reverseLeftComponent', () => {
       it('should return reverseLeft-observationFault', () => {
         const result = component.getId(ManoeuvreCompetencies.observationFault);
         expect(result).toBe('reverseLeft-observationFault');
+      });
+    });
+    describe('shouldShowReverseDiagramLink', () => {
+      const testCases = [
+        { category: TestCategory.BE, outcome: true },
+        { category: TestCategory.C, outcome: true },
+        { category: TestCategory.C1, outcome: true },
+        { category: TestCategory.C1E, outcome: true },
+        { category: TestCategory.CE, outcome: true },
+        { category: TestCategory.D, outcome: true },
+        { category: TestCategory.D1, outcome: true },
+        { category: TestCategory.DE, outcome: true },
+        { category: TestCategory.D1E, outcome: true },
+        { category: TestCategory.F, outcome: false },
+        { category: TestCategory.G, outcome: false },
+        { category: TestCategory.H, outcome: false },
+        { category: TestCategory.K, outcome: false },
+      ];
+
+      testCases.forEach((testCase) => {
+        it(`should return the correct result for a category ${testCase.category} test`, () => {
+          component.testCategory = testCase.category;
+          fixture.detectChanges();
+          expect(component.shouldShowReverseDiagramLink()).toEqual(testCase.outcome);
+        });
       });
     });
   });
