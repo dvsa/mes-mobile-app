@@ -76,18 +76,17 @@ describe('FaultSummaryCatHomeTestHelper', () => {
   });
 
   describe('getDrivingFaultsCatHomeTest (Including VehicleChecks)', () => {
-    it('should return 4 driving fault count for category F', () => {
+    it('should return 3 driving fault count for category F', () => {
       const result = FaultSummaryCatHomeTestHelper.getDrivingFaultsCatHomeTest(catFTestDataVCStateObject);
       let faultCount = 0;
       const competenciesWithFaults: string[] = [];
       result.map(fault => faultCount = faultCount + fault.faultCount);
-      expect(faultCount).toEqual(4);
+      expect(faultCount).toEqual(3);
       result.map(fault => competenciesWithFaults.push(fault.competencyIdentifier));
-      expect(competenciesWithFaults.length).toBe(4);
+      expect(competenciesWithFaults.length).toBe(3);
       expect(competenciesWithFaults).toContain('controlsGears');
       expect(competenciesWithFaults).toContain('reverseLeftControl');
       expect(competenciesWithFaults).toContain('vehicleChecks');
-      expect(competenciesWithFaults).toContain('highwayCodeSafety');
     });
 
     it('should return 6 driving fault count for category G', () => {
