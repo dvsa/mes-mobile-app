@@ -18,7 +18,8 @@ import showMeQuestionsVocationalConstants
 import showMeQuestionsVocationalTrailerConstants
   from '../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
 import safetyQuestionsCatAMod2Constants from '../../shared/constants/safety-questions.cat-a-mod2.constants';
-import balanceQuestionsCatAMod2Constants from '../../shared/constants/balance-questions.cat-a-mod2.constants';
+import balanceQuestionsCatAMod2Constants
+  from '../../shared/constants/balance-questions.cat-a-mod2.constants';
 import safetyQuestionsCatDConstants from '../../shared/constants/safety-questions.cat-d.constants';
 import showMeQuestionsCatHomeTestConstants
   from '../../shared/constants/show-me-questions/show-me-questions.cat-home-test.constants';
