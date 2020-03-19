@@ -25,14 +25,12 @@ import {
   PassFinalisationViewDidEnter,
   PassFinalisationValidationError,
 } from '../../pass-finalisation.actions';
-import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
     '../../../../modules/tests/test-summary/common/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
     '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PassFinalisationCatHomeTestPage } from '../pass-finalisation.cat-home-test.page';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
-import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
@@ -50,7 +48,6 @@ describe('PassFinalisationCatHomeTestPage', () => {
         PassFinalisationCatHomeTestPage,
         MockComponent(PassCertificateNumberComponent),
         MockComponent(LicenseProvidedComponent),
-        MockComponent(TransmissionComponent),
         MockComponent(D255Component),
         MockComponent(DebriefWitnessedComponent),
         MockComponent(FinalisationHeaderComponent),
@@ -96,13 +93,6 @@ describe('PassFinalisationCatHomeTestPage', () => {
       it('should dispatch the correct action when called', () => {
         component.provisionalLicenseNotReceived();
         expect(store$.dispatch).toHaveBeenCalledWith(new ProvisionalLicenseNotReceived());
-        expect(store$.dispatch).toHaveBeenCalledTimes(1);
-      });
-    });
-    describe('transmissionChanged', () => {
-      it('should dispatch the correct action when called', () => {
-        component.transmissionChanged('Manual');
-        expect(store$.dispatch).toHaveBeenCalledWith(new GearboxCategoryChanged('Manual'));
         expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });

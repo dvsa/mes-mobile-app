@@ -4,6 +4,7 @@ export const NUMBER_OF_SHOW_ME_QUESTIONS = 1;
 // Questions can be long; we disable max-line-length lint rule to keep things clean.
 /* tslint:disable:max-line-length */
 export const questions: VehicleChecksQuestion[] = [
+// tslint:disable:max-line-length
   {
     code: 'H1',
     description: 'Show me how you would check that the direction indicators are working.',
@@ -67,3 +68,4 @@ export const questions: VehicleChecksQuestion[] = [
 ];
 
 export default questions;
+// tslint:enable:max-line-length

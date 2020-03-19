@@ -6,6 +6,7 @@ export const NUMBER_OF_TELL_ME_QUESTIONS = 1;
 /* tslint:disable:max-line-length */
 export const questions: VehicleChecksQuestion[] = [
   {
+    // tslint:disable:max-line-length
     code: 'H13',
     description: 'Tell me how you would check that the brakes are working before starting a journey.',
     shortName: 'Brakes',
@@ -38,3 +39,4 @@ export const questions: VehicleChecksQuestion[] = [
 ];
 
 export default questions;
+    // tslint:enable:max-line-length
