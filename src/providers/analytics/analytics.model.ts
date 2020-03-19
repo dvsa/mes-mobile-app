@@ -163,6 +163,7 @@ export enum AnalyticsEvents {
   TOGGLE_ECO_CONTROL = 'toggle ECO control',
   TOGGLE_ETA_VERBAL = 'toggle ETA verbal',
   TOGGLE_ETA_PHYSICAL = 'toggle ETA physical',
+  START_TIMER = 'start timer',
 }
 
 export enum AnalyticsLabels {

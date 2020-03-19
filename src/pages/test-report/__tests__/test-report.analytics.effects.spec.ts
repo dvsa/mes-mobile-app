@@ -2235,4 +2235,22 @@ describe('Test Report Analytics Effects', () => {
       });
     });
   });
+  describe('startTimer', () => {
+    it('should call logEvent with a start timer event', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.D));
+      // ACT
+      actions$.next(new testReportActions.StartTimer());
+      // ASSERT
+      effects.startTimer$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.START_TIMER,
+        );
+        done();
+      });
+    });
+  });
 });

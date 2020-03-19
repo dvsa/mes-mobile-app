@@ -1574,4 +1574,23 @@ export class TestReportAnalyticsEffects {
     }),
   );
 
+  @Effect()
+  startTimer$ = this.actions$.pipe(
+    ofType(testReportActions.START_TIMER),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [testReportActions.StartTimer, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.START_TIMER, tests),
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
 }

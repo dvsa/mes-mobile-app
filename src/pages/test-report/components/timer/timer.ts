@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { StartTimer } from '../../test-report.actions';
 
 @Component({
   selector: 'timer',
@@ -13,7 +16,7 @@ export class TimerComponent {
   timerString: string;
   isPaused: boolean = true;
 
-  constructor() {
+  constructor(private store$: Store<StoreModel>) {
     this.showStartTimerButton = true;
     this.seconds = 0;
 
@@ -31,6 +34,7 @@ export class TimerComponent {
       this.seconds += 1;
       this.generateTimerString();
     }, 1000);
+    this.store$.dispatch(new StartTimer());
   }
 
   pauseTimer = (): void => {
