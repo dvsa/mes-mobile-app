@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { get } from 'lodash';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
@@ -11,6 +12,9 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { TestData } from '@dvsa/mes-test-schema/categories/common';
 import { TestData as CatAMod1TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { TestData as CatAMod2TestData } from '@dvsa/mes-test-schema/categories/AM2';
+import {
+  hasVehicleChecksBeenCompletedCatADI2,
+} from '../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.selector';
 import {
   hasManoeuvreBeenCompletedCatB,
   hasVehicleChecksBeenCompletedCatB,
@@ -36,6 +40,8 @@ export class TestReportValidatorProvider {
 
   public isTestReportValid(data: object, category: TestCategory): boolean {
     switch (category) {
+      case TestCategory.ADI2:
+        return this.validateLegalRequirementsCatAdiPart2(data);
       case TestCategory.B:
         return this.validateLegalRequirementsCatB(data);
       case TestCategory.BE:
@@ -71,6 +77,8 @@ export class TestReportValidatorProvider {
 
   public getMissingLegalRequirements(data: object, category: TestCategory): legalRequirementsLabels[] {
     switch (category) {
+      case TestCategory.ADI2:
+        return this.getMissingLegalRequirementsCatAdiPart2(data);
       case TestCategory.B:
         return this.getMissingLegalRequirementsCatB(data);
       case TestCategory.BE:
@@ -165,6 +173,46 @@ export class TestReportValidatorProvider {
     }
 
     return SpeedCheckState.VALID;
+  }
+
+  private validateLegalRequirementsCatAdiPart2(data: CatADI2UniqueTypes.TestData): boolean {
+    const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
+    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
+    const angledStart: boolean = get(data, 'testRequirements.angledStart', false);
+    const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
+    const downhillStart: boolean = get(data, 'testRequirements.downhillStart', false);
+    // TODO(MES-5031): implement as part of manoeuvres build
+    // const manoeuvre: boolean = hasManoeuvreBeenCompletedCatADIPart2(data.manoeuvres) || false;
+    const vehicleChecks: boolean = hasVehicleChecksBeenCompletedCatADI2(data.vehicleChecks) || false;
+    const eco: boolean = get(data, 'eco.completed', false);
+
+    return (
+      normalStart1 &&
+      normalStart2 &&
+      angledStart &&
+      uphillStart &&
+      downhillStart &&
+      // TODO(MES-5031): implement as part of manoeuvres build
+      // manoeuvre &&
+      vehicleChecks &&
+      eco
+    );
+  }
+
+  private getMissingLegalRequirementsCatAdiPart2(data: CatADI2UniqueTypes.TestData): legalRequirementsLabels[] {
+    const result: legalRequirementsLabels[] = [];
+
+    !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
+    !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);
+    !get(data, 'testRequirements.angledStart', false) && result.push(legalRequirementsLabels.angledStart);
+    !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
+    !get(data, 'testRequirements.downhillStart', false) && result.push(legalRequirementsLabels.downhillStart);
+    // TODO(MES-5031): implement as part of manoeuvres build
+    // !hasManoeuvreBeenCompletedCatADIPart2(data.manoeuvres) && result.push(legalRequirementsLabels.manoeuvre);
+    !hasVehicleChecksBeenCompletedCatADI2(data.vehicleChecks) && result.push(legalRequirementsLabels.vehicleChecks);
+    !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
+
+    return result;
   }
 
   private validateLegalRequirementsCatB(data: CatBUniqueTypes.TestData): boolean {

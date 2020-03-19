@@ -1,3 +1,4 @@
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
 import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
@@ -8,15 +9,16 @@ import * as controlledStopActions from './controlled-stop.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { createFeatureSelector } from '@ngrx/store';
 
-export const initialState: CatFUniqueTypes.ControlledStop = {};
-
 // TODO: Update schemas to create common controlled stop
 export type ControlledStopUnion =
+  | CatADI2UniqueTypes.ControlledStop
   | CatBUniqueTypes.ControlledStop
   | CatFUniqueTypes.ControlledStop
   | CatGUniqueTypes.ControlledStop
   | CatHUniqueTypes.ControlledStop
   | CatKUniqueTypes.ControlledStop;
+
+export const initialState: ControlledStopUnion = {};
 
 export function controlledStopReducer(
   state = initialState,

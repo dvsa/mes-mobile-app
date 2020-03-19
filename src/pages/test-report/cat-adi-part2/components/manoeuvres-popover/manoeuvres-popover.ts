@@ -1,7 +1,7 @@
 // TO-DO ADI Part2: implement correct category
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Component } from '@angular/core';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 // TO-DO ADI Part2: implement correct category
@@ -13,7 +13,6 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { RecordManoeuvresSelection } from '../../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
 import { map } from 'rxjs/operators';
-import { some } from 'lodash';
 
 interface ManoeuvresFaultState {
   reverseRight: boolean;
@@ -58,21 +57,17 @@ export class ManoeuvresPopoverComponent {
   recordManoeuvreSelection(manoeuvre: ManoeuvreTypes): void {
     this.store$.dispatch(new RecordManoeuvresSelection(manoeuvre));
   }
-  /**
-   * @param  {string} manoeuvre
-   * @returns Observable<boolean>
-   * Called by the manoeuvre input elements in manoeuvres-popover.html
-   * Tells the input whether it needs to be disabled based on whether
-   * or not another manoeuvre has a fault recorded
-   */
+
+  // TODO(MES-5031): implement as part of manoeuvres build
   shouldManoeuvreDisable(manoeuvre: ManoeuvreTypes): Observable<boolean> {
-    return this.manoeuvresWithFaults$.pipe(
-      map((manoeuvresWithFaults: ManoeuvresFaultState) => {
-        // TO-DO ADI Part2: implement correct category
-        const { [manoeuvre]: manoeuvreToOmit, ...otherManoeuvres } = manoeuvresWithFaults;
-        return some(otherManoeuvres, (value: boolean) => value);
-      }),
-    );
+    return of(false);
+    // return this.manoeuvresWithFaults$.pipe(
+    //   map((manoeuvresWithFaults: ManoeuvresFaultState) => {
+    //     // TO-DO ADI Part2: implement correct category
+    //     const { [manoeuvre]: manoeuvreToOmit, ...otherManoeuvres } = manoeuvresWithFaults;
+    //     return some(otherManoeuvres, (value: boolean) => value);
+    //   }),
+    // );
   }
 
   manoeuvreHasFaults = (manoeuvre): boolean => (

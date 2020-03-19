@@ -52,11 +52,6 @@ import {
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 
-import { AddDrivingFault } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
-import { AddDangerousFault } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
-import { AddSeriousFault } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
-
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
   isRemoveFaultMode$: Observable<boolean>;
@@ -192,11 +187,10 @@ export class TestReportCatADIPart2Page extends BasePageComponent {
       manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
       testData$.pipe(map((data) => {
         this.isTestReportValid =
-        // TO-DO ADI Part2: Implement correct category
-          this.testReportValidatorProvider.isTestReportValid(data, TestCategory.B);
+          this.testReportValidatorProvider.isTestReportValid(data, TestCategory.ADI2);
         this.missingLegalRequirements =
-          this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.B);
-        this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.B);
+          this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.ADI2);
+        this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.ADI2);
       }),
       ),
     ).subscribe();
@@ -244,42 +238,5 @@ export class TestReportCatADIPart2Page extends BasePageComponent {
 
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_ADI_PART2.DEBRIEF_PAGE));
-  }
-
-  passTest = (): void => {
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.clearance,
-      newFaultCount: 3,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.followingDistance,
-      newFaultCount: 1,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.useOfSpeed,
-      newFaultCount: 2,
-    }));
-    this.store$.dispatch(new SetActivityCode('1'));
-    this.navController.push(CAT_ADI_PART2.DEBRIEF_PAGE);
-  }
-
-  failTest = (): void => {
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.pedestrianCrossings,
-      newFaultCount: 3,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.controlsClutch,
-      newFaultCount: 1,
-    }));
-    this.store$.dispatch(new AddDrivingFault({
-      competency: Competencies.signalsCorrectly,
-      newFaultCount: 2,
-    }));
-    this.store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsChangeSpeed));
-    this.store$.dispatch(new AddSeriousFault(Competencies.useOfSpeed));
-    this.store$.dispatch(new AddDangerousFault(Competencies.responseToSignsTrafficLights));
-    this.store$.dispatch(new SetActivityCode('2'));
-    this.navController.push(CAT_ADI_PART2.DEBRIEF_PAGE);
   }
 }
