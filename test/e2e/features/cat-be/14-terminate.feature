@@ -1,6 +1,6 @@
 @catbe @full_smoke @regression
 Feature: Driving Examiner Completes Terminated Tests for Category B+E
-   
+
    Scenario: Examiner terminates a test on the test report due to mechanical failure
       Given I am logged in as "mobexaminer2" and I have a test for "Mr Dixon Clayton"
       When I check candidate details for "Mr Dixon Clayton"
@@ -51,6 +51,7 @@ Feature: Driving Examiner Completes Terminated Tests for Category B+E
       Then I should see the "Jeannette Bender" page
       And I fail the eye sight test
       Then I should see the Debrief page with outcome "Unsuccessful"
+     And I should see the "Debrief - Jeannette Bender" page
       When I end the debrief
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
