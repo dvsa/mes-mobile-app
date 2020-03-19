@@ -201,6 +201,11 @@ class JournalPage extends Page {
     this.waitForPresenceOfElement(element);
     return element;
   }
+
+  rekeyIsPresent() {
+    const rekeyStartTestButton = this.getElementById('rekey-start-test-button');
+    return expect(rekeyStartTestButton.isPresent()).to.eventually.be.true;
+  }
 }
 
 export default new JournalPage();

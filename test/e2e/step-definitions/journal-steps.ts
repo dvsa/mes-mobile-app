@@ -116,15 +116,26 @@ When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidat
 });
 
 When('I rekey a late test for {string}', (candidateName) => {
-  JournalPage.getStartTestButtonFor(candidateName);
+  JournalPage.startTestFor(candidateName)
+
+  // If the rekey dialog is shown so just select start test normally
+  const rekeyStartTestButton = JournalPage.getRekeyStartTestButton();
+  JournalPage.rekeyIsPresent();
+  rekeyStartTestButton.isPresent().then((result) => {
+    if (result) {
+      JournalPage.clickRekeyStartTestButton();
+    }
+  });
 });
 
 When('I navigate to next day', () => {
   JournalPage.clickNextDayButton();
 });
 
-When('I navigate to previous day', () => {
-  JournalPage.clickPreviousDayButton();
+When('I navigate to {int} day(s) previously', (numberOfDays) => {
+  for (let i = 0; i < numberOfDays; i += 1) {
+    JournalPage.clickPreviousDayButton();
+  }
 });
 
 Then('I have a special needs slot for {string}', (candidateName) => {
