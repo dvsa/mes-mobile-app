@@ -67,6 +67,8 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 import * as pcvDoorExerciseActions from
     '../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
+import * as highwayCodeActions
+  from '../../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
 
 describe('Test Report Analytics Effects', () => {
 
@@ -1993,6 +1995,86 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT}`,
           fullCompetencyLabels.pcvDoorExercise,
         );
+        done();
+      });
+    });
+  });
+  describe('toggleControlledStop', () => {
+    it('should call log event with toggle controlled stop completed', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new controlledStopActions.ToggleControlledStop());
+      // ACT
+      actions$.next(new controlledStopActions.ToggleControlledStop());
+      // ASSERT
+      effects.toggleControlledStop$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_CONTROLLED_STOP,
+            `${legalRequirementToggleValues.completed}`,
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle controlled stop uncompleted', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new controlledStopActions.ToggleControlledStop());
+      store$.dispatch(new controlledStopActions.ToggleControlledStop());
+      // ACT
+      actions$.next(new controlledStopActions.ToggleControlledStop());
+      // ASSERT
+      effects.toggleControlledStop$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_CONTROLLED_STOP,
+            `${legalRequirementToggleValues.uncompleted}`,
+          );
+        done();
+      });
+    });
+  });
+  describe('toggleHighwayCodeSafety', () => {
+    it('should call log event with toggle highway code stop completed', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.F));
+      store$.dispatch(new PopulateTestCategory(TestCategory.F));
+      store$.dispatch(new highwayCodeActions.ToggleHighwayCodeSafety());
+      // ACT
+      actions$.next(new highwayCodeActions.ToggleHighwayCodeSafety());
+      // ASSERT
+      effects.toggleHighwayCodeSafety$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+            `${legalRequirementsLabels.highwayCodeSafety} - ${legalRequirementToggleValues.completed}`,
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle highway code uncompleted', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.F));
+      store$.dispatch(new PopulateTestCategory(TestCategory.F));
+      store$.dispatch(new highwayCodeActions.ToggleHighwayCodeSafety());
+      store$.dispatch(new highwayCodeActions.ToggleHighwayCodeSafety());
+      // ACT
+      actions$.next(new highwayCodeActions.ToggleHighwayCodeSafety());
+      // ASSERT
+      effects.toggleHighwayCodeSafety$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+            `${legalRequirementsLabels.highwayCodeSafety} - ${legalRequirementToggleValues.uncompleted}`,
+          );
         done();
       });
     });

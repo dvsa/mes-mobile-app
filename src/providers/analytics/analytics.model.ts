@@ -158,6 +158,7 @@ export enum AnalyticsEvents {
   CIRCUIT_CHANGED = 'circuit changed',
   INDEPENDENT_DRIVING_TYPE_CHANGED = 'independent driving type changed',
   MODE_OF_TRANSPORT_CHANGED = 'mode of transport changed',
+  TOGGLE_CONTROLLED_STOP = 'toggle controlled stop',
 }
 
 export enum AnalyticsLabels {
