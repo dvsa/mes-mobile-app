@@ -23,6 +23,7 @@ import {
   ManoeuvreCompetencies,
   ManoeuvreTypes,
   SingleFaultCompetencyNames,
+  ExaminerActions,
 } from '../../../modules/tests/test-data/test-data.constants';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
@@ -67,6 +68,9 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 import * as pcvDoorExerciseActions from
     '../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
+import * as highwayCodeActions
+  from '../../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
+import * as etaActions from '../../../modules/tests/test-data/common/eta/eta.actions';
 
 describe('Test Report Analytics Effects', () => {
 
@@ -1992,6 +1996,258 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.PCV_DOOR_EXERCISE_REMOVE_DANGEROUS_FAULT}`,
           fullCompetencyLabels.pcvDoorExercise,
+        );
+        done();
+      });
+    });
+  });
+  describe('toggleControlledStop', () => {
+    it('should call log event with toggle controlled stop completed', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new controlledStopActions.ToggleControlledStop());
+      // ACT
+      actions$.next(new controlledStopActions.ToggleControlledStop());
+      // ASSERT
+      effects.toggleControlledStop$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_CONTROLLED_STOP,
+            `${legalRequirementToggleValues.completed}`,
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle controlled stop uncompleted', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new controlledStopActions.ToggleControlledStop());
+      store$.dispatch(new controlledStopActions.ToggleControlledStop());
+      // ACT
+      actions$.next(new controlledStopActions.ToggleControlledStop());
+      // ASSERT
+      effects.toggleControlledStop$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_CONTROLLED_STOP,
+            `${legalRequirementToggleValues.uncompleted}`,
+          );
+        done();
+      });
+    });
+  });
+  describe('toggleHighwayCodeSafety', () => {
+    it('should call log event with toggle highway code stop completed', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.F));
+      store$.dispatch(new PopulateTestCategory(TestCategory.F));
+      store$.dispatch(new highwayCodeActions.ToggleHighwayCodeSafety());
+      // ACT
+      actions$.next(new highwayCodeActions.ToggleHighwayCodeSafety());
+      // ASSERT
+      effects.toggleHighwayCodeSafety$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+            `${legalRequirementsLabels.highwayCodeSafety} - ${legalRequirementToggleValues.completed}`,
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle highway code uncompleted', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.F));
+      store$.dispatch(new PopulateTestCategory(TestCategory.F));
+      store$.dispatch(new highwayCodeActions.ToggleHighwayCodeSafety());
+      store$.dispatch(new highwayCodeActions.ToggleHighwayCodeSafety());
+      // ACT
+      actions$.next(new highwayCodeActions.ToggleHighwayCodeSafety());
+      // ASSERT
+      effects.toggleHighwayCodeSafety$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+            `${legalRequirementsLabels.highwayCodeSafety} - ${legalRequirementToggleValues.uncompleted}`,
+          );
+        done();
+      });
+    });
+  });
+  describe('toggleEcoControl', () => {
+    it('should call log event with toggle eco control selected', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new ecoActions.ToggleControlEco());
+      // ACT
+      actions$.next(new ecoActions.ToggleControlEco());
+      // ASSERT
+      effects.toggleEcoControl$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ECO_CONTROL,
+            'selected',
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle eco control unselected ', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new ecoActions.ToggleControlEco());
+      store$.dispatch(new ecoActions.ToggleControlEco());
+      // ACT
+      actions$.next(new ecoActions.ToggleControlEco());
+      // ASSERT
+      effects.toggleEcoControl$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ECO_CONTROL,
+            'unselected',
+          );
+        done();
+      });
+    });
+  });
+  describe('toggleEcoPlanning', () => {
+    it('should call log event with toggle eco control selected', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new ecoActions.TogglePlanningEco());
+      // ACT
+      actions$.next(new ecoActions.TogglePlanningEco());
+      // ASSERT
+      effects.toggleEcoPlanning$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ECO_PLANNING,
+            'selected',
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle eco control unselected ', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new ecoActions.TogglePlanningEco());
+      store$.dispatch(new ecoActions.TogglePlanningEco());
+      // ACT
+      actions$.next(new ecoActions.TogglePlanningEco());
+      // ASSERT
+      effects.toggleEcoPlanning$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ECO_PLANNING,
+            'unselected',
+          );
+        done();
+      });
+    });
+  });
+  describe('toggleETA', () => {
+    it('should call log event with toggle eta physical selected', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.physical));
+      // ACT
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.physical));
+      // ASSERT
+      effects.toggleETA$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ETA_PHYSICAL,
+            'selected',
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle eta physical unselected ', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.physical));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.physical));
+      // ACT
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.physical));
+      // ASSERT
+      effects.toggleETA$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ETA_PHYSICAL,
+            'unselected',
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle eta verbal selected', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.verbal));
+      // ACT
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.verbal));
+      // ASSERT
+      effects.toggleETA$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ETA_VERBAL,
+            'selected',
+          );
+        done();
+      });
+    });
+    it('should call log event with toggle eta verba unselected ', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.verbal));
+      store$.dispatch(new etaActions.ToggleETA(ExaminerActions.verbal));
+      // ACT
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.verbal));
+      // ASSERT
+      effects.toggleETA$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+            AnalyticsEventCategories.TEST_REPORT,
+            AnalyticsEvents.TOGGLE_ETA_VERBAL,
+            'unselected',
+          );
+        done();
+      });
+    });
+  });
+  describe('startTimer', () => {
+    it('should call logEvent with a start timer event', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.D));
+      // ACT
+      actions$.next(new testReportActions.StartTimer());
+      // ASSERT
+      effects.startTimer$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.START_TIMER,
         );
         done();
       });

@@ -34,8 +34,8 @@ import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../shared/constants/legal-requirements/legal-requirements.constants';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { getTestData } from '../../modules/tests/test-data/cat-b/test-data.reducer';
-import { getEco, getTestRequirements } from '../../modules/tests/test-data/common/test-data.selector';
-import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/common';
+import { getEco, getTestRequirements, getETA } from '../../modules/tests/test-data/common/test-data.selector';
+import { Eco, TestRequirements, ETA } from '@dvsa/mes-test-schema/categories/common';
 import * as uncoupleRecoupleActions
   from '../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import * as reverseLeftActions from './components/reverse-left/reverse-left.actions';
@@ -55,6 +55,16 @@ import * as emergencyStopActions from '../../modules/tests/test-data/cat-a-mod1/
 import * as avoidanceActions from '../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import * as pcvDoorExerciseActions from
     '../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
+import {
+  getControlledStop,
+  ControlledStopUnion,
+} from '../../modules/tests/test-data/common/controlled-stop/controlled-stop.reducer';
+import {
+  getHighwayCodeSafety,
+  HighwayCodeSafetyUnion,
+} from '../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.reducer';
+import * as etaActions from '../../modules/tests/test-data/common/eta/eta.actions';
+import { ExaminerActions } from '../../modules/tests/test-data/test-data.constants';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -573,6 +583,7 @@ export class TestReportAnalyticsEffects {
       return of(new AnalyticRecorded());
     }),
   );
+
   @Effect()
   highwayCodeSafetyRemoveFault$ = this.actions$.pipe(
     ofType(
@@ -594,6 +605,7 @@ export class TestReportAnalyticsEffects {
       return of(new AnalyticRecorded());
     }),
   );
+
   @Effect()
   showMeQuestionRemoveFault$ = this.actions$.pipe(
     ofType(
@@ -698,6 +710,169 @@ export class TestReportAnalyticsEffects {
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
         `${legalRequirementsLabels['eco']} - ${toggleValue}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  toggleEcoControl$ = this.actions$.pipe(
+    ofType(
+      ecoActions.TOGGLE_CONTROL_ECO,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          select(getEco),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, eco]: [ecoActions.ToggleEco, TestsModel, Eco]) => {
+      const toggleValue = eco.adviceGivenControl
+      ? 'selected'
+      : 'unselected';
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_ECO_CONTROL, tests),
+        `${toggleValue}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  toggleEcoPlanning$ = this.actions$.pipe(
+    ofType(
+      ecoActions.TOGGLE_PLANNING_ECO,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          select(getEco),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, eco]: [ecoActions.ToggleEco, TestsModel, Eco]) => {
+      const toggleValue = eco.adviceGivenPlanning
+        ? 'selected'
+        : 'unselected';
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_ECO_PLANNING, tests),
+        `${toggleValue}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  toggleETA$ = this.actions$.pipe(
+    ofType(
+      etaActions.TOGGLE_ETA,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          select(getETA),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, eta]: [etaActions.ToggleETA, TestsModel, ETA]) => {
+
+      const event: string = action.payload === ExaminerActions.physical ?
+        AnalyticsEvents.TOGGLE_ETA_PHYSICAL : AnalyticsEvents.TOGGLE_ETA_VERBAL;
+
+      const etaValue: boolean = action.payload === ExaminerActions.physical ? eta.physical : eta.verbal;
+
+      const toggleValue = etaValue
+        ? 'selected'
+        : 'unselected';
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(event, tests),
+        `${toggleValue}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  toggleControlledStop$ = this.actions$.pipe(
+    ofType(
+      controlledStopActions.TOGGLE_CONTROLLED_STOP,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          select(getControlledStop),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, controlledStop]:
+      [controlledStopActions.ToggleControlledStop, TestsModel, ControlledStopUnion]) => {
+      const toggleValue = controlledStop.selected
+        ? legalRequirementToggleValues.completed
+        : legalRequirementToggleValues.uncompleted;
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_CONTROLLED_STOP, tests),
+        `${toggleValue}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  toggleHighwayCodeSafety$ = this.actions$.pipe(
+    ofType(
+      highwayCodeSafetyActions.TOGGLE_HIGHWAYCODE_SAFETY,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          select(getHighwayCodeSafety),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, highwayCodeSafety]:
+      [highwayCodeSafetyActions.ToggleHighwayCodeSafety, TestsModel, HighwayCodeSafetyUnion]) => {
+      const toggleValue = highwayCodeSafety.selected
+        ? legalRequirementToggleValues.completed
+        : legalRequirementToggleValues.uncompleted;
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+        `${legalRequirementsLabels.highwayCodeSafety} - ${toggleValue}`,
       );
       return of(new AnalyticRecorded());
     }),
@@ -1398,4 +1573,24 @@ export class TestReportAnalyticsEffects {
       return of(new AnalyticRecorded());
     }),
   );
+
+  @Effect()
+  startTimer$ = this.actions$.pipe(
+    ofType(testReportActions.START_TIMER),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [testReportActions.StartTimer, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.START_TIMER, tests),
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
 }
