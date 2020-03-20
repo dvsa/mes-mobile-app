@@ -40,13 +40,11 @@ import {
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/common';
 import { of } from 'rxjs';
 import { MockComponent } from 'ng-mocks';
-import { RouteNumberComponent } from '../../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../../components/candidate-description/candidate-description';
 import { ShowMeQuestionComponent } from '../../components/show-me-question/show-me-question';
 import { WeatherConditionsComponent } from '../../components/weather-conditions/weather-conditions';
 import { AdditionalInformationComponent } from '../../components/additional-information/additional-information';
 import { IdentificationComponent } from '../../components/identification/identification';
-import { IndependentDrivingComponent } from '../../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../../components/fault-comment-card/fault-comment-card';
 import { FaultSummary } from '../../../../shared/models/fault-marking.model';
 import { ActivityCodeComponent } from '../../components/activity-code/activity-code';
@@ -78,13 +76,11 @@ describe('OfficeCatHomeTestPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         OfficeCatHomeTestPage,
-        MockComponent(RouteNumberComponent),
         MockComponent(CandidateDescriptionComponent),
         MockComponent(IdentificationComponent),
         MockComponent(ShowMeQuestionComponent),
         MockComponent(WeatherConditionsComponent),
         MockComponent(AdditionalInformationComponent),
-        MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
         MockComponent(VehicleChecksOfficeCardComponent),
       ],
