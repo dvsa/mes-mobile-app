@@ -23,8 +23,16 @@ export class FaultsDataRowComponent {
   @Input()
   drivingFaultCount?: number;
 
-  showNoFaultsMessage = () : boolean =>
-  this.drivingFaultCount === 0 &&
-  this.seriousFaults.length === 0 &&
-  this.dangerousFaults.length === 0
+  @Input()
+  minDrivingFaultCount: number = 15;
+
+  showNoFaultsMessage = (): boolean =>
+    this.drivingFaultCount === 0 &&
+    this.seriousFaults.length === 0 &&
+    this.dangerousFaults.length === 0
+
+  showFaultComment = (drivingFault: FaultSummary): boolean =>
+    this.drivingFaultCount > this.minDrivingFaultCount &&
+    drivingFault.comment !== undefined
+
 }
