@@ -63,15 +63,15 @@ export class ReversingDistancesProvider {
       case TestCategory.DE:
       case TestCategory.D1E:
         return ({
-          startDistance: data.vehicleLength > 16.5 ? 66 : Math.round(distanceFromStart * 100) / 100,
+          startDistance: data.vehicleLength > 16.5 ? 66 : Number(distanceFromStart.toFixed(2)),
           middleDistance: data.vehicleLength > 16.5
-            ? Math.round(66 - (data.vehicleLength * 2))
-            : Math.round(distanceFromMiddle * 100) / 100,
+            ? Number((66 - (data.vehicleLength * 2)).toFixed(2))
+            : Number(distanceFromMiddle.toFixed(2)),
         });
       default:
         return ({
-          startDistance:  Math.round(distanceFromStart * 100) / 100,
-          middleDistance: Math.round(distanceFromMiddle * 100) / 100,
+          startDistance: Number(distanceFromStart.toFixed(2)),
+          middleDistance: Number(distanceFromMiddle.toFixed(2)),
         });
     }
   }
@@ -81,7 +81,7 @@ export class ReversingDistancesProvider {
       return 3;
     }
     const distanceOfBayWidth = data.vehicleWidth * this.distanceValues.get(category).widthMultiplier;
-    return Math.round(distanceOfBayWidth * 100) / 100;
+    return Number(distanceOfBayWidth.toFixed(2));
   }
 
 }
