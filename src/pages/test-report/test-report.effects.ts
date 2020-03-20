@@ -25,6 +25,8 @@ import * as avoidanceActions from '../../modules/tests/test-data/cat-a-mod1/avoi
 import * as emergencyStopActions from '../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
 import * as singleFaultCompetenciesActions
   from '../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
+import * as highwayCodeActions from
+  '../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
 import { TestResultProvider } from '../../providers/test-result/test-result';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import { of } from 'rxjs';
@@ -117,6 +119,10 @@ export class TestReportEffects {
       singleFaultCompetenciesActions.REMOVE_SINGLE_FAULT_COMPETENCY_OUTCOME,
       singleFaultCompetenciesActions.REMOVE_SINGLE_SERIOUS_FAULT_COMPETENCY_OUTCOME,
       singleFaultCompetenciesActions.REMOVE_SINGLE_DANGEROUS_FAULT_COMPETENCY_OUTCOME,
+      highwayCodeActions.HIGHWAY_CODE_SAFETY_ADD_DRIVING_FAULT,
+      highwayCodeActions.HIGHWAY_CODE_SAFETY_ADD_SERIOUS_FAULT,
+      highwayCodeActions.HIGHWAY_CODE_SAFETY_REMOVE_FAULT,
+      highwayCodeActions.TOGGLE_HIGHWAYCODE_SAFETY,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
