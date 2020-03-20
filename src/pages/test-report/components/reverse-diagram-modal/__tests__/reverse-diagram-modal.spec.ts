@@ -107,7 +107,7 @@ describe('reverseDiagramModal', () => {
       const cappedStartDistanceCategories = mockFile.getCappedStartDistanceCategories();
       describe(`Category ${testCategory}`, () => {
         describe(`ngOnInit`, () => {
-          it(`should set the distance based on booked in vehicle length`, (done: DoneFn) => {
+          it('should set the distance based on booked in vehicle length', (done: DoneFn) => {
             component.category = testCategory;
             component.ngOnInit();
             component.componentState.vehicleLength$.subscribe((result) => {
@@ -115,7 +115,7 @@ describe('reverseDiagramModal', () => {
               done();
             });
           });
-          it(`should set the distance based on booked in vehicle width`, (done: DoneFn) => {
+          it('should set the distance based on booked in vehicle width', (done: DoneFn) => {
             component.category = testCategory;
             component.ngOnInit();
             component.componentState.vehicleWidth$.subscribe((result) => {
@@ -124,7 +124,7 @@ describe('reverseDiagramModal', () => {
             });
           });
         });
-        describe(`calculateReversingLengths`, () => {
+        describe('calculateReversingLengths', () => {
           it(`should resolve aAndA1 to ${value.expStartDist}`, () => {
             spyOn(component, 'calculateReversingLengths').and.callThrough();
             component.category = testCategory;
@@ -156,7 +156,7 @@ describe('reverseDiagramModal', () => {
             expect(result).toEqual(value.expMidDist);
           });
         });
-        describe(`calculateReversingWidth`, () => {
+        describe('calculateReversingWidth', () => {
           it(`should resolve aToA1 to ${value.expWidthDist}`, () => {
             component.category = testCategory;
             spyOn(component, 'calculateReversingWidth').and.callThrough();
@@ -170,6 +170,14 @@ describe('reverseDiagramModal', () => {
             expect(result).toEqual(value.expWidthDist);
           });
         });
+        describe('calculateAtoBMultiplierText', () => {
+          it(`should return the A to B multiplier text of ${value.expMidDistMultiplier}`, () => {
+            component.category = testCategory;
+            component.calculateAtoBMultiplierText();
+            const result = component.multiplierText;
+            expect(result).toEqual(value.expMidDistMultiplier);
+          });
+        });
       });
     }
 
@@ -177,10 +185,12 @@ describe('reverseDiagramModal', () => {
       it('should calculate the distances if vehicle dimensions are populated', () => {
         const calculateDistanceLengthSpy = spyOn(component, 'calculateReversingLengths');
         const calculateDistanceWidthSpy = spyOn(component, 'calculateReversingWidth');
+        const calculateAtoBMultiplierTextSpy = spyOn(component, 'calculateAtoBMultiplierText');
         component.ngOnInit();
         const result = component.ionViewWillEnter();
         expect(calculateDistanceLengthSpy).toHaveBeenCalled();
         expect(calculateDistanceWidthSpy).toHaveBeenCalled();
+        expect(calculateAtoBMultiplierTextSpy).toHaveBeenCalled();
         expect(result).toEqual(true);
       });
     });
