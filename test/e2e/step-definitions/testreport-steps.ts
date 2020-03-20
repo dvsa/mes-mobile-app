@@ -240,17 +240,38 @@ When('I terminate the test from the test report page', () => {
 });
 
 Then('the legal requirements pop up is present', () => {
-  const legalRequirementPopUp = getElement(by.xpath('//div/legal-requirements-modal'));
-  expect(legalRequirementPopUp.isPresent()).to.eventually.be.true;
+  switch (this.testCategory) {
+    case 'a-mod1':
+      const speedRequirementPopUp = getElement(by.xpath('//div/speed-check-modal'));
+      expect(speedRequirementPopUp.isPresent()).to.eventually.be.true;
+      break;
+    default:
+      const legalRequirementPopUp = getElement(by.xpath('//div/legal-requirements-modal'));
+      expect(legalRequirementPopUp.isPresent()).to.eventually.be.true;
+      break;
+  }
 });
 
 When('the required test observation is present {string}', (legalRequirement: string) => {
-  expect(getElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`)).isPresent()).to.eventually.be.true;
+  switch (this.testCategory) {
+    case 'a-mod1':
+      checkingEachLegalRequirementForBikes(legalRequirement);
+      break;
+    default:
+      expect(getElement(by.xpath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`)).isPresent()).to.eventually.be.true;
+      break;
+  }
 });
 
 Then('I return to the test report page', () =>   {
-  const returnToTestBtn = getElement(by.xpath('//div/legal-requirements-modal//modal-return-button//span'));
-  clickElement(returnToTestBtn);
+  switch (this.testCategory) {
+    case 'a-mod1':
+      clickReturnToTestButton('speed-check');
+      break;
+    default:
+      clickReturnToTestButton('legal-requirements');
+      break;
+  }
 });
 
 When('I enter the legal requirements', () => {
@@ -265,13 +286,15 @@ When('I add the Uncouple and Recouple fault', () => {
 });
 
 When('I enter recorded speed for Emergency Stop', () => {
-  const speed = getElement(by.xpath('//speed-check[1]/ion-row[1]/ion-col[2]/input[1]'));
+  const speed = getElement(by.xpath('//speed-check[1]//input[1]'));
   expect(speed.isPresent()).to.eventually.be.true;
   inputTextSendKeys(speed, '52');
 });
 
 When('I enter recorded speed for Avoidance', () => {
-  textFieldInputViaNativeMode('/html/body/ion-app/ng-component/ion-nav/div[2]/ion-content/div[2]/ion-grid/speed-check[2]/ion-row[1]/ion-col[2]/input[1]', '52');
+  const speed = getElement(by.xpath('//speed-check[2]//input[1]'));
+  expect(speed.isPresent()).to.eventually.be.true;
+  inputTextSendKeys(speed, '52');
 });
 
 const endTest = () => {
@@ -413,4 +436,16 @@ const completeManouveure = () => {
 const completeUncoupleRecouple = () => {
   const uncoupleRecouple = getElement(by.xpath('//competency-button[contains(@class, "uncouple-recouple-tick")]'));
   longPressButton(uncoupleRecouple);
+};
+
+const clickReturnToTestButton = (element: string) => {
+  const returnToTestBtn = getElement(by.xpath(`//div/${element}-modal//modal-return-button/button`));
+  clickElement(returnToTestBtn);
+};
+
+const checkingEachLegalRequirementForBikes = (legalRequirement) => {
+  const legalRequirements = element.all(by.xpath('//speed-check-modal//div/ul//li'));
+  legalRequirements.each((element, index) => {
+    expect(getElement(by.xpath(`//speed-check-modal//div/ul/li[${index + 1}][text() = '${legalRequirement}']`)).isPresent()).to.eventually.be.true;
+  });
 };

@@ -160,15 +160,15 @@ const openSelectCategoryOverlay = () => {
 };
 
 const selectCategoryType = (categoryTypeSelector, categoryType: string) => {
-  switch(categoryType) {
-    case 'AM': 
+  switch (categoryType) {
+    case 'AM':
       categoryTypeSelector = getElement(by.xpath('//*[@id="alert-input-0-0"]'));
       break;
     case 'A1':
       categoryTypeSelector = getElement(by.xpath('//*[@id="alert-input-0-1"]'));
       break;
     case 'A2':
-      categoryTypeSelector = getElement(by.xpath('//*[@id="alert-input-0-2"]')); 
+      categoryTypeSelector = getElement(by.xpath('//*[@id="alert-input-0-2"]'));
       break;
     case 'A':
       categoryTypeSelector = getElement(by.xpath('//*[@id="alert-input-0-3"]'));
