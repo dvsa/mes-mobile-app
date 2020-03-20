@@ -1,6 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { ModalController, Modal, NavController } from 'ionic-angular';
-import { CAT_BE, CAT_B, CAT_C, CAT_D, CAT_A_MOD1, CAT_A_MOD2 } from '../../../pages/page-names.constants';
+import {
+  CAT_BE,
+  CAT_B,
+  CAT_C,
+  CAT_D,
+  CAT_A_MOD1,
+  CAT_A_MOD2,
+  CAT_HOME_TEST,
+} from '../../../pages/page-names.constants';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
@@ -45,6 +53,12 @@ export class EndTestLinkComponent {
         break;
       case TestCategory.D:
         this.navController.push(CAT_D.DEBRIEF_PAGE);
+        break;
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K:
+        this.navController.push(CAT_HOME_TEST.DEBRIEF_PAGE);
         break;
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:

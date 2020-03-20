@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>{{ 'waitingRoom.title' | translate }} - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end>
-      <end-test-link category="pageState.category$ | async"></end-test-link>
+      <end-test-link category="{{pageState.category$ | async}}"></end-test-link>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
