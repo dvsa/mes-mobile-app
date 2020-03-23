@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { FaultSummary } from '../../shared/models/fault-marking.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { FaultCountProvider } from '../fault-count/fault-count';
 import { FaultSummaryCatBHelper } from './cat-b/fault-summary.cat-b';
 import { FaultSummaryCatBEHelper } from './cat-be/fault-summary.cat-be';
 import { FaultSummaryCatCHelper } from './cat-c/fault-summary.cat-c';
 import { FaultSummaryCatDHelper } from './cat-d/fault-summary.cat-d';
 import { FaultSummaryCatHomeTestHelper } from './cat-home-test/fault-summary.cat-home-test';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
@@ -18,6 +19,7 @@ import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
 import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 import { FaultSummaryCatAM1Helper } from './cat-a-mod1/fault-summary.cat-a-mod1';
 import { FaultSummaryCatAM2Helper } from './cat-a-mod2/fault-summary.cat-a-mod2';
+import { FaultSummaryCatAdiPart2Helper } from './cat-adi-part2/fault-summary.cat-adi-part2';
 
 @Injectable()
 export class FaultSummaryProvider {
@@ -26,6 +28,13 @@ export class FaultSummaryProvider {
 
   public getDrivingFaultsList(data: object, category: TestCategory): FaultSummary[] {
     switch (category) {
+      case TestCategory.ADI2:
+        return FaultSummaryCatAdiPart2Helper.getDrivingFaultsCatAdiPart2(
+          data,
+          this.faultCountProvider.getVehicleChecksFaultCount(
+            TestCategory.ADI2,
+             (<CatADI2UniqueTypes.TestData>data).vehicleChecks,
+          ));
       case TestCategory.B:
         return FaultSummaryCatBHelper.getDrivingFaultsCatB(data);
       case TestCategory.BE:
@@ -121,6 +130,8 @@ export class FaultSummaryProvider {
 
   public getSeriousFaultsList(data: object, category: TestCategory): FaultSummary[] {
     switch (category) {
+      case TestCategory.ADI2:
+        return FaultSummaryCatAdiPart2Helper.getSeriousFaultsCatAdiPart2(data);
       case TestCategory.B:
         return FaultSummaryCatBHelper.getSeriousFaultsCatB(data);
       case TestCategory.BE:
@@ -159,6 +170,8 @@ export class FaultSummaryProvider {
 
   public getDangerousFaultsList(data: object, category: TestCategory): FaultSummary[] {
     switch (category) {
+      case TestCategory.ADI2:
+        return FaultSummaryCatAdiPart2Helper.getDangerousFaultsCatAdiPart2(data);
       case TestCategory.B:
         return FaultSummaryCatBHelper.getDangerousFaultsCatB(data);
       case TestCategory.BE:
