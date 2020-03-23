@@ -12,16 +12,22 @@ export const START_TIMER = '[TestReportPage] Start Timer';
 export class TestReportViewDidEnter implements Action {
   readonly type = TEST_REPORT_VIEW_DID_ENTER;
 }
+
+// The aim of isUserGenerated in the actions below is so we know if we should track the event in analytics.
+// by default we don't as most of the time we programatically toggling the mode which we don't want to record
 export class ToggleRemoveFaultMode implements Action {
   readonly type = TOGGLE_REMOVE_FAULT_MODE;
+  constructor(public isUserGenerated: boolean = false) {}
 }
 
 export class ToggleSeriousFaultMode implements Action {
   readonly type = TOGGLE_SERIOUS_FAULT_MODE;
+  constructor(public isUserGenerated: boolean = false) {}
 }
 
 export class ToggleDangerousFaultMode implements Action {
   readonly type = TOGGLE_DANGEROUS_FAULT_MODE;
+  constructor(public isUserGenerated: boolean = false) {}
 }
 
 export class CalculateTestResult implements Action {

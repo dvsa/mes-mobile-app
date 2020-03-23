@@ -27,7 +27,7 @@ import {
   manoeuvreCompetencyLabels,
   manoeuvreTypeLabels,
 } from '../../shared/constants/competencies/catb-manoeuvres';
-import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
+import { AnalyticRecorded, AnalyticNotRecorded } from '../../providers/analytics/analytics.actions';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { legalRequirementsLabels, legalRequirementToggleValues }
@@ -103,6 +103,10 @@ export class TestReportAnalyticsEffects {
       ),
     )),
     concatMap(([action, tests]: [testReportActions.ToggleRemoveFaultMode, TestsModel]) => {
+      if (!action.isUserGenerated) {
+        return of(new AnalyticNotRecorded());
+      }
+
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.SELECT_REMOVE_MODE, tests),
@@ -122,6 +126,10 @@ export class TestReportAnalyticsEffects {
       ),
     )),
     concatMap(([action, tests]: [testReportActions.ToggleSeriousFaultMode, TestsModel]) => {
+      if (!action.isUserGenerated) {
+        return of(new AnalyticNotRecorded());
+      }
+
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.SELECT_SERIOUS_MODE, tests),
@@ -141,6 +149,9 @@ export class TestReportAnalyticsEffects {
       ),
     )),
     concatMap(([action, tests]: [testReportActions.ToggleDangerousFaultMode, TestsModel]) => {
+      if (!action.isUserGenerated) {
+        return of(new AnalyticNotRecorded());
+      }
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.SELECT_DANGEROUS_MODE, tests),
