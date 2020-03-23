@@ -7,6 +7,7 @@ import { TranslateModule, TranslateService, TranslateLoader } from '@ngx-transla
 import { createTranslateLoader } from '../../../../../app/app.module';
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import * as englishTranslations from '../../../../../assets/i18n/en.json';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 import { getMalformedVehicleChecks } from '../__mocks__/vehicle-checks-card.mock';
@@ -45,6 +46,44 @@ describe('VehicleChecksCardComponent', () => {
     translate = TestBed.get(TranslateService);
     translate.setDefaultLang('en');
   }));
+
+  describe('questionHasFault', () => {
+    const questionResult: QuestionResult = {
+      code: 'Test Code',
+      description: 'Test description',
+      outcome: 'P',
+    };
+
+    const questionResultFault: QuestionResult = {
+      code: 'Test Code',
+      description: 'Test description',
+      outcome: 'DF',
+    };
+
+    it('should return TRUE if the question has a fault', () => {
+      const result = component.questionHasFault(questionResultFault);
+      expect(result).toEqual(true);
+    });
+
+    it('should return FALSE if the question does NOT have a fault', () => {
+      const result = component.questionHasFault(questionResult);
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('isHomeTest', () => {
+    it('should return TRUE if it is a home test', () => {
+      component.category = TestCategory.F;
+      const result = component.isHomeTest();
+      expect(result).toEqual(true);
+    });
+
+    it('should return FALSE if it is NOT a home test', () => {
+      component.category = TestCategory.BE;
+      const result = component.isHomeTest();
+      expect(result).toEqual(false);
+    });
+  });
 
   describe('DOM', () => {
     describe('Vehicle check reporting', () => {

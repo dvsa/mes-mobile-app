@@ -16,12 +16,9 @@
           </ion-col>
           <ion-col col-3 no-padding></ion-col>
           <ion-col no-padding>
-            <div class="counter-label" [ngSwitch]="this.category">
-              <span *ngSwitchCase="'F'">{{question.code}} - {{ 'debrief.showMeTellMeQuestions.FGHK.' + question.code | translate }}</span>
-              <span *ngSwitchCase="'G'">{{question.code}} - {{ 'debrief.showMeTellMeQuestions.FGHK.' + question.code | translate }}</span>
-              <span *ngSwitchCase="'H'">{{question.code}} - {{ 'debrief.showMeTellMeQuestions.FGHK.' + question.code | translate }}</span>
-              <span *ngSwitchCase="'K'">{{question.code}} - {{ 'debrief.showMeTellMeQuestions.FGHK.' + question.code | translate }}</span>
-              <span *ngSwitchDefault>{{question.code}} - {{ 'debrief.showMeTellMeQuestions.' + this.category + '.' + question.code | translate }}</span>
+            <div class="counter-label">
+              <span *ngIf="isHomeTest()">{{question.code}} - {{ 'debrief.showMeTellMeQuestions.FGHK.' + question.code | translate }}</span>
+              <span *ngIf="!isHomeTest()">{{question.code}} - {{ 'debrief.showMeTellMeQuestions.' + this.category + '.' + question.code | translate }}</span>
             </div>
           </ion-col>
         </ion-row>
