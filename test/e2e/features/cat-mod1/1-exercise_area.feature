@@ -8,5 +8,4 @@ Feature: A Driving Examiner Starts a test for Modular 1
     And the candidate completes the declaration page
     And the candidate confirms their declaration
     Then I should see the "Declaration - Alisa Garza" page
-    Then I should see the "Alisa Garza" page
-    And I complete the waiting room to car page
+    And the candidate
