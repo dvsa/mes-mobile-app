@@ -30,18 +30,14 @@ import {
 } from '../../../modules/tests/tests.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
-  getRouteNumber,
   getCandidateDescription,
   getAdditionalInformation,
   getWeatherConditions,
   getIdentification,
-  getIndependentDriving,
 } from '../../../modules/tests/test-summary/common/test-summary.selector';
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import { map, withLatestFrom } from 'rxjs/operators';
 import {
-  RouteNumberChanged,
-  IndependentDrivingTypeChanged,
   IdentificationUsedChanged,
   CandidateDescriptionChanged,
   WeatherConditionsChanged,
@@ -71,7 +67,6 @@ import { WeatherConditionProvider } from '../../../providers/weather-conditions/
 import {
   WeatherConditions,
   Identification,
-  IndependentDriving,
   QuestionResult,
   ActivityCode,
   CategoryCode,
@@ -127,9 +122,6 @@ interface OfficePageState {
   isTestOutcomeSet$: Observable<boolean>;
   candidateName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
-  routeNumber$: Observable<number>;
-  displayRouteNumber$: Observable<boolean>;
-  displayIndependentDriving$: Observable<boolean>;
   displayCandidateDescription$: Observable<boolean>;
   displayIdentification$: Observable<boolean>;
   displayWeatherConditions$: Observable<boolean>;
@@ -141,7 +133,6 @@ interface OfficePageState {
   displayDangerousFault$: Observable<boolean>;
   displayVehicleChecks$: Observable<boolean>;
   identification$: Observable<Identification>;
-  independentDriving$: Observable<IndependentDriving>;
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
   etaFaults$: Observable<string>;
@@ -257,25 +248,6 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
-      routeNumber$: currentTest$.pipe(
-        select(getTestSummary),
-        select(getRouteNumber),
-      ),
-      displayRouteNumber$: currentTest$.pipe(
-        select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getRouteNumber))),
-        map(([outcome, route]) => this.outcomeBehaviourProvider.isVisible(outcome, 'routeNumber', route)),
-      ),
-      displayIndependentDriving$: currentTest$.pipe(
-        select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getIndependentDriving))),
-        map(([outcome, independent]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'independentDriving', independent)),
-      ),
       displayCandidateDescription$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
@@ -374,10 +346,6 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
         select(getTestSummary),
         select(getCandidateDescription),
       ),
-      independentDriving$: currentTest$.pipe(
-        select(getTestSummary),
-        select(getIndependentDriving),
-      ),
       identification$: currentTest$.pipe(
         select(getTestSummary),
         select(getIdentification),
@@ -414,7 +382,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
-        map(data => this.shouldDisplayDrivingFaultComments(data)),
+        map(data => this.shouldDisplayDrivingFaultComments(data as HomeTestData)),
       ),
       weatherConditions$: currentTest$.pipe(
         select(getTestSummary),
@@ -464,16 +432,8 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
     this.store$.dispatch(new IdentificationUsedChanged(identification));
   }
 
-  independentDrivingChanged(independentDriving: IndependentDriving): void {
-    this.store$.dispatch(new IndependentDrivingTypeChanged(independentDriving));
-  }
-
   weatherConditionsChanged(weatherConditions: WeatherConditions[]): void {
     this.store$.dispatch(new WeatherConditionsChanged(weatherConditions));
-  }
-
-  routeNumberChanged(routeNumber: number) {
-    this.store$.dispatch(new RouteNumberChanged(routeNumber));
   }
 
   candidateDescriptionChanged(candidateDescription: string) {
