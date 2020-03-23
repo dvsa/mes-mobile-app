@@ -10,3 +10,11 @@ Feature: Cat B+E Journal
     Given I am on the journal page as "mobexaminer2"
     When I view candidate details for "Mr Dillon Jennings"
     And I should see the "Business name" contains "Savvy"
+
+  Scenario: Examiner has a Cat B + E test with dimensions
+    Given I am on the journal page as "mobexaminer2"
+    When I view candidate details for "Mr Dixon Clayton"
+    And I should see the "Business name" contains "Imant"
+
+
+

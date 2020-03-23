@@ -191,7 +191,6 @@ Then('I continue the write up for {string}', (candidateName) => {
 const viewCandidateDetails = (candidateName) => {
   const buttonElement = getElement(by.xpath(`//h3[text()[normalize-space(.) = "${candidateName}"]]`));
   return clickElement(buttonElement);
-
 };
 
 const closeCandidateDetailsDialog = () => {
