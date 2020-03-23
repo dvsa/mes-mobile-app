@@ -62,21 +62,21 @@ export class ToolbarComponent {
   }
 
   toggleRemoveFaultMode(): void {
-    this.store$.dispatch(new ToggleRemoveFaultMode());
+    this.store$.dispatch(new ToggleRemoveFaultMode(true));
   }
 
   toggleSeriousMode(): void {
     if (this.isDangerousMode) {
       this.store$.dispatch(new ToggleDangerousFaultMode());
     }
-    this.store$.dispatch(new ToggleSeriousFaultMode());
+    this.store$.dispatch(new ToggleSeriousFaultMode(true));
   }
 
   toggleDangerousMode(): void {
     if (this.isSeriousMode) {
       this.store$.dispatch(new ToggleSeriousFaultMode());
     }
-    this.store$.dispatch(new ToggleDangerousFaultMode());
+    this.store$.dispatch(new ToggleDangerousFaultMode(true));
   }
 
 }

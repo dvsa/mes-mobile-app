@@ -40,7 +40,7 @@ import {
   manoeuvreCompetencyLabels,
   manoeuvreTypeLabels,
 } from '../../../shared/constants/competencies/catb-manoeuvres';
-import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
+import { AnalyticRecorded, AnalyticNotRecorded } from '../../../providers/analytics/analytics.actions';
 import {
   legalRequirementsLabels,
   legalRequirementToggleValues,
@@ -119,11 +119,11 @@ describe('Test Report Analytics Effects', () => {
   });
 
   describe('toggleRemoveFaultMode', () => {
-    it('should call logEvent for this competency', (done) => {
+    it('should call logEvent when the action is user generated', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
-      actions$.next(new testReportActions.ToggleRemoveFaultMode());
+      actions$.next(new testReportActions.ToggleRemoveFaultMode(true));
       // ASSERT
       effects.toggleRemoveFaultMode$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -135,11 +135,11 @@ describe('Test Report Analytics Effects', () => {
         done();
       });
     });
-    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+    it('should call logEvent when the action is user generated, prefixed with practice test', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testReportActions.ToggleRemoveFaultMode());
+      actions$.next(new testReportActions.ToggleRemoveFaultMode(true));
       // ASSERT
       effects.toggleRemoveFaultMode$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -151,14 +151,26 @@ describe('Test Report Analytics Effects', () => {
         done();
       });
     });
-  });
-
-  describe('toggleSeriousFaultMode', () => {
-    it('should call logEvent for this competency', (done) => {
+    it('should not call logEvent when the action is not user generated', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
-      actions$.next(new testReportActions.ToggleSeriousFaultMode());
+      actions$.next(new testReportActions.ToggleRemoveFaultMode());
+      // ASSERT
+      effects.toggleRemoveFaultMode$.subscribe((result) => {
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        done();
+      });
+    });
+  });
+
+  describe('toggleSeriousFaultMode', () => {
+    it('should call logEvent when action is user generated', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      // ACT
+      actions$.next(new testReportActions.ToggleSeriousFaultMode(true));
       // ASSERT
       effects.toggleSeriousFaultMode$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -170,11 +182,11 @@ describe('Test Report Analytics Effects', () => {
         done();
       });
     });
-    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+    it('should call logEvent when action is user generated, prefixed with practice test', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testReportActions.ToggleSeriousFaultMode());
+      actions$.next(new testReportActions.ToggleSeriousFaultMode(true));
       // ASSERT
       effects.toggleSeriousFaultMode$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -186,14 +198,26 @@ describe('Test Report Analytics Effects', () => {
         done();
       });
     });
-  });
-
-  describe('toggleDangerousFaultMode', () => {
-    it('should call logEvent for this competency', (done) => {
+    it('should not call logEvent when action is not user generated', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
-      actions$.next(new testReportActions.ToggleDangerousFaultMode());
+      actions$.next(new testReportActions.ToggleSeriousFaultMode());
+      // ASSERT
+      effects.toggleSeriousFaultMode$.subscribe((result) => {
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        done();
+      });
+    });
+  });
+
+  describe('toggleDangerousFaultMode', () => {
+    it('should call logEvent when action is user generated', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      // ACT
+      actions$.next(new testReportActions.ToggleDangerousFaultMode(true));
       // ASSERT
       effects.toggleDangerousFaultMode$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -205,11 +229,11 @@ describe('Test Report Analytics Effects', () => {
         done();
       });
     });
-    it('should call logEvent for this competency, prefixed with practice test', (done) => {
+    it('should call logEvent when action is user generated prefixed with practice test', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testReportActions.ToggleDangerousFaultMode());
+      actions$.next(new testReportActions.ToggleDangerousFaultMode(true));
       // ASSERT
       effects.toggleDangerousFaultMode$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -218,6 +242,18 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.SELECT_DANGEROUS_MODE}`,
         );
+        done();
+      });
+    });
+    it('should not call logEvent when action is not user generated', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
+      // ACT
+      actions$.next(new testReportActions.ToggleDangerousFaultMode());
+      // ASSERT
+      effects.toggleDangerousFaultMode$.subscribe((result) => {
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
         done();
       });
     });
