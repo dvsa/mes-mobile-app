@@ -267,6 +267,26 @@
         "E15": "Rear fog lights",
         "E16": "Dipped to main beam",
         "E17": "Brake lights"
+      },
+      "FGHK": {
+        "H1": "Direction indicators",
+        "H2": "Brake lights",
+        "H3": "Power assisted steering",
+        "H4": "Parking brake",
+        "H5": "Horn",
+        "H6": "Wash Windscreen",
+        "H7": "Rear fog lights",
+        "H8": "Dipped to main beam",
+        "H9": "Demist windows",
+        "H10": "Engine oil",
+        "H11": "Engine Coolant",
+        "H12": "Brake Fluid",
+        "H13": "Brakes",
+        "H14": "Windscreen washer reservoir",
+        "H15": "Tyre pressures",
+        "H16": "Mirrors secure",
+        "H17": "Headlights & tail lights",
+        "H18": "Amber Beacon"
       }
     },
     "competencies": {

@@ -267,6 +267,26 @@
         "E15": "Goleuadau niwl cefn",
         "E16": "Wedi'u dipio i'r brif olau",
         "E17": "Goleuadau brêciau"
+      },
+      "FGHK": {
+        "H1": "[CY] Direction indicators",
+        "H2": "[CY] Brake lights",
+        "H3": "[CY] Power assisted steering",
+        "H4": "[CY] Parking brake",
+        "H5": "[CY] Horn",
+        "H6": "[CY] Wash Windscreen",
+        "H7": "[CY] Rear fog lights",
+        "H8": "[CY] Dipped to main beam",
+        "H9": "[CY] Demist windows",
+        "H10": "[CY] Engine oil",
+        "H11": "[CY] Engine Coolant",
+        "H12": "[CY] Brake Fluid",
+        "H13": "[CY] Brakes",
+        "H14": "[CY] Windscreen washer reservoir",
+        "H15": "[CY] Tyre pressures",
+        "H16": "[CY] Mirrors secure",
+        "H17": "[CY] Headlights & tail lights",
+        "H18": "[CY] Amber Beacon"
       }
     },
     "competencies": {

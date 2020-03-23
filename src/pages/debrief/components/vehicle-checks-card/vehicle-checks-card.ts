@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CategoryCode, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
@@ -17,6 +18,16 @@ export class VehicleChecksCardComponent implements OnInit {
   constructor() { }
 
   questionHasFault = (result: QuestionResult): boolean => result.outcome !== CompetencyOutcome.P;
+
+  isHomeTest(): boolean {
+    switch (this.category) {
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K: return true;
+      default: return false;
+    }
+  }
 
   ngOnInit(): void {
     this.tellMeShowMeQuestions = this.tellMeShowMeQuestions.filter((result: QuestionResult) => {

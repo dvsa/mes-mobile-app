@@ -33,8 +33,7 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { TestOutcome } from '../../../shared/models/test-outcome';
-// TODO - Cat HOME - needs to use correct reducers
-import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { getVehicleChecks } from '../../../modules/tests/test-data/cat-home-test/test-data.cat-home.selector';
 import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
 
 interface DebriefPageState {
@@ -190,7 +189,6 @@ export class DebriefCatHomeTestPage extends BasePageComponent {
   ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
-
     }
   }
 
