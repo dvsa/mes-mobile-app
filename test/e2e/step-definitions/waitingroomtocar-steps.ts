@@ -53,6 +53,10 @@ When('I complete the waiting room to car page with automatic transmission', () =
   completeWaitingRoomPage(false, false, 'T1 - Brakes');
 });
 
+When('I complete the waiting room to car page with confirmed cat type', () => {
+  completeWaitingRoomPage(false, true, );
+});
+
 When('I fail the eye sight test', () => {
   eyeSightResult(false);
   const eyesightConfirmation = getElement(by.id('eyesight-failure-confirmation'));
@@ -75,6 +79,9 @@ const completeWaitingRoomPage = (questionResult, manualTransmission: boolean, te
     multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
   } else if (this.testCategory === 'a-mod1') {
     modCatConfirmation(UI_TEST_DATA.testData.a1);
+    const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
+    const transmissionRadio = getElement(by.id(transmissionSelector));
+    clickElement(transmissionRadio);
   } else {
     eyeSightResult(true);
     standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
@@ -141,6 +148,8 @@ const eyeSightResult = (result: boolean) => {
 const modCatConfirmation = (catType) => {
   openConfirmCatType();
   selectCatType(catType);
+  const submitDialog = getElement(by.xpath('//button[span[text() = "Confirm"]]'));
+  clickElement(submitDialog);
 };
 
 const openConfirmCatType = () => {
@@ -149,6 +158,7 @@ const openConfirmCatType = () => {
 };
 
 const selectCatType = (catType) => {
-  const element = getElement(by.xpath(`//text[@value="${catType}"]`));
+  const element = getElement(by.xpath(`//span[contains(@class, 'bike-code') and
+   normalize-space(text()) = '${catType}']`));
   clickElement(element);
 };

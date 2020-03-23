@@ -10,7 +10,7 @@ Feature: A Driving Examiner Completes a pass test for category a1
     And the candidate enters a new email address
     And I proceed to the car
     Then I should see the "Osborne Wolfe" page
-    And I complete the waiting room to car page
+    And I complete the waiting room to car page with confirmed cat type
     Then I should see the "Test report - Osborne Wolfe" page
     And I complete the test with controlled stop
     And I continue to debrief
