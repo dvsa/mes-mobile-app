@@ -288,13 +288,21 @@ When('I add the Uncouple and Recouple fault', () => {
 When('I enter recorded speed for Emergency Stop', () => {
   const speed = getElement(by.xpath('//speed-check[1]//input[1]'));
   expect(speed.isPresent()).to.eventually.be.true;
-  inputTextSendKeys(speed, '52');
+  speed.clear().then(() => {
+    inputTextSendKeys(speed, '52');
+  });
+  speed.getText().then((text) => {
+    console.log(text);
+  });
 });
 
 When('I enter recorded speed for Avoidance', () => {
   const speed = getElement(by.xpath('//speed-check[2]//input[1]'));
   expect(speed.isPresent()).to.eventually.be.true;
   inputTextSendKeys(speed, '52');
+  speed.getText().then((text) => {
+    console.log(text);
+  });
 });
 
 const endTest = () => {

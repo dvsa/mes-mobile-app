@@ -10,7 +10,7 @@ Feature: Driving Examiner Completes
     When the candidate requests to receive results by post
     And I proceed to the bike
     Then I should see the "Deanna Wolf" page
-    When I choose category "AM" test
+    When I choose category "A1" test
     And I complete the waiting room to car page
     Then I should see the "Test report - Deanna Wolf" page
     And I enter recorded speed for Emergency Stop
