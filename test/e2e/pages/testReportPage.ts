@@ -207,7 +207,7 @@ class DriverFaults extends Page {
 
 class ReversingDiagramModal extends Page {
   getReversingDiagramModalTitle() {
-    const selector = '//reverse-diagram-modal-cat-c//div[2]';
+    const selector = '//reverse-diagram-modal//div[2]';
     const element = this.getElementByXPath(selector);
     this.waitForPresenceOfElement(element, selector);
     return element;

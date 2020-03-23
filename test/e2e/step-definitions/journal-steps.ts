@@ -45,35 +45,6 @@ When('I start the test for {string}', (candidateName) => {
   });
 });
 
-// When('I rekey a test for {string}', async (candidateName) => {
-//   const buttonElement = JournalPage.getRekeyTestButtonFor(candidateName);
-//
-//   if (!await JournalPage.isButtonPresent(buttonElement)) {
-//     PageHelper.resetApp('mobexaminer1'); // temp hardcoded string for testing.
-//   }
-//
-//   JournalPage.clickRekeyTestButtonFor(candidateName);
-//
-//   // todo: kc added as part of an independent commit.  Left in to make
-//   // sure that the merge works correctly.
-//   // const buttonElement = TempPage.getAndAwaitElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
-//   // [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-//   // h3[text() = "${candidateName}"]]`));
-//   // TempPage.clickElement(buttonElement);
-// });
-//
-// When(/^I start the test (early|late) for \"(.+)\"$/, async (testTime: string, candidateName: string) => {
-//   if (testTime === 'early') {
-//     await JournalPage.startingExpiredOrEarlyTest(candidateName);
-//     await JournalPage.clickStartTestEarlyContinueButtonIfPresent();
-//   }
-//
-//   if (testTime === 'late') {
-//     await JournalPage.startingExpiredOrEarlyTest(candidateName);
-//     await JournalPage.clickRekeyStartTestButtonIfPresent();
-//   }
-// });
-
 When('I rekey a test for {string}', (candidateName) => {
   const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
 
@@ -116,7 +87,7 @@ When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidat
 });
 
 When('I rekey a late test for {string}', (candidateName) => {
-  JournalPage.startTestFor(candidateName)
+  JournalPage.startTestFor(candidateName);
 
   // If the rekey dialog is shown so just select start test normally
   const rekeyStartTestButton = JournalPage.getRekeyStartTestButton();
