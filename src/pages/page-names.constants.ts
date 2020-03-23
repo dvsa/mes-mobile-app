@@ -134,7 +134,7 @@ export const CAT_HOME_TEST = {
   WAITING_ROOM_PAGE: 'WaitingRoomCatHomeTestPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatHomeTestPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatHomeTestPage',
-  REKEY_REASON_PAGE: 'RekeyReasonCatDHomeTestPage',
+  REKEY_REASON_PAGE: 'RekeyReasonCatHomeTestPage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatHomeTestPage',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatHomeTestModal',
   VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatHomeTestPage',
