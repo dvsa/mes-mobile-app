@@ -51,6 +51,6 @@ When('I fail the eye sight test', () => {
   WaitingRoomToCarPage.clickEyesightFailureConfirmButton();
 });
 
-When('I complete the waiting room to car page with the following vehicle checks', function (table) {
+When('I complete the waiting room to car page with the following vehicle checks', (table) => {
   WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, table.raw()[1], true);
 });
