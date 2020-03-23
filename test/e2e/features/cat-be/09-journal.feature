@@ -14,6 +14,7 @@ Feature: Cat B+E Journal
   Scenario: Examiner has a Cat B + E test with dimensions
     Given I am on the journal page as "mobexaminer2"
     When I view candidate details for "Mr Dixon Clayton"
+    Then I should see the "Slot type" contains "Special Needs Extra Time"
     And I should see the "Business name" contains "Imant"
 
 
