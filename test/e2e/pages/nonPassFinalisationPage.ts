@@ -9,14 +9,16 @@ class NonPassFinalisationPage extends Page {
 
   // 2 getTestOutcomes - one is in debriefPage.ts.
   getTestOutcome() {
-    const element = this.getElementById('office-page-test-outcome');
-    this.waitForPresenceOfElement(element);
+    const selector = 'office-page-test-outcome';
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getActivityCodeSelector() {
-    const element = this.getElementById('activity-code-selector');
-    this.waitForPresenceOfElement(element);
+    const selector = 'activity-code-selector';
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -43,8 +45,9 @@ class NonPassFinalisationPage extends Page {
 
   // todo: kc also on debriefPage.
   getD255Yes() {
-    const element = this.getElementById('d255-yes');
-    this.waitForPresenceOfElement(element);
+    const selector = 'd255-yes';
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 

@@ -21,28 +21,30 @@ class SearchPage extends Page {
   }
 
   getTestOutcome() {
-    const element = this.getElementById('testOutcome');
-    this.waitForPresenceOfElement(element);
+    const selector = 'testOutcome'
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getTellMeQuestionCategory(cat) {
-    const element = this.getElementByXPath(
-      `//debrief-card//data-row-custom[1]/ion-row/ion-col[2]/span/span[@class="mes-data bold" and text() = "${cat}"]`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//debrief-card//data-row-custom[1]/ion-row/ion-col[2]/span/span[@class="mes-data bold" and text() = "${cat}"]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getTellMeQuestionText(categoryText) {
-    const element = this.getElementByXPath(
-      `//debrief-card//data-row-custom[1]/ion-row/ion-col[2]/span[@class="mes-data" and text() = "${categoryText}"]`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//debrief-card//data-row-custom[1]/ion-row/ion-col[2]/span[@class="mes-data" and text() = "${categoryText}"]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getDebriefSection() {
-    const element = this.getElementByXPath('//debrief-card');
-    this.waitForPresenceOfElement(element);
+    const selector = '//debrief-card';
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -52,9 +54,9 @@ class SearchPage extends Page {
   }
 
   getDataRow(row) {
-    const dataRow = this.getElementByXPath(
-      `//data-row/ion-row[ion-col/label[text() = '${row[0]}'] and ion-col/span[text() = '${row[1]}']]`);
-    this.waitForPresenceOfElement(dataRow);
+    const selector = `//data-row/ion-row[ion-col/label[text() = '${row[0]}'] and ion-col/span[text() = '${row[1]}']]`;
+    const dataRow = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(dataRow, selector);
     return dataRow;
   }
 

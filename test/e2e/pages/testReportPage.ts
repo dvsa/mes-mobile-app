@@ -71,14 +71,16 @@ class TestReportPage extends Page {
   }
 
   getSummaryCountField() {
-    const element = this.getElementById('summary-count');
-    this.waitForPresenceOfElement(element);
+    const selector = 'summary-count';
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getControlledStopTick() {
-    const element =  this.getElementByCss('.controlled-stop-tick.checked');
-    this.waitForPresenceOfElement(element);
+    const selector = '.controlled-stop-tick.checked';
+    const element =  this.getElementByCss(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -118,16 +120,18 @@ class TestReportPage extends Page {
   }
 
   getPracticeModeBanner() {
-    const element = this.getElementByClassName('practice-mode-top-banner');
-    this.waitForPresenceOfElement(element);
+    const selector = 'practice-mode-top-banner';
+    const element = this.getElementByClassName(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 }
 
 class ETA extends Page {
   getETAModalTitle() {
-    const element = this.getElementByClassName('modal-alert-header');
-    this.waitForPresenceOfElement(element);
+    const selector = 'modal-alert-header';
+    const element = this.getElementByClassName(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -158,15 +162,17 @@ class DriverFaults extends Page {
   }
 
   getSeriousFaultBadgeForVehicleChecks() {
-    const element = this.getElementByXPath('//vehicle-checks//serious-fault-badge//span');
-    this.waitForPresenceOfElement(element);
+    const selector = '//vehicle-checks//serious-fault-badge//span';
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getSeriousFaultBadge(competency) {
-    const element =  this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`
+    const element =  this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -175,31 +181,35 @@ class DriverFaults extends Page {
   }
 
   getDangerousFaultBadge(competency) {
-    const element = this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getCompetencyCountField(competency) {
-    const element = this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getDriverBadge(competency) {
-    const element = this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/driving-faults-badge`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/driving-faults-badge`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 }
 
 class ReversingDiagramModal extends Page {
   getReversingDiagramModalTitle() {
-    const element = this.getElementByXPath('//reverse-diagram-modal-cat-c//div[2]');
-    this.waitForPresenceOfElement(element);
+    const selector = '//reverse-diagram-modal-cat-c//div[2]';
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -215,14 +225,16 @@ class ReversingDiagramModal extends Page {
 class LegalRequirements extends Page {
 
   getLegalRequrementsPopup() {
-    const element = this.getElementByXPath('//div/legal-requirements-modal');
-    this.waitForPresenceOfElement(element);
+    const selector = '//div/legal-requirements-modal';
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getLegalRequirement(legalRequirement) {
-    const element = this.getElementByXPath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -273,8 +285,9 @@ class Competency extends Page {
   }
 
   getCompetencyButton(competency: string) {
-    const element = this.getElementByXPath(`//competency-button/div/span[text() = '${competency}']`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//competency-button/div/span[text() = '${competency}']`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 

@@ -148,7 +148,7 @@ When('I close the reversing diagram modal', () => {
 
 Then('I close the revresing diagram drop down', () => {
   TestReportPage.reverseDropDown();
-  TestReportPage.waitForPresenceOfElement(TestReportPage.competency.getCompetencyButton('Control'));
+  TestReportPage.competency.getCompetencyButton('Control');
 });
 
 When('I remove a driver fault for {string} with a tap', (competency: string) => {

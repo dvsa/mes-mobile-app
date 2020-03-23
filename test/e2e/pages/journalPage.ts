@@ -27,78 +27,88 @@ class JournalPage extends Page {
   }
 
   getSpecialNeedsIndicatorFor(candidateName) {
-    const element = this.getElementByXPath(`//indicators/div/img[@class = "exclamation-indicator"]
+    const selector = `//indicators/div/img[@class = "exclamation-indicator"]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`);
-    this.waitForPresenceOfElement(element);
+    h3[text() = "${candidateName}"]]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getWelshIndicatorFor(candidateName) {
-    const element = this.getElementByXPath(`//ion-grid/ion-row/ion-col/language/
+    const selector = `//ion-grid/ion-row/ion-col/language/
   div[@class = "welsh-language-indicator"][ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link
-    /div/button/span/h3[text() = "${candidateName}"]]`);
-    this.waitForPresenceOfElement(element);
+    /div/button/span/h3[text() = "${candidateName}"]]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getSlotLocator(description, code, time) {
-    const element = this.getElementByXPath(`//ion-row[ion-col/div/time/div/h2[text() = '${time}']]
-    [ion-col/h3[normalize-space(text()) = '${description}']][ion-col[h2[text() = '${code}']]]`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//ion-row[ion-col/div/time/div/h2[text() = '${time}']]
+    [ion-col/h3[normalize-space(text()) = '${description}']][ion-col[h2[text() = '${code}']]]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getTestResultElementFor(candidateName) {
-    const element = this.getElementByXPath(`//test-outcome//span[@class='outcome']/h2
+    const selector = `//test-outcome//span[@class='outcome']/h2
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`);
-    this.waitForPresenceOfElement(element);
+    h3[text() = "${candidateName}"]]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getTestCategoryElementFor(candidateName) {
-    const element = this.getElementByXPath(`//test-category/h2[ancestor::ion-row/ion-col/ion-grid/ion-row/
-    ion-col/candidate-link/div/button/span/h3[text() = "${candidateName}"]]`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//test-category/h2[ancestor::ion-row/ion-col/ion-grid/ion-row/
+    ion-col/candidate-link/div/button/span/h3[text() = "${candidateName}"]]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getVehicleLengthElementFor(candidateName) {
-    const element = this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'L: ']/following-sibling::span
+    const selector = `//vehicle-details/div/span/span[text()= 'L: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`);
-    this.waitForPresenceOfElement(element);
+      [text() = "${candidateName}"]]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getVehicleWidthElementFor(candidateName) {
-    const element = this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'W: ']/following-sibling::span
+    const selector = `//vehicle-details/div/span/span[text()= 'W: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`);
-    this.waitForPresenceOfElement(element);
+      [text() = "${candidateName}"]]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getVehicleHeightElementFor(candidateName) {
-    const element = this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'H: ']/following-sibling::span
+    const selector = `//vehicle-details/div/span/span[text()= 'H: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`);
-    this.waitForPresenceOfElement(element);
+      [text() = "${candidateName}"]]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getSeatElementFor(candidateName) {
-    const element = this.getElementByXPath(`//vehicle-details/div/span/span[text() = 'Seats: ']/following-sibling::span
+    const selector = `//vehicle-details/div/span/span[text() = 'Seats: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`);
-    this.waitForPresenceOfElement(element);
+      [text() = "${candidateName}"]]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getRefreshButton() {
-    const element = this.getElementByXPath('//button/span/span/span[text() = "Refresh"]');
-    this.waitForPresenceOfElement(element);
+    const selector = '//button/span/span/span[text() = "Refresh"]';
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -127,12 +137,13 @@ class JournalPage extends Page {
   }
 
   getStartTestButtonFor(candidateName, waitForElement : boolean = true) {
-    const element = this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
+    const selector = `//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`);
+    h3[text() = "${candidateName}"]]`;
+    const element = this.getElementByXPath(selector);
 
     if (waitForElement) {
-      this.waitForPresenceOfElement(element);
+      this.waitForPresenceOfElement(element, selector);
     }
 
     return element;
@@ -179,9 +190,10 @@ class JournalPage extends Page {
   }
 
   getDataRow(rowName, rowValue) {
-    const element = this.getElementByXPath(`//ion-col/label[text()= "${rowName}"]
-    [parent::ion-col/parent::ion-row//*[normalize-space(text()) = "${rowValue}"]]`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//ion-col/label[text()= "${rowName}"]
+    [parent::ion-col/parent::ion-row//*[normalize-space(text()) = "${rowValue}"]]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -197,8 +209,9 @@ class JournalPage extends Page {
   }
 
   getTimeDialog() {
+    const selector = `modal-alert-header`;
     const element = this.getElementByClassName(`modal-alert-header`);
-    this.waitForPresenceOfElement(element);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 

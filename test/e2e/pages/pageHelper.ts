@@ -33,8 +33,9 @@ class PageHelper extends Page {
   }
 
   getPassCodeField() {
-    const element = this.getElementByXPath('//XCUIElementTypeSecureTextField[@label="Passcode field"]');
-    this.waitForPresenceOfElement(element);
+    const selector = '//XCUIElementTypeSecureTextField[@label="Passcode field"]';
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 

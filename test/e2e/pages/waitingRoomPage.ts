@@ -6,8 +6,9 @@ class WaitingRoomPage extends Page {
   }
 
   getNewEmailInput() {
-    const element = this.getElementById('newEmailInput');
-    this.waitForPresenceOfElement(element);
+    const selector = 'newEmailInput';
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -53,14 +54,16 @@ class WaitingRoomPage extends Page {
   }
 
   getProvidedEmailRadioButton() {
-    const element = this.getElementById('providedEmail');
-    this.waitForPresenceOfElement(element);
+    const selector = 'providedEmail';
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getProvidedEmailValue() {
-    const element = this.getElementById('providedEmailInput');
-    this.waitForPresenceOfElement(element);
+    const selector = 'providedEmailInput';
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 }

@@ -35,8 +35,9 @@ class OfficePage extends Page {
   }
 
   getUploadRekeyMessage() {
-    const element = this.getElementByClassName('modal-alert-header');
-    this.waitForPresenceOfElement(element);
+    const selector = 'modal-alert-header';
+    const element = this.getElementByClassName(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -49,8 +50,9 @@ class OfficePage extends Page {
   }
 
   getPhysicalDescription() {
-    const element = this.getElementById('physical-description');
-    this.waitForPresenceOfElement(element);
+    const selector = 'physical-description';
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -60,8 +62,9 @@ class OfficePage extends Page {
   }
 
   getRouteField() {
-    const element = this.getElementById('route');
-    this.waitForPresenceOfElement(element);
+    const selector = 'route';
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -116,43 +119,49 @@ class OfficePage extends Page {
   }
 
   getDriverFault(faultCount, faultTest) {
-    const element = this.getElementByXPath(`//ion-row[@id = 'driving-fault-commentary-label']
+    const selector = `//ion-row[@id = 'driving-fault-commentary-label']
   [descendant::span[@class='count' and text() = '${faultCount}'] and descendant::label[@class='fault-label'
-  and text() = '${faultTest}']]`);
-    this.waitForPresenceOfElement(element);
+  and text() = '${faultTest}']]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getTestOutcomeField() {
-    const element = this.getElementByXPath('//div[@id="test-outcome-text"]/span');
-    this.waitForPresenceOfElement(element);
+    const selector = '//div[@id="test-outcome-text"]/span';
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getTellMeQuestionField() {
-    const element = this.getElementById('tell-me-question-text');
-    this.waitForPresenceOfElement(element);
+    const selector = 'tell-me-question-text';
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getCommentsValidationText(faultSeverity, faultLabel) {
-    const element = this.getElementByXPath(`//fault-comment-card[@faulttype='${faultSeverity}'
-  and //label[@class = 'fault-label' and text() = '${faultLabel}']]//div[@class='validation-text ng-invalid']`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//fault-comment-card[@faulttype='${faultSeverity}'
+  and //label[@class = 'fault-label' and text() = '${faultLabel}']]//div[@class='validation-text ng-invalid']`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getCommentsField(faultSeverity, faultLabel) {
-    const element = this.getElementByXPath(`//fault-comment-card[@faulttype='${faultSeverity}']
-  //ion-row[ion-col/label[text() = '${faultLabel}']]//textarea`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//fault-comment-card[@faulttype='${faultSeverity}']
+  //ion-row[ion-col/label[text() = '${faultLabel}']]//textarea`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getActivityCodeField(testCategory) {
-    const element = this.getElementByXPath(`//div[contains(@class, "office-cat-${testCategory}-page")]`
-      + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//div[contains(@class, "office-cat-${testCategory}-page")]`
+      + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 }

@@ -17,8 +17,9 @@ class WaitingRoomToCarPage extends Page {
   }
 
   getEyesightFailureConfirmation() {
-    const element = this.getElementById('eyesight-failure-confirmation');
-    this.waitForPresenceOfElement(element);
+    const selector = 'eyesight-failure-confirmation';
+    const element = this.getElementById(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -104,8 +105,9 @@ class WaitingRoomToCarPage extends Page {
   }
 
   getSelectQuestionsButton() {
-    const element = this.getElementByCss('input[value="Select questions"]');
-    this.waitForPresenceOfElement(element);
+    const selector = 'input[value="Select questions"]';
+    const element = this.getElementByCss(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 

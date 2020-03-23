@@ -17,8 +17,9 @@ class LoginPage extends Page {
   }
 
   getUsernameField() {
-    const element = this.getElementByXPath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]');
-    this.waitForPresenceOfElement(element);
+    const selector = '//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]';
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 

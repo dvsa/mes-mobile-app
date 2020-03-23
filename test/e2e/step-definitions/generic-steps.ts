@@ -160,7 +160,7 @@ Then('I should see the {string} page', (pageTitle) => {
   PageHelper.isCurrentPage(pageTitle);
 
   // Check that it is the last page title i.e. the displayed one
-  return expect(PageHelper.getDisplayedPageTitle().getText()).to.eventually.equal(pageTitle);
+  return expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`).to.eventually.equal(pageTitle);
 });
 
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {

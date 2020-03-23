@@ -9,9 +9,9 @@ class DashboardPage extends Page {
   }
 
   getEmployeeId(username) {
-    const element = this.getElementByXPath(
-      `//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 

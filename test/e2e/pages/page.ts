@@ -21,7 +21,8 @@ export default class Page {
    */
 // todo: check what type fieldElement is
   clickElement(fieldElement) {
-    browser.wait(ExpectedConditions.elementToBeClickable(fieldElement));
+    browser.wait(ExpectedConditions.elementToBeClickable(fieldElement),
+      0, `expected fieldElement ${fieldElement} to be clickable`);
     fieldElement.click().then((promise) => {
       return this.isReady(promise);
     });
@@ -29,25 +30,25 @@ export default class Page {
 
   clickElementById(elementId) {
     const element = this.getElementById(elementId);
-    this.waitForPresenceOfElement(element);
+    this.waitForPresenceOfElement(element, elementId);
     this.clickElement(element);
   }
 
   clickElementByXPath(xpath) {
     const element = this.getElementByXPath(xpath);
-    this.waitForPresenceOfElement(element);
+    this.waitForPresenceOfElement(element, xpath);
     this.clickElement(element);
   }
 
   clickElementByClassName(className) {
     const element = this.getElementByClassName(className);
-    this.waitForPresenceOfElement(element);
+    this.waitForPresenceOfElement(element, className);
     this.clickElement(element);
   }
 
   clickElementByCss(css) {
     const element = this.getElementByCss(css);
-    this.waitForPresenceOfElement(element);
+    this.waitForPresenceOfElement(element, css);
     this.clickElement(element);
   }
 
@@ -77,7 +78,9 @@ export default class Page {
     // There is a 200ms transition duration we have to account for
     browser.sleep(TEST_CONFIG.ACTION_WAIT);
     // Then wait for the page to become active again
-    browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
+    const className = 'click-block-active';
+    browser.wait(ExpectedConditions.stalenessOf(element(by.className(className))),
+      0, `Expected element ${className} to be stale`);
     // Then return the original promise
     return promise;
   }
@@ -101,9 +104,9 @@ export default class Page {
   }
 
   getPageTitle(pageTitle) {
-    const element = this.getElementByXPath(
-      `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
@@ -116,12 +119,21 @@ export default class Page {
 
   scrollToElement(element) {
     browser.executeScript('arguments[0].scrollIntoView(true);', element).then(() => {
-      expect(element.isPresent()).to.eventually.be.true;
+      expect(element.isPresent(), `Expected element ${element} to be present`).to.eventually.be.true;
     });
   }
 
-  waitForPresenceOfElement(element) {
-    browser.wait(ExpectedConditions.presenceOf(element));
+  getSelectorFromElement(element) {
+    console.log(`getSelectorFromElement: ${element}`);
+    browser.wait(element.getText().then((text) => {
+      console.log(`getSelectorFromElement() text: ${text}`);
+      return text;
+    }));
+  }
+
+  waitForPresenceOfElement(element, selector) {
+    browser.wait(ExpectedConditions.presenceOf(element),
+      0, `Expected element ${selector} to be present`);
   }
 
   /**
@@ -161,13 +173,13 @@ export default class Page {
 
   longPressElementByXPath(xpath) {
     const element = this.getElementByXPath(xpath);
-    this.waitForPresenceOfElement(element);
+    this.waitForPresenceOfElement(element, xpath);
     this.longPressButton(element);
   }
 
   longPressElementByClassName(className) {
     const element = this.getElementByClassName(className);
-    this.waitForPresenceOfElement(element);
+    this.waitForPresenceOfElement(element, className);
     this.longPressButton(element);
   }
 
@@ -183,22 +195,23 @@ export default class Page {
   }
 
   getElementByCssId(cssId) {
-    const element = this.getElementByCss(`#${cssId}`);
-    this.waitForPresenceOfElement(element);
+    const selector = `#${cssId}`;
+    const element = this.getElementByCss(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getCandidateNameElement(pageName, testCategory) {
-    const element = this.getElementByXPath(
-      `//div[contains(@class, '${this.getPageType(pageName, testCategory)}')]//h2[@id = 'candidate-name']`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//div[contains(@class, '${this.getPageType(pageName, testCategory)}')]//h2[@id = 'candidate-name']`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
   getCandidateDriveNumberElement(pageName, testCategory) {
-    const element = this.getElementByXPath(
-      `//div[contains(@class, '${this.getPageType(pageName, testCategory)}')]//h3[@id = 'candidate-driver-number']`);
-    this.waitForPresenceOfElement(element);
+    const selector = `//div[contains(@class, '${this.getPageType(pageName, testCategory)}')]//h3[@id = 'candidate-driver-number']`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
     return element;
   }
 
