@@ -123,12 +123,7 @@ export default class Page {
     });
   }
 
-  getSelectorFromElement(element) {
-    browser.wait(element.getText().then((text) => {
-      return text;
-    }));
-  }
-
+  // todo: kc how to keep default timeout
   waitForPresenceOfElement(element, selector) {
     browser.wait(ExpectedConditions.presenceOf(element),
       0, `Expected element ${selector} to be present`);

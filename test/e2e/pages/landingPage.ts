@@ -17,13 +17,28 @@ class LandingPage extends Page {
     return element;
   }
 
+  // todo: kc this should be called something better.
+  getAppElement() {
+    const selector = '//ion-app';
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
+    return element;
+  }
+
+  getStaffNumberField(staffNumber) {
+    const selector = `//span[@class="employee-id" and text()="${staffNumber}"]`;
+    const element = this.getElementByXPath(selector);
+    this.waitForPresenceOfElement(element, selector);
+    return element;
+  }
+
   /**
    * Checks whether the user is logged in.
    * @param staffNumber the staff number of the user we wish to be logged in
    */
   loggedInAs(staffNumber) {
-    browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
-    const staffNumberField = element(by.xpath(`//span[@class="employee-id" and text()="${staffNumber}"]`));
+    this.getAppElement();
+    const staffNumberField = this.getStaffNumberField(staffNumber);
     return staffNumberField.isPresent();
   }
 
