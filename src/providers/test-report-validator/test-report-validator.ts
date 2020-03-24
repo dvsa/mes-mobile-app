@@ -13,6 +13,7 @@ import { TestData } from '@dvsa/mes-test-schema/categories/common';
 import { TestData as CatAMod1TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { TestData as CatAMod2TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import {
+  hasManoeuvreBeenCompletedCatADIPart2,
   hasVehicleChecksBeenCompletedCatADI2,
 } from '../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.selector';
 import {
@@ -181,8 +182,7 @@ export class TestReportValidatorProvider {
     const angledStart: boolean = get(data, 'testRequirements.angledStart', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
     const downhillStart: boolean = get(data, 'testRequirements.downhillStart', false);
-    // TODO(MES-5031): implement as part of manoeuvres build
-    // const manoeuvre: boolean = hasManoeuvreBeenCompletedCatADIPart2(data.manoeuvres) || false;
+    const manoeuvre: boolean = hasManoeuvreBeenCompletedCatADIPart2(data.manoeuvres) || false;
     const vehicleChecks: boolean = hasVehicleChecksBeenCompletedCatADI2(data.vehicleChecks) || false;
     const eco: boolean = get(data, 'eco.completed', false);
 
@@ -192,8 +192,7 @@ export class TestReportValidatorProvider {
       angledStart &&
       uphillStart &&
       downhillStart &&
-      // TODO(MES-5031): implement as part of manoeuvres build
-      // manoeuvre &&
+      manoeuvre &&
       vehicleChecks &&
       eco
     );
@@ -207,8 +206,7 @@ export class TestReportValidatorProvider {
     !get(data, 'testRequirements.angledStart', false) && result.push(legalRequirementsLabels.angledStart);
     !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
     !get(data, 'testRequirements.downhillStart', false) && result.push(legalRequirementsLabels.downhillStart);
-    // TODO(MES-5031): implement as part of manoeuvres build
-    // !hasManoeuvreBeenCompletedCatADIPart2(data.manoeuvres) && result.push(legalRequirementsLabels.manoeuvre);
+    !hasManoeuvreBeenCompletedCatADIPart2(data.manoeuvres) && result.push(legalRequirementsLabels.manoeuvre);
     !hasVehicleChecksBeenCompletedCatADI2(data.vehicleChecks) && result.push(legalRequirementsLabels.vehicleChecks);
     !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
 

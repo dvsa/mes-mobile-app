@@ -6,11 +6,13 @@ import { IonicModule } from 'ionic-angular';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { TestReportComponentsModule } from '../../components/test-report-components.module';
+import { ManoeuvreCompetencyComponentAdiPart2 } from './manoeuvre-competency/manoeuvre-competency';
 
 @NgModule({
   declarations: [
     ManoeuvresComponent,
     ManoeuvresPopoverComponent,
+    ManoeuvreCompetencyComponentAdiPart2,
     VehicleCheckComponent,
   ],
   imports: [
@@ -22,6 +24,7 @@ import { TestReportComponentsModule } from '../../components/test-report-compone
   exports:[
     ManoeuvresComponent,
     ManoeuvresPopoverComponent,
+    ManoeuvreCompetencyComponentAdiPart2,
     VehicleCheckComponent,
   ],
 })

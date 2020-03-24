@@ -101,13 +101,6 @@ export class TestReportCatADIPart2Page extends BasePageComponent {
     this.displayOverlay = false;
   }
 
-  getCallback(): OverlayCallback {
-    return {
-      callbackMethod: () => {
-        this.toggleReportOverlay();
-      },
-    };
-  }
   ngOnInit(): void {
 
     const currentTest$ = this.store$.pipe(
@@ -147,7 +140,6 @@ export class TestReportCatADIPart2Page extends BasePageComponent {
       ),
     };
     this.setupSubscription();
-
   }
 
   ionViewDidEnter(): void {
@@ -158,6 +150,14 @@ export class TestReportCatADIPart2Page extends BasePageComponent {
       this.setupSubscription();
     }
     this.store$.dispatch(new TestReportViewDidEnter());
+  }
+
+  getCallback(): OverlayCallback {
+    return {
+      callbackMethod: () => {
+        this.toggleReportOverlay();
+      },
+    };
   }
 
   toggleReportOverlay(): void {

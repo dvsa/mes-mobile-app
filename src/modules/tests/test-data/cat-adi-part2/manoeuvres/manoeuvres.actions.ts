@@ -8,10 +8,10 @@ import {
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] [Cat ADI2] Record Manoeuvres Selection';
-export const RECORD_MANOEUVRES_DESELECTION = '[Manoeuvres] [Cat ADI2] Deselect Reverse Left Manoeuvre';
+export const RECORD_MANOEUVRES_DESELECTION = '[Manoeuvres] [Cat ADI2] Record Manoeuvre Deselection';
 export const ADD_MANOEUVRE_DRIVING_FAULT = '[Manoeuvres] [Cat ADI2] Add Manoeuvre Driving Fault';
 export const ADD_MANOEUVRE_SERIOUS_FAULT = '[Manoeuvres] [Cat ADI2] Add Manoeuvre Serious Fault';
-export const ADD_MANOEUVRE_DANGEROUS_FAULT = '[Manoeuvres] [Cat ADI2]Add Manoeuvre Dangerous Fault';
+export const ADD_MANOEUVRE_DANGEROUS_FAULT = '[Manoeuvres] [Cat ADI2] Add Manoeuvre Dangerous Fault';
 export const ADD_MANOEUVRE_COMMENT = '[Manoeuvres] [Cat ADI2] Add Manoeuvre Comment';
 export const REMOVE_MANOEUVRE_FAULT = '[Manoeuvres] [Cat ADI2] Remove Manoeuvre Fault';
 
@@ -55,7 +55,7 @@ export class AddManoeuvreComment implements Action {
 }
 
 export class RemoveManoeuvreFault implements Action {
-  constructor(public payload: ManoeuvrePayload) { }
+  constructor(public payload: ManoeuvrePayload, public index: number) { }
   readonly type = REMOVE_MANOEUVRE_FAULT;
 }
 

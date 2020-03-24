@@ -15,6 +15,7 @@ import { FaultCountAM1Helper } from './cat-a-mod1/fault-count.cat-a-mod1';
 import { FaultCountAM2Helper } from './cat-a-mod2/fault-count.cat-a-mod2';
 import { FaultCountHomeTestHelper } from './cat-home-test/fault-count.cat-home-test';
 import { FaultCountADIPart2Helper } from './cat-adi-part2/fault-count.cat-adi-part2';
+import { Manoeuvres } from '@dvsa/mes-test-schema/categories/ADI2/partial';
 
 // TODO: Remove category from helper functions as the name of the helper class already contains the category
 
@@ -110,10 +111,20 @@ export class FaultCountProvider {
     }
   }
 
-  public getManoeuvreFaultCount = (category: TestCategory, data: object, faultType: CompetencyOutcome): number => {
+  public getManoeuvreFaultCount = (
+    category: TestCategory,
+    data: object | Manoeuvres[],
+    faultType: CompetencyOutcome,
+  ): number => {
     switch (category) {
-      // TODO(ADI2): Replace with actual fault count helper
-      case TestCategory.ADI2: return sumManoeuvreFaults(data, faultType);
+      case TestCategory.ADI2:
+        if (!Array.isArray(data)) {
+          return 0;
+        }
+
+        return data.reduce((acc, manoeuvre) => {
+          return acc + sumManoeuvreFaults(manoeuvre, faultType);
+        }, 0);
       case TestCategory.B: return sumManoeuvreFaults(data, faultType);
       case TestCategory.BE: return sumManoeuvreFaults(data, faultType);
       case TestCategory.C1:

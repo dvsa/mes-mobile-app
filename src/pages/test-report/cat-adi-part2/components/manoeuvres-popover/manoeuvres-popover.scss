@@ -1,4 +1,16 @@
-manoeuvres-popover {
+manoeuvres-popover-adi-part2 {
+  .popover-title {
+    padding-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+
+    &:nth-of-type(2) {
+      border-top: 2px solid map-get($colors-gds, "gds-grey-2");;
+      padding-top: 20px;
+      margin-top: 10px;
+    }
+  }
+
 
   .gds-radio-button {
     & + label {
@@ -27,6 +39,7 @@ manoeuvres-popover {
   .popover-content {
     margin-left: 68px;
     border: 0 none map-get($colors, "mes-white");
+    position: relative;
   }
   .manoeuvre-competencies-container {
     margin-top: 40px;
