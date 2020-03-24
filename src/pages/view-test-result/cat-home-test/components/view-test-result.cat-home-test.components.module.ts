@@ -4,10 +4,12 @@ import { IonicModule } from 'ionic-angular';
 import { DebriefCardComponent } from './debrief-card/debrief-card';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { ViewTestResultComponentsModule } from '../../components/view-test-result.components.module';
+import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
 
 @NgModule({
   declarations: [
     DebriefCardComponent,
+    VehicleDetailsCardComponent,
   ],
   imports: [
     CommonModule,
@@ -17,6 +19,7 @@ import { ViewTestResultComponentsModule } from '../../components/view-test-resul
   ],
   exports: [
     DebriefCardComponent,
+    VehicleDetailsCardComponent,
   ],
 })
 export class ViewTestResultCatHomeTestComponentsModule {}
