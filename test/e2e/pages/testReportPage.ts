@@ -29,7 +29,7 @@ class TestReportPage extends Page {
   }
 
   completeManouveure(testCategory) {
-    if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1') {
+    if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1' || testCategory === 'ce') {
       this.longPressElementByXPath('//competency-button[contains(@class, "reverse-left-tick")]');
     } else {
       this.clickManoeuvresButton();
@@ -102,11 +102,6 @@ class TestReportPage extends Page {
     this.clickElementByXPath('//button/span[text() = "Terminate test"]');
   }
 
-  endAndTerminateTest() {
-    this.clickEndTestButton();
-    this.clickTerminateTestButton();
-  }
-
   clickReturnToTestButton() {
     this.clickElementByXPath('//div/legal-requirements-modal//modal-return-button//span');
   }
@@ -170,7 +165,7 @@ class DriverFaults extends Page {
 
   getSeriousFaultBadge(competency) {
     const selector = `//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`
+  and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`;
     const element =  this.getElementByXPath(selector);
     this.waitForPresenceOfElement(element, selector);
     return element;

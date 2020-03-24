@@ -124,9 +124,7 @@ export default class Page {
   }
 
   getSelectorFromElement(element) {
-    console.log(`getSelectorFromElement: ${element}`);
     browser.wait(element.getText().then((text) => {
-      console.log(`getSelectorFromElement() text: ${text}`);
       return text;
     }));
   }

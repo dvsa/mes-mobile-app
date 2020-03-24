@@ -37,7 +37,8 @@ When('I continue to debrief', () => {
 });
 
 When('I end and terminate the test', () => {
-  TestReportPage.endAndTerminateTest();
+  TestReportPage.clickEndTestButton();
+  TestReportPage.clickTerminateTestButton();
 });
 
 When('I complete the test', () => {
@@ -193,7 +194,8 @@ Then('the controlled stop requirement is ticked', () => {
 
 Then('the driver fault count is {string}', (driverFaultCount) => {
   const summaryCountField = TestReportPage.getSummaryCountField();
-  return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
+  expect(summaryCountField.getText(), `Expected driver fault count to equal ${driverFaultCount}`)
+    .to.eventually.equal(driverFaultCount);
 });
 
 Then('a serious fault is present along the driver fault count of {string}', (driverFaultCount) => {

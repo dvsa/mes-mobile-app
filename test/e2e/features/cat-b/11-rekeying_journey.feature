@@ -3,7 +3,7 @@ Feature: A Driving Examiner Rekeys Category B tests
 
    Scenario: User can rekey a test pass for the previous day
       Given I am on the journal page as "mobexaminer1"
-      When I navigate to previous day
+      When I navigate to 1 day previously
       And I rekey a test for "Miss Doris Pearson"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
