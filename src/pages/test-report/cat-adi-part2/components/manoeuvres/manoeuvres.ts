@@ -1,12 +1,11 @@
-// TO-DO ADI Part2: implement correct category
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
-// TO-DO ADI Part2: implement correct reducer
-import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
-// TO-DO ADI Part2: implement correct selector
-import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
+import {
+  getManoeuvresADI2,
+} from '../../../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { Subscription, Observable } from 'rxjs';
@@ -16,7 +15,7 @@ import { FaultCountProvider } from '../../../../../providers/fault-count/fault-c
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
-  selector: 'manoeuvres',
+  selector: 'manoeuvres-adi-part2',
   templateUrl: 'manoeuvres.html',
 })
 export class ManoeuvresComponent implements OnInit, OnDestroy {
@@ -36,8 +35,7 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   displayPopover: boolean;
-  // TO-DO ADI Part2: Implement correct category
-  manoeuvres$: Observable<CatBUniqueTypes.Manoeuvres>;
+  manoeuvres$: Observable<CatADI2UniqueTypes.Manoeuvres[]>;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -51,17 +49,16 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
       select(getTests),
       select(getCurrentTest),
       select(getTestData),
-      select(getManoeuvres),
+      select(getManoeuvresADI2),
     );
 
-    // TO-DO ADI Part2: implement correct categories
-    this.subscription = this.manoeuvres$.subscribe((manoeuvres: CatBUniqueTypes.Manoeuvres) => {
+    this.subscription = this.manoeuvres$.subscribe((manoeuvres: CatADI2UniqueTypes.Manoeuvres[]) => {
       this.drivingFaults =
-        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.B, manoeuvres, CompetencyOutcome.DF);
+        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.ADI2, manoeuvres, CompetencyOutcome.DF);
       this.hasSeriousFault =
-        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.B, manoeuvres, CompetencyOutcome.S) > 0;
+        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.ADI2, manoeuvres, CompetencyOutcome.S) > 0;
       this.hasDangerousFault =
-        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.B, manoeuvres, CompetencyOutcome.D) > 0;
+        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.ADI2, manoeuvres, CompetencyOutcome.D) > 0;
     });
   }
 

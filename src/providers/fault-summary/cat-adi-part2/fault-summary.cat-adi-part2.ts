@@ -9,7 +9,7 @@ import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 // import {
 //   manoeuvreCompetencyLabels as manoeuvreCompetencyLabelsCatAdiPart2,
 //   manoeuvreTypeLabels as manoeuvreTypeLabelsCatAdiPart2,
-// } from '../../../shared/constants/competencies/catb-manoeuvres';
+// } from '../../../shared/constants/competencies/catadi2-manoeuvres';
 import { getCompetencyFaults/*, getCompetencyComment*/ } from '../../../shared/helpers/get-competency-faults';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 

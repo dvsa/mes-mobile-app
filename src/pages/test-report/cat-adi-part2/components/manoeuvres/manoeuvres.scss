@@ -1,4 +1,4 @@
-manoeuvres {
+manoeuvres-adi-part2 {
 
   button {
     width: 254px;
@@ -117,7 +117,7 @@ manoeuvres {
 
   .popover {
     background-color: map-get($colors, "mes-light-grey");
-    height: 236px;
+    height: 600px;
     width: calc(100% - 12px);
     left: 6px;
     margin-top: 9px;

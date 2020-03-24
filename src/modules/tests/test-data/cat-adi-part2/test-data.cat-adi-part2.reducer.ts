@@ -24,6 +24,7 @@ export const initialState: CatADI2UniqueTypes.TestData = {
     tellMeQuestions: [],
   },
   controlledStop: {},
+  manoeuvres: [{}, {}],
 };
 
 export function testDataCatADI2Reducer(

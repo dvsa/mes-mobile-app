@@ -14,8 +14,18 @@ export const getDrivingFaultCount = (
 export const getManoeuvresADI2 = (data: CatADI2UniqueTypes.TestData) : CatADI2UniqueTypes.Manoeuvres[] =>
   data.manoeuvres;
 
-export const hasManoeuvreBeenCompletedCatADIPart2 = (manoeuvres: CatADI2UniqueTypes.Manoeuvres[]) =>
-(manoeuvres.length > 0);
+export const hasManoeuvreBeenCompletedCatADIPart2 = (manoeuvres: CatADI2UniqueTypes.Manoeuvres[]) => {
+  if (manoeuvres.length < 2) return false;
+
+  return manoeuvres.every((manoeuvre) => {
+    return (
+      get(manoeuvre, 'forwardPark.selected') ||
+      get(manoeuvre, 'reverseParkCarpark.selected') ||
+      get(manoeuvre, 'reverseParkRoad.selected') ||
+      get(manoeuvre, 'reverseRight.selected')
+    );
+  });
+};
 
 export const hasEyesightTestBeenCompleted = (data: CatADI2UniqueTypes.TestData) => data.eyesightTest.complete;
 
