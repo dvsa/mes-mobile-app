@@ -362,7 +362,8 @@
       "positioningNormalRiding": "Positioning - Normal riding",
       "bends": "Bends",
       "safetyQuestions": "Safety Questions",
-      "clearanceOrObstructions" : "Clearance/obstructions"
+      "clearanceOrObstructions" : "Clearance/obstructions",
+      "highwayCodeSafety": "Highway Code / Safety"
     },
     "dangerousFault": "Dangerous fault",
     "dangerousFaultsCardDescription": "dangerous faults",
