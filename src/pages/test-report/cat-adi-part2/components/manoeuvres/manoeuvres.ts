@@ -13,6 +13,7 @@ import { CompetencyOutcome } from '../../../../../shared/models/competency-outco
 import { OverlayCallback } from '../../../test-report.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { Manoeuvres } from '@dvsa/mes-test-schema/categories/ADI2/partial';
 
 @Component({
   selector: 'manoeuvres-adi-part2',
@@ -54,11 +55,17 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
 
     this.subscription = this.manoeuvres$.subscribe((manoeuvres: CatADI2UniqueTypes.Manoeuvres[]) => {
       this.drivingFaults =
-        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.ADI2, manoeuvres, CompetencyOutcome.DF);
+        this.faultCountProvider.getManoeuvreFaultCount<Manoeuvres[]>(
+          TestCategory.ADI2, manoeuvres, CompetencyOutcome.DF,
+        );
       this.hasSeriousFault =
-        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.ADI2, manoeuvres, CompetencyOutcome.S) > 0;
+        this.faultCountProvider.getManoeuvreFaultCount<Manoeuvres[]>(
+          TestCategory.ADI2, manoeuvres, CompetencyOutcome.S,
+        ) > 0;
       this.hasDangerousFault =
-        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.ADI2, manoeuvres, CompetencyOutcome.D) > 0;
+        this.faultCountProvider.getManoeuvreFaultCount<Manoeuvres[]>(
+          TestCategory.ADI2, manoeuvres, CompetencyOutcome.D,
+        ) > 0;
     });
   }
 

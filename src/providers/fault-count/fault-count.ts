@@ -15,7 +15,6 @@ import { FaultCountAM1Helper } from './cat-a-mod1/fault-count.cat-a-mod1';
 import { FaultCountAM2Helper } from './cat-a-mod2/fault-count.cat-a-mod2';
 import { FaultCountHomeTestHelper } from './cat-home-test/fault-count.cat-home-test';
 import { FaultCountADIPart2Helper } from './cat-adi-part2/fault-count.cat-adi-part2';
-import { Manoeuvres } from '@dvsa/mes-test-schema/categories/ADI2/partial';
 
 // TODO: Remove category from helper functions as the name of the helper class already contains the category
 
@@ -111,9 +110,9 @@ export class FaultCountProvider {
     }
   }
 
-  public getManoeuvreFaultCount = (
+  public getManoeuvreFaultCount = <T>(
     category: TestCategory,
-    data: object | Manoeuvres[],
+    data: T,
     faultType: CompetencyOutcome,
   ): number => {
     switch (category) {
