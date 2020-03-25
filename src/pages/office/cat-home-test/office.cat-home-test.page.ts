@@ -115,6 +115,7 @@ import {
 import {
   HighwayCodeSafetyAddComment,
 } from '../../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
+import { getTestData } from '../../../modules/tests/test-data/cat-home-test/test-data.cat-f.reducer';
 
 interface OfficePageState {
   testCategory$: Observable<CategoryCode>;
@@ -287,7 +288,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displayEco$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+          map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
           select(getEco))),
         map(([outcome, eco]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'eco', eco)),
@@ -295,7 +296,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displayEta$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+          map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
           select(getETA))),
         map(([outcome, eta]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'eta', eta)),
@@ -303,7 +304,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displayDrivingFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+          map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         )),
         map(([outcome, data] : [ActivityCode , HomeTestData]) =>
           this.outcomeBehaviourProvider.isVisible(
@@ -315,7 +316,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displaySeriousFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+          map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         )),
         map(([outcome, data]) =>
           this.outcomeBehaviourProvider.isVisible(
@@ -327,7 +328,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displayDangerousFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+          map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         )),
         map(([outcome, data]) =>
           this.outcomeBehaviourProvider.isVisible(
@@ -339,7 +340,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displayVehicleChecks$: currentTest$.pipe(
           select(getTestOutcome),
           withLatestFrom(currentTest$.pipe(
-            map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+            map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
           )),
           map(([outcome, data]) =>
             this.outcomeBehaviourProvider.isVisible(outcome,
@@ -359,33 +360,32 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
         select(getAdditionalInformation),
       ),
       etaFaults$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         select(getETA),
         select(getETAFaultText),
       ),
       ecoFaults$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         select(getEco),
         select(getEcoFaultText),
       ),
       dangerousFaults$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
         map(data => this.faultSummaryProvider.getDangerousFaultsList(data, this.testCategory)),
       ),
       seriousFaults$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+       select(getTestData),
         map(data => this.faultSummaryProvider.getSeriousFaultsList(data, this.testCategory)),
       ),
       drivingFaults$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        select(getTestData),
         map(data => this.faultSummaryProvider.getDrivingFaultsList(data, this.testCategory)),
       ),
       drivingFaultCount$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        select(getTestData),
         map(data => this.faultCountProvider.getDrivingFaultSumCount(this.testCategory, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        select(getTestData),
         map(data => this.shouldDisplayDrivingFaultComments(data as HomeTestData)),
       ),
       weatherConditions$: currentTest$.pipe(
@@ -393,7 +393,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
         select(getWeatherConditions),
       ),
       vehicleChecks$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         select(getVehicleChecks),
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
