@@ -1,16 +1,15 @@
-import { get } from 'lodash';
-import { EyesightTest, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { get, forOwn, transform, endsWith } from 'lodash';
+import { EyesightTest, QuestionResult, Manoeuvre } from '@dvsa/mes-test-schema/categories/common';
 import { CommentSource, CompetencyIdentifiers, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { CompetencyDisplayName } from '../../../shared/models/competency-display-name';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
-// TODO(MES-5031): uncomment as part of manoeuvres build
-// import { ManoeuvreTypes } from '../../../modules/tests/test-data/test-data.constants';
-// import {
-//   manoeuvreCompetencyLabels as manoeuvreCompetencyLabelsCatAdiPart2,
-//   manoeuvreTypeLabels as manoeuvreTypeLabelsCatAdiPart2,
-// } from '../../../shared/constants/competencies/catadi2-manoeuvres';
-import { getCompetencyFaults/*, getCompetencyComment*/ } from '../../../shared/helpers/get-competency-faults';
+import { ManoeuvreTypes } from '../../../modules/tests/test-data/test-data.constants';
+import {
+  manoeuvreCompetencyLabels as manoeuvreCompetencyLabelsCatAdiPart2,
+  manoeuvreTypeLabels as manoeuvreTypeLabelsCatAdiPart2,
+} from '../../../shared/constants/competencies/catadi2-manoeuvres';
+import { getCompetencyFaults, getCompetencyComment } from '../../../shared/helpers/get-competency-faults';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 
 export class FaultSummaryCatAdiPart2Helper {
@@ -75,22 +74,21 @@ export class FaultSummaryCatAdiPart2Helper {
     return returnCompetencies;
   }
 
-  // TODO(MES-5031): implement as part of manoeuvres build
-  // private static createManoeuvreFaultCatAdiPart2(
-  //   key: string,
-  //   type: ManoeuvreTypes,
-  //   competencyComment: string,
-  // ): FaultSummary {
-  //   const manoeuvreFaultSummary: FaultSummary = {
-  //     comment: competencyComment || '',
-  //     competencyIdentifier: `${type}${manoeuvreCompetencyLabelsCatAdiPart2[key]}`,
-  //     competencyDisplayName:
-  //       `${manoeuvreTypeLabelsCatAdiPart2[type]} - ${manoeuvreCompetencyLabelsCatAdiPart2[key]}`,
-  //     source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabelsCatAdiPart2[key]}`,
-  //     faultCount: 1,
-  //   };
-  //   return manoeuvreFaultSummary;
-  // }
+  private static createManoeuvreFaultCatAdiPart2(
+    key: string,
+    type: ManoeuvreTypes,
+    competencyComment: string,
+  ): FaultSummary {
+    const manoeuvreFaultSummary: FaultSummary = {
+      comment: competencyComment || '',
+      competencyIdentifier: `${type}${manoeuvreCompetencyLabelsCatAdiPart2[key]}`,
+      competencyDisplayName:
+        `${manoeuvreTypeLabelsCatAdiPart2[type]} - ${manoeuvreCompetencyLabelsCatAdiPart2[key]}`,
+      source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabelsCatAdiPart2[key]}`,
+      faultCount: 1,
+    };
+    return manoeuvreFaultSummary;
+  }
 
   private static getVehicleCheckDrivingFaultsCatAdiPart2(
     vehicleChecks: CatADI2UniqueTypes.VehicleChecks,
@@ -149,30 +147,37 @@ export class FaultSummaryCatAdiPart2Helper {
     return result;
   }
 
-  // TODO(MES-5031): implement as part of manoeuvres build
   private static getManoeuvreFaultsCatAdiPart2(
     manoeuvres: CatADI2UniqueTypes.Manoeuvres[],
     faultType: CompetencyOutcome,
   ): FaultSummary[] {
-    // const faultsEncountered: FaultSummary[] = [];
+    const faultsEncountered: FaultSummary[] = [];
 
-    // TODO: Replace any with Manoeuvres and change the transform function
-    // forOwn(manoeuvres, (manoeuvre: any, type: ManoeuvreTypes) => {
-    //   const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
+    manoeuvres.forEach((manoeuvre) => {
+      forOwn(manoeuvre, (manoeuvre: Manoeuvre, type: ManoeuvreTypes) => {
+        let faults = [];
 
-    //     if (endsWith(key, CompetencyIdentifiers.FAULT_SUFFIX) && value === faultType) {
+        if (!manoeuvre.selected) {
+          faults = [];
+        } else {
+          faults = transform<Manoeuvre, FaultSummary>(manoeuvre as any, (result, value, key: string) => {
 
-    //       const competencyComment = getCompetencyComment(
-    //         key,
-    //         manoeuvre.controlFaultComments,
-    //         manoeuvre.observationFaultComments);
+            if (endsWith(key, CompetencyIdentifiers.FAULT_SUFFIX) && value === faultType) {
 
-    //       result.push(this.createManoeuvreFaultCatAdiPart2(key, type, competencyComment));
-    //     }
-    //   }, []);
-    //   faultsEncountered.push(...faults);
-    // });
-    // return faultsEncountered;
-    return [];
+              const competencyComment = getCompetencyComment(
+                key,
+                manoeuvre.controlFaultComments,
+                manoeuvre.observationFaultComments);
+
+              result.push(this.createManoeuvreFaultCatAdiPart2(key, type, competencyComment));
+            }
+          }, []);
+        }
+
+        faultsEncountered.push(...faults);
+      });
+    });
+
+    return faultsEncountered;
   }
 }
