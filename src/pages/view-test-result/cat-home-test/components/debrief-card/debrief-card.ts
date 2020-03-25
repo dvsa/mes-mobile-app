@@ -7,8 +7,9 @@ import {
   ViewTestResultLabels,
   TestRequirementsLabels,
 } from '../../../components/data-row-with-list/data-list-with-row.model';
-// TODO - Cat HOME, change to the correct labels
-import { manoeuvreTypeLabels } from '../../../../../shared/constants/competencies/catbe-manoeuvres';
+import {
+  manoeuvreTypeLabelsCatHomeTest,
+} from '../../../../../shared/constants/competencies/cathometest-manoeuvres';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { FaultSummaryProvider } from '../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
@@ -72,7 +73,7 @@ export class DebriefCardComponent {
 
   public getManoeuvre(): string {
     const isReverseLeftSelected = get(this.data, 'manoeuvres.reverseLeft.selected', false);
-    return isReverseLeftSelected ? manoeuvreTypeLabels.reverseLeft : 'None' ;
+    return isReverseLeftSelected ? manoeuvreTypeLabelsCatHomeTest.reverseLeft : 'None' ;
   }
 
   public getEco(): DataRowListItem[] {
