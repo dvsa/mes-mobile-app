@@ -155,4 +155,5 @@ export const CAT_ADI_PART2 = {
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatADIPart2Page',
   VEHICLE_CHECKS_MODAL: 'VehicleChecksCatADIPart2Modal',
   VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatADIPart2Page',
+  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatADIPart2Page',
 };

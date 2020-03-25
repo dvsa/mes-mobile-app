@@ -218,15 +218,15 @@ describe('DebriefCatADIPart2Page', () => {
       component.endDebrief();
       expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.PASS_FINALISATION_PAGE);
     });
-    it('should navigate to BackToOfficePage when outcome = fail', () => {
+    it('should navigate to PostDebriefHoldingPage when outcome = fail', () => {
       component.outcome = TestOutcome.FAIL;
       component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.POST_DEBRIEF_HOLDING_PAGE);
     });
-    it('should navigate to the BackToOfficePage when outcomes = terminated', () => {
+    it('should navigate to the PostDebriefHoldingPage when outcomes = terminated', () => {
       component.outcome = 'Terminated';
       component.endDebrief();
-      expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE);
+      expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.POST_DEBRIEF_HOLDING_PAGE);
     });
   });
 
