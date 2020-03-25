@@ -2,6 +2,7 @@ import {
   CatHomeTestData,
   getManoeuvres,
   getVehicleChecks,
+  hasManoeuvreBeenCompletedCatHomeTest,
   hasVehicleChecksBeenCompletedCatHomeTest,
 } from '../test-data.cat-home.selector';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
@@ -57,6 +58,27 @@ describe('TestDataSelectors', () => {
     it('should retrieve the manoeuvres data when requested', () => {
       const result = getManoeuvres(state);
       expect(result).toEqual(state.manoeuvres);
+    });
+  });
+
+  describe('hasManoeuvreBeenCompleted', () => {
+    it('should return true when no manoeuvres are present', () => {
+      const state: CatHomeTestData = {};
+      expect(hasManoeuvreBeenCompletedCatHomeTest(state)).toEqual(undefined);
+    });
+    it('should return false when no manoeuvres have been completed', () => {
+      const state: CatHomeTestData = {
+        manoeuvres: {},
+      };
+      expect(hasManoeuvreBeenCompletedCatHomeTest(state)).toBeFalsy();
+    });
+    it('should return true when a manoeuvre has been completed', () => {
+      const state: CatHomeTestData = {
+        manoeuvres: {
+          reverseLeft: { selected: true },
+        },
+      };
+      expect(hasManoeuvreBeenCompletedCatHomeTest(state)).toEqual(true);
     });
   });
 

@@ -42,8 +42,9 @@ import { getTestCategory } from '../../../modules/tests/category/category.reduce
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-home/candidate/candidate.cat-home.reducer';
 import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
-// TODO Implement Home Test selector
-import { hasManoeuvreBeenCompletedCatC } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
+import {
+  hasManoeuvreBeenCompletedCatHomeTest,
+} from '../../../modules/tests/test-data/cat-home-test/test-data.cat-home.selector';
 import {
   getTestRequirementsCatHome,
 } from '../../../modules/tests/test-data/cat-home-test/test-requirements/test-requirements.cat-home.reducer';
@@ -149,16 +150,16 @@ export class TestReportCatHomeTestPage extends BasePageComponent {
       ),
       manoeuvres$: currentTest$.pipe(
         withLatestFrom(category$),
-        map(([data , category])  => this.testDataByCategory.getTestDataByCategoryCode(category)(data)),
-        select(hasManoeuvreBeenCompletedCatC),
+        map(([data , category]) => this.testDataByCategory.getTestDataByCategoryCode(category)(data)),
+        select(hasManoeuvreBeenCompletedCatHomeTest),
       ),
       testData$: currentTest$.pipe(
         withLatestFrom(category$),
-        map(([data , category])  => this.testDataByCategory.getTestDataByCategoryCode(category)(data)),
+        map(([data , category]) => this.testDataByCategory.getTestDataByCategoryCode(category)(data)),
       ),
       testRequirements$: currentTest$.pipe(
         withLatestFrom(category$),
-        map(([data , category])  => this.testDataByCategory.getTestDataByCategoryCode(category)(data)),
+        map(([data , category]) => this.testDataByCategory.getTestDataByCategoryCode(category)(data)),
         select(getTestRequirementsCatHome),
       ),
       testCategory$: currentTest$.pipe(
