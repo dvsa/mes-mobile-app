@@ -186,7 +186,7 @@ export class DebriefCatADIPart2Page extends BasePageComponent {
       this.navController.push(CAT_ADI_PART2.PASS_FINALISATION_PAGE);
       return;
     }
-    this.navController.push(CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE).then(() => {
+    this.navController.push(CAT_ADI_PART2.POST_DEBRIEF_HOLDING_PAGE).then(() => {
       const testReportPage = this.navController.getViews().find(view => view.id === CAT_ADI_PART2.TEST_REPORT_PAGE);
       if (testReportPage) {
         this.navController.removeView(testReportPage);
