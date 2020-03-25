@@ -76,16 +76,16 @@ import {
 } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-// TODO - Cat Home use correct actions
 import {
   AddShowMeTellMeComment,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
-import { AddManoeuvreComment } from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+} from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.action';
+import {
+  AddManoeuvreComment,
+} from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-// TODO - Cat Home , use correct behaviour map
-import { behaviourMap } from '../office-behaviour-map.cat-be';
+import { behaviourMap } from '../office-behaviour-map.cat-home-test';
 import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
@@ -99,18 +99,23 @@ import {
 } from '../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
-// TODO - CAT Home - Use correct selector
 import {
   vehicleChecksExist,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
-// TODO - CAT Home - Use correct selector
-import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+} from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.selector';
+import { getVehicleChecks } from '../../../modules/tests/test-data/cat-home-test/test-data.cat-home.selector';
 import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
 import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
 import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
 import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
+import {
+  AddControlledStopComment,
+} from '../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
+import {
+  HighwayCodeSafetyAddComment,
+} from '../../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
+import { getTestData } from '../../../modules/tests/test-data/cat-home-test/test-data.cat-f.reducer';
 
 interface OfficePageState {
   testCategory$: Observable<CategoryCode>;
@@ -283,7 +288,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displayEco$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+          map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
           select(getEco))),
         map(([outcome, eco]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'eco', eco)),
@@ -291,7 +296,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displayEta$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+          map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
           select(getETA))),
         map(([outcome, eta]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'eta', eta)),
@@ -299,7 +304,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displayDrivingFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+          map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         )),
         map(([outcome, data] : [ActivityCode , HomeTestData]) =>
           this.outcomeBehaviourProvider.isVisible(
@@ -311,7 +316,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displaySeriousFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+          map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         )),
         map(([outcome, data]) =>
           this.outcomeBehaviourProvider.isVisible(
@@ -323,7 +328,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displayDangerousFault$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+          map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         )),
         map(([outcome, data]) =>
           this.outcomeBehaviourProvider.isVisible(
@@ -335,7 +340,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       displayVehicleChecks$: currentTest$.pipe(
           select(getTestOutcome),
           withLatestFrom(currentTest$.pipe(
-            map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+            map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
           )),
           map(([outcome, data]) =>
             this.outcomeBehaviourProvider.isVisible(outcome,
@@ -355,33 +360,32 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
         select(getAdditionalInformation),
       ),
       etaFaults$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         select(getETA),
         select(getETAFaultText),
       ),
       ecoFaults$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         select(getEco),
         select(getEcoFaultText),
       ),
       dangerousFaults$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
         map(data => this.faultSummaryProvider.getDangerousFaultsList(data, this.testCategory)),
       ),
       seriousFaults$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+       select(getTestData),
         map(data => this.faultSummaryProvider.getSeriousFaultsList(data, this.testCategory)),
       ),
       drivingFaults$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        select(getTestData),
         map(data => this.faultSummaryProvider.getDrivingFaultsList(data, this.testCategory)),
       ),
       drivingFaultCount$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        select(getTestData),
         map(data => this.faultCountProvider.getDrivingFaultSumCount(this.testCategory, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        select(getTestData),
         map(data => this.shouldDisplayDrivingFaultComments(data as HomeTestData)),
       ),
       weatherConditions$: currentTest$.pipe(
@@ -389,7 +393,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
         select(getWeatherConditions),
       ),
       vehicleChecks$: currentTest$.pipe(
-        map(data => this.testDataByCategoryProvider.getTestDataByCategoryCode(this.testCategory)(data)),
+        map(data => this.testDataByCategoryProvider.getTestDataByTestCategory(this.testCategory)(data)),
         select(getVehicleChecks),
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
@@ -463,9 +467,10 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
 
     } else if (dangerousFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
       this.store$.dispatch(new AddUncoupleRecoupleComment(dangerousFaultComment.comment));
-
     } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
+    } else if (dangerousFaultComment.source === CommentSource.CONTROLLED_STOP) {
+      this.store$.dispatch(new AddControlledStopComment(dangerousFaultComment.comment));
     }
   }
 
@@ -492,6 +497,10 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       this.store$.dispatch(new AddShowMeTellMeComment(seriousFaultComment.comment));
     } else if (seriousFaultComment.source === CommentSource.EYESIGHT_TEST) {
       this.store$.dispatch(new EyesightTestAddComment(seriousFaultComment.comment));
+    } else if (seriousFaultComment.source === CommentSource.CONTROLLED_STOP) {
+      this.store$.dispatch(new AddControlledStopComment(seriousFaultComment.comment));
+    } else if (seriousFaultComment.source === CommentSource.HIGHWAY_CODE_SAFETY) {
+      this.store$.dispatch(new HighwayCodeSafetyAddComment(seriousFaultComment.comment));
     }
   }
 
@@ -516,6 +525,10 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
       this.store$.dispatch(new AddUncoupleRecoupleComment(drivingFaultComment.comment));
     } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(drivingFaultComment.comment));
+    } else if (drivingFaultComment.source === CommentSource.CONTROLLED_STOP) {
+      this.store$.dispatch(new AddControlledStopComment(drivingFaultComment.comment));
+    } else if (drivingFaultComment.source === CommentSource.HIGHWAY_CODE_SAFETY) {
+      this.store$.dispatch(new HighwayCodeSafetyAddComment(drivingFaultComment.comment));
     }
 
   }

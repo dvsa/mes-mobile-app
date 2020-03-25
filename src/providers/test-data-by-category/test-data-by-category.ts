@@ -44,4 +44,25 @@ export class TestDataByCategoryProvider {
       default: throw new Error(TestDataByCategoryProvider.getTestDataByCategoryCodeErrMsg);
     }
   }
+
+  public getTestDataByTestCategory(testCategory: TestCategory) {
+    switch (testCategory) {
+      case TestCategory.ADI2: return getTestDataCatADI2;
+      case TestCategory.B: return getTestDataCatB;
+      case TestCategory.BE: return getTestDataCatBE;
+      case TestCategory.C: return getTestDataC;
+      case TestCategory.C1: return getTestDataC1;
+      case TestCategory.CE: return getTestDataCE;
+      case TestCategory.C1E: return getTestDataC1E;
+      case TestCategory.D: return getTestDataCatD;
+      case TestCategory.D1: return getTestDataCatD1;
+      case TestCategory.DE: return getTestDataCatDE;
+      case TestCategory.D1E: return getTestDataCatD1E;
+      case TestCategory.F: return getTestDataCatF;
+      case TestCategory.G: return getTestDataCatG;
+      case TestCategory.H: return getTestDataCatH;
+      case TestCategory.K: return getTestDataCatK;
+      default: throw new Error(TestDataByCategoryProvider.getTestDataByCategoryCodeErrMsg);
+    }
+  }
 }
