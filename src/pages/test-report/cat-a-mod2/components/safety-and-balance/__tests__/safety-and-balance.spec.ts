@@ -64,8 +64,7 @@ describe('SafetyAndBalanceComponent', () => {
     });
   });
 
-  // TODO(MES-4515): Reintroduce once fault count providers are completed
-  xdescribe('DOM', () => {
+  describe('DOM', () => {
     it('should pass the number of S&B riding faults to the driving faults component', () => {
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
