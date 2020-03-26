@@ -16,8 +16,7 @@ export default class Page {
    */
 // todo: check what type fieldElement is
   clickElement(fieldElement) {
-    browser.wait(ExpectedConditions.elementToBeClickable(fieldElement),
-      0, `expected fieldElement ${fieldElement} to be clickable`);
+    browser.wait(ExpectedConditions.elementToBeClickable(fieldElement));
     fieldElement.click().then((promise) => {
       return this.isReady(promise);
     });
@@ -100,9 +99,7 @@ export default class Page {
     // There is a 200ms transition duration we have to account for
     browser.sleep(TEST_CONFIG.ACTION_WAIT);
     // Then wait for the page to become active again
-    const className = 'click-block-active';
-    browser.wait(ExpectedConditions.stalenessOf(element(by.className(className))),
-      0, `Expected element ${className} to be stale`);
+    browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
     // Then return the original promise
     return promise;
   }
@@ -123,6 +120,11 @@ export default class Page {
         });
       });
     });
+  }
+
+  getPageTitle(pageTitle) {
+    return this.getElementByXPath(
+      `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
   }
 
   /**

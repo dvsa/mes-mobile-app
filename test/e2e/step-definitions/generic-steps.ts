@@ -78,19 +78,41 @@ Given('I am not logged in', () => {
   });
 });
 
-Given('I am logged in as {string} and I have a test for {string}', (username, candidateName) => {
+Given('I am logged in as {string} and I have a test for {string}', async (username, candidateName) => {
   // Go to journal page as the user
-  JournalPage.onJournalPageAs(username);
-
-  expect(JournalPage.isCurrentPage()).to.eventually.be.true;
-
+  // Load the landing page
+  await LandingPage.onLandingPageAs(username);
+  // Navigate to journal page
+  DashboardPage.clickGoToMyJournalButton();
+  // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
+  JournalPage.getRefreshButton();
   const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
 
-  buttonElement.isPresent().then((isStartPresent) => {
-    if (!isStartPresent) {
-      PageHelper.resetApp(username);
-    }
-  });
+  const startButtonIsPresent = buttonElement.isPresent();
+  if (startButtonIsPresent) {
+    PageHelper.waitForOverlay('click-block-active');
+    JournalPage.clickBackButton();
+    // Logout
+    LoginPage.logout();
+    // Login
+    LoginPage.login(username);
+    // Refresh application
+    LandingPage.loadApplication();
+
+    LandingPage.waitForActionToInitiate();
+
+    // I should first hit the landing page
+    // LandingPage.getEmployeeId(username);
+    LandingPage.isCurrentPage(username);
+
+    // Navigate to journal page
+    DashboardPage.clickGoToMyJournalButton();
+
+    // If the journal page is loaded we should have a refresh button
+    const refreshButton = JournalPage.getRefreshButton();
+    return expect(refreshButton.isPresent()).to.eventually.be.true;
+  }
+
   return expect(buttonElement.isPresent()).to.eventually.be.true;
 });
 
@@ -135,13 +157,17 @@ When('I log in to the application as {string}', (username) => {
 
   // If the dashboard has loaded we should see the employee id
   // todo: kc seems we should also see employee id if landing page is loaded (see ln 107) which is right?
-  DashboardPage.isCurrentPage(username);
+  const employeeId = DashboardPage.getEmployeeId(username);
+  return expect(employeeId.isPresent()).to.eventually.be.true;
 });
 
-Then('I should see the {string} page', (expectedPageTitle) => {
+Then('I should see the {string} page', (pageTitle) => {
+  // Wait for the page title to exist
+  PageHelper.getPageTitle(pageTitle);
+
   // Check that it is the last page title i.e. the displayed one
-  return expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${expectedPageTitle}`)
-    .to.eventually.equal(expectedPageTitle);
+  return expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
+    .to.eventually.equal(pageTitle);
 });
 
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {

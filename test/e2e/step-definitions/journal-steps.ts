@@ -1,5 +1,7 @@
 import JournalPage from '../pages/journalPage';
 import PageHelper from '../pages/pageHelper';
+import LandingPage from '../pages/landingPage';
+import DashboardPage from '../pages/dashboardPage';
 
 const {
   Given,
@@ -11,9 +13,16 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-Given('I am on the journal page as {string}', (username) => {
-  JournalPage.onJournalPageAs(username);
-  return expect(JournalPage.isCurrentPage()).to.eventually.be.true;
+Given('I am on the journal page as {string}', async (username) => {
+  // Load the landing page
+  await LandingPage.onLandingPageAs(username);
+
+  // Navigate to journal page
+  DashboardPage.clickGoToMyJournalButton();
+
+  // If the journal page is loaded we should have a refresh button
+  const refreshButton = JournalPage.getRefreshButton();
+  return expect(refreshButton.isPresent(), 'refreshButton.isPresent()').to.eventually.be.true;
 });
 
 When('I view candidate details for {string}', (candidateName) => {
@@ -30,6 +39,7 @@ When('I start the test for {string}', (candidateName) => {
 
   // If the rekey dialog is shown so just select start test normally
   const rekeyStartTestButton = JournalPage.getRekeyStartTestButton();
+
   rekeyStartTestButton.isPresent().then((result) => {
     if (result) {
       JournalPage.clickRekeyStartTestButton();
@@ -38,6 +48,7 @@ When('I start the test for {string}', (candidateName) => {
 
     // If the start test early dialog is shown just select continue
   const startTestEarlyButton = JournalPage.getStartTestEarlyButton();
+
   startTestEarlyButton.isPresent().then((result) => {
     if (result) {
       JournalPage.clickStartTestEarlyButton();

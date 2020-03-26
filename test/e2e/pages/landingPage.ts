@@ -42,23 +42,19 @@ class LandingPage extends Page {
 
   // todo: kc on journalPage there is a method onJournalPageAs.
   // would be good to have a polymorphic method name here for both methods.
-  onLandingPageAs(username) {
-    this.loadApplication().then(() => {
+  async onLandingPageAs(username) {
+    await this.loadApplication();
+    this.waitForActionToInitiate();
+
+    const isLoggedInAs = await this.isLoggedInAs(username);
+    if (!isLoggedInAs) {
+      LoginPage.logout();
+      LoginPage.login(username);
+
+      // Refresh application
+      await this.loadApplication();
       this.waitForActionToInitiate();
-    });
-
-    this.isLoggedInAs(username).then((response) => {
-      if (!response) {
-        // If not logged in as the right user logout and log in as the correct user
-        LoginPage.logout();
-        LoginPage.login(username);
-
-        // Refresh application
-        this.loadApplication().then(() => {
-          this.waitForActionToInitiate();
-        });
-      }
-    });
+    }
 
     // I should first hit the landing page
     const employeeId = element(

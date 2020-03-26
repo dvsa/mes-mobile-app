@@ -1,6 +1,4 @@
 import Page from './page';
-import LandingPage from './landingPage';
-import DashboardPage from './dashboardPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -13,17 +11,7 @@ class JournalPage extends Page {
    */
   isCurrentPage() {
     const refreshButton = this.getRefreshButton();
-    return refreshButton.isPresent();
-  }
-
-  // todo: kc on LandingPage there is a method onLandingPageAs.
-  // would be good to have a polymorphic method name here for both methods.
-  onJournalPageAs (username) {
-    // Load the landing page
-    LandingPage.onLandingPageAs(username);
-
-    // Navigate to journal page
-    DashboardPage.clickGoToMyJournalButton();
+    expect(refreshButton.isPresent()).to.eventually.be.true;
   }
 
   getSpecialNeedsIndicatorFor(candidateName) {
@@ -166,7 +154,7 @@ class JournalPage extends Page {
     return expect(dataRow.isPresent()).to.eventually.be.true;
   }
 
-  startingExpiredOrEarlyTest = (candidateName) => {
+  startingExpiredOrEarlyTest(candidateName) {
     this.startTestFor(candidateName);
     const testDialog = this.getTimeDialog();
     return expect(testDialog.isPresent()).to.eventually.be.true;

@@ -116,7 +116,7 @@ class OfficePage extends Page {
   }
 
   getTestOutcomeField() {
-    return this.getElementByXPath('//div[@id="test-outcome-text"]/span', false);
+    return this.getElementByXPath('//div[@id="test-outcome-text"]/span');
   }
 
   getTellMeQuestionField() {
@@ -125,17 +125,17 @@ class OfficePage extends Page {
 
   getCommentsValidationText(faultSeverity, faultLabel) {
     return this.getElementByXPath(`//fault-comment-card[@faulttype='${faultSeverity}'
-  and //label[@class = 'fault-label' and text() = '${faultLabel}']]//div[@class='validation-text ng-invalid']`, false);
+  and //label[@class = 'fault-label' and text() = '${faultLabel}']]//div[@class='validation-text ng-invalid']`);
   }
 
   getCommentsField(faultSeverity, faultLabel) {
     return this.getElementByXPath(`//fault-comment-card[@faulttype='${faultSeverity}']
-  //ion-row[ion-col/label[text() = '${faultLabel}']]//textarea`, false);
+  //ion-row[ion-col/label[text() = '${faultLabel}']]//textarea`);
   }
 
   getActivityCodeField(testCategory) {
     return this.getElementByXPath(`//div[contains(@class, "office-cat-${testCategory}-page")]`
-      + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`, false);
+      + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`);
   }
 }
 
