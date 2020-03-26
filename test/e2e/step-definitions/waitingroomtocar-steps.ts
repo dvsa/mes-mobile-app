@@ -54,7 +54,7 @@ When('I complete the waiting room to car page with automatic transmission', () =
 });
 
 When('I complete the waiting room to car page with confirmed cat type', () => {
-  completeWaitingRoomPage(false, true, );
+  completeWaitingRoomPage(false, true);
 });
 
 When('I fail the eye sight test', () => {
