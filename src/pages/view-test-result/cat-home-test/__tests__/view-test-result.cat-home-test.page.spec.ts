@@ -25,7 +25,6 @@ import { ExaminerDetailsCardComponent } from '../../components/examiner-details-
 import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
-import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
 import { categoryHomeTestResultMock } from '../../../../shared/mocks/cat-home-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
@@ -38,6 +37,7 @@ import { ErrorMessageComponent } from '../../../../components/common/error-messa
 import { ViewTestResultCatHomeTestPage } from '../view-test-result.cat-home-test.page';
 import { BusinessDetailsCardComponent } from '../../components/business-details-card/business-details-card';
 import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
+import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('ViewTestResultCatHomeTestPage', () => {
@@ -247,7 +247,7 @@ describe('ViewTestResultCatHomeTestPage', () => {
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).not.toBeNull();
       expect(
-        fixture.debugElement.query(By.css('vehicle-details-card')),
+        fixture.debugElement.query(By.css('vehicle-details-card-cat-home-test')),
       ).not.toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).not.toBeNull();
       expect(
