@@ -11,25 +11,17 @@ class LandingPage extends Page {
   }
 
   getEmployeeId(username) {
-    const selector = `//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(
+      `//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`);
   }
 
   // todo: kc this should be called something better.
   getAppElement() {
-    const selector = '//ion-app';
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath('//ion-app');
   }
 
   getStaffNumberField(staffNumber) {
-    const selector = `//span[@class="employee-id" and text()="${staffNumber}"]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//span[@class="employee-id" and text()="${staffNumber}"]`);
   }
 
   /**

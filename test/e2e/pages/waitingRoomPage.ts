@@ -6,10 +6,7 @@ class WaitingRoomPage extends Page {
   }
 
   getNewEmailInput() {
-    const selector = 'newEmailInput';
-    const element = this.getElementById(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementById('newEmailInput');
   }
 
   enterNewEmail(email) {
@@ -54,17 +51,11 @@ class WaitingRoomPage extends Page {
   }
 
   getProvidedEmailRadioButton() {
-    const selector = 'providedEmail';
-    const element = this.getElementById(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementById('providedEmail');
   }
 
   getProvidedEmailValue() {
-    const selector = 'providedEmailInput';
-    const element = this.getElementById(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementById('providedEmailInput');
   }
 }
 

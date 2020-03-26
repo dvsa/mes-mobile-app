@@ -9,10 +9,8 @@ class DashboardPage extends Page {
   }
 
   getEmployeeId(username) {
-    const selector = `//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(
+      `//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`);
   }
 
   clickGoToMyJournalButton () {

@@ -30,43 +30,70 @@ export default class Page {
 
   clickElementById(elementId) {
     const element = this.getElementById(elementId);
-    this.waitForPresenceOfElement(element, elementId);
     this.clickElement(element);
   }
 
   clickElementByXPath(xpath) {
     const element = this.getElementByXPath(xpath);
-    this.waitForPresenceOfElement(element, xpath);
     this.clickElement(element);
   }
 
   clickElementByClassName(className) {
     const element = this.getElementByClassName(className);
-    this.waitForPresenceOfElement(element, className);
     this.clickElement(element);
   }
 
   clickElementByCss(css) {
     const element = this.getElementByCss(css);
-    this.waitForPresenceOfElement(element, css);
     this.clickElement(element);
   }
 
-  getElementByXPath(xpath) {
-    // return this.getAndAwaitElement(by.xpath(xpath));
-    return element(by.xpath(xpath)); // used to stop ali campbell debrieffrom working
+  clickButtonByCssId(buttonId) {
+    this.clickElementByCss(`#${buttonId}`);
   }
 
-  getElementById(elementId) {
-    return element(by.id(elementId));
+  getElementByXPath(xpath, waitForPresenceOfElement = true) {
+    const elementBy = element(by.xpath(xpath));
+
+    if (waitForPresenceOfElement) {
+      this.waitForPresenceOfElement(elementBy);
+    }
+
+    return elementBy;
   }
 
-  getElementByClassName(elementClassName) {
-    return element(by.className(elementClassName));
+  getElementById(elementId, waitForPresenceOfElement = true) {
+    const elementBy = element(by.id(elementId));
+
+    if (waitForPresenceOfElement) {
+      this.waitForPresenceOfElement(elementBy);
+    }
+
+    return elementBy;
   }
 
-  getElementByCss(css) {
-    return element(by.css(css));
+  getElementByClassName(elementClassName, waitForPresenceOfElement = true) {
+    const elementBy = element(by.className(elementClassName));
+
+    if (waitForPresenceOfElement) {
+      this.waitForPresenceOfElement(elementBy);
+    }
+
+    return elementBy;
+  }
+
+  getElementByCss(css, waitForPresenceOfElement = true) {
+    const elementBy = element(by.css(css));
+
+    if (waitForPresenceOfElement) {
+      this.waitForPresenceOfElement(elementBy);
+    }
+
+    return elementBy;
+  }
+
+  getElementByCssId(cssId) {
+    return this.getElementByCss(`#${cssId}`);
   }
 
   /**
@@ -104,10 +131,8 @@ export default class Page {
   }
 
   getPageTitle(pageTitle) {
-    const selector = `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(
+      `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
   }
 
   /**
@@ -124,9 +149,8 @@ export default class Page {
   }
 
   // todo: kc how to keep default timeout
-  waitForPresenceOfElement(element, selector) {
-    browser.wait(ExpectedConditions.presenceOf(element),
-      0, `Expected element ${selector} to be present`);
+  waitForPresenceOfElement(element) {
+    browser.wait(ExpectedConditions.presenceOf(element));
   }
 
   /**
@@ -166,13 +190,11 @@ export default class Page {
 
   longPressElementByXPath(xpath) {
     const element = this.getElementByXPath(xpath);
-    this.waitForPresenceOfElement(element, xpath);
     this.longPressButton(element);
   }
 
   longPressElementByClassName(className) {
     const element = this.getElementByClassName(className);
-    this.waitForPresenceOfElement(element, className);
     this.longPressButton(element);
   }
 
@@ -183,29 +205,14 @@ export default class Page {
     browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
   }
 
-  clickButtonByCssId(buttonId) {
-    this.clickElementByCss(`#${buttonId}`);
-  }
-
-  getElementByCssId(cssId) {
-    const selector = `#${cssId}`;
-    const element = this.getElementByCss(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
-  }
-
   getCandidateNameElement(pageName, testCategory) {
-    const selector = `//div[contains(@class, '${this.getPageType(pageName, testCategory)}')]//h2[@id = 'candidate-name']`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(
+      `//div[contains(@class, '${this.getPageType(pageName, testCategory)}')]//h2[@id = 'candidate-name']`);
   }
 
   getCandidateDriveNumberElement(pageName, testCategory) {
-    const selector = `//div[contains(@class, '${this.getPageType(pageName, testCategory)}')]//h3[@id = 'candidate-driver-number']`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(
+      `//div[contains(@class, '${this.getPageType(pageName, testCategory)}')]//h3[@id = 'candidate-driver-number']`);
   }
 
   getPageType(pageName : string, testCategory : string) {

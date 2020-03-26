@@ -31,10 +31,7 @@ class DebriefPage extends Page {
 
   // todo: kc also on nonPassFinalisationPage
   getD255Yes() {
-    const selector = 'd255-yes';
-    const element = this.getElementById(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementById('d255-yes');
   }
 
   // todo: kc also on nonPassFinalisationPage
@@ -77,26 +74,17 @@ class DebriefPage extends Page {
   }
 
   getApplicationRefField() {
-    const selector = '//ion-row[@id="application-reference-card"]/ion-col/span';
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath('//ion-row[@id="application-reference-card"]/ion-col/span');
   }
 
   getFaultElement(faultSeverity: string, faultDescription:string) {
-    const selector = `//ion-card[@id = '${faultSeverity}-fault']
-      //div[text() = '${faultDescription}']`
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//ion-card[@id = '${faultSeverity}-fault']
+      //div[text() = '${faultDescription}']`);
   }
 
   getTestOutcome(testCategory) {
-    const selector =
-      `//div[contains(@class, "debrief-cat-${testCategory}-page")]//div[@id = "test-outcome-background"]/div/h1`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(
+      `//div[contains(@class, "debrief-cat-${testCategory}-page")]//div[@id = "test-outcome-background"]/div/h1`);
   }
 }
 

@@ -35,10 +35,7 @@ class OfficePage extends Page {
   }
 
   getUploadRekeyMessage() {
-    const selector = 'modal-alert-header';
-    const element = this.getElementByClassName(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByClassName('modal-alert-header');
   }
 
   completeRekey(testCategory) {
@@ -50,10 +47,7 @@ class OfficePage extends Page {
   }
 
   getPhysicalDescription() {
-    const selector = 'physical-description';
-    const element = this.getElementById(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementById('physical-description');
   }
 
   enterCandidateDescription() {
@@ -62,10 +56,7 @@ class OfficePage extends Page {
   }
 
   getRouteField() {
-    const selector = 'route';
-    const element = this.getElementById(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementById('route');
   }
 
   enterRouteNumber(routeNumber) {
@@ -119,50 +110,32 @@ class OfficePage extends Page {
   }
 
   getDriverFault(faultCount, faultTest) {
-    const selector = `//ion-row[@id = 'driving-fault-commentary-label']
+    return this.getElementByXPath(`//ion-row[@id = 'driving-fault-commentary-label']
   [descendant::span[@class='count' and text() = '${faultCount}'] and descendant::label[@class='fault-label'
-  and text() = '${faultTest}']]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+  and text() = '${faultTest}']]`);
   }
 
   getTestOutcomeField() {
-    const selector = '//div[@id="test-outcome-text"]/span';
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath('//div[@id="test-outcome-text"]/span', false);
   }
 
   getTellMeQuestionField() {
-    const selector = 'tell-me-question-text';
-    const element = this.getElementById(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementById('tell-me-question-text');
   }
 
   getCommentsValidationText(faultSeverity, faultLabel) {
-    const selector = `//fault-comment-card[@faulttype='${faultSeverity}'
-  and //label[@class = 'fault-label' and text() = '${faultLabel}']]//div[@class='validation-text ng-invalid']`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//fault-comment-card[@faulttype='${faultSeverity}'
+  and //label[@class = 'fault-label' and text() = '${faultLabel}']]//div[@class='validation-text ng-invalid']`, false);
   }
 
   getCommentsField(faultSeverity, faultLabel) {
-    const selector = `//fault-comment-card[@faulttype='${faultSeverity}']
-  //ion-row[ion-col/label[text() = '${faultLabel}']]//textarea`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//fault-comment-card[@faulttype='${faultSeverity}']
+  //ion-row[ion-col/label[text() = '${faultLabel}']]//textarea`, false);
   }
 
   getActivityCodeField(testCategory) {
-    const selector = `//div[contains(@class, "office-cat-${testCategory}-page")]`
-      + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//div[contains(@class, "office-cat-${testCategory}-page")]`
+      + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`, false);
   }
 }
 

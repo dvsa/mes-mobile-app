@@ -71,17 +71,11 @@ class TestReportPage extends Page {
   }
 
   getSummaryCountField() {
-    const selector = 'summary-count';
-    const element = this.getElementById(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementById('summary-count');
   }
 
   getControlledStopTick() {
-    const selector = '.controlled-stop-tick.checked';
-    const element =  this.getElementByCss(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByCss('.controlled-stop-tick.checked');
   }
 
   clickEndTestButton() {
@@ -115,19 +109,13 @@ class TestReportPage extends Page {
   }
 
   getPracticeModeBanner() {
-    const selector = 'practice-mode-top-banner';
-    const element = this.getElementByClassName(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByClassName('practice-mode-top-banner');
   }
 }
 
 class ETA extends Page {
   getETAModalTitle() {
-    const selector = 'modal-alert-header';
-    const element = this.getElementByClassName(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByClassName('modal-alert-header');
   }
 
   closeETAModal() {
@@ -157,18 +145,12 @@ class DriverFaults extends Page {
   }
 
   getSeriousFaultBadgeForVehicleChecks() {
-    const selector = '//vehicle-checks//serious-fault-badge//span';
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath('//vehicle-checks//serious-fault-badge//span');
   }
 
   getSeriousFaultBadge(competency) {
-    const selector = `//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`;
-    const element =  this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`);
   }
 
   getSeriousFaultBadgeByTagName(button) {
@@ -176,36 +158,24 @@ class DriverFaults extends Page {
   }
 
   getDangerousFaultBadge(competency) {
-    const selector = `//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`);
   }
 
   getCompetencyCountField(competency) {
-    const selector = `//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`);
   }
 
   getDriverBadge(competency) {
-    const selector = `//competency-button[div/*[@class = 'competency-label'
-  and text() = '${competency}']]/div/driving-faults-badge`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/driving-faults-badge`);
   }
 }
 
 class ReversingDiagramModal extends Page {
   getReversingDiagramModalTitle() {
-    const selector = '//reverse-diagram-modal//div[2]';
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath('//reverse-diagram-modal//div[2]');
   }
 
   closeReversingDialogModal() {
@@ -220,17 +190,11 @@ class ReversingDiagramModal extends Page {
 class LegalRequirements extends Page {
 
   getLegalRequrementsPopup() {
-    const selector = '//div/legal-requirements-modal';
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath('//div/legal-requirements-modal');
   }
 
   getLegalRequirement(legalRequirement) {
-    const selector = `//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`);
   }
 
   getLegalRequirements() {
@@ -280,10 +244,7 @@ class Competency extends Page {
   }
 
   getCompetencyButton(competency: string) {
-    const selector = `//competency-button/div/span[text() = '${competency}']`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//competency-button/div/span[text() = '${competency}']`);
   }
 
   longPressCompetency (competency: string) {

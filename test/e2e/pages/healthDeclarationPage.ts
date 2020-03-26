@@ -2,10 +2,7 @@ import Page from './page';
 
 class HealthDeclarationPage extends Page {
   getPassCertificateNumber() {
-    const selector = 'declaration-pass-certificate-number';
-    const element = this.getElementById(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementById('declaration-pass-certificate-number');
   }
 
   /**

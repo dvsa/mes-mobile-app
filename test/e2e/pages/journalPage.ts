@@ -27,99 +27,71 @@ class JournalPage extends Page {
   }
 
   getSpecialNeedsIndicatorFor(candidateName) {
-    const selector = `//indicators/div/img[@class = "exclamation-indicator"]
+    return this.getElementByXPath(`//indicators/div/img[@class = "exclamation-indicator"]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    h3[text() = "${candidateName}"]]`);
   }
 
   getWelshIndicatorFor(candidateName) {
-    const selector = `//ion-grid/ion-row/ion-col/language/
+    return this.getElementByXPath(`//ion-grid/ion-row/ion-col/language/
   div[@class = "welsh-language-indicator"][ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link
-    /div/button/span/h3[text() = "${candidateName}"]]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    /div/button/span/h3[text() = "${candidateName}"]]`);
   }
 
   getSlotLocator(description, code, time) {
-    const selector = `//ion-row[ion-col/div/time/div/h2[text() = '${time}']]
-    [ion-col/h3[normalize-space(text()) = '${description}']][ion-col[h2[text() = '${code}']]]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//ion-row[ion-col/div/time/div/h2[text() = '${time}']]
+    [ion-col/h3[normalize-space(text()) = '${description}']][ion-col[h2[text() = '${code}']]]`);
   }
 
   getTestResultElementFor(candidateName) {
-    const selector = `//test-outcome//span[@class='outcome']/h2
+    return this.getElementByXPath(`//test-outcome//span[@class='outcome']/h2
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    h3[text() = "${candidateName}"]]`);
   }
 
   getTestCategoryElementFor(candidateName) {
-    const selector = `//test-category/h2[ancestor::ion-row/ion-col/ion-grid/ion-row/
-    ion-col/candidate-link/div/button/span/h3[text() = "${candidateName}"]]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//test-category/h2[ancestor::ion-row/ion-col/ion-grid/ion-row/
+    ion-col/candidate-link/div/button/span/h3[text() = "${candidateName}"]]`);
   }
 
   getVehicleLengthElementFor(candidateName) {
-    const selector = `//vehicle-details/div/span/span[text()= 'L: ']/following-sibling::span
+    return this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'L: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+      [text() = "${candidateName}"]]`);
   }
 
   getVehicleWidthElementFor(candidateName) {
-    const selector = `//vehicle-details/div/span/span[text()= 'W: ']/following-sibling::span
+    return this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'W: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+      [text() = "${candidateName}"]]`);
   }
 
   getVehicleHeightElementFor(candidateName) {
-    const selector = `//vehicle-details/div/span/span[text()= 'H: ']/following-sibling::span
+    return this.getElementByXPath(`//vehicle-details/div/span/span[text()= 'H: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+      [text() = "${candidateName}"]]`);
   }
 
   getSeatElementFor(candidateName) {
-    const selector = `//vehicle-details/div/span/span[text() = 'Seats: ']/following-sibling::span
+    return this.getElementByXPath(`//vehicle-details/div/span/span[text() = 'Seats: ']/following-sibling::span
     [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+      [text() = "${candidateName}"]]`);
   }
 
   getRefreshButton() {
-    const selector = '//button/span/span/span[text() = "Refresh"]';
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath('//button/span/span/span[text() = "Refresh"]');
   }
 
   clickRefreshButton() {
     this.clickElement(this.getRefreshButton());
   }
 
+  /**
+   * no need to call this.waitForPresenceOfElement(element) - this element may or may not be present.  If it is
+   * present we want to click it.  If it isn't present we don't care.
+   */
   getRekeyStartTestButton() {
-    return this.getElementById('rekey-start-test-button');
-    // no need to call this.waitForPresenceOfElement(element) - this element may or may not be present.  If it is
-    // present we want to click it.  If it isn't present we don't care.
+    return this.getElementById('rekey-start-test-button', false);
   }
 
   clickRekeyStartTestButton() {
@@ -129,7 +101,7 @@ class JournalPage extends Page {
   getRekeyTestButtonFor(candidateName) {
     return this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`);
+    h3[text() = "${candidateName}"]]`, false);
   }
 
   clickRekeyTestButtonFor(candidateName) {
@@ -137,16 +109,9 @@ class JournalPage extends Page {
   }
 
   getStartTestButtonFor(candidateName, waitForElement : boolean = true) {
-    const selector = `//button/span/h3[text()[normalize-space(.) = "Start test"]]
+    return this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`;
-    const element = this.getElementByXPath(selector);
-
-    if (waitForElement) {
-      this.waitForPresenceOfElement(element, selector);
-    }
-
-    return element;
+    h3[text() = "${candidateName}"]]`, waitForElement);
   }
 
   startTestFor(candidateName) {
@@ -159,10 +124,12 @@ class JournalPage extends Page {
     h3[text() = "${candidateName}"]]`);
   }
 
+  /**
+   * no need to call this.waitForPresenceOfElement(element) - this element may or may not be present.  If it is
+   * present we want to click it.  If it isn't present we don't care.
+   */
   getStartTestEarlyButton() {
-    return this.getElementById('early-start-start-test-button');
-    // no need to call this.waitForPresenceOfElement(element) - this element may or may not be present.  If it is
-    // present we want to click it.  If it isn't present we don't care.
+    return this.getElementById('early-start-start-test-button', false);
   }
 
   clickStartTestEarlyButton() {
@@ -190,11 +157,8 @@ class JournalPage extends Page {
   }
 
   getDataRow(rowName, rowValue) {
-    const selector = `//ion-col/label[text()= "${rowName}"]
-    [parent::ion-col/parent::ion-row//*[normalize-space(text()) = "${rowValue}"]]`;
-    const element = this.getElementByXPath(selector);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByXPath(`//ion-col/label[text()= "${rowName}"]
+    [parent::ion-col/parent::ion-row//*[normalize-space(text()) = "${rowValue}"]]`);
   }
 
   rowContains(rowName, rowValue) {
@@ -209,14 +173,12 @@ class JournalPage extends Page {
   }
 
   getTimeDialog() {
-    const selector = `modal-alert-header`;
-    const element = this.getElementByClassName(`modal-alert-header`);
-    this.waitForPresenceOfElement(element, selector);
-    return element;
+    return this.getElementByClassName(`modal-alert-header`);
   }
 
   rekeyIsPresent() {
-    const rekeyStartTestButton = this.getElementById('rekey-start-test-button');
+    // todo: should this call waitForPresenceOfElement?
+    const rekeyStartTestButton = this.getElementById('rekey-start-test-button', false);
     return expect(rekeyStartTestButton.isPresent()).to.eventually.be.true;
   }
 }
