@@ -10,11 +10,6 @@ const buttonPadding = 30;
 const request = require('request');
 
 export default class Page {
-  isCurrentPage(pageTitle) {
-    // Wait for the page title to exist
-    this.getPageTitle(pageTitle);
-  }
-
   /**
    * A framework safe click method.
    * @param fieldElement the element to click
@@ -128,11 +123,6 @@ export default class Page {
         });
       });
     });
-  }
-
-  getPageTitle(pageTitle) {
-    return this.getElementByXPath(
-      `//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`);
   }
 
   /**

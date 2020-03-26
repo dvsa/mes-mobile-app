@@ -138,12 +138,10 @@ When('I log in to the application as {string}', (username) => {
   DashboardPage.isCurrentPage(username);
 });
 
-Then('I should see the {string} page', (pageTitle) => {
-  PageHelper.isCurrentPage(pageTitle);
-
+Then('I should see the {string} page', (expectedPageTitle) => {
   // Check that it is the last page title i.e. the displayed one
-  return expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
-    .to.eventually.equal(pageTitle);
+  return expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${expectedPageTitle}`)
+    .to.eventually.equal(expectedPageTitle);
 });
 
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {

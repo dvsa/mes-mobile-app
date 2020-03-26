@@ -20,18 +20,24 @@ class LandingPage extends Page {
     return this.getElementByXPath('//ion-app');
   }
 
-  getStaffNumberField(staffNumber) {
-    return this.getElementByXPath(`//span[@class="employee-id" and text()="${staffNumber}"]`);
+  getStaffNumberField() {
+    return this.getElementByXPath(`//span[@class="employee-id"]`);
   }
 
   /**
    * Checks whether the user is logged in.
-   * @param staffNumber the staff number of the user we wish to be logged in
+   * @param username of the user we wish to be logged in
    */
-  loggedInAs(staffNumber) {
+  isLoggedInAs(username) {
+    const expectedStaffNumber = TEST_CONFIG.users[username].employeeId;
     this.getAppElement();
-    const staffNumberField = this.getStaffNumberField(staffNumber);
-    return staffNumberField.isPresent();
+    let result;
+    this.getStaffNumberField().getText().then((actualStaffNumber) => {
+      result = actualStaffNumber === expectedStaffNumber;
+      return result;
+    });
+
+    return Promise.resolve(false);
   }
 
   // todo: kc on journalPage there is a method onJournalPageAs.
@@ -41,7 +47,7 @@ class LandingPage extends Page {
       this.waitForActionToInitiate();
     });
 
-    this.loggedInAs(TEST_CONFIG.users[username].employeeId).then((response) => {
+    this.isLoggedInAs(username).then((response) => {
       if (!response) {
         // If not logged in as the right user logout and log in as the correct user
         LoginPage.logout();
