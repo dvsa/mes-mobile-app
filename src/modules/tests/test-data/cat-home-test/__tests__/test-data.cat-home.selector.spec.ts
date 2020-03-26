@@ -62,7 +62,7 @@ describe('TestDataSelectors', () => {
   });
 
   describe('hasManoeuvreBeenCompleted', () => {
-    it('should return true when no manoeuvres are present', () => {
+    it('should return undefined when manoeuvres are not present', () => {
       const state: CatHomeTestData = {};
       expect(hasManoeuvreBeenCompletedCatHomeTest(state)).toEqual(undefined);
     });
