@@ -1,6 +1,6 @@
 
 import { ManoeuvresComponent } from '../components/manoeuvres/manoeuvres';
-import { ManoeuvresPopoverComponent } from '../components/manoeuvres-popover/manoeuvres-popover';
+import { ManoeuvresPopoverComponentAdiPart2 } from '../components/manoeuvres-popover/manoeuvres-popover';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform, ModalController } from 'ionic-angular';
 import {
@@ -59,7 +59,7 @@ describe('TestReportCatADIPart2Page', () => {
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [TestReportCatADIPart2Page,
-        MockComponent(ManoeuvresPopoverComponent),
+        MockComponent(ManoeuvresPopoverComponentAdiPart2),
         MockComponent(ManoeuvresComponent),
         MockComponent(TickIndicatorComponent),
         MockComponent(CompetencyComponent),

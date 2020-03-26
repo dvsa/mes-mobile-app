@@ -50,7 +50,8 @@ export class AddManoeuvreComment implements Action {
     public fieldName: string,
     public faultType: CompetencyOutcome,
     public controlOrObservation: string,  // 'Control' | 'Observation',
-    public comment: string) { }
+    public comment: string,
+    public index: number) { }
   readonly type = ADD_MANOEUVRE_COMMENT;
 }
 

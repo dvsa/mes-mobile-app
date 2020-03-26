@@ -1,7 +1,7 @@
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { Store, select } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { Component } from '@angular/core';
+import { Observable, of, Subscription, merge } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
 import {
@@ -10,10 +10,10 @@ import {
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import {
-  RecordManoeuvresSelection,
+  RecordManoeuvresSelection, RecordManoeuvresDeselection,
 } from '../../../../../modules/tests/test-data/cat-adi-part2/manoeuvres/manoeuvres.actions';
 import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { some } from 'lodash';
 
 interface ManoeuvresFaultState {
@@ -27,12 +27,15 @@ interface ManoeuvresFaultState {
   selector: 'manoeuvres-popover-adi-part2',
   templateUrl: 'manoeuvres-popover.html',
 })
-export class ManoeuvresPopoverComponent {
+export class ManoeuvresPopoverComponentAdiPart2 implements OnInit, OnDestroy {
 
   manoeuvreTypes = ManoeuvreTypes;
   manoeuvres$: Observable<CatADI2UniqueTypes.Manoeuvres[]>;
   competencies = ManoeuvreCompetencies;
   manoeuvresWithFaults$: Observable<ManoeuvresFaultState[]>;
+  selectedManoeuvreTypes$: Observable<ManoeuvreTypes[]>;
+  subscription: Subscription;
+  merged$: Observable<ManoeuvreTypes[]>;
 
   constructor(private store$: Store<StoreModel>) { }
 
@@ -54,10 +57,31 @@ export class ManoeuvresPopoverComponent {
         }));
       }),
     );
+
+    this.merged$ = merge(
+      this.manoeuvres$.pipe(
+        map((manoeuvres: CatADI2UniqueTypes.Manoeuvres[]) => {
+          return [
+            ...manoeuvres.map((manoeuvre) => {
+              return Object.keys(manoeuvre).find((manoeuvreType: ManoeuvreTypes) => {
+                return manoeuvre[manoeuvreType].selected === true;
+              });
+            }),
+          ];
+        }),
+        tap((selectedManouevreTypes: ManoeuvreTypes[]) => {
+          if (selectedManouevreTypes && selectedManouevreTypes[0] === selectedManouevreTypes[1]) {
+            this.store$.dispatch(new RecordManoeuvresDeselection(selectedManouevreTypes[0], 1));
+          }
+        }),
+      ),
+    );
+
+    this.subscription = this.merged$.subscribe();
   }
 
-  recordManoeuvreSelection(manoeuvre: ManoeuvreTypes, index: number): void {
-    this.store$.dispatch(new RecordManoeuvresSelection(manoeuvre, index));
+  recordManoeuvreSelection(manoeuvreType: ManoeuvreTypes, index: number): void {
+    this.store$.dispatch(new RecordManoeuvresSelection(manoeuvreType, index));
   }
 
   /**
@@ -106,5 +130,13 @@ export class ManoeuvresPopoverComponent {
     manoeuvre.observationFault != null)
   )
 
-  getId = (manoeuvre: ManoeuvreTypes, competency: ManoeuvreCompetencies) => `${manoeuvre}-${competency}`;
+  getId = (manoeuvre: ManoeuvreTypes, competency: ManoeuvreCompetencies, index: number) => {
+    return `${manoeuvre}-${competency}${index}`;
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 }
