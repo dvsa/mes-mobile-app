@@ -16,8 +16,7 @@ import {
   getResidencyDeclarationStatus,
   getSignatureStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
-// TODO - HOME TEST - Fix Candidate Reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-d/candidate/candidate.cat-d.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/cat-home/candidate/candidate.cat-home.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
