@@ -77,6 +77,8 @@ When('I complete the test with controlled stop', () => {
   endTest();
 });
 
+When
+
 When('I add a Show me / Tell me driver fault', () => {
   longPressButton(getElement(by.className('vehicle-check-competency')));
 });
