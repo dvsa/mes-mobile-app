@@ -26,8 +26,7 @@ import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
 import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
-// TODO - Cat HOME , use correct data mock
-import { categoryBETestResultMock } from '../../../../shared/mocks/cat-be-test-result.mock';
+import { categoryHomeTestResultMock } from '../../../../shared/mocks/cat-home-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
 import { TestSummaryCardComponent } from '../../components/test-summary-card/test-summary-card';
@@ -109,13 +108,12 @@ describe('ViewTestResultCatHomeTestPage', () => {
     });
     describe('getTestDetails', () => {
       it('should correctly generate the data', () => {
-        // TODO - Cat Home , use correct mock
-        component.testResult = categoryBETestResultMock;
+        component.testResult = categoryHomeTestResultMock;
 
         const result: TestDetailsModel = component.getTestDetails();
 
         expect(result.applicationReference).toBe('12345672013');
-        expect(result.category).toBe('B+E');
+        expect(result.category).toBe('F');
         expect(result.date).toBe('Friday 5th July 2019');
         expect(result.time).toBe('09:00');
         expect(result.specialNeeds).toEqual(
@@ -134,8 +132,7 @@ describe('ViewTestResultCatHomeTestPage', () => {
     });
     describe('getExaminerDetails', () => {
       it('should correctly generate the data', () => {
-        // TODO - Cat Home , use correct mock
-        component.testResult = categoryBETestResultMock;
+        component.testResult = categoryHomeTestResultMock;
 
         const result: ExaminerDetailsModel = component.getExaminerDetails();
 
@@ -150,8 +147,7 @@ describe('ViewTestResultCatHomeTestPage', () => {
     });
     describe('getHeaderDetails', () => {
       it('should return the correct data', () => {
-        // TODO - Cat Home , use correct mock
-        component.testResult = categoryBETestResultMock;
+        component.testResult = categoryHomeTestResultMock;
         const result: ViewTestHeaderModel = component.getHeaderDetails();
 
         expect(result.activityCode).toBe('2');
@@ -229,8 +225,7 @@ describe('ViewTestResultCatHomeTestPage', () => {
     });
     it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
-      // TODO - Cat Home , use correct mock
-      component.testResult = categoryBETestResultMock;
+      component.testResult = categoryHomeTestResultMock;
 
       fixture.detectChanges();
 
@@ -262,8 +257,7 @@ describe('ViewTestResultCatHomeTestPage', () => {
   });
   it('should show rekey cards only when rekey is true', () => {
     component.isLoading = false;
-    // TODO - Cat Home , use correct mock
-    component.testResult = categoryBETestResultMock;
+    component.testResult = categoryHomeTestResultMock;
 
     fixture.detectChanges();
 

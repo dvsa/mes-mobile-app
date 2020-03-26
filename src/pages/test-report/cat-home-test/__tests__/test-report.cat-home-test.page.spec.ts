@@ -30,7 +30,7 @@ import {
   TestReportValidatorProviderMock,
 } from '../../../../providers/test-report-validator/__mocks__/test-report-validator.mock';
 import { ModalEvent } from '../../test-report.constants';
-import { CAT_HOME_TEST } from '../../../page-names.constants';
+import { CAT_HOME_TEST, LEGAL_REQUIREMENTS_MODAL, SPECIAL_REQUIREMENT_MODAL } from '../../../page-names.constants';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
@@ -49,6 +49,7 @@ describe('TestReportCatHomeTestPage', () => {
   let fixture: ComponentFixture<TestReportCatHomeTestPage>;
   let component: TestReportCatHomeTestPage;
   let navController: NavController;
+  let modalController: ModalController;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -79,6 +80,7 @@ describe('TestReportCatHomeTestPage', () => {
             testStatus: {},
             startedTests: {
               123: {
+                category: 'F',
                 testData: initialState,
                 journalData: {
                   candidate: candidateMock,
@@ -106,14 +108,57 @@ describe('TestReportCatHomeTestPage', () => {
     fixture = TestBed.createComponent(TestReportCatHomeTestPage);
     component = fixture.componentInstance;
     navController = TestBed.get(NavController);
+    modalController = TestBed.get(ModalController);
   }));
 
   describe('Class', () => {
+
+    describe('getCallback', () => {
+      it('should return the callback method', () => {
+        const toggleReportOverlaySpy = spyOn(component, 'toggleReportOverlay').and.callThrough();
+        component.getCallback().callbackMethod();
+        expect(toggleReportOverlaySpy).toHaveBeenCalled();
+        expect(component.displayOverlay).toEqual(true);
+      });
+    });
+
+    describe('When the category is K', () => {
+      it('should not show the manoeuvre button', () => {
+        component.testCategory = TestCategory.K;
+        const result = component.showManoeuvreButton();
+        expect(result).toEqual(false);
+      });
+
+      it('should not show the special requirement modal', () => {
+        const { calls } = modalController.create as jasmine.Spy;
+        component.testCategory = TestCategory.K;
+        component.manoeuvresCompleted = false;
+        component.isTestReportValid = true;
+        component.isEtaValid = true;
+        component.onEndTestClick();
+        expect(calls
+          .argsFor(0)[0]).toBe('EndTestModal');
+      });
+    });
+
+    describe('When the category is not K', () => {
+      it('should show the manoeuvre button', () => {
+        component.testCategory = TestCategory.F;
+        const result = component.showManoeuvreButton();
+        expect(result).toEqual(true);
+      });
+    });
+
     describe('onModalDismiss', () => {
       it('should navigate to debrief page when passed a CONTINUE event', () => {
         component.onModalDismiss(ModalEvent.CONTINUE);
         const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe(CAT_HOME_TEST.DEBRIEF_PAGE);
+      });
 
+      it('should navigate to debrief page when passed a TERMINATE event', () => {
+        component.onModalDismiss(ModalEvent.TERMINATE);
+        const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(CAT_HOME_TEST.DEBRIEF_PAGE);
       });
     });
@@ -126,14 +171,13 @@ describe('TestReportCatHomeTestPage', () => {
         expect(fixture.debugElement.query(By.css('.serious-mode'))).toBeNull();
         expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeNull();
       });
-      xit('should have serious fault mode styles applied when serious mode is enabled', async() => {
-        component.testCategory = TestCategory.F;
+      it('should have serious fault mode styles applied when serious mode is enabled', async() => {
         component.isSeriousMode = true;
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('.serious-mode'))).toBeDefined();
         expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeNull();
       });
-      xit('should have dangerous fault mode styles applied when dangerous mode is enabled', () => {
+      it('should have dangerous fault mode styles applied when dangerous mode is enabled', () => {
         component.isDangerousMode = true;
         component.testCategory = TestCategory.F;
         fixture.detectChanges();
@@ -150,5 +194,45 @@ describe('TestReportCatHomeTestPage', () => {
       endTestButton.triggerEventHandler('click', null);
       expect(component.onEndTestClick).toHaveBeenCalled();
     });
+
+    describe('when the test report is invalid', () => {
+      it('should show the Legal Requirements modal', () => {
+        const { calls } = modalController.create as jasmine.Spy;
+        const endTestButton = fixture.debugElement.query(By.css('#end-test-button'));
+        component.testCategory = TestCategory.K;
+        component.isTestReportValid = false;
+        endTestButton.triggerEventHandler('click', null);
+        expect(calls
+          .argsFor(0)[0]).toBe(LEGAL_REQUIREMENTS_MODAL);
+      });
+    });
+
+    describe('when ETA is invalid', () => {
+      it('should show the ETA invalid modal', () => {
+        const { calls } = modalController.create as jasmine.Spy;
+        const endTestButton = fixture.debugElement.query(By.css('#end-test-button'));
+        component.testCategory = TestCategory.K;
+        component.isTestReportValid = true;
+        component.isEtaValid = false;
+        endTestButton.triggerEventHandler('click', null);
+        expect(calls
+          .argsFor(0)[0]).toBe('EtaInvalidModal');
+      });
+    });
+
+    describe('when the manoeuvres are incomplete and the category is not K', () => {
+      it('should show the special requirement modal', () => {
+        const { calls } = modalController.create as jasmine.Spy;
+        const endTestButton = fixture.debugElement.query(By.css('#end-test-button'));
+        component.testCategory = TestCategory.F;
+        component.manoeuvresCompleted = false;
+        component.isTestReportValid = true;
+        component.isEtaValid = true;
+        endTestButton.triggerEventHandler('click', null);
+        expect(calls
+          .argsFor(0)[0]).toBe(SPECIAL_REQUIREMENT_MODAL);
+      });
+    });
+
   });
 });
