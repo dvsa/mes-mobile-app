@@ -25,6 +25,10 @@ Before({ tags: '@catce' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catmod1' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 When('I continue to the back to office page', () => {
   enterD255();
   enterDebriefWitnessed();

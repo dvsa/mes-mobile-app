@@ -1,4 +1,4 @@
-@cata1 @full_smoke @regression
+@catmod1 @full_smoke @regression
 Feature: A Driving Examiner Completes a pass test for category Mod A1
 
   Scenario: Examiner completes a passed test with no faults

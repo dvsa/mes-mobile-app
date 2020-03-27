@@ -30,6 +30,10 @@ Before({ tags: '@catce' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@catmod1' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 Then('the pass certificate number should be {string}', (certificateNumber) => {
   const passCertificateNumber = getElement(by.id('declaration-pass-certificate-number'));
   passCertificateNumber.getText().then((textValue) => {

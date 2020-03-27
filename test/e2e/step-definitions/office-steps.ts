@@ -29,6 +29,10 @@ Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
 });
 
+Before({ tags: '@catmod1' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 When('I complete the office write up', () => {
   enterRouteNumber('2');
   if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'ce') {

@@ -40,7 +40,7 @@ Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
 });
 
-Before({ tags: '@cata1' }, () => {
+Before({ tags: '@catmod1' }, () => {
   this.testCategory = 'a-mod1';
 });
 

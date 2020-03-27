@@ -32,6 +32,10 @@ Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
 });
 
+Before({ tags: '@catmod1' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 When('I end the test', () => {
   endTest();
 });
