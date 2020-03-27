@@ -47,8 +47,7 @@ import {
   WeatherConditionsChanged,
   AdditionalInformationChanged,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
-import { getCandidate }
-from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName,
   getCandidateDriverNumber,
@@ -84,7 +83,7 @@ import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/
 import {
   AddShowMeTellMeComment,
 } from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.action';
-import { AddManoeuvreComment } from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+import { AddManoeuvreComment } from '../../../modules/tests/test-data/cat-adi-part2/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
@@ -158,7 +157,7 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
   drivingFaultCtrl: String = 'drivingFaultCtrl';
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
-  static readonly maxFaultCount = 15;
+  static readonly maxFaultCount = 6;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
@@ -448,14 +447,17 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       );
     } else if (startsWith(dangerousFaultComment.source, CommentSource.MANOEUVRES)) {
       const segments = dangerousFaultComment.source.split('-');
-      const fieldName = segments[1];
-      const controlOrObservation = segments[2];
+      const index = parseInt(segments[1], 10);
+      const fieldName = segments[2];
+      const controlOrObservation = segments[3];
       this.store$.dispatch(
         new AddManoeuvreComment(
           fieldName,
           CompetencyOutcome.D,
           controlOrObservation,
-          dangerousFaultComment.comment),
+          dangerousFaultComment.comment,
+          index,
+        ),
       );
 
     } else if (dangerousFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
@@ -473,16 +475,18 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       );
     } else if (startsWith(seriousFaultComment.source, CommentSource.MANOEUVRES)) {
       const segments = seriousFaultComment.source.split('-');
-      const fieldName = segments[1];
-      const controlOrObservation = segments[2];
+      const index = parseInt(segments[1], 10);
+      const fieldName = segments[2];
+      const controlOrObservation = segments[3];
       this.store$.dispatch(
         new AddManoeuvreComment(
           fieldName,
           CompetencyOutcome.S,
           controlOrObservation,
-          seriousFaultComment.comment),
+          seriousFaultComment.comment,
+          index,
+        ),
       );
-
     } else if (seriousFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
       this.store$.dispatch(new AddUncoupleRecoupleComment(seriousFaultComment.comment));
     } else if (seriousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
@@ -499,16 +503,18 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       );
     } else if (startsWith(drivingFaultComment.source, CommentSource.MANOEUVRES)) {
       const segments = drivingFaultComment.source.split('-');
-      const fieldName = segments[1];
-      const controlOrObservation = segments[2];
+      const index = parseInt(segments[1], 10);
+      const fieldName = segments[2];
+      const controlOrObservation = segments[3];
       this.store$.dispatch(
         new AddManoeuvreComment(
           fieldName,
           CompetencyOutcome.DF,
           controlOrObservation,
-          drivingFaultComment.comment),
+          drivingFaultComment.comment,
+          index,
+        ),
       );
-
     } else if (drivingFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
       this.store$.dispatch(new AddUncoupleRecoupleComment(drivingFaultComment.comment));
     } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
@@ -588,7 +594,11 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
     const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.ADI2, data);
     const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.ADI2, data);
 
-    return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
+    return (
+      dangerousFaultCount === 0 &&
+      seriousFaultCount === 0 &&
+      drivingFaultCount > OfficeCatADIPart2Page.maxFaultCount
+    );
   }
 
 }
