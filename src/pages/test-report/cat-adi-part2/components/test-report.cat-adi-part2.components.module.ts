@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { ManoeuvresComponent } from './manoeuvres/manoeuvres';
 import { VehicleCheckComponent } from './vehicle-check/vehicle-check';
-import { ManoeuvresPopoverComponent } from './manoeuvres-popover/manoeuvres-popover';
+import { ManoeuvresPopoverComponentAdiPart2 } from './manoeuvres-popover/manoeuvres-popover';
 import { IonicModule } from 'ionic-angular';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { TestReportComponentsModule } from '../../components/test-report-components.module';
+import { ManoeuvreCompetencyComponentAdiPart2 } from './manoeuvre-competency/manoeuvre-competency';
 
 @NgModule({
   declarations: [
     ManoeuvresComponent,
-    ManoeuvresPopoverComponent,
+    ManoeuvresPopoverComponentAdiPart2,
+    ManoeuvreCompetencyComponentAdiPart2,
     VehicleCheckComponent,
   ],
   imports: [
@@ -21,7 +23,8 @@ import { TestReportComponentsModule } from '../../components/test-report-compone
   ],
   exports:[
     ManoeuvresComponent,
-    ManoeuvresPopoverComponent,
+    ManoeuvresPopoverComponentAdiPart2,
+    ManoeuvreCompetencyComponentAdiPart2,
     VehicleCheckComponent,
   ],
 })

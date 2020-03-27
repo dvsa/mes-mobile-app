@@ -110,10 +110,20 @@ export class FaultCountProvider {
     }
   }
 
-  public getManoeuvreFaultCount = (category: TestCategory, data: object, faultType: CompetencyOutcome): number => {
+  public getManoeuvreFaultCount = <T>(
+    category: TestCategory,
+    data: T,
+    faultType: CompetencyOutcome,
+  ): number => {
     switch (category) {
-      // TODO(ADI2): Replace with actual fault count helper
-      case TestCategory.ADI2: return sumManoeuvreFaults(data, faultType);
+      case TestCategory.ADI2:
+        if (!Array.isArray(data)) {
+          return 0;
+        }
+
+        return data.reduce((acc, manoeuvre) => {
+          return acc + sumManoeuvreFaults(manoeuvre, faultType);
+        }, 0);
       case TestCategory.B: return sumManoeuvreFaults(data, faultType);
       case TestCategory.BE: return sumManoeuvreFaults(data, faultType);
       case TestCategory.C1:

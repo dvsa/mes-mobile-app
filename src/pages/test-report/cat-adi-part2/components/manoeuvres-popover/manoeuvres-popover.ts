@@ -1,18 +1,20 @@
-// TO-DO ADI Part2: implement correct category
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { Store, select } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { Component } from '@angular/core';
+import { Observable, of, Subscription, merge } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-// TO-DO ADI Part2: implement correct category
-import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
-// TO-DO ADI Part2: implement correct category
-import { getManoeuvres } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
+import {
+  getManoeuvresADI2,
+} from '../../../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.selector';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { RecordManoeuvresSelection } from '../../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+import {
+  RecordManoeuvresSelection, RecordManoeuvresDeselection,
+} from '../../../../../modules/tests/test-data/cat-adi-part2/manoeuvres/manoeuvres.actions';
 import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { some } from 'lodash';
 
 interface ManoeuvresFaultState {
   reverseRight: boolean;
@@ -22,16 +24,18 @@ interface ManoeuvresFaultState {
 }
 
 @Component({
-  selector: 'manoeuvres-popover',
+  selector: 'manoeuvres-popover-adi-part2',
   templateUrl: 'manoeuvres-popover.html',
 })
-export class ManoeuvresPopoverComponent {
+export class ManoeuvresPopoverComponentAdiPart2 implements OnInit, OnDestroy {
 
   manoeuvreTypes = ManoeuvreTypes;
-  // TO-DO ADI Part2: Implement correct category
-  manoeuvres$: Observable<CatBUniqueTypes.Manoeuvres>;
+  manoeuvres$: Observable<CatADI2UniqueTypes.Manoeuvres[]>;
   competencies = ManoeuvreCompetencies;
-  manoeuvresWithFaults$: Observable<ManoeuvresFaultState>;
+  manoeuvresWithFaults$: Observable<ManoeuvresFaultState[]>;
+  selectedManoeuvreTypes$: Observable<ManoeuvreTypes[]>;
+  subscription: Subscription;
+  merged$: Observable<ManoeuvreTypes[]>;
 
   constructor(private store$: Store<StoreModel>) { }
 
@@ -40,34 +44,84 @@ export class ManoeuvresPopoverComponent {
       select(getTests),
       select(getCurrentTest),
       select(getTestData),
-      select(getManoeuvres),
+      select(getManoeuvresADI2),
     );
+
     this.manoeuvresWithFaults$ = this.manoeuvres$.pipe(
-      // TO-DO ADI Part2: implement correct category
+      map((manoeuvres: CatADI2UniqueTypes.Manoeuvres[]) => {
+        return manoeuvres.map(manoeuvre => ({
+          reverseRight: this.manoeuvreHasFaults(manoeuvre.reverseRight),
+          reverseParkRoad: this.manoeuvreHasFaults(manoeuvre.reverseParkRoad),
+          reverseParkCarpark: this.manoeuvreHasFaults(manoeuvre.reverseParkCarpark),
+          forwardPark: this.manoeuvreHasFaults(manoeuvre.forwardPark),
+        }));
+      }),
+    );
 
-      map((manoeuvres: CatBUniqueTypes.Manoeuvres) => ({
-        reverseRight: this.manoeuvreHasFaults(manoeuvres.reverseRight),
-        reverseParkRoad: this.manoeuvreHasFaults(manoeuvres.reverseParkRoad),
-        reverseParkCarpark: this.manoeuvreHasFaults(manoeuvres.reverseParkCarpark),
-        forwardPark: this.manoeuvreHasFaults(manoeuvres.forwardPark),
-      })),
+    this.merged$ = merge(
+      this.manoeuvres$.pipe(
+        map((manoeuvres: CatADI2UniqueTypes.Manoeuvres[]) => {
+          return [
+            ...manoeuvres.map((manoeuvre) => {
+              return Object.keys(manoeuvre).find((manoeuvreType: ManoeuvreTypes) => {
+                return manoeuvre[manoeuvreType].selected === true;
+              });
+            }),
+          ];
+        }),
+        tap((selectedManouevreTypes: ManoeuvreTypes[]) => {
+          if (selectedManouevreTypes && selectedManouevreTypes[0] === selectedManouevreTypes[1]) {
+            this.store$.dispatch(new RecordManoeuvresDeselection(selectedManouevreTypes[0], 1));
+          }
+        }),
+      ),
+    );
+
+    this.subscription = this.merged$.subscribe();
+  }
+
+  recordManoeuvreSelection(manoeuvreType: ManoeuvreTypes, index: number): void {
+    this.store$.dispatch(new RecordManoeuvresSelection(manoeuvreType, index));
+  }
+
+  /**
+   * @param  {string} manoeuvre
+   * @returns Observable<boolean>
+   * Called by the manoeuvre input elements in manoeuvres-popover.html
+   * Tells the input whether it needs to be disabled based on whether
+   * or not another manoeuvre has a fault recorded
+   */
+  shouldManoeuvreDisable(manoeuvre: ManoeuvreTypes, index: number): Observable<boolean> {
+    return this.manoeuvresWithFaults$.pipe(
+      map((manoeuvresWithFaults: ManoeuvresFaultState[]) => {
+        if (manoeuvre === ManoeuvreTypes.reverseLeft) { return true; }
+
+        const { [manoeuvre]: manoeuvreToOmit, ...otherManoeuvres } = manoeuvresWithFaults[index];
+        return some(otherManoeuvres, (value: boolean) => value);
+      }),
     );
   }
 
-  recordManoeuvreSelection(manoeuvre: ManoeuvreTypes): void {
-    this.store$.dispatch(new RecordManoeuvresSelection(manoeuvre));
-  }
+  /**
+   * @param  {string} manoeuvre
+   * @returns Observable<boolean>
+   * Called by the manoeuvre input elements in manoeuvres-popover.html
+   * Tells the input whether the same ManoeuvreType has selected in the preceeding Manoeuvre
+   */
+  shouldHideManoeuvre(manoeuvre: ManoeuvreTypes, index: number): Observable<boolean> {
+    if (index === 0) { return of(false); }
 
-  // TODO(MES-5031): implement as part of manoeuvres build
-  shouldManoeuvreDisable(manoeuvre: ManoeuvreTypes): Observable<boolean> {
-    return of(false);
-    // return this.manoeuvresWithFaults$.pipe(
-    //   map((manoeuvresWithFaults: ManoeuvresFaultState) => {
-    //     // TO-DO ADI Part2: implement correct category
-    //     const { [manoeuvre]: manoeuvreToOmit, ...otherManoeuvres } = manoeuvresWithFaults;
-    //     return some(otherManoeuvres, (value: boolean) => value);
-    //   }),
-    // );
+    let prerequisiteManoeuvreSelected: string;
+
+    return this.manoeuvres$.pipe(
+      map((manoeuvres) => {
+        prerequisiteManoeuvreSelected = Object.keys(manoeuvres[0]).find(
+          manoeuvreName => manoeuvres[0][manoeuvreName].selected,
+        );
+
+        return !prerequisiteManoeuvreSelected || manoeuvre === prerequisiteManoeuvreSelected;
+      }),
+    );
   }
 
   manoeuvreHasFaults = (manoeuvre): boolean => (
@@ -76,5 +130,13 @@ export class ManoeuvresPopoverComponent {
     manoeuvre.observationFault != null)
   )
 
-  getId = (manoeuvre: ManoeuvreTypes, competency: ManoeuvreCompetencies) => `${manoeuvre}-${competency}`;
+  getId = (manoeuvre: ManoeuvreTypes, competency: ManoeuvreCompetencies, index: number) => {
+    return `${manoeuvre}-${competency}${index}`;
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 }

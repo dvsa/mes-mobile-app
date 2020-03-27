@@ -67,11 +67,17 @@ export class ReverseLeftComponent implements OnInit, OnDestroy  {
 
     this.subscription = manoeuvres$.subscribe((manoeuvres: ManoeuvreUnion) => {
       this.drivingFaults =
-          this.faultCountProvider.getManoeuvreFaultCount(this.testCategory, manoeuvres, CompetencyOutcome.DF);
+          this.faultCountProvider.getManoeuvreFaultCount<ManoeuvreUnion>(
+            this.testCategory, manoeuvres, CompetencyOutcome.DF,
+          );
       this.hasSeriousFault =
-          this.faultCountProvider.getManoeuvreFaultCount(this.testCategory, manoeuvres, CompetencyOutcome.S) > 0;
+          this.faultCountProvider.getManoeuvreFaultCount<ManoeuvreUnion>(
+            this.testCategory, manoeuvres, CompetencyOutcome.S,
+          ) > 0;
       this.hasDangerousFault =
-          this.faultCountProvider.getManoeuvreFaultCount(this.testCategory, manoeuvres, CompetencyOutcome.D) > 0;
+          this.faultCountProvider.getManoeuvreFaultCount<ManoeuvreUnion>(
+            this.testCategory, manoeuvres, CompetencyOutcome.D,
+          ) > 0;
       this.completedReverseLeft = getReverseLeftSelected(manoeuvres);
     });
   }
