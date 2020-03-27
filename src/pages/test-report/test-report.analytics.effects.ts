@@ -17,6 +17,7 @@ import * as dangerousFaultsActions
 import * as drivingFaultsActions from '../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import * as seriousFaultsActions from '../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import * as manoeuvresActions from '../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+import * as manoeuvresADIPart2Actions from '../../modules/tests/test-data/cat-adi-part2/manoeuvres/manoeuvres.actions';
 import * as vehicleChecksActions from '../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
 import * as testRequirementsActions
   from '../../modules/tests/test-data/common/test-requirements/test-requirements.actions';
@@ -54,7 +55,7 @@ import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import * as emergencyStopActions from '../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.actions';
 import * as avoidanceActions from '../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import * as pcvDoorExerciseActions from
-    '../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
+  '../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
 import {
   getControlledStop,
   ControlledStopUnion,
@@ -253,6 +254,29 @@ export class TestReportAnalyticsEffects {
   );
 
   @Effect()
+  addManoeuvreDrivingFaultCatADIPart2$ = this.actions$.pipe(
+    ofType(
+      manoeuvresADIPart2Actions.ADD_MANOEUVRE_DRIVING_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [manoeuvresADIPart2Actions.AddManoeuvreDrivingFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
+        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+        1,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
   addManoeuvreSeriousFault$ = this.actions$.pipe(
     ofType(
       manoeuvresActions.ADD_MANOEUVRE_SERIOUS_FAULT,
@@ -276,6 +300,29 @@ export class TestReportAnalyticsEffects {
   );
 
   @Effect()
+  addManoeuvreSeriousFaultCatADIPart2$ = this.actions$.pipe(
+    ofType(
+      manoeuvresADIPart2Actions.ADD_MANOEUVRE_SERIOUS_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [manoeuvresADIPart2Actions.AddManoeuvreSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
+        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+        1,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
   addManoeuvreDangerousFault$ = this.actions$.pipe(
     ofType(
       manoeuvresActions.ADD_MANOEUVRE_DANGEROUS_FAULT,
@@ -288,6 +335,29 @@ export class TestReportAnalyticsEffects {
       ),
     )),
     concatMap(([action, tests]: [manoeuvresActions.AddManoeuvreDangerousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
+        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+        1,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  addManoeuvreDangerousFaultCatADIPart2$ = this.actions$.pipe(
+    ofType(
+      manoeuvresADIPart2Actions.ADD_MANOEUVRE_DANGEROUS_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [manoeuvresADIPart2Actions.AddManoeuvreDangerousFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
@@ -574,6 +644,28 @@ export class TestReportAnalyticsEffects {
   );
 
   @Effect()
+  removeManoeuvreFaultCatADIPart2$ = this.actions$.pipe(
+    ofType(
+      manoeuvresADIPart2Actions.REMOVE_MANOEUVRE_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [manoeuvresADIPart2Actions.RemoveManoeuvreFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REMOVE_DRIVING_FAULT, tests),
+        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
   controlledStopRemoveFault$ = this.actions$.pipe(
     ofType(
       controlledStopActions.CONTROLLED_STOP_REMOVE_FAULT,
@@ -746,8 +838,8 @@ export class TestReportAnalyticsEffects {
     )),
     concatMap(([action, tests, eco]: [ecoActions.ToggleEco, TestsModel, Eco]) => {
       const toggleValue = eco.adviceGivenControl
-      ? 'selected'
-      : 'unselected';
+        ? 'selected'
+        : 'unselected';
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_ECO_CONTROL, tests),
@@ -902,6 +994,28 @@ export class TestReportAnalyticsEffects {
       ),
     )),
     switchMap(([action, tests]: [manoeuvresActions.RecordManoeuvresSelection, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+        `${legalRequirementsLabels['manoeuvre']} - ${legalRequirementToggleValues.completed}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  manoeuvreCompletedEffectCatADIPart2$ = this.actions$.pipe(
+    ofType(
+      manoeuvresADIPart2Actions.RECORD_MANOEUVRES_SELECTION,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    switchMap(([action, tests]: [manoeuvresADIPart2Actions.RecordManoeuvresSelection, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
