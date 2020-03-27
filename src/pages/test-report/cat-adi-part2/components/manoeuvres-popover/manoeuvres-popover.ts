@@ -70,7 +70,11 @@ export class ManoeuvresPopoverComponentAdiPart2 implements OnInit, OnDestroy {
           ];
         }),
         tap((selectedManouevreTypes: ManoeuvreTypes[]) => {
-          if (selectedManouevreTypes && selectedManouevreTypes[0] === selectedManouevreTypes[1]) {
+          if (
+            selectedManouevreTypes[0] &&
+            selectedManouevreTypes[1] &&
+            selectedManouevreTypes[0] === selectedManouevreTypes[1]
+          ) {
             this.store$.dispatch(new RecordManoeuvresDeselection(selectedManouevreTypes[0], 1));
           }
         }),
