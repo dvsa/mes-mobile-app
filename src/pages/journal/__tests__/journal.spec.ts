@@ -3,11 +3,11 @@ import { App } from './../../../app/app.component';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import {
   Config, Platform,
-  LoadingController, ToastController, IonicModule, NavController, NavParams,
+  LoadingController, ToastController, IonicModule, ModalController, NavController, NavParams,
 } from 'ionic-angular';
 import {
   NavControllerMock, NavParamsMock, ConfigMock,
-  PlatformMock, LoadingControllerMock, ToastControllerMock,
+  PlatformMock, LoadingControllerMock, ModalControllerMock, ToastControllerMock,
 } from 'ionic-mocks';
 import { JournalComponentsModule } from './../components/journal-components.module';
 import { AppModule } from '../../../app/app.module';
@@ -20,9 +20,17 @@ import { journalReducer } from '../../../modules/journal/journal.reducer';
 import { Subscription } from 'rxjs';
 import { SlotSelectorProvider } from '../../../providers/slot-selector/slot-selector';
 import { MockedJournalModule } from '../../../modules/journal/__mocks__/journal.module.mock';
-import { UnloadJournal, LoadJournal, LoadJournalSuccess } from '../../../modules/journal/journal.actions';
+import {
+  UnloadJournal,
+  LoadJournal,
+  LoadJournalSuccess,
+  SetupPolling,
+} from '../../../modules/journal/journal.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { StoreModel } from '../../../shared/models/store.model';
+import { MesError } from '../../../shared/models/mes-error.model';
+import { ERROR_PAGE } from '../../page-names.constants';
+import { ErrorTypes } from '../../../shared/models/error-message';
 import journalSlotsDataMock from '../../../modules/journal/__mocks__/journal-slots-data.mock';
 import { By } from '@angular/platform-browser';
 import { ConnectionStatus } from '../../../providers/network-state/network-state';
@@ -67,6 +75,7 @@ describe('JournalPage', () => {
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
         { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },
         { provide: ToastController, useFactory: () => ToastControllerMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
@@ -110,6 +119,39 @@ describe('JournalPage', () => {
       it('should dispatch a LoadJournal action', () => {
         component.loadJournalManually();
         expect(store$.dispatch).toHaveBeenCalledWith(new LoadJournal());
+      });
+    });
+
+    describe('setupPolling', () => {
+      it('should dispatch a setupPolling action', () => {
+        component.setupPolling();
+        expect(store$.dispatch).toHaveBeenCalledWith(new SetupPolling());
+      });
+    });
+
+    describe('handleLoadingUI', () => {
+      it('should create a loading spinner instance if loading is true', () => {
+        component.handleLoadingUI(true);
+        expect(component.loadingController.create).toHaveBeenCalledWith({
+          dismissOnPageChange: true,
+          spinner: 'circles',
+        });
+      });
+    });
+
+    describe('showError', () => {
+      it('should create a modal instance if there is an error', () => {
+        const errorMessage: MesError = {
+          message: 'Error',
+          status: 500,
+          statusText: 'Something went wrong',
+        };
+
+        component.showError(errorMessage);
+        expect(component.modalController.create).toHaveBeenCalledWith(
+          ERROR_PAGE,
+          { type: ErrorTypes.JOURNAL_REFRESH },
+          { cssClass: 'modal-fullscreen text-zoom-regular' });
       });
     });
 
