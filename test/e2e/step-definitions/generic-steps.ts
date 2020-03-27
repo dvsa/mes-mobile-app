@@ -40,6 +40,10 @@ Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
 });
 
+Before({ tags: '@cata1' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 // We need this much timeout for the login process to complete
 setDefaultTimeout(TEST_CONFIG.DEFAULT_TIMEOUT);
 

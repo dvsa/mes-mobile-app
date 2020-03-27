@@ -1,5 +1,5 @@
-@catmod1 @full_smoke @regression
-Feature: A Driving Examiner Completes a pass test for category Mod 1
+@cata1 @full_smoke @regression
+Feature: A Driving Examiner Completes a pass test for category Mod A1
 
   Scenario: Examiner completes a passed test with no faults
     Given I am logged in as "desexamineram1" and I have a test for "Ms Alisa Garza"
@@ -7,7 +7,6 @@ Feature: A Driving Examiner Completes a pass test for category Mod 1
     And the candidate completes the declaration page
     And the candidate confirms their declaration
     Then I should see the "Declaration - Alisa Garza" page
-    And I click on the "Continue" button
     And I proceed to the car
     Then I should see the "Alisa Garza" page
     And I complete the waiting room to car page
