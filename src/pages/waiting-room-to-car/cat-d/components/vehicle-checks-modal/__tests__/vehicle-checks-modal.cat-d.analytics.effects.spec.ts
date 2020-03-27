@@ -72,7 +72,7 @@ describe('Vehicle Checks Modal Cat D Analytics Effects', () => {
     const showMeQuestion: QuestionResult = {
       code: 'S01',
     };
-    it('should log an analyics event with show me question info', (done) => {
+    it('should log an analytics event with show me question info', (done) => {
 
       store$.dispatch(new testsActions.StartTest(12345, TestCategory.D));
       actions$.next(new VehicleChecksActions.ShowMeQuestionSelected(showMeQuestion, questionNumber));
