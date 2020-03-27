@@ -74,7 +74,7 @@ import * as highwayCodeActions
   from '../../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.actions';
 import * as etaActions from '../../../modules/tests/test-data/common/eta/eta.actions';
 
-fdescribe('Test Report Analytics Effects', () => {
+describe('Test Report Analytics Effects', () => {
 
   let effects: TestReportAnalyticsEffects;
   let actions$: ReplaySubject<any>;
