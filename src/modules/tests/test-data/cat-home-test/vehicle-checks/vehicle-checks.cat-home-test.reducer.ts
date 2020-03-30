@@ -1,9 +1,5 @@
 
-import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
-import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
-import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
-import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
-
+import { VehicleChecksUnion } from '../../../../../shared/unions/test-schema-unions';
 import * as vehicleChecksCatHomeTestActionTypes from './vehicle-checks.cat-home-test.action';
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS,
@@ -12,13 +8,7 @@ import {
   NUMBER_OF_TELL_ME_QUESTIONS,
 } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-home-test.constants';
 
-export type VehicleChecksUnion =
-  | CatFUniqueTypes.VehicleChecks
-  | CatGUniqueTypes.VehicleChecks
-  | CatHUniqueTypes.VehicleChecks
-  | CatKUniqueTypes.VehicleChecks;
-
-export const initialState: CatFUniqueTypes.VehicleChecks = {
+export const initialState: VehicleChecksUnion = {
   tellMeQuestions: Array(NUMBER_OF_TELL_ME_QUESTIONS).fill({}),
   showMeQuestions: Array(NUMBER_OF_SHOW_ME_QUESTIONS).fill({}),
 };

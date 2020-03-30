@@ -8,7 +8,7 @@ import {
   RemoveManoeuvreFault,
 } from '../../../common/manoeuvres/manoeuvres.actions';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
-import { ManoeuvreUnion } from '../../../../../../providers/manoeuvres-by-category/manoeuvres-by-category';
+import { ManoeuvreUnion } from '../../../../../../shared/unions/test-schema-unions';
 import { manoeuvresReducer } from '../../../common/manoeuvres/manoeuvres.reducer';
 
 describe('Manoeuvres CatD Reducer', () => {

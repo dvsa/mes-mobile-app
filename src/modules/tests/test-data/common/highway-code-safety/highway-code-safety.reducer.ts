@@ -1,18 +1,9 @@
-import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
-import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
-import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
-import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
+import { HighwayCodeSafetyUnion } from '../../../../../shared/unions/test-schema-unions';
 
 import * as highwayCodeSafetyActions from './highway-code-safety.actions';
 import { createFeatureSelector } from '@ngrx/store';
 
-export const initialState: CatFUniqueTypes.HighwayCodeSafety = {};
-
-export type HighwayCodeSafetyUnion =
-  | CatFUniqueTypes.HighwayCodeSafety
-  | CatGUniqueTypes.HighwayCodeSafety
-  | CatHUniqueTypes.HighwayCodeSafety
-  | CatKUniqueTypes.HighwayCodeSafety;
+export const initialState: HighwayCodeSafetyUnion = {};
 
 export function highwayCodeSafetyReducer(
   state = initialState,

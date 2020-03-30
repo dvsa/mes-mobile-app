@@ -1,40 +1,18 @@
 import { Competencies, LegalRequirements } from '../test-data.constants';
 import { get } from 'lodash';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
-import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
-import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
-import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
-import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
+import {
+  CatDTestData,
+  CatDManoeuvres,
+  CatDTestRequirements,
+  CatDVehicleChecks,
+} from '../../../../shared/unions/test-schema-unions';
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS,
 } from '../../../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
 import {
    NUMBER_OF_TELL_ME_QUESTIONS,
   } from '../../../../shared/constants/tell-me-questions/tell-me-questions.vocational.constants';
-
-export type CatDTestData =
-  | CatDUniqueTypes.TestData
-  | CatD1UniqueTypes.TestData
-  | CatDEUniqueTypes.TestData
-  | CatD1EUniqueTypes.TestData;
-
-export type CatDManoeuvres =
-  | CatDUniqueTypes.Manoeuvres
-  | CatD1UniqueTypes.Manoeuvres
-  | CatDEUniqueTypes.Manoeuvres
-  | CatD1EUniqueTypes.Manoeuvres;
-
-export type CatDTestRequirements =
-  | CatDUniqueTypes.TestRequirements
-  | CatD1UniqueTypes.TestRequirements
-  | CatDEUniqueTypes.TestRequirements
-  | CatD1EUniqueTypes.TestRequirements;
-
-export type CatDVehicleChecks =
-  | CatDUniqueTypes.VehicleChecks
-  | CatD1UniqueTypes.VehicleChecks
-  | CatDEUniqueTypes.VehicleChecks
-  | CatD1EUniqueTypes.VehicleChecks;
 
 export const getDrivingFaultCount = (
   data: CatDTestData, competency: Competencies) => data.drivingFaults[competency];

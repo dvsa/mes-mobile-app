@@ -1,16 +1,7 @@
+import { VehicleChecksUnion } from '../../../../../shared/unions/test-schema-unions';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { createFeatureSelector } from '@ngrx/store';
 import { some } from 'lodash';
-import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
-import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
-import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
-import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
-
-type VehicleChecksUnion =
-  | CatFUniqueTypes.VehicleChecks
-  | CatGUniqueTypes.VehicleChecks
-  | CatHUniqueTypes.VehicleChecks
-  | CatKUniqueTypes.VehicleChecks;
 
 export const getSelectedShowMeQuestions = (
   vehicleChecks: VehicleChecksUnion,
