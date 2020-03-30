@@ -37,8 +37,8 @@ import { ErrorMessageComponent } from '../../../../components/common/error-messa
 import { ViewTestResultCatHomeTestPage } from '../view-test-result.cat-home-test.page';
 import { BusinessDetailsCardComponent } from '../../components/business-details-card/business-details-card';
 import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
-import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
 import { configureTestSuite } from 'ng-bullet';
+import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
 
 describe('ViewTestResultCatHomeTestPage', () => {
   let fixture: ComponentFixture<ViewTestResultCatHomeTestPage>;
@@ -247,7 +247,7 @@ describe('ViewTestResultCatHomeTestPage', () => {
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).not.toBeNull();
       expect(
-        fixture.debugElement.query(By.css('vehicle-details-card-cat-home-test')),
+        fixture.debugElement.query(By.css('vehicle-details-card')),
       ).not.toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).not.toBeNull();
       expect(
