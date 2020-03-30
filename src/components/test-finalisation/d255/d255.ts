@@ -5,7 +5,7 @@ import {
   VisibilityType,
 } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
-enum ValidD255Values {
+export enum ValidD255Values {
   YES = 'Yes',
   NO = 'No',
 }
@@ -29,7 +29,8 @@ export class D255Component implements OnChanges {
 
   @Output()
   d255Change = new EventEmitter<boolean>();
-  private formControl: FormControl;
+
+  formControl: FormControl;
   static readonly fieldName: string = 'd255';
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
@@ -40,7 +41,6 @@ export class D255Component implements OnChanges {
       this.formGroup.addControl(D255Component.fieldName, this.formControl);
     }
     const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, D255Component.fieldName);
-
     if (visibilityType === VisibilityType.NotVisible) {
       this.formGroup.get(D255Component.fieldName).clearValidators();
     } else {

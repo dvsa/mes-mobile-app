@@ -1,7 +1,7 @@
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 
-enum additionalText {
+export enum additionalText {
   JOURNAL = 'and try again later.',
   STANDARD_TEXT = 'and try again.',
 }
