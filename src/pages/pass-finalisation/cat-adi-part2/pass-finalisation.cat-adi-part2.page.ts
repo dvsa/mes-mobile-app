@@ -33,7 +33,11 @@ import {
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { DebriefWitnessed, DebriefUnwitnessed } from '../../../modules/tests/test-summary/common/test-summary.actions';
+import {
+  DebriefWitnessed,
+  DebriefUnwitnessed,
+  D255No,
+} from '../../../modules/tests/test-summary/common/test-summary.actions';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -67,6 +71,9 @@ export class PassFinalisationCatADIPart2Page extends BasePageComponent {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
+
+    // Dispatching this action as D255 is not present in ADI pt2 but it is a mandatory field in TARS
+    store$.dispatch(new D255No());
   }
 
   ngOnInit(): void {
