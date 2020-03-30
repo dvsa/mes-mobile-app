@@ -77,13 +77,15 @@ class JournalPage extends Page {
   /**
    * no need to call this.waitForPresenceOfElement(element) - this element may or may not be present.  If it is
    * present we want to click it.  If it isn't present we don't care.
+   *
+   * rekey-start-test-button is the id of the button "Start Test" in the "Test Time is Expired" modal.
    */
-  getRekeyStartTestButton() {
+  getStartTestLateButton() {
     return this.getElementById('rekey-start-test-button', false);
   }
 
-  clickRekeyStartTestButton() {
-    this.clickElement(this.getRekeyStartTestButton());
+  clickStartTestLateButton() {
+    this.clickElement(this.getStartTestLateButton());
   }
 
   getRekeyTestButtonFor(candidateName) {

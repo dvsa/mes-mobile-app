@@ -44,6 +44,14 @@ When('I start the test for {string}', (candidateName) => {
       JournalPage.clickStartTestEarlyButton();
     }
   });
+
+  const startTestLateButton = JournalPage.getStartTestLateButton();
+
+  startTestLateButton.isPresent().then((result) => {
+    if (result) {
+      JournalPage.clickStartTestLateButton();
+    }
+  });
 });
 
 When('I rekey a test for {string}', (candidateName) => {
@@ -76,26 +84,24 @@ When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidat
     JournalPage.startingExpiredOrEarlyTest(candidateName);
 
     // If the rekey dialog is shown so just select start test normally
-    const lateStartTestButton = JournalPage.getRekeyStartTestButton();
+    const lateStartTestButton = JournalPage.getStartTestLateButton();
     lateStartTestButton.isPresent().then((result) => {
       if (result) {
-        JournalPage.clickRekeyStartTestButton();
+        JournalPage.clickStartTestLateButton();
       }
     });
   }
-
-  // JournalPage.getStartTestButtonFor(candidateName);
 });
 
 When('I rekey a late test for {string}', (candidateName) => {
   JournalPage.startTestFor(candidateName);
 
   // If the rekey dialog is shown so just select start test normally
-  const rekeyStartTestButton = JournalPage.getRekeyStartTestButton();
+  const rekeyStartTestButton = JournalPage.getStartTestLateButton();
   JournalPage.rekeyIsPresent();
   rekeyStartTestButton.isPresent().then((result) => {
     if (result) {
-      JournalPage.clickRekeyStartTestButton();
+      JournalPage.clickStartTestLateButton();
     }
   });
 });
