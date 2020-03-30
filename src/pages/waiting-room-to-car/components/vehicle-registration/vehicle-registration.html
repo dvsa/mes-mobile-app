@@ -7,9 +7,15 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col col-32>
-        <input type="text" id="registration" formControlName="vehicleRegistration" class="vehicle-reg-input"
-          autocapitalize="characters" uppercaseAlphanumOnly [class.ng-invalid]="invalid" [value]="vehicleRegistration"
-          (change)="vehicleRegistrationChanged($event.target.value)" maxlength="7">
+        <input
+                type="text"
+                id="registration"
+                formControlName="vehicleRegistration"
+                class="vehicle-reg-input"
+                [class.ng-invalid]="invalid"
+                [value]="vehicleRegistration"
+                (input)="vehicleRegistrationChanged($event)"
+                maxlength="7">
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>
