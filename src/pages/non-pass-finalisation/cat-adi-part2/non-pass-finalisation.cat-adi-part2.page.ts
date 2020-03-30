@@ -43,6 +43,7 @@ import { behaviourMap } from '../../office/office-behaviour-map.cat-adi-part2';
 import {
   DebriefWitnessed,
   DebriefUnwitnessed,
+  D255No,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import {
   CandidateChoseToProceedWithTestInWelsh,
@@ -87,6 +88,9 @@ export class NonPassFinalisationCatADIPart2Page extends BasePageComponent implem
     this.form = new FormGroup({});
     this.activityCodeOptions = activityCodeModelList;
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
+
+    // Dispatching this action as D255 is not present in ADI pt2 but it is a mandatory field in TARS
+    store$.dispatch(new D255No());
   }
 
   ngOnInit() {
