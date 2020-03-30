@@ -194,7 +194,7 @@ Then('the controlled stop requirement is ticked', () => {
 
 Then('the driver fault count is {string}', (driverFaultCount) => {
   const summaryCountField = TestReportPage.getSummaryCountField();
-  expect(summaryCountField.getText(), `Expected driver fault count to equal ${driverFaultCount}`)
+  return expect(summaryCountField.getText(), `Expected driver fault count to equal ${driverFaultCount}`)
     .to.eventually.equal(driverFaultCount);
 });
 

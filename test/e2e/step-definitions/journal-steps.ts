@@ -36,18 +36,6 @@ When('I check candidate details for {string}', (candidateName) => {
 
 When('I start the test for {string}', (candidateName) => {
   JournalPage.startTestFor(candidateName);
-
-  // If the rekey dialog is shown so just select start test normally
-  const rekeyStartTestButton = JournalPage.getRekeyStartTestButton();
-
-  rekeyStartTestButton.isPresent().then((result) => {
-    if (result) {
-      JournalPage.clickRekeyStartTestButton();
-    } else {
-      PageHelper.resetApp('mobexaminer1'); // temp hardcoded string for testing.
-    }
-  });
-
     // If the start test early dialog is shown just select continue
   const startTestEarlyButton = JournalPage.getStartTestEarlyButton();
 
