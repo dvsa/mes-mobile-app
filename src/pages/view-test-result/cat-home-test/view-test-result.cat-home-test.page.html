@@ -25,7 +25,7 @@
       <rekey-reason-card [data]='testResult.rekeyReason'></rekey-reason-card>
     </div>
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
-    <vehicle-details-card [data]='testResult.vehicleDetails' [category]="testResult.category"></vehicle-details-card>
+    <vehicle-details-card [data]='testResult.vehicleDetails' [category]="testCategory"></vehicle-details-card>
     <debrief-card [data]='testResult.testData' [category]='testResult.category'></debrief-card>
     <test-summary-card
       [accompaniment]='testResult.accompaniment'
