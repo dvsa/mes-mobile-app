@@ -167,3 +167,7 @@ Then('The vehicle for {string} has length {string}, width {string}, height {stri
 Then('I continue the write up for {string}', (candidateName) => {
   JournalPage.clickContinueWriteupButton(candidateName);
 });
+
+When('I close the candidate test details modal', () => {
+  JournalPage.closeCandidateDetailsDialog();
+});

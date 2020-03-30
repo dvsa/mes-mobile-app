@@ -171,6 +171,10 @@ class JournalPage extends Page {
     const rekeyStartTestButton = this.getElementById('rekey-start-test-button', false);
     return expect(rekeyStartTestButton.isPresent()).to.eventually.be.true;
   }
+
+  closeCandidateTestDetailsModal() {
+    // const closeButton = this.ge
+  }
 }
 
 export default new JournalPage();
