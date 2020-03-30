@@ -81,7 +81,7 @@ Given('I am not logged in', () => {
 Given('I am logged in as {string} and I have a test for {string}', async (username, candidateName) => {
   // Go to journal page as the user
   // Load the landing page
-  await LandingPage.onLandingPageAs(username);
+  await LandingPage.onLandingPageAsAsync(username);
   // Navigate to journal page
   DashboardPage.clickGoToMyJournalButton();
   // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
@@ -136,8 +136,8 @@ Then('I should see the Microsoft login page', () => {
   });
 });
 
-Given('I am on the landing page as {string}', (username) => {
-  LandingPage.onLandingPageAs(username);
+Given('I am on the landing page as {string}', async (username) => {
+  await LandingPage.onLandingPageAsAsync(username);
 });
 
 When(/^I start marking a practice test (with|without) a driving fault$/, (drivingFault) => {

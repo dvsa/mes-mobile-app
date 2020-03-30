@@ -13,9 +13,9 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-Given('I am on the journal page as {string}',  (username) => {
+Given('I am on the journal page as {string}',  async (username) => {
   // Load the landing page
-  LandingPage.onLandingPageAs(username);
+  await LandingPage.onLandingPageAsAsync(username);
 
   // Navigate to journal page
   DashboardPage.clickGoToMyJournalButton();
@@ -43,6 +43,8 @@ When('I start the test for {string}', (candidateName) => {
   rekeyStartTestButton.isPresent().then((result) => {
     if (result) {
       JournalPage.clickRekeyStartTestButton();
+    } else {
+      PageHelper.resetApp('mobexaminer1'); // temp hardcoded string for testing.
     }
   });
 
