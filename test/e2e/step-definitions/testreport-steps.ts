@@ -77,7 +77,26 @@ When('I complete the test with controlled stop', () => {
   endTest();
 });
 
-When
+When('I complete the test as a Mod1 user', () => {
+  browser.driver.selectContext('NATIVE_APP').then(() => {
+    browser.getPageSource().then((response) => {
+      console.log(response);
+    });
+  });
+  // const emergencyStopFirst = getElement(by.xpath(`//ion-content/div[2]/
+  // ion-grid/speed-check[1]/ion-row[1]/ion-col[2]/input[1]`));
+  // const emergencyStopSecond = getElement(by.xpath(`//ion-content/div[2]/
+  // ion-grid/speed-check[1]/ion-row[1]/ion-col[2]/input[2]`));
+  // emergencyStopFirst.sendKeys('50');
+  // emergencyStopSecond.sendKeys('50');
+  // const avoidentStopFirst = getElement(by.xpath(`//ion-content/div[2]/
+  // ion-grid/speed-check[2]/ion-row[1]/ion-col[2]/input[1]`));
+  // const avoidentStopSecond = getElement(by.xpath(`//ion-content/div[2]/
+  // ion-grid/speed-check[2]/ion-row[1]/ion-col[2]/input[2]`));
+  // avoidentStopFirst.sendKeys('50');
+  // avoidentStopSecond.sendKeys('50');
+  // endTest();
+});
 
 When('I add a Show me / Tell me driver fault', () => {
   longPressButton(getElement(by.className('vehicle-check-competency')));
