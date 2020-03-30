@@ -29,7 +29,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And the required test observation is present "Show me / Tell me"
       And the required test observation is present "Eco (control and planning)"
       Then I return to the test report page
-      When I add a Show me / Tell me driver fault
+      When I add a "Show me / Tell me" driver fault
       Then the driver fault count is "1"
       When I add a "Accelerator" driver fault
       Then the driver fault count is "2"

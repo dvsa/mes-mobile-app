@@ -1,7 +1,14 @@
-import { Before } from 'cucumber';
-import { browser, ExpectedConditions, element, by , Key } from 'protractor';
-import { TEST_CONFIG } from '../test.config';
-import { waitForOverlay, getParentContext, getElement, isReady, clickElement, clickBackButton } from '../../helpers/interactionHelpers';
+import {Before} from 'cucumber';
+import {browser, ExpectedConditions, element, by, Key} from 'protractor';
+import {TEST_CONFIG} from '../test.config';
+import {
+  waitForOverlay,
+  getParentContext,
+  getElement,
+  isReady,
+  clickElement,
+  clickBackButton
+} from '../../helpers/interactionHelpers';
 
 const {
   Given,
@@ -20,27 +27,27 @@ const fs = require('fs');
 
 this.testCategory = 'b';
 
-Before({ tags: '@catbe' }, () => {
+Before({tags: '@catbe'}, () => {
   this.testCategory = 'be';
 });
 
-Before({ tags: '@catc' }, () => {
+Before({tags: '@catc'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catc1' }, () => {
+Before({tags: '@catc1'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catce' }, () => {
+Before({tags: '@catce'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catc1e' }, () => {
+Before({tags: '@catc1e'}, () => {
   this.testCategory = 'ce';
 });
 
-Before({ tags: '@catmod1' }, () => {
+Before({tags: '@catmod1'}, () => {
   this.testCategory = 'a-mod1';
 });
 
@@ -100,7 +107,7 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
       logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
       // Refresh application
       loadApplication().then(() => {
-      // Small wait to make sure the action has initiated
+        // Small wait to make sure the action has initiated
         browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
       });
 
@@ -187,7 +194,7 @@ Then('I should see the {string} contains {string}', (rowName, rowValue) => {
 });
 
 When('I click on the {string} button', (buttonId) => {
-  const buttonElement = getElement(by.css(`#${buttonId}`));
+  const buttonElement = getElement(by.xpath(`//*[@id="category-type"]//input`));
   return clickElement(buttonElement);
 });
 
@@ -414,13 +421,13 @@ const onLandingPageAs = (username) => {
 
   loggedInAs(TEST_CONFIG.users[username].employeeId).then((response) => {
     if (!response) {
-        // If not logged in as the right user logout and log in as the correct user
+      // If not logged in as the right user logout and log in as the correct user
       logout();
       logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
 
       // Refresh application
       loadApplication().then(() => {
-      // Small wait to make sure the action has initiated
+        // Small wait to make sure the action has initiated
         browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
       });
     }
@@ -444,7 +451,7 @@ export const onJournalPageAs = (username) => {
   browser.wait(ExpectedConditions.presenceOf(refreshButton));
 };
 
-const getPageType = (pageName : string) => {
+const getPageType = (pageName: string) => {
   switch (pageName) {
     case 'communication page':
       return `communication-cat-${this.testCategory}-page`;
