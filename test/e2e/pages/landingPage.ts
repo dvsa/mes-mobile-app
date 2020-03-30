@@ -20,8 +20,8 @@ class LandingPage extends Page {
     return this.getElementByXPath('//ion-app');
   }
 
-  getStaffNumberField() {
-    return this.getElementByXPath(`//span[@class="employee-id"]`);
+  getStaffNumberField(staffNumber) {
+    return this.getElementByXPath(`//span[@class="employee-id" and text()="${staffNumber}"]`);
   }
 
   /**
@@ -30,29 +30,29 @@ class LandingPage extends Page {
    */
   isLoggedInAs(username) {
     const expectedStaffNumber = TEST_CONFIG.users[username].employeeId;
-    this.getAppElement();
-    let result;
-    this.getStaffNumberField().getText().then((actualStaffNumber) => {
-      result = actualStaffNumber === expectedStaffNumber;
-      return result;
-    });
-
-    return Promise.resolve(false);
+    // const staffNumberElement = this.getStaffNumberField(expectedStaffNumber);
+    // const returnStaffNumber = staffNumberElement.getText().then((id) => {
+    //   return id;
+    // });
+    // return returnStaffNumber === expectedStaffNumber;
+    browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
+    const staffNumberField = element(by.xpath(`//span[@class="employee-id" and text()="${expectedStaffNumber}"]`));
+    return staffNumberField.isPresent();
   }
 
   // todo: kc on journalPage there is a method onJournalPageAs.
   // would be good to have a polymorphic method name here for both methods.
-  async onLandingPageAs(username) {
-    await this.loadApplication();
+  onLandingPageAs(username) {
+    this.loadApplication();
     this.waitForActionToInitiate();
 
-    const isLoggedInAs = await this.isLoggedInAs(username);
+    const isLoggedInAs = this.isLoggedInAs(username);
     if (!isLoggedInAs) {
       LoginPage.logout();
       LoginPage.login(username);
 
       // Refresh application
-      await this.loadApplication();
+      this.loadApplication();
       this.waitForActionToInitiate();
     }
 

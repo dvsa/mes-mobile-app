@@ -13,9 +13,9 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-Given('I am on the journal page as {string}', async (username) => {
+Given('I am on the journal page as {string}',  (username) => {
   // Load the landing page
-  await LandingPage.onLandingPageAs(username);
+  LandingPage.onLandingPageAs(username);
 
   // Navigate to journal page
   DashboardPage.clickGoToMyJournalButton();

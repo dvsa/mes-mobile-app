@@ -142,6 +142,7 @@ export default class Page {
 
   // todo: kc how to keep default timeout
   waitForPresenceOfElement(element) {
+    browser.sleep(1000);
     browser.wait(ExpectedConditions.presenceOf(element));
   }
 
