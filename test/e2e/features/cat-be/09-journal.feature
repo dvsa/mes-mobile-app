@@ -16,6 +16,3 @@ Feature: Cat B+E Journal
     When I view candidate details for "Mr Dixon Clayton"
     Then I should see the "Slot type" contains "Special Needs Extra Time"
     And I should see the "Business name" contains "Imant"
-
-
-
