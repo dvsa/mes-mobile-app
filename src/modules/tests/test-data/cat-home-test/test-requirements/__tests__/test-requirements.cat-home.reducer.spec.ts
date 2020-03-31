@@ -6,7 +6,7 @@ import { TestRequirements } from '@dvsa/mes-test-schema/categories/common';
 describe('Test Requirements CAT Home Reducer', () => {
 
   describe('TOGGLE_LEGAL_REQUIREMENT', () => {
-    it('should angled start to complete(true) when dispatched first time', () => {
+    it('should toggle angled start to complete(true) when dispatched first time', () => {
       const state: TestRequirements = {};
       const result = testRequirementsCatHomeReducer(
         state,
