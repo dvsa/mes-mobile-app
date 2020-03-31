@@ -32,17 +32,6 @@ class PageHelper extends Page {
     JournalPage.isCurrentPage();
   }
 
-  // is this to replace reset App?
-   // export const resetTestDataState = (username) => {
-   //   waitForOverlay('click-block-active');
-   //   clickBackButton();
-   //   logout();
-   //   logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
-   //   loadApplication().then(() => {
-   //     browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
-   //   });
-   // };
-
   getPassCodeField() {
     return this.getElementByXPath('//XCUIElementTypeSecureTextField[@label="Passcode field"]');
   }
