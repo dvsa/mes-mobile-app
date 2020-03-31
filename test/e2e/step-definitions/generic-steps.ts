@@ -1,7 +1,13 @@
 import { Before } from 'cucumber';
-import { browser, ExpectedConditions, element, by , Key } from 'protractor';
+import { browser, element, by } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
-import { waitForOverlay, getParentContext, getElement, isReady, clickElement, clickBackButton } from '../../helpers/interactionHelpers';
+import LoginPage from '../pages/loginPage';
+import LandingPage from '../pages/landingPage';
+import DashboardPage from '../pages/dashboardPage';
+import JournalPage from '../pages/journalPage';
+import TestReportPage from '../pages/testReportPage';
+import BackToOfficePage from '../pages/backToOfficePage';
+import PageHelper from '../pages/pageHelper';
 
 const {
   Given,
@@ -58,63 +64,55 @@ Given('I am not logged in', () => {
   browser.waitForAngular();
 
   // Log out if we are logged in
-  logout();
+  LoginPage.logout();
 
   browser.driver.getCurrentContext().then((webviewContext) => {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP').then(() => {
       // Wait until we are on the login page before proceeding
-      const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-      browser.wait(ExpectedConditions.presenceOf(usernameFld));
+      LoginPage.isCurrentPage();
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(getParentContext(webviewContext));
+      browser.driver.selectContext(LoginPage.getParentContext(webviewContext));
     });
   });
 });
 
-Given('I am logged in as {string} and I have a test for {string}', (username, candidateName) => {
+Given('I am logged in as {string} and I have a test for {string}', async (username, candidateName) => {
   // Go to journal page as the user
-  onJournalPageAs(username);
-
+  // Load the landing page
+  await LandingPage.onLandingPageAsAsync(username);
+  // Navigate to journal page
+  DashboardPage.clickGoToMyJournalButton();
   // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
-  const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-  browser.wait(ExpectedConditions.presenceOf(refreshButton));
+  JournalPage.getRefreshButton();
+  const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
 
-  const buttonElement = element(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
+  const startButtonIsPresent = buttonElement.isPresent();
+  if (startButtonIsPresent) {
+    PageHelper.waitForOverlay('click-block-active');
+    JournalPage.clickBackButton();
+    // Logout
+    LoginPage.logout();
+    // Login
+    LoginPage.login(username);
+    // Refresh application
+    LandingPage.loadApplication();
 
-  buttonElement.isPresent().then((isStartPresent) => {
-    if (!isStartPresent) {
-      // Go back to dashboard
-      waitForOverlay('click-block-active');
-      clickBackButton();
-      // Logout
-      logout();
-      // Login
-      logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
-      // Refresh application
-      loadApplication().then(() => {
-      // Small wait to make sure the action has initiated
-        browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
-      });
+    LandingPage.waitForActionToInitiate();
 
-      // I should first hit the landing page
-      const employeeId = element(
-        by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
-      browser.wait(ExpectedConditions.presenceOf(employeeId));
+    // I should first hit the landing page
+    // LandingPage.getEmployeeId(username);
+    LandingPage.isCurrentPage(username);
 
-      // Navigate to journal page
-      const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
-      clickElement(goToJournalButton);
+    // Navigate to journal page
+    DashboardPage.clickGoToMyJournalButton();
 
-      // If the journal page is loaded we should have a refresh button
-      const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-      browser.wait(ExpectedConditions.presenceOf(refreshButton));
-      return expect(refreshButton.isPresent()).to.eventually.be.true;
-    }
-  });
+    // If the journal page is loaded we should have a refresh button
+    const refreshButton = JournalPage.getRefreshButton();
+    return expect(refreshButton.isPresent()).to.eventually.be.true;
+  }
+
   return expect(buttonElement.isPresent()).to.eventually.be.true;
 });
 
@@ -129,71 +127,65 @@ Then('I should see the Microsoft login page', () => {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP').then(() => {
       // Check for Microsoft login username field
-      const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+      const usernameFld = LoginPage.getUsernameField();
       expect(usernameFld.isPresent()).to.eventually.be.true;
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(getParentContext(webviewContext));
+      browser.driver.selectContext(PageHelper.getParentContext(webviewContext));
     });
   });
 });
 
-Given('I am on the landing page as {string}', (username) => {
-  onLandingPageAs(username);
+Given('I am on the landing page as {string}', async (username) => {
+  await LandingPage.onLandingPageAsAsync(username);
 });
 
 When(/^I start marking a practice test (with|without) a driving fault$/, (drivingFault) => {
-  const practiceMarking = getElement(by.xpath('//button/span/h3[text() = "Practice marking a test (cat B)"]'));
-  clickElement(practiceMarking);
-
-  const withDriverFault = getElement(by.xpath(`//button/span/h3[text() = "Start ${drivingFault} a driving fault"]`));
-  clickElement(withDriverFault);
+  DashboardPage.clickPracticeMarkingATestCatB();
+  DashboardPage.clickStartWithOrWithoutADrivingFault(drivingFault);
 });
 
 Given(/^I start full practice mode$/, () => {
-  const practiceMarking = getElement(by.xpath('//button/span/h3[text() = "Practice marking a full test (cat B)"]'));
-  clickElement(practiceMarking);
+  DashboardPage.clickStartFullPracticeMode();
 
-  const practiceModeBanner = element(by.className('practice-mode-top-banner'));
-  browser.wait(ExpectedConditions.presenceOf(practiceModeBanner));
+  const practiceModeBanner = TestReportPage.getPracticeModeBanner();
   return expect(practiceModeBanner.isPresent()).to.eventually.be.true;
 });
 
 When('I log in to the application as {string}', (username) => {
-  logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
+  LoginPage.login(username);
 
   // If the dashboard has loaded we should see the employee id
-  const employeeId = element(
-    by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
-  browser.wait(ExpectedConditions.presenceOf(employeeId));
+  // todo: kc seems we should also see employee id if landing page is loaded (see ln 107) which is right?
+  const employeeId = DashboardPage.getEmployeeId(username);
   return expect(employeeId.isPresent()).to.eventually.be.true;
 });
 
 Then('I should see the {string} page', (pageTitle) => {
+  PageHelper.waitForOverlay('click-block-active');
   // Wait for the page title to exist
-  getElement(by.xpath(`//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`));
+  PageHelper.getPageTitle(pageTitle);
+
   // Check that it is the last page title i.e. the displayed one
-  return expect(element.all(by.className('toolbar-title')).last().getText()).to.eventually.equal(pageTitle);
+  return expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
+    .to.eventually.equal(pageTitle);
 });
 
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {
-  const dataRow = getElement(by.xpath(`//ion-col/label[text()= "${rowName}"]
-    [parent::ion-col/parent::ion-row//*[normalize-space(text()) = "${rowValue}"]]`));
-  return expect(dataRow.isPresent()).to.eventually.be.true;
+  JournalPage.rowContains(rowName, rowValue);
 });
 
 When('I click on the {string} button', (buttonId) => {
-  const buttonElement = getElement(by.css(`#${buttonId}`));
-  return clickElement(buttonElement);
+  PageHelper.clickButtonByCssId(buttonId);
 });
 
 Then('validation item {string} should be visible', (validationId: string) => {
-  const validationElement = getElement(by.css(`#${validationId}`));
+  const validationElement = PageHelper.getElementByCssId(validationId);
   return expect(validationElement.getAttribute('class')).to.eventually.contain('ng-invalid');
 });
 
 Then('validation item {string} should not be visible', (validationId: string) => {
-  const validationElement = getElement(by.css(`#${validationId}`));
+  const validationElement = PageHelper.getElementByCssId(validationId);
   return expect(validationElement.getAttribute('class')).to.eventually.not.contain('ng-invalid');
 });
 
@@ -204,50 +196,42 @@ Then('validation item {string} should not exist', (validationId: string) => {
 });
 
 Then('validation item {string} should be {string}', (validationId: string, validationText: string) => {
-  const validationElement = getElement(by.css(`#${validationId}`));
+  const validationElement = PageHelper.getElementByCssId(validationId);
   return expect(validationElement.getText()).to.eventually.equal(validationText);
 });
 
 When('I terminate the test', () => {
-  const lastEndTestButton = element.all(by.xpath('//end-test-link/button/span[text() = "End test"]')).last();
-  clickElement(lastEndTestButton);
-
-  const terminateTestButton = getElement(by.xpath('//button/span[text() = "Terminate test"]'));
-  clickElement(terminateTestButton);
-
-  enterPasscode();
+  TestReportPage.clickLastEndTestButton();
+  TestReportPage.clickTerminateTestButton();
+  PageHelper.enterPasscode();
 });
 
 When('I exit practice mode', () => {
-  const lastExitPracticeButton = element.all(by.className('exit-text')).last();
-  clickElement(lastExitPracticeButton);
+  TestReportPage.clickLastExitPracticeButton();
 });
 
-Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be \"(.+)\"$/, (
+Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be "(.+)"$/, (
   pageName: string, candidateName: string) => {
-  const candidateNameElement = getElement(
-    by.xpath(`//div[contains(@class, '${getPageType(pageName)}')]//h2[@id = 'candidate-name']`));
+  const candidateNameElement = PageHelper.getCandidateNameElement(pageName, this.testCategory);
   return expect(candidateNameElement.getText()).to.eventually.equal(candidateName);
 });
 
-Then(/^the (communication page|waiting room|debrief|health declaration) candidate driver number should be \"(.+)\"$/, (
+Then(/^the (communication page|waiting room|debrief|health declaration) candidate driver number should be "(.+)"$/, (
   pageName: string, driverNumber: string) => {
-  const candidateDriverNumberElement = getElement(
-    by.xpath(`//div[contains(@class, '${getPageType(pageName)}')]//h3[@id = 'candidate-driver-number']`));
+  const candidateDriverNumberElement = PageHelper.getCandidateDriveNumberElement(pageName, this.testCategory);
   return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
 });
 
 Then('I return to the Journal Page', () => {
-  const returnToJournalBtn = getElement(by.xpath('//*[@id="back-to-office-page"]//div[3]/button/span'));
-  clickElement(returnToJournalBtn);
+  BackToOfficePage.clickBackToJournalButton();
 });
 
 When('I click the back button', () => {
-  clickBackButton();
+  JournalPage.clickBackButton();
 });
 
 When('I click go to my Journal', () => {
-  clickGoToMyJournalButton();
+  DashboardPage.clickGoToMyJournalButton();
 });
 
 /**
@@ -277,116 +261,6 @@ AfterAll(() => {
 //////////////////////////////////////////// SHARED FUNCTIONS ////////////////////////////////////////////
 
 /**
- * Logs into the application with the given username and password. Assumes we will be on the Microsoft login page.
- * @param username the username
- * @param password the password
- */
-export const logInToApplication = (username, password) => {
-  // To be able to fill in the Authenticator login we need to switch to NATIVE context then switch back to WEBVIEW after
-  browser.driver.getCurrentContext().then((webviewContext) => {
-    // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP').then(() => {
-      // Fill in username and click Next
-      const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-      browser.wait(ExpectedConditions.presenceOf(usernameFld));
-      usernameFld.sendKeys(username);
-      const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));
-      nextButtonElement.click();
-
-      // Fill in password and click Sign in
-      const pFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
-      browser.wait(ExpectedConditions.presenceOf(pFld));
-      pFld.sendKeys(password);
-      const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
-      signInButtonElement.click();
-
-      // Switch back to WEBVIEW context
-      browser.driver.selectContext(getParentContext(webviewContext));
-
-      // Wait for dashboard page to load
-      const employeeId = element(by.xpath('//span[@class="employee-id"]'));
-      browser.wait(ExpectedConditions.presenceOf(employeeId));
-    });
-  });
-};
-
-/**
- * Checks whether the user is logged in.
- * @param staffNumber the staff number of the user we wish to be logged in
- */
-export const loggedInAs = (staffNumber) => {
-  browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
-  const staffNumberField = element(by.xpath(`//span[@class="employee-id" and text()="${staffNumber}"]`));
-  return staffNumberField.isPresent();
-};
-
-/**
- * Logs out of the application and takes them to the login page if they were logged in else returns current page
- */
-export const logout = () => {
-  browser.driver.getCurrentContext().then((webviewContext) => {
-    browser.driver.selectContext(getParentContext(webviewContext));
-    browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
-    browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-    const logout = element(by.xpath('//button/span/span[contains(text(), "Sign Out")]'));
-    logout.isPresent().then((result) => {
-      if (result) {
-        browser.wait(ExpectedConditions.elementToBeClickable(logout));
-        logout.click().then(() => {
-          // After logout click sign in to get us to the login screen
-          browser.sleep(TEST_CONFIG.ACTION_WAIT);
-          browser.driver.selectContext(getParentContext(webviewContext));
-          browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-          const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
-          clickElement(signIn);
-        });
-      } else {
-        return Promise.resolve();
-      }
-    });
-  });
-};
-
-/**
- * Load application.
- * Goes to the home page which will be the journal for logged in Examiners.
- * This essentially reloads the application.
- */
-export const loadApplication = () => {
-  const promise = browser.get('ionic://localhost');
-  return isReady(promise);
-};
-
-/**
- * Waits for the element to exist on the page before returning it.
- * @param elementBy the element finder
- */
-
-/**
- * Enters a generic password into the iOS passcode field.
- * Note: This will not work on the physical device but the simulator will accept any code.
- */
-export const enterPasscode = () => {
-  // To be able to fill in the passcode we need to switch to NATIVE context then switch back to WEBVIEW after
-  browser.driver.getCurrentContext().then((webviewContext) => {
-    // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP').then(() => {
-      // Get the passcode field
-      const passcodeField = element(by.xpath('//XCUIElementTypeSecureTextField[@label="Passcode field"]'));
-      browser.wait(ExpectedConditions.presenceOf(passcodeField));
-
-      // Send the fake passcode using native browser actions
-      browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
-
-      // Switch back to WEBVIEW context
-      browser.driver.selectContext(getParentContext(webviewContext)).then(() => {
-        browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
-      });
-    });
-  });
-};
-
-/**
  * Output the page source to a file - For debug purposes only
  * @param fileName the name of the file to output to
  */
@@ -400,60 +274,4 @@ export const logPageSource = (fileName: string) => {
       console.log(`The page source was saved as ${fileName}`);
     });
   });
-};
-
-const onLandingPageAs = (username) => {
-  loadApplication().then(() => {
-    // Small wait to make sure the action has initiated
-    browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
-  });
-
-  loggedInAs(TEST_CONFIG.users[username].employeeId).then((response) => {
-    if (!response) {
-        // If not logged in as the right user logout and log in as the correct user
-      logout();
-      logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
-
-      // Refresh application
-      loadApplication().then(() => {
-      // Small wait to make sure the action has initiated
-        browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
-      });
-    }
-  });
-
-  // I should first hit the landing page
-  const employeeId = element(
-    by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
-  browser.wait(ExpectedConditions.presenceOf(employeeId));
-};
-
-export const onJournalPageAs = (username) => {
-  // Load the landing page
-  onLandingPageAs(username);
-
-  // Navigate to journal page
-  clickGoToMyJournalButton();
-
-  // If the journal page is loaded we should have a refresh button
-  const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-  browser.wait(ExpectedConditions.presenceOf(refreshButton));
-};
-
-const getPageType = (pageName : string) => {
-  switch (pageName) {
-    case 'communication page':
-      return `communication-cat-${this.testCategory}-page`;
-    case 'debrief':
-      return `pass-finalisation-cat-${this.testCategory}-page`;
-    case 'health declaration':
-      return `health-declaration-cat-${this.testCategory}-page`;
-    default:
-      return `waiting-room-cat-${this.testCategory}-page`;
-  }
-};
-
-const clickGoToMyJournalButton = () => {
-  const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
-  clickElement(goToJournalButton);
 };

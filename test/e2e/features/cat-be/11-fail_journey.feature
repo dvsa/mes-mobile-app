@@ -151,3 +151,4 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     Then I search for a completed test with the application reference of "22345622011"
     When the search result is clicked
     Then the test result outcome is "Unsuccessful"
+  

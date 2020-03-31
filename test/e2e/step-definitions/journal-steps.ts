@@ -1,8 +1,8 @@
-import { by, element, browser, ExpectedConditions } from 'protractor';
-import { onJournalPageAs } from './generic-steps';
-import { getElement, clickElement } from '../../helpers/interactionHelpers';
+import JournalPage from '../pages/journalPage';
+import PageHelper from '../pages/pageHelper';
+import LandingPage from '../pages/landingPage';
+import DashboardPage from '../pages/dashboardPage';
 
-import { TEST_CONFIG } from '../test.config';
 const {
   Given,
   Then,
@@ -13,205 +13,161 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-Given('I am on the journal page as {string}', (username) => {
-  onJournalPageAs(username);
+Given('I am on the journal page as {string}',  async (username) => {
+  // Load the landing page
+  await LandingPage.onLandingPageAsAsync(username);
+
+  // Navigate to journal page
+  DashboardPage.clickGoToMyJournalButton();
 
   // If the journal page is loaded we should have a refresh button
-  const refreshButton = getElement(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-  return expect(refreshButton.isPresent()).to.eventually.be.true;
+  const refreshButton = JournalPage.getRefreshButton();
+  return expect(refreshButton.isPresent(), 'refreshButton.isPresent()').to.eventually.be.true;
 });
 
 When('I view candidate details for {string}', (candidateName) => {
-  return viewCandidateDetails(candidateName);
+  return JournalPage.viewCandidateDetails(candidateName);
 });
 
 When('I check candidate details for {string}', (candidateName) => {
-  viewCandidateDetails(candidateName);
-  closeCandidateDetailsDialog();
+  JournalPage.viewCandidateDetails(candidateName);
+  JournalPage.closeCandidateDetailsDialog();
 });
 
 When('I start the test for {string}', (candidateName) => {
-  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-  clickElement(buttonElement);
+  JournalPage.startTestFor(candidateName);
+    // If the start test early dialog is shown just select continue
+  const startTestEarlyButton = JournalPage.getStartTestEarlyButton();
 
-  // If the rekey dialog is shown so just select start test normally
-  const rekeyStartTestButton = element(by.id('rekey-start-test-button'));
-  rekeyStartTestButton.isPresent().then((result) => {
+  startTestEarlyButton.isPresent().then((result) => {
     if (result) {
-      clickElement(rekeyStartTestButton);
+      JournalPage.clickStartTestEarlyButton();
     }
   });
 
-    // If the start test early dialog is shown just select continue
-  const startTestEarlyButton = element(by.id('early-start-start-test-button'));
-  startTestEarlyButton.isPresent().then((result) => {
+  const startTestLateButton = JournalPage.getStartTestLateButton();
+
+  startTestLateButton.isPresent().then((result) => {
     if (result) {
-      clickElement(startTestEarlyButton);
+      JournalPage.clickStartTestLateButton();
     }
   });
 });
 
 When('I rekey a test for {string}', (candidateName) => {
-  const previousDayButtonElement = getElement(by.id('previous-day-container'));
-  clickElement(previousDayButtonElement);
+  const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
 
-  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
-  [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-  h3[text() = "${candidateName}"]]`));
-  clickElement(buttonElement);
+  buttonElement.isPresent().then((isStartPresent) => {
+    if (!isStartPresent) {
+      PageHelper.resetApp('mobexaminer1'); // temp hardcoded string for testing.
+    }
+  });
+  expect(buttonElement.isPresent()).to.eventually.be.true;
+
+  JournalPage.clickRekeyTestButtonFor(candidateName);
 });
 
 When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidateName: string) => {
   if (testTime === 'early') {
-    startingExpiredOrEarlyTest(candidateName);
+    JournalPage.startingExpiredOrEarlyTest(candidateName);
 
     // If the start test early dialog is shown just select continue
-    const startTestEarlyButton = element(by.id('early-start-start-test-button'));
+    const startTestEarlyButton = JournalPage.getStartTestEarlyButton();
     startTestEarlyButton.isPresent().then((result) => {
       if (result) {
-        clickElement(startTestEarlyButton);
+        JournalPage.clickStartTestEarlyButton();
       }
     });
   }
 
   if (testTime === 'late') {
-    startingExpiredOrEarlyTest(candidateName);
+    JournalPage.startingExpiredOrEarlyTest(candidateName);
 
     // If the rekey dialog is shown so just select start test normally
-    const lateStartTestButton = element(by.id('rekey-start-test-button'));
+    const lateStartTestButton = JournalPage.getStartTestLateButton();
     lateStartTestButton.isPresent().then((result) => {
       if (result) {
-        clickElement(lateStartTestButton);
+        JournalPage.clickStartTestLateButton();
       }
     });
   }
 });
 
-When('I rekey a late test for {string}',(candidateName) => {
-  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-  clickElement(buttonElement);
+When('I rekey a late test for {string}', (candidateName) => {
+  JournalPage.startTestFor(candidateName);
 
   // If the rekey dialog is shown so just select start test normally
-  const rekeyStartTestButton = element(by.id('rekey-rekey-test-button'));
-  rekeyIsPresent();
+  const rekeyStartTestButton = JournalPage.getStartTestLateButton();
+  JournalPage.rekeyIsPresent();
   rekeyStartTestButton.isPresent().then((result) => {
     if (result) {
-      clickElement(rekeyStartTestButton);
+      JournalPage.clickStartTestLateButton();
     }
   });
 });
 
 When('I navigate to next day', () => {
-  const nextDayButtonElement = getElement(by.id('next-day-container'));
-  return clickElement(nextDayButtonElement);
+  JournalPage.clickNextDayButton();
 });
 
-When('I navigate to previous day', () => {
-  const previousDayButtonElement = getElement(by.id('previous-day-container'));
-  return clickElement(previousDayButtonElement);
+When('I navigate to {int} day(s) previously', (numberOfDays) => {
+  for (let i = 0; i < numberOfDays; i += 1) {
+    JournalPage.clickPreviousDayButton();
+  }
 });
 
 Then('I have a special needs slot for {string}', (candidateName) => {
-  const exclamationIndicator = getElement(by.xpath(`//indicators/div/img[@class = "exclamation-indicator"]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
+  const exclamationIndicator = JournalPage.getSpecialNeedsIndicatorFor(candidateName);
   return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
 });
 
 Then('I have a welsh slot for {string}', (candidateName) => {
-  const exclamationIndicator = getElement(by.xpath(`//ion-grid/ion-row/ion-col/language/
-  div[@class = "welsh-language-indicator"][ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link
-    /div/button/span/h3[text() = "${candidateName}"]]`));
+  const exclamationIndicator = JournalPage.getWelshIndicatorFor(candidateName);
   return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
 });
 
 When('I refresh the journal', () => {
-  const refreshButton = getElement(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-  return clickElement(refreshButton);
+  JournalPage.clickRefreshButton();
 });
 
 Then('I have a non-test slot for {string} with code {string} at {string}', (description, code, time) => {
-  const slotLocator = getElement(by.xpath(`//ion-row[ion-col/div/time/div/h2[text() = '${time}']]
-  [ion-col/h3[normalize-space(text()) = '${description}']][ion-col[h2[text() = '${code}']]]`));
+  const slotLocator = JournalPage.getSlotLocator(description, code, time);
+  // todo: kc does getSlotLocator need this.waitForPresenceOfElement(element)
+  //  if it is being used with isPresent()to.eventually.be.true?
   return expect(slotLocator.isPresent()).to.eventually.be.true;
 });
 
 Then('the test result for {string} is {string}', (candidateName, testResult) => {
-  const testResultElement = getElement(by.xpath(`//test-outcome//span[@class='outcome']/h2
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-
+  const testResultElement = JournalPage.getTestResultElementFor(candidateName);
+  // todo: kc does getTestResultElementFor need this.waitForPresenceOfElement(element)
+  //  if it is being used with isPresent()to.eventually.be.true?
   return expect(testResultElement.getText()).to.eventually.equal(testResult);
 });
 
 Then('I should have a category {string} test for {string}', (category, candidateName) => {
-  const testCategory = getElement(by.xpath(`//test-category/h2[ancestor::ion-row/ion-col/ion-grid/ion-row/
-    ion-col/candidate-link/div/button/span/h3[text() = "${candidateName}"]]`));
+  const testCategory = JournalPage.getTestCategoryElementFor(candidateName);
   return expect(testCategory.getText()).to.eventually.equal(category);
 });
 
 Then('The vehicle for {string} has length {string}, width {string}, height {string} and seats {string}',
 (candidateName, length, width, height, seats) => {
-  const lengthValue = getElement(
-    by.xpath(`//vehicle-details/div/span/span[text()= 'L: ']/following-sibling::span
-    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`));
+  const lengthValue = JournalPage.getVehicleLengthElementFor(candidateName);
   expect(lengthValue.getText()).to.eventually.equal(length);
 
-  const widthValue = getElement(
-    by.xpath(`//vehicle-details/div/span/span[text()= 'W: ']/following-sibling::span
-    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`));
+  const widthValue = JournalPage.getVehicleWidthElementFor(candidateName);
   expect(widthValue.getText()).to.eventually.equal(width);
 
-  const heightValue = getElement(
-    by.xpath(`//vehicle-details/div/span/span[text()= 'H: ']/following-sibling::span
-    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`));
+  const heightValue = JournalPage.getVehicleHeightElementFor(candidateName);
   expect(heightValue.getText()).to.eventually.equal(height);
 
-  const seatValue = getElement(
-    by.xpath(`//vehicle-details/div/span/span[text() = 'Seats: ']/following-sibling::span
-    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/h3
-      [text() = "${candidateName}"]]`));
+  const seatValue = JournalPage.getSeatElementFor(candidateName);
   return expect(seatValue.getText()).to.eventually.equal(seats);
 });
 
 Then('I continue the write up for {string}', (candidateName) => {
-  const continueWriteUp = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Write-up"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-  clickElement(continueWriteUp);
+  JournalPage.clickContinueWriteupButton(candidateName);
 });
 
-const viewCandidateDetails = (candidateName) => {
-  const buttonElement = getElement(by.xpath(`//h3[text()[normalize-space(.) = "${candidateName}"]]`));
-  return clickElement(buttonElement);
-};
-
-const closeCandidateDetailsDialog = () => {
-  const closeCandidateDetailDialog = element(by.id('closeCandidateDetails'));
-  clickElement(closeCandidateDetailDialog);
-};
-
-const rekeyIsPresent = () => {
-  const rekeyStartTestButton = element(by.id('rekey-start-test-button'));
-  return expect(rekeyStartTestButton.isPresent()).to.eventually.be.true;
-};
-
-const timeDialog = () => {
-  const testDialog = getElement(by.className(`modal-alert-header`));
-  return expect(testDialog.isPresent()).to.eventually.be.true;
-};
-
-const startingExpiredOrEarlyTest = (candidateName) => {
-  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
-    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
-  clickElement(buttonElement);
-  timeDialog();
-};
+When('I close the candidate test details modal', () => {
+  JournalPage.closeCandidateDetailsDialog();
+});

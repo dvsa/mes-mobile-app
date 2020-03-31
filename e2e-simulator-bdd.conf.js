@@ -2,7 +2,7 @@ var appPath = __dirname + '/platforms/ios/build/emulator/DrivingExaminerService.
 
 exports.config = {
   seleniumAddress: 'http://localhost:4723/wd/hub',
-  allScriptsTimeout: 11000,
+  allScriptsTimeout: 16000,
   capabilities: {
     platformName: 'iOS',
     platformVersion: '12.1',
@@ -12,7 +12,7 @@ exports.config = {
     //fullReset: true,
     app: appPath,
     automationName: 'XCUITest',
-    isHeadless: false, 
+    isHeadless: false,
     newCommandTimeout: 180
   },
   specs: ['./test/e2e/features/*/*.feature'],
