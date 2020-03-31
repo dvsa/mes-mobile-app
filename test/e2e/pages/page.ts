@@ -145,6 +145,10 @@ export default class Page {
     browser.wait(ExpectedConditions.presenceOf(element));
   }
 
+  waitForAngularToFinishRendering() {
+    browser.waitForAngular();
+  }
+
   /**
    * Performs the long press action on the competency to add a driver fault.
    * The long press does not appear to have been implemented so calling appiums touch perform action directly.

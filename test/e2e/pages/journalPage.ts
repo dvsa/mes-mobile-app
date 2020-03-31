@@ -1,4 +1,5 @@
 import Page from './page';
+import { browser } from 'protractor';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -139,7 +140,9 @@ class JournalPage extends Page {
   }
 
   closeCandidateDetailsDialog() {
+    this.getElementById('closeCandidateDetails');
     this.clickElementById('closeCandidateDetails');
+    this.waitForAngularToFinishRendering();
   }
 
   clickBackButton() {
