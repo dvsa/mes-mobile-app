@@ -10,7 +10,7 @@
         [value]="getRegistrationNumber()"
         *ngIf="getRegistrationNumber()">
       </data-row>
-      <data-row-custom [label]="'Vehicle dimensions'" >
+      <data-row-custom *ngIf="!shouldHideDimensions()" [label]="'Vehicle dimensions'" >
         <ion-grid>
           <ion-row>
             <ion-col col-32>

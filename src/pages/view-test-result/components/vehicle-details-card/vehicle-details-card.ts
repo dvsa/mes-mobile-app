@@ -5,6 +5,7 @@ import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 export type VehicleDetailsWithDimensions =
   | CatBEUniqueTypes.VehicleDetails
@@ -22,6 +23,9 @@ export class VehicleDetailsCardComponent {
   @Input()
   data: CatBEUniqueTypes.VehicleDetails;
 
+  @Input()
+  category: TestCategory;
+
   constructor() {}
 
   public shouldHideCard() : boolean {
@@ -29,6 +33,18 @@ export class VehicleDetailsCardComponent {
       !this.getTransmission() &&
       !this.getRegistrationNumber()
     );
+  }
+
+  public shouldHideDimensions() : boolean {
+    switch (this.category) {
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K:
+        return true;
+      default:
+        return false;
+    }
   }
 
   public getTransmission(): string {

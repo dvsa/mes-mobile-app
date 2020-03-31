@@ -51,7 +51,7 @@ export class ViewTestResultCatHomeTestPage extends BasePageComponent implements 
 
   applicationReference: string = '';
   testResult: HomeTestResult;
-
+  testCategory: TestCategory;
   isLoading: boolean;
   loadingSpinner: Loading;
   subscription: Subscription;
@@ -94,7 +94,9 @@ export class ViewTestResultCatHomeTestPage extends BasePageComponent implements 
           this.handleLoadingUI(false);
           return of();
         }),
-      ).subscribe();
+      ).subscribe((data) => {
+        this.testCategory = this.testResult.category as TestCategory;
+      });
   }
 
   ionViewDidLeave(): void {

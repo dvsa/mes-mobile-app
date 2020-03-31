@@ -1,6 +1,5 @@
-
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, Config } from 'ionic-angular';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Config, IonicModule } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
 import { VehicleDetailsCardComponent, VehicleDetailsWithDimensions } from '../vehicle-details-card';
 import { MockComponent } from 'ng-mocks';
@@ -8,6 +7,7 @@ import { VehicleDetails } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
 import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
 import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('VehicleDetailsCardComponent', () => {
   let fixture: ComponentFixture<VehicleDetailsCardComponent>;
@@ -35,6 +35,22 @@ describe('VehicleDetailsCardComponent', () => {
   }));
 
   describe('Class', () => {
+    describe('shouldHideVehicleDetails', () => {
+      const localCategories = [
+        [TestCategory.F, true],
+        [TestCategory.G, true],
+        [TestCategory.H, true],
+        [TestCategory.K, true],
+        [TestCategory.B, false],
+      ];
+      for (const testCategory in localCategories) {
+        const title = localCategories[testCategory][1] ? 'should hide' : 'should not hide';
+        it(`${title} for TestCategory ${localCategories[testCategory][0]}`, () => {
+          component.category = localCategories[testCategory][0] as TestCategory;
+          expect(component.shouldHideDimensions()).toEqual(localCategories[testCategory][1]);
+        });
+      }
+    });
     describe('shouldHideCard', () => {
       it('should return true if the data is missing', () => {
         expect(component.shouldHideCard()).toEqual(true);

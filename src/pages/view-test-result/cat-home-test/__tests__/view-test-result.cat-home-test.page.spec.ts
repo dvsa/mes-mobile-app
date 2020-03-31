@@ -25,7 +25,6 @@ import { ExaminerDetailsCardComponent } from '../../components/examiner-details-
 import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
-import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
 import { categoryHomeTestResultMock } from '../../../../shared/mocks/cat-home-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
@@ -39,6 +38,7 @@ import { ViewTestResultCatHomeTestPage } from '../view-test-result.cat-home-test
 import { BusinessDetailsCardComponent } from '../../components/business-details-card/business-details-card';
 import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
 import { configureTestSuite } from 'ng-bullet';
+import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
 
 describe('ViewTestResultCatHomeTestPage', () => {
   let fixture: ComponentFixture<ViewTestResultCatHomeTestPage>;

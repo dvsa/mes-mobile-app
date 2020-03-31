@@ -40,33 +40,36 @@ export class DebriefCardComponent {
   constructor(
     private faultSummaryProvider: FaultSummaryProvider,
     private faultCountProvider: FaultCountProvider,
-  ) {}
+  ) {
+  }
 
   public getTestRequirements = (): DataRowListItem[] => {
     return [
       {
         label: TestRequirementsLabels.normalStart1,
-        checked: get(this.data, 'testRequirements.normalStart1', false) ,
+        checked: get(this.data, 'testRequirements.normalStart1', false),
       },
       {
         label: TestRequirementsLabels.normalStart2,
         checked: get(this.data, 'testRequirements.normalStart2', false),
       },
       {
-        label: TestRequirementsLabels.uphillStart,
-        checked: get(this.data, 'testRequirements.uphillStart', false),
+        label: TestRequirementsLabels.angledStart,
+        checked: get(this.data, 'testRequirements.angledStart', false),
       },
       {
-        label: TestRequirementsLabels.downhillStart,
-        checked: get(this.data, 'testRequirements.downhillStart', false),
+        label: TestRequirementsLabels.hillStart,
+        checked: get(this.data, 'testRequirements.uphillStartDesignatedStart', false),
       },
+    ];
+  }
+
+  public getHighwayCode(): DataRowListItem[] {
+    const isHighwayCodeSelected = get(this.data, 'highwayCodeSafety.selected', false);
+    return [
       {
-        label: TestRequirementsLabels.angledStartControlledStop,
-        checked: get(this.data, 'testRequirements.angledStartControlledStop', false),
-      },
-      {
-        label: TestRequirementsLabels.uncoupleRecouple,
-        checked: get(this.data, 'uncoupleRecouple.selected', false),
+        label: isHighwayCodeSelected ? 'Completed' : 'Not Completed',
+        checked: isHighwayCodeSelected,
       },
     ];
   }
@@ -117,7 +120,7 @@ export class DebriefCardComponent {
     if (eta.length === 0) {
       eta.push('None');
     }
-    return   flattenArray(eta);
+    return flattenArray(eta);
   }
 
   public getShowMeQuestions(): QuestionResult[] {
