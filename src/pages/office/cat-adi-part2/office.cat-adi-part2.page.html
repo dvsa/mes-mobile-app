@@ -64,8 +64,16 @@
               (identificationChange)="identificationChanged($event)">
             </identification>
 
-            <vehicle-checks-office-card [display]="pageState.displayVehicleChecks$ | async"
-              [checks]="pageState.vehicleChecks$ | async"></vehicle-checks-office-card>
+            <vehicle-checks-office-card-cat-adi2 
+              [display]="pageState.displayTellMeQuestions$ | async"
+              [checks]="pageState.vehicleChecks$ | async">
+            </vehicle-checks-office-card-cat-adi2>
+
+            <show-me-questions-cat-adi2 [display]="pageState.displayShowMeQuestions$ | async"
+              [showMeQuestions]="pageState.weatherConditions$ | async" [formGroup]="form"
+              [outcome]="pageState.testOutcome$ | async" [showMeQuestionOptions]="showMeQuestions"
+              (showMeQuestionsChange)="showMeQuestionsChanged($event)">
+            </show-me-questions-cat-adi2>
 
             <weather-conditions [display]="pageState.displayWeatherConditions$ | async"
               [weatherConditions]="pageState.weatherConditions$ | async" [formGroup]="form"
