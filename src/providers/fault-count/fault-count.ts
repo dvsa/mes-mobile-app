@@ -139,7 +139,7 @@ export class FaultCountProvider {
   public getVehicleChecksFaultCount = (category: TestCategory, data: object): VehicleChecksScore => {
     switch (category) {
       // TODO(ADI2): Replace with actual fault count helper
-      case TestCategory.ADI2: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
+      case TestCategory.ADI2: return FaultCountADIPart2Helper.getVehicleChecksFaultCountCatADIPart2(data);
       case TestCategory.BE: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
       case TestCategory.C1: return FaultCountCHelper.getVehicleChecksFaultCountCatC1(data);
       case TestCategory.C1E: return FaultCountCHelper.getVehicleChecksFaultCountCatC1E(data);
