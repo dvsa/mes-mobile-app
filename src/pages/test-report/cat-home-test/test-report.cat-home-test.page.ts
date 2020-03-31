@@ -48,29 +48,19 @@ import {
 import {
   getTestRequirementsCatHome,
 } from '../../../modules/tests/test-data/cat-home-test/test-requirements/test-requirements.cat-home.reducer';
-import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
-import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
-import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
-import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
+import {
+  CatHomeTestData,
+  HomeTestRequirements,
+} from '../../../shared/unions/test-schema-unions';
 
-type HomeTestDataUnion =
-  | CatFUniqueTypes.TestData
-  | CatGUniqueTypes.TestData
-  | CatHUniqueTypes.TestData
-  | CatKUniqueTypes.TestData;
-type HomeTestRequirementsUnion =
-  | CatFUniqueTypes.TestRequirements
-  | CatGUniqueTypes.TestRequirements
-  | CatHUniqueTypes.TestRequirements
-  | CatKUniqueTypes.TestRequirements;
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  testData$: Observable<HomeTestDataUnion>;
-  testRequirements$: Observable<HomeTestRequirementsUnion>;
+  testData$: Observable<CatHomeTestData>;
+  testRequirements$: Observable<HomeTestRequirements>;
   testCategory$: Observable<CategoryCode>;
 }
 

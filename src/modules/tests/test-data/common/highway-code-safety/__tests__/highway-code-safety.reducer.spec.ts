@@ -1,4 +1,5 @@
-import { highwayCodeSafetyReducer, HighwayCodeSafetyUnion } from '../highway-code-safety.reducer';
+import { HighwayCodeSafetyUnion } from '../../../../../../shared/unions/test-schema-unions';
+import { highwayCodeSafetyReducer } from '../highway-code-safety.reducer';
 import {
   ToggleHighwayCodeSafety,
   HighwayCodeSafetyAddDrivingFault,

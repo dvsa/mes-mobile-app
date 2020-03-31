@@ -1,37 +1,21 @@
 import {
-  CatCManoeuvres,
-  CatCTestData,
+  ManoeuvreUnion,
+  TestDataUnion,
+} from '../../shared/unions/test-schema-unions';
+
+import {
   getManoeuvres as getManoeuvresC,
 } from '../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import {
-  CatDManoeuvres,
-  CatDTestData,
   getManoeuvres as getManoeuvresD,
 } from '../../modules/tests/test-data/cat-d/test-data.cat-d.selector';
 import {
-  CatHomeTestData,
-  CatHomeTestManoeuvres,
   getManoeuvres as getManoeuvresHomeTest,
 } from '../../modules/tests/test-data/cat-home-test/test-data.cat-home.selector';
 import { getManoeuvres as getManoeuvresBE } from '../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { Injectable } from '@angular/core';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-
-export type TestDataUnion =
-  | CatBUniqueTypes.TestData
-  | CatBEUniqueTypes.TestData
-  | CatCTestData
-  | CatDTestData
-  | CatHomeTestData;
-
-export type ManoeuvreUnion =
-  | CatBEUniqueTypes.Manoeuvres
-  | CatCManoeuvres
-  | CatDManoeuvres
-  | CatHomeTestManoeuvres;
 
 @Injectable()
 export class ManoeuvresByCategoryProvider {

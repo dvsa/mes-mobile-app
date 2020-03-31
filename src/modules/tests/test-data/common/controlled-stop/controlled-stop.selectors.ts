@@ -1,4 +1,4 @@
-import { ControlledStopUnion } from './controlled-stop.reducer';
+import { ControlledStopUnion } from '../../../../../shared/unions/test-schema-unions';
 import { get } from 'lodash';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 

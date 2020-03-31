@@ -58,12 +58,16 @@ import * as pcvDoorExerciseActions from
   '../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
 import {
   getControlledStop,
-  ControlledStopUnion,
 } from '../../modules/tests/test-data/common/controlled-stop/controlled-stop.reducer';
 import {
   getHighwayCodeSafety,
-  HighwayCodeSafetyUnion,
+  ,
 } from '../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.reducer';
+import {
+  ControlledStopUnion,
+  HighwayCodeSafetyUnion,
+} from '../../shared/unions/test-schema-unions';
+
 import * as etaActions from '../../modules/tests/test-data/common/eta/eta.actions';
 import { ExaminerActions } from '../../modules/tests/test-data/test-data.constants';
 

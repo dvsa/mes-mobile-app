@@ -17,8 +17,8 @@ import { FaultCountProvider } from '../../../../providers/fault-count/fault-coun
 import { TestDataByCategoryProvider } from '../../../../providers/test-data-by-category/test-data-by-category';
 import {
   ManoeuvresByCategoryProvider,
-  ManoeuvreUnion,
 } from '../../../../providers/manoeuvres-by-category/manoeuvres-by-category';
+import { ManoeuvreUnion } from '../../../../shared/unions/test-schema-unions';
 import { getReverseLeftSelected } from '../../../../modules/tests/test-data/common/manoeuvres/manoeuvres.selectors';
 import { map } from 'rxjs/operators';
 

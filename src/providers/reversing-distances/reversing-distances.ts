@@ -1,26 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { VehicleDetailsUnion } from '../../shared/unions/test-schema-unions';
 import { ReversingLengths } from './reversing-lengths.model';
-import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
-import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
-import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
-import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
-import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
-import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
-import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
-import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
-
-export type VehicleDetailsUnion =
-  | CatBEUniqueTypes.VehicleDetails
-  | CatCUniqueTypes.VehicleDetails
-  | CatC1UniqueTypes.VehicleDetails
-  | CatCEUniqueTypes.VehicleDetails
-  | CatC1EUniqueTypes.VehicleDetails
-  | CatDUniqueTypes.VehicleDetails
-  | CatD1UniqueTypes.VehicleDetails
-  | CatDEUniqueTypes.VehicleDetails
-  | CatD1EUniqueTypes.VehicleDetails;
 
 interface VehicleMultipliers {
   widthMultiplier: number;

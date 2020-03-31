@@ -1,4 +1,5 @@
-import { controlledStopReducer, ControlledStopUnion } from '../controlled-stop.reducer';
+import { ControlledStopUnion } from '../../../../../../shared/unions/test-schema-unions';
+import { controlledStopReducer } from '../controlled-stop.reducer';
 import {
   ToggleControlledStop,
   ControlledStopAddDrivingFault,

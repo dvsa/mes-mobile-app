@@ -1,7 +1,7 @@
 import * as manoeuvresActions from '../../common/manoeuvres/manoeuvres.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { ManoeuvreTypes } from '../../test-data.constants';
-import { ManoeuvreUnion } from '../../../../../providers/manoeuvres-by-category/manoeuvres-by-category';
+import { ManoeuvreUnion } from '../../../../../shared/unions/test-schema-unions';
 
 export const initialState: ManoeuvreUnion = {
   reverseLeft: {},

@@ -1,4 +1,5 @@
-import { ReversingDistancesProvider, VehicleDetailsUnion } from '../reversing-distances';
+import { ReversingDistancesProvider } from '../reversing-distances';
+import { VehicleDetailsUnion } from '../../../shared/unions/test-schema-unions';
 import { TestBed } from '@angular/core/testing';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';

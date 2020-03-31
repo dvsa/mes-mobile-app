@@ -61,7 +61,7 @@ import {
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/common/vehicle-details.reducer';
 import {
   VehicleChecksUnion,
-} from '../../../modules/tests/test-data/cat-home-test/vehicle-checks/vehicle-checks.cat-home-test.reducer';
+} from '../../../shared/unions/test-schema-unions';
 import { Subscription } from 'rxjs';
 import { getEyesightTest } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
 

@@ -1,4 +1,4 @@
-import { HighwayCodeSafetyUnion } from './highway-code-safety.reducer';
+import { HighwayCodeSafetyUnion } from '../../../../../shared/unions/test-schema-unions';
 import { get } from 'lodash';
 
 export const isHighwayCodeSafetySelected =
