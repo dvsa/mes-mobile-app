@@ -81,7 +81,7 @@ import {
 import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import {
-  AddShowMeTellMeComment,
+  AddShowMeTellMeComment, ShowMeQuestionSelected,
 } from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.action';
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/cat-adi-part2/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
@@ -106,6 +106,7 @@ import {
   vehicleChecksExist,
   getVehicleChecksCatADI2,
 } from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.selector';
+import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -128,7 +129,8 @@ interface OfficePageState {
   displayDrivingFault$: Observable<boolean>;
   displaySeriousFault$: Observable<boolean>;
   displayDangerousFault$: Observable<boolean>;
-  displayVehicleChecks$: Observable<boolean>;
+  displayTellMeQuestions$: Observable<boolean>;
+  displayShowMeQuestions$: Observable<boolean>;
   identification$: Observable<Identification>;
   independentDriving$: Observable<IndependentDriving>;
   candidateDescription$: Observable<string>;
@@ -161,6 +163,7 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
+  showMeQuestions: VehicleChecksQuestion[];
 
   constructor(
     private store$: Store<StoreModel>,
@@ -182,6 +185,7 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
     this.activityCodeOptions = activityCodeModelList;
+    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.B);
   }
 
   ionViewDidEnter(): void {
@@ -332,15 +336,23 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
             this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.ADI2),
           )),
       ),
-      displayVehicleChecks$: currentTest$.pipe(
+      displayTellMeQuestions$: currentTest$.pipe(
           select(getTestOutcome),
           withLatestFrom(currentTest$.pipe(
             select(getTestData))),
             map(([outcome, data]) =>
             this.outcomeBehaviourProvider.isVisible(outcome,
-              'vehicleChecks',
+              'tellMeQuestion',
               vehicleChecksExist(data.vehicleChecks))),
       ),
+      displayShowMeQuestions$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestData))),
+          map(([outcome, data]) =>
+            this.outcomeBehaviourProvider.isVisible(outcome, 'showMeQuestion', data),
+          ),
+    ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
         select(getCandidateDescription),
@@ -426,6 +438,10 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
 
   weatherConditionsChanged(weatherConditions: WeatherConditions[]): void {
     this.store$.dispatch(new WeatherConditionsChanged(weatherConditions));
+  }
+
+  showMeQuestionsChange(): void {
+    // this.store$.dispatch(new ShowMeQuestionSelected())
   }
 
   routeNumberChanged(routeNumber: number) {
@@ -524,12 +540,12 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {
-    const showMeQuestion = this.form.controls['showMeQuestion'];
-    if (showMeQuestion) {
-      if (showMeQuestion.value && showMeQuestion.value.code === 'N/A') {
-        this.form.controls['showMeQuestion'].setValue({});
-      }
-    }
+    // const showMeQuestion = this.form.controls['showMeQuestion'];
+    // if (showMeQuestion) {
+    //   if (showMeQuestion.value && showMeQuestion.value.code === 'N/A') {
+    //     this.form.controls['showMeQuestion'].setValue({});
+    //   }
+    // }
     this.store$.dispatch(new SetActivityCode(activityCodeModel.activityCode));
   }
 

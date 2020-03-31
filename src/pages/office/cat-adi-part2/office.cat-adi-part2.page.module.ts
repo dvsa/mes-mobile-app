@@ -7,10 +7,14 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { OfficeComponentsModule } from '../components/office.components.module';
 import { OfficeEffects } from '../office.effects';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
+import { VehicleChecksOfficeCardCatADI2Component } from './components/vehicle-checks/vehicle-checks-office-card';
+import { ShowMeQuestionsCatADI2Component } from './components/show-me-questions/show-me-questions';
 
 @NgModule({
   declarations: [
     OfficeCatADIPart2Page,
+    VehicleChecksOfficeCardCatADI2Component,
+    ShowMeQuestionsCatADI2Component,
   ],
   imports: [
     IonicPageModule.forChild(OfficeCatADIPart2Page),
