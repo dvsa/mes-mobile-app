@@ -55,6 +55,9 @@ export class VehicleChecksCatADIPart2Component implements OnChanges {
       return outcome !== undefined;
     };
 
+    if (!this.vehicleChecks.tellMeQuestions) {
+      return false;
+    }
     return this.vehicleChecks.tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true);
   }
 

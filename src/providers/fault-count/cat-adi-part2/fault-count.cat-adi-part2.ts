@@ -3,6 +3,7 @@ import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 import { sumManoeuvreFaults } from '../../../shared/helpers/faults';
+import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 
 export class FaultCountADIPart2Helper {
 
@@ -70,11 +71,74 @@ export class FaultCountADIPart2Helper {
     return result;
   }
 
-  // TODO(ADI2): Complete implementation in MES-2833
-  public static getVehicleChecksFaultCountCatADIPart2 = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): number => {
+  public static getVehicleChecksFaultCountCatADIPart2 = (
+    vehicleChecks: CatADI2UniqueTypes.VehicleChecks,
+  ): VehicleChecksScore => {
 
     if (!vehicleChecks) {
-      return 0;
+      return {
+        drivingFaults: 0,
+        seriousFaults: 0,
+      };
+    }
+
+    const { tellMeQuestions, showMeQuestions } = vehicleChecks;
+
+    let total = 0;
+
+    if (tellMeQuestions) {
+      total += tellMeQuestions.reduce<number>((acc, question) => {
+        if (question.outcome === CompetencyOutcome.DF) {
+          return acc + 1;
+        }
+        return acc;
+      }, 0);
+    }
+
+    if (showMeQuestions) {
+      total += showMeQuestions.reduce<number>((acc, question) => {
+        if (question.outcome === CompetencyOutcome.DF) {
+          return acc + 1;
+        }
+        return acc;
+      }, 0);
+    }
+
+    return {
+      drivingFaults: total,
+      seriousFaults: 0,
+    };
+  }
+
+  public static getShowMeFaultCount = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): VehicleChecksScore => {
+    if (!vehicleChecks) {
+      return {
+        drivingFaults: 0,
+        seriousFaults: 0,
+      };
+    }
+
+    const { showMeQuestions } = vehicleChecks;
+
+    const total = showMeQuestions.reduce<number>((acc, question) => {
+      if (question.outcome === CompetencyOutcome.DF) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+
+    return {
+      drivingFaults: total,
+      seriousFaults: 0,
+    };
+  }
+
+  public static getTellMeFaultCount = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): VehicleChecksScore => {
+    if (!vehicleChecks) {
+      return {
+        drivingFaults: 0,
+        seriousFaults: 0,
+      };
     }
 
     const { tellMeQuestions } = vehicleChecks;
@@ -86,7 +150,9 @@ export class FaultCountADIPart2Helper {
       return acc;
     }, 0);
 
-    return total;
+    return {
+      drivingFaults: total,
+      seriousFaults: 0,
+    };
   }
-
 }
