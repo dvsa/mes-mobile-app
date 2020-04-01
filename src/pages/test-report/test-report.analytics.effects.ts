@@ -61,7 +61,6 @@ import {
 } from '../../modules/tests/test-data/common/controlled-stop/controlled-stop.reducer';
 import {
   getHighwayCodeSafety,
-  ,
 } from '../../modules/tests/test-data/common/highway-code-safety/highway-code-safety.reducer';
 import {
   ControlledStopUnion,
