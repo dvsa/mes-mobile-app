@@ -1,11 +1,11 @@
 import {
-  CatHomeTestData,
   getManoeuvres,
   getVehicleChecks,
   hasManoeuvreBeenCompletedCatHomeTest,
   hasVehicleChecksBeenCompletedCatHomeTest,
 } from '../test-data.cat-home.selector';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import { CatHomeTestData } from '../../../../../shared/unions/test-schema-unions';
 
 describe('TestDataSelectors', () => {
   const state: CatHomeTestData = {
