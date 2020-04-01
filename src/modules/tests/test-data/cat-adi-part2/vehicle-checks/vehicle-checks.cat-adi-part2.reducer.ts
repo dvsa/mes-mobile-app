@@ -7,6 +7,7 @@ from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-ad
 
 export const initialState: CatADI2UniqueTypes.VehicleChecks = {
   tellMeQuestions: Array(numberOfTellMeQuestions).fill({}),
+  showMeQuestions: Array(2).fill({}),
 };
 
 export function vehicleChecksCatADI2Reducer(
@@ -14,6 +15,13 @@ export function vehicleChecksCatADI2Reducer(
   action: vehicleChecksCatADI2ActionTypes.Types,
 ): CatADI2UniqueTypes.VehicleChecks {
   switch (action.type) {
+    case vehicleChecksCatADI2ActionTypes.SHOW_ME_QUESTION_SELECTED:
+      return {
+        ...state,
+        tellMeQuestions: state.tellMeQuestions.map(
+          (item, index) => index === action.index ? action.showMeQuestion : item,
+        ),
+      };
     case vehicleChecksCatADI2ActionTypes.TELL_ME_QUESTION_SELECTED:
       return {
         ...state,

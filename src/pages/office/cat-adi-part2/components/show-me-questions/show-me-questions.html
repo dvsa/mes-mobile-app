@@ -8,10 +8,13 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-select value="showMeQuestions" multiple="true" okText="Submit" cancelText="Cancel"
+                  #showMeQuestionSelect
         placeholder="Select show me questions" formControlName="showMeQuestions" [class.ng-invalid]="invalid"
-        (ionChange)="showMeQuestionsChanged($event)" [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}">
-        <ion-option [value]="showMeQuestion.code"
-          *ngFor="let showMeQuestion of showMeQuestionOptions">
+        (change)="showMeQuestionsChanged($event)" [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}">
+        <ion-option *ngFor="let showMeQuestion of showMeQuestionOptions; let i = index;"
+                    [disabled]="disableInputs(i)"
+                    (ionSelect)="optionChange(showMeQuestion, i)"
+                    [value]="showMeQuestion">
           {{showMeQuestion.code}} - {{showMeQuestion.shortName}}
         </ion-option>
       </ion-select>

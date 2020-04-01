@@ -27,11 +27,11 @@ import {
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import { map, tap } from 'rxjs/operators';
-import {
-  getPassCertificateNumber,
-  isProvisionalLicenseProvided,
-} from '../../../modules/tests/pass-completion/pass-completion.selector';
-import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
+// import {
+//   getPassCertificateNumber,
+//   isProvisionalLicenseProvided,
+// } from '../../../modules/tests/pass-completion/pass-completion.selector';
+// import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import { TranslateService } from '@ngx-translate/core';
 import { ProvisionalLicenseNotReceived } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import {
@@ -52,8 +52,8 @@ interface HealthDeclarationPageState {
   candidateName$: Observable<string>;
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
-  passCertificateNumber$: Observable<string>;
-  licenseProvided$: Observable<boolean>;
+  // passCertificateNumber$: Observable<string>;
+  // licenseProvided$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
 }
 @IonicPage()
@@ -146,24 +146,26 @@ export class HealthDeclarationCatBEPage extends BasePageComponent {
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
-      passCertificateNumber$: currentTest$.pipe(
-        select(getPassCompletion),
-        select(getPassCertificateNumber),
-      ),
-      licenseProvided$: currentTest$.pipe(
-        select(getPassCompletion),
-        map(isProvisionalLicenseProvided),
-      ),
+      // passCertificateNumber$: currentTest$.pipe(
+      //   select(getPassCompletion),
+      //   select(getPassCertificateNumber),
+      // ),
+      // licenseProvided$: currentTest$.pipe(
+      //   select(getPassCompletion),
+      //   map(isProvisionalLicenseProvided),
+      // ),
       conductedLanguage$: currentTest$.pipe(
         select(getCommunicationPreference),
         select(getConductedLanguage),
       ),
     };
 
-    const { licenseProvided$, healthDeclarationAccepted$, conductedLanguage$ } = this.pageState;
+    const {
+      // licenseProvided$,
+      healthDeclarationAccepted$, conductedLanguage$ } = this.pageState;
 
     this.merged$ = merge(
-      licenseProvided$.pipe(map(val => this.licenseProvided = val)),
+      // licenseProvided$.pipe(map(val => this.licenseProvided = val)),
       healthDeclarationAccepted$.pipe(map(val => this.healthDeclarationAccepted = val)),
       conductedLanguage$.pipe(tap(value => configureI18N(value as Language, this.translate))),
     );

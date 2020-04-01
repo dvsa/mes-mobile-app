@@ -81,7 +81,8 @@ import {
 import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import {
-  AddShowMeTellMeComment, ShowMeQuestionSelected,
+  AddShowMeTellMeComment,
+  // ShowMeQuestionSelected,
 } from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.action';
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/cat-adi-part2/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
@@ -145,6 +146,7 @@ interface OfficePageState {
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
+  showMeQuestions$: Observable<QuestionResult[]>;
 }
 
 @IonicPage()
@@ -408,6 +410,11 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
         select(getVehicleChecksCatADI2),
         map(checks => [...checks.tellMeQuestions]),
       ),
+      showMeQuestions$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatADI2),
+        map(checks => [...checks.showMeQuestions]),
+      ),
     };
   }
 
@@ -440,7 +447,8 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
     this.store$.dispatch(new WeatherConditionsChanged(weatherConditions));
   }
 
-  showMeQuestionsChange(): void {
+  showMeQuestionsChanged(ev): void {
+    console.log('ev', ev);
     // this.store$.dispatch(new ShowMeQuestionSelected())
   }
 
@@ -540,12 +548,6 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {
-    // const showMeQuestion = this.form.controls['showMeQuestion'];
-    // if (showMeQuestion) {
-    //   if (showMeQuestion.value && showMeQuestion.value.code === 'N/A') {
-    //     this.form.controls['showMeQuestion'].setValue({});
-    //   }
-    // }
     this.store$.dispatch(new SetActivityCode(activityCodeModel.activityCode));
   }
 
