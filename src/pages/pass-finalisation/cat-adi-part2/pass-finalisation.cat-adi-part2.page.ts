@@ -38,6 +38,7 @@ import {
   DebriefUnwitnessed,
   D255No,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
+import { includes } from 'lodash';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -124,11 +125,22 @@ export class PassFinalisationCatADIPart2Page extends BasePageComponent {
     this.store$.dispatch(new PassFinalisationViewDidEnter());
   }
 
-  onSubmit() {
+  async onSubmit(): Promise<void> {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.store$.dispatch(new PersistTests());
-      this.navController.push(CAT_ADI_PART2.HEALTH_DECLARATION_PAGE);
+
+      await this.navController.push(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE);
+
+      for await(const view of this.navController.getViews()) {
+        if (includes([
+          CAT_ADI_PART2.TEST_REPORT_PAGE,
+          CAT_ADI_PART2.DEBRIEF_PAGE,
+          CAT_ADI_PART2.PASS_FINALISATION_PAGE,
+        ], view.id)) {
+          await this.navController.removeView(view);
+        }
+      }
       return;
     }
   }

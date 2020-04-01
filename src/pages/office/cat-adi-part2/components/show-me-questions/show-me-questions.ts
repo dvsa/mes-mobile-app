@@ -1,16 +1,21 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
 } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
+import { find } from 'lodash';
+import { Select } from 'ionic-angular';
 
 @Component({
   selector: 'show-me-questions-cat-adi2',
   templateUrl: 'show-me-questions.html',
 })
 export class ShowMeQuestionsCatADI2Component implements OnChanges {
+
+  @ViewChild('showMeQuestionSelect') selectRef: Select;
 
   @Input()
   display: boolean;
@@ -19,7 +24,7 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
   outcome: string;
 
   @Input()
-  showMeQuestions: VehicleChecksQuestion[];
+  showMeQuestions: QuestionResult[];
 
   @Input()
   showMeQuestionOptions: VehicleChecksQuestion[];
@@ -30,10 +35,13 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
   @Output()
   showMeQuestionsChange = new EventEmitter<VehicleChecksQuestion[]>();
 
+  values = [];
+
   private formControl: FormControl;
   static readonly fieldName: string = 'showMeQuestions';
 
-  constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
+  constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) {
+  }
 
   ngOnChanges(): void {
     if (!this.formControl) {
@@ -48,11 +56,28 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
     } else {
       this.formGroup.get(ShowMeQuestionsCatADI2Component.fieldName).setValidators([Validators.required]);
     }
-
     this.formControl.patchValue(this.showMeQuestions);
   }
 
+  disableInputs(index: number): boolean {
+    const questionResults: QuestionResult[] = this.formControl.value;
+    const codes: string[] = questionResults.map((result: QuestionResult) => result.code || null);
+
+    if (codes.filter((code: string) => code).length >= 2) {
+      return !find(questionResults, { code: this.showMeQuestionOptions[index].code });
+    }
+    return false;
+  }
+
+  optionChange(r, i) {
+    // console.log(i);
+    // this.values = [...this.values, r];
+    // console.log(this.values);
+    console.log(this.selectRef.getValues());
+  }
+
   showMeQuestionsChanged(showMeQuestions: VehicleChecksQuestion[]): void {
+    this.ngOnChanges();
     this.showMeQuestionsChange.emit(showMeQuestions);
   }
 
