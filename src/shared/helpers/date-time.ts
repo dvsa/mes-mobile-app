@@ -7,7 +7,7 @@ export class DateTime {
     if (sourceDateTime === undefined) {
       this.moment = moment();
     } else if (typeof sourceDateTime === 'string') {
-      this.moment = moment(new Date(sourceDateTime));
+      this.moment = moment(sourceDateTime);
     } else if (sourceDateTime instanceof Date) {
       this.moment = moment(sourceDateTime);
     } else {
