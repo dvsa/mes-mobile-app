@@ -145,7 +145,6 @@ export const CAT_ADI_PART2 = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatADIPart2Page',
   COMMUNICATION_PAGE: 'CommunicationCatADIPart2Page',
   DEBRIEF_PAGE: 'DebriefCatADIPart2Page',
-  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatADIPart2Page',
   OFFICE_PAGE: 'OfficeCatADIPart2Page',
   PASS_FINALISATION_PAGE: 'PassFinalisationCatADIPart2Page',
   TEST_REPORT_PAGE: 'TestReportCatADIPart2Page',
