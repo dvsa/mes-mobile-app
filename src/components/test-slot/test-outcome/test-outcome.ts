@@ -294,8 +294,8 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   shouldDisplayCheckStartModal(): boolean {
-    const retVal = new DateTime().compareDuration(this.slotDetail.start, Duration.MINUTE) > 5;
-    return retVal;
+    const minsUntilTest = new DateTime().compareDuration(this.slotDetail.start, Duration.MINUTE);
+    return minsUntilTest > 5;
   }
 
   isE2EPracticeMode(): boolean {
