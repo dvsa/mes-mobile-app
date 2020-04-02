@@ -148,7 +148,6 @@ export class FaultCountProvider {
 
   public getVehicleChecksFaultCount = (category: TestCategory, data: object): VehicleChecksScore => {
     switch (category) {
-      // TODO(ADI2): Replace with actual fault count helper
       case TestCategory.ADI2: return FaultCountADIPart2Helper.getVehicleChecksFaultCountCatADIPart2(data);
       case TestCategory.BE: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
       case TestCategory.C1: return FaultCountCHelper.getVehicleChecksFaultCountCatC1(data);
@@ -183,6 +182,13 @@ export class FaultCountProvider {
       case TestCategory.D1E:
       case TestCategory.DE:
       case TestCategory.D: return FaultCountDHelper.getSafetyQuestionsFaultCount(data);
+      default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
+    }
+  }
+
+  public getTellMeFaultCount = (category: TestCategory, data: object): VehicleChecksScore => {
+    switch (category) {
+      case TestCategory.ADI2: return FaultCountADIPart2Helper.getTellMeFaultCount(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
