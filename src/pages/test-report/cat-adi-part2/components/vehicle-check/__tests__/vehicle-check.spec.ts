@@ -19,7 +19,7 @@ import {
 } from '../../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { By } from '@angular/platform-browser';
-// TO-DO ADI Part2: implement correct category
+
 import {
   TellMeQuestionOutcomeChanged,
   ShowMeQuestionDrivingFault,
@@ -33,7 +33,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { configureTestSuite } from 'ng-bullet';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 
-fdescribe('VehicleCheckComponent', () => {
+describe('VehicleCheckComponent', () => {
 
   let fixture: ComponentFixture<VehicleCheckComponent>;
   let component: VehicleCheckComponent;
@@ -114,6 +114,14 @@ fdescribe('VehicleCheckComponent', () => {
         fixture.detectChanges();
 
         component.isRemoveFaultMode = true;
+        component.vehicleChecks.showMeQuestions = [
+          {
+            code: '123',
+            outcome: 'DF',
+          },
+        ];
+
+        component.isRemoveFaultMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.removeFault();
@@ -128,6 +136,7 @@ fdescribe('VehicleCheckComponent', () => {
 
         component.isRemoveFaultMode = true;
         component.isSeriousMode = true;
+        component.vehicleChecks.seriousFault = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
@@ -142,6 +151,7 @@ fdescribe('VehicleCheckComponent', () => {
 
         component.isRemoveFaultMode = true;
         component.isDangerousMode = true;
+        component.vehicleChecks.dangerousFault = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
@@ -164,6 +174,7 @@ fdescribe('VehicleCheckComponent', () => {
 
     it('should pass 1 driving faults to the driving faults badge component when there is a tell me fault', () => {
       store$.dispatch(new TellMeQuestionOutcomeChanged(CompetencyOutcome.DF, 0));
+      // store$.dispatch(new TellMeQuestionDrivingFault());
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;

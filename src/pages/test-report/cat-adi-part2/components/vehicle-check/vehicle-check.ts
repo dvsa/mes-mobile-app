@@ -3,11 +3,9 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-// TO-DO ADI Part2: implement correct category
-import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
-// TO-DO ADI Part2: implement correct category
-import { getVehicleChecks } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-// TO-DO ADI Part2: implement correct category
+import { getTestData } from '../../../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
+import { getVehicleChecksCatADIPart2 }
+  from '../../../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.selector';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Subscription, merge, Observable } from 'rxjs';
@@ -50,7 +48,8 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
 
   constructor(
     private store$: Store<StoreModel>,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
 
@@ -60,7 +59,7 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
       select(getTests),
       select(getCurrentTest),
       select(getTestData),
-      select(getVehicleChecks),
+      select(getVehicleChecksCatADIPart2),
     );
 
     const isSeriousMode$ = this.store$.pipe(
