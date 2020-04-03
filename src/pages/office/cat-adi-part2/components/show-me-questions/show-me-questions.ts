@@ -50,10 +50,6 @@ export class ShowMeQuestionsCatADI2Component implements OnInit, OnChanges {
   // @TODO - rename and make type strict
   index: number[] = [];
 
-  i: number = 0;
-
-  clicks = [];
-
   private formControl: FormControl;
   static readonly fieldName: string = 'showMeQuestions';
 
@@ -65,38 +61,15 @@ export class ShowMeQuestionsCatADI2Component implements OnInit, OnChanges {
     this.showMeQuestionOptionsDisabled = this.showMeQuestionOptions.map(v => ({ ...v, disabled: false }));
   }
 
-  selection = (question: VehicleChecksQuestion, index: number): void => {
-    this.values.push(question);
-    this.index.push(index);
+  onDocumentReady(): any {
+    const values: number[] = [0, 1, 2, 3, 4, 5, 6, 7];
 
-    this.values = this.uniqueArray(this.values, 'code');
-    this.index = this.uniqueArray(this.index, null);
-
-    // @TODO - create array dynamically (Matt B)
-    const filteredIndices: number[] = [0, 1, 2, 3, 4, 5, 6, 7].filter(v => this.index.indexOf(v) === -1);
-    const requiredIndices: number[] = [0, 1, 2, 3, 4, 5, 6, 7].filter(v => this.index.indexOf(v) !== -1);
-
-    filteredIndices.forEach((res: number) => {
-      if (res !== undefined) {
-        const elem = document.querySelector(`#alert-input-0-${res}`);
-
-        if (this.values.length >= 2 && elem) {
-          elem.setAttribute('disabled', 'true');
-        }
-      }
+    values.forEach((res: number) => {
+      console.log(res);
+      // tslint:disable-next-line:max-line-length
+      document.querySelector(`#alert-input-0-${res}`).setAttribute('onclick', 'ng.probe(document.getElementById(\'show-me-questions-card\')).componentInstance.debug()');
     });
-
-    requiredIndices.forEach((res: number) => {
-      if (res !== undefined) {
-        const elem = document.querySelector(`#alert-input-0-${res}`);
-
-        if (elem) {
-          elem.setAttribute('onclick', `true`);
-          elem.addEventListener('click', this.myDebugger);
-        }
-      }
-    });
-  };
+  }
 
   ngOnChanges(): void {
     if (!this.formControl) {
@@ -122,29 +95,28 @@ export class ShowMeQuestionsCatADI2Component implements OnInit, OnChanges {
     return !this.formControl.valid && this.formControl.dirty;
   }
 
-  myDebugger = (): void => {
-    console.log('matt');
-  };
+  debug = (): void => {
+    console.log('debug');
+  }
 
-  // selection = (question: VehicleChecksQuestion, index: number): void => {
-  //   this.values.push(question);
-  //   this.index.push(index);
-  //
-  //   console.log('question', question);
-  //
-  //   this.values = this.uniqueArray(this.values, 'code');
-  //   this.index = this.uniqueArray(this.index, null);
-  //
-  // @TODO - create array dynamically (Matt B)
-  //   const filteredIndices: number[] = [0, 1, 2, 3, 4, 5, 6, 7].filter(v => this.index.indexOf(v) === -1);
-  //
-  //   filteredIndices.forEach((res: number) => {
-  //     if (this.values.length >= 2 && res !== undefined && document.querySelector(`#alert-input-0-${res}`)) {
-  //       document.querySelector(`#alert-input-0-${res}`).setAttribute('disabled', 'true');
-  //     }
-  //   });
-  //
-  // }
+  selection = (question: VehicleChecksQuestion, index: number): void => {
+    this.values.push(question);
+    this.index.push(index);
+
+    console.log('question', question);
+
+    this.values = this.uniqueArray(this.values, 'code');
+    this.index = this.uniqueArray(this.index, null);
+
+    // @TODO - create array dynamically (Matt B)
+    const filteredIndices: number[] = [0, 1, 2, 3, 4, 5, 6, 7].filter(v => this.index.indexOf(v) === -1);
+
+    filteredIndices.forEach((res: number) => {
+      if (this.values.length >= 2 && res !== undefined && document.querySelector(`#alert-input-0-${res}`)) {
+        document.querySelector(`#alert-input-0-${res}`).setAttribute('disabled', 'true');
+      }
+    });
+  }
 
   uniqueArray = (array: any[], key: string): any[] => {
     if (!key) {
