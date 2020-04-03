@@ -2,7 +2,7 @@ import { pickBy } from 'lodash';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
-import { sumManoeuvreArrayFaults } from '../../../shared/helpers/faults';
+import { sumManoeuvreArrayFaults, sumManoeuvreFaults } from '../../../shared/helpers/faults';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 
 export class FaultCountADIPart2Helper {
@@ -19,7 +19,7 @@ export class FaultCountADIPart2Helper {
 
     const result =
       faultTotal +
-      sumManoeuvreArrayFaults(manoeuvres, CompetencyOutcome.DF) +
+      sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
       FaultCountADIPart2Helper.getVehicleChecksFaultCountCatADIPart2(vehicleChecks).drivingFaults +
       controlledStopHasDrivingFault;
 
@@ -36,16 +36,9 @@ export class FaultCountADIPart2Helper {
     const controlledStopSeriousFaults = (controlledStop && controlledStop.fault === CompetencyOutcome.S) ? 1 : 0;
     const eyesightTestSeriousFaults = (eyesightTest && eyesightTest.seriousFault) ? 1 : 0;
 
-    console.log('seriousFaults', seriousFaults)
-    console.log('manoeuvres', manoeuvres)
-    console.log('controlledStop', controlledStop)
-    console.log('vehicleChecks', vehicleChecks)
-    console.log('eyesightTest', eyesightTest)
-    console.log('seriousFaultSumOfSimpleCompetencies', seriousFaultSumOfSimpleCompetencies)
-
     const result =
       seriousFaultSumOfSimpleCompetencies +
-      sumManoeuvreArrayFaults(manoeuvres, CompetencyOutcome.S) +
+      sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) +
       FaultCountADIPart2Helper.getVehicleChecksByOutcomeFaultCountCatADIPart2(vehicleChecks, CompetencyOutcome.S) +
       controlledStopSeriousFaults +
       eyesightTestSeriousFaults;
@@ -64,7 +57,7 @@ export class FaultCountADIPart2Helper {
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
-      sumManoeuvreArrayFaults(manoeuvres, CompetencyOutcome.D) +
+      sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) +
       FaultCountADIPart2Helper.getVehicleChecksByOutcomeFaultCountCatADIPart2(vehicleChecks, CompetencyOutcome.D) +
       controlledStopDangerousFaults;
 
@@ -145,14 +138,21 @@ export class FaultCountADIPart2Helper {
   }
 
   public static getShowMeFaultCount = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): VehicleChecksScore => {
+
+    const emptyResults = {
+      drivingFaults: 0,
+      seriousFaults: 0,
+    }
+
     if (!vehicleChecks) {
-      return {
-        drivingFaults: 0,
-        seriousFaults: 0,
-      };
+      return emptyResults;
     }
 
     const { showMeQuestions } = vehicleChecks;
+
+    if (!showMeQuestions) {
+      return emptyResults;
+    }
 
     const total = showMeQuestions.reduce<number>((acc, question) => {
       if (question.outcome === CompetencyOutcome.DF) {
@@ -168,14 +168,21 @@ export class FaultCountADIPart2Helper {
   }
 
   public static getTellMeFaultCount = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): VehicleChecksScore => {
+
+    const emptyResults = {
+      drivingFaults: 0,
+      seriousFaults: 0,
+    }
+
     if (!vehicleChecks) {
-      return {
-        drivingFaults: 0,
-        seriousFaults: 0,
-      };
+      return emptyResults;
     }
 
     const { tellMeQuestions } = vehicleChecks;
+
+    if (!tellMeQuestions) {
+      return emptyResults;
+    }
 
     const total = tellMeQuestions.reduce<number>((acc, question) => {
       if (question.outcome === CompetencyOutcome.DF) {

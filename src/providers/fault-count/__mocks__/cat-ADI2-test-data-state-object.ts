@@ -1,4 +1,5 @@
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const catADI2TestDataStateObjectNoDrivingFaults: CatADI2UniqueTypes.TestData = {
   drivingFaults: {},
@@ -72,6 +73,45 @@ export const catADI2TestDataStateObjectManoeuvreFaults: CatADI2UniqueTypes.TestD
       },
     },
   ],
+  controlledStop: {},
+};
+
+export const catADI2TestDataStateObjectShowMeFaults: CatADI2UniqueTypes.TestData = {
+  drivingFaults: {},
+  dangerousFaults: {},
+  seriousFaults: {},
+  vehicleChecks: {
+    tellMeQuestions: [
+      {
+        code: 'T1',
+        description: 'Brakes',
+        outcome: 'DF',
+      },
+      {
+        code: 'T2',
+        description: 'Tyre pressures',
+        outcome: 'DF',
+      },
+      {
+        code: 'T3',
+        description: 'Head restraint',
+        outcome: 'P',
+      },
+    ],
+    showMeQuestions: [
+      {
+        outcome: CompetencyOutcome.DF,
+      },
+    ],
+  },
+  eco: {},
+  ETA: {},
+  eyesightTest: {
+    complete: true,
+    seriousFault: false,
+  },
+  testRequirements: {},
+  manoeuvres: [],
   controlledStop: {},
 };
 
@@ -149,6 +189,59 @@ export const catADI2TestDataStateObjectControlledStopDrivingFaults: CatADI2Uniqu
 export const catADI2TestDataStateObjectSeriousFaults: CatADI2UniqueTypes.TestData = {
   drivingFaults: {},
   dangerousFaults: {},
+  seriousFaults: {
+    useOfMirrorsChangeDirection: true,
+  },
+  vehicleChecks: {
+    tellMeQuestions: [
+      {
+        code: 'T1',
+        description: 'Brakes',
+        outcome: 'P',
+      },
+      {
+        code: 'T2',
+        description: 'Tyre pressures',
+        outcome: 'P',
+      },
+      {
+        code: 'T3',
+        description: 'Head restraint',
+        outcome: 'P',
+      },
+    ],
+    showMeQuestions: [
+      {
+        outcome: CompetencyOutcome.S,
+      },
+    ],
+  },
+  eco: {},
+  ETA: {},
+  eyesightTest: {
+    complete: true,
+    seriousFault: true,
+  },
+  testRequirements: {},
+  manoeuvres: [
+    {
+      reverseParkCarpark: {
+        selected: true,
+        controlFault: CompetencyOutcome.S,
+      },
+    },
+  ],
+  controlledStop: {
+    fault: CompetencyOutcome.S,
+    selected: true,
+  },
+};
+
+export const catADI2TestDataStateObjectDangerousFaults: CatADI2UniqueTypes.TestData = {
+  drivingFaults: {},
+  dangerousFaults: {
+    useOfMirrorsChangeDirection: true,
+  },
   seriousFaults: {},
   vehicleChecks: {
     tellMeQuestions: [
@@ -170,7 +263,7 @@ export const catADI2TestDataStateObjectSeriousFaults: CatADI2UniqueTypes.TestDat
     ],
     showMeQuestions: [
       {
-        outcome: 'S',
+        outcome: CompetencyOutcome.D,
       },
     ],
   },
@@ -185,12 +278,12 @@ export const catADI2TestDataStateObjectSeriousFaults: CatADI2UniqueTypes.TestDat
     {
       reverseParkCarpark: {
         selected: true,
-        controlFault: 'S',
+        controlFault: CompetencyOutcome.D,
       },
     },
   ],
   controlledStop: {
-    fault: 'S',
+    fault: CompetencyOutcome.D,
     selected: true,
   },
 };
