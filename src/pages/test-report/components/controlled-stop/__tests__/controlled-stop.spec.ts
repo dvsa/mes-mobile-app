@@ -216,7 +216,6 @@ describe('ControlledStopComponent', () => {
         const tickButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-tick'));
         component.selectedControlledStop = true;
         fixture.detectChanges();
-        console.log(tickButton.nativeElement);
         expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick checked');
       });
 

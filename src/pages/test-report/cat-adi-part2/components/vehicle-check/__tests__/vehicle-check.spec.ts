@@ -226,7 +226,6 @@ describe('VehicleCheckComponent', () => {
         };
 
         const outcome = component.hasShowMeDrivingFault();
-        console.log('outcome', outcome);
         expect(outcome).toEqual(true);
       });
 
@@ -257,7 +256,6 @@ describe('VehicleCheckComponent', () => {
         };
 
         const outcome = component.hasTellMeDrivingFault();
-        console.log('outcome', outcome);
         expect(outcome).toEqual(true);
       });
 

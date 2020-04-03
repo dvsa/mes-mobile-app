@@ -116,7 +116,6 @@ export function vehicleChecksCatADI2Reducer(
         dangerousFault: false,
       };
     case vehicleChecksCatADI2ActionTypes.SHOW_ME_QUESTION_PASSED:
-      console.log('PASS');
       showMeQuestionIndex = state.showMeQuestions.findIndex(e => e.outcome === CompetencyOutcome.DF);
       if (showMeQuestionIndex > -1) {
         newShowMeQuestionsState[showMeQuestionIndex].outcome = CompetencyOutcome.P;
