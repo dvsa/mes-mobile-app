@@ -36,7 +36,7 @@ When('I check candidate details for {string}', (candidateName) => {
 
 When('I start the test for {string}', (candidateName) => {
   JournalPage.startTestFor(candidateName);
-    // If the start test early dialog is shown just select continue
+  // If the start test early dialog is shown just select continue
   const startTestEarlyButton = JournalPage.getStartTestEarlyButton();
 
   startTestEarlyButton.isPresent().then((result) => {
@@ -55,7 +55,7 @@ When('I start the test for {string}', (candidateName) => {
 });
 
 When('I rekey a test for {string}', (candidateName) => {
-  const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
+  const buttonElement = JournalPage.getRekeyTestButtonFor(candidateName);
 
   buttonElement.isPresent().then((isStartPresent) => {
     if (!isStartPresent) {
@@ -84,10 +84,10 @@ When(/^I start the test (early|late) for \"(.+)\"$/, (testTime: string, candidat
     JournalPage.startingExpiredOrEarlyTest(candidateName);
 
     // If the rekey dialog is shown so just select start test normally
-    const lateStartTestButton = JournalPage.getStartTestLateButton();
+    const lateStartTestButton = JournalPage.getRekeyTestLateButton();
     lateStartTestButton.isPresent().then((result) => {
       if (result) {
-        JournalPage.clickStartTestLateButton();
+        JournalPage.clickRekeyTestLateButton();
       }
     });
   }
@@ -97,11 +97,11 @@ When('I rekey a late test for {string}', (candidateName) => {
   JournalPage.startTestFor(candidateName);
 
   // If the rekey dialog is shown so just select start test normally
-  const rekeyStartTestButton = JournalPage.getStartTestLateButton();
+  const rekeyStartTestButton = JournalPage.getRekeyTestLateButton();
   JournalPage.rekeyIsPresent();
   rekeyStartTestButton.isPresent().then((result) => {
     if (result) {
-      JournalPage.clickStartTestLateButton();
+      JournalPage.clickRekeyTestLateButton();
     }
   });
 });
@@ -150,19 +150,19 @@ Then('I should have a category {string} test for {string}', (category, candidate
 });
 
 Then('The vehicle for {string} has length {string}, width {string}, height {string} and seats {string}',
-(candidateName, length, width, height, seats) => {
-  const lengthValue = JournalPage.getVehicleLengthElementFor(candidateName);
-  expect(lengthValue.getText()).to.eventually.equal(length);
+  (candidateName, length, width, height, seats) => {
+    const lengthValue = JournalPage.getVehicleLengthElementFor(candidateName);
+    expect(lengthValue.getText()).to.eventually.equal(length);
 
-  const widthValue = JournalPage.getVehicleWidthElementFor(candidateName);
-  expect(widthValue.getText()).to.eventually.equal(width);
+    const widthValue = JournalPage.getVehicleWidthElementFor(candidateName);
+    expect(widthValue.getText()).to.eventually.equal(width);
 
-  const heightValue = JournalPage.getVehicleHeightElementFor(candidateName);
-  expect(heightValue.getText()).to.eventually.equal(height);
+    const heightValue = JournalPage.getVehicleHeightElementFor(candidateName);
+    expect(heightValue.getText()).to.eventually.equal(height);
 
-  const seatValue = JournalPage.getSeatElementFor(candidateName);
-  return expect(seatValue.getText()).to.eventually.equal(seats);
-});
+    const seatValue = JournalPage.getSeatElementFor(candidateName);
+    return expect(seatValue.getText()).to.eventually.equal(seats);
+  });
 
 Then('I continue the write up for {string}', (candidateName) => {
   JournalPage.clickContinueWriteupButton(candidateName);

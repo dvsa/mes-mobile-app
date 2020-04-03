@@ -85,8 +85,16 @@ class JournalPage extends Page {
     return this.getElementById('rekey-start-test-button', false);
   }
 
+  getRekeyTestLateButton() {
+    return this.getElementById('rekey-rekey-test-button', false);
+  }
+
   clickStartTestLateButton() {
     this.clickElement(this.getStartTestLateButton());
+  }
+
+  clickRekeyTestLateButton() {
+    this.clickElement(this.getRekeyTestLateButton());
   }
 
   getRekeyTestButtonFor(candidateName) {
@@ -171,7 +179,7 @@ class JournalPage extends Page {
 
   rekeyIsPresent() {
     // todo: should this call waitForPresenceOfElement?
-    const rekeyStartTestButton = this.getElementById('rekey-start-test-button', false);
+    const rekeyStartTestButton = this.getElementById('rekey-rekey-test-button', false);
     return expect(rekeyStartTestButton.isPresent()).to.eventually.be.true;
   }
 
