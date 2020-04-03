@@ -15,6 +15,7 @@ import { FaultCountAM1Helper } from './cat-a-mod1/fault-count.cat-a-mod1';
 import { FaultCountAM2Helper } from './cat-a-mod2/fault-count.cat-a-mod2';
 import { FaultCountHomeTestHelper } from './cat-home-test/fault-count.cat-home-test';
 import { FaultCountADIPart2Helper } from './cat-adi-part2/fault-count.cat-adi-part2';
+import { VehicleChecks } from '@dvsa/mes-test-schema/categories/ADI2/partial';
 
 // TODO: Remove category from helper functions as the name of the helper class already contains the category
 
@@ -186,7 +187,7 @@ export class FaultCountProvider {
     }
   }
 
-  public getTellMeFaultCount = (category: TestCategory, data: object): VehicleChecksScore => {
+  public getTellMeFaultCount = (category: TestCategory, data: VehicleChecks): VehicleChecksScore => {
     switch (category) {
       case TestCategory.ADI2: return FaultCountADIPart2Helper.getTellMeFaultCount(data);
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);

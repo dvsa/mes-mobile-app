@@ -29,6 +29,11 @@ import { FaultCountDHelper } from '../cat-d/fault-count.cat-d';
 import { configureTestSuite } from 'ng-bullet';
 import { FaultCountAM1Helper } from '../cat-a-mod1/fault-count.cat-a-mod1';
 import { FaultCountAM2Helper } from '../cat-a-mod2/fault-count.cat-a-mod2';
+import {
+  catADI2TestDataStateObjectNoDrivingFaults,
+  catADI2TestDataStateObjectTellMeFaults,
+} from '../__mocks__/cat-ADI2-test-data-state-object';
+import { FaultCountADIPart2Helper } from '../cat-adi-part2/fault-count.cat-adi-part2';
 
 describe('FaultCountProvider', () => {
 
@@ -45,6 +50,10 @@ describe('FaultCountProvider', () => {
   beforeEach(() => {
 
     faultCountProvider = TestBed.get(FaultCountProvider);
+
+    spyOn(FaultCountADIPart2Helper, 'getDrivingFaultSumCountCatADIPart2').and.callThrough();
+    spyOn(FaultCountADIPart2Helper, 'getSeriousFaultSumCountCatADIPart2').and.callThrough();
+    spyOn(FaultCountADIPart2Helper, 'getDangerousFaultSumCountCatADIPart2').and.callThrough();
 
     spyOn(FaultCountBHelper, 'getDrivingFaultSumCountCatB').and.callThrough();
     spyOn(FaultCountBHelper, 'getSeriousFaultSumCountCatB').and.callThrough();
@@ -98,6 +107,13 @@ describe('FaultCountProvider', () => {
   });
 
   describe('getDrivingFaultSumCount', () => {
+    describe('CAT ADI2', () => {
+      it('shoud call the category ADI2 specific method for getting the riding fault sum count', () => {
+        faultCountProvider.getDrivingFaultSumCount(TestCategory.ADI2, catADI2TestDataStateObjectNoDrivingFaults);
+        expect((FaultCountADIPart2Helper as any).getDrivingFaultSumCountCatADIPart2).toHaveBeenCalled();
+      });
+    });
+
     describe('CAT A', () => {
       it('shoud call the category AM1 specific method for getting the riding fault sum count', () => {
         faultCountProvider.getDrivingFaultSumCount(TestCategory.EUAM1, catAM1TestDataStateObject);
@@ -160,6 +176,13 @@ describe('FaultCountProvider', () => {
   });
 
   describe('getSeriousFaultSumCount', () => {
+    describe('CAT ADI2', () => {
+      it('shoud call the category ADI2 specific method for getting the riding fault sum count', () => {
+        faultCountProvider.getSeriousFaultSumCount(TestCategory.ADI2, catADI2TestDataStateObjectNoDrivingFaults);
+        expect((FaultCountADIPart2Helper as any).getSeriousFaultSumCountCatADIPart2).toHaveBeenCalled();
+      });
+    });
+
     describe('CAT A', () => {
       it('should call the category AM1 specific method for getting the serious fault sum count', () => {
         faultCountProvider.getSeriousFaultSumCount(TestCategory.EUAM1, catAM1TestDataStateObject);
@@ -222,6 +245,13 @@ describe('FaultCountProvider', () => {
   });
 
   describe('getDangerousFaultSumCount', () => {
+    describe('CAT ADI2', () => {
+      it('shoud call the category ADI2 specific method for getting the riding fault sum count', () => {
+        faultCountProvider.getDangerousFaultSumCount(TestCategory.ADI2, catADI2TestDataStateObjectNoDrivingFaults);
+        expect((FaultCountADIPart2Helper as any).getDangerousFaultSumCountCatADIPart2).toHaveBeenCalled();
+      });
+    });
+
     describe('CAT A', () => {
       it('should call the category AM1 specific method for getting the dangerous fault sum count', () => {
         faultCountProvider.getDangerousFaultSumCount(TestCategory.EUAM1, catAM1TestDataStateObject);
@@ -515,6 +545,21 @@ describe('FaultCountProvider', () => {
   describe('getSeriousFaultSumCountCatAM1', () => {
     it('should return the serious faults count', () => {
       expect((FaultCountAM1Helper as any).getSeriousFaultSumCountCatAM1(catAM1TestDataStateObject)).toBe(5);
+    });
+  });
+
+  describe('getTellMeFaultCount', () => {
+    it('should return the tellMeQuestions faults count', () => {
+
+      const expected = {
+        drivingFaults: 2,
+        seriousFaults: 0,
+      };
+
+      const returnValue = faultCountProvider.getTellMeFaultCount(
+        TestCategory.ADI2,
+        catADI2TestDataStateObjectTellMeFaults.vehicleChecks);
+      expect(returnValue).toEqual(expected);
     });
   });
 });

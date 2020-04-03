@@ -23,13 +23,3 @@ export const sumManoeuvreFaults = (manoeuvres: Object | Manoeuvres[], faultType:
     });
   }, 0);
 };
-
-export const sumManoeuvreArrayFaults = (manoeuvres, faultType: CompetencyOutcome): number => {
-  let total: number = 0;
-
-  manoeuvres.forEach((manoeuvre) => {
-    total += sumManoeuvreFaults(manoeuvre, faultType);
-  });
-
-  return total;
-};
