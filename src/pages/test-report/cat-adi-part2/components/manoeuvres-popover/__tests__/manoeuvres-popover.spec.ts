@@ -23,7 +23,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { testReportReducer } from '../../../../test-report.reducer';
 import { ManoeuvresPopoverComponentAdiPart2 } from '../manoeuvres-popover';
 
-describe('ADI2 ManoeuvresPopoverComponent', () => {
+fdescribe('ADI2 ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponentAdiPart2>;
   let component: ManoeuvresPopoverComponentAdiPart2;
   let store$: Store<StoreModel>;
