@@ -142,7 +142,7 @@ export class FaultCountADIPart2Helper {
     const emptyResults = {
       drivingFaults: 0,
       seriousFaults: 0,
-    }
+    };
 
     if (!vehicleChecks) {
       return emptyResults;
@@ -172,7 +172,7 @@ export class FaultCountADIPart2Helper {
     const emptyResults = {
       drivingFaults: 0,
       seriousFaults: 0,
-    }
+    };
 
     if (!vehicleChecks) {
       return emptyResults;
