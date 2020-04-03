@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, ViewChild, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import {
@@ -6,14 +6,20 @@ import {
   VisibilityType,
 } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
-import { find } from 'lodash';
+import {
+  // find,
+  uniqBy,
+  uniq,
+} from 'lodash';
 import { Select } from 'ionic-angular';
+
+// type VehicleChecksQuestionDisable = (VehicleChecksQuestion & { disabled: boolean; })[];
 
 @Component({
   selector: 'show-me-questions-cat-adi2',
   templateUrl: 'show-me-questions.html',
 })
-export class ShowMeQuestionsCatADI2Component implements OnChanges {
+export class ShowMeQuestionsCatADI2Component implements OnInit, OnChanges {
 
   @ViewChild('showMeQuestionSelect') selectRef: Select;
 
@@ -29,18 +35,30 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
   @Input()
   showMeQuestionOptions: VehicleChecksQuestion[];
 
+  // Created as i've added a disabled property - might not be needed
+  showMeQuestionOptionsDisabled: { code: string; description: string; shortName: string; disabled: boolean; }[];
+
   @Input()
   formGroup: FormGroup;
 
   @Output()
   showMeQuestionsChange = new EventEmitter<VehicleChecksQuestion[]>();
 
-  values = [];
+  // @TODO - rename and make type strict
+  values: any[] = [];
+
+  // @TODO - rename and make type strict
+  index: number[] = [];
 
   private formControl: FormControl;
   static readonly fieldName: string = 'showMeQuestions';
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) {
+  }
+
+  // Might not be needed if not using 'disabled' property directly
+  ngOnInit(): void {
+    this.showMeQuestionOptionsDisabled = this.showMeQuestionOptions.map(v => ({ ...v, disabled: false }));
   }
 
   ngOnChanges(): void {
@@ -59,30 +77,38 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
     this.formControl.patchValue(this.showMeQuestions);
   }
 
-  disableInputs(index: number): boolean {
-    const questionResults: QuestionResult[] = this.formControl.value;
-    const codes: string[] = questionResults.map((result: QuestionResult) => result.code || null);
-
-    if (codes.filter((code: string) => code).length >= 2) {
-      return !find(questionResults, { code: this.showMeQuestionOptions[index].code });
-    }
-    return false;
-  }
-
-  optionChange(r, i) {
-    // console.log(i);
-    // this.values = [...this.values, r];
-    // console.log(this.values);
-    console.log(this.selectRef.getValues());
-  }
-
   showMeQuestionsChanged(showMeQuestions: VehicleChecksQuestion[]): void {
-    this.ngOnChanges();
     this.showMeQuestionsChange.emit(showMeQuestions);
   }
 
   get invalid(): boolean {
     return !this.formControl.valid && this.formControl.dirty;
+  }
+
+  selection = (question: VehicleChecksQuestion, index: number): void => {
+    this.values.push(question);
+    this.index.push(index);
+
+    console.log('question', question);
+
+    this.values = this.uniqueArray(this.values, 'code');
+    this.index = this.uniqueArray(this.index, null);
+
+    // @TODO - create array dynamically (Matt B)
+    const filteredIndices: number[] = [0, 1, 2, 3, 4, 5, 6, 7].filter(v => this.index.indexOf(v) === -1);
+
+    filteredIndices.forEach((res: number) => {
+      if (this.values.length >= 2 && res !== undefined && document.querySelector(`#alert-input-0-${res}`)) {
+        document.querySelector(`#alert-input-0-${res}`).setAttribute('disabled', 'true');
+      }
+    });
+  }
+
+  uniqueArray = (array: any[], key: string): any[] => {
+    if (!key) {
+      return uniq(array);
+    }
+    return uniqBy(array, key);
   }
 
 }
