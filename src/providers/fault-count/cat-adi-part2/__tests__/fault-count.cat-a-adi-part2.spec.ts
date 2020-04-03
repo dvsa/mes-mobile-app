@@ -40,7 +40,7 @@ describe('FaultCountADIPart2Helper', () => {
     it('Should return 1 when a controlledStop driving fault exists', () => {
       const temp =
         FaultCountADIPart2Helper.getDrivingFaultSumCountCatADIPart2(
-          catADI2TestDataStateObjectControlledStopDrivingFaults
+          catADI2TestDataStateObjectControlledStopDrivingFaults,
         );
       expect(temp).toEqual(1);
     });
