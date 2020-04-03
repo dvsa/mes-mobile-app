@@ -14,6 +14,7 @@
                         formControlName="showMeQuestions"
                         [class.ng-invalid]="invalid"
                         (change)="showMeQuestionsChanged($event)"
+                        (click)="onDocumentReady()"
                         [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}">
 
                 <ion-option *ngFor="let showMeQuestion of showMeQuestionOptionsDisabled; let i = index;"

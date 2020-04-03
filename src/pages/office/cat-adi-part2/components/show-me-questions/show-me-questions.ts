@@ -61,6 +61,16 @@ export class ShowMeQuestionsCatADI2Component implements OnInit, OnChanges {
     this.showMeQuestionOptionsDisabled = this.showMeQuestionOptions.map(v => ({ ...v, disabled: false }));
   }
 
+  onDocumentReady(): any {
+    const values: number[] = [0, 1, 2, 3, 4, 5, 6, 7];
+
+    values.forEach((res: number) => {
+      console.log(res);
+      // tslint:disable-next-line:max-line-length
+      document.querySelector(`#alert-input-0-${res}`).setAttribute('onclick', 'ng.probe(document.getElementById(\'show-me-questions-card\')).componentInstance.debug()');
+    });
+  }
+
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl([]);
@@ -83,6 +93,10 @@ export class ShowMeQuestionsCatADI2Component implements OnInit, OnChanges {
 
   get invalid(): boolean {
     return !this.formControl.valid && this.formControl.dirty;
+  }
+
+  debug = (): void => {
+    console.log('debug');
   }
 
   selection = (question: VehicleChecksQuestion, index: number): void => {
