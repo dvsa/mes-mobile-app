@@ -207,6 +207,7 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
 
   hasShowMeDrivingFault = (): boolean => {
     const showMeQuestions = this.vehicleChecks.showMeQuestions;
+    console.log('showMeQuestions', showMeQuestions);
     if (!showMeQuestions) {
       return false;
     }
@@ -214,12 +215,16 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
       if (!e) {
         return false;
       }
+      console.log('e.outcome', e.outcome);
       return e.outcome === CompetencyOutcome.DF;
     });
   }
 
   hasTellMeDrivingFault = (): boolean => {
     const tellMeQuestions = this.vehicleChecks.tellMeQuestions;
+    if (!tellMeQuestions) {
+      return false;
+    }
     return tellMeQuestions.some((e) => {
       if (!e) {
         return false;

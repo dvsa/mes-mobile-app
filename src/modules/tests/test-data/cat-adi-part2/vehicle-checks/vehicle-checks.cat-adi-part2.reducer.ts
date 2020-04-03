@@ -39,12 +39,16 @@ export function vehicleChecksCatADI2Reducer(
       return acc;
     }, 0);
   }
-  const tellMeFaultCount = state.tellMeQuestions.reduce<number>((acc, question) => {
-    if (question.outcome === CompetencyOutcome.DF) {
-      return acc + 1;
-    }
-    return acc;
-  }, 0);
+
+  let tellMeFaultCount = 0;
+  if (state.tellMeQuestions) {
+    tellMeFaultCount = state.tellMeQuestions.reduce<number>((acc, question) => {
+      if (question.outcome === CompetencyOutcome.DF) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+  }
   const showMeTellMeFaultCount = tellMeFaultCount + showMeFaultCount;
 
   switch (action.type) {
