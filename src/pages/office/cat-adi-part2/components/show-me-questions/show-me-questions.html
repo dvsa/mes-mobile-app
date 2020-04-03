@@ -1,28 +1,35 @@
 <ion-row *ngIf="display" class="mes-validated-row mes-row-separator" id="show-me-questions-card" nowrap
-  [formGroup]="formGroup">
-  <div class="validation-bar" [class.ng-invalid]="invalid"></div>
-  <ion-col class="component-label" col-32 align-self-center>
-    <label>Show me questions</label>
-  </ion-col>
-  <ion-col col-63 align-self-center padding-left>
-    <ion-row class="spacing-row"></ion-row>
-    <ion-row>
-      <ion-select value="showMeQuestions" multiple="true" okText="Submit" cancelText="Cancel"
-                  #showMeQuestionSelect
-        placeholder="Select show me questions" formControlName="showMeQuestions" [class.ng-invalid]="invalid"
-        (change)="showMeQuestionsChanged($event)" [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}">
-        <ion-option *ngFor="let showMeQuestion of showMeQuestionOptions; let i = index;"
-                    [disabled]="disableInputs(i)"
-                    (ionSelect)="optionChange(showMeQuestion, i)"
-                    [value]="showMeQuestion">
-          {{showMeQuestion.code}} - {{showMeQuestion.shortName}}
-        </ion-option>
-      </ion-select>
-    </ion-row>
-    <ion-row class="validation-message-row" align-items-center>
-      <div class="validation-text" [class.ng-invalid]="invalid" id="office-showmequestions-validation-text">
-        Select show me questions
-      </div>
-    </ion-row>
-  </ion-col>
+         [formGroup]="formGroup">
+    <div class="validation-bar" [class.ng-invalid]="invalid"></div>
+    <ion-col class="component-label" col-32 align-self-center>
+        <label>Show me questions</label>
+    </ion-col>
+    <ion-col col-63 align-self-center padding-left>
+        <ion-row class="spacing-row"></ion-row>
+        <ion-row>
+
+            <ion-select value="showMeQuestions" multiple="true" okText="Submit" cancelText="Cancel"
+                        #showMeQuestionSelect
+                        placeholder="Select show me questions"
+                        formControlName="showMeQuestions"
+                        [class.ng-invalid]="invalid"
+                        (change)="showMeQuestionsChanged($event)"
+                        [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}">
+
+                <ion-option *ngFor="let showMeQuestion of showMeQuestionOptionsDisabled; let i = index;"
+                            id="question_option_{{i}}"
+                            [disabled]="showMeQuestion.disabled"
+                            (ionSelect)="selection(showMeQuestion, i)"
+                            [value]="showMeQuestion">
+                    {{showMeQuestion.code}} - {{showMeQuestion.shortName}}
+                </ion-option>
+            </ion-select>
+
+        </ion-row>
+        <ion-row class="validation-message-row" align-items-center>
+            <div class="validation-text" [class.ng-invalid]="invalid" id="office-showmequestions-validation-text">
+                Select show me questions
+            </div>
+        </ion-row>
+    </ion-col>
 </ion-row>
