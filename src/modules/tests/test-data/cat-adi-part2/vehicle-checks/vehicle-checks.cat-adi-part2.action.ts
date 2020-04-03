@@ -29,8 +29,8 @@ export class TellMeQuestionSelected implements Action {
 }
 
 export class TellMeQuestionOutcomeChanged implements Action {
-  readonly type = TELL_ME_QUESTION_OUTCOME_CHANGED;
   constructor(public tellMeQuestionOutcome: QuestionOutcome, public index: number) {}
+  readonly type = TELL_ME_QUESTION_OUTCOME_CHANGED;
 }
 export class AddShowMeTellMeComment implements Action {
   constructor(public comment: string) { }

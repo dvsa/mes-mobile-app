@@ -2,7 +2,6 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { VehicleCheckComponent } from '../vehicle-check';
 import { IonicModule } from 'ionic-angular';
 import { StoreModule, Store } from '@ngrx/store';
-import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../../test-report.reducer';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
@@ -32,12 +31,41 @@ import {
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
+import { TestData } from '@dvsa/mes-test-schema/categories/ADI2/partial';
+import { TestData as CommonTestData } from '@dvsa/mes-test-schema/categories/common';
 
 describe('VehicleCheckComponent', () => {
 
   let fixture: ComponentFixture<VehicleCheckComponent>;
   let component: VehicleCheckComponent;
   let store$: Store<StoreModel>;
+
+  const mockTestData: TestData | CommonTestData = {
+    dangerousFaults: {},
+    drivingFaults: {},
+    manoeuvres: [{ reverseRight: { selected: true } }, {}],
+    seriousFaults: {},
+    testRequirements: {},
+    ETA: {},
+    eco: {},
+    vehicleChecks: {
+      showMeQuestion: [
+        {
+          code: 'S3',
+          description: '',
+          outcome: 'P',
+        },
+      ],
+      tellMeQuestion: [
+        {
+          code: 'T4',
+          description: '',
+          outcome: 'DF',
+        },
+      ],
+    },
+    eyesightTest: {},
+  };
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -51,7 +79,32 @@ describe('VehicleCheckComponent', () => {
       ],
       imports: [
         IonicModule,
-        StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                testData: mockTestData,
+                postTestDeclarations: {
+                  healthDeclarationAccepted: false,
+                  passCertificateNumberReceived: false,
+                  postTestSignature: '',
+                },
+                journalData: {},
+                category: 'ADI2',
+                communicationPreferences: {
+                  updatedEmail: '',
+                  communicationMethod: 'Not provided',
+                  conductedLanguage: 'Not provided',
+                },
+              },
+            },
+          }),
+          testReport: testReportReducer,
+        }),
       ],
     });
   });
@@ -160,6 +213,68 @@ describe('VehicleCheckComponent', () => {
           new VehicleChecksRemoveDangerousFault());
       });
     });
+
+    describe('hasShowMeDrivingFault', () => {
+      it('should return true if a show me driving fault exists', () => {
+        component.vehicleChecks = {
+          showMeQuestions: [
+            {
+              code: '123',
+              outcome: CompetencyOutcome.DF,
+            },
+          ],
+        };
+
+        const outcome = component.hasShowMeDrivingFault();
+        console.log('outcome', outcome);
+        expect(outcome).toEqual(true);
+      });
+
+      it('should return false no show me driving fault exists', () => {
+        component.vehicleChecks = {
+          showMeQuestions: [
+            {
+              code: '123',
+              outcome: CompetencyOutcome.P,
+            },
+          ],
+        };
+
+        const outcome = component.hasShowMeDrivingFault();
+        expect(outcome).toEqual(false);
+      });
+    });
+
+    describe('hasTellMeDrivingFault', () => {
+      it('should return true if a tell me driving fault exists', () => {
+        component.vehicleChecks = {
+          tellMeQuestions: [
+            {
+              code: '123',
+              outcome: CompetencyOutcome.DF,
+            },
+          ],
+        };
+
+        const outcome = component.hasTellMeDrivingFault();
+        console.log('outcome', outcome);
+        expect(outcome).toEqual(true);
+      });
+
+      it('should return false no tell me driving fault exists', () => {
+        component.vehicleChecks = {
+          tellMeQuestions: [
+            {
+              code: '123',
+              outcome: CompetencyOutcome.P,
+            },
+          ],
+        };
+
+        const outcome = component.hasTellMeDrivingFault();
+        expect(outcome).toEqual(false);
+      });
+    });
   });
 
   describe('DOM', () => {
@@ -170,27 +285,6 @@ describe('VehicleCheckComponent', () => {
 
       fixture.detectChanges();
       expect(drivingFaultsBadge.count).toBe(0);
-    });
-
-    it('should pass 1 driving faults to the driving faults badge component when there is a tell me fault', () => {
-      store$.dispatch(new TellMeQuestionOutcomeChanged(CompetencyOutcome.DF, 0));
-      // store$.dispatch(new TellMeQuestionDrivingFault());
-      fixture.detectChanges();
-      const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
-        .componentInstance as DrivingFaultsBadgeComponent;
-
-      fixture.detectChanges();
-      expect(drivingFaultsBadge.count).toBe(1);
-    });
-
-    it('should pass 1 driving faults to the driving faults badge component when there is a show me fault', () => {
-      store$.dispatch(new ShowMeQuestionDrivingFault());
-      fixture.detectChanges();
-      const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
-        .componentInstance as DrivingFaultsBadgeComponent;
-
-      fixture.detectChanges();
-      expect(drivingFaultsBadge.count).toBe(1);
     });
 
     it('should have a serious fault badge on if there was serious fault recorded against the vehicle checks', () => {
