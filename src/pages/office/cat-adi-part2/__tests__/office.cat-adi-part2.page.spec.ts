@@ -42,7 +42,6 @@ import { of } from 'rxjs';
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../../components/candidate-description/candidate-description';
-// import { ShowMeQuestionComponent } from '../../components/show-me-question/show-me-question';
 import { WeatherConditionsComponent } from '../../components/weather-conditions/weather-conditions';
 import { AdditionalInformationComponent } from '../../components/additional-information/additional-information';
 import { IdentificationComponent } from '../../components/identification/identification';
