@@ -129,9 +129,8 @@ export class PassFinalisationCatADIPart2Page extends BasePageComponent {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.store$.dispatch(new PersistTests());
-      this.navController.push(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE).then(() => {
+      this.navController.push(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE).then((value) => {
         this.navController.getViews().forEach((view) => {
-          console.log(view);
           if (includes([
             CAT_ADI_PART2.TEST_REPORT_PAGE,
             CAT_ADI_PART2.DEBRIEF_PAGE,

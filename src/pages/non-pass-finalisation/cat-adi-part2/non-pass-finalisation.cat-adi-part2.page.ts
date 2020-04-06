@@ -162,7 +162,7 @@ export class NonPassFinalisationCatADIPart2Page extends BasePageComponent implem
           if (includes([
             CAT_ADI_PART2.TEST_REPORT_PAGE,
             CAT_ADI_PART2.DEBRIEF_PAGE,
-            CAT_ADI_PART2.PASS_FINALISATION_PAGE,
+            CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE,
           ],
             view.id)) {
             this.navController.removeView(view);
