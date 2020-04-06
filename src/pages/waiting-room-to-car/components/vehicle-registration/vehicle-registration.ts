@@ -1,6 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { isEmpty } from 'lodash';
+import {
+  FieldValidators,
+  getRegistrationNumberValidator,
+} from '../../../../shared/constants/field-validators/field-validators';
 
 @Component({
   selector: 'vehicle-registration',
@@ -19,7 +23,7 @@ export class VehicleRegistrationComponent implements OnChanges {
 
   formControl: FormControl;
 
-  private registrationNumberValidator: RegExp = /^[A-Z0-9]{1,7}$/gi;
+  readonly registrationNumberValidator: FieldValidators = getRegistrationNumberValidator();
 
   ngOnChanges(): void {
     if (!this.formControl) {
@@ -29,7 +33,7 @@ export class VehicleRegistrationComponent implements OnChanges {
   }
 
   vehicleRegistrationChanged(event: any): void {
-    if (!this.registrationNumberValidator.test(event.target.value)) {
+    if (!this.registrationNumberValidator.pattern.test(event.target.value)) {
       event.target.value = event.target.value.replace(/[^A-Z0-9]/gi, '');
 
       if (isEmpty(event.target.value)) {

@@ -15,7 +15,7 @@
                 [class.ng-invalid]="invalid"
                 [value]="vehicleRegistration"
                 (input)="vehicleRegistrationChanged($event)"
-                maxlength="7">
+                [maxlength]="registrationNumberValidator.maxLength">
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>
