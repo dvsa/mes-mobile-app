@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
 import { IonicPageModule } from 'ionic-angular';
 import { OfficeCatADIPart2Page } from './office.cat-adi-part2.page';
-import { EffectsModule } from '@ngrx/effects';
 import { OfficeAnalyticsEffects } from '../office.analytics.effects';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { OfficeComponentsModule } from '../components/office.components.module';

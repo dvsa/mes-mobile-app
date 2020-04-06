@@ -4,10 +4,14 @@ import {
   NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestions,
 }
 from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-adi-part2.constants';
+import {
+  NUMBER_OF_SHOW_ME_QUESTIONS as numberOfShowMeQuestions,
+}
+from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-adi-part2.constants';
 
 export const initialState: CatADI2UniqueTypes.VehicleChecks = {
   tellMeQuestions: Array(numberOfTellMeQuestions).fill({}),
-  showMeQuestions: Array(2).fill({}),
+  showMeQuestions: Array(numberOfShowMeQuestions).fill({}),
 };
 
 export function vehicleChecksCatADI2Reducer(
@@ -18,7 +22,7 @@ export function vehicleChecksCatADI2Reducer(
     case vehicleChecksCatADI2ActionTypes.SHOW_ME_QUESTION_SELECTED:
       return {
         ...state,
-        tellMeQuestions: state.tellMeQuestions.map(
+        showMeQuestions: state.showMeQuestions.map(
           (item, index) => index === action.index ? action.showMeQuestion : item,
         ),
       };

@@ -5,6 +5,8 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 
 import tellMeQuestionsCatAdiPart2Constants
   from '../../shared/constants/tell-me-questions/tell-me-questions.cat-adi-part2.constants';
+import showMeQuestionsCatAdiPart2Constants
+  from '../../shared/constants/show-me-questions/show-me-questions.cat-adi-part2.constants';
 import tellMeQuestionsCatBConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-b.constants';
 import showMeQuestionsCatBConstants from '../../shared/constants/show-me-questions/show-me-questions.cat-b.constants';
 import tellMeQuestionsCatBeConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
@@ -18,8 +20,7 @@ import showMeQuestionsVocationalConstants
 import showMeQuestionsVocationalTrailerConstants
   from '../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
 import safetyQuestionsCatAMod2Constants from '../../shared/constants/safety-questions.cat-a-mod2.constants';
-import balanceQuestionsCatAMod2Constants
-  from '../../shared/constants/balance-questions.cat-a-mod2.constants';
+import balanceQuestionsCatAMod2Constants from '../../shared/constants/balance-questions.cat-a-mod2.constants';
 import safetyQuestionsCatDConstants from '../../shared/constants/safety-questions.cat-d.constants';
 import showMeQuestionsCatHomeTestConstants
   from '../../shared/constants/show-me-questions/show-me-questions.cat-home-test.constants';
@@ -59,6 +60,8 @@ export class QuestionProvider {
 
   getShowMeQuestions(testCategory: TestCategory): VehicleChecksQuestion[] {
     switch (testCategory) {
+      case TestCategory.ADI2:
+        return showMeQuestionsCatAdiPart2Constants;
       case TestCategory.B:
         return showMeQuestionsCatBConstants;
       case TestCategory.BE:

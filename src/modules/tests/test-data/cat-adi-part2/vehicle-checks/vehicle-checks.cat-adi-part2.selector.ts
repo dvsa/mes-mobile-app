@@ -10,9 +10,9 @@ export const getSelectedShowMeQuestions = (
 };
 
 export const getSelectedTellMeQuestions = (
-  vehicleChecksCatBEReducer: CatADI2UniqueTypes.VehicleChecks,
+  vehicleChecks: CatADI2UniqueTypes.VehicleChecks,
 ): QuestionResult[] => {
-  return vehicleChecksCatBEReducer.tellMeQuestions;
+  return vehicleChecks.tellMeQuestions;
 };
 
 export const vehicleChecksExist = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): boolean => {

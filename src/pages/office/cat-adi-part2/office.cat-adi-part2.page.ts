@@ -82,7 +82,7 @@ import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
 import {
   AddShowMeTellMeComment,
-  // ShowMeQuestionSelected,
+  ShowMeQuestionSelected,
 } from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.action';
 import { AddManoeuvreComment } from '../../../modules/tests/test-data/cat-adi-part2/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
@@ -106,6 +106,7 @@ import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import {
   vehicleChecksExist,
   getVehicleChecksCatADI2,
+  getSelectedShowMeQuestions,
 } from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.selector';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
@@ -187,7 +188,7 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
     this.activityCodeOptions = activityCodeModelList;
-    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.B);
+    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.ADI2);
   }
 
   ionViewDidEnter(): void {
@@ -413,7 +414,7 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       showMeQuestions$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatADI2),
-        map(checks => [...checks.showMeQuestions]),
+        select(getSelectedShowMeQuestions),
       ),
     };
   }
@@ -447,9 +448,8 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
     this.store$.dispatch(new WeatherConditionsChanged(weatherConditions));
   }
 
-  showMeQuestionsChanged(ev): void {
-    console.log('ev', ev);
-    // this.store$.dispatch(new ShowMeQuestionSelected())
+  showMeQuestionsChanged(result: QuestionResult, index: number): void {
+    this.store$.dispatch(new ShowMeQuestionSelected(result, index));
   }
 
   routeNumberChanged(routeNumber: number) {
