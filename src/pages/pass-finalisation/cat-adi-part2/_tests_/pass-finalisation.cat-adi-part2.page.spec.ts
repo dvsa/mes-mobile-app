@@ -28,11 +28,13 @@ import { WarningBannerComponent } from '../../../../components/common/warning-ba
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
+import { CAT_ADI_PART2 } from '../../../page-names.constants';
 
 describe('PassFinalisationCatADIPart2Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatADIPart2Page>;
   let component: PassFinalisationCatADIPart2Page;
   let store$: Store<StoreModel>;
+  let navMock$: NavController;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -99,6 +101,12 @@ describe('PassFinalisationCatADIPart2Page', () => {
       it('should dispatch the PersistTests action', () => {
         component.onSubmit();
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+      });
+
+      fit('should remove pass finalisation from view', () => {
+        navMock$ = TestBed.get(NavController);
+        component.onSubmit();
+        expect(navMock$.removeView).toHaveBeenCalledWith(CAT_ADI_PART2.PASS_FINALISATION_PAGE);
       });
 
       it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
