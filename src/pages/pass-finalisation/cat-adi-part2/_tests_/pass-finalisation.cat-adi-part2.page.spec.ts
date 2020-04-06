@@ -1,6 +1,6 @@
 import { ComponentFixture, async, TestBed, fakeAsync } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
+import { NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
@@ -34,7 +34,6 @@ describe('PassFinalisationCatADIPart2Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatADIPart2Page>;
   let component: PassFinalisationCatADIPart2Page;
   let store$: Store<StoreModel>;
-  let navMock$: NavController;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -47,7 +46,7 @@ describe('PassFinalisationCatADIPart2Page', () => {
       ],
       imports: [IonicModule, AppModule],
       providers: [
-        { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        NavController,
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
@@ -104,9 +103,9 @@ describe('PassFinalisationCatADIPart2Page', () => {
       });
 
       fit('should remove pass finalisation from view', () => {
-        navMock$ = TestBed.get(NavController);
+        spyOn(component.navController, 'getViews').and.returnValue([CAT_ADI_PART2.PASS_FINALISATION_PAGE]);
         component.onSubmit();
-        expect(navMock$.removeView).toHaveBeenCalledWith(CAT_ADI_PART2.PASS_FINALISATION_PAGE);
+        expect(component.navController.removeView).toHaveBeenCalledWith(CAT_ADI_PART2.PASS_FINALISATION_PAGE);
       });
 
       it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
