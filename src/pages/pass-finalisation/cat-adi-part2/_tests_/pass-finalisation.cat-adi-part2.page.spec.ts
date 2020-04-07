@@ -34,7 +34,7 @@ describe('PassFinalisationCatADIPart2Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatADIPart2Page>;
   let component: PassFinalisationCatADIPart2Page;
   let store$: Store<StoreModel>;
-  let navController$: NavController;
+  let navController: NavController;
   jasmine.getEnv().allowRespy(true);
 
   configureTestSuite(() => {
@@ -63,7 +63,7 @@ describe('PassFinalisationCatADIPart2Page', () => {
     component = fixture.componentInstance;
     component.subscription = new Subscription();
     store$ = TestBed.get(Store);
-    navController$ = TestBed.get(NavController);
+    navController = TestBed.get(NavController);
     spyOn(store$, 'dispatch');
   }));
 
@@ -106,22 +106,22 @@ describe('PassFinalisationCatADIPart2Page', () => {
       });
 
       it('should remove pass finalisation from view', fakeAsync(() => {
-        spyOn(navController$, 'push').and.returnValue(Promise.resolve());
-        spyOn(navController$, 'getViews').and.returnValue([
+        spyOn(navController, 'push').and.returnValue(Promise.resolve());
+        spyOn(navController, 'getViews').and.returnValue([
           { id: CAT_ADI_PART2.TEST_REPORT_PAGE },
           { id: CAT_ADI_PART2.DEBRIEF_PAGE },
           { id: CAT_ADI_PART2.PASS_FINALISATION_PAGE },
         ]);
-        spyOn(navController$, 'removeView');
+        spyOn(navController, 'removeView');
         component.onSubmit();
         flushMicrotasks();
-        expect(navController$.push).toHaveBeenCalledWith(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE);
+        expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE);
         flushMicrotasks();
-        expect(navController$.getViews).toHaveBeenCalled();
+        expect(navController.getViews).toHaveBeenCalled();
         flushMicrotasks();
-        expect(navController$.removeView).toHaveBeenCalledWith({ id: 'PassFinalisationCatADIPart2Page' });
-        expect(navController$.removeView).toHaveBeenCalledWith({ id: 'TestReportCatADIPart2Page' });
-        expect(navController$.removeView).toHaveBeenCalledWith({ id: 'DebriefCatADIPart2Page' });
+        expect(navController.removeView).toHaveBeenCalledWith({ id: 'PassFinalisationCatADIPart2Page' });
+        expect(navController.removeView).toHaveBeenCalledWith({ id: 'TestReportCatADIPart2Page' });
+        expect(navController.removeView).toHaveBeenCalledWith({ id: 'DebriefCatADIPart2Page' });
       }));
 
       it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
