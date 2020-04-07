@@ -28,6 +28,10 @@ Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
 });
 
+Before({ tags: '@cata1' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 When('I select a tell me question', () => {
   WaitingRoomToCarPage.selectTellMeQuestion('T2 - Tyre pressures');
 });
@@ -53,4 +57,8 @@ When('I fail the eye sight test', () => {
 
 When('I complete the waiting room to car page with the following vehicle checks', (table) => {
   WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, table.raw()[1], true);
+});
+
+When('I complete the waiting room to car page with confirmed cat type', () => {
+  completeWaitingRoomPage(false, true);
 });

@@ -140,6 +140,11 @@ class WaitingRoomToCarPage extends Page {
       this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
     } else if (testCategory === 'ce') {
       this.multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
+    } else if (testCategory === 'a-mod1') {
+      this.modCatConfirmation(UI_TEST_DATA.testData.a1);
+      const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
+      const transmissionRadio = getElement(by.id(transmissionSelector));
+      clickElement(transmissionRadio);
     } else {
       this.eyeSightResultPass();
       this.standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
@@ -147,6 +152,24 @@ class WaitingRoomToCarPage extends Page {
     this.enterSearchTerm('AB12CDE');
     this.submitWRTC();
   }
+
+  modCatConfirmation(catType) {
+    this.openConfirmCatType();
+    this.selectCatType(catType);
+    const submitDialog = getElement(by.xpath('//button[span[text() = "Confirm"]]'));
+    clickElement(submitDialog);
+  };
+
+  openConfirmCatType() {
+    const buttonElement = getElement(by.xpath(`//*[@id="category-type"]/ion-col[2]/ion-row[2]/ion-col/input`));
+    clickElement(buttonElement);
+  };
+
+  selectCatType(catType) {
+    const element = getElement(by.xpath(`//span[contains(@class, 'bike-code') and
+   normalize-space(text()) = '${catType}']`));
+    clickElement(element);
+  };
 }
 
 export default new WaitingRoomToCarPage();
