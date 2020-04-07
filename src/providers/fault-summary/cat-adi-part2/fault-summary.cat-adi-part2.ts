@@ -78,13 +78,14 @@ export class FaultSummaryCatAdiPart2Helper {
     key: string,
     type: ManoeuvreTypes,
     competencyComment: string,
+    index: number,
   ): FaultSummary {
     const manoeuvreFaultSummary: FaultSummary = {
       comment: competencyComment || '',
       competencyIdentifier: `${type}${manoeuvreCompetencyLabelsCatAdiPart2[key]}`,
       competencyDisplayName:
         `${manoeuvreTypeLabelsCatAdiPart2[type]} - ${manoeuvreCompetencyLabelsCatAdiPart2[key]}`,
-      source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabelsCatAdiPart2[key]}`,
+      source: `${CommentSource.MANOEUVRES}-${index}-${type}-${manoeuvreCompetencyLabelsCatAdiPart2[key]}`,
       faultCount: 1,
     };
     return manoeuvreFaultSummary;
@@ -153,7 +154,7 @@ export class FaultSummaryCatAdiPart2Helper {
   ): FaultSummary[] {
     const faultsEncountered: FaultSummary[] = [];
 
-    manoeuvres.forEach((manoeuvre) => {
+    manoeuvres.forEach((manoeuvre, position) => {
       forOwn(manoeuvre, (manoeuvre: Manoeuvre, type: ManoeuvreTypes) => {
         let faults = [];
 
@@ -169,7 +170,7 @@ export class FaultSummaryCatAdiPart2Helper {
                 manoeuvre.controlFaultComments,
                 manoeuvre.observationFaultComments);
 
-              result.push(this.createManoeuvreFaultCatAdiPart2(key, type, competencyComment));
+              result.push(this.createManoeuvreFaultCatAdiPart2(key, type, competencyComment, position));
             }
           }, []);
         }

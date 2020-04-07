@@ -42,7 +42,6 @@ import { of } from 'rxjs';
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../../components/candidate-description/candidate-description';
-import { ShowMeQuestionComponent } from '../../components/show-me-question/show-me-question';
 import { WeatherConditionsComponent } from '../../components/weather-conditions/weather-conditions';
 import { AdditionalInformationComponent } from '../../components/additional-information/additional-information';
 import { IdentificationComponent } from '../../components/identification/identification';
@@ -65,7 +64,8 @@ import { SetActivityCode } from '../../../../modules/tests/activity-code/activit
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { configureTestSuite } from 'ng-bullet';
-import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
+import { ShowMeQuestionsCatADI2Component } from '../components/show-me-questions/show-me-questions';
+import { VehicleChecksOfficeCardCatADI2Component } from '../components/vehicle-checks/vehicle-checks-office-card';
 
 describe('OfficeCatADIPart2Page', () => {
   let fixture: ComponentFixture<OfficeCatADIPart2Page>;
@@ -80,12 +80,12 @@ describe('OfficeCatADIPart2Page', () => {
         MockComponent(RouteNumberComponent),
         MockComponent(CandidateDescriptionComponent),
         MockComponent(IdentificationComponent),
-        MockComponent(ShowMeQuestionComponent),
         MockComponent(WeatherConditionsComponent),
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
-        MockComponent(VehicleChecksOfficeCardComponent),
+        MockComponent(VehicleChecksOfficeCardCatADI2Component),
+        MockComponent(ShowMeQuestionsCatADI2Component),
       ],
       imports: [
         IonicModule,

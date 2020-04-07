@@ -22,6 +22,7 @@ export const initialState: CatADI2UniqueTypes.TestData = {
   eyesightTest: {},
   vehicleChecks: {
     tellMeQuestions: [],
+    showMeQuestions: [],
   },
   controlledStop: {},
   manoeuvres: [{}, {}],

@@ -47,8 +47,7 @@ import {
   WeatherConditionsChanged,
   AdditionalInformationChanged,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
-// TO-DO ADI Part2: Implement category specific reducer
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
   getCandidateName,
   getCandidateDriverNumber,
@@ -66,8 +65,7 @@ import {
   getEco,
   getEcoFaultText,
 } from '../../../modules/tests/test-data/common/test-data.selector';
-// TO-DO ADI Part2: Implement category specific reducer
-import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
@@ -82,16 +80,15 @@ import {
 } from '../../../modules/tests/test-data/common/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFaultComment } from '../../../modules/tests/test-data/common/serious-faults/serious-faults.actions';
 import { AddDrivingFaultComment } from '../../../modules/tests/test-data/common/driving-faults/driving-faults.actions';
-// TO-DO ADI Part2: Implement category specific actions
 import {
   AddShowMeTellMeComment,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
-import { AddManoeuvreComment } from '../../../modules/tests/test-data/common/manoeuvres/manoeuvres.actions';
+  ShowMeQuestionSelected,
+} from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.action';
+import { AddManoeuvreComment } from '../../../modules/tests/test-data/cat-adi-part2/manoeuvres/manoeuvres.actions';
 import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-// TO-DO ADI Part2: Implement category specific behaviour map
-import { behaviourMap } from '../office-behaviour-map.cat-be';
+import { behaviourMap } from '../office-behaviour-map.cat-adi-part2';
 import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
@@ -104,15 +101,14 @@ import {
   AddUncoupleRecoupleComment,
 } from '../../../modules/tests/test-data/common/uncouple-recouple/uncouple-recouple.actions';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
-// TO-DO Implement category specific schema
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
-// TO-DO Implement category specific selector
 import {
   vehicleChecksExist,
-} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
-// TO-DO Implement category specific selector
-import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+  getVehicleChecksCatADI2,
+  getSelectedShowMeQuestions,
+} from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.selector';
+import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -135,7 +131,8 @@ interface OfficePageState {
   displayDrivingFault$: Observable<boolean>;
   displaySeriousFault$: Observable<boolean>;
   displayDangerousFault$: Observable<boolean>;
-  displayVehicleChecks$: Observable<boolean>;
+  displayTellMeQuestions$: Observable<boolean>;
+  displayShowMeQuestions$: Observable<boolean>;
   identification$: Observable<Identification>;
   independentDriving$: Observable<IndependentDriving>;
   candidateDescription$: Observable<string>;
@@ -150,6 +147,7 @@ interface OfficePageState {
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
+  showMeQuestions$: Observable<QuestionResult[]>;
 }
 
 @IonicPage()
@@ -164,10 +162,11 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
   drivingFaultCtrl: String = 'drivingFaultCtrl';
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
-  static readonly maxFaultCount = 15;
+  static readonly maxFaultCount = 6;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
+  showMeQuestions: VehicleChecksQuestion[];
 
   constructor(
     private store$: Store<StoreModel>,
@@ -189,6 +188,7 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
     this.activityCodeOptions = activityCodeModelList;
+    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.ADI2);
   }
 
   ionViewDidEnter(): void {
@@ -312,8 +312,7 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            // TO-DO ADI Part2: Implement correct category
-            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.ADI2),
           )),
       ),
       displaySeriousFault$: currentTest$.pipe(
@@ -325,8 +324,7 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            // TO-DO ADI Part2: Implement correct category
-            this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.ADI2),
           )),
       ),
       displayDangerousFault$: currentTest$.pipe(
@@ -338,19 +336,26 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
           this.outcomeBehaviourProvider.isVisible(
             outcome,
             'faultComment',
-            // TO-DO ADI Part2: Implement correct category
-            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE),
+            this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.ADI2),
           )),
       ),
-      displayVehicleChecks$: currentTest$.pipe(
+      displayTellMeQuestions$: currentTest$.pipe(
           select(getTestOutcome),
           withLatestFrom(currentTest$.pipe(
             select(getTestData))),
             map(([outcome, data]) =>
             this.outcomeBehaviourProvider.isVisible(outcome,
-              'vehicleChecks',
+              'tellMeQuestion',
               vehicleChecksExist(data.vehicleChecks))),
       ),
+      displayShowMeQuestions$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestData))),
+          map(([outcome, data]) =>
+            this.outcomeBehaviourProvider.isVisible(outcome, 'showMeQuestion', data),
+          ),
+    ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
         select(getCandidateDescription),
@@ -379,23 +384,19 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        // TO-DO ADI Part2: Implement correct category
-        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.BE)),
+        map(data => this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.ADI2)),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        // TO-DO ADI Part2: Implement correct category
-        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.BE)),
+        map(data => this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.ADI2)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        // TO-DO ADI Part2: Implement correct category
-        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.BE)),
+        map(data => this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.ADI2)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        // TO-DO ADI Part2: Implement correct category
-        map(data => this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data)),
+        map(data => this.faultCountProvider.getDrivingFaultSumCount(TestCategory.ADI2, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
@@ -407,8 +408,13 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       ),
       vehicleChecks$: currentTest$.pipe(
         select(getTestData),
-        select(getVehicleChecks),
-        map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
+        select(getVehicleChecksCatADI2),
+        map(checks => [...checks.tellMeQuestions]),
+      ),
+      showMeQuestions$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatADI2),
+        select(getSelectedShowMeQuestions),
       ),
     };
   }
@@ -442,6 +448,10 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
     this.store$.dispatch(new WeatherConditionsChanged(weatherConditions));
   }
 
+  showMeQuestionsChanged(result: QuestionResult, index: number): void {
+    this.store$.dispatch(new ShowMeQuestionSelected(result, index));
+  }
+
   routeNumberChanged(routeNumber: number) {
     this.store$.dispatch(new RouteNumberChanged(routeNumber));
   }
@@ -461,14 +471,17 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       );
     } else if (startsWith(dangerousFaultComment.source, CommentSource.MANOEUVRES)) {
       const segments = dangerousFaultComment.source.split('-');
-      const fieldName = segments[1];
-      const controlOrObservation = segments[2];
+      const index = parseInt(segments[1], 10);
+      const fieldName = segments[2];
+      const controlOrObservation = segments[3];
       this.store$.dispatch(
         new AddManoeuvreComment(
           fieldName,
           CompetencyOutcome.D,
           controlOrObservation,
-          dangerousFaultComment.comment),
+          dangerousFaultComment.comment,
+          index,
+        ),
       );
 
     } else if (dangerousFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
@@ -486,16 +499,18 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       );
     } else if (startsWith(seriousFaultComment.source, CommentSource.MANOEUVRES)) {
       const segments = seriousFaultComment.source.split('-');
-      const fieldName = segments[1];
-      const controlOrObservation = segments[2];
+      const index = parseInt(segments[1], 10);
+      const fieldName = segments[2];
+      const controlOrObservation = segments[3];
       this.store$.dispatch(
         new AddManoeuvreComment(
           fieldName,
           CompetencyOutcome.S,
           controlOrObservation,
-          seriousFaultComment.comment),
+          seriousFaultComment.comment,
+          index,
+        ),
       );
-
     } else if (seriousFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
       this.store$.dispatch(new AddUncoupleRecoupleComment(seriousFaultComment.comment));
     } else if (seriousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
@@ -512,16 +527,18 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       );
     } else if (startsWith(drivingFaultComment.source, CommentSource.MANOEUVRES)) {
       const segments = drivingFaultComment.source.split('-');
-      const fieldName = segments[1];
-      const controlOrObservation = segments[2];
+      const index = parseInt(segments[1], 10);
+      const fieldName = segments[2];
+      const controlOrObservation = segments[3];
       this.store$.dispatch(
         new AddManoeuvreComment(
           fieldName,
           CompetencyOutcome.DF,
           controlOrObservation,
-          drivingFaultComment.comment),
+          drivingFaultComment.comment,
+          index,
+        ),
       );
-
     } else if (drivingFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
       this.store$.dispatch(new AddUncoupleRecoupleComment(drivingFaultComment.comment));
     } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
@@ -531,12 +548,6 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {
-    const showMeQuestion = this.form.controls['showMeQuestion'];
-    if (showMeQuestion) {
-      if (showMeQuestion.value && showMeQuestion.value.code === 'N/A') {
-        this.form.controls['showMeQuestion'].setValue({});
-      }
-    }
     this.store$.dispatch(new SetActivityCode(activityCodeModel.activityCode));
   }
 
@@ -596,13 +607,16 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
     this.popToRoot();
   }
 
-  // TO-DO ADI Part2: Implement correct category
-  shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {
-    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data);
-    const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, data);
-    const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data);
+  shouldDisplayDrivingFaultComments = (data: CatADI2UniqueTypes.TestData): boolean => {
+    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.ADI2, data);
+    const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.ADI2, data);
+    const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.ADI2, data);
 
-    return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
+    return (
+      dangerousFaultCount === 0 &&
+      seriousFaultCount === 0 &&
+      drivingFaultCount > OfficeCatADIPart2Page.maxFaultCount
+    );
   }
 
 }
