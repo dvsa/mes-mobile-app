@@ -143,8 +143,7 @@ class WaitingRoomToCarPage extends Page {
     } else if (testCategory === 'a-mod1') {
       this.modCatConfirmation(UI_TEST_DATA.testData.a1);
       const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
-      const transmissionRadio = getElement(by.id(transmissionSelector));
-      clickElement(transmissionRadio);
+      this.clickElementById(transmissionSelector);
     } else {
       this.eyeSightResultPass();
       this.standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
@@ -156,20 +155,17 @@ class WaitingRoomToCarPage extends Page {
   modCatConfirmation(catType) {
     this.openConfirmCatType();
     this.selectCatType(catType);
-    const submitDialog = getElement(by.xpath('//button[span[text() = "Confirm"]]'));
-    clickElement(submitDialog);
+    this.clickElementByXPath('//button[span[text() = "Confirm"]]');
   };
 
   openConfirmCatType() {
-    const buttonElement = getElement(by.xpath(`//*[@id="category-type"]/ion-col[2]/ion-row[2]/ion-col/input`));
-    clickElement(buttonElement);
-  };
+    this.clickElementByXPath(`//*[@id="category-type"]/ion-col[2]/ion-row[2]/ion-col/input`);
+  }
 
   selectCatType(catType) {
-    const element = getElement(by.xpath(`//span[contains(@class, 'bike-code') and
-   normalize-space(text()) = '${catType}']`));
-    clickElement(element);
-  };
+    this.clickElementByXPath(`//span[contains(@class, 'bike-code') and
+   normalize-space(text()) = '${catType}']`);
+  }
 }
 
 export default new WaitingRoomToCarPage();
