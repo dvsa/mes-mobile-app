@@ -39,6 +39,7 @@ import {
   D255No,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { includes } from 'lodash';
+import { ContinueFromDeclaration } from '../../health-declaration/health-declaration.actions';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -128,7 +129,7 @@ export class PassFinalisationCatADIPart2Page extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.store$.dispatch(new PersistTests());
+      this.store$.dispatch(new ContinueFromDeclaration());
       this.navController.push(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE).then((value) => {
         this.navController.getViews().forEach((view) => {
           if (includes([
