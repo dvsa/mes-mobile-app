@@ -103,12 +103,10 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
   }
 
   onTap = () => {
-    'tap';
     this.addOrRemoveFault();
   }
 
   onPress = () => {
-    'press';
     this.addOrRemoveFault(true);
   }
 
