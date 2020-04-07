@@ -1,6 +1,6 @@
-import { ComponentFixture, async, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, flushMicrotasks } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
+import { NavParamsMock, ConfigMock, PlatformMock, NavControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
@@ -28,11 +28,14 @@ import { WarningBannerComponent } from '../../../../components/common/warning-ba
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
+import { CAT_ADI_PART2 } from '../../../page-names.constants';
 
 describe('PassFinalisationCatADIPart2Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatADIPart2Page>;
   let component: PassFinalisationCatADIPart2Page;
   let store$: Store<StoreModel>;
+  let navController: NavController;
+  jasmine.getEnv().allowRespy(true);
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -60,6 +63,7 @@ describe('PassFinalisationCatADIPart2Page', () => {
     component = fixture.componentInstance;
     component.subscription = new Subscription();
     store$ = TestBed.get(Store);
+    navController = TestBed.get(NavController);
     spyOn(store$, 'dispatch');
   }));
 
@@ -100,6 +104,25 @@ describe('PassFinalisationCatADIPart2Page', () => {
         component.onSubmit();
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
       });
+
+      it('should remove pass finalisation from view', fakeAsync(() => {
+        spyOn(navController, 'push').and.returnValue(Promise.resolve());
+        spyOn(navController, 'getViews').and.returnValue([
+          { id: CAT_ADI_PART2.TEST_REPORT_PAGE },
+          { id: CAT_ADI_PART2.DEBRIEF_PAGE },
+          { id: CAT_ADI_PART2.PASS_FINALISATION_PAGE },
+        ]);
+        spyOn(navController, 'removeView');
+        component.onSubmit();
+        flushMicrotasks();
+        expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE);
+        flushMicrotasks();
+        expect(navController.getViews).toHaveBeenCalled();
+        flushMicrotasks();
+        expect(navController.removeView).toHaveBeenCalledWith({ id: 'PassFinalisationCatADIPart2Page' });
+        expect(navController.removeView).toHaveBeenCalledWith({ id: 'TestReportCatADIPart2Page' });
+        expect(navController.removeView).toHaveBeenCalledWith({ id: 'DebriefCatADIPart2Page' });
+      }));
 
       it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
         component.form = new FormGroup({

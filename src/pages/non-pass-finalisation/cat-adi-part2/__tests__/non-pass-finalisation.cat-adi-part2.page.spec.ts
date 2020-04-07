@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick, flushMicrotasks } from '@angular/core/testing';
 import { IonicModule, NavController, Platform } from 'ionic-angular';
 import { NavControllerMock, PlatformMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
@@ -29,11 +29,13 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
 '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
+import { CAT_ADI_PART2 } from '../../../page-names.constants';
 
 describe('NonPassFinalisationCatADIPart2Page', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatADIPart2Page>;
   let component: NonPassFinalisationCatADIPart2Page;
   let store$: Store<StoreModel>;
+  let navController$: NavController;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -61,6 +63,7 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
     fixture = TestBed.createComponent(NonPassFinalisationCatADIPart2Page);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
+    navController$ = TestBed.get(NavController);
     spyOn(store$, 'dispatch');
   }));
 
@@ -96,6 +99,26 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
       });
     });
     describe('OnContinue', () => {
+
+      it('should remove non pass finalisation from view', fakeAsync(() => {
+        spyOn(navController$, 'push').and.returnValue(Promise.resolve());
+        spyOn(navController$, 'getViews').and.returnValue([
+          { id: CAT_ADI_PART2.TEST_REPORT_PAGE },
+          { id: CAT_ADI_PART2.DEBRIEF_PAGE },
+          { id: CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE },
+        ]);
+        spyOn(navController$, 'removeView');
+        component.continue();
+        flushMicrotasks();
+        expect(navController$.push).toHaveBeenCalledWith(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE);
+        flushMicrotasks();
+        expect(navController$.getViews).toHaveBeenCalled();
+        flushMicrotasks();
+        expect(navController$.removeView).toHaveBeenCalledWith({ id: 'NonPassFinalisationCatADIPart2Page' });
+        expect(navController$.removeView).toHaveBeenCalledWith({ id: 'TestReportCatADIPart2Page' });
+        expect(navController$.removeView).toHaveBeenCalledWith({ id: 'DebriefCatADIPart2Page' });
+      }));
+
       it('should dispatch a change test state to WriteUp action', () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.ADI2));

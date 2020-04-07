@@ -52,6 +52,7 @@ import {
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { includes } from 'lodash';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -156,7 +157,18 @@ export class NonPassFinalisationCatADIPart2Page extends BasePageComponent implem
     if (this.form.valid) {
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
-      this.navController.push(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE);
+      this.navController.push(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE).then(() => {
+        this.navController.getViews().forEach((view) => {
+          if (includes([
+            CAT_ADI_PART2.TEST_REPORT_PAGE,
+            CAT_ADI_PART2.DEBRIEF_PAGE,
+            CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE,
+          ],
+            view.id)) {
+            this.navController.removeView(view);
+          }
+        });
+      });
       return;
     }
     Object.keys(this.form.controls).forEach((controlName) => {
