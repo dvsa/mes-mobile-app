@@ -69,8 +69,7 @@ describe('ShowMeQuestionsCatADI2Component', () => {
         component.showMeQuestionsChanged(vehicleChecksQuestion);
         expect(component.showMeQuestionsChange.emit).toHaveBeenCalledWith({
           code: 'A15',
-          description: 'When it is safe to do so can you show me how you wash and clean the rear windscreen.',
-          shortName: 'Rear windscreen',
+          description: 'Rear windscreen',
         });
       });
     });
