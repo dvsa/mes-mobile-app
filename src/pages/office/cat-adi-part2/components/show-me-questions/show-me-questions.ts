@@ -64,8 +64,12 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
     }
   }
 
-  showMeQuestionsChanged(showMeQuestions: QuestionResult): void {
-    this.showMeQuestionsChange.emit(showMeQuestions);
+  showMeQuestionsChanged(showMeQuestions: VehicleChecksQuestion): void {
+    const result: QuestionResult = {
+      code: showMeQuestions.code,
+      description: showMeQuestions.shortName,
+    };
+    this.showMeQuestionsChange.emit(result);
   }
 
   get invalid(): boolean {
