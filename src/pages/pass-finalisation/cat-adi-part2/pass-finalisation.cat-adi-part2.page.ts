@@ -39,7 +39,7 @@ import {
   D255No,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { includes } from 'lodash';
-import { ContinueFromDeclaration } from '../../health-declaration/health-declaration.actions';
+import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -61,6 +61,7 @@ export class PassFinalisationCatADIPart2Page extends BasePageComponent {
   form: FormGroup;
   merged$: Observable<string>;
   subscription: Subscription;
+  slotId: string;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -79,6 +80,11 @@ export class PassFinalisationCatADIPart2Page extends BasePageComponent {
   }
 
   ngOnInit(): void {
+
+    this.store$.pipe(
+      select(getTests),
+      map(tests => tests.currentTest.slotId),
+    ).subscribe(slotId => this.slotId = slotId);
 
     const currentTest$ = this.store$.pipe(
       select(getTests),
@@ -129,7 +135,8 @@ export class PassFinalisationCatADIPart2Page extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.store$.dispatch(new ContinueFromDeclaration());
+      this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
+      this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE).then((value) => {
         this.navController.getViews().forEach((view) => {
           if (includes([
