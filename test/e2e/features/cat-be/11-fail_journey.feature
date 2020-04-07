@@ -145,10 +145,5 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     And I upload the test
     Then I should see the "Journal" page
     And the test result for "Mr Dillon Jennings" is "2"
-    And I click the back button
-    Then I should see the "My dashboard" page
-    And I click on the "Search for completed tests" button
-    Then I search for a completed test with the application reference of "22345622011"
-    When the search result is clicked
-    Then the test result outcome is "Unsuccessful"
-  
+
+

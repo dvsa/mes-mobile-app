@@ -147,7 +147,7 @@ When('I close the reversing diagram modal', () => {
   TestReportPage.reversingDiagramModal.closeReversingDialogModal();
 });
 
-Then('I close the revresing diagram drop down', () => {
+Then('I close the reversing diagram drop down', () => {
   TestReportPage.reverseDropDown();
   TestReportPage.competency.getCompetencyButton('Control');
 });

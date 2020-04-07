@@ -8,6 +8,9 @@ import JournalPage from '../pages/journalPage';
 import TestReportPage from '../pages/testReportPage';
 import BackToOfficePage from '../pages/backToOfficePage';
 import PageHelper from '../pages/pageHelper';
+import {waitForOverlay} from "../../helpers/interactionHelpers";
+
+
 
 const {
   Given,
@@ -27,7 +30,7 @@ const fs = require('fs');
 this.testCategory = 'b';
 
 Before({ tags: '@catbe' }, () => {
-  this.testCategory = 'be';
+  this.testCategory = 'be'
 });
 
 Before({ tags: '@catc' }, () => {
@@ -45,6 +48,7 @@ Before({ tags: '@catce' }, () => {
 Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
 });
+
 
 // We need this much timeout for the login process to complete
 setDefaultTimeout(TEST_CONFIG.DEFAULT_TIMEOUT);
