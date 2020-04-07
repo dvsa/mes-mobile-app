@@ -1,6 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { StringType } from '../../../../../shared/helpers/string-type';
+import { FormGroup, FormControl } from '@angular/forms';
+import {
+  FieldValidators,
+  getInstructorRegistrationNumberValidator,
+  nonNumericValues,
+} from '../../../../../shared/constants/field-validators/field-validators';
+import { isEmpty } from 'lodash';
 
 @Component({
   selector: 'instructor-registration',
@@ -19,19 +24,23 @@ export class InstructorRegistrationComponent implements OnChanges {
 
   private formControl: FormControl;
 
+  readonly instructorRegistrationNumberValidator: FieldValidators = getInstructorRegistrationNumberValidator();
+
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
       this.formGroup.addControl('instructorRegistration', this.formControl);
     }
-    this.formGroup.get('instructorRegistration')
-      .setValidators([Validators.min(1), Validators.max(9999999), Validators.pattern(/^[0-9]*$/)]);
     this.formControl.patchValue(this.instructorRegistration);
   }
 
-  instructorRegistrationChanged(instructorRegistration: string): void {
-    if (StringType.isNumeric(instructorRegistration)) {
-      this.instructorRegistrationChange.emit(Number.parseInt(instructorRegistration, 10));
+  instructorRegistrationChanged(event: any): void {
+    if (!this.instructorRegistrationNumberValidator.pattern.test(event.target.value)) {
+      event.target.value = event.target.value.replace(nonNumericValues, '');
+    }
+
+    if (!isEmpty(event.target.value)) {
+      this.instructorRegistrationChange.emit(Number.parseInt(event.target.value, 10));
     }
   }
 
