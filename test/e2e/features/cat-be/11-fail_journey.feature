@@ -1,4 +1,4 @@
-@catbe @full_smoke @regression @syed
+@catbe @full_smoke @regression
 Feature: Driving Examiner Completes a Failed Journey on Category B+E
 
   Scenario: Examiner completes a failed test with various faults

@@ -1,8 +1,8 @@
 var appPath = __dirname + '/platforms/ios/build/emulator/DrivingExaminerService.app';
 
 exports.config = {
-  seleniumAddress: 'http://localhost:4723/wd/hub',
-  allScriptsTimeout: 16000,
+ seleniumAddress: 'http://localhost:4723/wd/hub',
+  allScriptsTimeout: 30000,
   capabilities: {
     platformName: 'iOS',
     platformVersion: '12.1',

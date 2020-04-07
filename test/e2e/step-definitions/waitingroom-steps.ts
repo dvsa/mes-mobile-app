@@ -7,7 +7,7 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-// Set default category to be cat b
+//Set default category to be cat b
 this.testCategory = 'b';
 
 Before({ tags: '@catbe' }, () => {

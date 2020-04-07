@@ -1,13 +1,11 @@
 import { Then, When, Before } from 'cucumber';
 import OfficePage from '../pages/OfficePage';
-
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
 this.testCategory = 'b';
-
 Before({ tags: '@catbe' }, () => {
   this.testCategory = 'be';
 });
