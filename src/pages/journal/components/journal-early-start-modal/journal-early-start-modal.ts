@@ -2,10 +2,10 @@ import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 import { Component, OnInit } from '@angular/core';
 import { ModalEvent } from './journal-early-start-modal.constants';
 import { SlotDetail } from '@dvsa/mes-journal-schema';
-import { DateTime } from '../../../../shared/helpers/date-time';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { EarlyStartDidContinue, EarlyStartDidReturn } from '../../../../modules/journal/journal.actions';
+import * as moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -40,6 +40,6 @@ export class JournalEarlyStartModal implements OnInit {
   }
 
   getStartTime() {
-    return new DateTime(this.slotData.start).format('kk:mm');
+    return moment(this.slotData.start).format('kk:mm');
   }
 }
