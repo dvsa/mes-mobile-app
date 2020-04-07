@@ -4,7 +4,7 @@ vehicle-check {
   }
 
   competency-button.show-me-question-tick {
-    
+
     .competency-button {
       padding: 1px 7px 2px;
 
@@ -21,28 +21,26 @@ vehicle-check {
   }
 
   competency-button.vehicle-check-competency {
-    display: flex;       // this styling is neccessary to ensure z-index
-    flex-flow: column;   // works on competency buttons
+    display: flex; // this styling is neccessary to ensure z-index
+    flex-flow: column; // works on competency buttons
     .competency-button {
-      margin-left: 8px;
+      margin-left: 1px;
 
       padding-left: 5px;
       padding-right: 5px;
+    }
 
-      driving-faults-badge {
-        width: 30px;
-      }
+    .competency-label {
+      margin-left: 10px;
+      font-size: 15px;
+    }
 
-      .fault-wrapper {
-        display: flex;
-        width: 30px;
-        justify-content: flex-end;
-        align-items: center;
-        
-        dangerous-fault-badge {
-          margin-left: -22px;
-        }
-      }
+    .driving-faults-badge {
+      width: 20px;
+    }
+
+    .vehicle-Check-badges {
+      display: flex;
     }
   }
 }

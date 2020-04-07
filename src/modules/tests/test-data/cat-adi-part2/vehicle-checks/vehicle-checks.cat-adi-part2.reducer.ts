@@ -94,15 +94,23 @@ export function vehicleChecksCatADI2Reducer(
         showMeQuestions: newShowMeQuestionsState,
       };
     case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_SERIOUS_FAULT:
+      let dangerousFlag: boolean = false;
+      if (state.dangerousFault) {
+        dangerousFlag = true;
+      }
       return {
         ...state,
         seriousFault: true,
-        dangerousFault: false,
+        dangerousFault: dangerousFlag,
       };
     case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_DANGEROUS_FAULT:
+      let seriousFlag: boolean = false;
+      if (state.seriousFault) {
+        seriousFlag = true;
+      }
       return {
         ...state,
-        seriousFault: false,
+        seriousFault: seriousFlag,
         dangerousFault: true,
       };
     case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_REMOVE_SERIOUS_FAULT:

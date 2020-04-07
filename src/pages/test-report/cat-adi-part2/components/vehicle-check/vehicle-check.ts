@@ -194,10 +194,6 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
   }
 
   getDrivingFaultCount = (): number => {
-    if (this.hasDangerousFault() || this.hasSeriousFault()) {
-      return 0;
-    }
-
     if (this.hasShowMeDrivingFault() || this.hasTellMeDrivingFault()) {
       return this.showMeQuestionFaultCount + this.tellMeQuestionFaultCount;
     }

@@ -60,7 +60,7 @@ describe('VehicleCheckComponent', () => {
         {
           code: 'T4',
           description: '',
-          outcome: 'DF',
+          outcome: 'P',
         },
       ],
     },
@@ -278,6 +278,8 @@ describe('VehicleCheckComponent', () => {
   describe('DOM', () => {
     it('should pass 0 driving faults to the driving faults badge component when no tell me fault', () => {
       fixture.detectChanges();
+      component.tellMeQuestionFaultCount = 0;
+      component.showMeQuestionFaultCount = 0;
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
 
@@ -299,12 +301,11 @@ describe('VehicleCheckComponent', () => {
       store$.dispatch(new TellMeQuestionOutcomeChanged(CompetencyOutcome.DF, 0));
       store$.dispatch(new VehicleChecksSeriousFault());
       fixture.detectChanges();
-
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
 
       fixture.detectChanges();
-      expect(drivingFaultsBadge.count).toBe(0);
+      expect(drivingFaultsBadge.count).toBe(1);
 
       const seriousFaultBadge = fixture.debugElement.query(By.css('serious-fault-badge'))
         .componentInstance as SeriousFaultBadgeComponent;
@@ -332,7 +333,7 @@ describe('VehicleCheckComponent', () => {
         .componentInstance as DrivingFaultsBadgeComponent;
 
       fixture.detectChanges();
-      expect(drivingFaultsBadge.count).toBe(0);
+      expect(drivingFaultsBadge.count).toBe(1);
 
       const dangerousFaultBadge = fixture.debugElement.query(By.css('dangerous-fault-badge'))
         .componentInstance as DangerousFaultBadgeComponent;
