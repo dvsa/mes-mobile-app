@@ -7,7 +7,7 @@ export class DateTime {
     if (sourceDateTime === undefined) {
       this.moment = moment();
     } else if (typeof sourceDateTime === 'string') {
-      this.moment = moment(sourceDateTime);
+      this.moment = moment(new Date(sourceDateTime));
     } else if (sourceDateTime instanceof Date) {
       this.moment = moment(sourceDateTime);
     } else {
@@ -50,6 +50,9 @@ export class DateTime {
   }
 
   compareDuration(targetDate: DateTime | string | Date, duration: Duration): number {
+    if (typeof targetDate === 'string') {
+      return moment(targetDate).diff(this.moment, duration);
+    }
     return new DateTime(targetDate).moment.diff(this.moment, duration);
   }
 
