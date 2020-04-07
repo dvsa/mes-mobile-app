@@ -33,6 +33,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 import { TestData } from '@dvsa/mes-test-schema/categories/ADI2/partial';
 import { TestData as CommonTestData } from '@dvsa/mes-test-schema/categories/common';
+import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 
 describe('VehicleCheckComponent', () => {
 
@@ -105,6 +106,9 @@ describe('VehicleCheckComponent', () => {
           }),
           testReport: testReportReducer,
         }),
+      ],
+      providers: [
+        FaultCountProvider,
       ],
     });
   });

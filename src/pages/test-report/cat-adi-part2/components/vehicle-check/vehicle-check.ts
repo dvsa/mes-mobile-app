@@ -44,17 +44,13 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  faultCountProvider: FaultCountProvider;
-
   constructor(
     private store$: Store<StoreModel>,
+    private faultCountProvider: FaultCountProvider,
   ) {
   }
 
   ngOnInit(): void {
-
-    this.faultCountProvider = new FaultCountProvider();
-
     const vehicleChecks$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
