@@ -21,8 +21,8 @@ import { By } from '@angular/platform-browser';
 
 import {
   TellMeQuestionOutcomeChanged,
-  ShowMeQuestionDrivingFault,
-  ShowMeQuestionPassed,
+  ShowMeQuestionAddDrivingFault,
+  ShowMeQuestionRemoveDrivingFault,
   VehicleChecksSeriousFault,
   VehicleChecksDangerousFault,
   VehicleChecksRemoveSeriousFault,
@@ -151,7 +151,7 @@ describe('VehicleCheckComponent', () => {
 
         component.addFault(true);
 
-        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionDrivingFault());
+        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionAddDrivingFault(0));
       });
 
       it('should not dispatch SHOW_ME_QUESTION_DRIVING_FAULT when competency was just tapped', () => {
@@ -161,13 +161,13 @@ describe('VehicleCheckComponent', () => {
 
         component.addFault(false);
 
-        expect(storeDisptachSpy).not.toHaveBeenCalledWith(new ShowMeQuestionDrivingFault());
+        expect(storeDisptachSpy).not.toHaveBeenCalledWith(new ShowMeQuestionAddDrivingFault(3));
       });
     });
 
     describe('removeFault', () => {
-      it('should dispatch a SHOW_ME_QUESTION_PASSED action on remove fault', () => {
-        store$.dispatch(new ShowMeQuestionDrivingFault());
+      it('should dispatch a SHOW_ME_QUESTION_REMOVE_DRIVING_FAULT action on remove fault', () => {
+        store$.dispatch(new ShowMeQuestionAddDrivingFault(0));
         fixture.detectChanges();
 
         component.isRemoveFaultMode = true;
@@ -184,7 +184,7 @@ describe('VehicleCheckComponent', () => {
         component.removeFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(
-          new ShowMeQuestionPassed());
+          new ShowMeQuestionRemoveDrivingFault(-1));
       });
 
       it('should dispatch a VEHICLE_CHECK_REMOVE_SERIOUS_FAULT action if there is a serious fault', () => {

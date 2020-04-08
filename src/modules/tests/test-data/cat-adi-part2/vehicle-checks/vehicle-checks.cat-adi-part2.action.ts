@@ -38,12 +38,12 @@ export class AddShowMeTellMeComment implements Action {
 }
 
 export class ShowMeQuestionAddDrivingFault implements Action {
-  constructor(public showMeQuestion: QuestionResult[], public index: number) {}
+  constructor(public index: number) {}
   readonly type = SHOW_ME_QUESTION_ADD_DRIVING_FAULT;
 }
 
 export class ShowMeQuestionRemoveDrivingFault implements Action {
-  constructor(public showMeQuestion: QuestionResult[], public index: number) {}
+  constructor(public index: number) {}
   readonly type = SHOW_ME_QUESTION_REMOVE_DRIVING_FAULT;
 }
 
@@ -75,4 +75,3 @@ export type Types =
   | VehicleChecksDangerousFault
   | VehicleChecksRemoveSeriousFault
   | VehicleChecksRemoveDangerousFault;
-
