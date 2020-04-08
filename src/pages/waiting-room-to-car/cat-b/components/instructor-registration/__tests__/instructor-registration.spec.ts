@@ -55,12 +55,12 @@ describe('InstructorRegistrationComponent', () => {
 
     it('should remove preceding zeros and emit null as empty', () => {
       component.instructorRegistrationChanged(mockOnlyZeroRegistrationNumber);
-      expect(component.instructorRegistrationChange.emit).toHaveBeenCalledWith(null);
+      expect(component.instructorRegistrationChange.emit).toHaveBeenCalledWith(undefined);
     });
 
     it('should emit null as the value can`t be cast to a number', () => {
       component.instructorRegistrationChanged(mockBlankInstructorRegistrationNumber);
-      expect(component.instructorRegistrationChange.emit).toHaveBeenCalledWith(null);
+      expect(component.instructorRegistrationChange.emit).toHaveBeenCalledWith(undefined);
     });
   });
 });
