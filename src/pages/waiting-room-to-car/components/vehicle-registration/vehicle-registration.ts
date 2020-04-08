@@ -31,6 +31,7 @@ export class VehicleRegistrationComponent implements OnChanges {
       this.formControl = new FormControl(null, [Validators.required]);
       this.formGroup.addControl('vehicleRegistration', this.formControl);
     }
+    this.formControl.patchValue(this.vehicleRegistration);
   }
 
   vehicleRegistrationChanged(event: any): void {

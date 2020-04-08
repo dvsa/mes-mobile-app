@@ -11,6 +11,11 @@ export const instructorDetailsReducer = (state = initialState, action: instructo
         ...state,
         registrationNumber: action.instructorRegistrationNumber,
       };
+    case instructorDetailsActions.INSTRUCTOR_REGISTRATION_NUMBER_REMOVED:
+      return {
+        ...state,
+        registrationNumber: undefined,
+      };
     default:
       return state;
   }

@@ -5,7 +5,6 @@ import {
   getInstructorRegistrationNumberValidator,
   nonNumericValues,
 } from '../../../../../shared/constants/field-validators/field-validators';
-import { isEmpty } from 'lodash';
 
 @Component({
   selector: 'instructor-registration',
@@ -22,7 +21,7 @@ export class InstructorRegistrationComponent implements OnChanges {
   @Output()
   instructorRegistrationChange = new EventEmitter<number>();
 
-  private formControl: FormControl;
+  formControl: FormControl;
 
   readonly instructorRegistrationNumberValidator: FieldValidators = getInstructorRegistrationNumberValidator();
 
@@ -38,10 +37,8 @@ export class InstructorRegistrationComponent implements OnChanges {
     if (!this.instructorRegistrationNumberValidator.pattern.test(event.target.value)) {
       event.target.value = event.target.value.replace(nonNumericValues, '');
     }
-
-    if (!isEmpty(event.target.value)) {
-      this.instructorRegistrationChange.emit(Number.parseInt(event.target.value, 10));
-    }
+    const valueAsNumber: number = Number(event.target.value);
+    this.instructorRegistrationChange.emit(typeof valueAsNumber === 'number' ? valueAsNumber : null);
   }
 
   get invalid(): boolean {
