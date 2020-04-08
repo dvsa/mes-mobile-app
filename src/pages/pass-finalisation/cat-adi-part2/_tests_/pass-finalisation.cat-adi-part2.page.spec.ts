@@ -29,6 +29,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 import { CAT_ADI_PART2 } from '../../../page-names.constants';
+import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
 
 describe('PassFinalisationCatADIPart2Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatADIPart2Page>;
@@ -101,8 +102,10 @@ describe('PassFinalisationCatADIPart2Page', () => {
     });
     describe('onSubmit', () => {
       it('should dispatch the PersistTests action', () => {
+        component.slotId = '123';
         component.onSubmit();
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+        expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
 
       it('should remove pass finalisation from view', fakeAsync(() => {
