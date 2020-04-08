@@ -183,7 +183,9 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
     }
 
     if (wasPress) {
-      this.store$.dispatch(new ShowMeQuestionDrivingFault());
+      if (this.getDrivingFaultCount() < 4) {
+        this.store$.dispatch(new ShowMeQuestionDrivingFault());
+      }
     }
   }
 
