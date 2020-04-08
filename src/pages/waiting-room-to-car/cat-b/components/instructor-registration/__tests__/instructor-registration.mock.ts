@@ -10,6 +10,18 @@ export const mockInvalidInstructorRegistrationNumber = {
   },
 };
 
+export const mockLeadingZeroRegistrationNumber = {
+  target: {
+    value: '04567',
+  },
+};
+
+export const mockOnlyZeroRegistrationNumber = {
+  target: {
+    value: '0',
+  },
+};
+
 export const mockBlankInstructorRegistrationNumber = {
   target: {
     value: '',

@@ -3,6 +3,9 @@ export type FieldValidators = {
   maxLength: string;
 };
 
+// Used for when you want to check value does not have a leading zero
+export const nonLeadingZero: RegExp = /^0*/g;
+
 // Used for when you want to replace all parts of input except numbers 0-9
 export const nonNumericValues: RegExp = /[^0-9]/g;
 
@@ -18,7 +21,7 @@ export const getRegistrationNumberValidator = (): FieldValidators => {
 
 export const getInstructorRegistrationNumberValidator = (): FieldValidators => {
   return {
-    pattern: /^[0-9]{1,7}$/gi,
+    pattern: /^[1-9][0-9]{0,6}$/g,
     maxLength: '7',
   };
 };

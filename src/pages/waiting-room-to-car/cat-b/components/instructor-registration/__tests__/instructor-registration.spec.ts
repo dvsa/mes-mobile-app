@@ -6,10 +6,12 @@ import { InstructorRegistrationComponent } from '../instructor-registration';
 import {
   mockBlankInstructorRegistrationNumber,
   mockInvalidInstructorRegistrationNumber,
+  mockLeadingZeroRegistrationNumber,
+  mockOnlyZeroRegistrationNumber,
   mockValidInstructorRegistrationNumber,
 } from './instructor-registration.mock';
 
-fdescribe('InstructorRegistrationComponent', () => {
+describe('InstructorRegistrationComponent', () => {
   let fixture: ComponentFixture<InstructorRegistrationComponent>;
   let component: InstructorRegistrationComponent;
 
@@ -46,7 +48,17 @@ fdescribe('InstructorRegistrationComponent', () => {
       expect(component.instructorRegistrationChange.emit).toHaveBeenCalledWith(12457);
     });
 
-    it('should return null if the value can`t be cast to a number', () => {
+    it('should remove preceding zeros and emit rest of valid result', () => {
+      component.instructorRegistrationChanged(mockLeadingZeroRegistrationNumber);
+      expect(component.instructorRegistrationChange.emit).toHaveBeenCalledWith(4567);
+    });
+
+    it('should remove preceding zeros and emit null as empty', () => {
+      component.instructorRegistrationChanged(mockOnlyZeroRegistrationNumber);
+      expect(component.instructorRegistrationChange.emit).toHaveBeenCalledWith(null);
+    });
+
+    it('should emit null as the value can`t be cast to a number', () => {
       component.instructorRegistrationChanged(mockBlankInstructorRegistrationNumber);
       expect(component.instructorRegistrationChange.emit).toHaveBeenCalledWith(null);
     });
