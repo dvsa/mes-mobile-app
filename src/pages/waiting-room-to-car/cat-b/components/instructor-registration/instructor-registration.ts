@@ -40,7 +40,7 @@ export class InstructorRegistrationComponent implements OnChanges {
         .replace(nonLeadingZero, '')
         .replace(nonNumericValues, '');
     }
-    this.instructorRegistrationChange.emit(Number(event.target.value) || null);
+    this.instructorRegistrationChange.emit(Number(event.target.value) || undefined);
   }
 
   get invalid(): boolean {
