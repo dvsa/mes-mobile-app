@@ -6,8 +6,8 @@ export const SHOW_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] [CatADI2] S
 export const TELL_ME_QUESTION_SELECTED = '[VehicleChecksPage] [CatADI2] Tell Me Question Selected';
 export const TELL_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] [CatADI2] Tell Me Question Outcome Changed';
 export const SHOW_ME_QUESTION_ADD_DRIVING_FAULT = '[Vehicle Checks] [CatADI2] Show Me Question Add Driving Fault';
-export const VEHICLE_CHECKS_SERIOUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Serious Fault';
-export const VEHICLE_CHECKS_DANGEROUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Dangerous Fault';
+export const VEHICLE_CHECKS_ADD_SERIOUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Serious Fault';
+export const VEHICLE_CHECKS_ADD_DANGEROUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Dangerous Fault';
 export const VEHICLE_CHECKS_REMOVE_SERIOUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Remove Serious Fault';
 export const VEHICLE_CHECKS_REMOVE_DANGEROUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Remove Dangerous Fault';
 export const SHOW_ME_QUESTION_REMOVE_DRIVING_FAULT = '[Vehicle Checks] [CatADI2] Show Me Question Passed';
@@ -47,12 +47,12 @@ export class ShowMeQuestionRemoveDrivingFault implements Action {
   readonly type = SHOW_ME_QUESTION_REMOVE_DRIVING_FAULT;
 }
 
-export class VehicleChecksSeriousFault implements Action {
-  readonly type = VEHICLE_CHECKS_SERIOUS_FAULT;
+export class VehicleChecksAddSeriousFault implements Action {
+  readonly type = VEHICLE_CHECKS_ADD_SERIOUS_FAULT;
 }
 
-export class VehicleChecksDangerousFault implements Action {
-  readonly type = VEHICLE_CHECKS_DANGEROUS_FAULT;
+export class VehicleChecksAddDangerousFault implements Action {
+  readonly type = VEHICLE_CHECKS_ADD_DANGEROUS_FAULT;
 }
 
 export class VehicleChecksRemoveSeriousFault implements Action {
@@ -71,7 +71,7 @@ export type Types =
   | AddShowMeTellMeComment
   | ShowMeQuestionAddDrivingFault
   | ShowMeQuestionRemoveDrivingFault
-  | VehicleChecksSeriousFault
-  | VehicleChecksDangerousFault
+  | VehicleChecksAddSeriousFault
+  | VehicleChecksAddDangerousFault
   | VehicleChecksRemoveSeriousFault
   | VehicleChecksRemoveDangerousFault;

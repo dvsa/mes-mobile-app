@@ -23,8 +23,8 @@ import {
   TellMeQuestionOutcomeChanged,
   ShowMeQuestionAddDrivingFault,
   ShowMeQuestionRemoveDrivingFault,
-  VehicleChecksSeriousFault,
-  VehicleChecksDangerousFault,
+  VehicleChecksAddSeriousFault,
+  VehicleChecksAddDangerousFault,
   VehicleChecksRemoveSeriousFault,
   VehicleChecksRemoveDangerousFault,
 } from '../../../../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.action';
@@ -130,7 +130,7 @@ describe('VehicleCheckComponent', () => {
 
         component.addFault(false);
 
-        expect(storeDisptachSpy).toHaveBeenCalledWith(new VehicleChecksSeriousFault());
+        expect(storeDisptachSpy).toHaveBeenCalledWith(new VehicleChecksAddSeriousFault());
       });
 
       it('should dispatch VEHICLE_CHECK_DANGEROUS_FAULT when dangerous mode is on', () => {
@@ -141,7 +141,7 @@ describe('VehicleCheckComponent', () => {
 
         component.addFault(false);
 
-        expect(storeDisptachSpy).toHaveBeenCalledWith(new VehicleChecksDangerousFault());
+        expect(storeDisptachSpy).toHaveBeenCalledWith(new VehicleChecksAddDangerousFault());
       });
 
       it('should dispatch SHOW_ME_QUESTION_DRIVING_FAULT when competency is pressed', () => {
@@ -188,7 +188,7 @@ describe('VehicleCheckComponent', () => {
       });
 
       it('should dispatch a VEHICLE_CHECK_REMOVE_SERIOUS_FAULT action if there is a serious fault', () => {
-        store$.dispatch(new VehicleChecksSeriousFault());
+        store$.dispatch(new VehicleChecksAddSeriousFault());
         fixture.detectChanges();
 
         component.isRemoveFaultMode = true;
@@ -203,7 +203,7 @@ describe('VehicleCheckComponent', () => {
       });
 
       it('should dispatch a VEHICLE_CHECK_REMOVE_DANGEROUS_FAULT action if there is a dangerous fault', () => {
-        store$.dispatch(new VehicleChecksDangerousFault());
+        store$.dispatch(new VehicleChecksAddDangerousFault());
         fixture.detectChanges();
 
         component.isRemoveFaultMode = true;
@@ -292,7 +292,7 @@ describe('VehicleCheckComponent', () => {
     });
 
     it('should have a serious fault badge on if there was serious fault recorded against the vehicle checks', () => {
-      store$.dispatch(new VehicleChecksSeriousFault());
+      store$.dispatch(new VehicleChecksAddSeriousFault());
       fixture.detectChanges();
       const seriousFaultBadge = fixture.debugElement.query(By.css('serious-fault-badge'))
         .componentInstance as SeriousFaultBadgeComponent;
@@ -303,7 +303,7 @@ describe('VehicleCheckComponent', () => {
 
     it('should have a serious fault badge on if tell me has driving fault but vehicle checks has serious', () => {
       store$.dispatch(new TellMeQuestionOutcomeChanged(CompetencyOutcome.DF, 0));
-      store$.dispatch(new VehicleChecksSeriousFault());
+      store$.dispatch(new VehicleChecksAddSeriousFault());
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
@@ -319,7 +319,7 @@ describe('VehicleCheckComponent', () => {
     });
 
     it('should have a dangerous fault badge on if there was serious fault recorded against vehicle checks', () => {
-      store$.dispatch(new VehicleChecksDangerousFault());
+      store$.dispatch(new VehicleChecksAddDangerousFault());
       fixture.detectChanges();
       const dangerousFaultBadge = fixture.debugElement.query(By.css('dangerous-fault-badge'))
         .componentInstance as DangerousFaultBadgeComponent;
@@ -330,7 +330,7 @@ describe('VehicleCheckComponent', () => {
 
     it('should have a dangerous fault badge on if tell me has driving fault but vehicle checks has dangerous', () => {
       store$.dispatch(new TellMeQuestionOutcomeChanged(CompetencyOutcome.DF, 0));
-      store$.dispatch(new VehicleChecksDangerousFault());
+      store$.dispatch(new VehicleChecksAddDangerousFault());
       fixture.detectChanges();
 
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))

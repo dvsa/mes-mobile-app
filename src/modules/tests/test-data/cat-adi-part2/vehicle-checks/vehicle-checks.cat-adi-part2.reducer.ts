@@ -20,6 +20,8 @@ export const initialState: CatADI2UniqueTypes.VehicleChecks = {
       outcome: CompetencyOutcome.P,
     },
   ],
+  seriousFault: false,
+  dangerousFault: false,
 };
 
 export function vehicleChecksCatADI2Reducer(
@@ -78,24 +80,14 @@ export function vehicleChecksCatADI2Reducer(
           } : item),
       };
 
-    case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_SERIOUS_FAULT:
-      let dangerousFlag: boolean = false;
-      if (state.dangerousFault) {
-        dangerousFlag = true;
-      }
+    case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_ADD_SERIOUS_FAULT:
       return {
         ...state,
         seriousFault: true,
-        dangerousFault: dangerousFlag,
       };
-    case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_DANGEROUS_FAULT:
-      let seriousFlag: boolean = false;
-      if (state.seriousFault) {
-        seriousFlag = true;
-      }
+    case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_ADD_DANGEROUS_FAULT:
       return {
         ...state,
-        seriousFault: seriousFlag,
         dangerousFault: true,
       };
     case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_REMOVE_SERIOUS_FAULT:

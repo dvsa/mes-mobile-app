@@ -10,8 +10,8 @@ import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Subscription, merge, Observable } from 'rxjs';
 import {
-  VehicleChecksSeriousFault,
-  VehicleChecksDangerousFault,
+  VehicleChecksAddSeriousFault,
+  VehicleChecksAddDangerousFault,
   VehicleChecksRemoveSeriousFault,
   VehicleChecksRemoveDangerousFault,
   ShowMeQuestionAddDrivingFault,
@@ -173,13 +173,13 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
 
   addFault = (wasPress: boolean): void => {
     if (this.isDangerousMode) {
-      this.store$.dispatch(new VehicleChecksDangerousFault());
+      this.store$.dispatch(new VehicleChecksAddDangerousFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
     }
 
     if (this.isSeriousMode) {
-      this.store$.dispatch(new VehicleChecksSeriousFault());
+      this.store$.dispatch(new VehicleChecksAddSeriousFault());
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
