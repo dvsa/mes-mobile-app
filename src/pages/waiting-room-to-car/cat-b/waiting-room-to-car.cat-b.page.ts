@@ -25,7 +25,6 @@ import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-b/
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import {
   InstructorRegistrationNumberChanged,
-  // InstructorRegistrationNumberRemoved,
 } from '../../../modules/tests/instructor-details/instructor-details.actions';
 import {
   getRegistrationNumber,
@@ -265,7 +264,7 @@ export class WaitingRoomToCarCatBPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
   }
 
-  instructorRegistrationChanged(instructorRegistration: number): void {
+  instructorRegistrationChanged(instructorRegistration: number) {
     this.store$.dispatch(new InstructorRegistrationNumberChanged(instructorRegistration));
   }
 
