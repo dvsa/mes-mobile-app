@@ -181,7 +181,7 @@ export class WaitingRoomToCarCatADIPart2Page extends BasePageComponent {
         select(getTestData),
         select(getVehicleChecksCatADIPart2),
         map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(TestCategory.ADI2, vehicleChecks);
+          return this.faultCountProvider.getTellMeFaultCount(TestCategory.ADI2, vehicleChecks);
         }),
       ),
       vehicleChecks$: currentTest$.pipe(

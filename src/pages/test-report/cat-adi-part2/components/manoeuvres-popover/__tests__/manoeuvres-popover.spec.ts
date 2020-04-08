@@ -1,4 +1,3 @@
-
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController } from 'ionic-angular';
 import { AppModule } from '../../../../../../app/app.module';
@@ -22,11 +21,40 @@ import {
 import { configureTestSuite } from 'ng-bullet';
 import { testReportReducer } from '../../../../test-report.reducer';
 import { ManoeuvresPopoverComponentAdiPart2 } from '../manoeuvres-popover';
+import { TestData } from '@dvsa/mes-test-schema/categories/ADI2/partial';
+import { TestData as CommonTestData } from '@dvsa/mes-test-schema/categories/common';
 
 describe('ADI2 ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponentAdiPart2>;
   let component: ManoeuvresPopoverComponentAdiPart2;
   let store$: Store<StoreModel>;
+
+  const mockTestData: TestData | CommonTestData = {
+    dangerousFaults: {},
+    drivingFaults: {},
+    manoeuvres: [{ reverseRight: { selected: true } }, {}],
+    seriousFaults: {},
+    testRequirements: {},
+    ETA: {},
+    eco: {},
+    vehicleChecks: {
+      showMeQuestion: [
+        {
+          code: 'S3',
+          description: '',
+          outcome: 'P',
+        },
+      ],
+      tellMeQuestion: [
+        {
+          code: 'T4',
+          description: '',
+          outcome: 'DF',
+        },
+      ],
+    },
+    eyesightTest: {},
+  };
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -46,28 +74,7 @@ describe('ADI2 ManoeuvresPopoverComponent', () => {
             testStatus: {},
             startedTests: {
               123: {
-                testData: {
-                  dangerousFaults: {},
-                  drivingFaults: {},
-                  manoeuvres: [{ reverseRight: { selected: true } }, {}],
-                  seriousFaults: {},
-                  testRequirements: {},
-                  ETA: {},
-                  eco: {},
-                  vehicleChecks: {
-                    showMeQuestion: {
-                      code: 'S3',
-                      description: '',
-                      outcome: '',
-                    },
-                    tellMeQuestion: {
-                      code: '',
-                      description: '',
-                      outcome: '',
-                    },
-                  },
-                  eyesightTest: {},
-                },
+                testData: mockTestData,
                 postTestDeclarations: {
                   healthDeclarationAccepted: false,
                   passCertificateNumberReceived: false,
@@ -146,7 +153,7 @@ describe('ADI2 ManoeuvresPopoverComponent', () => {
         component.recordManoeuvreSelection(ManoeuvreTypes.reverseParkRoad, 0);
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-right-radio1'))
-        .nativeElement.disabled).toBe(false);
+          .nativeElement.disabled).toBe(false);
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-road-radio1'))
           .nativeElement.disabled).toBe(false);
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-carpark-radio1'))
@@ -162,7 +169,7 @@ describe('ADI2 ManoeuvresPopoverComponent', () => {
         }, 0));
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-right-radio1'))
-        .nativeElement.disabled).toBe(false);
+          .nativeElement.disabled).toBe(false);
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-road-radio1'))
           .nativeElement.disabled).toBe(true);
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-carpark-radio1'))

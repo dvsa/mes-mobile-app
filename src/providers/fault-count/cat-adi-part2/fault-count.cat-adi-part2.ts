@@ -3,15 +3,15 @@ import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 import { sumManoeuvreFaults } from '../../../shared/helpers/faults';
+import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 
 export class FaultCountADIPart2Helper {
 
-  // TODO(ADI2): Complete implementation in MES-2833
   public static getDrivingFaultSumCountCatADIPart2 = (data: CatADI2UniqueTypes.TestData): number => {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { drivingFaults, manoeuvres, controlledStop/*, vehicleChecks*/ } = data;
+    const { drivingFaults, manoeuvres, controlledStop, vehicleChecks } = data;
     let faultTotal: number = 0;
     getCompetencyFaults(drivingFaults).forEach(fault => faultTotal = faultTotal + fault.faultCount);
 
@@ -20,64 +20,169 @@ export class FaultCountADIPart2Helper {
     const result =
       faultTotal +
       sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-      // FaultCountADIPart2Helper.getVehicleChecksFaultCountCatB(vehicleChecks) +
+      FaultCountADIPart2Helper.getVehicleChecksFaultCountCatADIPart2(vehicleChecks).drivingFaults +
       controlledStopHasDrivingFault;
 
     return result;
   }
 
-  // TODO(ADI2): Complete implementation in MES-2833
   public static getSeriousFaultSumCountCatADIPart2 = (data: CatADI2UniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { seriousFaults, manoeuvres, controlledStop, /*vehicleChecks, */eyesightTest } = data;
+    const { seriousFaults, manoeuvres, controlledStop, vehicleChecks, eyesightTest } = data;
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
-    // const vehicleCheckSeriousFaults =
-    //   (vehicleChecks && vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S) ? 1 : 0;
     const controlledStopSeriousFaults = (controlledStop && controlledStop.fault === CompetencyOutcome.S) ? 1 : 0;
     const eyesightTestSeriousFaults = (eyesightTest && eyesightTest.seriousFault) ? 1 : 0;
 
     const result =
       seriousFaultSumOfSimpleCompetencies +
       sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) +
-      // vehicleCheckSeriousFaults +
+      FaultCountADIPart2Helper.getVehicleChecksByOutcomeFaultCountCatADIPart2(vehicleChecks, CompetencyOutcome.S) +
       controlledStopSeriousFaults +
       eyesightTestSeriousFaults;
 
     return result;
   }
 
-  // TODO(ADI2): Complete implementation in MES-2833
   public static getDangerousFaultSumCountCatADIPart2 = (data: CatADI2UniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
-    const { dangerousFaults, manoeuvres, controlledStop/*, vehicleChecks*/ } = data;
+    const { dangerousFaults, manoeuvres, controlledStop, vehicleChecks } = data;
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
-    // const vehicleCheckDangerousFaults =
-    //   (vehicleChecks && vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D) ? 1 : 0;
     const controlledStopDangerousFaults = (controlledStop && controlledStop.fault === CompetencyOutcome.D) ? 1 : 0;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +
       sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) +
-      // vehicleCheckDangerousFaults +
+      FaultCountADIPart2Helper.getVehicleChecksByOutcomeFaultCountCatADIPart2(vehicleChecks, CompetencyOutcome.D) +
       controlledStopDangerousFaults;
 
     return result;
   }
 
-  // TODO(ADI2): Complete implementation in MES-2833
-  public static getVehicleChecksFaultCountCatADIPart2 = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): number => {
+  public static getVehicleChecksFaultCountCatADIPart2 = (
+    vehicleChecks: CatADI2UniqueTypes.VehicleChecks,
+  ): VehicleChecksScore => {
+
+    if (!vehicleChecks) {
+      return {
+        drivingFaults: 0,
+        seriousFaults: 0,
+      };
+    }
+
+    const { tellMeQuestions, showMeQuestions } = vehicleChecks;
+
+    let total = 0;
+
+    if (tellMeQuestions) {
+      total += tellMeQuestions.reduce<number>((acc, question) => {
+        if (question.outcome === CompetencyOutcome.DF) {
+          return acc + 1;
+        }
+        return acc;
+      }, 0);
+    }
+
+    if (showMeQuestions) {
+      total += showMeQuestions.reduce<number>((acc, question) => {
+        if (question.outcome === CompetencyOutcome.DF) {
+          return acc + 1;
+        }
+        return acc;
+      }, 0);
+    }
+
+    return {
+      drivingFaults: total,
+      seriousFaults: 0,
+    };
+  }
+
+  public static getVehicleChecksByOutcomeFaultCountCatADIPart2 = (
+    vehicleChecks: CatADI2UniqueTypes.VehicleChecks,
+    outcome: CompetencyOutcome,
+  ): number => {
 
     if (!vehicleChecks) {
       return 0;
     }
 
+    const { tellMeQuestions, showMeQuestions } = vehicleChecks;
+
+    let total = 0;
+
+    if (tellMeQuestions) {
+      total += tellMeQuestions.reduce<number>((acc, question) => {
+        if (question.outcome === outcome) {
+          return acc + 1;
+        }
+        return acc;
+      }, 0);
+    }
+
+    if (showMeQuestions) {
+      total += showMeQuestions.reduce<number>((acc, question) => {
+        if (question.outcome === outcome) {
+          return acc + 1;
+        }
+        return acc;
+      }, 0);
+    }
+
+    return total;
+  }
+
+  public static getShowMeFaultCount = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): VehicleChecksScore => {
+
+    const emptyResults = {
+      drivingFaults: 0,
+      seriousFaults: 0,
+    };
+
+    if (!vehicleChecks) {
+      return emptyResults;
+    }
+
+    const { showMeQuestions } = vehicleChecks;
+
+    if (!showMeQuestions) {
+      return emptyResults;
+    }
+
+    const total = showMeQuestions.reduce<number>((acc, question) => {
+      if (question.outcome === CompetencyOutcome.DF) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+
+    return {
+      drivingFaults: total,
+      seriousFaults: 0,
+    };
+  }
+
+  public static getTellMeFaultCount = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): VehicleChecksScore => {
+
+    const emptyResults = {
+      drivingFaults: 0,
+      seriousFaults: 0,
+    };
+
+    if (!vehicleChecks) {
+      return emptyResults;
+    }
+
     const { tellMeQuestions } = vehicleChecks;
+
+    if (!tellMeQuestions) {
+      return emptyResults;
+    }
 
     const total = tellMeQuestions.reduce<number>((acc, question) => {
       if (question.outcome === CompetencyOutcome.DF) {
@@ -86,7 +191,9 @@ export class FaultCountADIPart2Helper {
       return acc;
     }, 0);
 
-    return total;
+    return {
+      drivingFaults: total,
+      seriousFaults: 0,
+    };
   }
-
 }

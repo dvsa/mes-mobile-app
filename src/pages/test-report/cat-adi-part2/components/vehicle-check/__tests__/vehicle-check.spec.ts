@@ -2,7 +2,6 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { VehicleCheckComponent } from '../vehicle-check';
 import { IonicModule } from 'ionic-angular';
 import { StoreModule, Store } from '@ngrx/store';
-import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../../test-report.reducer';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
@@ -19,25 +18,55 @@ import {
 } from '../../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
 import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { By } from '@angular/platform-browser';
-// TO-DO ADI Part2: implement correct category
+
 import {
-  TellMeQuestionCorrect,
-  TellMeQuestionDrivingFault,
-  ShowMeQuestionSeriousFault,
-  ShowMeQuestionDangerousFault,
-  ShowMeQuestionDrivingFault,
-  ShowMeQuestionPassed,
-  ShowMeQuestionRemoveFault,
-} from '../../../../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
-import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
+  TellMeQuestionOutcomeChanged,
+  ShowMeQuestionAddDrivingFault,
+  ShowMeQuestionRemoveDrivingFault,
+  VehicleChecksAddSeriousFault,
+  VehicleChecksAddDangerousFault,
+  VehicleChecksRemoveSeriousFault,
+  VehicleChecksRemoveDangerousFault,
+} from '../../../../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.action';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
+import { TestData } from '@dvsa/mes-test-schema/categories/ADI2/partial';
+import { TestData as CommonTestData } from '@dvsa/mes-test-schema/categories/common';
+import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 
 describe('VehicleCheckComponent', () => {
 
   let fixture: ComponentFixture<VehicleCheckComponent>;
   let component: VehicleCheckComponent;
   let store$: Store<StoreModel>;
+
+  const mockTestData: TestData | CommonTestData = {
+    dangerousFaults: {},
+    drivingFaults: {},
+    manoeuvres: [{ reverseRight: { selected: true } }, {}],
+    seriousFaults: {},
+    testRequirements: {},
+    ETA: {},
+    eco: {},
+    vehicleChecks: {
+      showMeQuestion: [
+        {
+          code: 'S3',
+          description: '',
+          outcome: 'P',
+        },
+      ],
+      tellMeQuestion: [
+        {
+          code: 'T4',
+          description: '',
+          outcome: 'P',
+        },
+      ],
+    },
+    eyesightTest: {},
+  };
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -51,7 +80,35 @@ describe('VehicleCheckComponent', () => {
       ],
       imports: [
         IonicModule,
-        StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                testData: mockTestData,
+                postTestDeclarations: {
+                  healthDeclarationAccepted: false,
+                  passCertificateNumberReceived: false,
+                  postTestSignature: '',
+                },
+                journalData: {},
+                category: 'ADI2',
+                communicationPreferences: {
+                  updatedEmail: '',
+                  communicationMethod: 'Not provided',
+                  conductedLanguage: 'Not provided',
+                },
+              },
+            },
+          }),
+          testReport: testReportReducer,
+        }),
+      ],
+      providers: [
+        FaultCountProvider,
       ],
     });
   });
@@ -60,13 +117,12 @@ describe('VehicleCheckComponent', () => {
     fixture = TestBed.createComponent(VehicleCheckComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
-    // TO-DO ADI Part2: implement correct category
-    store$.dispatch(new StartTest(105, TestCategory.B));
+    store$.dispatch(new StartTest(105, TestCategory.ADI2));
   }));
 
   describe('Class', () => {
     describe('addFault', () => {
-      it('should dispatch SHOW_ME_QUESTION_SERIOUS_FAULT when serious mode is on', () => {
+      it('should dispatch VEHICLE_CHECK_SERIOUS_FAULT when serious mode is on', () => {
         fixture.detectChanges();
         component.isSeriousMode = true;
 
@@ -74,10 +130,10 @@ describe('VehicleCheckComponent', () => {
 
         component.addFault(false);
 
-        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionSeriousFault());
+        expect(storeDisptachSpy).toHaveBeenCalledWith(new VehicleChecksAddSeriousFault());
       });
 
-      it('should dispatch SHOW_ME_QUESTION_DANGEROUS_FAULT when dangerous mode is on', () => {
+      it('should dispatch VEHICLE_CHECK_DANGEROUS_FAULT when dangerous mode is on', () => {
         fixture.detectChanges();
         component.isDangerousMode = true;
 
@@ -85,7 +141,7 @@ describe('VehicleCheckComponent', () => {
 
         component.addFault(false);
 
-        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionDangerousFault());
+        expect(storeDisptachSpy).toHaveBeenCalledWith(new VehicleChecksAddDangerousFault());
       });
 
       it('should dispatch SHOW_ME_QUESTION_DRIVING_FAULT when competency is pressed', () => {
@@ -95,7 +151,7 @@ describe('VehicleCheckComponent', () => {
 
         component.addFault(true);
 
-        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionDrivingFault());
+        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionAddDrivingFault(0));
       });
 
       it('should not dispatch SHOW_ME_QUESTION_DRIVING_FAULT when competency was just tapped', () => {
@@ -105,14 +161,22 @@ describe('VehicleCheckComponent', () => {
 
         component.addFault(false);
 
-        expect(storeDisptachSpy).not.toHaveBeenCalledWith(new ShowMeQuestionDrivingFault());
+        expect(storeDisptachSpy).not.toHaveBeenCalledWith(new ShowMeQuestionAddDrivingFault(3));
       });
     });
 
     describe('removeFault', () => {
-      it('should dispatch a SHOW_ME_QUESTION_PASSED action on remove fault', () => {
-        store$.dispatch(new ShowMeQuestionDrivingFault());
+      it('should dispatch a SHOW_ME_QUESTION_REMOVE_DRIVING_FAULT action on remove fault', () => {
+        store$.dispatch(new ShowMeQuestionAddDrivingFault(0));
         fixture.detectChanges();
+
+        component.isRemoveFaultMode = true;
+        component.vehicleChecks.showMeQuestions = [
+          {
+            code: '123',
+            outcome: 'DF',
+          },
+        ];
 
         component.isRemoveFaultMode = true;
 
@@ -120,100 +184,106 @@ describe('VehicleCheckComponent', () => {
         component.removeFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(
-          new ShowMeQuestionPassed());
-
+          new ShowMeQuestionRemoveDrivingFault(-1));
       });
 
-      it('should dispatch a SHOW_ME_QUESTION_PASSED action if there is a serious fault', () => {
-        store$.dispatch(new ShowMeQuestionSeriousFault());
+      it('should dispatch a VEHICLE_CHECK_REMOVE_SERIOUS_FAULT action if there is a serious fault', () => {
+        store$.dispatch(new VehicleChecksAddSeriousFault());
         fixture.detectChanges();
 
         component.isRemoveFaultMode = true;
         component.isSeriousMode = true;
+        component.vehicleChecks.seriousFault = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(
-          new ShowMeQuestionPassed());
+          new VehicleChecksRemoveSeriousFault());
       });
 
-      it('should dispatch a SHOW_ME_QUESTION_PASSED action if there is a dangerous fault', () => {
-        store$.dispatch(new ShowMeQuestionDangerousFault());
+      it('should dispatch a VEHICLE_CHECK_REMOVE_DANGEROUS_FAULT action if there is a dangerous fault', () => {
+        store$.dispatch(new VehicleChecksAddDangerousFault());
         fixture.detectChanges();
 
         component.isRemoveFaultMode = true;
         component.isDangerousMode = true;
+        component.vehicleChecks.dangerousFault = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(
-          new ShowMeQuestionPassed());
+          new VehicleChecksRemoveDangerousFault());
       });
     });
 
-    describe('toggleShowMeQuestion', () => {
-      it('should dispatch SHOW_ME_QUESTION_PASSED when competency has not got any faults', () => {
-        fixture.detectChanges();
+    describe('hasShowMeDrivingFault', () => {
+      it('should return true if a show me driving fault exists', () => {
+        component.vehicleChecks = {
+          showMeQuestions: [
+            {
+              code: '123',
+              outcome: CompetencyOutcome.DF,
+            },
+          ],
+        };
 
-        const storeDisptachSpy = spyOn(store$, 'dispatch');
-
-        component.toggleShowMeQuestion();
-
-        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionPassed());
+        const outcome = component.hasShowMeDrivingFault();
+        expect(outcome).toEqual(true);
       });
 
-      it('should not dispatch anything when show me has driving fault', () => {
-        fixture.detectChanges();
-        component.showMeQuestionFault = CompetencyOutcome.DF;
+      it('should return false no show me driving fault exists', () => {
+        component.vehicleChecks = {
+          showMeQuestions: [
+            {
+              code: '123',
+              outcome: CompetencyOutcome.P,
+            },
+          ],
+        };
 
-        const storeDisptachSpy = spyOn(store$, 'dispatch');
+        const outcome = component.hasShowMeDrivingFault();
+        expect(outcome).toEqual(false);
+      });
+    });
 
-        component.toggleShowMeQuestion();
+    describe('hasTellMeDrivingFault', () => {
+      it('should return true if a tell me driving fault exists', () => {
+        component.vehicleChecks = {
+          tellMeQuestions: [
+            {
+              code: '123',
+              outcome: CompetencyOutcome.DF,
+            },
+          ],
+        };
 
-        expect(storeDisptachSpy).not.toHaveBeenCalled();
+        const outcome = component.hasTellMeDrivingFault();
+        expect(outcome).toEqual(true);
       });
 
-      it('should not dispatch anything when show me has serious fault', () => {
-        fixture.detectChanges();
-        component.showMeQuestionFault = CompetencyOutcome.S;
+      it('should return false no tell me driving fault exists', () => {
+        component.vehicleChecks = {
+          tellMeQuestions: [
+            {
+              code: '123',
+              outcome: CompetencyOutcome.P,
+            },
+          ],
+        };
 
-        const storeDisptachSpy = spyOn(store$, 'dispatch');
-
-        component.toggleShowMeQuestion();
-
-        expect(storeDisptachSpy).not.toHaveBeenCalled();
-      });
-
-      it('should not dispatch anything when show me has dangerous fault', () => {
-        fixture.detectChanges();
-        component.showMeQuestionFault = CompetencyOutcome.D;
-
-        const storeDisptachSpy = spyOn(store$, 'dispatch');
-
-        component.toggleShowMeQuestion();
-
-        expect(storeDisptachSpy).not.toHaveBeenCalled();
-      });
-
-      it('should dispatch SHOW_ME_QUESTION_REMOVE_FAULT when show me has pass outcome', () => {
-        fixture.detectChanges();
-        component.showMeQuestionFault = CompetencyOutcome.P;
-
-        const storeDisptachSpy = spyOn(store$, 'dispatch');
-
-        component.toggleShowMeQuestion();
-
-        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionRemoveFault());
+        const outcome = component.hasTellMeDrivingFault();
+        expect(outcome).toEqual(false);
       });
     });
   });
 
   describe('DOM', () => {
     it('should pass 0 driving faults to the driving faults badge component when no tell me fault', () => {
-      store$.dispatch(new TellMeQuestionCorrect());
       fixture.detectChanges();
+      component.tellMeQuestionFaultCount = 0;
+      component.showMeQuestionFaultCount = 0;
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
 
@@ -221,28 +291,8 @@ describe('VehicleCheckComponent', () => {
       expect(drivingFaultsBadge.count).toBe(0);
     });
 
-    it('should pass 1 driving faults to the driving faults badge component when there is a tell me fault', () => {
-      store$.dispatch(new TellMeQuestionDrivingFault());
-      fixture.detectChanges();
-      const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
-        .componentInstance as DrivingFaultsBadgeComponent;
-
-      fixture.detectChanges();
-      expect(drivingFaultsBadge.count).toBe(1);
-    });
-
-    it('should pass 1 driving faults to the driving faults badge component when there is a show me fault', () => {
-      store$.dispatch(new ShowMeQuestionDrivingFault());
-      fixture.detectChanges();
-      const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
-        .componentInstance as DrivingFaultsBadgeComponent;
-
-      fixture.detectChanges();
-      expect(drivingFaultsBadge.count).toBe(1);
-    });
-
-    it('should have a serious fault badge on if there was serious fault recorded against the show me question', () => {
-      store$.dispatch(new ShowMeQuestionSeriousFault());
+    it('should have a serious fault badge on if there was serious fault recorded against the vehicle checks', () => {
+      store$.dispatch(new VehicleChecksAddSeriousFault());
       fixture.detectChanges();
       const seriousFaultBadge = fixture.debugElement.query(By.css('serious-fault-badge'))
         .componentInstance as SeriousFaultBadgeComponent;
@@ -251,16 +301,15 @@ describe('VehicleCheckComponent', () => {
       expect(seriousFaultBadge.showBadge).toBe(true);
     });
 
-    it('should have a serious fault badge on if tell me has driving fault but show me has serious', () => {
-      store$.dispatch(new TellMeQuestionDrivingFault());
-      store$.dispatch(new ShowMeQuestionSeriousFault());
+    it('should have a serious fault badge on if tell me has driving fault but vehicle checks has serious', () => {
+      store$.dispatch(new TellMeQuestionOutcomeChanged(CompetencyOutcome.DF, 0));
+      store$.dispatch(new VehicleChecksAddSeriousFault());
       fixture.detectChanges();
-
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
 
       fixture.detectChanges();
-      expect(drivingFaultsBadge.count).toBe(0);
+      expect(drivingFaultsBadge.count).toBe(1);
 
       const seriousFaultBadge = fixture.debugElement.query(By.css('serious-fault-badge'))
         .componentInstance as SeriousFaultBadgeComponent;
@@ -269,8 +318,8 @@ describe('VehicleCheckComponent', () => {
       expect(seriousFaultBadge.showBadge).toBe(true);
     });
 
-    it('should have a dangerous fault badge on if there was serious fault recorded against show me question', () => {
-      store$.dispatch(new ShowMeQuestionDangerousFault());
+    it('should have a dangerous fault badge on if there was serious fault recorded against vehicle checks', () => {
+      store$.dispatch(new VehicleChecksAddDangerousFault());
       fixture.detectChanges();
       const dangerousFaultBadge = fixture.debugElement.query(By.css('dangerous-fault-badge'))
         .componentInstance as DangerousFaultBadgeComponent;
@@ -279,16 +328,16 @@ describe('VehicleCheckComponent', () => {
       expect(dangerousFaultBadge.showBadge).toBe(true);
     });
 
-    it('should have a dangerous fault badge on if tell me has driving fault but show me has dangerous', () => {
-      store$.dispatch(new TellMeQuestionDrivingFault());
-      store$.dispatch(new ShowMeQuestionDangerousFault());
+    it('should have a dangerous fault badge on if tell me has driving fault but vehicle checks has dangerous', () => {
+      store$.dispatch(new TellMeQuestionOutcomeChanged(CompetencyOutcome.DF, 0));
+      store$.dispatch(new VehicleChecksAddDangerousFault());
       fixture.detectChanges();
 
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
 
       fixture.detectChanges();
-      expect(drivingFaultsBadge.count).toBe(0);
+      expect(drivingFaultsBadge.count).toBe(1);
 
       const dangerousFaultBadge = fixture.debugElement.query(By.css('dangerous-fault-badge'))
         .componentInstance as DangerousFaultBadgeComponent;

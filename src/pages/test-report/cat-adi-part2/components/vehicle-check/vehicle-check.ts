@@ -3,26 +3,26 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
-// TO-DO ADI Part2: implement correct category
-import { getTestData } from '../../../../../modules/tests/test-data/cat-b/test-data.reducer';
-// TO-DO ADI Part2: implement correct category
-import { getVehicleChecks } from '../../../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
-// TO-DO ADI Part2: implement correct category
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { getTestData } from '../../../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
+import { getVehicleChecksCatADIPart2 }
+  from '../../../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.selector';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Subscription, merge, Observable } from 'rxjs';
 import {
-  ShowMeQuestionSeriousFault,
-  ShowMeQuestionDangerousFault,
-  ShowMeQuestionDrivingFault,
-  ShowMeQuestionPassed,
-  ShowMeQuestionRemoveFault,
-} from '../../../../../modules/tests/test-data/cat-b/vehicle-checks/vehicle-checks.actions';
+  VehicleChecksAddSeriousFault,
+  VehicleChecksAddDangerousFault,
+  VehicleChecksRemoveSeriousFault,
+  VehicleChecksRemoveDangerousFault,
+  ShowMeQuestionAddDrivingFault,
+  ShowMeQuestionRemoveDrivingFault,
+} from '../../../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.action';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
 import { getTestReportState } from '../../../test-report.reducer';
 import { isSeriousMode, isDangerousMode, isRemoveFaultMode } from '../../../test-report.selector';
 import { map } from 'rxjs/operators';
-import { isEmpty } from 'lodash';
+import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'vehicle-check',
@@ -31,9 +31,10 @@ import { isEmpty } from 'lodash';
 export class VehicleCheckComponent implements OnInit, OnDestroy {
 
   selectedShowMeQuestion: boolean = false;
+  showMeQuestionFaultCount: number;
+  tellMeQuestionFaultCount: number;
 
-  tellMeQuestionFault: string;
-  showMeQuestionFault: string;
+  vehicleChecks: CatADI2UniqueTypes.VehicleChecks;
 
   isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
@@ -43,15 +44,18 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  constructor(private store$: Store<StoreModel>) { }
+  constructor(
+    private store$: Store<StoreModel>,
+    private faultCountProvider: FaultCountProvider,
+  ) {
+  }
 
   ngOnInit(): void {
-
     const vehicleChecks$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
       select(getTestData),
-      select(getVehicleChecks),
+      select(getVehicleChecksCatADIPart2),
     );
 
     const isSeriousMode$ = this.store$.pipe(
@@ -70,12 +74,16 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
     );
 
     this.subscription = merge(
-      // TO-DO ADI Part2: implement correct category
-      vehicleChecks$.pipe(map((vehicleChecks: CatBUniqueTypes.VehicleChecks) => {
-        this.tellMeQuestionFault = vehicleChecks.tellMeQuestion.outcome;
-        this.showMeQuestionFault = vehicleChecks.showMeQuestion.outcome;
-
-        this.selectedShowMeQuestion = !isEmpty(vehicleChecks.showMeQuestion.outcome);
+      vehicleChecks$.pipe(map((vehicleChecks: CatADI2UniqueTypes.VehicleChecks) => {
+        this.vehicleChecks = vehicleChecks;
+        this.tellMeQuestionFaultCount = this.faultCountProvider.getVehicleChecksFaultCount(
+          TestCategory.ADI2,
+          { tellMeQuestions: vehicleChecks.tellMeQuestions },
+        ).drivingFaults;
+        this.showMeQuestionFaultCount = this.faultCountProvider.getVehicleChecksFaultCount(
+          TestCategory.ADI2,
+          { showMeQuestions: vehicleChecks.showMeQuestions },
+        ).drivingFaults;
       })),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
@@ -99,16 +107,16 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
   }
 
   toggleShowMeQuestion = (): void => {
-    if (this.hasShowMeDrivingFault() || this.hasSeriousFault() || this.hasDangerousFault()) {
+    if (this.hasSeriousFault() || this.hasDangerousFault()) {
       return;
     }
 
-    if (this.showMeQuestionFault === CompetencyOutcome.P) {
-      this.store$.dispatch(new ShowMeQuestionRemoveFault());
+    if (this.selectedShowMeQuestion) {
+      this.selectedShowMeQuestion = false;
       return;
     }
 
-    this.store$.dispatch(new ShowMeQuestionPassed());
+    this.selectedShowMeQuestion = true;
   }
 
   canButtonRipple = () => {
@@ -142,72 +150,89 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
 
   removeFault = (): void => {
     if (this.hasDangerousFault() && this.isDangerousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new ShowMeQuestionPassed());
+      this.store$.dispatch(new VehicleChecksRemoveDangerousFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
     if (this.hasSeriousFault() && this.isSeriousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new ShowMeQuestionPassed());
+      this.store$.dispatch(new VehicleChecksRemoveSeriousFault());
       this.store$.dispatch(new ToggleSeriousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
     if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.hasShowMeDrivingFault()) {
-      this.store$.dispatch(new ShowMeQuestionPassed());
+      console.log('this.showMeQuestionFaultCount', this.showMeQuestionFaultCount);
+      this.store$.dispatch(
+        new ShowMeQuestionRemoveDrivingFault(this.showMeQuestionFaultCount - 1),
+      );
       this.store$.dispatch(new ToggleRemoveFaultMode());
     }
   }
 
   addFault = (wasPress: boolean): void => {
-    if (this.hasShowMeDrivingFault() || this.hasSeriousFault() || this.hasDangerousFault()) {
-      return;
-    }
-
     if (this.isDangerousMode) {
-      this.store$.dispatch(new ShowMeQuestionDangerousFault());
+      this.store$.dispatch(new VehicleChecksAddDangerousFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
     }
 
     if (this.isSeriousMode) {
-      this.store$.dispatch(new ShowMeQuestionSeriousFault());
+      this.store$.dispatch(new VehicleChecksAddSeriousFault());
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
 
     if (wasPress) {
-      this.store$.dispatch(new ShowMeQuestionDrivingFault());
+      if (this.getDrivingFaultCount() < 4 && this.showMeQuestionFaultCount < 2) {
+        this.store$.dispatch(
+          new ShowMeQuestionAddDrivingFault(this.showMeQuestionFaultCount),
+        );
+      }
     }
   }
 
   getDrivingFaultCount = (): number => {
-    if (this.hasDangerousFault() || this.hasSeriousFault()) {
-      return 0;
-    }
-
     if (this.hasShowMeDrivingFault() || this.hasTellMeDrivingFault()) {
-      return 1;
+      return this.showMeQuestionFaultCount + this.tellMeQuestionFaultCount;
     }
 
     return 0;
   }
 
   hasShowMeDrivingFault = (): boolean => {
-    return this.showMeQuestionFault === CompetencyOutcome.DF;
+    const showMeQuestions = this.vehicleChecks.showMeQuestions;
+    if (!showMeQuestions) {
+      return false;
+    }
+    return showMeQuestions.some((e) => {
+      if (!e) {
+        return false;
+      }
+      return e.outcome === CompetencyOutcome.DF;
+    });
   }
 
   hasTellMeDrivingFault = (): boolean => {
-    return this.tellMeQuestionFault === CompetencyOutcome.DF;
+    const tellMeQuestions = this.vehicleChecks.tellMeQuestions;
+    if (!tellMeQuestions) {
+      return false;
+    }
+    return tellMeQuestions.some((e) => {
+      if (!e) {
+        return false;
+      }
+      return e.outcome === CompetencyOutcome.DF;
+    });
   }
 
   hasSeriousFault = (): boolean => {
-    return this.showMeQuestionFault === CompetencyOutcome.S;
+    return this.vehicleChecks.seriousFault;
   }
 
   hasDangerousFault = (): boolean => {
-    return this.showMeQuestionFault === CompetencyOutcome.D;
+    return this.vehicleChecks.dangerousFault;
   }
 }
