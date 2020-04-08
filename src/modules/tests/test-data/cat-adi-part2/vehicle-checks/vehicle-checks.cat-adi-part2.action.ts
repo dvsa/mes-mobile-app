@@ -5,12 +5,12 @@ export const SHOW_ME_QUESTION_SELECTED = '[VehicleChecksPage] [CatADI2] Show Me 
 export const SHOW_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] [CatADI2] Show Me Question Outcome Changed';
 export const TELL_ME_QUESTION_SELECTED = '[VehicleChecksPage] [CatADI2] Tell Me Question Selected';
 export const TELL_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] [CatADI2] Tell Me Question Outcome Changed';
-export const SHOW_ME_QUESTION_DRIVING_FAULT = '[Vehicle Checks] [CatADI2] Show Me Question Driving Fault';
+export const SHOW_ME_QUESTION_ADD_DRIVING_FAULT = '[Vehicle Checks] [CatADI2] Show Me Question Add Driving Fault';
 export const VEHICLE_CHECKS_SERIOUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Serious Fault';
 export const VEHICLE_CHECKS_DANGEROUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Dangerous Fault';
 export const VEHICLE_CHECKS_REMOVE_SERIOUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Remove Serious Fault';
 export const VEHICLE_CHECKS_REMOVE_DANGEROUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Remove Dangerous Fault';
-export const SHOW_ME_QUESTION_PASSED = '[Vehicle Checks] [CatADI2] Show Me Question Passed';
+export const SHOW_ME_QUESTION_REMOVE_DRIVING_FAULT = '[Vehicle Checks] [CatADI2] Show Me Question Passed';
 export const ADD_SHOW_ME_TELL_ME_COMMENT = '[Vehicle Checks] [CatADI2] Add Show Me / Tell Me comment';
 
 export class ShowMeQuestionSelected implements Action {
@@ -37,8 +37,14 @@ export class AddShowMeTellMeComment implements Action {
   readonly type = ADD_SHOW_ME_TELL_ME_COMMENT;
 }
 
-export class ShowMeQuestionDrivingFault implements Action {
-  readonly type = SHOW_ME_QUESTION_DRIVING_FAULT;
+export class ShowMeQuestionAddDrivingFault implements Action {
+  constructor(public showMeQuestion: QuestionResult[], public index: number) {}
+  readonly type = SHOW_ME_QUESTION_ADD_DRIVING_FAULT;
+}
+
+export class ShowMeQuestionRemoveDrivingFault implements Action {
+  constructor(public showMeQuestion: QuestionResult[], public index: number) {}
+  readonly type = SHOW_ME_QUESTION_REMOVE_DRIVING_FAULT;
 }
 
 export class VehicleChecksSeriousFault implements Action {
@@ -47,10 +53,6 @@ export class VehicleChecksSeriousFault implements Action {
 
 export class VehicleChecksDangerousFault implements Action {
   readonly type = VEHICLE_CHECKS_DANGEROUS_FAULT;
-}
-
-export class ShowMeQuestionPassed implements Action {
-  readonly type = SHOW_ME_QUESTION_PASSED;
 }
 
 export class VehicleChecksRemoveSeriousFault implements Action {
@@ -67,9 +69,10 @@ export type Types =
   | TellMeQuestionSelected
   | TellMeQuestionOutcomeChanged
   | AddShowMeTellMeComment
-  | ShowMeQuestionDrivingFault
+  | ShowMeQuestionAddDrivingFault
+  | ShowMeQuestionRemoveDrivingFault
   | VehicleChecksSeriousFault
   | VehicleChecksDangerousFault
   | VehicleChecksRemoveSeriousFault
-  | VehicleChecksRemoveDangerousFault
-  | ShowMeQuestionPassed;
+  | VehicleChecksRemoveDangerousFault;
+

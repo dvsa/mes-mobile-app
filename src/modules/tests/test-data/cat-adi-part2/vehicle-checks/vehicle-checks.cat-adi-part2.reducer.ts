@@ -26,27 +26,6 @@ export function vehicleChecksCatADI2Reducer(
   state: CatADI2UniqueTypes.VehicleChecks = initialState,
   action: vehicleChecksCatADI2ActionTypes.Types,
 ): CatADI2UniqueTypes.VehicleChecks {
-  // let showMeQuestionIndex;
-  // let showMeFaultCount = 0;
-  // if (state.showMeQuestions) {
-  //   showMeFaultCount = state.showMeQuestions.reduce<number>((acc, question) => {
-  //     if (question.outcome === CompetencyOutcome.DF) {
-  //       return acc + 1;
-  //     }
-  //     return acc;
-  //   }, 0);
-  // }
-  //
-  // let tellMeFaultCount = 0;
-  // if (state.tellMeQuestions) {
-  //   tellMeFaultCount = state.tellMeQuestions.reduce<number>((acc, question) => {
-  //     if (question.outcome === CompetencyOutcome.DF) {
-  //       return acc + 1;
-  //     }
-  //     return acc;
-  //   }, 0);
-  // }
-  // const showMeTellMeFaultCount = tellMeFaultCount + showMeFaultCount;
 
   switch (action.type) {
     case vehicleChecksCatADI2ActionTypes.SHOW_ME_QUESTION_SELECTED:
@@ -80,27 +59,24 @@ export function vehicleChecksCatADI2Reducer(
         ...state,
         showMeTellMeComments: action.comment,
       };
-    case vehicleChecksCatADI2ActionTypes.SHOW_ME_QUESTION_DRIVING_FAULT:
-      let showMeQuestionDFIndex;
-      const tempShowMeQuestions = state.showMeQuestions;
-
-      showMeQuestionDFIndex = tempShowMeQuestions.findIndex(e => e.outcome === CompetencyOutcome.P);
-      tempShowMeQuestions[showMeQuestionDFIndex].outcome = CompetencyOutcome.DF;
-
+    case vehicleChecksCatADI2ActionTypes.SHOW_ME_QUESTION_ADD_DRIVING_FAULT:
       return {
         ...state,
-        showMeQuestions: tempShowMeQuestions,
+        showMeQuestions: state.showMeQuestions.map(
+          (item, index) =>  index === action.index ? {
+            ...item,
+            outcome: CompetencyOutcome.DF,
+          } : item),
       };
-
-    // case vehicleChecksCatADI2ActionTypes.SHOW_ME_QUESTION_DRIVING_FAULT:
-    //   return {
-    //     ...state,
-    //     showMeQuestions: state.showMeQuestions.map(
-    //       (item, index) =>  item.outcome === CompetencyOutcome.P ? {
-    //         ...item,
-    //         outcome: CompetencyOutcome.DF,
-    //       } : item),
-    //   };
+    case vehicleChecksCatADI2ActionTypes.SHOW_ME_QUESTION_REMOVE_DRIVING_FAULT:
+      return {
+        ...state,
+        showMeQuestions: state.showMeQuestions.map(
+          (item, index) =>  index === action.index ? {
+            ...item,
+            outcome: CompetencyOutcome.P,
+          } : item),
+      };
 
     case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_SERIOUS_FAULT:
       let dangerousFlag: boolean = false;
@@ -131,17 +107,6 @@ export function vehicleChecksCatADI2Reducer(
       return {
         ...state,
         dangerousFault: false,
-      };
-    case vehicleChecksCatADI2ActionTypes.SHOW_ME_QUESTION_PASSED:
-      let showMeQuestionPassedIndex;
-      const tempShowQuestions = state.showMeQuestions;
-
-      showMeQuestionPassedIndex = tempShowQuestions.findIndex(e => e.outcome === CompetencyOutcome.DF);
-      tempShowQuestions[showMeQuestionPassedIndex].outcome = CompetencyOutcome.P;
-
-      return {
-        ...state,
-        showMeQuestions: tempShowQuestions,
       };
     default:
       return state;

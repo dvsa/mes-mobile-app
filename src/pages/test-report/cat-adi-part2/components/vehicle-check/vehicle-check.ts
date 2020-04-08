@@ -10,12 +10,12 @@ import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Subscription, merge, Observable } from 'rxjs';
 import {
-  ShowMeQuestionDrivingFault,
   VehicleChecksSeriousFault,
   VehicleChecksDangerousFault,
   VehicleChecksRemoveSeriousFault,
   VehicleChecksRemoveDangerousFault,
-  ShowMeQuestionPassed,
+  ShowMeQuestionAddDrivingFault,
+  ShowMeQuestionRemoveDrivingFault,
 } from '../../../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.action';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
 import { getTestReportState } from '../../../test-report.reducer';
@@ -164,7 +164,9 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
     }
 
     if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.hasShowMeDrivingFault()) {
-      this.store$.dispatch(new ShowMeQuestionPassed());
+      this.store$.dispatch(
+        new ShowMeQuestionRemoveDrivingFault(this.vehicleChecks.showMeQuestions, this.showMeQuestionFaultCount - 1),
+      );
       this.store$.dispatch(new ToggleRemoveFaultMode());
     }
   }
@@ -183,8 +185,10 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
     }
 
     if (wasPress) {
-      if (this.getDrivingFaultCount() < 4) {
-        this.store$.dispatch(new ShowMeQuestionDrivingFault());
+      if (this.getDrivingFaultCount() < 4 && this.showMeQuestionFaultCount < 2) {
+        this.store$.dispatch(
+          new ShowMeQuestionAddDrivingFault(this.vehicleChecks.showMeQuestions, this.showMeQuestionFaultCount),
+        );
       }
     }
   }
