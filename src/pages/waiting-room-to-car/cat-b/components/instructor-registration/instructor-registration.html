@@ -7,8 +7,11 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col col-32>
-        <input type="number" id="instructor-registration" numbersOnly formControlName="instructorRegistration"
-          [value]="instructorRegistration" (change)="instructorRegistrationChanged($event.target.value)">
+        <input type="text"
+               id="instructor-registration"
+               formControlName="instructorRegistration"
+               [maxLength]="instructorRegistrationNumberValidator.maxLength"
+               (input)="instructorRegistrationChanged($event)">
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>

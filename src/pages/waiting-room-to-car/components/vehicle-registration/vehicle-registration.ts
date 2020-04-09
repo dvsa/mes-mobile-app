@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash';
 import {
   FieldValidators,
   getRegistrationNumberValidator,
+  nonAlphaNumericValues,
 } from '../../../../shared/constants/field-validators/field-validators';
 
 @Component({
@@ -30,11 +31,12 @@ export class VehicleRegistrationComponent implements OnChanges {
       this.formControl = new FormControl(null, [Validators.required]);
       this.formGroup.addControl('vehicleRegistration', this.formControl);
     }
+    this.formControl.patchValue(this.vehicleRegistration);
   }
 
   vehicleRegistrationChanged(event: any): void {
     if (!this.registrationNumberValidator.pattern.test(event.target.value)) {
-      event.target.value = event.target.value.replace(/[^A-Z0-9]/gi, '');
+      event.target.value = event.target.value.replace(nonAlphaNumericValues, '');
 
       if (isEmpty(event.target.value)) {
         this.formControl.setErrors({ invalidValue: event.target.value });
