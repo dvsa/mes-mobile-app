@@ -26,9 +26,3 @@ export const resetTestDataState = (username) => {
     browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
   });
 };
-
-
-
-export const inputTextSendKeys = (element, input) => {
-  element.sendKeys(input);
-};

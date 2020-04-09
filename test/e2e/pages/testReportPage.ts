@@ -111,6 +111,17 @@ class TestReportPage extends Page {
   getPracticeModeBanner() {
     return this.getElementByClassName('practice-mode-top-banner');
   }
+
+  emergencyFirstAndSecondTEST() {
+    const firstButton = this.getElementByXPath(`//ion-content/div[2]/ion-grid/
+    speed-check[1]/ion-row[1]/ion-col[2]/input[1]`);
+    firstButton.sendKeys('55');
+    this.clickRemove();
+    this.clickRemove();
+    const secondButton = this.getElementByXPath(`//ion-content/div[2]/
+    ion-grid/speed-check[1]/ion-row[1]/ion-col[2]/input[2]`);
+    secondButton.sendKeys('50');
+  }
 }
 
 class ETA extends Page {

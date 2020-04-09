@@ -1,8 +1,7 @@
 import { Then, When, Before } from 'cucumber';
 import TestReportPage from '../pages/testReportPage';
-import { textFieldInputViaNativeMode, waitForPresenceOfElement, getElement, clickElement, inputTextSendKeys }
-  from '../../helpers/interactionHelpers';
 import { browser} from 'protractor';
+import Page from '../pages/page';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -245,13 +244,16 @@ When('I add the Uncouple and Recouple fault', () => {
 });
 
 When('I complete the test as a Mod1 user', () => {
-  browser.driver.selectContext('NATIVE_APP').then(() => {
-    browser.getPageSource().then((response) => {
-      console.log(response);
-    });
-  });
+  // browser.driver.selectContext('NATIVE_APP').then(() => {
+  //   browser.getPageSource().then((response) => {
+  //     console.log(response);
+  //   });
+  // });
 
-  this.textFieldInputViaNativeMode('//XCUIElementTypeStaticText[@name=“Emergency stop”]]', 55);
+  TestReportPage.textFieldInputViaNativeMode('//XCUIElementTypeStaticText[@name=“Emergency stop”]]', 55);
+  // TestReportPage.emergencyFirstAndSecondTEST();
+  // TestReportPage.clickEndTestButton();
+  // this.textFieldInputViaNativeMode('//XCUIElementTypeStaticText[@name=“Emergency stop”]]', 55);
 
   // const emergencyStopFirst = getElement(by.xpath(`//ion-content/div[2]/
   // ion-grid/speed-check[1]/ion-row[1]/ion-col[2]/input[1]`));
@@ -268,22 +270,22 @@ When('I complete the test as a Mod1 user', () => {
   // endTest();
 });
 
-When('I enter recorded speed for Emergency Stop', () => {
-  const speed = getElement(by.xpath('//speed-check[1]//input[1]'));
-  expect(speed.isPresent()).to.eventually.be.true;
-  speed.clear().then(() => {
-    inputTextSendKeys(speed, '52');
-  });
-  speed.getText().then((text) => {
-    console.log(text);
-  });
-});
-
-When('I enter recorded speed for Avoidance', () => {
-  const speed = getElement(by.xpath('//speed-check[2]//input[1]'));
-  expect(speed.isPresent()).to.eventually.be.true;
-  inputTextSendKeys(speed, '52');
-  speed.getText().then((text) => {
-    console.log(text);
-  });
-});
+// When('I enter recorded speed for Emergency Stop', () => {
+//   const speed = getElement(by.xpath('//speed-check[1]//input[1]'));
+//   expect(speed.isPresent()).to.eventually.be.true;
+//   speed.clear().then(() => {
+//     inputTextSendKeys(speed, '52');
+//   });
+//   speed.getText().then((text) => {
+//     console.log(text);
+//   });
+// });
+//
+// When('I enter recorded speed for Avoidance', () => {
+//   const speed = getElement(by.xpath('//speed-check[2]//input[1]'));
+//   expect(speed.isPresent()).to.eventually.be.true;
+//   inputTextSendKeys(speed, '52');
+//   speed.getText().then((text) => {
+//     console.log(text);
+//   });
+// });
