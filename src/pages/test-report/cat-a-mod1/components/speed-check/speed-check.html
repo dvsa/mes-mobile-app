@@ -12,6 +12,7 @@
       class="speed-input first-speed-input"
       maxlength="3"
       numbersOnly
+      id="{{competency}}FirstAttempt"
     />
     <input
       [disabled]="!firstAttemptValid()"
@@ -21,6 +22,7 @@
       class="speed-input second-speed-input"
       maxlength="3"
       numbersOnly
+      id="{{competency}}SecondAttempt"
     />
   </ion-col>
   <ion-col col-16>
@@ -30,7 +32,8 @@
         'not-met': getNotMet()
       }"
     >
-      <span class="competency-label">Not met</span>
+      <span class="competency-label"
+            id="{{competency}}Met">Not met</span>
     </competency-button>
   </ion-col>
 </ion-row>
