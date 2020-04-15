@@ -6,23 +6,21 @@
   </ion-col>
   <ion-col col-32>
     <input
-      (change)="onFirstAttemptChange($event.target.value)"
-      [value]="getFirstAttempt()"
       type="text"
       class="speed-input first-speed-input"
-      maxlength="3"
-      numbersOnly
       id="{{competency}}FirstAttempt"
+      (input)="onFirstAttemptChange($event)"
+      [value]="getFirstAttempt()"
+      [maxLength]="speedCheckValidator.maxLength"
     />
     <input
-      [disabled]="!firstAttemptValid()"
-      (change)="onSecondAttemptChange($event.target.value)"
-      [value]="getSecondAttempt()"
       type="text"
       class="speed-input second-speed-input"
-      maxlength="3"
-      numbersOnly
       id="{{competency}}SecondAttempt"
+      [disabled]="!firstAttemptValid()"
+      (input)="onSecondAttemptChange($event)"
+      [value]="getSecondAttempt()"
+      [maxLength]="speedCheckValidator.maxLength"
     />
   </ion-col>
   <ion-col col-16>

@@ -28,8 +28,20 @@ import {
   RecordAvoidanceSecondAttempt,
 } from '../../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import { SingleFaultCompetencyComponent } from '../../../../components/single-fault-competency/single-fault-competency';
+import {
+  leadingZero,
+  nonNumericValues,
+  substringReplacer
+} from '../../../../../../shared/constants/field-validators/field-validators';
+import {
+  mockBlankSpeed,
+  mockInvalidSpeed,
+  mockLeadingZeroSpeed,
+  mockTruncatedLengthSpeed,
+  mockValidSpeed
+} from './speed-check.mock';
 
-describe('SpeedCheckComponent', () => {
+fdescribe('SpeedCheckComponent', () => {
 
   let fixture: ComponentFixture<SpeedCheckComponent>;
   let component: SpeedCheckComponent;
@@ -234,6 +246,28 @@ describe('SpeedCheckComponent', () => {
       component.firstAttempt = 25;
 
       expect(component.firstAttemptValid()).toEqual(true);
+    });
+  });
+
+  describe('formatSpeedAttempt', () => {
+    it('should detect valid pattern and cast to number', () => {
+      expect(component.formatSpeedAttempt(mockValidSpeed)).toEqual(123);
+    });
+
+    it('should detect invalid pattern, strip characters and cast to number', () => {
+      expect(component.formatSpeedAttempt(mockInvalidSpeed)).toEqual(145);
+    });
+
+    it('should truncate any numbers additional to the permitted 3', () => {
+      expect(component.formatSpeedAttempt(mockTruncatedLengthSpeed)).toEqual(345);
+    });
+
+    it('should remove the preceding zero and cast to number', () => {
+      expect(component.formatSpeedAttempt(mockLeadingZeroSpeed)).toEqual(456);
+    });
+
+    it('should return undefined as could cast empty string to a number', () => {
+      expect(component.formatSpeedAttempt(mockBlankSpeed)).toEqual(undefined);
     });
   });
 });
