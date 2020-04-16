@@ -126,7 +126,6 @@ export class SpeedCheckComponent {
 
   onFirstAttemptChange = (attemptedSpeed: any): void => {
     const firstAttempt = this.formatSpeedAttempt(attemptedSpeed);
-    console.log('fa', firstAttempt);
 
     if (this.competency === Competencies.speedCheckEmergency) {
       this.store$.dispatch(new RecordEmergencyStopFirstAttempt(firstAttempt));
