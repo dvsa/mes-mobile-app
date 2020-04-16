@@ -1,5 +1,3 @@
-import { isEmpty } from 'lodash';
-
 export type FieldValidators = {
   pattern: RegExp;
   maxLength: string;
@@ -33,13 +31,4 @@ export const getSpeedCheckValidator = (): FieldValidators => {
     pattern: /^[1-9][0-9]{0,2}$/g,
     maxLength: '3',
   };
-};
-
-export const substringReplacer = (targetValue: string, regExps: Array<RegExp>): string => {
-  if (typeof targetValue !== 'string' || isEmpty(regExps)) return targetValue;
-
-  for (const regExp of regExps) {
-    targetValue = targetValue.replace(regExp, '');
-  }
-  return targetValue;
 };

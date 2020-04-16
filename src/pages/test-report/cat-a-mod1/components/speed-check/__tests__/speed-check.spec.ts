@@ -29,19 +29,14 @@ import {
 } from '../../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import { SingleFaultCompetencyComponent } from '../../../../components/single-fault-competency/single-fault-competency';
 import {
-  leadingZero,
-  nonNumericValues,
-  substringReplacer
-} from '../../../../../../shared/constants/field-validators/field-validators';
-import {
   mockBlankSpeed,
   mockInvalidSpeed,
   mockLeadingZeroSpeed,
   mockTruncatedLengthSpeed,
-  mockValidSpeed
+  mockValidSpeed,
 } from './speed-check.mock';
 
-fdescribe('SpeedCheckComponent', () => {
+describe('SpeedCheckComponent', () => {
 
   let fixture: ComponentFixture<SpeedCheckComponent>;
   let component: SpeedCheckComponent;

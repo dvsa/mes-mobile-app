@@ -34,7 +34,6 @@ import { CompetencyOutcome } from '../../../../../shared/models/competency-outco
 import {
   FieldValidators,
   getSpeedCheckValidator,
-  substringReplacer,
   leadingZero,
   nonNumericValues,
 } from '../../../../../shared/constants/field-validators/field-validators';
@@ -151,7 +150,9 @@ export class SpeedCheckComponent {
 
   formatSpeedAttempt = (event: any): number | undefined => {
     if (!this.speedCheckValidator.pattern.test(event.target.value)) {
-      event.target.value = substringReplacer(event.target.value, [leadingZero, nonNumericValues]);
+      event.target.value = event.target.value
+        .replace(leadingZero, '')
+        .replace(nonNumericValues, '');
     }
     return Number(event.target.value) || undefined;
   }
