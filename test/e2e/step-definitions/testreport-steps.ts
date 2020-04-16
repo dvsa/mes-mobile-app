@@ -28,6 +28,10 @@ Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
 });
 
+Before({ tags: '@cata' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 When('I end the test', () => {
   TestReportPage.clickEndTestButton();
 });
