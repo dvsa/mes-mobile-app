@@ -125,7 +125,8 @@ export class SpeedCheckComponent {
   }
 
   onFirstAttemptChange = (attemptedSpeed: any): void => {
-    const firstAttempt: number = this.formatSpeedAttempt(attemptedSpeed);
+    const firstAttempt = this.formatSpeedAttempt(attemptedSpeed);
+    console.log('fa', firstAttempt);
 
     if (this.competency === Competencies.speedCheckEmergency) {
       this.store$.dispatch(new RecordEmergencyStopFirstAttempt(firstAttempt));
@@ -137,7 +138,7 @@ export class SpeedCheckComponent {
   }
 
   onSecondAttemptChange = (attemptedSpeed: any): void => {
-    const secondAttempt: number = this.formatSpeedAttempt(attemptedSpeed);
+    const secondAttempt = this.formatSpeedAttempt(attemptedSpeed);
 
     if (this.competency === Competencies.speedCheckEmergency) {
       this.store$.dispatch(new RecordEmergencyStopSecondAttempt(secondAttempt));
@@ -152,7 +153,8 @@ export class SpeedCheckComponent {
     if (!this.speedCheckValidator.pattern.test(event.target.value)) {
       event.target.value = event.target.value
         .replace(leadingZero, '')
-        .replace(nonNumericValues, '');
+        .replace(nonNumericValues, '')
+        .substring(0, Number(this.speedCheckValidator.maxLength));
     }
     return Number(event.target.value) || undefined;
   }
