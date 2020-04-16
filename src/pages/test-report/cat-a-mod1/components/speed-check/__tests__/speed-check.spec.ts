@@ -36,7 +36,7 @@ import {
   mockValidSpeed,
 } from './speed-check.mock';
 
-fdescribe('SpeedCheckComponent', () => {
+describe('SpeedCheckComponent', () => {
 
   let fixture: ComponentFixture<SpeedCheckComponent>;
   let component: SpeedCheckComponent;
