@@ -111,6 +111,18 @@ class TestReportPage extends Page {
   getPracticeModeBanner() {
     return this.getElementByClassName('practice-mode-top-banner');
   }
+
+  emergencyStopClick() {
+    const emergencyStop = this.getElementByXPath('/html/body/ion-app/ng-component/ion-nav/div[2]/ion-content/' +
+      'div[2]/ion-grid/speed-check[1]/ion-row[1]/ion-col[2]/input[1]');
+    emergencyStop.sendKeys('55');
+  }
+
+  avoidenceStopClick(){
+    const avoidencyStop = this.getElementByXPath('/html/body/ion-app/ng-component/ion-nav/div[2]/ion-content/' +
+      'div[2]/ion-grid/speed-check[2]/ion-row[1]/ion-col[2]/input[1]');
+    avoidencyStop.sendKeys('66');
+  }
 }
 
 class ETA extends Page {

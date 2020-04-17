@@ -17,6 +17,7 @@ Feature: Driving Examiner Completes a Failed Journey on Category A for Mod1
     And the driver fault count is "1"
     When I add a "Safety" driver fault
     And the driver fault count is "2"
+    And I add a number to emergency stop and avoidence stop
     And I continue to debrief
     Then I should see the Debrief page with outcome "Failed"
     When I end the debrief

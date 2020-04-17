@@ -1,5 +1,7 @@
 import { Then, When, Before } from 'cucumber';
 import TestReportPage from '../pages/testReportPage';
+import {getEmergencyStop} from '../../../src/modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.selector';
+import testReportPage from '../pages/testReportPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -239,4 +241,9 @@ When('I enter the legal requirements', () => {
 
 When('I add the Uncouple and Recouple fault', () => {
   TestReportPage.addUncoupleRecoupleFault();
+});
+
+When('I add a number to emergency stop and avoidence stop', () => {
+  testReportPage.emergencyStopClick();
+  testReportPage.avoidenceStopClick();
 });
