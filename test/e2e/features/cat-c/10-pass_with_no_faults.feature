@@ -22,7 +22,7 @@ Feature: A Driving Examiner Completes a Passed User Journey in Category C
       When I end the debrief
       Then I should see the "Test debrief - Right Ford" page
       And  I select the code 78 option
-      And I complete the pass details for category "c"
+      And I complete the pass details
       And I complete the health declaration
       Then I am on the back to office page
       And I continue to the office write up
