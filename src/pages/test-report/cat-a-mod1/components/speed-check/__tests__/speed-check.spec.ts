@@ -28,6 +28,13 @@ import {
   RecordAvoidanceSecondAttempt,
 } from '../../../../../../modules/tests/test-data/cat-a-mod1/avoidance/avoidance.actions';
 import { SingleFaultCompetencyComponent } from '../../../../components/single-fault-competency/single-fault-competency';
+import {
+  mockBlankSpeed,
+  mockInvalidSpeed,
+  mockLeadingZeroSpeed,
+  mockTruncatedLengthSpeed,
+  mockValidSpeed,
+} from './speed-check.mock';
 
 describe('SpeedCheckComponent', () => {
 
@@ -121,45 +128,50 @@ describe('SpeedCheckComponent', () => {
     describe('onFirstAttemptChange dispatches the correct actions', () => {
       it('should record emergency stop first attempt', () => {
         component.competency = Competencies.speedCheckEmergency;
-
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-
-        const attemptedSpeed = '48';
+        const attemptedSpeed = {
+          target: {
+            value: '48',
+          },
+        };
         component.onFirstAttemptChange(attemptedSpeed);
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordEmergencyStopFirstAttempt(Number(attemptedSpeed)));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordEmergencyStopFirstAttempt(Number('48')));
       });
 
       it('should record avoidance first attempt', () => {
         component.competency = Competencies.speedCheckAvoidance;
-
         const storeDispatchSpy = spyOn(store$, 'dispatch');
 
-        const attemptedSpeed = '48';
+        const attemptedSpeed = {
+          target: {
+            value: '48',
+          },
+        };
         component.onFirstAttemptChange(attemptedSpeed);
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordAvoidanceFirstAttempt(Number(attemptedSpeed)));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordAvoidanceFirstAttempt(Number('48')));
       });
 
       it('should record undefined as Emergency Stop firstAttempt when attemptedSpeed is an empty string', () => {
         component.competency = Competencies.speedCheckEmergency;
-
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-
-        const attemptedSpeed = '';
+        const attemptedSpeed = {
+          target: {
+            value: '',
+          },
+        };
         component.onFirstAttemptChange(attemptedSpeed);
-
         expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordEmergencyStopFirstAttempt(undefined));
       });
 
       it('should record undefined as Avoidance firstAttempt when attemptedSpeed is an empty string', () => {
         component.competency = Competencies.speedCheckAvoidance;
-
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-
-        const attemptedSpeed = '';
+        const attemptedSpeed = {
+          target: {
+            value: '',
+          },
+        };
         component.onFirstAttemptChange(attemptedSpeed);
-
         expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordAvoidanceFirstAttempt(undefined));
       });
     });
@@ -167,45 +179,49 @@ describe('SpeedCheckComponent', () => {
     describe('onSecondAttemptChange', () => {
       it('should record emergency stop second attempt', () => {
         component.competency = Competencies.speedCheckEmergency;
-
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-
-        const attemptedSpeed = '48';
+        const attemptedSpeed = {
+          target: {
+            value: '48',
+          },
+        };
         component.onSecondAttemptChange(attemptedSpeed);
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordEmergencyStopSecondAttempt(Number(attemptedSpeed)));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordEmergencyStopSecondAttempt(Number('48')));
       });
 
       it('should record avoidance second attempt', () => {
         component.competency = Competencies.speedCheckAvoidance;
-
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-
-        const attemptedSpeed = '48';
+        const attemptedSpeed = {
+          target: {
+            value: '48',
+          },
+        };
         component.onSecondAttemptChange(attemptedSpeed);
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordAvoidanceSecondAttempt(Number(attemptedSpeed)));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordAvoidanceSecondAttempt(Number('48')));
       });
 
       it('should record undefined as Emergency Stop secondAttempt when attemptedSpeed is an empty string', () => {
         component.competency = Competencies.speedCheckEmergency;
-
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-
-        const attemptedSpeed = '';
+        const attemptedSpeed = {
+          target: {
+            value: '',
+          },
+        };
         component.onSecondAttemptChange(attemptedSpeed);
-
         expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordEmergencyStopSecondAttempt(undefined));
       });
 
       it('should record undefined as Avoidance secondAttempt when attemptedSpeed is an empty string', () => {
         component.competency = Competencies.speedCheckAvoidance;
-
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-
-        const attemptedSpeed = '';
+        const attemptedSpeed = {
+          target: {
+            value: '',
+          },
+        };
         component.onSecondAttemptChange(attemptedSpeed);
-
         expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordAvoidanceSecondAttempt(undefined));
       });
     });
@@ -234,6 +250,28 @@ describe('SpeedCheckComponent', () => {
       component.firstAttempt = 25;
 
       expect(component.firstAttemptValid()).toEqual(true);
+    });
+  });
+
+  describe('formatSpeedAttempt', () => {
+    it('should detect valid pattern and cast to number', () => {
+      expect(component.formatSpeedAttempt(mockValidSpeed)).toEqual(123);
+    });
+
+    it('should detect invalid pattern, strip characters and cast to number', () => {
+      expect(component.formatSpeedAttempt(mockInvalidSpeed)).toEqual(145);
+    });
+
+    it('should truncate any numbers additional to the permitted 3', () => {
+      expect(component.formatSpeedAttempt(mockTruncatedLengthSpeed)).toEqual(345);
+    });
+
+    it('should remove the preceding zero and cast to number', () => {
+      expect(component.formatSpeedAttempt(mockLeadingZeroSpeed)).toEqual(456);
+    });
+
+    it('should return undefined as could cast empty string to a number', () => {
+      expect(component.formatSpeedAttempt(mockBlankSpeed)).toEqual(undefined);
     });
   });
 });

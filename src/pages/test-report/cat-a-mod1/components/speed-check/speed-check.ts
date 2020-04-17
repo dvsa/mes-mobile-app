@@ -31,6 +31,12 @@ import {
 import { Subscription, merge } from 'rxjs';
 import { competencyLabels } from '../../../../../shared/constants/competencies/competencies';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import {
+  FieldValidators,
+  getSpeedCheckValidator,
+  leadingZero,
+  nonNumericValues,
+} from '../../../../../shared/constants/field-validators/field-validators';
 
 @Component({
   selector: 'speed-check',
@@ -49,6 +55,8 @@ export class SpeedCheckComponent {
 
   @Input()
   pairedCompetency?: SingleFaultCompetencyNames;
+
+  readonly speedCheckValidator: FieldValidators = getSpeedCheckValidator();
 
   constructor(
     private store$: Store<StoreModel>,
@@ -116,8 +124,8 @@ export class SpeedCheckComponent {
     return this.secondAttempt || null;
   }
 
-  onFirstAttemptChange = (attemptedSpeed: string): void => {
-    const firstAttempt = attemptedSpeed === '' ? undefined : Number(attemptedSpeed);
+  onFirstAttemptChange = (attemptedSpeed: any): void => {
+    const firstAttempt = this.formatSpeedAttempt(attemptedSpeed);
 
     if (this.competency === Competencies.speedCheckEmergency) {
       this.store$.dispatch(new RecordEmergencyStopFirstAttempt(firstAttempt));
@@ -128,8 +136,8 @@ export class SpeedCheckComponent {
     }
   }
 
-  onSecondAttemptChange = (attemptedSpeed: string): void => {
-    const secondAttempt = attemptedSpeed === '' ? undefined : Number(attemptedSpeed);
+  onSecondAttemptChange = (attemptedSpeed: any): void => {
+    const secondAttempt = this.formatSpeedAttempt(attemptedSpeed);
 
     if (this.competency === Competencies.speedCheckEmergency) {
       this.store$.dispatch(new RecordEmergencyStopSecondAttempt(secondAttempt));
@@ -138,6 +146,16 @@ export class SpeedCheckComponent {
     if (this.competency === Competencies.speedCheckAvoidance) {
       this.store$.dispatch(new RecordAvoidanceSecondAttempt(secondAttempt));
     }
+  }
+
+  formatSpeedAttempt = (event: any): number | undefined => {
+    if (!this.speedCheckValidator.pattern.test(event.target.value)) {
+      event.target.value = event.target.value
+        .replace(leadingZero, '')
+        .replace(nonNumericValues, '')
+        .substring(0, Number(this.speedCheckValidator.maxLength));
+    }
+    return Number(event.target.value) || undefined;
   }
 
   getNotMet(): boolean {

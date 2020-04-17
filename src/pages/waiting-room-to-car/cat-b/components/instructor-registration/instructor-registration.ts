@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import {
   FieldValidators,
   getInstructorRegistrationNumberValidator,
-  nonLeadingZero,
+  leadingZero,
   nonNumericValues,
 } from '../../../../../shared/constants/field-validators/field-validators';
 
@@ -37,7 +37,7 @@ export class InstructorRegistrationComponent implements OnChanges {
   instructorRegistrationChanged(event: any): void {
     if (!this.instructorRegistrationNumberValidator.pattern.test(event.target.value)) {
       event.target.value = event.target.value
-        .replace(nonLeadingZero, '')
+        .replace(leadingZero, '')
         .replace(nonNumericValues, '');
     }
     this.instructorRegistrationChange.emit(Number(event.target.value) || undefined);
