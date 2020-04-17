@@ -13,6 +13,10 @@ Feature: Driving Examiner Completes a Failed Journey on Category A for Mod1
     And I complete the waiting room to car page with confirmed cat type
     Then I should see the "Test report - Alisa Garza" page
 #      And I complete the test as a Mod1 user
+    When I add a "Use of stand" driver fault
+    And the driver fault count is "1"
+    When I add a "Safety" driver fault
+    And the driver fault count is "2"
     And I continue to debrief
     Then I should see the Debrief page with outcome "Failed"
     When I end the debrief
