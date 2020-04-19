@@ -141,7 +141,7 @@ class WaitingRoomToCarPage extends Page {
     } else if (testCategory === 'ce') {
       this.multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
     } else if (testCategory === 'a-mod1') {
-      this.modCatConfirmation(UI_TEST_DATA.testData.a1);
+      this.modCatConfirmation(tellMeQuestion);
       const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
       this.clickElementById(transmissionSelector);
     } else {

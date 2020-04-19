@@ -9,10 +9,15 @@ class DebriefPage extends Page {
     this.clickElementByXPath('//button[span[h3[text()="Diwedd ôl-drafodaeth"]]]');
   }
 
-  completePassdetails() {
-    this.textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
-      + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
-    this.clickProvisionalLicenceReceived();
+  completePassdetails(testCategory) {
+    if (testCategory === 'a-mod1') {
+      this.textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
+        + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456');
+    } else {
+      this.textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
+        + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
+      this.clickProvisionalLicenceReceived();
+    }
     this.clickD255Yes();
     this.clickDebriefWitnessedYes();
   }
@@ -78,8 +83,7 @@ class DebriefPage extends Page {
   }
 
   getFaultElement(faultSeverity: string, faultDescription:string) {
-    return this.getElementByXPath(`//ion-card[@id = '${faultSeverity}-fault']
-      //div[text() = '${faultDescription}']`);
+    return this.getElementByXPath(`//ion-card[@id = '${faultSeverity}-fault']//div[text() = '${faultDescription}']`);
   }
 
   getTestOutcome(testCategory) {

@@ -247,3 +247,29 @@ When('I add a number to emergency stop and avoidence stop', () => {
   testReportPage.emergencyStopClick();
   testReportPage.avoidenceStopClick();
 });
+
+When('I enter {string} first value {string} and second value {string}', (textBox, firstValue, secondValue) => {
+  if (textBox === 'Emergency Stop') {
+    if (!(firstValue === '-')) {
+      TestReportPage.bikeControlStops.enterEmergencyStopFirstValue(firstValue);
+    }
+    if (!(secondValue === '-')) {
+      TestReportPage.bikeControlStops.enterEmergencyStopSecondValue(secondValue);
+    }
+  } else {
+    if (!(firstValue === '-')) {
+      TestReportPage.bikeControlStops.enterAvoidanceStopFirstValue(firstValue);
+    }
+    if (!(secondValue === '-')) {
+      TestReportPage.bikeControlStops.enterAvoidanceStopSecondValue(secondValue);
+    }
+  }
+});
+
+When('I click Emergency Stop Not Met', () => {
+  TestReportPage.bikeControlStops.clickEmergencyMetCondition();
+});
+
+When('I click Avoidance Stop Not Met', () => {
+  TestReportPage.bikeControlStops.clickAvoidanceMetCondition();
+});

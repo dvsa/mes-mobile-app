@@ -57,7 +57,7 @@ When('the candidate completes the declaration page', () => {
   WaitingRoomPage.clickSignaturePad();
 });
 
-When('I proceed to the car', () => {
+When(/^I proceed to the car|bike$/, () => {
   // Examiner clicks continue button then enters passcode
   WaitingRoomPage.clickContinueButton(this.testCategory);
   PageHelper.enterPasscode();

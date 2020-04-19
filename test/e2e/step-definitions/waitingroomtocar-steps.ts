@@ -59,6 +59,6 @@ When('I complete the waiting room to car page with the following vehicle checks'
   WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, table.raw()[1], true);
 });
 
-When('I complete the waiting room to car page with confirmed cat type', () => {
-  WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, true, true);
+When('I complete the waiting room to bike page with confirmed cat type {string}', (catType) => {
+  WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, true, true, catType);
 });
