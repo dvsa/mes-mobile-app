@@ -28,6 +28,10 @@ Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@cata' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 When('I end the debrief', () => {
   DebriefPage.clickEndDebriefButton();
 });
@@ -37,7 +41,7 @@ When('I end the welsh debrief', () => {
 });
 
 When('I complete the pass details', () => {
-  DebriefPage.completePassdetails();
+  DebriefPage.completePassdetails(this.testCategory);
   DebriefPage.selectTransmission('manual');
   DebriefPage.continuePassFinalisation(this.testCategory);
 });
@@ -47,7 +51,7 @@ When('I select the code 78 option', () => {
 });
 
 When('I complete the pass details with an automatic transmission', () => {
-  DebriefPage.completePassdetails();
+  DebriefPage.completePassdetails(this.testCategory);
   DebriefPage.selectTransmission('automatic');
   DebriefPage.continuePassFinalisation(this.testCategory);
 });

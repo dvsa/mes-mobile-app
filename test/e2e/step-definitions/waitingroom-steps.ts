@@ -30,6 +30,10 @@ Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@cata' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 When('the candidate enters a new email address', () => {
   WaitingRoomPage.clickNewEmailRadioButton();
   WaitingRoomPage.enterNewEmail('testemail@example.com');
@@ -53,7 +57,7 @@ When('the candidate completes the declaration page', () => {
   WaitingRoomPage.clickSignaturePad();
 });
 
-When('I proceed to the car', () => {
+When(/^I proceed to the car|bike$/, () => {
   // Examiner clicks continue button then enters passcode
   WaitingRoomPage.clickContinueButton(this.testCategory);
   PageHelper.enterPasscode();

@@ -140,12 +140,31 @@ class WaitingRoomToCarPage extends Page {
       this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
     } else if (testCategory === 'ce') {
       this.multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
+    } else if (testCategory === 'a-mod1') {
+      this.modCatConfirmation(tellMeQuestion);
+      const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
+      this.clickElementById(transmissionSelector);
     } else {
       this.eyeSightResultPass();
       this.standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
     }
     this.enterSearchTerm('AB12CDE');
     this.submitWRTC();
+  }
+
+  modCatConfirmation(catType) {
+    this.openConfirmCatType();
+    this.selectCatType(catType);
+    this.clickElementByXPath('//button[span[text() = "Confirm"]]');
+  };
+
+  openConfirmCatType() {
+    this.clickElementByXPath(`//*[@id="category-type"]/ion-col[2]/ion-row[2]/ion-col/input`);
+  }
+
+  selectCatType(catType) {
+    this.clickElementByXPath(`//span[contains(@class, 'bike-code') and
+   normalize-space(text()) = '${catType}']`);
   }
 }
 

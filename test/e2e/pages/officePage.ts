@@ -22,6 +22,14 @@ class OfficePage extends Page {
     this.clickElementById('ipadIssueSelected');
   }
 
+  clickCircuit(value) {
+    if (value === 'left') {
+      this.clickElementById('circuit-left');
+    } else {
+      this.clickElementById('circuit-right');
+    }
+  }
+
   clickiPadIssueTechnicalFault() {
     this.clickElementById('ipadIssueTechnicalFault');
   }
@@ -137,6 +145,11 @@ class OfficePage extends Page {
     return this.getElementByXPath(`//div[contains(@class, "office-cat-${testCategory}-page")]`
       + `//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]`);
   }
+
+  clickSaveAndContinueLater() {
+    this.clickElementById('defer-button');
+  }
+
 }
 
 export default new OfficePage();

@@ -10,6 +10,7 @@ class TestReportPage extends Page {
   public reversingDiagramModal: ReversingDiagramModal;
   public legalRequirements: LegalRequirements;
   public competency: Competency;
+  public bikeControlStops: BikeControlStops;
 
   constructor() {
     super();
@@ -18,6 +19,8 @@ class TestReportPage extends Page {
     this.reversingDiagramModal = new ReversingDiagramModal();
     this.legalRequirements = new LegalRequirements();
     this.competency = new Competency();
+    this.bikeControlStops = new BikeControlStops();
+
   }
 
   completeUncoupleRecouple() {
@@ -110,6 +113,18 @@ class TestReportPage extends Page {
 
   getPracticeModeBanner() {
     return this.getElementByClassName('practice-mode-top-banner');
+  }
+
+  emergencyStopClick() {
+    const emergencyStop = this.getElementByXPath('/html/body/ion-app/ng-component/ion-nav/div[2]/ion-content/' +
+      'div[2]/ion-grid/speed-check[1]/ion-row[1]/ion-col[2]/input[1]');
+    emergencyStop.sendKeys('55');
+  }
+
+  avoidenceStopClick(){
+    const avoidencyStop = this.getElementByXPath('/html/body/ion-app/ng-component/ion-nav/div[2]/ion-content/' +
+      'div[2]/ion-grid/speed-check[2]/ion-row[1]/ion-col[2]/input[1]');
+    avoidencyStop.sendKeys('66');
   }
 }
 
@@ -252,5 +267,39 @@ class Competency extends Page {
     this.longPressButton(competencyButton);
   }
 }
+class BikeControlStops extends Page {
 
+  enterEmergencyStopFirstValue(firstValue) {
+    const firstElement = this.getElementById('speedCheckEmergencyFirstAttempt');
+    firstElement.sendKeys(firstValue);
+  }
+
+  enterEmergencyStopSecondValue(secondValue) {
+    const secondElement = this.getElementById('speedCheckEmergencySecondAttempt');
+    secondElement.sendKeys(secondValue);
+  }
+
+  clickEmergencyMetCondition() {
+    const competencyButton = this.getElementByXPath(`//span[@id="speedCheckEmergencyMet"]`);
+    competencyButton.click();
+    //this.clickElementByXPath('//span[@id="speedCheckEmergencyMet"]');
+  }
+
+  enterAvoidanceStopFirstValue(firstValue) {
+    const firstElement = this.getElementById('speedCheckAvoidanceFirstAttempt');
+    firstElement.sendKeys(firstValue);
+  }
+
+  enterAvoidanceStopSecondValue(secondValue) {
+    const secondElement = this.getElementById('speedCheckAvoidanceSecondAttempt');
+    secondElement.sendKeys(secondValue);
+  }
+
+  clickAvoidanceMetCondition() {
+
+    const competencyButton = this.getElementByXPath(`//span[@id="speedCheckAvoidanceMet"]`);
+    competencyButton.click();
+    //this.clickElementByXPath('//span[@id="speedCheckAvoidanceMet"]');
+  }
+}
 export default new TestReportPage();

@@ -25,6 +25,10 @@ Before({ tags: '@catce' }, () => {
   this.testCategory = 'c';
 });
 
+Before({ tags: '@cata' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 When('I continue to the back to office page', () => {
   NonPassFinalisationPage.clickD255Yes();
   DebriefPage.clickDebriefWitnessedYes();

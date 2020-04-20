@@ -1,5 +1,7 @@
 import { Then, When, Before } from 'cucumber';
 import TestReportPage from '../pages/testReportPage';
+import {getEmergencyStop} from '../../../src/modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.selector';
+import testReportPage from '../pages/testReportPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -26,6 +28,10 @@ Before({ tags: '@catce' }, () => {
 
 Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
+});
+
+Before({ tags: '@cata' }, () => {
+  this.testCategory = 'a-mod1';
 });
 
 When('I end the test', () => {
@@ -235,4 +241,35 @@ When('I enter the legal requirements', () => {
 
 When('I add the Uncouple and Recouple fault', () => {
   TestReportPage.addUncoupleRecoupleFault();
+});
+
+When('I add a number to emergency stop and avoidence stop', () => {
+  testReportPage.emergencyStopClick();
+  testReportPage.avoidenceStopClick();
+});
+
+When('I enter {string} first value {string} and second value {string}', (textBox, firstValue, secondValue) => {
+  if (textBox === 'Emergency Stop') {
+    if (!(firstValue === '-')) {
+      TestReportPage.bikeControlStops.enterEmergencyStopFirstValue(firstValue);
+    }
+    if (!(secondValue === '-')) {
+      TestReportPage.bikeControlStops.enterEmergencyStopSecondValue(secondValue);
+    }
+  } else {
+    if (!(firstValue === '-')) {
+      TestReportPage.bikeControlStops.enterAvoidanceStopFirstValue(firstValue);
+    }
+    if (!(secondValue === '-')) {
+      TestReportPage.bikeControlStops.enterAvoidanceStopSecondValue(secondValue);
+    }
+  }
+});
+
+When('I click Emergency Stop Not Met', () => {
+  TestReportPage.bikeControlStops.clickEmergencyMetCondition();
+});
+
+When('I click Avoidance Stop Not Met', () => {
+  TestReportPage.bikeControlStops.clickAvoidanceMetCondition();
 });

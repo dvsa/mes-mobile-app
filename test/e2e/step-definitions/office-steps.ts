@@ -26,13 +26,21 @@ Before({ tags: '@catc1e' }, () => {
   this.testCategory = 'ce';
 });
 
+Before({ tags: '@cata' }, () => {
+  this.testCategory = 'a-mod1';
+});
+
 When('I complete the office write up', () => {
-  OfficePage.enterRouteNumber('2');
-  if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'ce') {
-    OfficePage.enterIndependentDriving('diagram');
+  if (!(this.testCategory === 'a-mod1')) {
+    OfficePage.enterRouteNumber('2');
+    if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'ce') {
+      OfficePage.enterIndependentDriving('diagram');
+    } else {
+      OfficePage.enterIndependentDriving('satnav');
+      OfficePage.enterShowMe('S5 - Horn');
+    }
   } else {
-    OfficePage.enterIndependentDriving('satnav');
-    OfficePage.enterShowMe('S5 - Horn');
+    OfficePage.clickCircuit('left');
   }
   OfficePage.enterCandidateDescription();
   OfficePage.enterWeatherConditions();
@@ -62,6 +70,9 @@ When('I complete the weather conditions', () => {
   OfficePage.enterWeatherConditions();
 });
 
+When('I complete the {string} circuit', (circuitType) => {
+  OfficePage.clickCircuit(circuitType);
+});
 When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel) => {
   const commentsField = OfficePage.getCommentsField(faultSeverity, faultLabel);
   commentsField.sendKeys(`Comment for ${faultSeverity} fault: ${faultLabel}`);
