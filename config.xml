@@ -98,5 +98,5 @@
     <plugin name="cordova-plugin-appconfig" spec="1.1.4" />
     <hook src="scripts/editPlist.js" type="before_build" />
     <plugin name="cordova-plugin-is-debug" spec="1.0.0" />
-    <engine name="ios" spec="^4.5.5" />
+    <engine name="ios" spec="4.5.5" />
 </widget>
