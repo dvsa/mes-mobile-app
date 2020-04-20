@@ -1,7 +1,7 @@
 @cata
-Feature: A Driving Examiner Completes fail test with more than 6 faults
+Feature: A Driving Examiner Completes failed tests
 
-  Scenario: Examiner changes test category to A2
+  Scenario: Examiner completes failed test with more than 6 faults
     Given I am logged in as "desexamineram1" and I have a test for "Mr Right Ford"
     When I start the test for "Mr Right Ford"
     And the candidate completes the declaration page
