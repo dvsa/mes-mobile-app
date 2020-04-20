@@ -53,7 +53,6 @@ Feature: A Driving Examiner Rekeys Category Mod1 tests
     Then I should see the "Journal" page
     And the test result for "Ms Shelia Cantu" is "1"
 
-
   Scenario: Driving Examiner rekeys a failed test for two days ago
     Given I am logged in as "desexamineram1" and I have a test for "Mr Mcdowell Goff"
     When I navigate to 2 day previously
@@ -70,7 +69,7 @@ Feature: A Driving Examiner Rekeys Category Mod1 tests
     And I proceed to the bike
     Then I should see the "Mcdowell Goff" page
     And I complete the waiting room to bike page with confirmed cat type "A1"
-    Then I should see the "Test report - Right Ford" page
+    Then I should see the "Test report - Mcdowell Goff" page
     When I add a "Manual handling" driver fault
     And the driver fault count is "1"
     And I add a "Safety" driver fault
@@ -103,7 +102,7 @@ Feature: A Driving Examiner Rekeys Category Mod1 tests
     And I see a "driving" fault for "Use of stand"
     And I see a "driving" fault for "Slow control"
     And I see a "driving" fault for "Controlled stop"
-    Then I should see the "Debrief - Right Ford" page
+    Then I should see the "Debrief - Mcdowell Goff" page
     When I end the debrief
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
