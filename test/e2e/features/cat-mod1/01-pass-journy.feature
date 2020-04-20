@@ -1,7 +1,7 @@
 @cata
 Feature: A Driving Examiner Completes pass test's for Mod1
 
-  Scenario: Examiner changes test category to AM
+  Scenario: Examiner changes test category to A
     Given I am logged in as "desexamineram1" and I have a test for "Ms Alisa Garza"
     When I start the test for "Ms Alisa Garza"
     And the candidate completes the declaration page
@@ -10,7 +10,7 @@ Feature: A Driving Examiner Completes pass test's for Mod1
     When the candidate requests to receive results by post
     And I proceed to the bike
     Then I should see the "Alisa Garza" page
-    And I complete the waiting room to bike page with confirmed cat type "AM"
+    And I complete the waiting room to bike page with confirmed cat type "A"
     Then I should see the "Test report - Alisa Garza" page
     When I add a "Use of stand" driver fault
     And the driver fault count is "1"
