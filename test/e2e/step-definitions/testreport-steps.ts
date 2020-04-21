@@ -1,6 +1,5 @@
 import { Then, When, Before } from 'cucumber';
 import TestReportPage from '../pages/testReportPage';
-import {getEmergencyStop} from '../../../src/modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.selector';
 import testReportPage from '../pages/testReportPage';
 
 const chai = require('chai');
@@ -36,6 +35,11 @@ Before({ tags: '@cata' }, () => {
 
 When('I end the test', () => {
   TestReportPage.clickEndTestButton();
+});
+
+When('I end the test with the speed requirements not met', () => {
+  TestReportPage.clickEndTestButton();
+  TestReportPage.clickEndTestButtonSpeedRequirements();
 });
 
 When('I continue to debrief', () => {
@@ -267,7 +271,7 @@ When('I enter {string} first value {string} and second value {string}', (textBox
 });
 
 When('I click Emergency Stop Not Met', () => {
-  TestReportPage.bikeControlStops.clickEmergencyMetCondition();
+  TestReportPage.competency.clickCompetency('Not met');
 });
 
 When('I click Avoidance Stop Not Met', () => {

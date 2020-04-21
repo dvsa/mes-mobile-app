@@ -85,6 +85,10 @@ class TestReportPage extends Page {
     this.clickElementById('end-test-button');
   }
 
+  clickEndTestButtonSpeedRequirements() {
+    this.clickElementByClassName('end-test-button');
+  }
+
   clickLastEndTestButton() {
     const lastEndTestButton = element.all(by.xpath('//end-test-link/button/span[text() = "End test"]')).last();
     this.clickElement(lastEndTestButton);
@@ -279,10 +283,8 @@ class BikeControlStops extends Page {
     secondElement.sendKeys(secondValue);
   }
 
-  clickEmergencyMetCondition() {
-    const competencyButton = this.getElementByXPath(`//span[@id="speedCheckEmergencyMet"]`);
-    competencyButton.click();
-    //this.clickElementByXPath('//span[@id="speedCheckEmergencyMet"]');
+  getCompetencyButton(competency: string) {
+    return this.getElementByXPath(`//competency-button/div/span[@id='${competency}']`);
   }
 
   enterAvoidanceStopFirstValue(firstValue) {
@@ -296,10 +298,8 @@ class BikeControlStops extends Page {
   }
 
   clickAvoidanceMetCondition() {
-
     const competencyButton = this.getElementByXPath(`//span[@id="speedCheckAvoidanceMet"]`);
     competencyButton.click();
-    //this.clickElementByXPath('//span[@id="speedCheckAvoidanceMet"]');
   }
 }
 export default new TestReportPage();

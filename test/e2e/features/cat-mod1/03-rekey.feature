@@ -76,8 +76,6 @@ Feature: A Driving Examiner Rekeys Category Mod1 tests
     And the driver fault count is "2"
     And I enter "Emergency Stop" first value "23" and second value "45"
     And I enter "Avoidance Stop" first value "34" and second value "55"
-    And I click Emergency Stop Not Met
-    And I click Avoidance Stop Not Met
     When I add a "Use of stand" driver fault
     And the driver fault count is "3"
     When I add a "Controlled stop" driver fault

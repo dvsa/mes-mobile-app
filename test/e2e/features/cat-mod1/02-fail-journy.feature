@@ -1,7 +1,7 @@
 @cata
-Feature: A Driving Examiner Completes fail test with more than 6 faults
+Feature: A Driving Examiner Completes failed tests
 
-  Scenario: Examiner changes test category to A2
+  Scenario: Examiner completes failed test with more than 6 faults
     Given I am logged in as "desexamineram1" and I have a test for "Mr Right Ford"
     When I start the test for "Mr Right Ford"
     And the candidate completes the declaration page
@@ -18,8 +18,6 @@ Feature: A Driving Examiner Completes fail test with more than 6 faults
     And the driver fault count is "2"
     And I enter "Emergency Stop" first value "23" and second value "45"
     And I enter "Avoidance Stop" first value "34" and second value "55"
-    And I click Emergency Stop Not Met
-    And I click Avoidance Stop Not Met
     When I add a "Use of stand" driver fault
     And the driver fault count is "3"
     When I add a "Controlled stop" driver fault
@@ -67,3 +65,33 @@ Feature: A Driving Examiner Completes fail test with more than 6 faults
     Then I should see the "Journal" page
     And the test result for "Mr Right Ford" is "2"
 
+  Scenario: Examiner fail candidate by no meeting emergency stop requirements
+    Given I am logged in as "desexamineram1" and I have a test for "Ms Alisa Garza"
+    When I start the test for "Ms Alisa Garza"
+    And the candidate completes the declaration page
+    And the candidate confirms their declaration
+    Then I should see the "Declaration - Alisa Garza" page
+    When the candidate requests to receive results by post
+    And I proceed to the bike
+    Then I should see the "Alisa Garza" page
+    And I complete the waiting room to bike page with confirmed cat type "A"
+    Then I should see the "Test report - Alisa Garza" page
+    And I enter "Emergency Stop" first value "23" and second value "45"
+    And I enter "Avoidance Stop" first value "34" and second value "55"
+    And I click Emergency Stop Not Met
+    When I end the test with the speed requirements not met
+    Then I should see the Debrief page with outcome "Unsuccessful"
+    Then I should see the "Debrief - Alisa Garza" page
+    When I end the debrief
+    Then I am on the post debrief holding page
+    When I continue to the non pass finalisation page
+    And I complete the fail details
+    And I am on the back to office page
+    And I continue to the office write up
+    Then I should see the "Office" page
+    And the office page test outcome is "Unsuccessful"
+    When I complete the office write up
+    And I enter a comment for "serious" fault "Emergency stop - Speed requirement not met"
+    And I upload the test
+    Then I should see the "Journal" page
+    And the test result for "Ms Alisa Garza" is "4"
