@@ -1,8 +1,6 @@
 import { Then, When, Before } from 'cucumber';
 import TestReportPage from '../pages/testReportPage';
-import {getEmergencyStop} from '../../../src/modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.selector';
 import testReportPage from '../pages/testReportPage';
-import {Test} from 'tslint';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');

@@ -287,13 +287,6 @@ class BikeControlStops extends Page {
     return this.getElementByXPath(`//competency-button/div/span[@id='${competency}']`);
   }
 
-  clickEmergencyMetCondition() {
-    const competencyButton = this.getCompetencyButton('speedCheckEmergencyMet');
-    // this.clickElement(competencyButton);
-    competencyButton.click();
-    //*[@id="speedCheckEmergencyMet"]
-  }
-
   enterAvoidanceStopFirstValue(firstValue) {
     const firstElement = this.getElementById('speedCheckAvoidanceFirstAttempt');
     firstElement.sendKeys(firstValue);
@@ -305,10 +298,8 @@ class BikeControlStops extends Page {
   }
 
   clickAvoidanceMetCondition() {
-
     const competencyButton = this.getElementByXPath(`//span[@id="speedCheckAvoidanceMet"]`);
     competencyButton.click();
-    //this.clickElementByXPath('//span[@id="speedCheckAvoidanceMet"]');
   }
 }
 export default new TestReportPage();
