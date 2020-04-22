@@ -7,9 +7,14 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row [formGroup]="form">
       <ion-col>
-        <input formControlName="passCertificateNumberCtrl" [class.ng-invalid]="isInvalid()" type="text"
-          id="pass-certificate-number" class="pass-cert-input" maxlength="8"
-          (change)="passCertificateNumberChanged($event.target.value)">
+        <input
+                id="pass-certificate-number"
+                class="pass-cert-input"
+                type="text"
+                formControlName="passCertificateNumberCtrl"
+                [class.ng-invalid]="isInvalid()"
+                [maxlength]="passCertificateAMOD1Validator.maxLength"
+                (input)="passCertificateNumberChanged($event.target.value)">
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>
