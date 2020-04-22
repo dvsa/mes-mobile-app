@@ -38,12 +38,14 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
   private formControl: FormControl;
 
   readonly questionId: string = uniqueId();
-  readonly fieldName: string = `showMeQuestions_${this.questionId}`;
+  fieldName: string;
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) {
   }
 
   ngOnChanges(): void {
+    this.fieldName = `showMeQuestion_${this.questionNumber}`;
+
     if (!this.formControl) {
       this.formControl = new FormControl({ disabled: true });
       this.formGroup.addControl(this.fieldName, this.formControl);
