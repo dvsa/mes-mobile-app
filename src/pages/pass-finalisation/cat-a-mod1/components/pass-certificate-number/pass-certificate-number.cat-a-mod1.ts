@@ -48,18 +48,12 @@ export class PassCertificateNumberCatAMod1Component implements OnChanges {
     const actualLength: number = getByteCount(passCertificateNumber);
     const permittedLength: number = this.passCertificateAMOD1Validator.maxByteLength;
     const validFormat: boolean = this.passCertificateAMOD1Validator.pattern.test(passCertificateNumber);
-    const invalidFormatErr = { invalidFormat: passCertificateNumber };
 
     if (actualLength > permittedLength) {
-      const error = {
-        actualLength,
-        permittedLength,
-      };
-      this.formControl.setErrors(validFormat ? error : { ...error, ...invalidFormatErr });
+      this.formControl.setErrors({ actualLength, permittedLength, value: passCertificateNumber });
     } else if (!validFormat) {
-      this.formControl.setErrors(invalidFormatErr);
+      this.formControl.setErrors({ invalidFormat: passCertificateNumber });
     }
-
     this.passCertificateNumberChange.emit(toUpper(passCertificateNumber));
   }
 

@@ -1,8 +1,12 @@
-import { PassCertificateNumberCatAMod1Component } from '../pass-certificate-number.cat-a-mod1';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonicModule } from 'ionic-angular';
-import { FormGroup } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
+
+import { PassCertificateNumberCatAMod1Component } from '../pass-certificate-number.cat-a-mod1';
+import {
+  PASS_CERTIFICATE_LENGTH_A_MOD1,
+} from '../../../../../../providers/pass-certificate-validation/pass-certificate-validation.constants';
 
 describe('PassCertificateNumberCatAMod1Component', () => {
   let fixture: ComponentFixture<PassCertificateNumberCatAMod1Component>;
@@ -23,14 +27,59 @@ describe('PassCertificateNumberCatAMod1Component', () => {
     fixture = TestBed.createComponent(PassCertificateNumberCatAMod1Component);
     component = fixture.componentInstance;
     component.form = new FormGroup({});
+    component.formControl = new FormControl(null, [
+      Validators.maxLength(PASS_CERTIFICATE_LENGTH_A_MOD1),
+      Validators.minLength(PASS_CERTIFICATE_LENGTH_A_MOD1),
+      Validators.pattern(component.passCertificateAMOD1Validator.pattern),
+      Validators.required,
+    ]);
   }));
 
   describe('Class', () => {
     describe('passCertificateNumberChanged', () => {
       it('should emit pass certificate number if 7 characters and valid', () => {
+        spyOn(component.formControl, 'setErrors');
         spyOn(component.passCertificateNumberChange, 'emit');
         const passCertificateNumber = 'C26754E';
         component.passCertificateNumberChanged(passCertificateNumber);
+        expect(component.formControl.setErrors).not.toHaveBeenCalled();
+        expect(component.passCertificateNumberChange.emit).toHaveBeenCalledWith(passCertificateNumber);
+      });
+
+      it('should recognise a permitted length but invalid format then set errors', () => {
+        spyOn(component.formControl, 'setErrors');
+        spyOn(component.passCertificateNumberChange, 'emit');
+        const passCertificateNumber = 'ABCDEFG';
+        component.passCertificateNumberChanged(passCertificateNumber);
+        expect(component.formControl.setErrors).toHaveBeenCalledWith({
+          invalidFormat: passCertificateNumber,
+        });
+        expect(component.passCertificateNumberChange.emit).toHaveBeenCalledWith(passCertificateNumber);
+      });
+
+      it('should recognise an illegal length then set errors', () => {
+        spyOn(component.formControl, 'setErrors');
+        spyOn(component.passCertificateNumberChange, 'emit');
+        const passCertificateNumber = 'A1234567789';
+        component.passCertificateNumberChanged(passCertificateNumber);
+        expect(component.formControl.setErrors).toHaveBeenCalledWith({
+          actualLength: 11,
+          permittedLength: 8,
+          value: 'A1234567789',
+        });
+        expect(component.passCertificateNumberChange.emit).toHaveBeenCalledWith(passCertificateNumber);
+      });
+
+      it('should recognise a correct string length & invalid byte length then set errors', () => {
+        spyOn(component.formControl, 'setErrors');
+        spyOn(component.passCertificateNumberChange, 'emit');
+        const passCertificateNumber = 'B8711 2–';
+        component.passCertificateNumberChanged(passCertificateNumber);
+        expect(component.formControl.setErrors).toHaveBeenCalledWith({
+          actualLength: 10,
+          permittedLength: 8,
+          value: passCertificateNumber,
+        });
         expect(component.passCertificateNumberChange.emit).toHaveBeenCalledWith(passCertificateNumber);
       });
     });
