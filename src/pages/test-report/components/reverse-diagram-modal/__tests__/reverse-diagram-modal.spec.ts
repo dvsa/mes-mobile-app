@@ -4,8 +4,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { AppModule } from '../../../../../app/app.module';
 import { Config, IonicModule, NavController, NavParams, Platform } from 'ionic-angular';
 import { ConfigMock, NavControllerMock, NavParamsMock, PlatformMock } from 'ionic-mocks';
-import { ReversingDistancesProvider }
-  from '../../../../../providers/reversing-distances/reversing-distances';
+import { ReversingDistancesProvider } from '../../../../../providers/reversing-distances/reversing-distances';
 import { MockAppComponent } from '../../../../../app/__mocks__/app.component.mock';
 import { App } from '../../../../../app/app.component';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -192,6 +191,24 @@ describe('reverseDiagramModal', () => {
         expect(calculateDistanceWidthSpy).toHaveBeenCalled();
         expect(calculateAtoBMultiplierTextSpy).toHaveBeenCalled();
         expect(result).toEqual(true);
+      });
+    });
+
+    describe('getReversingDiagramLabel', () => {
+      it('should return `articulated` when the category is one of BE, CE, C1E, DE, D1E', () => {
+        const categories = [TestCategory.BE, TestCategory.CE, TestCategory.C1E, TestCategory.DE, TestCategory.D1E];
+        categories.forEach((category: TestCategory) => {
+          component.category = category;
+          expect(component.getReversingDiagramLabel()).toEqual('articulated');
+        });
+      });
+
+      it('should return `rigid` when the category is one of C, C1, D, D1', () => {
+        const categories = [TestCategory.C, TestCategory.C1, TestCategory.D, TestCategory.D1];
+        categories.forEach((category: TestCategory) => {
+          component.category = category;
+          expect(component.getReversingDiagramLabel()).toEqual('rigid');
+        });
       });
     });
   });
