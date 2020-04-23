@@ -1,4 +1,4 @@
-import { Observable, Subscription, merge } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { IonicPage, NavParams } from 'ionic-angular';
@@ -11,12 +11,11 @@ import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
 import { map } from 'rxjs/operators';
+import { ReverseDiagramLengthChanged, ReverseDiagramWidthChanged } from './reverse-diagram-modal.actions';
 import {
-  ReverseDiagramLengthChanged,
-  ReverseDiagramWidthChanged,
-} from './reverse-diagram-modal.actions';
-import { CategorySpecificVehicleDetails, VehicleDetailsByCategoryProvider }
-  from '../../../../providers/vehicle-details-by-category/vehicle-details-by-category';
+  CategorySpecificVehicleDetails,
+  VehicleDetailsByCategoryProvider,
+} from '../../../../providers/vehicle-details-by-category/vehicle-details-by-category';
 
 interface ReverseDiagramPageState {
   vehicleLength$: Observable<number>;
@@ -90,6 +89,22 @@ export class ReverseDiagramPage implements OnInit {
       vehicleWidth$.pipe(map(val => this.vehicleWidth = val)),
       category$.pipe(map(val => this.category = val as TestCategory)),
     );
+  }
+
+  getReversingDiagramLabel = (): string => {
+    switch (this.category) {
+      case TestCategory.BE:
+      case TestCategory.CE:
+      case TestCategory.C1E:
+      case TestCategory.DE:
+      case TestCategory.D1E:
+        return 'articulated';
+      case TestCategory.C:
+      case TestCategory.C1:
+      case TestCategory.D:
+      case TestCategory.D1:
+        return 'rigid';
+    }
   }
 
   calculateReversingLengths(vehicleLength: number): void {
