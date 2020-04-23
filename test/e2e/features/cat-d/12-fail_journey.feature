@@ -1,58 +1,60 @@
 @catd @full_smoke @regression
 Feature: A Driving Examiner Completes a Welsh Failed User Journey in Category D
 
-    Scenario: Examiner completes a failed welsh test with various faults
-        Given I am logged in as "desexaminerce" and I have a test for "Mr Hendricks Parsons"
-        When I check candidate details for "Mr Hendricks Parsons"
-        When I start the test for "Mr Hendricks Parsons"
-        And the candidate completes the declaration page
-        And the candidate confirms their declaration
-        Then I should see the "Datganiad - Hendricks Parsons" page
-        And the candidate enters a new email address
-        And I proceed to the car
-        Then I should see the "Hendricks Parsons" page
-        And I complete the waiting room to car page with the following vehicle checks
-        | show_me_1 | show_me_2 |
-        | true      | false     |
-        Then I should see the "Test report - Hendricks Parsons" page
-        And the driver fault count is "1"
-        When I end the test
-        Then the legal requirements pop up is present
-        And the required test observation is present "NS (normal start)"
-        And the required test observation is present "UH (uphill start)"
-        And the required test observation is present "AS/CS (angled start/ controlled stop)"
-        And the required test observation is present "Manoeuvres"
-        And the required test observation is present "Eco (control and planning)"
-        And the required test observation is present "Uncouple / Recouple"
-        Then I return to the test report page
-        And I should see the "Test report - Hendricks Parsons" page
-        And I enter the legal requirements
-        When I add a "Meeting" driver fault
-        And the driver fault count is "2"
-        When I add a "Footbrake" driver fault
-        And the driver fault count is "3"
-        When I add the Uncouple and Recouple fault
-        And the driver fault count is "4"
-        When I add a "Control" serious fault with a long press
-        Then the "Control" button displays the serious badge
-        When I end the test
-        And I continue to debrief
-        Then I should see the Debrief page with outcome "Aflwyddiannus"
-        And I see a "serious" fault for "Symud i ffwrdd - dan reolaeth"
-        And I see a "driving" fault for "Rheolaeth - brêc troed"
-        And I see a "driving" fault for "Doethineb - dod i gyfarfod cerbydau"
-        And I see a "driving" fault for "Dadfachu / Ailfachu"
-        And I see a "driving" fault for "Gwirio’r cerbyd"
-        When I end the welsh debrief
-        Then I am on the post debrief holding page
-        When I continue to the non pass finalisation page
-        And I complete the fail details
-        And I am on the back to office page
-        And I continue to the office write up
-        Then I should see the "Office" page
-        And the office page test outcome is "Unsuccessful"
-        When I complete the office write up
-        And I enter a comment for "serious" fault "Move off - Control"
-        And I upload the test
-        Then I should see the "Journal" page
-        And the test result for "Mr Hendricks Parsons" is "2"
+  Scenario: Candidate fails a test with 16 driver faults
+    Given I am logged in as "desexaminerd" and I have a test for "Mr Right Ford"
+    When I start the test for "Mr Right Ford"
+    And the candidate completes the declaration page
+    And the candidate confirms their declaration
+    Then I should see the "Declaration - Right Ford" page
+    And I proceed to the car
+    Then I should see the "Right Ford" page
+    And I complete the waiting room to car page
+    Then I should see the "Test report - Right Ford" page
+    When I add a "Accelerator" driver fault
+    And I add a "Safety" driver fault
+    And I add a "Safety" driver fault
+    And I add a "Lane discipline" driver fault
+    And I add a "Accelerator" driver fault
+    And I add a "Safety" driver fault
+    And I add a "Lane discipline" driver fault
+    And I add a "Lane discipline" driver fault
+    And I add a "Approach speed" driver fault
+    And I add a "Approach speed" driver fault
+    And I add a "Signalling" driver fault
+    And I add a "Timed" driver fault
+    And I add a "Clearance" driver fault
+    And I add a "Signalling" driver fault
+    And I add a "Signalling" driver fault
+    And I add a "Signalling" driver fault
+    Then the driver fault count is "16"
+    When I complete the test
+    And I continue to debrief
+    Then I should see the Debrief page with outcome "Unsuccessful"
+    And I see a "driving" fault for "Use of mirrors - Signalling"
+    And I see a "driving" fault for "Move off - Safety"
+    And I see a "driving" fault for "Positioning - Lane discipline"
+    And I see a "driving" fault for "Controls - Accelerator"
+    And I see a "driving" fault for "Junctions - Approach speed"
+    And I see a "driving" fault for "Signals - Timed"
+    And I see a "driving" fault for "Clearance"
+    When I end the debrief
+    Then I am on the post debrief holding page
+    When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Right Ford" page
+    When I continue to the back to office page
+    And I am on the back to office page
+    And I continue to the office write up
+    Then I should see the "Office" page
+    And the office page test outcome is "Unsuccessful"
+    And I complete the office write up
+    And I enter a comment for "driving" fault "Use of mirrors - Signalling"
+    And I enter a comment for "driving" fault "Move off - Safety"
+    And I enter a comment for "driving" fault "Positioning - Lane discipline"
+    And I enter a comment for "driving" fault "Controls - Accelerator"
+    And I enter a comment for "driving" fault "Junctions - Approach speed"
+    And I enter a comment for "driving" fault "Signals - Timed"
+    And I enter a comment for "driving" fault "Clearance"
+    And I upload the test
+    Then I should see the "Journal" page
+    And the test result for "Mr Right Ford" is "2"
