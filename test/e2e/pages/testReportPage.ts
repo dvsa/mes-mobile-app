@@ -32,7 +32,7 @@ class TestReportPage extends Page {
   }
 
   completeManouveure(testCategory) {
-    if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1' || testCategory === 'ce') {
+    if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1' || testCategory === 'ce' || testCategory === 'd') {
       this.longPressElementByXPath('//competency-button[contains(@class, "reverse-left-tick")]');
     } else {
       this.clickManoeuvresButton();
@@ -121,7 +121,7 @@ class TestReportPage extends Page {
     emergencyStop.sendKeys('55');
   }
 
-  avoidenceStopClick(){
+  avoidenceStopClick() {
     const avoidencyStop = this.getElementByXPath('/html/body/ion-app/ng-component/ion-nav/div[2]/ion-content/' +
       'div[2]/ion-grid/speed-check[2]/ion-row[1]/ion-col[2]/input[1]');
     avoidencyStop.sendKeys('66');
@@ -212,6 +212,11 @@ class LegalRequirements extends Page {
     return this.getElementByXPath(`//legal-requirements-modal//div//ul/li[text() = '${legalRequirement}']`);
   }
 
+  getMultiLegalRequirement() {
+    return this.getElementByXPath(`//ion-grid/ion-row/ion-col[1]/ion-row[1]/ion-col[3]/
+    multi-legal-requirement/competency-button/div/div[4]/span[text() = 'BS']`);
+  }
+
   getLegalRequirements() {
     return element.all(by.xpath('//legal-requirement/competency-button[@class="legal-button"]'));
   }
@@ -221,6 +226,18 @@ class LegalRequirements extends Page {
     legalRequirements.each((legalRequirement) => {
       this.longPressButton(legalRequirement);
     });
+  }
+
+  completeLegalBusRequirements() {
+    // const legalRequirements = this.getMultiLegalRequirement();
+    // legalRequirements.each((legalRequirement) => {
+    //   this.longPressButton(legalRequirement);
+    //   //multi-legal-requirement/competency-button
+    //   //ion-grid/ion-row/ion-col[1]/ion-row[1]/ion-col[3]/multi-legal-requirement/competency-button/div
+    // });
+
+    const legalRequirements = this.getMultiLegalRequirement();
+    this.longPressButton(legalRequirements);
   }
 }
 
@@ -282,7 +299,6 @@ class BikeControlStops extends Page {
   clickEmergencyMetCondition() {
     const competencyButton = this.getElementByXPath(`//span[@id="speedCheckEmergencyMet"]`);
     competencyButton.click();
-    //this.clickElementByXPath('//span[@id="speedCheckEmergencyMet"]');
   }
 
   enterAvoidanceStopFirstValue(firstValue) {
@@ -299,7 +315,6 @@ class BikeControlStops extends Page {
 
     const competencyButton = this.getElementByXPath(`//span[@id="speedCheckAvoidanceMet"]`);
     competencyButton.click();
-    //this.clickElementByXPath('//span[@id="speedCheckAvoidanceMet"]');
   }
 }
 export default new TestReportPage();

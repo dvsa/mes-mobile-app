@@ -34,6 +34,10 @@ Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
 });
 
+Before({ tags: '@catd' }, () => {
+  this.testCategory = 'd';
+});
+
 When('I end the test', () => {
   TestReportPage.clickEndTestButton();
 });
@@ -74,6 +78,13 @@ When('I complete the test with controlled stop', () => {
   TestReportPage.completeEco();
   TestReportPage.completeShowMe();
   TestReportPage.completeControlledStop();
+  TestReportPage.clickEndTestButton();
+});
+
+When('I complete the test with Buss stop', () => {
+  TestReportPage.completeManouveure(this.testCategory);
+  TestReportPage.completeEco();
+  TestReportPage.legalRequirements.completeLegalBusRequirements();
   TestReportPage.clickEndTestButton();
 });
 

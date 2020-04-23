@@ -30,6 +30,10 @@ Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
 });
 
+Before({ tags: '@catd' }, () => {
+  this.testCategory = 'd';
+});
+
 When('I complete the office write up', () => {
   if (!(this.testCategory === 'a-mod1')) {
     OfficePage.enterRouteNumber('2');
