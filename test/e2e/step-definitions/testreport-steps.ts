@@ -68,6 +68,13 @@ When('I complete the test', () => {
   TestReportPage.clickEndTestButton();
 });
 
+When('I complete the test with bus stop', () => {
+  TestReportPage.legalRequirements.completeLegalRequirements();
+  TestReportPage.completeManouveure(this.testCategory);
+  TestReportPage.completeEco();
+  TestReportPage.clickEndTestButton();
+});
+
 When('I complete the test with uncouple recouple', () => {
   TestReportPage.legalRequirements.completeLegalRequirements();
   TestReportPage.completeManouveure(this.testCategory);
@@ -229,7 +236,7 @@ When('I terminate the test from the test report page', () => {
 });
 
 Then('the legal requirements pop up is present', () => {
-  const legalRequirementPopUp = TestReportPage.legalRequirements.getLegalRequrementsPopup();
+  const legalRequirementPopUp = TestReportPage.legalRequirements.getLegalRequirementsPopup()
   expect(legalRequirementPopUp.isPresent()).to.eventually.be.true;
 });
 

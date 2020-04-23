@@ -1,5 +1,5 @@
 @catd @full_smoke @regression
-Feature: A Driving Examiner Completes a Welsh Failed User Journey in Category D
+Feature: A Driving Examiner Completes a Failed User Journey in Category D
 
   Scenario: Candidate fails a test with 16 driver faults
     Given I am logged in as "desexaminerd" and I have a test for "Mr Right Ford"

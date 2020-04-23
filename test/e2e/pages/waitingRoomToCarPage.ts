@@ -1,6 +1,6 @@
 import Page from './page';
-import { by, element } from 'protractor';
-import { UI_TEST_DATA } from '../../test_data/ui_test_data';
+import {by, element} from 'protractor';
+import {UI_TEST_DATA} from '../../test_data/ui_test_data';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -36,13 +36,13 @@ class WaitingRoomToCarPage extends Page {
     this.clickElementByXPath('//button[span[text() = "Submit"]]');
   }
 
-  selectTellMeQuestion (tellMeQuestion: string) {
+  selectTellMeQuestion(tellMeQuestion: string) {
     this.clickTellMeSelector();
     this.clickTellMeQuestion(tellMeQuestion);
     this.clickSubmitButton();
   }
 
-  getVehicleChecksQuestions(){
+  getVehicleChecksQuestions() {
     return element.all(by.id('vehicle-checks-question-selector'));
   }
 
@@ -138,6 +138,9 @@ class WaitingRoomToCarPage extends Page {
       this.multiShowAndTell(UI_TEST_DATA.testData.be, questionResult);
     } else if (testCategory === 'c' || testCategory === 'c1') {
       this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
+    } else if (testCategory === 'd') {
+      this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
+      this.completeSafetyQuestions();
     } else if (testCategory === 'ce') {
       this.multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
     } else if (testCategory === 'a-mod1') {
@@ -156,7 +159,7 @@ class WaitingRoomToCarPage extends Page {
     this.openConfirmCatType();
     this.selectCatType(catType);
     this.clickElementByXPath('//button[span[text() = "Confirm"]]');
-  };
+  }
 
   openConfirmCatType() {
     this.clickElementByXPath(`//*[@id="category-type"]/ion-col[2]/ion-row[2]/ion-col/input`);
@@ -165,6 +168,14 @@ class WaitingRoomToCarPage extends Page {
   selectCatType(catType) {
     this.clickElementByXPath(`//span[contains(@class, 'bike-code') and
    normalize-space(text()) = '${catType}']`);
+  }
+
+  completeSafetyQuestions() {
+    this.openSelectQuestionsOverlay();
+    this.clickElementById('safetyQuestionsCorrect_14');
+    this.clickElementById('safetyQuestionsCorrect_15');
+    this.clickElementById('safetyQuestionsCorrect_16');
+    this.submitVehicleChecksButton();
   }
 }
 

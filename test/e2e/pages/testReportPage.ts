@@ -208,7 +208,7 @@ class ReversingDiagramModal extends Page {
 
 class LegalRequirements extends Page {
 
-  getLegalRequrementsPopup() {
+  getLegalRequirementsPopup() {
     return this.getElementByXPath('//div/legal-requirements-modal');
   }
 
