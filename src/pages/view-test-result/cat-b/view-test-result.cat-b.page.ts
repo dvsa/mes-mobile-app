@@ -14,7 +14,6 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of, Subscription } from 'rxjs';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
-import { DateTime } from '../../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.cat-b.model';
 import { CompressionProvider } from '../../../providers/compression/compression';
@@ -41,6 +40,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { HttpResponse } from '@angular/common/http';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -134,7 +134,7 @@ export class ViewTestResultCatBPage extends BasePageComponent implements OnInit 
       return null;
     }
 
-    const startDate: DateTime = new DateTime(this.testResult.journalData.testSlotAttributes.start);
+    const startDate: moment.Moment = moment(this.testResult.journalData.testSlotAttributes.start);
 
     return {
       date: startDate.format('dddd Do MMMM YYYY'),
