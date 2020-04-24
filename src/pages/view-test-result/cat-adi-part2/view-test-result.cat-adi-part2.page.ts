@@ -13,7 +13,6 @@ import { SearchProvider } from '../../../providers/search/search';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { Subscription } from 'rxjs/Subscription';
-import { DateTime } from '../../../shared/helpers/date-time';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { getCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
@@ -34,6 +33,7 @@ import { ViewTestHeaderModel } from '../components/view-test-header/view-test-he
 // TO-DO ADI Part2: Implement correct category
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { get } from 'lodash';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -124,7 +124,7 @@ export class ViewTestResultCatADIPart2Page extends BasePageComponent implements 
       return null;
     }
 
-    const startDate: DateTime = new DateTime(this.testResult.journalData.testSlotAttributes.start);
+    const startDate: moment.Moment = moment(this.testResult.journalData.testSlotAttributes.start);
 
     return {
       date: startDate.format('dddd Do MMMM YYYY'),
