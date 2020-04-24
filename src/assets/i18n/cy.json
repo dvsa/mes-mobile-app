@@ -21,22 +21,22 @@
   },
   "debrief": {
     "safetyAndBalanceQuestions": {
-      "SQ1": "Lefel olew",
-      "SQ2": "Corn yn gweithio",
-      "SQ3": "Hylif Brêc",
-      "SQ4": "Goleuadau",
-      "SQ5": "Goleuadau Brêc",
-      "SQ6": "Cadwyn",
-      "SQ7": "Llywio",
-      "SQ8": "Teiars",
-      "SQ9": "Brêc Blaen",
-      "SQ10": "Breciau",
-      "SQ11": "Switsh Torri Allan Injan",
-      "SQ12": "Golau Niwl",
-      "SQ13": "Wedi Gostwng / Prif Belydr ",
-      "BQ1": "Problemau teithwyr piliwn",
-      "BQ2": "Cludo teithiwr",
-      "BQ3": "Cydbwysedd gyda theithiwr"
+      "M1": "Lefel olew",
+      "M2": "Corn yn gweithio",
+      "M3": "Hylif Brêc",
+      "M4": "Goleuadau",
+      "M5": "Goleuadau Brêc",
+      "M6": "Cadwyn",
+      "M7": "Llywio",
+      "M8": "Teiars",
+      "M9": "Brêc Blaen",
+      "M10": "Breciau",
+      "M11": "Switsh Torri Allan Injan",
+      "M12": "Golau Niwl",
+      "M13": "Wedi Gostwng / Prif Belydr ",
+      "B1": "Problemau teithwyr piliwn",
+      "B2": "Cludo teithiwr",
+      "B3": "Cydbwysedd gyda theithiwr"
     },
     "showMeTellMeQuestions": {
       "ADI2": {
