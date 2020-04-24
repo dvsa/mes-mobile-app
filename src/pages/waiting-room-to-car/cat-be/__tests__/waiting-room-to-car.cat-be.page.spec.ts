@@ -32,6 +32,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { VehicleChecksCatBEComponent } from '../components/vehicle-checks/vehicle-checks';
 import { configureTestSuite } from 'ng-bullet';
+import { LWSosButtonComponent } from '../../../../components/lone-worker/lw-sos-button/lw-sos-button';
 
 describe('WaitingRoomToCarCatBEPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatBEPage>;
@@ -52,6 +53,7 @@ describe('WaitingRoomToCarCatBEPage', () => {
         MockComponent(AccompanimentComponent),
         MockComponent(VehicleChecksCatBEComponent),
         MockComponent(WarningBannerComponent),
+        MockComponent(LWSosButtonComponent),
       ],
       imports: [
         IonicModule,
