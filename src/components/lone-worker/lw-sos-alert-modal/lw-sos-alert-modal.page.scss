@@ -1,3 +1,84 @@
-.lw-alert-modal {
-  background-color: black;
+lw-sos-alert-modal {
+  
+  .content-ios {
+    background-color: black;
+  }
+
+  .lw-countdown-container {
+    width: 400px;
+    height: 300px;
+
+    .lw-countdown {
+      width: 100%;
+      height: 100px;
+
+      text-align: center;
+      line-height: 100%;
+
+      font-size: 90px;
+    }
+
+    $prefix: "countdown-bands";
+    @mixin set-background($prefix, $number) {
+      background-image: url("/assets/"+$prefix+$number+".png");
+    }
+
+    .lw-countdown-bands {
+      width: 100%;
+      height: 200px;
+
+      background-repeat: no-repeat;
+      background-position: center;
+
+      &.red {
+        $prefix-red: $prefix + "-red-";
+
+        &.c3 {
+          @include set-background($prefix-red, 1);
+        }
+        &.c2 {
+          @include set-background($prefix-red, 2);
+        }
+        &.c1 {
+          @include set-background($prefix-red, 3);
+        }
+      }
+
+      &.amber {
+        $prefix-amber: $prefix + "-amber-";
+
+        &.c3 {
+          @include set-background($prefix-amber, 1);
+        }
+        &.c2 {
+          @include set-background($prefix-amber, 2);
+        }
+        &.c1 {
+          @include set-background($prefix-amber, 3);
+        }
+      }
+    }
+  }
+  
+  .lw-button-container {
+    height: 400px;
+
+    > div {
+      text-align: center;
+      height: 200px;
+      padding: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      color: white;
+    }
+
+    hr {
+      background-color: white;
+      height: 2px;
+      width: 320px;
+    }
+  }
+  
 }
