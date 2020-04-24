@@ -13,6 +13,7 @@ export enum ActivityCodeDescription {
     FAIL_EYESIGHT = 'Fail due to eyesight',
     FAIL_PUBLIC_SAFETY = 'Fail in the interests of public safety',
     FAIL_CANDIDATE_STOPS_TEST = 'Fail candidate chose to stop test, already failed',
+    FAIL_H_AND_S_COVID_19 = 'Test terminated in the interest of health & safety (Covid 19)',
     MECHANICAL_FAILURE = 'Mechanical failure',
     DOCUMENTS_NOT_PRODUCED = 'Documents not produced',
     VEHICLE_NOT_SUITABLE = 'Vehicle / gear not suitable or no vehicle for test',

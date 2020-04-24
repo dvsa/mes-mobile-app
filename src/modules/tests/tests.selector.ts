@@ -42,7 +42,8 @@ export const getTestOutcomeText = (test: TestResultCommonSchema) => {
     test.activityCode === ActivityCodes.FAIL ||
     test.activityCode === ActivityCodes.FAIL_CANDIDATE_STOPS_TEST ||
     test.activityCode === ActivityCodes.FAIL_EYESIGHT ||
-    test.activityCode === ActivityCodes.FAIL_PUBLIC_SAFETY
+    test.activityCode === ActivityCodes.FAIL_PUBLIC_SAFETY ||
+    test.activityCode === ActivityCodes.FAIL_H_AND_S_COVID_19
   ) {
     return TestOutcome.Failed;
   }
