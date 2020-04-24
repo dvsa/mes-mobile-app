@@ -15,7 +15,7 @@
     <p>
       Here is going to be the red and amber alert buttons
     </p>
-    <!-- <div class="lw-countdown-container">
+    <div class="lw-countdown-container">
       <div class="lw-countdown">
         <span *ngIf="countdownVisible">
           {{ countdownValue }}
@@ -27,17 +27,17 @@
     </div>
     <div class="lw-button-container">
       <div>
-        <p>{{ (amberAlertStatus$ | async)?.canSendAlert() ? 'Contact LDTM and colleagues' : 'Amber Alert Status' }}</p>
+        <p>Contact LDTM and colleagues</p>
         <lw-alert-button name="Amber Alert" class="amber" (start)="startCountDown('amber')" (stop)="stopCountDown()"
-          [status]="amberAlertStatus$ | async">
+          [severity]="Amber">
         </lw-alert-button>
       </div>
       <div>
-        <p>{{ (redAlertStatus$ | async)?.canSendAlert() ? 'Contact Police' : 'Red Alert Status' }}</p>
+        <p>Contact Police</p>
         <lw-alert-button name="Red Alert" class="red" (start)="startCountDown('red')" (stop)="stopCountDown()"
-          [status]="redAlertStatus$ | async">
+          [severity]="Red">
         </lw-alert-button>
       </div>
-    </div> -->
+    </div>
   </div>
 </ion-content>

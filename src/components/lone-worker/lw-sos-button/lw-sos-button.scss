@@ -1,18 +1,20 @@
 lw-sos-button {
   .lw-sos-button-wrapper {
     .lw-sos-button-outer {
+      margin-left: 96px;
       border: 1px solid red;
       border-radius: 10px;
       padding: 5px;
-      width: 65px;
       background-color: transparent;
 
       span {
         color: white;
         background-color: red;
         border-radius: 25px;
-        padding: 20px 15px;
+        padding: 5px 5px;
         display: inline-block;
+        font-size: 14px;
+        font-weight: 700;
       }
     }
 
