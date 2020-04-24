@@ -26,7 +26,7 @@ export class FaultCountAM2Helper {
     const totalIncorrectAnswerCount: number = numberOfIncorrectSafetyAnswers + numberOfIncorrectBalanceAnswers;
 
     return {
-      drivingFaults: (totalIncorrectAnswerCount >= 3) ? 1 : 0,
+      drivingFaults: (totalIncorrectAnswerCount >= 1) ? 1 : 0,
     };
   }
 
