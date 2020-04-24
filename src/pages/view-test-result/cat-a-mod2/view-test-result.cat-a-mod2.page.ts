@@ -12,7 +12,6 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { SearchProvider } from '../../../providers/search/search';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of, Subscription } from 'rxjs';
-import { DateTime } from '../../../shared/helpers/date-time';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { getCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
@@ -33,6 +32,7 @@ import { ViewTestHeaderModel } from '../components/view-test-header/view-test-he
 import { TestResultCatAM2Schema } from '@dvsa/mes-test-schema/categories/AM2';
 import { get } from 'lodash';
 import { categoryAM2TestResultMock } from '../../../shared/mocks/cat-a-mod2-test-result.mock';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -122,7 +122,7 @@ export class ViewTestResultCatAMod2Page extends BasePageComponent implements OnI
       return null;
     }
 
-    const startDate: DateTime = new DateTime(this.testResult.journalData.testSlotAttributes.start);
+    const startDate: moment.Moment = moment(this.testResult.journalData.testSlotAttributes.start);
 
     return {
       date: startDate.format('dddd Do MMMM YYYY'),

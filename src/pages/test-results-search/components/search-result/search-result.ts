@@ -6,6 +6,7 @@ import { ModalController } from 'ionic-angular';
 import { CAT_A_MOD1, CAT_A_MOD2, CAT_B, CAT_BE, CAT_C, CAT_D, CAT_HOME_TEST } from '../../../page-names.constants';
 import { App } from '../../../../app/app.component';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import moment from 'moment';
 
 @Component({
   selector: 'search-result',
@@ -23,7 +24,7 @@ export class SearchResultComponent {
   }
 
   getTime(): string {
-    return new DateTime(this.searchResult.testDate).format('HH:mm');
+    return moment(this.searchResult.testDate).format('HH:mm');
   }
 
   getName(): string {
