@@ -23,14 +23,14 @@ describe('FaultCountAM2Helper', () => {
       expect(temp).toEqual(output);
     });
 
-    it('0 driving faults, 2 failed safety questions', () => {
-      const output =  { drivingFaults: 0 };
+    it('1 driving faults, 2 failed safety questions', () => {
+      const output =  { drivingFaults: 1 };
       const temp = FaultCountAM2Helper.getSafetyAndBalanceFaultCountCatAM2(safetyAndBalanceMock2FaultsSafety);
       expect(temp).toEqual(output);
     });
 
-    it('0 driving faults, 1 failed safety and 1 failed balance question', () => {
-      const output =  { drivingFaults: 0 };
+    it('1 driving faults, 1 failed safety and 1 failed balance question', () => {
+      const output =  { drivingFaults: 1 };
       const temp = FaultCountAM2Helper.getSafetyAndBalanceFaultCountCatAM2(safetyAndBalanceMock2FaultsSafetyAndBalance);
       expect(temp).toEqual(output);
     });
