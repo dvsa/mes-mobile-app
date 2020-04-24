@@ -1,0 +1,12 @@
+<!-- <button ion-button>SOS</button> -->
+
+<div class="lw-sos-button-wrapper">
+  <button class="lw-sos-button-outer" (click)='raiseSos()'>
+    <span>
+      SOS
+    </span>
+  </button>
+  <button [class]='getStatusClass()' *ngIf="status.sending || status.received" disabled>
+    {{ status.sending ? 'sent' : 'received' }}
+  </button>
+</div>

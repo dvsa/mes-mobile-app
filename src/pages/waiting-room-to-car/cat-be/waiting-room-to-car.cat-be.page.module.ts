@@ -6,6 +6,7 @@ import { WaitingRoomToCarAnalyticsEffects } from '../waiting-room-to-car.analyti
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { WaitingRoomToCarComponentsModule } from '../components/waiting-room-to-car.components.module';
 import { WaitingRoomToCarCatBEComponentsModule } from './components/waiting-room-to-car.cat-be.components.module';
+import { LoneWorkerModule } from '../../../components/lone-worker/lone-worker.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { WaitingRoomToCarCatBEComponentsModule } from './components/waiting-room
     ComponentsModule,
     WaitingRoomToCarComponentsModule,
     WaitingRoomToCarCatBEComponentsModule,
+    LoneWorkerModule,
   ],
 })
 export class WaitingRoomToCarCatBEPageModule { }

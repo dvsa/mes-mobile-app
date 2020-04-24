@@ -1,0 +1,154 @@
+// .lw-alert-modal {
+//   .modal-wrapper {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//   }
+
+//   ion-toolbar {
+//     text-align: center;
+//     position: relative;
+
+//     ion-title {
+//       line-height: 44px;
+//     }
+
+//     .close-button {
+//       float: right;
+//     }
+//   }
+
+//   .lw-popup-container {
+//     width: 400px;
+//     height: 700px;
+
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     margin-left: -200px;
+//     margin-top: -500px;
+//   }
+
+//   .lw-countdown-container {
+//     width: 400px;
+//     height: 300px;
+
+//     .lw-countdown {
+//       width: 100%;
+//       height: 100px;
+
+//       text-align: center;
+//       line-height: 100%;
+
+//       font-size: 90px;
+//     }
+
+//     $prefix: "countdown-bands";
+//     @mixin set-background($prefix, $number) {
+//       background-image: url("/assets/"+$prefix+$number+".png");
+//     }
+
+//     .lw-countdown-bands {
+//       width: 100%;
+//       height: 200px;
+
+//       background-repeat: no-repeat;
+//       background-position: center;
+
+//       &.red {
+//         $prefix-red: $prefix + "-red-";
+
+//         &.c3 {
+//           @include set-background($prefix-red, 1);
+//         }
+//         &.c2 {
+//           @include set-background($prefix-red, 2);
+//         }
+//         &.c1 {
+//           @include set-background($prefix-red, 3);
+//         }
+//       }
+
+//       &.amber {
+//         $prefix-amber: $prefix + "-amber-";
+
+//         &.c3 {
+//           @include set-background($prefix-amber, 1);
+//         }
+//         &.c2 {
+//           @include set-background($prefix-amber, 2);
+//         }
+//         &.c1 {
+//           @include set-background($prefix-amber, 3);
+//         }
+//       }
+//     }
+//   }
+
+//   .lw-button-container {
+//     width: 400px;
+//     height: 400px;
+
+//     > div {
+//       text-align: center;
+//       height: 200px;
+//       padding: 10px;
+//     }
+
+//     > div:first-of-type {
+//       border-bottom: 2px solid white;
+//     }
+//   }
+
+//   lw-alert-button {
+//     > button {
+//       border-radius: 45px;
+//       background-color: white;
+//       padding: 25px 50px;
+//       font-weight: 500;
+//       font-size: 18px;
+//       min-width: 90%;
+
+//       &.sent,
+//       &.received {
+//         border-radius: 5px;
+//         min-width: 60%;
+//         font-size: 45px;
+//         padding: 15px 15px;
+//       }
+
+//       .lw-button-name-text {
+//         text-transform: uppercase;
+//         font-size: 30px;
+//       }
+//     }
+
+//     &.amber {
+//       button {
+//         color: rgb(246, 192, 94);
+
+//         &:active,
+//         &.sent,
+//         &.received {
+//           color: black;
+//           background-color: rgb(246, 192, 94);
+//         }
+//       }
+//     }
+
+//     &.red {
+//       button {
+//         color: rgb(206, 65, 61);
+
+//         &:active,
+//         &.sent,
+//         &.received {
+//           color: black;
+//           background-color: rgb(206, 65, 61);
+//         }
+//       }
+//     }
+//   }
+// }

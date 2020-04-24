@@ -1,0 +1,15 @@
+<button class="lw-alert-button" (mousedown)="onTouch()" (mouseup)="onTouchLeave()" [class.sent]="status.sending" [class.received]="status.received" [disabled]="!status.canSendAlert()">
+  <span *ngIf="status.canSendAlert()">
+    Hold down for
+    <br />
+    <span class="lw-button-name-text">
+      {{ status.alertType == 'Red'? 'Red Alert' : 'Amber Alert' }}
+    </span>
+  </span>
+  <span *ngIf="status.sending && !status.received">
+    sent
+  </span>
+  <span *ngIf="status.received">
+    received
+  </span>
+</button>

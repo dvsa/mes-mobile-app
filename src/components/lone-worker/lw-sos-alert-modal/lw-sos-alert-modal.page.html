@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="close()">Close</button>
+      <ion-icon slot="end" name="close-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>
+      Send an alert
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="lw-popup-container">
+    <p>
+      Here is going to be the red and amber alert buttons
+    </p>
+    <!-- <div class="lw-countdown-container">
+      <div class="lw-countdown">
+        <span *ngIf="countdownVisible">
+          {{ countdownValue }}
+        </span>
+      </div>
+      <div class="lw-countdown-bands" [class]="getCountdownClass()">
+
+      </div>
+    </div>
+    <div class="lw-button-container">
+      <div>
+        <p>{{ (amberAlertStatus$ | async)?.canSendAlert() ? 'Contact LDTM and colleagues' : 'Amber Alert Status' }}</p>
+        <lw-alert-button name="Amber Alert" class="amber" (start)="startCountDown('amber')" (stop)="stopCountDown()"
+          [status]="amberAlertStatus$ | async">
+        </lw-alert-button>
+      </div>
+      <div>
+        <p>{{ (redAlertStatus$ | async)?.canSendAlert() ? 'Contact Police' : 'Red Alert Status' }}</p>
+        <lw-alert-button name="Red Alert" class="red" (start)="startCountDown('red')" (stop)="stopCountDown()"
+          [status]="redAlertStatus$ | async">
+        </lw-alert-button>
+      </div>
+    </div> -->
+  </div>
+</ion-content>
