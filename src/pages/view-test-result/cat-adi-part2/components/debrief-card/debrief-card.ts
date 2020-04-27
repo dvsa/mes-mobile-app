@@ -1,20 +1,19 @@
 import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
-import { flattenArray } from '../../../view-test-result-helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-// TO-DO ADI Part2: Implement correct category
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
+
 import {
   DataRowListItem,
   ViewTestResultLabels,
   TestRequirementsLabels,
 } from '../../../components/data-row-with-list/data-list-with-row.model';
-// TO-DO ADI Part2: Implement correct category
+import { flattenArray } from '../../../view-test-result-helpers';
 import { manoeuvreTypeLabels } from '../../../../../shared/constants/competencies/catbe-manoeuvres';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { FaultSummaryProvider } from '../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
   selector: 'debrief-card',
@@ -23,19 +22,19 @@ import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 export class DebriefCardComponent {
 
   @Input()
-  // TO-DO ADI Part2: Implement correct category
-  data: CatBEUniqueTypes.TestData;
+  data: CatADI2UniqueTypes.TestData;
 
   constructor(
     private faultSummaryProvider: FaultSummaryProvider,
     private faultCountProvider: FaultCountProvider,
-  ) {}
+  ) {
+  }
 
   public getTestRequirements = (): DataRowListItem[] => {
     return [
       {
         label: TestRequirementsLabels.normalStart1,
-        checked: get(this.data, 'testRequirements.normalStart1', false) ,
+        checked: get(this.data, 'testRequirements.normalStart1', false),
       },
       {
         label: TestRequirementsLabels.normalStart2,
@@ -62,7 +61,7 @@ export class DebriefCardComponent {
 
   public getManoeuvre(): string {
     const isReverseLeftSelected = get(this.data, 'manoeuvres.reverseLeft.selected', false);
-    return isReverseLeftSelected ? manoeuvreTypeLabels.reverseLeft : 'None' ;
+    return isReverseLeftSelected ? manoeuvreTypeLabels.reverseLeft : 'None';
   }
 
   public getEco(): DataRowListItem[] {
@@ -79,23 +78,19 @@ export class DebriefCardComponent {
   }
 
   public getDrivingFaults(): FaultSummary[] {
-    // TO-DO ADI Part2: Implement correct category
-    return this.faultSummaryProvider.getDrivingFaultsList(this.data, TestCategory.BE);
+    return this.faultSummaryProvider.getDrivingFaultsList(this.data, TestCategory.ADI2);
   }
 
   public getSeriousFaults(): FaultSummary[] {
-    // TO-DO ADI Part2: Implement correct category
-    return this.faultSummaryProvider.getSeriousFaultsList(this.data, TestCategory.BE);
+    return this.faultSummaryProvider.getSeriousFaultsList(this.data, TestCategory.ADI2);
   }
 
   public getDangerousFaults(): FaultSummary[] {
-    // TO-DO ADI Part2: Implement correct category
-    return this.faultSummaryProvider.getDangerousFaultsList(this.data, TestCategory.BE);
+    return this.faultSummaryProvider.getDangerousFaultsList(this.data, TestCategory.ADI2);
   }
 
   public getDrivingFaultCount(): number {
-    // TO-DO ADI Part2: Implement correct category
-    return this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, this.data);
+    return this.faultCountProvider.getDrivingFaultSumCount(TestCategory.ADI2, this.data);
   }
 
   public getETA(): string {
@@ -110,7 +105,7 @@ export class DebriefCardComponent {
     if (eta.length === 0) {
       eta.push('None');
     }
-    return   flattenArray(eta);
+    return flattenArray(eta);
   }
 
   public getShowMeQuestions(): QuestionResult[] {
