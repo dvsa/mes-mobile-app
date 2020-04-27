@@ -55,8 +55,8 @@ describe('SafetyAndBalanceCardCatAMod2Component', () => {
   beforeEach(async(() => {
     fixture = TestBed.createComponent(SafetyAndBalanceCardCatAMod2Component);
     store$ = TestBed.get(Store);
-    store$.dispatch(new StartTest(105, TestCategory.EUAM2));
-    store$.dispatch(new PopulateTestCategory(TestCategory.EUAM2));
+    store$.dispatch(new StartTest(105, TestCategory.EUA2M2));
+    store$.dispatch(new PopulateTestCategory(TestCategory.EUA2M2));
     store$.dispatch(new PopulateCandidateDetails(candidateMock));
     translate = TestBed.get(TranslateService);
     translate.setDefaultLang('en');
