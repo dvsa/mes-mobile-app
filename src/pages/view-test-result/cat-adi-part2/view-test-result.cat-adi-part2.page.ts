@@ -7,6 +7,7 @@ import {
   Loading,
   LoadingController,
 } from 'ionic-angular';
+import { JournalData } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { HttpResponse } from '@angular/common/http';
@@ -34,7 +35,6 @@ import { QuestionProvider } from '../../../providers/question/question';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-import { JournalData } from '@dvsa/mes-test-schema/categories/common';
 
 @IonicPage()
 @Component({
@@ -131,7 +131,7 @@ export class ViewTestResultCatADIPart2Page extends BasePageComponent implements 
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
       applicationReference: formatApplicationReference(journalData.applicationReference),
-      category: TestCategory.BE,
+      category: TestCategory.ADI2,
       specialNeeds: journalData.testSlotAttributes.specialNeedsArray,
       entitlementCheck: journalData.testSlotAttributes.entitlementCheck,
       slotType: journalData.testSlotAttributes.slotType,
