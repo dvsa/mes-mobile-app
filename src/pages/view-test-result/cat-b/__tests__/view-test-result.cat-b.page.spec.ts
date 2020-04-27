@@ -283,7 +283,7 @@ describe('ViewTestResultCatBPage', () => {
         expect(result).toEqual([{
           comment: 'mock-ancillary-controls-comment',
           competencyIdentifier: 'ancillaryControls',
-          competencyDisplayName: 'Ancillary Controls',
+          competencyDisplayName: 'Control - Ancillary Controls',
           source: 'simple',
           faultCount: 1,
         }]);
@@ -322,7 +322,7 @@ describe('ViewTestResultCatBPage', () => {
         expect(result).toEqual([{
           comment: 'mock-awareness-planning-comment',
           competencyIdentifier: 'awarenessPlanning',
-          competencyDisplayName: 'Awareness planning',
+          competencyDisplayName: 'Awareness / Planning',
           faultCount: 2,
           source: 'simple',
         }]);

@@ -45,7 +45,7 @@ describe('SeriousFaultsDebriefCardComponent', () => {
       fixture.detectChanges();
       const seriousFaultLabels = fixture.debugElement.queryAll(By.css('#serious-fault .counter-label'));
       const drivingFaultCount = fixture.debugElement.query(By.css('h1.fault-heading')).nativeElement;
-      expect(seriousFaultLabels[0].nativeElement.innerHTML).toBe('Ancillary Controls');
+      expect(seriousFaultLabels[0].nativeElement.innerHTML).toBe('Control - Ancillary Controls');
       expect(seriousFaultLabels[1].nativeElement.innerHTML).toBe('Clearance');
       expect(drivingFaultCount.innerHTML).toBe(seriousFaults.length.toString());
     });
