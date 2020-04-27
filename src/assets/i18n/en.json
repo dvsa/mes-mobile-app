@@ -21,22 +21,22 @@
   },
   "debrief": {
     "safetyAndBalanceQuestions": {
-      "SQ1": "Oil level",
-      "SQ2": "Horn working",
-      "SQ3": "Brake Fluid",
-      "SQ4": "Lights",
-      "SQ5": "Brake Lights",
-      "SQ6": "Chain",
-      "SQ7": "Steering",
-      "SQ8": "Tyres",
-      "SQ9": "Front Brake",
-      "SQ10": "Brakes",
-      "SQ11": "Engine Cut Out Switch",
-      "SQ12": "Fog Light",
-      "SQ13": "Dipped / Main Beam",
-      "BQ1": "Pillion passenger problems",
-      "BQ2": "Carrying a passenger",
-      "BQ3": "Balance with passenger"
+      "M1": "Oil level",
+      "M2": "Horn working",
+      "M3": "Brake Fluid",
+      "M4": "Lights",
+      "M5": "Brake Lights",
+      "M6": "Chain",
+      "M7": "Steering",
+      "M8": "Tyres",
+      "M9": "Front Brake",
+      "M10": "Brakes",
+      "M11": "Engine Cut Out Switch",
+      "M12": "Fog Light",
+      "M13": "Dipped / Main Beam",
+      "B1": "Pillion passenger problems",
+      "B2": "Carrying a passenger",
+      "B3": "Balance with passenger"
     },
     "showMeTellMeQuestions": {
       "ADI2": {

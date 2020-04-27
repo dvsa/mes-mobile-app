@@ -62,15 +62,15 @@ describe('SafetyAndBalanceCardCatAMod2Component', () => {
     store$.dispatch(new PopulateCandidateDetails(candidateMock));
 
     const safetyQuestions: QuestionResult[] = [{
-      code: 'SQ4',
+      code: 'M4',
       description: 'Tell me how you would check that the lights and reflectors are clean and working.',
     }, {
-      code: 'SQ6',
+      code: 'M6',
       description: 'Tell me how you would check the condition of the chain on this machine.',
     }];
 
     const balanceQuestions: QuestionResult[] = [{
-      code: 'BQ1',
+      code: 'B1',
       description: 'What problems could arise from carrying a pillion passenger?',
     }];
 
@@ -98,11 +98,11 @@ describe('SafetyAndBalanceCardCatAMod2Component', () => {
 
         expect(safetyAndBalanceQuestions.length).toBe(3);
         expect(safetyAndBalanceQuestions[0].nativeElement.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.SQ4);
+          .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.M4);
         expect(safetyAndBalanceQuestions[1].nativeElement.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.SQ6);
+          .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.M6);
         expect(safetyAndBalanceQuestions[2].nativeElement.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.BQ1);
+          .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.B1);
       });
 
       it('should show results in Welsh for a Welsh test', (done) => {
@@ -117,11 +117,11 @@ describe('SafetyAndBalanceCardCatAMod2Component', () => {
             .queryAll(By.css('.counter-label'));
 
           expect(safetyAndBalanceQuestions[0].nativeElement.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.SQ4);
+            .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.M4);
           expect(safetyAndBalanceQuestions[1].nativeElement.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.SQ6);
+            .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.M6);
           expect(safetyAndBalanceQuestions[2].nativeElement.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.BQ1);
+            .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.B1);
           done();
         });
       });

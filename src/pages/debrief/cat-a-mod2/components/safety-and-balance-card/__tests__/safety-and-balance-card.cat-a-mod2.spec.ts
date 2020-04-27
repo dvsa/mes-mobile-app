@@ -66,7 +66,7 @@ describe('SafetyAndBalanceCardCatAMod2Component', () => {
     describe('Safety and balance question reporting', () => {
       it('should show results', () => {
         const safetyQuestion: QuestionResult = {
-          code: 'SQ4',
+          code: 'M4',
           description: 'Tell me how you would check that the lights and reflectors are clean and working.',
         };
         // Configure show safety and balance questions
@@ -79,12 +79,12 @@ describe('SafetyAndBalanceCardCatAMod2Component', () => {
           .query(By.css('#safety-and-balance-questions .counter-label')).nativeElement;
 
         expect(safetyQuestionText.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.SQ4);
+          .toContain((<any>englishTranslations).debrief.safetyAndBalanceQuestions.M4);
       });
 
       it('should show results in Welsh for a Welsh test', (done) => {
         const safetyQuestion: QuestionResult = {
-          code: 'SQ4',
+          code: 'M4',
           description: 'Tell me how you would check that the lights and reflectors are clean and working.',
         };
         // Configure show safety and balance questions
@@ -102,7 +102,7 @@ describe('SafetyAndBalanceCardCatAMod2Component', () => {
             .query(By.css('#safety-and-balance-questions .counter-label')).nativeElement;
 
           expect(safetyQuestionText.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.SQ4);
+            .toContain((<any>welshTranslations).debrief.safetyAndBalanceQuestions.M4);
           done();
         });
       });
