@@ -38,6 +38,7 @@ export function vehicleChecksCatADI2Reducer(
             ...item,
             code: action.showMeQuestion.code,
             description: action.showMeQuestion.description,
+            outcome: action.showMeQuestion.outcome,
           } : item,
         ),
       };
