@@ -47,6 +47,11 @@ export enum Competencies {
   speedCheckEmergency = 'speedCheckEmergency',
   speedCheckAvoidance = 'speedCheckAvoidance',
   clearanceOrObstructions = 'clearanceOrObstructions',
+  rearObservationSignalling = 'rearObservationSignalling',
+  rearObservationChangeDirection = 'rearObservationChangeDirection',
+  rearObservationChangeSpeed = 'rearObservationChangeSpeed',
+  positionNormalRiding = 'positionNormalRiding',
+  judgementOvertakingFiltering = 'judgementOvertakingFiltering',
 }
 
 export enum SingleFaultCompetencyNames {
