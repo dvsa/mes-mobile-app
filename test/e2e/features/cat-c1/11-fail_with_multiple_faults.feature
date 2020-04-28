@@ -40,7 +40,7 @@ Feature: A Driving Examiner Completes a Failed User Journey in Category C1
       And I see a "serious" fault for "Move off - Control"
       And I see a "driving" fault for "Signals - Timed"
       And I see a "driving" fault for "Signals - Correctly"
-      And I see a "driving" fault for "Move off - Safety"
+      And I see a "driving" fault for "Move Away – Safety"
       And I see a "driving" fault for "Vehicle checks"
       When I end the debrief
       Then I am on the post debrief holding page

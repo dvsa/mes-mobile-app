@@ -13,7 +13,7 @@ Feature: A Driving Examiner Completes a Failed User Journey in Category C
       Then I should see the "Tanner Holman" page
       And I complete the waiting room to car page with the following vehicle checks
         | show_me_1   | show_me_2   | show_me_3   | show_me_4   | show_me_5   |
-        | true        | true        | true        | false       | false       |   
+        | true        | true        | true        | false       | false       |
       Then I should see the "Test report - Tanner Holman" page
       And the driver fault count is "3"
       When I end the test
@@ -40,7 +40,7 @@ Feature: A Driving Examiner Completes a Failed User Journey in Category C
       And I see a "serious" fault for "Move off - Control"
       And I see a "driving" fault for "Signals - Timed"
       And I see a "driving" fault for "Signals - Correctly"
-      And I see a "driving" fault for "Move off - Safety"
+      And I see a "driving" fault for "Move Away – Safety"
       And I see a "driving" fault for "Vehicle checks"
       When I end the debrief
       Then I am on the post debrief holding page
