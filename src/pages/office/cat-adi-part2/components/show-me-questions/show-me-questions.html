@@ -27,23 +27,25 @@
       </ion-col>
       <ion-col col-4>
       </ion-col>
-      <ion-col align-self-center>
+      <ion-col align-self-center col-24>
         <input type="radio"
+               id="showMe_{{questionNumber}}_btn1"
                class="gds-radio-button"
                [checked]="showMeChecked"
                [disabled]="showMeDisabled"
                (change)="showMeOutcomeChanged($event.target.value)"
                value="P">
-        <label class="radio-label">Correct</label>
+        <label for="showMe_{{questionNumber}}_btn1" class="radio-label">Correct</label>
       </ion-col>
-      <ion-col align-self-center>
+      <ion-col align-self-center col-24>
         <input type="radio"
+               id="showMe_{{questionNumber}}_btn2"
                class="gds-radio-button"
                [checked]="!showMeChecked"
                [disabled]="showMeDisabled"
                (change)="showMeOutcomeChanged($event.target.value)"
                value="DF">
-        <label class="radio-label">Incorrect</label>
+        <label for="showMe_{{questionNumber}}_btn2" css="radio-label">Incorrect</label>
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>
