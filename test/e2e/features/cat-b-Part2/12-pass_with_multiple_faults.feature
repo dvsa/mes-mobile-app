@@ -32,9 +32,9 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
       Then I should see the "Office" page
       And the office page test outcome is "Passed"
       And there are "2" driver faults listed for "Signals - Timed"
-      And there is "1" driver fault listed for "Controls - Accelerator"
+      And there is "1" driver fault listed for "Control - Accelerator"
       And there is "1" driver fault listed for "Clearance"
-      And there is "1" driver fault listed for "Rear Observation – Signalling"
+      And there is "1" driver fault listed for "Use of mirrors - Signalling"
       And I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
@@ -71,10 +71,10 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
       When I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
-      And I see a "driving" fault for "Rear Observation – Signalling"
-      And I see a "driving" fault for "Move Away – Safety"
+      And I see a "driving" fault for "Use of mirrors - Signalling"
+      And I see a "driving" fault for "Move Away - Safety"
       And I see a "driving" fault for "Positioning - Lane discipline"
-      And I see a "driving" fault for "Controls - Accelerator"
+      And I see a "driving" fault for "Control - Accelerator"
       And I see a "driving" fault for "Junctions - Approach speed"
       And I see a "driving" fault for "Signals - Timed"
       And I see a "driving" fault for "Clearance"
@@ -86,10 +86,10 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Passed"
-      And there are "3" driver faults listed for "Move Away – Safety"
+      And there are "3" driver faults listed for "Move Away - Safety"
       And there are "3" driver faults listed for "Positioning - Lane discipline"
-      And there are "3" driver faults listed for "Rear Observation – Signalling"
-      And there are "2" driver faults listed for "Controls - Accelerator"
+      And there are "3" driver faults listed for "Use of mirrors - Signalling"
+      And there are "2" driver faults listed for "Control - Accelerator"
       And there are "2" driver faults listed for "Junctions - Approach speed"
       And there is "1" driver fault listed for "Signals - Timed"
       And there is "1" driver fault listed for "Clearance"

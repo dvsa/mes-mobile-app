@@ -51,7 +51,7 @@ Feature: A Driving Examiner Completes a Failed User Journey for Category C1 in W
         Then I should see the "Office" page
         And the office page test outcome is "Unsuccessful"
         When I complete the office write up
-        And I enter a comment for "serious" fault "Move off - Control"
+        And I enter a comment for "serious" fault "Move Away - Control"
         And I upload the test
         Then I should see the "Journal" page
         And the test result for "Mr Meyers Kennedy" is "2"
