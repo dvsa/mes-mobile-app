@@ -1,0 +1,10 @@
+show-me-questions-cat-adi2 {
+  .gds-radio-button{
+    &:disabled + label {
+      opacity: 0.4;
+    }
+    &:disabled + label:before {
+      opacity: 0.4;
+    }
+  }
+}

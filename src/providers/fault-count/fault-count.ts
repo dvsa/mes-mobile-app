@@ -193,4 +193,11 @@ export class FaultCountProvider {
       default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
     }
   }
+
+  public getShowMeFaultCount = (category: TestCategory, data: VehicleChecks): VehicleChecksScore => {
+    switch (category) {
+      case TestCategory.ADI2: return FaultCountADIPart2Helper.getShowMeFaultCount(data);
+      default: throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
+    }
+  }
 }

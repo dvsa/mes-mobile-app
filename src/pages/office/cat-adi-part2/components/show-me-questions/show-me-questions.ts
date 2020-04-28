@@ -7,6 +7,7 @@ import {
   VisibilityType,
 } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 @Component({
   selector: 'show-me-questions-cat-adi2',
@@ -32,18 +33,31 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
   @Input()
   outcome: string;
 
+  @Input()
+  serious: boolean;
+
+  @Input()
+  dangerous: boolean;
+
+  @Input()
+  drivingFaults: number;
+
   @Output()
   showMeQuestionsChange = new EventEmitter<QuestionResult>();
 
   private formControl: FormControl;
 
   readonly questionId: string = uniqueId();
-  readonly fieldName: string = `showMeQuestions_${this.questionId}`;
+  fieldName: string;
+  checked: boolean;
+  disabled: boolean;
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) {
   }
 
   ngOnChanges(): void {
+    this.fieldName = `showMeQuestion_${this.questionNumber}`;
+
     if (!this.formControl) {
       this.formControl = new FormControl({ disabled: true });
       this.formGroup.addControl(this.fieldName, this.formControl);
@@ -62,12 +76,24 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
     if (this.questionResult) {
       this.formControl.patchValue(this.findQuestion());
     }
+
+    this.updateShowMeQuestionAttributes();
   }
 
   showMeQuestionsChanged(showMeQuestions: VehicleChecksQuestion): void {
     const result: QuestionResult = {
       code: showMeQuestions.code,
       description: showMeQuestions.shortName,
+      outcome: this.questionResult.outcome,
+    };
+    this.showMeQuestionsChange.emit(result);
+  }
+
+  showMeOutcomeChanged(value: CompetencyOutcome): void {
+    const result: QuestionResult = {
+      code: this.questionResult.code,
+      description: this.questionResult.description,
+      outcome: value,
     };
     this.showMeQuestionsChange.emit(result);
   }
@@ -87,5 +113,30 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
 
   findQuestion(): VehicleChecksQuestion {
     return this.questions.find(question => question.code === this.questionResult.code);
+  }
+
+  updateShowMeQuestionAttributes(): void {
+    const seriousDangerousCount: number = [this.serious, this.dangerous].filter(Boolean).length;
+    if (
+      (seriousDangerousCount === 0 && this.drivingFaults === 0) ||
+      (seriousDangerousCount === 0 && this.drivingFaults === 1 && this.questionNumber === 2)) {
+      this.checked = true;
+      this.disabled = true;
+    } else if (
+      (seriousDangerousCount === 1 && this.drivingFaults === 0 && this.questionNumber === 2)) {
+      this.checked = true;
+      this.disabled = false;
+    } else {
+      this.checked = false;
+      this.disabled = true;
+    }
+  }
+
+  get showMeChecked(): boolean {
+    return this.checked;
+  }
+
+  get showMeDisabled(): boolean {
+    return this.disabled;
   }
 }

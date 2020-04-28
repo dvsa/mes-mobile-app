@@ -15,6 +15,18 @@ export const getSelectedTellMeQuestions = (
   return vehicleChecks.tellMeQuestions;
 };
 
+export const getVehicleChecksSerious = (
+  vehicleChecks: CatADI2UniqueTypes.VehicleChecks,
+): boolean => {
+  return vehicleChecks.seriousFault;
+};
+
+export const getVehicleChecksDangerous = (
+  vehicleChecks: CatADI2UniqueTypes.VehicleChecks,
+): boolean => {
+  return vehicleChecks.dangerousFault;
+};
+
 export const vehicleChecksExist = (vehicleChecks: CatADI2UniqueTypes.VehicleChecks): boolean => {
   return some([... vehicleChecks.tellMeQuestions], fault => fault.outcome != null);
 };

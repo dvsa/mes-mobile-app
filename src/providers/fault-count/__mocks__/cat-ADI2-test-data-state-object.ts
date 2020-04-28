@@ -85,12 +85,12 @@ export const catADI2TestDataStateObjectShowMeFaults: CatADI2UniqueTypes.TestData
       {
         code: 'T1',
         description: 'Brakes',
-        outcome: 'DF',
+        outcome: 'P',
       },
       {
         code: 'T2',
         description: 'Tyre pressures',
-        outcome: 'DF',
+        outcome: 'P',
       },
       {
         code: 'T3',
@@ -100,7 +100,14 @@ export const catADI2TestDataStateObjectShowMeFaults: CatADI2UniqueTypes.TestData
     ],
     showMeQuestions: [
       {
-        outcome: CompetencyOutcome.DF,
+        code: 'T2',
+        description: 'Tyre pressures',
+        outcome: 'DF',
+      },
+      {
+        code: 'T3',
+        description: 'Head restraint',
+        outcome: 'DF',
       },
     ],
   },
@@ -135,6 +142,64 @@ export const catADI2TestDataStateObjectTellMeFaults: CatADI2UniqueTypes.TestData
         code: 'T3',
         description: 'Head restraint',
         outcome: 'P',
+      },
+    ],
+    showMeQuestions: [
+      {
+        code: 'T1',
+        description: 'something',
+        outcome: 'P',
+      },
+      {
+        code: 'T2',
+        description: 'something else',
+        outcome: 'P',
+      },
+    ],
+  },
+  eco: {},
+  ETA: {},
+  eyesightTest: {
+    complete: true,
+    seriousFault: false,
+  },
+  testRequirements: {},
+  manoeuvres: [],
+  controlledStop: {},
+};
+
+export const catADI2TestDataStateObjectTellShowMeFaults: CatADI2UniqueTypes.TestData = {
+  drivingFaults: {},
+  dangerousFaults: {},
+  seriousFaults: {},
+  vehicleChecks: {
+    tellMeQuestions: [
+      {
+        code: 'T1',
+        description: 'Brakes',
+        outcome: 'P',
+      },
+      {
+        code: 'T2',
+        description: 'Tyre pressures',
+        outcome: 'P',
+      },
+      {
+        code: 'T3',
+        description: 'Head restraint',
+        outcome: 'P',
+      },
+    ],
+    showMeQuestions: [
+      {
+        code: 'T1',
+        description: 'something',
+        outcome: 'DF',
+      },
+      {
+        code: 'T2',
+        description: 'something else',
+        outcome: 'DF',
       },
     ],
   },

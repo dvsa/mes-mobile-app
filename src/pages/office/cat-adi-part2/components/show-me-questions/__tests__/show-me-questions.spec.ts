@@ -6,6 +6,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { AppModule } from '../../../../../../app/app.module';
 import { ShowMeQuestionsCatADI2Component } from '../show-me-questions';
 import { VehicleChecksQuestion } from '../../../../../../providers/question/vehicle-checks-question.model';
+import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
 
 const vehicleChecksQuestion: VehicleChecksQuestion = {
   code: 'A15',
@@ -66,10 +67,31 @@ describe('ShowMeQuestionsCatADI2Component', () => {
       it('should emit the correct event', () => {
         component.showMeQuestionsChange = new EventEmitter();
         spyOn(component.showMeQuestionsChange, 'emit');
+        component.questionResult = {
+          outcome: 'P',
+        },
         component.showMeQuestionsChanged(vehicleChecksQuestion);
         expect(component.showMeQuestionsChange.emit).toHaveBeenCalledWith({
           code: 'A15',
           description: 'Rear windscreen',
+          outcome: 'P',
+        });
+      });
+    });
+
+    describe('showMeOutcomeChanged', () => {
+      it('should emit the correct event', () => {
+        component.showMeQuestionsChange = new EventEmitter();
+        spyOn(component.showMeQuestionsChange, 'emit');
+        component.questionResult = {
+          code: 'A15',
+          description: 'Rear windscreen',
+        },
+          component.showMeOutcomeChanged(CompetencyOutcome.P);
+        expect(component.showMeQuestionsChange.emit).toHaveBeenCalledWith({
+          code: 'A15',
+          description: 'Rear windscreen',
+          outcome: 'P',
         });
       });
     });
@@ -84,6 +106,74 @@ describe('ShowMeQuestionsCatADI2Component', () => {
         component.questions = [vehicleChecksQuestion];
         component.questionResult = { code: 'A17' };
         expect(component.findQuestion()).toEqual(undefined);
+      });
+    });
+
+    describe('updateShowMeQuestionAttributes', () => {
+      it('should return checked as true and disabled as true when no S, no D and no DF', () => {
+        component.serious = false;
+        component.dangerous = false;
+        component.drivingFaults = 0;
+        component.questionNumber = 1;
+        component.updateShowMeQuestionAttributes();
+        expect(component.checked).toEqual(true);
+        expect(component.disabled).toEqual(true);
+      });
+      it('should return checked as true and disabled as true when no S, no D and 1 DF when 2nd question', () => {
+        component.serious = false;
+        component.dangerous = false;
+        component.drivingFaults = 1;
+        component.questionNumber = 2;
+        component.updateShowMeQuestionAttributes();
+        expect(component.checked).toEqual(true);
+        expect(component.disabled).toEqual(true);
+      });
+
+      it('should return checked as true and disabled as false when S, no D and 0 DF when 2nd question', () => {
+        component.serious = true;
+        component.dangerous = false;
+        component.drivingFaults = 0;
+        component.questionNumber = 2;
+        component.updateShowMeQuestionAttributes();
+        expect(component.checked).toEqual(true);
+        expect(component.disabled).toEqual(false);
+      });
+      it('should return checked as true and disabled as false when no S, D and 0 DF when 2nd question', () => {
+        component.serious = false;
+        component.dangerous = true;
+        component.drivingFaults = 0;
+        component.questionNumber = 2;
+        component.updateShowMeQuestionAttributes();
+        expect(component.checked).toEqual(true);
+        expect(component.disabled).toEqual(false);
+      });
+
+      it('should return checked as false and disabled as true when S, D and 0 DF', () => {
+        component.serious = true;
+        component.dangerous = true;
+        component.drivingFaults = 0;
+        component.questionNumber = 1;
+        component.updateShowMeQuestionAttributes();
+        expect(component.checked).toEqual(false);
+        expect(component.disabled).toEqual(true);
+      });
+      it('should return checked as false and disabled as true when S, D and 1 DF', () => {
+        component.serious = true;
+        component.dangerous = true;
+        component.drivingFaults = 1;
+        component.questionNumber = 1;
+        component.updateShowMeQuestionAttributes();
+        expect(component.checked).toEqual(false);
+        expect(component.disabled).toEqual(true);
+      });
+      it('should return checked as false and disabled as true when S, D and 2 DF', () => {
+        component.serious = true;
+        component.dangerous = true;
+        component.drivingFaults = 2;
+        component.questionNumber = 1;
+        component.updateShowMeQuestionAttributes();
+        expect(component.checked).toEqual(false);
+        expect(component.disabled).toEqual(true);
       });
     });
   });

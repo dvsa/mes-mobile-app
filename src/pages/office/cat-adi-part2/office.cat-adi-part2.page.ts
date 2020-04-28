@@ -107,6 +107,8 @@ import {
   vehicleChecksExist,
   getVehicleChecksCatADI2,
   getSelectedShowMeQuestions,
+  getVehicleChecksSerious,
+  getVehicleChecksDangerous,
 } from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.selector';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
@@ -148,6 +150,9 @@ interface OfficePageState {
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
   showMeQuestions$: Observable<QuestionResult[]>;
+  vehicleChecksSerious$: Observable<boolean>;
+  vehicleChecksDangerous$: Observable<boolean>;
+  showMeQuestionsFaults$: Observable<number>;
 }
 
 @IonicPage()
@@ -340,22 +345,22 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
           )),
       ),
       displayTellMeQuestions$: currentTest$.pipe(
-          select(getTestOutcome),
-          withLatestFrom(currentTest$.pipe(
-            select(getTestData))),
-            map(([outcome, data]) =>
-            this.outcomeBehaviourProvider.isVisible(outcome,
-              'tellMeQuestion',
-              vehicleChecksExist(data.vehicleChecks))),
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestData))),
+        map(([outcome, data]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome,
+            'tellMeQuestion',
+            vehicleChecksExist(data.vehicleChecks))),
       ),
       displayShowMeQuestions$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
           select(getTestData))),
-          map(([outcome, data]) =>
-            this.outcomeBehaviourProvider.isVisible(outcome, 'showMeQuestion', data),
-          ),
-    ),
+        map(([outcome, data]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'showMeQuestion', data),
+        ),
+      ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
         select(getCandidateDescription),
@@ -415,6 +420,21 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
         select(getTestData),
         select(getVehicleChecksCatADI2),
         select(getSelectedShowMeQuestions),
+      ),
+      vehicleChecksSerious$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatADI2),
+        select(getVehicleChecksSerious),
+      ),
+      vehicleChecksDangerous$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatADI2),
+        select(getVehicleChecksDangerous),
+      ),
+      showMeQuestionsFaults$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatADI2),
+        map(data => this.faultCountProvider.getShowMeFaultCount(TestCategory.ADI2, data).drivingFaults),
       ),
     };
   }
@@ -570,7 +590,8 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       buttons: [
         {
           text: 'Cancel',
-          handler: () => { },
+          handler: () => {
+          },
         },
         {
           text: 'Upload',

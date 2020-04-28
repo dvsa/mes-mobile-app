@@ -79,6 +79,9 @@
                     [questions]="showMeQuestions"
                     [questionsToDisable]="pageState.showMeQuestions$ | async"
                     [outcome]="pageState.testOutcome$ | async"
+                    [serious]="pageState.vehicleChecksSerious$ | async"
+                    [dangerous]="pageState.vehicleChecksDangerous$ | async"
+                    [drivingFaults]="pageState.showMeQuestionsFaults$ | async"
                     (showMeQuestionsChange)="showMeQuestionsChanged($event, 0)">
             </show-me-questions-cat-adi2>
 
@@ -89,6 +92,9 @@
                     [questions]="showMeQuestions"
                     [questionsToDisable]="pageState.showMeQuestions$ | async"
                     [outcome]="pageState.testOutcome$ | async"
+                    [serious]="pageState.vehicleChecksSerious$ | async"
+                    [dangerous]="pageState.vehicleChecksDangerous$ | async"
+                    [drivingFaults]="pageState.showMeQuestionsFaults$ | async"
                     (showMeQuestionsChange)="showMeQuestionsChanged($event, 1)">
             </show-me-questions-cat-adi2>
 
