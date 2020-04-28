@@ -8,6 +8,7 @@ import { DataRowComponent } from '../../../../../components/common/data-row/data
 import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
 import { IndependentDriving, WeatherConditions } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
+import { ModeOfTransport } from '@dvsa/mes-test-schema/categories/AM2';
 
 describe('TestSummaryCardComponent', () => {
   let fixture: ComponentFixture<TestSummaryCardComponent>;
@@ -254,5 +255,38 @@ describe('TestSummaryCardComponent', () => {
         expect(component.getAdditionalInformation()).toEqual('None');
       });
     });
+
+    describe('shouldDisplayTestConductedOn', () => {
+      it('should return true if mode of transport', () => {
+        const mode: ModeOfTransport = 'Bike to bike';
+        component.testSummary = {
+          modeOfTransport: mode,
+        };
+        expect(component.shouldDisplayTestConductedOn()).toEqual(true);
+      });
+      it('should return false if no mode of transport', () => {
+        component.testSummary = {
+          additionalInformation: 'Test Additional Information',
+        };
+        expect(component.shouldDisplayTestConductedOn()).toEqual(false);
+      });
+    });
+
+    describe('getTestConductedOn', () => {
+      it('should return the mode of transport if populated', () => {
+        const mode: ModeOfTransport = 'Bike to bike';
+        component.testSummary = {
+          modeOfTransport: mode,
+        };
+        expect(component.getTestConductedOn()).toEqual(mode);
+      });
+      it('should return None if not populated', () => {
+        component.testSummary = {
+          additionalInformation: 'Test Additional Information',
+        };
+        expect(component.getTestConductedOn()).toEqual('None');
+      });
+    });
+
   });
 });

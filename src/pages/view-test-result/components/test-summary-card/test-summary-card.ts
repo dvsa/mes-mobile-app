@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
 import { flattenArray, convertBooleanToString } from '../../view-test-result-helpers';
 import { Accompaniment, TestSummary, PassCompletion } from '@dvsa/mes-test-schema/categories/common';
+import { TestSummary as CatAMod2TestSummary } from '@dvsa/mes-test-schema/categories/AM2';
 
 @Component({
   selector: 'test-summary-card',
@@ -16,7 +17,7 @@ export class TestSummaryCardComponent {
   passCompletion: PassCompletion;
 
   @Input()
-  testSummary: TestSummary;
+  testSummary: TestSummary | CatAMod2TestSummary;
 
   constructor() {}
 
@@ -85,5 +86,13 @@ export class TestSummaryCardComponent {
 
   public shouldDisplayLicenceProvided(data: boolean) : boolean {
     return get(this.passCompletion, 'provisionalLicenceProvided') !== undefined;
+  }
+
+  public shouldDisplayTestConductedOn() : boolean {
+    return get(this.testSummary, 'modeOfTransport') !== undefined;
+  }
+
+  public getTestConductedOn(): string {
+    return get(this.testSummary, 'modeOfTransport', 'None');
   }
 }
