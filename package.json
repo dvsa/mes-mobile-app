@@ -55,6 +55,7 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
+    "@dvsa/lw-incident-model": "^0.3.0",
     "@ionic-native-mocks/network": "^2.0.12",
     "@ionic-native/app-version": "^4.20.0",
     "@ionic-native/core": "~4.17.0",
