@@ -5,7 +5,7 @@ import {
   vehicleChecksExist,
 } from '../vehicle-checks.cat-adi-part2.selector';
 
-fdescribe('Vehicle Checks Selector Cat ADI2', () => {
+describe('Vehicle Checks Selector Cat ADI2', () => {
 
   describe('getVehicleChecksSerious', () => {
     it('should return false if there are no serious vehicle checks recorded', ()  => {

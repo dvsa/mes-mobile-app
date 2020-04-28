@@ -1,10 +1,10 @@
 show-me-questions-cat-adi2 {
   .gds-radio-button{
     &:disabled + label {
-      color: map-get($colors-gds, "gds-grey-2");
+      opacity: 0.4;
     }
     &:disabled + label:before {
-      border-color: map-get($colors-gds, "gds-grey-2");
+      opacity: 0.4;
     }
   }
 }

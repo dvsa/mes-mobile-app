@@ -7,6 +7,7 @@ import {
   VisibilityType,
 } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 @Component({
   selector: 'show-me-questions-cat-adi2',
@@ -88,7 +89,7 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
     this.showMeQuestionsChange.emit(result);
   }
 
-  showMeOutcomeChanged(value): void {
+  showMeOutcomeChanged(value: CompetencyOutcome): void {
     const result: QuestionResult = {
       code: this.questionResult.code,
       description: this.questionResult.description,
