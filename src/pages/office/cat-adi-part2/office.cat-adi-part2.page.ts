@@ -469,8 +469,6 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
   }
 
   showMeQuestionsChanged(result: QuestionResult, index: number): void {
-    console.log('dispatch result', result);
-    console.log('dispatch index', index);
     this.store$.dispatch(new ShowMeQuestionSelected(result, index));
   }
 

@@ -137,6 +137,18 @@ export const catADI2TestDataStateObjectTellMeFaults: CatADI2UniqueTypes.TestData
         outcome: 'P',
       },
     ],
+    showMeQuestions: [
+      {
+        code: 'T1',
+        description: 'something',
+        outcome: 'DF',
+      },
+      {
+        code: 'T2',
+        description: 'something else',
+        outcome: 'DF',
+      },
+    ],
   },
   eco: {},
   ETA: {},

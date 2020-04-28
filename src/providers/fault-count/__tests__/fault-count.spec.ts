@@ -562,4 +562,19 @@ describe('FaultCountProvider', () => {
       expect(returnValue).toEqual(expected);
     });
   });
+
+  describe('getShowMeFaultCount', () => {
+    it('should return the ShowMeQuestions faults count', () => {
+
+      const expected = {
+        drivingFaults: 2,
+        seriousFaults: 0,
+      };
+
+      const returnValue = faultCountProvider.getShowMeFaultCount(
+        TestCategory.ADI2,
+        catADI2TestDataStateObjectTellMeFaults.vehicleChecks);
+      expect(returnValue).toEqual(expected);
+    });
+  });
 });

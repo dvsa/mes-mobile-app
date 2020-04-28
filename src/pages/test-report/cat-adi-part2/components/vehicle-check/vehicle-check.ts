@@ -164,7 +164,6 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
     }
 
     if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.hasShowMeDrivingFault()) {
-      console.log('this.showMeQuestionFaultCount', this.showMeQuestionFaultCount);
       this.store$.dispatch(
         new ShowMeQuestionRemoveDrivingFault(this.showMeQuestionFaultCount - 1),
       );

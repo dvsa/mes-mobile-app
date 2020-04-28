@@ -116,53 +116,18 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
 
   evaluateLabels(): void {
     const seriousDangerousCount: number = [this.serious, this.dangerous].filter(Boolean).length;
-    console.log('seriousDangerousCount', seriousDangerousCount);
-    switch (true) {
-      case (seriousDangerousCount === 0 && this.drivingFaults === 0): {
-        this.checked = true;
-        this.disabled = true;
-        break;
-      }
-      case (seriousDangerousCount === 0 && this.drivingFaults === 1 && this.questionNumber === 1): {
-        this.checked = false;
-        this.disabled = true;
-        break;
-      }
-      case (seriousDangerousCount === 0 && this.drivingFaults === 1 && this.questionNumber === 2): {
-        this.checked = true;
-        this.disabled = true;
-        break;
-      }
-      case (seriousDangerousCount === 0 && this.drivingFaults === 2): {
-        this.checked = false;
-        this.disabled = true;
-        break;
-      }
-      case (seriousDangerousCount === 1 && this.drivingFaults === 0 && this.questionNumber === 1): {
-        this.checked = false;
-        this.disabled = true;
-        break;
-      }
-      case (seriousDangerousCount === 1 && this.drivingFaults === 0 && this.questionNumber === 2): {
-        this.checked = true;
-        this.disabled = false;
-        break;
-      }
-      case (seriousDangerousCount === 1 && this.drivingFaults === 1): {
-        this.checked = false;
-        this.disabled = true;
-        break;
-      }
-      case (seriousDangerousCount === 1 && this.drivingFaults === 2): {
-        this.checked = false;
-        this.disabled = true;
-        break;
-      }
-      case (seriousDangerousCount === 2): {
-        this.checked = false;
-        this.disabled = true;
-        break;
-      }
+    if (
+      (seriousDangerousCount === 0 && this.drivingFaults === 0) ||
+      (seriousDangerousCount === 0 && this.drivingFaults === 1 && this.questionNumber === 2)) {
+      this.checked = true;
+      this.disabled = true;
+    } else if (
+      (seriousDangerousCount === 1 && this.drivingFaults === 0 && this.questionNumber === 2)) {
+      this.checked = true;
+      this.disabled = false;
+    } else {
+      this.checked = false;
+      this.disabled = true;
     }
   }
 
