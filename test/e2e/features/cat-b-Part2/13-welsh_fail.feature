@@ -87,14 +87,14 @@ Feature: A Driving Examiner Completes An Failed Journey for Category B in Welsh
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Unsuccessful"
-      And there are "2" driver faults listed for "Move Away – Safety"
-      And there is "1" driver fault listed for "Controls - Accelerator"
+      And there are "2" driver faults listed for "Move Away - Safety"
+      And there is "1" driver fault listed for "Control - Accelerator"
       And there is "1" driver fault listed for "Reverse right - Control"
       And there is "1" driver fault listed for "Controlled Stop"
       And there is "1" driver fault listed for "Show Me/Tell Me"
       When I complete the office write up
       And I enter a comment for "dangerous" fault "Use of speed"
-      And I enter a comment for "serious" fault "Controls - Accelerator"
+      And I enter a comment for "serious" fault "Control - Accelerator"
       And I upload the test
       Then I should see the "Journal" page
       And the test result for "Mr Bright Wilson" is "2"
