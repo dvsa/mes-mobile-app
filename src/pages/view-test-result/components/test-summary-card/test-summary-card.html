@@ -21,6 +21,7 @@
         *ngIf="getPassCertificateNumber()">
       </data-row>
       <data-row [label]="'Route number'" [value]="getRouteNumber()"></data-row>
+      <data-row *ngIf="shouldDisplayTestConductedOn()" [label]="'Test conducted on'" [value]="getTestConductedOn()"></data-row>
       <data-row [label]="'Independent driving'" [value]="getIndependentDriving()"></data-row>
       <data-row [label]="'Physical description of candidate'" [value]="getCandidateDescription()"></data-row>
       <data-row [label]="'Debrief witnessed'" [value]="getDebriefWitnessed()"></data-row>
