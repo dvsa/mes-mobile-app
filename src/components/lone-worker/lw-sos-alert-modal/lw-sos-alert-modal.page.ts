@@ -5,7 +5,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import * as alertActions from '../lw-store/alert/alert.actions';
 import { map } from 'rxjs/operators';
-import { getAlertStatus } from '../lw-store/alert/alert.selector';
+import { getAlertStatus, getIncidentProperties } from '../lw-store/alert/alert.selector';
 import { Observable, merge, Subscription } from 'rxjs';
 import { AlertStatusModel } from '../lw-store/alert/alert.model';
 import { getAlertState } from '../lw-store/alert/alert.reducer';
@@ -24,6 +24,7 @@ export class LWSosAlertModal {
 
   redAlertStatus$: Observable<AlertStatusModel>;
   amberAlertStatus$: Observable<AlertStatusModel>;
+  incidentProperties$: Observable<any>;
 
   countdownVisible = false;
   countdownValue = 3;
@@ -47,9 +48,17 @@ export class LWSosAlertModal {
       map(state => getAlertStatus(state, Severity.Amber)),
     );
 
+    // Might be a better way to extract incident properties outside of this Modal and just do a regular @Input()
+    // Would help to decouple Lone Worker with DES
+    this.incidentProperties$ = this.store$.pipe(
+      select(getIncidentProperties),
+      map(incidentProperties => this.incident = incidentProperties),
+    );
+
     this.merged$ = merge(
       this.redAlertStatus$,
       this.amberAlertStatus$,
+      this.incidentProperties$,
     );
   }
 
