@@ -150,7 +150,7 @@ When('I open the reversing diagram', () => {
 
 Then('I should see the reversing diagram modal', () => {
   const diagramModalTitle = TestReportPage.reversingDiagramModal.getReversingDiagramModalTitle();
-  expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - articulated vehicle');
+  expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - rigid vehicle');
 });
 
 When('I close the reversing diagram modal', () => {
