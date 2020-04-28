@@ -31,6 +31,7 @@ import { FaultCountAM1Helper } from '../cat-a-mod1/fault-count.cat-a-mod1';
 import { FaultCountAM2Helper } from '../cat-a-mod2/fault-count.cat-a-mod2';
 import {
   catADI2TestDataStateObjectNoDrivingFaults,
+  catADI2TestDataStateObjectShowMeFaults,
   catADI2TestDataStateObjectTellMeFaults,
 } from '../__mocks__/cat-ADI2-test-data-state-object';
 import { FaultCountADIPart2Helper } from '../cat-adi-part2/fault-count.cat-adi-part2';
@@ -573,7 +574,7 @@ describe('FaultCountProvider', () => {
 
       const returnValue = faultCountProvider.getShowMeFaultCount(
         TestCategory.ADI2,
-        catADI2TestDataStateObjectTellMeFaults.vehicleChecks);
+        catADI2TestDataStateObjectShowMeFaults.vehicleChecks);
       expect(returnValue).toEqual(expected);
     });
   });

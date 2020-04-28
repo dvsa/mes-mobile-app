@@ -77,7 +77,7 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
       this.formControl.patchValue(this.findQuestion());
     }
 
-    this.evaluateLabels();
+    this.updateShowMeQuestionAttributes();
   }
 
   showMeQuestionsChanged(showMeQuestions: VehicleChecksQuestion): void {
@@ -115,7 +115,7 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
     return this.questions.find(question => question.code === this.questionResult.code);
   }
 
-  evaluateLabels(): void {
+  updateShowMeQuestionAttributes(): void {
     const seriousDangerousCount: number = [this.serious, this.dangerous].filter(Boolean).length;
     if (
       (seriousDangerousCount === 0 && this.drivingFaults === 0) ||

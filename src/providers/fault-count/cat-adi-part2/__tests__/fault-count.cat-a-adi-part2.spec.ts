@@ -33,7 +33,7 @@ describe('FaultCountADIPart2Helper', () => {
 
     it('Should return 2 when 2 vehicle check driving fault exists', () => {
       const temp =
-        FaultCountADIPart2Helper.getDrivingFaultSumCountCatADIPart2(catADI2TestDataStateObjectTellMeFaults);
+        FaultCountADIPart2Helper.getDrivingFaultSumCountCatADIPart2(catADI2TestDataStateObjectShowMeFaults);
       expect(temp).toEqual(2);
     });
 
@@ -133,10 +133,10 @@ describe('FaultCountADIPart2Helper', () => {
         expect(temp).toEqual(expectedValue);
       });
 
-      it('Should return 1 driving faults, 0 serious faults when 1 vehicleCheck faults exist', () => {
+      it('Should return 2 driving faults, 0 serious faults when 2 vehicleCheck faults exist', () => {
 
         const expectedValue = {
-          drivingFaults: 1,
+          drivingFaults: 2,
           seriousFaults: 0,
         };
 

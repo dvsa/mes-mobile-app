@@ -11,12 +11,12 @@ describe('Vehicle Checks Selector Cat ADI2', () => {
     it('should return false if there are no serious vehicle checks recorded', ()  => {
       const emptySerious: CatADI2UniqueTypes.VehicleChecks = { seriousFault: false };
       const result = getVehicleChecksSerious(emptySerious);
-      expect(result).toBeFalsy();
+      expect(result).toBe(false);
     });
     it('should return true if there are serious vehicle checks recorded', ()  => {
       const serious: CatADI2UniqueTypes.VehicleChecks = { seriousFault: true };
       const result = getVehicleChecksSerious(serious);
-      expect(result).toBeTruthy();
+      expect(result).toBe(true);
     });
   });
 
@@ -24,12 +24,12 @@ describe('Vehicle Checks Selector Cat ADI2', () => {
     it('should return false if there are no dangerous vehicle checks recorded', ()  => {
       const emptyDangerous: CatADI2UniqueTypes.VehicleChecks = { dangerousFault: false };
       const result = getVehicleChecksDangerous(emptyDangerous);
-      expect(result).toBeFalsy();
+      expect(result).toBe(false);
     });
     it('should return true if there are dangerous vehicle checks recorded', ()  => {
       const dangerous: CatADI2UniqueTypes.VehicleChecks = { dangerousFault: true };
       const result = getVehicleChecksDangerous(dangerous);
-      expect(result).toBeTruthy();
+      expect(result).toBe(true);
     });
   });
 

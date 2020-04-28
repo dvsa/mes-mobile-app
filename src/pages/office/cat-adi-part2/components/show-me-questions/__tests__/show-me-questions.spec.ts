@@ -109,13 +109,13 @@ describe('ShowMeQuestionsCatADI2Component', () => {
       });
     });
 
-    describe('evaluateLabels', () => {
+    describe('updateShowMeQuestionAttributes', () => {
       it('should return checked as true and disabled as true when no S, no D and no DF', () => {
         component.serious = false;
         component.dangerous = false;
         component.drivingFaults = 0;
         component.questionNumber = 1;
-        component.evaluateLabels();
+        component.updateShowMeQuestionAttributes();
         expect(component.checked).toEqual(true);
         expect(component.disabled).toEqual(true);
       });
@@ -124,7 +124,7 @@ describe('ShowMeQuestionsCatADI2Component', () => {
         component.dangerous = false;
         component.drivingFaults = 1;
         component.questionNumber = 2;
-        component.evaluateLabels();
+        component.updateShowMeQuestionAttributes();
         expect(component.checked).toEqual(true);
         expect(component.disabled).toEqual(true);
       });
@@ -134,7 +134,7 @@ describe('ShowMeQuestionsCatADI2Component', () => {
         component.dangerous = false;
         component.drivingFaults = 0;
         component.questionNumber = 2;
-        component.evaluateLabels();
+        component.updateShowMeQuestionAttributes();
         expect(component.checked).toEqual(true);
         expect(component.disabled).toEqual(false);
       });
@@ -143,7 +143,7 @@ describe('ShowMeQuestionsCatADI2Component', () => {
         component.dangerous = true;
         component.drivingFaults = 0;
         component.questionNumber = 2;
-        component.evaluateLabels();
+        component.updateShowMeQuestionAttributes();
         expect(component.checked).toEqual(true);
         expect(component.disabled).toEqual(false);
       });
@@ -153,7 +153,7 @@ describe('ShowMeQuestionsCatADI2Component', () => {
         component.dangerous = true;
         component.drivingFaults = 0;
         component.questionNumber = 1;
-        component.evaluateLabels();
+        component.updateShowMeQuestionAttributes();
         expect(component.checked).toEqual(false);
         expect(component.disabled).toEqual(true);
       });
@@ -162,7 +162,7 @@ describe('ShowMeQuestionsCatADI2Component', () => {
         component.dangerous = true;
         component.drivingFaults = 1;
         component.questionNumber = 1;
-        component.evaluateLabels();
+        component.updateShowMeQuestionAttributes();
         expect(component.checked).toEqual(false);
         expect(component.disabled).toEqual(true);
       });
@@ -171,7 +171,7 @@ describe('ShowMeQuestionsCatADI2Component', () => {
         component.dangerous = true;
         component.drivingFaults = 2;
         component.questionNumber = 1;
-        component.evaluateLabels();
+        component.updateShowMeQuestionAttributes();
         expect(component.checked).toEqual(false);
         expect(component.disabled).toEqual(true);
       });
