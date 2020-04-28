@@ -1,6 +1,6 @@
 @catb @regression
 Feature: Practice mode
-  
+
   Scenario: User can start marking practice test without a driver fault
     Given I am on the landing page as "mobexaminer1"
     When I start marking a practice test without a driving fault
@@ -76,7 +76,7 @@ Feature: Practice mode
     Then I should see the Debrief page with outcome "Unsuccessful"
     And I see a "dangerous" fault for "Use of speed"
     And I see a "serious" fault for "Controls - Accelerator"
-    And I see a "driving" fault for "Move off - Safety"
+    And I see a "driving" fault for "Move Away – Safety"
     And I see a "driving" fault for "Controls - Accelerator"
     And I see a "driving" fault for "Vehicle checks"
     When I end the debrief
@@ -88,7 +88,7 @@ Feature: Practice mode
     And I continue to the office write up
     Then I should see the "Office" page
     And the office page test outcome is "Unsuccessful"
-    And there are "2" driver faults listed for "Move off - Safety"
+    And there are "2" driver faults listed for "Move Away – Safety"
     And there is "1" driver fault listed for "Controls - Accelerator"
     And there is "1" driver fault listed for "Show Me/Tell Me"
     When I complete the office write up

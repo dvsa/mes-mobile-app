@@ -87,7 +87,7 @@ Feature: A Driving Examiner Completes An Failed Journey for Category B in Welsh
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Unsuccessful"
-      And there are "2" driver faults listed for "Move off - Safety"
+      And there are "2" driver faults listed for "Move Away – Safety"
       And there is "1" driver fault listed for "Controls - Accelerator"
       And there is "1" driver fault listed for "Reverse right - Control"
       And there is "1" driver fault listed for "Controlled Stop"
