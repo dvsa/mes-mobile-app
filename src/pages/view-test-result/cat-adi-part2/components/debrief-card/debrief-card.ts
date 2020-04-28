@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { get } from 'lodash';
+import { get, flattenDeep } from 'lodash';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
@@ -10,10 +10,10 @@ import {
   TestRequirementsLabels,
 } from '../../../components/data-row-with-list/data-list-with-row.model';
 import { flattenArray } from '../../../view-test-result-helpers';
-import { manoeuvreTypeLabels } from '../../../../../shared/constants/competencies/catbe-manoeuvres';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { FaultSummaryProvider } from '../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
+import { manoeuvreTypeLabels } from '../../../../../shared/constants/competencies/catadi2-manoeuvres';
 
 @Component({
   selector: 'debrief-card',
@@ -51,17 +51,21 @@ export class DebriefCardComponent {
       {
         label: TestRequirementsLabels.angledStartControlledStop,
         checked: get(this.data, 'testRequirements.angledStartControlledStop', false),
-      },
-      {
-        label: TestRequirementsLabels.uncoupleRecouple,
-        checked: get(this.data, 'uncoupleRecouple.selected', false),
-      },
+      }
     ];
   }
 
   public getManoeuvre(): string {
-    const isReverseLeftSelected = get(this.data, 'manoeuvres.reverseLeft.selected', false);
-    return isReverseLeftSelected ? manoeuvreTypeLabels.reverseLeft : 'None';
+    const manoeuvres: CatADI2UniqueTypes.Manoeuvres[] = get(this.data, 'manoeuvres', []);
+
+    const mappedManoeuvres: string[] = flattenDeep(
+      manoeuvres.map((manoeuvreObject: CatADI2UniqueTypes.Manoeuvres) => {
+        if (manoeuvreObject) {
+          return Object.keys(manoeuvreObject).map((manoeuvre: string) => manoeuvreTypeLabels[manoeuvre]);
+        }
+      })
+    );
+    return mappedManoeuvres.length > 0 ? mappedManoeuvres.join(', ') : 'None';
   }
 
   public getEco(): DataRowListItem[] {
