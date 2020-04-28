@@ -1,5 +1,9 @@
 import { IonicPage, NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
+import { Incident, Severity } from '@dvsa/lw-incident-model';
+import { StoreModel } from '../../../shared/models/store.model';
+import { Store } from '@ngrx/store';
+import * as alertActions from '../lw-store/alert/alert.actions';
 
 type AlertType = 'red' | 'amber';
 
@@ -15,8 +19,11 @@ export class LWSosAlertModal {
   countdownInterval: any;
 
   private currentAlertType: AlertType;
+  private incident: Incident;
 
-  constructor(private navController: NavController) {}
+  constructor(
+    private navController: NavController,
+    private store$: Store<StoreModel>) {}
 
   close(): void {
     this.navController.pop();
@@ -58,17 +65,17 @@ export class LWSosAlertModal {
 
     console.log('constructing incident');
 
-    // const alert: Incident = {
-    //   ...this.incident,
-    //   severity: this.currentAlertType === 'red' ? Severity.Red : Severity.Amber,
-    //   timestamp: new Date(),
-    // };
+    const alert: Incident = {
+      ...this.incident,
+      severity: this.currentAlertType === 'red' ? Severity.Red : Severity.Amber,
+      timestamp: new Date(),
+    };
 
     console.log('dispatching relevant actions considering the incident');
 
-    // this.store$.dispatch(this.currentAlertType === 'red' ?
-    //   new alertActions.SendRedAlert(alert) :
-    //   new alertActions.SendAmberAlert(alert));
+    this.store$.dispatch(this.currentAlertType === 'red' ?
+      new alertActions.SendRedAlert(alert) :
+      new alertActions.SendAmberAlert(alert));
 
   }
 }
