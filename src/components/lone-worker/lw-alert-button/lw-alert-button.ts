@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-// import { AlertStatusModel } from '../../alert/alert.model';
+import { AlertStatusModel } from '../lw-store/alert/alert.model';
 
 export enum Severity {
   Red = 'Red',
@@ -11,9 +11,8 @@ export enum Severity {
   templateUrl: 'lw-alert-button.html',
 })
 export class LWAlertButtonComponent {
-
   @Input()
-  severity: Severity;
+  status: AlertStatusModel;
 
   @Output()
   start: EventEmitter<any> = new EventEmitter();

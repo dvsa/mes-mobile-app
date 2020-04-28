@@ -2,8 +2,13 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Incident, Severity } from '@dvsa/lw-incident-model';
 import { StoreModel } from '../../../shared/models/store.model';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as alertActions from '../lw-store/alert/alert.actions';
+import { map } from 'rxjs/operators';
+import { getAlertStatus } from '../lw-store/alert/alert.selector';
+import { Observable, merge, Subscription } from 'rxjs';
+import { AlertStatusModel } from '../lw-store/alert/alert.model';
+import { getAlertState } from '../lw-store/alert/alert.reducer';
 
 type AlertType = 'red' | 'amber';
 
@@ -13,6 +18,12 @@ type AlertType = 'red' | 'amber';
   templateUrl: 'lw-sos-alert-modal.page.html',
 })
 export class LWSosAlertModal {
+
+  private subscription: Subscription;
+  private merged$: Observable<AlertStatusModel>;
+
+  redAlertStatus$: Observable<AlertStatusModel>;
+  amberAlertStatus$: Observable<AlertStatusModel>;
 
   countdownVisible = false;
   countdownValue = 3;
@@ -24,6 +35,36 @@ export class LWSosAlertModal {
   constructor(
     private navController: NavController,
     private store$: Store<StoreModel>) {}
+
+  ngOnInit(): void {
+    this.redAlertStatus$ = this.store$.pipe(
+      select(getAlertState),
+      map(state => getAlertStatus(state, Severity.Red)),
+    );
+
+    this.amberAlertStatus$ = this.store$.pipe(
+      select(getAlertState),
+      map(state => getAlertStatus(state, Severity.Amber)),
+    );
+
+    this.merged$ = merge(
+      this.redAlertStatus$,
+      this.amberAlertStatus$,
+    );
+  }
+
+  ionViewWillEnter(): boolean {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
+    return true;
+  }
+
+  ionViewWillLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
   close(): void {
     this.navController.pop();
@@ -63,15 +104,11 @@ export class LWSosAlertModal {
 
   private triggerAlert(): void {
 
-    console.log('constructing incident');
-
     const alert: Incident = {
       ...this.incident,
       severity: this.currentAlertType === 'red' ? Severity.Red : Severity.Amber,
       timestamp: new Date(),
     };
-
-    console.log('dispatching relevant actions considering the incident');
 
     this.store$.dispatch(this.currentAlertType === 'red' ?
       new alertActions.SendRedAlert(alert) :

@@ -26,14 +26,14 @@
       <div>
         <p>Contact LDTM and colleagues</p>
         <lw-alert-button name="Amber Alert" class="amber" (start)="startCountDown('amber')" (stop)="stopCountDown()"
-          [severity]="Amber">
+          [status]="amberAlertStatus$ | async">
         </lw-alert-button>
       </div>
       <hr />
       <div>
         <p>Contact Police</p>
         <lw-alert-button name="Red Alert" class="red" (start)="startCountDown('red')" (stop)="stopCountDown()"
-          [severity]="Red">
+          [status]="redAlertStatus$ | async">
         </lw-alert-button>
       </div>
     </div>

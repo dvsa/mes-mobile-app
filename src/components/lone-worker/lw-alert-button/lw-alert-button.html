@@ -3,13 +3,13 @@
     Hold down for
     <br />
     <span class="lw-button-name-text">
-      {{ severity === 'Red' ? 'Red Alert' : 'Amber Alert' }}
+      {{ status.alertType === 'Red' ? 'Red Alert' : 'Amber Alert' }}
     </span>
   </span>
-  <!-- <span *ngIf="status.sending && !status.received">
+  <span *ngIf="status.sending && !status.received">
     sent
   </span>
   <span *ngIf="status.received">
     received
-  </span> -->
+  </span>
 </button>
