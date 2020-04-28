@@ -2,7 +2,7 @@
 Feature: A Driving Examiner Rekeys Category B tests
 
   Scenario: User can rekey a test pass for the previous day
-    Given I am on the journal page as "mobexaminer1"
+    Given I am logged in as "mobexaminer1" and I have a test for "Miss Doris Pearson"
     When I navigate to 1 day previously
     And I rekey a test for "Miss Doris Pearson"
     And the candidate completes the declaration page
@@ -25,8 +25,8 @@ Feature: A Driving Examiner Rekeys Category B tests
     And I see a "driving" fault for "Progress - Undue hesitation"
     And I see a "driving" fault for "Response to signs / signals - Traffic lights"
     And I see a "driving" fault for "Judgement - Crossing"
-    And I see a "driving" fault for "Ancillary Controls"
-    And I see a "driving" fault for "Controls - Gears"
+    And I see a "driving" fault for "Control - Ancillary Controls"
+    And I see a "driving" fault for "Control - Gears"
     When I end the debrief
     Then I should see the "Test debrief - Doris Pearson" page
     And I complete the pass details
@@ -38,8 +38,8 @@ Feature: A Driving Examiner Rekeys Category B tests
     And there is "1" driver fault listed for "Progress - Undue hesitation"
     And there is "1" driver fault listed for "Response to signs / signals - Traffic lights"
     And there is "1" driver fault listed for "Judgement - Crossing"
-    And there is "1" driver fault listed for "Ancillary Controls"
-    And there is "1" driver fault listed for "Controls - Gears"
+    And there is "1" driver fault listed for "Control - Ancillary Controls"
+    And there is "1" driver fault listed for "Control - Gears"
     When I complete the office write up
     And I complete the rekey
     Then the rekey is successfully uploaded
@@ -48,7 +48,7 @@ Feature: A Driving Examiner Rekeys Category B tests
     And the test result for "Miss Doris Pearson" is "1"
 
   Scenario: Driving Examiner rekeys a failed test for two days ago
-    Given I am on the journal page as "mobexaminer1"
+    Given I am logged in as "mobexaminer1" and I have a test for "Mrs Carly Doe"
     When I navigate to 2 day previously
     And I rekey a test for "Mrs Carly Doe"
     And the candidate completes the declaration page
@@ -112,8 +112,8 @@ Feature: A Driving Examiner Rekeys Category B tests
     And I see a "driving" fault for "Progress - Undue hesitation"
     And I see a "driving" fault for "Response to signs / signals - Traffic lights"
     And I see a "driving" fault for "Judgement - Crossing"
-    And I see a "driving" fault for "Ancillary Controls"
-    And I see a "driving" fault for "Controls - Gears"
+    And I see a "driving" fault for "Control - Ancillary Controls"
+    And I see a "driving" fault for "Control - Gears"
     When I end the debrief
     Then I should see the "Test debrief - Florence Pearson" page
     And I complete the pass details
@@ -125,8 +125,8 @@ Feature: A Driving Examiner Rekeys Category B tests
     And there is "1" driver fault listed for "Progress - Undue hesitation"
     And there is "1" driver fault listed for "Response to signs / signals - Traffic lights"
     And there is "1" driver fault listed for "Judgement - Crossing"
-    And there is "1" driver fault listed for "Ancillary Controls"
-    And there is "1" driver fault listed for "Controls - Gears"
+    And there is "1" driver fault listed for "Control - Ancillary Controls"
+    And there is "1" driver fault listed for "Control - Gears"
     When I complete the office write up
     And I complete the rekey
     Then the rekey is successfully uploaded

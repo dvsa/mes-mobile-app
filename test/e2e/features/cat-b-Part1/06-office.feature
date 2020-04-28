@@ -83,4 +83,4 @@ Feature: Office page
     And validation item "office-weather-validation-text" should be "Select weather conditions"
     And validation item "office-weather-validation-text" should be visible
     And I have a "dangerous" fault for "Use of speed" requiring a comment
-    And I have a "serious" fault for "Controls - Accelerator" requiring a comment
+    And I have a "serious" fault for "Control - Accelerator" requiring a comment
