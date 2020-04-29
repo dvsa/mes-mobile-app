@@ -31,4 +31,4 @@ Feature: A Driving Examiner Completes a Passed User Journey in Category CE
       When I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Ms Diaz Barber" is "1"
+     And the test result for "Ms Diaz Barber" is "1"
