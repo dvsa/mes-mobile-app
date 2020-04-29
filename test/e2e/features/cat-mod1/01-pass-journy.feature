@@ -27,7 +27,7 @@ Feature: A Driving Examiner Completes pass test's for Mod1
     When I end the test
     And I continue to debrief
     Then I should see the Debrief page with outcome "Passed"
-    And I see a "driving" fault for "Move off - Safety"
+    And I see a "driving" fault for "Move Away - Safety"
     And I see a "driving" fault for "Use of stand"
     And I see a "driving" fault for "Slow control"
     And I see a "driving" fault for "Emergency Stop"
@@ -71,7 +71,7 @@ Feature: A Driving Examiner Completes pass test's for Mod1
     When I end the test
     And I continue to debrief
     Then I should see the Debrief page with outcome "Passed"
-    And I see a "driving" fault for "Move off - Safety"
+    And I see a "driving" fault for "Move Away - Safety"
     And I see a "driving" fault for "Use of stand"
     And I see a "driving" fault for "Slow control"
     And I see a "driving" fault for "Emergency Stop"
