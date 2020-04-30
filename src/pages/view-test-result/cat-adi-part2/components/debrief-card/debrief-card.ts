@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { get, flattenDeep } from 'lodash';
+import { get } from 'lodash';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
@@ -51,21 +51,28 @@ export class DebriefCardComponent {
       {
         label: TestRequirementsLabels.angledStartControlledStop,
         checked: get(this.data, 'testRequirements.angledStartControlledStop', false),
-      }
+      },
+      {
+        label: TestRequirementsLabels.angledStart,
+        checked: get(this.data, 'testRequirements.angledStart', false),
+      },
     ];
   }
 
   public getManoeuvre(): string {
     const manoeuvres: CatADI2UniqueTypes.Manoeuvres[] = get(this.data, 'manoeuvres', []);
+    const selectedManoeuvres: string[] = [];
 
-    const mappedManoeuvres: string[] = flattenDeep(
-      manoeuvres.map((manoeuvreObject: CatADI2UniqueTypes.Manoeuvres) => {
-        if (manoeuvreObject) {
-          return Object.keys(manoeuvreObject).map((manoeuvre: string) => manoeuvreTypeLabels[manoeuvre]);
-        }
-      })
-    );
-    return mappedManoeuvres.length > 0 ? mappedManoeuvres.join(', ') : 'None';
+    manoeuvres.map((manoeuvreObject: CatADI2UniqueTypes.Manoeuvres) => {
+      if (manoeuvreObject) {
+        Object.keys(manoeuvreObject).map((manoeuvre: string) => {
+          if (manoeuvreObject[manoeuvre].selected) {
+            selectedManoeuvres.push(manoeuvreTypeLabels[manoeuvre]);
+          }
+        });
+      }
+    });
+    return selectedManoeuvres.length > 0 ? selectedManoeuvres.join(', ') : 'None';
   }
 
   public getEco(): DataRowListItem[] {

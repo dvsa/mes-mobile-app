@@ -73,23 +73,23 @@ describe('DebriefCardComponent', () => {
       it('should return the correct values for all test requirements', () => {
         const data: CatADI2UniqueTypes.TestData = {
           testRequirements: {
-            angledStartControlledStop: true,
+            angledStartControlledStop: false,
             downhillStart: false,
             normalStart1: true,
             normalStart2: false,
+            uphillStart: false,
+            angledStart: false,
           },
         };
         component.data = data;
-        fixture.detectChanges();
         const result: DataRowListItem[] = component.getTestRequirements();
-
         expect(result.length).toEqual(6);
         expect(result).toContain({ label: TestRequirementsLabels.normalStart1, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.normalStart2, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.uphillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
-        expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
-        expect(result).toContain({ label: TestRequirementsLabels.uncoupleRecouple, checked: false });
+        expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: false });
+        expect(result).toContain({ label: TestRequirementsLabels.angledStart, checked: false });
       });
     });
     describe('getManoeuvre', () => {
@@ -101,10 +101,9 @@ describe('DebriefCardComponent', () => {
                 selected: true,
               },
             },
-          ]
+          ],
         };
         component.data = data;
-        fixture.detectChanges();
         expect(component.getManoeuvre()).toEqual(manoeuvreTypeLabels.reverseRight);
       });
       it('should return None if the manoeuvre has not been completed', () => {
@@ -115,10 +114,9 @@ describe('DebriefCardComponent', () => {
                 selected: false,
               },
             },
-          ]
+          ],
         };
         component.data = data;
-        fixture.detectChanges();
         expect(component.getManoeuvre()).toEqual('None');
       });
       it('should return None if the data does not exist', () => {
@@ -133,7 +131,6 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        fixture.detectChanges();
         const result: DataRowListItem[] = component.getEco();
 
         expect(result.length).toEqual(2);
@@ -182,7 +179,6 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        fixture.detectChanges();
         expect(component.getETA()).toEqual('Physical and Verbal');
       });
       it('should return the correct data if only a physical eta has been selected', () => {
@@ -193,7 +189,6 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        fixture.detectChanges();
         expect(component.getETA()).toEqual('Physical');
       });
       it('should return the correct data if only a verbal eta has been selected', () => {
@@ -203,7 +198,6 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        fixture.detectChanges();
         expect(component.getETA()).toEqual('Verbal');
       });
       it('should return None if no ETA is present', () => {
@@ -227,7 +221,6 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        fixture.detectChanges();
         const result: QuestionResult[] = component.getShowMeQuestions();
         expect(result.length).toEqual(1);
         expect(result).toContain({ code: '1', description: '2', outcome: 'P' });
@@ -250,7 +243,6 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        fixture.detectChanges();
         const result: QuestionResult[] = component.getTellMeQuestions();
         expect(result.length).toEqual(1);
         expect(result).toContain({ code: '1', description: '2', outcome: 'P' });
