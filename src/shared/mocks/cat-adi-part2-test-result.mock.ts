@@ -136,7 +136,7 @@ export const categoryAdiPart2TestMock: CatADI2UniqueTypes.TestResult = {
           observationFault: 'S',
           observationFaultComments: 'Candidate nearly hit a little old lady crossing the road',
         },
-      }
+      },
     ],
     seriousFaults: {
       clearance: true,

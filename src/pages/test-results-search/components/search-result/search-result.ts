@@ -11,7 +11,7 @@ import {
   CAT_BE,
   CAT_C,
   CAT_D,
-  CAT_HOME_TEST
+  CAT_HOME_TEST,
 } from '../../../page-names.constants';
 import { App } from '../../../../app/app.component';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
