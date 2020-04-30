@@ -114,8 +114,7 @@ describe('ViewTestResultCatADIPart2Page', () => {
         const result: TestDetailsModel = component.getTestDetails();
 
         expect(result.applicationReference).toBe('12345672013');
-        // TO-DO Implement the correct category
-        expect(result.category).toBe(TestCategory.BE);
+        expect(result.category).toBe(TestCategory.ADI2);
         expect(result.date).toBe('Friday 5th July 2019');
         expect(result.time).toBe('09:00');
         expect(result.specialNeeds).toEqual(
