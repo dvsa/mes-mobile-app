@@ -34,7 +34,7 @@ export class FaultCommentCardComponent {
   @Output()
   faultCommentsChange = new EventEmitter<FaultSummary>();
 
-  ngOnInit() {
+  ngOnChanges() {
     this.faultComments.forEach((value) => {
       const control = new FormControl(null);
       this.formGroup.addControl(
