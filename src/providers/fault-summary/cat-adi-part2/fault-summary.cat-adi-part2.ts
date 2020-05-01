@@ -41,6 +41,7 @@ export class FaultSummaryCatAdiPart2Helper {
       ...getCompetencyFaults(data.dangerousFaults),
       ...this.getManoeuvreFaultsCatAdiPart2(data.manoeuvres, CompetencyOutcome.D),
       ...this.getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
+      ...this.getVehicleCheckDangerousFaultsCatAdiPart2(data.vehicleChecks),
     ];
   }
 
@@ -135,7 +136,7 @@ export class FaultSummaryCatAdiPart2Helper {
     const showMeFaults = showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
     const tellMeFaults = tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
 
-    const seriousFaultCount = showMeFaults.length + tellMeFaults.length === 5 ? 1 : 0;
+    const seriousFaultCount = vehicleChecks.seriousFault ? 1 : showMeFaults.length + tellMeFaults.length === 5 ? 1 : 0;
     const competency: FaultSummary = {
       comment: vehicleChecks.showMeTellMeComments || '',
       competencyIdentifier: CommentSource.VEHICLE_CHECKS,
@@ -144,6 +145,28 @@ export class FaultSummaryCatAdiPart2Helper {
       faultCount: seriousFaultCount,
     };
     seriousFaultCount > 0 && result.push(competency);
+
+    return result;
+  }
+
+  private static getVehicleCheckDangerousFaultsCatAdiPart2(
+    vehicleChecks: CatADI2UniqueTypes.VehicleChecks,
+  ): FaultSummary[] {
+    const result: FaultSummary[] = [];
+
+    if (!vehicleChecks) {
+      return result;
+    }
+
+    const dangerousFaultCount = vehicleChecks.dangerousFault ? 1 : 0;
+    const competency: FaultSummary = {
+      comment: vehicleChecks.showMeTellMeComments || '',
+      competencyIdentifier: CommentSource.VEHICLE_CHECKS,
+      competencyDisplayName: CompetencyDisplayName.VEHICLE_CHECKS,
+      source: CommentSource.VEHICLE_CHECKS,
+      faultCount: dangerousFaultCount,
+    };
+    dangerousFaultCount > 0 && result.push(competency);
 
     return result;
   }
