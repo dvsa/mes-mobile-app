@@ -41,6 +41,7 @@ export class VehicleDetailsCardComponent {
       case TestCategory.G:
       case TestCategory.H:
       case TestCategory.K:
+      case TestCategory.ADI2:
         return true;
       default:
         return false;
