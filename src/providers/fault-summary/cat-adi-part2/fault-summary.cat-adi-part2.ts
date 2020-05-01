@@ -136,7 +136,7 @@ export class FaultSummaryCatAdiPart2Helper {
     const showMeFaults = showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
     const tellMeFaults = tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
 
-    const seriousFaultCount = vehicleChecks.seriousFault ? 1 : showMeFaults.length + tellMeFaults.length === 5 ? 1 : 0;
+    const seriousFaultCount = (vehicleChecks.seriousFault || (showMeFaults.length + tellMeFaults.length === 5)) ? 1 : 0;
     const competency: FaultSummary = {
       comment: vehicleChecks.showMeTellMeComments || '',
       competencyIdentifier: CommentSource.VEHICLE_CHECKS,
