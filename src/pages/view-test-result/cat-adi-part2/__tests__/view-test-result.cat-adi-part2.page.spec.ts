@@ -133,7 +133,6 @@ describe('ViewTestResultCatADIPart2Page', () => {
     });
     describe('getExaminerDetails', () => {
       it('should correctly generate the data', () => {
-        // TO-DO ADI Part2: Implement correct category
         component.testResult = categoryAdiPart2TestMock;
 
         const result: ExaminerDetailsModel = component.getExaminerDetails();
