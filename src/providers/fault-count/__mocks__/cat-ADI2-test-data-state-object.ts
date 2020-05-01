@@ -277,9 +277,11 @@ export const catADI2TestDataStateObjectSeriousFaults: CatADI2UniqueTypes.TestDat
     ],
     showMeQuestions: [
       {
-        outcome: CompetencyOutcome.S,
+        outcome: CompetencyOutcome.DF,
       },
     ],
+    seriousFault: true,
+    dangerousFault: false,
   },
   eco: {},
   ETA: {},
@@ -328,9 +330,11 @@ export const catADI2TestDataStateObjectDangerousFaults: CatADI2UniqueTypes.TestD
     ],
     showMeQuestions: [
       {
-        outcome: CompetencyOutcome.D,
+        outcome: CompetencyOutcome.DF,
       },
     ],
+    seriousFault: false,
+    dangerousFault: true,
   },
   eco: {},
   ETA: {},
