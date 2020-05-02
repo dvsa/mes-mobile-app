@@ -5,7 +5,7 @@ Feature: A Driving Examiner  Creates a Lone Worker Incident
         Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
         When I start the test for "Miss Florence Pearson"
         And I click the SOS button on the Test Report 
-        Then I click and hold the red alert button
+        Then I click and hold the "red" alert button
         When I see the incident has been sent
         And I close the create incident modal
         Then I can see the incident sent icon on the test report page
@@ -14,7 +14,7 @@ Feature: A Driving Examiner  Creates a Lone Worker Incident
         Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
         When I start the test late for "Mrs Jane Doe"
         And I click the SOS button on the Test Report 
-        Then I click and hold the amber alert button
+        Then I click and hold the "amber" alert button
         When I see the incident has been sent
         And I close the create incident modal
         Then I can see the incident sent icon on the test report page
@@ -23,6 +23,10 @@ Feature: A Driving Examiner  Creates a Lone Worker Incident
         Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
         When I start the test late for "Mrs Jane Doe"
         Then I click the SOS button on the Test Report Page
+        Then I click and hold the "amber" alert button
+        When I see the incident has been sent
+        Then I click and hold the "red" alert button
+        When I see the incident has been sent
 
     Scenario: SOS button is not present on any customer facing screen
         Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"

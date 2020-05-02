@@ -1,6 +1,4 @@
 import { Then, When, Before } from 'cucumber';
-import WaitingRoomPage from '../pages/waitingRoomPage';
-import PageHelper from '../pages/pageHelper';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -10,8 +8,30 @@ const expect = chai.expect;
 //Set default category to be cat b
 this.testCategory = 'b';
 
-When('the candidate enters a new email address', () => {
-  WaitingRoomPage.clickNewEmailRadioButton();
-  WaitingRoomPage.enterNewEmail('testemail@example.com');
+When('I click the SOS button on the Test Report', () => {
+
 });
 
+Then('I click the SOS button on the Test Report', () => {
+
+});
+
+Then('I click and hold the {string} alert button', (incident: string) => {
+
+});
+
+When('I see the incident has been sent', () => {
+
+});
+
+When('I close the create incident modal', () => {
+
+});
+
+When('I can see the incident sent icon on the test report page', () => {
+
+});
+
+When('the SOS button is not present', () => {
+
+});
