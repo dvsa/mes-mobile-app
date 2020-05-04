@@ -64,7 +64,7 @@ When('I complete the pass details with an automatic transmission', () => {
 });
 
 When('I complete the fail details', () => {
-  if (this.testCategory === 'c' || this.testCategory === 'c1') {
+  if (this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'd') {
     DebriefPage.selectTransmission('manual');
   }
   DebriefPage.clickD255No();
