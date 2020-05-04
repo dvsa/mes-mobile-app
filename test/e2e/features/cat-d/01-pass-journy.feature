@@ -2,7 +2,7 @@
 
 Feature: A Driving Examiner Completes a pass test for category d
 
-  Scenario: Examiner completes a passed test with no faults
+  Scenario: Examiner completes a passed test journy
     Given I am logged in as "desexaminerd" and I have a test for "Mr Right Ford"
     When I start the test for "Mr Right Ford"
     And the candidate completes the declaration page
