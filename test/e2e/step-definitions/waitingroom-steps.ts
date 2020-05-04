@@ -34,6 +34,10 @@ Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
 });
 
+Before({ tags: '@catd' }, () => {
+  this.testCategory = 'd';
+});
+
 When('the candidate enters a new email address', () => {
   WaitingRoomPage.clickNewEmailRadioButton();
   WaitingRoomPage.enterNewEmail('testemail@example.com');

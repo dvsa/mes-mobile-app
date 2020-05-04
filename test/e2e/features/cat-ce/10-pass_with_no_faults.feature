@@ -21,7 +21,7 @@ Feature: A Driving Examiner Completes a Passed User Journey in Category CE
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
       Then I should see the "Test debrief - Diaz Barber" page
-      And  I select the code 78 option
+      And  I select the code 78 no option
       And I complete the pass details
       And I complete the health declaration
       Then I am on the back to office page

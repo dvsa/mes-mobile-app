@@ -1,6 +1,7 @@
 import { Then, When, Before } from 'cucumber';
 import TestReportPage from '../pages/testReportPage';
 import testReportPage from '../pages/testReportPage';
+import {Test} from 'tslint';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -31,6 +32,10 @@ Before({ tags: '@catc1e' }, () => {
 
 Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
+});
+
+Before({ tags: '@catd' }, () => {
+  this.testCategory = 'd';
 });
 
 When('I end the test', () => {
@@ -73,11 +78,15 @@ When('I complete the test with uncouple recouple', () => {
 });
 
 When('I complete the test with controlled stop', () => {
-  TestReportPage.legalRequirements.completeLegalRequirements();
+  if (this.testCategory === 'd') {
+    TestReportPage.legalRequirements.completeLegalRequirementsForCategoryD();
+  }else {
+    TestReportPage.legalRequirements.completeLegalRequirements();
+    TestReportPage.completeShowMe();
+    TestReportPage.completeControlledStop();
+  }
   TestReportPage.completeManouveure(this.testCategory);
   TestReportPage.completeEco();
-  TestReportPage.completeShowMe();
-  TestReportPage.completeControlledStop();
   TestReportPage.clickEndTestButton();
 });
 
@@ -153,7 +162,7 @@ Then('I should see the reversing diagram modal', () => {
   if (this.testCategory === 'ce') {
     expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - articulated vehicle');
   }
-  if (this.testCategory === 'c') {
+  if (this.testCategory === 'c' || this.testCategory === 'd') {
     expect(diagramModalTitle.getText()).to.eventually.equal('Reversing diagram - rigid vehicle');
   }
 });
