@@ -27,7 +27,7 @@
         <ng-content></ng-content>
       </ion-col>
     </ion-row>
-    <div class="man-report-overlay man-report-overlay-remove" [class.man-show-overlay]="isRemoveFaultMode$"
+    <div class="man-report-overlay man-report-overlay-remove" [class.man-show-overlay]="isRemoveFaultMode$ | async"
          [class.man-hide-overlay]="!isRemoveFaultMode$"></div>
   </ion-grid>
 </div>

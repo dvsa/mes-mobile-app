@@ -32,7 +32,6 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
   drivingFaults: number = 0;
   hasSeriousFault: boolean = false;
   hasDangerousFault: boolean = false;
-  isRemoveFaultMode: boolean = false;
 
   subscription: Subscription;
 
