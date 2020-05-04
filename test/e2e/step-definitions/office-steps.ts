@@ -30,10 +30,14 @@ Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
 });
 
+Before({ tags: '@catd' }, () => {
+  this.testCategory = 'd';
+});
+
 When('I complete the office write up', () => {
   if (!(this.testCategory === 'a-mod1')) {
     OfficePage.enterRouteNumber('2');
-    if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'ce') {
+    if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'ce' || this.testCategory === 'd') {
       OfficePage.enterIndependentDriving('diagram');
     } else {
       OfficePage.enterIndependentDriving('satnav');

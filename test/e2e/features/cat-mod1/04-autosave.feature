@@ -34,4 +34,4 @@ Feature: A Driving Examiner Completes a Passed Journey for Category Mod1 Using A
     When I search for a completed test with the application reference of "20123022011"
     And the search result is clicked
     Then I should see the "Test information" page
-#    And the test result outcome is "Passed"
+

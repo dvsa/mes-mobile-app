@@ -32,6 +32,9 @@ Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
 });
 
+Before({ tags: '@catd' }, () => {
+  this.testCategory = 'd';
+});
 When('I end the debrief', () => {
   DebriefPage.clickEndDebriefButton();
 });
@@ -46,8 +49,12 @@ When('I complete the pass details', () => {
   DebriefPage.continuePassFinalisation(this.testCategory);
 });
 
-When('I select the code 78 option', () => {
+When('I select the code 78 no option', () => {
   DebriefPage.clickCode78NotReceived();
+});
+
+When('I select the code 78 yes option', () => {
+  DebriefPage.clickCode78Received();
 });
 
 When('I complete the pass details with an automatic transmission', () => {
@@ -57,7 +64,7 @@ When('I complete the pass details with an automatic transmission', () => {
 });
 
 When('I complete the fail details', () => {
-  if (this.testCategory === 'c' || this.testCategory === 'c1') {
+  if (this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'd') {
     DebriefPage.selectTransmission('manual');
   }
   DebriefPage.clickD255No();

@@ -32,7 +32,7 @@ class TestReportPage extends Page {
   }
 
   completeManouveure(testCategory) {
-    if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1' || testCategory === 'ce') {
+    if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1' || testCategory === 'ce' || testCategory === 'd') {
       this.longPressElementByXPath('//competency-button[contains(@class, "reverse-left-tick")]');
     } else {
       this.clickManoeuvresButton();
@@ -225,6 +225,13 @@ class LegalRequirements extends Page {
     legalRequirements.each((legalRequirement) => {
       this.longPressButton(legalRequirement);
     });
+  }
+  completeLegalRequirementsForCategoryD() {
+    this.longPressButton(this.getElementById('BS'));
+    this.longPressButton(this.getElementById('BS'));
+    this.longPressButton(this.getElementById('NS'));
+    this.longPressButton(this.getElementById('NS'));
+    this.completeLegalRequirements();
   }
 }
 
