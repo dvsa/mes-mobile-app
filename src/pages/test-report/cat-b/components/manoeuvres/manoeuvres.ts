@@ -12,6 +12,8 @@ import { OverlayCallback } from '../../../test-report.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B/partial';
+import { getTestReportState } from '../../../test-report.reducer';
+import { isRemoveFaultMode } from '../../../test-report.selector';
 
 @Component({
   selector: 'manoeuvres',
@@ -30,11 +32,13 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
   drivingFaults: number = 0;
   hasSeriousFault: boolean = false;
   hasDangerousFault: boolean = false;
+  isRemoveFaultMode: boolean = false;
 
   subscription: Subscription;
 
   displayPopover: boolean;
   manoeuvres$: Observable<CatBUniqueTypes.Manoeuvres>;
+  isRemoveFaultMode$: Observable<boolean>;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -65,6 +69,13 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
           TestCategory.B, manoeuvres, CompetencyOutcome.D,
         ) > 0;
     });
+  }
+
+  ngOnChanges(): void {
+    this.isRemoveFaultMode$ = this.store$.pipe(
+      select(getTestReportState),
+      select(isRemoveFaultMode),
+    );
   }
 
   ngOnDestroy(): void {

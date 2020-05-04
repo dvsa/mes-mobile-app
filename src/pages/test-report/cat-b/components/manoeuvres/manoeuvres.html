@@ -21,11 +21,16 @@
   </div>
 </button>
 <div class="popover" *ngIf="displayPopover">
-  <ion-grid>
+  <ion-grid no-padding>
     <ion-row>
       <ion-col>
         <ng-content></ng-content>
       </ion-col>
     </ion-row>
+    <div class="man-report-overlay man-report-overlay-remove" [class.man-show-overlay]="isRemoveFaultMode$"
+         [class.man-hide-overlay]="!isRemoveFaultMode$"></div>
   </ion-grid>
 </div>
+
+<!--<div class="report-overlay report-overlay-remove" [class.contract]="isSeriousMode || isDangerousMode" [class.show-overlay]="isRemoveFaultMode"-->
+<!--     [class.hide-overlay]="!isRemoveFaultMode"></div>-->
