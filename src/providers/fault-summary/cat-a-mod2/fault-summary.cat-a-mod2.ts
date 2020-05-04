@@ -50,10 +50,10 @@ export class FaultSummaryCatAM2Helper {
 
     const allSafetyQuestions = safetyAndBalance.safetyQuestions;
     const allBalanceQuestions = safetyAndBalance.balanceQuestions;
-    const allSafetyQuestionsFailed = allSafetyQuestions.every(v => v.outcome === CompetencyOutcome.DF);
-    const allBalanceQuestionsFailed = allBalanceQuestions.every(v => v.outcome === CompetencyOutcome.DF);
+    const someSafetyQuestionsFailed = allSafetyQuestions.some(v => v.outcome === CompetencyOutcome.DF);
+    const someBalanceQuestionsFailed = allBalanceQuestions.some(v => v.outcome === CompetencyOutcome.DF);
 
-    if (allSafetyQuestionsFailed && allBalanceQuestionsFailed) {
+    if (someSafetyQuestionsFailed || someBalanceQuestionsFailed) {
       return [{
         competencyDisplayName: CompetencyDisplayName.SAFETY_AND_BALANCE_QUESTIONS,
         competencyIdentifier: 'safetyAndBalanceQuestions',
