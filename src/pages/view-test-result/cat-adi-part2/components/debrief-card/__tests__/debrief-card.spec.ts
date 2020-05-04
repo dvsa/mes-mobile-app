@@ -20,15 +20,13 @@ import { FaultsDataRowComponent } from '../../../../components/faults-data-row/f
 import { VehicleChecksDataRowComponent } from '../../../../components/vehicle-checks-data-row/vehicle-checks-data-row';
 import { FaultSummaryProvider } from '../../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
-// TO-DO ADI Part2: Implement correct category
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import {
   DataRowListItem,
   TestRequirementsLabels,
   ViewTestResultLabels,
 } from '../../../../components/data-row-with-list/data-list-with-row.model';
-// TO-DO ADI Part2: Implement correct category
-import { manoeuvreTypeLabels } from '../../../../../../shared/constants/competencies/catbe-manoeuvres';
+import { manoeuvreTypeLabels } from '../../../../../../shared/constants/competencies/catadi2-manoeuvres';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
 
@@ -73,53 +71,52 @@ describe('DebriefCardComponent', () => {
   describe('Class', () => {
     describe('getTestRequirements', () => {
       it('should return the correct values for all test requirements', () => {
-        // TO-DO ADI Part2: Implement correct category
-        const data: CatBEUniqueTypes.TestData = {
+        const data: CatADI2UniqueTypes.TestData = {
           testRequirements: {
-            angledStartControlledStop: true,
+            angledStartControlledStop: false,
             downhillStart: false,
             normalStart1: true,
             normalStart2: false,
+            uphillStart: false,
+            angledStart: false,
           },
         };
         component.data = data;
-        fixture.detectChanges();
         const result: DataRowListItem[] = component.getTestRequirements();
-
         expect(result.length).toEqual(6);
         expect(result).toContain({ label: TestRequirementsLabels.normalStart1, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.normalStart2, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.uphillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
-        expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
-        expect(result).toContain({ label: TestRequirementsLabels.uncoupleRecouple, checked: false });
+        expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: false });
+        expect(result).toContain({ label: TestRequirementsLabels.angledStart, checked: false });
       });
     });
     describe('getManoeuvre', () => {
       it('should return Reverse Left if the manoeuvre has been completed', () => {
-        // TO-DO ADI Part2: Implement correct category
-        const data: CatBEUniqueTypes.TestData = {
-          manoeuvres: {
-            reverseLeft: {
-              selected: true,
+        const data: CatADI2UniqueTypes.TestData = {
+          manoeuvres: [
+            {
+              reverseRight: {
+                selected: true,
+              },
             },
-          },
+          ],
         };
         component.data = data;
-        fixture.detectChanges();
-        expect(component.getManoeuvre()).toEqual(manoeuvreTypeLabels.reverseLeft);
+        expect(component.getManoeuvre()).toEqual(manoeuvreTypeLabels.reverseRight);
       });
       it('should return None if the manoeuvre has not been completed', () => {
-        // TO-DO ADI Part2: Implement correct category
-        const data: CatBEUniqueTypes.TestData = {
-          manoeuvres: {
-            reverseLeft: {
-              selected: false,
+        const data: CatADI2UniqueTypes.TestData = {
+          manoeuvres: [
+            {
+              reverseRight: {
+                selected: false,
+              },
             },
-          },
+          ],
         };
         component.data = data;
-        fixture.detectChanges();
         expect(component.getManoeuvre()).toEqual('None');
       });
       it('should return None if the data does not exist', () => {
@@ -128,14 +125,12 @@ describe('DebriefCardComponent', () => {
     });
     describe('getEco', () => {
       it('should return the correct data for eco', () => {
-        // TO-DO ADI Part2: Implement correct category
-        const data: CatBEUniqueTypes.TestData = {
+        const data: CatADI2UniqueTypes.TestData = {
           eco: {
             adviceGivenControl: true,
           },
         };
         component.data = data;
-        fixture.detectChanges();
         const result: DataRowListItem[] = component.getEco();
 
         expect(result.length).toEqual(2);
@@ -177,38 +172,32 @@ describe('DebriefCardComponent', () => {
     });
     describe('getETA', () => {
       it('should return the correct data if all eta options have been selected', () => {
-        // TO-DO ADI Part2: Implement correct category
-        const data: CatBEUniqueTypes.TestData = {
+        const data: CatADI2UniqueTypes.TestData = {
           ETA: {
             physical: true,
             verbal: true,
           },
         };
         component.data = data;
-        fixture.detectChanges();
         expect(component.getETA()).toEqual('Physical and Verbal');
       });
       it('should return the correct data if only a physical eta has been selected', () => {
-        // TO-DO ADI Part2: Implement correct category
-        const data: CatBEUniqueTypes.TestData = {
+        const data: CatADI2UniqueTypes.TestData = {
           ETA: {
             physical: true,
             verbal: false,
           },
         };
         component.data = data;
-        fixture.detectChanges();
         expect(component.getETA()).toEqual('Physical');
       });
       it('should return the correct data if only a verbal eta has been selected', () => {
-        // TO-DO ADI Part2: Implement correct category
-        const data: CatBEUniqueTypes.TestData = {
+        const data: CatADI2UniqueTypes.TestData = {
           ETA: {
             verbal: true,
           },
         };
         component.data = data;
-        fixture.detectChanges();
         expect(component.getETA()).toEqual('Verbal');
       });
       it('should return None if no ETA is present', () => {
@@ -220,8 +209,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getShowMeQuestions()).toEqual([]);
       });
       it('should return the correct data when present', () => {
-        // TO-DO ADI Part2: Implement correct category
-        const data: CatBEUniqueTypes.TestData = {
+        const data: CatADI2UniqueTypes.TestData = {
           vehicleChecks: {
             showMeQuestions: [
               {
@@ -233,7 +221,6 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        fixture.detectChanges();
         const result: QuestionResult[] = component.getShowMeQuestions();
         expect(result.length).toEqual(1);
         expect(result).toContain({ code: '1', description: '2', outcome: 'P' });
@@ -244,8 +231,7 @@ describe('DebriefCardComponent', () => {
         expect(component.getTellMeQuestions()).toEqual([]);
       });
       it('should return the correct data when present', () => {
-        // TO-DO ADI Part2: Implement correct category
-        const data: CatBEUniqueTypes.TestData = {
+        const data: CatADI2UniqueTypes.TestData = {
           vehicleChecks: {
             tellMeQuestions: [
               {
@@ -257,7 +243,6 @@ describe('DebriefCardComponent', () => {
           },
         };
         component.data = data;
-        fixture.detectChanges();
         const result: QuestionResult[] = component.getTellMeQuestions();
         expect(result.length).toEqual(1);
         expect(result).toContain({ code: '1', description: '2', outcome: 'P' });

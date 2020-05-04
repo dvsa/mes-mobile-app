@@ -7,17 +7,24 @@ import {
   Loading,
   LoadingController,
 } from 'ionic-angular';
-import { BasePageComponent } from '../../../shared/classes/base-page';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { SearchProvider } from '../../../providers/search/search';
+import { JournalData } from '@dvsa/mes-test-schema/categories/common';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
+import { HttpResponse } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { Subscription } from 'rxjs/Subscription';
+import { get } from 'lodash';
+import moment from 'moment';
+
+import { BasePageComponent } from '../../../shared/classes/base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { SearchProvider } from '../../../providers/search/search';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { getCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
-import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { ViewTestResultViewDidEnter } from '../view-test-result.actions';
@@ -25,15 +32,9 @@ import { LogType } from '../../../shared/models/log.model';
 import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogHelper } from '../../../providers/logs/logsHelper';
 import { QuestionProvider } from '../../../providers/question/question';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { HttpResponse } from '@angular/common/http';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
-// TO-DO ADI Part2: Implement correct category
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { get } from 'lodash';
-import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -43,9 +44,7 @@ import moment from 'moment';
 export class ViewTestResultCatADIPart2Page extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
-  // TO-DO ADI Part2: Implement correct category
-  testResult: CatBEUniqueTypes.TestResult;
-
+  testResult: CatADI2UniqueTypes.TestResult;
   isLoading: boolean;
   loadingSpinner: Loading;
   subscription: Subscription;
@@ -77,12 +76,13 @@ export class ViewTestResultCatADIPart2Page extends BasePageComponent implements 
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
         map((response: HttpResponse<any>): string => response.body),
-        // TO-DO ADI Part2: Implement correct category
-        map(data => this.testResult = this.compressionProvider.extractTestResult(data) as CatBEUniqueTypes.TestResult),
+        map(data => this.testResult = this.compressionProvider.extractTestResult(data) as
+          CatADI2UniqueTypes.TestResult),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
           this.store$.dispatch(new SaveLog(this.logHelper
-            .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
+            .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`,
+              err)));
           this.errorLink = ErrorTypes.SEARCH_RESULT;
           this.additionalErrorText = true;
           this.showErrorMessage = true;
@@ -125,16 +125,17 @@ export class ViewTestResultCatADIPart2Page extends BasePageComponent implements 
     }
 
     const startDate: moment.Moment = moment(this.testResult.journalData.testSlotAttributes.start);
+    const journalData: JournalData = this.testResult.journalData;
 
     return {
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
-      applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
-      category: TestCategory.BE,
-      specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
-      entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
-      slotType: this.testResult.journalData.testSlotAttributes.slotType,
-      previousCancellations: get(this.testResult, 'journalData.testSlotAttributes.previousCancellation', []),
+      applicationReference: formatApplicationReference(journalData.applicationReference),
+      category: TestCategory.ADI2,
+      specialNeeds: journalData.testSlotAttributes.specialNeedsArray,
+      entitlementCheck: journalData.testSlotAttributes.entitlementCheck,
+      slotType: journalData.testSlotAttributes.slotType,
+      previousCancellations: get(journalData, 'testSlotAttributes.previousCancellation', []),
     };
   }
 
