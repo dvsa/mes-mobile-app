@@ -1,6 +1,6 @@
 @catd
 
-  Feature: Driver Examiner failed the test journy for category D with serious fault
+  Feature: Driver Examiner failed the test journey for category D with serious fault
 
 Scenario: Examiner completes a passed test with no faults
   Given I am logged in as "desexaminerd" and I have a test for "Mr Right Ford"

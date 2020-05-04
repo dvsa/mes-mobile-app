@@ -2,7 +2,7 @@
 
 Feature: A Driving Examiner Completes a pass test for category d
 
-  Scenario: Examiner completes a passed test journy
+  Scenario: Examiner completes a passed test with no faults
     Given I am logged in as "desexaminerd" and I have a test for "Mr Right Ford"
     When I start the test for "Mr Right Ford"
     And the candidate completes the declaration page
@@ -17,8 +17,6 @@ Feature: A Driving Examiner Completes a pass test for category d
     Then I should see the reversing diagram modal
     And I close the reversing diagram modal
     Then I close the reversing diagram drop down
-    And I add a "PCV Exercise" driver fault
-    And the driver fault count is "1"
     And I complete the test with controlled stop
     And I continue to debrief
     Then I should see the Debrief page with outcome "Passed"
