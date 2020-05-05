@@ -17,7 +17,6 @@ import { DataRowComponent } from '../../../../../../components/common/data-row/d
 import { DataRowCustomComponent } from '../../../../../../components/common/data-row-custom/data-row-custom';
 import { DataRowWithListComponent } from '../../../../components/data-row-with-list/data-list-with-row';
 import { FaultsDataRowComponent } from '../../../../components/faults-data-row/faults-data-row';
-import { VehicleChecksDataRowComponent } from '../../../../components/vehicle-checks-data-row/vehicle-checks-data-row';
 import { FaultSummaryProvider } from '../../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM2';
@@ -29,6 +28,9 @@ import {
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import {
+  SafetyAndBalanceDataRowComponent,
+} from '../../../../components/safety-and-balance-data-row/safety-and-balance-data-row';
 
 describe('DebriefCardComponent', () => {
   let fixture: ComponentFixture<DebriefCardComponent>;
@@ -48,7 +50,7 @@ describe('DebriefCardComponent', () => {
         MockComponent(DataRowCustomComponent),
         MockComponent(DataRowWithListComponent),
         MockComponent(FaultsDataRowComponent),
-        MockComponent(VehicleChecksDataRowComponent),
+        MockComponent(SafetyAndBalanceDataRowComponent),
       ],
       imports: [
         IonicModule,
