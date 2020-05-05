@@ -12,12 +12,31 @@ manoeuvre-competency {
       width: 100%;
       justify-content: center;
     }
+
     .competency-label {
       margin-left: 20px;
     }
 
     .fault-wrapper {
       display: flex;
+    }
+
+    &.man-remove-mode.man-fault-mode.man-fault {
+      background-color: #1e7dc8;
+      z-index: 1000 !important;
+      position: absolute;
+    }
+
+    &.man-remove-mode.man-serious-mode.man-serious-fault {
+      background-color: #1e7dc8;
+      z-index: 1000 !important;
+      position: absolute;
+    }
+
+    &.man-remove-mode.man-dangerous-mode.man-dangerous-fault {
+      background-color: #1e7dc8;
+      z-index: 1000 !important;
+      position: absolute;
     }
   }
 }

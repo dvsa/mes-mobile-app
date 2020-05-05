@@ -11,6 +11,8 @@ import { RecordManoeuvresSelection } from '../../../../../modules/tests/test-dat
 import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
 import { map } from 'rxjs/operators';
 import { some } from 'lodash';
+import { getTestReportState } from '../../../test-report.reducer';
+import { isRemoveFaultMode } from '../../../test-report.selector';
 
 interface ManoeuvresFaultState {
   reverseRight: boolean;
@@ -29,6 +31,7 @@ export class ManoeuvresPopoverComponent {
   manoeuvres$: Observable<CatBUniqueTypes.Manoeuvres>;
   competencies = ManoeuvreCompetencies;
   manoeuvresWithFaults$: Observable<ManoeuvresFaultState>;
+  isRemoveFaultMode$: Observable<boolean>;
 
   constructor(private store$: Store<StoreModel>) { }
 
@@ -46,6 +49,13 @@ export class ManoeuvresPopoverComponent {
         reverseParkCarpark: this.manoeuvreHasFaults(manoeuvres.reverseParkCarpark),
         forwardPark: this.manoeuvreHasFaults(manoeuvres.forwardPark),
       })),
+    );
+  }
+
+  ngOnChanges(): void {
+    this.isRemoveFaultMode$ = this.store$.pipe(
+      select(getTestReportState),
+      select(isRemoveFaultMode),
     );
   }
 

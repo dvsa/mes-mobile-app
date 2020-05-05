@@ -5,7 +5,13 @@
   (touchend)="onTouchEnd()"
   [ngClass]="{
     'activated': touchState,
-    'ripple-effect': rippleState
+    'ripple-effect': rippleState,
+    'man-fault': hasDrivingFault() > 0,
+    'man-serious-fault': hasSeriousFault() > 0,
+    'man-dangerous-fault': hasDangerousFault() > 0,
+    'man-remove-mode': isRemoveFaultMode,
+    'man-serious-mode': isSeriousMode,
+    'man-dangerous-mode': isDangerousMode
   }"
 >
   <driving-faults-badge class="driving-faults" [count]="hasDrivingFault()"></driving-faults-badge>

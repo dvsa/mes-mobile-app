@@ -24,9 +24,11 @@ manoeuvres-popover {
       border-color: map-get($colors-gds, "gds-grey-2");
     }
   }
-  .popover-content {
+  .man-popover-content {
     margin-left: 68px;
     border: 0 none map-get($colors, "mes-white");
+    z-index: -1;
+    position: absolute;
   }
   .manoeuvre-competencies-container {
     margin-top: 40px;
@@ -34,4 +36,6 @@ manoeuvres-popover {
       margin-bottom: 10px;
     }
   }
+
+
 }

@@ -94,22 +94,6 @@ manoeuvres {
       display: inline-block;
       margin-right: 2px;
     }
-
-    &.fault {
-      .remove-mode.fault-mode & {
-        z-index: 270;
-      }
-    }
-    &.serious-fault {
-      .remove-mode.serious-mode & {
-        z-index: 270;
-      }
-    }
-    &.dangerous-fault {
-      .remove-mode.dangerous-mode & {
-        z-index: 270;
-      }
-    }
   }
 
   .popover {
@@ -157,6 +141,7 @@ manoeuvres {
   }
 
   .man-show-overlay {
+    z-index: 220;
     animation-name: showAnimation;
     animation-duration: 0.25s;
     animation-fill-mode: forwards;
@@ -170,6 +155,7 @@ manoeuvres {
   .man-report-overlay {
     background-color: rgba(0, 0, 0, 0.85);
     position: absolute;
+    z-index: 120;
     left: 0px;
     width: 100%;
     height: 100%;
