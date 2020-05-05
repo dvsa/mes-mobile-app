@@ -46,7 +46,7 @@ describe('FaultSummaryCatAM2Helper', () => {
   });
 
   describe('getSafetyAndBalanceFaults', () => {
-    it('should return a driving fault if safety / balance questions are incorrect', () => {
+    it('should return a single driving fault if any safety / balance questions are incorrect', () => {
 
       expect(FaultSummaryCatAM2Helper.getSafetyAndBalanceFaults(
         catAM2TestDataStateObject.safetyAndBalanceQuestions,
@@ -56,24 +56,6 @@ describe('FaultSummaryCatAM2Helper', () => {
       catAM2TestDataStateObject.safetyAndBalanceQuestions.safetyQuestions[0].outcome = CompetencyOutcome.P;
       catAM2TestDataStateObject.safetyAndBalanceQuestions.safetyQuestions[1].outcome = CompetencyOutcome.P;
       catAM2TestDataStateObject.safetyAndBalanceQuestions.balanceQuestions[0].outcome = CompetencyOutcome.P;
-
-      expect(FaultSummaryCatAM2Helper.getSafetyAndBalanceFaults(
-        catAM2TestDataStateObject.safetyAndBalanceQuestions,
-      )).toEqual([]);
-    });
-    it('should return an empty array if only safety questions are incorrect', () => {
-      catAM2TestDataStateObject.safetyAndBalanceQuestions.safetyQuestions[0].outcome = CompetencyOutcome.DF;
-      catAM2TestDataStateObject.safetyAndBalanceQuestions.safetyQuestions[1].outcome = CompetencyOutcome.DF;
-      catAM2TestDataStateObject.safetyAndBalanceQuestions.balanceQuestions[0].outcome = CompetencyOutcome.P;
-
-      expect(FaultSummaryCatAM2Helper.getSafetyAndBalanceFaults(
-        catAM2TestDataStateObject.safetyAndBalanceQuestions,
-      )).toEqual([]);
-    });
-    it('should return an empty array if only balance question is incorrect', () => {
-      catAM2TestDataStateObject.safetyAndBalanceQuestions.safetyQuestions[0].outcome = CompetencyOutcome.P;
-      catAM2TestDataStateObject.safetyAndBalanceQuestions.safetyQuestions[1].outcome = CompetencyOutcome.P;
-      catAM2TestDataStateObject.safetyAndBalanceQuestions.balanceQuestions[0].outcome = CompetencyOutcome.DF;
 
       expect(FaultSummaryCatAM2Helper.getSafetyAndBalanceFaults(
         catAM2TestDataStateObject.safetyAndBalanceQuestions,

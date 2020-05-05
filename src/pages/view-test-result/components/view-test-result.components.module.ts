@@ -15,6 +15,7 @@ import { ContactDetailsCardComponent } from './contact-details-card/contact-deta
 import { BusinessDetailsCardComponent } from './business-details-card/business-details-card';
 import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
 import { VehicleDetailsCardCatAComponent } from './vehicle-details-card-cat-a/vehicle-details-card-cat-a';
+import { SafetyAndBalanceDataRowComponent } from './safety-and-balance-data-row/safety-and-balance-data-row';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { VehicleDetailsCardCatAComponent } from './vehicle-details-card-cat-a/ve
     RekeyDetailsCardComponent,
     RekeyReasonCardComponent,
     VehicleChecksDataRowComponent,
+    SafetyAndBalanceDataRowComponent,
     TestSummaryCardComponent,
     ContactDetailsCardComponent,
     BusinessDetailsCardComponent,
@@ -46,6 +48,7 @@ import { VehicleDetailsCardCatAComponent } from './vehicle-details-card-cat-a/ve
     RekeyDetailsCardComponent,
     RekeyReasonCardComponent,
     VehicleChecksDataRowComponent,
+    SafetyAndBalanceDataRowComponent,
     TestSummaryCardComponent,
     ContactDetailsCardComponent,
     BusinessDetailsCardComponent,

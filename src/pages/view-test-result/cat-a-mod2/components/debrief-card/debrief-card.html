@@ -14,16 +14,16 @@
         [drivingFaultCount]="getDrivingFaultCount()">
     </faults-data-row>
       <data-row [label]="'ETA'" [value]="getETA()"></data-row>
-      <vehicle-checks-data-row
+      <safety-and-balance-data-row
         [label]="'Safety question(s)'"
         [data]="getSafetyQuestions()"
         [shouldHaveSeperator]="false">
-      </vehicle-checks-data-row>
-      <vehicle-checks-data-row
+      </safety-and-balance-data-row>
+      <safety-and-balance-data-row
         [label]="'Balance question'"
         [data]="getBalanceQuestions()"
         [shouldHaveSeperator]="false">
-      </vehicle-checks-data-row>
+      </safety-and-balance-data-row>
     </ion-grid>
   </ion-card-content>
 </ion-card>
