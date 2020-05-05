@@ -1,7 +1,6 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
-// import { Saf } from '../safety-and-balance-data-row';
 import { SafetyAndBalanceDataRowComponent } from '../safety-and-balance-data-row';
 import { configureTestSuite } from 'ng-bullet';
 
