@@ -47,7 +47,7 @@ export const getIncidentProperties = (state: StoreModel): any => {
         accompaniedBy: getAccompaniedBy(currentTest.accompaniment),
         candidateDriverNumber: candidate.driverNumber,
         candidateName: candidateNameAsStr,
-        startDateTime: journalData.testSlotAttributes.start, // TODO: Needs turning into a Date
+        startDateTime: new Date(journalData.testSlotAttributes.start),
         testCategory: currentTest.category,
         testCentre: {
           centreId: testCentre.centreId,
