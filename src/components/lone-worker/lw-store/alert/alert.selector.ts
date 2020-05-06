@@ -38,8 +38,7 @@ export const getIncidentProperties = (state: StoreModel): any => {
   const incident = {
     loneWorker: {
       staffNumber,
-      // Driving examiner name not currently available in DES, using staffNumber for now
-      name: staffNumber,
+      name: state.appInfo.employeeName,
     },
     scenario: {
       drivingTestInfo: {
