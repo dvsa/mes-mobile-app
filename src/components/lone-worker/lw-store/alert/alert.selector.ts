@@ -28,6 +28,7 @@ export const getAlertStatus = (state: AlertModel, severity: Severity): AlertStat
 // TODO: add return type when have all properties
 export const getIncidentProperties = (state: StoreModel): any => {
 
+  const staffNumber = state.journal.examiner.staffNumber;
   // This selector always get the test that is currently in progress and active
   const currentTest = getCurrentTest(state.tests);
   const { journalData } = currentTest;
@@ -36,11 +37,9 @@ export const getIncidentProperties = (state: StoreModel): any => {
 
   const incident = {
     loneWorker: {
-
-      // TODO: Not sure where the name property is coming from
-      name: 'Not defined in DES',
-
-      staffNumber: state.journal.examiner.staffNumber,
+      staffNumber,
+      // Driving examiner name not currently available in DES, using staffNumber for now
+      name: staffNumber,
     },
     scenario: {
       drivingTestInfo: {
