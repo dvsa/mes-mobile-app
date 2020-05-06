@@ -88,7 +88,7 @@ export class LWSosAlertModal {
 
       if (this.countdownValue === 0) {
         clearInterval(this.countdownInterval);
-        this.triggerAlert();
+        this.dispatchTriggerAlert();
         this.countdownVisible = false;
         this.countdownValue = 3;
       }
@@ -111,7 +111,7 @@ export class LWSosAlertModal {
     return `lw-countdown-bands ${this.currentAlertType} c${this.countdownValue}`;
   }
 
-  private triggerAlert(): void {
+  private dispatchTriggerAlert(): void {
 
     const alert: Incident = {
       ...this.incident,

@@ -8,6 +8,7 @@ import { AlertSendReciept } from '../lw-store/alert/alert.model';
 @Injectable()
 export class AlertProvider {
 
+  // TODO: Update to read from config
   configuration = {
     apiRoot: 'localhost...',
   };
@@ -17,6 +18,7 @@ export class AlertProvider {
   ) { }
 
   triggerAlert(incident: Incident): Observable<AlertSendReciept> {
+    console.log('### Sending alert');
     const postUri = `${this.configuration.apiRoot}/incident`;
     return this.http
       .post(postUri, incident)
