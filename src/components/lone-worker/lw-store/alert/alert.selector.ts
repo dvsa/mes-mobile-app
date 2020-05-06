@@ -11,14 +11,14 @@ export const getAlertStatus = (state: AlertModel, severity: Severity): AlertStat
     case Severity.Red:
       if (state.redAlert) {
         status.sending = state.isSending;
-        status.received = !!state.redAlert.id;
+        status.received = !!state.redAlert.incident.id;
       }
       break;
     case Severity.Amber:
       if (state.amberAlert) {
         status.sending = state.isSending;
-        status.received = !!state.amberAlert.id;
-        status.disabled = !!state.redAlert || !!state.amberAlert.id;
+        status.received = !!state.amberAlert.incident.id;
+        status.disabled = !!state.redAlert || !!state.amberAlert.incident.id;
       }
       break;
   }

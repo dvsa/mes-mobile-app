@@ -1,11 +1,13 @@
 import { AlertModel } from './alert.model';
 import { createFeatureSelector } from '@ngrx/store';
 import * as alertActions from './alert.actions';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export const initialState: AlertModel = {
   redAlert: null,
   amberAlert: null,
   isSending: false,
+  error: HttpErrorResponse,
 };
 
 export function alertReducer(state = initialState, action: alertActions.AlertActionTypes): AlertModel {
@@ -13,14 +15,20 @@ export function alertReducer(state = initialState, action: alertActions.AlertAct
     case alertActions.SEND_RED_ALERT:
       return {
         ...state,
-        redAlert: action.incident,
+        redAlert: {
+          ...state.redAlert,
+          incident: action.incident,
+        },
         isSending: true,
         error: { message: '', status: 0, statusText: '' },
       };
     case alertActions.SEND_AMBER_ALERT:
       return {
         ...state,
-        amberAlert: action.incident,
+        amberAlert: {
+          ...state.amberAlert,
+          incident: action.incident,
+        },
         isSending: true,
         error: { message: '', status: 0, statusText: '' },
       };
@@ -29,8 +37,11 @@ export function alertReducer(state = initialState, action: alertActions.AlertAct
         ...state,
         redAlert: {
           ...state.redAlert,
-          received: action.sentReceipt.received,
-          id: action.sentReceipt.incidentId,
+          incident: {
+            ...state.redAlert.incident,
+            received: action.sentReceipt.received,
+            id: action.sentReceipt.incidentId,
+          },
         },
         isSending: false,
       };
@@ -39,15 +50,30 @@ export function alertReducer(state = initialState, action: alertActions.AlertAct
         ...state,
         amberAlert: {
           ...state.amberAlert,
-          received: action.sentReceipt.received,
-          id: action.sentReceipt.incidentId,
+          incident: {
+            ...state.redAlert.incident,
+            received: action.sentReceipt.received,
+            id: action.sentReceipt.incidentId,
+          },
         },
         isSending: false,
       };
-    case alertActions.ALERT_SEND_FAILURE:
+    case alertActions.RED_ALERT_SEND_FAILURE:
       return {
         ...state,
-        error: action.error,
+        redAlert: {
+          ...state.redAlert,
+          error: action.error,
+        },
+        isSending: false,
+      };
+    case alertActions.AMBER_ALERT_SEND_FAILURE:
+      return {
+        ...state,
+        amberAlert: {
+          ...state.amberAlert,
+          error: action.error,
+        },
         isSending: false,
       };
     default:

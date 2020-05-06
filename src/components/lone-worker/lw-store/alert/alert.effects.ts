@@ -19,7 +19,7 @@ export class AlertEffects {
     switchMap((action) => {
       return this.alertProvider.triggerAlert(action.incident).pipe(
         map(receipt => new alertActions.RedAlertSent(receipt)),
-        catchError((err: HttpErrorResponse) => of(new alertActions.AlertSendFailure(err))),
+        catchError((err: HttpErrorResponse) => of(new alertActions.RedAlertSendFailure(err))),
       );
     }),
   );
@@ -30,7 +30,7 @@ export class AlertEffects {
     switchMap((action) => {
       return this.alertProvider.triggerAlert(action.incident).pipe(
         map(receipt => new alertActions.AmberAlertSent(receipt)),
-        catchError((err: HttpErrorResponse) => of(new alertActions.AlertSendFailure(err))),
+        catchError((err: HttpErrorResponse) => of(new alertActions.AmberAlertSendFailure(err))),
       );
     }),
   );
