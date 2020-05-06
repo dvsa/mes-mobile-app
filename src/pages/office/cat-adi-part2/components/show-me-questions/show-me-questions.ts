@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { uniqueId } from 'lodash';
@@ -13,7 +13,7 @@ import { CompetencyOutcome } from '../../../../../shared/models/competency-outco
   selector: 'show-me-questions-cat-adi2',
   templateUrl: 'show-me-questions.html',
 })
-export class ShowMeQuestionsCatADI2Component implements OnChanges {
+export class ShowMeQuestionsCatADI2Component implements OnChanges, OnInit {
 
   @Input()
   questionResult: QuestionResult;
@@ -55,6 +55,10 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) {
   }
 
+  ngOnInit () {
+    this.updateShowMeQuestionAttributes(true);
+  }
+
   ngOnChanges(): void {
     this.fieldName = `showMeQuestion_${this.questionNumber}`;
 
@@ -77,7 +81,7 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
       this.formControl.patchValue(this.findQuestion());
     }
 
-    this.updateShowMeQuestionAttributes();
+    this.updateShowMeQuestionAttributes(false);
   }
 
   showMeQuestionsChanged(showMeQuestions: VehicleChecksQuestion): void {
@@ -115,20 +119,20 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges {
     return this.questions.find(question => question.code === this.questionResult.code);
   }
 
-  updateShowMeQuestionAttributes(): void {
+  updateShowMeQuestionAttributes(shouldEnableDisableFields: boolean): void {
     const seriousDangerousCount: number = [this.serious, this.dangerous].filter(Boolean).length;
     if (
       (seriousDangerousCount === 0 && this.drivingFaults === 0) ||
       (seriousDangerousCount === 0 && this.drivingFaults === 1 && this.questionNumber === 2)) {
       this.checked = true;
-      this.disabled = true;
+      if (shouldEnableDisableFields) this.disabled = true;
     } else if (
       (seriousDangerousCount === 1 && this.drivingFaults === 0 && this.questionNumber === 2)) {
       this.checked = true;
-      this.disabled = false;
+      if (shouldEnableDisableFields) this.disabled = false;
     } else {
       this.checked = false;
-      this.disabled = true;
+      if (shouldEnableDisableFields) this.disabled = true;
     }
   }
 
