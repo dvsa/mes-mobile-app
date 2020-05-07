@@ -21,12 +21,10 @@ export class LWAlertButtonComponent {
   stop: EventEmitter<any> = new EventEmitter();
 
   onTouch(): void {
-    console.log('on touch has been triggered');
     this.start.emit();
   }
 
   onTouchLeave(): void {
-    console.log('on touch leave has been triggered');
     this.stop.emit();
   }
 

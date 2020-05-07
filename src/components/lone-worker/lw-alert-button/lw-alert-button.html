@@ -6,10 +6,13 @@
       {{ status.alertType === 'Red' ? 'Red Alert' : 'Amber Alert' }}
     </span>
   </span>
-  <span *ngIf="status.sending && !status.received">
+  <div *ngIf="status.sending && !status.received">
     sent
-  </span>
-  <span *ngIf="status.received">
+  </div>
+  <div *ngIf="status.received">
     received
-  </span>
+  </div>
+  <div *ngIf="status.error">
+    error
+  </div>
 </button>

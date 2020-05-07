@@ -27,6 +27,7 @@ export class AlertStatusModel {
   public sending: boolean;
   public received: boolean;
   public disabled: boolean;
+  public error: boolean;
 
   public canSendAlert = (): boolean => !this.sending && !this.received && !this.disabled;
 }
