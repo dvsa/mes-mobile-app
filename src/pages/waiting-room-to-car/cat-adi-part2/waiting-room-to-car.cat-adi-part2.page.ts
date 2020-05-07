@@ -64,6 +64,19 @@ import { VehicleChecksQuestion } from '../../../providers/question/vehicle-check
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
+import {
+  OrditTrainedChanged,
+  TrainerRegistrationNumberChanged,
+  TrainingRecordsChanged,
+} from '../../../modules/tests/trainer-details/cat-adi-part2/trainer-details.cat-adi-part2.actions';
+import {
+  getTrainerDetails,
+} from '../../../modules/tests/trainer-details/cat-adi-part2/trainer-details.cat-adi-part2.reducer';
+import {
+  getOrditTrained,
+  getTrainerRegistrationNumber,
+  getTrainingRecords,
+} from '../../../modules/tests/trainer-details/cat-adi-part2/trainer-details.cat-adi-part2.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -81,6 +94,9 @@ interface WaitingRoomToCarPageState {
   gearboxManualRadioChecked$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
   vehicleChecks$: Observable<CatADI2UniqueTypes.VehicleChecks>;
+  orditTrained$: Observable<boolean>;
+  trainingRecords$: Observable<boolean>;
+  trainerRegistrationNumber$: Observable<number>;
 }
 
 @IonicPage()
@@ -188,6 +204,18 @@ export class WaitingRoomToCarCatADIPart2Page extends BasePageComponent {
         select(getTestData),
         select(getVehicleChecksCatADIPart2),
       ),
+      orditTrained$: currentTest$.pipe(
+        select(getTrainerDetails),
+        select(getOrditTrained),
+      ),
+      trainingRecords$: currentTest$.pipe(
+        select(getTrainerDetails),
+        select(getTrainingRecords),
+      ),
+      trainerRegistrationNumber$: currentTest$.pipe(
+        select(getTrainerDetails),
+        select(getTrainerRegistrationNumber),
+      ),
     };
   }
 
@@ -278,6 +306,18 @@ export class WaitingRoomToCarCatADIPart2Page extends BasePageComponent {
   eyesightTestResultChanged(passed: boolean): void {
     const action = passed ? new EyesightTestPassed() : new EyesightTestFailed();
     this.store$.dispatch(action);
+  }
+
+  trainingRecordOutcomeChanged(hasRecords: boolean): void {
+    this.store$.dispatch(new TrainingRecordsChanged(hasRecords));
+  }
+
+  orditTrainedOutcomeChanged(wasOrditTrained: boolean): void {
+    this.store$.dispatch(new OrditTrainedChanged(wasOrditTrained));
+  }
+
+  trainerRegistrationNumberChanged(instructorRegistration: number): void {
+    this.store$.dispatch(new TrainerRegistrationNumberChanged(instructorRegistration));
   }
 
   getDebriefPage() {

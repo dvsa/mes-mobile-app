@@ -21,6 +21,9 @@ import { testDataCatADI2Reducer } from './test-data/cat-adi-part2/test-data.cat-
 import { vehicleDetailsCatADIPart2Reducer }
 from './vehicle-details/cat-adi-part2/vehicle-details.cat-adi-part2.reducer';
 import { nullReducer } from '../../shared/classes/null.reducer';
+import {
+    trainerDetailsCatADIPart2Reducer,
+} from './trainer-details/cat-adi-part2/trainer-details.cat-adi-part2.reducer';
 
 export function testsCatADIPart2Reducer(
   action: Action, state: CatADI2UniqueTypes.TestResult): Required<CatADI2UniqueTypes.TestResult> {
@@ -34,6 +37,7 @@ export function testsCatADIPart2Reducer(
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatADIPart2Reducer,
       testData: testDataCatADI2Reducer,
+      trainerDetails: trainerDetailsCatADIPart2Reducer,
       passCompletion: nullReducer,
       postTestDeclarations: postTestDeclarationsReducer,
       testSummary: testSummaryReducer,

@@ -29,6 +29,13 @@ export const getInstructorRegistrationNumberValidator = (): FieldValidators => {
   };
 };
 
+export const getTrainerRegistrationNumberValidator = (): FieldValidators => {
+  return {
+    pattern: /^[1-9][0-9]{0,6}$/g,
+    maxLength: '7',
+  };
+};
+
 export const getSpeedCheckValidator = (): FieldValidators => {
   return {
     pattern: /^[1-9][0-9]{0,2}$/g,

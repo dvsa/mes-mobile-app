@@ -58,6 +58,24 @@
               (schoolVehicleDetailsChange)="schoolCarToggled()"
               (dualVehicleDetailsChange)="dualControlsToggled()"
             ></vehicle-details-card>
+
+            <ordit-trainer-cat-adi-part2
+                    [formGroup]="form"
+                    [orditTrainedRadioChecked]="pageState?.orditTrained$ | async"
+                    (orditTrainedOutcomeChange)="orditTrainedOutcomeChanged($event)">
+            </ordit-trainer-cat-adi-part2>
+
+            <trainer-registration-number-cat-adi-part2
+                    [formGroup]="form"
+                    [trainerRegistration]="pageState.trainerRegistrationNumber$ | async"
+                    (trainerRegistrationChange)="trainerRegistrationNumberChanged($event)">
+            </trainer-registration-number-cat-adi-part2>
+
+            <training-records-cat-adi-part2
+                    [formGroup]="form"
+                    [trainingRecordRadioChecked]="pageState.trainingRecords$ | async"
+                    (trainingRecordOutcomeChange)="trainingRecordOutcomeChanged($event)">
+            </training-records-cat-adi-part2>
           </ion-col>
         </ion-row>
 

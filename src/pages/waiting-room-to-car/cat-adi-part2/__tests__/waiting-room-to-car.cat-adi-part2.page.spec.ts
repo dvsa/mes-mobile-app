@@ -1,6 +1,11 @@
 import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
+import { StoreModule, Store } from '@ngrx/store';
+import { By } from '@angular/platform-browser';
+import { MockComponent } from 'ng-mocks';
+import { of } from 'rxjs';
+import { configureTestSuite } from 'ng-bullet';
 
 import { AppModule } from '../../../../app/app.module';
 import { WaitingRoomToCarCatADIPart2Page } from '../waiting-room-to-car.cat-adi-part2.page';
@@ -8,14 +13,10 @@ import { AuthenticationProvider } from '../../../../providers/authentication/aut
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
-import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { By } from '@angular/platform-browser';
-import { MockComponent } from 'ng-mocks';
 import {
   EyesightFailureConfirmationComponent,
 } from '../../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
-import { of } from 'rxjs';
 import { QuestionProvider } from '../../../../providers/question/question';
 import { QuestionProviderMock } from '../../../../providers/question/__mocks__/question.mock';
 import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';
@@ -30,11 +31,15 @@ import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actio
 import { EyesightTestReset } from '../../../../modules/tests/test-data/common/eyesight-test/eyesight-test.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
-import { configureTestSuite } from 'ng-bullet';
 import {
   AccompanimentCardCatADIPart2Component,
 } from '../components/accompaniment-card/accompaniment-card.cat-adi-part2';
 import { VehicleChecksCatADIPart2Component } from '../components/vehicle-checks/vehicle-checks.cat-adi-part2';
+import { OrditTrainerCatAdiPart2Component } from '../components/ordit-trainer/ordit-trainer.cat-adi-part2';
+import { TrainingRecordsCatAdiPart2Component } from '../components/training-records/training-records.cat-adi-part2';
+import {
+  TrainerRegistrationNumberCatAdiPart2Component,
+} from '../components/trainer-registration-number/trainer-registration-number.cat-adi-part2';
 
 describe('WaitingRoomToCarCatADIPart2Page', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatADIPart2Page>;
@@ -55,6 +60,9 @@ describe('WaitingRoomToCarCatADIPart2Page', () => {
         MockComponent(AccompanimentCardCatADIPart2Component),
         MockComponent(AccompanimentComponent),
         MockComponent(VehicleChecksCatADIPart2Component),
+        MockComponent(OrditTrainerCatAdiPart2Component),
+        MockComponent(TrainingRecordsCatAdiPart2Component),
+        MockComponent(TrainerRegistrationNumberCatAdiPart2Component),
       ],
       imports: [
         IonicModule,
@@ -68,14 +76,19 @@ describe('WaitingRoomToCarCatADIPart2Page', () => {
             startedTests: {
               123: {
                 vehicleDetails: {},
+                trainerDetails: {
+                  orditTrainedCandidate: null,
+                  trainingRecords: null,
+                  trainerRegistrationNumber: null,
+                },
                 accompaniment: {},
                 testData: {
                   vehicleChecks: {
-                    tellMeQuestion: {
+                    tellMeQuestion: [{
                       code: 'T1',
                       description: 'desc',
                       outcome: CompetencyOutcome.P,
-                    },
+                    }],
                   },
                   seriousFaults: [],
                   eyesightTest: {},
@@ -155,8 +168,6 @@ describe('WaitingRoomToCarCatADIPart2Page', () => {
   });
   describe('onSubmit', () => {
     it('should dispatch the appropriate WaitingRoomToCarValidationError actions', fakeAsync(() => {
-      fixture.detectChanges();
-
       component.form = new FormGroup({
         requiredControl1: new FormControl(null, [Validators.required]),
         requiredControl2: new FormControl(null, [Validators.required]),
