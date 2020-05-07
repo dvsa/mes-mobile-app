@@ -1,4 +1,4 @@
-import { AlertModel, AlertStatusModel } from './alert.model';
+import { AlertModel, AlertStatusModel, AlertRequestStatus } from './alert.model';
 import { Severity, ScenarioType } from '@dvsa/lw-incident-model';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
@@ -11,16 +11,16 @@ export const getAlertStatus = (state: AlertModel, severity: Severity): AlertStat
     case Severity.Red:
       if (state.redAlert) {
         status.sending = state.isSending;
-        status.received = !!state.redAlert.incident.id;
-        status.error = !!state.redAlert.error;
+        status.received = state.redAlert.status === AlertRequestStatus.Success;
+        status.error = state.redAlert.status === AlertRequestStatus.Fail;
       }
       break;
     case Severity.Amber:
       if (state.amberAlert) {
         status.sending = state.isSending;
-        status.received = !!state.amberAlert.incident.id;
+        status.received = state.amberAlert.status === AlertRequestStatus.Success;
         status.disabled = !!state.redAlert || !!state.amberAlert.incident.id;
-        status.error = !!state.amberAlert.error;
+        status.error = state.amberAlert.status === AlertRequestStatus.Fail;
       }
       break;
   }

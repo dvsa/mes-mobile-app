@@ -35,6 +35,6 @@ export class AlertStatusModel {
 export type StoreModel = { loneWorkerAlerts: AlertModel };
 
 export enum AlertRequestStatus {
-  Success,
-  Fail,
+  Success = 'SUCCESS',
+  Fail = 'FAIL',
 }

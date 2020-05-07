@@ -1,11 +1,17 @@
-import { AlertModel } from './alert.model';
+import { AlertModel, AlertRequestStatus } from './alert.model';
 import { createFeatureSelector } from '@ngrx/store';
 import * as alertActions from './alert.actions';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export const initialState: AlertModel = {
-  redAlert: null,
-  amberAlert: null,
+  redAlert: {
+    status: null,
+    incident: null,
+  },
+  amberAlert:{
+    status: null,
+    incident: null,
+  },
   isSending: false,
   error: HttpErrorResponse,
 };
@@ -20,7 +26,6 @@ export function alertReducer(state = initialState, action: alertActions.AlertAct
           incident: action.incident,
         },
         isSending: true,
-        error: { message: '', status: 0, statusText: '' },
       };
     case alertActions.SEND_AMBER_ALERT:
       return {
@@ -30,7 +35,6 @@ export function alertReducer(state = initialState, action: alertActions.AlertAct
           incident: action.incident,
         },
         isSending: true,
-        error: { message: '', status: 0, statusText: '' },
       };
     case alertActions.RED_ALERT_SENT:
       return {
@@ -42,6 +46,7 @@ export function alertReducer(state = initialState, action: alertActions.AlertAct
             received: action.sentReceipt.received,
             id: action.sentReceipt.incidentId,
           },
+          status: AlertRequestStatus.Success,
         },
         isSending: false,
       };
@@ -55,6 +60,7 @@ export function alertReducer(state = initialState, action: alertActions.AlertAct
             received: action.sentReceipt.received,
             id: action.sentReceipt.incidentId,
           },
+          status: AlertRequestStatus.Success,
         },
         isSending: false,
       };
@@ -64,6 +70,7 @@ export function alertReducer(state = initialState, action: alertActions.AlertAct
         redAlert: {
           ...state.redAlert,
           error: action.error,
+          status: AlertRequestStatus.Fail,
         },
         isSending: false,
       };
@@ -73,6 +80,7 @@ export function alertReducer(state = initialState, action: alertActions.AlertAct
         amberAlert: {
           ...state.amberAlert,
           error: action.error,
+          status: AlertRequestStatus.Fail,
         },
         isSending: false,
       };
