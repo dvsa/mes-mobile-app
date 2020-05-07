@@ -1,9 +1,10 @@
 import { AlertModel, AlertStatusModel, AlertRequestStatus } from './alert.model';
-import { Severity, ScenarioType } from '@dvsa/lw-incident-model';
+import { Severity, ScenarioType, Vehicle } from '@dvsa/lw-incident-model';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { Accompaniment, Name } from '@dvsa/mes-test-schema/categories/common';
-import { omit } from 'lodash';
+import { Accompaniment, Name, VehicleDetails } from '@dvsa/mes-test-schema/categories/common';
+import { omit, get } from 'lodash';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
 export const getAlertStatus = (state: AlertModel, severity: Severity): AlertStatusModel => {
   const status = new AlertStatusModel(severity);
@@ -53,21 +54,25 @@ export const getIncidentProperties = (state: StoreModel): any => {
           centreId: testCentre.centreId,
           centreName: testCentre.centreName,
         },
-        vehicle: {
-
-          // Different categories store different data - so you might want to extract these on a category level
-
-          // dualControl: currentTest.vehicleDetails.dualControls,
-          // schoolCar: currentTest.vehicleDetails.schoolCar,
-
-          vehicleRegistration: currentTest.vehicleDetails.registrationNumber,
-        },
+        vehicle: getVehicleDetails(currentTest.vehicleDetails),
       },
       type: ScenarioType.DrivingTest,
     },
   };
 
   return incident;
+};
+
+const getVehicleDetails = (vehicleDetails: VehicleDetails & CatBUniqueTypes.VehicleDetails): Vehicle => {
+  const incidentVehicleDetails: Vehicle = {};
+  const hasDualControlsField = get(vehicleDetails, 'dualControls', false);
+  const hasSchoolCarField = get(vehicleDetails, 'schoolCar', false);
+  if (hasDualControlsField) incidentVehicleDetails.dualControl = vehicleDetails.dualControls;
+  if (hasSchoolCarField) incidentVehicleDetails.schoolCar = vehicleDetails.schoolCar;
+  return {
+    ...incidentVehicleDetails,
+    vehicleRegistration: vehicleDetails.registrationNumber,
+  };
 };
 
 const getAccompaniedBy = (accompaniment: Accompaniment) => {
