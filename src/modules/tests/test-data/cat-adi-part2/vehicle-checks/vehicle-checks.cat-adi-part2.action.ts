@@ -84,4 +84,6 @@ export type Types =
   | VehicleChecksAddSeriousFault
   | VehicleChecksAddDangerousFault
   | VehicleChecksRemoveSeriousFault
-  | VehicleChecksRemoveDangerousFault;
+  | VehicleChecksRemoveDangerousFault
+  | VehicleChecksCompletedDeselected
+  | VehicleChecksCompletedSelected;
