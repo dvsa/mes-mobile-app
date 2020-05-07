@@ -70,7 +70,8 @@ export const hasVehicleChecksBeenCompletedCatADI2 = (vehicleChecks: CatADI2Uniqu
 
   if (
     !(vehicleChecks && vehicleChecks.tellMeQuestions instanceof Array) ||
-    vehicleChecks.tellMeQuestions.length !== NUMBER_OF_TELL_ME_QUESTIONS
+    vehicleChecks.tellMeQuestions.length !== NUMBER_OF_TELL_ME_QUESTIONS ||
+    !vehicleChecks.vehicleChecksCompleted
   ) {
     return false;
   }
