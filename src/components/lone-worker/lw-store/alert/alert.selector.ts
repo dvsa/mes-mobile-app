@@ -1,5 +1,5 @@
 import { AlertModel, AlertStatusModel, AlertRequestStatus } from './alert.model';
-import { Severity, ScenarioType, Vehicle } from '@dvsa/lw-incident-model';
+import { Severity, ScenarioType, Vehicle, IncidentCore } from '@dvsa/lw-incident-model';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { Accompaniment, Name, VehicleDetails } from '@dvsa/mes-test-schema/categories/common';
@@ -11,16 +11,16 @@ export const getAlertStatus = (state: AlertModel, severity: Severity): AlertStat
   switch (severity) {
     case Severity.Red:
       if (state.redAlert) {
-        status.sending = state.isSending;
+        status.sending = state.redAlert.isSending;
         status.received = state.redAlert.status === AlertRequestStatus.Success;
         status.error = state.redAlert.status === AlertRequestStatus.Fail;
       }
       break;
     case Severity.Amber:
       if (state.amberAlert) {
-        status.sending = state.isSending;
+        status.sending = state.amberAlert.isSending;
         status.received = state.amberAlert.status === AlertRequestStatus.Success;
-        status.disabled = !!state.redAlert || !!state.amberAlert.incident.id;
+        status.disabled = !!state.redAlert || state.amberAlert.status === AlertRequestStatus.Success;
         status.error = state.amberAlert.status === AlertRequestStatus.Fail;
       }
       break;
@@ -28,8 +28,7 @@ export const getAlertStatus = (state: AlertModel, severity: Severity): AlertStat
   return status;
 };
 
-// TODO: add return type when have all properties
-export const getIncidentProperties = (state: StoreModel): any => {
+export const getIncidentProperties = (state: StoreModel): Partial<IncidentCore> => {
 
   const staffNumber = state.journal.examiner.staffNumber;
   // This selector always get the test that is currently in progress and active
@@ -51,7 +50,7 @@ export const getIncidentProperties = (state: StoreModel): any => {
         startDateTime: new Date(journalData.testSlotAttributes.start),
         testCategory: currentTest.category,
         testCentre: {
-          centreId: testCentre.centreId,
+          centreId: testCentre.centreId.toString(),
           centreName: testCentre.centreName,
         },
         vehicle: getVehicleDetails(currentTest.vehicleDetails),

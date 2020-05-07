@@ -1,6 +1,6 @@
 import { IonicPage, NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { Incident, Severity } from '@dvsa/lw-incident-model';
+import { Severity, IncidentCore } from '@dvsa/lw-incident-model';
 import { StoreModel } from '../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import * as alertActions from '../lw-store/alert/alert.actions';
@@ -31,7 +31,7 @@ export class LWSosAlertModal {
   countdownInterval: any;
 
   private currentAlertType: AlertType;
-  private incident: Incident;
+  private incident: IncidentCore;
 
   constructor(
     private navController: NavController,
@@ -52,7 +52,7 @@ export class LWSosAlertModal {
     // Would help to decouple Lone Worker with DES
     this.incidentProperties$ = this.store$.pipe(
       select(getIncidentProperties),
-      map(incidentProperties => this.incident = incidentProperties),
+      map(incidentProperties => this.incident = incidentProperties as IncidentCore),
     );
 
     this.merged$ = merge(
@@ -113,7 +113,7 @@ export class LWSosAlertModal {
 
   private dispatchTriggerAlert(): void {
 
-    const alert: Incident = {
+    const alert: IncidentCore = {
       ...this.incident,
       severity: this.currentAlertType === 'red' ? Severity.Red : Severity.Amber,
       timestamp: new Date(),

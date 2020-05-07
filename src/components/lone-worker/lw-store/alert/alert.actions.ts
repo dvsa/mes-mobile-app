@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Incident } from '@dvsa/lw-incident-model';
+import { IncidentCore } from '@dvsa/lw-incident-model';
 import { AlertSendReciept } from './alert.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -12,12 +12,12 @@ export const AMBER_ALERT_SEND_FAILURE = '[Lone Worker Alert] Amber Alert Send Fa
 
 export class SendAmberAlert implements Action {
   readonly type = SEND_AMBER_ALERT;
-  constructor(public incident: Incident) { }
+  constructor(public incident: IncidentCore) { }
 }
 
 export class SendRedAlert implements Action {
   readonly type = SEND_RED_ALERT;
-  constructor(public incident: Incident) { }
+  constructor(public incident: IncidentCore) { }
 }
 
 export class AmberAlertSent implements Action {

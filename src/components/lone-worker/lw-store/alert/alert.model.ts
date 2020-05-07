@@ -1,16 +1,16 @@
-import { Incident, Severity } from '@dvsa/lw-incident-model';
+import { IncidentCore, Severity } from '@dvsa/lw-incident-model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export type AlertModel = {
-  isSending: boolean;
   redAlert: AlertWrapper;
   amberAlert: AlertWrapper;
-  error?: any;
 };
 
 export type AlertWrapper = {
-  incident: Incident | null,
+  incident: IncidentCore | null,
   status: AlertRequestStatus,
+  isSending: boolean,
+  sentReceipt: AlertSendReciept,
   error?: HttpErrorResponse,
 };
 
