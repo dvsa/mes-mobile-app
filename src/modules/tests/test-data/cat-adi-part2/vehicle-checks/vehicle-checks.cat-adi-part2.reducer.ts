@@ -22,6 +22,7 @@ export const initialState: CatADI2UniqueTypes.VehicleChecks = {
   ],
   seriousFault: false,
   dangerousFault: false,
+  vehicleChecksCompleted: false,
 };
 
 export function vehicleChecksCatADI2Reducer(
