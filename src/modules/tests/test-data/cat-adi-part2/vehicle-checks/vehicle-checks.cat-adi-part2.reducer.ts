@@ -101,6 +101,16 @@ export function vehicleChecksCatADI2Reducer(
         ...state,
         dangerousFault: false,
       };
+    case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_COMPLETED_DESELECTED:
+      return {
+        ...state,
+        vehicleChecksCompleted: false,
+      };
+    case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_COMPLETED_SELECTED:
+      return {
+        ...state,
+        vehicleChecksCompleted: true,
+      };
     default:
       return state;
   }
