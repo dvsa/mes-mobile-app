@@ -7,14 +7,13 @@ import {
 } from '../../common/test-data.selector';
 import {
   getDrivingFaultCount,
-  // TODO - ADI2: Update with manoeuvres
-  // getManoeuvres,
-  // hasManoeuvreBeenCompletedCatBE,
   areTellMeQuestionsSelected,
   areTellMeQuestionsCorrect,
   hasVehicleChecksBeenCompletedCatADI2,
   hasEyesightTestGotSeriousFault,
   hasEyesightTestBeenCompleted,
+  getManoeuvresADI2,
+  hasManoeuvreBeenCompletedCatADIPart2,
 } from '../test-data.cat-adi-part2.selector';
 import { Competencies } from '../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
@@ -163,30 +162,35 @@ describe('TestDataSelectors Cat ADI2', () => {
     });
   });
 
-  // TODO - ADI2: Manoeuvres yet to be compeleted
-  // describe('getManoeuvres', () => {
-  //   it('should retrive the manoeuvres data when requested', () => {
-  //     const result = getManoeuvres(state);
-  //     expect(result).toEqual(state.manoeuvres);
-  //   });
-  // });
+  describe('getManoeuvres', () => {
+    it('should retrieve the manoeuvres data when requested', () => {
+      const result = getManoeuvresADI2(state);
+      expect(result).toEqual(state.manoeuvres);
+    });
+  });
 
-  // describe('hasManoeuvreBeenCompleted', () => {
-  //   it('should return false when no manoeuvres have been completed', () => {
-  //     const state: CatBEUniqueTypes.TestData = {
-  //       manoeuvres: {},
-  //     };
-  //     expect(hasManoeuvreBeenCompletedCatBE(state)).toBeFalsy();
-  //   });
-  //   it('should return true when a manoeuvre has been completed', () => {
-  //     const state: CatBEUniqueTypes.TestData = {
-  //       manoeuvres: {
-  //         reverseLeft: { selected: true },
-  //       },
-  //     };
-  //     expect(hasManoeuvreBeenCompletedCatBE(state)).toEqual(true);
-  //   });
-  // });
+  fdescribe('hasManoeuvreBeenCompleted', () => {
+    it('should return false when no manoeuvres have been completed', () => {
+      const state: CatADI2UniqueTypes.Manoeuvres[] = [{
+      }];
+      expect(hasManoeuvreBeenCompletedCatADIPart2(state)).toBeFalsy();
+    });
+    it('should return true when 2 manoeuvres have been completed', () => {
+      const state: CatADI2UniqueTypes.Manoeuvres[] = [
+        {
+          reverseRight: {
+            selected: true,
+          },
+        },
+        {
+          reverseParkRoad: {
+            selected: true,
+          },
+        },
+      ];
+      expect(hasManoeuvreBeenCompletedCatADIPart2(state)).toEqual(true);
+    });
+  });
 
   describe('vehicle checks selector', () => {
     describe('areTellMeQuestionsSelected', () => {
