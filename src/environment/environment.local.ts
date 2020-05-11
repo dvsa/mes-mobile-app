@@ -10,6 +10,8 @@ export const environment: LocalEnvironmentFile = {
   googleAnalyticsId: 'UA-129489007-3',
   logsPostApiKey: '',
   logsApiUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/logs',
+  // TODO LW-114: Uncomment this when raiseIncidentApiBaseUrl is added to remote config
+  // raiseIncidentApiBaseUrl: string;
   logsAutoSendInterval: 6000,
   employeeNameKey: 'name',
   authentication: {

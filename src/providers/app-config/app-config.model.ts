@@ -8,6 +8,8 @@ export type AppConfig = {
   logsPostApiKey: string;
   logsApiUrl: string;
   logsAutoSendInterval: number;
+  // TODO LW-114: Uncomment this when raiseIncidentApiBaseUrl is added to remote config
+  // raiseIncidentApiBaseUrl: string;
   authentication: {
     context: string,
     resourceUrl: string,
