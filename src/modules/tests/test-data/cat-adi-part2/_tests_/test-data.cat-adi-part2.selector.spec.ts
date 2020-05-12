@@ -327,6 +327,7 @@ describe('TestDataSelectors Cat ADI2', () => {
           ],
           vehicleChecksCompleted: false,
         };
+
         expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(false);
       });
       it('should return false with an empty array as its parameter', () => {
@@ -334,6 +335,19 @@ describe('TestDataSelectors Cat ADI2', () => {
           tellMeQuestions: [],
           vehicleChecksCompleted: true,
         };
+
+        expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(false);
+      });
+      it('should return false with an array under 2 items', () => {
+        const state: CatADI2UniqueTypes.VehicleChecks = {
+          tellMeQuestions: [
+            {
+              outcome: CompetencyOutcome.P,
+            },
+          ],
+          vehicleChecksCompleted: true,
+        };
+
         expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(false);
       });
     });

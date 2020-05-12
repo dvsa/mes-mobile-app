@@ -26,6 +26,7 @@ describe('TestReportValidator', () => {
     { category: TestCategory.G, validTest: mocks.validTestCatG, legalReqs: mocks.legalRequirementsCatG },
     { category: TestCategory.H, validTest: mocks.validTestCatH, legalReqs: mocks.legalRequirementsCatH },
     { category: TestCategory.K, validTest: mocks.validTestCatK, legalReqs: mocks.legalRequirementsCatK },
+    { category: TestCategory.ADI2, validTest: mocks.validTestCatADIPart2, legalReqs: mocks.legalRequirementsADIPart2 },
   ];
 
   let testReportValidatorProvider: TestReportValidatorProvider;
@@ -56,7 +57,7 @@ describe('TestReportValidator', () => {
     });
 
   });
-  describe('getMissingLegalRequirements', () => {
+  fdescribe('getMissingLegalRequirements', () => {
     categories.forEach((cat) => {
       it(`should return an empty array if the legal requirements are met for a Cat ${cat.category} test`, () => {
         const result = testReportValidatorProvider.getMissingLegalRequirements(cat.validTest, cat.category);

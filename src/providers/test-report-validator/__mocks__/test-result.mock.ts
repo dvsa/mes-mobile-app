@@ -15,6 +15,7 @@ import { CatFUniqueTypes } from '@dvsa/mes-test-schema/categories/F';
 import { CatGUniqueTypes } from '@dvsa/mes-test-schema/categories/G';
 import { CatHUniqueTypes } from '@dvsa/mes-test-schema/categories/H';
 import { CatKUniqueTypes } from '@dvsa/mes-test-schema/categories/K';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 
 export const validTestCatAMod2: CatAMod2TestData = {
   testRequirements: {
@@ -44,6 +45,56 @@ export const validTestCatAMod2: CatAMod2TestData = {
       },
     ],
   },
+  eco: {
+    completed: true,
+  },
+};
+
+export const validTestCatADIPart2: CatADI2UniqueTypes.TestData = {
+  testRequirements: {
+    angledStart: true,
+    downhillStart: true,
+    uphillStart: true,
+    normalStart1: true,
+    normalStart2: true,
+  },
+  vehicleChecks: {
+    showMeQuestions: [
+      {
+        outcome: CompetencyOutcome.P,
+      },
+      {
+        outcome: CompetencyOutcome.P,
+      },
+      {
+        outcome: CompetencyOutcome.P,
+      },
+    ],
+    tellMeQuestions: [
+      {
+        outcome: CompetencyOutcome.P,
+      },
+      {
+        outcome: CompetencyOutcome.P,
+      },
+      {
+        outcome: CompetencyOutcome.P,
+      },
+    ],
+    vehicleChecksCompleted: true,
+  },
+  manoeuvres: [
+    {
+      reverseRight: {
+        selected: true,
+      },
+    },
+    {
+      reverseParkCarpark: {
+        selected: true,
+      },
+    },
+  ],
   eco: {
     completed: true,
   },
@@ -318,6 +369,17 @@ export const legalRequirementsAMod2 = [
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.hillStart,
   legalRequirementsLabels.safetyAndBalanceQuestions,
+  legalRequirementsLabels.eco,
+];
+
+export const legalRequirementsADIPart2 = [
+  legalRequirementsLabels.normalStart1,
+  legalRequirementsLabels.normalStart2,
+  legalRequirementsLabels.angledStart,
+  legalRequirementsLabels.uphillStart,
+  legalRequirementsLabels.downhillStart,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.vehicleChecks,
   legalRequirementsLabels.eco,
 ];
 
