@@ -3,10 +3,10 @@ import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 import { configureTestSuite } from 'ng-bullet';
+
 import { DataRowComponent } from '../../../../../../components/common/data-row/data-row';
 import { DataRowCustomComponent } from '../../../../../../components/common/data-row-custom/data-row-custom';
 import { CandidateDetails, TestDetailsCardCatADI2Component } from '../test-details.cat-adi-part2';
-import { it } from '@angular/cli/lib/ast-tools/spec-utils';
 
 describe('TestDetailsCardCatADI2Component', () => {
   let fixture: ComponentFixture<TestDetailsCardCatADI2Component>;
@@ -34,7 +34,6 @@ describe('TestDetailsCardCatADI2Component', () => {
   }));
 
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
     it('should create', () => {
       expect(component).toBeDefined();
     });

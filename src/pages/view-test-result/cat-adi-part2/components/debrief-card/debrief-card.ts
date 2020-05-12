@@ -126,4 +126,14 @@ export class DebriefCardComponent {
   public getTellMeQuestions(): QuestionResult[] {
     return get(this.data, 'vehicleChecks.tellMeQuestions', []);
   }
+
+  public getControlledStop = (): DataRowListItem[] => {
+    const controlledStop = get(this.data, 'controlledStop.selected', false);
+    return [
+      {
+        label: controlledStop ? ViewTestResultLabels.completed : ViewTestResultLabels.notCompleted,
+        checked: controlledStop,
+      },
+    ];
+  }
 }
