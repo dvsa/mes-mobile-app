@@ -173,7 +173,7 @@ describe('TestDataSelectors Cat ADI2', () => {
     it('should return false when no manoeuvres have been completed', () => {
       const state: CatADI2UniqueTypes.Manoeuvres[] = [{
       }];
-      expect(hasManoeuvreBeenCompletedCatADIPart2(state)).toBeFalsy();
+      expect(hasManoeuvreBeenCompletedCatADIPart2(state)).toEqual(false);
     });
     it('should return true when 2 manoeuvres have been completed', () => {
       const state: CatADI2UniqueTypes.Manoeuvres[] = [
@@ -189,6 +189,16 @@ describe('TestDataSelectors Cat ADI2', () => {
         },
       ];
       expect(hasManoeuvreBeenCompletedCatADIPart2(state)).toEqual(true);
+    });
+    it('should return false with only 1 manoeuvre completed', () => {
+      const state: CatADI2UniqueTypes.Manoeuvres[] = [
+        {
+          reverseRight: {
+            selected: true,
+          },
+        },
+      ];
+      expect(hasManoeuvreBeenCompletedCatADIPart2(state)).toEqual(false);
     });
   });
 
