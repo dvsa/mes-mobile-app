@@ -57,7 +57,7 @@ describe('TestReportValidator', () => {
     });
 
   });
-  fdescribe('getMissingLegalRequirements', () => {
+  describe('getMissingLegalRequirements', () => {
     categories.forEach((cat) => {
       it(`should return an empty array if the legal requirements are met for a Cat ${cat.category} test`, () => {
         const result = testReportValidatorProvider.getMissingLegalRequirements(cat.validTest, cat.category);
