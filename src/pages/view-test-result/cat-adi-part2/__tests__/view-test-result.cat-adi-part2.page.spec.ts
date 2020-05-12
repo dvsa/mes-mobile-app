@@ -12,20 +12,22 @@ import {
   PlatformMock,
   LoadingControllerMock,
 } from 'ionic-mocks';
+import { configureTestSuite } from 'ng-bullet';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { MockComponent } from 'ng-mocks';
+import { By } from '@angular/platform-browser';
+
 import { AppModule } from '../../../../app/app.module';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { SearchProvider } from '../../../../providers/search/search';
 import { SearchProviderMock } from '../../../../providers/search/__mocks__/search.mock';
-import { MockComponent } from 'ng-mocks';
 import { TestDetailsCardComponent } from '../../components/test-details-card/test-details-card';
 import { RekeyDetailsCardComponent } from '../../components/rekey-details-card/rekey-details';
 import { RekeyReasonCardComponent } from '../../components/rekey-reason-card/rekey-reason';
 import { ExaminerDetailsCardComponent } from '../../components/examiner-details-card/examiner-details';
-import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../../components/test-details-card/test-details-card.model';
-import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
 import { categoryAdiPart2TestMock } from '../../../../shared/mocks/cat-adi-part2-test-result.mock';
 import { CompressionProvider } from '../../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../../providers/compression/__mocks__/compression.mock';
@@ -38,8 +40,8 @@ import { ErrorMessageComponent } from '../../../../components/common/error-messa
 import { ViewTestResultCatADIPart2Page } from '../view-test-result.cat-adi-part2.page';
 import { BusinessDetailsCardComponent } from '../../components/business-details-card/business-details-card';
 import { ContactDetailsCardComponent } from '../../components/contact-details-card/contact-details-card';
-import { configureTestSuite } from 'ng-bullet';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { VehicleDetailsCatADIPt2Component } from '../components/vehicle-details/vehicle-details';
+import { TestDetailsCardCatADI2Component } from '../components/test-details/test-details.cat-adi-part2';
 
 describe('ViewTestResultCatADIPart2Page', () => {
   let fixture: ComponentFixture<ViewTestResultCatADIPart2Page>;
@@ -54,13 +56,14 @@ describe('ViewTestResultCatADIPart2Page', () => {
         MockComponent(RekeyDetailsCardComponent),
         MockComponent(RekeyReasonCardComponent),
         MockComponent(ExaminerDetailsCardComponent),
-        MockComponent(VehicleDetailsCardComponent),
+        MockComponent(VehicleDetailsCatADIPt2Component),
         MockComponent(TestSummaryCardComponent),
         MockComponent(ViewTestHeaderComponent),
         MockComponent(DebriefCardComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(BusinessDetailsCardComponent),
         MockComponent(ContactDetailsCardComponent),
+        MockComponent(TestDetailsCardCatADI2Component),
       ],
       imports: [IonicModule, AppModule],
       providers: [
@@ -236,9 +239,6 @@ describe('ViewTestResultCatADIPart2Page', () => {
         fixture.debugElement.query(By.css('view-test-header')),
       ).not.toBeNull();
       expect(
-        fixture.debugElement.query(By.css('test-details-card')),
-      ).not.toBeNull();
-      expect(
         fixture.debugElement.query(By.css('rekey-details-card')),
       ).not.toBeNull();
       expect(
@@ -248,7 +248,10 @@ describe('ViewTestResultCatADIPart2Page', () => {
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).not.toBeNull();
       expect(
-        fixture.debugElement.query(By.css('vehicle-details-card')),
+        fixture.debugElement.query(By.css('test-details-card-adi2')),
+      ).not.toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('vehicle-details-cat-adi-pt2')),
       ).not.toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).not.toBeNull();
       expect(

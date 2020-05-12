@@ -1,0 +1,38 @@
+<ion-card>
+    <ion-card-header>
+        <h4>Vehicle details</h4>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-grid>
+
+            <data-row
+                    *ngIf="getTransmission()"
+                    [label]="'Transmission'"
+                    [value]="getTransmission()">
+            </data-row>
+
+            <data-row
+                    *ngIf="getRegistrationNumber()"
+                    [label]="'Vehicle registration number'"
+                    [value]="getRegistrationNumber()">
+            </data-row>
+
+            <data-row
+                    *ngIf="getTrainerPRN()"
+                    [label]="'Trainer PRN'"
+                    [value]="getTrainerPRN()">
+            </data-row>
+
+            <data-row
+                    [label]="'ORDIT'"
+                    [value]="getOrdit()">
+            </data-row>
+
+            <data-row
+                    [label]="'Training Records'"
+                    [value]="getTrainingRecords()">
+            </data-row>
+
+        </ion-grid>
+    </ion-card-content>
+</ion-card>
