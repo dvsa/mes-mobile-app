@@ -12,10 +12,15 @@ export const VEHICLE_CHECKS_REMOVE_SERIOUS_FAULT = '[Vehicle Checks] [CatADI2] V
 export const VEHICLE_CHECKS_ADD_DANGEROUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Add Dangerous Fault';
 export const VEHICLE_CHECKS_REMOVE_DANGEROUS_FAULT = '[Vehicle Checks] [CatADI2] Vehicle Checks Remove Dangerous Fault';
 export const ADD_SHOW_ME_TELL_ME_COMMENT = '[Vehicle Checks] [CatADI2] Add Show Me / Tell Me comment';
+export const VEHICLE_CHECKS_TOGGLE = '[Vehicle Checks] [CatADI2] Vehicle Checks Completed Toggled';
 
 export class ShowMeQuestionSelected implements Action {
   readonly type = SHOW_ME_QUESTION_SELECTED;
   constructor(public showMeQuestion: QuestionResult, public index: number) {}
+}
+
+export class VehicleChecksCompletedToggle implements Action {
+  readonly type = VEHICLE_CHECKS_TOGGLE;
 }
 
 export class ShowMeQuestionOutcomeChanged implements Action {
@@ -74,4 +79,5 @@ export type Types =
   | VehicleChecksAddSeriousFault
   | VehicleChecksAddDangerousFault
   | VehicleChecksRemoveSeriousFault
-  | VehicleChecksRemoveDangerousFault;
+  | VehicleChecksRemoveDangerousFault
+  | VehicleChecksCompletedToggle;

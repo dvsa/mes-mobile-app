@@ -7,14 +7,13 @@ import {
 } from '../../common/test-data.selector';
 import {
   getDrivingFaultCount,
-  // TODO - ADI2: Update with manoeuvres
-  // getManoeuvres,
-  // hasManoeuvreBeenCompletedCatBE,
   areTellMeQuestionsSelected,
   areTellMeQuestionsCorrect,
   hasVehicleChecksBeenCompletedCatADI2,
   hasEyesightTestGotSeriousFault,
   hasEyesightTestBeenCompleted,
+  getManoeuvresADI2,
+  hasManoeuvreBeenCompletedCatADIPart2,
 } from '../test-data.cat-adi-part2.selector';
 import { Competencies } from '../../test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
@@ -163,30 +162,45 @@ describe('TestDataSelectors Cat ADI2', () => {
     });
   });
 
-  // TODO - ADI2: Manoeuvres yet to be compeleted
-  // describe('getManoeuvres', () => {
-  //   it('should retrive the manoeuvres data when requested', () => {
-  //     const result = getManoeuvres(state);
-  //     expect(result).toEqual(state.manoeuvres);
-  //   });
-  // });
+  describe('getManoeuvres', () => {
+    it('should retrieve the manoeuvres data when requested', () => {
+      const result = getManoeuvresADI2(state);
+      expect(result).toEqual(state.manoeuvres);
+    });
+  });
 
-  // describe('hasManoeuvreBeenCompleted', () => {
-  //   it('should return false when no manoeuvres have been completed', () => {
-  //     const state: CatBEUniqueTypes.TestData = {
-  //       manoeuvres: {},
-  //     };
-  //     expect(hasManoeuvreBeenCompletedCatBE(state)).toBeFalsy();
-  //   });
-  //   it('should return true when a manoeuvre has been completed', () => {
-  //     const state: CatBEUniqueTypes.TestData = {
-  //       manoeuvres: {
-  //         reverseLeft: { selected: true },
-  //       },
-  //     };
-  //     expect(hasManoeuvreBeenCompletedCatBE(state)).toEqual(true);
-  //   });
-  // });
+  describe('hasManoeuvreBeenCompleted', () => {
+    it('should return false when no manoeuvres have been completed', () => {
+      const state: CatADI2UniqueTypes.Manoeuvres[] = [{
+      }];
+      expect(hasManoeuvreBeenCompletedCatADIPart2(state)).toEqual(false);
+    });
+    it('should return true when 2 manoeuvres have been completed', () => {
+      const state: CatADI2UniqueTypes.Manoeuvres[] = [
+        {
+          reverseRight: {
+            selected: true,
+          },
+        },
+        {
+          reverseParkRoad: {
+            selected: true,
+          },
+        },
+      ];
+      expect(hasManoeuvreBeenCompletedCatADIPart2(state)).toEqual(true);
+    });
+    it('should return false with only 1 manoeuvre completed', () => {
+      const state: CatADI2UniqueTypes.Manoeuvres[] = [
+        {
+          reverseRight: {
+            selected: true,
+          },
+        },
+      ];
+      expect(hasManoeuvreBeenCompletedCatADIPart2(state)).toEqual(false);
+    });
+  });
 
   describe('vehicle checks selector', () => {
     describe('areTellMeQuestionsSelected', () => {
@@ -235,7 +249,7 @@ describe('TestDataSelectors Cat ADI2', () => {
     });
 
     describe('hasVehicleChecksBeenCompleted', () => {
-      it('should return true if vehicle checks have been completed with a pass', () => {
+      it('should return true if vehicle checks have been completed with a pass & button has been selected', () => {
         const state: CatADI2UniqueTypes.VehicleChecks = {
           tellMeQuestions: [
             {
@@ -248,11 +262,12 @@ describe('TestDataSelectors Cat ADI2', () => {
               outcome: CompetencyOutcome.P,
             },
           ],
+          vehicleChecksCompleted: true,
         };
 
         expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);
       });
-      it('should return true if vehicle checks have been completed with a driving fault', () => {
+      it('should return true if vehicle checks have been completed with driving faults', () => {
         const state: CatADI2UniqueTypes.VehicleChecks = {
           tellMeQuestions: [
             {
@@ -265,6 +280,7 @@ describe('TestDataSelectors Cat ADI2', () => {
               outcome: CompetencyOutcome.DF,
             },
           ],
+          vehicleChecksCompleted: true,
         };
 
         expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);
@@ -282,6 +298,7 @@ describe('TestDataSelectors Cat ADI2', () => {
               outcome: CompetencyOutcome.S,
             },
           ],
+          vehicleChecksCompleted: true,
         };
 
         expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);
@@ -299,9 +316,49 @@ describe('TestDataSelectors Cat ADI2', () => {
               outcome: CompetencyOutcome.D,
             },
           ],
+          vehicleChecksCompleted: true,
         };
 
         expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(true);
+      });
+      it('should return false if vehicleChecksCompleted is false', () => {
+        const state: CatADI2UniqueTypes.VehicleChecks = {
+
+          tellMeQuestions: [
+            {
+              outcome: CompetencyOutcome.P,
+            },
+            {
+              outcome: CompetencyOutcome.P,
+            },
+            {
+              outcome: CompetencyOutcome.P,
+            },
+          ],
+          vehicleChecksCompleted: false,
+        };
+
+        expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(false);
+      });
+      it('should return false with an empty array as its parameter', () => {
+        const state: CatADI2UniqueTypes.VehicleChecks = {
+          tellMeQuestions: [],
+          vehicleChecksCompleted: true,
+        };
+
+        expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(false);
+      });
+      it('should return false with an array under 2 items', () => {
+        const state: CatADI2UniqueTypes.VehicleChecks = {
+          tellMeQuestions: [
+            {
+              outcome: CompetencyOutcome.P,
+            },
+          ],
+          vehicleChecksCompleted: true,
+        };
+
+        expect(hasVehicleChecksBeenCompletedCatADI2(state)).toEqual(false);
       });
     });
   });

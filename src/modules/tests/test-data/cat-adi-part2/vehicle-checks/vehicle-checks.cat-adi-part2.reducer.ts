@@ -22,6 +22,7 @@ export const initialState: CatADI2UniqueTypes.VehicleChecks = {
   ],
   seriousFault: false,
   dangerousFault: false,
+  vehicleChecksCompleted: false,
 };
 
 export function vehicleChecksCatADI2Reducer(
@@ -100,6 +101,11 @@ export function vehicleChecksCatADI2Reducer(
       return {
         ...state,
         dangerousFault: false,
+      };
+    case vehicleChecksCatADI2ActionTypes.VEHICLE_CHECKS_TOGGLE:
+      return {
+        ...state,
+        vehicleChecksCompleted: !state.vehicleChecksCompleted,
       };
     default:
       return state;

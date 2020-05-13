@@ -15,7 +15,7 @@ export const getManoeuvresADI2 = (data: CatADI2UniqueTypes.TestData) : CatADI2Un
   data.manoeuvres;
 
 export const hasManoeuvreBeenCompletedCatADIPart2 = (manoeuvres: CatADI2UniqueTypes.Manoeuvres[]) => {
-  if (manoeuvres.length < 2) return false;
+  if (!manoeuvres || manoeuvres.length < 2) return false;
 
   return manoeuvres.every((manoeuvre) => {
     return (
@@ -70,7 +70,8 @@ export const hasVehicleChecksBeenCompletedCatADI2 = (vehicleChecks: CatADI2Uniqu
 
   if (
     !(vehicleChecks && vehicleChecks.tellMeQuestions instanceof Array) ||
-    vehicleChecks.tellMeQuestions.length !== NUMBER_OF_TELL_ME_QUESTIONS
+    vehicleChecks.tellMeQuestions.length !== NUMBER_OF_TELL_ME_QUESTIONS ||
+    !vehicleChecks.vehicleChecksCompleted
   ) {
     return false;
   }
