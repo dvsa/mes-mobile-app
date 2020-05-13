@@ -4,7 +4,7 @@ vehicle-check {
   }
 
   competency-button.show-me-question-tick {
-    
+
     .competency-button {
       padding: 1px 7px 2px;
 
@@ -38,11 +38,15 @@ vehicle-check {
         width: 30px;
         justify-content: flex-end;
         align-items: center;
-        
+
         dangerous-fault-badge {
           margin-left: -22px;
         }
       }
     }
+  }
+
+  .show-me-tell-me-label {
+    font-size: 15px !important;
   }
 }
