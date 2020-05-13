@@ -4,7 +4,7 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.reducer';
-import { getVehicleChecksCatADIPart2 }
+import { getVehicleChecksCatADIPart2, hasVehicleChecksBeenCompletedCatADI2 }
   from '../../../../../modules/tests/test-data/cat-adi-part2/test-data.cat-adi-part2.selector';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
@@ -35,6 +35,7 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
   tellMeQuestionFaultCount: number;
 
   vehicleChecks: CatADI2UniqueTypes.VehicleChecks;
+  vehicleChecksCompleted: boolean = false;
 
   isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
@@ -73,6 +74,10 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
       select(isRemoveFaultMode),
     );
 
+    const vehicleChecksCompleted$ = merge(vehicleChecks$.pipe(
+      select(hasVehicleChecksBeenCompletedCatADI2),
+    ));
+
     this.subscription = merge(
       vehicleChecks$.pipe(map((vehicleChecks: CatADI2UniqueTypes.VehicleChecks) => {
         this.vehicleChecks = vehicleChecks;
@@ -85,6 +90,7 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
           { showMeQuestions: vehicleChecks.showMeQuestions },
         ).drivingFaults;
       })),
+      vehicleChecksCompleted$.pipe(map(toggle => this.vehicleChecksCompleted = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
