@@ -15,7 +15,7 @@ import {
   VehicleChecksRemoveSeriousFault,
   VehicleChecksRemoveDangerousFault,
   ShowMeQuestionAddDrivingFault,
-  ShowMeQuestionRemoveDrivingFault, VehicleChecksCompletedDeselected, VehicleChecksCompletedSelected,
+  ShowMeQuestionRemoveDrivingFault, VehicleChecksCompletedToggle,
 } from '../../../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.action';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
 import { getTestReportState } from '../../../test-report.reducer';
@@ -118,12 +118,12 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
     }
 
     if (this.selectedShowMeQuestion) {
-      this.store$.dispatch(new VehicleChecksCompletedDeselected());
+      this.store$.dispatch(new VehicleChecksCompletedToggle());
       this.selectedShowMeQuestion = false;
       return;
     }
 
-    this.store$.dispatch(new VehicleChecksCompletedSelected());
+    this.store$.dispatch(new VehicleChecksCompletedToggle());
     this.selectedShowMeQuestion = true;
   }
 
