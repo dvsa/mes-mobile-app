@@ -14,7 +14,10 @@
   </error-message>
   <div *ngIf="!isLoading && !showErrorMessage">
     <view-test-header [data]="getHeaderDetails()"></view-test-header>
-    <test-details-card [data]="getTestDetails()"></test-details-card>
+    <test-details-card-adi2
+            [data]="getTestDetails()"
+            [candidateDetails]="getCandidateDetails()"
+    ></test-details-card-adi2>
     <contact-details-card
       [candidateData]="testResult.journalData.candidate"
       [communicationPreferencesData]="testResult.communicationPreferences">
@@ -25,7 +28,10 @@
       <rekey-reason-card [data]='testResult.rekeyReason'></rekey-reason-card>
     </div>
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
-    <vehicle-details-card [data]='testResult.vehicleDetails'></vehicle-details-card>
+    <vehicle-details-cat-adi-pt2
+            [data]='testResult.vehicleDetails'
+            [trainerData]="getTrainerData()">
+    </vehicle-details-cat-adi-pt2>
     <debrief-card [data]='testResult.testData'></debrief-card>
     <test-summary-card
       [accompaniment]='testResult.accompaniment'

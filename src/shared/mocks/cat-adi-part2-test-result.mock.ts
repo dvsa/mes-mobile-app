@@ -93,6 +93,11 @@ export const categoryAdiPart2TestMock: CatADI2UniqueTypes.TestResult = {
     dualControls: true,
     schoolCar: false,
   },
+  trainerDetails: {
+    orditTrainedCandidate: true,
+    trainingRecords: true,
+    trainerRegistrationNumber: 2433244,
+  },
   accompaniment: {
     ADI: true,
     interpreter: true,

@@ -119,6 +119,27 @@ export class ViewTestResultCatADIPart2Page extends BasePageComponent implements 
     }
   }
 
+  getTrainerData(): CatADI2UniqueTypes.TrainerDetails {
+    if (!this.testResult) {
+      return null;
+    }
+    return {
+      orditTrainedCandidate: get(this.testResult, 'trainerDetails.orditTrainedCandidate'),
+      trainingRecords: get(this.testResult, 'trainerDetails.trainingRecords'),
+      trainerRegistrationNumber: get(this.testResult, 'trainerDetails.trainerRegistrationNumber'),
+    };
+  }
+
+  getCandidateDetails(): { prn: number; attemptNumber: number; } {
+    if (!this.testResult) {
+      return null;
+    }
+    return {
+      prn: get(this.testResult, 'journalData.candidate.prn'),
+      attemptNumber: get(this.testResult, 'journalData.candidate.previousADITests'),
+    };
+  }
+
   getTestDetails(): TestDetailsModel {
     if (!this.testResult) {
       return null;
