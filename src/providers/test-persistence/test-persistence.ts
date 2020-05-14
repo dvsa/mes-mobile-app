@@ -32,6 +32,7 @@ export class TestPersistenceProvider {
   }
 
   async clearPersistedTests(): Promise<void> {
+    alert(this.testKeychainKey);
     await this.dataStoreProvider.removeItem(this.testKeychainKey);
   }
 

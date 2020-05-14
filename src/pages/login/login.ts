@@ -95,7 +95,18 @@ export class LoginPage extends BasePageComponent {
 
       this.initialiseAuthentication();
 
-      await this.authenticationProvider.login();
+      const isAuthenticated = await this.authenticationProvider.isAuthenticated();
+
+      if (!isAuthenticated) {
+        await this.authenticationProvider.login();
+      } else {
+        const token = await this.authenticationProvider.getIdToken();
+        alert(`already authenticated. proceeding
+        token is
+        ${JSON.stringify(token)}`);
+      }
+
+      await this.authenticationProvider.setEmployeeId();
 
       this.store$.dispatch(new LoadEmployeeId(this.authenticationProvider.getEmployeeId()));
 

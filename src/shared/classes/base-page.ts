@@ -14,11 +14,15 @@ export abstract class BasePageComponent {
   }
 
   ionViewWillEnter() {
-    if (this.loginRequired && this.isIos() && !this.authenticationProvider.isAuthenticated()) {
-      this.navController.setRoot(LOGIN_PAGE);
-      return false;
-    }
-    return true;
+    this.authenticationProvider.isAuthenticated().then(
+      (isAuthenticated) => {
+        if (this.loginRequired && this.isIos() && !isAuthenticated) {
+          this.navController.setRoot(LOGIN_PAGE);
+          return false;
+        }
+        return true;
+      },
+    );
   }
 
   isIos(): boolean {
@@ -26,11 +30,16 @@ export abstract class BasePageComponent {
   }
 
   logout() {
+    alert(`about to log the user out`);
     if (this.isIos()) {
-      this.authenticationProvider.logout();
-      this.navController.setRoot(LOGIN_PAGE, {
-        hasLoggedOut: true,
-      });
+      this.authenticationProvider.logout()
+        .then(
+          () => {
+            this.navController.setRoot(LOGIN_PAGE, {
+              hasLoggedOut: true,
+            });
+          },
+        );
     }
   }
 
