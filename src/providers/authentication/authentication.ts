@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
 import { TestPersistenceProvider } from '../test-persistence/test-persistence';
 import { IonicAuth, IonicAuthOptions } from '@ionic-enterprise/auth';
+import { DataStoreProvider } from '../data-store/data-store';
 
 const adConfig: IonicAuthOptions = {
   // new dev
@@ -17,14 +18,14 @@ const adConfig: IonicAuthOptions = {
   logoutUrl: 'mesmobileappscheme://login?logout=true',
   // logoutUrl: 'mesmobileappscheme://callback?logout=true',
   iosWebView: 'shared',
-  tokenStorageProvider: {
-    getAccessToken: () => Promise.resolve(JSON.parse(localStorage.getItem('accessToken'))),
-    setAccessToken: token => Promise.resolve(localStorage.setItem('accesstoken', JSON.stringify(token))),
-    getIdToken: () => Promise.resolve(JSON.parse(localStorage.getItem('idToken'))),
-    setIdToken: token => Promise.resolve(localStorage.setItem('idToken', JSON.stringify(token))),
-    getRefreshToken: () => Promise.resolve(JSON.parse(localStorage.getItem('refreshToken'))),
-    setRefreshToken: token => Promise.resolve(localStorage.setItem('refreshToken', JSON.stringify(token))),
-  },
+  // tokenStorageProvider: {
+  //   getAccessToken: () => Promise.resolve(JSON.parse(localStorage.getItem('accessToken'))),
+  //   setAccessToken: token => Promise.resolve(localStorage.setItem('accesstoken', JSON.stringify(token))),
+  //   getIdToken: () => Promise.resolve(JSON.parse(localStorage.getItem('idToken'))),
+  //   setIdToken: token => Promise.resolve(localStorage.setItem('idToken', JSON.stringify(token))),
+  //   getRefreshToken: () => Promise.resolve(JSON.parse(localStorage.getItem('refreshToken'))),
+  //   setRefreshToken: token => Promise.resolve(localStorage.setItem('refreshToken', JSON.stringify(token))),
+  // },
 };
 
 @Injectable()
@@ -36,11 +37,39 @@ export class AuthenticationProvider extends IonicAuth {
   private inUnAuthenticatedMode: boolean;
   public jwtDecode: any;
 
+  // @ts-ignore
   constructor(
+    private dataStoreProvider: DataStoreProvider,
     private networkState: NetworkStateProvider,
     private appConfig: AppConfigProvider,
     private testPersistenceProvider: TestPersistenceProvider,
   ) {
+    adConfig.tokenStorageProvider = {
+      // async getAccessToken() {
+      //   return await dataStoreProvider.getItemNew('accessToken');
+      // },
+      // async setAccessToken(token) {
+      //   await dataStoreProvider.setItem('accessToken', JSON.stringify(token));
+      // },
+      // async getIdToken() {
+      //   return await dataStoreProvider.getItemNew('idToken');
+      // },
+      // async setIdToken(token) {
+      //   await dataStoreProvider.setItem('idToken', JSON.stringify(token));
+      // },
+      // async getRefreshToken() {
+      //   return await this.dataStoreProvider.getItemNew('refreshToken');
+      // },
+      // async setRefreshToken(token) {
+      //   await dataStoreProvider.setItem('refreshToken', JSON.stringify(token));
+      // },
+      getAccessToken: () => Promise.resolve(localStorage.getItem('accessToken')),
+      setAccessToken: token => Promise.resolve(localStorage.setItem('accessToken', JSON.stringify(token))),
+      getIdToken: () => Promise.resolve(JSON.parse(localStorage.getItem('idToken'))),
+      setIdToken: token => Promise.resolve(localStorage.setItem('idToken', JSON.stringify(token))),
+      getRefreshToken: () => Promise.resolve(JSON.parse(localStorage.getItem('refreshToken'))),
+      setRefreshToken: token => Promise.resolve(localStorage.setItem('refreshToken', JSON.stringify(token))),
+    };
     super(adConfig);
   }
 
@@ -106,7 +135,7 @@ export class AuthenticationProvider extends IonicAuth {
     if (this.appConfig.getAppConfig().logoutClearsTestPersistence) {
       await this.testPersistenceProvider.clearPersistedTests();
     }
-    localStorage.clear();
+    this.dataStoreProvider.getKeys();
   }
 
   async setEmployeeId() {

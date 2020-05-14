@@ -89,4 +89,12 @@ export class DataStoreProvider {
     return this.secureContainer.remove(key);
   }
 
+  async getItemNew(key) {
+    const keys = await this.getKeys();
+    if (keys.indexOf(key) > 0) {
+      return await this.getItem(key);
+    }
+    return Promise.resolve(null);
+  }
+
 }
