@@ -7,10 +7,4 @@
   <button [class]='getStatusClass()' *ngIf="status.sending || status.received" disabled>
     {{ status.sending ? 'sent' : 'received' }}
   </button>
-  <span [class]='getStatusClass()' *ngIf="(redAlertStatus$ | async).received">
-    red received
-  </span>
-  <span [class]='getStatusClass()' *ngIf="(amberAlertStatus$ | async).received">
-    amber received
-  </span>
 </div>

@@ -1,14 +1,14 @@
 import { Action } from '@ngrx/store';
 import { IncidentCore } from '@dvsa/lw-incident-model';
-import { AlertSendReciept } from './alert.model';
+import { AlertSendReciept } from './raised-alert.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
-export const SEND_AMBER_ALERT = '[Lone Worker Alert] Send Amber Alert';
-export const AMBER_ALERT_SENT = '[Lone Worker Alert] Amber Alert Sent';
-export const SEND_RED_ALERT = '[Lone Worker Alert] Send Red Alert';
-export const RED_ALERT_SENT = '[Lone Worker Alert] Red Alert Sent';
-export const RED_ALERT_SEND_FAILURE = '[Lone Worker Alert] Red Alert Send Failure';
-export const AMBER_ALERT_SEND_FAILURE = '[Lone Worker Alert] Amber Alert Send Failure';
+export const SEND_AMBER_ALERT = '[Lone Worker Raised Alert] Send Amber Alert';
+export const AMBER_ALERT_SENT = '[Lone Worker Raised Alert] Amber Alert Sent';
+export const SEND_RED_ALERT = '[Lone Worker Raised Alert] Send Red Alert';
+export const RED_ALERT_SENT = '[Lone Worker Raised Alert] Red Alert Sent';
+export const RED_ALERT_SEND_FAILURE = '[Lone Worker Raised Alert] Red Alert Send Failure';
+export const AMBER_ALERT_SEND_FAILURE = '[Lone Worker Raised Alert] Amber Alert Send Failure';
 
 export class SendAmberAlert implements Action {
   readonly type = SEND_AMBER_ALERT;
@@ -40,7 +40,7 @@ export class AmberAlertSendFailure implements Action {
   constructor(public error: HttpErrorResponse) {}
 }
 
-export type AlertActionTypes =
+export type RaisedAlertActionTypes =
   SendAmberAlert |
   SendRedAlert |
   RedAlertSent |

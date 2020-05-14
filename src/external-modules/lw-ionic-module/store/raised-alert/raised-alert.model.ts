@@ -1,12 +1,12 @@
 import { IncidentCore, Severity } from '@dvsa/lw-incident-model';
 import { HttpErrorResponse } from '@angular/common/http';
 
-export type AlertModel = {
-  redAlert: AlertWrapper;
-  amberAlert: AlertWrapper;
+export type RaisedAlertModel = {
+  redAlert: RaisedAlertWrapper;
+  amberAlert: RaisedAlertWrapper;
 };
 
-export type AlertWrapper = {
+export type RaisedAlertWrapper = {
   incident: IncidentCore | null,
   status: AlertRequestStatus,
   isSending: boolean,
@@ -19,7 +19,7 @@ export type AlertSendReciept = {
   received: Date;
 };
 
-export class AlertStatusModel {
+export class RaisedAlertStatusModel {
   constructor(
     public alertType: Severity,
   ) { }
@@ -31,8 +31,6 @@ export class AlertStatusModel {
 
   public canSendAlert = (): boolean => !this.sending && !this.received && !this.disabled;
 }
-
-export type StoreModel = { loneWorkerAlerts: AlertModel };
 
 export enum AlertRequestStatus {
   Success = 'SUCCESS',

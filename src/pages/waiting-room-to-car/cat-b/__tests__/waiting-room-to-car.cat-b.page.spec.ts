@@ -41,6 +41,15 @@ import { TransmissionComponent } from '../../../../components/common/transmissio
 import { InstructorRegistrationComponent } from '../components/instructor-registration/instructor-registration';
 import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 import { configureTestSuite } from 'ng-bullet';
+import {
+  SosButtonComponent,
+} from '../../../../external-modules/lw-ionic-module/components/sos-button/sos-button.component';
+import {
+  LoneWorkerIntegrationProviderMock,
+} from '../../../../providers/lone-worker-integration/__mocks__/lone-worker-integration.provider.mock';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../../providers/lone-worker-integration/lone-worker-integration.provider';
 
 describe('WaitingRoomToCarCatBPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatBPage>;
@@ -65,6 +74,7 @@ describe('WaitingRoomToCarCatBPage', () => {
         MockComponent(AccompanimentCardComponent),
         MockComponent(AccompanimentComponent),
         MockComponent(PracticeModeBanner),
+        MockComponent(SosButtonComponent),
       ],
       imports: [
         IonicModule,
@@ -108,6 +118,7 @@ describe('WaitingRoomToCarCatBPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: QuestionProvider, useClass: QuestionProviderMock },
+        { provide: LoneWorkerIntegrationProvider, useClass: LoneWorkerIntegrationProviderMock },
       ],
     });
   });

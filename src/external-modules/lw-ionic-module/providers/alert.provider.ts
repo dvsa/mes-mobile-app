@@ -1,23 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IncidentCore } from '@dvsa/lw-incident-model';
+import { IncidentCore, Incident, Severity } from '@dvsa/lw-incident-model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { AlertSendReciept } from '../lw-store/alert/alert.model';
+import { AlertSendReciept } from '../store/raised-alert/raised-alert.model';
+import { loneWorkerConfigService, LoneWorkerConfig } from '../lone-worker-config.service';
 // TODO LW-114: Use AppConfigProvider when raiseIncidentApiBaseUrl is added to remote config
 // import { AppConfigProvider } from '../../../providers/app-config/app-config';
 
 @Injectable()
 export class AlertProvider {
 
-  // TODO LW-114: Update to read from config
-  configuration = {
-    apiRoot: 'https://b7d9614c-d93c-4d01-9240-066175c35eef.mock.pstmn.io',
-  };
+  // // TODO LW-114: Update to read from config
+  // configuration = {
+  //   apiRoot: 'https://b7d9614c-d93c-4d01-9240-066175c35eef.mock.pstmn.io',
+  // };
 
   constructor(
+    @Inject(loneWorkerConfigService) private configuration: LoneWorkerConfig,
     public http: HttpClient,
-  ) { }
+) { }
 
   triggerAlert(
     incident: IncidentCore,
@@ -32,5 +34,13 @@ export class AlertProvider {
       .post(postUri, incident)
       .pipe(map((value: AlertSendReciept) => value),
     );
+  }
+
+  fetchAmberAlerts(testCentreId: string): Observable<Incident[]> {
+    const getUri = `${this.configuration.apiRoot}/recent-incidents/${Severity.Amber}/${testCentreId}`;
+
+    return this.http
+      .get(getUri)
+      .pipe(map((value: Incident[]) => value));
   }
 }

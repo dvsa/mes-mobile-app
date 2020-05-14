@@ -5,7 +5,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
@@ -75,6 +75,10 @@ import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_B } from '../../page-names.constants';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { IncidentCore } from '@dvsa/lw-incident-model';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -117,6 +121,9 @@ export class WaitingRoomToCarCatBPage extends PracticeableBasePageComponent {
 
   tellMeQuestions: VehicleChecksQuestion[];
 
+  incidentProperties$: Observable<IncidentCore>;
+  private incidentPropertiesSubscription: Subscription;
+
   constructor(
     store$: Store<StoreModel>,
     public navController: NavController,
@@ -124,6 +131,7 @@ export class WaitingRoomToCarCatBPage extends PracticeableBasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public questionProvider: QuestionProvider,
+    public loneWorkerIntegrationProvider: LoneWorkerIntegrationProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.B);
@@ -222,13 +230,21 @@ export class WaitingRoomToCarCatBPage extends PracticeableBasePageComponent {
         map(getTellMeQuestion),
       ),
     };
+
+    this.incidentProperties$ = this.loneWorkerIntegrationProvider.getIncidentPropertiesFromStore().pipe(
+      map(incidentPartial => incidentPartial as IncidentCore),
+    );
   }
 
   ionViewDidEnter(): void {
+    this.incidentPropertiesSubscription = this.incidentProperties$.subscribe();
     this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
   }
 
   ionViewWillLeave(): void {
+    if (this.incidentPropertiesSubscription) {
+      this.incidentPropertiesSubscription.unsubscribe();
+    }
     this.store$.dispatch(new PersistTests());
   }
 

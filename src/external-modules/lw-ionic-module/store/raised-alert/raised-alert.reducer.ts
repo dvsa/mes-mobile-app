@@ -1,8 +1,8 @@
-import { AlertModel, AlertRequestStatus } from './alert.model';
+import { RaisedAlertModel, AlertRequestStatus } from './raised-alert.model';
 import { createFeatureSelector } from '@ngrx/store';
-import * as alertActions from './alert.actions';
+import * as alertActions from './raised-alert.actions';
 
-export const initialState: AlertModel = {
+export const initialState: RaisedAlertModel = {
   redAlert: {
     status: null,
     incident: null,
@@ -17,7 +17,10 @@ export const initialState: AlertModel = {
   },
 };
 
-export function alertReducer(state = initialState, action: alertActions.AlertActionTypes): AlertModel {
+export function raisedAlertReducer(
+  state = initialState,
+  action: alertActions.RaisedAlertActionTypes,
+): RaisedAlertModel {
   switch (action.type) {
     case alertActions.SEND_RED_ALERT:
       return {
@@ -88,4 +91,4 @@ export function alertReducer(state = initialState, action: alertActions.AlertAct
   }
 }
 
-export const getAlertState = createFeatureSelector<AlertModel>('loneWorkerAlerts');
+export const getAlertState = createFeatureSelector<RaisedAlertModel>('loneWorkerRaisedAlerts');

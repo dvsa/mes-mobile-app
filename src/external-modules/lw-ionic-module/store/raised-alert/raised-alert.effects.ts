@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
-import { AlertProvider } from '../../lw-providers/alert.provider';
-import * as alertActions from './alert.actions';
+import { AlertProvider } from '../../providers/alert.provider';
+import * as alertActions from './raised-alert.actions';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 
 @Injectable()
-export class AlertEffects {
+export class RaisedAlertEffects {
   constructor(
         private actions$: Actions,
         private alertProvider: AlertProvider,

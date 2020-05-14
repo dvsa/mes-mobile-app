@@ -1,30 +1,30 @@
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Severity, IncidentCore } from '@dvsa/lw-incident-model';
 import { StoreModel } from '../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
-import * as alertActions from '../lw-store/alert/alert.actions';
+import * as alertActions from '../store/raised-alert/raised-alert.actions';
 import { map } from 'rxjs/operators';
-import { getAlertStatus, getIncidentProperties } from '../lw-store/alert/alert.selector';
+import { getRaisedAlertStatus } from '../store/raised-alert/raised-alert.selector';
 import { Observable, merge, Subscription } from 'rxjs';
-import { AlertStatusModel } from '../lw-store/alert/alert.model';
-import { getAlertState } from '../lw-store/alert/alert.reducer';
+import { RaisedAlertStatusModel } from '../store/raised-alert/raised-alert.model';
+import { getAlertState } from '../store/raised-alert/raised-alert.reducer';
+import { LocationProvider } from '../providers/location.provider';
 
 type AlertType = 'red' | 'amber';
 
 @IonicPage()
 @Component({
-  selector: 'lw-sos-alert-modal',
-  templateUrl: 'lw-sos-alert-modal.page.html',
+  selector: 'lw-raise-alert-modal',
+  templateUrl: 'raise-alert-modal.page.html',
 })
-export class LWSosAlertModal {
+export class RaiseAlertModalPage {
 
   private subscription: Subscription;
-  private merged$: Observable<AlertStatusModel>;
+  private merged$: Observable<RaisedAlertStatusModel>;
 
-  redAlertStatus$: Observable<AlertStatusModel>;
-  amberAlertStatus$: Observable<AlertStatusModel>;
-  incidentProperties$: Observable<any>;
+  redAlertStatus$: Observable<RaisedAlertStatusModel>;
+  amberAlertStatus$: Observable<RaisedAlertStatusModel>;
 
   countdownVisible = false;
   countdownValue = 3;
@@ -35,30 +35,32 @@ export class LWSosAlertModal {
 
   constructor(
     private navController: NavController,
-    private store$: Store<StoreModel>) {}
+    private store$: Store<StoreModel>,
+    private locationProvider: LocationProvider,
+    private params: NavParams) { }
 
   ngOnInit(): void {
     this.redAlertStatus$ = this.store$.pipe(
       select(getAlertState),
-      map(state => getAlertStatus(state, Severity.Red)),
+      map(state => getRaisedAlertStatus(state, Severity.Red)),
     );
 
     this.amberAlertStatus$ = this.store$.pipe(
       select(getAlertState),
-      map(state => getAlertStatus(state, Severity.Amber)),
+      map(state => getRaisedAlertStatus(state, Severity.Amber)),
     );
 
-    // Might be a better way to extract incident properties outside of this Modal and just do a regular @Input()
-    // Would help to decouple Lone Worker with DES
-    this.incidentProperties$ = this.store$.pipe(
-      select(getIncidentProperties),
-      map(incidentProperties => this.incident = incidentProperties as IncidentCore),
-    );
+    // // Might be a better way to extract incident properties outside of this Modal and just do a regular @Input()
+    // // Would help to decouple Lone Worker with DES
+    // this.incidentProperties$ = this.store$.pipe(
+    //   select(getIncidentProperties),
+    //   map(incidentProperties => this.incident = incidentProperties as IncidentCore),
+    // );
+    this.incident = this.params.get('incident');
 
     this.merged$ = merge(
       this.redAlertStatus$,
       this.amberAlertStatus$,
-      this.incidentProperties$,
     );
   }
 
@@ -118,6 +120,27 @@ export class LWSosAlertModal {
       severity: this.currentAlertType === 'red' ? Severity.Red : Severity.Amber,
       timestamp: new Date(),
     };
+
+    this.locationProvider.tryGetCurrentLocation().
+      then((coords) => {
+        alert.currentLocation = {
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+          timestamp: new Date(),
+        };
+
+        this.dispatchAlertAction(alert);
+      })
+      .catch((err) => {
+        console.log(err.permissionDenied ?
+          'User has disallowed location sharing' :
+          `Device unable to get geolocation: ${err.message}`);
+        this.dispatchAlertAction(alert);
+      });
+
+  }
+
+  private dispatchAlertAction(alert: IncidentCore): void {
 
     this.store$.dispatch(this.currentAlertType === 'red' ?
       new alertActions.SendRedAlert(alert) :

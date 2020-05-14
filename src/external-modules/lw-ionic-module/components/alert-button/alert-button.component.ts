@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlertStatusModel } from '../lw-store/alert/alert.model';
+import { RaisedAlertStatusModel } from '../../store/raised-alert/raised-alert.model';
 
 export enum Severity {
   Red = 'Red',
@@ -8,11 +8,11 @@ export enum Severity {
 
 @Component({
   selector: 'lw-alert-button',
-  templateUrl: 'lw-alert-button.html',
+  templateUrl: 'alert-button.component.html',
 })
-export class LWAlertButtonComponent {
+export class RaiseAlertButtonComponent {
   @Input()
-  status: AlertStatusModel;
+  status: RaisedAlertStatusModel;
 
   @Output()
   start: EventEmitter<any> = new EventEmitter();

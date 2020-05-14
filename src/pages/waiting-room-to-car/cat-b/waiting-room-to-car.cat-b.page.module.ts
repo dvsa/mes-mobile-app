@@ -6,6 +6,10 @@ import { WaitingRoomToCarAnalyticsEffects } from '../waiting-room-to-car.analyti
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { WaitingRoomToCarComponentsModule } from '../components/waiting-room-to-car.components.module';
 import { WaitingRoomToCarCatBComponentsModule } from './components/waiting-room-to-car.cat-b.components.module';
+import { LoneWorkerIonicModule } from '../../../external-modules/lw-ionic-module/lone-worker.module';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
 
 @NgModule({
   declarations: [
@@ -17,6 +21,12 @@ import { WaitingRoomToCarCatBComponentsModule } from './components/waiting-room-
     ComponentsModule,
     WaitingRoomToCarComponentsModule,
     WaitingRoomToCarCatBComponentsModule,
+    LoneWorkerIonicModule.forRoot({
+      apiRoot: 'http://localhost:3000',
+    }),
+  ],
+  providers: [
+    LoneWorkerIntegrationProvider,
   ],
 })
 export class WaitingRoomToCarCatBPageModule { }
