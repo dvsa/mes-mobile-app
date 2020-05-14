@@ -5,7 +5,27 @@ import { NetworkStateProvider, ConnectionStatus } from '../network-state/network
 import { TestPersistenceProvider } from '../test-persistence/test-persistence';
 import { IonicAuth, IonicAuthOptions } from '@ionic-enterprise/auth';
 
-
+const adConfig: IonicAuthOptions = {
+  // new dev
+  authConfig: 'azure',
+  platform: 'cordova',
+  clientID: '923b07d4-80ee-4524-8f38-c1230aefe151',
+  // @ts-ignore
+  discoveryUrl: 'https://login.microsoftonline.com/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/v2.0/.well-known/openid-configuration?appid=923b07d4-80ee-4524-8f38-c1230aefe151',
+  redirectUri: 'mesmobileappscheme://callback',
+  scope: 'openid offline_access profile email',
+  logoutUrl: 'mesmobileappscheme://login?logout=true',
+  // logoutUrl: 'mesmobileappscheme://callback?logout=true',
+  iosWebView: 'shared',
+  tokenStorageProvider: {
+    getAccessToken: () => Promise.resolve(JSON.parse(localStorage.getItem('accessToken'))),
+    setAccessToken: token => Promise.resolve(localStorage.setItem('accesstoken', JSON.stringify(token))),
+    getIdToken: () => Promise.resolve(JSON.parse(localStorage.getItem('idToken'))),
+    setIdToken: token => Promise.resolve(localStorage.setItem('idToken', JSON.stringify(token))),
+    getRefreshToken: () => Promise.resolve(JSON.parse(localStorage.getItem('refreshToken'))),
+    setRefreshToken: token => Promise.resolve(localStorage.setItem('refreshToken', JSON.stringify(token))),
+  },
+};
 
 @Injectable()
 export class AuthenticationProvider extends IonicAuth {
