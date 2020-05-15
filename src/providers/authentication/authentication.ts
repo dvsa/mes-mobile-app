@@ -12,20 +12,6 @@ export enum Token {
   REFRESH = 'refreshToken',
 }
 
-const adConfig: IonicAuthOptions = {
-  // new dev
-  authConfig: 'azure',
-  platform: 'cordova',
-  clientID: '923b07d4-80ee-4524-8f38-c1230aefe151',
-  // @ts-ignore
-  discoveryUrl: 'https://login.microsoftonline.com/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/v2.0/.well-known/openid-configuration?appid=923b07d4-80ee-4524-8f38-c1230aefe151',
-  redirectUri: 'mesmobileappscheme://callback',
-  scope: 'openid offline_access profile email',
-  logoutUrl: 'mesmobileappscheme://login?logout=true',
-  // logoutUrl: 'mesmobileappscheme://callback?logout=true',
-  iosWebView: 'shared',
-};
-
 @Injectable()
 export class AuthenticationProvider {
 
@@ -42,35 +28,45 @@ export class AuthenticationProvider {
     private appConfig: AppConfigProvider,
     private testPersistenceProvider: TestPersistenceProvider,
   ) {
-    this.ionicAuth = new IonicAuth(this.getAuthOptions());
   }
 
-  getAuthOptions = (): IonicAuthOptions => ({
-    ...adConfig,
-    tokenStorageProvider: {
-      getAccessToken: async () => JSON.parse(await this.dataStoreProvider.getItem(Token.ACCESS)),
-      setAccessToken: async (token: string) => {
-        await this.dataStoreProvider.setItem(Token.ACCESS, JSON.stringify(token));
-        return Promise.resolve();
+  getAuthOptions =  (appConfig: AppConfigProvider): IonicAuthOptions => {
+    const authSettings = this.appConfig.getAppConfig().authentication;
+    return {
+      authConfig: 'azure',
+      platform: 'cordova',
+      clientID: authSettings.clientId,
+      discoveryUrl: `${authSettings.context}/v2.0/.well-known/openid-configuration?appid=${authSettings.clientId}`,
+      redirectUri: authSettings.redirectUrl,
+      scope: 'openid offline_access profile email',
+      logoutUrl: authSettings.logoutUrl,
+      iosWebView: 'shared',
+      tokenStorageProvider: {
+        getAccessToken: async () => JSON.parse(await this.dataStoreProvider.getItem(Token.ACCESS)),
+        setAccessToken: async (token: string) => {
+          await this.dataStoreProvider.setItem(Token.ACCESS, JSON.stringify(token));
+          return Promise.resolve();
+        },
+        getIdToken: async () => JSON.parse(await this.dataStoreProvider.getItem(Token.ID)),
+        setIdToken: async (token: string) => {
+          await this.dataStoreProvider.setItem(Token.ID, JSON.stringify(token));
+          return Promise.resolve();
+        },
+        getRefreshToken: async () => JSON.parse(await this.dataStoreProvider.getItem(Token.REFRESH)),
+        setRefreshToken: async (token: string) => {
+          await this.dataStoreProvider.setItem(Token.REFRESH, JSON.stringify(token));
+          return Promise.resolve();
+        },
       },
-      getIdToken: async () => JSON.parse(await this.dataStoreProvider.getItem(Token.ID)),
-      setIdToken: async (token: string) => {
-        await this.dataStoreProvider.setItem(Token.ID, JSON.stringify(token));
-        return Promise.resolve();
-      },
-      getRefreshToken: async () => JSON.parse(await this.dataStoreProvider.getItem(Token.REFRESH)),
-      setRefreshToken: async (token: string) => {
-        await this.dataStoreProvider.setItem(Token.REFRESH, JSON.stringify(token));
-        return Promise.resolve();
-      },
-    },
-  });
+    };
+  }
 
   public initialiseAuthentication = (): void => {
     this.authenticationSettings = this.appConfig.getAppConfig().authentication;
     this.employeeIdKey = this.appConfig.getAppConfig().authentication.employeeIdKey;
     this.jwtDecode = jwtDecode;
     this.inUnAuthenticatedMode = false;
+    this.ionicAuth = new IonicAuth(this.getAuthOptions(this.appConfig));
   }
 
   public isInUnAuthenticatedMode = (): boolean => {
@@ -91,8 +87,6 @@ export class AuthenticationProvider {
   }
 
   public getAuthenticationToken = async (): Promise<string> => {
-    // const response = await this.aquireTokenSilently();
-    // return response.accessToken;
     return JSON.parse(await this.dataStoreProvider.getItem(Token.ID));
   }
 
@@ -102,9 +96,7 @@ export class AuthenticationProvider {
 
   public loadEmployeeName = async (): Promise<string> => {
     const idToken = await this.ionicAuth.getIdToken();
-    // @TODO - change to get name key from config
-    // return idToken[this.appConfig.getAppConfig().authentication.employeeNameKey];
-    return idToken['name'];
+    return idToken[this.appConfig.getAppConfig().authentication.employeeNameKey];
   }
 
   async login(): Promise<void> {
