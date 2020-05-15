@@ -42,7 +42,7 @@ class WaitingRoomToCarPage extends Page {
     this.clickSubmitButton();
   }
 
-  getVehicleChecksQuestions(){
+  getVehicleChecksQuestions() {
     return element.all(by.id('vehicle-checks-question-selector'));
   }
 
@@ -60,8 +60,6 @@ class WaitingRoomToCarPage extends Page {
     elements.each((element, index) => {
       this.clickElement(element);
       this.clickVehicleCheck(showMeQuestionsArray, index);
-      // const submitDialog = TempPage.getAndAwaitElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
-      // TempPage.clickElement(submitDialog);
       this.clickSubmitButton();
       const resultFromQuestions =
         (showMeQuestionsArray[1][index] === 'true') ? 'vehicleChecksFault' : 'vehicleChecksCorrect';
@@ -147,8 +145,13 @@ class WaitingRoomToCarPage extends Page {
       this.modCatConfirmation(tellMeQuestion);
       const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
       this.clickElementById(transmissionSelector);
-    } else {
+    } else if (testCategory === 'mod2') {
+      this.modCatConfirmation(tellMeQuestion);
       this.eyeSightResultPass();
+      this.multiShowAndTell(UI_TEST_DATA.testData.mod2, questionResult);
+      const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
+      this.clickElementById(transmissionSelector);
+    } else {
       this.standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
     }
     this.enterSearchTerm('AB12CDE');
@@ -159,7 +162,7 @@ class WaitingRoomToCarPage extends Page {
     this.openConfirmCatType();
     this.selectCatType(catType);
     this.clickElementByXPath('//button[span[text() = "Confirm"]]');
-  };
+  }
 
   openConfirmCatType() {
     this.clickElementByXPath(`//*[@id="category-type"]/ion-col[2]/ion-row[2]/ion-col/input`);
