@@ -31,14 +31,10 @@ export abstract class BasePageComponent {
 
   logout() {
     if (this.isIos()) {
-      this.authenticationProvider.logout()
-        .then(
-          () => {
-            this.navController.setRoot(LOGIN_PAGE, {
-              hasLoggedOut: true,
-            });
-          },
-        );
+      this.authenticationProvider.logout();
+      this.navController.setRoot(LOGIN_PAGE, {
+        hasLoggedOut: true,
+      });
     }
   }
 
