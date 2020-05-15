@@ -2,6 +2,9 @@
   <practice-mode-banner *ngIf="isPracticeMode"></practice-mode-banner>
   <ion-navbar>
     <ion-title>Finalise outcome - {{ pageState.candidateName$ | async }}</ion-title>
+    <ion-buttons start>
+      <lw-sos-button [incidentProperties$]="incidentProperties$"></lw-sos-button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

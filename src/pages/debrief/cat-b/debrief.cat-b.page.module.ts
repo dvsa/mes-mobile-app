@@ -9,6 +9,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DebriefEffects } from '../debrief.effects';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 import { DebriefCatBComponentsModule } from './components/debrief.cat-b.components.module';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
+import { LoneWorkerIonicModule } from '../../../external-modules/lw-ionic-module/lone-worker.module';
 
 @NgModule({
   declarations: [
@@ -24,8 +28,10 @@ import { DebriefCatBComponentsModule } from './components/debrief.cat-b.componen
     ComponentsModule,
     TranslateModule,
     DebriefCatBComponentsModule,
+    LoneWorkerIonicModule,
   ],
   providers: [
+    LoneWorkerIntegrationProvider,
     FaultSummaryProvider,
   ],
 })

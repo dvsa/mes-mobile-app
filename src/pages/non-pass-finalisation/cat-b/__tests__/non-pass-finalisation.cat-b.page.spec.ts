@@ -30,6 +30,15 @@ import { FinalisationHeaderComponent } from
     '../../../../components/test-finalisation/finalisation-header/finalisation-header';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
+import {
+  SosButtonComponent,
+} from '../../../../external-modules/lw-ionic-module/components/sos-button/sos-button.component';
+import {
+  LoneWorkerIntegrationProviderMock,
+} from '../../../../providers/lone-worker-integration/__mocks__/lone-worker-integration.provider.mock';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../../providers/lone-worker-integration/lone-worker-integration.provider';
 
 describe('NonPassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatBPage>;
@@ -46,6 +55,7 @@ describe('NonPassFinalisationCatBPage', () => {
         MockComponent(LanguagePreferencesComponent),
         MockComponent(DebriefWitnessedComponent),
         MockComponent(FinalisationHeaderComponent),
+        MockComponent(SosButtonComponent),
       ],
       imports: [
         IonicModule,
@@ -55,6 +65,7 @@ describe('NonPassFinalisationCatBPage', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: LoneWorkerIntegrationProvider, useClass: LoneWorkerIntegrationProviderMock },
       ],
     });
   });

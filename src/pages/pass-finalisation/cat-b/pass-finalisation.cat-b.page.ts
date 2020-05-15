@@ -66,6 +66,10 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { TransmissionType } from '../../../shared/models/transmission-type';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
+import { IncidentCore } from '@dvsa/lw-incident-model';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -95,9 +99,11 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
   passCertificateNumberInput: ElementRef;
   testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
-  merged$: Observable<string>;
+  merged$: Observable<string | IncidentCore>;
   transmission: GearboxCategory;
   subscription: Subscription;
+
+  incidentProperties$: Observable<IncidentCore>;
 
   constructor(
     store$: Store<StoreModel>,
@@ -106,6 +112,7 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
+    public loneWorkerIntegrationProvider: LoneWorkerIntegrationProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
@@ -185,8 +192,13 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
     };
     const { transmission$ } = this.pageState;
 
+    this.incidentProperties$ = this.loneWorkerIntegrationProvider.getIncidentPropertiesFromStore().pipe(
+      map(incidentPartial => incidentPartial as IncidentCore),
+    );
+
     this.merged$ = merge(
       transmission$.pipe(map(value => this.transmission = value)),
+      this.incidentProperties$,
     );
     this.subscription = this.merged$.subscribe();
   }

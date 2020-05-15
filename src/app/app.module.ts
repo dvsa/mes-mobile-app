@@ -52,6 +52,7 @@ import { RemoteDevToolsProxy } from '../../ngrx-devtool-proxy/remote-devtools-pr
 import {
   BikeCategoryDetailProvider,
 } from '../providers/bike-category-detail/bike-category-detail';
+import { LoneWorkerIonicModule } from '../external-modules/lw-ionic-module/lone-worker.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -113,6 +114,9 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
         useFactory: (createTranslateLoader),
         deps: [HttpClient],
       },
+    }),
+    LoneWorkerIonicModule.forRoot({
+      apiRoot: 'http://localhost:3000',
     }),
   ],
   bootstrap: [IonicApp],

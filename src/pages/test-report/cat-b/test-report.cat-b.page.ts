@@ -48,6 +48,10 @@ import {
   getTestRequirementsCatB,
 } from '../../../modules/tests/test-data/cat-b/test-requirements/test-requirements.reducer';
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
+import { IncidentCore } from '@dvsa/lw-incident-model';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -82,6 +86,8 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
   modal: Modal;
   missingLegalRequirements: legalRequirementsLabels[] = [];
 
+  incidentProperties$: Observable<IncidentCore>;
+
   constructor(
     store$: Store<StoreModel>,
     public navController: NavController,
@@ -93,6 +99,7 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
     public statusBar: StatusBar,
+    public loneWorkerIntegrationProvider: LoneWorkerIntegrationProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.displayOverlay = false;
@@ -143,6 +150,11 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
         select(getTestRequirementsCatB),
       ),
     };
+
+    this.incidentProperties$ = this.loneWorkerIntegrationProvider.getIncidentPropertiesFromStore().pipe(
+      map(incidentPartial => incidentPartial as IncidentCore),
+    );
+
     this.setupSubscription();
 
   }
@@ -208,8 +220,8 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
         this.missingLegalRequirements =
           this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.B);
         this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.B);
-      }),
-      ),
+      })),
+      this.incidentProperties$,
     ).subscribe();
   }
 

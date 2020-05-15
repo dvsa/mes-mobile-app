@@ -12,6 +12,10 @@ import { TestReportEffects } from '../test-report.effects';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { TestReportCatBPage } from './test-report.cat-b.page';
 import { TestReportCatBComponentsModule } from './components/test-report.cat-b.components.module';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
+import { LoneWorkerIonicModule } from '../../../external-modules/lw-ionic-module/lone-worker.module';
 
 @NgModule({
   declarations: [
@@ -27,10 +31,12 @@ import { TestReportCatBComponentsModule } from './components/test-report.cat-b.c
       TestReportEffects,
     ]),
     ComponentsModule,
+    LoneWorkerIonicModule,
   ],
   providers: [
     TestReportValidatorProvider,
     TestResultProvider,
+    LoneWorkerIntegrationProvider,
   ],
 })
 export class TestReportCatBPageModule {}

@@ -34,8 +34,11 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
 import { getTestOutcome } from '../debrief.selector';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
-
 import { TestOutcome } from '../../../shared/models/test-outcome';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
+import { IncidentCore } from '@dvsa/lw-incident-model';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -69,6 +72,8 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
   public adviceGivenControl: boolean = false;
   public adviceGivenPlanning: boolean = false;
 
+  incidentProperties$: Observable<IncidentCore>;
+
   constructor(
     store$: Store<StoreModel>,
     public navController: NavController,
@@ -80,6 +85,7 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
     private translate: TranslateService,
     private faultCountProvider: FaultCountProvider,
     private faultSummaryProvider: FaultSummaryProvider,
+    public loneWorkerIntegrationProvider: LoneWorkerIntegrationProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
   }
@@ -141,6 +147,10 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
 
     const { testResult$, etaFaults$, ecoFaults$, conductedLanguage$ } = this.pageState;
 
+    this.incidentProperties$ = this.loneWorkerIntegrationProvider.getIncidentPropertiesFromStore().pipe(
+      map(incidentPartial => incidentPartial as IncidentCore),
+    );
+
     this.subscription = merge(
       testResult$.pipe(map(result => this.outcome = result)),
       etaFaults$.pipe(
@@ -156,6 +166,7 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
         }),
       ),
       conductedLanguage$.pipe(tap(value => configureI18N(value as Language, this.translate))),
+      this.incidentProperties$,
     ).subscribe();
   }
 

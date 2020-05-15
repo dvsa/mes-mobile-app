@@ -44,6 +44,15 @@ import { TestOutcome } from '../../../../shared/models/test-outcome';
 import { configureTestSuite } from 'ng-bullet';
 import { MockComponent } from 'ng-mocks';
 import { VehicleChecksCardCatBComponent } from '../components/vehicle-checks-card-cat-b/vehicle-checks-card.cat-b';
+import {
+  SosButtonComponent,
+} from '../../../../external-modules/lw-ionic-module/components/sos-button/sos-button.component';
+import {
+  LoneWorkerIntegrationProviderMock,
+} from '../../../../providers/lone-worker-integration/__mocks__/lone-worker-integration.provider.mock';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../../providers/lone-worker-integration/lone-worker-integration.provider';
 
 describe('DebriefCatBPage', () => {
   let fixture: ComponentFixture<DebriefCatBPage>;
@@ -68,6 +77,7 @@ describe('DebriefCatBPage', () => {
       declarations: [
         DebriefCatBPage,
         MockComponent(VehicleChecksCardCatBComponent),
+        MockComponent(SosButtonComponent),
       ],
       imports: [
         IonicModule,
@@ -127,6 +137,7 @@ describe('DebriefCatBPage', () => {
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
+        { provide: LoneWorkerIntegrationProvider, useClass: LoneWorkerIntegrationProviderMock },
       ],
     });
   });

@@ -7,6 +7,10 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { TestFinalisationComponentsModule } from
 '../../../components/test-finalisation/test-finalisation-component.module';
 import { PassFinalisationComponentsModule } from '../components/pass-finalisation-components.module';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
+import { LoneWorkerIonicModule } from '../../../external-modules/lw-ionic-module/lone-worker.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +22,10 @@ import { PassFinalisationComponentsModule } from '../components/pass-finalisatio
     ComponentsModule,
     TestFinalisationComponentsModule,
     PassFinalisationComponentsModule,
+    LoneWorkerIonicModule,
+  ],
+  providers: [
+    LoneWorkerIntegrationProvider,
   ],
 })
 export class PassFinalisationCatBPageModule {}

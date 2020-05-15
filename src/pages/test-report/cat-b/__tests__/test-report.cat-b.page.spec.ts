@@ -50,6 +50,15 @@ import { NavigationStateProvider } from '../../../../providers/navigation-state/
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 import { configureTestSuite } from 'ng-bullet';
+import {
+  SosButtonComponent,
+} from '../../../../external-modules/lw-ionic-module/components/sos-button/sos-button.component';
+import {
+  LoneWorkerIntegrationProviderMock,
+} from '../../../../providers/lone-worker-integration/__mocks__/lone-worker-integration.provider.mock';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../../providers/lone-worker-integration/lone-worker-integration.provider';
 
 describe('TestReportCatBPage', () => {
   let fixture: ComponentFixture<TestReportCatBPage>;
@@ -76,6 +85,7 @@ describe('TestReportCatBPage', () => {
         MockComponent(VehicleCheckComponent),
         MockComponent(EcoComponent),
         MockComponent(PracticeModeBanner),
+        MockComponent(SosButtonComponent),
       ],
       imports: [
         IonicModule,
@@ -110,6 +120,7 @@ describe('TestReportCatBPage', () => {
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
+        { provide: LoneWorkerIntegrationProvider, useClass: LoneWorkerIntegrationProviderMock },
       ],
     });
   });

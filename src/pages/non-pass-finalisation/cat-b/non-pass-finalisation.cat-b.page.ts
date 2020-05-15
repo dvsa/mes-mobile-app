@@ -5,7 +5,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { CAT_B } from '../../page-names.constants';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
   getCurrentTest,
@@ -53,6 +53,10 @@ import {
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
+import { IncidentCore } from '@dvsa/lw-incident-model';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -80,12 +84,16 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
   activityCodeOptions: ActivityCodeModel[];
   slotId: string;
 
+  incidentProperties$: Observable<IncidentCore>;
+  private incidentPropertiesSubscription: Subscription;
+
   constructor(
     store$: Store<StoreModel>,
     navController: NavController,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
+    public loneWorkerIntegrationProvider: LoneWorkerIntegrationProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
@@ -157,10 +165,23 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
         select(isWelshTest),
       ),
     };
+
+    this.incidentProperties$ = this.loneWorkerIntegrationProvider.getIncidentPropertiesFromStore().pipe(
+      map(incidentPartial => incidentPartial as IncidentCore),
+    );
   }
 
   ionViewDidEnter(): void {
+    if (this.incidentProperties$) {
+      this.incidentPropertiesSubscription = this.incidentProperties$.subscribe();
+    }
     this.store$.dispatch(new NonPassFinalisationViewDidEnter());
+  }
+
+  ionViewWillLeave(): void {
+    if (this.incidentPropertiesSubscription) {
+      this.incidentPropertiesSubscription.unsubscribe();
+    }
   }
 
   continue() {

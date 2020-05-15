@@ -39,6 +39,15 @@ import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
 import { configureTestSuite } from 'ng-bullet';
 import { Subscription } from 'rxjs';
+import {
+  SosButtonComponent,
+} from '../../../../external-modules/lw-ionic-module/components/sos-button/sos-button.component';
+import {
+  LoneWorkerIntegrationProviderMock,
+} from '../../../../providers/lone-worker-integration/__mocks__/lone-worker-integration.provider.mock';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../../providers/lone-worker-integration/lone-worker-integration.provider';
 
 describe('PassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;
@@ -58,6 +67,7 @@ describe('PassFinalisationCatBPage', () => {
         MockComponent(FinalisationHeaderComponent),
         MockComponent(LanguagePreferencesComponent),
         MockComponent(WarningBannerComponent),
+        MockComponent(SosButtonComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
@@ -67,6 +77,7 @@ describe('PassFinalisationCatBPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: LoneWorkerIntegrationProvider, useClass: LoneWorkerIntegrationProviderMock },
       ],
     });
   });
