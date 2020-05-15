@@ -18,14 +18,6 @@ const adConfig: IonicAuthOptions = {
   logoutUrl: 'mesmobileappscheme://login?logout=true',
   // logoutUrl: 'mesmobileappscheme://callback?logout=true',
   iosWebView: 'shared',
-  // tokenStorageProvider: {
-  //   getAccessToken: () => Promise.resolve(JSON.parse(localStorage.getItem('accessToken'))),
-  //   setAccessToken: token => Promise.resolve(localStorage.setItem('accesstoken', JSON.stringify(token))),
-  //   getIdToken: () => Promise.resolve(JSON.parse(localStorage.getItem('idToken'))),
-  //   setIdToken: token => Promise.resolve(localStorage.setItem('idToken', JSON.stringify(token))),
-  //   getRefreshToken: () => Promise.resolve(JSON.parse(localStorage.getItem('refreshToken'))),
-  //   setRefreshToken: token => Promise.resolve(localStorage.setItem('refreshToken', JSON.stringify(token))),
-  // },
 };
 
 @Injectable()
@@ -45,30 +37,27 @@ export class AuthenticationProvider extends IonicAuth {
     private testPersistenceProvider: TestPersistenceProvider,
   ) {
     adConfig.tokenStorageProvider = {
-      // async getAccessToken() {
-      //   return await dataStoreProvider.getItemNew('accessToken');
-      // },
-      // async setAccessToken(token) {
-      //   await dataStoreProvider.setItem('accessToken', JSON.stringify(token));
-      // },
-      // async getIdToken() {
-      //   return await dataStoreProvider.getItemNew('idToken');
-      // },
-      // async setIdToken(token) {
-      //   await dataStoreProvider.setItem('idToken', JSON.stringify(token));
-      // },
-      // async getRefreshToken() {
-      //   return await this.dataStoreProvider.getItemNew('refreshToken');
-      // },
-      // async setRefreshToken(token) {
-      //   await dataStoreProvider.setItem('refreshToken', JSON.stringify(token));
-      // },
-      getAccessToken: () => Promise.resolve(localStorage.getItem('accessToken')),
-      setAccessToken: token => Promise.resolve(localStorage.setItem('accessToken', JSON.stringify(token))),
-      getIdToken: () => Promise.resolve(JSON.parse(localStorage.getItem('idToken'))),
-      setIdToken: token => Promise.resolve(localStorage.setItem('idToken', JSON.stringify(token))),
-      getRefreshToken: () => Promise.resolve(JSON.parse(localStorage.getItem('refreshToken'))),
-      setRefreshToken: token => Promise.resolve(localStorage.setItem('refreshToken', JSON.stringify(token))),
+      async getAccessToken() {
+        return JSON.parse(await dataStoreProvider.getItem('accessToken'));
+      },
+      async setAccessToken(token) {
+        await dataStoreProvider.setItem('accessToken', JSON.stringify(token));
+        return Promise.resolve();
+      },
+      async getIdToken() {
+        return JSON.parse(await dataStoreProvider.getItem('idToken'));
+      },
+      async setIdToken(token) {
+        await dataStoreProvider.setItem('idToken', JSON.stringify(token));
+        return Promise.resolve();
+      },
+      async getRefreshToken() {
+        return JSON.parse(await this.dataStoreProvider.getItem('refreshToken'));
+      },
+      async setRefreshToken(token) {
+        await dataStoreProvider.setItem('refreshToken', JSON.stringify(token));
+        return Promise.resolve();
+      },
     };
     super(adConfig);
   }
@@ -100,8 +89,7 @@ export class AuthenticationProvider extends IonicAuth {
   public getAuthenticationToken = async (): Promise<string> => {
     // const response = await this.aquireTokenSilently();
     // return response.accessToken;
-    await this.isAuthenticated();
-    return await JSON.parse(localStorage.getItem('idToken'));
+    return JSON.parse(await this.dataStoreProvider.getItem('idToken'));
   }
 
   public getEmployeeId = (): string => {
@@ -119,28 +107,23 @@ export class AuthenticationProvider extends IonicAuth {
     await super.login();
   }
 
-  async onLoginSuccess() {
-    // do some work here
-    alert(`successfully logged in!`);
-    const token = await this.getIdToken();
-    alert(JSON.stringify(token));
-  }
-
   public logoutEnabled = (): boolean => {
     return this.appConfig.getAppConfig().journal.enableLogoutButton;
   }
 
   async logout(): Promise<void> {
-    await super.logout();
     if (this.appConfig.getAppConfig().logoutClearsTestPersistence) {
       await this.testPersistenceProvider.clearPersistedTests();
     }
-    this.dataStoreProvider.getKeys();
+    await this.dataStoreProvider.removeItem('accessToken');
+    await this.dataStoreProvider.removeItem('idToken');
+    await this.dataStoreProvider.removeItem('refreshToken');
+    await super.logout();
+
   }
 
   async setEmployeeId() {
     const idToken = await this.getIdToken();
-    alert(idToken[this.employeeIdKey]);
     const employeeId = idToken[this.employeeIdKey];
     console.log(employeeId);
     const employeeIdClaim = Array.isArray(employeeId) ? employeeId[0] : employeeId;

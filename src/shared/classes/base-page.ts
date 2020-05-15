@@ -30,7 +30,6 @@ export abstract class BasePageComponent {
   }
 
   logout() {
-    alert(`about to log the user out`);
     if (this.isIos()) {
       this.authenticationProvider.logout()
         .then(

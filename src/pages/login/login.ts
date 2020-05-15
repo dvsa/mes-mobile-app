@@ -95,15 +95,12 @@ export class LoginPage extends BasePageComponent {
 
       this.initialiseAuthentication();
 
+      await this.initialisePersistentStorage();
+
       const isAuthenticated = await this.authenticationProvider.isAuthenticated();
 
       if (!isAuthenticated) {
         await this.authenticationProvider.login();
-      } else {
-        const token = await this.authenticationProvider.getIdToken();
-        alert(`already authenticated. proceeding
-        token is
-        ${JSON.stringify(token)}`);
       }
 
       await this.authenticationProvider.setEmployeeId();
@@ -111,8 +108,6 @@ export class LoginPage extends BasePageComponent {
       this.store$.dispatch(new LoadEmployeeId(this.authenticationProvider.getEmployeeId()));
 
       this.store$.dispatch(new LoadLog());
-
-      await this.initialisePersistentStorage();
 
       await this.appConfigProvider.loadRemoteConfig();
       this.store$.dispatch(new LoadConfigSuccess());
