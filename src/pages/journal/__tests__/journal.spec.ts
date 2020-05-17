@@ -49,6 +49,15 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { SlotProvider } from '../../../providers/slot/slot';
 import { configureTestSuite } from 'ng-bullet';
+import {
+  AmberAlertProvider,
+} from '../../../external-modules/lw-ionic-module/providers/amber-alert.provider';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
+import {
+  LoneWorkerIntegrationProviderMock,
+} from '../../../providers/lone-worker-integration/__mocks__/lone-worker-integration.provider.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -90,6 +99,8 @@ describe('JournalPage', () => {
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: SlotProvider, useClass: SlotProvider },
+        { provide: AmberAlertProvider, useClass: AmberAlertProvider },
+        { provide: LoneWorkerIntegrationProvider, useClass: LoneWorkerIntegrationProviderMock },
       ],
     });
   });

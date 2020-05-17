@@ -13,6 +13,12 @@ import { TestsEffects } from '../../modules/tests/tests.effects';
 import { TestSlotComponentsModule } from '../../components/test-slot/test-slot-components.module';
 import { ComponentsModule } from '../../components/common/common-components.module';
 import { JournalAnalyticsEffects } from './journal.analytics.effects';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../providers/lone-worker-integration/lone-worker-integration.provider';
+import {
+  LoneWorkerIonicModule,
+} from '../../external-modules/lw-ionic-module/lone-worker.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +33,7 @@ import { JournalAnalyticsEffects } from './journal.analytics.effects';
       TestsEffects,
     ]),
     ComponentsModule,
+    LoneWorkerIonicModule,
   ],
   entryComponents: [
     ActivitySlotComponent,
@@ -37,6 +44,7 @@ import { JournalAnalyticsEffects } from './journal.analytics.effects';
     SlotProvider,
     SlotSelectorProvider,
     DateTimeProvider,
+    LoneWorkerIntegrationProvider,
   ],
 })
-export class JournalPageModule {}
+export class JournalPageModule { }

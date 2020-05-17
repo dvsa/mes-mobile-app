@@ -11,6 +11,9 @@ import { LoneWorkerConfig, loneWorkerConfigService } from './lone-worker-config.
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LocationProvider } from './providers/location.provider';
+import { amberAlertReducer } from './store/amber-alert/amber-alert.reducer';
+import { AmberAlertEffects } from './store/amber-alert/amber-alert.effects';
+import { AmberAlertProvider } from './providers/amber-alert.provider';
 
 @NgModule({
   imports: [
@@ -22,18 +25,16 @@ import { LocationProvider } from './providers/location.provider';
     EffectsModule.forFeature([
       RaisedAlertEffects,
     ]),
-    // StoreModule.forFeature('loneWorkerAmberAlerts', amberAlertReducer),
-    // EffectsModule.forFeature([
-    //   AmberAlertEffects,
-    // ]),
+    StoreModule.forFeature('loneWorkerAmberAlerts', amberAlertReducer),
+    EffectsModule.forFeature([
+      AmberAlertEffects,
+    ]),
   ],
   declarations: [
     SosButtonComponent,
-    // AmberAlertModalComponent,
   ],
   exports: [
     SosButtonComponent,
-    // AmberAlertModalComponent,
   ],
 })
 export class LoneWorkerIonicModule {
@@ -47,8 +48,7 @@ export class LoneWorkerIonicModule {
         },
         AlertProvider,
         LocationProvider,
-        // NetworkStateProvider,
-        // AmberAlertProvider,
+        AmberAlertProvider,
       ],
     };
   }

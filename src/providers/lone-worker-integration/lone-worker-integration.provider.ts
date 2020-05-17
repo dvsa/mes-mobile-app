@@ -7,26 +7,49 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Accompaniment, Name, VehicleDetails } from '@dvsa/mes-test-schema/categories/common';
 import { omit, get } from 'lodash';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { getSlotsOnSelectedDate } from '../../modules/journal/journal.selector';
 
 @Injectable()
 export class LoneWorkerIntegrationProvider {
 
   constructor(
-        private store$: Store<StoreModel>,
-    ) {
+    private store$: Store<StoreModel>,
+  ) {
 
   }
 
   getIncidentPropertiesFromStore(): Observable<Partial<IncidentCore>> {
     return this.store$.pipe(
-            select(this.getIncidentProperties),
-        );
+      select(this.getIncidentProperties),
+    );
+  }
+
+  getTestCentreIdFromStore(): Observable<string> {
+    return this.store$.pipe(
+      select(this.getTestCentreId),
+    );
+  }
+
+  private getTestCentreId = (state: StoreModel): string => {
+    // if there is a current tests, return that test centre Id
+    if (state.tests.currentTest.slotId) {
+      const currentTest = getCurrentTest(state.tests);
+      return currentTest.journalData.testCentre.centreId.toString();
+    }
+
+    // if no active test, return id from top slow for selected date
+    const slots = getSlotsOnSelectedDate(state.journal);
+    if (slots[0]) {
+      return slots[0].slotData.testCentre.centreId.toString();
+    }
+
+    return null;
   }
 
   private getIncidentProperties = (state: StoreModel): Partial<IncidentCore> => {
 
     const staffNumber = state.journal.examiner.staffNumber;
-        // This selector always get the test that is currently in progress and active
+    // This selector always get the test that is currently in progress and active
     const currentTest = getCurrentTest(state.tests);
     const { journalData } = currentTest;
     const { candidate, testCentre } = journalData;

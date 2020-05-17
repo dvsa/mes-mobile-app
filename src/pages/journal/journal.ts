@@ -34,6 +34,10 @@ import { PersonalCommitmentSlotComponent } from './personal-commitment/personal-
 import { TestSlotComponent } from '../../components/test-slot/test-slot/test-slot';
 import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
 import { DateTime } from '../../shared/helpers/date-time';
+import { AmberAlertProvider } from '../../external-modules/lw-ionic-module/providers/amber-alert.provider';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../../providers/lone-worker-integration/lone-worker-integration.provider';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -84,7 +88,8 @@ export class JournalPage extends BasePageComponent implements OnInit {
     private deviceProvider: DeviceProvider,
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
-
+    public amberAlertProvider: AmberAlertProvider,
+    public loneWorkerIntegrationProvider: LoneWorkerIntegrationProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId();
@@ -133,6 +138,9 @@ export class JournalPage extends BasePageComponent implements OnInit {
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),
+      this.loneWorkerIntegrationProvider.getTestCentreIdFromStore().pipe(
+        map(testCentreId => this.amberAlertProvider.subscribe(testCentreId)),
+      ),
     );
 
   }

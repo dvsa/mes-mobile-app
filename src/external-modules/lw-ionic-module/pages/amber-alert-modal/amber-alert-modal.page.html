@@ -1,0 +1,43 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Incident details</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ul>
+        <li>
+            <label>Date:</label> {{ incident.timestamp | date:'short' }}
+        </li>
+        <li>
+            <label>Lone worker:</label> {{ incident.loneWorker.name }}
+        </li>
+        <li>
+            <label>Staff number:</label> {{ incident.loneWorker.staffNumber }}
+        </li>
+        <li>
+            <label>Candidate name:</label> {{ incident.scenario.drivingTestInfo?.candidateName }}
+        </li>
+        <li>
+            <label>Test category:</label> {{ incident.scenario.drivingTestInfo?.testCategory }}
+        </li>
+        <li>
+            <label>Accompanied by:</label> {{ incident.scenario.drivingTestInfo?.accompaniedBy || 'none' }}
+        </li>
+        <li>
+            <label>Vehicle registration:</label> {{ incident.scenario.drivingTestInfo?.vehicle?.vehicleRegistration }}
+        </li>
+        <li>
+            <label>Dual control:</label> {{ incident.scenario.drivingTestInfo?.vehicle?.dualControl ? 'Yes' : 'No' }}
+        </li>
+        <li>
+            <label>School car:</label> {{ incident.scenario.drivingTestInfo?.vehicle?.schoolCar ? 'Yes' : 'No' }}
+        </li>
+    </ul>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-buttons>
+            <button ion-button (click)="close()">Close</button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

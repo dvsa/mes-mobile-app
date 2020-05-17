@@ -1,15 +1,15 @@
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Severity, IncidentCore } from '@dvsa/lw-incident-model';
-import { StoreModel } from '../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
-import * as alertActions from '../store/raised-alert/raised-alert.actions';
+import * as alertActions from '../../store/raised-alert/raised-alert.actions';
 import { map } from 'rxjs/operators';
-import { getRaisedAlertStatus } from '../store/raised-alert/raised-alert.selector';
+import { getRaisedAlertStatus } from '../../store/raised-alert/raised-alert.selector';
 import { Observable, merge, Subscription } from 'rxjs';
-import { RaisedAlertStatusModel } from '../store/raised-alert/raised-alert.model';
-import { getAlertState } from '../store/raised-alert/raised-alert.reducer';
-import { LocationProvider } from '../providers/location.provider';
+import { RaisedAlertStatusModel } from '../../store/raised-alert/raised-alert.model';
+import { getAlertState } from '../../store/raised-alert/raised-alert.reducer';
+import { LocationProvider } from '../../providers/location.provider';
 
 type AlertType = 'red' | 'amber';
 
