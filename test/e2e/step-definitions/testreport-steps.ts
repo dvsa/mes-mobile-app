@@ -46,6 +46,12 @@ When('I end the test', () => {
   TestReportPage.clickEndTestButton();
 });
 
+When('I complete the test with all legal requirements clicked', () => {
+  testReportPage.legalRequirements.completeLegalRequirements()
+  TestReportPage.completeEco();
+  TestReportPage.clickEndTestButton();
+});
+
 When('I end the test with the speed requirements not met', () => {
   TestReportPage.clickEndTestButton();
   TestReportPage.clickEndTestButtonSpeedRequirements();
