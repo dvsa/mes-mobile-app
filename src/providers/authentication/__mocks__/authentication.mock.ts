@@ -1,6 +1,6 @@
 export class AuthenticationProviderMock {
 
-  isAuthenticated = jasmine.createSpy('isAuthenticated').and.returnValue(true);
+  isAuthenticated = jasmine.createSpy('isAuthenticated').and.returnValue(Promise.resolve(true));
 
   isInUnAuthenticatedMode = jasmine.createSpy('isInUnAuthenticatedMode').and.returnValue(false);
 
@@ -18,4 +18,6 @@ export class AuthenticationProviderMock {
   determineAuthenticationMode = jasmine.createSpy('determineAuthenticationMode');
 
   logoutEnabled = jasmine.createSpy('logoutEnabled').and.returnValue(true);
+
+  setEmployeeId = jasmine.createSpy('setEmployeeId').and.returnValue(Promise.resolve());
 }
