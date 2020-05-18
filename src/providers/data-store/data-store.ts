@@ -56,9 +56,6 @@ export class DataStoreProvider {
     }
     return this.secureContainer.get(key).then((response: string) => {
       return response;
-    }).catch((error) => {
-      console.log(`unable to find ${key} error is ${error}`);
-      return null;
     });
   }
   /**
@@ -89,9 +86,9 @@ export class DataStoreProvider {
     if (!this.secureContainer) {
       return Promise.resolve('');
     }
-    return this.secureContainer.remove(key).catch(() => {
+    return this.secureContainer.remove(key).catch((error) => {
+      console.error(`error removing ${key}. Error is: ${error.message}`);
       return Promise.resolve('');
     });
   }
-
 }

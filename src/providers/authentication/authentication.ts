@@ -42,23 +42,33 @@ export class AuthenticationProvider {
       logoutUrl: authSettings.logoutUrl,
       iosWebView: 'shared',
       tokenStorageProvider: {
-        getAccessToken: async () => JSON.parse(await this.dataStoreProvider.getItem(Token.ACCESS)),
-        setAccessToken: async (token: string) => {
-          await this.dataStoreProvider.setItem(Token.ACCESS, JSON.stringify(token));
-          return Promise.resolve();
-        },
-        getIdToken: async () => JSON.parse(await this.dataStoreProvider.getItem(Token.ID)),
-        setIdToken: async (token: string) => {
-          await this.dataStoreProvider.setItem(Token.ID, JSON.stringify(token));
-          return Promise.resolve();
-        },
-        getRefreshToken: async () => JSON.parse(await this.dataStoreProvider.getItem(Token.REFRESH)),
-        setRefreshToken: async (token: string) => {
-          await this.dataStoreProvider.setItem(Token.REFRESH, JSON.stringify(token));
-          return Promise.resolve();
-        },
+        getAccessToken: async () => this.getToken(Token.ACCESS),
+        setAccessToken: async (token: string) => this.setToken(Token.ACCESS, token),
+        getIdToken: async () => this.getToken(Token.ID),
+        setIdToken: async (token: string) => this.setToken(Token.ID, token),
+        getRefreshToken: async () => this.getToken(Token.REFRESH),
+        setRefreshToken: async (token: string) => this.setToken(Token.REFRESH, token),
       },
     };
+  }
+
+  async getToken(tokenName: Token): Promise<string | null> {
+    try {
+      return JSON.parse(await this.dataStoreProvider.getItem(tokenName));
+    } catch (error) {
+      return Promise.resolve(null);
+    }
+  }
+
+  async setToken(tokenName: Token, token: string): Promise<void> {
+    await this.dataStoreProvider.setItem(tokenName, JSON.stringify(token));
+    return Promise.resolve();
+  }
+
+  async clearTokens(): Promise<void> {
+    await this.dataStoreProvider.removeItem(Token.ACCESS);
+    await this.dataStoreProvider.removeItem(Token.ID);
+    await this.dataStoreProvider.removeItem(Token.REFRESH);
   }
 
   public initialiseAuthentication = (): void => {
@@ -111,9 +121,7 @@ export class AuthenticationProvider {
     if (this.appConfig.getAppConfig().logoutClearsTestPersistence) {
       await this.testPersistenceProvider.clearPersistedTests();
     }
-    await this.dataStoreProvider.removeItem(Token.ACCESS);
-    await this.dataStoreProvider.removeItem(Token.ID);
-    await this.dataStoreProvider.removeItem(Token.REFRESH);
+    await this.clearTokens();
     await this.ionicAuth.logout();
   }
 

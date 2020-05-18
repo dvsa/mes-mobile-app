@@ -32,7 +32,11 @@ export class TestPersistenceProvider {
   }
 
   async clearPersistedTests(): Promise<void> {
-    await this.dataStoreProvider.removeItem(this.testKeychainKey);
+    const items: string[] = await this.dataStoreProvider.getKeys();
+    if (items.indexOf(this.testKeychainKey) >= 0) {
+      await this.dataStoreProvider.removeItem(this.testKeychainKey);
+    }
+    return Promise.resolve();
   }
 
   clearCachedTests(tests: TestsModel): TestsModel {
