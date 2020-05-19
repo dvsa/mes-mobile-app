@@ -116,7 +116,7 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
       },
     }),
     LoneWorkerIonicModule.forRoot({
-      apiRoot: 'http://localhost:3000',
+      apiRoot: 'https://lone-worker-dev.mes.dev-dvsacloud.uk/raise-incident-api',
     }),
   ],
   bootstrap: [IonicApp],
