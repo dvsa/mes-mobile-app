@@ -36,39 +36,38 @@ Feature: A Driving Examiner Completes failed tests
     And the driver fault count is "11"
     When I complete the test with all legal requirements clicked
     And I continue to debrief
-    Then I should see the Debrief page with outcome "Unsuccessful"
-    And I see a "riding" fault for "Move Off - Safety"
-    And I see a "riding" fault for "Move Off - Control"
-    And I see a "riding" fault for "Junctions - Turning left"
-    And I see a "riding" fault for "Signals - Timed"
-    And I see a "riding" fault for "Precautions"
-    And I see a "riding" fault for "Signals - Necessary"
-    And I see a "riding" fault for "Junctions - Turing right"
-    And I see a "riding" fault for "Junctions - Cutting corners"
-    And I see a "riding" fault for "Judgement - Overtaking"
-    And I see a "riding" fault for "Judgement - Meeting"
-    And I see a "riding" fault for "Judgement - Crossing"
     Then I should see the "Debrief - Richard Rhys" page
-    When I end the debrief
-    Then I am on the post debrief holding page
-    When I continue to the non pass finalisation page
-    And I complete the fail details
-    And I am on the back to office page
-    And I continue to the office write up
-    Then I should see the "Office" page
-    And the office page test outcome is "Unsuccessful"
-    When I complete the office write up
-    And I see a "driving" fault for "Move Off - Safety"
-    And I see a "driving" fault for "Move Off - Control"
-    And I see a "driving" fault for "Junctions - Turning left"
+    And I see a "driving" fault for "Move off - Safety"
+    And I see a "driving" fault for "Move off - Control"
     And I see a "driving" fault for "Signals - Timed"
     And I see a "driving" fault for "Precautions"
     And I see a "driving" fault for "Signals - Necessary"
-    And I see a "driving" fault for "Junctions - Turing right"
+    And I see a "driving" fault for "Junctions - Turning left"
+    And I see a "driving" fault for "Junctions - Turning right"
     And I see a "driving" fault for "Junctions - Cutting corners"
     And I see a "driving" fault for "Judgement - Overtaking"
     And I see a "driving" fault for "Judgement - Meeting"
     And I see a "driving" fault for "Judgement - Crossing"
+    When I end the debrief
+    When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Richard Rhys" page
+    When I continue to the back to office page
+    And I continue to the office write up
+    Then I should see the "Office" page
+    And the office page test outcome is "Unsuccessful"
+    When I complete the office write up
+    When I pick Car to bike button on the office page
+    And I enter a comment for "driving" fault "Move off - Safety"
+    And I enter a comment for "driving" fault "Move off - Control"
+    And I enter a comment for "driving" fault "Signals - Timed"
+    And I enter a comment for "driving" fault "Precautions"
+    And I enter a comment for "driving" fault "Signals - Necessary"
+    And I enter a comment for "driving" fault "Junctions - Turning left"
+    And I enter a comment for "driving" fault "Junctions - Turning right"
+    And I enter a comment for "driving" fault "Junctions - Cutting corners"
+    And I enter a comment for "driving" fault "Judgement - Overtaking"
+    And I enter a comment for "driving" fault "Judgement - Meeting"
+    And I enter a comment for "driving" fault "Judgement - Crossing"
     And I upload the test
     Then I should see the "Journal" page
-    And the test result for "Mr Richard Rhys" is "2"
+    And the test result for "Richard Rhys" is "2"

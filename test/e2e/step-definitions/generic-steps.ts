@@ -54,7 +54,7 @@ Before({ tags: '@cata' }, () => {
 });
 
 Before({ tags: '@catam2' }, () => {
-  this.testCategory = 'mod2';
+  this.testCategory = 'a-mod2';
 });
 
 Before({ tags: '@catd' }, () => {

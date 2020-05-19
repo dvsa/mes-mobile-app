@@ -1,40 +1,42 @@
-import { Then, When, Before } from 'cucumber';
+import {Then, When, Before} from 'cucumber';
 import OfficePage from '../pages/OfficePage';
+import officePage from '../pages/OfficePage';
+
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
 this.testCategory = 'b';
-Before({ tags: '@catbe' }, () => {
+Before({tags: '@catbe'}, () => {
   this.testCategory = 'be';
 });
 
-Before({ tags: '@catc' }, () => {
+Before({tags: '@catc'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catc1' }, () => {
+Before({tags: '@catc1'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catce' }, () => {
+Before({tags: '@catce'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catc1e' }, () => {
+Before({tags: '@catc1e'}, () => {
   this.testCategory = 'ce';
 });
 
-Before({ tags: '@cata' }, () => {
+Before({tags: '@cata'}, () => {
   this.testCategory = 'a-mod1';
 });
 
-Before({ tags: '@catam2' }, () => {
+Before({tags: '@catam2'}, () => {
   this.testCategory = 'a-mod2';
 });
 
-Before({ tags: '@catd' }, () => {
+Before({tags: '@catd'}, () => {
   this.testCategory = 'd';
 });
 
@@ -60,6 +62,10 @@ When('I complete the office write up with Not applicable to independent driving 
   OfficePage.enterCandidateDescription();
   OfficePage.enterShowMe('N/A - Not applicable');
   OfficePage.enterWeatherConditions();
+});
+
+When('I pick Car to bike button on the office page', () => {
+  OfficePage.clickBikeSelector();
 });
 
 When('I upload the test', () => {
@@ -97,17 +103,17 @@ Then('I have a {string} fault for {string} requiring a comment', (faultSeverity,
   return expect(commentsValidationText.getAttribute('class')).to.eventually.contain('ng-invalid');
 });
 
-Then('the tell me question should be {string}', (tellMeQuestion : string) => {
+Then('the tell me question should be {string}', (tellMeQuestion: string) => {
   const tellMeQuestionField = OfficePage.getTellMeQuestionField();
   return expect(tellMeQuestionField.getText()).to.eventually.equal(tellMeQuestion);
 });
 
-Then('the office page test outcome is {string}', (testOutcome : string) => {
+Then('the office page test outcome is {string}', (testOutcome: string) => {
   const testOutcomeField = OfficePage.getTestOutcomeField();
   return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
 
-Then(/^there (?:is|are) \"(.+)\" driver faults? listed for \"(.+)\"$/, (faultCount : string, faultTest : string) => {
+Then(/^there (?:is|are) \"(.+)\" driver faults? listed for \"(.+)\"$/, (faultCount: string, faultTest: string) => {
   const driverFault = OfficePage.getDriverFault(faultCount, faultTest);
   return expect(driverFault.isPresent()).to.eventually.be.true;
 });

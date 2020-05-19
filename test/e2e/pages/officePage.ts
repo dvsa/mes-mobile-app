@@ -76,6 +76,10 @@ class OfficePage extends Page {
     this.clickElementByXPath('//ion-select[@formcontrolname="weatherConditions"]');
   }
 
+  clickBikeSelector() {
+    this.getElementById('mode-of-transport-cartobike');
+  }
+
   clickWeatherItemBrightWetRoads() {
     this.clickElementByXPath('//button/span/div[normalize-space(text()) = "2 - Bright / wet roads"]');
   }

@@ -145,7 +145,7 @@ class WaitingRoomToCarPage extends Page {
       this.modCatConfirmation(tellMeQuestion);
       const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
       this.clickElementById(transmissionSelector);
-    } else if (testCategory === 'mod2') {
+    } else if (testCategory === 'a-mod2') {
       this.modCatConfirmation(tellMeQuestion);
       this.eyeSightResultPass();
       this.multiShowAndTell(UI_TEST_DATA.testData.mod2, questionResult);

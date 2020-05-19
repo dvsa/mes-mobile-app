@@ -29,6 +29,10 @@ Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
 });
 
+Before({ tags: '@catam2' }, () => {
+  this.testCategory = 'a-mod2';
+});
+
 Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
