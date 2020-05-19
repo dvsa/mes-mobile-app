@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AppConfigProvider } from '../app-config/app-config';
-import jwtDecode from 'jwt-decode';
 import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
 import { TestPersistenceProvider } from '../test-persistence/test-persistence';
 import { IonicAuth, IonicAuthOptions } from '@ionic-enterprise/auth';
@@ -19,7 +18,6 @@ export class AuthenticationProvider {
   private employeeIdKey: string;
   private employeeId: string;
   private inUnAuthenticatedMode: boolean;
-  public jwtDecode: any;
   public ionicAuth: IonicAuth;
 
   constructor(
@@ -74,7 +72,6 @@ export class AuthenticationProvider {
   public initialiseAuthentication = (): void => {
     this.authenticationSettings = this.appConfig.getAppConfig().authentication;
     this.employeeIdKey = this.appConfig.getAppConfig().authentication.employeeIdKey;
-    this.jwtDecode = jwtDecode;
     this.inUnAuthenticatedMode = false;
     this.ionicAuth = new IonicAuth(this.getAuthOptions(this.appConfig));
   }
@@ -97,7 +94,7 @@ export class AuthenticationProvider {
   }
 
   public getAuthenticationToken = async (): Promise<string> => {
-    return JSON.parse(await this.dataStoreProvider.getItem(Token.ID));
+    return this.getToken(Token.ID);
   }
 
   public getEmployeeId = (): string => {
@@ -110,7 +107,10 @@ export class AuthenticationProvider {
   }
 
   async login(): Promise<void> {
-    await this.ionicAuth.login();
+    if (this.isInUnAuthenticatedMode()) {
+      return Promise.resolve();
+    }
+    return await this.ionicAuth.login();
   }
 
   public logoutEnabled = (): boolean => {
@@ -128,7 +128,8 @@ export class AuthenticationProvider {
   async setEmployeeId() {
     const idToken = await this.ionicAuth.getIdToken();
     const employeeId = idToken[this.employeeIdKey];
-    const numericEmployeeId = Number.parseInt(employeeId, 10);
+    const employeeIdClaim = Array.isArray(employeeId) ? employeeId[0] : employeeId;
+    const numericEmployeeId = Number.parseInt(employeeIdClaim, 10);
     this.employeeId = numericEmployeeId.toString();
   }
 

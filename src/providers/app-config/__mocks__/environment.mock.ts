@@ -15,7 +15,7 @@ export const remoteEnvironmentMock: EnvironmentFile = {
     clientId: 'remote-authentication-client-id',
     redirectUrl: 'remote-authentication-redirect-url',
     logoutUrl: 'remote-logout-url',
-    employeeIdKey: 'remote-employeeIdKey',
+    employeeIdKey: 'remoteemployeeIdKey',
   },
 };
 
@@ -29,14 +29,14 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
   logsPostApiKey: '',
   logsApiUrl: 'https://www.example.com/api/v1/logs',
   logsAutoSendInterval: 6000,
-  employeeNameKey: 'local-employee-name-key',
+  employeeNameKey: 'localemployeenamekey',
   authentication: {
     context: 'local-authentication-context',
     resourceUrl: 'local-authentication-resource-url',
     clientId: 'local-authentication-client-id',
     redirectUrl: 'local-authentication-redirect-url',
     logoutUrl: 'local-logout-url',
-    employeeIdKey: 'local-employeeIdKey',
+    employeeIdKey: 'localemployeeIdKey',
   },
   approvedDeviceIdentifiers: [
     'iPad7,4',

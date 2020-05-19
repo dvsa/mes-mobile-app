@@ -16,7 +16,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { DataStoreProvider } from '../../data-store/data-store';
 import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
 
-fdescribe('Authentication', () => {
+describe('Authentication', () => {
   let authenticationProvider: AuthenticationProvider;
   let networkStateProvider: NetworkStateProvider;
   let appConfigProvider: AppConfigProvider;
@@ -44,99 +44,91 @@ fdescribe('Authentication', () => {
     testPersistenceProvider = TestBed.get(TestPersistenceProvider);
     dataStoreProvider = TestBed.get(DataStoreProvider);
     authenticationProvider.initialiseAuthentication();
-    authenticationProvider.jwtDecode = () => ({
-      'local-employeeIdKey': ['12345678'],
-    });
   }));
 
   describe('Provider', () => {
 
-    fit('should compile', () => {
+    it('should compile', () => {
       expect(authenticationProvider).toBeDefined();
     });
 
-    fit('determineAuthenticationMode() should set unauthenticated mode to true if offline', async () => {
+    it('determineAuthenticationMode() should set unauthenticated mode to true if offline', async () => {
       spyOn(networkStateProvider, 'getNetworkState').and.returnValue(ConnectionStatus.OFFLINE);
       authenticationProvider.determineAuthenticationMode();
       expect(authenticationProvider.isInUnAuthenticatedMode()).toEqual(true);
     });
 
-    fit('determineAuthenticationMode() should set unauthenticated mode to false if online', async () => {
+    it('determineAuthenticationMode() should set unauthenticated mode to false if online', async () => {
       spyOn(networkStateProvider, 'getNetworkState').and.returnValue(ConnectionStatus.ONLINE);
       authenticationProvider.determineAuthenticationMode();
       expect(authenticationProvider.isInUnAuthenticatedMode()).toEqual(false);
     });
 
-    fit('isAuthenticated() should return false when no login has happened', async () => {
+    it('isAuthenticated() should return false when no login has happened', async () => {
       spyOn(authenticationProvider.ionicAuth, 'isAuthenticated').and.returnValue(Promise.resolve(false));
       const isAuthenticated = await authenticationProvider.isAuthenticated();
       expect(isAuthenticated).toEqual(false);
     });
 
-    fit('getAuthenticationToken() should return a token', async () => {
-      spyOn(dataStoreProvider, 'getItem').and.returnValue(Promise.resolve('{"employeeid": "123456"}'));
+    it('getAuthenticationToken() should return a token', async () => {
+      spyOn(dataStoreProvider, 'getItem').and.returnValue(Promise.resolve('"U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4"'));
       const token = await authenticationProvider.getAuthenticationToken();
 
       expect(token).toEqual('U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4');
     });
 
-    it('should login successfully', async () => {
+    it('should call ionic login', async () => {
+      spyOn(authenticationProvider.ionicAuth, 'login').and.returnValue(Promise.resolve());
       await authenticationProvider.login();
 
-      expect(authenticationProvider.isAuthenticated()).toEqual(true);
+      expect(authenticationProvider.ionicAuth.login).toHaveBeenCalled();
     });
 
     it('should login without authenticating in unauthenticated mode', async () => {
       spyOn(authenticationProvider, 'isInUnAuthenticatedMode').and.returnValue(true);
-      spyOn(authenticationProvider, 'aquireTokenSilently').and.callThrough();
+      spyOn(authenticationProvider.ionicAuth, 'login').and.returnValue(Promise.resolve());
       await authenticationProvider.login();
-      // expect(authenticationProvider.aquireTokenSilently).toHaveBeenCalledTimes(0);
+      expect(authenticationProvider.ionicAuth.login).toHaveBeenCalledTimes(0);
     });
 
     it('should login with authenticating in unauthenticated mode', async () => {
       spyOn(authenticationProvider, 'isInUnAuthenticatedMode').and.returnValue(false);
-      spyOn(authenticationProvider, 'aquireTokenSilently').and.callThrough();
+      spyOn(authenticationProvider.ionicAuth, 'login').and.returnValue(Promise.resolve());
       await authenticationProvider.login();
-      // expect(authenticationProvider.aquireTokenSilently).toHaveBeenCalledTimes(1);
+      expect(authenticationProvider.ionicAuth.login).toHaveBeenCalledTimes(1);
     });
 
     it('should set the correct employeeId when it is an array', async () => {
-      await authenticationProvider.login();
-
-      expect(authenticationProvider.isAuthenticated()).toEqual(true);
+      spyOn(authenticationProvider.ionicAuth, 'getIdToken').and.returnValue(Promise.resolve({
+        localemployeeIdKey: ['12345678'],
+      }));
+      await authenticationProvider.setEmployeeId();
       expect(authenticationProvider.getEmployeeId()).toEqual('12345678');
     });
 
     it('should set the correct employeeId when it is a string', async () => {
-      authenticationProvider.jwtDecode = () => ({
-        'local-employeeIdKey': '12345678',
-      });
-      await authenticationProvider.login();
-
-      expect(authenticationProvider.isAuthenticated()).toEqual(true);
+      spyOn(authenticationProvider.ionicAuth, 'getIdToken').and.returnValue(Promise.resolve({
+        localemployeeIdKey: '12345678',
+      }));
+      await authenticationProvider.setEmployeeId();
       expect(authenticationProvider.getEmployeeId()).toEqual('12345678');
     });
 
     it('should strip leading zeroes from the employeeId', async () => {
-      authenticationProvider.jwtDecode = () => ({
-        'local-employeeIdKey': '00123456',
-      });
-      await authenticationProvider.login();
-
-      expect(authenticationProvider.isAuthenticated()).toEqual(true);
+      spyOn(authenticationProvider.ionicAuth, 'getIdToken').and.returnValue(Promise.resolve({
+        localemployeeIdKey: ['0123456'],
+      }));
+      await authenticationProvider.setEmployeeId();
       expect(authenticationProvider.getEmployeeId()).toEqual('123456');
     });
 
     describe('logout', () => {
       it('should logout successfully', async () => {
-        await authenticationProvider.login();
-
-        expect(authenticationProvider.isAuthenticated()).toEqual(true);
-
+        spyOn(authenticationProvider.ionicAuth, 'logout');
+        spyOn(authenticationProvider, 'clearTokens');
         await authenticationProvider.logout();
-
-        expect(authenticationProvider.isAuthenticated()).toEqual(false);
-        expect(testPersistenceProvider.clearPersistedTests).not.toHaveBeenCalled();
+        expect(authenticationProvider.ionicAuth.logout).toHaveBeenCalled();
+        expect(authenticationProvider.clearTokens).toHaveBeenCalled();
       });
       it('should clear the persisted tests when the configuration to do so is enabled', async () => {
         const configWithPersistenceClearing: AppConfig = {
@@ -144,9 +136,11 @@ fdescribe('Authentication', () => {
           logoutClearsTestPersistence: true,
         };
         spyOn(appConfigProvider, 'getAppConfig').and.returnValue(configWithPersistenceClearing);
-
+        spyOn(authenticationProvider.ionicAuth, 'logout');
+        spyOn(authenticationProvider, 'clearTokens');
         await authenticationProvider.logout();
-
+        expect(authenticationProvider.ionicAuth.logout).toHaveBeenCalled();
+        expect(authenticationProvider.clearTokens).toHaveBeenCalled();
         expect(testPersistenceProvider.clearPersistedTests).toHaveBeenCalled();
       });
     });
