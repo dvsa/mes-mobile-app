@@ -370,6 +370,7 @@ export class OfficeCatHomeTestPage extends BasePageComponent {
         select(getEcoFaultText),
       ),
       dangerousFaults$: currentTest$.pipe(
+        select(getTestData),
         map(data => this.faultSummaryProvider.getDangerousFaultsList(data, this.testCategory)),
       ),
       seriousFaults$: currentTest$.pipe(
