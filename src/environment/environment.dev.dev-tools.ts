@@ -2,12 +2,12 @@ import { MdmConfig } from '@dvsa/mes-config-schema/mdm-config';
 
 export const environment: MdmConfig = {
   isRemote: true,
-  configUrl: 'https://mattc.mes.dev-dvsacloud.uk/v1/configuration/dev',
+  configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev',
   daysToCacheLogs: 7,
   enableDevTools: true,
   logoutClearsTestPersistence: true,
   logsPostApiKey: '',
-  logsApiUrl: 'https://mattc.mes.dev-dvsacloud.uk/v1/logs',
+  logsApiUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/logs',
   logsAutoSendInterval: 6000,
   authentication: {
     context: 'https://login.microsoftonline.com/6c448d90-4ca1-4caf-ab59-0a2aa67d7801',
