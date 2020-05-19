@@ -181,14 +181,14 @@ export class ManoeuvreCompetencyComponentAdiPart2 implements OnInit, OnDestroy {
       manoeuvre: this.manoeuvre,
     };
 
-    if (this.isDangerousMode && this.isRemoveFaultMode) {
+    if (this.hasDangerousFault() && this.isDangerousMode && this.isRemoveFaultMode) {
       this.store$.dispatch(new RemoveManoeuvreFault(payload, this.index));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
-    if (this.isSeriousMode && this.isRemoveFaultMode) {
+    if (this.hasSeriousFault() && this.isSeriousMode && this.isRemoveFaultMode) {
       this.store$.dispatch(new RemoveManoeuvreFault(payload, this.index));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
