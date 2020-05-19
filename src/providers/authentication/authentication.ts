@@ -20,7 +20,7 @@ export class AuthenticationProvider {
   private employeeId: string;
   private inUnAuthenticatedMode: boolean;
   public jwtDecode: any;
-  private ionicAuth: IonicAuth;
+  public ionicAuth: IonicAuth;
 
   constructor(
     private dataStoreProvider: DataStoreProvider,
