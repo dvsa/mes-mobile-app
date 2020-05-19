@@ -1,0 +1,23 @@
+ion-toast.lw-amber-toast {
+  .toast-wrapper {
+    margin-top: 65px !important;
+    max-width: 100%;
+    border-radius: 15px;
+  }
+  .toast-container {
+    background-color: map-get($colors-gds, gds-bright-red);
+    padding: 5px;
+    border-radius: 15px;
+  }
+  .toast-message {
+    @extend .heavy-font-family;
+    font-size: 22px;
+  }
+  .toast-message::before {
+    margin-right: 10px;
+    font-size: 32px;
+    vertical-align: middle;
+    content: "\f276";
+    font-family: "Ionicons";
+  }
+}
