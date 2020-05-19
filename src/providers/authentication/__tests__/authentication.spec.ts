@@ -3,7 +3,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { MSAdal } from '@ionic-native/ms-adal';
 
 import { MSAdalMock } from '../__mocks__/ms-adal.mock';
-import { AuthenticationProvider } from '../authentication';
+import { AuthenticationProvider, Token } from '../authentication';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { InAppBrowserMock } from '../__mocks__/in-app-browser.mock';
@@ -125,10 +125,12 @@ describe('Authentication', () => {
     describe('logout', () => {
       it('should logout successfully', async () => {
         spyOn(authenticationProvider.ionicAuth, 'logout');
-        spyOn(authenticationProvider, 'clearTokens');
+        spyOn(dataStoreProvider, 'removeItem');
         await authenticationProvider.logout();
         expect(authenticationProvider.ionicAuth.logout).toHaveBeenCalled();
-        expect(authenticationProvider.clearTokens).toHaveBeenCalled();
+        expect(dataStoreProvider.removeItem).toHaveBeenCalledWith(Token.ID);
+        expect(dataStoreProvider.removeItem).toHaveBeenCalledWith(Token.ACCESS);
+        expect(dataStoreProvider.removeItem).toHaveBeenCalledWith(Token.REFRESH);
       });
       it('should clear the persisted tests when the configuration to do so is enabled', async () => {
         const configWithPersistenceClearing: AppConfig = {
@@ -137,13 +139,30 @@ describe('Authentication', () => {
         };
         spyOn(appConfigProvider, 'getAppConfig').and.returnValue(configWithPersistenceClearing);
         spyOn(authenticationProvider.ionicAuth, 'logout');
-        spyOn(authenticationProvider, 'clearTokens');
+        spyOn(dataStoreProvider, 'removeItem');
         await authenticationProvider.logout();
         expect(authenticationProvider.ionicAuth.logout).toHaveBeenCalled();
-        expect(authenticationProvider.clearTokens).toHaveBeenCalled();
         expect(testPersistenceProvider.clearPersistedTests).toHaveBeenCalled();
+        expect(dataStoreProvider.removeItem).toHaveBeenCalledWith(Token.ID);
+        expect(dataStoreProvider.removeItem).toHaveBeenCalledWith(Token.ACCESS);
+        expect(dataStoreProvider.removeItem).toHaveBeenCalledWith(Token.REFRESH);
       });
     });
-
+    describe('loadEmployeeName', () => {
+      it('should load the employee name from the token', async () => {
+        const expectedName = 'A N Examiner';
+        spyOn(authenticationProvider, 'getToken').and.returnValue(Promise.resolve({
+          localemployeenamekey: expectedName,
+        }));
+        const actualName = await authenticationProvider.loadEmployeeName();
+        expect(actualName).toEqual(expectedName);
+      });
+    });
+    describe('logoutEnabled', () => {
+      it('should return value from config', async () => {
+        const logoutEnabled = await authenticationProvider.logoutEnabled();
+        expect(logoutEnabled).toEqual(true);
+      });
+    });
   });
 });

@@ -28,7 +28,7 @@ export class AuthenticationProvider {
   ) {
   }
 
-  getAuthOptions =  (appConfig: AppConfigProvider): IonicAuthOptions => {
+  private getAuthOptions =  (appConfig: AppConfigProvider): IonicAuthOptions => {
     const authSettings = this.appConfig.getAppConfig().authentication;
     return {
       authConfig: 'azure',
@@ -50,7 +50,7 @@ export class AuthenticationProvider {
     };
   }
 
-  async getToken(tokenName: Token): Promise<string | null> {
+  private async getToken(tokenName: Token): Promise<string | null> {
     try {
       return JSON.parse(await this.dataStoreProvider.getItem(tokenName));
     } catch (error) {
@@ -58,12 +58,12 @@ export class AuthenticationProvider {
     }
   }
 
-  async setToken(tokenName: Token, token: string): Promise<void> {
+  private async setToken(tokenName: Token, token: string): Promise<void> {
     await this.dataStoreProvider.setItem(tokenName, JSON.stringify(token));
     return Promise.resolve();
   }
 
-  async clearTokens(): Promise<void> {
+  private async clearTokens(): Promise<void> {
     await this.dataStoreProvider.removeItem(Token.ACCESS);
     await this.dataStoreProvider.removeItem(Token.ID);
     await this.dataStoreProvider.removeItem(Token.REFRESH);
@@ -80,7 +80,7 @@ export class AuthenticationProvider {
     return this.inUnAuthenticatedMode;
   }
 
-  async isAuthenticated(): Promise<boolean> {
+  public async isAuthenticated(): Promise<boolean> {
     return await this.ionicAuth.isAuthenticated();
   }
 
@@ -102,11 +102,14 @@ export class AuthenticationProvider {
   }
 
   public loadEmployeeName = async (): Promise<string> => {
-    const idToken = await this.ionicAuth.getIdToken();
-    return idToken[this.appConfig.getAppConfig().authentication.employeeNameKey];
+    const idToken = await this.getToken(Token.ID);
+    if (idToken) {
+      return idToken[this.appConfig.getAppConfig().authentication.employeeNameKey];
+    }
+    return '';
   }
 
-  async login(): Promise<void> {
+  public async login(): Promise<void> {
     if (this.isInUnAuthenticatedMode()) {
       return Promise.resolve();
     }
@@ -117,7 +120,7 @@ export class AuthenticationProvider {
     return this.appConfig.getAppConfig().journal.enableLogoutButton;
   }
 
-  async logout(): Promise<void> {
+  public async logout(): Promise<void> {
     if (this.appConfig.getAppConfig().logoutClearsTestPersistence) {
       await this.testPersistenceProvider.clearPersistedTests();
     }
@@ -125,7 +128,7 @@ export class AuthenticationProvider {
     await this.ionicAuth.logout();
   }
 
-  async setEmployeeId() {
+  public async setEmployeeId() {
     const idToken = await this.ionicAuth.getIdToken();
     const employeeId = idToken[this.employeeIdKey];
     const employeeIdClaim = Array.isArray(employeeId) ? employeeId[0] : employeeId;
