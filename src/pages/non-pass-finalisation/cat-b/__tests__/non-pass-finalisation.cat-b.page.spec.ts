@@ -39,6 +39,7 @@ import {
 import {
   LoneWorkerIntegrationProvider,
 } from '../../../../providers/lone-worker-integration/lone-worker-integration.provider';
+import { AmberAlertProvider } from '../../../../external-modules/lw-ionic-module/providers/amber-alert.provider';
 
 describe('NonPassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatBPage>;
@@ -65,6 +66,7 @@ describe('NonPassFinalisationCatBPage', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: AmberAlertProvider, useClass: AmberAlertProvider },
         { provide: LoneWorkerIntegrationProvider, useClass: LoneWorkerIntegrationProviderMock },
       ],
     });

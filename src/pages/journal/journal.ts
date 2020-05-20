@@ -167,6 +167,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
   ionViewWillLeave() {
     this.store$.dispatch(new journalActions.StopPolling());
+    this.amberAlertProvider.unsubscribe();
   }
 
   ionViewDidEnter(): void {

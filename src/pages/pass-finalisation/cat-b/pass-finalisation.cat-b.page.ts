@@ -70,6 +70,7 @@ import {
   LoneWorkerIntegrationProvider,
 } from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
 import { IncidentCore } from '@dvsa/lw-incident-model';
+import { AmberAlertProvider } from '../../../external-modules/lw-ionic-module/providers/amber-alert.provider';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -99,7 +100,7 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
   passCertificateNumberInput: ElementRef;
   testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
-  merged$: Observable<string | IncidentCore>;
+  merged$: Observable<string | IncidentCore | void>;
   transmission: GearboxCategory;
   subscription: Subscription;
 
@@ -112,6 +113,7 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
+    public amberAlertProvider: AmberAlertProvider,
     public loneWorkerIntegrationProvider: LoneWorkerIntegrationProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
@@ -199,8 +201,15 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
     this.merged$ = merge(
       transmission$.pipe(map(value => this.transmission = value)),
       this.incidentProperties$,
+      this.loneWorkerIntegrationProvider.getTestCentreIdFromStore().pipe(
+        map(testCentreId => this.amberAlertProvider.subscribe(testCentreId)),
+      ),
     );
     this.subscription = this.merged$.subscribe();
+  }
+
+  ionViewWillLeave(): void {
+    this.amberAlertProvider.unsubscribe();
   }
 
   ionViewDidLeave(): void {

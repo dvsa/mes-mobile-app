@@ -13,4 +13,8 @@ export class LoneWorkerIntegrationProviderMock {
   getIncidentPropertiesFromStore(): Observable<Partial<IncidentCore>> {
     return of({ timestamp: new Date() } as Partial<IncidentCore>);
   }
+
+  getTestCentreIdFromStore(): Observable<string> {
+    return of('54321');
+  }
 }

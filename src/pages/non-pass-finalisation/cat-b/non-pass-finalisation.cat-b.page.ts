@@ -5,7 +5,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { CAT_B } from '../../page-names.constants';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, merge } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
   getCurrentTest,
@@ -57,6 +57,7 @@ import { IncidentCore } from '@dvsa/lw-incident-model';
 import {
   LoneWorkerIntegrationProvider,
 } from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
+import { AmberAlertProvider } from '../../../external-modules/lw-ionic-module/providers/amber-alert.provider';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -85,7 +86,8 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
   slotId: string;
 
   incidentProperties$: Observable<IncidentCore>;
-  private incidentPropertiesSubscription: Subscription;
+  private lwMerged$: Observable<IncidentCore | void>;
+  private lwSubscription: Subscription;
 
   constructor(
     store$: Store<StoreModel>,
@@ -93,6 +95,7 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
+    public amberAlertProvider: AmberAlertProvider,
     public loneWorkerIntegrationProvider: LoneWorkerIntegrationProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
@@ -166,21 +169,25 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
       ),
     };
 
-    this.incidentProperties$ = this.loneWorkerIntegrationProvider.getIncidentPropertiesFromStore().pipe(
-      map(incidentPartial => incidentPartial as IncidentCore),
-    );
+    this.lwMerged$ = merge(
+      this.incidentProperties$ = this.loneWorkerIntegrationProvider.getIncidentPropertiesFromStore().pipe(
+        map(incidentPartial => incidentPartial as IncidentCore),
+      ),
+      this.loneWorkerIntegrationProvider.getTestCentreIdFromStore().pipe(
+        map(testCentreId => this.amberAlertProvider.subscribe(testCentreId)),
+      ));
   }
 
   ionViewDidEnter(): void {
-    if (this.incidentProperties$) {
-      this.incidentPropertiesSubscription = this.incidentProperties$.subscribe();
+    if (this.lwMerged$) {
+      this.lwSubscription = this.lwMerged$.subscribe();
     }
     this.store$.dispatch(new NonPassFinalisationViewDidEnter());
   }
 
   ionViewWillLeave(): void {
-    if (this.incidentPropertiesSubscription) {
-      this.incidentPropertiesSubscription.unsubscribe();
+    if (this.lwSubscription) {
+      this.lwSubscription.unsubscribe();
     }
   }
 

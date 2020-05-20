@@ -39,6 +39,7 @@ import {
   LoneWorkerIntegrationProvider,
 } from '../../../providers/lone-worker-integration/lone-worker-integration.provider';
 import { IncidentCore } from '@dvsa/lw-incident-model';
+import { AmberAlertProvider } from '../../../external-modules/lw-ionic-module/providers/amber-alert.provider';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -85,6 +86,7 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
     private translate: TranslateService,
     private faultCountProvider: FaultCountProvider,
     private faultSummaryProvider: FaultSummaryProvider,
+    public amberAlertProvider: AmberAlertProvider,
     public loneWorkerIntegrationProvider: LoneWorkerIntegrationProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
@@ -167,11 +169,18 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
       ),
       conductedLanguage$.pipe(tap(value => configureI18N(value as Language, this.translate))),
       this.incidentProperties$,
+      this.loneWorkerIntegrationProvider.getTestCentreIdFromStore().pipe(
+        map(testCentreId => this.amberAlertProvider.subscribe(testCentreId)),
+      ),
     ).subscribe();
   }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new DebriefViewDidEnter());
+  }
+
+  ionViewWillLeave(): void {
+    this.amberAlertProvider.unsubscribe();
   }
 
   ionViewDidLeave(): void {

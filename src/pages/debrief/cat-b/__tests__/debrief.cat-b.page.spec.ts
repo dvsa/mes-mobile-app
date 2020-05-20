@@ -53,6 +53,7 @@ import {
 import {
   LoneWorkerIntegrationProvider,
 } from '../../../../providers/lone-worker-integration/lone-worker-integration.provider';
+import { AmberAlertProvider } from '../../../../external-modules/lw-ionic-module/providers/amber-alert.provider';
 
 describe('DebriefCatBPage', () => {
   let fixture: ComponentFixture<DebriefCatBPage>;
@@ -137,6 +138,7 @@ describe('DebriefCatBPage', () => {
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
+        { provide: AmberAlertProvider, useClass: AmberAlertProvider },
         { provide: LoneWorkerIntegrationProvider, useClass: LoneWorkerIntegrationProviderMock },
       ],
     });
