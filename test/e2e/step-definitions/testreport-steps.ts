@@ -233,6 +233,11 @@ Then('the competency {string} driver fault count is {string}', (competency, driv
   return expect(competencyCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
+Then('the competency for Show me and Tell me driver fault count is {string}', (driverFaultCount) => {
+  const competencyCountField = TestReportPage.driverFaults.getCompetencyCountFieldForSMTM('Show me / Tell me');
+  return expect(competencyCountField.getText()).to.eventually.equal(driverFaultCount);
+});
+
 When('I terminate the test from the test report page', () => {
   TestReportPage.clickEndTestButton();
   TestReportPage.clickTerminateTestButton();

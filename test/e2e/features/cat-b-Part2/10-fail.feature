@@ -18,7 +18,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And I complete the waiting room to car page with a tell me driver fault
       Then I should see the "Test report - Jane Doe" page
       And the driver fault count is "1"
-      And the competency "Show me / Tell me" driver fault count is "1"
+      And the competency for Show me and Tell me driver fault count is "1"
       When I end the test
       Then the legal requirements pop up is present
       And the required test observation is present "NS (normal start)"

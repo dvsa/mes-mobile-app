@@ -186,6 +186,11 @@ class DriverFaults extends Page {
   and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`);
   }
 
+  getCompetencyCountFieldForSMTM(competency) {
+    return this.getElementByXPath(`//competency-button[div/*[@class = 'show-me-tell-me-label'
+  and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`);
+  }
+
   getDriverBadge(competency) {
     return this.getElementByXPath(`//competency-button[div/*[@class = 'competency-label'
   and text() = '${competency}']]/div/driving-faults-badge`);
