@@ -24,7 +24,7 @@ export class RaiseAlertButtonComponent {
     this.start.emit();
   }
 
-  onTouchLeave(): void {
+  onTouchEnd(): void {
     this.stop.emit();
   }
 

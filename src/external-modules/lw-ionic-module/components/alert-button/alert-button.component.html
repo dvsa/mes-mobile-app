@@ -1,4 +1,4 @@
-<button class="lw-alert-button" (mousedown)="onTouch()" (mouseup)="onTouchLeave()" [class.sent]="false" [class.received]="flase" [disabled]="false">
+<button class="lw-alert-button" (touchstart)="onTouch()" (touchend)="onTouchEnd()" [class.sent]="false" [class.received]="flase" [disabled]="false">
   <span *ngIf="true">
     Hold down for
     <br />
