@@ -42,6 +42,9 @@ export class AmberAlertProvider {
   unsubscribe(): void {
     this.store$.dispatch(new UnsubscribeFromAmberAlerts());
     this.storeSubscription.unsubscribe();
+    if (this.toast) {
+      this.toast.dismiss(undefined, 'automatic');
+    }
   }
 
   async checkAndDisplayToast(incidents: ReceivedIncident[], modalOpen: boolean): Promise<void> {

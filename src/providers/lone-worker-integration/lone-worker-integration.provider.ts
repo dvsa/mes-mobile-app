@@ -34,7 +34,9 @@ export class LoneWorkerIntegrationProvider {
     // if there is a current tests, return that test centre Id
     if (state.tests.currentTest.slotId) {
       const currentTest = getCurrentTest(state.tests);
-      return currentTest.journalData.testCentre.centreId.toString();
+      return currentTest.journalData.testCentre ?
+        currentTest.journalData.testCentre.centreId ?
+          currentTest.journalData.testCentre.centreId.toString() : '' : '';
     }
 
     // if no active test, return id from top slow for selected date
