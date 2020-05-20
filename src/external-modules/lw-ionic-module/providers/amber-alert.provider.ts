@@ -60,7 +60,7 @@ export class AmberAlertProvider {
     if (this.toast) { return; }
 
     this.toast = this.toastController.create({
-      message: 'An incident has been raised buy a colleague',
+      message: 'An incident has been raised by a colleague',
       position: 'top',
       cssClass: 'lw-amber-toast',
       showCloseButton: true,

@@ -7,13 +7,13 @@ export const initialState: RaisedAlertModel = {
     status: null,
     incident: null,
     sentReceipt: null,
-    isSending: null,
+    isSending: false,
   },
   amberAlert:{
     status: null,
     incident: null,
     sentReceipt: null,
-    isSending: null,
+    isSending: false,
   },
 };
 

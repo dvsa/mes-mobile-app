@@ -1,18 +1,18 @@
-<button class="lw-alert-button" (touchstart)="onTouch()" (touchend)="onTouchEnd()" [class.sent]="false" [class.received]="flase" [disabled]="false">
-  <span *ngIf="true">
+<button class="lw-alert-button" (touchstart)="onTouch()" (touchend)="onTouchEnd()" [class.sent]="status.sending" [class.received]="status.received" [disabled]="!status.canSendAlert()">
+  <span *ngIf="status.canSendAlert()">
     Hold down for
     <br />
     <span class="lw-button-name-text">
-      {{ status?.alertType === 'Red' ? 'Red Alert' : 'Amber Alert' }}
+      {{ status.alertType == 'Red'? 'Red Alert' : 'Amber Alert' }}
     </span>
   </span>
-  <div *ngIf="status?.sending && !status?.received">
-    sending
-  </div>
-  <div *ngIf="status?.received">
+  <span *ngIf="status.sending && !status.received">
+    sent
+  </span>
+  <span *ngIf="status.received">
     received
-  </div>
+  </span>
   <div *ngIf="status?.error">
-    error
+    something went wrong, try again...
   </div>
 </button>
