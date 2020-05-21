@@ -24,7 +24,6 @@ export class AmberAlertProvider {
   constructor(
     private store$: Store<StoreModel>,
     private toastController: ToastController,
-    // private modelController: ModalController,
     private alertController: AlertController,
     private datePipe: DatePipe) { }
 
@@ -81,26 +80,9 @@ export class AmberAlertProvider {
     this.toast.present();
   }
 
-  // private modal: Modal;
   private alert: Alert;
   displayIncident(incident: ReceivedIncident): void {
-    // if (this.modal) { this.modal.dismiss(); }
     if (this.alert) { this.alert.dismiss(); }
-
-    // this.modal = this.modelController.create(
-    //   'AmberAlertModalPage',
-    //   { incident },
-    //   {
-    //     cssClass: 'lw-amber-alert-modal',
-    //     enableBackdropDismiss: false,
-    //   });
-
-    // this.modal.onDidDismiss(() => {
-    //   this.modal = null;
-    //   this.store$.dispatch(new AmberIncidentDismissed());
-    // });
-
-    // this.modal.present();
 
     /* tslint:disable:prefer-template */
     /* tslint:disable:max-line-length */
