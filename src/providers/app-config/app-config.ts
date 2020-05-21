@@ -228,6 +228,8 @@ export class AppConfigProvider {
 
   private mapRemoteConfig = (data: any) =>
     this.appConfig = merge({}, this.appConfig, {
+      // TODO LW-114: Replace this when config added to remote
+      raiseIncidentApiBaseUrl: 'https://lone-worker-dev.mes.dev-dvsacloud.uk/raise-incident-api',
       googleAnalyticsId: data.googleAnalyticsId,
       approvedDeviceIdentifiers: data.approvedDeviceIdentifiers,
       timeTravelDate: data.timeTravelDate,

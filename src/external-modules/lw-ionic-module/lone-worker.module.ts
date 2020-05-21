@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, Provider } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { SosButtonComponent } from './components/sos-button/sos-button.component';
@@ -7,13 +7,17 @@ import { raisedAlertReducer } from './store/raised-alert/raised-alert.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { RaisedAlertEffects } from './store/raised-alert/raised-alert.effects';
 import { AlertProvider } from './providers/alert.provider';
-import { LoneWorkerConfig, loneWorkerConfigService } from './lone-worker-config.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LocationProvider } from './providers/location.provider';
 import { amberAlertReducer } from './store/amber-alert/amber-alert.reducer';
 import { AmberAlertEffects } from './store/amber-alert/amber-alert.effects';
 import { AmberAlertProvider } from './providers/amber-alert.provider';
+import { LoneWorkerConfigProvider, LoneWorkerConfigProviderLocal } from './providers/lone-worker-config.provider';
+
+export interface LoneWorkerConfig {
+  configProvider?: Provider;
+}
 
 @NgModule({
   imports: [
@@ -42,10 +46,11 @@ export class LoneWorkerIonicModule {
     return {
       ngModule: LoneWorkerIonicModule,
       providers:[
-        {
-          provide: loneWorkerConfigService,
-          useValue: config,
-        },
+        config.configProvider ||
+          {
+            provide: LoneWorkerConfigProvider,
+            useClass: LoneWorkerConfigProviderLocal,
+          },
         AlertProvider,
         LocationProvider,
         AmberAlertProvider,

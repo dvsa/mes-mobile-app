@@ -53,9 +53,19 @@ import {
   BikeCategoryDetailProvider,
 } from '../providers/bike-category-detail/bike-category-detail';
 import { LoneWorkerIonicModule } from '../external-modules/lw-ionic-module/lone-worker.module';
+import {
+  LoneWorkerIntegrationProvider,
+} from '../providers/lone-worker-integration/lone-worker-integration.provider';
+import {
+  LoneWorkerConfigProvider,
+} from '../external-modules/lw-ionic-module/providers/lone-worker-config.provider';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
+
+export function createLoneWorkerConfigProvider(loneWorkerIntegrationProvider: LoneWorkerIntegrationProvider) {
+  return loneWorkerIntegrationProvider.createLoneWorkerConfigProvider();
 }
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -116,7 +126,11 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
       },
     }),
     LoneWorkerIonicModule.forRoot({
-      apiRoot: 'https://lone-worker-dev.mes.dev-dvsacloud.uk/raise-incident-api',
+      configProvider: {
+        provide: LoneWorkerConfigProvider,
+        useFactory: (createLoneWorkerConfigProvider),
+        deps: [LoneWorkerIntegrationProvider],
+      },
     }),
   ],
   bootstrap: [IonicApp],
@@ -160,6 +174,7 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
     SchemaValidatorProvider,
     PassCertificateValidationProvider,
     BikeCategoryDetailProvider,
+    LoneWorkerIntegrationProvider,
   ],
 })
 export class AppModule { }

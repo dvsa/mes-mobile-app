@@ -8,12 +8,25 @@ import { Accompaniment, Name, VehicleDetails } from '@dvsa/mes-test-schema/categ
 import { omit, get } from 'lodash';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { getSlotsOnSelectedDate } from '../../modules/journal/journal.selector';
+import { AppConfigProvider } from '../app-config/app-config';
+import {
+  LoneWorkerConfigProvider,
+} from '../../external-modules/lw-ionic-module/providers/lone-worker-config.provider';
 
+export class MesLoneWorkerConfigProvider extends LoneWorkerConfigProvider {
+  constructor(
+    public apiRoot: string,
+    public amberPollTime: number,
+  ) {
+    super();
+  }
+}
 @Injectable()
 export class LoneWorkerIntegrationProvider {
 
   constructor(
     private store$: Store<StoreModel>,
+    private appConfigProvider: AppConfigProvider,
   ) {
 
   }
@@ -28,6 +41,13 @@ export class LoneWorkerIntegrationProvider {
     return this.store$.pipe(
       select(this.getTestCentreId),
     );
+  }
+
+  createLoneWorkerConfigProvider(): LoneWorkerConfigProvider {
+    const apiRoot = this.appConfigProvider.getAppConfig() ?
+      this.appConfigProvider.getAppConfig().raiseIncidentApiBaseUrl : '';
+
+    return new MesLoneWorkerConfigProvider(apiRoot, 30000);
   }
 
   private getTestCentreId = (state: StoreModel): string => {

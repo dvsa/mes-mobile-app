@@ -21,6 +21,8 @@ export class AppConfigProviderMock {
       logsPostApiKey: localEnvironmentMock.logsPostApiKey,
       logsApiUrl: localEnvironmentMock.logsApiUrl,
       logsAutoSendInterval: localEnvironmentMock.logsAutoSendInterval,
+      // TODO LW-114 : Update This once config is in remote
+      raiseIncidentApiBaseUrl: '',
       authentication: {
         clientId: localEnvironmentMock.authentication.clientId,
         context: localEnvironmentMock.authentication.context,

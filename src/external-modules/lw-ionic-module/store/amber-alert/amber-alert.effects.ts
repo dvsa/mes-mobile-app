@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { AlertProvider } from '../../providers/alert.provider';
 import * as alertActions from './amber-alert.actions';
@@ -10,12 +10,12 @@ import { Store, select } from '@ngrx/store';
 import { getAmberAlertState } from './amber-alert.reducer';
 import { getAmberIncidents } from './amber-alert.selector';
 import { ReceivedIncident } from './amber-alert.model';
-import { LoneWorkerConfig, loneWorkerConfigService } from '../../lone-worker-config.service';
 import { StoreModel } from '../store.model';
 import {
   NetworkStateProvider,
   ConnectionStatus,
 } from '../../../../providers/network-state/network-state';
+import { LoneWorkerConfigProvider } from '../../providers/lone-worker-config.provider';
 
 @Injectable()
 export class AmberAlertEffects {
@@ -30,7 +30,7 @@ export class AmberAlertEffects {
      */
     private networkStateProvider: NetworkStateProvider,
     private amberAlertProvider: AmberAlertProvider,
-    @Inject(loneWorkerConfigService) private configuration: LoneWorkerConfig,
+    private configProvider: LoneWorkerConfigProvider,
   ) {
 
   }
@@ -38,7 +38,7 @@ export class AmberAlertEffects {
   subscribeToAmberAlerts$ = this.actions$.pipe(
     ofType<alertActions.SubscribeToAmberAlerts>(alertActions.SUBSCRIBE_TO_AMBER_ALERTS),
     switchMap((action) => {
-      const pollTimer$ = interval(this.configuration.amberPollTime ? this.configuration.amberPollTime : 30000);
+      const pollTimer$ = interval(this.configProvider.amberPollTime ? this.configProvider.amberPollTime : 30000);
 
       const pollsWhileOnlineAndModalClosed$ = pollTimer$
         .pipe(
