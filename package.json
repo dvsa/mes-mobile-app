@@ -84,6 +84,7 @@
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-device-authentication": "git+https://github.com/dvsa/cordova-plugin-device-authentication.git",
+    "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-google-analytics": "^1.8.6",
     "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-insomnia": "~4.3.0",
@@ -208,7 +209,8 @@
       "cordova-plugin-device-authentication": {},
       "cordova-plugin-appconfig": {},
       "cordova-plugin-ios-disableshaketoedit": {},
-      "cordova-plugin-is-debug": {}
+      "cordova-plugin-is-debug": {},
+      "cordova-plugin-geolocation": {}
     },
     "platforms": [
       "ios"
