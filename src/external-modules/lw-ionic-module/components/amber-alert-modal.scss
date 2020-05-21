@@ -1,0 +1,15 @@
+.lw-amber-alert-alert {
+  div.alert-message {
+    max-height: none;
+  }
+  ul {
+    list-style-type: none;
+    padding: 10px;
+  }
+  li {
+    text-align: start !important;
+    label {
+      font-weight: bold;
+    }
+  }
+}
