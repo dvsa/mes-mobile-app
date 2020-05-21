@@ -1,4 +1,3 @@
-
 import { Action } from '@ngrx/store';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
@@ -36,9 +35,13 @@ import { testsCatGReducer } from './tests.cat-g.reducer';
 import { testsCatHReducer } from './tests.cat-h.reducer';
 import { testsCatKReducer } from './tests.cat-k.reducer';
 import { testsCatADIPart2Reducer } from './tests.cat-adi-part2.reducer';
+import { TestResultCatCPCSchema } from '@dvsa/mes-test-schema/categories/CPC';
+import { testsCatCPCReducer } from './tests.cat-cpc.reducer';
 
 export function testsReducerFactory(
-  category: TestCategory | null, action: Action, state: TestResultSchemasUnion,
+  category: TestCategory | null,
+  action: Action,
+  state: TestResultSchemasUnion,
 ): TestResultSchemasUnion {
   switch (category) {
     case TestCategory.ADI2:
@@ -55,6 +58,9 @@ export function testsReducerFactory(
       return testsCatC1Reducer(action, state as Required<CatC1UniqueTypes.TestResult>);
     case TestCategory.C1E:
       return testsCatC1EReducer(action, state as Required<CatC1EUniqueTypes.TestResult>);
+    case TestCategory.CCPC:
+    case TestCategory.DCPC:
+      return testsCatCPCReducer(action, state as Required<TestResultCatCPCSchema>);
     case TestCategory.EUAMM1:
     case TestCategory.EUA1M1:
     case TestCategory.EUA2M1:
