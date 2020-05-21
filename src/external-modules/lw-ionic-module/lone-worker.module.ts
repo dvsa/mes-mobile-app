@@ -1,5 +1,5 @@
 import { NgModule, ModuleWithProviders, Provider } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { SosButtonComponent } from './components/sos-button/sos-button.component';
 import { StoreModule } from '@ngrx/store';
@@ -54,6 +54,7 @@ export class LoneWorkerIonicModule {
         AlertProvider,
         LocationProvider,
         AmberAlertProvider,
+        DatePipe,
       ],
     };
   }

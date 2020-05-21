@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { StoreModel } from '../store/store.model';
 import { Store, select } from '@ngrx/store';
 import {
@@ -8,10 +9,11 @@ import {
   AmberIncidentDismissed,
 } from '../store/amber-alert/amber-alert.actions';
 import { map, debounceTime } from 'rxjs/operators';
-import { ToastController, ModalController, Modal, Toast } from 'ionic-angular';
+import { ToastController, Toast, AlertController, Alert } from 'ionic-angular';
 import { Subscription, combineLatest } from 'rxjs';
 import { getAmberIncidents, getAmberModalState } from '../store/amber-alert/amber-alert.selector';
 import { ReceivedIncident } from '../store/amber-alert/amber-alert.model';
+import { get } from 'lodash';
 
 @Injectable()
 export class AmberAlertProvider {
@@ -22,7 +24,8 @@ export class AmberAlertProvider {
   constructor(
     private store$: Store<StoreModel>,
     private toastController: ToastController,
-    private modelController: ModalController) { }
+    private alertController: AlertController,
+    private datePipe: DatePipe) { }
 
   subscribe(testCentreId: string): void {
 
@@ -77,23 +80,52 @@ export class AmberAlertProvider {
     this.toast.present();
   }
 
-  private modal: Modal;
+  private alert: Alert;
   displayIncident(incident: ReceivedIncident): void {
-    if (this.modal) { this.modal.dismiss(); }
+    if (this.alert) { this.alert.dismiss(); }
 
-    this.modal = this.modelController.create(
-      'AmberAlertModalPage',
-      { incident },
-      {
-        cssClass: 'lw-amber-alert-modal',
-        enableBackdropDismiss: false,
-      });
+    /* tslint:disable:prefer-template */
+    /* tslint:disable:max-line-length */
+    this.alert = this.alertController.create({
+      title: 'Incident details',
+      cssClass: 'lw-amber-alert-alert',
+      message: '<ul>' +
+        '<li>' +
+          '<label>Date: </label>' + this.datePipe.transform(incident.timestamp, 'short') +
+        '</li>' +
+        '<li>' +
+          '<label>Staff number: </label>' + incident.loneWorker.staffNumber +
+        '</li>' +
+        '<li>' +
+          '<label>Candidate name: </label>' + get(incident, 'scenario.drivingTestInfo.candidateName', '') +
+        '</li>' +
+        '<li>' +
+          '<label>Test category: </label>' + get(incident, 'scenario.drivingTestInfo.testCategory', '') +
+        '</li>' +
+        '<li>' +
+          '<label>Accompanied by: </label>' + get(incident, 'scenario.drivingTestInfo.accompaniedBy', 'none') +
+        '</li>' +
+        '<li>' +
+          '<label>Vehicle registration: </label>' + get(incident, 'scenario.drivingTestInfo.vehicle.vehicleRegistration', '') +
+        '</li>' +
+        '<li>' +
+          '<label>Dual control: </label>' + (get(incident, 'scenario.drivingTestInfo.vehicle.dualControl', '') ? 'Yes' : 'No') +
+        '</li>' +
+        '<li>' +
+          '<label>School car: </label>' + (get(incident, 'scenario.drivingTestInfo.vehicle.schoolCar', '') ? 'Yes' : 'No') +
+        '</li>' +
+      '</ul>'
+      ,
+      buttons: ['Close'],
+    });
 
-    this.modal.onDidDismiss(() => {
-      this.modal = null;
+    this.alert.onDidDismiss(() => {
+      this.alert = null;
       this.store$.dispatch(new AmberIncidentDismissed());
     });
 
-    this.modal.present();
+    this.alert.present();
   }
+  /* tslint:enable:max-line-length */
+  /* tslint:enable:prefer-template */
 }
