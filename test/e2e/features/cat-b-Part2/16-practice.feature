@@ -12,7 +12,7 @@ Feature: Practice mode
     When I start marking a practice test with a driving fault
     Then I should see the "Test report - Practice Mode" page
     And the driver fault count is "1"
-    And the competency "Show me / Tell me" driver fault count is "1"
+    And the competency for Show me and Tell me driver fault count is "1"
 
   Scenario: User completes a full practice test pass
     Given I am on the landing page as "mobexaminer1"
