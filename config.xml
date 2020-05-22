@@ -98,12 +98,9 @@
     <plugin name="cordova-plugin-appconfig" spec="1.1.4" />
     <hook src="scripts/editPlist.js" type="before_build" />
     <plugin name="cordova-plugin-is-debug" spec="1.0.0" />
-    <engine name="ios" spec="^4.5.5" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.2" />
-    <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
-        <string>Your location is required in emergency situations</string>
-    </edit-config>
-    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-        <string>Your location is required in emergency situations</string>
-    </edit-config>
+    <config-file overwrite="true" parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
+        <string>Allow the app to know your location</string>
+    </config-file>
+    <engine name="ios" spec="^4.5.5" />
 </widget>
