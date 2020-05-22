@@ -1,6 +1,11 @@
 import Page from './page';
 import { browser, by, element } from 'protractor';
 
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+const expect = chai.expect;
+
 const buttonPadding = 30;
 const request = require('request');
 
@@ -129,6 +134,11 @@ class TestReportPage extends Page {
     const avoidencyStop = this.getElementByXPath('/html/body/ion-app/ng-component/ion-nav/div[2]/ion-content/' +
       'div[2]/ion-grid/speed-check[2]/ion-row[1]/ion-col[2]/input[1]');
     avoidencyStop.sendKeys('66');
+  }
+
+  clickOnTheSosButton() {
+    this.clickElementByXPath('//ion-header/ion-navbar/ion-buttons[1]/lw-sos-button/div/button');
+    this.waitForAngularToFinishRendering();
   }
 }
 

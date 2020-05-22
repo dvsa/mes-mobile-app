@@ -1,4 +1,6 @@
 import { Then, When, Before } from 'cucumber';
+import TestReportPage from '../pages/testReportPage';
+import LoneWorker from '../pages/loneWorkerPage';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -9,15 +11,11 @@ const expect = chai.expect;
 this.testCategory = 'b';
 
 When('I click the SOS button on the Test Report', () => {
-
-});
-
-Then('I click the SOS button on the Test Report', () => {
-
+  TestReportPage.clickOnTheSosButton();
 });
 
 Then('I click and hold the {string} alert button', (incident: string) => {
-
+  LoneWorker.raiseAlert(incident);
 });
 
 When('I see the incident has been sent', () => {
