@@ -216,6 +216,8 @@ export class AppConfigProvider {
       logsPostApiKey: data.logsPostApiKey,
       logsApiUrl: data.logsApiUrl,
       logsAutoSendInterval: data.logsAutoSendInterval,
+      // TODO LW-114: Replace this when config added to remote
+      raiseIncidentApiBaseUrl: 'https://lone-worker-dev.mes.dev-dvsacloud.uk/raise-incident-api',
       authentication: {
         context: data.authentication.context,
         redirectUrl: data.authentication.redirectUrl,
