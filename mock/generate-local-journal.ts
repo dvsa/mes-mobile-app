@@ -962,7 +962,7 @@ const localJournal: ExaminerWorkSchedule = {
           specialNeedsExtendedTest: false,
           extendedTest: false,
           progressiveAccess: false,
-          testCategory: 'F',
+          testCategory: 'CCPC',
           vehicleGearbox: 'Manual',
           vehicleHeight: 5,
           vehicleLength: 15,
@@ -981,7 +981,7 @@ const localJournal: ExaminerWorkSchedule = {
           },
           candidateId: 106,
           candidateName: {
-            firstName: 'James',
+            firstName: 'Matthew',
             lastName: 'Brown',
             title: 'Mr',
           },
