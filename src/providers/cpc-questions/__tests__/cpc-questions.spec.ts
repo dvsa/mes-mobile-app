@@ -2,7 +2,7 @@ import { CPCQuestionProvider } from '../cpc-questions';
 import { configureTestSuite } from 'ng-bullet';
 import { TestBed } from '@angular/core/testing';
 
-fdescribe('CPC Question Provider', () => {
+describe('CPC Question Provider', () => {
   let cpcQuestionProvider: CPCQuestionProvider;
 
   configureTestSuite(() => {
