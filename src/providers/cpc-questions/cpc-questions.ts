@@ -1,32 +1,30 @@
 import { Injectable } from '@angular/core';
+import { Question } from '@dvsa/mes-test-schema/categories/CPC';
+
 import { lgvQuestions } from '../../shared/constants/cpc-questions/cpc-lgv-questions.constants';
 import { pcvQuestions } from '../../shared/constants/cpc-questions/cpc-pcv-questions.constants';
-import { questionCombinations } from '../../shared/constants/cpc-questions/cpc-question-combinations.constants';
-import { Question } from '@dvsa/mes-test-schema/categories/CPC';
+import {
+  Combination,
+  questionCombinations,
+} from '../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 
 @Injectable()
 export class CPCQuestionProvider {
-  constructor() {
+
+  constructor() {}
+
+  private getQuestionCombination = (combinationCode: string): Combination => {
+    return questionCombinations.find((question: Combination) => question.code === combinationCode);
   }
 
-  getQuestionsByCombinationCode(combinationCode: string): Question[] {
-    let questionCodes: string[] = [];
-    const questions: Question[] = [];
-    // get combinations
-    questionCombinations.forEach((combination) => {
-      if (combination.code === combinationCode) {
-        questionCodes = combination.questions;
-      }
-    });
-    // set question bank, based on vehicle type
-    let questionBank: Question[];
-    combinationCode.indexOf('LGV') === 0 ? questionBank = lgvQuestions : questionBank = pcvQuestions;
-    // get questions
-    questionBank.forEach((question) => {
-      if (questionCodes.indexOf(question.questionCode) >= 0) {
-        questions.push(question);
-      }
-    });
-    return questions;
+  private getQuestionsByVehicleType = (combinationCode: string): Question[] => {
+    return combinationCode.includes('LGV') ? lgvQuestions : pcvQuestions;
+  }
+
+  getQuestionsBank = (combinationCode: string): Question[] => {
+    const questionCombination: string[] = this.getQuestionCombination(combinationCode).questions;
+
+    return this.getQuestionsByVehicleType(combinationCode)
+      .filter((item: Question) => questionCombination.includes(item.questionCode));
   }
 }
