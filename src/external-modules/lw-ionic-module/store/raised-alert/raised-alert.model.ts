@@ -29,7 +29,7 @@ export class RaisedAlertStatusModel {
   public disabled: boolean;
   public error: boolean;
 
-  public canSendAlert = (): boolean => !this.sending && !this.received && !this.disabled;
+  public canSendAlert = (): boolean => !this.sending && !this.received;
 }
 
 export enum AlertRequestStatus {

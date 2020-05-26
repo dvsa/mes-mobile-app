@@ -1,4 +1,4 @@
-<button class="lw-alert-button" (touchstart)="onTouch()" (touchend)="onTouchEnd()" [class.sent]="status.sending" [class.received]="status.received" [disabled]="!status.canSendAlert()">
+<button class="lw-alert-button" (touchstart)="onTouch()" (touchend)="onTouchEnd()" [class.sent]="status.sending" [class.received]="status.received">
   <span *ngIf="status.canSendAlert()">
     Hold down for
     <br />

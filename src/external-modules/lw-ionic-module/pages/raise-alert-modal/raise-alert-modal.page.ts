@@ -50,12 +50,6 @@ export class RaiseAlertModalPage {
       map(state => getRaisedAlertStatus(state, Severity.Amber)),
     );
 
-    // // Might be a better way to extract incident properties outside of this Modal and just do a regular @Input()
-    // // Would help to decouple Lone Worker with DES
-    // this.incidentProperties$ = this.store$.pipe(
-    //   select(getIncidentProperties),
-    //   map(incidentProperties => this.incident = incidentProperties as IncidentCore),
-    // );
     this.incident = this.params.get('incident');
 
     this.merged$ = merge(
