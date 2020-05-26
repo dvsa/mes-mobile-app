@@ -18,7 +18,8 @@ import {
   CAT_A_MOD2,
   CAT_D,
   CAT_ADI_PART2,
-  CAT_HOME_TEST, CAT_CPC,
+  CAT_HOME_TEST,
+  CAT_CPC,
 } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import {
