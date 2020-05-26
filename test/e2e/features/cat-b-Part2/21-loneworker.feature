@@ -1,41 +1,61 @@
-@catb @regression
-Feature: A Driving Examiner  Creates a Lone Worker Incident
+@catb @regression @lw
+Feature: A Driving Examiner Creates a Lone Worker Incident
 
-    Scenario: Creates a Red Incident
-        Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
-        When I start the test for "Miss Florence Pearson"
-        And the candidate completes the declaration page
-        And the candidate confirms their declaration
-        Then I should see the "Declaration - Florence Pearson" page
-        And the candidate enters a new email address
-        And I proceed to the car
-        Then I should see the "Florence Pearson" page
-        And I complete the waiting room to car page
-        Then I should see the "Test report - Florence Pearson" page
-        And I click the SOS button on the Test Report 
-        Then I should see the "Send an alert" page
-        Then I click and hold the "red" alert button
-        # When I see the incident has been sent
-        # And I close the create incident modal
-        # Then I can see the incident sent icon on the test report page
+    # Scenario: Creates a Red Incident
+    #     Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
+    #     When I start the test for "Miss Florence Pearson"
+    #     And the candidate completes the declaration page
+    #     And the candidate confirms their declaration
+    #     Then I should see the "Declaration - Florence Pearson" page
+    #     And the candidate enters a new email address
+    #     And I proceed to the car
+    #     Then I should see the "Florence Pearson" page
+    #     And I click the SOS button on the Test Report
+    #     And I click and hold the "red" alert button
+    #     Then I should see the "Send an alert" page
+    #     And I close the create incident modal
+    #     And the incident is showing as "received"
+    #     Then I should see the "Florence Pearson" page
 
     # Scenario: Creates a Amber Incident
     #     Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-    #     When I start the test late for "Mrs Jane Doe"
-    #     And I click the SOS button on the Test Report 
-    #     Then I click and hold the "amber" alert button
-    #     When I see the incident has been sent
+    #     When I check candidate details for "Mrs Jane Doe"
+    #     When I start the test for "Mrs Jane Doe"
+    #     And the candidate completes the declaration page
+    #     And the candidate confirms their declaration
+    #     Then I should see the "Declaration - Jane Doe" page
+    #     And the candidate enters a new email address
+    #     And I proceed to the car
+    #     Then I should see the "Jane Doe" page
+    #     And I click the SOS button on the Test Report
+    #     And I click and hold the "amber" alert button
+    #     Then I should see the "Send an alert" page
     #     And I close the create incident modal
-    #     Then I can see the incident sent icon on the test report page
+    #     And the incident is showing as "received"
+    #     Then I should see the "Jane Doe" page
         
-    # Scenario: Creates a Amber incident and a Red incident
-    #     Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-    #     When I start the test late for "Mrs Jane Doe"
-    #     Then I click the SOS button on the Test Report Page
-    #     Then I click and hold the "amber" alert button
-    #     When I see the incident has been sent
-    #     Then I click and hold the "red" alert button
-    #     When I see the incident has been sent
+    Scenario: Creates a Amber incident and a Red incident
+        Given I am logged in as "mobexaminer1" and I have a test for "Mr James Brown"
+        When I check candidate details for "Mr James Brown"
+        When I start the test for "Mr James Brown"
+        And the candidate completes the declaration page
+        And the candidate confirms their declaration
+        Then I should see the "Declaration - James Brown" page
+        And the candidate enters a new email address
+        And I proceed to the car
+        Then I should see the "James Brown" page
+        And I click the SOS button on the Test Report
+        And I click and hold the "amber" alert button
+        Then I should see the incident modal
+        And I close the create incident modal
+        And the incident is showing as "received"
+        Then I should see the "James Brown" page
+        And I click the SOS button on the Test Report
+        And I click and hold the "red" alert button
+        Then I should see the incident modal
+        And I close the create incident modal
+        And the incident is showing as "received"
+        Then I should see the "James Brown" page
 
     # Scenario: SOS button is not present on any customer facing screen
     #     Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"

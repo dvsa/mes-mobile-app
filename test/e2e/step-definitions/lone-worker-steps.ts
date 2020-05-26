@@ -1,6 +1,7 @@
 import { Then, When, Before } from 'cucumber';
 import TestReportPage from '../pages/testReportPage';
 import LoneWorker from '../pages/loneWorkerPage';
+import { browser } from 'protractor';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -14,22 +15,26 @@ When('I click the SOS button on the Test Report', () => {
   TestReportPage.clickOnTheSosButton();
 });
 
-Then('I click and hold the {string} alert button', (incident: string) => {
+When('I click and hold the {string} alert button', (incident: string) => {
   LoneWorker.raiseAlert(incident);
 });
 
-When('I see the incident has been sent', () => {
-
-});
-
 When('I close the create incident modal', () => {
-
+  LoneWorker.closeTheIncidentModlal();
 });
 
-When('I can see the incident sent icon on the test report page', () => {
-
+When('the incident is showing as {string}', (status: string) => {
+  LoneWorker.incidentStatus(status);
 });
 
 When('the SOS button is not present', () => {
+  
+});
 
+When('the Lone Worker Pop up is present', () => {
+  LoneWorker.loneWorkerModal();
+});
+
+Then('I should see the incident modal', () => {
+  return LoneWorker.loneWorkerIncidentModalText();
 });

@@ -154,7 +154,7 @@ export default class Page {
    * The long press does not appear to have been implemented so calling appiums touch perform action directly.
    * @param button The button to longpress
    */
-  longPressButton(button) {
+  longPressButton(button, seconds?: number) {
     browser.getProcessedConfig().then((config) => {
       browser.driver.getSession().then((session) => {
         button.getLocation().then((buttonLocation) => {
@@ -166,6 +166,7 @@ export default class Page {
                   options: {
                     x: Math.ceil(buttonLocation.x) + buttonPadding,
                     y: Math.ceil(buttonLocation.y) + buttonPadding,
+                    duration: seconds,
                   },
                 },
                 {
@@ -189,9 +190,9 @@ export default class Page {
     this.longPressButton(element);
   }
 
-  longPressElementByClassName(className) {
+  longPressElementByClassName(className, seconds?: number) {
     const element = this.getElementByClassName(className);
-    this.longPressButton(element);
+    this.longPressButton(element, seconds);
   }
 
   /**
@@ -226,5 +227,10 @@ export default class Page {
 
   waitForOverlay(elementName: string)  {
     browser.wait(ExpectedConditions.stalenessOf(element(by.className(elementName))));
+  }
+
+  assertTextIsPresentInASingleElement(elementPattern: string, expectedText: string) {
+    const reuqestedElement = element(by.xpath(elementPattern));
+    expect(reuqestedElement.getText()).to.eventually.equal(expectedText);
   }
 }
