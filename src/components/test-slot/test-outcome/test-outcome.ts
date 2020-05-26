@@ -340,6 +340,10 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.C1:
       case TestCategory.C:
         return CAT_C.WAITING_ROOM_PAGE;
+        // @TODO: Point to CAT_CPC.WAITING_ROOM_PAGE;
+      case TestCategory.CCPC:
+      case TestCategory.DCPC:
+        return CAT_BE.WAITING_ROOM_PAGE;
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:

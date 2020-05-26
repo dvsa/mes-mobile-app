@@ -4,8 +4,8 @@ import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 import { examinerReducer } from '../common/examiner/examiner.reducer';
 import { testCentreReducer } from '../common/test-centre/test-centre.reducer';
 import { testSlotsAttributesReducer } from '../common/test-slot-attributes/test-slot-attributes.reducer';
-import { candidateCatCPCReducer } from './candidate/candidate.cat-cpc.reducer';
 import { applicationReferenceReducer } from '../common/application-reference/application-reference.reducer';
+import { candidateReducer } from '../common/candidate/candidate.reducer';
 
 export const initialState: JournalData = {
   applicationReference: {
@@ -47,7 +47,7 @@ export function journalDataCatCPCReducer(
     examiner: examinerReducer,
     testCentre: testCentreReducer,
     testSlotAttributes: testSlotsAttributesReducer,
-    candidate: candidateCatCPCReducer,
+    candidate: candidateReducer,
     applicationReference: applicationReferenceReducer,
   })(state as Required<JournalData>, action);
 }
