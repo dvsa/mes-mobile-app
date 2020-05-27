@@ -123,7 +123,7 @@ export class QuestionProvider {
     }
   }
 
-  getCombinations = (testCategory: TestCategory): any[] => {
+  getCombinations = (testCategory: TestCategory): Combination[] => {
     switch (testCategory) {
       case TestCategory.CCPC:
         return questionCombinations.filter((questions: Combination) => questions.code.includes('LGV'));

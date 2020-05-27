@@ -17,7 +17,7 @@ import {
 } from '../../../modules/tests/accompaniment/cat-cpc/accompaniment.cat-cpc.actions';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
-import { getRegistrationNumber, } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import { getRegistrationNumber } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import {
   getInterpreterAccompaniment,
   getSupervisorAccompaniment,
@@ -37,7 +37,11 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { PopulateCombination } from '../../../modules/tests/test-data/cat-cpc/combination/combination.action';
 import { CPCQuestionProvider } from '../../../providers/cpc-questions/cpc-questions';
 import { Configuration, Question } from '@dvsa/mes-test-schema/categories/CPC';
-import { getVehicleConfiguration } from '../../../modules/tests/vehicle-details/cat-cpc/vehicle-details.cat-cpc.selector';
+import {
+  getVehicleConfiguration,
+} from '../../../modules/tests/vehicle-details/cat-cpc/vehicle-details.cat-cpc.selector';
+import { Combination } from './temp/combos';
+import { PopulateQuestion } from '../../../modules/tests/test-data/cat-cpc/question/question.action';
 
 interface WaitingRoomToCarPageState {
   testCategory$: Observable<CategoryCode>;
@@ -57,10 +61,9 @@ interface WaitingRoomToCarPageState {
 export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
 
   pageState: WaitingRoomToCarPageState;
-
   form: FormGroup;
   testCategory: CategoryCode;
-  combinations: any[];
+  combinations: Combination[];
 
   constructor(
     public store$: Store<StoreModel>,
@@ -83,7 +86,7 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
 
     currentTest$.pipe(
       select(getTestCategory),
-    ).subscribe((val) => this.testCategory = val);
+    ).subscribe((result: CategoryCode) => this.testCategory = result);
 
     this.pageState = {
       testCategory$: currentTest$.pipe(
@@ -115,9 +118,7 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
         select(getVehicleConfiguration),
       ),
     };
-    console.log(this.testCategory);
     this.combinations = this.questionProvider.getCombinations(this.testCategory as TestCategory);
-    console.log(this.combinations);
   }
 
   ionViewDidEnter(): void {
@@ -133,7 +134,7 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
 
     const questionsBank: Question[] = this.cpcQuestionProvider.getQuestionsBank(combination);
 
-    console.log(questionsBank);
+    this.store$.dispatch(new PopulateQuestion(questionsBank));
   }
 
   supervisorAccompanimentToggled(): void {
@@ -157,7 +158,9 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
     if (this.form.valid) {
       this.navController.push(CAT_CPC.TEST_REPORT_PAGE).then(() => {
         // remove Waiting Room To Car Page
-        const view = this.navController.getViews().find(view => view.id === CAT_CPC.WAITING_ROOM_TO_CAR_PAGE);
+        const view =
+          this.navController.getViews().find(view => view.id === CAT_CPC.WAITING_ROOM_TO_CAR_PAGE);
+
         if (view) {
           this.navController.removeView(view);
         }
@@ -172,6 +175,7 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
       });
     }
   }
+
   updateForm(ctrl: string, value: any) {
     this.form.patchValue({
       [ctrl]: value,

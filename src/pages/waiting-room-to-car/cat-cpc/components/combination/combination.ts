@@ -25,8 +25,6 @@ export class CombinationComponent {
   static readonly fieldName: string = 'combination';
 
   ngOnChanges(): void {
-    console.info(this.combinations);
-
     if (!this.formControl) {
       this.formControl = new FormControl(null, [Validators.required]);
       this.formGroup.addControl(CombinationComponent.fieldName, this.formControl);
