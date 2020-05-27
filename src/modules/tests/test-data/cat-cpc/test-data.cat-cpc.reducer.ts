@@ -1,9 +1,8 @@
-import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 import { TestData } from '@dvsa/mes-test-schema/categories/CPC';
+import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 
 import { combinationReducer } from './combination/combination.reducer';
 import { totalPercentageReducer } from './overall-score/total-percentage.reducer';
-import { questionReducer } from './question/question.reducer';
 import { nullReducer } from '../../../../shared/classes/null.reducer';
 
 const initialState: TestData = {
@@ -22,11 +21,10 @@ export function testDataCatCPCReducer(
 ): Required<TestData> {
   return combineReducers({
     combination: combinationReducer,
-    question1: questionReducer,
-    question2: questionReducer,
-    question3: questionReducer,
-    question4: questionReducer,
-    // @TODO - Create bespoke question5 reducer
+    question1: nullReducer,
+    question2: nullReducer,
+    question3: nullReducer,
+    question4: nullReducer,
     question5: nullReducer,
     totalPercent: totalPercentageReducer,
   })(state as Required<TestData>, action);
