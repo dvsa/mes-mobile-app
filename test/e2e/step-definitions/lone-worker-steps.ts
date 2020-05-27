@@ -28,7 +28,7 @@ When('the incident is showing as {string}', (status: string) => {
 });
 
 When('the SOS button is not present', () => {
-  
+  LoneWorker.sosButtonIsNotPresent();
 });
 
 When('the Lone Worker Pop up is present', () => {

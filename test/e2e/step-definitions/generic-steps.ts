@@ -173,6 +173,7 @@ When('I log in to the application as {string}', (username) => {
 });
 
 Then('I should see the {string} page', (pageTitle) => {
+  browser.sleep(1000);
   PageHelper.waitForOverlay('click-block-active');
   // Wait for the page title to exist
   PageHelper.getPageTitle(pageTitle);

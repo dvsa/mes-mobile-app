@@ -23,23 +23,8 @@ class LoneWorker extends Page {
 
   acceptLocationModal() {
     ExpectedConditions.alertIsPresent();
-    if (ExpectedConditions.alertIsPresent(), 1000) {
-      console.log('true');
-      // const alert = browser.driver.switchTo().alert();
-      // alert.accept();
-    } else {
-      console.log('false');
-    }
-    // try {
-    //   ExpectedConditions.alertIsPresent();
-    //   const alert = browser.driver.switchTo().alert();
-    //   alert.accept();
-    //   const found = true;
-    //   return found;
-    // } catch (err) {
-    //   const found = false;
-    //   return found;
-    // }
+    const alert = browser.driver.switchTo().alert();
+    alert.accept();
   }
 
   closeTheIncidentModlal() {
@@ -55,6 +40,11 @@ class LoneWorker extends Page {
   loneWorkerIncidentModalText() {
     this.assertTextIsPresentInASingleElement('//lw-raise-alert-modal/ion-header/ion-navbar/div[2]/ion-title/div',
     'Send an alert');
+  }
+
+  sosButtonIsNotPresent() {
+    const sosButton =  element(by.xpath('//ion-header/ion-navbar/ion-buttons[1]/lw-sos-button/div/button'))
+    expect(sosButton.isPresent()).to.eventually.be.false;
   }
 }
 

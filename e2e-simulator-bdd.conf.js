@@ -13,7 +13,8 @@ exports.config = {
     app: appPath,
     automationName: 'XCUITest',
     isHeadless: false,
-    newCommandTimeout: 180
+    newCommandTimeout: 180,
+    useLocationServices: true
   },
   specs: ['./test/e2e/features/*/*.feature'],
   framework: 'custom',
