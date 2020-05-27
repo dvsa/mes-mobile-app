@@ -23,6 +23,6 @@ export class LoneWorkerIntegrationProviderMock {
   }
 
   createLoneWorkerConfigProvider(): LoneWorkerConfigProvider {
-    return new MesLoneWorkerConfigProvider('', 100);
+    return new MesLoneWorkerConfigProvider(() => { return ''; }, 100);
   }
 }

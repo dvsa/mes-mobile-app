@@ -18,7 +18,7 @@ export class AlertProvider {
     incident: IncidentCore,
   ): Observable<AlertSendReciept> {
     console.log('### Sending alert');
-    const postUri = `${this.configProvider.apiRoot}/incident`;
+    const postUri = `${this.configProvider.apiRoot()}/incident`;
     // TODO LW-114: Use AppConfigProvider when raiseIncidentApiBaseUrl is added to remote config
     // const postURI = `${appConfig.getAppConfig().raiseIncidentApiBaseUrl}/incident`;
     return this.http
@@ -28,7 +28,7 @@ export class AlertProvider {
   }
 
   fetchAmberAlerts(testCentreId: string): Observable<Incident[]> {
-    const getUri = `${this.configProvider.apiRoot}/recent-incidents/${Severity.Amber}/${testCentreId}`;
+    const getUri = `${this.configProvider.apiRoot()}/recent-incidents/${Severity.Amber}/${testCentreId}`;
 
     return this.http
       .get(getUri)

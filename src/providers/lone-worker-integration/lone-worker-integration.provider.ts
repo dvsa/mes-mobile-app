@@ -15,7 +15,7 @@ import {
 
 export class MesLoneWorkerConfigProvider extends LoneWorkerConfigProvider {
   constructor(
-    public apiRoot: string,
+    public apiRoot: Function,
     public amberPollTime: number,
   ) {
     super();
@@ -44,8 +44,10 @@ export class LoneWorkerIntegrationProvider {
   }
 
   createLoneWorkerConfigProvider(): LoneWorkerConfigProvider {
-    const apiRoot = this.appConfigProvider.getAppConfig() ?
+    const apiRoot = () => {
+      return this.appConfigProvider.getAppConfig() ?
       this.appConfigProvider.getAppConfig().raiseIncidentApiBaseUrl : '';
+    };
 
     return new MesLoneWorkerConfigProvider(apiRoot, 30000);
   }
