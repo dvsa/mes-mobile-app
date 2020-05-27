@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IncidentCore } from '@dvsa/lw-incident-model';
+import { IncidentCore, Incident, Severity } from '@dvsa/lw-incident-model';
 import { AlertSendReciept } from './raised-alert.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -9,6 +9,9 @@ export const SEND_RED_ALERT = '[Lone Worker Raised Alert] Send Red Alert';
 export const RED_ALERT_SENT = '[Lone Worker Raised Alert] Red Alert Sent';
 export const RED_ALERT_SEND_FAILURE = '[Lone Worker Raised Alert] Red Alert Send Failure';
 export const AMBER_ALERT_SEND_FAILURE = '[Lone Worker Raised Alert] Amber Alert Send Failure';
+export const UPDATE_INCIDENT_LOCATION_RESULT_RECEIVED =
+  '[Lone Worker Raised Alert] Update Incident Location Result Received';
+export const UPDATE_INCIDENT_LOCATION_FAILURE = '[Lone Worker Raised Alert] Update Incident Location Failure';
 export const RESET_ALERT_STATE = '[Lone Worker Raised Alert] Reset State';
 
 export class SendAmberAlert implements Action {
@@ -40,6 +43,18 @@ export class AmberAlertSendFailure implements Action {
   readonly type = AMBER_ALERT_SEND_FAILURE;
   constructor(public error: HttpErrorResponse) {}
 }
+export class UpdateIncidentLocationResultReceived implements Action {
+  readonly type = UPDATE_INCIDENT_LOCATION_RESULT_RECEIVED;
+  constructor(public incident: Incident) { }
+}
+export class UpdateIncidentLocationFailure implements Action {
+  readonly type = UPDATE_INCIDENT_LOCATION_FAILURE;
+  constructor(
+      public incidentId: string,
+      public severity: Severity,
+      public error: HttpErrorResponse,
+  ) { }
+}
 
 export class ResetRaisedAlertState implements Action {
   readonly type = RESET_ALERT_STATE;
@@ -52,4 +67,6 @@ export type RaisedAlertActionTypes =
   AmberAlertSent |
   RedAlertSendFailure |
   AmberAlertSendFailure |
-  ResetRaisedAlertState;
+  ResetRaisedAlertState |
+  UpdateIncidentLocationResultReceived |
+  UpdateIncidentLocationFailure;

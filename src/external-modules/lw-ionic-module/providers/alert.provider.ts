@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IncidentCore, Incident, Severity } from '@dvsa/lw-incident-model';
+import { IncidentCore, Incident, Severity, Location } from '@dvsa/lw-incident-model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AlertSendReciept } from '../store/raised-alert/raised-alert.model';
@@ -33,5 +33,13 @@ export class AlertProvider {
     return this.http
       .get(getUri)
       .pipe(map((value: Incident[]) => value));
+  }
+
+  updateIncidentLocation(incidentId: string, location: Location): Observable<Incident> {
+    const patchUri = `${this.configProvider.apiRoot()}/incident/location/${incidentId}`;
+
+    return this.http
+      .patch(patchUri, location)
+      .pipe(map((value: Incident) => value));
   }
 }

@@ -10,15 +10,22 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { getSlotsOnSelectedDate } from '../../modules/journal/journal.selector';
 import { AppConfigProvider } from '../app-config/app-config';
 import {
-  LoneWorkerConfigProvider,
+  LoneWorkerConfigProvider, LocationUpdateConfig,
 } from '../../external-modules/lw-ionic-module/providers/lone-worker-config.provider';
 
 export class MesLoneWorkerConfigProvider extends LoneWorkerConfigProvider {
+  public redLocationUpdate?: LocationUpdateConfig;
+  public amberLocationUpdate?: LocationUpdateConfig;
+
   constructor(
     public apiRoot: Function,
     public amberPollTime: number,
   ) {
     super();
+
+    this.redLocationUpdate = {
+      pollFrequencySeconds: 5,
+    };
   }
 }
 @Injectable()

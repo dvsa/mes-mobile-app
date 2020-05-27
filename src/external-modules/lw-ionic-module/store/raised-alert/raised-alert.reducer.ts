@@ -1,6 +1,7 @@
 import { RaisedAlertModel, AlertRequestStatus } from './raised-alert.model';
 import { createFeatureSelector } from '@ngrx/store';
 import * as alertActions from './raised-alert.actions';
+import { Severity } from '@dvsa/lw-incident-model';
 
 export const initialState: RaisedAlertModel = {
   redAlert: {
@@ -88,6 +89,23 @@ export function raisedAlertReducer(
       };
     case alertActions.RESET_ALERT_STATE:
       return initialState;
+    case alertActions.UPDATE_INCIDENT_LOCATION_RESULT_RECEIVED:
+      return {
+        ...state,
+        ...action.incident.severity === Severity.Amber
+          ? {
+            amberAlert: {
+              ...state.amberAlert,
+              incident: action.incident,
+            },
+          }
+          : {
+            redAlert: {
+              ...state.redAlert,
+              incident: action.incident,
+            },
+          },
+      };
     default:
       return state;
   }
