@@ -58,6 +58,9 @@ import {
 import {
   LoneWorkerIntegrationProviderMock,
 } from '../../../providers/lone-worker-integration/__mocks__/lone-worker-integration.provider.mock';
+import {
+  RaisedAlertProvider,
+} from '../../../external-modules/lw-ionic-module/providers/raised-alert.provider';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -101,6 +104,7 @@ describe('JournalPage', () => {
         { provide: SlotProvider, useClass: SlotProvider },
         { provide: AmberAlertProvider, useClass: AmberAlertProvider },
         { provide: LoneWorkerIntegrationProvider, useClass: LoneWorkerIntegrationProviderMock },
+        RaisedAlertProvider,
       ],
     });
   });

@@ -9,6 +9,7 @@ export const SEND_RED_ALERT = '[Lone Worker Raised Alert] Send Red Alert';
 export const RED_ALERT_SENT = '[Lone Worker Raised Alert] Red Alert Sent';
 export const RED_ALERT_SEND_FAILURE = '[Lone Worker Raised Alert] Red Alert Send Failure';
 export const AMBER_ALERT_SEND_FAILURE = '[Lone Worker Raised Alert] Amber Alert Send Failure';
+export const RESET_ALERT_STATE = '[Lone Worker Raised Alert] Reset State';
 
 export class SendAmberAlert implements Action {
   readonly type = SEND_AMBER_ALERT;
@@ -40,10 +41,15 @@ export class AmberAlertSendFailure implements Action {
   constructor(public error: HttpErrorResponse) {}
 }
 
+export class ResetRaisedAlertState implements Action {
+  readonly type = RESET_ALERT_STATE;
+}
+
 export type RaisedAlertActionTypes =
   SendAmberAlert |
   SendRedAlert |
   RedAlertSent |
   AmberAlertSent |
   RedAlertSendFailure |
-  AmberAlertSendFailure;
+  AmberAlertSendFailure |
+  ResetRaisedAlertState;

@@ -9,7 +9,7 @@ export const initialState: RaisedAlertModel = {
     sentReceipt: null,
     isSending: false,
   },
-  amberAlert:{
+  amberAlert: {
     status: null,
     incident: null,
     sentReceipt: null,
@@ -86,6 +86,8 @@ export function raisedAlertReducer(
           isSending: false,
         },
       };
+    case alertActions.RESET_ALERT_STATE:
+      return initialState;
     default:
       return state;
   }

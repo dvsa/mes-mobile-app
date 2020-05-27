@@ -38,6 +38,7 @@ import { AmberAlertProvider } from '../../external-modules/lw-ionic-module/provi
 import {
   LoneWorkerIntegrationProvider,
 } from '../../providers/lone-worker-integration/lone-worker-integration.provider';
+import { RaisedAlertProvider } from '../../external-modules/lw-ionic-module/providers/raised-alert.provider';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -90,6 +91,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     public insomnia: Insomnia,
     public amberAlertProvider: AmberAlertProvider,
     public loneWorkerIntegrationProvider: LoneWorkerIntegrationProvider,
+    public raisedAlertProvider: RaisedAlertProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId();
@@ -172,6 +174,9 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new journalActions.JournalViewDidEnter());
+
+    // reset lone worker raised alerts
+    this.raisedAlertProvider.resetRaisedAlertState();
 
     if (super.isIos()) {
       this.screenOrientation.unlock();

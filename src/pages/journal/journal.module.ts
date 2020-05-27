@@ -19,6 +19,9 @@ import {
 import {
   LoneWorkerIonicModule,
 } from '../../external-modules/lw-ionic-module/lone-worker.module';
+import {
+  RaisedAlertProvider,
+} from '../../external-modules/lw-ionic-module/providers/raised-alert.provider';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,7 @@ import {
     SlotSelectorProvider,
     DateTimeProvider,
     LoneWorkerIntegrationProvider,
+    RaisedAlertProvider,
   ],
 })
 export class JournalPageModule { }
