@@ -32,6 +32,10 @@ Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
 });
 
+Before({ tags: '@catm2' }, () => {
+  this.testCategory = 'a-mod2';
+});
+
 Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
@@ -66,3 +70,8 @@ When('I complete the waiting room to car page with the following vehicle checks'
 When('I complete the waiting room to bike page with confirmed cat type {string}', (catType) => {
   WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, true, true, catType);
 });
+
+When('I complete the waiting room to car page with a Safety And Balance Question faults and cat type {string}',
+  (catType) => {
+    WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, false, true, catType);
+  });

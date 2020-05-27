@@ -42,16 +42,16 @@ class WaitingRoomToCarPage extends Page {
     this.clickSubmitButton();
   }
 
-  getVehicleChecksQuestions(){
-    return element.all(by.id('vehicle-checks-question-selector'));
-  }
-
   clickVehicleCheck(showMeQuestionsArray, index) {
     this.clickElementByXPath(`//button//div[normalize-space(text()) =  "${showMeQuestionsArray[0][index]}"]`);
   }
 
   clickVehicleAnswer(resultFromQuestions, index) {
     this.clickElementById(`${resultFromQuestions}_${index + 1}`);
+  }
+
+  getVehicleChecksQuestions(){
+    return element.all(by.id('vehicle-checks-question-selector'));
   }
 
   showMeQuestions(questions, questionResult) {
@@ -63,8 +63,12 @@ class WaitingRoomToCarPage extends Page {
       // const submitDialog = TempPage.getAndAwaitElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
       // TempPage.clickElement(submitDialog);
       this.clickSubmitButton();
-      const resultFromQuestions =
-        (showMeQuestionsArray[1][index] === 'true') ? 'vehicleChecksFault' : 'vehicleChecksCorrect';
+      let resultFromQuestions;
+      if (questionResult === true) {
+        resultFromQuestions = 'vehicleChecksCorrect';
+      } else {
+        resultFromQuestions = 'vehicleChecksFault';
+      }
       this.clickVehicleAnswer(resultFromQuestions, index);
     });
   }
@@ -147,7 +151,14 @@ class WaitingRoomToCarPage extends Page {
       this.modCatConfirmation(tellMeQuestion);
       const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
       this.clickElementById(transmissionSelector);
-    } else {
+    } else if (testCategory === 'a-mod2') {
+      this.eyeSightResultPass();
+      this.modCatConfirmation(tellMeQuestion);
+      const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
+      this.clickElementById(transmissionSelector);
+      // this is using for Selecting Safety and Balance Questions as well.
+      this.multiShowAndTell(UI_TEST_DATA.testData.mod2, questionResult);
+    }else {
       this.eyeSightResultPass();
       this.standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
     }

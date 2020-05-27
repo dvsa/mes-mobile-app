@@ -34,6 +34,10 @@ Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
 });
 
+Before({ tags: '@catm2' }, () => {
+  this.testCategory = 'a-mod2';
+});
+
 Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
@@ -57,14 +61,19 @@ When('I end and terminate the test', () => {
 });
 
 When('I complete the test', () => {
-  TestReportPage.legalRequirements.completeLegalRequirements();
-  TestReportPage.completeManouveure(this.testCategory);
-  TestReportPage.completeEco();
-  if (this.testCategory === 'b') {
-    TestReportPage.completeShowMe();
-  }
-  if (this.testCategory === 'be' || this.testCategory === 'ce') {
-    TestReportPage.completeUncoupleRecouple();
+  if (this.testCategory === 'a-mod2') {
+    TestReportPage.legalRequirements.completeLegalRequirements();
+    TestReportPage.completeEco();
+  } else {
+    TestReportPage.legalRequirements.completeLegalRequirements();
+    TestReportPage.completeManouveure(this.testCategory);
+    TestReportPage.completeEco();
+    if (this.testCategory === 'b') {
+      TestReportPage.completeShowMe();
+    }
+    if (this.testCategory === 'be' || this.testCategory === 'ce') {
+      TestReportPage.completeUncoupleRecouple();
+    }
   }
   TestReportPage.clickEndTestButton();
 });
