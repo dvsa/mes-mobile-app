@@ -21,7 +21,7 @@ import {
   hasVehicleChecksBeenCompletedCatB,
 } from '../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { haveSafetyAndBalanceQuestionsBeenCompleted }
-  from '../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
+ from '../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
 import { hasManoeuvreBeenCompletedCatBE } from '../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { hasManoeuvreBeenCompletedCatC } from '../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import { legalRequirementsLabels } from '../../shared/constants/legal-requirements/legal-requirements.constants';
@@ -575,6 +575,7 @@ export class TestReportValidatorProvider {
     !get(data, 'highwayCodeSafety.selected', false) && result.push(legalRequirementsLabels.highwayCodeSafety);
 
     !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
+    !get(data, 'controlledStop.selected', false) && result.push(legalRequirementsLabels.controlledStop);
 
     return result;
   }
