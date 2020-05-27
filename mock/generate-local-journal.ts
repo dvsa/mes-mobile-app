@@ -1277,7 +1277,7 @@ const localJournal: ExaminerWorkSchedule = {
         centreName: 'Example Test Centre',
         costCode: 'EXTC1',
       },
-      vehicleTypeCode: 'CCPC',
+      vehicleTypeCode: 'C',
       vehicleSlotTypeCode: 7,
       examinerVisiting: false,
     },
@@ -1345,7 +1345,7 @@ const localJournal: ExaminerWorkSchedule = {
         centreName: 'Example Test Centre',
         costCode: 'EXTC1',
       },
-      vehicleTypeCode: 'DCPC',
+      vehicleTypeCode: 'D',
       vehicleSlotTypeCode: 7,
       examinerVisiting: false,
     }
