@@ -7,7 +7,7 @@ export const ANSWER_TOGGLED = '[CatCPC] Answer toggled';
 
 export const POPULATE_ANSWER_SCORE = '[CatCPC] Populate answer score';
 
-export class PopulateQuestion implements Action {
+export class PopulateQuestions implements Action {
   readonly type = POPULATE_QUESTION;
 
   constructor(public payload: Question[]) {
@@ -30,5 +30,5 @@ export class PopulateAnswerScore implements Action {
 
 export type Types =
   | QuestionAnswerToggled
-  | PopulateQuestion
+  | PopulateQuestions
   | PopulateAnswerScore;

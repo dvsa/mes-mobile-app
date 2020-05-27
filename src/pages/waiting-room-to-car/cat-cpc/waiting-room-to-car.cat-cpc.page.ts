@@ -41,7 +41,7 @@ import {
   getVehicleConfiguration,
 } from '../../../modules/tests/vehicle-details/cat-cpc/vehicle-details.cat-cpc.selector';
 import { Combination } from './temp/combos';
-import { PopulateQuestion } from '../../../modules/tests/test-data/cat-cpc/question/question.action';
+import { PopulateQuestions } from '../../../modules/tests/test-data/cat-cpc/question/question.action';
 
 interface WaitingRoomToCarPageState {
   testCategory$: Observable<CategoryCode>;
@@ -130,11 +130,9 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
   }
 
   combinationSelected(combination: string): void {
-    this.store$.dispatch(new PopulateCombination(combination));
-
     const questionsBank: Question[] = this.cpcQuestionProvider.getQuestionsBank(combination);
-
-    this.store$.dispatch(new PopulateQuestion(questionsBank));
+    this.store$.dispatch(new PopulateCombination(combination));
+    this.store$.dispatch(new PopulateQuestions(questionsBank));
   }
 
   supervisorAccompanimentToggled(): void {
