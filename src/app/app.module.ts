@@ -52,6 +52,7 @@ import { RemoteDevToolsProxy } from '../../ngrx-devtool-proxy/remote-devtools-pr
 import {
   BikeCategoryDetailProvider,
 } from '../providers/bike-category-detail/bike-category-detail';
+import { CPCQuestionProvider } from '../providers/cpc-questions/cpc-questions';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -156,6 +157,7 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
     SchemaValidatorProvider,
     PassCertificateValidationProvider,
     BikeCategoryDetailProvider,
+    CPCQuestionProvider,
   ],
 })
 export class AppModule { }

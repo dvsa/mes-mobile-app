@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+        <ion-title>{{pageState.candidateName$ | async}}</ion-title>
+        <ion-buttons end>
+            <end-test-link [category]="pageState?.testCategory$ | async"></end-test-link>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <ion-grid>
+                <ion-row no-padding>
+                    <ion-col no-padding>
+                        <vehicle-registration [formGroup]="form"
+                                              [vehicleRegistration]="pageState.registrationNumber$ | async"
+                                              (vehicleRegistrationChange)="vehicleRegistrationChanged($event)">
+                        </vehicle-registration>
+
+                        <vehicle-details-cat-cpc
+                                [formGroup]="form"
+                                [configuration]="pageState?.configuration$ | async"
+                                (vehicleDetailsChange)="vehicleConfiguration($event)">
+                        </vehicle-details-cat-cpc>
+
+                        <combination
+                                [formGroup]="form"
+                                [combinations]="combinations"
+                                [combination]="pageState.combination$ | async"
+                                (combinationChange)="combinationSelected($event)">
+                        </combination>
+
+                        <accompaniment-card-cat-cpc [formGroup]="form"
+                                                    [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async"
+                                                    [interpreterAccompaniment]="pageState.interpreterAccompaniment$ | async"
+                                                    (supervisorAccompanimentChange)="supervisorAccompanimentToggled()"
+                                                    (interpreterAccompanimentChange)="interpreterAccompanimentToggled()">
+                        </accompaniment-card-cat-cpc>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </div>
+</ion-content>
+
+<ion-footer>
+    <ion-row class="mes-full-width-card box-shadow">
+        <button type="submit" class="mes-primary-button" id="continue-to-test-report-button" ion-button
+                (click)="onSubmit()">
+            <h3>Continue to test report</h3>
+        </button>
+    </ion-row>
+</ion-footer>
