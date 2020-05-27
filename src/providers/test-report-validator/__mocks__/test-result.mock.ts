@@ -306,6 +306,9 @@ export const validTestCatF: CatFUniqueTypes.TestData = {
       selected: true,
     },
   },
+  controlledStop: {
+    selected: true,
+  },
 };
 
 export const validTestCatG: CatGUniqueTypes.TestData = {
@@ -325,6 +328,9 @@ export const validTestCatG: CatGUniqueTypes.TestData = {
     reverseLeft: {
       selected: true,
     },
+  },
+  controlledStop: {
+    selected: true,
   },
 };
 
@@ -346,6 +352,9 @@ export const validTestCatH: CatHUniqueTypes.TestData = {
       selected: true,
     },
   },
+  controlledStop: {
+    selected: true,
+  },
 };
 
 export const validTestCatK: CatKUniqueTypes.TestData = {
@@ -359,6 +368,9 @@ export const validTestCatK: CatKUniqueTypes.TestData = {
     completed: true,
   },
   highwayCodeSafety: {
+    selected: true,
+  },
+  controlledStop: {
     selected: true,
   },
 };
@@ -465,6 +477,7 @@ export const legalRequirementsCatF = [
   legalRequirementsLabels.manoeuvre,
   legalRequirementsLabels.highwayCodeSafety,
   legalRequirementsLabels.eco,
+  legalRequirementsLabels.controlledStop,
 ];
 
 export const legalRequirementsCatG = [
@@ -475,6 +488,7 @@ export const legalRequirementsCatG = [
   legalRequirementsLabels.manoeuvre,
   legalRequirementsLabels.highwayCodeSafety,
   legalRequirementsLabels.eco,
+  legalRequirementsLabels.controlledStop,
 ];
 
 export const legalRequirementsCatH = [
@@ -485,6 +499,7 @@ export const legalRequirementsCatH = [
   legalRequirementsLabels.manoeuvre,
   legalRequirementsLabels.highwayCodeSafety,
   legalRequirementsLabels.eco,
+  legalRequirementsLabels.controlledStop,
 ];
 
 export const legalRequirementsCatK = [
@@ -494,4 +509,5 @@ export const legalRequirementsCatK = [
   legalRequirementsLabels.uphillStartDesignatedStart,
   legalRequirementsLabels.highwayCodeSafety,
   legalRequirementsLabels.eco,
+  legalRequirementsLabels.controlledStop,
 ];
