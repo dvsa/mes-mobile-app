@@ -9,6 +9,7 @@ import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
 import { TestResultCatAM2Schema } from '@dvsa/mes-test-schema/categories/AM2';
+import { TestResultCatCPCSchema } from '@dvsa/mes-test-schema/categories/CPC';
 
 @Component({
   selector: 'rekey-details-card',
@@ -24,7 +25,8 @@ export class RekeyDetailsCardComponent {
   | CatC1UniqueTypes.TestResult
   | CatC1EUniqueTypes.TestResult
   | TestResultCatAM1Schema
-  | TestResultCatAM2Schema;
+  | TestResultCatAM2Schema
+  | TestResultCatCPCSchema;
 
   public getScheduledStaffNumber (): string {
     return get(this.data, 'examinerBooked'.toString());
