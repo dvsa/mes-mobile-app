@@ -1,6 +1,6 @@
 @catm2 @full_smoke @regression
 
-Feature: Driver Examiner complete the pass journey for Mod2
+Feature: Driver Examiner complete the fail journey for Mod2
 
   Background:
     Given I am logged in as "desexamineram2" and I have a test for "Mr Richard Rhys"

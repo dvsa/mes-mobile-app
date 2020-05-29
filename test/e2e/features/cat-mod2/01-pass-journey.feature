@@ -11,7 +11,7 @@
       When the candidate requests to receive results by post
       And I proceed to the bike
 
-      Scenario: Examiner changes test category to A
+      Scenario: Driving Examiner completes a passed test for category A with no faults
         Given I should see the "Fox Farrell" page
         And I select the test category "A"
         And I select the Transmission Type "Manual"
