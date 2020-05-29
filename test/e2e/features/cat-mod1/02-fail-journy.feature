@@ -1,4 +1,4 @@
-@cata
+@cata @full_smoke @regression
 Feature: A Driving Examiner Completes failed tests
 
   Scenario: Examiner completes failed test with more than 6 faults

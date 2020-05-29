@@ -1,4 +1,4 @@
-@catb @regression
+@catb @full_smoke @regression
 Feature: Login
 
   Scenario: User logs into the application

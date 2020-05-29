@@ -1,4 +1,4 @@
-@catce @regression
+@catce @full_smoke @regression
 Feature: A Driving Examiner Terminates a test in Category CE
 
    Scenario: Examiner terminates a test on the test report due to mechanical failure

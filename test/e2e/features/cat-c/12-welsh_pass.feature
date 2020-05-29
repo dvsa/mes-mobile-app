@@ -1,4 +1,4 @@
-@catc @regression
+@catc @full_smoke @regression
 Feature: A Driving Examiner Completes a Passed User Journey for Category C in Welsh
 
     Scenario: Examiner completes a passed welsh test with no faults

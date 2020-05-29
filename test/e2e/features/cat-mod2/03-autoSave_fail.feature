@@ -1,4 +1,4 @@
-@catm2
+@catm2 @full_smoke @regression
 
 Feature: Autosave end to end failed journey for Category B+E Mod2
 
@@ -64,4 +64,15 @@ Feature: Autosave end to end failed journey for Category B+E Mod2
     When I search for a completed test with the application reference of "20123000011"
     And the search result is clicked
     Then I should see the "Test information" page
-    And the test result outcome is "Passed"
+    And the test result outcome is "Unsuccessful"
+    And the test result has the following data present
+      | label                             | value                         |
+      | Application reference             | 20123000011                   |
+      | Test category                     | EUAM2                         |
+      | Slot type                         | Standard Test                 |
+      | Examiner number                   | 10000011                      |
+      | Physical description of candidate | None                          |
+      | Weather conditions                | Bright / wet roads and Showers|
+    When I click the close button
+    When I click the back button on the search submitted test page
+    Then I should see the "My dashboard" page

@@ -1,4 +1,4 @@
-@catb @smoke @regression
+@catb @full_smoke @regression
 Feature: A Driving Examiner Completes An Failed Journey for Category B in Welsh
 
    Scenario: Examiner completes a failed test with various faults in Welsh

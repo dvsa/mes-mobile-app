@@ -1,4 +1,4 @@
-@catm2
+@catm2 @full_smoke @regression
 
 Feature: Driver Examiner complete the pass journey for Mod2
 
