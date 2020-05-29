@@ -30,6 +30,10 @@ Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
 });
 
+Before({ tags: '@catm2' }, () => {
+  this.testCategory = 'a-mod2';
+});
+
 Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
@@ -37,11 +41,17 @@ Before({ tags: '@catd' }, () => {
 When('I complete the office write up', () => {
   if (!(this.testCategory === 'a-mod1')) {
     OfficePage.enterRouteNumber('2');
-    if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'ce' || this.testCategory === 'd') {
+    if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' ||
+this.testCategory === 'ce' || this.testCategory === 'd') {
       OfficePage.enterIndependentDriving('diagram');
     } else {
-      OfficePage.enterIndependentDriving('satnav');
-      OfficePage.enterShowMe('S5 - Horn');
+      if (this.testCategory === 'a-mod2') {
+        OfficePage.enterIndependentDriving('diagram');   //The function is also used for Enter independent riding
+        OfficePage.enterTestConductedOn('cartobike');
+      } else {
+        OfficePage.enterIndependentDriving('satnav');
+        OfficePage.enterShowMe('S5 - Horn');
+      }
     }
   } else {
     OfficePage.clickCircuit('left');

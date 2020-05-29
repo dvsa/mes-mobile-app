@@ -1,4 +1,4 @@
-@catb @regression
+@catb @full_smoke @regression
 Feature: Practice mode
 
   Scenario: User can start marking practice test without a driver fault

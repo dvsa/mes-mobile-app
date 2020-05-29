@@ -5,5 +5,6 @@ export const UI_TEST_DATA = {
     c: ['Q1 - All doors secure', 'Q2 - Air leaks', 'Q10 - Air pressure', 'Q7 - Sufficient tread', 'Q9 - Body safety'],
     ce: ['E2 - Change tacho', 'E3 - Loading mechanism'],
     a1: ['A1'],
+    mod2: ['M4 - Lights', 'M11 - Engine Cut Out Switch', 'B3 - Balance with passenger'],
   },
 };

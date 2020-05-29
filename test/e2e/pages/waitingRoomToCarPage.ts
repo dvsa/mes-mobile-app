@@ -1,6 +1,7 @@
 import Page from './page';
 import { by, element } from 'protractor';
 import { UI_TEST_DATA } from '../../test_data/ui_test_data';
+import PageHelper from './pageHelper';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -42,16 +43,37 @@ class WaitingRoomToCarPage extends Page {
     this.clickSubmitButton();
   }
 
-  getVehicleChecksQuestions(){
-    return element.all(by.id('vehicle-checks-question-selector'));
-  }
-
   clickVehicleCheck(showMeQuestionsArray, index) {
     this.clickElementByXPath(`//button//div[normalize-space(text()) =  "${showMeQuestionsArray[0][index]}"]`);
   }
 
   clickVehicleAnswer(resultFromQuestions, index) {
     this.clickElementById(`${resultFromQuestions}_${index + 1}`);
+  }
+
+  getVehicleChecksQuestions(){
+    return element.all(by.id('vehicle-checks-question-selector'));
+  }
+
+  showMeQuestionsForDifferentAnswers(questions, questionResult) {
+    const showMeQuestionsArray = [questions, questionResult];
+    const elements = this.getVehicleChecksQuestions();
+    let count = 0;
+    elements.each((element, index) => {
+      this.clickElement(element);
+      this.clickVehicleCheck(showMeQuestionsArray, index);
+      // const submitDialog = TempPage.getAndAwaitElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
+      // TempPage.clickElement(submitDialog);
+      this.clickSubmitButton();
+      let resultFromQuestions;
+      if (questionResult[count] === 'true') {
+        resultFromQuestions = 'vehicleChecksCorrect';
+      } else {
+        resultFromQuestions = 'vehicleChecksFault';
+      }
+      this.clickVehicleAnswer(resultFromQuestions, index);
+      count = count + 1;
+    });
   }
 
   showMeQuestions(questions, questionResult) {
@@ -63,8 +85,12 @@ class WaitingRoomToCarPage extends Page {
       // const submitDialog = TempPage.getAndAwaitElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
       // TempPage.clickElement(submitDialog);
       this.clickSubmitButton();
-      const resultFromQuestions =
-        (showMeQuestionsArray[1][index] === 'true') ? 'vehicleChecksFault' : 'vehicleChecksCorrect';
+      let resultFromQuestions;
+      if (questionResult === true) {
+        resultFromQuestions = 'vehicleChecksCorrect';
+      } else {
+        resultFromQuestions = 'vehicleChecksFault';
+      }
       this.clickVehicleAnswer(resultFromQuestions, index);
     });
   }
@@ -147,12 +173,49 @@ class WaitingRoomToCarPage extends Page {
       this.modCatConfirmation(tellMeQuestion);
       const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
       this.clickElementById(transmissionSelector);
-    } else {
+    } else if (testCategory === 'a-mod2') {
+      this.eyeSightResultPass();
+      this.modCatConfirmation(tellMeQuestion);
+      const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
+      this.clickElementById(transmissionSelector);
+      // this is using for Selecting Safety and Balance Questions as well.
+      this.multiShowAndTell(UI_TEST_DATA.testData.mod2, questionResult);
+    }else {
       this.eyeSightResultPass();
       this.standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
     }
     this.enterSearchTerm('AB12CDE');
     this.submitWRTC();
+  }
+
+  selectSafetyAndBalanceQuestions(table, pageTitle) {
+    this.openSelectQuestionsOverlay();
+    PageHelper.waitForOverlay('click-block-active');
+    // Wait for the page title to exist
+    PageHelper.getPageTitle(pageTitle);
+
+    // Check that it is the last page title i.e. the displayed one
+    expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
+      .to.eventually.equal(pageTitle);
+    this.showMeQuestionsForDifferentAnswers(table.raw()[0], table.raw()[1]);
+    this.submitVehicleChecksButton();
+  }
+
+  enterRegistrationNumber(registrationNumber) {
+    this.enterSearchTerm(registrationNumber);
+  }
+
+  selectTransmissionType(transmissionType) {
+    const transmissionSelector = (transmissionType === 'Manual') ? 'transmission-manual' : 'transmission-automatic';
+    this.clickElementById(transmissionSelector);
+  }
+
+  selectEyeSight(result) {
+    if (result === 'Pass') {
+      this.eyeSightResultPass();
+    } else {
+      this.eyeSightResultFail();
+    }
   }
 
   modCatConfirmation(catType) {

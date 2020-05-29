@@ -1,4 +1,4 @@
-#@catb @regression
+#@catb @full_smoke @regression
 #Feature: A Driving Examiner starts an early and late test to see if appropriate dialog appears
 #
 #  Scenario: Early start popup

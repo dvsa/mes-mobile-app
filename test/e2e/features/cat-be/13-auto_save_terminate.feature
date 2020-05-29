@@ -1,4 +1,4 @@
-@catbe @regression
+@catbe @full_smoke @regression
 Feature: Autosave end to end terminate journey for Category B+E
 
    Scenario: Examiner terminates test as candidate failed eye sight test and completes write-up later using autosave

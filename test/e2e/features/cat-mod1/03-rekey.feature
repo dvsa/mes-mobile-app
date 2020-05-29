@@ -1,4 +1,4 @@
-@cata
+@cata @full_smoke @regression
 Feature: A Driving Examiner Rekeys Category Mod1 tests
 
   Scenario: User can rekey a test pass for the previous day
