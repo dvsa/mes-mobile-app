@@ -86,6 +86,10 @@ class DebriefPage extends Page {
     return this.getElementByXPath(`//ion-card[@id = '${faultSeverity}-fault']//div[text() = '${faultDescription}']`);
   }
 
+  getQuestionsElement(faultSeverity: string, faultDescription:string) {
+    return this.getElementByXPath(`//ion-card[@id ='${faultSeverity}-questions']//div[text() = '${faultDescription}']`);
+  }
+
   getTestOutcome(testCategory) {
     return this.getElementByXPath(
       `//div[contains(@class, "debrief-cat-${testCategory}-page")]//div[@id = "test-outcome-background"]/div/h1`);

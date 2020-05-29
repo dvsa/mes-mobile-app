@@ -13,7 +13,14 @@
 
       Scenario: Examiner changes test category to A
         Given I should see the "Fox Farrell" page
-        And I complete the waiting room to bike page with confirmed cat type "A"
+        And I select the test category "A"
+        And I select the Transmission Type "Manual"
+        And I select the Eyesight test result "Pass"
+        And I enter the vehicle registration number "AB12CDE"
+        And I select the "Safety and Balance Questions - Fox Farrell" page
+          |M4 - Lights|M11 - Engine Cut Out Switch|B3 - Balance with passenger|
+          |true       |true                       |true                     |
+        Then I continue to test report
         Then I should see the "Test report - Fox Farrell" page
         And I complete the test
         And I continue to debrief
@@ -34,7 +41,14 @@
 
     Scenario: Driver Examiner Pass the candidate on wrong answer for Safety and Balance Questions
       Given I should see the "Fox Farrell" page
-      And I complete the waiting room to car page with a Safety And Balance Question faults and cat type "AM"
+      And I select the test category "AM"
+      And I select the Transmission Type "Manual"
+      And I select the Eyesight test result "Pass"
+      And I enter the vehicle registration number "AB12CDE"
+      And I select the "Safety and Balance Questions - Fox Farrell" page
+        |M4 - Lights|M11 - Engine Cut Out Switch|B3 - Balance with passenger|
+        |false      |false                      |false                      |
+      Then I continue to test report
       Then I should see the "Test report - Fox Farrell" page
       And I complete the test
       And I continue to debrief

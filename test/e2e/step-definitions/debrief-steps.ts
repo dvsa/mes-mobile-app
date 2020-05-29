@@ -93,6 +93,11 @@ Then('I see a {string} fault for {string}', (faultSeverity, faultDescription) =>
   return expect(faultElement.isPresent()).to.eventually.be.true;
 });
 
+Then('I see a {string} questions for {string}', (faultSeverity, faultDescription) => {
+  const faultElement = DebriefPage.getQuestionsElement(faultSeverity, faultDescription);
+  return expect(faultElement.isPresent()).to.eventually.be.true;
+});
+
 Then('I should see the application reference {string}', (applicationRef) => {
   const applicationRefField = DebriefPage.getApplicationRefField();
   return expect(applicationRefField.getText()).to.eventually.equal(applicationRef);

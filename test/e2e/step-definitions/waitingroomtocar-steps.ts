@@ -75,3 +75,28 @@ When('I complete the waiting room to car page with a Safety And Balance Question
   (catType) => {
     WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, false, true, catType);
   });
+
+When('I select the test category {string}', (catType) => {
+  WaitingRoomToCarPage.modCatConfirmation(catType);
+});
+
+When('I select the Transmission Type {string}', (transmissionType) => {
+  WaitingRoomToCarPage.selectTransmissionType(transmissionType);
+});
+
+When('I select the Eyesight test result {string}', (result) => {
+  WaitingRoomToCarPage.selectEyeSight(result);
+});
+
+When('I enter the vehicle registration number {string}', (registrationNumber) => {
+  WaitingRoomToCarPage.enterRegistrationNumber(registrationNumber);
+});
+
+When('I select the {string} page', (pageTitle, questionsAndResults) => {
+  WaitingRoomToCarPage.selectSafetyAndBalanceQuestions(questionsAndResults, pageTitle);
+
+});
+
+When('I continue to test report', () => {
+  WaitingRoomToCarPage.submitWRTC();
+});
