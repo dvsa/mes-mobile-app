@@ -1,4 +1,4 @@
-@catb @regression
+@catb @full_smoke @regression
 Feature: A Driving Examiner Completes Multiple Terminated Journeys For Category B
 
    @smoke

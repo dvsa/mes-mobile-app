@@ -1,4 +1,4 @@
-@catbe @regression
+@catbe @full_smoke @regression
 Feature: Cat B+E waiting room to car
 
    Scenario: adding five failures to the show me tell me marks the test as unsuccesfull

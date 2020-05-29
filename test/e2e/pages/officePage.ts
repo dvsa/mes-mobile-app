@@ -113,6 +113,10 @@ class OfficePage extends Page {
     this.clickElementById(`independent-driving-${type}`);
   }
 
+  enterTestConductedOn (type) {
+    this.clickElementById(`mode-of-transport-${type}`);
+  }
+
   clickReturnToJournalButton() {
     this.clickElementByXPath('//button/span/h3[text() = "Return to journal"]');
   }

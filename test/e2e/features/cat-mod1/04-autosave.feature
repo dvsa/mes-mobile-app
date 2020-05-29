@@ -1,4 +1,4 @@
-@cata
+@cata @full_smoke @regression
 Feature: A Driving Examiner Completes a Passed Journey for Category Mod1 Using Autosave
 
   Scenario: Examiner complete the pass test for autosave

@@ -1,4 +1,4 @@
-@catc @regression
+@catc @full_smoke @regression
 Feature: A Driving Examiner Completes a Passed User Journey in Category C
 
    Scenario: Examiner completes a passed test with no faults
