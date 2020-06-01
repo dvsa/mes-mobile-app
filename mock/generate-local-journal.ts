@@ -1247,7 +1247,7 @@ const localJournal: ExaminerWorkSchedule = {
             lastName: 'Brown',
             title: 'Mr',
           },
-          driverNumber: 'BELL9915220A99HC',
+          driverNumber: 'BROWN915220A99HC',
           gender: 'M',
           mobileTelephone: '07654 123456',
           primaryTelephone: '01234 567890',
@@ -1269,7 +1269,7 @@ const localJournal: ExaminerWorkSchedule = {
       },
       slotDetail: {
         duration: 57,
-        slotId: 1015,
+        slotId: 1019,
         start: `${today}T18:55:00`,
       },
       testCentre: {
@@ -1337,7 +1337,7 @@ const localJournal: ExaminerWorkSchedule = {
       },
       slotDetail: {
         duration: 57,
-        slotId: 1015,
+        slotId: 1020,
         start: `${today}T18:55:00`,
       },
       testCentre: {
@@ -1348,7 +1348,7 @@ const localJournal: ExaminerWorkSchedule = {
       vehicleTypeCode: 'D',
       vehicleSlotTypeCode: 7,
       examinerVisiting: false,
-    }
+    },
   ],
 };
 
