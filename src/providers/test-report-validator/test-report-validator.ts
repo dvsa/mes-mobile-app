@@ -21,7 +21,7 @@ import {
   hasVehicleChecksBeenCompletedCatB,
 } from '../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 import { haveSafetyAndBalanceQuestionsBeenCompleted }
-  from '../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
+ from '../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
 import { hasManoeuvreBeenCompletedCatBE } from '../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { hasManoeuvreBeenCompletedCatC } from '../../modules/tests/test-data/cat-c/test-data.cat-c.selector';
 import { legalRequirementsLabels } from '../../shared/constants/legal-requirements/legal-requirements.constants';
@@ -531,13 +531,15 @@ export class TestReportValidatorProvider {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
     const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const angledStart: boolean = get(data, 'testRequirements.angledStart', false);
+    const controlledStop: boolean = get(data, 'controlledStop.selected', false);
     const uphillStartDesignatedStart: boolean = get(data, 'testRequirements.uphillStartDesignatedStart', false);
 
-    const hCodeSafteyQuestions: boolean = get(data, 'highwayCodeSafety.selected', false);
+    const hCodeSafetyQuestions: boolean = get(data, 'highwayCodeSafety.selected', false);
 
     const eco: boolean = get(data, 'eco.completed', false);
 
-    return normalStart1 && normalStart2 && angledStart && uphillStartDesignatedStart && hCodeSafteyQuestions && eco;
+    return normalStart1 && normalStart2 && angledStart &&
+      uphillStartDesignatedStart && hCodeSafetyQuestions && eco && controlledStop;
   }
 
   private getMissingLegalRequirementsCatHomeTest(data: HomeTestData): legalRequirementsLabels[] {
@@ -556,6 +558,8 @@ export class TestReportValidatorProvider {
 
     !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
 
+    !get(data, 'controlledStop.selected', false) && result.push(legalRequirementsLabels.controlledStop);
+
     return result;
   }
 
@@ -571,6 +575,7 @@ export class TestReportValidatorProvider {
     !get(data, 'highwayCodeSafety.selected', false) && result.push(legalRequirementsLabels.highwayCodeSafety);
 
     !get(data, 'eco.completed', false) && result.push(legalRequirementsLabels.eco);
+    !get(data, 'controlledStop.selected', false) && result.push(legalRequirementsLabels.controlledStop);
 
     return result;
   }
