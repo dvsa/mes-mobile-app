@@ -28,7 +28,6 @@ import {
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { QuestionProvider } from '../../../providers/question/question';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_CPC } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
@@ -76,7 +75,6 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public questionProvider: QuestionProvider,
     public cpcQuestionProvider: CPCQuestionProvider,
   ) {
     super(platform, navController, authenticationProvider);
@@ -177,20 +175,6 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
         }
       });
     }
-  }
-
-  updateForm(ctrl: string, value: any) {
-    this.form.patchValue({
-      [ctrl]: value,
-    });
-  }
-
-  isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName] && this.form.get(controlName).dirty;
-  }
-
-  getDebriefPage() {
-    return CAT_CPC.DEBRIEF_PAGE;
   }
 
 }

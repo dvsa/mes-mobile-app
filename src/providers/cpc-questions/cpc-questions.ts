@@ -28,10 +28,12 @@ export class CPCQuestionProvider {
   }
 
   getQuestionsBank = (combinationCode: string): Question[] => {
-    const questionCombination: string[] = this.getQuestionCombination(combinationCode).questions;
+    const { questions } = this.getQuestionCombination(combinationCode);
 
     return this.getQuestionsByVehicleType(combinationCode)
-      .filter((item: Question) => questionCombination.includes(item.questionCode));
+      .filter((item: Question) => questions.includes(item.questionCode))
+      .sort((a: Question, b: Question) =>
+        questions.indexOf(a.questionCode) - questions.indexOf(b.questionCode));
   }
 
   getCombinations = (testCategory: TestCategory): Combination[] => {

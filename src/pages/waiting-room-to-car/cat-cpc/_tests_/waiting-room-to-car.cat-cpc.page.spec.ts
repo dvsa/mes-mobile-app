@@ -13,8 +13,6 @@ import { AuthenticationProviderMock } from '../../../../providers/authentication
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { QuestionProvider } from '../../../../providers/question/question';
-import { QuestionProviderMock } from '../../../../providers/question/__mocks__/question.mock';
 import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { VehicleRegistrationComponent } from '../../components/vehicle-registration/vehicle-registration';
@@ -33,6 +31,8 @@ import {
   PopulateVehicleConfiguration,
   VehicleRegistrationChanged,
 } from '../../../../modules/tests/vehicle-details/common/vehicle-details.actions';
+import { CPCQuestionProvider } from '../../../../providers/cpc-questions/cpc-questions';
+import { CpcQuestionsMock } from '../../../../providers/cpc-questions/_mocks_/cpc-questions.mock';
 
 describe('WaitingRoomToCarCatCPCPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatCPCPage>;
@@ -81,7 +81,7 @@ describe('WaitingRoomToCarCatCPCPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
-        { provide: QuestionProvider, useClass: QuestionProviderMock },
+        { provide: CPCQuestionProvider, useClass: CpcQuestionsMock },
       ],
     });
   });
@@ -146,7 +146,8 @@ describe('WaitingRoomToCarCatCPCPage', () => {
       expect(component.cpcQuestionProvider.getQuestionsBank).toHaveBeenCalledWith('LGV1');
       expect(component.cpcQuestionProvider.getQuestion5ByVehicleType).toHaveBeenCalledWith('LGV1');
       expect(store$.dispatch).toHaveBeenCalledWith(new PopulateCombination('LGV1'));
-      expect(store$.dispatch).toHaveBeenCalledWith(new PopulateQuestions([...questions, {}] as Question[]));
+      expect(store$.dispatch)
+        .toHaveBeenCalledWith(new PopulateQuestions([...questions, {}] as Question[]));
     });
   });
 

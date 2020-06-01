@@ -1,34 +1,35 @@
 import { Action } from '@ngrx/store';
-import { Answer, Question } from '@dvsa/mes-test-schema/categories/CPC';
+import { Question } from '@dvsa/mes-test-schema/categories/CPC';
+import { QuestionNumber } from '../../../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 
-export const POPULATE_QUESTION = '[CatCPC] Populate questions';
+export const POPULATE_QUESTIONS = '[CatCPC] Populate questions';
 
 export const ANSWER_TOGGLED = '[CatCPC] Answer toggled';
 
 export const POPULATE_ANSWER_SCORE = '[CatCPC] Populate answer score';
 
 export class PopulateQuestions implements Action {
-  readonly type = POPULATE_QUESTION;
+  readonly type = POPULATE_QUESTIONS;
 
   constructor(public payload: Question[]) {
   }
 }
 
-export class QuestionAnswerToggled implements Action {
+export class AnswerToggled implements Action {
   readonly type = ANSWER_TOGGLED;
 
-  constructor(public payload: Answer, public answerNumber: number) {
+  constructor(public questionNumber: QuestionNumber, public answerNumber: number) {
   }
 }
 
 export class PopulateAnswerScore implements Action {
   readonly type = POPULATE_ANSWER_SCORE;
 
-  constructor(public score: number) {
+  constructor(public questionNumber: QuestionNumber, public score: number) {
   }
 }
 
 export type Types =
-  | QuestionAnswerToggled
+  | AnswerToggled
   | PopulateQuestions
   | PopulateAnswerScore;

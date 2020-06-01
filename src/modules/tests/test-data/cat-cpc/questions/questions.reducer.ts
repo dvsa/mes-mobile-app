@@ -59,24 +59,25 @@ export function question5Reducer(
 const questionReducer = (
   state: Question = initialState,
   action: questionActionTypes.Types,
-  questionNumber: number,
+  questionNumber: QuestionNumber,
 ): Question | Question5 => {
   switch (action.type) {
-    case questionActionTypes.POPULATE_QUESTION:
+    case questionActionTypes.POPULATE_QUESTIONS:
       return action.payload[questionNumber];
     case questionActionTypes.ANSWER_TOGGLED:
-      return {
+      const key: string = getAnswerNumberKey(action.answerNumber);
+      return (action.questionNumber === questionNumber) ? {
         ...state,
-        [getAnswerNumberKey(action.answerNumber)]: {
-          label: action.payload.label,
-          selected: !action.payload.selected,
+        [key]: {
+          label: state[key].label,
+          selected: !state[key].selected,
         },
-      };
+      } : state;
     case questionActionTypes.POPULATE_ANSWER_SCORE:
-      return {
+      return (action.questionNumber === questionNumber) ? {
         ...state,
         score: action.score,
-      };
+      } : state;
     default:
       return state;
   }
