@@ -49,9 +49,6 @@ export class EndTestLinkComponent {
         this.navController.push(CAT_BE.DEBRIEF_PAGE);
         break;
       case TestCategory.C:
-      case TestCategory.C1:
-      case TestCategory.CE:
-      case TestCategory.C1E:
         this.navController.push(CAT_C.DEBRIEF_PAGE);
         break;
       case TestCategory.CCPC:
@@ -59,9 +56,6 @@ export class EndTestLinkComponent {
         this.navController.push(CAT_CPC.DEBRIEF_PAGE);
         break;
       case TestCategory.D:
-      case TestCategory.D1:
-      case TestCategory.DE:
-      case TestCategory.D1E:
         this.navController.push(CAT_D.DEBRIEF_PAGE);
         break;
       case TestCategory.F:
