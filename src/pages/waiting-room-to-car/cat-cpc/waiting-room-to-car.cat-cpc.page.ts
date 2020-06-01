@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { Configuration, Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { Observable } from 'rxjs';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
-import { Observable } from 'rxjs';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   PopulateVehicleConfiguration,
@@ -15,17 +19,15 @@ import {
   InterpreterAccompanimentToggled,
   SupervisorAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/cat-cpc/accompaniment.cat-cpc.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-cpc/vehicle-details.cat-cpc.reducer';
 import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
 import { getRegistrationNumber } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import {
   getInterpreterAccompaniment,
   getSupervisorAccompaniment,
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../providers/question/question';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_CPC } from '../../page-names.constants';
@@ -33,23 +35,26 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { getTestData } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.reducer';
 import { getCombination } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.selector';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PopulateCombination } from '../../../modules/tests/test-data/cat-cpc/combination/combination.action';
 import { CPCQuestionProvider } from '../../../providers/cpc-questions/cpc-questions';
-import { Configuration, Question } from '@dvsa/mes-test-schema/categories/CPC';
 import {
   getVehicleConfiguration,
 } from '../../../modules/tests/vehicle-details/cat-cpc/vehicle-details.cat-cpc.selector';
-import { Combination } from './temp/combos';
-import { PopulateQuestions } from '../../../modules/tests/test-data/cat-cpc/question/question.action';
+import {
+  PopulateQuestions,
+} from '../../../modules/tests/test-data/cat-cpc/questions/questions.action';
+import {
+  Combination,
+  CombinationCodes,
+} from '../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 
 interface WaitingRoomToCarPageState {
-  testCategory$: Observable<CategoryCode>;
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
   supervisorAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
-  combination$: Observable<string>;
+  combination$: Observable<CombinationCodes>;
   configuration$: Observable<Configuration>;
 }
 
@@ -89,9 +94,6 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
     ).subscribe((result: CategoryCode) => this.testCategory = result);
 
     this.pageState = {
-      testCategory$: currentTest$.pipe(
-        select(getTestCategory),
-      ),
       candidateName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
@@ -118,7 +120,8 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
         select(getVehicleConfiguration),
       ),
     };
-    this.combinations = this.questionProvider.getCombinations(this.testCategory as TestCategory);
+
+    this.combinations = this.cpcQuestionProvider.getCombinations(this.testCategory as TestCategory);
   }
 
   ionViewDidEnter(): void {
@@ -130,9 +133,11 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
   }
 
   combinationSelected(combination: string): void {
-    const questionsBank: Question[] = this.cpcQuestionProvider.getQuestionsBank(combination);
+    const questions: Question[] = this.cpcQuestionProvider.getQuestionsBank(combination);
+    const question5: Question5 = this.cpcQuestionProvider.getQuestion5ByVehicleType(combination);
+
     this.store$.dispatch(new PopulateCombination(combination));
-    this.store$.dispatch(new PopulateQuestions(questionsBank));
+    this.store$.dispatch(new PopulateQuestions([...questions, question5]));
   }
 
   supervisorAccompanimentToggled(): void {

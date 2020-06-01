@@ -1,6 +1,7 @@
 import { Question, Question5, TestData } from '@dvsa/mes-test-schema/categories/CPC';
+import { CombinationCodes } from '../../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 
-export const getCombination = (data: TestData): string => data.combination;
+export const getCombination = (data: TestData): CombinationCodes => data.combination as CombinationCodes;
 
 export const getQuestion1 = (data: TestData): Question => data.question1;
 

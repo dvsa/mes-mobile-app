@@ -7,7 +7,7 @@ import {
   CAT_D,
   CAT_A_MOD1,
   CAT_A_MOD2,
-  CAT_HOME_TEST,
+  CAT_HOME_TEST, CAT_CPC,
 } from '../../../pages/page-names.constants';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
@@ -49,9 +49,19 @@ export class EndTestLinkComponent {
         this.navController.push(CAT_BE.DEBRIEF_PAGE);
         break;
       case TestCategory.C:
+      case TestCategory.C1:
+      case TestCategory.CE:
+      case TestCategory.C1E:
         this.navController.push(CAT_C.DEBRIEF_PAGE);
         break;
+      case TestCategory.CCPC:
+      case TestCategory.DCPC:
+        this.navController.push(CAT_CPC.DEBRIEF_PAGE);
+        break;
       case TestCategory.D:
+      case TestCategory.D1:
+      case TestCategory.DE:
+      case TestCategory.D1E:
         this.navController.push(CAT_D.DEBRIEF_PAGE);
         break;
       case TestCategory.F:

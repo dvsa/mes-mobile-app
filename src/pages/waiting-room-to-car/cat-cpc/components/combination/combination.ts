@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Combination } from '../../temp/combos';
+import { Combination } from '../../../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 
 @Component({
   selector: 'combination',

@@ -1,3 +1,16 @@
+// @TODO: Move to schema definition
+export type CombinationCodes =
+  'LGV1' | 'LGV2' | 'LGV3' | 'LGV4' | 'LGV5' | 'LGV6' | 'LGV7' | 'LGV8' |
+  'PCV1' | 'PCV2' | 'PCV3' | 'PCV4' | 'PCV5' | 'PCV6' | 'PCV7' | 'PCV8';
+
+export enum QuestionNumber {
+  ONE = 0,
+  TWO = 1,
+  THREE = 2,
+  FOUR = 3,
+  FIVE = 4,
+}
+
 export interface Combination {
   code: string;
   questions: string[];

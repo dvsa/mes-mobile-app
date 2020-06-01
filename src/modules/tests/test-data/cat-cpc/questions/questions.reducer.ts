@@ -1,5 +1,6 @@
-import { Question } from '@dvsa/mes-test-schema/categories/CPC';
-import * as questionActionTypes from './question.action';
+import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
+import * as questionActionTypes from './questions.action';
+import { QuestionNumber } from '../../../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 
 const initialState: Question = {
   questionCode: null,
@@ -12,13 +13,18 @@ const initialState: Question = {
   answer4: null,
   score: null,
 };
-
-enum QuestionNumber {
-  ONE = 0,
-  TWO = 1,
-  THREE = 2,
-  FOUR = 3,
-}
+const additionalAnswers = {
+  answer5: null,
+  answer6: null,
+  answer7: null,
+  answer8: null,
+  answer9: null,
+  answer10: null,
+};
+const initialStateQ5: Question5 = {
+  ...initialState,
+  ...additionalAnswers,
+};
 
 export function question1Reducer(
   state: Question = initialState,
@@ -44,11 +50,17 @@ export function question4Reducer(
   return questionReducer(state, action, QuestionNumber.FOUR);
 }
 
-export const questionReducer = (
+export function question5Reducer(
+  state: Question5 = initialStateQ5,
+  action: questionActionTypes.Types): Question5 {
+  return questionReducer(state, action, QuestionNumber.FIVE) as Question5;
+}
+
+const questionReducer = (
   state: Question = initialState,
   action: questionActionTypes.Types,
-  questionNumber?: number,
-): Question => {
+  questionNumber: number,
+): Question | Question5 => {
   switch (action.type) {
     case questionActionTypes.POPULATE_QUESTION:
       return action.payload[questionNumber];

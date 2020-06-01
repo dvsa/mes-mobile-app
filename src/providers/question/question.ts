@@ -26,7 +26,6 @@ import showMeQuestionsCatHomeTestConstants
   from '../../shared/constants/show-me-questions/show-me-questions.cat-home-test.constants';
 import tellMeQuestionsCatHomeTestConstants
   from '../../shared/constants/tell-me-questions/tell-me-questions.cat-home-test.constants';
-import { Combination, questionCombinations } from '../../pages/waiting-room-to-car/cat-cpc/temp/combos';
 
 @Injectable()
 export class QuestionProvider {
@@ -120,15 +119,6 @@ export class QuestionProvider {
         return safetyQuestionsCatDConstants;
       default:
         return [];
-    }
-  }
-
-  getCombinations = (testCategory: TestCategory): Combination[] => {
-    switch (testCategory) {
-      case TestCategory.CCPC:
-        return questionCombinations.filter((questions: Combination) => questions.code.includes('LGV'));
-      case TestCategory.DCPC:
-        return questionCombinations.filter((questions: Combination) => questions.code.includes('PCV'));
     }
   }
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Question } from '@dvsa/mes-test-schema/categories/CPC';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
 
-import { lgvQuestions } from '../../shared/constants/cpc-questions/cpc-lgv-questions.constants';
-import { pcvQuestions } from '../../shared/constants/cpc-questions/cpc-pcv-questions.constants';
+import { lgvQuestion5, lgvQuestions } from '../../shared/constants/cpc-questions/cpc-lgv-questions.constants';
+import { pcvQuestion5, pcvQuestions } from '../../shared/constants/cpc-questions/cpc-pcv-questions.constants';
 import {
   Combination,
   questionCombinations,
@@ -11,7 +12,8 @@ import {
 @Injectable()
 export class CPCQuestionProvider {
 
-  constructor() {}
+  constructor() {
+  }
 
   private getQuestionCombination = (combinationCode: string): Combination => {
     return questionCombinations.find((question: Combination) => question.code === combinationCode);
@@ -21,10 +23,25 @@ export class CPCQuestionProvider {
     return combinationCode.includes('LGV') ? lgvQuestions : pcvQuestions;
   }
 
+  getQuestion5ByVehicleType = (combinationCode: string): Question5 => {
+    return combinationCode.includes('LGV') ? lgvQuestion5 : pcvQuestion5;
+  }
+
   getQuestionsBank = (combinationCode: string): Question[] => {
     const questionCombination: string[] = this.getQuestionCombination(combinationCode).questions;
 
     return this.getQuestionsByVehicleType(combinationCode)
       .filter((item: Question) => questionCombination.includes(item.questionCode));
+  }
+
+  getCombinations = (testCategory: TestCategory): Combination[] => {
+    switch (testCategory) {
+      case TestCategory.CCPC:
+        return questionCombinations.filter((questions: Combination) => questions.code.includes('LGV'));
+      case TestCategory.DCPC:
+        return questionCombinations.filter((questions: Combination) => questions.code.includes('PCV'));
+      default:
+        return [];
+    }
   }
 }
