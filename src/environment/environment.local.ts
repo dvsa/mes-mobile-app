@@ -78,6 +78,11 @@ export const environment: LocalEnvironmentFile = {
         to: null,
       },
       {
+        testCategory: 'DCPC',
+        from: '2019-01-01',
+        to: null,
+      },
+      {
         testCategory: 'EUAM1',
         from: '2019-01-01',
         to: null,
