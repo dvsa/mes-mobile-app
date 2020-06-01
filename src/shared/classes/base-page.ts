@@ -14,15 +14,15 @@ export abstract class BasePageComponent {
   }
 
   ionViewWillEnter() {
-    this.authenticationProvider.isAuthenticated().then(
-      (isAuthenticated) => {
-        if (this.loginRequired && this.isIos() && !isAuthenticated) {
-          this.navController.setRoot(LOGIN_PAGE);
-          return false;
-        }
-        return true;
-      },
-    );
+    if (this.loginRequired && this.isIos()) {
+      this.authenticationProvider.isAuthenticated().then(
+        (isAuthenticated) => {
+          if (!isAuthenticated) {
+            this.navController.setRoot(LOGIN_PAGE);
+          }
+        },
+      );
+    }
   }
 
   isIos(): boolean {

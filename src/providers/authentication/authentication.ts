@@ -81,6 +81,9 @@ export class AuthenticationProvider {
   }
 
   public async isAuthenticated(): Promise<boolean> {
+    if (this.isInUnAuthenticatedMode()) {
+      return Promise.resolve(true);
+    }
     return await this.ionicAuth.isAuthenticated();
   }
 
