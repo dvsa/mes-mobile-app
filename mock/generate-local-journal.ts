@@ -1270,7 +1270,7 @@ const localJournal: ExaminerWorkSchedule = {
       slotDetail: {
         duration: 57,
         slotId: 1019,
-        start: `${today}T18:55:00`,
+        start: `${today}T19:30:00`,
       },
       testCentre: {
         centreId: 54321,
@@ -1338,7 +1338,7 @@ const localJournal: ExaminerWorkSchedule = {
       slotDetail: {
         duration: 57,
         slotId: 1020,
-        start: `${today}T18:55:00`,
+        start: `${today}T20:25:00`,
       },
       testCentre: {
         centreId: 54321,
