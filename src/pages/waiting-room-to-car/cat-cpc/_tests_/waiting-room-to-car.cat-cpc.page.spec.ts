@@ -34,7 +34,7 @@ import {
   VehicleRegistrationChanged,
 } from '../../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 
-fdescribe('WaitingRoomToCarCatCPCPage', () => {
+describe('WaitingRoomToCarCatCPCPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatCPCPage>;
   let component: WaitingRoomToCarCatCPCPage;
   let store$: Store<StoreModel>;
