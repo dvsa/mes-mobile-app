@@ -73,6 +73,11 @@ export const environment: LocalEnvironmentFile = {
         to: null,
       },
       {
+        testCategory: 'CCPC',
+        from: '2019-01-01',
+        to: null,
+      },
+      {
         testCategory: 'EUAM1',
         from: '2019-01-01',
         to: null,

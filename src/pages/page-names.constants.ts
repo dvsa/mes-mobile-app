@@ -156,3 +156,19 @@ export const CAT_ADI_PART2 = {
   VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatADIPart2Page',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatADIPart2Page',
 };
+
+export const CAT_CPC = {
+  REKEY_UPLOAD_OUTCOME_PAGE,
+  BACK_TO_OFFICE_PAGE: 'BackToOfficeCatCPCPage',
+  COMMUNICATION_PAGE: 'CommunicationCatCPCPage',
+  DEBRIEF_PAGE: 'DebriefCatCPCPage',
+  OFFICE_PAGE: 'OfficeCatCPCPage',
+  PASS_FINALISATION_PAGE: 'PassFinalisationCatCPCPage',
+  TEST_REPORT_PAGE: 'TestReportCatCPCPage',
+  WAITING_ROOM_PAGE: 'WaitingRoomCatCPCPage',
+  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatCPCPage',
+  REKEY_REASON_PAGE: 'RekeyReasonCatADIPart2Page',
+  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatCPCPage',
+  VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatCPCPage',
+  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatCPCPage',
+};
