@@ -79,6 +79,7 @@ class WaitingRoomToCarPage extends Page {
   showMeQuestions(questions, questionResult) {
     const showMeQuestionsArray = [questions, questionResult];
     const elements = this.getVehicleChecksQuestions();
+    let count = 0;
     elements.each((element, index) => {
       this.clickElement(element);
       this.clickVehicleCheck(showMeQuestionsArray, index);
@@ -86,11 +87,12 @@ class WaitingRoomToCarPage extends Page {
       // TempPage.clickElement(submitDialog);
       this.clickSubmitButton();
       let resultFromQuestions;
-      if (questionResult === true) {
+      if (questionResult === true || questionResult[count] === 'false') {
         resultFromQuestions = 'vehicleChecksCorrect';
       } else {
         resultFromQuestions = 'vehicleChecksFault';
       }
+      count = count + 1;
       this.clickVehicleAnswer(resultFromQuestions, index);
     });
   }
@@ -114,7 +116,7 @@ class WaitingRoomToCarPage extends Page {
   standardUserJourney(withDriverFault: boolean, manualTransmission: boolean, tellMeQuestion: string) {
     this.selectTellMeQuestion(tellMeQuestion);
 
-    if (withDriverFault) {
+    if (!withDriverFault) {
       this.clickTellMeFault();
     } else {
       this.clickTellMeCorrect();

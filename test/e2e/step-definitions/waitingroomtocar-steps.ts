@@ -45,11 +45,11 @@ When('I select a tell me question', () => {
 });
 
 When('I complete the waiting room to car page', () => {
-  WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, false, true, 'T5 - Headlights & tail lights');
+  WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, true, true, 'T5 - Headlights & tail lights');
 });
 
 When('I complete the waiting room to car page with a tell me driver fault', () => {
-  WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, true, true, 'T1 - Brakes');
+  WaitingRoomToCarPage.completeWaitingRoomPage(this.testCategory, false, true, 'T1 - Brakes');
 });
 
 When('I complete the waiting room to car page with automatic transmission', () => {
