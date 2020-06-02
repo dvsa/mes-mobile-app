@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+        <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
+        <ion-buttons end>
+            <button ion-button id="end-test-button">End test</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content no-padding no-bounce>
+
+    <module-assessment [combinationCode]="pageState.combinationCode$ | async"></module-assessment>
+
+    <question-card [question]="pageState.question1$ | async"></question-card>
+
+</ion-content>
+
+<question-footer [questionCode]="(pageState.question1$ | async)?.questionCode"
+                 [combination]="pageState.combinationCode$ | async"></question-footer>

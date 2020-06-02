@@ -1,0 +1,10 @@
+<ion-row>
+    <ion-col>
+        <input type="checkbox"
+               class="gds-checkbox"
+               [id]="getID(answerNumber)">
+        <label [for]="getID(answerNumber)" [id]="getLabel(answerNumber)" margin-left>
+            {{answer.label}}
+        </label>
+    </ion-col>
+</ion-row>

@@ -64,8 +64,7 @@ export class TestResultProvider {
     }
   }
 
-  private calculateCatAdiPart2TestResult = (testData: CatADI2UniqueTypes.TestData |
-    CatADI2UniqueTypes.TestData): Observable<ActivityCode> => {
+  private calculateCatAdiPart2TestResult = (testData: CatADI2UniqueTypes.TestData): Observable<ActivityCode> => {
 
     if (this.faultCountProvider.getDangerousFaultSumCount(TestCategory.ADI2, testData) > 0) {
       return of(ActivityCodes.FAIL);

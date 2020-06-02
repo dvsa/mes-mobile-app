@@ -1,0 +1,14 @@
+<ion-footer>
+    <ion-row>
+        <ion-col text-center *ngIf="showPreviousPageButton(combination, questionCode)">
+            <button ion-button block id="previous-page">
+                Previous Question
+            </button>
+        </ion-col>
+        <ion-col text-center *ngIf="showNextPageButton(combination, questionCode)">
+            <button ion-button block id="next-page">
+                Next Question
+            </button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

@@ -23,6 +23,12 @@ export class CPCQuestionProvider {
     return combinationCode.includes('LGV') ? lgvQuestions : pcvQuestions;
   }
 
+  getQuestionNumber = (combinationCode: string, questionCode: string): number => {
+    const { questions } = this.getQuestionCombination(combinationCode);
+
+    return questions.findIndex((question: string) => question === questionCode);
+  }
+
   getQuestion5ByVehicleType = (combinationCode: string): Question5 => {
     return combinationCode.includes('LGV') ? lgvQuestion5 : pcvQuestion5;
   }
