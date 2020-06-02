@@ -3,6 +3,7 @@ export enum legalRequirementsLabels {
   normalStart2 = 'NS (normal start)',
   angledStart = 'AS (angled start)',
   angledStartControlledStop = 'AS/CS (angled start/ controlled stop)',
+  controlledStop = 'Controlled Stop',
   uphillStart = 'UH (uphill start)',
   downhillStart = 'DH (downhill start)',
   hillStart = 'HS / DS (hill or designated start)',
