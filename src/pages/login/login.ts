@@ -138,7 +138,7 @@ export class LoginPage extends BasePageComponent {
         } else {
           this.dispatchLog(`user ${examiner} not authorised: Could not get token`);
         }
-        this.authenticationProvider.logout();
+        await this.authenticationProvider.logout();
       }
       this.appInitError = error;
       console.log(error);

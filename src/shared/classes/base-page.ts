@@ -29,17 +29,17 @@ export abstract class BasePageComponent {
     return this.platform.is('ios');
   }
 
-  logout() {
+  async logout() {
     if (this.isIos()) {
-      this.authenticationProvider.logout()
-        .then(
-          () => {
-            this.navController.setRoot(LOGIN_PAGE, {
-              hasLoggedOut: true,
-            });
-          },
-        );
+      try {
+        await this.authenticationProvider.logout();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        await this.navController.setRoot(LOGIN_PAGE, {
+          hasLoggedOut: true,
+        });
+      }
     }
   }
-
 }
