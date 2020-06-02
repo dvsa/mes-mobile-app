@@ -151,7 +151,7 @@ describe('Authentication', () => {
     describe('loadEmployeeName', () => {
       it('should load the employee name from the token', async () => {
         const expectedName = 'A N Examiner';
-        spyOn(authenticationProvider, 'getToken').and.returnValue(Promise.resolve({
+        spyOn(authenticationProvider.ionicAuth, 'getIdToken').and.returnValue(Promise.resolve({
           localemployeenamekey: expectedName,
         }));
         const actualName = await authenticationProvider.loadEmployeeName();
