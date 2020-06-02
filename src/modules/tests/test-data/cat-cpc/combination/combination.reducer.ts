@@ -1,10 +1,10 @@
 import * as combinationActionTypes from './combination.action';
+import { CombinationCodes } from '../../../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 
-const initialState: string = null;
+const initialState: CombinationCodes = null;
 
-// @TODO - Create Combination ENUM instead of using generic string
 export function combinationReducer(
-  state: string = initialState,
+  state: CombinationCodes = initialState,
   action: combinationActionTypes.Types): string {
   switch (action.type) {
     case combinationActionTypes.POPULATE_COMBINATION:

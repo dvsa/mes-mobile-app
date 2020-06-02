@@ -167,7 +167,7 @@ export const CAT_CPC = {
   TEST_REPORT_PAGE: 'TestReportCatCPCPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatCPCPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatCPCPage',
-  REKEY_REASON_PAGE: 'RekeyReasonCatADIPart2Page',
+  REKEY_REASON_PAGE: 'RekeyReasonCatCPCPage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatCPCPage',
   VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatCPCPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatCPCPage',

@@ -380,6 +380,9 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.C1:
       case TestCategory.C:
         return CAT_C.PASS_FINALISATION_PAGE;
+      case TestCategory.CCPC:
+      case TestCategory.DCPC:
+        return CAT_CPC.PASS_FINALISATION_PAGE;
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
@@ -416,6 +419,9 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.C1:
       case TestCategory.C:
         return CAT_C.NON_PASS_FINALISATION_PAGE;
+      case TestCategory.CCPC:
+      case TestCategory.DCPC:
+        return CAT_CPC.NON_PASS_FINALISATION_PAGE;
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
@@ -452,6 +458,9 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.C1:
       case TestCategory.C:
         return CAT_C.OFFICE_PAGE;
+      case TestCategory.CCPC:
+      case TestCategory.DCPC:
+        return CAT_CPC.OFFICE_PAGE;
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:

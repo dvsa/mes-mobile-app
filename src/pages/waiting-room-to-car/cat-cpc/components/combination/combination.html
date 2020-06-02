@@ -1,0 +1,30 @@
+<ion-row class="mes-validated-row mes-row-separator"
+         id="combination-dropdown" nowrap [formGroup]="formGroup">
+    <div class="validation-bar" [class.ng-invalid]="invalid"></div>
+    <ion-col class="component-label" col-32 align-self-center>
+        <label>Combination</label>
+    </ion-col>
+    <ion-col col-63 align-self-center padding-left>
+        <ion-row class="spacing-row"></ion-row>
+        <ion-row>
+            <ion-select okText="Submit"
+                        cancelText="Cancel"
+                        placeholder="Select a combination"
+                        formControlName="combination"
+                        [class.ng-invalid]="invalid"
+                        (ionChange)="combinationChanged($event)"
+                        [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}">
+                <ion-option *ngFor="let combination of combinations"
+                            [value]="combination.code">
+                    {{combination.code}}
+                </ion-option>
+            </ion-select>
+        </ion-row>
+        <ion-row class="validation-message-row" align-items-center>
+            <div class="validation-text" [class.ng-invalid]="invalid"
+                 id="combination-validation-text">
+                Select a combination
+            </div>
+        </ion-row>
+    </ion-col>
+</ion-row>
