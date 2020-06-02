@@ -132,8 +132,6 @@ export class WaitingRoomCatCPCPage extends BasePageComponent implements OnInit {
       select(getCurrentTest),
     );
 
-    console.log(currentTest$);
-
     this.pageState = {
       insuranceDeclarationAccepted$: currentTest$.pipe(
         select(getPreTestDeclarations),

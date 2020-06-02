@@ -33,7 +33,7 @@ export function testDataCatCPCReducer(
     question4: question4Reducer,
     question5: question5Reducer,
     totalPercent: totalPercentageReducer,
-  })(state as TestData, action);
+  })(state as Required<TestData>, action);
 }
 
 export const getTestData = createFeatureSelector<TestData>('testData');
