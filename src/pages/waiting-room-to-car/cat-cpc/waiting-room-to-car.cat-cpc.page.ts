@@ -50,6 +50,7 @@ import {
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { PopulateTestScore } from '../../../modules/tests/test-data/cat-cpc/overall-score/total-percentage.action';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -183,12 +184,14 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
   // @TODO - remove method - dev purposes only
   async passTest() {
     this.populateQuestionsScores('LGV7', ActivityCodes.PASS);
+    this.store$.dispatch(new PopulateTestScore(100));
     await this.navController.push(CAT_CPC.DEBRIEF_PAGE);
   }
 
   // @TODO - remove method - dev purposes only
   async failTest() {
     this.populateQuestionsScores('LGV7', ActivityCodes.FAIL);
+    this.store$.dispatch(new PopulateTestScore(0));
     await this.navController.push(CAT_CPC.DEBRIEF_PAGE);
   }
 
