@@ -1,7 +1,4 @@
-import { Component, Input } from '@angular/core';
-
-import { CPCQuestionProvider } from '../../../../../providers/cpc-questions/cpc-questions';
-import { CombinationCodes } from '../../../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'question-footer',
@@ -9,25 +6,33 @@ import { CombinationCodes } from '../../../../../shared/constants/cpc-questions/
 })
 export class QuestionFooterComponent {
 
-  @Input()
-  combination: CombinationCodes;
+  @Output()
+  questionPageChange = new EventEmitter();
 
   @Input()
-  questionCode: string;
+  questionNumber: number;
 
-  constructor(private cpcQuestionProvider: CPCQuestionProvider) {
+  constructor() {
   }
 
-  showPreviousPageButton = (combination: CombinationCodes, questionCode: string): boolean => {
-    const index = this.cpcQuestionProvider.getQuestionNumber(combination, questionCode);
+  showPreviousPageButton = (): boolean => this.questionNumber > 1;
 
-    return index > 0;
+  showNextPageButton = (): boolean => this.questionNumber < 5;
+
+  showViewSummaryButton = (): boolean => this.questionNumber === 5;
+
+  goToPreviousQuestion = (): void => {
+    const questionNumber: number = this.questionNumber - 1;
+    this.questionPageChange.emit(questionNumber);
   }
 
-  showNextPageButton = (combination: CombinationCodes, questionCode: string): boolean => {
-    const index = this.cpcQuestionProvider.getQuestionNumber(combination, questionCode);
+  goToNextQuestion = () => {
+    const questionNumber: number = this.questionNumber + 1;
+    this.questionPageChange.emit(questionNumber);
+  }
 
-    return index < 3;
+  goToSummary = (): void => {
+    console.log('goToSummary');
   }
 
 }

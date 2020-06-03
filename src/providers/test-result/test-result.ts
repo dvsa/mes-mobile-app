@@ -19,6 +19,7 @@ import { CatD1UniqueTypes } from '@dvsa/mes-test-schema/categories/D1';
 import { CatDEUniqueTypes } from '@dvsa/mes-test-schema/categories/DE';
 import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 import { HomeTestData } from '../../pages/office/cat-home-test/office.cat-home-test.page';
+import { TestData } from '@dvsa/mes-test-schema/categories/CPC';
 
 @Injectable()
 export class TestResultProvider {
@@ -38,6 +39,9 @@ export class TestResultProvider {
       case TestCategory.CE:
       case TestCategory.C1E:
         return this.calculateCatCAndSubCategoryTestResult(category, testData);
+      case TestCategory.CCPC:
+      case TestCategory.DCPC:
+        return this.calculateCatCPCTestResult(testData as TestData);
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
@@ -209,6 +213,22 @@ export class TestResultProvider {
       return of(ActivityCodes.FAIL);
     }
 
+    return of(ActivityCodes.PASS);
+  }
+
+  private calculateCatCPCTestResult = (testData: TestData): Observable<ActivityCode> => {
+    const { question1, question2, question3, question4, question5 } = testData;
+
+    const scores: number[] = [question1.score, question2.score, question3.score, question4.score, question5.score];
+
+    // fail if any score is less than 15
+    if (scores.some((score: number) => score < 15)) {
+      return of(ActivityCodes.FAIL);
+    }
+    // fail if at least one score is not 20
+    if (scores.indexOf(20) === -1) {
+      return of(ActivityCodes.FAIL);
+    }
     return of(ActivityCodes.PASS);
   }
 }

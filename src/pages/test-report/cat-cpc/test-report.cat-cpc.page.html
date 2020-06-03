@@ -8,12 +8,47 @@
 </ion-header>
 
 <ion-content no-padding no-bounce>
-
     <module-assessment [combinationCode]="pageState.combinationCode$ | async"></module-assessment>
 
-    <question-card [question]="pageState.question1$ | async"></question-card>
+    <div *ngIf="pageNumber === 1">
+        <question-card
+                (answerPayload)="populateAnswer($event)"
+                [question]="pageState.question1$ | async"
+                [questionNumber]="pageNumber">
+        </question-card>
+    </div>
+
+    <div *ngIf="pageNumber === 2">
+        <question-card
+                (answerPayload)="populateAnswer($event)"
+                [question]="pageState.question2$ | async"
+                [questionNumber]="pageNumber">
+        </question-card>
+    </div>
+
+    <div *ngIf="pageNumber === 3">
+        <question-card
+                (answerPayload)="populateAnswer($event)"
+                [question]="pageState.question3$ | async"
+                [questionNumber]="pageNumber">
+        </question-card>
+    </div>
+
+    <div *ngIf="pageNumber === 4">
+        <question-card
+                (answerPayload)="populateAnswer($event)"
+                [question]="pageState.question4$ | async"
+                [questionNumber]="pageNumber">
+        </question-card>
+    </div>
+
+    <div *ngIf="pageNumber === 5">
+        <question-five-card
+                (answerPayload)="populateAnswer($event)"
+                [question]="pageState.question5$ | async">
+        </question-five-card>
+    </div>
 
 </ion-content>
 
-<question-footer [questionCode]="(pageState.question1$ | async)?.questionCode"
-                 [combination]="pageState.combinationCode$ | async"></question-footer>
+<question-footer [questionNumber]="pageNumber" (questionPageChange)="questionPageChanged($event)"></question-footer>

@@ -1,0 +1,31 @@
+question-score {
+  #question-score-label, #total-label, {
+    font-weight: normal;
+  }
+
+  #percentage-label {
+    font-weight: normal;
+  }
+
+  div, h2, {
+    display: inline;
+  }
+
+  .align-col-right {
+    text-align: right;
+  }
+
+  #score-value {
+    font-size: 30px;
+    border-radius: 6px;
+    padding: 6px !important;;
+    max-width: 40px;
+    max-height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    display: inline;
+    position: static;
+    background-color: #e2e2f9;
+  }
+
+}

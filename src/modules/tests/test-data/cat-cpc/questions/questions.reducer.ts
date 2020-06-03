@@ -65,15 +65,14 @@ const questionReducer = (
     case questionActionTypes.POPULATE_QUESTIONS:
       return action.payload[questionNumber];
     case questionActionTypes.ANSWER_TOGGLED:
-      const key: string = getAnswerNumberKey(action.answerNumber);
       return (action.questionNumber === questionNumber) ? {
         ...state,
-        [key]: {
-          label: state[key].label,
-          selected: !state[key].selected,
+        [getAnswerNumberKey(action.answerNumber)]: {
+          selected: !action.toggled,
+          label: state[getAnswerNumberKey(action.answerNumber)].label,
         },
       } : state;
-    case questionActionTypes.POPULATE_ANSWER_SCORE:
+    case questionActionTypes.POPULATE_QUESTION_SCORE:
       return (action.questionNumber === questionNumber) ? {
         ...state,
         score: action.score,
@@ -83,4 +82,4 @@ const questionReducer = (
   }
 };
 
-const getAnswerNumberKey = (questionNumber: number): string => `answer${questionNumber}`;
+const getAnswerNumberKey = (questionNumber: string): string => `answer${questionNumber}`;

@@ -6,7 +6,7 @@ export const POPULATE_QUESTIONS = '[CatCPC] Populate questions';
 
 export const ANSWER_TOGGLED = '[CatCPC] Answer toggled';
 
-export const POPULATE_ANSWER_SCORE = '[CatCPC] Populate answer score';
+export const POPULATE_QUESTION_SCORE = '[CatCPC] Populate question score';
 
 export class PopulateQuestions implements Action {
   readonly type = POPULATE_QUESTIONS;
@@ -17,13 +17,12 @@ export class PopulateQuestions implements Action {
 
 export class AnswerToggled implements Action {
   readonly type = ANSWER_TOGGLED;
-
-  constructor(public questionNumber: QuestionNumber, public answerNumber: number) {
+  constructor(public toggled: boolean, public questionNumber: QuestionNumber, public answerNumber: string) {
   }
 }
 
-export class PopulateAnswerScore implements Action {
-  readonly type = POPULATE_ANSWER_SCORE;
+export class PopulateQuestionScore implements Action {
+  readonly type = POPULATE_QUESTION_SCORE;
 
   constructor(public questionNumber: QuestionNumber, public score: number) {
   }
@@ -32,4 +31,4 @@ export class PopulateAnswerScore implements Action {
 export type Types =
   | AnswerToggled
   | PopulateQuestions
-  | PopulateAnswerScore;
+  | PopulateQuestionScore;

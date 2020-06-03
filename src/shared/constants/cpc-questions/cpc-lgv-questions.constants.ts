@@ -10,19 +10,19 @@ export const lgvQuestions: CPCQuestion[] = [
       'a) the checks you\'d carry out to make sure the vehicle isn\'t over-loaded',
     ],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Check paperwork relating to the load (Or check load)',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Check vehicle design weight (VI Plate).',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Tyre checks for signs of bulging',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Further check by taking vehicle to nearest weigh bridge',
     },
     score: null,
@@ -36,20 +36,20 @@ export const lgvQuestions: CPCQuestion[] = [
       'a) Where might you consider parking it?',
     ],
     answer1: {
-      selected: null,
+      selected: false,
       // tslint:disable-next-line:max-line-length
       label: 'Only park in secure, well lit vehicle parks. Where possible, park with the rear doors against a wall or backed up to another vehicle',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Remove keys and lock doors ',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Activate or explain the use of any other security features',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Walk around security check. For example, check the seals',
     },
     score: null,
@@ -61,19 +61,19 @@ export const lgvQuestions: CPCQuestion[] = [
     subtitle: 'You\'ve parked at a border crossing and left the vehicle unattended. Show me what checks you’d make before driving the vehicle through customs.',
     additionalItems: [],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Check external compartments',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Check under and on top (visual if possible) of the vehicle',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Check inside the cab and load security. For example, check the trailer seals and curtains',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Check fuel cap in place (not tampered with). Visual check',
     },
     score: null,
@@ -88,19 +88,19 @@ export const lgvQuestions: CPCQuestion[] = [
       'c) If you are involved in a railway bridge strike what action should you take? ',
     ],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Check the vehicle height sign matches the vehicle or load',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Plan a suitable route / look out for any height restrictions',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Measure the highest point of the vehicle or load',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Call the police and railway authority using the bridge ID plate ',
     },
     score: null,
@@ -114,19 +114,19 @@ export const lgvQuestions: CPCQuestion[] = [
       'b) if you\'re still in doubt, what else you could you do',
     ],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Check paperwork relating to the load (or check load)',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Check vehicle design weight (VI Plate) ',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Tyre checks for signs of bulging',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Further check by taking vehicle to nearest weigh bridge',
     },
     score: null,
@@ -138,19 +138,19 @@ export const lgvQuestions: CPCQuestion[] = [
     subtitle: 'You\'ve had a comfort break just before boarding a cross channel ferry. Show me what checks you\'d make to this vehicle before driving through customs.',
     additionalItems: [''],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Check external compartments',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Check under and on top (visual, if possible) of the vehicle ',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Check inside the cab and load security. For example, check the trailer seals and curtains',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Check fuel cap in place (not tampered with). Visual check',
     },
     score: null,
@@ -166,19 +166,19 @@ export const lgvQuestions: CPCQuestion[] = [
       'd) how you\'d release the restraining device.',
     ],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Shows by pointing to the correct distribution area (against the headboard)',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Selects correct restraint item - chain / tensioner',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Demonstrates competence in use of chain / tensioner',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Demonstrates how to release the restraining device',
     },
     score: null,
@@ -192,19 +192,19 @@ export const lgvQuestions: CPCQuestion[] = [
       'b) any checks you could make to identify air leaks',
     ],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Emptying the air tanks by pumping the footbrake',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Restarting the engine and making sure the compressor recharges the system',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Stop the engine, apply footbrake and listen for leaks',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Physical check of the air system to make sure air lines are serviceable',
     },
     score: null,
@@ -217,19 +217,19 @@ export const lgvQuestions: CPCQuestion[] = [
       'a) Show me what checks you\'d make to this vehicle\'s fuel system',
       'b) Explain what precautions you\'d take to make sure you don\'t run out of fuel'],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Checks enough fuel for the first stage of the journey (instrument check)',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Checks fuel tank and mountings for condition',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Vehicle fuel card, or means to buy fuel on the journey if necessary',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Checks fuel fill level and fuel cap security',
     },
     score: null,
@@ -243,19 +243,19 @@ export const lgvQuestions: CPCQuestion[] = [
       'b) which is the appropriate fire extinguisher to use on this fire',
     ],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Stop as quickly and safely as possible on the hard shoulder. ',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Identifies correct extinguisher to use on electrical system fire (CO2 / Powder) (Refer to photograph)',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Awareness of need to contact emergency services',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Isolate the vehicle (disconnect electric supply)',
     },
     score: null,
@@ -270,19 +270,19 @@ export const lgvQuestions: CPCQuestion[] = [
       'c) if you\'re still in doubt, what else you could do',
     ],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Check vehicle design weight (VI Plate)',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Check paperwork relating to the load (or check load)',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Tyre checks for signs of bulging',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Further check by taking vehicle to nearest weigh bridge',
     },
     score: null,
@@ -294,19 +294,19 @@ export const lgvQuestions: CPCQuestion[] = [
     subtitle: 'You\'ve been given a different vehicle to drive for the day. Show me all of the practical and visual safety checks you\'d make before driving the vehicle. ',
     additionalItems: [],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Daily walkround check',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Is aware of vehicle height (sign check), width and weight',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Cockpit drill to include warning system checks',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Enough fuel for the journey',
     },
     score: null,
@@ -323,19 +323,19 @@ export const lgvQuestions: CPCQuestion[] = [
       'd) how you\'d release the restraining device',
     ],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Load to be placed up against the head board',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Selects correct restraint item - load tensioning bar/webbing straps',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Demonstrates competence in use of load tensioning bar/webbing straps',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Demonstrates how to release the restraining device',
     },
     score: null,
@@ -347,19 +347,19 @@ export const lgvQuestions: CPCQuestion[] = [
     subtitle: 'You\'ve parked at the docks and, following a rest break, you suspect your vehicle may have been tampered with. Show me what checks you\'d make around and inside your vehicle before continuing your journey.',
     additionalItems: [],
     answer1: {
-      selected: null,
+      selected: false,
       label: 'Check external compartments',
     },
     answer2: {
-      selected: null,
+      selected: false,
       label: 'Check under and on top (visual if possible) of the vehicle',
     },
     answer3: {
-      selected: null,
+      selected: false,
       label: 'Check inside the cab and load security. For example, check the trailer seals and curtains',
     },
     answer4: {
-      selected: null,
+      selected: false,
       label: 'Check fuel cap in place (not tampered with). Visual check',
     },
     score: null,
@@ -372,43 +372,43 @@ export const lgvQuestion5: Question5 = {
   subtitle: 'Show me and explain the daily safety checks you\'d make to this vehicle before driving on the road.',
   additionalItems: [],
   answer1: {
-    selected: null,
+    selected: false,
     label: 'Brakes',
   },
   answer2: {
-    selected: null,
+    selected: false,
     label: 'Horn',
   },
   answer3: {
-    selected: null,
+    selected: false,
     label: 'Exhaust system(s)',
   },
   answer4: {
-    selected: null,
+    selected: false,
     label: 'Lights/Reflectors',
   },
   answer5: {
-    selected: null,
+    selected: false,
     label: 'Mirrors',
   },
   answer6: {
-    selected: null,
+    selected: false,
     label: 'Instrument panel warning lights',
   },
   answer7: {
-    selected: null,
+    selected: false,
     label: 'Tyres / Wheel fixings ',
   },
   answer8: {
-    selected: null,
+    selected: false,
     label: 'Height marker',
   },
   answer9: {
-    selected: null,
+    selected: false,
     label: 'Wipers / Washers',
   },
   answer10: {
-    selected: null,
+    selected: false,
     label: 'Air leaks',
   },
   score: null,

@@ -11,16 +11,20 @@ import { AdditionalItemsComponent } from './additional-items/additional-items';
 import { QuestionTitleComponent } from './question-title/question-title';
 import { QuestionSubtitleComponent } from './question-subtitle/question-subtitle';
 import { QuestionAnswerComponent } from './question-answer/question-answer';
+import { QuestionFiveCardComponent } from './question-five-card/question-five-card';
+import { QuestionScoreComponent } from './question-score/question-score';
 
 @NgModule({
   declarations: [
     ModuleAssessmentComponent,
     QuestionCardComponent,
+    QuestionFiveCardComponent,
     QuestionFooterComponent,
     AdditionalItemsComponent,
     QuestionTitleComponent,
     QuestionSubtitleComponent,
     QuestionAnswerComponent,
+    QuestionScoreComponent,
   ],
   imports: [
     CommonModule,
@@ -32,11 +36,13 @@ import { QuestionAnswerComponent } from './question-answer/question-answer';
   exports: [
     ModuleAssessmentComponent,
     QuestionCardComponent,
+    QuestionFiveCardComponent,
     QuestionFooterComponent,
     AdditionalItemsComponent,
     QuestionTitleComponent,
     QuestionSubtitleComponent,
     QuestionAnswerComponent,
+    QuestionScoreComponent,
   ],
 })
 export class TestReportCatAMod1ComponentsModule { }

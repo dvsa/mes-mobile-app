@@ -2,8 +2,12 @@
     <ion-col>
         <input type="checkbox"
                class="gds-checkbox"
+               (change)="answerChanged()"
+               [checked]="answer.selected"
                [id]="getID(answerNumber)">
-        <label [for]="getID(answerNumber)" [id]="getLabel(answerNumber)" margin-left>
+        <label [for]="getID(answerNumber)"
+               [id]="getLabel(answerNumber)"
+               margin-left>
             {{answer.label}}
         </label>
     </ion-col>

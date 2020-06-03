@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
+import { Question, Question5, TestData } from '@dvsa/mes-test-schema/categories/CPC';
 
 import { lgvQuestion5, lgvQuestions } from '../../shared/constants/cpc-questions/cpc-lgv-questions.constants';
 import { pcvQuestion5, pcvQuestions } from '../../shared/constants/cpc-questions/cpc-pcv-questions.constants';
 import {
   Combination,
-  questionCombinations,
+  questionCombinations, QuestionNumber,
 } from '../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 
 @Injectable()
@@ -21,6 +21,37 @@ export class CPCQuestionProvider {
 
   private getQuestionsByVehicleType = (combinationCode: string): Question[] => {
     return combinationCode.includes('LGV') ? lgvQuestions : pcvQuestions;
+  }
+
+  getQuestionScore = (question: Question | Question5, questionNumber: QuestionNumber): number => {
+    let scorePerAnswer: number = 5;
+
+    if (questionNumber === QuestionNumber.FIVE) {
+      scorePerAnswer = 2;
+    }
+
+    const result: number = Object.keys(question).reduce((sum: number, key: string): number => {
+      if (key.indexOf('answer') > -1) {
+        return sum + (question[key].selected ? scorePerAnswer : 0);
+      }
+      return sum;
+    }, 0);
+
+    if (questionNumber === QuestionNumber.FIVE) {
+      return this.roundToNearestFive(result);
+    }
+    return result;
+  }
+
+  private roundToNearestFive = (sum: number): number => Math.round(sum / 5) * 5;
+
+  getTotalQuestionScore = (testData: TestData): number => {
+    return Object.keys(testData).reduce((sum: number, key: string): number => {
+      if (key.indexOf('question') > -1 && typeof testData[key] === 'object') {
+        return sum + (testData[key].score || 0);
+      }
+      return sum;
+    }, 0);
   }
 
   getQuestionNumber = (combinationCode: string, questionCode: string): number => {
