@@ -1,4 +1,4 @@
-@catb @regression
+@catb @full_smoke @regression
 Feature: A Driving Examiner Rekeys Category B tests
 
   Scenario: User can rekey a test pass for the previous day

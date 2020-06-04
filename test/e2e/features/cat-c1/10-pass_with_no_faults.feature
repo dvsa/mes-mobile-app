@@ -1,4 +1,4 @@
-@catc1 @regression
+@catc1 @full_smoke @regression
 Feature: A Driving Examiner Completes a Passed User Journey in Category C1
 
    Scenario: Examiner completes a passed test with no faults
@@ -27,4 +27,3 @@ Feature: A Driving Examiner Completes a Passed User Journey in Category C1
       And I upload the test
       Then I should see the "Journal" page
       And the test result for "Ms Deanna Wolf" is "1"
-   

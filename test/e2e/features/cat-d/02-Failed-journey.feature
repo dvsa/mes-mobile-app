@@ -1,4 +1,4 @@
-@catd
+@catd @full_smoke @regression
 
   Feature: Driver Examiner failed the test journey for category D with serious fault
 

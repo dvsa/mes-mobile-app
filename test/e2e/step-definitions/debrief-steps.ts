@@ -32,6 +32,10 @@ Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
 });
 
+Before({ tags: '@catm2' }, () => {
+  this.testCategory = 'a-mod2';
+});
+
 Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
@@ -86,6 +90,11 @@ Then('I should see the Debrief page with outcome {string}', (outcome) => {
 
 Then('I see a {string} fault for {string}', (faultSeverity, faultDescription) => {
   const faultElement = DebriefPage.getFaultElement(faultSeverity, faultDescription);
+  return expect(faultElement.isPresent()).to.eventually.be.true;
+});
+
+Then('I see a {string} questions for {string}', (faultSeverity, faultDescription) => {
+  const faultElement = DebriefPage.getQuestionsElement(faultSeverity, faultDescription);
   return expect(faultElement.isPresent()).to.eventually.be.true;
 });
 

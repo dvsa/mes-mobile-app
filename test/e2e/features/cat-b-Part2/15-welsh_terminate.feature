@@ -1,4 +1,4 @@
-@catb @regression
+@catb @full_smoke @regression
 Feature: A Driving Examiner Completes a Terminated Journey For Category B in Welsh
 
    Scenario: Examiner terminates test as candidate failed eye sight test

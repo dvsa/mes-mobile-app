@@ -1,4 +1,4 @@
-@catd
+@catd @full_smoke @regression
 
 Feature: A Driving Examiner Completes a pass test for category d
 
