@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ 'debrief.title' | translate }} - {{pageState.candidateName$ | async}}</ion-title>
+    <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
+      <button ion-button (click)="logout()">Sign Out</button>
+    </ion-buttons>
+  </ion-navbar>
+  <test-outcome-debrief-card [outcome]="outcome"></test-outcome-debrief-card>
+</ion-header>
+
+<ion-content>
+</ion-content>
+<ion-footer>
+  <div id="end-debrief-background">
+    <button ion-button id="end-debrief-button" class="mes-primary-button" (click)="endDebrief()">
+      <h3>{{ 'debrief.end' | translate }}</h3>
+    </button>
+  </div>
+</ion-footer>

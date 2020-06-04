@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
-import { Configuration, Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
+import { ActivityCode, Configuration, Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { Observable } from 'rxjs';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
@@ -40,6 +40,7 @@ import {
   getVehicleConfiguration,
 } from '../../../modules/tests/vehicle-details/cat-cpc/vehicle-details.cat-cpc.selector';
 import {
+  PopulateAnswerScore,
   PopulateQuestions,
 } from '../../../modules/tests/test-data/cat-cpc/questions/questions.action';
 import {
@@ -47,6 +48,9 @@ import {
   CombinationCodes,
 } from '../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
+import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { PopulateTestScore } from '../../../modules/tests/test-data/cat-cpc/overall-score/total-percentage.action';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -175,6 +179,33 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
         }
       });
     }
+  }
+
+  // @TODO - remove method - dev purposes only
+  async passTest() {
+    this.populateQuestionsScores('LGV7', ActivityCodes.PASS);
+    this.store$.dispatch(new PopulateTestScore(100));
+    await this.navController.push(CAT_CPC.DEBRIEF_PAGE);
+  }
+
+  // @TODO - remove method - dev purposes only
+  async failTest() {
+    this.populateQuestionsScores('LGV7', ActivityCodes.FAIL);
+    this.store$.dispatch(new PopulateTestScore(0));
+    await this.navController.push(CAT_CPC.DEBRIEF_PAGE);
+  }
+
+  // @TODO - remove method - dev purposes only
+  populateQuestionsScores(combination: string, result: ActivityCode) {
+    this.store$.dispatch(new SetActivityCode(result));
+    this.combinationSelected(combination);
+    const questions: Question[] = this.cpcQuestionProvider.getQuestionsBank(combination);
+    const question5: Question5 = this.cpcQuestionProvider.getQuestion5ByVehicleType(combination);
+    const allQuestions: any[] = [...questions, question5];
+    allQuestions.forEach((question, index) => {
+      const score = result === ActivityCodes.PASS ? 100 : 0;
+      this.store$.dispatch(new PopulateAnswerScore(index, score));
+    });
   }
 
 }
