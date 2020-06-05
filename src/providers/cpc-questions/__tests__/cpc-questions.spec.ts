@@ -6,12 +6,12 @@ import { pcvQuestion5 } from '../../../shared/constants/cpc-questions/cpc-pcv-qu
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
   Combination,
-  QuestionNumber
+  QuestionNumber,
 } from '../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 import { question, question5 } from '../../../modules/tests/test-data/cat-cpc/_tests_/test-data.cat-cpc.mock';
 import { TestData } from '@dvsa/mes-test-schema/categories/CPC';
 
-fdescribe('CPC Question Provider', () => {
+describe('CPC Question Provider', () => {
   let cpcQuestionProvider: CPCQuestionProvider;
 
   configureTestSuite(() => {
@@ -89,7 +89,7 @@ fdescribe('CPC Question Provider', () => {
     });
   });
 
-  fdescribe('getTotalQuestionScore', () => {
+  describe('getTotalQuestionScore', () => {
     it('should sum the score value in each', () => {
       const testData: TestData = {
         combination: 'LGV1',

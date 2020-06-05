@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Config, IonicModule, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
-import { ConfigMock, ModalControllerMock, NavControllerMock, NavParamsMock, PlatformMock, } from 'ionic-mocks';
+import { ConfigMock, ModalControllerMock, NavControllerMock, NavParamsMock, PlatformMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 
 import { AppModule } from '../../../../app/app.module';
@@ -18,7 +18,7 @@ import { CpcQuestionsMock } from '../../../../providers/cpc-questions/_mocks_/cp
 import { TestReportCatCPCPage } from '../test-report.cat-cpc.page';
 import {
   AnswerToggled,
-  PopulateQuestionScore
+  PopulateQuestionScore,
 } from '../../../../modules/tests/test-data/cat-cpc/questions/questions.action';
 import { PopulateTestScore } from '../../../../modules/tests/test-data/cat-cpc/overall-score/total-percentage.action';
 import { QuestionFiveCardComponent } from '../components/question-five-card/question-five-card';
@@ -32,7 +32,7 @@ import { QuestionTitleComponent } from '../components/question-title/question-ti
 import { catCPCTestData, mockToggleEvent } from '../__mocks__/test-report.cat-cpc.mock';
 import { QuestionNumber } from '../../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 
-fdescribe('TestReportCatCPCPage', () => {
+describe('TestReportCatCPCPage', () => {
   let fixture: ComponentFixture<TestReportCatCPCPage>;
   let component: TestReportCatCPCPage;
   // let navController: NavController;
