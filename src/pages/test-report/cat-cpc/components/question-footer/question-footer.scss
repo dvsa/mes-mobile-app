@@ -1,9 +1,9 @@
 question-footer {
-  #next-page, #view-summary-button {
+  #next-page-button, #view-summary-button {
     background: map-get($colors-gds, gds-dark-green-2);
   }
 
-  #previous-page {
+  #previous-page-button {
     background: map-get($colors-gds, gds-grey-1);
   }
 }

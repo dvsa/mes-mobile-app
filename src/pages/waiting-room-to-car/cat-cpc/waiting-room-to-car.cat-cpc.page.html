@@ -1,10 +1,6 @@
 <ion-header>
     <ion-navbar hideBackButton>
         <ion-title>{{pageState.candidateName$ | async}}</ion-title>
-      <ion-buttons start>
-        <button ion-button (click)="passTest()" >Pass Test</button>
-        <button ion-button (click)="failTest()" >Fail Test</button>
-      </ion-buttons>
         <ion-buttons end>
             <end-test-link [category]="testCategory"></end-test-link>
         </ion-buttons>

@@ -16,15 +16,13 @@ question-score {
   }
 
   #score-value {
+    display: flex;
     font-size: 30px;
-    border-radius: 6px;
-    padding: 6px !important;;
-    max-width: 40px;
-    max-height: 40px;
-    min-width: 40px;
-    min-height: 40px;
-    display: inline;
-    position: static;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 60px;
+    border: 2px solid grey;
     background-color: #e2e2f9;
   }
 
