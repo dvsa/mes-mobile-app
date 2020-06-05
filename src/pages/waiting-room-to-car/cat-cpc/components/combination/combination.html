@@ -16,7 +16,7 @@
                         [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}">
                 <ion-option *ngFor="let combination of combinations"
                             [value]="combination.code">
-                    {{combination.code}}
+                  {{combination.code}} <span *ngIf="combination.additionalText"> - {{combination.additionalText}}</span>
                 </ion-option>
             </ion-select>
         </ion-row>
