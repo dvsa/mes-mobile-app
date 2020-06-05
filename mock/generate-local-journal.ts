@@ -432,7 +432,7 @@ const localJournal: ExaminerWorkSchedule = {
       },
       slotDetail: {
         duration: 57,
-        slotId: 1007,
+        slotId: 1021,
         start: `${previousWorkingDay}T14:32:00`,
       },
       testCentre: {
@@ -1143,7 +1143,7 @@ const localJournal: ExaminerWorkSchedule = {
       },
       slotDetail: {
         duration: 57,
-        slotId: 1017,
+        slotId: 1022,
         start: `${today}T18:50:00`,
       },
       testCentre: {
@@ -1201,7 +1201,7 @@ const localJournal: ExaminerWorkSchedule = {
       },
       slotDetail: {
         duration: 57,
-        slotId: 1018,
+        slotId: 1024,
         start: `${today}T18:50:00`,
       },
       testCentre: {
@@ -1269,7 +1269,7 @@ const localJournal: ExaminerWorkSchedule = {
       },
       slotDetail: {
         duration: 57,
-        slotId: 1019,
+        slotId: 1023,
         start: `${today}T19:30:00`,
       },
       testCentre: {

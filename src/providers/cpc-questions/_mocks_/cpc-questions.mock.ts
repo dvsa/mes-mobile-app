@@ -20,6 +20,14 @@ export class CpcQuestionsMock {
     return combinationCode.includes('LGV') ? lgvQuestion5 : pcvQuestion5;
   }
 
+  getQuestionScore() {
+    return 15;
+  }
+
+  getTotalQuestionScore() {
+    return 80;
+  }
+
   getCombinations(combinationCode: string): Combination[] {
     if (combinationCode.includes('LGV')) {
       return [

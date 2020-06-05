@@ -1,0 +1,19 @@
+<ion-footer>
+    <ion-row>
+        <ion-col text-center *ngIf="showPreviousPageButton()">
+            <button ion-button block id="previous-page-button" (click)="goToPreviousQuestion()">
+                Previous question
+            </button>
+        </ion-col>
+        <ion-col text-center *ngIf="showNextPageButton()">
+            <button ion-button block id="next-page-button" (click)="goToNextQuestion()">
+                Next question
+            </button>
+        </ion-col>
+        <ion-col text-center *ngIf="showViewSummaryButton()">
+            <button ion-button block id="view-summary-button" (click)="goToSummary()">
+                View test summary
+            </button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

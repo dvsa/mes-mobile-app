@@ -69,11 +69,11 @@ const questionReducer = (
       return (action.questionNumber === questionNumber) ? {
         ...state,
         [key]: {
+          selected: !action.toggled,
           label: state[key].label,
-          selected: !state[key].selected,
         },
       } : state;
-    case questionActionTypes.POPULATE_ANSWER_SCORE:
+    case questionActionTypes.POPULATE_QUESTION_SCORE:
       return (action.questionNumber === questionNumber) ? {
         ...state,
         score: action.score,
@@ -83,4 +83,4 @@ const questionReducer = (
   }
 };
 
-const getAnswerNumberKey = (questionNumber: number): string => `answer${questionNumber}`;
+const getAnswerNumberKey = (questionNumber: string): string => `answer${questionNumber}`;

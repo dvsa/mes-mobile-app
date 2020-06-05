@@ -1,6 +1,6 @@
 import * as totalPercentageActionTypes from './total-percentage.action';
 
-const initialState: number = null;
+const initialState: number = 0;
 
 export function totalPercentageReducer(
   state: number = initialState,

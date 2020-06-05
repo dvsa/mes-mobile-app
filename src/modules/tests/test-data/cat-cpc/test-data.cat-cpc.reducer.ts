@@ -11,7 +11,7 @@ import {
   question5Reducer,
 } from './questions/questions.reducer';
 
-const initialState: TestData = {
+export const initialState: TestData = {
   combination: null,
   question1: null,
   question2: null,
