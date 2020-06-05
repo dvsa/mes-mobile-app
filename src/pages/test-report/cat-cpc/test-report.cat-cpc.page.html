@@ -10,44 +10,39 @@
 <ion-content no-padding no-bounce>
     <module-assessment [combinationCode]="pageState.combinationCode$ | async"></module-assessment>
 
-    <div *ngIf="pageNumber === 1">
-        <question-card
-                (answerPayload)="populateAnswer($event)"
-                [question]="pageState.question1$ | async"
-                [questionNumber]="pageNumber">
-        </question-card>
-    </div>
+    <question-card
+            *ngIf="pageNumber === 1"
+            (answerPayload)="populateAnswer($event)"
+            [question]="pageState.question1$ | async"
+            [questionNumber]="pageNumber">
+    </question-card>
 
-    <div *ngIf="pageNumber === 2">
-        <question-card
-                (answerPayload)="populateAnswer($event)"
-                [question]="pageState.question2$ | async"
-                [questionNumber]="pageNumber">
-        </question-card>
-    </div>
+    <question-card
+            *ngIf="pageNumber === 2"
+            (answerPayload)="populateAnswer($event)"
+            [question]="pageState.question2$ | async"
+            [questionNumber]="pageNumber">
+    </question-card>
 
-    <div *ngIf="pageNumber === 3">
-        <question-card
-                (answerPayload)="populateAnswer($event)"
-                [question]="pageState.question3$ | async"
-                [questionNumber]="pageNumber">
-        </question-card>
-    </div>
+    <question-card
+            *ngIf="pageNumber === 3"
+            (answerPayload)="populateAnswer($event)"
+            [question]="pageState.question3$ | async"
+            [questionNumber]="pageNumber">
+    </question-card>
 
-    <div *ngIf="pageNumber === 4">
-        <question-card
-                (answerPayload)="populateAnswer($event)"
-                [question]="pageState.question4$ | async"
-                [questionNumber]="pageNumber">
-        </question-card>
-    </div>
+    <question-card
+            *ngIf="pageNumber === 4"
+            (answerPayload)="populateAnswer($event)"
+            [question]="pageState.question4$ | async"
+            [questionNumber]="pageNumber">
+    </question-card>
 
-    <div *ngIf="pageNumber === 5">
-        <question-five-card
-                (answerPayload)="populateAnswer($event)"
-                [question]="pageState.question5$ | async">
-        </question-five-card>
-    </div>
+    <question-five-card
+            *ngIf="pageNumber === 5"
+            (answerPayload)="populateAnswer($event)"
+            [question]="pageState.question5$ | async">
+    </question-five-card>
 
 </ion-content>
 

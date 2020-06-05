@@ -43,7 +43,7 @@ export class CPCQuestionProvider {
     return result;
   }
 
-  private roundToNearestFive = (sum: number): number => Math.round(sum / 5) * 5;
+  roundToNearestFive = (sum: number): number => Math.round(sum / 5) * 5;
 
   getTotalQuestionScore = (testData: TestData): number => {
     return Object.keys(testData).reduce((sum: number, key: string): number => {
@@ -52,12 +52,6 @@ export class CPCQuestionProvider {
       }
       return sum;
     }, 0);
-  }
-
-  getQuestionNumber = (combinationCode: string, questionCode: string): number => {
-    const { questions } = this.getQuestionCombination(combinationCode);
-
-    return questions.findIndex((question: string) => question === questionCode);
   }
 
   getQuestion5ByVehicleType = (combinationCode: string): Question5 => {

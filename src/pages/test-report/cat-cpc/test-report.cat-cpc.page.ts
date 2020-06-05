@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, Modal, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
 import { Question, Question5, TestData } from '@dvsa/mes-test-schema/categories/CPC';
 import { Observable, Subscription } from 'rxjs';
@@ -31,9 +31,6 @@ import {
 } from '../../../modules/tests/test-data/cat-cpc/questions/questions.action';
 import { PopulateTestScore } from '../../../modules/tests/test-data/cat-cpc/overall-score/total-percentage.action';
 import { CPCQuestionProvider } from '../../../providers/cpc-questions/cpc-questions';
-// import { CAT_CPC, SPECIAL_REQUIREMENT_MODAL } from '../../page-names.constants';
-// import { ModalEvent } from '../test-report.constants';
-// import { CalculateTestResult, TerminateTestFromTestReport } from '../test-report.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -69,8 +66,6 @@ export class TestReportCatCPCPage extends BasePageComponent {
 
   testData: TestData;
 
-  modal: Modal;
-
   pageNumber: number = 1;
 
   constructor(
@@ -78,9 +73,8 @@ export class TestReportCatCPCPage extends BasePageComponent {
     public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
-    public modalController: ModalController,
     public authenticationProvider: AuthenticationProvider,
-    private cpcQuestionProvider: CPCQuestionProvider) {
+    public cpcQuestionProvider: CPCQuestionProvider) {
 
     super(platform, navController, authenticationProvider);
   }
@@ -163,24 +157,4 @@ export class TestReportCatCPCPage extends BasePageComponent {
       [5, QuestionNumber.FIVE],
     ]).get(questionNumber);
   }
-
-  // onEndTestClick = (): void => {
-  //   const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-  //   this.modal = this.modalController.create(SPECIAL_REQUIREMENT_MODAL, {}, options);
-  //   this.modal.onDidDismiss(this.onModalDismiss);
-  //   this.modal.present();
-  // }
-  //
-  // private onModalDismiss = (event: ModalEvent): void => {
-  //   switch (event) {
-  //     case ModalEvent.CONTINUE:
-  //       this.store$.dispatch(new CalculateTestResult());
-  //       this.navController.push(CAT_CPC.DEBRIEF_PAGE);
-  //       break;
-  //     case ModalEvent.TERMINATE:
-  //       this.store$.dispatch(new TerminateTestFromTestReport());
-  //       this.navController.push(CAT_CPC.DEBRIEF_PAGE);
-  //       break;
-  //   }
-  // }
 }

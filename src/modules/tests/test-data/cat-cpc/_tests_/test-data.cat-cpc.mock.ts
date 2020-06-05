@@ -54,11 +54,11 @@ export const question5 = (): Question5 => ({
     label: 'answer 6',
   },
   answer7: {
-    selected: false,
+    selected: true,
     label: 'answer 7',
   },
   answer8: {
-    selected: false,
+    selected: true,
     label: 'answer 8',
   },
   answer9: {

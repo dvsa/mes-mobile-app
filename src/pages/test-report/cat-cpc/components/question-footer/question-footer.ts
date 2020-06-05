@@ -12,9 +12,6 @@ export class QuestionFooterComponent {
   @Input()
   questionNumber: number;
 
-  constructor() {
-  }
-
   showPreviousPageButton = (): boolean => this.questionNumber > 1;
 
   showNextPageButton = (): boolean => this.questionNumber < 5;
@@ -32,7 +29,8 @@ export class QuestionFooterComponent {
   }
 
   goToSummary = (): void => {
-    console.log('goToSummary');
+    // @TODO: Create logic for presenting modal
+    return;
   }
 
 }

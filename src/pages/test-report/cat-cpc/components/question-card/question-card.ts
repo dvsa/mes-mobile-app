@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Question } from '@dvsa/mes-test-schema/categories/CPC';
+import { Answer, Question } from '@dvsa/mes-test-schema/categories/CPC';
+
+export type AnswerChanged = {
+  answer: Answer;
+  answerNumber: string;
+}
 
 @Component({
   selector: 'question-card',
@@ -16,8 +21,7 @@ export class QuestionCardComponent {
   @Output()
   answerPayload = new EventEmitter();
 
-  // @TODO - Make type for details
-  answerChanged = (details: any): void => {
+  answerChanged = (details: AnswerChanged): void => {
     this.answerPayload.emit({ questionNumber: this.questionNumber, ...details });
   }
 
