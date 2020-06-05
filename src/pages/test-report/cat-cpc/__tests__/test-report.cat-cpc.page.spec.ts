@@ -35,7 +35,6 @@ import { QuestionNumber } from '../../../../shared/constants/cpc-questions/cpc-q
 describe('TestReportCatCPCPage', () => {
   let fixture: ComponentFixture<TestReportCatCPCPage>;
   let component: TestReportCatCPCPage;
-  // let navController: NavController;
   let store$: Store<StoreModel>;
 
   configureTestSuite(() => {
@@ -87,7 +86,6 @@ describe('TestReportCatCPCPage', () => {
   beforeEach(async(() => {
     fixture = TestBed.createComponent(TestReportCatCPCPage);
     component = fixture.componentInstance;
-    // navController = TestBed.get(NavController);
     store$ = TestBed.get(Store);
   }));
 
