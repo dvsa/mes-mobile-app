@@ -22,11 +22,24 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTestOutcome } from '../debrief.selector';
+import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
+import {
+  getQuestion1,
+  getQuestion2,
+  getQuestion3, getQuestion4, getQuestion5, getTotalPercent,
+} from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.selector';
+import { getTestData } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.reducer';
 
 interface DebriefPageState {
   conductedLanguage$: Observable<string>;
   candidateName$: Observable<string>;
   testResult$: Observable<string>;
+  question1$: Observable<Question>;
+  question2$: Observable<Question>;
+  question3$: Observable<Question>;
+  question4$: Observable<Question>;
+  question5$: Observable<Question5>;
+  overallScore$: Observable<number>;
 }
 
 @IonicPage()
@@ -74,6 +87,30 @@ export class DebriefCatCPCPage extends BasePageComponent {
       ),
       testResult$: currentTest$.pipe(
         select(getTestOutcome),
+      ),
+      question1$: currentTest$.pipe(
+        select(getTestData),
+        select(getQuestion1),
+      ),
+      question2$: currentTest$.pipe(
+        select(getTestData),
+        select(getQuestion2),
+      ),
+      question3$: currentTest$.pipe(
+        select(getTestData),
+        select(getQuestion3),
+      ),
+      question4$: currentTest$.pipe(
+        select(getTestData),
+        select(getQuestion4),
+      ),
+      question5$: currentTest$.pipe(
+        select(getTestData),
+        select(getQuestion5),
+      ),
+      overallScore$: currentTest$.pipe(
+        select(getTestData),
+        select(getTotalPercent),
       ),
     };
 

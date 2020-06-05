@@ -9,6 +9,7 @@
 </ion-header>
 
 <ion-content>
+  <test-details-card [question1]="pageState.question1$ | async" [question2]="pageState.question2$ | async" [question3]="pageState.question3$ | async" [question4]="pageState.question4$ | async" [question5]="pageState.question5$ | async"></test-details-card>
 </ion-content>
 <ion-footer>
   <div id="end-debrief-background">
