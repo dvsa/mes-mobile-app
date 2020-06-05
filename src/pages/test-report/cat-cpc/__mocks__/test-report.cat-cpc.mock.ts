@@ -4,7 +4,7 @@ import { question, question5 } from '../../../../modules/tests/test-data/cat-cpc
 export const mockToggleEvent = {
   answer: {
     label: 'a description of some kind',
-    selected: true
+    selected: true,
   },
   questionNumber: 1,
   answerNumber: '2',

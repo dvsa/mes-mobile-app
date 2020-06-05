@@ -4,7 +4,7 @@ import { Answer, Question } from '@dvsa/mes-test-schema/categories/CPC';
 export type AnswerChanged = {
   answer: Answer;
   answerNumber: string;
-}
+};
 
 @Component({
   selector: 'question-card',
