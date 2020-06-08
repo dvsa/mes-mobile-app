@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Modal, ModalController } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
 import { Question, Question5, TestData } from '@dvsa/mes-test-schema/categories/CPC';
 import { Observable, Subscription } from 'rxjs';
@@ -31,6 +31,10 @@ import {
 } from '../../../modules/tests/test-data/cat-cpc/questions/questions.action';
 import { PopulateTestScore } from '../../../modules/tests/test-data/cat-cpc/overall-score/total-percentage.action';
 import { CPCQuestionProvider } from '../../../providers/cpc-questions/cpc-questions';
+import { CAT_CPC } from '../../page-names.constants';
+import { ModalEvent } from '../test-report.constants';
+import { CalculateTestResult, TerminateTestFromTestReport } from '../test-report.actions';
+import { withLatestFrom } from 'rxjs/operators';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -61,12 +65,10 @@ type ToggleEvent = {
 export class TestReportCatCPCPage extends BasePageComponent {
 
   pageState: TestReportPageState;
-
   subscription: Subscription;
-
   testData: TestData;
-
   pageNumber: number = 1;
+  modal: Modal;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -74,6 +76,7 @@ export class TestReportCatCPCPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    private modalController: ModalController,
     public cpcQuestionProvider: CPCQuestionProvider) {
 
     super(platform, navController, authenticationProvider);
@@ -157,4 +160,37 @@ export class TestReportCatCPCPage extends BasePageComponent {
       [5, QuestionNumber.FIVE],
     ]).get(questionNumber);
   }
+
+  onEndTestClick = (): void => {
+    const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
+    this.pageState.question1$.pipe(
+      withLatestFrom(
+        this.pageState.question2$,
+        this.pageState.question3$,
+        this.pageState.question4$,
+        this.pageState.question5$,
+      ),
+    ).subscribe((questions) => {
+      this.modal = this.modalController.create('CpcEndTestModal', {
+        cpcQuestions: questions,
+      }, options);
+      this.modal.onDidDismiss(this.onModalDismiss);
+      this.modal.present();
+    });
+  }
+
+  onModalDismiss = (event: ModalEvent): void => {
+    switch (event) {
+      case ModalEvent.CONTINUE:
+        this.store$.dispatch(new CalculateTestResult());
+        this.navController.push(CAT_CPC.DEBRIEF_PAGE);
+        break;
+      case ModalEvent.TERMINATE:
+        this.store$.dispatch(new TerminateTestFromTestReport());
+        this.navController.push(CAT_CPC.DEBRIEF_PAGE);
+        break;
+    }
+  }
+
+
 }

@@ -1,0 +1,35 @@
+<ion-card class="modal-alert">
+  <ion-row justify-content-center>
+    <ion-col no-padding >
+      <h3 class="modal-alert-header">Test Outcome: </h3>
+    </ion-col>
+  </ion-row>
+  <!--NEW STUFF-->
+  <ion-row *ngFor="let question of questions" class="result-row">
+    <ion-col col-84 class="result-item">
+      <div class="row">
+      <div class="col question-code">{{question.questionCode}}</div>
+      <div class="col question-score">{{question.score}}%
+                <img class="answer-icon"src="../../../../../assets/imgs/greenCorrectAnswer.png"/>
+      </div>
+      </div>
+    </ion-col>
+  </ion-row>
+  <!--<modal-result-item *ngFor="let question of questions" [questionCode]="question.questionCode" [questionScore]="question.score"></modal-result-item>-->
+  <!--NEW STUFF-->
+  <ion-row justify-content-center >
+    <ion-col col-84>
+      <button ion-button class="mes-primary-button" (click)="onContinue()">
+        <h3>Continue to debrief</h3>
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col no-padding class="column-border-top column-border-right">
+      <button ion-button clear class="terminate-button" (click)="onTerminate()">Terminate test</button>
+    </ion-col>
+    <ion-col no-padding class="column-border-top">
+      <button ion-button clear class="return-button" (click)="onCancel()">Return to test</button>
+    </ion-col>
+  </ion-row>
+</ion-card>

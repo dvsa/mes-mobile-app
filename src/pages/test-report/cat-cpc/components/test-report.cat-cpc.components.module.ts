@@ -13,6 +13,7 @@ import { QuestionSubtitleComponent } from './question-subtitle/question-subtitle
 import { QuestionAnswerComponent } from './question-answer/question-answer';
 import { QuestionFiveCardComponent } from './question-five-card/question-five-card';
 import { QuestionScoreComponent } from './question-score/question-score';
+import { CpcEndTestModalModule } from './cpc-end-test-modal/cpc-end-test-modal.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { QuestionScoreComponent } from './question-score/question-score';
     TestReportComponentsModule,
     IonicModule,
     DirectivesModule,
+    CpcEndTestModalModule
   ],
   exports: [
     ModuleAssessmentComponent,
@@ -45,4 +47,4 @@ import { QuestionScoreComponent } from './question-score/question-score';
     QuestionScoreComponent,
   ],
 })
-export class TestReportCatAMod1ComponentsModule { }
+export class TestReportCatCPCComponentsModule { }
