@@ -5,16 +5,16 @@
     </ion-card-title>
   </ion-card-header>
   <ion-card-content>
-      <ion-list>
-        <ion-grid>
-          <ion-row *ngFor="let question of questions" align-items-start class="mes-data">
-            <ion-col col-xl-12 class="question-wrapper">
+      <ion-grid>
+        <ion-list *ngFor="let question of questions; let first = first; let last = last">
+          <ion-row align-items-start class="cpc-line-break">
+            <ion-col col-75>
               <h5 class="question-span">{{getFormattedQuestion(question)}}</h5>
             </ion-col>
-            <ion-col col-sm-12 class="percentage-wrapper">
+            <ion-col col-10 align-items-end>
               {{getQuestionPercentage(question)}}%
             </ion-col>
-            <ion-col col-sm-12>
+            <ion-col col-10 align-items-end>
               <div class="counter-icon">
                 <img *ngIf="shouldTickBox(question)" src="assets/imgs/greenCorrectAnswer.png" alt="Correct Answer"
                      class="correct-icon icon-image" />
@@ -23,7 +23,25 @@
               </div>
             </ion-col>
           </ion-row>
-        </ion-grid>
-      </ion-list>
+          <ion-row *ngIf="last">
+            <ion-col col-75>
+              <b>Total</b>
+            </ion-col>
+            <ion-col col-10 align-items-end>
+              {{getTotalScore()}}%
+            </ion-col>
+            <ion-col col-10 align-items-end>
+              <div class="counter-icon">
+                <img *ngIf="getTotalScore() >= 80" src="assets/imgs/greenCorrectAnswer.png"
+                     alt="Correct Answer"
+                     class="correct-icon icon-image"/>
+                <img *ngIf="!getTotalScore() < 80" src="assets/imgs/redWrongAnswer.png"
+                     alt="Wrong Answer"
+                     class="wrong-icon icon-image"/>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-grid>
   </ion-card-content>
 </ion-card>

@@ -42,6 +42,26 @@ export class TestDetailsCardComponent implements OnInit {
     return (question.score / 5) > 15;
   }
 
+  getTotalScore = (): number => {
+    let count = 0;
+    for (const question of this.questions) {
+      count = count + this.getQuestionPercentage(question);
+    }
+    return count;
+  }
+
+  isPass = (): boolean => {
+    for (const question of this.questions) {
+      if (question.score < 25) {
+        return false;
+      }
+    }
+    if (this.getTotalScore() < 80) {
+      return false;
+    }
+    return true;
+  }
+
   ngOnInit(): void {
     this.questions = [this.question1, this.question2, this.question3, this.question4, this.question5];
   }
