@@ -5,10 +5,10 @@ export type QuestionUnion = Question
 | Question5;
 
 @Component({
-  selector: 'test-details-card',
-  templateUrl: 'test-details-card.html',
+  selector: 'debrief-cpc-card',
+  templateUrl: 'debrief-cpc-card.html',
 })
-export class TestDetailsCardComponent implements OnInit {
+export class DebriefCPCCardComponent implements OnInit {
 
   @Input()
   public question1: Question;

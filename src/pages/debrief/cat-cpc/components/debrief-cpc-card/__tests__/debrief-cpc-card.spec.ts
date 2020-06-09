@@ -1,5 +1,5 @@
 import { Question } from '@dvsa/mes-test-schema/categories/CPC';
-import { QuestionUnion, TestDetailsCardComponent } from '../test-details-card';
+import { DebriefCPCCardComponent, QuestionUnion } from '../debrief-cpc-card';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { configureTestSuite } from 'ng-bullet';
 import { AppModule } from '../../../../../../app/app.module';
@@ -8,14 +8,14 @@ import { ComponentsModule } from '../../../../../../components/common/common-com
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 
-fdescribe('CPC TestDetailsCardComponent', () => {
-  let fixture: ComponentFixture<TestDetailsCardComponent>;
-  let component: TestDetailsCardComponent;
+describe('DebriefCPCCardComponent', () => {
+  let fixture: ComponentFixture<DebriefCPCCardComponent>;
+  let component: DebriefCPCCardComponent;
   let question: Question;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      declarations: [TestDetailsCardComponent],
+      declarations: [DebriefCPCCardComponent],
       imports: [
         IonicModule,
         AppModule,
@@ -27,7 +27,7 @@ fdescribe('CPC TestDetailsCardComponent', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(TestDetailsCardComponent);
+    fixture = TestBed.createComponent(DebriefCPCCardComponent);
     component = fixture.componentInstance;
     question = {
       questionCode: 'Q12',
