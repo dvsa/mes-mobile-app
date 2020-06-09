@@ -9,10 +9,10 @@
         <ion-list *ngFor="let question of questions; let first = first; let last = last">
           <ion-row align-items-start class="cpc-line-break">
             <ion-col col-75>
-              <h5 class="question-span">{{getFormattedQuestion(question)}}</h5>
+              <h3>{{getFormattedQuestion(question)}}</h3>
             </ion-col>
             <ion-col col-10 align-items-end>
-              {{getQuestionPercentage(question)}}%
+              <h3>{{getQuestionPercentage(question)}}%</h3>
             </ion-col>
             <ion-col col-10 align-items-end>
               <div class="counter-icon">
@@ -23,19 +23,21 @@
               </div>
             </ion-col>
           </ion-row>
-          <ion-row *ngIf="last">
+          <ion-row *ngIf="last" class="cpc-total-padding">
             <ion-col col-75>
-              <b>Total</b>
+              <h3>Total</h3>
             </ion-col>
             <ion-col col-10 align-items-end>
-              {{getTotalScore()}}%
+              <h3>
+                {{getTotalScore()}}%
+              </h3>
             </ion-col>
             <ion-col col-10 align-items-end>
               <div class="counter-icon">
-                <img *ngIf="getTotalScore() >= 80" src="assets/imgs/greenCorrectAnswer.png"
+                <img *ngIf="isPass()" src="assets/imgs/greenCorrectAnswer.png"
                      alt="Correct Answer"
                      class="correct-icon icon-image"/>
-                <img *ngIf="!getTotalScore() < 80" src="assets/imgs/redWrongAnswer.png"
+                <img *ngIf="!isPass()" src="assets/imgs/redWrongAnswer.png"
                      alt="Wrong Answer"
                      class="wrong-icon icon-image"/>
               </div>

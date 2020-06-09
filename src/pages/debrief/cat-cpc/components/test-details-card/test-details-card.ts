@@ -25,6 +25,9 @@ export class TestDetailsCardComponent implements OnInit {
   @Input()
   public question5: Question5;
 
+  @Input()
+  public overallScore: number;
+
   public questions: QuestionUnion[];
 
   constructor() {
@@ -35,11 +38,11 @@ export class TestDetailsCardComponent implements OnInit {
   }
 
   getQuestionPercentage = (question: Question | Question5): number => {
-    return question.score / 5;
+    return question.score;
   }
 
   shouldTickBox = (question: Question | Question5): boolean => {
-    return (question.score / 5) > 15;
+    return question.score > 15;
   }
 
   getTotalScore = (): number => {
@@ -51,12 +54,16 @@ export class TestDetailsCardComponent implements OnInit {
   }
 
   isPass = (): boolean => {
+    let percentageRequirement: boolean = false;
     for (const question of this.questions) {
-      if (question.score < 25) {
+      if (question.score === 20) {
+        percentageRequirement = true;
+      }
+      if (question.score < 15) {
         return false;
       }
     }
-    if (this.getTotalScore() < 80) {
+    if (!percentageRequirement || this.getTotalScore() < 80) {
       return false;
     }
     return true;

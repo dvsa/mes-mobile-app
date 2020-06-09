@@ -1,10 +1,12 @@
 test-details-card {
-  .question-wrapper {
-    padding-right: 5em;
-  }
   .cpc-line-break {
-    border-bottom: 1px solid grey;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    border-bottom: 1px solid;
+    border-bottom-color: #9b9b9b;
+    margin-top: 2em;
+    padding-bottom: 2em;
+  }
+  .cpc-total-padding {
+    margin-top: 2em;
+    margin-bottom: 1em;
   }
 }
