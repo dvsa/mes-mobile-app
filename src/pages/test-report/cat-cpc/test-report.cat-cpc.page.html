@@ -46,4 +46,4 @@
 
 </ion-content>
 
-<question-footer [questionNumber]="pageNumber" (questionPageChange)="questionPageChanged($event)"></question-footer>
+<question-footer [questionNumber]="pageNumber" (questionPageChange)="questionPageChanged($event)" (testSummaryRequested)="onEndTestClick()"></question-footer>
