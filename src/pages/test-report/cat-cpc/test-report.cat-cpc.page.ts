@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Modal, ModalController } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
 import { Question, Question5, TestData } from '@dvsa/mes-test-schema/categories/CPC';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest } from 'rxjs';
 
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -34,7 +34,6 @@ import { CPCQuestionProvider } from '../../../providers/cpc-questions/cpc-questi
 import { CAT_CPC } from '../../page-names.constants';
 import { ModalEvent } from '../test-report.constants';
 import { CalculateTestResult, TerminateTestFromTestReport } from '../test-report.actions';
-import { withLatestFrom } from 'rxjs/operators';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -129,6 +128,7 @@ export class TestReportCatCPCPage extends BasePageComponent {
         select(getTotalPercent),
       ),
     };
+    this.setUpSubscription();
   }
 
   questionPageChanged = (pageNumber: number): void => {
@@ -165,22 +165,12 @@ export class TestReportCatCPCPage extends BasePageComponent {
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    // this.pageState.question1$.pipe(
-    //   withLatestFrom(
-    //     this.pageState.question2$,
-    //     this.pageState.question3$,
-    //     this.pageState.question4$,
-    //     this.pageState.question5$,
-    //     this.pageState.overallPercentage$,
-    //   ),
-    // ).subscribe(([question1, question2, question3, question4, question5, overallPercentage]) => {
-    //   this.modal = this.modalController.create('CpcEndTestModal', {
-    //     cpcQuestions: [question1, question2, question3, question4, question5],
-    //     totalPercentage: overallPercentage,
-    //   }, options);
-    //   this.modal.onDidDismiss(this.onModalDismiss);
-    //   this.modal.present();
-    // });
+    this.modal = this.modalController.create('CpcEndTestModal', {
+      cpcQuestions: this.questions,
+      totalPercentage: this.overallPercentage,
+    }, options);
+    this.modal.onDidDismiss(this.onModalDismiss);
+    this.modal.present();
   }
 
   onModalDismiss = (event: ModalEvent): void => {
@@ -194,5 +184,28 @@ export class TestReportCatCPCPage extends BasePageComponent {
         this.navController.push(CAT_CPC.DEBRIEF_PAGE);
         break;
     }
+  }
+
+  setUpSubscription() {
+    const {
+      question1$,
+      question2$,
+      question3$,
+      question4$,
+      question5$,
+      overallPercentage$,
+    } = this.pageState;
+
+    this.subscription = combineLatest(
+      question1$,
+      question2$,
+      question3$,
+      question4$,
+      question5$,
+      overallPercentage$,
+    ).subscribe(([question1, question2, question3, question4, question5, overallPercentage]) => {
+      this.questions = [question1, question2, question3, question4, question5];
+      this.overallPercentage = overallPercentage;
+    });
   }
 }
