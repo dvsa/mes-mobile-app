@@ -25,38 +25,4 @@ end-test-modal {
     color: map-get($colors-gds, gds-black);
   }
 
-  .result-row {
-    display: grid;
-    justify-items: center;
-    padding-top: 3px;
-    padding-bottom: 3px;
-  }
-
-  .result-item {
-    width: 75%;
-    background: map-get($colors, light);
-    // background: map-get($colors-gds, gds-grey-2);
-    border-radius: 8px;
-  }
-
-  .question-code {
-    font-weight: bold;
-    text-align: left;
-    width: 10%;
-  }
-
-  .question-score {
-    text-align: center;
-  }
-
-  .answer-icon {
-   float: right
-  }
-
-  img {
-    width: 25px;
-    height: 25px;
-    min-width: 25px;
-  }
-
 }

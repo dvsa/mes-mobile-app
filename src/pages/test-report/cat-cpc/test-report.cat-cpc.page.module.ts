@@ -12,6 +12,7 @@ import { TestReportValidatorProvider } from '../../../providers/test-report-vali
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { TestReportComponentsModule } from '../components/test-report-components.module';
 import { TestReportCatCPCComponentsModule } from './components/test-report.cat-cpc.components.module';
+import { CpcEndTestModalModule } from './components/cpc-end-test-modal/cpc-end-test-modal.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { TestReportCatCPCComponentsModule } from './components/test-report.cat-c
     ComponentsModule,
     TestReportComponentsModule,
     TestReportCatCPCComponentsModule,
+    CpcEndTestModalModule,
   ],
   providers: [
     TestReportValidatorProvider,

@@ -69,6 +69,8 @@ export class TestReportCatCPCPage extends BasePageComponent {
   testData: TestData;
   pageNumber: number = 1;
   modal: Modal;
+  questions: (Question | Question5) [];
+  overallPercentage: number;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -163,20 +165,22 @@ export class TestReportCatCPCPage extends BasePageComponent {
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    this.pageState.question1$.pipe(
-      withLatestFrom(
-        this.pageState.question2$,
-        this.pageState.question3$,
-        this.pageState.question4$,
-        this.pageState.question5$,
-      ),
-    ).subscribe((questions) => {
-      this.modal = this.modalController.create('CpcEndTestModal', {
-        cpcQuestions: questions,
-      }, options);
-      this.modal.onDidDismiss(this.onModalDismiss);
-      this.modal.present();
-    });
+    // this.pageState.question1$.pipe(
+    //   withLatestFrom(
+    //     this.pageState.question2$,
+    //     this.pageState.question3$,
+    //     this.pageState.question4$,
+    //     this.pageState.question5$,
+    //     this.pageState.overallPercentage$,
+    //   ),
+    // ).subscribe(([question1, question2, question3, question4, question5, overallPercentage]) => {
+    //   this.modal = this.modalController.create('CpcEndTestModal', {
+    //     cpcQuestions: [question1, question2, question3, question4, question5],
+    //     totalPercentage: overallPercentage,
+    //   }, options);
+    //   this.modal.onDidDismiss(this.onModalDismiss);
+    //   this.modal.present();
+    // });
   }
 
   onModalDismiss = (event: ModalEvent): void => {
@@ -191,6 +195,4 @@ export class TestReportCatCPCPage extends BasePageComponent {
         break;
     }
   }
-
-
 }

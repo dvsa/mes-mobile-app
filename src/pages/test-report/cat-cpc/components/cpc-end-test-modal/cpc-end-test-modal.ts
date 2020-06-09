@@ -10,6 +10,7 @@ import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
 })
 export class CpcEndTestModal implements OnInit {
   questions: (Question | Question5)[];
+  totalPercentage: number;
 
   constructor(
     private viewCtrl: ViewController,
@@ -17,21 +18,20 @@ export class CpcEndTestModal implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(`init`);
     this.questions = this.navParams.get('cpcQuestions');
-    console.log(this.questions);
+    this.totalPercentage = this.navParams.get('totalPercentage');
   }
 
-  onCancel() {
-    this.viewCtrl.dismiss(ModalEvent.CANCEL);
+  async onCancel() {
+    await this.viewCtrl.dismiss(ModalEvent.CANCEL);
   }
 
-  onContinue() {
-    this.viewCtrl.dismiss(ModalEvent.CONTINUE);
+  async onContinue() {
+    await this.viewCtrl.dismiss(ModalEvent.CONTINUE);
   }
 
-  onTerminate() {
-    this.viewCtrl.dismiss(ModalEvent.TERMINATE);
+  async onTerminate() {
+    await this.viewCtrl.dismiss(ModalEvent.TERMINATE);
   }
 
 }
