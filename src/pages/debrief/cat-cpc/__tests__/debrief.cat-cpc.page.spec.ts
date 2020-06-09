@@ -57,50 +57,26 @@ describe('DebriefCatCPCPage', () => {
                   question1: {
                     questionCode: 'Q12',
                     title: 'Loading the vehicle',
-                    subtitle: 'Show me: ',
-                    additionalItems: [
-                      'a) how you\'d check the maximum authorised mass of this vehicle',
-                      'b) what other checks you\'d carry out to make sure the vehicle\'s not overloaded',
-                      'c) if you\'re still in doubt, what else you could do',
-                    ],
                     score: 20,
                   },
                   question2: {
                     questionCode: 'Q04',
                     title: 'Security of vehicle and contents',
-                    subtitle: 'You are about to drive a high sided vehicle on an unfamilar route. ',
-                    additionalItems: [
-                      'a) Show me the visual checks you would make before starting your journey',
-                      'b) If there is any doubt of the vehicles height what else could you do?',
-                      'c) If you are involved in a railway bridge strike what action should you take? ',
-                    ],
                     score: 20,
                   },
                   question3: {
                     questionCode: 'Q15',
                     title: 'Preventing criminality and trafficking in illegal immigrants',
-                    subtitle: 'You\'ve parked at the docks and, following a rest break, ' +
-                      'you suspect your vehicle may have been tampered with. Show me what checks you\'d ' +
-                      'make around and inside your vehicle before continuing your journey.',
-                    additionalItems: [],
                     score: 20,
                   },
                   question4: {
                     questionCode: 'Q11',
                     title: 'Assessing emergency situations',
-                    subtitle: 'You\'re driving on a motorway and flames appear from the engine compartment. Show me:',
-                    additionalItems: [
-                      'a) how you’d deal with this small electrical wiring fire',
-                      'b) which is the appropriate fire extinguisher to use on this fire',
-                    ],
                     score: 20,
                   },
                   question5: {
                     questionCode: 'Q05',
                     title: 'Ability to prevent physical risk',
-                    subtitle: 'Show me and explain the daily ' +
-                      'safety checks you\'d make to this vehicle before driving on the road.',
-                    additionalItems: [],
                     score: 20,
                   },
                   totalPercent: 100,
