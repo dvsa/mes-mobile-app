@@ -113,10 +113,6 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
   }
 
   toggleShowMeQuestion = (): void => {
-    if (this.hasSeriousFault() || this.hasDangerousFault()) {
-      return;
-    }
-
     this.store$.dispatch(new VehicleChecksCompletedToggle());
     this.selectedShowMeQuestion = !this.selectedShowMeQuestion;
   }
