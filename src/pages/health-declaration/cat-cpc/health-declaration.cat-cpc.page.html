@@ -26,7 +26,7 @@
       <receipt-declaration [formGroup]="form" [selected]="pageState.receiptDeclarationAccepted$ | async"
                            (receiptDeclarationChange)="receiptDeclarationChanged()" [certificateNumber]="pageState.passCertificateNumber$ | async">
       </receipt-declaration>
-      <div class="signaturePadding"></div>
+      <div class="cpc-signature-padding"></div>
       <signature [formGroup]="form" [signature]="pageState.signature$ | async"
                  [drawCompleteAction]="getSignatureDrawCompleteAction()" [clearAction]="getSignatureClearAction()">
       </signature>
