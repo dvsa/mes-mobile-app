@@ -11,7 +11,7 @@ const initialState: Question = {
   answer2: null,
   answer3: null,
   answer4: null,
-  score: null,
+  score: 0,
 };
 const additionalAnswers = {
   answer5: null,

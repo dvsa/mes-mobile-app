@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Modal, ModalController } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
-import { Question, Question5, TestData } from '@dvsa/mes-test-schema/categories/CPC';
+import { CategoryCode, Question, Question5, TestData } from '@dvsa/mes-test-schema/categories/CPC';
 import { Observable, Subscription, combineLatest } from 'rxjs';
 
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -34,6 +34,8 @@ import { CPCQuestionProvider } from '../../../providers/cpc-questions/cpc-questi
 import { CAT_CPC } from '../../page-names.constants';
 import { ModalEvent } from '../test-report.constants';
 import { CalculateTestResult, TerminateTestFromTestReport } from '../test-report.actions';
+import { TestResultProvider } from '../../../providers/test-result/test-result';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -44,6 +46,7 @@ interface TestReportPageState {
   question4$: Observable<Question>;
   question5$: Observable<Question5>;
   overallPercentage$: Observable<number>;
+  category$: Observable<CategoryCode>;
 }
 
 type ToggleEvent = {
@@ -70,8 +73,10 @@ export class TestReportCatCPCPage extends BasePageComponent {
   modal: Modal;
   questions: (Question | Question5) [];
   overallPercentage: number;
+  category: CategoryCode;
 
   constructor(
+    private testResultProvider: TestResultProvider,
     public store$: Store<StoreModel>,
     public navController: NavController,
     public navParams: NavParams,
@@ -127,6 +132,9 @@ export class TestReportCatCPCPage extends BasePageComponent {
         select(getTestData),
         select(getTotalPercent),
       ),
+      category$: currentTest$.pipe(
+        select(getTestCategory),
+      ),
     };
     this.setUpSubscription();
   }
@@ -165,12 +173,17 @@ export class TestReportCatCPCPage extends BasePageComponent {
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    this.modal = this.modalController.create('CpcEndTestModal', {
-      cpcQuestions: this.questions,
-      totalPercentage: this.overallPercentage,
-    }, options);
-    this.modal.onDidDismiss(this.onModalDismiss);
-    this.modal.present();
+    this.testResultProvider.calculateTestResult(this.category, this.testData).subscribe(
+      (result) => {
+        this.modal = this.modalController.create('CpcEndTestModal', {
+          cpcQuestions: this.questions,
+          totalPercentage: this.overallPercentage,
+          testResult: result,
+        }, options);
+        this.modal.onDidDismiss(this.onModalDismiss);
+        this.modal.present();
+      },
+    );
   }
 
   onModalDismiss = (event: ModalEvent): void => {
@@ -186,26 +199,25 @@ export class TestReportCatCPCPage extends BasePageComponent {
     }
   }
 
-  setUpSubscription() {
-    const {
-      question1$,
-      question2$,
-      question3$,
-      question4$,
-      question5$,
-      overallPercentage$,
-    } = this.pageState;
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
+  setUpSubscription() {
     this.subscription = combineLatest(
-      question1$,
-      question2$,
-      question3$,
-      question4$,
-      question5$,
-      overallPercentage$,
-    ).subscribe(([question1, question2, question3, question4, question5, overallPercentage]) => {
+      this.pageState.question1$,
+      this.pageState.question2$,
+      this.pageState.question3$,
+      this.pageState.question4$,
+      this.pageState.question5$,
+      this.pageState.overallPercentage$,
+      this.pageState.category$,
+    ).subscribe(([question1, question2, question3, question4, question5, overallPercentage, category]) => {
       this.questions = [question1, question2, question3, question4, question5];
       this.overallPercentage = overallPercentage;
+      this.category = category;
     });
   }
 }

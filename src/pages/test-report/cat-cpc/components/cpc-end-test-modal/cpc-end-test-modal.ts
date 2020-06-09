@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import { ModalEvent } from '../../../test-report.constants';
-import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
+import { ActivityCode, Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
+import { ActivityCodes } from '../../../../../shared/models/activity-codes';
 
 @IonicPage()
 @Component({
@@ -11,6 +12,7 @@ import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
 export class CpcEndTestModal implements OnInit {
   questions: (Question | Question5)[];
   totalPercentage: number;
+  testResult: ActivityCode;
 
   constructor(
     private viewCtrl: ViewController,
@@ -20,6 +22,7 @@ export class CpcEndTestModal implements OnInit {
   ngOnInit() {
     this.questions = this.navParams.get('cpcQuestions');
     this.totalPercentage = this.navParams.get('totalPercentage');
+    this.testResult = this.navParams.get('testResult');
   }
 
   async onCancel() {
@@ -32,6 +35,14 @@ export class CpcEndTestModal implements OnInit {
 
   async onTerminate() {
     await this.viewCtrl.dismiss(ModalEvent.TERMINATE);
+  }
+
+  getTestResultLabel(): string {
+    return (this.testResult === ActivityCodes.PASS ? 'Passed' : 'Failed');
+  }
+
+  getTestResultClass(): string {
+    return (this.testResult === ActivityCodes.PASS ? 'test-result-pass-label' : 'test-result-fail-label');
   }
 
 }

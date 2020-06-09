@@ -25,4 +25,12 @@ end-test-modal {
     color: map-get($colors-gds, gds-black);
   }
 
+  .test-result-pass-label {
+    color: map-get($colors-gds, gds-green);
+  }
+
+  .test-result-fail-label {
+    color: map-get($colors-gds, gds-red);
+  }
+
 }
