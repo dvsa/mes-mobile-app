@@ -186,7 +186,6 @@ export class HealthDeclarationCatCpcPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      // TODO confirm these next two lines are needed
       this.persistAndNavigate(false);
       return;
     }
@@ -195,31 +194,6 @@ export class HealthDeclarationCatCpcPage extends BasePageComponent {
         this.store$.dispatch(new HealthDeclarationValidationError(`${controlName} is blank`));
       }
     });
-  }
-
-  showConfirmHealthDeclarationModal() {
-    const shortMessage = 'Remind the candidate to contact DVLA';
-    const extendedMessage =
-      // tslint:disable-next-line:max-line-length
-      `You need to give the provisional licence back to the candidate.<br/>The field 'Driver licence received' will be automatically changed to 'no'.<br/>${shortMessage}`;
-    const alert = this.alertController.create({
-      title: 'The candidate has not confirmed the health declaration',
-      message: this.licenseProvided ? extendedMessage : shortMessage,
-      cssClass: 'confirm-declaration-modal',
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: () => {
-          },
-        },
-        {
-          text: 'Continue',
-          handler: () => this.persistAndNavigate(true),
-        },
-      ],
-      enableBackdropDismiss: false,
-    });
-    alert.present();
   }
 
   persistAndNavigate(resetLicenseProvided: boolean) {
