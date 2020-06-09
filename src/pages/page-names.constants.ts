@@ -162,6 +162,7 @@ export const CAT_CPC = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatCPCPage',
   COMMUNICATION_PAGE: 'CommunicationCatCPCPage',
   DEBRIEF_PAGE: 'DebriefCatCPCPage',
+  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatCPCPage',
   OFFICE_PAGE: 'OfficeCatCPCPage',
   PASS_FINALISATION_PAGE: 'PassFinalisationCatCPCPage',
   TEST_REPORT_PAGE: 'TestReportCatCPCPage',
