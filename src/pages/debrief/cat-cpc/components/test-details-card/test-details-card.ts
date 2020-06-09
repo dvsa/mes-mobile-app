@@ -28,6 +28,7 @@ export class TestDetailsCardComponent implements OnInit {
   @Input()
   public overallScore: number;
 
+  @Input()
   public questions: QuestionUnion[];
 
   constructor() {
