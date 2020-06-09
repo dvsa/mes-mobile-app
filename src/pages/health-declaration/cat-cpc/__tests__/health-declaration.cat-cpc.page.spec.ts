@@ -35,11 +35,11 @@ import { SignatureComponent } from '../../components/signature/signature';
 import { ReceiptDeclarationComponent } from '../../components/receipt-declaration/receipt-declaration';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
-import { HealthDeclarationCatCpcPage } from '../health-declaration.cat-cpc.page';
+import { HealthDeclarationCatCPCPageModule } from '../health-declaration.cat-cpc.page';
 
 describe('HealthDeclarationCatCPCPage', () => {
-  let fixture: ComponentFixture<HealthDeclarationCatCpcPage>;
-  let component: HealthDeclarationCatCpcPage;
+  let fixture: ComponentFixture<HealthDeclarationCatCPCPageModule>;
+  let component: HealthDeclarationCatCPCPageModule;
   let store$: Store<StoreModel>;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let translate: TranslateService;
@@ -56,7 +56,7 @@ describe('HealthDeclarationCatCPCPage', () => {
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        HealthDeclarationCatCpcPage,
+        HealthDeclarationCatCPCPageModule,
         MockComponent(SignatureComponent),
         MockComponent(ReceiptDeclarationComponent),
       ],
@@ -101,7 +101,7 @@ describe('HealthDeclarationCatCPCPage', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(HealthDeclarationCatCpcPage);
+    fixture = TestBed.createComponent(HealthDeclarationCatCPCPageModule);
     component = fixture.componentInstance;
     deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
     store$ = TestBed.get(Store);

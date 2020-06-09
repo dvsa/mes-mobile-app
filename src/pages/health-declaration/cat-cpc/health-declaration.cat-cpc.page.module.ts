@@ -7,14 +7,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { HealthDeclarationEffects } from '../health-declaration.effects';
 import { HealthDeclarationComponentsModule } from '../components/health-declaration.components.module';
-import { HealthDeclarationCatCpcPage } from './health-declaration.cat-cpc.page';
+import { HealthDeclarationCatCPCPageModule } from './health-declaration.cat-cpc.page';
 
 @NgModule({
   declarations: [
-    HealthDeclarationCatCpcPage,
+    HealthDeclarationCatCPCPageModule,
   ],
   imports: [
-    IonicPageModule.forChild(HealthDeclarationCatCpcPage),
+    IonicPageModule.forChild(HealthDeclarationCatCPCPageModule),
     EffectsModule.forFeature([
       HealthDeclarationAnalyticsEffects,
       HealthDeclarationEffects,
