@@ -6,7 +6,6 @@
   </ion-row>
   <modal-result-item *ngFor="let question of questions" [label]="question.questionCode" [score]="question.score" [isPass]="question.score >= 15"> </modal-result-item>
   <modal-result-item label="TOTAL" [score]="totalPercentage" [isPass]="testResult == 1"> </modal-result-item>
-  <!--NEW STUFF-->
   <ion-row justify-content-center >
     <ion-col col-84>
       <button ion-button class="mes-primary-button" (click)="onContinue()">
