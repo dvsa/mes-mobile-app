@@ -1,7 +1,7 @@
 debrief-cpc-card {
   .cpc-line-break {
     border-bottom: 1px solid;
-    border-bottom-color: #9b9b9b;
+    border-bottom-color: map_get($colors-gds, gds-grey-3);
     margin-top: 2em;
     padding-bottom: 2em;
   }
