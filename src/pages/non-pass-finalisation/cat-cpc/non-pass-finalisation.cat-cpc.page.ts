@@ -17,7 +17,6 @@ import {
   isTestOutcomeSet,
   getTestOutcomeText,
 } from '../../../modules/tests/tests.selector';
-import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
 import {
   getUntitledCandidateName,
   getCandidateDriverNumber,
@@ -52,6 +51,7 @@ import {
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;

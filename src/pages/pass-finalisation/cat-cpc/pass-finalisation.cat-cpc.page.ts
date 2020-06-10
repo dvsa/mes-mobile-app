@@ -2,19 +2,15 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
-import {
-  PassFinalisationViewDidEnter,
-  PassFinalisationValidationError,
-} from '../pass-finalisation.actions';
-import {
-  PassCertificateNumberChanged,
-} from '../../../modules/tests/pass-completion/pass-completion.actions';
-import {
-  getPassCertificateNumber,
-} from '../../../modules/tests/pass-completion/pass-completion.selector';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/AM2';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { Observable, Subscription, merge } from 'rxjs';
-import { getCandidate } from '../../../modules/tests/journal-data/cat-c/candidate/candidate.cat-c.reducer';
+import { map } from 'rxjs/operators';
+
+import { StoreModel } from '../../../shared/models/store.model';
+import { PassFinalisationViewDidEnter, PassFinalisationValidationError } from '../pass-finalisation.actions';
+import { PassCertificateNumberChanged } from '../../../modules/tests/pass-completion/pass-completion.actions';
+import { getPassCertificateNumber } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
@@ -25,16 +21,12 @@ import {
   getApplicationNumber,
 } from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
 import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../modules/tests/tests.selector';
-import { map } from 'rxjs/operators';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_CPC } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import { isDebriefWitnessed } from '../../../modules/tests/test-summary/common/test-summary.selector';
-import {
-  DebriefWitnessed,
-  DebriefUnwitnessed,
-} from '../../../modules/tests/test-summary/common/test-summary.actions';
+import { DebriefWitnessed, DebriefUnwitnessed } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../../office/office-behaviour-map.cat-cpc';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
@@ -51,10 +43,9 @@ import {
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
-import { getPassCompletion } from '../../../modules/tests/pass-completion/cat-c/pass-completion.cat-c.reducer';
+import { getPassCompletion } from '../../../modules/tests/pass-completion/cat-cpc/pass-completion.cat-cpc.reducer';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/AM2';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
