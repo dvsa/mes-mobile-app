@@ -27,7 +27,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: '100 litres fuel = 100Kg / 0.1 tonne',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q02',
@@ -55,7 +55,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: '250 litres fuel = 250kg / 0.25 tonne',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q03',
@@ -79,7 +79,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Trim should be clean',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q04',
@@ -103,7 +103,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Check the passenger list to make sure you\'ve got the correct numbers of legitimate passengers',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q06',
@@ -129,7 +129,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Isolate the vehicle (disconnect electric supply)',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q07',
@@ -157,7 +157,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Ask the passenger to move to another seat if possible / refer to company policy',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q08',
@@ -184,7 +184,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: ' Identifies water or foam extinguisher(s) (refer to picture)',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q09',
@@ -210,7 +210,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Physical check of the air system to make sure air lines are serviceable',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q10',
@@ -233,7 +233,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Check for anything that could cause slips/trips or could cause soil/damage to clothing',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q11',
@@ -262,7 +262,7 @@ export const pcvQuestions: CPCQuestion[] = [
       // tslint:disable-next-line:max-line-length
       label: 'Good all round observation is required, as well as extensive use of mirrors, to check for any rear end sweep',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q12',
@@ -287,7 +287,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Enough fuel for the journey, Ad Blue (If appropriate)',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q13',
@@ -314,7 +314,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Isolate the vehicle disconnect electric supply and isolate fuel cut off switch',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q14',
@@ -338,7 +338,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Check nearside mirror for any late passengers before moving away',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q15',
@@ -362,7 +362,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Contact emergency services',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q16',
@@ -389,7 +389,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Driver must make sure all passengers understand signs and legal requirements',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q17',
@@ -414,7 +414,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Check the passenger list to make sure you\'ve got the correct numbers of legitimate passengers',
     },
-    score: null,
+    score: 0,
   },
   {
     questionCode: 'Q18',
@@ -438,7 +438,7 @@ export const pcvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Check the passenger list to make sure you\'ve got the correct numbers of legitimate passengers',
     },
-    score: null,
+    score: 0,
   },
 ];
 
@@ -487,5 +487,5 @@ export const pcvQuestion5: Question5 = {
     selected: false,
     label: 'Air leaks',
   },
-  score: null,
+  score: 0,
 };

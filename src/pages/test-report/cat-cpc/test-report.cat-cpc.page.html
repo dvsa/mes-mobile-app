@@ -2,7 +2,7 @@
     <ion-navbar hideBackButton>
         <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
         <ion-buttons end>
-            <button ion-button id="end-test-button">End test</button>
+            <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
@@ -46,4 +46,4 @@
 
 </ion-content>
 
-<question-footer [questionNumber]="pageNumber" (questionPageChange)="questionPageChanged($event)"></question-footer>
+<question-footer [questionNumber]="pageNumber" (questionPageChange)="questionPageChanged($event)" (testSummaryRequested)="onEndTestClick()"></question-footer>

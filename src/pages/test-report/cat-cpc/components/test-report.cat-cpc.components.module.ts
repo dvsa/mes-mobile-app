@@ -45,4 +45,4 @@ import { QuestionScoreComponent } from './question-score/question-score';
     QuestionScoreComponent,
   ],
 })
-export class TestReportCatAMod1ComponentsModule { }
+export class TestReportCatCPCComponentsModule { }

@@ -9,6 +9,9 @@ export class QuestionFooterComponent {
   @Output()
   questionPageChange = new EventEmitter();
 
+  @Output()
+  testSummaryRequested = new EventEmitter<boolean>();
+
   @Input()
   questionNumber: number;
 
@@ -29,8 +32,7 @@ export class QuestionFooterComponent {
   }
 
   goToSummary = (): void => {
-    // @TODO: Create logic for presenting modal
-    return;
+    this.testSummaryRequested.emit(true);
   }
 
 }

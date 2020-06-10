@@ -31,11 +31,21 @@ import { QuestionSubtitleComponent } from '../components/question-subtitle/quest
 import { QuestionTitleComponent } from '../components/question-title/question-title';
 import { catCPCTestData, mockToggleEvent } from '../__mocks__/test-report.cat-cpc.mock';
 import { QuestionNumber } from '../../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
+import { TestResultProvider } from '../../../../providers/test-result/test-result';
+import { TestResultProviderMock } from '../../../../providers/test-result/__mocks__/test-result.mock';
+import { lgvQuestion5, lgvQuestions } from '../../../../shared/constants/cpc-questions/cpc-lgv-questions.constants';
+import { ActivityCodes } from '../../../../shared/models/activity-codes';
+import { ModalEvent } from '../../test-report.constants';
+import { CalculateTestResult, TerminateTestFromTestReport } from '../../test-report.actions';
+import { CAT_CPC } from '../../../page-names.constants';
+import { Subscription, of } from 'rxjs';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('TestReportCatCPCPage', () => {
   let fixture: ComponentFixture<TestReportCatCPCPage>;
   let component: TestReportCatCPCPage;
   let store$: Store<StoreModel>;
+  let modalController: ModalController;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -79,6 +89,7 @@ describe('TestReportCatCPCPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
         { provide: CPCQuestionProvider, useClass: CpcQuestionsMock },
+        { provide: TestResultProvider, useClass: TestResultProviderMock },
       ],
     });
   });
@@ -86,6 +97,7 @@ describe('TestReportCatCPCPage', () => {
   beforeEach(async(() => {
     fixture = TestBed.createComponent(TestReportCatCPCPage);
     component = fixture.componentInstance;
+    modalController = TestBed.get(ModalController);
     store$ = TestBed.get(Store);
   }));
 
@@ -116,6 +128,68 @@ describe('TestReportCatCPCPage', () => {
 
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new PopulateTestScore(40));
+      });
+    });
+
+    describe('onEndTestClick', () => {
+      it('should create the end test modal with neccessary params', async() => {
+        component.questions = [lgvQuestions[0]];
+        component.overallPercentage = 90;
+        await component.onEndTestClick();
+        expect(modalController.create).toHaveBeenCalledWith('CPCEndTestModal', {
+          cpcQuestions: component.questions,
+          totalPercentage: 90,
+          testResult: ActivityCodes.PASS,
+        }, { cssClass: 'mes-modal-alert text-zoom-regular' });
+      });
+    });
+
+    describe('onModalDismiss', () => {
+      it('should calculate the test result if CONTINUE', () => {
+        spyOn(store$, 'dispatch');
+        spyOn(component.navController, 'push').and.callThrough();
+        component.onModalDismiss(ModalEvent.CONTINUE);
+        expect(store$.dispatch).toHaveBeenCalledWith(new CalculateTestResult());
+        expect(component.navController.push).toHaveBeenCalledWith(CAT_CPC.DEBRIEF_PAGE);
+      });
+      it('should terminate the test result if TERMINATE', () => {
+        spyOn(store$, 'dispatch');
+        spyOn(component.navController, 'push').and.callThrough();
+        component.onModalDismiss(ModalEvent.TERMINATE);
+        expect(store$.dispatch).toHaveBeenCalledWith(new TerminateTestFromTestReport());
+        expect(component.navController.push).toHaveBeenCalledWith(CAT_CPC.DEBRIEF_PAGE);
+      });
+    });
+
+    describe('ionViewDidLeave', () => {
+      it('should cancel the subscription', () => {
+        component.subscription = new Subscription();
+        spyOn(component.subscription, 'unsubscribe');
+        component.ionViewDidLeave();
+        expect(component.subscription.unsubscribe).toHaveBeenCalled();
+      });
+    });
+
+    describe('setUpSubscription', () => {
+      it('should subscribe to all observables and update class properties', () => {
+        component.ngOnInit();
+        component.pageState.question1$ = of(lgvQuestions[0]);
+        component.pageState.question2$ = of(lgvQuestions[1]);
+        component.pageState.question3$ = of(lgvQuestions[2]);
+        component.pageState.question4$ = of(lgvQuestions[3]);
+        component.pageState.question5$ = of(lgvQuestion5[0]);
+        component.pageState.overallPercentage$ = of(10);
+        component.pageState.category$ = of(TestCategory.CCPC);
+        component.setUpSubscription();
+        expect(component.questions).toEqual([
+          lgvQuestions[0],
+          lgvQuestions[1],
+          lgvQuestions[2],
+          lgvQuestions[3],
+          lgvQuestion5[0],
+        ]);
+        expect(component.overallPercentage).toEqual(10);
+        expect(component.category).toEqual(TestCategory.CCPC);
       });
     });
 
