@@ -9,4 +9,20 @@ debrief-cpc-card {
     margin-top: 2em;
     margin-bottom: 1em;
   }
+  .cpc-percentage {
+    margin-left: 8em;
+  }
+  .cpc-answer-icon {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    padding-top: 50%;
+    padding-bottom: 50%;
+    .text-zoom-large & {
+      padding-top: 4px;
+    }
+    .text-zoom-x-large & {
+      padding-top: 6px;
+    }
+  }
 }
