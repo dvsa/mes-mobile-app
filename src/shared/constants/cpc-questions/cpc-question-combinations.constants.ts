@@ -1,7 +1,4 @@
-// @TODO: Move to schema definition
-export type CombinationCodes =
-  'LGV1' | 'LGV2' | 'LGV3' | 'LGV4' | 'LGV5' | 'LGV6' | 'LGV7' | 'LGV8' |
-  'PCV1' | 'PCV2' | 'PCV3' | 'PCV4' | 'PCV5' | 'PCV6' | 'PCV7' | 'PCV8';
+import { CombinationCodes } from '@dvsa/mes-test-schema/categories/CPC';
 
 export enum QuestionNumber {
   ONE = 0,
@@ -12,7 +9,7 @@ export enum QuestionNumber {
 }
 
 export interface Combination {
-  code: string;
+  code: CombinationCodes;
   questions: string[];
   additionalText?: string;
 }

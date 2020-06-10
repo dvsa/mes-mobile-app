@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
-import { Configuration, Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
+import { CombinationCodes, Configuration, Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { Observable } from 'rxjs';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
@@ -44,7 +44,6 @@ import {
 } from '../../../modules/tests/test-data/cat-cpc/questions/questions.action';
 import {
   Combination,
-  CombinationCodes,
 } from '../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 
@@ -130,7 +129,7 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
     this.store$.dispatch(new PersistTests());
   }
 
-  combinationSelected(combination: string): void {
+  combinationSelected(combination: CombinationCodes): void {
     const questions: Question[] = this.cpcQuestionProvider.getQuestionsBank(combination);
     const question5: Question5 = this.cpcQuestionProvider.getQuestion5ByVehicleType(combination);
 
