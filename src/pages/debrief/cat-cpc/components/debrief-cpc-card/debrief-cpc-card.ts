@@ -4,6 +4,8 @@ import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
 export type QuestionUnion = Question
 | Question5;
 
+export const MINIMUM_QUESTION_SCORE: number = 15;
+
 @Component({
   selector: 'debrief-cpc-card',
   templateUrl: 'debrief-cpc-card.html',
@@ -29,6 +31,8 @@ export class DebriefCPCCardComponent implements OnInit {
   public overallScore: number;
 
   @Input()
+  public testOutcome: string;
+
   public questions: QuestionUnion[];
 
   constructor() {
@@ -43,31 +47,15 @@ export class DebriefCPCCardComponent implements OnInit {
   }
 
   shouldTickBox = (question: Question | Question5): boolean => {
-    return question.score > 15;
+    return question.score >= MINIMUM_QUESTION_SCORE;
   }
 
   getTotalScore = (): number => {
-    let count = 0;
-    for (const question of this.questions) {
-      count = count + this.getQuestionPercentage(question);
-    }
-    return count;
+    return this.overallScore;
   }
 
   isPass = (): boolean => {
-    let percentageRequirement: boolean = false;
-    for (const question of this.questions) {
-      if (question.score === 20) {
-        percentageRequirement = true;
-      }
-      if (question.score < 15) {
-        return false;
-      }
-    }
-    if (!percentageRequirement || this.getTotalScore() < 80) {
-      return false;
-    }
-    return true;
+    return this.testOutcome === 'Pass' ? true : false;
   }
 
   ngOnInit(): void {
