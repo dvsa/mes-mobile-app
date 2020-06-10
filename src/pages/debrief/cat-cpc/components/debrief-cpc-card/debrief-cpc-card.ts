@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
+import { TestOutcome } from '../../../../../shared/models/test-outcome';
 
 export type QuestionUnion = Question
 | Question5;
@@ -51,7 +52,7 @@ export class DebriefCPCCardComponent implements OnInit {
   }
 
   isPass = (): boolean => {
-    return this.testOutcome === 'Pass' ? true : false;
+    return this.testOutcome === TestOutcome.PASS;
   }
 
   ngOnInit(): void {
