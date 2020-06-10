@@ -13,11 +13,11 @@ export class ModalResultItemComponent {
   score: number;
 
   @Input()
-  isPass: number;
+  isPass: boolean;
 
   getOutcomeIcon(): string {
-    const passImage = '../../../../../../../assets/imgs/greenCorrectAnswer.png';
-    const failImage = '../../../../../../../assets/imgs/redWrongAnswer.png';
+    const passImage = 'assets/imgs/greenCorrectAnswer.png';
+    const failImage = 'assets/imgs/redWrongAnswer.png';
     return (this.isPass ? passImage : failImage);
   }
 

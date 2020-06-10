@@ -9,7 +9,7 @@ import { ActivityCodes } from '../../../../../shared/models/activity-codes';
   selector: 'end-test-modal',
   templateUrl: 'cpc-end-test-modal.html',
 })
-export class CpcEndTestModal implements OnInit {
+export class CPCEndTestModal implements OnInit {
   questions: (Question | Question5)[];
   totalPercentage: number;
   testResult: ActivityCode;

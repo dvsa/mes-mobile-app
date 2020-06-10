@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { CpcEndTestModal } from './cpc-end-test-modal';
+import { CPCEndTestModal } from './cpc-end-test-modal';
 import { ModalResultItemComponent } from './components/modal-result-item/modal-result-item';
 
 @NgModule({
   declarations: [
-    CpcEndTestModal,
+    CPCEndTestModal,
     ModalResultItemComponent,
   ],
   imports: [
-    IonicPageModule.forChild(CpcEndTestModal),
+    IonicPageModule.forChild(CPCEndTestModal),
   ],
   exports: [
-    CpcEndTestModal,
+    CPCEndTestModal,
     ModalResultItemComponent,
   ],
 })
-export class CpcEndTestModalModule { }
+export class CPCEndTestModalModule { }

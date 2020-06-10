@@ -171,17 +171,17 @@ export class TestReportCatCPCPage extends BasePageComponent {
     ]).get(questionNumber);
   }
 
-  onEndTestClick = (): void => {
+  onEndTestClick = async (): Promise<void> => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     this.testResultProvider.calculateTestResult(this.category, this.testData).subscribe(
-      (result) => {
-        this.modal = this.modalController.create('CpcEndTestModal', {
+      async (result) => {
+        this.modal =  await this.modalController.create('CPCEndTestModal', {
           cpcQuestions: this.questions,
           totalPercentage: this.overallPercentage,
           testResult: result,
         }, options);
         this.modal.onDidDismiss(this.onModalDismiss);
-        this.modal.present();
+        await this.modal.present();
       },
     );
   }
