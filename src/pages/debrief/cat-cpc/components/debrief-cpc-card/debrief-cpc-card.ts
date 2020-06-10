@@ -50,10 +50,6 @@ export class DebriefCPCCardComponent implements OnInit {
     return question.score >= MINIMUM_QUESTION_SCORE;
   }
 
-  getTotalScore = (): number => {
-    return this.overallScore;
-  }
-
   isPass = (): boolean => {
     return this.testOutcome === 'Pass' ? true : false;
   }

@@ -1,5 +1,5 @@
 import { Question } from '@dvsa/mes-test-schema/categories/CPC';
-import { DebriefCPCCardComponent, QuestionUnion } from '../debrief-cpc-card';
+import { DebriefCPCCardComponent } from '../debrief-cpc-card';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { configureTestSuite } from 'ng-bullet';
 import { AppModule } from '../../../../../../app/app.module';
@@ -80,36 +80,14 @@ describe('DebriefCPCCardComponent', () => {
     });
   });
 
-  describe('getTotalScore', () => {
-    it('should return a total score of 100', () => {
-      const questions: QuestionUnion[] = [question, question, question, question, question];
-      component.questions = questions;
-      const result = component.getTotalScore();
-      expect(result).toEqual(100);
-    });
-  });
-
   describe('isPass', () => {
-    it('should return true if all questions have 15% and a minimum of 1 question with 20%', () => {
-      const questions: QuestionUnion[] = [question, question, question, question, question];
-      component.questions = questions;
-      const result = component.isPass();
-      expect(result).toEqual(true);
+    it('should return true if the testOutcome equals Pass', () => {
+      component.testOutcome = 'Pass';
+      expect(component.isPass()).toEqual(true);
     });
-    it('should return false if there is a question below 15%', () => {
-      const malformedQuestion: Question = JSON.parse(JSON.stringify(question));
-      malformedQuestion.score = 14;
-      const questions: QuestionUnion[] = [question, question, question, question, malformedQuestion];
-      component.questions = questions;
-      const result = component.isPass();
-      expect(result).toEqual(false);
-    });
-    it('should return false if there is no question with 20%', () => {
-      question.score = 15;
-      const questions: QuestionUnion[] = [question, question, question, question, question];
-      component.questions = questions;
-      const result = component.isPass();
-      expect(result).toEqual(false);
+    it('should return false if the testOutcome does not equal Pass', () => {
+      component.testOutcome = 'Fail';
+      expect(component.isPass()).toEqual(false);
     });
   });
 });
