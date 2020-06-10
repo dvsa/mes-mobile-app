@@ -172,5 +172,4 @@ export const CAT_CPC = {
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatCPCPage',
   VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatCPCPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatCPCPage',
-  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatCPCPage',
 };
