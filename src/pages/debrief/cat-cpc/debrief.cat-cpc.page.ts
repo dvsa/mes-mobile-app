@@ -30,6 +30,7 @@ import {
 } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.reducer';
 import { CAT_CPC } from '../../page-names.constants';
+import { TestOutcome as OutcomeType } from '../../../modules/tests/tests.constants';
 import { TestOutcome } from '../../../shared/models/test-outcome';
 
 interface DebriefPageState {
@@ -136,7 +137,7 @@ export class DebriefCatCPCPage extends BasePageComponent {
   }
 
   isTerminated(): boolean {
-    return this.outcome !== TestOutcome.PASS && this.outcome !== TestOutcome.FAIL;
+    return this.outcome === OutcomeType.Terminated;
   }
 
   endDebrief(): void {
