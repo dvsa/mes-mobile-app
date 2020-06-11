@@ -9,7 +9,8 @@
 </ion-header>
 
 <ion-content>
-  <debrief-cpc-card [overallScore]="pageState.overallScore$ | async"
+  <debrief-cpc-card *ngIf="!this.isTerminated()"
+    [overallScore]="pageState.overallScore$ | async"
                     [question1]="pageState.question1$ | async"
                     [question2]="pageState.question2$ | async"
                     [question3]="pageState.question3$ | async"

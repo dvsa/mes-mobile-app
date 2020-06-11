@@ -29,8 +29,8 @@ import {
   getQuestion3, getQuestion4, getQuestion5, getTotalPercent,
 } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.reducer';
-import { TestOutcome } from '../../../shared/models/test-outcome';
 import { CAT_CPC } from '../../page-names.constants';
+import { TestOutcome } from '../../../shared/models/test-outcome';
 
 interface DebriefPageState {
   conductedLanguage$: Observable<string>;
@@ -133,6 +133,10 @@ export class DebriefCatCPCPage extends BasePageComponent {
       this.subscription.unsubscribe();
 
     }
+  }
+
+  isTerminated(): boolean {
+    return this.outcome !== TestOutcome.PASS && this.outcome !== TestOutcome.FAIL;
   }
 
   endDebrief(): void {
