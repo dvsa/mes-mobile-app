@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CombinationCodes } from '../../../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
+import { CombinationCodes } from '@dvsa/mes-test-schema/categories/CPC';
 
 @Component({
   selector: 'module-assessment',

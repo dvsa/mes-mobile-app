@@ -1,11 +1,11 @@
 import * as combinationActionTypes from './combination.action';
-import { CombinationCodes } from '../../../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
+import { CombinationCodes } from '@dvsa/mes-test-schema/categories/CPC';
 
 const initialState: CombinationCodes = null;
 
 export function combinationReducer(
   state: CombinationCodes = initialState,
-  action: combinationActionTypes.Types): string {
+  action: combinationActionTypes.Types): CombinationCodes {
   switch (action.type) {
     case combinationActionTypes.POPULATE_COMBINATION:
       return action.payload;

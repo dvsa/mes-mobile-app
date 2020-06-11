@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Modal, ModalController } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
-import { CategoryCode, Question, Question5, TestData } from '@dvsa/mes-test-schema/categories/CPC';
+import { CombinationCodes, CategoryCode, Question, Question5, TestData } from '@dvsa/mes-test-schema/categories/CPC';
 import { Observable, Subscription, combineLatest } from 'rxjs';
 
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -12,7 +12,6 @@ import { getCandidate } from '../../../modules/tests/journal-data/common/candida
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
-  CombinationCodes,
   QuestionNumber,
 } from '../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 import { getTestData } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.reducer';
