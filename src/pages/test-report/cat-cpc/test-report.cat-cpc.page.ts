@@ -135,7 +135,11 @@ export class TestReportCatCPCPage extends BasePageComponent {
         select(getTestCategory),
       ),
     };
+  }
+
+  ionViewWillEnter() {
     this.setUpSubscription();
+    return true;
   }
 
   questionPageChanged = (pageNumber: number): void => {
