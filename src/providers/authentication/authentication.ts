@@ -28,7 +28,7 @@ export class AuthenticationProvider {
   ) {
   }
 
-  private getAuthOptions =  (appConfig: AppConfigProvider): IonicAuthOptions => {
+  private getAuthOptions =  (): IonicAuthOptions => {
     const authSettings = this.appConfig.getAppConfig().authentication;
     return {
       authConfig: 'azure',
@@ -73,7 +73,7 @@ export class AuthenticationProvider {
     this.authenticationSettings = this.appConfig.getAppConfig().authentication;
     this.employeeIdKey = this.appConfig.getAppConfig().authentication.employeeIdKey;
     this.inUnAuthenticatedMode = false;
-    this.ionicAuth = new IonicAuth(this.getAuthOptions(this.appConfig));
+    this.ionicAuth = new IonicAuth(this.getAuthOptions());
   }
 
   public isInUnAuthenticatedMode = (): boolean => {
@@ -97,6 +97,7 @@ export class AuthenticationProvider {
   }
 
   public getAuthenticationToken = async (): Promise<string> => {
+    await this.isAuthenticated();
     return this.getToken(Token.ID);
   }
 
