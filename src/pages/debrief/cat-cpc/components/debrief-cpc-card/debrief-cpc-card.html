@@ -8,10 +8,10 @@
       <ion-grid>
         <ion-list *ngFor="let question of questions; let first = first; let last = last">
           <ion-row align-items-start class="cpc-line-break">
-            <ion-col col-55>
+            <ion-col col-78>
               <h3>{{getFormattedQuestion(question)}}</h3>
             </ion-col>
-            <ion-col col-20 class="cpc-percentage">
+            <ion-col col-10 class="cpc-percentage">
               <span>{{getQuestionPercentage(question)}}%</span>
             </ion-col>
             <ion-col col-5 align-items-end>
@@ -24,10 +24,10 @@
             </ion-col>
           </ion-row>
           <ion-row *ngIf="last" class="cpc-total-padding">
-            <ion-col col-55>
+            <ion-col col-78>
               <h3>Total</h3>
             </ion-col>
-            <ion-col col-20 class="cpc-percentage">
+            <ion-col col-10 class="cpc-percentage">
               <span>
                 {{this.overallScore}}%
               </span>
