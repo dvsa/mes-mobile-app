@@ -60,7 +60,7 @@ interface HealthDeclarationPageState {
   selector: '.health-declaration-cat-cpc-page',
   templateUrl: 'health-declaration.cat-cpc.page.html',
 })
-export class HealthDeclarationCatCPCPageModule extends BasePageComponent {
+export class HealthDeclarationCatCPCPage extends BasePageComponent {
 
   @ViewChild(Navbar) navBar: Navbar;
 

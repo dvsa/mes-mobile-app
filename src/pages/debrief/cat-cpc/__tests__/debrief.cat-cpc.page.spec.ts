@@ -129,20 +129,17 @@ describe('DebriefCatCPCPage', () => {
         component.endDebrief();
         expect(store$.dispatch).toHaveBeenCalledWith(new EndDebrief);
       });
-      // TODO xit to be removed once navigation to this page is working
-      xit('should navigate to PassFinalisationPage when outcome = pass', () => {
+      it('should navigate to PassFinalisationPage when outcome = pass', () => {
         component.outcome = TestOutcome.PASS;
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith(CAT_CPC.PASS_FINALISATION_PAGE);
       });
-      // TODO xit to be removed once navigation to this page is working
-      xit('should navigate to BackToOfficePage when outcome = fail', () => {
+      it('should navigate to BackToOfficePage when outcome = fail', () => {
         component.outcome = TestOutcome.FAIL;
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith(CAT_CPC.POST_DEBRIEF_HOLDING_PAGE);
       });
-      // TODO xit to be removed once navigation to this page is working
-      xit('should navigate to the BackToOfficePage when outcomes = terminated', () => {
+      it('should navigate to the BackToOfficePage when outcomes = terminated', () => {
         component.outcome = 'Terminated';
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith(CAT_CPC.POST_DEBRIEF_HOLDING_PAGE);
