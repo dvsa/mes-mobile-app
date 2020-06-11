@@ -139,7 +139,6 @@ export class TestReportCatCPCPage extends BasePageComponent {
 
   ionViewWillEnter() {
     this.setUpSubscription();
-    return true;
   }
 
   questionPageChanged = (pageNumber: number): void => {

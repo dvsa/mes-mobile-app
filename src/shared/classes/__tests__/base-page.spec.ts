@@ -45,22 +45,29 @@ describe('Base Page', () => {
   }));
 
   describe('ionViewWillEnter()', () => {
+    beforeEach(() => {
+      spyOn(basePageComponent.navController, 'setRoot');
+    });
     it('should allow user access if authentication is not required', () => {
       basePageComponent.loginRequired = false;
-      expect(basePageComponent.ionViewWillEnter()).toBe(true);
+      basePageComponent.ionViewWillEnter();
+      expect(basePageComponent.navController.setRoot).not.toHaveBeenCalled();
     });
     it('should allow user access if authentication is required and device is not ios', () => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(false);
-      expect(basePageComponent.ionViewWillEnter()).toBe(true);
+      basePageComponent.ionViewWillEnter();
+      expect(basePageComponent.navController.setRoot).not.toHaveBeenCalled();
     });
     it('should allow user access if authenticated , is an ios device and is required', () => {
-      expect(basePageComponent.ionViewWillEnter()).toBe(true);
+      basePageComponent.ionViewWillEnter();
+      expect(basePageComponent.navController.setRoot).not.toHaveBeenCalled();
     });
     // tslint:disable-next-line:max-line-length
     it('should not allow user access if user is not authenticated, authentication is required and device is ios', () => {
       authenticationProvider.isAuthenticated =
       jasmine.createSpy('authenticationProvider.isAuthenticated').and.returnValue(false);
-      expect(basePageComponent.ionViewWillEnter()).toBe(false);
+      basePageComponent.ionViewWillEnter();
+      expect(basePageComponent.navController.setRoot).toHaveBeenCalled();
     });
 
   });
