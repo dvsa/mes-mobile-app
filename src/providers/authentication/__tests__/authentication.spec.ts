@@ -72,6 +72,7 @@ describe('Authentication', () => {
 
     it('getAuthenticationToken() should return a token', async () => {
       spyOn(dataStoreProvider, 'getItem').and.returnValue(Promise.resolve('"U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4"'));
+      spyOn(authenticationProvider.ionicAuth, 'isAuthenticated').and.returnValue(Promise.resolve(true));
       const token = await authenticationProvider.getAuthenticationToken();
 
       expect(token).toEqual('U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4');
