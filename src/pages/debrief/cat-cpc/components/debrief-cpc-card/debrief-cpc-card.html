@@ -1,0 +1,49 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>
+      <h4>Test Details</h4>
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+      <ion-grid>
+        <ion-list *ngFor="let question of questions; let first = first; let last = last">
+          <ion-row align-items-start class="cpc-line-break">
+            <ion-col col-78>
+              <h3>{{getFormattedQuestion(question)}}</h3>
+            </ion-col>
+            <ion-col col-10 class="cpc-percentage">
+              <span>{{getQuestionPercentage(question)}}%</span>
+            </ion-col>
+            <ion-col col-5 align-items-end>
+              <div class="cpc-answer-icon">
+                <img *ngIf="shouldTickBox(question)" src="assets/imgs/greenCorrectAnswer.png" alt="Correct Answer"
+                     class="correct-icon icon-image" />
+                <img *ngIf="!shouldTickBox(question)" src="assets/imgs/redWrongAnswer.png" alt="Wrong Answer"
+                     class="wrong-icon icon-image" />
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="last" class="cpc-total-padding">
+            <ion-col col-78>
+              <h3>Total</h3>
+            </ion-col>
+            <ion-col col-10 class="cpc-percentage">
+              <span>
+                {{this.overallScore}}%
+              </span>
+            </ion-col>
+            <ion-col col-5 align-items-end>
+              <div class="cpc-answer-icon">
+                <img *ngIf="isPass()" src="assets/imgs/greenCorrectAnswer.png"
+                     alt="Correct Answer"
+                     class="correct-icon icon-image"/>
+                <img *ngIf="!isPass()" src="assets/imgs/redWrongAnswer.png"
+                     alt="Wrong Answer"
+                     class="wrong-icon icon-image"/>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-grid>
+  </ion-card-content>
+</ion-card>
