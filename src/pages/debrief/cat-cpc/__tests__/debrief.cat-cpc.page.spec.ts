@@ -145,6 +145,23 @@ describe('DebriefCatCPCPage', () => {
         expect(navController.push).toHaveBeenCalledWith(CAT_CPC.POST_DEBRIEF_HOLDING_PAGE);
       });
     });
+    describe('isTerminated', () => {
+      it('should return true if the test outcome is terminated', () => {
+        component.outcome = 'Terminated';
+        const result = component.isTerminated();
+        expect(result).toEqual(true);
+      });
+      it('should return false if the test outcome is pass', () => {
+        component.outcome = 'Pass';
+        const result = component.isTerminated();
+        expect(result).toEqual(false);
+      });
+      it('should return false if the test outcome is fail', () => {
+        component.outcome = 'Fail';
+        const result = component.isTerminated();
+        expect(result).toEqual(false);
+      });
+    });
   });
 
   describe('DOM', () => {
