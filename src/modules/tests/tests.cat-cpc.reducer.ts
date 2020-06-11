@@ -5,7 +5,6 @@ import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
 import { preTestDeclarationsReducer } from './pre-test-declarations/common/pre-test-declarations.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
-import { testSummaryReducer } from './test-summary/common/test-summary.reducer';
 import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';
 import { rekeyReducer } from './rekey/rekey.reducer';
 import { rekeyDateReducer } from './rekey-date/rekey-date.reducer';
@@ -20,6 +19,7 @@ import { testDataCatCPCReducer } from './test-data/cat-cpc/test-data.cat-cpc.red
 import { accompanimentCatCPCReducer } from './accompaniment/cat-cpc/accompaniment.cat-cpc.reducer';
 import { vehicleDetailsCatCPCReducer } from './vehicle-details/cat-cpc/vehicle-details.cat-cpc.reducer';
 import { passCompletionCatCPCReducer } from './pass-completion/cat-cpc/pass-completion.cat-cpc.reducer';
+import { testSummaryCPCReducer } from './test-summary/cat-cpc/test-summary.cat-cpc.reducer';
 
 export function testsCatCPCReducer(
   action: Action,
@@ -34,7 +34,7 @@ export function testsCatCPCReducer(
       preTestDeclarations: preTestDeclarationsReducer,
       accompaniment: accompanimentCatCPCReducer,
       postTestDeclarations: postTestDeclarationsReducer,
-      testSummary: testSummaryReducer,
+      testSummary: testSummaryCPCReducer,
       rekeyReason: rekeyReasonReducer,
       rekey: rekeyReducer,
       rekeyDate: rekeyDateReducer,

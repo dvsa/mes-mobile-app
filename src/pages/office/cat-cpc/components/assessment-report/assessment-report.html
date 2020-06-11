@@ -1,0 +1,18 @@
+<ion-row *ngIf="display" class="mes-component-row mes-row-separator" id="assessment-report-card"
+  [formGroup]="formGroup">
+  <ion-col class="component-label" col-32 align-self-start>
+    <label>Assessment report</label>
+  </ion-col>
+  <ion-col align-self-center padding-left>
+    <ion-row class="spacing-row"></ion-row>
+    <ion-row>
+      <ion-col class="textarea-input">
+        <textarea id="assessment report" class="mes-data" name="assessmentReport"
+          formControlName="assessmentReport" [value]="assessmentReport"
+          (change)="assessmentReportChanged($event.target.value)">
+      </textarea>
+      </ion-col>
+    </ion-row>
+    <ion-row class="spacing-row"></ion-row>
+  </ion-col>
+</ion-row>
