@@ -8,9 +8,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class AssessmentReportComponent implements OnChanges {
 
   @Input()
-  outcome: string;
-
-  @Input()
   assessmentReport: string;
 
   @Input()

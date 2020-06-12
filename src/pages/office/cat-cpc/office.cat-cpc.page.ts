@@ -4,12 +4,15 @@ import {
   NavParams,
   Platform,
   ToastController,
-  Toast, Keyboard, AlertController,
+  Toast,
+  Keyboard,
+  AlertController,
 } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
+import { map, withLatestFrom } from 'rxjs/operators';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
   OfficeViewDidEnter,
@@ -35,7 +38,6 @@ import {
   getIdentification,
 } from '../../../modules/tests/test-summary/common/test-summary.selector';
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
-import { map, withLatestFrom } from 'rxjs/operators';
 import {
   IdentificationUsedChanged,
   CandidateDescriptionChanged,
@@ -59,19 +61,19 @@ import {
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map.cat-adi-part2';
 import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
+import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_CPC, JOURNAL_PAGE } from '../../page-names.constants';
-import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
+
 import { AssessmentReportChanged } from '../../../modules/tests/test-summary/cat-cpc/test-summary.cat-cpc.actions';
 import { getAssessmentReport } from '../../../modules/tests/test-summary/cat-cpc/test-summary.cat-cpc.selector';
 import {
-  getCombination,
+  getCombination, getTotalPercent,
   getQuestion1, getQuestion2, getQuestion3, getQuestion4, getQuestion5,
-  getTotalPercent,
 } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.reducer';
-import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
+import { CombinationCodes, Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
 import { getTestOutcome as getTestOutcomeDebrief } from '../../debrief/debrief.selector';
 import {
   Combination,
@@ -117,8 +119,8 @@ export class OfficeCatCPCPage extends BasePageComponent {
   toast: Toast;
   subscription: Subscription;
 
-  public outcome: string;
-  combinationAdditionalText: string;
+  public outcome: TestOutcome;
+  combinationAdditionalText: CombinationCodes;
 
   activityCodeOptions: ActivityCodeModel[];
 
@@ -260,11 +262,10 @@ export class OfficeCatCPCPage extends BasePageComponent {
     const { testResult$, combination$ } = this.pageState;
 
     this.subscription = merge(
-      testResult$.pipe(map(result => this.outcome = result)),
-      combination$.pipe(map(result => this.combinationAdditionalText = result)),
+      testResult$.pipe(map(result => this.outcome = result as TestOutcome)),
+      combination$.pipe(map(result => this.combinationAdditionalText = result as CombinationCodes)),
     ).subscribe();
 
-    console.log('this.outcome', this.outcome);
   }
 
   popToRoot() {
@@ -278,7 +279,7 @@ export class OfficeCatCPCPage extends BasePageComponent {
     this.store$.dispatch(new PersistTests());
   }
 
-  getCombinationAdditionalText(code): string {
+  getCombinationAdditionalText(code: CombinationCodes): string {
     const question: Combination = questionCombinations.find((question) => {
       return question.code === code;
     });
@@ -287,7 +288,6 @@ export class OfficeCatCPCPage extends BasePageComponent {
   }
 
   displayIfFail = (outcome: TestOutcome): boolean => {
-    console.log('outcome', outcome);
     return outcome === TestOutcome.FAIL;
   }
 

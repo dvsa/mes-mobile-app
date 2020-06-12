@@ -46,7 +46,6 @@
                          (activityCodeChange)="activityCodeChanged($event)" [disabled]="true">
           </activity-code>
 
-          <!--          <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">-->
           <div no-padding>
 
             <candidate-description [display]="pageState.displayCandidateDescription$ | async" [formGroup]="form"
@@ -75,7 +74,6 @@
             <assessment-report *ngIf="displayIfFail(outcome)"
                                [assessmentReport]="pageState.assessmentReport$ | async"
                                [formGroup]="form"
-                               [outcome]="pageState.testOutcome$ | async"
                                (assessmentReportChange)="assessmentReportChanged($event)">
             </assessment-report>
 
@@ -93,10 +91,6 @@
         </ion-grid>
       </ion-card-content>
     </ion-card>
-
-    <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
-
-    </div>
 
     <div [hidden]="!keyboard.isOpen()" class="keyboard-space"></div>
   </form>

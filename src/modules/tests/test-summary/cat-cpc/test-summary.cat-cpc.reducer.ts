@@ -5,9 +5,10 @@ import { TestSummary } from '@dvsa/mes-test-schema/categories/CPC';
 
 export const initialState : TestSummary = {
   candidateDescription: null,
+  identification: 'Licence',
+  D255: false,
   additionalInformation: null,
   assessmentReport: null,
-  identification: 'Licence',
 };
 
 export function testSummaryCPCReducer(
