@@ -1,5 +1,5 @@
 import Page from './page';
-import { browser, by, element } from 'protractor';
+import {browser, by, element} from 'protractor';
 
 const buttonPadding = 30;
 const request = require('request');
@@ -125,7 +125,7 @@ class TestReportPage extends Page {
     emergencyStop.sendKeys('55');
   }
 
-  avoidenceStopClick(){
+  avoidenceStopClick() {
     const avoidencyStop = this.getElementByXPath('/html/body/ion-app/ng-component/ion-nav/div[2]/ion-content/' +
       'div[2]/ion-grid/speed-check[2]/ion-row[1]/ion-col[2]/input[1]');
     avoidencyStop.sendKeys('66');
@@ -226,6 +226,7 @@ class LegalRequirements extends Page {
       this.longPressButton(legalRequirement);
     });
   }
+
   completeLegalRequirementsForCategoryD() {
     this.longPressButton(this.getElementById('BS'));
     this.longPressButton(this.getElementById('BS'));
@@ -273,11 +274,12 @@ class Competency extends Page {
     return this.getElementByXPath(`//competency-button/div/span[text() = '${competency}']`);
   }
 
-  longPressCompetency (competency: string) {
+  longPressCompetency(competency: string) {
     const competencyButton = this.getCompetencyButton(competency);
     this.longPressButton(competencyButton);
   }
 }
+
 class BikeControlStops extends Page {
 
   enterEmergencyStopFirstValue(firstValue) {
@@ -309,4 +311,5 @@ class BikeControlStops extends Page {
     competencyButton.click();
   }
 }
+
 export default new TestReportPage();

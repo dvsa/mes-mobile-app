@@ -69,24 +69,25 @@ browser.getProcessedConfig().then((config) => {
 });
 
 Given('I am not logged in', () => {
+    // Wait for app to be ready
+    browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+    browser.waitForAngular();
 
-  // Wait for app to be ready
-  browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
-  browser.waitForAngular();
+    //LoginPage.clickOnContinue();
 
-  // Log out if we are logged in
-  LoginPage.logout();
+    // Log out if we are logged in
+    LoginPage.logout();
 
-  browser.driver.getCurrentContext().then((webviewContext) => {
-    // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP').then(() => {
-      // Wait until we are on the login page before proceeding
-      LoginPage.isCurrentPage();
+    browser.driver.getCurrentContext().then((webviewContext) => {
+      // Switch to NATIVE context
+      browser.driver.selectContext('NATIVE_APP').then(() => {
+        // Wait until we are on the login page before proceeding
+        LoginPage.getToSignInPopUp();
 
-      // Switch back to WEBVIEW context
-      browser.driver.selectContext(LoginPage.getParentContext(webviewContext));
+        // Switch back to WEBVIEW context
+        browser.driver.selectContext(LoginPage.getParentContext(webviewContext));
+      });
     });
-  });
 });
 
 Given('I am logged in as {string} and I have a test for {string}', async (username, candidateName) => {
