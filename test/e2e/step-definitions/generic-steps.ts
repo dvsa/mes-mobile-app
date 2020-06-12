@@ -53,10 +53,6 @@ Before({ tags: '@cata' }, () => {
   this.testCategory = 'a-mod1';
 });
 
-Before({ tags: '@catm2' }, () => {
-  this.testCategory = 'a-mod2';
-});
-
 Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
@@ -73,10 +69,11 @@ browser.getProcessedConfig().then((config) => {
 });
 
 Given('I am not logged in', () => {
-
   // Wait for app to be ready
   browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
   browser.waitForAngular();
+
+  //LoginPage.clickOnContinue();
 
   // Log out if we are logged in
   LoginPage.logout();
@@ -85,7 +82,7 @@ Given('I am not logged in', () => {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP').then(() => {
       // Wait until we are on the login page before proceeding
-      LoginPage.isCurrentPage();
+      LoginPage.getToSignInPopUp();
 
       // Switch back to WEBVIEW context
       browser.driver.selectContext(LoginPage.getParentContext(webviewContext));
