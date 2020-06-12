@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import {
-  Combination, questionCombinations,
+  Combination,
 } from '../../../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 
 @Component({
@@ -10,22 +10,26 @@ import {
 })
 export class CombinationComponent {
 
-  combinationAdditionalTest: any;
+  // combinationAdditionalText: any;
 
   @Input()
   combination: Combination;
+
+  @Input()
+  combinationAdditionalText: string;
+
   constructor() { }
 
-  ngOnInit(): void {
-    this.combinationAdditionalTest = this.getCombinationAdditionalText(this.combination);
-  }
-
-  getCombinationAdditionalText(code) {
-    const question: Combination = questionCombinations.find((question) => {
-      return question.code === code;
-    });
-
-    return question.additionalText;
-  }
+  // ngOnInit(): void {
+  //   this.combinationAdditionalText = this.getCombinationAdditionalText(this.combination);
+  // }
+  //
+  // getCombinationAdditionalText(code) {
+  //   const question: Combination = questionCombinations.find((question) => {
+  //     return question.code === code;
+  //   });
+  //
+  //   return question.additionalText;
+  // }
 
 }

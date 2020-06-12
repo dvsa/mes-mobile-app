@@ -1,21 +1,21 @@
 import { Question } from '@dvsa/mes-test-schema/categories/CPC';
-import { DebriefCPCCardComponent } from '../debrief-cpc-card';
+import { CPCDebriefCardComponent } from '../cpc-debrief-card';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { configureTestSuite } from 'ng-bullet';
-import { AppModule } from '../../../../../../app/app.module';
+import { AppModule } from '../../../../app/app.module';
 import { IonicModule } from 'ionic-angular';
-import { ComponentsModule } from '../../../../../../components/common/common-components.module';
+import { ComponentsModule } from '../../common-components.module';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('DebriefCPCCardComponent', () => {
-  let fixture: ComponentFixture<DebriefCPCCardComponent>;
-  let component: DebriefCPCCardComponent;
+describe('CPCDebriefCardComponent', () => {
+  let fixture: ComponentFixture<CPCDebriefCardComponent>;
+  let component: CPCDebriefCardComponent;
   let question: Question;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      declarations: [DebriefCPCCardComponent],
+      declarations: [CPCDebriefCardComponent],
       imports: [
         IonicModule,
         AppModule,
@@ -27,7 +27,7 @@ describe('DebriefCPCCardComponent', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(DebriefCPCCardComponent);
+    fixture = TestBed.createComponent(CPCDebriefCardComponent);
     component = fixture.componentInstance;
     question = {
       questionCode: 'Q12',

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
-import { TestOutcome } from '../../../../../shared/models/test-outcome';
+import { TestOutcome } from '../../../shared/models/test-outcome';
 
 export type QuestionUnion = Question
 | Question5;
@@ -8,10 +8,10 @@ export type QuestionUnion = Question
 export const MINIMUM_QUESTION_SCORE: number = 15;
 
 @Component({
-  selector: 'debrief-cpc-card',
-  templateUrl: 'debrief-cpc-card.html',
+  selector: 'cpc-debrief-card',
+  templateUrl: 'cpc-debrief-card.html',
 })
-export class DebriefCPCCardComponent implements OnInit {
+export class CPCDebriefCardComponent implements OnInit {
 
   @Input()
   public question1: Question;

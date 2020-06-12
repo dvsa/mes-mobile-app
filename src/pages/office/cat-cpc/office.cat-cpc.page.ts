@@ -17,7 +17,7 @@ import {
   SavingWriteUpForLater,
   OfficeValidationError,
 } from '../office.actions';
-import { Observable } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
@@ -65,8 +65,19 @@ import { CAT_CPC, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { AssessmentReportChanged } from '../../../modules/tests/test-summary/cat-cpc/test-summary.cat-cpc.actions';
 import { getAssessmentReport } from '../../../modules/tests/test-summary/cat-cpc/test-summary.cat-cpc.selector';
-import { getCombination } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.selector';
+import {
+  getCombination,
+  getQuestion1, getQuestion2, getQuestion3, getQuestion4, getQuestion5,
+  getTotalPercent,
+} from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-cpc/test-data.cat-cpc.reducer';
+import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
+import { getTestOutcome as getTestOutcomeDebrief } from '../../debrief/debrief.selector';
+import {
+  Combination,
+  questionCombinations,
+} from '../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
+import { TestOutcome } from '../../../shared/models/test-outcome';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -84,8 +95,14 @@ interface OfficePageState {
   combination$: Observable<string>;
   displayAdditionalInformation$: Observable<boolean>;
   additionalInformation$: Observable<string>;
-  displayAssessmentReport$: Observable<boolean>;
   assessmentReport$: Observable<string>;
+  overallScore$: Observable<number>;
+  question1$: Observable<Question>;
+  question2$: Observable<Question>;
+  question3$: Observable<Question>;
+  question4$: Observable<Question>;
+  question5$: Observable<Question5>;
+  testResult$: Observable<string>;
   isRekey$: Observable<boolean>;
 }
 
@@ -94,10 +111,14 @@ interface OfficePageState {
   selector: '.office-cat-cpc-page',
   templateUrl: 'office.cat-cpc.page.html',
 })
-export class OfficeCatCpcPage extends BasePageComponent {
+export class OfficeCatCPCPage extends BasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
   toast: Toast;
+  subscription: Subscription;
+
+  public outcome: string;
+  combinationAdditionalText: string;
 
   activityCodeOptions: ActivityCodeModel[];
 
@@ -199,23 +220,51 @@ export class OfficeCatCpcPage extends BasePageComponent {
         select(getTestSummary),
         select(getAdditionalInformation),
       ),
-      displayAssessmentReport$: currentTest$.pipe(
-        select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getAssessmentReport))),
-        map(([outcome, assessment]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'assessmentReport', assessment)),
-      ),
       assessmentReport$: currentTest$.pipe(
         select(getTestSummary),
         select(getAssessmentReport),
+      ),
+      overallScore$: currentTest$.pipe(
+        select(getTestData),
+        select(getTotalPercent),
+      ),
+      question1$: currentTest$.pipe(
+        select(getTestData),
+        select(getQuestion1),
+      ),
+      question2$: currentTest$.pipe(
+        select(getTestData),
+        select(getQuestion2),
+      ),
+      question3$: currentTest$.pipe(
+        select(getTestData),
+        select(getQuestion3),
+      ),
+      question4$: currentTest$.pipe(
+        select(getTestData),
+        select(getQuestion4),
+      ),
+      question5$: currentTest$.pipe(
+        select(getTestData),
+        select(getQuestion5),
+      ),
+      testResult$: currentTest$.pipe(
+        select(getTestOutcomeDebrief),
       ),
       isRekey$: currentTest$.pipe(
         select(getRekeyIndicator),
         select(isRekey),
       ),
     };
+
+    const { testResult$, combination$ } = this.pageState;
+
+    this.subscription = merge(
+      testResult$.pipe(map(result => this.outcome = result)),
+      combination$.pipe(map(result => this.combinationAdditionalText = result)),
+    ).subscribe();
+
+    console.log('this.outcome', this.outcome);
   }
 
   popToRoot() {
@@ -227,6 +276,19 @@ export class OfficeCatCpcPage extends BasePageComponent {
     this.popToRoot();
     this.store$.dispatch(new SavingWriteUpForLater());
     this.store$.dispatch(new PersistTests());
+  }
+
+  getCombinationAdditionalText(code): string {
+    const question: Combination = questionCombinations.find((question) => {
+      return question.code === code;
+    });
+
+    return question.additionalText;
+  }
+
+  displayIfFail = (outcome: TestOutcome): boolean => {
+    console.log('outcome', outcome);
+    return outcome === TestOutcome.FAIL;
   }
 
   onSubmit() {
@@ -310,6 +372,13 @@ export class OfficeCatCpcPage extends BasePageComponent {
   completeTest() {
     this.store$.dispatch(new CompleteTest());
     this.popToRoot();
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+
+    }
   }
 
 }

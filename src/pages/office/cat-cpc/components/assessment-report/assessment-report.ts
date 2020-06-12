@@ -6,8 +6,6 @@ import { FormGroup, FormControl } from '@angular/forms';
   templateUrl: 'assessment-report.html',
 })
 export class AssessmentReportComponent implements OnChanges {
-  @Input()
-  display: boolean;
 
   @Input()
   outcome: string;

@@ -25,6 +25,7 @@ import { WarningBannerComponent } from './warning-banner/warning-banner';
 import { TransmissionComponent } from './transmission/transmission';
 import { DataRowComponent } from './data-row/data-row';
 import { DataRowCustomComponent } from './data-row-custom/data-row-custom';
+import { CPCDebriefCardComponent } from './cpc-debrief-card/cpc-debrief-card';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { DataRowCustomComponent } from './data-row-custom/data-row-custom';
     TransmissionComponent,
     DataRowComponent,
     DataRowCustomComponent,
+    CPCDebriefCardComponent,
   ],
   imports: [
     SignaturePadModule,
@@ -79,6 +81,7 @@ import { DataRowCustomComponent } from './data-row-custom/data-row-custom';
     TransmissionComponent,
     DataRowComponent,
     DataRowCustomComponent,
+    CPCDebriefCardComponent,
   ],
 })
 export class ComponentsModule { }

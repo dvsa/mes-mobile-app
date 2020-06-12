@@ -61,7 +61,8 @@
                             (identificationChange)="identificationChanged($event)">
             </identification>
 
-            <combination [combination]="pageState.combination$ | async">
+            <combination [combination]="pageState.combination$ | async"
+                         [combinationAdditionalText]="getCombinationAdditionalText(combinationAdditionalText)">
             </combination>
 
             <additional-information [display]="pageState.displayAdditionalInformation$ | async"
@@ -71,12 +72,22 @@
                                     (additionalInformationChange)="additionalInformationChanged($event)">
             </additional-information>
 
-            <assessment-report [display]="pageState.displayAssessmentReport$ | async"
+            <assessment-report *ngIf="displayIfFail(outcome)"
                                [assessmentReport]="pageState.assessmentReport$ | async"
                                [formGroup]="form"
                                [outcome]="pageState.testOutcome$ | async"
                                (assessmentReportChange)="assessmentReportChanged($event)">
             </assessment-report>
+
+            <cpc-debrief-card *ngIf="displayIfFail(outcome)"
+                              [overallScore]="pageState.overallScore$ | async"
+                              [question1]="pageState.question1$ | async"
+                              [question2]="pageState.question2$ | async"
+                              [question3]="pageState.question3$ | async"
+                              [question4]="pageState.question4$ | async"
+                              [question5]="pageState.question5$ | async"
+                              [testOutcome]="outcome">
+            </cpc-debrief-card>
 
           </div>
         </ion-grid>
