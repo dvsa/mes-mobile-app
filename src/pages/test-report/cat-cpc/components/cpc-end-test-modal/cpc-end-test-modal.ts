@@ -38,7 +38,7 @@ export class CPCEndTestModal implements OnInit {
     await this.viewCtrl.dismiss(ModalEvent.TERMINATE);
   }
 
-  getTestResultLabel(): string {
+  getTestResultLabel(): TestOutcome {
     return (this.testResult === ActivityCodes.PASS ? TestOutcome.Passed : TestOutcome.Failed);
   }
 
