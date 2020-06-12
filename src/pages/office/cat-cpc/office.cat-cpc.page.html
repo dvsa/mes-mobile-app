@@ -61,7 +61,7 @@
             </identification>
 
             <combination [combination]="pageState.combination$ | async"
-                         [combinationAdditionalText]="getCombinationAdditionalText(combinationAdditionalText)">
+                         [combinationAdditionalText]="getCombinationAdditionalText(combinationCode)">
             </combination>
 
             <additional-information [display]="pageState.displayAdditionalInformation$ | async"

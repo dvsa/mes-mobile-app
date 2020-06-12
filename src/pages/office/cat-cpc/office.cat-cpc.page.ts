@@ -120,7 +120,7 @@ export class OfficeCatCPCPage extends BasePageComponent {
   subscription: Subscription;
 
   public outcome: TestOutcome;
-  combinationAdditionalText: CombinationCodes;
+  combinationCode: CombinationCodes;
 
   activityCodeOptions: ActivityCodeModel[];
 
@@ -263,7 +263,7 @@ export class OfficeCatCPCPage extends BasePageComponent {
 
     this.subscription = merge(
       testResult$.pipe(map(result => this.outcome = result as TestOutcome)),
-      combination$.pipe(map(result => this.combinationAdditionalText = result as CombinationCodes)),
+      combination$.pipe(map(result => this.combinationCode = result as CombinationCodes)),
     ).subscribe();
 
   }
