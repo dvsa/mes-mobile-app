@@ -3,6 +3,7 @@ import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import { ModalEvent } from '../../../test-report.constants';
 import { ActivityCode, Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
 import { ActivityCodes } from '../../../../../shared/models/activity-codes';
+import { TestOutcome } from '../../../../../modules/tests/tests.constants';
 
 @IonicPage()
 @Component({
@@ -37,8 +38,8 @@ export class CPCEndTestModal implements OnInit {
     await this.viewCtrl.dismiss(ModalEvent.TERMINATE);
   }
 
-  getTestResultLabel(): string {
-    return (this.testResult === ActivityCodes.PASS ? 'Passed' : 'Failed');
+  getTestResultLabel(): TestOutcome {
+    return (this.testResult === ActivityCodes.PASS ? TestOutcome.Passed : TestOutcome.Failed);
   }
 
   getTestResultClass(): string {

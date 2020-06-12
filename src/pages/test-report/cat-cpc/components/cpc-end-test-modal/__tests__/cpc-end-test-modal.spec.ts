@@ -8,6 +8,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { ModalResultItemComponent } from '../components/modal-result-item/modal-result-item';
 import { ModalEvent } from '../../../../test-report.constants';
 import { ActivityCodes } from '../../../../../../shared/models/activity-codes';
+import { TestOutcome } from '../../../../../../modules/tests/tests.constants';
 
 describe('CPCEndTestModal', () => {
   let fixture: ComponentFixture<CPCEndTestModal>;
@@ -93,12 +94,12 @@ describe('CPCEndTestModal', () => {
       it('should return the correct label for a pass', () => {
         component.testResult = ActivityCodes.PASS;
         label = component.getTestResultLabel();
-        expect(label).toEqual('Passed');
+        expect(label).toEqual(TestOutcome.Passed);
       });
       it('should return the correct label for a fail', () => {
         component.testResult = ActivityCodes.FAIL;
         label = component.getTestResultLabel();
-        expect(label).toEqual('Failed');
+        expect(label).toEqual(TestOutcome.Failed);
       });
     });
     describe('getTestResultClass', () => {
