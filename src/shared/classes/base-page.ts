@@ -16,9 +16,7 @@ export abstract class BasePageComponent {
   ionViewWillEnter() {
     if (this.loginRequired && this.isIos() && !this.authenticationProvider.isAuthenticated()) {
       this.navController.setRoot(LOGIN_PAGE);
-      return false;
     }
-    return true;
   }
 
   isIos(): boolean {

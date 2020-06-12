@@ -161,6 +161,14 @@ describe('TestReportCatCPCPage', () => {
       });
     });
 
+    describe('ionViewWillEnter', () => {
+      it('should set up the subscription', () => {
+        spyOn(component, 'setUpSubscription');
+        component.ionViewWillEnter();
+        expect(component.setUpSubscription).toHaveBeenCalled();
+      });
+    });
+
     describe('ionViewDidLeave', () => {
       it('should cancel the subscription', () => {
         component.subscription = new Subscription();

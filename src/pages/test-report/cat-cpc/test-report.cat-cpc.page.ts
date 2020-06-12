@@ -135,6 +135,9 @@ export class TestReportCatCPCPage extends BasePageComponent {
         select(getTestCategory),
       ),
     };
+  }
+
+  ionViewWillEnter() {
     this.setUpSubscription();
   }
 
