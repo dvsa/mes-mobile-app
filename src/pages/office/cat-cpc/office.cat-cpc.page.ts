@@ -61,7 +61,6 @@ import {
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map.cat-adi-part2';
 import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
-import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_CPC, JOURNAL_PAGE } from '../../page-names.constants';
@@ -297,12 +296,12 @@ export class OfficeCatCPCPage extends BasePageComponent {
     }
   }
 
-  identificationChanged(identification: Identification): void {
-    this.store$.dispatch(new IdentificationUsedChanged(identification));
-  }
-
   candidateDescriptionChanged(candidateDescription: string) {
     this.store$.dispatch(new CandidateDescriptionChanged(candidateDescription));
+  }
+
+  identificationChanged(identification: Identification): void {
+    this.store$.dispatch(new IdentificationUsedChanged(identification));
   }
 
   additionalInformationChanged(additionalInformation: string): void {
@@ -311,10 +310,6 @@ export class OfficeCatCPCPage extends BasePageComponent {
 
   assessmentReportChanged(assessmentReport: string): void {
     this.store$.dispatch(new AssessmentReportChanged(assessmentReport));
-  }
-
-  activityCodeChanged(activityCodeModel: ActivityCodeModel) {
-    this.store$.dispatch(new SetActivityCode(activityCodeModel.activityCode));
   }
 
   private createToast = (errorMessage: string) => {

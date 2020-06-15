@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import {
   IonicModule,
   NavController,
@@ -24,14 +24,9 @@ import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
-import { RouteNumberComponent } from '../../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../../components/candidate-description/candidate-description';
-import { WeatherConditionsComponent } from '../../components/weather-conditions/weather-conditions';
 import { AdditionalInformationComponent } from '../../components/additional-information/additional-information';
 import { IdentificationComponent } from '../../components/identification/identification';
-import { IndependentDrivingComponent } from '../../components/independent-driving/independent-driving';
-import { OfficeValidationError } from '../../office.actions';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastControllerMock } from '../../__mocks__/toast-controller-mock';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
@@ -40,8 +35,14 @@ import { configureTestSuite } from 'ng-bullet';
 import { OfficeCatCPCPage } from '../office.cat-cpc.page';
 import { CombinationComponent } from '../components/combination/combination';
 import { AssessmentReportComponent } from '../components/assessment-report/assessment-report';
-import { CPCDebriefCardComponent } from '../../../../components/common/cpc-debrief-card/cpc-debrief-card';
-import { ActivityCodeComponent } from '../../components/activity-code/activity-code';
+import { TestOutcome } from '../../../../shared/models/test-outcome';
+import {
+  AdditionalInformationChanged,
+  CandidateDescriptionChanged,
+  IdentificationUsedChanged,
+} from '../../../../modules/tests/test-summary/common/test-summary.actions';
+import { AssessmentReportChanged } from '../../../../modules/tests/test-summary/cat-cpc/test-summary.cat-cpc.actions';
+import { CAT_CPC } from '../../../page-names.constants';
 
 fdescribe('OfficeCatCPCPage', () => {
   let fixture: ComponentFixture<OfficeCatCPCPage>;
@@ -53,13 +54,11 @@ fdescribe('OfficeCatCPCPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         OfficeCatCPCPage,
-        MockComponent(ActivityCodeComponent),
         MockComponent(CandidateDescriptionComponent),
         MockComponent(IdentificationComponent),
         MockComponent(CombinationComponent),
         MockComponent(AdditionalInformationComponent),
         MockComponent(AssessmentReportComponent),
-        MockComponent(CPCDebriefCardComponent),
       ],
       imports: [
         IonicModule,
@@ -276,23 +275,83 @@ fdescribe('OfficeCatCPCPage', () => {
     });
   });
 
-  // describe('onSubmit', () => {
-  //   it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
-  //     component.form = new FormGroup({
-  //       requiredControl1: new FormControl(null, [Validators.required]),
-  //       requiredControl2: new FormControl(null, [Validators.required]),
-  //       notRequiredControl: new FormControl(null),
-  //     });
-  //
-  //     component.onSubmit();
-  //     tick();
-  //     expect(store$.dispatch)
-  //       .toHaveBeenCalledWith(new OfficeValidationError('requiredControl1 is blank'));
-  //     expect(store$.dispatch)
-  //       .toHaveBeenCalledWith(new OfficeValidationError('requiredControl2 is blank'));
-  //     expect(store$.dispatch)
-  //       .not
-  //       .toHaveBeenCalledWith(new OfficeValidationError('notRequiredControl is blank'));
-  //   }));
-  // });
+  describe('getCombinationAdditionalText', () => {
+    it('should return the additionalText for the passed in combination code (LGV1)', () => {
+      expect(component.getCombinationAdditionalText('LGV1')).toEqual('Fire ex');
+    });
+
+    it('should return the additionalText for the passed in combination code (LGV2)', () => {
+      expect(component.getCombinationAdditionalText('LGV2')).toEqual('LSDT');
+    });
+  });
+
+  describe('displayIfFail', () => {
+    it('should return false if test outcome is pass', () => {
+      expect(component.displayIfFail(TestOutcome.PASS)).toEqual(false);
+    });
+
+    it('should return true if test outcome is fail', () => {
+      expect(component.displayIfFail(TestOutcome.FAIL)).toEqual(true);
+    });
+  });
+
+  describe('onSubmit', () => {
+    it('should call showFinishTestModal when form is valid', () => {
+      spyOn(component, 'isFormValid').and.returnValue(true);
+      spyOn(component, 'showFinishTestModal');
+      component.onSubmit();
+      expect(component.showFinishTestModal).toHaveBeenCalled();
+    });
+
+    it('should not call showFinishTestModal when form is not valid', () => {
+      spyOn(component, 'isFormValid').and.returnValue(false);
+      spyOn(component, 'showFinishTestModal');
+      component.onSubmit();
+      expect(component.showFinishTestModal).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('candidateDescriptionChanged', () => {
+    it('should dispatch candidate description to the store', () => {
+      component.candidateDescriptionChanged('tall');
+      expect(store$.dispatch).toHaveBeenCalledWith(new CandidateDescriptionChanged('tall'));
+    });
+  });
+
+  describe('identificationChanged', () => {
+    it('should dispatch identification to the store', () => {
+      component.identificationChanged('Licence');
+      expect(store$.dispatch).toHaveBeenCalledWith(new IdentificationUsedChanged('Licence'));
+    });
+  });
+
+  describe('additionalInformationChanged', () => {
+    it('should dispatch additional info to the store', () => {
+      component.additionalInformationChanged('text');
+      expect(store$.dispatch).toHaveBeenCalledWith(new AdditionalInformationChanged('text'));
+    });
+  });
+
+  describe('assessmentReportChanged', () => {
+    it('should dispatch assessemnt report to the store', () => {
+      component.assessmentReportChanged('text');
+      expect(store$.dispatch).toHaveBeenCalledWith(new AssessmentReportChanged('text'));
+    });
+  });
+
+  describe('goToReasonForRekey', () => {
+    it('should call navController when form is valid', () => {
+      spyOn(component, 'isFormValid').and.returnValue(true);
+      spyOn(component.navController, 'push');
+      component.goToReasonForRekey();
+      expect(component.navController.push).toHaveBeenCalledWith(CAT_CPC.REKEY_REASON_PAGE);
+    });
+
+    it('should not call navController when form is not valid', () => {
+      spyOn(component, 'isFormValid').and.returnValue(false);
+      spyOn(component.navController, 'push');
+      component.goToReasonForRekey();
+      expect(component.navController.push).not.toHaveBeenCalled();
+    });
+  });
 });
