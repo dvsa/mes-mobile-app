@@ -7,7 +7,9 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col align-self-center>
-        <label id="combination-label">{{combination}} - {{combinationAdditionalText}}</label>
+        <label id="combination-label">{{combination}}
+          <span *ngIf="combination.additionalText">- {{combinationAdditionalText}}</span>
+        </label>
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>
