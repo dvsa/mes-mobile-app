@@ -13,6 +13,10 @@
       </textarea>
       </ion-col>
     </ion-row>
-    <ion-row class="spacing-row"></ion-row>
+    <ion-row class="validation-message-row" align-items-center>
+      <div class="validation-text" [class.ng-invalid]="invalid" *ngIf="invalid" id="office-candidate-assessment-report-validation-text">
+        Provide assessment report
+      </div>
+    </ion-row>
   </ion-col>
 </ion-row>

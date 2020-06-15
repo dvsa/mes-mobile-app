@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'assessment-report',
@@ -23,12 +23,17 @@ export class AssessmentReportComponent implements OnChanges {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
       this.formGroup.addControl(AssessmentReportComponent.fieldName, this.formControl);
+      this.formGroup.get(AssessmentReportComponent.fieldName).setValidators([Validators.required]);
     }
     this.formControl.patchValue(this.assessmentReport);
   }
 
   assessmentReportChanged(assessmentReport: string): void {
     this.assessmentReportChange.emit(assessmentReport);
+  }
+
+  get invalid(): boolean {
+    return !this.formControl.valid && this.formControl.dirty;
   }
 
 }
