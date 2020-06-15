@@ -359,18 +359,11 @@ describe('OfficeCatCPCPage', () => {
   });
 
   describe('isFormValid', () => {
-    // it('should return true if form is valid', () => {
-    //   const result = component.isFormValid();
-    //   console.log('formValid', component.form.valid);
-    //   console.log('form', component.form);
-    //   expect(result).toEqual(true);
-    // });
 
     it('should return true if form is valid', () => {
       spyOn(component, 'createToast');
       const form = component.form;
       fixture.detectChanges();
-      // component.pageState.assessmentReport$ = of(true);
       component.pageState.additionalInformation$ = of('text');
       component.isFormValid();
       fixture.detectChanges();
