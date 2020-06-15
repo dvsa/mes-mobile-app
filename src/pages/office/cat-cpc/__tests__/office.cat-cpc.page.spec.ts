@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
   IonicModule,
   NavController,
@@ -43,8 +43,11 @@ import {
 } from '../../../../modules/tests/test-summary/common/test-summary.actions';
 import { AssessmentReportChanged } from '../../../../modules/tests/test-summary/cat-cpc/test-summary.cat-cpc.actions';
 import { CAT_CPC } from '../../../page-names.constants';
+import { CompleteTest, OfficeValidationError } from '../../office.actions';
+import { of, Subscription } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-fdescribe('OfficeCatCPCPage', () => {
+describe('OfficeCatCPCPage', () => {
   let fixture: ComponentFixture<OfficeCatCPCPage>;
   let component: OfficeCatCPCPage;
   let navController: NavController;
@@ -352,6 +355,61 @@ fdescribe('OfficeCatCPCPage', () => {
       spyOn(component.navController, 'push');
       component.goToReasonForRekey();
       expect(component.navController.push).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('isFormValid', () => {
+    // it('should return true if form is valid', () => {
+    //   const result = component.isFormValid();
+    //   console.log('formValid', component.form.valid);
+    //   console.log('form', component.form);
+    //   expect(result).toEqual(true);
+    // });
+
+    it('should return true if form is valid', () => {
+      spyOn(component, 'createToast');
+      const form = component.form;
+      fixture.detectChanges();
+      // component.pageState.assessmentReport$ = of(true);
+      component.pageState.additionalInformation$ = of('text');
+      component.isFormValid();
+      fixture.detectChanges();
+      expect(form.valid).toEqual(true);
+    });
+
+    it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
+      component.form = new FormGroup({
+        requiredControl1: new FormControl(null, [Validators.required]),
+        requiredControl2: new FormControl(null, [Validators.required]),
+        notRequiredControl: new FormControl(null),
+      });
+
+      component.isFormValid();
+      tick();
+      expect(store$.dispatch)
+        .toHaveBeenCalledWith(new OfficeValidationError('requiredControl1 is blank'));
+      expect(store$.dispatch)
+        .toHaveBeenCalledWith(new OfficeValidationError('requiredControl2 is blank'));
+      expect(store$.dispatch)
+        .not.toHaveBeenCalledWith(new OfficeValidationError('notRequiredControl is blank'));
+    }));
+  });
+
+  describe('completeTest', () => {
+    it('should dispatch CompleteTest and call pop to root', () => {
+      spyOn(component, 'popToRoot');
+      component.completeTest();
+      expect(store$.dispatch).toHaveBeenCalledWith(new CompleteTest());
+      expect(component.popToRoot).toHaveBeenCalled();
+    });
+  });
+
+  describe('ionViewDidLeave', () => {
+    it('should unsubscribe when subscription', () => {
+      component.subscription = new Subscription();
+      spyOn(component.subscription, 'unsubscribe');
+      component.ionViewDidLeave();
+      expect(component.subscription.unsubscribe).toHaveBeenCalled();
     });
   });
 });
