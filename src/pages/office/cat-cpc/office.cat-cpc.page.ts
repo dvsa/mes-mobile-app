@@ -279,16 +279,11 @@ export class OfficeCatCPCPage extends BasePageComponent {
   }
 
   getCombinationAdditionalText(code: CombinationCodes): string {
-    let output: string = null;
     const question: Combination = questionCombinations.find((question) => {
       return question.code === code;
     });
 
-    if (question.additionalText) {
-      output = question.additionalText;
-    }
-
-    return output;
+    return question.additionalText || null;
   }
 
   displayIfFail = (outcome: TestOutcome): boolean => {
