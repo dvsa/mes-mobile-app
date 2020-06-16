@@ -7,7 +7,7 @@ export const lgvQuestions: CPCQuestion[] = [
     subtitle: 'Your fully laden vehicle is ready for you to do a delivery. Show me:',
     additionalItems: [
       'a) the checks you\'d carry out to make sure the vehicle isn\'t over-loaded',
-      'a) the checks you\'d carry out to make sure the vehicle isn\'t over-loaded',
+      'a) if you\'re still in doubt, what else you could do',
     ],
     answer1: {
       selected: false,
@@ -33,7 +33,7 @@ export const lgvQuestions: CPCQuestion[] = [
     subtitle: 'You need to leave your vehicle.',
     additionalItems: [
       'a) Where might you consider parking it?',
-      'a) Where might you consider parking it?',
+      'b) Explain what safety checks and security precautions you\'d take',
     ],
     answer1: {
       selected: false,
