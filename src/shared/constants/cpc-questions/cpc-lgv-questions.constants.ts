@@ -81,7 +81,7 @@ export const lgvQuestions: CPCQuestion[] = [
   {
     questionCode: 'Q04',
     title: 'Security of vehicle and contents',
-    subtitle: 'You are about to drive a high sided vehicle on an unfamilar route. ',
+    subtitle: 'You are about to drive a high sided vehicle on an unfamiliar route. ',
     additionalItems: [
       'a) Show me the visual checks you would make before starting your journey',
       'b) If there is any doubt of the vehicles height what else could you do?',
