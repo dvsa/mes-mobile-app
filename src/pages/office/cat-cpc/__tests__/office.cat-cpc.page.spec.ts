@@ -286,6 +286,10 @@ describe('OfficeCatCPCPage', () => {
     it('should return the additionalText for the passed in combination code (LGV2)', () => {
       expect(component.getCombinationAdditionalText('LGV2')).toEqual('LSDT');
     });
+
+    it('should return the null for the passed in combination code (LGV3) has no additional text', () => {
+      expect(component.getCombinationAdditionalText('LGV3')).toEqual(null);
+    });
   });
 
   describe('displayIfFail', () => {
