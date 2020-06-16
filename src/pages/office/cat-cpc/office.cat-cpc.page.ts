@@ -283,7 +283,9 @@ export class OfficeCatCPCPage extends BasePageComponent {
       return question.code === code;
     });
 
-    return question.additionalText;
+    if (question.additionalText) {
+      return question.additionalText;
+    }
   }
 
   displayIfFail = (outcome: TestOutcome): boolean => {
