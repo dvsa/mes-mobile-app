@@ -12,6 +12,7 @@ import {
   CAT_C,
   CAT_D,
   CAT_HOME_TEST,
+  CAT_CPC,
 } from '../../../page-names.constants';
 import { App } from '../../../../app/app.component';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -85,6 +86,10 @@ export class SearchResultComponent {
         break;
       case TestCategory.ADI2:
         pageToOpen = CAT_ADI_PART2.VIEW_TEST_RESULT_PAGE;
+        break;
+      case TestCategory.CCPC:
+      case TestCategory.DCPC:
+        pageToOpen = CAT_CPC.VIEW_TEST_RESULT_PAGE;
         break;
     }
 
