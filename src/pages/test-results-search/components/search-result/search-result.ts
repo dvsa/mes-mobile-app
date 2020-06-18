@@ -26,7 +26,8 @@ export class SearchResultComponent {
   @Input()
   searchResult: SearchResultTestSchema;
 
-  constructor(public modalController: ModalController, private app: App) { }
+  constructor(public modalController: ModalController, private app: App) {
+  }
 
   getDate(): string {
     return new DateTime(this.searchResult.testDate).format('DD/MM/YYYY');
@@ -39,6 +40,27 @@ export class SearchResultComponent {
   getName(): string {
     const name: Name = this.searchResult.candidateName;
     return `${name.title} ${name.firstName} ${name.lastName}`;
+  }
+
+  driverRider(searchResult: SearchResultTestSchema): string {
+    let driverLabel: string;
+
+    switch (searchResult.category) {
+      case TestCategory.EUAM1:
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAMM1:
+      case TestCategory.EUAM2:
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAMM2:
+        driverLabel =  'Rider';
+        break;
+      default:
+        driverLabel =  'Driver';
+        break;
+    }
+    return driverLabel;
   }
 
   openTestResult(): void {
