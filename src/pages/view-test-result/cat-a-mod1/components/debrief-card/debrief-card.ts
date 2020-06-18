@@ -16,6 +16,9 @@ export class DebriefCardComponent {
   @Input()
   data: TestData;
 
+  @Input()
+  drivingType: string;
+
   constructor(
     private faultSummaryProvider: FaultSummaryProvider,
     private faultCountProvider: FaultCountProvider,
