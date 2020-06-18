@@ -38,45 +38,25 @@ describe('SearchResultComponent', () => {
   });
 
   describe('driverRider', () => {
+    const searchResult = {
+      costCode: null,
+      testDate: null,
+      driverNumber: null,
+      candidateName: null,
+      applicationReference: null,
+      category: null,
+      activityCode: null,
+    };
     it('should return driver when cat is not A', () => {
-
-      const searchResult = {
-        costCode: null,
-        testDate: null,
-        driverNumber: null,
-        candidateName: null,
-        applicationReference: null,
-        category: TestCategory.B,
-        activityCode: null,
-      };
+      searchResult.category = TestCategory.B;
       expect(component.driverRider(searchResult)).toEqual('Driver');
     });
-
     it('should return driver when cat is EUA1M1', () => {
-
-      const searchResult = {
-        costCode: null,
-        testDate: null,
-        driverNumber: null,
-        candidateName: null,
-        applicationReference: null,
-        category: TestCategory.EUA1M1,
-        activityCode: null,
-      };
+      searchResult.category = TestCategory.EUA1M1;
       expect(component.driverRider(searchResult)).toEqual('Rider');
     });
-
     it('should return driver when cat is EUAM2', () => {
-
-      const searchResult = {
-        costCode: null,
-        testDate: null,
-        driverNumber: null,
-        candidateName: null,
-        applicationReference: null,
-        category: TestCategory.EUAM2,
-        activityCode: null,
-      };
+      searchResult.category = TestCategory.EUAM2;
       expect(component.driverRider(searchResult)).toEqual('Rider');
     });
   });
