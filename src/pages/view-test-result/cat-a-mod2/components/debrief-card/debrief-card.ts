@@ -25,9 +25,6 @@ export class DebriefCardComponent {
   @Input()
   category: CategoryCode;
 
-  @Input()
-  drivingType: string;
-
   constructor(
     private faultSummaryProvider: FaultSummaryProvider,
     private faultCountProvider: FaultCountProvider,

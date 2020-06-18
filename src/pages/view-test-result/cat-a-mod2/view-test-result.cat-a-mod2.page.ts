@@ -33,7 +33,6 @@ import { TestResultCatAM2Schema } from '@dvsa/mes-test-schema/categories/AM2';
 import { get } from 'lodash';
 import { categoryAM2TestResultMock } from '../../../shared/mocks/cat-a-mod2-test-result.mock';
 import moment from 'moment';
-import { getDrivingOrRidingLabel } from '../../../shared/helpers/driver-type';
 
 @IonicPage()
 @Component({
@@ -159,10 +158,6 @@ export class ViewTestResultCatAMod2Page extends BasePageComponent implements OnI
       activityCode: this.testResult.activityCode,
       testOutcome: getTestOutcomeText(this.testResult),
     };
-  }
-
-  public getDriverType(): string {
-    return getDrivingOrRidingLabel(this.testResult.category as TestCategory);
   }
 
   // on exit error modal

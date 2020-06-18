@@ -16,6 +16,7 @@ import { CompressionProvider } from '../../../providers/compression/compression'
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { getCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
+import { getDrivingOrRidingLabel } from '../../../shared/helpers/driver-type';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ErrorTypes } from '../../../shared/models/error-message';
@@ -33,7 +34,6 @@ import { get } from 'lodash';
 import { TestResultCatAM1Schema } from '@dvsa/mes-test-schema/categories/AM1';
 import { TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/common';
 import moment from 'moment';
-import { getDrivingOrRidingLabel } from '../../../shared/helpers/driver-type';
 
 @IonicPage()
 @Component({

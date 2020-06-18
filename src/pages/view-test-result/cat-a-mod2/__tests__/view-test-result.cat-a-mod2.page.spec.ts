@@ -40,7 +40,6 @@ import { ViewTestResultCatAMod2Page } from '../view-test-result.cat-a-mod2.page'
 import { configureTestSuite } from 'ng-bullet';
 import { VehicleDetailsCardCatAComponent } from
 '../../components/vehicle-details-card-cat-a/vehicle-details-card-cat-a';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('ViewTestResultCatAMod2Page', () => {
   let fixture: ComponentFixture<ViewTestResultCatAMod2Page>;
@@ -155,16 +154,6 @@ describe('ViewTestResultCatAMod2Page', () => {
       it('should return null when there is no test result', () => {
         const result: ViewTestHeaderModel = component.getHeaderDetails();
         expect(result).toBeNull();
-      });
-    });
-    describe('getDriverType', () => {
-      it('should return riding when cat is a', () => {
-        component.testResult.category = TestCategory.EUA1M1;
-        expect(component.getDriverType()).toEqual('riding');
-      });
-      it('should return riding when cat is not a', () => {
-        component.testResult.category = TestCategory.B;
-        expect(component.getDriverType()).toEqual('driving');
       });
     });
     describe('goBack', () => {

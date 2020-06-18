@@ -1,5 +1,6 @@
 import { FaultsDataRowComponent } from '../faults-data-row';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('FaultsDataRowComponent', () => {
   describe('deafultSettings', () => {
@@ -64,6 +65,23 @@ describe('FaultsDataRowComponent', () => {
       const result = component.showFaultComment(faultSummary);
 
       expect(result).toBe(true);
+    });
+  });
+
+  describe('getDriverType', () => {
+    it('should riding for EUA1M1', () => {
+      const component = new FaultsDataRowComponent();
+      expect(component.getDriverType(TestCategory.EUA1M1)).toBe('riding');
+    });
+
+    it('should riding for EUAM2', () => {
+      const component = new FaultsDataRowComponent();
+      expect(component.getDriverType(TestCategory.EUAM2)).toBe('riding');
+    });
+
+    it('should driving for not Cat A', () => {
+      const component = new FaultsDataRowComponent();
+      expect(component.getDriverType(TestCategory.B)).toBe('driving');
     });
   });
 });

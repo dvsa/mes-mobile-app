@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FaultSummary } from '../../../../shared/models/fault-marking.model';
+import { getDrivingOrRidingLabel } from '../../../../shared/helpers/driver-type';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'faults-data-row',
@@ -26,7 +28,7 @@ export class FaultsDataRowComponent {
   minDrivingFaultCount: number = 15;
 
   @Input()
-  driverType?: string;
+  category?: string;
 
   showNoFaultsMessage = (): boolean =>
     this.drivingFaultCount === 0 &&
@@ -40,12 +42,8 @@ export class FaultsDataRowComponent {
   constructor() {
   }
 
-  public getDriverType() {
-    console.log('this.drivingType', this.driverType);
-    if (!this.driverType) {
-      return 'driving';
-    }
-    return this.driverType;
+  public getDriverType(category: TestCategory): string {
+    return getDrivingOrRidingLabel(category);
   }
 
 }

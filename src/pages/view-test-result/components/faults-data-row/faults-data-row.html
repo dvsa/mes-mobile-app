@@ -50,7 +50,7 @@
         </ion-col>
       </ion-row>
       <ion-row *ngIf="drivingFaultCount !== 0">
-        <ion-col><span class='mes-data bold'>{{drivingFaultCount}} {{getDriverType()}} faults</span></ion-col>
+        <ion-col><span class='mes-data bold'>{{drivingFaultCount}} {{getDriverType(category)}} faults</span></ion-col>
       </ion-row>
       <ion-row *ngFor="let drivingFault of drivingFaults">
         <ion-col col-7>
