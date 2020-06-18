@@ -2,7 +2,6 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/AM2';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { Observable, Subscription, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -46,6 +45,7 @@ import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-num
 import { getPassCompletion } from '../../../modules/tests/pass-completion/cat-cpc/pass-completion.cat-cpc.reducer';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/CPC';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
