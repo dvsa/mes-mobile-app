@@ -7,6 +7,7 @@ export const initialState : TestSummary = {
   candidateDescription: null,
   identification: 'Licence',
   D255: false,
+  debriefWitnessed: null,
   additionalInformation: null,
   assessmentReport: null,
 };
