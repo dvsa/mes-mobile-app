@@ -65,6 +65,7 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { configureTestSuite } from 'ng-bullet';
 import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
 import { TestDataByCategoryProvider } from '../../../../providers/test-data-by-category/test-data-by-category';
+import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
 
 describe('OfficeCatHomeTestPage', () => {
   let fixture: ComponentFixture<OfficeCatHomeTestPage>;
@@ -83,6 +84,7 @@ describe('OfficeCatHomeTestPage', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(FaultCommentCardComponent),
         MockComponent(VehicleChecksOfficeCardComponent),
+        MockComponent(CandidateSectionComponent),
       ],
       imports: [
         IonicModule,
