@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/AM2';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/CPC';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { Observable, Subscription, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
