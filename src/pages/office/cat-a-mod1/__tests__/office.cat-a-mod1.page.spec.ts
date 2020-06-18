@@ -74,6 +74,7 @@ import { SpeedCheckDebriefCardComponent }
   from '../../../debrief/cat-a-mod1/components/speed-check-debrief-card/speed-check-debrief-card';
 import { AddSingleFaultCompetencyComment }
   from '../../../../modules/tests/test-data/common/single-fault-competencies/single-fault-competencies.actions';
+import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
 
 describe('OfficeAMod1Page', () => {
   let fixture: ComponentFixture<OfficeCatAMod1Page>;
@@ -95,6 +96,7 @@ describe('OfficeAMod1Page', () => {
         MockComponent(FaultCommentCardComponent),
         MockComponent(SpeedCheckDebriefCardComponent),
         MockComponent(CircuitComponent),
+        MockComponent(CandidateSectionComponent),
       ],
       imports: [
         IonicModule,

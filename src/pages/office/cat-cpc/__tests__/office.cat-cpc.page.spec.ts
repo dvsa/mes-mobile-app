@@ -46,6 +46,7 @@ import { CAT_CPC } from '../../../page-names.constants';
 import { CompleteTest, OfficeValidationError } from '../../office.actions';
 import { of, Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
 
 describe('OfficeCatCPCPage', () => {
   let fixture: ComponentFixture<OfficeCatCPCPage>;
@@ -62,6 +63,7 @@ describe('OfficeCatCPCPage', () => {
         MockComponent(CombinationComponent),
         MockComponent(AdditionalInformationComponent),
         MockComponent(AssessmentReportComponent),
+        MockComponent(CandidateSectionComponent),
       ],
       imports: [
         IonicModule,

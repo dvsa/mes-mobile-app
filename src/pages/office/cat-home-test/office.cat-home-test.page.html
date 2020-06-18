@@ -8,28 +8,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-row class="mes-full-width-card" id="candidate-section">
-    <ion-col col-60>
-      <h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2>
-      <h3 id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3>
-    </ion-col>
-    <ion-col col-36 class="align-col-right">
-      <h2>{{pageState.startTime$ | async}}</h2>
-      <h3>Test outcome:
-        <div id="test-outcome-text" class="inline-mode" [ngSwitch]="(pageState.testOutcomeText$ | async)">
-          <span class="pass" *ngSwitchCase="'Passed'">
-            {{pageState.testOutcomeText$ | async}}
-          </span>
-          <span class="fail" *ngSwitchCase="'Unsuccessful'">
-            {{pageState.testOutcomeText$ | async}}
-          </span>
-          <span class="terminated" *ngSwitchCase="'Terminated'">
-            {{pageState.testOutcomeText$ | async}}
-          </span>
-        </div>
-      </h3>
-    </ion-col>
-  </ion-row>
+
+  <office-candidate-section
+          [candidateName]="pageState.candidateName$ | async"
+          [driverNumber]="pageState.candidateDriverNumber$ | async"
+          [startTime]="pageState.startTime$ | async"
+          [testOutcomeText]="pageState.testOutcomeText$ | async">
+  </office-candidate-section>
 
   <form [formGroup]="form">
 

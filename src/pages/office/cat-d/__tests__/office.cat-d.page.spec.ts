@@ -65,6 +65,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
 import { configureTestSuite } from 'ng-bullet';
+import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
 
 describe('OfficePage Cat D', () => {
   let fixture: ComponentFixture<OfficeCatDPage>;
@@ -85,6 +86,7 @@ describe('OfficePage Cat D', () => {
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
         MockComponent(VehicleChecksOfficeCardComponent),
+        MockComponent(CandidateSectionComponent),
       ],
       imports: [
         IonicModule,

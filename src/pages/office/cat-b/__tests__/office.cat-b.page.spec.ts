@@ -70,6 +70,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { FaultCountProvider } from '../../../../providers/fault-count/fault-count';
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { configureTestSuite } from 'ng-bullet';
+import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatBPage>;
@@ -90,6 +91,7 @@ describe('OfficePage', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
+        MockComponent(CandidateSectionComponent),
       ],
       imports: [
         IonicModule,

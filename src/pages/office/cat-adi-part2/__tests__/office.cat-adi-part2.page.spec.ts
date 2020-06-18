@@ -66,6 +66,7 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { configureTestSuite } from 'ng-bullet';
 import { ShowMeQuestionsCatADI2Component } from '../components/show-me-questions/show-me-questions';
 import { VehicleChecksOfficeCardCatADI2Component } from '../components/vehicle-checks/vehicle-checks-office-card';
+import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
 
 describe('OfficeCatADIPart2Page', () => {
   let fixture: ComponentFixture<OfficeCatADIPart2Page>;
@@ -86,6 +87,7 @@ describe('OfficeCatADIPart2Page', () => {
         MockComponent(FaultCommentCardComponent),
         MockComponent(VehicleChecksOfficeCardCatADI2Component),
         MockComponent(ShowMeQuestionsCatADI2Component),
+        MockComponent(CandidateSectionComponent),
       ],
       imports: [
         IonicModule,

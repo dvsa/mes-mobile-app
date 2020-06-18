@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
+
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { FaultCommentComponent } from './fault-comment/fault-comment';
 import { FaultCommentCardComponent } from './fault-comment-card/fault-comment-card';
@@ -13,6 +14,7 @@ import { AdditionalInformationComponent } from './additional-information/additio
 import { DirectivesModule } from '../../../directives/directives.module';
 import { VehicleChecksOfficeCardComponent } from './vehicle-checks/vehicle-checks-office-card';
 import { IndependentDrivingComponent } from './independent-driving/independent-driving';
+import { CandidateSectionComponent } from './candidate-section/candidate-section';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { IndependentDrivingComponent } from './independent-driving/independent-d
     WeatherConditionsComponent,
     AdditionalInformationComponent,
     VehicleChecksOfficeCardComponent,
+    CandidateSectionComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +47,7 @@ import { IndependentDrivingComponent } from './independent-driving/independent-d
     WeatherConditionsComponent,
     AdditionalInformationComponent,
     VehicleChecksOfficeCardComponent,
+    CandidateSectionComponent,
   ],
 })
 export class OfficeComponentsModule { }
