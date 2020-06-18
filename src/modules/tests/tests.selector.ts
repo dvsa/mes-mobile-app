@@ -33,7 +33,7 @@ export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testSt
 
 export const getTestOutcome = (test: TestResultCommonSchema) => test.activityCode;
 
-export const getTestOutcomeText = (test: TestResultCommonSchema) => {
+export const getTestOutcomeText = (test: TestResultSchemasUnion) => {
   if (test.activityCode === ActivityCodes.PASS) {
     return TestOutcome.Passed;
   }
