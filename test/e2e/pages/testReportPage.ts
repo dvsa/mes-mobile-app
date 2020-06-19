@@ -27,12 +27,21 @@ class TestReportPage extends Page {
     this.longPressElementByXPath('//competency-button[contains(@class, "uncouple-recouple-tick")]');
   }
 
+  completeHomeTestCodeSafety() {
+    this.longPressElementByCss('.highway-code-safety-tick');
+  }
+
+  completeHomeTestControlledStop() {
+    this.longPressElementByCss('.controlled-stop-tick');
+  }
+
+
   addUncoupleRecoupleFault() {
     this.longPressElementByXPath('//uncouple-recouple//competency-button/div/div[1]');
   }
 
   completeManouveure(testCategory) {
-    if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1' || testCategory === 'ce' || testCategory === 'd') {
+    if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1' || testCategory === 'ce' || testCategory === 'd' || testCategory === 'home-test') {
       this.longPressElementByXPath('//competency-button[contains(@class, "reverse-left-tick")]');
     } else {
       this.clickManoeuvresButton();

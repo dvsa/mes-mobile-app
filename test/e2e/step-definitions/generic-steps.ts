@@ -61,6 +61,9 @@ Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
 
+Before({ tags: '@catH' }, () => {
+  this.testCategory = 'home-test';
+});
 // We need this much timeout for the login process to complete
 setDefaultTimeout(TEST_CONFIG.DEFAULT_TIMEOUT);
 

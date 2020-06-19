@@ -194,6 +194,11 @@ export default class Page {
     this.longPressButton(element);
   }
 
+  longPressElementByCss(css) {
+    const element = this.getElementByCss(css);
+    this.longPressButton(element);
+  }
+
   /**
    * Small wait to make sure the action has initiated
    */

@@ -42,6 +42,10 @@ Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
 
+Before({ tags: '@catH' }, () => {
+  this.testCategory = 'home-test';
+});
+
 When('I end the test', () => {
   TestReportPage.clickEndTestButton();
 });
@@ -73,6 +77,10 @@ When('I complete the test', () => {
     }
     if (this.testCategory === 'be' || this.testCategory === 'ce') {
       TestReportPage.completeUncoupleRecouple();
+    }
+    if (this.testCategory === 'home-test') {
+      TestReportPage.completeHomeTestCodeSafety();
+      TestReportPage.completeHomeTestControlledStop();
     }
   }
   TestReportPage.clickEndTestButton();
