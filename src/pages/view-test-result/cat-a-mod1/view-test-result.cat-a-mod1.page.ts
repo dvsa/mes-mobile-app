@@ -16,7 +16,6 @@ import { CompressionProvider } from '../../../providers/compression/compression'
 import { formatApplicationReference } from '../../../shared/helpers/formatters';
 import { getCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
-import { getDrivingOrRidingLabel } from '../../../shared/helpers/driver-type';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ErrorTypes } from '../../../shared/models/error-message';
@@ -158,10 +157,6 @@ export class ViewTestResultCatAMod1Page extends BasePageComponent implements OnI
       activityCode: this.testResult.activityCode,
       testOutcome: getTestOutcomeText(this.testResult as TestResultCommonSchema),
     };
-  }
-
-  public getDriverType(): string {
-    return getDrivingOrRidingLabel(this.testResult.category as TestCategory);
   }
 
   // on exit error modal

@@ -28,7 +28,7 @@ export class FaultsDataRowComponent {
   minDrivingFaultCount: number = 15;
 
   @Input()
-  category?: string;
+  category?: string = null;
 
   showNoFaultsMessage = (): boolean =>
     this.drivingFaultCount === 0 &&
