@@ -66,4 +66,16 @@ describe('FaultsDataRowComponent', () => {
       expect(result).toBe(true);
     });
   });
+
+  describe('getDriverType', () => {
+    it('should return riding when isRider is true', () => {
+      const component = new FaultsDataRowComponent();
+      expect(component.getDriverType(true)).toBe('riding');
+    });
+
+    it('should return driving when isRider is false', () => {
+      const component = new FaultsDataRowComponent();
+      expect(component.getDriverType(false)).toBe('driving');
+    });
+  });
 });

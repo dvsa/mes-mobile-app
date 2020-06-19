@@ -1,4 +1,3 @@
-
 import { Component, Input } from '@angular/core';
 import { FaultSummary } from '../../../../shared/models/fault-marking.model';
 
@@ -26,6 +25,9 @@ export class FaultsDataRowComponent {
   @Input()
   minDrivingFaultCount: number = 15;
 
+  @Input()
+  isRider?: boolean = false;
+
   showNoFaultsMessage = (): boolean =>
     this.drivingFaultCount === 0 &&
     this.seriousFaults.length === 0 &&
@@ -34,5 +36,12 @@ export class FaultsDataRowComponent {
   showFaultComment = (drivingFault: FaultSummary): boolean =>
     this.drivingFaultCount > this.minDrivingFaultCount &&
     drivingFault.comment !== undefined
+
+  constructor() {
+  }
+
+  public getDriverType(isRider: boolean): string {
+    return isRider ? 'riding' : 'driving';
+  }
 
 }
