@@ -41,6 +41,11 @@ export function testStatusReducer(state = initialState, action: testStatusAction
         ...state,
         [action.slotId]: TestStatus.Submitted,
       };
+    case testStatusActions.SET_TEST_STATUS_DYNAMIC:
+      return {
+        ...state,
+        [action.slotId]: action.testStatus as TestStatus,
+      }
     default:
       return state;
   }

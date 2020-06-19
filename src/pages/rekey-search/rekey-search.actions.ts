@@ -7,11 +7,17 @@ export const REKEY_SEARCH_VIEW_DID_ENTER = '[RekeySearch] Rekey Search Did Enter
 export const REKEY_SEARCH_CLEAR_STATE = '[RekeySearch] Rekey Search Clear State';
 
 export const SEARCH_BOOKED_TEST = '[RekeySearch] Search Booked Test';
+export const SEARCH_BOOKED_TEST_FOR_STATUS = '[RekeySearch] Search Booked Test to get the status';
 export const SEARCH_BOOKED_TEST_SUCCESS = '[RekeySearchEffects] Search Booked Test Success';
 export const SEARCH_BOOKED_TEST_FAILURE = '[RekeySearchEffects] Search Booked Test Failure';
 
 export class RekeySearchViewDidEnter implements Action {
   readonly type = REKEY_SEARCH_VIEW_DID_ENTER;
+}
+
+export class SearchBookedTestForTestStatus implements Action {
+  readonly type = SEARCH_BOOKED_TEST_FOR_STATUS;
+  constructor(public appRef: string, public staffNumber: string) {}
 }
 
 export class SearchBookedTest implements Action {
@@ -38,4 +44,5 @@ export type RekeySearchActionTypes =
   | RekeySearchClearState
   | SearchBookedTest
   | SearchBookedTestSuccess
-  | SearchBookedTestFailure;
+  | SearchBookedTestFailure
+  | SearchBookedTestForTestStatus;

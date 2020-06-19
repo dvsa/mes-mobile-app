@@ -292,6 +292,8 @@ describe('TestSlotComponent', () => {
           testStatus$: of(TestStatus.Booked),
           testActivityCode$: of(ActivityCodes.PASS),
           isRekey$: of(false),
+          applicationReferenceNumber$: of('13342435'),
+          staffNumber$: of('1234567')
         };
         fixture.detectChanges();
         const subByDirective = fixture.debugElement.query(

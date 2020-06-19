@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { RekeySearchProvider } from '../../providers/rekey-search/rekey-search';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { CompressionProvider } from '../../providers/compression/compression';
 import { SearchProvider } from '../../providers/search/search';
 import {
-  SEARCH_BOOKED_TEST, SearchBookedTest, SearchBookedTestSuccess, SearchBookedTestFailure, RekeySearchActionTypes,
+  SEARCH_BOOKED_TEST,
+  SearchBookedTest,
+  SearchBookedTestSuccess,
+  SearchBookedTestFailure,
+  RekeySearchActionTypes,
+  SEARCH_BOOKED_TEST_FOR_STATUS,
 } from './rekey-search.actions';
 import { RekeySearchErrorMessages } from './rekey-search-error-model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
@@ -19,9 +24,8 @@ export class RekeySearchEffects {
     private actions$: Actions,
     private testSearchProvider: SearchProvider,
     private rekeySearchProvider: RekeySearchProvider,
-    private compressionProvider: CompressionProvider,
-  )
-  { }
+    private compressionProvider: CompressionProvider) {
+  }
 
   @Effect()
   getBooking$ = this.actions$.pipe(
@@ -48,6 +52,24 @@ export class RekeySearchEffects {
             );
           }
           return of(new SearchBookedTestFailure(err));
+        }),
+      );
+    }),
+  );
+
+  @Effect()
+  getTestSlotStatus$ = this.actions$.pipe(
+    ofType(SEARCH_BOOKED_TEST_FOR_STATUS),
+    tap(() => console.log('called the new action')),
+    switchMap((action: SearchBookedTest) => {
+      console.log('action', action);
+      return this.testSearchProvider.getTestResult(action.appRef, action.staffNumber).pipe(
+        switchMap((response: HttpResponse<any>): Observable<any> => {
+          console.log('response', response);
+          return of(response);
+        }), catchError((err) => {
+          console.log('err', err);
+          return of(err);
         }),
       );
     }),

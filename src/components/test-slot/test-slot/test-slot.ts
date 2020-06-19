@@ -8,9 +8,14 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { Observable } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { getTestStatus, getActivityCodeBySlotId, getTestById } from '../../../modules/tests/tests.selector';
+import {
+  getTestStatus,
+  getActivityCodeBySlotId,
+  getTestById,
+  getJournalData,
+} from '../../../modules/tests/tests.selector';
 import { SlotTypes } from '../../../shared/models/slot-types';
 import { map, filter } from 'rxjs/operators';
 import { TestSlot } from '@dvsa/mes-journal-schema';
@@ -20,16 +25,29 @@ import { SlotProvider } from '../../../providers/slot/slot';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { getApplicationNumber } from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
+import { getApplicationReference } from '../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
+import { getExaminer } from '../../../modules/tests/journal-data/common/examiner/examiner.reducer';
+import { getStaffNumber } from '../../../modules/tests/journal-data/common/examiner/examiner.selector';
+// import { SearchBookedTestForTestStatus } from '../../../pages/rekey-search/rekey-search.actions';
+import { SearchProvider } from '../../../providers/search/search';
+import { HttpResponse } from '@angular/common/http';
+import * as testStatusActions from '../../../modules/tests/test-status/test-status.actions';
+import { CompressionProvider } from '../../../providers/compression/compression';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
   testActivityCode$: Observable<ActivityCode>;
   isRekey$: Observable<boolean>;
+
+  applicationReferenceNumber$: Observable<string>;
+  staffNumber$: Observable<string>;
 }
 
 @Component({
   selector: 'test-slot',
   templateUrl: 'test-slot.html',
+  providers: [SearchProvider, CompressionProvider]
 })
 export class TestSlotComponent implements SlotComponent, OnInit {
   @Input()
@@ -44,6 +62,14 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   @Input()
   showLocation: boolean;
 
+  applicationReference: string;
+  staffNumber: string;
+
+  merged$: Observable<any>;
+  subscription: Subscription;
+
+  testStatus: TestStatus;
+
   componentState: TestSlotComponentState;
 
   constructor(
@@ -52,7 +78,10 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     public dateTimeProvider: DateTimeProvider,
     public store$: Store<StoreModel>,
     private slotProvider: SlotProvider,
-  ) { }
+    private testSearchProvider: SearchProvider,
+    private compressionProvider: CompressionProvider,
+  ) {
+  }
 
   ngOnInit(): void {
     const { slotId } = this.slot.slotDetail;
@@ -72,7 +101,61 @@ export class TestSlotComponent implements SlotComponent, OnInit {
         select(getRekeyIndicator),
         select(isRekey),
       ),
+      applicationReferenceNumber$: this.store$.pipe(
+        select(getTests),
+        map((tests) => getTestById(tests, slotId.toString())),
+        filter((test) => test !== undefined),
+        select(getJournalData),
+        select(getApplicationReference),
+        select(getApplicationNumber),
+      ),
+      staffNumber$: this.store$.pipe(
+        select(getTests),
+        map((tests) => getTestById(tests, slotId.toString())),
+        filter((test) => test !== undefined),
+        select(getJournalData),
+        select(getExaminer),
+        select(getStaffNumber),
+      ),
     };
+
+    const { applicationReferenceNumber$, staffNumber$, testStatus$ } = this.componentState;
+
+    this.merged$ = merge(
+      applicationReferenceNumber$.pipe(map(value => this.applicationReference = value)),
+      staffNumber$.pipe(map(value => this.staffNumber = value)),
+      testStatus$.pipe(map(value => this.testStatus = value)),
+    );
+    this.subscription = this.merged$.subscribe();
+
+    if (this.applicationReference && this.staffNumber) {
+      // needs to be moved to effect and instantiated by dispatch action
+      this.testSearchProvider
+        .getTestResult(this.applicationReference, this.staffNumber)
+        .subscribe((response: HttpResponse<any>): void => {
+          if (response) {
+            const { body } = response;
+
+            if (typeof body === 'string') {
+              // this object spread will not need to be done if the TestStatus existed in schema
+              const test =
+                { ...this.compressionProvider.extractTestResult(body), testStatus: TestStatus.Submitted };
+              const id: number = get(test, 'journalData.testSlotAttributes.slotId', null);
+              // check status here and dispatch appropriate action, create action that handles any TestStatus and use
+              // the value from the decompress JSON
+              const { testStatus } = test;
+
+              if (typeof id === 'number' && this.testStatus !== test.testStatus) {
+                this.store$.dispatch(
+                  new testStatusActions.SetTestStatusDynamic(id.toString(), testStatus)
+                );
+              }
+            }
+          }
+        }, (err) => {
+          console.error(err);
+        });
+    }
   }
 
   isIndicatorNeededForSlot(): boolean {
