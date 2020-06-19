@@ -1,7 +1,7 @@
 import { FaultsDataRowComponent } from '../faults-data-row';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 
-fdescribe('FaultsDataRowComponent', () => {
+describe('FaultsDataRowComponent', () => {
   describe('deafultSettings', () => {
     it('should have 15 as minDrivingFaultCount when the component is created', () => {
       const component = new FaultsDataRowComponent();
