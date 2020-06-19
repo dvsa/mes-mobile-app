@@ -68,12 +68,12 @@ describe('FaultsDataRowComponent', () => {
   });
 
   describe('getDriverType', () => {
-    it('should riding for EUAM2', () => {
+    it('should return riding when isRider is true', () => {
       const component = new FaultsDataRowComponent();
       expect(component.getDriverType(true)).toBe('riding');
     });
 
-    it('should driving for not Cat A', () => {
+    it('should return driving when isRider is false', () => {
       const component = new FaultsDataRowComponent();
       expect(component.getDriverType(false)).toBe('driving');
     });
