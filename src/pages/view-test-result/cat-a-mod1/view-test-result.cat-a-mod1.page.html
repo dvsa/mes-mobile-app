@@ -8,7 +8,7 @@
     <ion-title>
       Test information
     </ion-title>
-  </ion-navbar>getDriverType
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
@@ -27,9 +27,7 @@
     </div>
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
     <vehicle-details-card-cat-a [data]='testResult.vehicleDetails'></vehicle-details-card-cat-a>
-    <debrief-card [data]='testResult.testData'
-                  [category]='testResult.category'>
-    </debrief-card>
+    <debrief-card [data]='testResult.testData'></debrief-card>
     <test-summary-card
       [accompaniment]='testResult.accompaniment'
       [passCompletion]='testResult.passCompletion'

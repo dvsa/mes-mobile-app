@@ -5,7 +5,7 @@ import { flattenArray } from '../../../view-test-result-helpers';
 import { FaultSummary } from '../../../../../shared/models/fault-marking.model';
 import { FaultSummaryProvider } from '../../../../../providers/fault-summary/fault-summary';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
-import { CategoryCode, TestData } from '@dvsa/mes-test-schema/categories/AM1';
+import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
 
 @Component({
   selector: 'debrief-card',
@@ -15,9 +15,6 @@ export class DebriefCardComponent {
 
   @Input()
   data: TestData;
-
-  @Input()
-  category: CategoryCode;
 
   constructor(
     private faultSummaryProvider: FaultSummaryProvider,
