@@ -39,6 +39,11 @@ Before({ tags: '@catm2' }, () => {
 Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
+
+Before({ tags: '@catH' }, () => {
+  this.testCategory = 'home-test';
+});
+
 When('I end the debrief', () => {
   DebriefPage.clickEndDebriefButton();
 });
@@ -49,7 +54,9 @@ When('I end the welsh debrief', () => {
 
 When('I complete the pass details', () => {
   DebriefPage.completePassdetails(this.testCategory);
-  DebriefPage.selectTransmission('manual');
+  if(this.testCategory !== 'home-test'){
+    DebriefPage.selectTransmission('manual');
+  }
   DebriefPage.continuePassFinalisation(this.testCategory);
 });
 
@@ -95,6 +102,11 @@ Then('I see a {string} fault for {string}', (faultSeverity, faultDescription) =>
 
 Then('I see a {string} questions for {string}', (faultSeverity, faultDescription) => {
   const faultElement = DebriefPage.getQuestionsElement(faultSeverity, faultDescription);
+  return expect(faultElement.isPresent()).to.eventually.be.true;
+});
+
+Then('I see a vehicle check fault for {string}', (faultDescription) => {
+  const faultElement = DebriefPage.getVehicleCheckElement(faultDescription);
   return expect(faultElement.isPresent()).to.eventually.be.true;
 });
 

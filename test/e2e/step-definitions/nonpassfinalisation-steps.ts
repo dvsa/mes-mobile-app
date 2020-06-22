@@ -37,6 +37,10 @@ Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
 
+Before({ tags: '@catH' }, () => {
+  this.testCategory = 'home-test';
+});
+
 When('I continue to the back to office page', () => {
   NonPassFinalisationPage.clickD255Yes();
   DebriefPage.clickDebriefWitnessedYes();

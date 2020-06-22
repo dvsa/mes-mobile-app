@@ -40,6 +40,10 @@ Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
 
+Before({ tags: '@catH' }, () => {
+  this.testCategory = 'home-test';
+});
+
 When('I select a tell me question', () => {
   WaitingRoomToCarPage.selectTellMeQuestion('T2 - Tyre pressures');
 });
