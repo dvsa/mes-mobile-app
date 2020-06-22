@@ -82,8 +82,8 @@ export class ViewTestResultCatCPCPage extends BasePageComponent implements OnIni
         }),
       ).subscribe((data) => {
         this.testCategory = this.testResult.category as TestCategory;
+        this.testOutcome = getTestOutcomeText(this.testResult);
       });
-    this.testOutcome = getTestOutcomeText(this.testResult);
   }
 
   ionViewDidLeave(): void {

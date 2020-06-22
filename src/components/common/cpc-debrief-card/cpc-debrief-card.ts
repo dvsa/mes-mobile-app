@@ -38,6 +38,9 @@ export class CPCDebriefCardComponent implements OnInit {
   @Input()
   public isDetailedTestView: boolean = false;
 
+  @Input()
+  public combination: string;
+
   public cardHeader: string = 'Test details';
 
   public questions: QuestionUnion[];

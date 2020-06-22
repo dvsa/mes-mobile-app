@@ -14,7 +14,7 @@
 <ion-content padding>
   <error-message *ngIf="!isLoading && showErrorMessage" class="error" returnTo="{{errorLink}}" (exitModal)="goBack()">
   </error-message>
-  <div *ngIf="!isLoading && showErrorMessage" class="error" returnTo="{{errorLink}}" (exitModal)="goBack()">
+  <div *ngIf="!isLoading && showErrorMessage">
     <view-test-header [data]="getHeaderDetails()"></view-test-header>
     <test-details-card [data]="getTestDetails()"></test-details-card>
     <contact-details-card [candidateData]="testResult.journalData.candidate"
@@ -39,6 +39,7 @@
                       [question4]="testResult.testData.question4"
                       [question5]="testResult.testData.question5"
                       [overallScore]="testResult.testData.totalPercent"
+                      [combination]="testResult.testData.combination"
     ></cpc-debrief-card>
   </div>
 </ion-content>

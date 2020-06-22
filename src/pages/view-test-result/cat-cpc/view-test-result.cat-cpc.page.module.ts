@@ -6,6 +6,9 @@ import { ViewTestResultComponentsModule } from '../components/view-test-result.c
 import { EffectsModule } from '@ngrx/effects';
 import { ViewTestResultAnalyticsEffects } from '../view-test-result.analytics.effects';
 import { ViewTestResultCatCPCComponentsModule } from './components/view-test-result.cat-cpc.components.module';
+import { CompressionProvider } from '../../../providers/compression/compression';
+import { SearchProvider } from '../../../providers/search/search';
+import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,11 @@ import { ViewTestResultCatCPCComponentsModule } from './components/view-test-res
     ViewTestResultComponentsModule,
     EffectsModule.forFeature([ViewTestResultAnalyticsEffects]),
     ViewTestResultCatCPCComponentsModule,
+  ],
+  providers: [
+    SearchProvider,
+    CompressionProvider,
+    FaultSummaryProvider,
   ],
 })
 export class ViewTestResultCatCPCPageModule {}
