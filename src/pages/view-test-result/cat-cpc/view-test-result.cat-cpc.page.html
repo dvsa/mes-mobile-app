@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons ion-buttons start navPop>
+      <button ion-button center class="nav-close">
+        <ion-icon name="md-close"></ion-icon>Close
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Test information
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <error-message *ngIf="!isLoading && showErrorMessage" class="error" returnTo="{{errorLink}}" (exitModal)="goBack()">
+  </error-message>
+  <div *ngIf="!isLoading && showErrorMessage" class="error" returnTo="{{errorLink}}" (exitModal)="goBack()">
+    <view-test-header [data]="getHeaderDetails()"></view-test-header>
+    <test-details-card [data]="getTestDetails()"></test-details-card>
+    <contact-details-card [candidateData]="testResult.journalData.candidate"
+                          [communicationPreferencesData]="testResult.communicationPreferences">
+    </contact-details-card>
+    <business-details-card [data]="testResult.journalData.candidate"></business-details-card>
+    <div *ngIf="testResult.rekey">
+      <rekey-details-card [data]='testResult'></rekey-details-card>
+      <rekey-reason-card [data]='testResult.rekeyReason'></rekey-reason-card>
+    </div>
+    <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
+    <test-summary-card
+      [accompaniment]='testResult.accompaniment'
+      [passCompletion]='testResult.passCompletion'
+      [testSummary]='testResult.testSummary'
+    ></test-summary-card>
+    <cpc-debrief-card [isDetailedTestView]="true"
+                      [testOutcome]="testOutcome"
+                      [question1]="testResult.testData.question1"
+                      [question2]="testResult.testData.question2"
+                      [question3]="testResult.testData.question3"
+                      [question4]="testResult.testData.question4"
+                      [question5]="testResult.testData.question5"
+                      [overallScore]="testResult.testData.totalPercent"
+    ></cpc-debrief-card>
+  </div>
+</ion-content>

@@ -5,6 +5,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { ViewTestResultComponentsModule } from '../components/view-test-result.components.module';
 import { EffectsModule } from '@ngrx/effects';
 import { ViewTestResultAnalyticsEffects } from '../view-test-result.analytics.effects';
+import { ViewTestResultCatCPCComponentsModule } from './components/view-test-result.cat-cpc.components.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ViewTestResultAnalyticsEffects } from '../view-test-result.analytics.ef
     IonicPageModule.forChild(ViewTestResultCatCPCPage),
     ViewTestResultComponentsModule,
     EffectsModule.forFeature([ViewTestResultAnalyticsEffects]),
+    ViewTestResultCatCPCComponentsModule,
   ],
 })
 export class ViewTestResultCatCPCPageModule {}

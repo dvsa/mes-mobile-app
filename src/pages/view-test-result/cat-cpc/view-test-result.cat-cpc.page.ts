@@ -25,6 +25,7 @@ import { getCandidateName } from '../../../modules/tests/journal-data/common/can
 import { getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { get } from 'lodash';
 import { TestResultCatCPCSchema } from '@dvsa/mes-test-schema/categories/CPC';
+import { TestOutcome } from '../../../modules/tests/tests.constants';
 
 @IonicPage()
 @Component({
@@ -42,6 +43,7 @@ export class ViewTestResultCatCPCPage extends BasePageComponent implements OnIni
   showErrorMessage: boolean = false;
   errorLink: string;
   additionalErrorText: boolean;
+  testOutcome: TestOutcome;
 
   constructor(
     public navController: NavController,
@@ -81,6 +83,7 @@ export class ViewTestResultCatCPCPage extends BasePageComponent implements OnIni
       ).subscribe((data) => {
         this.testCategory = this.testResult.category as TestCategory;
       });
+    this.testOutcome = getTestOutcomeText(this.testResult);
   }
 
   ionViewDidLeave(): void {
