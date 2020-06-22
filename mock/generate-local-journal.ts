@@ -444,7 +444,6 @@ const localJournal: ExaminerWorkSchedule = {
       vehicleSlotTypeCode: 7,
       examinerVisiting: false,
     },
-
     {
       booking: {
         application: {
@@ -492,7 +491,6 @@ const localJournal: ExaminerWorkSchedule = {
       vehicleSlotTypeCode: 7,
       examinerVisiting: false,
     },
-
     {
       booking: {
         application: {
