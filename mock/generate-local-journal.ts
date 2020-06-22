@@ -444,6 +444,55 @@ const localJournal: ExaminerWorkSchedule = {
       vehicleSlotTypeCode: 7,
       examinerVisiting: false,
     },
+
+    {
+      booking: {
+        application: {
+          applicationId: 1543201,
+          bookingSequence: 7,
+          checkDigit: 7,
+          entitlementCheck: false,
+          extendedTest: false,
+          progressiveAccess: false,
+          testCategory: 'CCPC',
+          vehicleGearbox: 'Manual',
+          welshTest: false,
+        },
+        candidate: {
+          candidateAddress: {
+            addressLine1: '1 Hangar Lane',
+            addressLine2: 'Someplace',
+            addressLine3: 'Sometown',
+            postcode: 'AB78 9CD',
+          },
+          candidateId: 117,
+          candidateName: {
+            firstName: 'Fred',
+            lastName: 'Colon',
+            title: 'Mr',
+          },
+          driverNumber: 'COLON375220A99HC',
+          gender: 'M',
+          primaryTelephone: '01234 567890',
+          dateOfBirth: '1970-09-06',
+          ethnicityCode: 'A',
+        },
+      },
+      slotDetail: {
+        duration: 57,
+        slotId: 1031,
+        start: `${previousWorkingDay}T15:32:00`,
+      },
+      testCentre: {
+        centreId: 54321,
+        centreName: 'Example Test Centre',
+        costCode: 'EXTC1',
+      },
+      vehicleTypeCode: 'F',
+      vehicleSlotTypeCode: 7,
+      examinerVisiting: false,
+    },
+
     {
       booking: {
         application: {

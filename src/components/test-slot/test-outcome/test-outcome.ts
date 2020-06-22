@@ -174,11 +174,13 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   rekeyTest() {
+    console.log('here');
     if (this.testStatus === null || this.testStatus === TestStatus.Booked) {
       this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.category, true));
     } else {
       this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.category, true));
     }
+    console.log('this.category', this.category);
     switch (this.category) {
       case TestCategory.ADI2:
         this.navController.push(CAT_ADI_PART2.WAITING_ROOM_PAGE);
@@ -194,6 +196,10 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.C1:
       case TestCategory.C:
         this.navController.push(CAT_C.WAITING_ROOM_PAGE);
+        break;
+      case TestCategory.CCPC:
+      case TestCategory.DCPC:
+        this.navController.push(CAT_CPC.WAITING_ROOM_PAGE);
         break;
       case TestCategory.DE:
       case TestCategory.D1E:
