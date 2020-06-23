@@ -3,7 +3,15 @@ import { EndTestLinkComponent } from '../end-test-link';
 import { IonicModule, ModalController, NavController } from 'ionic-angular';
 import { ModalControllerMock, NavControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
-import { CAT_B, CAT_BE, CAT_C, CAT_D, CAT_A_MOD1, CAT_A_MOD2 } from '../../../../pages/page-names.constants';
+import {
+  CAT_B,
+  CAT_BE,
+  CAT_C,
+  CAT_D,
+  CAT_A_MOD1,
+  CAT_A_MOD2,
+  CAT_ADI_PART2,
+} from '../../../../pages/page-names.constants';
 import { configureTestSuite } from 'ng-bullet';
 
 describe('EndTestLinkComponent', () => {
@@ -121,6 +129,15 @@ describe('EndTestLinkComponent', () => {
           const { calls } = navController.push as jasmine.Spy;
           expect(calls.argsFor(0)[0]).toBe(CAT_A_MOD2.DEBRIEF_PAGE);
         });
+      });
+
+      it('should dismiss the termination confirmation dialog and navigate to CAT ADI2 debrief', () => {
+        component.category = 'ADI2';
+        component.terminateTestModal = jasmine.createSpyObj('terminateTestModal', ['dismiss']);
+        component.onTerminate();
+        expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe(CAT_ADI_PART2.DEBRIEF_PAGE);
       });
 
     });
