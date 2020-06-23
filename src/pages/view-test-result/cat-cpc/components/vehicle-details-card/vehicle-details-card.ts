@@ -9,4 +9,8 @@ export class CPCVehicleDetailsCardComponent {
 
   @Input()
   public vehicleDetails: VehicleDetails;
+
+  getCombination(): string {
+    return this.vehicleDetails.configuration || 'N/A';
+  }
 }

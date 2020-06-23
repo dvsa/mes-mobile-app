@@ -33,6 +33,7 @@
     ></test-summary-card>
     <cpc-vehicle-details-card [vehicleDetails]="testResult.vehicleDetails"></cpc-vehicle-details-card>
     <cpc-debrief-card
+      *ngIf="testResult.testData.combination"
       [isDetailedTestView]="true"
       [testOutcome]="testOutcome"
       [question1]="testResult.testData.question1"
