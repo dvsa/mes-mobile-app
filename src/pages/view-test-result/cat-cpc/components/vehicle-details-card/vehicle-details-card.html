@@ -1,0 +1,11 @@
+<ion-card>
+  <ion-card-header>
+    <h4>Vehicle details</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <data-row [label]="'Vehicle registration number'" [value]="vehicleDetails.registrationNumber"></data-row>
+      <data-row [label]="'Vehicle details'" [value]="vehicleDetails.configuration" [shouldHaveSeperator]="false"></data-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

@@ -31,15 +31,17 @@
       [passCompletion]='testResult.passCompletion'
       [testSummary]='testResult.testSummary'
     ></test-summary-card>
-    <cpc-debrief-card [isDetailedTestView]="true"
-                      [testOutcome]="testOutcome"
-                      [question1]="testResult.testData.question1"
-                      [question2]="testResult.testData.question2"
-                      [question3]="testResult.testData.question3"
-                      [question4]="testResult.testData.question4"
-                      [question5]="testResult.testData.question5"
-                      [overallScore]="testResult.testData.totalPercent"
-                      [combination]="testResult.testData.combination"
+    <cpc-vehicle-details-card [vehicleDetails]="testResult.vehicleDetails"></cpc-vehicle-details-card>
+    <cpc-debrief-card
+      [isDetailedTestView]="true"
+      [testOutcome]="testOutcome"
+      [question1]="testResult.testData.question1"
+      [question2]="testResult.testData.question2"
+      [question3]="testResult.testData.question3"
+      [question4]="testResult.testData.question4"
+      [question5]="testResult.testData.question5"
+      [overallScore]="testResult.testData.totalPercent"
+      [combination]="testResult.testData.combination"
     ></cpc-debrief-card>
   </div>
 </ion-content>

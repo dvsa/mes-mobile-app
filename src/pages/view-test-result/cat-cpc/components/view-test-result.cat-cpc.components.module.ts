@@ -3,9 +3,11 @@ import { ComponentsModule } from '../../../../components/common/common-component
 import { ViewTestResultComponentsModule } from '../../components/view-test-result.components.module';
 import { IonicModule } from 'ionic-angular';
 import { CommonModule } from '@angular/common';
+import { CPCVehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
 
 @NgModule({
   declarations: [
+    CPCVehicleDetailsCardComponent,
   ],
   imports: [
     CommonModule,
@@ -14,6 +16,7 @@ import { CommonModule } from '@angular/common';
     ViewTestResultComponentsModule,
   ],
   exports: [
+    CPCVehicleDetailsCardComponent,
   ],
 })
 export class ViewTestResultCatCPCComponentsModule {}
