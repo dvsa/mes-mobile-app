@@ -292,6 +292,10 @@ describe('OfficeCatCPCPage', () => {
     it('should return the null for the passed in combination code (LGV3) has no additional text', () => {
       expect(component.getCombinationAdditionalText('LGV3')).toEqual(null);
     });
+
+    it('should return null when nothing is passed in', () => {
+      expect(component.getCombinationAdditionalText(null)).toEqual(null);
+    });
   });
 
   describe('displayIfFail', () => {
