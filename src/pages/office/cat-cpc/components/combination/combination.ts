@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-
 import { CombinationCodes } from '@dvsa/mes-test-schema/categories/CPC';
 
 @Component({
@@ -15,5 +14,9 @@ export class CombinationComponent {
   combinationAdditionalText: string;
 
   constructor() { }
+
+  getCombinationText(combinationText: CombinationCodes | null): string {
+    return combinationText || 'N/A';
+  }
 
 }
