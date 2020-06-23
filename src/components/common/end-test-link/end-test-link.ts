@@ -7,7 +7,7 @@ import {
   CAT_D,
   CAT_A_MOD1,
   CAT_A_MOD2,
-  CAT_HOME_TEST, CAT_CPC,
+  CAT_HOME_TEST, CAT_CPC, CAT_ADI_PART2,
 } from '../../../pages/page-names.constants';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
@@ -42,6 +42,9 @@ export class EndTestLinkComponent {
   onTerminate = () => {
     this.terminateTestModal.dismiss();
     switch (this.category) {
+      case TestCategory.ADI2:
+        this.navController.push(CAT_ADI_PART2.DEBRIEF_PAGE);
+        break;
       case TestCategory.B:
         this.navController.push(CAT_B.DEBRIEF_PAGE);
         break;
