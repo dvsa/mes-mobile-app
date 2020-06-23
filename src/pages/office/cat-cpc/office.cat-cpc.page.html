@@ -62,7 +62,7 @@
                                (assessmentReportChange)="assessmentReportChanged($event)">
             </assessment-report>
 
-            <cpc-debrief-card *ngIf="displayIfFail(outcome)"
+            <cpc-debrief-card *ngIf="displayIfFail(outcome) && pageState.combination$ | async"
                               [overallScore]="pageState.overallScore$ | async"
                               [question1]="pageState.question1$ | async"
                               [question2]="pageState.question2$ | async"
