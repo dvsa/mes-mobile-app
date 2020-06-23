@@ -7,16 +7,9 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col align-self-center>
-        <ng-template [ngIf]="combination" [ngIfElse]="noCombination">
-          <label id="combination-label">{{combination}}
-            <span *ngIf="combinationAdditionalText">- {{combinationAdditionalText}}</span>
-          </label>
-        </ng-template>
-        <ng-template #noCombination>
-          <label id="no-combination-label">
-            <span>N/A</span>
-          </label>
-        </ng-template>
+        <label id="combination-label">{{getCombinationText(combination)}}
+          <span *ngIf="combinationAdditionalText">- {{combinationAdditionalText}}</span>
+        </label>
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>
