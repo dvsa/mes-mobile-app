@@ -111,6 +111,7 @@ import {
   getVehicleChecksDangerous,
 } from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.selector';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
+import { TestOutcome } from '../../../modules/tests/tests.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -405,7 +406,9 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.shouldDisplayDrivingFaultComments(data)),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestOutcomeText))),
+        map(([testData, testOutcomeText]) => this.shouldDisplayDrivingFaultComments(testData, testOutcomeText)),
       ),
       weatherConditions$: currentTest$.pipe(
         select(getTestSummary),
@@ -628,15 +631,12 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
     this.popToRoot();
   }
 
-  shouldDisplayDrivingFaultComments = (data: CatADI2UniqueTypes.TestData): boolean => {
-    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.ADI2, data);
-    const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.ADI2, data);
-    const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.ADI2, data);
+  shouldDisplayDrivingFaultComments = (
+    testData: CatADI2UniqueTypes.TestData, testOutcomeText: TestOutcome): boolean => {
+    const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.ADI2, testData);
 
     return (
-      dangerousFaultCount === 0 &&
-      seriousFaultCount === 0 &&
-      drivingFaultCount > OfficeCatADIPart2Page.maxFaultCount
+      drivingFaultCount > 0 && testOutcomeText === TestOutcome.Failed
     );
   }
 
