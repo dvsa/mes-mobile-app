@@ -10,7 +10,7 @@ import { formatApplicationReference } from '../../shared/helpers/formatters';
 
 export const getCandidateName = (slot: any): string => {
   const { title, firstName, lastName } = slot.booking.candidate.candidateName;
-  return `${title} ${firstName} ${lastName}`;
+  return title ? `${title} ${firstName} ${lastName}` : `${firstName} ${lastName}`;
 };
 
 export const getTime = (slot: any): string => slot.slotDetail.start;

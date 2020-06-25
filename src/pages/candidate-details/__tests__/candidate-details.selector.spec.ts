@@ -48,8 +48,7 @@ describe('Candidate Details Selector', () => {
     it('returns None string for falsey propery', () => {
       const slot = {
         booking: {
-          application: {
-          },
+          application: {},
           previousCancellation: [],
         },
       };
@@ -161,6 +160,25 @@ describe('Candidate Details Selector', () => {
       const result = getCandidateName(slot);
 
       expect(result).toEqual(`${title} ${firstName} ${lastName}`);
+    });
+
+    it('returns the combination of candidate name title, firstName and lastName', () => {
+      const firstName = 'Florence';
+      const lastName = 'Pearson';
+      const slot = {
+        booking: {
+          candidate: {
+            candidateName: {
+              firstName,
+              lastName,
+            },
+          },
+        },
+      };
+
+      const result = getCandidateName(slot);
+
+      expect(result).toEqual(`${firstName} ${lastName}`);
     });
   });
 

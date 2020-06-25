@@ -38,7 +38,7 @@ export class SearchResultComponent {
 
   getName(): string {
     const name: Name = this.searchResult.candidateName;
-    return `${name.title} ${name.firstName} ${name.lastName}`;
+    return name.title ? `${name.title} ${name.firstName} ${name.lastName}` : `${name.firstName} ${name.lastName}`;
   }
 
   openTestResult(): void {
