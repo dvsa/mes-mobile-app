@@ -41,8 +41,6 @@ export class CPCDebriefCardComponent implements OnInit {
   @Input()
   public combination: string;
 
-  public cardHeader: string = 'Test details';
-
   public questions: QuestionUnion[];
 
   constructor() {
@@ -60,15 +58,16 @@ export class CPCDebriefCardComponent implements OnInit {
     return question.score >= MINIMUM_QUESTION_SCORE;
   }
 
+  getCardHeader = (): string => {
+    return this.isDetailedTestView ? 'Debrief' : 'Test details';
+  }
+
   isPass = (): boolean => {
     return this.testOutcome === TestOutcome.PASS || this.testOutcome === OutcomeType.Passed;
   }
 
   ngOnInit(): void {
     this.questions = [this.question1, this.question2, this.question3, this.question4, this.question5];
-    if (this.isDetailedTestView) {
-      this.cardHeader = 'Debrief';
-    }
   }
 
 }
