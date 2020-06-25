@@ -29,7 +29,7 @@ import { CPCVehicleDetailsCardComponent } from '../components/vehicle-details-ca
 import { TestOutcome } from '../../../../modules/tests/tests.constants';
 import { By } from '@angular/platform-browser';
 
-fdescribe('ViewTestResultCatCPCPage', () => {
+describe('ViewTestResultCatCPCPage', () => {
   let fixture: ComponentFixture<ViewTestResultCatCPCPage>;
   let component: ViewTestResultCatCPCPage;
   let loadingController: LoadingController;
@@ -214,7 +214,7 @@ fdescribe('ViewTestResultCatCPCPage', () => {
     });
     it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
-      component.testResult = categoryCPCTestResultMock;
+      spyOn(component.compressionProvider, 'extractTestResult').and.returnValue(categoryCPCTestResultMock);
 
       fixture.detectChanges();
 
@@ -238,7 +238,9 @@ fdescribe('ViewTestResultCatCPCPage', () => {
       expect(
         fixture.debugElement.query(By.css('cpc-vehicle-details-card')),
       ).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('cpc-debrief-card'))).not.toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('cpc-debrief-card')),
+      ).not.toBeNull();
       expect(
         fixture.debugElement.query(By.css('test-summary-card')),
       ).not.toBeNull();
