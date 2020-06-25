@@ -31,7 +31,10 @@
       [passCompletion]='testResult.passCompletion'
       [testSummary]='testResult.testSummary'
     ></test-summary-card>
-    <cpc-vehicle-details-card [vehicleDetails]="testResult.vehicleDetails"></cpc-vehicle-details-card>
+    <cpc-vehicle-details-card
+      *ngIf="testCategory !== 'DCPC'"
+      [vehicleDetails]="testResult.vehicleDetails">
+    </cpc-vehicle-details-card>
     <cpc-debrief-card
       *ngIf="testResult.testData.combination"
       [isDetailedTestView]="true"

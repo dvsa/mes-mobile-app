@@ -28,6 +28,7 @@ import { CPCDebriefCardComponent } from '../../../../components/common/cpc-debri
 import { CPCVehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
 import { TestOutcome } from '../../../../modules/tests/tests.constants';
 import { By } from '@angular/platform-browser';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('ViewTestResultCatCPCPage', () => {
   let fixture: ComponentFixture<ViewTestResultCatCPCPage>;
@@ -183,6 +184,26 @@ describe('ViewTestResultCatCPCPage', () => {
       expect(
         fixture.debugElement.query(By.css('test-summary-card')),
       ).toBeNull();
+    });
+    it('should hide vehicle details if testCategory is a DCPC', () => {
+      component.isLoading = false;
+      const mockData = categoryCPCTestResultMock;
+      mockData.category = TestCategory.DCPC;
+      spyOn(component.compressionProvider, 'extractTestResult').and.returnValue(mockData);
+      fixture.detectChanges();
+      expect(
+        fixture.debugElement.query(By.css('cpc-vehicle-details-card')),
+      ).toBeNull();
+    });
+    it('should show vehicle details if testCategory is not a DCPC', () => {
+      component.isLoading = false;
+      const mockData = categoryCPCTestResultMock;
+      mockData.category = TestCategory.CCPC;
+      spyOn(component.compressionProvider, 'extractTestResult').and.returnValue(mockData);
+      fixture.detectChanges();
+      expect(
+        fixture.debugElement.query(By.css('cpc-vehicle-details-card')),
+      ).not.toBeNull();
     });
     it('should hide the cards and show the error message when there has been an error', () => {
       component.isLoading = false;
