@@ -48,6 +48,11 @@ export const questions: VehicleChecksQuestion[] = [
     description: 'When it is safe to do so can you show me how you would operate the cruise control.',
     shortName: 'Cruise control',
   },
+  {
+    code: 'N/A',
+    description: 'Not applicable.',
+    shortName: 'Not applicable',
+  },
 ];
 /* tslint:enable:max-line-length */
 
