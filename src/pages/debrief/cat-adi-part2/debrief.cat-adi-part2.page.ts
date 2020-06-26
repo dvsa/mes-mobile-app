@@ -15,7 +15,7 @@ import { FaultSummary } from '../../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from '@ngx-translate/core';
-import { ETA, Eco, CategoryCode, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { ETA, Eco, CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import {
   getCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
@@ -32,9 +32,6 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { TestOutcome } from '../../../shared/models/test-outcome';
-import {
-  getVehicleChecksCatADI2,
-} from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.selector';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -47,7 +44,6 @@ interface DebriefPageState {
   conductedLanguage$: Observable<string>;
   candidateName$: Observable<string>;
   category$: Observable<CategoryCode>;
-  tellMeShowMeQuestions$: Observable<QuestionResult[]>;
 }
 
 @IonicPage()
@@ -140,12 +136,6 @@ export class DebriefCatADIPart2Page extends BasePageComponent {
       ),
       category$: currentTest$.pipe(
         select(getTestCategory),
-      ),
-      tellMeShowMeQuestions$: currentTest$.pipe(
-        select(getTestData),
-        select(getVehicleChecksCatADI2),
-        map(checks => checks.tellMeQuestions),
-        map(checks => checks.filter(c => c.code !== undefined)),
       ),
     };
 
