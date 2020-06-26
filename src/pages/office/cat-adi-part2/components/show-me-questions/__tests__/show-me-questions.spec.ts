@@ -37,6 +37,10 @@ describe('ShowMeQuestionsCatADI2Component', () => {
 
   describe('Class', () => {
     describe('isOptionDisabled', () => {
+      it('should return false if the question code is N/A', () => {
+        const result = component.isOptionDisabled({ code: 'N/A', description: '', shortName: '' });
+        expect(result).toEqual(false);
+      });
       it(`should return true if the question is in the list of questions to disable
           and not equal to the currently selected question`,
         () => {

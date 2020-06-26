@@ -107,6 +107,9 @@ export class ShowMeQuestionsCatADI2Component implements OnChanges, OnInit {
   }
 
   isOptionDisabled(question: VehicleChecksQuestion): boolean {
+    if (question.code === 'N/A') {
+      return false;
+    }
     const doesQuestionExist: QuestionResult =
       this.questionsToDisable.find(
         questionToDisable => questionToDisable.code === question.code &&
