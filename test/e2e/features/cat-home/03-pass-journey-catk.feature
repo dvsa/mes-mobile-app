@@ -1,4 +1,4 @@
-@catH  @full_smoke @regression
+@catk  @full_smoke @regression
 
 Feature: Driver Examiner complete the pass journey for Home test cat K
 
