@@ -11,7 +11,26 @@ Feature: Driver Examiner complete the fail journey for Home test H
     When the candidate requests to receive results by post
     And I proceed to the bike
 
-  Scenario: Driving Examiner completes a passed test for category H with 16 faults
+  Scenario: Driving Examiner fail the Eyesight test
+    Given I should see the "Florence Pearson" page
+    And I fail the eye sight test
+    Then I should see the Debrief page with outcome "Unsuccessful"
+    And I should see the "Debrief - Florence Pearson" page
+    When I end the debrief
+    Then I am on the post debrief holding page
+    When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Florence Pearson" page
+    And I complete the fail details
+    And I continue to the office write up
+    Then I should see the "Office" page
+    And the office page test outcome is "Unsuccessful"
+    When I complete the office write up
+    And I enter a comment for "serious" fault "Eyesight Test"
+    And I upload the test
+    Then I should see the "Journal" page
+    And the test result for "Miss Florence Pearson" is "3"
+
+  Scenario: Driving Examiner fail the test for category H with 16 faults
     Given I should see the "Florence Pearson" page
     And I select the Eyesight test result "Pass"
     And I enter the vehicle registration number "AB12CDE"
@@ -49,6 +68,7 @@ Feature: Driver Examiner complete the fail journey for Home test H
     When I end the debrief
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Florence Pearson" page
     And I complete the fail details
     And I am on the back to office page
     And I continue to the office write up
@@ -64,3 +84,63 @@ Feature: Driver Examiner complete the fail journey for Home test H
     And I upload the test
     Then I should see the "Journal" page
     And the test result for "Miss Florence Pearson" is "2"
+
+
+  Scenario: Driving Examiner fail the test for category H with 1 serious fault
+    Given I should see the "Florence Pearson" page
+    And I select the Eyesight test result "Pass"
+    And I enter the vehicle registration number "AB12CDE"
+    And I select the "Vehicle checks - Florence Pearson" page
+      |H1 - Direction indicators |H15 - Tyre pressures |
+      |true                      |true                 |
+    Then I continue to test report
+    Then I should see the "Test report - Florence Pearson" page
+    And I add a "Accelerator" serious fault
+    When I complete the test
+    And I continue to debrief
+    Then I should see the Debrief page with outcome "Unsuccessful"
+    And I see a "serious" fault for "Control - Accelerator"
+    When I end the debrief
+    Then I am on the post debrief holding page
+    When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Florence Pearson" page
+    And I complete the fail details
+    And I am on the back to office page
+    And I continue to the office write up
+    Then I should see the "Office" page
+    And the office page test outcome is "Unsuccessful"
+    When I complete the office write up
+    And I enter a comment for "serious" fault "Control - Accelerator"
+    And I upload the test
+    Then I should see the "Journal" page
+    And the test result for "Miss Florence Pearson" is "2"
+
+  Scenario: Driving Examiner fail the test for category H with 1 dangerous fault
+    Given I should see the "Florence Pearson" page
+    And I select the Eyesight test result "Pass"
+    And I enter the vehicle registration number "AB12CDE"
+    And I select the "Vehicle checks - Florence Pearson" page
+      |H1 - Direction indicators |H15 - Tyre pressures |
+      |true                      |true                 |
+    Then I continue to test report
+    Then I should see the "Test report - Florence Pearson" page
+    And I add a "Signalling" dangerous fault
+    When I complete the test
+    And I continue to debrief
+    Then I should see the Debrief page with outcome "Unsuccessful"
+    And I see a "dangerous" fault for "Use of mirrors - Signalling"
+    When I end the debrief
+    Then I am on the post debrief holding page
+    When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Florence Pearson" page
+    And I complete the fail details
+    And I am on the back to office page
+    And I continue to the office write up
+    Then I should see the "Office" page
+    And the office page test outcome is "Unsuccessful"
+    When I complete the office write up
+    And I enter a comment for "dangerous" fault "Use of mirrors - Signalling"
+    And I upload the test
+    Then I should see the "Journal" page
+    And the test result for "Miss Florence Pearson" is "2"
+
