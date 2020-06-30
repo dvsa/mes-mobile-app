@@ -199,13 +199,6 @@ Given('I am on the {string} page', (pageTitle) => {
     .to.eventually.equal(pageTitle);
 });
 
-
-
-
-
-
-
-
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {
   JournalPage.rowContains(rowName, rowValue);
 });
