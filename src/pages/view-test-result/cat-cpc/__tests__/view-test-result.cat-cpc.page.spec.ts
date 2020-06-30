@@ -7,7 +7,6 @@ import { TestDetailsCardComponent } from '../../components/test-details-card/tes
 import { RekeyDetailsCardComponent } from '../../components/rekey-details-card/rekey-details';
 import { RekeyReasonCardComponent } from '../../components/rekey-reason-card/rekey-reason';
 import { ExaminerDetailsCardComponent } from '../../components/examiner-details-card/examiner-details';
-import { TestSummaryCardComponent } from '../../components/test-summary-card/test-summary-card';
 import { ViewTestHeaderComponent } from '../../components/view-test-header/view-test-header';
 import { ErrorMessageComponent } from '../../../../components/common/error-message/error-message';
 import { BusinessDetailsCardComponent } from '../../components/business-details-card/business-details-card';
@@ -25,10 +24,10 @@ import { TestDetailsModel } from '../../components/test-details-card/test-detail
 import { ExaminerDetailsModel } from '../../components/examiner-details-card/examiner-details-card.model';
 import { ViewTestHeaderModel } from '../../components/view-test-header/view-test-header.model';
 import { CPCDebriefCardComponent } from '../../../../components/common/cpc-debrief-card/cpc-debrief-card';
-import { CPCVehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
 import { TestOutcome } from '../../../../modules/tests/tests.constants';
 import { By } from '@angular/platform-browser';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { ViewTestResultCatCPCComponentsModule } from '../components/view-test-result.cat-cpc.components.module';
 
 describe('ViewTestResultCatCPCPage', () => {
   let fixture: ComponentFixture<ViewTestResultCatCPCPage>;
@@ -43,15 +42,13 @@ describe('ViewTestResultCatCPCPage', () => {
         MockComponent(RekeyDetailsCardComponent),
         MockComponent(RekeyReasonCardComponent),
         MockComponent(ExaminerDetailsCardComponent),
-        MockComponent(CPCVehicleDetailsCardComponent),
-        MockComponent(TestSummaryCardComponent),
         MockComponent(ViewTestHeaderComponent),
         MockComponent(CPCDebriefCardComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(BusinessDetailsCardComponent),
         MockComponent(ContactDetailsCardComponent),
       ],
-      imports: [IonicModule, AppModule],
+      imports: [IonicModule, AppModule, ViewTestResultCatCPCComponentsModule],
       providers: [
         {
           provide: NavController,
@@ -263,7 +260,7 @@ describe('ViewTestResultCatCPCPage', () => {
         fixture.debugElement.query(By.css('cpc-debrief-card')),
       ).not.toBeNull();
       expect(
-        fixture.debugElement.query(By.css('test-summary-card')),
+        fixture.debugElement.query(By.css('cpc-test-summary-card')),
       ).not.toBeNull();
     });
   });
