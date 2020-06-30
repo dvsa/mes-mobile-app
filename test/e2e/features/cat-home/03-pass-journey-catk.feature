@@ -1,8 +1,9 @@
-@catk  @full_smoke @regression
+@catHome  @full_smoke @regression
 
 Feature: Driver Examiner complete the pass journey for Home test cat K
 
-  Background:
+  Scenario: Driving Examiner completes a passed test for category K with wrong vehicle checks answers
+
     Given I am logged in as "desexaminerbe" and I have a test for "Mr James Brown"
     When I view candidate details for "Mr James Brown"
     Then I should see the "Test details - Mr James Brown" page
@@ -16,10 +17,8 @@ Feature: Driver Examiner complete the pass journey for Home test cat K
     And the candidate confirms their declaration
     Then I should see the "Declaration - James Brown" page
     When the candidate requests to receive results by post
-    And I proceed to the bike
-
-  Scenario: Driving Examiner completes a passed test for category K with wrong vehicle checks answers
-    Given I should see the "James Brown" page
+    And I proceed to the car
+    Then I should see the "James Brown" page
     And I select the Eyesight test result "Pass"
     And I enter the vehicle registration number "AB12CDE"
     And I select the "Vehicle checks - James Brown" page
@@ -43,3 +42,28 @@ Feature: Driver Examiner complete the pass journey for Home test cat K
     And I upload the test
     Then I should see the "Journal" page
     And the test result for "Mr James Brown" is "1"
+
+Scenario: A Driving Examiner Completes a pass test for autosave
+
+    Given I am on the "Journal" page
+    And  I click the back button
+    Then I should see the "My dashboard" page
+    When I click search completed tests
+    When I search for a completed test with the application reference of "22123478013"
+    And the search result is clicked
+    Then I should see the "Test information" page
+    And the test result outcome is "Passed"
+    And the test result has the following data present
+      | label                             | value                                  |
+      | Application reference             | 22123478013                            |
+      | Test category                     | K                                      |
+      | Slot type                         | Extended Test Special Needs            |
+      | Certificate number                | A123456X                               |
+      | Route number                      | 88                                     |
+      | Physical description of candidate | None                                   |
+      | Weather conditions                | Bright / wet roads and Showers         |
+    When I click the close button
+    Then I should see the "Search submitted test" page
+    When I click the back button on the search submitted test page
+    Then I should see the "My dashboard" page
+

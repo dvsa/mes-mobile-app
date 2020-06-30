@@ -1,4 +1,4 @@
-@catH  @full_smoke @regression
+@catHome @full_smoke @regression
 
 Feature: Driver Examiner complete the fail journey for Home test H
 
@@ -9,7 +9,7 @@ Feature: Driver Examiner complete the fail journey for Home test H
     And the candidate confirms their declaration
     Then I should see the "Declaration - Florence Pearson" page
     When the candidate requests to receive results by post
-    And I proceed to the bike
+    And I proceed to the car
 
   Scenario: Driving Examiner fail the Eyesight test
     Given I should see the "Florence Pearson" page
@@ -75,7 +75,7 @@ Feature: Driver Examiner complete the fail journey for Home test H
     Then I should see the "Office" page
     And the office page test outcome is "Unsuccessful"
     When I complete the office write up
-   And I enter a comment for "driving" fault "Control - Accelerator"
+    And I enter a comment for "driving" fault "Control - Accelerator"
     And I enter a comment for "driving" fault "Move Away - Safety"
     And I enter a comment for "driving" fault "Use of mirrors - Signalling"
     And I enter a comment for "driving" fault "Junctions - Approach speed"

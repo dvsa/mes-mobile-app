@@ -31,7 +31,7 @@ Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
 
-Before({ tags: '@catH' }, () => {
+Before({ tags: '@catHome' }, () => {
   this.testCategory = 'home-test';
 });
 

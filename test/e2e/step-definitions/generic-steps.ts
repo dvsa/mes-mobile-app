@@ -61,7 +61,7 @@ Before({ tags: '@catd' }, () => {
   this.testCategory = 'd';
 });
 
-Before({ tags: '@catH' }, () => {
+Before({ tags: '@catHome' }, () => {
   this.testCategory = 'home-test';
 });
 // We need this much timeout for the login process to complete
@@ -180,6 +180,16 @@ When('I log in to the application as {string}', (username) => {
 });
 
 Then('I should see the {string} page', (pageTitle) => {
+  PageHelper.waitForOverlay('click-block-active');
+  // Wait for the page title to exist
+  PageHelper.getPageTitle(pageTitle);
+
+  // Check that it is the last page title i.e. the displayed one
+  return expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
+    .to.eventually.equal(pageTitle);
+});
+
+Given('I am on the {string} page', (pageTitle) => {
   PageHelper.waitForOverlay('click-block-active');
   // Wait for the page title to exist
   PageHelper.getPageTitle(pageTitle);
