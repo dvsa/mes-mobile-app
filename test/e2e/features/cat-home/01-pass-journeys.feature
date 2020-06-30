@@ -1,4 +1,4 @@
-@catH  @full_smoke @regression
+@catHome @full_smoke @regression
 
 Feature: Driver Examiner complete the pass journey for Home test H
 
@@ -9,7 +9,7 @@ Feature: Driver Examiner complete the pass journey for Home test H
     And the candidate confirms their declaration
     Then I should see the "Declaration - Florence Pearson" page
     When the candidate requests to receive results by post
-    And I proceed to the bike
+    And I proceed to the car
 
   Scenario: Driving Examiner completes a passed test for category H with wrong vehicle checks answers
     Given I should see the "Florence Pearson" page
