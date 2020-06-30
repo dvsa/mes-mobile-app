@@ -28,6 +28,9 @@ export class FaultsDataRowComponent {
   @Input()
   isRider?: boolean = false;
 
+  @Input()
+  displayDrivingFaults?: boolean = false;
+
   showNoFaultsMessage = (): boolean =>
     this.drivingFaultCount === 0 &&
     this.seriousFaults.length === 0 &&
