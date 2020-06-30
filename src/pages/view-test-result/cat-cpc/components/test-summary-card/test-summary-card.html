@@ -1,0 +1,34 @@
+<ion-card>
+  <ion-card-header>
+    <h4>Test summary</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <data-row [label]="'Accompanied by'" [value]="getAccompaniedBy()"></data-row>
+      <data-row
+        [label]="'Licence provided'"
+        [value]="getProvisionalLicenceProvided()"
+        *ngIf="shouldDisplayLicenceProvided(getProvisionalLicenceProvided())">
+      </data-row>
+      <data-row
+        [label]="'Code 78'"
+        [value]="getCode78()"
+        *ngIf="getCode78() != null">
+      </data-row>
+      <data-row
+        [label]="'Certificate number'"
+        [value]="getPassCertificateNumber()"
+        *ngIf="getPassCertificateNumber()">
+      </data-row>
+      <data-row [label]="'Physical description of candidate'" [value]="getCandidateDescription()"></data-row>
+      <data-row [label]="'Debrief witnessed'" [value]="getDebriefWitnessed()"></data-row>
+      <data-row [label]="'D255'" [value]="getD255()"></data-row>
+      <data-row [label]="'Additional information'" [value]="getAdditionalInformation()"></data-row>
+      <data-row
+        [label]="'Assessment Report'"
+        [value]="getAssessmentReport()"
+        *ngIf="shouldDisplayAssessmentReport()"
+      ></data-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

@@ -26,11 +26,6 @@
       <rekey-reason-card [data]='testResult.rekeyReason'></rekey-reason-card>
     </div>
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
-    <test-summary-card
-      [accompaniment]='testResult.accompaniment'
-      [passCompletion]='testResult.passCompletion'
-      [testSummary]='testResult.testSummary'
-    ></test-summary-card>
     <cpc-vehicle-details-card
       *ngIf="testCategory !== 'DCPC'"
       [vehicleDetails]="testResult.vehicleDetails">
@@ -47,5 +42,11 @@
       [overallScore]="testResult.testData.totalPercent"
       [combination]="testResult.testData.combination"
     ></cpc-debrief-card>
+    <cpc-test-summary-card
+      [accompaniment]='testResult.accompaniment'
+      [passCompletion]='testResult.passCompletion'
+      [testSummary]='testResult.testSummary'
+      [testOutcome]="testOutcome"
+    ></cpc-test-summary-card>
   </div>
 </ion-content>
