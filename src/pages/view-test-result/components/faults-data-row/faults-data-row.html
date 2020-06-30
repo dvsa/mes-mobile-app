@@ -64,7 +64,7 @@
               <span class="mes-data">{{drivingFault.competencyDisplayName}}</span>
             </ion-col>
           </ion-row>
-          <ion-row *ngIf="showFaultComment(drivingFault)">
+          <ion-row *ngIf="showFaultComment(drivingFault) || displayDrivingFaults">
             <ion-col>
               <span class="mes-data">- {{drivingFault.comment}}</span>
             </ion-col>
