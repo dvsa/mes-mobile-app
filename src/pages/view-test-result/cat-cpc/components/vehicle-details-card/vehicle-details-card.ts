@@ -9,8 +9,4 @@ export class CPCVehicleDetailsCardComponent {
 
   @Input()
   public vehicleDetails: VehicleDetails;
-
-  getConfiguration(): string {
-    return this.vehicleDetails.configuration || 'N/A';
-  }
 }
