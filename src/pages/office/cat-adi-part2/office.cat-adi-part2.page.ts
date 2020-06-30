@@ -112,6 +112,9 @@ import {
 } from '../../../modules/tests/test-data/cat-adi-part2/vehicle-checks/vehicle-checks.cat-adi-part2.selector';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestOutcome } from '../../../modules/tests/tests.constants';
+import {
+  AddControlledStopComment,
+} from '../../../modules/tests/test-data/common/controlled-stop/controlled-stop.actions';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -566,8 +569,9 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       this.store$.dispatch(new AddUncoupleRecoupleComment(drivingFaultComment.comment));
     } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(drivingFaultComment.comment));
+    } else if (drivingFaultComment.source === CommentSource.CONTROLLED_STOP) {
+      this.store$.dispatch(new AddControlledStopComment(drivingFaultComment.comment));
     }
-
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {
