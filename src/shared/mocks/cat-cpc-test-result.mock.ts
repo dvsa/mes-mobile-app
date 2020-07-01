@@ -2,7 +2,7 @@ import { TestResultCatCPCSchema } from '@dvsa/mes-test-schema/categories/CPC';
 
 export const categoryCPCTestResultMock: TestResultCatCPCSchema = {
   version: '0.0.1',
-  category: 'F',
+  category: 'CCPC',
   activityCode: '2',
   rekey: true,
   rekeyDate: '2019-08-05T09:00:00',

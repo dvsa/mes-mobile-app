@@ -55,11 +55,6 @@ export class CPCTestSummaryCardComponent {
     return convertBooleanToString(get(this.passCompletion, 'provisionalLicenceProvided'));
   }
 
-  public getCode78(): string  {
-    const code78: boolean = get(this.passCompletion, 'code78Present', null);
-    return code78 !== null ? convertBooleanToString(code78) : null;
-  }
-
   public getPassCertificateNumber() : string {
     return get(this.passCompletion, 'passCertificateNumber');
   }

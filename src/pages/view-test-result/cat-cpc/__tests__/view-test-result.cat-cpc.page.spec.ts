@@ -100,7 +100,7 @@ describe('ViewTestResultCatCPCPage', () => {
         const result: TestDetailsModel = component.getTestDetails();
 
         expect(result.applicationReference).toBe('12345672013');
-        expect(result.category).toBe('F');
+        expect(result.category).toBe('CCPC');
         expect(result.date).toBe('Friday 5th July 2019');
         expect(result.time).toBe('09:00');
         expect(result.specialNeeds).toEqual(

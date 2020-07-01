@@ -11,11 +11,6 @@
         *ngIf="shouldDisplayLicenceProvided(getProvisionalLicenceProvided())">
       </data-row>
       <data-row
-        [label]="'Code 78'"
-        [value]="getCode78()"
-        *ngIf="getCode78() != null">
-      </data-row>
-      <data-row
         [label]="'Certificate number'"
         [value]="getPassCertificateNumber()"
         *ngIf="getPassCertificateNumber()">
