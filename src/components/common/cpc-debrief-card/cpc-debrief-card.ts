@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
 import { TestOutcome } from '../../../shared/models/test-outcome';
+import { TestOutcome as OutcomeType } from '../../../modules/tests/tests.constants';
 
 export type QuestionUnion = Question
 | Question5;
@@ -34,6 +35,12 @@ export class CPCDebriefCardComponent implements OnInit {
   @Input()
   public testOutcome: string;
 
+  @Input()
+  public isDetailedTestView: boolean = false;
+
+  @Input()
+  public combination: string;
+
   public questions: QuestionUnion[];
 
   constructor() {
@@ -51,8 +58,12 @@ export class CPCDebriefCardComponent implements OnInit {
     return question.score >= MINIMUM_QUESTION_SCORE;
   }
 
+  getCardHeader = (): string => {
+    return this.isDetailedTestView ? 'Debrief' : 'Test details';
+  }
+
   isPass = (): boolean => {
-    return this.testOutcome === TestOutcome.PASS;
+    return this.testOutcome === TestOutcome.PASS || this.testOutcome === OutcomeType.Passed;
   }
 
   ngOnInit(): void {

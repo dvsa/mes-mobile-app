@@ -89,4 +89,16 @@ describe('CPCDebriefCardComponent', () => {
       expect(component.isPass()).toEqual(false);
     });
   });
+
+  describe('cardHeader', () => {
+    it('should display the header as Debrief if it is a detailed test view', () => {
+      component.isDetailedTestView = true;
+      expect(component.getCardHeader()).toEqual('Debrief');
+    });
+
+    it('should display the header as Test details if it is not a detailed test view', () => {
+      component.isDetailedTestView = false;
+      expect(component.getCardHeader()).toEqual('Test details');
+    });
+  });
 });
