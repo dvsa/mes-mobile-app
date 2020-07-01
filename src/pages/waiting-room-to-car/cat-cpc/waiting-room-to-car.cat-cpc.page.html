@@ -19,6 +19,7 @@
                         </vehicle-registration>
 
                         <vehicle-details-cat-cpc
+                                *ngIf="showVehicleDetails()"
                                 [formGroup]="form"
                                 [configuration]="pageState?.configuration$ | async"
                                 (vehicleDetailsChange)="vehicleConfiguration($event)">

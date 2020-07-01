@@ -179,4 +179,15 @@ describe('WaitingRoomToCarCatCPCPage', () => {
         .toHaveBeenCalledWith(new PopulateVehicleConfiguration('Articulated'));
     });
   });
+
+  describe('showVehicleDetails', () => {
+    it('should return a true for showing vehicle details when category is CCPC', () => {
+      component.testCategory = 'CCPC';
+      expect(component.showVehicleDetails()).toEqual(true);
+    });
+    it('should return a false which will hide vehicle details when category is not CCPC', () => {
+      component.testCategory = 'DCPC';
+      expect(component.showVehicleDetails()).toEqual(false);
+    });
+  });
 });

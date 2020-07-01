@@ -176,4 +176,6 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
     }
   }
 
+  showVehicleDetails = (): boolean => this.testCategory === TestCategory.CCPC;
+
 }
