@@ -13,7 +13,7 @@
           clearInput
           [class.ng-invalid]="invalid"
           [value]="dtcNumber"
-          (change)="dtcNumberChanged($event.target.value)"></ion-input>
+          (ionChange)="dtcNumberChanged($event.value)"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col col-3></ion-col>
@@ -31,7 +31,7 @@
           numbersOnly
           [class.ng-invalid]="invalid"
           [value]="staffNumber"
-          (change)="staffNumberChanged($event.target.value)"></ion-input>
+          (ionChange)="staffNumberChanged($event.value)"></ion-input>
       </ion-item>
     </ion-col>
   </ion-row>

@@ -47,7 +47,7 @@
                   clearInput
                   [class.ng-invalid]="invalid"
                   [value]="candidateInfo"
-                  (change)="candidateInfoChanged($event.target.value)"></ion-input>
+                  (ionChange)="candidateInfoChanged($event.value)"></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -84,11 +84,11 @@
 
   <ion-list class="test-results-list" [virtualScroll]="searchResults" [approxItemHeight]="'140px'" [headerFn]="myHeaderFn" [approxHeaderHeight]="'600px'">
     <ion-item-divider *virtualHeader="let header" class="list-header">
-      
+
     </ion-item-divider>
     <ion-item no-lines *virtualItem="let result">
       <search-result [searchResult]=result></search-result>
     </ion-item>
   </ion-list>
-  
+
 </ion-content>
