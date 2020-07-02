@@ -34,3 +34,28 @@ Feature: A Driving Examiner Completes a pass test for category d
     And I upload the test
     Then I should see the "Journal" page
     And the test result for "Mr Right Ford" is "1"
+
+  Scenario: A Driving Examiner Completes a pass test for autosave
+
+    Given I am on the "Journal" page
+    And  I click the back button
+    Then I should see the "My dashboard" page
+    When I click search completed tests
+    When I search for a completed test with the application reference of "16123400011 "
+    And the search result is clicked
+    Then I should see the "Test information" page
+    And the test result outcome is "Passed"
+    And the test result has the following data present
+      | label                             | value                                  |
+      | Application reference             | 16123400011                            |
+      | Test category                     | D                                      |
+      | Slot type                         | Standard Test                          |
+      | Code 78                           | Yes                                    |
+      | Route number                      | None                                   |
+      | Physical description of candidate | None                                   |
+      | Weather conditions                | Bright / wet roads and Showers         |
+    When I click the close button
+    Then I should see the "Search submitted test" page
+    When I click the back button on the search submitted test page
+    Then I should see the "My dashboard" page
+
