@@ -13,7 +13,7 @@ export class TerminateTestModal {
 
   onTerminate: Function;
 
-  shouldAuthenticate: boolean;
+  shouldAuthenticate: boolean = true;
 
   constructor(
     private navParams: NavParams,
@@ -21,7 +21,7 @@ export class TerminateTestModal {
   ) {
     this.onCancel = this.navParams.get('onCancel');
     this.onTerminate = this.navParams.get('onTerminate');
-    this.shouldAuthenticate = this.navParams.get('shouldAuthenticate') || true;
+    this.shouldAuthenticate = this.navParams.get('shouldAuthenticate');
   }
 
   /**
@@ -36,7 +36,7 @@ export class TerminateTestModal {
         }).catch(err => console.error(err));
     }
     this.onTerminate();
-    return null;
+    return Promise.resolve();
   }
 
 }
