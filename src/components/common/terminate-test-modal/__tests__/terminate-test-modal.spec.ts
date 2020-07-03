@@ -57,7 +57,7 @@ describe('TerminateTestModal', () => {
     });
   });
 
-  fdescribe('Class', () => {
+  describe('Class', () => {
     describe('terminationWrapper', () => {
       it('should trigger the lock screen', () => {
         component.shouldAuthenticate = true;
