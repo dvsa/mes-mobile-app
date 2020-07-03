@@ -83,7 +83,7 @@ describe('TerminateTestModal', () => {
         const lockScreenRejectionSpy = jasmine.createSpy('triggerLockScreen');
         deviceAuthenticationProvider.triggerLockScreen = lockScreenRejectionSpy;
         const result = await component.terminationWrapper();
-        expect(result).toEqual(null);
+        expect(result).toEqual(undefined);
         expect(deviceAuthenticationProvider.triggerLockScreen).not.toHaveBeenCalled();
       });
     });
