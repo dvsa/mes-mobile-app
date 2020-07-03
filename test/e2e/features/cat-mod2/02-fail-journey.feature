@@ -11,7 +11,7 @@ Feature: Driver Examiner complete the fail journey for Mod2
     Then I should see the "Declaration - Richard Rhys" page
     When the candidate requests to receive results by post
     And I proceed to the bike
-    Given I should see the "Richard Rhys" page
+    And I should see the "Richard Rhys" page
     And I select the test category "A2"
     And I select the Transmission Type "Manual"
     And I select the Eyesight test result "Pass"
