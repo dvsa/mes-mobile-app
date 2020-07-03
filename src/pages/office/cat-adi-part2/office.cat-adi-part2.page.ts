@@ -512,9 +512,10 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
 
     } else if (dangerousFaultComment.source === CommentSource.UNCOUPLE_RECOUPLE) {
       this.store$.dispatch(new AddUncoupleRecoupleComment(dangerousFaultComment.comment));
-
     } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
+    } else if (dangerousFaultComment.source === CommentSource.CONTROLLED_STOP) {
+      this.store$.dispatch(new AddControlledStopComment(dangerousFaultComment.comment));
     }
   }
 
@@ -543,6 +544,8 @@ export class OfficeCatADIPart2Page extends BasePageComponent {
       this.store$.dispatch(new AddShowMeTellMeComment(seriousFaultComment.comment));
     } else if (seriousFaultComment.source === CommentSource.EYESIGHT_TEST) {
       this.store$.dispatch(new EyesightTestAddComment(seriousFaultComment.comment));
+    } else if (seriousFaultComment.source === CommentSource.CONTROLLED_STOP) {
+      this.store$.dispatch(new AddControlledStopComment(seriousFaultComment.comment));
     }
   }
 
