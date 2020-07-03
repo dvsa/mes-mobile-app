@@ -2,7 +2,8 @@
 
 Feature: Driver Examiner complete the fail journey for Mod2
 
-  Background:
+  Scenario: Examiner fail the candidate with 11 driving faults
+
     Given I am logged in as "desexamineram2" and I have a test for "Mr Richard Rhys"
     When I start the test for "Mr Richard Rhys"
     And the candidate completes the declaration page
@@ -10,9 +11,7 @@ Feature: Driver Examiner complete the fail journey for Mod2
     Then I should see the "Declaration - Richard Rhys" page
     When the candidate requests to receive results by post
     And I proceed to the bike
-
-  Scenario: Examiner fail the candidate with 11 driving faults
-    Given I should see the "Richard Rhys" page
+    And I should see the "Richard Rhys" page
     And I select the test category "A2"
     And I select the Transmission Type "Manual"
     And I select the Eyesight test result "Pass"
@@ -59,3 +58,27 @@ Feature: Driver Examiner complete the fail journey for Mod2
     And I upload the test
     Then I should see the "Journal" page
     And the test result for "Mr Richard Rhys" is "2"
+
+  Scenario: A Driving Examiner Completes a fail test for autosave
+
+    Given I am on the "Journal" page
+    And  I click the back button
+    Then I should see the "My dashboard" page
+    When I click search completed tests
+    When I search for a completed test with the application reference of "20123000011"
+    And the search result is clicked
+    Then I should see the "Test information" page
+    And the test result outcome is "Unsuccessful"
+    And the test result has the following data present
+      | label                             | value                                  |
+      | Application reference             | 20123000011                            |
+      | Test category                     | EUA2M2                                 |
+      | Test centre                       | EXTC1                                  |
+      | D255                              | No                                     |
+      | Route number                      | None                                   |
+      | Physical description of candidate | None                                   |
+      | Weather conditions                | Bright / wet roads and Showers         |
+    When I click the close button
+    Then I should see the "Search submitted test" page
+    When I click the back button on the search submitted test page
+    Then I should see the "My dashboard" page
