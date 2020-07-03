@@ -20,6 +20,9 @@ export class EndTestLinkComponent {
   @Input()
   category: string;
 
+  @Input()
+  shouldAuthenticate: boolean = true;
+
   constructor(
     public modalController: ModalController,
     public navController: NavController,
@@ -31,6 +34,7 @@ export class EndTestLinkComponent {
     this.terminateTestModal = this.modalController.create('TerminateTestModal', {
       onCancel: this.onCancel,
       onTerminate: this.onTerminate,
+      shouldAuthenticate: this.shouldAuthenticate,
     }, { cssClass: 'mes-modal-alert text-zoom-regular' });
     this.terminateTestModal.present();
   }

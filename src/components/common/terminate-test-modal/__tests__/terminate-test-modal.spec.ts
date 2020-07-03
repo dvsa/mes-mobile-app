@@ -57,23 +57,34 @@ describe('TerminateTestModal', () => {
     });
   });
 
-  describe('Class', () => {
+  fdescribe('Class', () => {
     describe('terminationWrapper', () => {
       it('should trigger the lock screen', () => {
+        component.shouldAuthenticate = true;
         component.terminationWrapper();
         expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
       });
       it('should not call the onTerminate callback when the lock screen Promise rejects', async () => {
+        component.shouldAuthenticate = true;
         const lockScreenRejectionSpy = jasmine.createSpy('triggerLockScreen').and.returnValue(Promise.reject('n'));
         deviceAuthenticationProvider.triggerLockScreen = lockScreenRejectionSpy;
         await component.terminationWrapper();
         expect(component.onTerminate).not.toHaveBeenCalled();
       });
       it('should call the onTerminate callback when the lock screen Promise resolves', async () => {
+        component.shouldAuthenticate = true;
         const lockScreenRejectionSpy = jasmine.createSpy('triggerLockScreen').and.returnValue(Promise.resolve('y'));
         deviceAuthenticationProvider.triggerLockScreen = lockScreenRejectionSpy;
         await component.terminationWrapper();
         expect(component.onTerminate).toHaveBeenCalled();
+      });
+      it('should not trigger the lock screen if shouldAuthenticate equals false', async () => {
+        component.shouldAuthenticate = false;
+        const lockScreenRejectionSpy = jasmine.createSpy('triggerLockScreen');
+        deviceAuthenticationProvider.triggerLockScreen = lockScreenRejectionSpy;
+        const result = await component.terminationWrapper();
+        expect(result).toEqual(null);
+        expect(deviceAuthenticationProvider.triggerLockScreen).not.toHaveBeenCalled();
       });
     });
   });
