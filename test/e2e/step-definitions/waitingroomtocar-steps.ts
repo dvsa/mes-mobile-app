@@ -44,6 +44,10 @@ Before({ tags: '@catHome' }, () => {
   this.testCategory = 'home-test';
 });
 
+Before({ tags: '@catADI2' }, () => {
+  this.testCategory = 'adi-part2';
+});
+
 When('I select a tell me question', () => {
   WaitingRoomToCarPage.selectTellMeQuestion('T2 - Tyre pressures');
 });
@@ -90,6 +94,14 @@ When('I select the Transmission Type {string}', (transmissionType) => {
 
 When('I select the Eyesight test result {string}', (result) => {
   WaitingRoomToCarPage.selectEyeSight(result);
+});
+
+When('I select the ordit trainer outcome {string}', (result) => {
+  WaitingRoomToCarPage.selectOrditTrainerOutcome(result);
+});
+
+When('I select the training records outcome {string}', (result) => {
+  WaitingRoomToCarPage.selectTrainningRecordOutcome(result);
 });
 
 When('I enter the vehicle registration number {string}', (registrationNumber) => {

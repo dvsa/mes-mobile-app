@@ -45,6 +45,10 @@ Before({ tags: '@catHome' }, () => {
   this.testCategory = 'home-test';
 });
 
+Before({ tags: '@catADI2' }, () => {
+  this.testCategory = 'adi-part2';
+});
+
 Then('the pass certificate number should be {string}', (certificateNumber) => {
   const passCertificateNumber = HealthDeclarationPage.getPassCertificateNumber();
   passCertificateNumber.getText().then((textValue) => {

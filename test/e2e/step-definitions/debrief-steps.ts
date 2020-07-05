@@ -44,6 +44,10 @@ Before({ tags: '@catHome' }, () => {
   this.testCategory = 'home-test';
 });
 
+Before({ tags: '@catADI2' }, () => {
+  this.testCategory = 'adi-part2';
+});
+
 When('I end the debrief', () => {
   DebriefPage.clickEndDebriefButton();
 });

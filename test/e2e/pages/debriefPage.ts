@@ -1,4 +1,5 @@
 import Page from './page';
+import {createElementCssSelector} from '@angular/compiler';
 
 class DebriefPage extends Page {
   clickEndDebriefButton() {
@@ -10,16 +11,21 @@ class DebriefPage extends Page {
   }
 
   completePassdetails(testCategory) {
-    if (testCategory === 'a-mod1') {
-      this.textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
-        + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456');
-    } else {
-      this.textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
-        + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
-      this.clickProvisionalLicenceReceived();
+    if(testCategory === 'adi-part2') {
+      this.clickDebriefWitnessedYes();
+      this.clickLanguageYes();
+    }else {
+      if (testCategory === 'a-mod1') {
+        this.textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
+          + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456');
+      } else {
+        this.textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
+          + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
+        this.clickProvisionalLicenceReceived();
+      }
+      this.clickD255Yes();
+      this.clickDebriefWitnessedYes();
     }
-    this.clickD255Yes();
-    this.clickDebriefWitnessedYes();
   }
 
   selectTransmission (transmissionType: string) {
@@ -50,6 +56,10 @@ class DebriefPage extends Page {
 
   clickDebriefWitnessedYes() {
     this.clickElementById('debrief-witnessed-yes');
+  }
+
+  clickLanguageYes() {
+    this.clickElementById('lang-pref-english');
   }
 
   clickContinueToPassFinalisationButton(testCategory: string) {
