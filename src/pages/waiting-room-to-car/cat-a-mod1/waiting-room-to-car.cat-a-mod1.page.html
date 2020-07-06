@@ -2,7 +2,7 @@
   <ion-navbar hideBackButton>
     <ion-title>{{pageState.candidateName$ | async}}</ion-title>
     <ion-buttons end>
-      <end-test-link [category]="pageState.testCategory$ | async"></end-test-link>
+      <end-test-link [shouldAuthenticate]="false" [category]="pageState.testCategory$ | async"></end-test-link>
     </ion-buttons>
   </ion-navbar>
 </ion-header>

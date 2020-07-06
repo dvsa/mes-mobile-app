@@ -13,12 +13,15 @@ export class TerminateTestModal {
 
   onTerminate: Function;
 
+  shouldAuthenticate: boolean = true;
+
   constructor(
     private navParams: NavParams,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
   ) {
     this.onCancel = this.navParams.get('onCancel');
     this.onTerminate = this.navParams.get('onTerminate');
+    this.shouldAuthenticate = this.navParams.get('shouldAuthenticate');
   }
 
   /**
@@ -26,10 +29,14 @@ export class TerminateTestModal {
    * Handles re-authentication and subsequent delegation to the onTerminate callback.
    */
   terminationWrapper(): Promise<void> {
-    return this.deviceAuthenticationProvider.triggerLockScreen()
-      .then(() => {
-        this.onTerminate();
-      }).catch(err => console.error(err));
+    if (this.shouldAuthenticate) {
+      return this.deviceAuthenticationProvider.triggerLockScreen()
+        .then(() => {
+          this.onTerminate();
+        }).catch(err => console.error(err));
+    }
+    this.onTerminate();
+    return Promise.resolve();
   }
 
 }
