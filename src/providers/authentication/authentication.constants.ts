@@ -4,3 +4,5 @@ export enum AuthenticationError {
   NO_RESPONSE = 'application did not receive response from broker',
   USER_NOT_AUTHORISED = 'user not authorised',
 }
+
+export const USER_ROLES_KEY = 'roles';
