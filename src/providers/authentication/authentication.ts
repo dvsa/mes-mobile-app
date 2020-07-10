@@ -3,10 +3,11 @@ import { MSAdal, AuthenticationContext, AuthenticationResult } from '@ionic-nati
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { AppConfigProvider } from '../app-config/app-config';
 import jwtDecode from 'jwt-decode';
-import { AuthenticationError } from './authentication.constants';
+import { AuthenticationError, USER_ROLES_KEY } from './authentication.constants';
 import { MsAdalError } from './authentication.models';
 import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
 import { TestPersistenceProvider } from '../test-persistence/test-persistence';
+import { AccessRole } from '../app-config/constants/examiner-role.constants';
 
 @Injectable()
 export class AuthenticationProvider {
@@ -17,6 +18,7 @@ export class AuthenticationProvider {
   private isUserAuthenticated: boolean;
   private inUnAuthenticatedMode: boolean;
   public jwtDecode: any;
+  private employeeRoles: string[];
 
   constructor(
     private msAdal: MSAdal,
@@ -60,6 +62,10 @@ export class AuthenticationProvider {
   public getEmployeeId = (): string => {
     return this.employeeId || null;
   }
+
+  public isDelegatedExaminer = (): boolean => this.getEmployeeRoles().includes(AccessRole.DELEGATED_EXAMINER);
+
+  private getEmployeeRoles = (): string[] => this.employeeRoles || [];
 
   public loadEmployeeName = async(): Promise<string> => {
     const accessToken = await this.getAuthenticationToken();
@@ -150,10 +156,10 @@ export class AuthenticationProvider {
   private successfulLogin = (authResponse: AuthenticationResult) => {
     const decodedToken = this.jwtDecode(authResponse.accessToken);
     const employeeId = decodedToken[this.employeeIdKey];
+    this.employeeRoles = decodedToken[USER_ROLES_KEY];
     const employeeIdClaim = Array.isArray(employeeId) ? employeeId[0] : employeeId;
     const numericEmployeeId = Number.parseInt(employeeIdClaim, 10);
     this.employeeId = numericEmployeeId.toString();
-
     this.isUserAuthenticated = true;
   }
 

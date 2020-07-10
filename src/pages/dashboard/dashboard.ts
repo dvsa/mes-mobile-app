@@ -61,10 +61,16 @@ export class DashboardPage extends BasePageComponent {
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId() || 'NOT_KNOWN';
-    this.role = ExaminerRoleDescription[this.appConfigProvider.getAppConfig().role] || 'Unknown Role';
+    this.role = this.getRoleDescription();
     this.todaysDate = this.dateTimeProvider.now();
     this.todaysDateFormatted = this.dateTimeProvider.now().format('dddd Do MMMM YYYY');
+  }
 
+  getRoleDescription = (): string => {
+    if (this.authenticationProvider.isDelegatedExaminer()) {
+      return ExaminerRoleDescription.RETROKEY_TEAM;
+    }
+    return ExaminerRoleDescription[this.appConfigProvider.getAppConfig().role] || 'Unknown Role';
   }
 
   ionViewDidEnter(): void {
