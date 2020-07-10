@@ -8,6 +8,7 @@ import { RekeySearchCardComponent } from './rekey-search-card/rekey-search-card'
 import { ProfileHeaderComponent } from './profile-header/profile-header';
 import { PracticeTestReportCardComponent } from './practice-test-report-card/practice-test-report-card';
 import { PracticeEndToEndCardComponent } from './practice-end-to-end-card/practice-end-to-end-card';
+import { StartDelegatedExaminerRekeyComponent } from './start-delegated-examiner-rekey/start-delegated-examiner-rekey';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PracticeEndToEndCardComponent } from './practice-end-to-end-card/practi
     ProfileHeaderComponent,
     PracticeTestReportCardComponent,
     PracticeEndToEndCardComponent,
+    StartDelegatedExaminerRekeyComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { PracticeEndToEndCardComponent } from './practice-end-to-end-card/practi
     ProfileHeaderComponent,
     PracticeTestReportCardComponent,
     PracticeEndToEndCardComponent,
+    StartDelegatedExaminerRekeyComponent,
   ],
 })
 export class DashboardComponentsModule { }

@@ -1,0 +1,54 @@
+delegated-examiner-rekey {
+  button[clear] {
+    width: 100%;
+    padding: 0px;
+    background-color: initial;
+    &.activated {
+      .go-to-journal-card #card-content-wrapper {
+        background: darken(map-get($colors, 'mes-white'), 10);
+      }
+    }
+  }
+  .delegated-examiner-rekey-card {
+
+    h1, h4 {
+      color: map-get($colors, mes-white);
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .icon-row {
+      height: 92px;
+    }
+
+    .mes-primary-button {
+      min-width: 320px;
+      margin-top: 30px;
+      box-shadow: none;
+
+      h3 {
+        color: map-get($colors, mes-white);
+      }
+
+    }
+
+    #card-content-wrapper {
+      display: flex;
+      align-items: center;
+      height: 240px;
+      padding: 24px;
+      background: map-get($colors, mes-white);
+      width: 100%;
+    }
+
+  }
+}
+
+ion-card img.icon-delegated-examiner {
+  width: 160px;
+  height: 92px
+}
