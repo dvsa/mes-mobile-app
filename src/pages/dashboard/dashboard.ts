@@ -134,4 +134,6 @@ export class DashboardPage extends BasePageComponent {
 
   isLogoutEnabled = (): boolean =>
     this.authenticationProvider.logoutEnabled()
+
+  showDelegatedExaminerRekey = (): boolean => this.authenticationProvider.isDelegatedExaminer();
 }
