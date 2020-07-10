@@ -36,17 +36,16 @@ Feature: Driver Examiner complete the pass journey for ADI2
     When I end the debrief
     Then I should see the "Test debrief - Anna Firstlis" page
     And I complete the pass details
-
 #    And I complete the health declaration
+    And I continue to the office write up
 #    Then I am on the back to office page
-#    And I continue to the office write up
-#    Then I should see the "Office" page
-#    And the office page test outcome is "Passed"
-#    When I complete the office write up
-#    And I upload the test
-#    Then I should see the "Journal" page
-#    And the test result for "miss Anna Firstlis" is "1"
-#
+    Then I should see the "Office" page
+    And the office page test outcome is "Passed"
+    When I complete the office write up
+    And I upload the test
+    Then I should see the "Journal" page
+    And the test result for "miss Anna Firstlis" is "1"
+
 #  Scenario: A Driving Examiner Completes a pass test for autosave
 #
 #    Given I am on the "Journal" page

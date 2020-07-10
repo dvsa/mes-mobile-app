@@ -58,7 +58,7 @@ When('I end the welsh debrief', () => {
 
 When('I complete the pass details', () => {
   DebriefPage.completePassdetails(this.testCategory);
-  if(this.testCategory !== 'home-test'){
+  if(this.testCategory !== 'home-test' && this.testCategory !== 'adi-part2'){
     DebriefPage.selectTransmission('manual');
   }
   DebriefPage.continuePassFinalisation(this.testCategory);

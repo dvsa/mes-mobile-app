@@ -1,4 +1,5 @@
 import Page from './page';
+import {by, element} from 'protractor';
 class OfficePage extends Page {
   clickUploadButton() {
     this.clickElementByXPath('//button[span[h3[text() = "Upload"]]]');
@@ -104,6 +105,24 @@ class OfficePage extends Page {
   }
 
   enterShowMe(value) {
+    this.clickShowMeSelector();
+    this.clickShowMeItem(value);
+    this.clickSubmit();
+  }
+
+  enterAllShowMe(showMeQuestionsArray) {
+    const elements = element.all()
+    let count = 0;
+    showMeQuestionsArray.each((element, index) => {
+      this.clickElementById(element);
+      this.clickVehicleCheck(showMeQuestionsArray, index);
+      // const submitDialog = TempPage.getAndAwaitElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
+      // TempPage.clickElement(submitDialog);
+      this.clickSubmitButton();
+
+
+
+
     this.clickShowMeSelector();
     this.clickShowMeItem(value);
     this.clickSubmit();
