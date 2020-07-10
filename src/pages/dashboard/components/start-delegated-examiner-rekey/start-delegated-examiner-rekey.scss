@@ -10,7 +10,6 @@ delegated-examiner-rekey {
     }
   }
   .delegated-examiner-rekey-card {
-
     h1, h4 {
       color: map-get($colors, mes-white);
     }
@@ -44,11 +43,31 @@ delegated-examiner-rekey {
       background: map-get($colors, mes-white);
       width: 100%;
     }
+  }
 
+  .delegated-examiner-description-button {
+    background: map-get($colors-gds, gds-blue);
+    box-shadow: inset 0 -2px 0 0 map-get($colors-gds, gds-light-blue);
+    border-radius: 10px;
+    margin: 0 0.2rem;
+    height: initial;
+    &.activated {
+      background:  map-get($colors-gds, gds-blue);
+    }
+    h3 {
+      color: map-get($colors, mes-white);
+      .text-zoom-regular &,
+      .text-zoom-large &,
+      .text-zoom-x-large & {
+        line-height: 2em;
+      }
+      min-height: 44px;
+      padding-top: 1px
+    }
   }
 }
 
 ion-card img.icon-delegated-examiner {
-  width: 160px;
-  height: 92px
+  width: 150px;
+  height: 88px
 }
