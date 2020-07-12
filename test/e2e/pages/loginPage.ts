@@ -38,10 +38,10 @@ class LoginPage extends Page {
         nextButtonElement.click();
 
         // Fill in password and click Sign in
-        const pFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
+        const pFld = element(by.xpath(`//XCUIElementTypeOther[@name="Sign In"]/XCUIElementTypeOther[4]/XCUIElementTypeSecureTextField`));
         browser.wait(ExpectedConditions.presenceOf(pFld));
         pFld.sendKeys(password);
-        const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
+        const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@name="Sign in"]'));
         signInButtonElement.click();
 
         // Switch back to WEBVIEW context
