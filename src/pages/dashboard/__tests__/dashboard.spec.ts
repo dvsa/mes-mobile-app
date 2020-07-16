@@ -108,21 +108,4 @@ describe('DashboardPage', () => {
       });
     });
   });
-
-  describe('getRoleDescription', () => {
-    it('should return "Retrokey Team" when user is a delegated examiner', () => {
-      spyOn(component.authenticationProvider, 'isDelegatedExaminer').and.returnValue(true);
-      expect(component.getRoleDescription()).toEqual('Retrokey Team');
-    });
-    it('should return the role set in the appConfig object', () => {
-      spyOn(component.authenticationProvider, 'isDelegatedExaminer').and.returnValue(false);
-      spyOn(component.appConfigProvider, 'getAppConfig').and.returnValue({ role: 'DE' });
-      expect(component.getRoleDescription()).toEqual('Driving Examiner');
-    });
-    it('should return unknown when user has neither the DE/LDTM or delegated examiner role', () => {
-      spyOn(component.authenticationProvider, 'isDelegatedExaminer').and.returnValue(false);
-      spyOn(component.appConfigProvider, 'getAppConfig').and.returnValue({ role: 'Other' });
-      expect(component.getRoleDescription()).toEqual('Unknown Role');
-    });
-  });
 });
