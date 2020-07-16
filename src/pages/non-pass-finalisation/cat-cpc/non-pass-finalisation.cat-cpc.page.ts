@@ -35,7 +35,7 @@ import { isWelshTest }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
   ActivityCodeModel,
-  activityCodeModelList,
+  populateActivityCodeModelList,
 } from '../../office/components/activity-code/activity-code.constants';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
@@ -86,7 +86,8 @@ export class NonPassFinalisationCatCPCPage extends BasePageComponent implements 
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
-    this.activityCodeOptions = activityCodeModelList;
+    // TODO: link to delegatedExaminer flag when available
+    this.activityCodeOptions = populateActivityCodeModelList(true);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 

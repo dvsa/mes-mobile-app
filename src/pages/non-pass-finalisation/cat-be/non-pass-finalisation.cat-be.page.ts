@@ -89,6 +89,7 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
+    // TODO: link to delegatedExaminer flag when available
     this.activityCodeOptions = populateActivityCodeModelList(true);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
