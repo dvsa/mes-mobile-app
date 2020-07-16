@@ -14,7 +14,7 @@ import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { DeviceProvider } from '../../providers/device/device';
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { ExaminerRoleDescription } from '../../providers/app-config/constants/examiner-role.constants';
+import { ExaminerRole, ExaminerRoleDescription } from '../../providers/app-config/constants/examiner-role.constants';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
 import * as journalActions from './../../modules/journal/journal.actions';
@@ -61,16 +61,9 @@ export class DashboardPage extends BasePageComponent {
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId() || 'NOT_KNOWN';
-    this.role = this.getRoleDescription();
+    this.role = ExaminerRoleDescription[this.appConfigProvider.getAppConfig().role] || 'Unknown Role';
     this.todaysDate = this.dateTimeProvider.now();
     this.todaysDateFormatted = this.dateTimeProvider.now().format('dddd Do MMMM YYYY');
-  }
-
-  getRoleDescription = (): string => {
-    if (this.authenticationProvider.isDelegatedExaminer()) {
-      return ExaminerRoleDescription.RETROKEY_TEAM;
-    }
-    return ExaminerRoleDescription[this.appConfigProvider.getAppConfig().role] || 'Unknown Role';
   }
 
   ionViewDidEnter(): void {
@@ -135,5 +128,6 @@ export class DashboardPage extends BasePageComponent {
   isLogoutEnabled = (): boolean =>
     this.authenticationProvider.logoutEnabled()
 
-  showDelegatedExaminerRekey = (): boolean => this.authenticationProvider.isDelegatedExaminer();
+  showDelegatedExaminerRekey = (): boolean =>
+    this.appConfigProvider.getAppConfig().role === ExaminerRole.DLG
 }
