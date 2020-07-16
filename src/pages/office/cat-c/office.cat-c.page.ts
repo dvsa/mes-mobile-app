@@ -89,7 +89,10 @@ import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map.cat-c';
-import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
+import {
+  ActivityCodeModel,
+  populateActivityCodeModelList,
+} from '../components/activity-code/activity-code.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
@@ -186,7 +189,8 @@ export class OfficeCatCPage extends BasePageComponent {
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-    this.activityCodeOptions = activityCodeModelList;
+    // TODO: link to delegatedExaminer flag when available
+    this.activityCodeOptions = populateActivityCodeModelList(true);
   }
 
   ionViewDidEnter(): void {
