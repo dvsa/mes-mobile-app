@@ -20,6 +20,7 @@ import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatBEReducer } from './journal-data/cat-be/journal-data.cat-be.reducer';
 import { testDataCatBEReducer } from './test-data/cat-be/test-data.cat-be.reducer';
 import { vehicleDetailsCatBEReducer } from './vehicle-details/cat-be/vehicle-details.cat-be.reducer';
+import { delegatedTestReducer } from './delegated-test/delegated-test.reducer';
 
 export function testsCatBEReducer(
   action: Action, state: CatBEUniqueTypes.TestResult): Required<CatBEUniqueTypes.TestResult> {
@@ -40,6 +41,7 @@ export function testsCatBEReducer(
       rekey: rekeyReducer,
       rekeyDate: rekeyDateReducer,
       rekeyReason: rekeyReasonReducer,
+      delegatedTest: delegatedTestReducer,
       examinerBooked: examinerBookedReducer,
       examinerConducted: examinerConductedReducer,
       examinerKeyed: examinerKeyedReducer,
