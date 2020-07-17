@@ -31,6 +31,10 @@ class TestReportPage extends Page {
     this.longPressElementByCss('.highway-code-safety-tick');
   }
 
+  completeAdi2SMTM() {
+    this.longPressElementByXPath('//competency-button[contains(@class, "show-me-question-tick")]');
+  }
+
   completeHomeTestControlledStop() {
     this.longPressElementByCss('.controlled-stop-tick');
   }
@@ -43,7 +47,12 @@ class TestReportPage extends Page {
   completeManouveure(testCategory) {
     if (testCategory === 'be' || testCategory === 'c' || testCategory === 'c1' || testCategory === 'ce' || testCategory === 'd' || testCategory === 'home-test') {
       this.longPressElementByXPath('//competency-button[contains(@class, "reverse-left-tick")]');
-    } else {
+    } else if (testCategory === 'adi-part2') {
+      this.clickManoeuvresButtonForAdi2();
+      this.clickReverseRightRadioAdi2();
+      this.clickReverseParkRadio();
+      this.clickManoeuvresButtonForAdi2();
+    }else {
       this.clickManoeuvresButton();
       this.clickReverseRightRadio();
       this.clickManoeuvresButton();
@@ -54,8 +63,20 @@ class TestReportPage extends Page {
     this.clickElementById('manoeuvres-reverse-right-radio');
   }
 
+  clickReverseRightRadioAdi2() {
+    this.clickElementById('manoeuvres-reverse-right-radio1');
+  }
+
+  clickReverseParkRadio() {
+    this.clickElementById('manoeuvres-reverse-park-road-radio2');
+  }
+
   clickManoeuvresButton() {
     this.clickElementByXPath('//manoeuvres/button');
+  }
+
+  clickManoeuvresButtonForAdi2() {
+    this.clickElementByCss('ion-icon[name="md-arrow-dropright"]');
   }
 
   clickSeriousMode() {
