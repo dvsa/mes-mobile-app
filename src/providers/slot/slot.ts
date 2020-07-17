@@ -9,6 +9,7 @@ import { AppConfigProvider } from '../app-config/app-config';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotHasChanged } from './slot.actions';
 import { DateTimeProvider } from '../date-time/date-time';
+import { ExaminerRole } from '../app-config/constants/examiner-role.constants';
 
 const MS_PER_DAY: number = 1000 * 60 * 60 * 24;
 
@@ -113,7 +114,7 @@ export class SlotProvider {
       const slotHasPeriodEndCriteria: boolean = this.hasPeriodEndCriteria(slotStartDate, period.to);
       return period.testCategory === testCategory && slotHasPeriodStartCriteria && slotHasPeriodEndCriteria;
     });
-    return periodsPermittingStart.length > 0;
+    return periodsPermittingStart.length > 0 || this.appConfigProvider.getAppConfig().role === ExaminerRole.DLG;
   }
 
   public dateDiffInDays = (startDate: Date, periodDate: Date): number => {

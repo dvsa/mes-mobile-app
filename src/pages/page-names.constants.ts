@@ -13,6 +13,7 @@ export const LEGAL_REQUIREMENTS_MODAL = 'LegalRequirementsModal';
 export const SPECIAL_REQUIREMENT_MODAL = 'SpecialLegalRequirementModal';
 export const REVERSE_DIAGRAM_PAGE = 'ReverseDiagramPage';
 export const REKEY_UPLOAD_OUTCOME_PAGE = 'RekeyUploadOutcomePage';
+export const DELEGATED_REKEY_SEARCH_PAGE = 'DelegatedRekeySearchPage';
 
 export const CAT_B = {
   REKEY_UPLOAD_OUTCOME_PAGE,
