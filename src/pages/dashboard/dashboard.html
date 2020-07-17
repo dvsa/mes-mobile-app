@@ -20,18 +20,18 @@
   <ion-grid no-padding>
     <ion-row>
       <ion-col no-padding col-96 col-lg-32>
-        <go-to-journal-card *ngIf="!isDelegatedExaminer()"></go-to-journal-card>
-        <delegated-examiner-rekey *ngIf="isDelegatedExaminer()"></delegated-examiner-rekey>
+        <go-to-journal-card *ngIf="!showDelegatedExaminerRekey()"></go-to-journal-card>
+        <delegated-examiner-rekey *ngIf="showDelegatedExaminerRekey()"></delegated-examiner-rekey>
       </ion-col>
       <ion-col no-padding col-48 col-lg-32>
-        <test-results-search-card *ngIf="!isDelegatedExaminer()"></test-results-search-card>
+        <test-results-search-card *ngIf="!showDelegatedExaminerRekey()"></test-results-search-card>
       </ion-col>
       <ion-col no-padding col-48 col-lg-32>
-        <rekey-search-card *ngIf="!isDelegatedExaminer()"></rekey-search-card>
+        <rekey-search-card *ngIf="!showDelegatedExaminerRekey()"></rekey-search-card>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <hr *ngIf="!isDelegatedExaminer() && (showEndToEndPracticeMode() || showTestReportPracticeMode())" />
-  <practice-test-report-card id="testReportPracticeMode" *ngIf="showTestReportPracticeMode() && !isDelegatedExaminer()"></practice-test-report-card>
-  <practice-end-to-end-card id="endToendPracticeMode" *ngIf="showEndToEndPracticeMode() && !isDelegatedExaminer()"></practice-end-to-end-card>
+  <hr *ngIf="!showDelegatedExaminerRekey() && (showEndToEndPracticeMode() || showTestReportPracticeMode())" />
+  <practice-test-report-card id="testReportPracticeMode" *ngIf="showTestReportPracticeMode() && !showDelegatedExaminerRekey()"></practice-test-report-card>
+  <practice-end-to-end-card id="endToendPracticeMode" *ngIf="showEndToEndPracticeMode() && !showDelegatedExaminerRekey()"></practice-end-to-end-card>
 </ion-content>
