@@ -1,5 +1,6 @@
 import { Then, When, Before } from 'cucumber';
 import OfficePage from '../pages/OfficePage';
+import officePage from '../pages/OfficePage';
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
@@ -42,6 +43,10 @@ Before({ tags: '@catHome' }, () => {
   this.testCategory = 'home-test';
 });
 
+Before({ tags: '@catADI2' }, () => {
+  this.testCategory = 'adi-part2';
+});
+
 When('I complete the office write up', () => {
   if(this.testCategory !== 'home-test') {
     if (!(this.testCategory === 'a-mod1')) {
@@ -51,11 +56,12 @@ When('I complete the office write up', () => {
         OfficePage.enterIndependentDriving('diagram');
       } else {
         if (this.testCategory === 'a-mod2') {
-          OfficePage.enterIndependentDriving('diagram');   //The function is also used for Enter independent riding
-          OfficePage.enterTestConductedOn('cartobike');
-        } else {
           OfficePage.enterIndependentDriving('satnav');
           OfficePage.enterShowMe('S5 - Horn');
+        }else if (this.testCategory === 'adi-part2') {
+          OfficePage.enterIndependentDriving('satnav');
+          OfficePage.selectShowMeQuestion('1', 'A20 - Front demister');
+          OfficePage.selectShowMeQuestion('2', 'A21 - Side window');
         }
       }
     } else {

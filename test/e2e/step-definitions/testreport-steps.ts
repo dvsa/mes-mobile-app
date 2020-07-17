@@ -46,6 +46,10 @@ Before({ tags: '@catHome' }, () => {
   this.testCategory = 'home-test';
 });
 
+Before({ tags: '@catADI2' }, () => {
+  this.testCategory = 'adi-part2';
+});
+
 When('I end the test', () => {
   TestReportPage.clickEndTestButton();
 });
@@ -77,6 +81,10 @@ When('I complete the test', () => {
     }
     if (this.testCategory === 'be' || this.testCategory === 'ce') {
       TestReportPage.completeUncoupleRecouple();
+    }
+    if (this.testCategory === 'adi-part2') {
+      TestReportPage.completeAdi2SMTM();
+      TestReportPage.completeHomeTestControlledStop();
     }
     if (this.testCategory === 'home-test') {
       TestReportPage.completeHomeTestCodeSafety();

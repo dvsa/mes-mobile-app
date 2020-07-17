@@ -41,6 +41,10 @@ Before({ tags: '@catHome' }, () => {
   this.testCategory = 'home-test';
 });
 
+Before({ tags: '@catADI2' }, () => {
+  this.testCategory = 'adi-part2';
+});
+
 When('I continue to the back to office page', () => {
   NonPassFinalisationPage.clickD255Yes();
   DebriefPage.clickDebriefWitnessedYes();

@@ -44,6 +44,10 @@ Before({ tags: '@catHome' }, () => {
   this.testCategory = 'home-test';
 });
 
+Before({ tags: '@catADI2' }, () => {
+  this.testCategory = 'adi-part2';
+});
+
 When('I end the debrief', () => {
   DebriefPage.clickEndDebriefButton();
 });
@@ -54,7 +58,7 @@ When('I end the welsh debrief', () => {
 
 When('I complete the pass details', () => {
   DebriefPage.completePassdetails(this.testCategory);
-  if(this.testCategory !== 'home-test'){
+  if(this.testCategory !== 'home-test' && this.testCategory !== 'adi-part2'){
     DebriefPage.selectTransmission('manual');
   }
   DebriefPage.continuePassFinalisation(this.testCategory);
@@ -78,7 +82,9 @@ When('I complete the fail details', () => {
   if (this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'd') {
     DebriefPage.selectTransmission('manual');
   }
-  DebriefPage.clickD255No();
+  if (this.testCategory !== 'adi-part2') {
+    DebriefPage.clickD255No();
+  }
   DebriefPage.clickDebriefWitnessedYes();
   // TODO: There seem to be 2 continue buttons...are they on different pages?
   DebriefPage.clickContinueButton2();

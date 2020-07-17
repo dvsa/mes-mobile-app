@@ -13,8 +13,30 @@ class WaitingRoomToCarPage extends Page {
     this.clickElementById('eyesight-pass');
   }
 
+  orditTrainerResultPass() {
+    this.clickElementByCss('label[for="ordit-trained-yes"]');
+  }
+
+  orditTrainerResultFail() {
+    this.clickElementByCss('label[for="ordit-trained-no"]');
+  }
+ trainigRecordsPass() {
+    this.clickElementByCss('label[for="training-record-yes"]');
+  }
+  trainigRecordsFail() {
+    this.clickElementByCss('label[for="training-record-no"]');
+  }
+
   eyeSightResultFail() {
     this.clickElementById('eyesight-fail');
+  }
+
+  selectTranmissionType(transmissionType:string) {
+    if (transmissionType === 'Manual') {
+      this.clickElementById('transmission-manual');
+    }else {
+      this.clickElementById('transmission-automatic');
+    }
   }
 
   getEyesightFailureConfirmation() {
@@ -182,7 +204,7 @@ class WaitingRoomToCarPage extends Page {
       this.clickElementById(transmissionSelector);
       // this is using for Selecting Safety and Balance Questions as well.
       this.multiShowAndTell(UI_TEST_DATA.testData.mod2, questionResult);
-    }else {
+    } else {
       this.eyeSightResultPass();
       this.standardUserJourney(questionResult, manualTransmission, tellMeQuestion);
     }
@@ -217,6 +239,22 @@ class WaitingRoomToCarPage extends Page {
       this.eyeSightResultPass();
     } else {
       this.eyeSightResultFail();
+    }
+  }
+
+  selectOrditTrainerOutcome(result) {
+    if (result === 'Pass') {
+      this.orditTrainerResultPass();
+    } else {
+      this.orditTrainerResultFail();
+    }
+  }
+
+  selectTrainningRecordOutcome(result) {
+    if (result === 'Pass') {
+      this.trainigRecordsPass();
+    } else {
+      this.trainigRecordsFail();
     }
   }
 

@@ -1,4 +1,5 @@
 import Page from './page';
+import {by, element} from 'protractor';
 class OfficePage extends Page {
   clickUploadButton() {
     this.clickElementByXPath('//button[span[h3[text() = "Upload"]]]');
@@ -105,6 +106,12 @@ class OfficePage extends Page {
 
   enterShowMe(value) {
     this.clickShowMeSelector();
+    this.clickShowMeItem(value);
+    this.clickSubmit();
+  }
+
+  selectShowMeQuestion(index, value) {
+    this.clickElementById('show-me-question-selector_1'.replace('1', index));
     this.clickShowMeItem(value);
     this.clickSubmit();
   }

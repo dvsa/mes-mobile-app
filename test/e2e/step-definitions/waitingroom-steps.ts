@@ -46,6 +46,10 @@ Before({ tags: '@catHome' }, () => {
   this.testCategory = 'home-test';
 });
 
+Before({ tags: '@catADI2' }, () => {
+  this.testCategory = 'adi-part2';
+});
+
 When('the candidate enters a new email address', () => {
   WaitingRoomPage.clickNewEmailRadioButton();
   WaitingRoomPage.enterNewEmail('testemail@example.com');
@@ -65,7 +69,9 @@ When(/^the candidate confirms their communication preference$/, () => {
 
 When('the candidate completes the declaration page', () => {
   WaitingRoomPage.checkInsuranceDeclaration();
-  WaitingRoomPage.checkResidencyDeclaration();
+  if (this.testCategory !== 'adi-part2') {
+    WaitingRoomPage.checkResidencyDeclaration();
+  }
   WaitingRoomPage.clickSignaturePad();
 });
 
