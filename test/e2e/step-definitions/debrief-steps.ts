@@ -82,7 +82,9 @@ When('I complete the fail details', () => {
   if (this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'd') {
     DebriefPage.selectTransmission('manual');
   }
-  DebriefPage.clickD255No();
+  if (this.testCategory !== 'adi-part2') {
+    DebriefPage.clickD255No();
+  }
   DebriefPage.clickDebriefWitnessedYes();
   // TODO: There seem to be 2 continue buttons...are they on different pages?
   DebriefPage.clickContinueButton2();

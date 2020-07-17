@@ -25,7 +25,7 @@ Feature: Driver Examiner complete the pass journey for ADI2
       |T4 - Sufficient tread |T11 - Dipped to main beam |T13 - Engine coolant |
       |false                 |false                     |false                |
     And I select the Transmission Type "Manual"
-    And I select the ordit `trainer outcome "Pass"
+    And I select the ordit trainer outcome "Pass"
     And I select the training records outcome "Pass"
     Then I continue to test report
     Then I should see the "Test report - Anna Firstlis" page
@@ -36,9 +36,7 @@ Feature: Driver Examiner complete the pass journey for ADI2
     When I end the debrief
     Then I should see the "Test debrief - Anna Firstlis" page
     And I complete the pass details
-#    And I complete the health declaration
     And I continue to the office write up
-#    Then I am on the back to office page
     Then I should see the "Office" page
     And the office page test outcome is "Passed"
     When I complete the office write up
@@ -46,27 +44,26 @@ Feature: Driver Examiner complete the pass journey for ADI2
     Then I should see the "Journal" page
     And the test result for "miss Anna Firstlis" is "1"
 
-#  Scenario: A Driving Examiner Completes a pass test for autosave
-#
-#    Given I am on the "Journal" page
-#    And  I click the back button
-#    Then I should see the "My dashboard" page
-#    When I click search completed tests
-#    When I search for a completed test with the application reference of "22123400011"
-#    And the search result is clicked
-#    Then I should see the "Test information" page
-#    And the test result outcome is "Passed"
-#    And the test result has the following data present
-#      | label                             | value                                  |
-#      | Application reference             | 22123400011                            |
-#      | Test category                     | K                                      |
-#      | Slot type                         | Extended Test Special Needs            |
-#      | Certificate number                | A123456X                               |
-#      | Route number                      | 88                                     |
-#      | Physical description of candidate | None                                   |
-#      | Weather conditions                | Bright / wet roads and Showers         |
-#    When I click the close button
-#    Then I should see the "Search submitted test" page
-#    When I click the back button on the search submitted test page
-#    Then I should see the "My dashboard" page
-#
+  Scenario: A Driving Examiner Completes a pass test for autosave
+
+    Given I am on the "Journal" page
+    And  I click the back button
+    Then I should see the "My dashboard" page
+    When I click search completed tests
+    When I search for a completed test with the application reference of "22123400011"
+    And the search result is clicked
+    Then I should see the "Test information" page
+    And the test result outcome is "Passed"
+    And the test result has the following data present
+      | label                             | value                                  |
+      | Application reference             | 22123400011                            |
+      | Test category                     | ADI2                                   |
+      | Slot type                         | Standard Test                          |
+      | ORDIT                             | Yes                                    |
+      | Physical description of candidate | None                                   |
+      | Weather conditions                | Bright / wet roads and Showers         |
+    When I click the close button
+    Then I should see the "Search submitted test" page
+    When I click the back button on the search submitted test page
+    Then I should see the "My dashboard" page
+
