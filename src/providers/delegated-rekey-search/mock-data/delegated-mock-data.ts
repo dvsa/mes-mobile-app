@@ -6,7 +6,7 @@ export const delegatedBooking: TestSlot = {
       applicationId: 22123411,
       bookingSequence: 3,
       checkDigit: 1,
-      testCategory: 'H',
+      testCategory: 'C',
     },
     candidate: {
       candidateName: {
