@@ -25,7 +25,7 @@ Feature: Driver Examiner complete the pass journey for ADI2
       |T4 - Sufficient tread |T11 - Dipped to main beam |T13 - Engine coolant |
       |false                 |false                     |false                |
     And I select the Transmission Type "Manual"
-    And I select the ordit trainer outcome "Pass"
+    And I select the ordit `trainer outcome "Pass"
     And I select the training records outcome "Pass"
     Then I continue to test report
     Then I should see the "Test report - Anna Firstlis" page
