@@ -87,6 +87,11 @@ describe('DashboardPage', () => {
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#testReportPracticeMode'))).toBeNull();
       });
+      it('should not show test report practice mode banner when isDelegatedExaminer returns true', () => {
+        spyOn(component.authenticationProvider, 'isDelegatedExaminer').and.returnValue(true);
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('practice-test-report-card'))).toBeNull();
+      });
     });
 
     describe('end to end practice mode', () => {
@@ -105,6 +110,38 @@ describe('DashboardPage', () => {
 
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#endToendPracticeMode'))).toBeNull();
+      });
+
+      it('should not show the end to end practice mode banner when isDelegatedExaminer returns true', () => {
+        spyOn(component.authenticationProvider, 'isDelegatedExaminer').and.returnValue(true);
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('practice-end-to-end-card'))).toBeNull();
+      });
+    });
+    describe('goToJournalCard', () => {
+      it('should not show journal card when isDelegatedExaminer returns true', () => {
+        spyOn(component.authenticationProvider, 'isDelegatedExaminer').and.returnValue(true);
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('go-to-journal-card'))).toBeNull();
+      });
+      it('should show the journal card when isDelegatedExaminer returns false', () => {
+        spyOn(component.authenticationProvider, 'isDelegatedExaminer').and.returnValue(false);
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('go-to-journal-card'))).not.toBeNull();
+      });
+    });
+    describe('delegatedExaminerRekey', () => {
+      it('should show the delegated examiner rekey card when isDelegatedExaminer returns true', () => {
+        spyOn(component.authenticationProvider, 'isDelegatedExaminer').and.returnValue(true);
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('delegated-examiner-rekey'))).not.toBeNull();
+      });
+    });
+    describe('rekeySearchCard', () => {
+      it('should hide the rekey search card when isDelegatedExaminer returns true', () => {
+        spyOn(component.authenticationProvider, 'isDelegatedExaminer').and.returnValue(true);
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('rekey-search-card'))).toBeNull();
       });
     });
   });
