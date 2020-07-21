@@ -64,6 +64,9 @@ export class TestOutcomeComponent implements OnInit {
   isRekey: boolean;
 
   @Input()
+  isDelegatedTest: boolean = false;
+
+  @Input()
   category: TestCategory;
 
   modal: Modal;
@@ -78,7 +81,8 @@ export class TestOutcomeComponent implements OnInit {
     private store$: Store<StoreModel>,
     public navController: NavController,
     private modalController: ModalController,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     const bookedTestSlot$ = this.store$.pipe(
@@ -119,6 +123,10 @@ export class TestOutcomeComponent implements OnInit {
       return false; // because the test is complete
     }
 
+    if (this.isDelegatedTest) {
+      return false;
+    }
+
     if (this.isTestSlotOnRekeySearch) {
       return true; // because the test is incomplete AND this is the rekey search
     }
@@ -136,7 +144,11 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   showStartTestButton(): boolean {
-    return this.testStatus === TestStatus.Booked;
+    return !this.isDelegatedTest && (this.testStatus === TestStatus.Booked);
+  }
+
+  showDelegatedExaminerRekeyButton(): boolean {
+    return this.isDelegatedTest;
   }
 
   showResumeButton(): boolean {
@@ -175,7 +187,7 @@ export class TestOutcomeComponent implements OnInit {
 
   rekeyTest() {
     if (this.testStatus === null || this.testStatus === TestStatus.Booked) {
-      this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.category, true));
+      this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.category, true, false));
     } else {
       this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.category, true));
     }
@@ -222,6 +234,32 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.G:
       case TestCategory.F:
         this.navController.push(CAT_HOME_TEST.WAITING_ROOM_PAGE);
+        break;
+    }
+  }
+
+  rekeyDelegatedTest(): void {
+    this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.category, false, true));
+
+    switch (this.category) {
+      case TestCategory.BE:
+        this.navController.push(CAT_BE.WAITING_ROOM_TO_CAR_PAGE);
+        break;
+      case TestCategory.CE:
+      case TestCategory.C1E:
+      case TestCategory.C1:
+      case TestCategory.C:
+        this.navController.push(CAT_C.WAITING_ROOM_TO_CAR_PAGE);
+        break;
+      case TestCategory.CCPC:
+      case TestCategory.DCPC:
+        this.navController.push(CAT_CPC.WAITING_ROOM_TO_CAR_PAGE);
+        break;
+      case TestCategory.DE:
+      case TestCategory.D1E:
+      case TestCategory.D1:
+      case TestCategory.D:
+        this.navController.push(CAT_D.WAITING_ROOM_TO_CAR_PAGE);
         break;
     }
   }

@@ -24,6 +24,7 @@ import { nullReducer } from '../../shared/classes/null.reducer';
 import {
     trainerDetailsCatADIPart2Reducer,
 } from './trainer-details/cat-adi-part2/trainer-details.cat-adi-part2.reducer';
+import { delegatedTestReducer } from './delegated-test/delegated-test.reducer';
 
 export function testsCatADIPart2Reducer(
   action: Action, state: CatADI2UniqueTypes.TestResult): Required<CatADI2UniqueTypes.TestResult> {
@@ -45,6 +46,7 @@ export function testsCatADIPart2Reducer(
       rekey: rekeyReducer,
       rekeyDate: rekeyDateReducer,
       rekeyReason: rekeyReasonReducer,
+      delegatedTest: delegatedTestReducer,
       examinerBooked: examinerBookedReducer,
       examinerConducted: examinerConductedReducer,
       examinerKeyed: examinerKeyedReducer,

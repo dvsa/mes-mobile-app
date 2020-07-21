@@ -20,6 +20,7 @@ import { journalDataCatCReducer } from './journal-data/cat-c/journal-data.cat-c.
 import { testDataCatCReducer } from './test-data/cat-c/test-data.cat-c.reducer';
 import { vehicleDetailsCatCReducer } from './vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { passCompletionCatCReducer } from './pass-completion/cat-c/pass-completion.cat-c.reducer';
+import { delegatedTestReducer } from './delegated-test/delegated-test.reducer';
 
 export function testsCatCReducer(
   action: Action, state: CatCUniqueTypes.TestResult): Required<CatCUniqueTypes.TestResult> {
@@ -40,6 +41,7 @@ export function testsCatCReducer(
       rekey: rekeyReducer,
       rekeyDate: rekeyDateReducer,
       rekeyReason: rekeyReasonReducer,
+      delegatedTest: delegatedTestReducer,
       examinerBooked: examinerBookedReducer,
       examinerConducted: examinerConductedReducer,
       examinerKeyed: examinerKeyedReducer,

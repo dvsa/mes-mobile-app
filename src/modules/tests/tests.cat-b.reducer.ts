@@ -21,6 +21,7 @@ import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
 import { testDataReducer } from './test-data/cat-b/test-data.reducer';
 import { journalDataReducer } from './journal-data/cat-b/journal-data.reducer';
+import { delegatedTestReducer } from './delegated-test/delegated-test.reducer';
 
 export function testsCatBReducer(
   action: Action, state: CatBUniqueTypes.TestResult): Required<CatBUniqueTypes.TestResult> {
@@ -42,6 +43,7 @@ export function testsCatBReducer(
       rekey: rekeyReducer,
       rekeyDate: rekeyDateReducer,
       rekeyReason: rekeyReasonReducer,
+      delegatedTest: delegatedTestReducer,
       examinerBooked: examinerBookedReducer,
       examinerConducted: examinerConductedReducer,
       examinerKeyed: examinerKeyedReducer,

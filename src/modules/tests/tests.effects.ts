@@ -39,6 +39,9 @@ import { MarkAsRekey } from './rekey/rekey.actions';
 import { getRekeySearchState, RekeySearchModel } from '../../pages/rekey-search/rekey-search.reducer';
 import { getBookedTestSlot, getStaffNumber } from '../../pages/rekey-search/rekey-search.selector';
 import {
+  getBookedTestSlot as getDelegatedBookedTestSlot,
+} from '../../pages/delegated-rekey-search/delegated-rekey-search.selector';
+import {
   Examiner,
   TestSlotAttributes,
   ConductedLanguage,
@@ -61,6 +64,12 @@ import {
 }
 from './test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 import { IndependentDrivingTypeChanged, RouteNumberChanged } from './test-summary/common/test-summary.actions';
+import { StartDelegatedTest } from './delegated-test/delegated-test.actions';
+import {
+  DelegatedRekeySearchModel,
+  getDelegatedRekeySearchState,
+} from '../../pages/delegated-rekey-search/delegated-rekey-search.reducer';
+
 @Injectable()
 export class TestsEffects {
   constructor(
@@ -139,11 +148,16 @@ export class TestsEffects {
         this.store$.pipe(
           select(getRekeySearchState),
         ),
+        this.store$.pipe(
+          select(getDelegatedRekeySearchState),
+        ),
       ),
     )),
-    switchMap(([action, journal, rekeySearch]: [testActions.StartTest, JournalModel, RekeySearchModel]) => {
+    switchMap(([action, journal, rekeySearch, delegatedRekeySearch]:
+                 [testActions.StartTest, JournalModel, RekeySearchModel, DelegatedRekeySearchModel]) => {
       const startTestAction = action as testActions.StartTest;
       const isRekeySearch = this.navigationStateProvider.isRekeySearch();
+      const isDelegatedRekeySearch = this.navigationStateProvider.isDelegatedExaminerRekeySearch();
       const employeeId = this.authenticationProvider.getEmployeeId() || journal.examiner.staffNumber;
 
       let slot: TestSlot;
@@ -153,7 +167,11 @@ export class TestsEffects {
 
       let examinerBooked: string;
 
-      if (isRekeySearch) {
+      if (isDelegatedRekeySearch) {
+        examinerBooked = journal.examiner.staffNumber;
+        examiner = journal.examiner;
+        slot = getDelegatedBookedTestSlot(delegatedRekeySearch);
+      } else if (isRekeySearch) {
         examinerBooked = getStaffNumber(rekeySearch);
         examiner = {
           staffNumber: examinerBooked,
@@ -195,6 +213,11 @@ export class TestsEffects {
       if (startTestAction.rekey) {
         arrayOfActions.push(new MarkAsRekey());
       }
+
+      if (startTestAction.delegatedTest) {
+        arrayOfActions.push(new StartDelegatedTest());
+      }
+
       if (
         startTestAction.category === TestCategory.C ||
         startTestAction.category === TestCategory.C1 ||

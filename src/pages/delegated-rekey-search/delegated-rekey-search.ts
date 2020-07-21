@@ -11,7 +11,7 @@ import {
   DelegatedRekeySearchClearState,
 } from './delegated-rekey-search.actions';
 
-import { distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import
 {
   getIsLoading,
@@ -74,7 +74,6 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
       ),
       bookedTestSlot$: rekeySearch$.pipe(
         map(getBookedTestSlot),
-        tap(test => console.log(JSON.stringify(test))),
       ),
       rekeySearchErr$: rekeySearch$.pipe(
         map(getDelegatedRekeySearchError),
