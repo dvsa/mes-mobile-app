@@ -38,8 +38,8 @@ export const getTrainerRegistrationNumberValidator = (): FieldValidators => {
 
 export const getSpeedCheckValidator = (): FieldValidators => {
   return {
-    pattern: /^[1-9][0-9]{0,2}$/g,
-    maxLength: '3',
+    pattern: /^[0-9][0-9]{0,2}$/g,
+    maxLength: '2',
   };
 };
 
