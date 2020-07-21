@@ -20,9 +20,11 @@ export class LanguagePreferencesComponent implements OnChanges {
   private formField: string = 'languagePreferences';
 
   ngOnChanges(): void {
-    this.formControl = new FormControl('', Validators.required);
-    this.formGroup.addControl(this.formField, this.formControl);
-    this.formGroup.get(this.formField).setValidators([Validators.required]);
+    if (!this.formControl) {
+      this.formControl = new FormControl('', Validators.required);
+      this.formGroup.addControl(this.formField, this.formControl);
+      this.formGroup.get(this.formField).setValidators([Validators.required]);
+    }
     this.formControl.patchValue(this.isWelsh);
   }
 
