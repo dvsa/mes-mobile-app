@@ -34,7 +34,6 @@ import { CompetencyOutcome } from '../../../../../shared/models/competency-outco
 import {
   FieldValidators,
   getSpeedCheckValidator,
-  leadingZero,
   nonNumericValues,
 } from '../../../../../shared/constants/field-validators/field-validators';
 
@@ -60,7 +59,8 @@ export class SpeedCheckComponent {
 
   constructor(
     private store$: Store<StoreModel>,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     const speedCheckData$ = this.store$.pipe(
@@ -149,13 +149,12 @@ export class SpeedCheckComponent {
   }
 
   formatSpeedAttempt = (event: any): number | undefined => {
+    if (event.target.value === '') return undefined;
     if (!this.speedCheckValidator.pattern.test(event.target.value)) {
       event.target.value = event.target.value
-        .replace(leadingZero, '')
-        .replace(nonNumericValues, '')
-        .substring(0, Number(this.speedCheckValidator.maxLength));
+        .replace(nonNumericValues, '');
     }
-    return Number(event.target.value) || undefined;
+    return Number(event.target.value);
   }
 
   getNotMet(): boolean {
