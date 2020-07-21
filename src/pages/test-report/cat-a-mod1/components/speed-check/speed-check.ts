@@ -34,7 +34,6 @@ import { CompetencyOutcome } from '../../../../../shared/models/competency-outco
 import {
   FieldValidators,
   getSpeedCheckValidator,
-  leadingZero,
   nonNumericValues,
 } from '../../../../../shared/constants/field-validators/field-validators';
 
@@ -149,13 +148,18 @@ export class SpeedCheckComponent {
   }
 
   formatSpeedAttempt = (event: any): number | undefined => {
-    if (!this.speedCheckValidator.pattern.test(event.target.value)) {
-      event.target.value = event.target.value
-        .replace(leadingZero, '')
-        .replace(nonNumericValues, '')
-        .substring(0, Number(this.speedCheckValidator.maxLength));
+    let output: number | undefined;
+    if (event.target.value === '') {
+      output = undefined;
+    } else {
+      if (!this.speedCheckValidator.pattern.test(event.target.value)) {
+        event.target.value = event.target.value
+          .replace(nonNumericValues, '');
+      }
+      event.target.value = event.target.value.slice(0, Number(this.speedCheckValidator.maxLength));
+      output = Number(event.target.value);
     }
-    return Number(event.target.value) || undefined;
+    return output;
   }
 
   getNotMet(): boolean {
