@@ -14,6 +14,13 @@
         </span>
       </ion-col>
       <ng-template #nonRekey>
+        <ion-col *ngIf="showDelegatedExaminerRekeyButton()">
+          <span>
+            <button class="mes-secondary-button mes-delegated-button" ion-button (click)="rekeyDelegatedTest()">
+              <h3 class="write-up-label">Rekey</h3>
+            </button>
+          </span>
+        </ion-col>
         <ion-col *ngIf="showResumeButton()">
           <span>
             <button class="mes-secondary-button mes-warning-button" ion-button (click)="clickStartOrResumeTest()">

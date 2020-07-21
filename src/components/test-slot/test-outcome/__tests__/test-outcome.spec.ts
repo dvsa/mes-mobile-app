@@ -396,6 +396,21 @@ describe('Test Outcome', () => {
       });
     });
 
+    describe('rekeyDelegatedTest', () => {
+      it('should call the rekeyDelegatedTest method when `Rekey` is clicked', () => {
+        component.slotDetail = testSlotDetail;
+        component.category = TestCategory.BE;
+
+        spyOn(component, 'showDelegatedExaminerRekeyButton').and.returnValue(true);
+        spyOn(component, 'rekeyDelegatedTest');
+
+        fixture.detectChanges();
+        const rekeyDelegatedButton = fixture.debugElement.query(By.css('.mes-delegated-button'));
+        rekeyDelegatedButton.triggerEventHandler('click', null);
+        expect(component.rekeyDelegatedTest).toHaveBeenCalled();
+      });
+    });
+
     describe('debrief a test', () => {
       it('should call the resumeTest method when `Resume` is clicked', () => {
         component.slotDetail = testSlotDetail;

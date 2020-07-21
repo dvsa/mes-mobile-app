@@ -45,7 +45,12 @@ export class TestOutcomeChanged implements Action {
 
 export class StartTest implements Action {
   readonly type = START_TEST;
-  constructor(public slotId: number, public category: TestCategory, public rekey: boolean = false) { }
+  constructor(
+    public slotId: number,
+    public category: TestCategory,
+    public rekey: boolean = false,
+    public delegatedTest: boolean = false,
+  ) { }
 }
 
 export class ActivateTest implements Action {

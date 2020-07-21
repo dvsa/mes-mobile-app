@@ -44,11 +44,14 @@
         <ion-col class="test-outcome-col" no-padding padding-right>
           <test-outcome
             [slotDetail]="slot.slotDetail" [canStartTest]="canStartTest()"
+            [isDelegatedTest]="delegatedTest"
             [testStatus]="componentState.testStatus$ | async"
             [activityCode]="componentState.testActivityCode$ | async"
             [specialRequirements]="isIndicatorNeededForSlot()"
             [hasSeenCandidateDetails]="hasSeenCandidateDetails"
-            [isRekey]="componentState.isRekey$ | async" [category]="slot.booking.application.testCategory"></test-outcome>
+            [isRekey]="componentState.isRekey$ | async"
+            [category]="slot.booking.application.testCategory">
+          </test-outcome>
         </ion-col>
       </ion-row>
       <ion-row class="slot-footer" [ngClass]="{'vehicle-details-displayed': showVehicleDetails()}" align-items-center>
