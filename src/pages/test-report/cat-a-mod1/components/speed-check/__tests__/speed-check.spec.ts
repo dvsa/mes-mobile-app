@@ -31,8 +31,6 @@ import { SingleFaultCompetencyComponent } from '../../../../components/single-fa
 import {
   mockBlankSpeed,
   mockInvalidSpeed,
-  mockLeadingZeroSpeed,
-  mockTruncatedLengthSpeed,
   mockValidSpeed,
 } from './speed-check.mock';
 
@@ -260,14 +258,6 @@ describe('SpeedCheckComponent', () => {
 
     it('should detect invalid pattern, strip characters and cast to number', () => {
       expect(component.formatSpeedAttempt(mockInvalidSpeed)).toEqual(145);
-    });
-
-    it('should truncate any numbers additional to the permitted 3', () => {
-      expect(component.formatSpeedAttempt(mockTruncatedLengthSpeed)).toEqual(345);
-    });
-
-    it('should remove the preceding zero and cast to number', () => {
-      expect(component.formatSpeedAttempt(mockLeadingZeroSpeed)).toEqual(456);
     });
 
     it('should return undefined as could cast empty string to a number', () => {

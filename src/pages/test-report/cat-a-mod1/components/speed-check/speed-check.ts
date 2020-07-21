@@ -59,7 +59,8 @@ export class SpeedCheckComponent {
 
   constructor(
     private store$: Store<StoreModel>,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     const speedCheckData$ = this.store$.pipe(
@@ -148,18 +149,12 @@ export class SpeedCheckComponent {
   }
 
   formatSpeedAttempt = (event: any): number | undefined => {
-    let output: number | undefined;
-    if (event.target.value === '') {
-      output = undefined;
-    } else {
-      if (!this.speedCheckValidator.pattern.test(event.target.value)) {
-        event.target.value = event.target.value
-          .replace(nonNumericValues, '');
-      }
-      event.target.value = event.target.value.slice(0, Number(this.speedCheckValidator.maxLength));
-      output = Number(event.target.value);
+    if (event.target.value === '') return undefined;
+    if (!this.speedCheckValidator.pattern.test(event.target.value)) {
+      event.target.value = event.target.value
+        .replace(nonNumericValues, '');
     }
-    return output;
+    return Number(event.target.value);
   }
 
   getNotMet(): boolean {
