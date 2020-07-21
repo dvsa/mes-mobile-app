@@ -6,7 +6,7 @@
   </ion-col>
   <ion-col col-32>
     <input
-      type="number"
+      type="tel"
       class="speed-input first-speed-input"
       id="{{competency}}FirstAttempt"
       (input)="onFirstAttemptChange($event)"
@@ -14,7 +14,7 @@
       [maxLength]="speedCheckValidator.maxLength"
     />
     <input
-      type="number"
+      type="tel"
       class="speed-input second-speed-input"
       id="{{competency}}SecondAttempt"
       [disabled]="!firstAttemptValid()"
