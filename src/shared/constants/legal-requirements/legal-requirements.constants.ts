@@ -1,6 +1,6 @@
 export enum legalRequirementsLabels {
-  normalStart1 = 'NS (normal start)',
-  normalStart2 = 'NS (normal start)',
+  normalStart1 = 'NS (normal stop)',
+  normalStart2 = 'NS (normal stop)',
   angledStart = 'AS (angled start)',
   angledStartControlledStop = 'AS/CS (angled start/ controlled stop)',
   controlledStop = 'Controlled Stop',
