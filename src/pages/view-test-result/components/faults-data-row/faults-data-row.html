@@ -17,7 +17,7 @@
         <ion-col>
           <ion-row>
             <ion-col>
-              <span class="mes-data">{{dangerousFault.competencyDisplayName}}</span>
+              <span class="mes-data">{{dangerousFault.competencyDisplayName | modifyCompetencyLabel:testCategory:dangerousFault.competencyDisplayName}}</span>
             </ion-col>
           </ion-row>
           <ion-row *ngIf="dangerousFault.comment">
@@ -39,7 +39,7 @@
         <ion-col>
           <ion-row>
             <ion-col>
-              <span class="mes-data">{{seriousFault.competencyDisplayName}}</span>
+              <span class="mes-data">{{seriousFault.competencyDisplayName | modifyCompetencyLabel:testCategory:seriousFault.competencyDisplayName}}</span>
             </ion-col>
           </ion-row>
           <ion-row *ngIf="seriousFault.comment">
@@ -61,7 +61,7 @@
         <ion-col>
           <ion-row>
             <ion-col>
-              <span class="mes-data">{{drivingFault.competencyDisplayName}}</span>
+              <span class="mes-data">{{drivingFault.competencyDisplayName  | modifyCompetencyLabel:testCategory:drivingFault.competencyDisplayName}}</span>
             </ion-col>
           </ion-row>
           <ion-row *ngIf="showFaultComment(drivingFault) || displayDrivingFaults">

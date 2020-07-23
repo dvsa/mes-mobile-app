@@ -16,6 +16,9 @@ export class DebriefCardComponent {
   @Input()
   data: TestData;
 
+  @Input()
+  testCategory?: TestCategory;
+
   constructor(
     private faultSummaryProvider: FaultSummaryProvider,
     private faultCountProvider: FaultCountProvider,

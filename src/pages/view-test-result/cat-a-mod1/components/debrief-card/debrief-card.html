@@ -11,7 +11,8 @@
         [dangerousFaults]="getDangerousFaults()"
         [drivingFaultCount]="getDrivingFaultCount()"
         [minDrivingFaultCount]="5"
-        [isRider]=true>
+        [isRider]=true
+        [testCategory]='testCategory'>
       </faults-data-row>
       <data-row [label]="'ETA'" [value]="getETA()"></data-row>
       <speed-card
