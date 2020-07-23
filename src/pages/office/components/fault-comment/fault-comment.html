@@ -8,7 +8,7 @@
       <driving-faults-badge [count]="faultComment.faultCount" *ngSwitchCase="'driving'"></driving-faults-badge>
     </ion-col>
     <ion-col class="component-label" col-28 align-self-start>
-      <label class="fault-label">{{faultComment.competencyDisplayName | modifyLabel:isBikeCategory:faultComment.competencyDisplayName}}</label>
+      <label class="fault-label">{{faultComment.competencyDisplayName | modifyCompetencyLabel:testCategory:faultComment.competencyDisplayName}}</label>
     </ion-col>
     <ion-col padding-left>
       <ion-row class="spacing-row"></ion-row>

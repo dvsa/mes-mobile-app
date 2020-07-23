@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'dangerous-faults-debrief-card',
@@ -10,6 +11,6 @@ export class DangerousFaultsDebriefCardComponent {
   public dangerousFaults: string[];
 
   @Input()
-  public isBikeCategory?: boolean = false;
+  public testCategory?: TestCategory;
 
 }
