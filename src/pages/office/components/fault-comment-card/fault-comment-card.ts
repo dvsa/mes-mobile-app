@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FaultSummary } from '../../../../shared/models/fault-marking.model';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'fault-comment-card',
@@ -32,7 +33,7 @@ export class FaultCommentCardComponent {
   maxFaultCount: number;
 
   @Input()
-  isBikeCategory?: boolean = false;
+  testCategory?: TestCategory;
 
   @Output()
   faultCommentsChange = new EventEmitter<FaultSummary>();

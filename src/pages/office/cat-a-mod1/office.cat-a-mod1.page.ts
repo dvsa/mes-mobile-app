@@ -106,6 +106,7 @@ from '../../../modules/tests/test-data/cat-a-mod1/emergency-stop/emergency-stop.
 import { startsWith } from 'lodash';
 
 interface OfficePageState {
+  testCategory$: Observable<TestCategory>;
   activityCode$: Observable<ActivityCodeModel>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
@@ -196,6 +197,7 @@ export class OfficeCatAMod1Page extends BasePageComponent {
     );
 
     this.pageState = {
+      testCategory$,
       activityCode$: currentTest$.pipe(
         select(getActivityCode),
       ),

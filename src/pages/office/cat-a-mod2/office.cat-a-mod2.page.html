@@ -145,7 +145,7 @@
         [outcome]="pageState.testOutcome$ | async"
         [maxFaultCount]="maxFaultCount"
         (faultCommentsChange)="dangerousFaultCommentChanged($event)"
-        [isBikeCategory]=true
+        [testCategory]="pageState.testCategory$ | async"
       ></fault-comment-card>
 
       <fault-comment-card
@@ -157,7 +157,7 @@
         [outcome]="pageState.testOutcome$ | async"
         [maxFaultCount]="maxFaultCount"
         (faultCommentsChange)="seriousFaultCommentChanged($event)"
-        [isBikeCategory]=true
+        [testCategory]="pageState.testCategory$ | async"
       ></fault-comment-card>
 
       <fault-comment-card
@@ -171,7 +171,7 @@
         [faultCount]="pageState.drivingFaultCount$ | async"
         [maxFaultCount]="maxFaultCount"
         (faultCommentsChange)="drivingFaultCommentChanged($event)"
-        [isBikeCategory]=true
+        [testCategory]="pageState.testCategory$ | async"
       ></fault-comment-card>
 
       <ion-card id="driving-fault-no-commentary"
@@ -189,7 +189,7 @@
               </div>
             </ion-col>
             <ion-col class="component-label" align-self-center>
-              <label class="fault-label">{{drivingFault.competencyDisplayName | modifyLabel:true:drivingFault.competencyDisplayName}}</label>
+              <label class="fault-label">{{drivingFault.competencyDisplayName | modifyCompetencyLabel:(pageState.testCategory$ | async):drivingFault.competencyDisplayName}}</label>
             </ion-col>
           </ion-row>
         </ion-card-content>

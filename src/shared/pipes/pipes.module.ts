@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { ModifyLabel } from './modifyLabel';
+import { ModifyCompetencyLabel } from './modifyCompetencyLabel';
 
 @NgModule({
   declarations: [
-    ModifyLabel,
+    ModifyCompetencyLabel,
   ],
   exports: [
-    ModifyLabel,
+    ModifyCompetencyLabel,
   ],
   imports: [],
 })
