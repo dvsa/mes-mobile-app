@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FaultSummary } from '../../../../shared/models/fault-marking.model';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'faults-data-row',
@@ -30,6 +31,9 @@ export class FaultsDataRowComponent {
 
   @Input()
   displayDrivingFaults?: boolean = false;
+
+  @Input()
+  testCategory?: TestCategory;
 
   showNoFaultsMessage = (): boolean =>
     this.drivingFaultCount === 0 &&
