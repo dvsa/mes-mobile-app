@@ -3,19 +3,15 @@ import { FaultCommentComponent } from '../fault-comment';
 import { IonicModule } from 'ionic-angular';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
-import { MockComponent } from 'ng-mocks';
 import {
   DrivingFaultsBadgeComponent,
 } from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
-import { SeriousFaultBadgeComponent } from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
-import {
-  DangerousFaultBadgeComponent,
-} from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
 import { FormGroup, FormControl } from '@angular/forms';
 import { OutcomeBehaviourMapProvider } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../../../office-behaviour-map';
 import { CommentSource } from '../../../../../shared/models/fault-marking.model';
 import { configureTestSuite } from 'ng-bullet';
+import { ComponentsModule } from '../../../../../components/common/common-components.module';
 
 describe('FaultCommentComponent', () => {
   let fixture: ComponentFixture<FaultCommentComponent>;
@@ -26,13 +22,11 @@ describe('FaultCommentComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         FaultCommentComponent,
-        MockComponent(DrivingFaultsBadgeComponent),
-        MockComponent(SeriousFaultBadgeComponent),
-        MockComponent(DangerousFaultBadgeComponent),
       ],
       imports: [
         IonicModule,
         AppModule,
+        ComponentsModule,
       ],
       providers: [
         { provide: OutcomeBehaviourMapProvider, useClass: OutcomeBehaviourMapProvider },

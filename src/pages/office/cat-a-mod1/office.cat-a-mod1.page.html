@@ -115,6 +115,7 @@
         [outcome]="pageState.testOutcome$ | async"
         [maxFaultCount]="maxFaultCount"
         (faultCommentsChange)="dangerousFaultCommentChanged($event)"
+        [isBikeCategory]=true
       ></fault-comment-card>
 
       <fault-comment-card
@@ -126,6 +127,7 @@
         [outcome]="pageState.testOutcome$ | async"
         [maxFaultCount]="maxFaultCount"
         (faultCommentsChange)="seriousFaultCommentChanged($event)"
+        [isBikeCategory]=true
       ></fault-comment-card>
 
       <fault-comment-card
@@ -139,6 +141,7 @@
         [maxFaultCount]="maxFaultCount"
         [faultCount]="pageState.drivingFaultCount$ | async"
         (faultCommentsChange)="drivingFaultCommentChanged($event)"
+        [isBikeCategory]=true
       ></fault-comment-card>
 
       <ion-card
@@ -165,7 +168,7 @@
             </ion-col>
             <ion-col class="component-label" align-self-center>
               <label class="fault-label"
-                >{{drivingFault.competencyDisplayName}}</label
+                >{{drivingFault.competencyDisplayName | modifyLabel:true:drivingFault.competencyDisplayName}}</label
               >
             </ion-col>
           </ion-row>

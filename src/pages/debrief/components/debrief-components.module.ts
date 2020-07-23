@@ -10,6 +10,7 @@ import { DrivingFaultsDebriefCardComponent } from './driving-faults-debrief-card
 import { EcoDebriefCardComponent } from './eco-debrief-card/eco-debrief-card';
 import { TestOutcomeDebriefCardComponent } from './test-outcome-debrief-card/test-outcome-debrief-card';
 import { VehicleChecksCardComponent } from './vehicle-checks-card/vehicle-checks-card';
+import { PipesModule } from '../../../shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { VehicleChecksCardComponent } from './vehicle-checks-card/vehicle-checks
     CommonModule,
     IonicModule,
     TranslateModule,
+    PipesModule,
   ],
   exports: [
     VehicleChecksCardComponent,
