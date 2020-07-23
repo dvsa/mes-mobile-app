@@ -18,6 +18,9 @@ export class DrivingFaultsDebriefCardComponent {
   @Input()
   public testCategory: TestCategory;
 
+  @Input()
+  public isBikeCategory?: boolean = false;
+
   constructor() {
   }
 

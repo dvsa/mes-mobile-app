@@ -9,4 +9,7 @@ export class DangerousFaultsDebriefCardComponent {
   @Input()
   public dangerousFaults: string[];
 
+  @Input()
+  public isBikeCategory?: boolean = false;
+
 }

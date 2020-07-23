@@ -31,6 +31,9 @@ export class FaultCommentCardComponent {
   @Input()
   maxFaultCount: number;
 
+  @Input()
+  isBikeCategory?: boolean = false;
+
   @Output()
   faultCommentsChange = new EventEmitter<FaultSummary>();
 

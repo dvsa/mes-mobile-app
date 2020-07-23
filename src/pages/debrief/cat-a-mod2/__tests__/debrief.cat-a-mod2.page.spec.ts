@@ -29,7 +29,6 @@ import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-// TODO - PREP-AMOD2 - Implement category specific competencies
 import { fullCompetencyLabels } from '../../../../shared/constants/competencies/competencies';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { PopulateTestSlotAttributes }
@@ -244,7 +243,7 @@ describe('DebriefCatAMod2Page', () => {
       const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
       const dangerousLabel = fixture.debugElement.query(By.css('#dangerous-fault .counter-label')).nativeElement;
 
-      expect(drivingFaultLabel.innerHTML).toBe(fullCompetencyLabels.moveOffSafety);
+      expect(drivingFaultLabel.innerHTML).toBe('Move away - Safety');
       expect(seriousLabel.innerHTML).toBe(fullCompetencyLabels.useOfMirrorsSignalling);
       expect(dangerousLabel.innerHTML).toBe(fullCompetencyLabels.useOfMirrorsChangeDirection);
     });

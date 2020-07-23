@@ -40,6 +40,9 @@ export class FaultCommentComponent implements OnChanges {
   @Input()
   maxFaultCount: number;
 
+  @Input()
+  isBikeCategory?: boolean = false;
+
   @Output()
   faultCommentChange = new EventEmitter<FaultSummary>();
 
