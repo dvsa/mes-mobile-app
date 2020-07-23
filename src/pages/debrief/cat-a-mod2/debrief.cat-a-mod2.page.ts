@@ -34,6 +34,7 @@ import { getUntitledCandidateName } from '../../../modules/tests/journal-data/co
 import { TestOutcome } from '../../../shared/models/test-outcome';
 
 interface DebriefPageState {
+  testCategory$: Observable<TestCategory>;
   seriousFaults$: Observable<string[]>;
   dangerousFaults$: Observable<string[]>;
   drivingFaults$: Observable<FaultSummary[]>;
@@ -43,7 +44,6 @@ interface DebriefPageState {
   testResult$: Observable<string>;
   conductedLanguage$: Observable<string>;
   candidateName$: Observable<string>;
-  category$: Observable<TestCategory>;
 }
 
 @IonicPage()
@@ -57,7 +57,6 @@ export class DebriefCatAMod2Page extends BasePageComponent {
   pageState: DebriefPageState;
   subscription: Subscription;
   isPassed: boolean;
-  category: TestCategory = TestCategory.EUAM2;
 
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
@@ -88,34 +87,35 @@ export class DebriefCatAMod2Page extends BasePageComponent {
       select(getTests),
       select(getCurrentTest),
     );
-    const category$ = currentTest$.pipe(
+    const testCategory$ = currentTest$.pipe(
       select(getTestCategory),
-      map(c => c as TestCategory),
+      // We need this as TestCategory but it comes as CategoryCode.
+      map(testCategory => testCategory as TestCategory),
     );
     this.pageState = {
-      category$,
+      testCategory$,
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(category$),
+        withLatestFrom(testCategory$),
         map(([data, category]) =>
           this.faultSummaryProvider.getSeriousFaultsList(data, category)
           .map(fault => fault.competencyIdentifier)),
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(category$),
+        withLatestFrom(testCategory$),
         map(([data, category]) =>
           this.faultSummaryProvider.getDangerousFaultsList(data, category)
           .map(fault => fault.competencyIdentifier)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(category$),
+        withLatestFrom(testCategory$),
         map(([data, category]) => this.faultSummaryProvider.getDrivingFaultsList(data, category)),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(category$),
+        withLatestFrom(testCategory$),
         map(([testData, category]) => {
           return this.faultCountProvider.getDrivingFaultSumCount(category, testData);
         }),

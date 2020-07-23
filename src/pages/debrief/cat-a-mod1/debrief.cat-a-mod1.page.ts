@@ -40,6 +40,7 @@ import { getEmergencyStop } from '../../../modules/tests/test-data/cat-a-mod1/em
 import { Avoidance, EmergencyStop } from '@dvsa/mes-test-schema/categories/AM1';
 
 interface DebriefPageState {
+  testCategory$: Observable<TestCategory>;
   seriousFaults$: Observable<string[]>;
   dangerousFaults$: Observable<string[]>;
   drivingFaults$: Observable<FaultSummary[]>;
@@ -92,10 +93,12 @@ export class DebriefCatAMod1Page extends BasePageComponent {
       select(getTests),
       select(getCurrentTest),
     );
-    const category$ = currentTest$.pipe(
+    const testCategory$ = currentTest$.pipe(
       select(getTestCategory),
+      map(testCategory => testCategory as TestCategory),
     );
     this.pageState = {
+      testCategory$,
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data =>
@@ -114,7 +117,7 @@ export class DebriefCatAMod1Page extends BasePageComponent {
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        withLatestFrom(category$),
+        withLatestFrom(testCategory$),
         map(([testData, category]) => {
           return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
         }),
