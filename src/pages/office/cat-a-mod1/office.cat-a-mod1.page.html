@@ -115,6 +115,7 @@
         [outcome]="pageState.testOutcome$ | async"
         [maxFaultCount]="maxFaultCount"
         (faultCommentsChange)="dangerousFaultCommentChanged($event)"
+        [testCategory]="pageState.testCategory$ | async"
       ></fault-comment-card>
 
       <fault-comment-card
@@ -126,6 +127,7 @@
         [outcome]="pageState.testOutcome$ | async"
         [maxFaultCount]="maxFaultCount"
         (faultCommentsChange)="seriousFaultCommentChanged($event)"
+        [testCategory]="pageState.testCategory$ | async"
       ></fault-comment-card>
 
       <fault-comment-card
@@ -139,6 +141,7 @@
         [maxFaultCount]="maxFaultCount"
         [faultCount]="pageState.drivingFaultCount$ | async"
         (faultCommentsChange)="drivingFaultCommentChanged($event)"
+        [testCategory]="pageState.testCategory$ | async"
       ></fault-comment-card>
 
       <ion-card
@@ -152,21 +155,18 @@
           <ion-row
             class="driving-fault-no-commentary-row"
             id="driving-fault-commentary-label"
-            *ngFor="let drivingFault of (pageState.drivingFaults$ | async)"
-          >
+            *ngFor="let drivingFault of (pageState.drivingFaults$ | async)">
             <ion-col class="fault-badge" align-self-center col-4>
               <div class="counter-icon">
                 <driving-faults-badge
                   class="counter driving-faults"
-                  [count]="drivingFault.faultCount"
-                >
+                  [count]="drivingFault.faultCount">
                 </driving-faults-badge>
               </div>
             </ion-col>
             <ion-col class="component-label" align-self-center>
               <label class="fault-label"
-                >{{drivingFault.competencyDisplayName}}</label
-              >
+                >{{drivingFault.competencyDisplayName | modifyCompetencyLabel:(pageState.testCategory$ | async):drivingFault.competencyDisplayName}}</label>
             </ion-col>
           </ion-row>
         </ion-card-content>

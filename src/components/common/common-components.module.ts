@@ -26,6 +26,7 @@ import { TransmissionComponent } from './transmission/transmission';
 import { DataRowComponent } from './data-row/data-row';
 import { DataRowCustomComponent } from './data-row-custom/data-row-custom';
 import { CPCDebriefCardComponent } from './cpc-debrief-card/cpc-debrief-card';
+import { PipesModule } from '../../shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { CPCDebriefCardComponent } from './cpc-debrief-card/cpc-debrief-card';
     DataRowComponent,
     DataRowCustomComponent,
     CPCDebriefCardComponent,
+    PipesModule,
   ],
 })
 export class ComponentsModule { }

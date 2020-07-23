@@ -17,7 +17,7 @@
         </ion-col>
         <ion-col col-3 no-padding></ion-col>
         <ion-col no-padding>
-          <div class="counter-label">{{'debrief.competencies.' + drivingFault.competencyIdentifier | translate}}</div>
+          <div class="counter-label">{{'debrief.competencies.' + drivingFault.competencyIdentifier | translate  | modifyCompetencyLabel:testCategory:drivingFault.competencyIdentifier}}</div>
         </ion-col>
       </ion-row>
     </ion-grid>

@@ -5,6 +5,7 @@ import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
 } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 enum ValidFaultTypes {
   DRIVING = 'driving',
@@ -39,6 +40,9 @@ export class FaultCommentComponent implements OnChanges {
 
   @Input()
   maxFaultCount: number;
+
+  @Input()
+  testCategory?: TestCategory;
 
   @Output()
   faultCommentChange = new EventEmitter<FaultSummary>();
