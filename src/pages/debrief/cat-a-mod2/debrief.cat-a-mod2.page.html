@@ -15,17 +15,16 @@
   ></eta-debrief-card>
   <dangerous-faults-debrief-card
     [dangerousFaults]="pageState.dangerousFaults$ | async"
-    [testCategory]="category">
+    [testCategory]="pageState.testCategory$ | async">
   </dangerous-faults-debrief-card>
   <serious-faults-debrief-card
     [seriousFaults]="pageState.seriousFaults$ | async"
-    [testCategory]="category">
+    [testCategory]="pageState.testCategory$ | async">
   </serious-faults-debrief-card>
   <driving-faults-debrief-card
     [drivingFaults]="pageState.drivingFaults$ | async"
     [drivingFaultCount]="pageState.drivingFaultCount$ | async"
-    [testCategory]="pageState.category$ | async"
-    [testCategory]="category">
+    [testCategory]="pageState.testCategory$ | async">
   </driving-faults-debrief-card>
   <eco-debrief-card
     [adviceGivenControl]="adviceGivenControl"
