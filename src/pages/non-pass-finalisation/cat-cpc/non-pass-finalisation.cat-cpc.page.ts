@@ -52,6 +52,8 @@ import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-st
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -83,11 +85,11 @@ export class NonPassFinalisationCatCPCPage extends BasePageComponent implements 
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
+    public appConfig: AppConfigProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
-    // TODO: link to delegatedExaminer flag when available
-    this.activityCodeOptions = populateActivityCodeModelList(true);
+    this.activityCodeOptions = populateActivityCodeModelList(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 

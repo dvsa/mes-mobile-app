@@ -109,6 +109,8 @@ import {
   vehicleChecksExist,
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -179,13 +181,13 @@ export class OfficeCatBEPage extends BasePageComponent {
     public alertController: AlertController,
     private faultCountProvider: FaultCountProvider,
     private faultSummaryProvider: FaultSummaryProvider,
+    public appConfig: AppConfigProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-    // TODO: link to delegatedExaminer flag when available
-    this.activityCodeOptions = populateActivityCodeModelList(true);
+    this.activityCodeOptions = populateActivityCodeModelList(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
   }
 
   ionViewDidEnter(): void {

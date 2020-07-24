@@ -117,6 +117,8 @@ import {
 import {
   AddPcvDoorExerciseComment,
 } from '../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -190,13 +192,13 @@ export class OfficeCatDPage extends BasePageComponent {
     public alertController: AlertController,
     private faultCountProvider: FaultCountProvider,
     private faultSummaryProvider: FaultSummaryProvider,
+    public appConfig: AppConfigProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-    // TODO: link to delegatedExaminer flag when available
-    this.activityCodeOptions = populateActivityCodeModelList(true);
+    this.activityCodeOptions = populateActivityCodeModelList(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
   }
 
   ionViewDidEnter(): void {

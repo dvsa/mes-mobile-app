@@ -62,6 +62,8 @@ import {
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -98,11 +100,11 @@ export class NonPassFinalisationCatCPage extends BasePageComponent implements On
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
+    public appConfig: AppConfigProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
-    // TODO: link to delegatedExaminer flag when available
-    this.activityCodeOptions = populateActivityCodeModelList(true);
+    this.activityCodeOptions = populateActivityCodeModelList(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 

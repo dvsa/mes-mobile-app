@@ -82,6 +82,8 @@ import {
   questionCombinations,
 } from '../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 import { TestOutcome } from '../../../shared/models/test-outcome';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -136,12 +138,12 @@ export class OfficeCatCPCPage extends BasePageComponent {
     public keyboard: Keyboard,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public alertController: AlertController,
+    public appConfig: AppConfigProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-    // TODO: link to delegatedExaminer flag when available
-    this.activityCodeOptions = populateActivityCodeModelList(true);
+    this.activityCodeOptions = populateActivityCodeModelList(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
   }
 
   ionViewDidEnter(): void {
