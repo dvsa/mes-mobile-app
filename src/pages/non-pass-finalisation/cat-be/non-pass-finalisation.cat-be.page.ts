@@ -53,7 +53,7 @@ import {
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
+// import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 
 interface NonPassFinalisationPageState {
@@ -92,7 +92,7 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
-    this.activityCodeOptions = populateActivityCodeModelList(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
+    this.activityCodeOptions = populateActivityCodeModelList(true);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 

@@ -2,7 +2,9 @@ import { TestStatus } from './test-status/test-status.model';
 import { JournalData, ActivityCode, TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/common';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories/index';
 import { TestsModel } from './tests.model';
-import { activityCodeModelList } from '../../pages/office/components/activity-code/activity-code.constants';
+import {
+  populateActivityCodeModelList,
+} from '../../pages/office/components/activity-code/activity-code.constants';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { startsWith } from 'lodash';
 import { TestOutcome } from './tests.constants';
@@ -62,20 +64,19 @@ export const isPassed = (test: TestResultSchemasUnion): boolean => {
 };
 
 export const getActivityCode = (test: TestResultCommonSchema) => {
-
-  const activityCodeIndex = activityCodeModelList.findIndex(
-    activityCode => test.activityCode === activityCode.activityCode);
-  return activityCodeModelList[activityCodeIndex];
-
+  // TODO add user role in place of true
+  return populateActivityCodeModelList(true).find((code) => {
+    return code.activityCode === test.activityCode;
+  });
 };
 
-export const isPracticeMode = (tests: TestsModel) : boolean =>
+export const isPracticeMode = (tests: TestsModel): boolean =>
   isTestReportPracticeTest(tests) || isEndToEndPracticeTest(tests);
 
 export const isTestReportPracticeTest = (tests: TestsModel): boolean =>
   tests.currentTest.slotId === testReportPracticeSlotId;
 
-export const isEndToEndPracticeTest = (tests: TestsModel) : boolean =>
+export const isEndToEndPracticeTest = (tests: TestsModel): boolean =>
   startsWith(tests.currentTest.slotId, end2endPracticeSlotId);
 
 export const getAllTestStatuses = (test: TestsModel): { [slotId: string]: TestStatus; } => {

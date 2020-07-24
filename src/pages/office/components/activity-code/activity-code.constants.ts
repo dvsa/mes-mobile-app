@@ -7,7 +7,7 @@ export interface ActivityCodeModel {
 }
 
 export interface ActivityCodeModelDelegatedExaminer {
-  activityCode: ActivityCodeDelegatedExaminer;
+  activityCode: ActivityCode;
   description: ActivityCodeDescriptionDelegatedExaminer;
 }
 
@@ -90,11 +90,11 @@ export function populateActivityCodeModelList(DLG?: boolean): ActivityCodeModel[
 
 export let activityCodeModelList: ActivityCodeModel[] = populateActivityCodeModelList();
 
-// TODO move to schema
-export type ActivityCodeDelegatedExaminer =
-  | '76'
-  | '77'
-  | '78'
-  | '79'
-  | '80'
-  | '81';
+// // TODO move to schema
+// export type ActivityCodeDelegatedExaminer =
+//   | '76'
+//   | '77'
+//   | '78'
+//   | '79'
+//   | '80'
+//   | '81';
