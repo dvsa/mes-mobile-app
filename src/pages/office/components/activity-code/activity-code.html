@@ -6,9 +6,17 @@
     <ion-col col-63 align-self-center padding-left>
       <ion-row class="spacing-row"></ion-row>
       <ion-row>
-        <ion-select id="activity-code-selector" placeholder="Select an activity code" okText="Submit" cancelText="Cancel"
-          formControlName="activityCode" (ionChange)="activityCodeChanged($event)" [selectOptions]="{cssClass:'mes-select activity-code-select', enableBackdropDismiss:false}" [disabled]="isSelectDisabled()">
-          <ion-option [value]="activityCode" [disabled]="isOptionDisabled(activityCode.activityCode)" *ngFor="let activityCode of activityCodeOptions">
+        <ion-select id="activity-code-selector"
+                    placeholder="Select an activity code"
+                    okText="Submit"
+                    cancelText="Cancel"
+                    formControlName="activityCode"
+                    (ionChange)="activityCodeChanged($event)"
+                    [selectOptions]="{cssClass:'mes-select activity-code-select', enableBackdropDismiss:false}"
+                    [disabled]="isSelectDisabled()">
+          <ion-option [value]="activityCode"
+                      [disabled]="isOptionDisabled(activityCode.activityCode)"
+                      *ngFor="let activityCode of activityCodeOptions">
             {{activityCode.activityCode}} - {{activityCode.description}}
           </ion-option>
         </ion-select>
