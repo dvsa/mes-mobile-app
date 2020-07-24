@@ -107,4 +107,8 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   canStartTest(): boolean {
     return this.slotProvider.canStartTest(this.slot);
   }
+
+  canViewCandidateDetails(): boolean {
+    return new Date(this.slot.slotDetail.start) > new Date();
+  }
 }
