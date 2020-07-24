@@ -68,7 +68,7 @@ describe('DebriefCardComponent', () => {
     component = fixture.componentInstance;
     faultSummaryProvider = TestBed.get(FaultSummaryProvider);
     faultCountProvider = TestBed.get(FaultCountProvider);
-    component.category = TestCategory.EUAM2;
+    component.testCategory = TestCategory.EUAM2;
   }));
 
   describe('Class', () => {

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
 import { flattenArray } from '../../../view-test-result-helpers';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { CategoryCode, TestData } from '@dvsa/mes-test-schema/categories/AM2';
+import { TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import {
   DataRowListItem,
   ViewTestResultLabels,
@@ -23,7 +23,7 @@ export class DebriefCardComponent {
   data: TestData;
 
   @Input()
-  category: CategoryCode;
+  testCategory?: TestCategory;
 
   constructor(
     private faultSummaryProvider: FaultSummaryProvider,
@@ -65,19 +65,19 @@ export class DebriefCardComponent {
   }
 
   public getDrivingFaults(): FaultSummary[] {
-    return this.faultSummaryProvider.getDrivingFaultsList(this.data, this.category as TestCategory);
+    return this.faultSummaryProvider.getDrivingFaultsList(this.data, this.testCategory);
   }
 
   public getSeriousFaults(): FaultSummary[] {
-    return this.faultSummaryProvider.getSeriousFaultsList(this.data, this.category as TestCategory);
+    return this.faultSummaryProvider.getSeriousFaultsList(this.data, this.testCategory);
   }
 
   public getDangerousFaults(): FaultSummary[] {
-    return this.faultSummaryProvider.getDangerousFaultsList(this.data, this.category as TestCategory);
+    return this.faultSummaryProvider.getDangerousFaultsList(this.data, this.testCategory);
   }
 
   public getDrivingFaultCount(): number {
-    return this.faultCountProvider.getDrivingFaultSumCount(this.category as TestCategory, this.data);
+    return this.faultCountProvider.getDrivingFaultSumCount(this.testCategory, this.data);
   }
 
   public getETA(): string {
