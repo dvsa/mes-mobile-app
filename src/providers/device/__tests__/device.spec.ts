@@ -100,6 +100,12 @@ describe('Device Provider', () => {
       const result = await deviceProvider.disableSingleAppMode();
       expect(result).toBe(true);
     });
+
+    it('should detect examiner role as DLG and resolve with false', async () => {
+      spyOn(deviceProvider.appConfig, 'getAppConfig').and.returnValue({ role: 'DLG' });
+      const result = await deviceProvider.enableSingleAppMode();
+      expect(result).toBe(false);
+    });
   });
 
 });
