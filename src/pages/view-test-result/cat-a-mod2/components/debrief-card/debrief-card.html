@@ -12,7 +12,8 @@
         [seriousFaults]="getSeriousFaults()"
         [dangerousFaults]="getDangerousFaults()"
         [drivingFaultCount]="getDrivingFaultCount()"
-        [isRider]=true>
+        [isRider]=true
+        [testCategory]='testCategory'>
     </faults-data-row>
       <data-row [label]="'ETA'" [value]="getETA()"></data-row>
       <safety-and-balance-data-row
