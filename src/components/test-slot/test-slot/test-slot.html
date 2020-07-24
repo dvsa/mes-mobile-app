@@ -32,7 +32,7 @@
           <ion-grid no-padding>
             <ion-row align-items-center>
               <ion-col>
-                <ng-content *ngIf="slot.booking.candidate; then candidateLink else unknownCandidate">
+                <ng-content *ngIf="slot.booking.candidate && canViewCandidateDetails(); then candidateLink else unknownCandidate">
                 </ng-content>
               </ion-col>
               <ion-col class="category-col">
