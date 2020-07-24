@@ -20,6 +20,7 @@ import { SlotProvider } from '../../../providers/slot/slot';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import * as moment from 'moment';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
@@ -106,6 +107,15 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   }
 
   canViewCandidateDetails(): boolean {
-    return new Date(this.slot.slotDetail.start) > new Date();
+    const today = moment();
+    const daysToAdd = today.isoWeekday() === 6 ? 2 : today.isoWeekday() === 7 ? 1 : 0;
+    const tomorrow = moment().add(daysToAdd, 'days').startOf('day');
+    // console.log(tomorrow);
+
+    // const tomorrow: Date = new Date();
+    // tomorrow.setDate(new Date().getDate() + 1);
+    // tomorrow.setHours(0); tomorrow.setMinutes(0); tomorrow.setSeconds(0); tomorrow.setMilliseconds(0);
+    console.log(tomorrow);
+    return new Date(this.slot.slotDetail.start) <= new Date();
   }
 }
