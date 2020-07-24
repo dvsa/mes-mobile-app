@@ -168,8 +168,9 @@ export class TestsEffects {
       let examinerBooked: string;
 
       if (isDelegatedRekeySearch) {
-        examinerBooked = journal.examiner.staffNumber;
-        examiner = journal.examiner;
+        examiner = {
+          staffNumber: employeeId,
+        };
         slot = getDelegatedBookedTestSlot(delegatedRekeySearch);
       } else if (isRekeySearch) {
         examinerBooked = getStaffNumber(rekeySearch);

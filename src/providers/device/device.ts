@@ -9,6 +9,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { LogHelper } from '../logs/logsHelper';
 import { timeout, retry, map } from 'rxjs/operators';
 import { defer, Observable } from 'rxjs';
+import { ExaminerRole } from '../app-config/constants/examiner-role.constants';
 
 declare let cordova: any;
 
@@ -59,6 +60,9 @@ export class DeviceProvider implements IDeviceProvider {
    * a unique log is sent.
   */
   enableSingleAppMode = async(): Promise<any> => {
+    if (this.appConfig.getAppConfig().role === ExaminerRole.DLG) {
+      return Promise.resolve(false);
+    }
     const enableAsamWithRetriesAndTimeout$: Observable<boolean> = defer(() => this.setSingleAppMode(true)).pipe(
         map((didSucceed: boolean): boolean => {
           if (!didSucceed) throw new Error('Call to enable ASAM failed');
@@ -81,6 +85,9 @@ export class DeviceProvider implements IDeviceProvider {
   }
 
   disableSingleAppMode = async (): Promise<boolean> => {
+    if (this.appConfig.getAppConfig().role === ExaminerRole.DLG) {
+      return Promise.resolve(true);
+    }
     return await this.setSingleAppMode(false);
   }
 
