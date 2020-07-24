@@ -21,8 +21,8 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And the competency for Show me and Tell me driver fault count is "1"
       When I end the test
       Then the legal requirements pop up is present
-      And the required test observation is present "NS (normal start)"
-      And the required test observation is present "NS (normal start)"
+      And the required test observation is present "NS (normal stop)"
+      And the required test observation is present "NS (normal stop)"
       And the required test observation is present "AS (angled start)"
       And the required test observation is present "HS / DS (hill or designated start)"
       And the required test observation is present "Manoeuvres"
@@ -78,7 +78,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       Then I should see the Debrief page with outcome "Unsuccessful"
       And I see a "dangerous" fault for "Use of speed"
       And I see a "serious" fault for "Control - Accelerator"
-      And I see a "driving" fault for "Move Away - Safety"
+      And I see a "driving" fault for "Move off - Safety"
       And I see a "driving" fault for "Control - Accelerator"
       And I see a "driving" fault for "Reverse right - Control"
       And I see a "driving" fault for "Controlled stop"
@@ -92,7 +92,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Unsuccessful"
-      And there are "2" driver faults listed for "Move Away - Safety"
+      And there are "2" driver faults listed for "Move off - Safety"
       And there is "1" driver fault listed for "Control - Accelerator"
       And there is "1" driver fault listed for "Reverse right - Control"
       And there is "1" driver fault listed for "Controlled Stop"
@@ -136,7 +136,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And I continue to debrief
       Then I should see the Debrief page with outcome "Unsuccessful"
       And I see a "driving" fault for "Use of mirrors - Signalling"
-      And I see a "driving" fault for "Move Away - Safety"
+      And I see a "driving" fault for "Move off - Safety"
       And I see a "driving" fault for "Positioning - Lane discipline"
       And I see a "driving" fault for "Control - Accelerator"
       And I see a "driving" fault for "Junctions - Approach speed"
@@ -153,7 +153,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And the office page test outcome is "Unsuccessful"
       And I complete the office write up
       And I enter a comment for "driving" fault "Use of mirrors - Signalling"
-      And I enter a comment for "driving" fault "Move Away - Safety"
+      And I enter a comment for "driving" fault "Move off - Safety"
       And I enter a comment for "driving" fault "Positioning - Lane discipline"
       And I enter a comment for "driving" fault "Control - Accelerator"
       And I enter a comment for "driving" fault "Junctions - Approach speed"
@@ -197,7 +197,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And I continue to debrief
       Then I should see the Debrief page with outcome "Unsuccessful"
       And I see a "driving" fault for "Use of mirrors - Signalling"
-      And I see a "driving" fault for "Move Away - Safety"
+      And I see a "driving" fault for "Move off - Safety"
       And I see a "driving" fault for "Positioning - Lane discipline"
       And I see a "driving" fault for "Control - Accelerator"
       And I see a "driving" fault for "Junctions - Approach speed"
@@ -213,7 +213,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       Then I should see the "Office" page
       And the office page test outcome is "Unsuccessful"
       And there are "4" driver faults listed for "Use of mirrors - Signalling"
-      And there are "3" driver faults listed for "Move Away - Safety"
+      And there are "3" driver faults listed for "Move off - Safety"
       And there are "3" driver faults listed for "Positioning - Lane discipline"
       And there are "2" driver faults listed for "Control - Accelerator"
       And there are "2" driver faults listed for "Junctions - Approach speed"

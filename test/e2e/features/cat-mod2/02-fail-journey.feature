@@ -37,7 +37,7 @@ Feature: Driver Examiner complete the fail journey for Mod2
     When I complete the test
     And I continue to debrief
     Then I should see the Debrief page with outcome "Unsuccessful"
-    And I see a "driving" fault for "Move Away - Safety"
+    And I see a "driving" fault for "Move away - Safety"
     And I see a "driving" fault for "Junctions - Approach speed"
     And I see a "driving" fault for "Precautions"
     And I see a "driving" fault for "Rear Observation - Signalling"
