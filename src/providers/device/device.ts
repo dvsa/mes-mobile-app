@@ -85,9 +85,6 @@ export class DeviceProvider implements IDeviceProvider {
   }
 
   disableSingleAppMode = async (): Promise<boolean> => {
-    if (this.appConfig.getAppConfig().role === ExaminerRole.DLG) {
-      return Promise.resolve(true);
-    }
     return await this.setSingleAppMode(false);
   }
 
