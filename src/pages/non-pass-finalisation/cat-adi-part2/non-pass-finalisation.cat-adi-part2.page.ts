@@ -34,7 +34,7 @@ import { isWelshTest }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
   ActivityCodeModel,
-  activityCodeModelList,
+  populateActivityCodeModelList,
 } from '../../office/components/activity-code/activity-code.constants';
 import { FormGroup } from '@angular/forms';
 import { PersistTests } from '../../../modules/tests/tests.actions';
@@ -87,7 +87,7 @@ export class NonPassFinalisationCatADIPart2Page extends BasePageComponent implem
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
-    this.activityCodeOptions = activityCodeModelList;
+    this.activityCodeOptions = populateActivityCodeModelList(false);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
 
     // Dispatching this action as D255 is not present in ADI pt2 but it is a mandatory field in TARS
