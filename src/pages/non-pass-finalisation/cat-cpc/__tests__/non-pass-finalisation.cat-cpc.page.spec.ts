@@ -28,6 +28,8 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
     '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
+import { AppConfigProvider } from '../../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
 
 describe('NonPassFinalisationCatCPCPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatCPCPage>;
@@ -51,6 +53,7 @@ describe('NonPassFinalisationCatCPCPage', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     });
   });

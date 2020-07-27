@@ -31,6 +31,8 @@ import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-detail
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
+import { AppConfigProvider } from '../../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
 
 describe('NonPassFinalisationCatCPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatCPage>;
@@ -56,6 +58,7 @@ describe('NonPassFinalisationCatCPage', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     });
   });
