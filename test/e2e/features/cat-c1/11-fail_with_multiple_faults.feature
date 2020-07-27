@@ -18,7 +18,7 @@ Feature: A Driving Examiner Completes a Failed User Journey in Category C1
       And the driver fault count is "3"
       When I end the test
       Then the legal requirements pop up is present
-      And the required test observation is present "NS (normal start)"
+      And the required test observation is present "NS (normal stop)"
       And the required test observation is present "UH (uphill start)"
       And the required test observation is present "AS/CS (angled start/ controlled stop)"
       And the required test observation is present "Manoeuvres"
@@ -37,10 +37,10 @@ Feature: A Driving Examiner Completes a Failed User Journey in Category C1
       When I end the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Unsuccessful"
-      And I see a "serious" fault for "Move Away - Control"
+      And I see a "serious" fault for "Move off - Control"
       And I see a "driving" fault for "Signals - Timed"
       And I see a "driving" fault for "Signals - Correctly"
-      And I see a "driving" fault for "Move Away - Safety"
+      And I see a "driving" fault for "Move off - Safety"
       And I see a "driving" fault for "Vehicle checks"
       When I end the debrief
       Then I am on the post debrief holding page
@@ -51,7 +51,7 @@ Feature: A Driving Examiner Completes a Failed User Journey in Category C1
       Then I should see the "Office" page
       And the office page test outcome is "Unsuccessful"
       When I complete the office write up
-      And I enter a comment for "serious" fault "Move Away - Control"
+      And I enter a comment for "serious" fault "Move off - Control"
       And I upload the test
       Then I should see the "Journal" page
       And the test result for "Mr Bright Wilson" is "2"

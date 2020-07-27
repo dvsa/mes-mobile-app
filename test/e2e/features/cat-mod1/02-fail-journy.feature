@@ -35,8 +35,8 @@ Feature: A Driving Examiner Completes failed tests
     When I end the test
     And I continue to debrief
     Then I should see the Debrief page with outcome "Unsuccessful"
-    And I see a "driving" fault for "Move Away - Safety"
-    And I see a "driving" fault for "Move Away - Control"
+    And I see a "driving" fault for "Move away - Safety"
+    And I see a "driving" fault for "Move away - Control"
     And I see a "driving" fault for "Precautions"
     And I see a "driving" fault for "Manual handling"
     And I see a "driving" fault for "Use of stand"
@@ -52,8 +52,8 @@ Feature: A Driving Examiner Completes failed tests
     Then I should see the "Office" page
     And the office page test outcome is "Unsuccessful"
     When I complete the office write up
-    And I enter a comment for "driving" fault "Move Away - Safety"
-    And I enter a comment for "driving" fault "Move Away - Control"
+    And I enter a comment for "driving" fault "Move away - Safety"
+    And I enter a comment for "driving" fault "Move away - Control"
     And I enter a comment for "driving" fault "Precautions"
     And I enter a comment for "driving" fault "Manual handling"
     And I enter a comment for "driving" fault "Use of stand"

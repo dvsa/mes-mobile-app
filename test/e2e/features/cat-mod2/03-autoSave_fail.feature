@@ -1,9 +1,8 @@
 @catm2 @full_smoke @regression
 
-Feature: Driver Examiner complete the fail journey for Mod2
+Feature: Autosave end to end failed journey for Category B+E Mod2
 
-  Scenario: Examiner fail the candidate with 11 driving faults
-
+  Background:
     Given I am logged in as "desexamineram2" and I have a test for "Mr Richard Rhys"
     When I start the test for "Mr Richard Rhys"
     And the candidate completes the declaration page
@@ -11,14 +10,16 @@ Feature: Driver Examiner complete the fail journey for Mod2
     Then I should see the "Declaration - Richard Rhys" page
     When the candidate requests to receive results by post
     And I proceed to the bike
-    And I should see the "Richard Rhys" page
+
+  Scenario: Examiner fail the candidate with 11 driving faults
+    Given I should see the "Richard Rhys" page
     And I select the test category "A2"
     And I select the Transmission Type "Manual"
     And I select the Eyesight test result "Pass"
     And I enter the vehicle registration number "AB12CDE"
     And I select the "Safety and Balance Questions - Richard Rhys" page
       |M4 - Lights|M11 - Engine Cut Out Switch|B3 - Balance with passenger|
-    |true       |true                       |false                      |
+      |true       |true                       |false                      |
     Then I continue to test report
     Then I should see the "Test report - Richard Rhys" page
     When I add a "Precautions" driver fault
@@ -57,12 +58,7 @@ Feature: Driver Examiner complete the fail journey for Mod2
     And I enter a comment for "dangerous" fault "Rear Observation - Signalling"
     And I upload the test
     Then I should see the "Journal" page
-    And the test result for "Mr Richard Rhys" is "2"
-
-  Scenario: A Driving Examiner Completes a fail test for autosave
-
-    Given I am on the "Journal" page
-    And  I click the back button
+    When I click the back button
     Then I should see the "My dashboard" page
     When I click search completed tests
     When I search for a completed test with the application reference of "20123000011"
@@ -70,15 +66,13 @@ Feature: Driver Examiner complete the fail journey for Mod2
     Then I should see the "Test information" page
     And the test result outcome is "Unsuccessful"
     And the test result has the following data present
-      | label                             | value                                  |
-      | Application reference             | 20123000011                            |
-      | Test category                     | EUA2M2                                 |
-      | Test centre                       | EXTC1                                  |
-      | D255                              | No                                     |
-      | Route number                      | None                                   |
-      | Physical description of candidate | None                                   |
-      | Weather conditions                | Bright / wet roads and Showers         |
+      | label                             | value                         |
+      | Application reference             | 20123000011                   |
+      | Test category                     | EUAM2                         |
+      | Slot type                         | Standard Test                 |
+      | Examiner number                   | 10000011                      |
+      | Physical description of candidate | None                          |
+      | Weather conditions                | Bright / wet roads and Showers|
     When I click the close button
-    Then I should see the "Search submitted test" page
     When I click the back button on the search submitted test page
     Then I should see the "My dashboard" page

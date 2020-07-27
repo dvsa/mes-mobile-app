@@ -72,7 +72,7 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
       And I see a "driving" fault for "Use of mirrors - Signalling"
-      And I see a "driving" fault for "Move Away - Safety"
+      And I see a "driving" fault for "Move off - Safety"
       And I see a "driving" fault for "Positioning - Lane discipline"
       And I see a "driving" fault for "Control - Accelerator"
       And I see a "driving" fault for "Junctions - Approach speed"
@@ -86,7 +86,7 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Passed"
-      And there are "3" driver faults listed for "Move Away - Safety"
+      And there are "3" driver faults listed for "Move off - Safety"
       And there are "3" driver faults listed for "Positioning - Lane discipline"
       And there are "3" driver faults listed for "Use of mirrors - Signalling"
       And there are "2" driver faults listed for "Control - Accelerator"

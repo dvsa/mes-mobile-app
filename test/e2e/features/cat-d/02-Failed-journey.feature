@@ -30,10 +30,10 @@ Scenario: Examiner completes a passed test with no faults
   And I complete the test with controlled stop
   And I continue to debrief
   Then I should see the Debrief page with outcome "Unsuccessful"
-  And I see a "serious" fault for "Move Away - Control"
+  And I see a "serious" fault for "Move off - Control"
   And I see a "driving" fault for "Control - Accelerator"
   And I see a "driving" fault for "Signals - Correctly"
-  And I see a "driving" fault for "Move Away - Safety"
+  And I see a "driving" fault for "Move off - Safety"
   And I see a "driving" fault for "PCV Door Exercise"
   When I end the debrief
   Then I am on the post debrief holding page
@@ -44,7 +44,7 @@ Scenario: Examiner completes a passed test with no faults
   Then I should see the "Office" page
   And the office page test outcome is "Unsuccessful"
   When I complete the office write up
-  And I enter a comment for "serious" fault "Move Away - Control"
+  And I enter a comment for "serious" fault "Move off - Control"
   And I upload the test
   Then I should see the "Journal" page
   And the test result for "Mr Right Ford" is "2"
