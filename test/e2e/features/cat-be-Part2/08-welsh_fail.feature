@@ -1,6 +1,6 @@
 @catbe @full_smoke @regression
 Feature: Driving Examiner Completes a Welsh Failed Test in Category B+E
- 
+
   Scenario: Examiner completes a failed test with various faults
       Given I am logged in as "desexaminerw" and I have a test for "Mr Hendricks Parsons"
       When I check candidate details for "Mr Hendricks Parsons"
@@ -13,12 +13,12 @@ Feature: Driving Examiner Completes a Welsh Failed Test in Category B+E
       Then I should see the "Hendricks Parsons" page
       And I complete the waiting room to car page with the following vehicle checks
         | show_me_1   | show_me_2   | show_me_3   | show_me_4   | show_me_5   |
-        | true        | true        | true        | false       | false       |   
+        | true        | true        | true        | false       | false       |
       Then I should see the "Test report - Hendricks Parsons" page
       And the driver fault count is "3"
       When I end the test
       Then the legal requirements pop up is present
-      And the required test observation is present "NS (normal start)"
+      And the required test observation is present "NS (normal stop)"
       And the required test observation is present "UH (uphill start)"
       And the required test observation is present "AS/CS (angled start/ controlled stop)"
       And the required test observation is present "Manoeuvres"
