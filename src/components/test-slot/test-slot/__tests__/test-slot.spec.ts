@@ -268,7 +268,7 @@ describe('TestSlotComponent', () => {
         expect(nextDay).toEqual(moment('2020-07-27').toDate());
       });
     });
-    fdescribe('canViewCandidateDetails()', () => {
+    describe('canViewCandidateDetails()', () => {
       it('should return false if slot date is after latest viewable date', () => {
         spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(() => moment('2020-07-24').toDate());
         component.slot.slotDetail.start = '2020-07-25T08:10:00';
