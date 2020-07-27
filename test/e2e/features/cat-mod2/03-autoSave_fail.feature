@@ -68,7 +68,7 @@ Feature: Autosave end to end failed journey for Category B+E Mod2
     And the test result has the following data present
       | label                             | value                         |
       | Application reference             | 20123000011                   |
-      | Test category                     | EUAM2                         |
+      | Test category                     | EUA2M2                         |
       | Slot type                         | Standard Test                 |
       | Examiner number                   | 10000011                      |
       | Physical description of candidate | None                          |

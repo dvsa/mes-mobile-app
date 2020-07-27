@@ -58,7 +58,7 @@ Feature: Driver Examiner complete the fail journey for Home test H
     And I continue to debrief
     Then I should see the Debrief page with outcome "Unsuccessful"
     And I see a "driving" fault for "Control - Accelerator"
-    And I see a "driving" fault for "Move Away - Safety"
+    And I see a "driving" fault for "Move off - Safety"
     And I see a "driving" fault for "Use of mirrors - Signalling"
     And I see a "driving" fault for "Junctions - Approach speed"
     And I see a "driving" fault for "Signals - Timed"
@@ -76,7 +76,7 @@ Feature: Driver Examiner complete the fail journey for Home test H
     And the office page test outcome is "Unsuccessful"
     When I complete the office write up
     And I enter a comment for "driving" fault "Control - Accelerator"
-    And I enter a comment for "driving" fault "Move Away - Safety"
+    And I enter a comment for "driving" fault "Move off - Safety"
     And I enter a comment for "driving" fault "Use of mirrors - Signalling"
     And I enter a comment for "driving" fault "Junctions - Approach speed"
     And I enter a comment for "driving" fault "Signals - Timed"

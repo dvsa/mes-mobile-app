@@ -56,8 +56,9 @@ When('I complete the office write up', () => {
         OfficePage.enterIndependentDriving('diagram');
       } else {
         if (this.testCategory === 'a-mod2') {
-          OfficePage.enterIndependentDriving('satnav');
-          OfficePage.enterShowMe('S5 - Horn');
+          OfficePage.enterTestConductedOn('cartobike');
+          OfficePage.enterIndependentDriving('diagram');
+          // OfficePage.enterShowMe('S5 - Horn');
         }else if (this.testCategory === 'adi-part2') {
           OfficePage.enterIndependentDriving('satnav');
           OfficePage.selectShowMeQuestion('1', 'A20 - Front demister');
