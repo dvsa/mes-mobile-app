@@ -114,9 +114,8 @@ export class TestSlotComponent implements SlotComponent, OnInit {
 
   getLatestViewableSlotDateTime(): Date {
     const today = moment();
-    // add one day if current day is sunday. add two if current day is friday
+    // add 3 days if current day is friday, 2 if saturday, else add 1
     const daysToAdd = today.isoWeekday() === 5 ? 3 : today.isoWeekday() === 6 ? 2 : 1;
-    const nextWeekDay: Date =  moment().add(daysToAdd, 'days').startOf('day').toDate();
-    return nextWeekDay;
+    return  moment().add(daysToAdd, 'days').startOf('day').toDate();
   }
 }
