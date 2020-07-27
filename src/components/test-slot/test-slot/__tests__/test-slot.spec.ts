@@ -35,6 +35,7 @@ import { LocationComponent } from '../../location/location';
 import { SlotProvider } from '../../../../providers/slot/slot';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
+import moment from 'moment';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -247,6 +248,44 @@ describe('TestSlotComponent', () => {
       it('should return false if special needs is null', () => {
         component.slot.booking.application.specialNeeds = null;
         expect(component.isSpecialNeedsSlot()).toBe(false);
+      });
+    });
+
+    describe('getLatestViewableSlotDateTime()', () => {
+      it('should return the next day if current day is not friday or saturday', () => {
+        jasmine.clock().mockDate(new Date('2020-07-23')); // thursday
+        const nextDay = component.getLatestViewableSlotDateTime();
+        expect(nextDay).toEqual(moment('2020-07-24').toDate());
+      });
+      it('should return start of the following monday if friday', () => {
+        jasmine.clock().mockDate(new Date('2020-07-24')); // friday
+        const nextDay = component.getLatestViewableSlotDateTime();
+        expect(nextDay).toEqual(moment('2020-07-27').toDate());
+      });
+      it('should return start of the following monday if saturday', () => {
+        jasmine.clock().mockDate(new Date('2020-07-25')); // friday
+        const nextDay = component.getLatestViewableSlotDateTime();
+        expect(nextDay).toEqual(moment('2020-07-27').toDate());
+      });
+    });
+    fdescribe('canViewCandidateDetails()', () => {
+      it('should return false if slot date is after latest viewable date', () => {
+        spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(() => moment('2020-07-24').toDate());
+        component.slot.slotDetail.start = '2020-07-25T08:10:00';
+        const canViewCandidateDetails = component.canViewCandidateDetails();
+        expect(canViewCandidateDetails).toEqual(false);
+      });
+      it('should return true if slot date is equal to latest viewable date', () => {
+        spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(() => moment('2020-07-24').toDate());
+        component.slot.slotDetail.start = '2020-07-24T08:10:00';
+        const canViewCandidateDetails = component.canViewCandidateDetails();
+        expect(canViewCandidateDetails).toEqual(true);
+      });
+      it('should return true if slot date is less than latest viewable date', () => {
+        spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(() => moment('2020-07-24').toDate());
+        component.slot.slotDetail.start = '2020-07-22T08:10:00';
+        const canViewCandidateDetails = component.canViewCandidateDetails();
+        expect(canViewCandidateDetails).toEqual(true);
       });
     });
   });

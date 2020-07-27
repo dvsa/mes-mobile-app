@@ -32,7 +32,7 @@
           <ion-grid no-padding>
             <ion-row align-items-center>
               <ion-col>
-                <ng-content *ngIf="slot.booking.candidate && canViewCandidateDetails(); then candidateLink else unknownCandidate">
+                <ng-content *ngIf="slot.booking.candidate; then candidateLink else unknownCandidate">
                 </ng-content>
               </ion-col>
               <ion-col class="category-col">
@@ -78,9 +78,12 @@
   </ion-row>
 </ion-card>
 <ng-template #candidateLink>
-  <candidate-link [slot]="slot" [slotChanged]="hasSlotChanged" [name]="slot.booking.candidate.candidateName"
+  <candidate-link *ngIf="canViewCandidateDetails()" [slot]="slot" [slotChanged]="hasSlotChanged" [name]="slot.booking.candidate.candidateName"
     [isPortrait]="isPortrait()">
   </candidate-link>
+  <button *ngIf="!canViewCandidateDetails()" class="mes-transparent-button" ion-button disabled>
+    <h3 class="candidate-name">Candidate details unavailable</h3>
+  </button>
 </ng-template>
 <ng-template #unknownCandidate>
   <button class="mes-transparent-button" ion-button disabled>
