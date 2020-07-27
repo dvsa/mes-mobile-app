@@ -28,7 +28,7 @@ export class ActivityCodeComponent implements OnChanges {
   static readonly fieldName: string = 'activityCode';
 
   ngOnInit(): void {
-    console.log('activityCodeModel', this.activityCodeModel);
+    // console.log('activityCodeModel', this.activityCodeModel);
     console.log('formGroup', this.formGroup);
   }
 
@@ -37,11 +37,11 @@ export class ActivityCodeComponent implements OnChanges {
       this.formControl = new FormControl({ disabled: true }, [Validators.required]);
       this.formGroup.addControl(ActivityCodeComponent.fieldName, this.formControl);
     }
+    console.log('activityCodeModel', this.activityCodeModel);
     this.formControl.patchValue(this.activityCodeModel);
   }
 
-  activityCodeChanged(activityCode: ActivityCodeModel | ActivityCodeModelDelegatedExaminer): void {
-    console.log('change', activityCode);
+  activityCodeChanged(activityCode: ActivityCodeModel): void {
     if (this.formControl.valid) {
       this.activityCodeChange.emit(activityCode);
     }
@@ -57,9 +57,6 @@ export class ActivityCodeComponent implements OnChanges {
   }
 
   isOptionDisabled(activityCode: ActivityCode): boolean {
-    if (parseInt(activityCode, 10) < 4) {
-      return true;
-    }
-    return false;
+    return parseInt(activityCode, 10) < 4;
   }
 }

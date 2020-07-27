@@ -6,11 +6,8 @@
     <ion-col col-63 align-self-center padding-left>
       <ion-row class="spacing-row"></ion-row>
       <ion-row>
-        <ion-select id="activity-code-selector"
-                    placeholder="Select an activity code"
-                    okText="Submit"
-                    cancelText="Cancel"
-                    formControlName="activityCode"
+        <ion-select id="activity-code-selector" placeholder="Select an activity code" okText="Submit" cancelText="Cancel"
+          formControlName="activityCode"
                     (ionChange)="activityCodeChanged($event)"
                     [selectOptions]="{cssClass:'mes-select activity-code-select', enableBackdropDismiss:false}"
                     [disabled]="isSelectDisabled()">
