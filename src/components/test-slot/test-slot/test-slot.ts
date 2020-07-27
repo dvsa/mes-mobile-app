@@ -107,15 +107,16 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   }
 
   canViewCandidateDetails(): boolean {
-    const today = moment();
-    const daysToAdd = today.isoWeekday() === 6 ? 2 : today.isoWeekday() === 7 ? 1 : 0;
-    const tomorrow = moment().add(daysToAdd, 'days').startOf('day');
-    // console.log(tomorrow);
+    const slotStart = moment(this.slot.slotDetail.start).startOf('day');
+    const maxViewStart = moment(this.getLatestViewableSlotDateTime()).startOf('day');
+    return slotStart.isSameOrBefore(maxViewStart);
+  }
 
-    // const tomorrow: Date = new Date();
-    // tomorrow.setDate(new Date().getDate() + 1);
-    // tomorrow.setHours(0); tomorrow.setMinutes(0); tomorrow.setSeconds(0); tomorrow.setMilliseconds(0);
-    console.log(tomorrow);
-    return new Date(this.slot.slotDetail.start) <= new Date();
+  getLatestViewableSlotDateTime(): Date {
+    const today = moment();
+    // add one day if current day is sunday. add two if current day is friday
+    const daysToAdd = today.isoWeekday() === 5 ? 3 : today.isoWeekday() === 6 ? 2 : 1;
+    const nextWeekDay: Date =  moment().add(daysToAdd, 'days').startOf('day').toDate();
+    return nextWeekDay;
   }
 }
