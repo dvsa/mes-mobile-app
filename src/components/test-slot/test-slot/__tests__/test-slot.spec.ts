@@ -142,6 +142,12 @@ describe('TestSlotComponent', () => {
     store$ = TestBed.get(Store);
   }));
 
+  afterAll(() => {
+    if (jasmine.clock) {
+      jasmine.clock().uninstall();
+    }
+  });
+
   describe('Class', () => {
     describe('isIndicatorNeededForSlot', () => {
       it('should return true if specialNeeds is a non-blank string', () => {
