@@ -1,5 +1,4 @@
-
-import { ActivityCodes } from '../../../../shared/models/activity-codes';
+import { ActivityCodes, DelegatedExaminerActivityCodes } from '../../../../shared/models/activity-codes';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 
 export interface ActivityCodeModel {
@@ -55,13 +54,33 @@ export enum ActivityCodeDescription {
     SITE_ACCESS_MANAGER_NOT_AVAILABLE = 'Site access manager not available',
 }
 
-function populateActivityCodeModelList(): ActivityCodeModel[] {
+export enum ActivityCodeDelegated {
+  TEST_NOT_COMPLETED = 'Test not completed',
+  TEST_NOT_STARTED = 'Test not started',
+  BAD_WEATHER = 'Bad weather',
+  EXAMINER_ILL_OR_UNAVAILABLE = 'Examiner ill or unavailable',
+  BAD_WEATHER_REBOOK = 'Bad weather - rebook',
+  EXAMINER_ILL_OR_UNAVAILABLE_REBOOK = 'Examiner ill or unavailable - rebook',
+}
+
+export function populateActivityCodeModelList(isDelegatedExaminer?: boolean): ActivityCodeModel[] {
   const codeList = [];
+
   Object.keys(ActivityCodes).forEach(code => codeList.push({
     activityCode: ActivityCodes[code],
     description: ActivityCodeDescription[code],
   }));
+
+  if (isDelegatedExaminer) {
+    Object.keys(DelegatedExaminerActivityCodes).forEach(code => codeList.push({
+      activityCode: DelegatedExaminerActivityCodes[code],
+      description: ActivityCodeDelegated[code],
+    }));
+  }
+
+  codeList.sort((a, b) => (Number(a.activityCode) > Number(b.activityCode)) ? 1 : -1);
+
   return codeList;
 }
 
-export let activityCodeModelList: ActivityCodeModel[] = populateActivityCodeModelList();
+export let activityCodeModelList: ActivityCodeModel[] = populateActivityCodeModelList(true);

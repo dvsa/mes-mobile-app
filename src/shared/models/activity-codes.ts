@@ -45,3 +45,12 @@ export enum ActivityCodes {
   INCORRECT_LENSE_WORN = '82',
   SITE_ACCESS_MANAGER_NOT_AVAILABLE = '83',
 }
+
+export enum DelegatedExaminerActivityCodes {
+  TEST_NOT_COMPLETED = '76',
+  TEST_NOT_STARTED = '77',
+  BAD_WEATHER = '78',
+  EXAMINER_ILL_OR_UNAVAILABLE = '79',
+  BAD_WEATHER_REBOOK = '80',
+  EXAMINER_ILL_OR_UNAVAILABLE_REBOOK = '81',
+}
