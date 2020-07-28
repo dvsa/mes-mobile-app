@@ -35,7 +35,7 @@ import { isWelshTest }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
   ActivityCodeModel,
-  activityCodeModelList,
+  populateActivityCodeModelList,
 } from '../../office/components/activity-code/activity-code.constants';
 import { FormGroup } from '@angular/forms';
 import { PersistTests } from '../../../modules/tests/tests.actions';
@@ -91,7 +91,7 @@ export class NonPassFinalisationCatAMod1Page extends BasePageComponent implement
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
-    this.activityCodeOptions = activityCodeModelList;
+    this.activityCodeOptions = populateActivityCodeModelList(false);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 
