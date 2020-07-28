@@ -16,8 +16,8 @@ Feature: A Driving Examiner Completes An Failed Journey for Category B in Welsh
       And the driver fault count is "1"
       When I end the test
       Then the legal requirements pop up is present
-      And the required test observation is present "NS (normal start)"
-      And the required test observation is present "NS (normal start)"
+      And the required test observation is present "NS (normal stop)"
+      And the required test observation is present "NS (normal stop)"
       And the required test observation is present "AS (angled start)"
       And the required test observation is present "HS / DS (hill or designated start)"
       And the required test observation is present "Manoeuvres"
@@ -87,7 +87,7 @@ Feature: A Driving Examiner Completes An Failed Journey for Category B in Welsh
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Unsuccessful"
-      And there are "2" driver faults listed for "Move Away - Safety"
+      And there are "2" driver faults listed for "Move off - Safety"
       And there is "1" driver fault listed for "Control - Accelerator"
       And there is "1" driver fault listed for "Reverse right - Control"
       And there is "1" driver fault listed for "Controlled Stop"

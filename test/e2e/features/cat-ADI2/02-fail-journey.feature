@@ -56,7 +56,7 @@ Feature: Driver Examiner complete the fail journey for ADI2
     And the office page test outcome is "Unsuccessful"
     When I complete the office write up
     And I enter a comment for "driving" fault "Control - Accelerator"
-    And I enter a comment for "driving" fault "Move Away - Safety"
+    And I enter a comment for "driving" fault "Move off - Safety"
     And I enter a comment for "driving" fault "Use of mirrors - Signalling"
     And I enter a comment for "driving" fault "Junctions - Approach speed"
     And I enter a comment for "driving" fault "Signals - Timed"
