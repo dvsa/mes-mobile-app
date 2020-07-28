@@ -38,7 +38,7 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import {
-  getVehicleChecksCatC,
+  getVehicleChecksCatC, getVehicleChecksCompleted,
 } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
@@ -47,6 +47,9 @@ import { VehicleChecksCatCComponent } from './components/vehicle-checks/vehicle-
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import { VehicleChecksCompletedToggled } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -58,7 +61,8 @@ interface WaitingRoomToCarPageState {
   vehicleChecksScore$: Observable<VehicleChecksScore>;
   vehicleChecks$: Observable<CatCUniqueTypes.VehicleChecks>;
   testCategory$: Observable<CategoryCode>;
-
+  delegatedTest$: Observable<boolean>;
+  vehicleChecksCompleted$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -137,6 +141,15 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
           this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory as TestCategory, vehicleChecks),
         ),
       ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
+      vehicleChecksCompleted$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatC),
+        select(getVehicleChecksCompleted),
+      )
     };
     this.setupSubscription();
   }
@@ -168,6 +181,11 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   vehicleRegistrationChanged(vehicleRegistration: string) {
     this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
   }
+
+  vehicleChecksCompletedOutcomeChanged(toggled: boolean) {
+    this.store$.dispatch(new VehicleChecksCompletedToggled(toggled));
+  }
+
   ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

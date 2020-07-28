@@ -148,7 +148,7 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   showDelegatedExaminerRekeyButton(): boolean {
-    return this.isDelegatedTest;
+    return this.isDelegatedTest && !this.showResumeButton();
   }
 
   showResumeButton(): boolean {

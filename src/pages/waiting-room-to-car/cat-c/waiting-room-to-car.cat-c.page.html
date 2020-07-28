@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar hideBackButton>
+  <ion-navbar [hideBackButton]="!(pageState.delegatedTest$ | async)">
     <ion-title>{{pageState.candidateName$ | async}}</ion-title>
     <ion-buttons end>
       <end-test-link [shouldAuthenticate]="false" category="C"></end-test-link>
@@ -17,11 +17,19 @@
               (vehicleRegistrationChange)="vehicleRegistrationChanged($event)"></vehicle-registration>
 
             <vehicle-checks-cat-c
+              *ngIf="!(pageState.delegatedTest$ | async)"
               [formGroup]="form"
               [vehicleChecksScore]="pageState.vehicleChecksScore$ | async"
               [vehicleChecks]="pageState.vehicleChecks$ | async"
               [onCloseVehicleChecksModal]="closeVehicleChecksModal"
             ></vehicle-checks-cat-c>
+
+            <vehicle-checks-completed
+            *ngIf="pageState.delegatedTest$ | async"
+            [formGroup]="form"
+            [vehicleChecksCompleted]="pageState.vehicleChecksCompleted$ | async"
+            (vehicleChecksCompletedOutcomeChange)="vehicleChecksCompletedOutcomeChanged($event)"
+            ></vehicle-checks-completed>
 
             <accompaniment-card [formGroup]="form" [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"
               [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async" [otherAccompaniment]="pageState.otherAccompaniment$ | async"
@@ -32,8 +40,13 @@
           </ion-col>
         </ion-row>
 
-        <warning-banner *ngIf=" displayCabLockDown() " class="banner-space" warningText="Is the cab locked down?"></warning-banner>
-        <warning-banner *ngIf=" displayLoadSecured() " warningText="Is the load secure?"></warning-banner>
+        <div *ngIf="!(pageState.delegatedTest$ | async)">
+            <warning-banner *ngIf=" displayCabLockDown() " class="banner-space" warningText="Is the cab locked down?"></warning-banner>
+            <warning-banner *ngIf=" displayLoadSecured() " warningText="Is the load secure?"></warning-banner>
+        </div>
+        <div *ngIf="pageState.delegatedTest$ | async">
+            <warning-banner warningText="Vehicle checks are a legal requirement"></warning-banner>
+        </div>
 
       </ion-grid>
     </form>

@@ -11,6 +11,7 @@ import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-deta
 import { VehicleDetailsComponent } from './vehicle-details/vehicle-details';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { BikeCategoryTypeComponent } from './bike-category-type/bike-category-type';
+import { VehicleChecksToggleComponent } from './vehicle-checks-completed/vehicle-checks-completed';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { BikeCategoryTypeComponent } from './bike-category-type/bike-category-ty
     VehicleDetailsCardComponent,
     VehicleDetailsComponent,
     BikeCategoryTypeComponent,
+    VehicleChecksToggleComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +40,7 @@ import { BikeCategoryTypeComponent } from './bike-category-type/bike-category-ty
     VehicleDetailsCardComponent,
     VehicleDetailsComponent,
     BikeCategoryTypeComponent,
+    VehicleChecksToggleComponent,
   ],
 })
 export class WaitingRoomToCarComponentsModule { }

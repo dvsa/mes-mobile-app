@@ -2,19 +2,21 @@ import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import * as vehicleChecksCatCActionTypes from './vehicle-checks.cat-c.action';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-export const generateInitialState = (category: TestCategory): CatCUniqueTypes.VehicleChecks => {
+export const generateInitialState = (category: TestCategory, state: CatCUniqueTypes.VehicleChecks): CatCUniqueTypes.VehicleChecks => {
   switch (category) {
     case TestCategory.C:
     case TestCategory.C1:
-      return  {
+      return {
         tellMeQuestions: Array(2).fill({}),
         showMeQuestions: Array(3).fill({}),
+        vehicleChecksCompleted: (typeof state.vehicleChecksCompleted === 'boolean') ? state.vehicleChecksCompleted : null,
       };
     case TestCategory.CE:
     case TestCategory.C1E:
       return {
         tellMeQuestions: Array(1).fill({}),
         showMeQuestions: Array(1).fill({}),
+        vehicleChecksCompleted: (typeof state.vehicleChecksCompleted === 'boolean') ? state.vehicleChecksCompleted : null,
       };
   }
 };
@@ -24,7 +26,7 @@ export function vehicleChecksCatCReducer(
   action: vehicleChecksCatCActionTypes.Types): CatCUniqueTypes.VehicleChecks {
   switch (action.type) {
     case vehicleChecksCatCActionTypes.INITIALIZE_VEHICLE_CHECKS:
-      return generateInitialState(action.category);
+      return generateInitialState(action.category, state);
     case vehicleChecksCatCActionTypes.SHOW_ME_QUESTION_SELECTED:
       return {
         ...state,
@@ -59,7 +61,13 @@ export function vehicleChecksCatCReducer(
       return {
         ...state,
         showMeTellMeComments: action.comment,
-      };    default:
+      };
+    case vehicleChecksCatCActionTypes.VEHICLE_CHECKS_COMPLETED:
+      return {
+        ...state,
+        vehicleChecksCompleted: action.toggled,
+      };
+    default:
       return state;
   }
 }

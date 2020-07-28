@@ -29,5 +29,7 @@ export const vehicleChecksExist = (vehicleChecks: CatCVehicleChecks): boolean =>
   return some(questions, fault => fault.outcome != null);
 };
 
+export const getVehicleChecksCompleted = (vehicleChecks: CatCVehicleChecks) => vehicleChecks.vehicleChecksCompleted;
+
 export const getVehicleChecksCatC =
   createFeatureSelector<CatCVehicleChecks>('vehicleChecks');

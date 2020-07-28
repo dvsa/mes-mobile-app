@@ -87,6 +87,7 @@ interface WaitingRoomToCarPageState {
   gearboxManualRadioChecked$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
   vehicleChecks$: Observable<CatBEUniqueTypes.VehicleChecks>;
+  encounterReason$: Observable<string>;
 }
 
 @IonicPage()
@@ -190,6 +191,10 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
       vehicleChecks$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatBE),
+      ),
+      encounterReason$: currentTest$.pipe(
+        select(getVehicleDetails),
+        select(getEncounterReason),
       ),
     };
   }
