@@ -107,7 +107,7 @@ Feature: Practice mode
     And the candidate requests to receive results by post
     And I proceed to the car
     Then I should see the "Jeremy Craig" page
-    And I terminate the test
+    And I terminate the test in practice mode
     Then I should see the Debrief page with outcome "Terminated"
     When I end the debrief
     Then I am on the post debrief holding page

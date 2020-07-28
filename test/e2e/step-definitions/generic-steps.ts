@@ -239,6 +239,11 @@ When('I terminate the test', () => {
   PageHelper.enterPasscode();
 });
 
+When('I terminate the test in practice mode', () => {
+  TestReportPage.clickLastEndTestButton();
+  TestReportPage.clickTerminateTestButton();
+});
+
 When('I exit practice mode', () => {
   TestReportPage.clickLastExitPracticeButton();
 });
