@@ -27,7 +27,7 @@ import { VehicleChecksCatDComponent } from '../components/vehicle-checks/vehicle
 import { configureTestSuite } from 'ng-bullet';
 import {
   VehicleChecksCompletedToggled,
-} from '../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
+} from '../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 import {
   CandidateDeclarationSigned,
   SetDeclarationStatus,
