@@ -123,7 +123,7 @@ describe('JournalNavigationComponent', () => {
     describe('selected date is the last available date', () => {
       let selectedDay: string;
       beforeEach(() => {
-        selectedDay = DateTime.at(DateTime.today()).add(3, Duration.DAY).format('YYYY-MM-DD');
+        selectedDay = DateTime.at(DateTime.today()).add(7, Duration.DAY).format('YYYY-MM-DD');
         store$.dispatch(new SetSelectedDate(selectedDay));
       });
 
