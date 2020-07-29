@@ -15,7 +15,7 @@ export enum ActivityCodeDescription {
   MECHANICAL_FAILURE = 'Mechanical failure',
   DOCUMENTS_NOT_PRODUCED = 'Documents not produced',
   VEHICLE_NOT_SUITABLE = 'Vehicle / gear not suitable or no vehicle for test',
-  NO_L_PLATES = 'No ‘L’ plates',
+  NO_L_PLATES = 'No ‘L’ plates / candidate refused to wear face covering',
   MOTORCYCLE_CANDIDATE_LOST_AND_RETURNED = 'Motorcycle candidate lost and returned too late to DTC',
   MOTORCYCLE_CANDIDATE_LOST_DID_NOT_RETURN = 'Motorcycle candidate lost and did not return to test centre',
   DVSA_RADIO_FAILURE = 'DVSA radio failure',
