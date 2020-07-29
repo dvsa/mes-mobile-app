@@ -70,6 +70,26 @@ import {
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { VehicleChecksCatBEComponent } from './components/vehicle-checks/vehicle-checks';
+import {
+  getVehicleChecksCompleted,
+} from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
+import {
+  getPreTestDeclarations,
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
+import {
+  getCandidateDeclarationSignedStatus,
+  getInsuranceDeclarationStatus,
+  getResidencyDeclarationStatus,
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import {
+  CandidateDeclarationSigned,
+  SetDeclarationStatus,
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
+import {
+  VehicleChecksCompletedToggled,
+} from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -87,7 +107,11 @@ interface WaitingRoomToCarPageState {
   gearboxManualRadioChecked$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
   vehicleChecks$: Observable<CatBEUniqueTypes.VehicleChecks>;
-  encounterReason$: Observable<string>;
+  delegatedTest$: Observable<boolean>;
+  vehicleChecksCompleted$: Observable<boolean>;
+  insuranceDeclarationAccepted$: Observable<boolean>;
+  residencyDeclarationAccepted$: Observable<boolean>;
+  candidateDeclarationSigned$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -192,9 +216,26 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
         select(getTestData),
         select(getVehicleChecksCatBE),
       ),
-      encounterReason$: currentTest$.pipe(
-        select(getVehicleDetails),
-        select(getEncounterReason),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
+      vehicleChecksCompleted$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatBE),
+        select(getVehicleChecksCompleted),
+      ),
+      insuranceDeclarationAccepted$: currentTest$.pipe(
+        select(getPreTestDeclarations),
+        select(getInsuranceDeclarationStatus),
+      ),
+      residencyDeclarationAccepted$: currentTest$.pipe(
+        select(getPreTestDeclarations),
+        select(getResidencyDeclarationStatus),
+      ),
+      candidateDeclarationSigned$: currentTest$.pipe(
+        select(getPreTestDeclarations),
+        select(getCandidateDeclarationSignedStatus),
       ),
     };
   }
@@ -241,6 +282,15 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
 
   closeVehicleChecksModal = () => {
     this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
+  }
+
+  vehicleChecksCompletedOutcomeChanged(toggled: boolean) {
+    this.store$.dispatch(new VehicleChecksCompletedToggled(toggled));
+  }
+
+  candidateDeclarationOutcomeChanged(declaration: boolean) {
+    this.store$.dispatch(new SetDeclarationStatus(declaration));
+    this.store$.dispatch(new CandidateDeclarationSigned());
   }
 
   onSubmit() {

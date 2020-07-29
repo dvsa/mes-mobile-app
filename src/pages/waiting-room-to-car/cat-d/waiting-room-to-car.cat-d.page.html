@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar hideBackButton>
+  <ion-navbar [hideBackButton]="!(pageState.delegatedTest$ | async)">
     <ion-title>{{pageState.candidateName$ | async}}</ion-title>
     <ion-buttons end>
       <end-test-link [shouldAuthenticate]="false" category="D"></end-test-link>
@@ -13,17 +13,34 @@
       <ion-grid>
         <ion-row no-padding id="post-eyesight-form-content">
           <ion-col no-padding>
+
+            <candidate-declaration-signed
+                    *ngIf="pageState.delegatedTest$ | async"
+                    [formGroup]="form"
+                    [candidateSigned]="pageState.candidateDeclarationSigned$ | async"
+                    [declarationSelected]="(pageState.insuranceDeclarationAccepted$ | async) && (pageState.residencyDeclarationAccepted$ | async)"
+                    (candidateDeclarationChange)="candidateDeclarationOutcomeChanged($event)">
+            </candidate-declaration-signed>
+
             <vehicle-registration [formGroup]="form" [vehicleRegistration]="pageState.registrationNumber$ | async"
               (vehicleRegistrationChange)="vehicleRegistrationChanged($event)"></vehicle-registration>
 
             <vehicle-checks-cat-d
-              [formGroup]="form"
-              [vehicleChecksScore]="pageState.vehicleChecksScore$ | async"
-              [safetyQuestionsScore]="pageState.safetyQuestionsScore$ | async"
-              [vehicleChecks]="pageState.vehicleChecks$ | async"
-              [safetyQuestions]="pageState.safetyQuestions$ | async"
-              [onCloseVehicleChecksModal]="closeVehicleChecksModal"
+                    *ngIf="!(pageState.delegatedTest$ | async)"
+                    [formGroup]="form"
+                    [vehicleChecksScore]="pageState.vehicleChecksScore$ | async"
+                    [safetyQuestionsScore]="pageState.safetyQuestionsScore$ | async"
+                    [vehicleChecks]="pageState.vehicleChecks$ | async"
+                    [safetyQuestions]="pageState.safetyQuestions$ | async"
+                    [onCloseVehicleChecksModal]="closeVehicleChecksModal"
             ></vehicle-checks-cat-d>
+
+            <vehicle-checks-completed
+                    *ngIf="pageState.delegatedTest$ | async"
+                    [formGroup]="form"
+                    [vehicleChecksCompleted]="pageState.vehicleChecksCompleted$ | async"
+                    (vehicleChecksCompletedOutcomeChange)="vehicleChecksCompletedOutcomeChanged($event)"
+            ></vehicle-checks-completed>
 
             <accompaniment-card [formGroup]="form" [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"
               [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async" [otherAccompaniment]="pageState.otherAccompaniment$ | async"
@@ -34,7 +51,13 @@
           </ion-col>
         </ion-row>
 
-        <warning-banner *ngIf="displayLoadSecured() " warningText="Is the load secure?"></warning-banner>
+        <div *ngIf="!(pageState.delegatedTest$ | async)">
+          <warning-banner *ngIf="displayLoadSecured() " warningText="Is the load secure?"></warning-banner>
+        </div>
+
+        <div *ngIf="pageState.delegatedTest$ | async">
+          <warning-banner warningText="Vehicle checks are a legal requirement"></warning-banner>
+        </div>
 
       </ion-grid>
     </form>
