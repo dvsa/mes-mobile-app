@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Avoidance, EmergencyStop } from '@dvsa/mes-test-schema/categories/AM1';
-import { Store } from '@ngrx/store';
-import { StoreModel } from '../../../../../shared/models/store.model';
 import { configureI18N } from '../../../../../shared/helpers/translation.helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { Language } from '../../../../../modules/tests/communication-preferences/communication-preferences.model';
@@ -13,7 +11,6 @@ import { Language } from '../../../../../modules/tests/communication-preferences
 export class SpeedCheckDebriefCardComponent {
 
   constructor(
-    public store$: Store<StoreModel>,
     private translate: TranslateService,
     ) {}
 
