@@ -35,7 +35,7 @@ export class SpeedCheckDebriefCardComponent implements OnInit {
   public avoidanceAttempted: boolean;
 
   @Input()
-  public isTranslatable: boolean;
+  public isTranslatable: boolean = true;
 
   ngOnInit(): void {
     if (!this.isTranslatable) {
