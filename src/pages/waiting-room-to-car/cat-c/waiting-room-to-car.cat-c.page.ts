@@ -38,7 +38,7 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import {
-  getVehicleChecksCatC,
+  getVehicleChecksCatC, getVehicleChecksCompleted,
 } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
@@ -47,6 +47,23 @@ import { VehicleChecksCatCComponent } from './components/vehicle-checks/vehicle-
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import {
+  VehicleChecksCompletedToggled,
+} from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
+import {
+  getPreTestDeclarations,
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
+import {
+  getCandidateDeclarationSignedStatus,
+  getInsuranceDeclarationStatus,
+  getResidencyDeclarationStatus,
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
+import {
+  CandidateDeclarationSigned,
+  SetDeclarationStatus,
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -58,7 +75,11 @@ interface WaitingRoomToCarPageState {
   vehicleChecksScore$: Observable<VehicleChecksScore>;
   vehicleChecks$: Observable<CatCUniqueTypes.VehicleChecks>;
   testCategory$: Observable<CategoryCode>;
-
+  delegatedTest$: Observable<boolean>;
+  vehicleChecksCompleted$: Observable<boolean>;
+  insuranceDeclarationAccepted$: Observable<boolean>;
+  residencyDeclarationAccepted$: Observable<boolean>;
+  candidateDeclarationSigned$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -137,6 +158,27 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
           this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory as TestCategory, vehicleChecks),
         ),
       ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
+      vehicleChecksCompleted$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatC),
+        select(getVehicleChecksCompleted),
+      ),
+      insuranceDeclarationAccepted$: currentTest$.pipe(
+        select(getPreTestDeclarations),
+        select(getInsuranceDeclarationStatus),
+      ),
+      residencyDeclarationAccepted$: currentTest$.pipe(
+        select(getPreTestDeclarations),
+        select(getResidencyDeclarationStatus),
+      ),
+      candidateDeclarationSigned$: currentTest$.pipe(
+        select(getPreTestDeclarations),
+        select(getCandidateDeclarationSignedStatus),
+      ),
     };
     this.setupSubscription();
   }
@@ -168,6 +210,16 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   vehicleRegistrationChanged(vehicleRegistration: string) {
     this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
   }
+
+  vehicleChecksCompletedOutcomeChanged(toggled: boolean) {
+    this.store$.dispatch(new VehicleChecksCompletedToggled(toggled));
+  }
+
+  candidateDeclarationOutcomeChanged(declaration: boolean) {
+    this.store$.dispatch(new SetDeclarationStatus(declaration));
+    this.store$.dispatch(new CandidateDeclarationSigned());
+  }
+
   ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

@@ -6,15 +6,17 @@ export const generateInitialState = (category: TestCategory): CatDUniqueTypes.Ve
   switch (category) {
     case TestCategory.D:
     case TestCategory.D1:
-      return  {
+      return {
         tellMeQuestions: Array(2).fill({}),
         showMeQuestions: Array(3).fill({}),
+        vehicleChecksCompleted: null,
       };
     case TestCategory.DE:
     case TestCategory.D1E:
       return {
         tellMeQuestions: Array(1).fill({}),
         showMeQuestions: Array(1).fill({}),
+        vehicleChecksCompleted: null,
       };
   }
 };
@@ -59,6 +61,11 @@ export function vehicleChecksCatDReducer(
       return {
         ...state,
         showMeTellMeComments: action.comment,
+      };
+    case vehicleChecksCatDActionTypes.VEHICLE_CHECKS_COMPLETED:
+      return {
+        ...state,
+        vehicleChecksCompleted: action.toggled,
       };
     default:
       return state;

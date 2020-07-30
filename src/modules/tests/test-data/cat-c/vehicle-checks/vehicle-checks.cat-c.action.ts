@@ -8,6 +8,7 @@ export const SHOW_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] [CatC] Show
 export const TELL_ME_QUESTION_SELECTED = '[VehicleChecksPage] [CatC] Tell Me Question Selected';
 export const TELL_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] [CatC] Tell Me Question Outcome Changed';
 export const ADD_SHOW_ME_TELL_ME_COMMENT = '[Vehicle Checks] [CatC] Add Show me Tell me comment';
+export const VEHICLE_CHECKS_COMPLETED = '[Vehicle Checks] [CatC] Vehicle Checks Completed';
 
 export class InitializeVehicleChecks implements Action {
   constructor(public category: TestCategory) { }
@@ -38,10 +39,16 @@ export class AddShowMeTellMeComment implements Action {
   readonly type = ADD_SHOW_ME_TELL_ME_COMMENT;
 }
 
+export class VehicleChecksCompletedToggled implements Action {
+  constructor(public toggled: boolean) { }
+  readonly type = VEHICLE_CHECKS_COMPLETED;
+}
+
 export type Types =
   | InitializeVehicleChecks
   | ShowMeQuestionSelected
   | ShowMeQuestionOutcomeChanged
   | TellMeQuestionSelected
   | TellMeQuestionOutcomeChanged
-  | AddShowMeTellMeComment;
+  | AddShowMeTellMeComment
+  | VehicleChecksCompletedToggled;

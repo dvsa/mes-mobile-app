@@ -6,6 +6,7 @@ export const initialState: PreTestDeclarations = {
   insuranceDeclarationAccepted: false,
   residencyDeclarationAccepted: false,
   preTestSignature: '',
+  candidateDeclarationSigned: false,
 };
 
 export function preTestDeclarationsReducer(
@@ -35,7 +36,17 @@ export function preTestDeclarationsReducer(
         ...state,
         preTestSignature: '',
       };
-
+    case preTestDeclarationActions.CANDIDATE_DECLARATION_SIGNED:
+      return {
+        ...state,
+        candidateDeclarationSigned: true,
+      };
+    case preTestDeclarationActions.SET_DECLARATION_STATUS:
+      return {
+        ...state,
+        insuranceDeclarationAccepted: action.payload,
+        residencyDeclarationAccepted: action.payload,
+      };
     default:
       return state;
   }

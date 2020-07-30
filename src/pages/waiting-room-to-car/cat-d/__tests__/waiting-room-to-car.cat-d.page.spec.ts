@@ -25,6 +25,15 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 import { VehicleChecksCatDComponent } from '../components/vehicle-checks/vehicle-checks.cat-d';
 import { configureTestSuite } from 'ng-bullet';
+import {
+  VehicleChecksCompletedToggled,
+} from '../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
+import {
+  CandidateDeclarationSigned,
+  SetDeclarationStatus,
+} from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
+import { VehicleChecksToggleComponent } from '../../components/vehicle-checks-completed/vehicle-checks-completed';
+import { CandidateDeclarationSignedComponent } from '../../components/candidate-declaration/candidate-declaration';
 
 describe('WaitingRoomToCarCatDPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatDPage>;
@@ -43,6 +52,8 @@ describe('WaitingRoomToCarCatDPage', () => {
         MockComponent(AccompanimentComponent),
         MockComponent(VehicleChecksCatDComponent),
         MockComponent(WarningBannerComponent),
+        MockComponent(VehicleChecksToggleComponent),
+        MockComponent(CandidateDeclarationSignedComponent),
       ],
       imports: [
         IonicModule,
@@ -135,5 +146,19 @@ describe('WaitingRoomToCarCatDPage', () => {
       tick();
       expect(component.navController.push).toHaveBeenCalledWith('TestReportCatDPage');
     }));
+  });
+  describe('vehicleChecksCompletedOutcomeChanged', () => {
+    it('should dispatch VehicleChecksCompletedToggled action with the value passed in', () => {
+      component.vehicleChecksCompletedOutcomeChanged(true);
+      expect(store$.dispatch).toHaveBeenCalledWith(new VehicleChecksCompletedToggled(true));
+    });
+  });
+
+  describe('candidateDeclarationOutcomeChanged', () => {
+    it('should dispatch a SetDeclarationStatus action with the value passed in and CandidateDeclarationSigned', () => {
+      component.candidateDeclarationOutcomeChanged(false);
+      expect(store$.dispatch).toHaveBeenCalledWith(new SetDeclarationStatus(false));
+      expect(store$.dispatch).toHaveBeenCalledWith(new CandidateDeclarationSigned());
+    });
   });
 });

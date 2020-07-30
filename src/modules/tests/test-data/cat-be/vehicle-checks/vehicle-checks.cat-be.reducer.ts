@@ -12,6 +12,7 @@ import {
 export const initialState: CatBEUniqueTypes.VehicleChecks = {
   tellMeQuestions: Array(numberOfTellMeQuestions).fill({}),
   showMeQuestions: Array(numberOfShowMeQuestions).fill({}),
+  vehicleChecksCompleted: null,
 };
 
 export function vehicleChecksCatBEReducer(
@@ -52,7 +53,13 @@ export function vehicleChecksCatBEReducer(
       return {
         ...state,
         showMeTellMeComments: action.comment,
-      };    default:
+      };
+    case vehicleChecksCatBeActionTypes.VEHICLE_CHECKS_COMPLETED:
+      return {
+        ...state,
+        vehicleChecksCompleted: action.toggled,
+      };
+    default:
       return state;
   }
 }
