@@ -17,6 +17,8 @@ export class LegalRequirementComponent {
   legalRequirement: LegalRequirements;
   @Input()
   ticked: boolean;
+  @Input()
+  disabled: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -25,7 +27,9 @@ export class LegalRequirementComponent {
   getLabel = (): string => legalRequirementLabels[this.legalRequirement];
 
   toggleLegalRequirement = (): void => {
-    this.store$.dispatch(new ToggleLegalRequirement(this.legalRequirement));
+    if (!this.disabled) {
+      this.store$.dispatch(new ToggleLegalRequirement(this.legalRequirement));
+    }
   }
 
   /**
