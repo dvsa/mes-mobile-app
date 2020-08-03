@@ -5,12 +5,12 @@
         <label>Emergency Stop</label>
       </ion-col>
       <ion-col col-20 no-padding>
-        <div *ngIf=emergencyStop.firstAttempt>
+        <div *ngIf="(emergencyStop.firstAttempt || emergencyStop.firstAttempt === 0)">
           1st: {{emergencyStop.firstAttempt}}km/h
         </div>
       </ion-col>
       <ion-col col-20 no-padding>
-        <div *ngIf=emergencyStop.secondAttempt>
+        <div *ngIf="(emergencyStop.secondAttempt || emergencyStop.secondAttempt === 0)">
           2nd: {{emergencyStop.secondAttempt}}km/h
         </div>
       </ion-col>
@@ -37,12 +37,12 @@
         <label>Avoidance</label>
       </ion-col>
       <ion-col col-20 no-padding>
-        <div *ngIf=avoidance.firstAttempt>
+        <div *ngIf="(avoidance.firstAttempt || avoidance.firstAttempt === 0)">
           1st: {{avoidance.firstAttempt}}km/h
         </div>
       </ion-col>
       <ion-col col-20 no-padding>
-        <div *ngIf=avoidance.secondAttempt>
+        <div *ngIf="(avoidance.secondAttempt || avoidance.secondAttempt === 0)">
           2nd: {{avoidance.secondAttempt}}km/h
         </div>
       </ion-col>
