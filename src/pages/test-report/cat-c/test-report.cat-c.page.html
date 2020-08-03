@@ -55,6 +55,7 @@
             <legal-requirement
               [legalRequirement]="legalRequirements.downhillStart"
               [ticked]="(pageState.testRequirements$ | async)[legalRequirements.downhillStart]"
+              [disabled]="(pageState.delegatedTest$ | async)"
             >
             </legal-requirement>
           </ion-col>

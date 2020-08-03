@@ -243,10 +243,12 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push(CAT_C.TEST_REPORT_PAGE).then(() => {
+      this.navController.push(CAT_C.TEST_REPORT_PAGE).then(async () => {
         // remove Waiting Room To Car Page
         const view = this.navController.getViews().find(view => view.id === CAT_C.WAITING_ROOM_TO_CAR_PAGE);
-        if (view) {
+        let isDelegated: boolean;
+        await this.pageState.delegatedTest$.pipe(map(result => isDelegated = result)).subscribe();
+        if (view && !isDelegated) {
           this.navController.removeView(view);
         }
       });
