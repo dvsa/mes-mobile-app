@@ -271,9 +271,11 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push(CAT_D.TEST_REPORT_PAGE).then(() => {
+      this.navController.push(CAT_D.TEST_REPORT_PAGE).then(async () => {
         const view = this.navController.getViews().find(view => view.id === CAT_D.WAITING_ROOM_TO_CAR_PAGE);
-        if (view) {
+        let isDelegated: boolean;
+        await this.pageState.delegatedTest$.pipe(map(value => isDelegated = value));
+        if (view && !isDelegated) {
           this.navController.removeView(view);
         }
       });

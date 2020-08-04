@@ -45,6 +45,8 @@ import { hasManoeuvreBeenCompletedCatD } from '../../../modules/tests/test-data/
 import { getTestRequirementsCatD }
   from '../../../modules/tests/test-data/cat-d/test-requirements/test-requirements.cat-d.reducer';
 import { getTestData } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -55,6 +57,7 @@ interface TestReportPageState {
   testData$: Observable<CatDUniqueTypes.TestData>;
   testRequirements$: Observable<CatDUniqueTypes.TestRequirements>;
   testCategory$: Observable<CategoryCode>;
+  delegatedTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -138,6 +141,10 @@ export class TestReportCatDPage extends BasePageComponent {
       ),
       testCategory$: currentTest$.pipe(
         select(getTestCategory),
+      ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
       ),
     };
     this.setupSubscription();
