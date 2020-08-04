@@ -46,6 +46,8 @@ import {
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -56,6 +58,7 @@ interface TestReportPageState {
   testData$: Observable<CatBEUniqueTypes.TestData>;
   testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
   testCategory$: Observable<CategoryCode>;
+  delegatedTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -140,6 +143,10 @@ export class TestReportCatBEPage extends BasePageComponent {
       ),
       testCategory$: currentTest$.pipe(
         select(getTestCategory),
+      ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
       ),
     };
     this.setupSubscription();
