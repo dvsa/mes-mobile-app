@@ -15,6 +15,9 @@ export class CompetencyButtonComponent {
   @Input()
   ripple?: boolean = true;
 
+  @Input()
+  disabled?: boolean = false;
+
   touchState: boolean = false;
   touchStateDelay: number = 100;
   touchTimeout: any;
@@ -26,12 +29,18 @@ export class CompetencyButtonComponent {
   constructor() { }
 
   onTapEvent(): void {
+    if (this.disabled) {
+      return;
+    }
     if (this.onTap) {
       this.onTap();
     }
   }
 
   onPressEvent(): void {
+    if (this.disabled) {
+      return;
+    }
     if (this.onPress) {
       this.onPress();
     }
@@ -51,11 +60,17 @@ export class CompetencyButtonComponent {
   }
 
   onTouchStart(): void {
+    if (this.disabled) {
+      return;
+    }
     clearTimeout(this.touchTimeout);
     this.touchState = true;
   }
 
   onTouchEnd(): void {
+    if (this.disabled) {
+      return;
+    }
     // defer the removal of the touch state to allow the page to render
     this.touchTimeout = setTimeout(() => this.touchState = false, this.touchStateDelay);
   }

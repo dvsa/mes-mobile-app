@@ -27,9 +27,7 @@ export class LegalRequirementComponent {
   getLabel = (): string => legalRequirementLabels[this.legalRequirement];
 
   toggleLegalRequirement = (): void => {
-    if (!this.disabled) {
-      this.store$.dispatch(new ToggleLegalRequirement(this.legalRequirement));
-    }
+    this.store$.dispatch(new ToggleLegalRequirement(this.legalRequirement));
   }
 
   /**
