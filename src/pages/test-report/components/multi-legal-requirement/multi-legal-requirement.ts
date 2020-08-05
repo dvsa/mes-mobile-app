@@ -21,6 +21,8 @@ export class MultiLegalRequirementComponent {
   requirement2Ticked: boolean;
   @Input()
   label: string;
+  @Input()
+  disabled: boolean = false;
   constructor(
     private store$: Store<StoreModel>,
   ) {}
@@ -28,6 +30,9 @@ export class MultiLegalRequirementComponent {
   getLabel = (): string => this.label;
 
   toggleLegalRequirement = (): void => {
+    if (this.disabled) {
+      return;
+    }
     if (!this.requirement1Ticked && !this.requirement2Ticked) {
       this.store$.dispatch(new ToggleLegalRequirement(this.legalRequirement1));
     }

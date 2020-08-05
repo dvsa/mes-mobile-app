@@ -27,6 +27,7 @@
               [requirement1Ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart1]"
               [requirement2Ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart2]"
               label="NS"
+              [disabled]="(pageState.delegatedTest$ | async)"
             >
             </multi-legal-requirement>
           </ion-col>
@@ -38,6 +39,7 @@
               [requirement1Ticked]="(pageState.testRequirements$ | async)[legalRequirements.busStop1]"
               [requirement2Ticked]="(pageState.testRequirements$ | async)[legalRequirements.busStop2]"
               label="BS"
+              [disabled]="(pageState.delegatedTest$ | async)"
             >
             </multi-legal-requirement>
           </ion-col>
