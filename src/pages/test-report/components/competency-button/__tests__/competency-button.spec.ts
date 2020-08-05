@@ -32,6 +32,31 @@ describe('CompetencyButtonComponent', () => {
   }));
 
   describe('Class', () => {
+    describe('onTapEvent', () => {
+      it('should not call onTap if disabled is true', () => {
+        component.disabled = true;
+        component.onTap = () => {};
+        spyOn(component, 'onTap');
+        component.onTapEvent();
+        expect(component.onTap).not.toHaveBeenCalled();
+      });
+    });
+    describe('onPressEvent', () => {
+      it('should not call onPress if disabled is true', () => {
+        component.disabled = true;
+        component.onPress = () => {};
+        spyOn(component, 'onPress');
+        component.onPressEvent();
+        expect(component.onPress).not.toHaveBeenCalled();
+      });
+    });
+    describe('onTouchStart', () => {
+      it('should not set touchState to true if disabled is true', () => {
+        component.disabled = true;
+        component.onTouchStart();
+        expect(component.touchState).toEqual(false);
+      });
+    });
     it('should call the tap function when a tap event is triggered', () => {
       const tapSpy = jasmine.createSpy('onTapEvent');
       component.onTapEvent = tapSpy;
@@ -55,6 +80,15 @@ describe('CompetencyButtonComponent', () => {
       it('should have added no classes to the competency button', () => {
         const competencyButton = fixture.debugElement.query(By.css('.competency-button'));
         expect(competencyButton.nativeElement.className).toEqual('competency-button');
+      });
+      it('should not add the activated class when the button is pressed if disabled is true', () => {
+        component.disabled = true;
+        component.onTouchStart();
+        fixture.detectChanges();
+        const button = fixture.debugElement.query(By.css('.competency-button'));
+        expect(button).toBeDefined();
+        expect(button.nativeElement.className).not.toContain('activated');
+        expect(component.touchState).toEqual(false);
       });
 
       it('should add the activated class when the button is pressed', () => {
@@ -90,6 +124,13 @@ describe('CompetencyButtonComponent', () => {
 
         expect(button).toBeDefined();
         expect(button.nativeElement.className).toContain('ripple-effect');
+      });
+      it('should not add the ripple effect animation if disabled is true', () => {
+        component.disabled = true;
+        component.onPressEvent();
+        const button = fixture.debugElement.query(By.css('.competency-button'));
+        expect(button).toBeDefined();
+        expect(button.nativeElement.className).not.toContain('ripple-effect');
       });
 
       it('should remove the ripple effect animation css class within the required time frame', (done) => {
