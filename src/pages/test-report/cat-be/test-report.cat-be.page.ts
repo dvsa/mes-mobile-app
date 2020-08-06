@@ -80,6 +80,7 @@ export class TestReportCatBEPage extends BasePageComponent {
   isTestReportValid: boolean = false;
   isEtaValid: boolean = true;
   testCategory: CategoryCode;
+  isDelegated: boolean;
 
   modal: Modal;
   missingLegalRequirements: legalRequirementsLabels[] = [];
@@ -181,6 +182,7 @@ export class TestReportCatBEPage extends BasePageComponent {
       isDangerousMode$,
       manoeuvres$,
       testData$,
+      delegatedTest$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -189,12 +191,13 @@ export class TestReportCatBEPage extends BasePageComponent {
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
+      delegatedTest$.pipe(map(result => this.isDelegated = result)),
       testData$.pipe(
         map((data) => {
           this.isTestReportValid =
-            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.BE);
+            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.BE, this.isDelegated);
           this.missingLegalRequirements =
-            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.BE);
+            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.BE, this.isDelegated);
           this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.BE);
         }),
       ),

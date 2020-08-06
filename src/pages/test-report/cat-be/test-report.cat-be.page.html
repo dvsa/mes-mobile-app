@@ -63,7 +63,6 @@
             <legal-requirement
               [legalRequirement]="legalRequirements.angledStartControlledStop"
               [ticked]="(pageState.testRequirements$ | async)[legalRequirements.angledStartControlledStop]"
-              [disabled]="(pageState.delegatedTest$| async)"
             >
             </legal-requirement>
           </ion-col>
