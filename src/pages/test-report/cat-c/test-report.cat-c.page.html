@@ -30,7 +30,6 @@
               [legalRequirement]="legalRequirements.normalStart1"
               [ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart1]"
               [disabled]="(pageState.delegatedTest$ | async)"
-              [ngClass]="{'disabled':(pageState.delegatedTest$ | async)}"
             >
             </legal-requirement>
           </ion-col>

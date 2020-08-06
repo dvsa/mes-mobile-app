@@ -1,7 +1,4 @@
 legal-requirement {
-  .disabled {
-
-  }
   competency-button {
     position: relative;
 
@@ -31,6 +28,12 @@ legal-requirement {
         .competency-label {
           font-weight: bold;
         }
+      }
+    }
+    &.disabled {
+      .competency-button {
+        border: none;
+        box-shadow: none;
       }
     }
   }
