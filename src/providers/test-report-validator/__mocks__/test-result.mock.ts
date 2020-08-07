@@ -144,11 +144,46 @@ export const validTestCatBE: CatBEUniqueTypes.TestData = {
   },
 };
 
+export const validDelegatedTestCatBE: CatBEUniqueTypes.TestData = {
+  testRequirements: {
+    angledStartControlledStop: true,
+    normalStart2: false,
+    uphillStart: false,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+  eco: {
+    completed: true,
+  },
+  uncoupleRecouple: {
+    selected: true,
+  },
+};
+
 export const validTestCatC: CatCUniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
     normalStart2: true,
     uphillStart: true,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+  eco: {
+    completed: true,
+  },
+};
+
+export const validDelegatedTestCatCAndC1: CatCUniqueTypes.TestData = {
+  testRequirements: {
+    angledStartControlledStop: true,
+    normalStart2: false,
+    uphillStart: false,
   },
   manoeuvres: {
     reverseLeft: {
@@ -173,6 +208,25 @@ export const validTestCatC1: CatC1UniqueTypes.TestData = {
   },
   eco: {
     completed: true,
+  },
+};
+
+export const validDelegatedTestCatCEAndC1E: CatCEUniqueTypes.TestData | CatCEUniqueTypes.TestData = {
+  testRequirements: {
+    angledStartControlledStop: true,
+    normalStart2: false,
+    uphillStart: false,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+  eco: {
+    completed: true,
+  },
+  uncoupleRecouple: {
+    selected: true,
   },
 };
 
@@ -214,6 +268,23 @@ export const validTestCatC1E: CatC1EUniqueTypes.TestData = {
   },
 };
 
+export const validDelegatedTestCatDAndD1: CatD1UniqueTypes.TestData | CatDUniqueTypes.TestData = {
+  testRequirements: {
+    busStop1: false,
+    busStop2: false,
+    angledStartControlledStop: true,
+    uphillStart: false,
+  } as CatDUniqueTypes.TestRequirements | CatD1UniqueTypes.TestRequirements,
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+  eco: {
+    completed: true,
+  },
+};
+
 export const validTestCatD: CatDUniqueTypes.TestData = {
   testRequirements: {
     busStop1: true,
@@ -228,6 +299,26 @@ export const validTestCatD: CatDUniqueTypes.TestData = {
   },
   eco: {
     completed: true,
+  },
+};
+
+export const validDelegatedTestCatD1AndD1E: CatD1UniqueTypes.TestData | CatD1EUniqueTypes.TestData = {
+  testRequirements: {
+    normalStart1: true,
+    normalStart2: true,
+    angledStartControlledStop: true,
+    uphillStart: true,
+  },
+  manoeuvres: {
+    reverseLeft: {
+      selected: true,
+    },
+  },
+  eco: {
+    completed: true,
+  },
+  uncoupleRecouple: {
+    selected: true,
   },
 };
 
@@ -414,9 +505,22 @@ export const legalRequirementsBE = [
   legalRequirementsLabels.uncoupleRecouple,
 ];
 
+export const delegatedRequirementsBE = [
+  legalRequirementsLabels.angledStartControlledStop,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.eco,
+  legalRequirementsLabels.uncoupleRecouple,
+];
+
 export const legalRequirementsCatCAndC1 = [
   legalRequirementsLabels.normalStart1,
   legalRequirementsLabels.uphillStart,
+  legalRequirementsLabels.angledStartControlledStop,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.eco,
+];
+
+export const delegatedRequirementsCatCAndC1 = [
   legalRequirementsLabels.angledStartControlledStop,
   legalRequirementsLabels.manoeuvre,
   legalRequirementsLabels.eco,
@@ -431,10 +535,23 @@ export const legalRequirementsCatCEAndC1E = [
   legalRequirementsLabels.uncoupleRecouple,
 ];
 
+export const delegatedRequirementsCatCEAndC1E = [
+  legalRequirementsLabels.angledStartControlledStop,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.eco,
+  legalRequirementsLabels.uncoupleRecouple,
+];
+
 export const legalRequirementsCatD = [
   legalRequirementsLabels.busStop1,
   legalRequirementsLabels.busStop2,
   legalRequirementsLabels.uphillStart,
+  legalRequirementsLabels.angledStartControlledStop,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.eco,
+];
+
+export const delegatedRequirementsCatDAndD1 = [
   legalRequirementsLabels.angledStartControlledStop,
   legalRequirementsLabels.manoeuvre,
   legalRequirementsLabels.eco,
@@ -453,6 +570,13 @@ export const legalRequirementsCatDE = [
   legalRequirementsLabels.busStop1,
   legalRequirementsLabels.busStop2,
   legalRequirementsLabels.uphillStart,
+  legalRequirementsLabels.angledStartControlledStop,
+  legalRequirementsLabels.manoeuvre,
+  legalRequirementsLabels.eco,
+  legalRequirementsLabels.uncoupleRecouple,
+];
+
+export const delegatedRequirementsCatDEAndD1E = [
   legalRequirementsLabels.angledStartControlledStop,
   legalRequirementsLabels.manoeuvre,
   legalRequirementsLabels.eco,

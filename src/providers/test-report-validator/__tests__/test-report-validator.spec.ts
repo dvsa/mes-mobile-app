@@ -28,6 +28,26 @@ describe('TestReportValidator', () => {
     { category: TestCategory.K, validTest: mocks.validTestCatK, legalReqs: mocks.legalRequirementsCatK },
     { category: TestCategory.ADI2, validTest: mocks.validTestCatADIPart2, legalReqs: mocks.legalRequirementsADIPart2 },
   ];
+  const delegatedCategories = [
+    { category: TestCategory.BE, validTest: mocks.validDelegatedTestCatBE,
+      delegatedRequirements: mocks.delegatedRequirementsBE },
+    { category: TestCategory.C, validTest: mocks.validDelegatedTestCatCAndC1,
+      delegatedRequirements: mocks.delegatedRequirementsCatCAndC1 },
+    { category: TestCategory.C1, validTest: mocks.validDelegatedTestCatCAndC1,
+      delegatedRequirements: mocks.delegatedRequirementsCatCAndC1 },
+    { category: TestCategory.C1E, validTest: mocks.validDelegatedTestCatCEAndC1E,
+      delegatedRequirements: mocks.delegatedRequirementsCatCEAndC1E },
+    { category: TestCategory.CE, validTest: mocks.validDelegatedTestCatCEAndC1E,
+      delegatedRequirements: mocks.delegatedRequirementsCatCEAndC1E },
+    { category: TestCategory.D, validTest: mocks.validDelegatedTestCatDAndD1,
+      delegatedRequirements: mocks.delegatedRequirementsCatDAndD1 },
+    { category: TestCategory.D1, validTest: mocks.validDelegatedTestCatDAndD1,
+      delegatedRequirements: mocks.delegatedRequirementsCatDAndD1 },
+    { category: TestCategory.DE, validTest: mocks.validDelegatedTestCatD1AndD1E,
+      delegatedRequirements: mocks.delegatedRequirementsCatDEAndD1E },
+    { category: TestCategory.D1E, validTest: mocks.validDelegatedTestCatD1AndD1E,
+      delegatedRequirements: mocks.delegatedRequirementsCatDEAndD1E },
+  ];
 
   let testReportValidatorProvider: TestReportValidatorProvider;
 
@@ -68,7 +88,16 @@ describe('TestReportValidator', () => {
         expect(result).toEqual(cat.legalReqs);
       });
     });
-
+    delegatedCategories.forEach((cat) => {
+      it(`should return an empty array if the legal requirements are met for a Cat ${cat.category} test`, () => {
+        const result = testReportValidatorProvider.getMissingLegalRequirements(cat.validTest, cat.category, true);
+        expect(result).toEqual([]);
+      });
+      it(`should return any missing legal requirements for a Cat ${cat.category} test`, () => {
+        const result = testReportValidatorProvider.getMissingLegalRequirements({}, cat.category, true);
+        expect(result).toEqual(cat.delegatedRequirements);
+      });
+    });
   });
   describe('isETAValid', () => {
     it('should return true if there is no ETA fault', () => {
