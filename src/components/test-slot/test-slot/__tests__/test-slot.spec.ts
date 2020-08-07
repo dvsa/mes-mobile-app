@@ -275,12 +275,67 @@ describe('TestSlotComponent', () => {
       });
     });
     describe('canViewCandidateDetails()', () => {
-      it('should return false if slot date is after latest viewable date', () => {
+      it('should return false if slot date is after latest viewable date and user NOT whitelisted for ADI', () => {
         spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(() => moment('2020-07-24').toDate());
         component.slot.slotDetail.start = '2020-07-25T08:10:00';
         const canViewCandidateDetails = component.canViewCandidateDetails();
         expect(canViewCandidateDetails).toEqual(false);
       });
+
+      it('should return true if slot date is after latest viewable date and user IS whitelisted for ADI', () => {
+        jasmine.clock().mockDate(new Date('2020-07-25'));
+        spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(() => moment('2020-07-24').toDate());
+        spyOn(component.appConfig, 'getAppConfig').and.returnValue({
+          journal: {
+            testPermissionPeriods: [{
+              testCategory: TestCategory.ADI3,
+              from: '2020-01-01',
+              to: null,
+            }],
+          },
+        });
+        component.slot.slotDetail.start = '2020-07-25T08:10:00';
+        const canViewCandidateDetails = component.canViewCandidateDetails();
+        expect(canViewCandidateDetails).toEqual(true);
+      });
+
+      it('should return true if slot date is after latest viewable date and user IS whitelisted for ADI', () => {
+        const now = new Date();
+        const mockDate = new Date('2020-07-25');
+        mockDate.setTime(now.getTime());
+        jasmine.clock().mockDate(mockDate);
+        spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(() => moment('2020-07-24').toDate());
+        spyOn(component.appConfig, 'getAppConfig').and.returnValue({
+          journal: {
+            testPermissionPeriods: [{
+              testCategory: TestCategory.ADI2,
+              from: '2020-01-01',
+              to: '2020-07-25',
+            }],
+          },
+        });
+        component.slot.slotDetail.start = '2020-07-25T08:10:00';
+        const canViewCandidateDetails = component.canViewCandidateDetails();
+        expect(canViewCandidateDetails).toEqual(true);
+      });
+
+      it('should return false if slot date is after latest viewable date and user IS NOT whitelisted for ADI', () => {
+        jasmine.clock().mockDate(new Date('2020-07-25'));
+        spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(() => moment('2020-07-24').toDate());
+        spyOn(component.appConfig, 'getAppConfig').and.returnValue({
+          journal: {
+            testPermissionPeriods: [{
+              testCategory: TestCategory.B,
+              from: '2020-01-01',
+              to: null,
+            }],
+          },
+        });
+        component.slot.slotDetail.start = '2020-07-25T08:10:00';
+        const canViewCandidateDetails = component.canViewCandidateDetails();
+        expect(canViewCandidateDetails).toEqual(false);
+      });
+
       it('should return true if slot date is equal to latest viewable date', () => {
         spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(() => moment('2020-07-24').toDate());
         component.slot.slotDetail.start = '2020-07-24T08:10:00';
