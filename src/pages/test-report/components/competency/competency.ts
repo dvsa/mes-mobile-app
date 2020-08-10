@@ -61,6 +61,8 @@ export class CompetencyComponent {
   hasDangerousFault: boolean = false;
 
   allowRipple: boolean = true;
+  @Input()
+  overrideForcePress: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -123,7 +125,7 @@ export class CompetencyComponent {
   }
 
   onTap = () => {
-    this.addOrRemoveFault();
+    this.addOrRemoveFault(this.overrideForcePress);
   }
 
   onPress = () => {
