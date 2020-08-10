@@ -274,7 +274,8 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
       this.navController.push(CAT_D.TEST_REPORT_PAGE).then(async () => {
         const view = this.navController.getViews().find(view => view.id === CAT_D.WAITING_ROOM_TO_CAR_PAGE);
         let isDelegated: boolean;
-        await this.pageState.delegatedTest$.pipe(map(value => isDelegated = value));
+        await this.pageState.delegatedTest$.pipe(map(value => isDelegated = value)).subscribe();
+        console.log(isDelegated);
         if (view && !isDelegated) {
           this.navController.removeView(view);
         }

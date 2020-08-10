@@ -300,7 +300,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
         // remove Waiting Room To Car Page
         const view = this.navController.getViews().find(view => view.id === CAT_BE.WAITING_ROOM_TO_CAR_PAGE);
         let isDelegated: boolean;
-        await this.pageState.delegatedTest$.pipe(map(value => isDelegated = value));
+        await this.pageState.delegatedTest$.pipe(map(value => isDelegated = value)).subscribe();
         if (view && !isDelegated) {
           this.navController.removeView(view);
         }
