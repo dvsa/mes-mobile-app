@@ -33,8 +33,8 @@ export class DelegatedRekeySearchProvider {
   getDelegatedExaminerBookingByAppRef(applicationReference: string): Observable<Object> {
     // @TODO - MES-5436 mock responses added. Implementation needed once delegated end point is available
     this.applicationReferences.forEach((ref) => {
-      console.log(`applicationReference: ${applicationReference}`);
-      console.log(`referenceNumber: ${ref.referenceNumber}`);
+      console.log(`applicationReference: ${applicationReference} Length ${applicationReference.length}`);
+      console.log(`referenceNumber: ${ref.referenceNumber} Length ${ref.referenceNumber.length}`);
       if (applicationReference === ref.referenceNumber) {
         return of(new HttpResponse({
           status: 200,
