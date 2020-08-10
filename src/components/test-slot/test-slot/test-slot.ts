@@ -110,9 +110,16 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   }
 
   canViewCandidateDetails(): boolean {
+    const { testPermissionPeriods } = this.appConfig.getAppConfig().journal;
+    const currentDateTime = new Date();
+    const isWhitelistedForADI: boolean = testPermissionPeriods.some((period) => {
+      return (period.testCategory === TestCategory.ADI2 || period.testCategory === TestCategory.ADI3)
+        && new Date(period.from) <= currentDateTime
+        && (new Date(period.to) >= currentDateTime || period.to === null);
+    });
     const slotStart = moment(this.slot.slotDetail.start).startOf('day');
     const maxViewStart = moment(this.getLatestViewableSlotDateTime()).startOf('day');
-    return slotStart.isSameOrBefore(maxViewStart);
+    return slotStart.isSameOrBefore(maxViewStart) || isWhitelistedForADI;
   }
 
   getLatestViewableSlotDateTime(): Date {

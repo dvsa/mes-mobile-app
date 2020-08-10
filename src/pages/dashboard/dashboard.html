@@ -21,7 +21,7 @@
     <ion-row>
       <ion-col no-padding col-96 col-lg-32>
         <go-to-journal-card *ngIf="!showDelegatedExaminerRekey()"></go-to-journal-card>
-        <delegated-examiner-rekey></delegated-examiner-rekey>
+        <delegated-examiner-rekey *ngIf="showDelegatedExaminerRekey()"></delegated-examiner-rekey>
       </ion-col>
       <ion-col no-padding col-48 col-lg-32 *ngIf="!showDelegatedExaminerRekey()">
         <test-results-search-card></test-results-search-card>
