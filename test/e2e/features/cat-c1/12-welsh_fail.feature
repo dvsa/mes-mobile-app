@@ -37,7 +37,7 @@ Feature: A Driving Examiner Completes a Failed User Journey for Category C1 in W
         When I end the test
         And I continue to debrief
         Then I should see the Debrief page with outcome "Aflwyddiannus"
-        And I see a "serious" fault for "Symud i ffwrdd - dan reolaeth"
+        And I see a "serious" fault for "Symud i ffwrdd - rheoli"
         And I see a "driving" fault for "Signalau - amseru"
         And I see a "driving" fault for "Signalau - yn gywir"
         And I see a "driving" fault for "Symud i ffwrdd - diogelwch"
