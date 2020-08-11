@@ -29,6 +29,8 @@ import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-re
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
 import { competencyLabels } from '../../../../shared/constants/competencies/competencies';
+import { getDelegatedTestIndicator } from '../../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface CompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -37,6 +39,7 @@ interface CompetencyState {
   drivingFaultCount$: Observable<number>;
   hasSeriousFault$: Observable<boolean>;
   hasDangerousFault$: Observable<boolean>;
+  isDelegated$: Observable<boolean>;
 }
 
 @Component({
@@ -59,6 +62,7 @@ export class CompetencyComponent {
   hasSeriousFault: boolean = false;
   isDangerousMode: boolean = false;
   hasDangerousFault: boolean = false;
+  isDelegated: boolean = false;
 
   allowRipple: boolean = true;
 
@@ -92,6 +96,10 @@ export class CompetencyComponent {
         select(getTestData),
         select(testData => hasDangerousFault(testData, this.competency)),
       ),
+      isDelegated$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
     };
 
     const {
@@ -101,6 +109,7 @@ export class CompetencyComponent {
       hasSeriousFault$,
       isDangerousMode$,
       hasDangerousFault$,
+      isDelegated$,
     } = this.competencyState;
 
     const merged$ = merge(
@@ -110,6 +119,7 @@ export class CompetencyComponent {
       hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
+      isDelegated$.pipe(map(toggle => this.isDelegated = toggle)),
     ).pipe(tap(this.canButtonRipple));
 
     this.subscription = merged$.subscribe();
@@ -123,7 +133,7 @@ export class CompetencyComponent {
   }
 
   onTap = () => {
-    this.addOrRemoveFault();
+    this.addOrRemoveFault(this.isDelegated);
   }
 
   onPress = () => {

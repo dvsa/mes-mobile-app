@@ -46,6 +46,8 @@ import {
 import { legalRequirementsLabels } from '../../../shared/constants/legal-requirements/legal-requirements.constants';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -56,6 +58,7 @@ interface TestReportPageState {
   testData$: Observable<CatBEUniqueTypes.TestData>;
   testRequirements$: Observable<CatBEUniqueTypes.TestRequirements>;
   testCategory$: Observable<CategoryCode>;
+  delegatedTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -77,6 +80,7 @@ export class TestReportCatBEPage extends BasePageComponent {
   isTestReportValid: boolean = false;
   isEtaValid: boolean = true;
   testCategory: CategoryCode;
+  isDelegated: boolean;
 
   modal: Modal;
   missingLegalRequirements: legalRequirementsLabels[] = [];
@@ -141,6 +145,10 @@ export class TestReportCatBEPage extends BasePageComponent {
       testCategory$: currentTest$.pipe(
         select(getTestCategory),
       ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
     };
     this.setupSubscription();
 
@@ -174,6 +182,7 @@ export class TestReportCatBEPage extends BasePageComponent {
       isDangerousMode$,
       manoeuvres$,
       testData$,
+      delegatedTest$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -182,12 +191,13 @@ export class TestReportCatBEPage extends BasePageComponent {
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
+      delegatedTest$.pipe(map(result => this.isDelegated = result)),
       testData$.pipe(
         map((data) => {
           this.isTestReportValid =
-            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.BE);
+            this.testReportValidatorProvider.isTestReportValid(data, TestCategory.BE, this.isDelegated);
           this.missingLegalRequirements =
-            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.BE);
+            this.testReportValidatorProvider.getMissingLegalRequirements(data, TestCategory.BE, this.isDelegated);
           this.isEtaValid = this.testReportValidatorProvider.isETAValid(data, TestCategory.BE);
         }),
       ),

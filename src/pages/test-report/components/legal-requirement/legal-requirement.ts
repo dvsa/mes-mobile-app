@@ -17,6 +17,8 @@ export class LegalRequirementComponent {
   legalRequirement: LegalRequirements;
   @Input()
   ticked: boolean;
+  @Input()
+  disabled: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,

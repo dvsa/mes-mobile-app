@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar hideBackButton>
+  <ion-navbar [hideBackButton]="!(pageState.delegatedTest$ | async)">
     <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end>
       <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>
@@ -27,6 +27,7 @@
               [requirement1Ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart1]"
               [requirement2Ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart2]"
               label="NS"
+              [disabled]="(pageState.delegatedTest$ | async)"
             >
             </multi-legal-requirement>
           </ion-col>
@@ -38,6 +39,7 @@
               [requirement1Ticked]="(pageState.testRequirements$ | async)[legalRequirements.busStop1]"
               [requirement2Ticked]="(pageState.testRequirements$ | async)[legalRequirements.busStop2]"
               label="BS"
+              [disabled]="(pageState.delegatedTest$ | async)"
             >
             </multi-legal-requirement>
           </ion-col>
@@ -47,6 +49,7 @@
             <legal-requirement
               [legalRequirement]="legalRequirements.uphillStart"
               [ticked]="(pageState.testRequirements$ | async)[legalRequirements.uphillStart]"
+              [disabled]="(pageState.delegatedTest$ | async)"
             >
             </legal-requirement>
           </ion-col>
@@ -54,6 +57,7 @@
             <legal-requirement
               [legalRequirement]="legalRequirements.downhillStart"
               [ticked]="(pageState.testRequirements$ | async)[legalRequirements.downhillStart]"
+              [disabled]="(pageState.delegatedTest$ | async)"
             >
             </legal-requirement>
           </ion-col>
