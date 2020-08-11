@@ -4,7 +4,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
-import { Observable } from 'rxjs';
+import { Observable, merge, Subscription } from 'rxjs';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
@@ -129,6 +129,8 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
   showEyesightFailureConfirmation: boolean = false;
 
   tellMeQuestions: VehicleChecksQuestion[];
+  isDelegated: boolean;
+  subscription: Subscription;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -238,6 +240,14 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
         select(getCandidateDeclarationSignedStatus),
       ),
     };
+    this.setupSubscription();
+  }
+
+  setupSubscription(): void {
+    const { delegatedTest$ } = this.pageState;
+    this.subscription = merge(
+      delegatedTest$.pipe(map(value => this.isDelegated = value)),
+    ).subscribe();
   }
 
   ionViewDidEnter(): void {
@@ -246,6 +256,12 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
 
   ionViewWillLeave(): void {
     this.store$.dispatch(new PersistTests());
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   schoolCarToggled(): void {
@@ -296,12 +312,10 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push(CAT_BE.TEST_REPORT_PAGE).then(async () => {
+      this.navController.push(CAT_BE.TEST_REPORT_PAGE).then(() => {
         // remove Waiting Room To Car Page
         const view = this.navController.getViews().find(view => view.id === CAT_BE.WAITING_ROOM_TO_CAR_PAGE);
-        let isDelegated: boolean;
-        await this.pageState.delegatedTest$.pipe(map(value => isDelegated = value)).subscribe();
-        if (view && !isDelegated) {
+        if (view && !this.isDelegated) {
           this.navController.removeView(view);
         }
       });

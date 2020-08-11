@@ -97,6 +97,7 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   showEyesightFailureConfirmation: boolean = false;
 
   testCategory: CategoryCode;
+  isDelegated: boolean;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -233,22 +234,22 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   setupSubscription() {
     const {
       testCategory$,
+      delegatedTest$,
     } = this.pageState;
 
     this.subscription = merge(
       testCategory$.pipe(map(result => this.testCategory = result)),
+      delegatedTest$.pipe(map(result => this.isDelegated = result)),
     ).subscribe();
   }
 
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push(CAT_C.TEST_REPORT_PAGE).then(async () => {
+      this.navController.push(CAT_C.TEST_REPORT_PAGE).then(() => {
         // remove Waiting Room To Car Page
         const view = this.navController.getViews().find(view => view.id === CAT_C.WAITING_ROOM_TO_CAR_PAGE);
-        let isDelegated: boolean;
-        await this.pageState.delegatedTest$.pipe(map(result => isDelegated = result)).subscribe();
-        if (view && !isDelegated) {
+        if (view && !this.isDelegated) {
           this.navController.removeView(view);
         }
       });
