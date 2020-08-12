@@ -93,10 +93,11 @@ export class DebriefCardComponent {
   }
 
   public controlledStop(): DataRowListItem[] {
+    const isControlledStopSelected = get(this.data, 'controlledStop.selected', false);
     return [
       {
-        label: ViewTestResultLabels.completed,
-        checked: get(this.data, 'controlledStop.selected', false),
+        label: isControlledStopSelected ? 'Completed' : 'Not Completed',
+        checked: isControlledStopSelected,
       },
     ];
   }
