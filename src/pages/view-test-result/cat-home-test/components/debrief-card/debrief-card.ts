@@ -92,6 +92,16 @@ export class DebriefCardComponent {
     ];
   }
 
+  public controlledStop(): DataRowListItem[] {
+    const isControlledStopSelected = get(this.data, 'controlledStop.selected', false);
+    return [
+      {
+        label: isControlledStopSelected ? 'Completed' : 'Not Completed',
+        checked: isControlledStopSelected,
+      },
+    ];
+  }
+
   public getDrivingFaults(): FaultSummary[] {
     return this.faultSummaryProvider.getDrivingFaultsList(this.data, this.category);
   }
