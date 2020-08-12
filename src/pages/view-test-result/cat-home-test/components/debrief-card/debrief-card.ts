@@ -92,6 +92,15 @@ export class DebriefCardComponent {
     ];
   }
 
+  public controlledStop(): DataRowListItem[] {
+    return [
+      {
+        label: ViewTestResultLabels.completed,
+        checked: get(this.data, 'controlledStop.selected', false),
+      },
+    ];
+  }
+
   public getDrivingFaults(): FaultSummary[] {
     return this.faultSummaryProvider.getDrivingFaultsList(this.data, this.category);
   }
