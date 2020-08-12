@@ -38,7 +38,7 @@ Feature: A Driving Examiner Completes a Welsh Failed User Journey in Category CE
         When I end the test
         And I continue to debrief
         Then I should see the Debrief page with outcome "Aflwyddiannus"
-        And I see a "serious" fault for "Symud i ffwrdd - dan reolaeth"
+        And I see a "serious" fault for "Symud i ffwrdd - rheoli"
         And I see a "driving" fault for "Rheolaeth - brêc troed"
         And I see a "driving" fault for "Doethineb - dod i gyfarfod cerbydau"
         And I see a "driving" fault for "Dadfachu / Ailfachu"
