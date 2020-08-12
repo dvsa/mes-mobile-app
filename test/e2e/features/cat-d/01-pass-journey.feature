@@ -50,7 +50,6 @@ Feature: A Driving Examiner Completes a pass test for category d
       | Application reference             | 16123400011                            |
       | Test category                     | D                                      |
       | Slot type                         | Standard Test                          |
-      | Code 78                           | Yes                                    |
       | Route number                      | None                                   |
       | Physical description of candidate | None                                   |
       | Weather conditions                | Bright / wet roads and Showers         |
