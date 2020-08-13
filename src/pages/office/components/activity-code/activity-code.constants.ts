@@ -79,8 +79,8 @@ export function populateActivityCodeModelList(isDelegatedExaminer?: boolean): Ac
   }
 
   codeList.sort((a, b) => (Number(a.activityCode) > Number(b.activityCode)) ? 1 : -1);
-
   return codeList;
 }
 
-export let activityCodeModelList: ActivityCodeModel[] = populateActivityCodeModelList(true);
+export let activityCodeModelListDelEx: ActivityCodeModel[] = populateActivityCodeModelList(true);
+export let activityCodeModelList: ActivityCodeModel[] = populateActivityCodeModelList(false);
