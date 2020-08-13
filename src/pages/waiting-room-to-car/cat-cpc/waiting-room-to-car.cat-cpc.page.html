@@ -13,6 +13,15 @@
       <ion-grid>
         <ion-row no-padding>
           <ion-col no-padding>
+
+            <candidate-declaration-signed
+              *ngIf="pageState.delegatedTest$ | async"
+              [formGroup]="form"
+              [candidateSigned]="pageState.candidateDeclarationSigned$ | async"
+              [declarationSelected]="(pageState.insuranceDeclarationAccepted$ | async) && (pageState.residencyDeclarationAccepted$ | async)"
+              (candidateDeclarationChange)="candidateDeclarationOutcomeChanged($event)">
+            </candidate-declaration-signed>
+
             <vehicle-registration [formGroup]="form"
                                   [vehicleRegistration]="pageState.registrationNumber$ | async"
                                   (vehicleRegistrationChange)="vehicleRegistrationChanged($event)">

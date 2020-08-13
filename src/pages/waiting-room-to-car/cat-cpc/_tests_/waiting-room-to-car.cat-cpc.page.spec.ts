@@ -33,6 +33,11 @@ import {
 } from '../../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { CPCQuestionProvider } from '../../../../providers/cpc-questions/cpc-questions';
 import { CpcQuestionsMock } from '../../../../providers/cpc-questions/_mocks_/cpc-questions.mock';
+import { CandidateDeclarationSignedComponent } from '../../components/candidate-declaration/candidate-declaration';
+import {
+  CandidateDeclarationSigned,
+  SetDeclarationStatus,
+} from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 
 describe('WaitingRoomToCarCatCPCPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatCPCPage>;
@@ -48,6 +53,7 @@ describe('WaitingRoomToCarCatCPCPage', () => {
         MockComponent(AccompanimentCardCatCPCComponent),
         MockComponent(VehicleDetailsCatCPCComponent),
         MockComponent(CombinationComponent),
+        MockComponent(CandidateDeclarationSignedComponent),
       ],
       imports: [
         IonicModule,
@@ -188,6 +194,14 @@ describe('WaitingRoomToCarCatCPCPage', () => {
     it('should return a false which will hide vehicle details when category is not CCPC', () => {
       component.testCategory = 'DCPC';
       expect(component.showVehicleDetails()).toEqual(false);
+    });
+  });
+
+  describe('candidateDeclarationOutcomeChanged', () => {
+    it('should dispatch a SetDeclarationStatus action with the value passed in and CandidateDeclarationSigned', () => {
+      component.candidateDeclarationOutcomeChanged(false);
+      expect(store$.dispatch).toHaveBeenCalledWith(new SetDeclarationStatus(false));
+      expect(store$.dispatch).toHaveBeenCalledWith(new CandidateDeclarationSigned());
     });
   });
 });
