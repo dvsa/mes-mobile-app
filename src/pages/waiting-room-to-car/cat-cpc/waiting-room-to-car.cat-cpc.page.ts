@@ -46,6 +46,21 @@ import {
   Combination,
 } from '../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import { getPreTestDeclarations }
+  from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.reducer';
+import {
+  getCandidateDeclarationSignedStatus,
+  getInsuranceDeclarationStatus,
+  getResidencyDeclarationStatus,
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
+import { VehicleChecksCompletedToggled }
+  from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
+import {
+  CandidateDeclarationSigned,
+  SetDeclarationStatus,
+} from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -54,6 +69,10 @@ interface WaitingRoomToCarPageState {
   interpreterAccompaniment$: Observable<boolean>;
   combination$: Observable<CombinationCodes>;
   configuration$: Observable<Configuration>;
+  delegatedTest$: Observable<boolean>;
+  insuranceDeclarationAccepted$: Observable<boolean>;
+  residencyDeclarationAccepted$: Observable<boolean>;
+  candidateDeclarationSigned$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -116,6 +135,22 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
         select(getVehicleDetails),
         select(getVehicleConfiguration),
       ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
+      insuranceDeclarationAccepted$: currentTest$.pipe(
+        select(getPreTestDeclarations),
+        select(getInsuranceDeclarationStatus),
+      ),
+      residencyDeclarationAccepted$: currentTest$.pipe(
+        select(getPreTestDeclarations),
+        select(getResidencyDeclarationStatus),
+      ),
+      candidateDeclarationSigned$: currentTest$.pipe(
+        select(getPreTestDeclarations),
+        select(getCandidateDeclarationSignedStatus),
+      ),
     };
 
     this.combinations = this.cpcQuestionProvider.getCombinations(this.testCategory as TestCategory);
@@ -177,5 +212,14 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
   }
 
   showVehicleDetails = (): boolean => this.testCategory === TestCategory.CCPC;
+
+  vehicleChecksCompletedOutcomeChanged(toggled: boolean) {
+    this.store$.dispatch(new VehicleChecksCompletedToggled(toggled));
+  }
+
+  candidateDeclarationOutcomeChanged(declaration: boolean) {
+    this.store$.dispatch(new SetDeclarationStatus(declaration));
+    this.store$.dispatch(new CandidateDeclarationSigned());
+  }
 
 }

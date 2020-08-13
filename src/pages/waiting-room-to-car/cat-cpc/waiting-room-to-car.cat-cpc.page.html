@@ -1,55 +1,64 @@
 <ion-header>
-    <ion-navbar hideBackButton>
-        <ion-title>{{pageState.candidateName$ | async}}</ion-title>
-        <ion-buttons end>
-            <end-test-link [shouldAuthenticate]="false" [category]="testCategory"></end-test-link>
-        </ion-buttons>
-    </ion-navbar>
+  <ion-navbar [hideBackButton]="!(pageState.delegatedTest$ | async)">
+    <ion-title>{{pageState.candidateName$ | async}}</ion-title>
+    <ion-buttons end>
+      <end-test-link [shouldAuthenticate]="false" [category]="testCategory"></end-test-link>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <div>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <ion-grid>
-                <ion-row no-padding>
-                    <ion-col no-padding>
-                        <vehicle-registration [formGroup]="form"
-                                              [vehicleRegistration]="pageState.registrationNumber$ | async"
-                                              (vehicleRegistrationChange)="vehicleRegistrationChanged($event)">
-                        </vehicle-registration>
+  <div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ion-grid>
+        <ion-row no-padding>
+          <ion-col no-padding>
 
-                        <vehicle-details-cat-cpc
-                                *ngIf="showVehicleDetails()"
-                                [formGroup]="form"
-                                [configuration]="pageState?.configuration$ | async"
-                                (vehicleDetailsChange)="vehicleConfiguration($event)">
-                        </vehicle-details-cat-cpc>
+            <candidate-declaration-signed
+              *ngIf="pageState.delegatedTest$ | async"
+              [formGroup]="form"
+              [candidateSigned]="pageState.candidateDeclarationSigned$ | async"
+              [declarationSelected]="(pageState.insuranceDeclarationAccepted$ | async) && (pageState.residencyDeclarationAccepted$ | async)"
+              (candidateDeclarationChange)="candidateDeclarationOutcomeChanged($event)">
+            </candidate-declaration-signed>
 
-                        <combination
-                                [formGroup]="form"
-                                [combinations]="combinations"
-                                [combination]="pageState.combination$ | async"
-                                (combinationChange)="combinationSelected($event)">
-                        </combination>
+            <vehicle-registration [formGroup]="form"
+                                  [vehicleRegistration]="pageState.registrationNumber$ | async"
+                                  (vehicleRegistrationChange)="vehicleRegistrationChanged($event)">
+            </vehicle-registration>
 
-                        <accompaniment-card-cat-cpc [formGroup]="form"
-                                                    [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async"
-                                                    [interpreterAccompaniment]="pageState.interpreterAccompaniment$ | async"
-                                                    (supervisorAccompanimentChange)="supervisorAccompanimentToggled()"
-                                                    (interpreterAccompanimentChange)="interpreterAccompanimentToggled()">
-                        </accompaniment-card-cat-cpc>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </form>
-    </div>
+            <vehicle-details-cat-cpc
+              *ngIf="showVehicleDetails() && !(pageState.delegatedTest$ | async)"
+              [formGroup]="form"
+              [configuration]="pageState?.configuration$ | async"
+              (vehicleDetailsChange)="vehicleConfiguration($event)">
+            </vehicle-details-cat-cpc>
+
+            <combination
+              [formGroup]="form"
+              [combinations]="combinations"
+              [combination]="pageState.combination$ | async"
+              (combinationChange)="combinationSelected($event)">
+            </combination>
+
+            <accompaniment-card-cat-cpc [formGroup]="form"
+                                        [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async"
+                                        [interpreterAccompaniment]="pageState.interpreterAccompaniment$ | async"
+                                        (supervisorAccompanimentChange)="supervisorAccompanimentToggled()"
+                                        (interpreterAccompanimentChange)="interpreterAccompanimentToggled()">
+            </accompaniment-card-cat-cpc>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
 </ion-content>
 
 <ion-footer>
-    <ion-row class="mes-full-width-card box-shadow">
-        <button type="submit" class="mes-primary-button" id="continue-to-test-report-button" ion-button
-                (click)="onSubmit()">
-            <h3>Continue to test report</h3>
-        </button>
-    </ion-row>
+  <ion-row class="mes-full-width-card box-shadow">
+    <button type="submit" class="mes-primary-button" id="continue-to-test-report-button" ion-button
+            (click)="onSubmit()">
+      <h3>Continue to test report</h3>
+    </button>
+  </ion-row>
 </ion-footer>
