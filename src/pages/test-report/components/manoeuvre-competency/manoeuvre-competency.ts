@@ -21,12 +21,15 @@ import { map } from 'rxjs/operators';
 import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../test-report.actions';
+import { getDelegatedTestIndicator } from '../../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface ManoeuvreCompetencyComponentState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvreCompetencyOutcome$: Observable<ManoeuvreOutcome | null>;
+  delegatedTest$: Observable<boolean>;
 }
 
 @Component({
@@ -56,6 +59,7 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
   isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
+  isDelegated: boolean = false;
   manoeuvreCompetencyOutcome: ManoeuvreOutcome | null;
 
   constructor(
@@ -91,6 +95,10 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
           return null;
         }),
       ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
     };
 
     const {
@@ -98,12 +106,14 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
       isSeriousMode$,
       isDangerousMode$,
       manoeuvreCompetencyOutcome$,
+      delegatedTest$,
     } = this.componentState;
 
     const merged$ = merge(
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
+      delegatedTest$.pipe(map(toggle => this.isDelegated = toggle)),
       manoeuvreCompetencyOutcome$.pipe(map(outcome => this.manoeuvreCompetencyOutcome = outcome)),
     );
 
