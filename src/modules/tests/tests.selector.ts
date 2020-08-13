@@ -65,6 +65,7 @@ export const getActivityCode = (test: TestResultCommonSchema) => {
 
   const activityCodeIndex = activityCodeModelList.findIndex(
     activityCode => test.activityCode === activityCode.activityCode);
+  console.log('getActCode', activityCodeModelList[activityCodeIndex]);
   return activityCodeModelList[activityCodeIndex];
 
 };

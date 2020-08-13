@@ -14,7 +14,7 @@
         <ion-grid class="grid">
             <activity-code id="activity-code-card" [formGroup]="form"
                            [activityCodeModel]="pageState.activityCode$ | async"
-                           [activityCodeOptions]="activityCodeOptions"
+                           [activityCodeOptions]="activityCodeOptions$ | async"
                            (activityCodeChange)="activityCodeChanged($event)"
                            [disabled]="false">
             </activity-code>

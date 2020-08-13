@@ -34,7 +34,7 @@ import {
 import { isWelshTest }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
-  ActivityCodeModel,
+  ActivityCodeModel, activityCodeModelList, activityCodeModelListDelEx,
   populateActivityCodeModelList,
 } from '../../office/components/activity-code/activity-code.constants';
 import { PersistTests } from '../../../modules/tests/tests.actions';
@@ -56,12 +56,12 @@ import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 
 interface NonPassFinalisationPageState {
+  activityCode$: Observable<ActivityCodeModel>;
   candidateName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   isTestOutcomeSet$: Observable<boolean>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
-  activityCode$: Observable<ActivityCodeModel>;
   displayDebriefWitnessed$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   isWelshTest$: Observable<boolean>;
@@ -76,7 +76,7 @@ export class NonPassFinalisationCatCPCPage extends BasePageComponent implements 
 
   pageState: NonPassFinalisationPageState;
   form: FormGroup;
-  activityCodeOptions: ActivityCodeModel[];
+  activityCodeOptions$: Observable<ActivityCodeModel[]>;
   slotId: string;
 
   constructor(
@@ -89,8 +89,14 @@ export class NonPassFinalisationCatCPCPage extends BasePageComponent implements 
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
-    this.activityCodeOptions = populateActivityCodeModelList(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
+    console.log(this.appConfig.getAppConfig().role);
+    this.activityCodeOptions$ = this.activityCode(this.appConfig.getAppConfig().role !== ExaminerRole.DLG);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
+  }
+
+  activityCode(flag) {
+    if (flag) return activityCodeModelListDelEx;
+    return activityCodeModelList;
   }
 
   ngOnInit() {
@@ -104,6 +110,9 @@ export class NonPassFinalisationCatCPCPage extends BasePageComponent implements 
       select(getCurrentTest),
     );
     this.pageState = {
+      activityCode$: currentTest$.pipe(
+        select(getActivityCode),
+      ),
       candidateName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
@@ -123,9 +132,6 @@ export class NonPassFinalisationCatCPCPage extends BasePageComponent implements 
       ),
       testOutcomeText$: currentTest$.pipe(
         select(getTestOutcomeText),
-      ),
-      activityCode$: currentTest$.pipe(
-        select(getActivityCode),
       ),
       displayDebriefWitnessed$: currentTest$.pipe(
         select(getTestOutcome),
