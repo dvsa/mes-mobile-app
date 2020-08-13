@@ -56,7 +56,7 @@ export const questionCombinations: Combination[] = [
   },
   {
     code: 'PCV1',
-    questions: ['Q01', 'Q04', 'Q03', 'Q06'],
+    questions: ['Q01', 'Q03', 'Q04', 'Q06'],
     additionalText: 'Fire ex',
   },
   {
