@@ -63,9 +63,6 @@
         <div *ngIf="!(pageState.delegatedTest$ | async)">
           <warning-banner warningText="Is the load secure?"></warning-banner>
         </div>
-        <div *ngIf="pageState.delegatedTest$ | async">
-          <warning-banner warningText="Vehicle checks are a legal requirement"></warning-banner>
-        </div>
 
       </ion-grid>
     </form>
