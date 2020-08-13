@@ -26,6 +26,10 @@ export class DelegatedRekeySearchProvider {
     { referenceNumber: '12345678925', testCategory: TestCategory.DE, isWelshTest: true },
     { referenceNumber: '12345678926', testCategory: TestCategory.D1E, isWelshTest: false },
     { referenceNumber: '12345678927', testCategory: TestCategory.D1E, isWelshTest: true },
+    { referenceNumber: '12345678928', testCategory: TestCategory.CCPC, isWelshTest: false },
+    { referenceNumber: '12345678929', testCategory: TestCategory.CCPC, isWelshTest: true },
+    { referenceNumber: '12345678930', testCategory: TestCategory.DCPC, isWelshTest: false },
+    { referenceNumber: '12345678931', testCategory: TestCategory.DCPC, isWelshTest: true },
   ];
   constructor() {
   }
@@ -41,7 +45,7 @@ export class DelegatedRekeySearchProvider {
         body: getDelegatedBooking(foundReference.testCategory, foundReference.isWelshTest),
       }));
     }
-    if (applicationReference === '12345678928') {
+    if (applicationReference === '12345678950') {
       return throwError(new HttpErrorResponse({
         error: 'Internal server error',
         status: 500,

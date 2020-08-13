@@ -46,6 +46,8 @@ import {
   Combination,
 } from '../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -54,6 +56,7 @@ interface WaitingRoomToCarPageState {
   interpreterAccompaniment$: Observable<boolean>;
   combination$: Observable<CombinationCodes>;
   configuration$: Observable<Configuration>;
+  delegatedTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -115,6 +118,10 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
       configuration$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getVehicleConfiguration),
+      ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
       ),
     };
 
