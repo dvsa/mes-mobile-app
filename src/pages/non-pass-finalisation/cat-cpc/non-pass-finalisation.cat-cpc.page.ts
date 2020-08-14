@@ -34,8 +34,7 @@ import {
 import { isWelshTest }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
-  ActivityCodeModel, activityCodeModelList, activityCodeModelListDelEx,
-  populateActivityCodeModelList,
+  ActivityCodeModel,
 } from '../../office/components/activity-code/activity-code.constants';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
@@ -54,6 +53,7 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
+import { ActivityCodeOptionsProvider } from '../../../providers/activity-code-options/activity-code-options';
 
 interface NonPassFinalisationPageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -76,7 +76,7 @@ export class NonPassFinalisationCatCPCPage extends BasePageComponent implements 
 
   pageState: NonPassFinalisationPageState;
   form: FormGroup;
-  activityCodeOptions$: Observable<ActivityCodeModel[]>;
+  activityCodeOptions: ActivityCodeModel[];
   slotId: string;
 
   constructor(
@@ -86,17 +86,13 @@ export class NonPassFinalisationCatCPCPage extends BasePageComponent implements 
     public authenticationProvider: AuthenticationProvider,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public appConfig: AppConfigProvider,
+    public activityCodeOptionsProvider: ActivityCodeOptionsProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
-    console.log(this.appConfig.getAppConfig().role);
-    this.activityCodeOptions$ = this.activityCode(this.appConfig.getAppConfig().role !== ExaminerRole.DLG);
+    this.activityCodeOptions =
+      this.activityCodeOptionsProvider.getActivityCode(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-  }
-
-  activityCode(flag) {
-    if (flag) return activityCodeModelListDelEx;
-    return activityCodeModelList;
   }
 
   ngOnInit() {

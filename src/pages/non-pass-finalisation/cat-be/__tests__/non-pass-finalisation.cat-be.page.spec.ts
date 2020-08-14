@@ -32,7 +32,7 @@ import { configureTestSuite } from 'ng-bullet';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
 
-describe('NonPassFinalisationCatBEPage', () => {
+fdescribe('NonPassFinalisationCatBEPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatBEPage>;
   let component: NonPassFinalisationCatBEPage;
   let store$: Store<StoreModel>;

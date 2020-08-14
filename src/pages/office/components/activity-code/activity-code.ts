@@ -46,8 +46,7 @@ export class ActivityCodeComponent implements OnChanges {
   }
 
   isSelectDisabled(): boolean {
-    // return this.disabled || (this.activityCodeModel && parseInt(this.activityCodeModel.activityCode, 10) < 4)
-    return false;
+    return this.disabled || (this.activityCodeModel && parseInt(this.activityCodeModel.activityCode, 10) < 4);
   }
 
   isOptionDisabled(activityCode: ActivityCode): boolean {
