@@ -2,7 +2,10 @@ import { TestStatus } from './test-status/test-status.model';
 import { JournalData, ActivityCode, TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/common';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories/index';
 import { TestsModel } from './tests.model';
-import { activityCodeModelList } from '../../pages/office/components/activity-code/activity-code.constants';
+import {
+  activityCodeModelList,
+  activityCodeModelListDelegatedExaminer,
+} from '../../pages/office/components/activity-code/activity-code.constants';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { startsWith } from 'lodash';
 import { TestOutcome } from './tests.constants';
@@ -62,11 +65,14 @@ export const isPassed = (test: TestResultSchemasUnion): boolean => {
 };
 
 export const getActivityCode = (test: TestResultCommonSchema) => {
-
-  const activityCodeIndex = activityCodeModelList.findIndex(
-    activityCode => test.activityCode === activityCode.activityCode);
-  return activityCodeModelList[activityCodeIndex];
-
+  if (test.delegatedTest) {
+    return activityCodeModelListDelegatedExaminer.find((code) => {
+      return code.activityCode === test.activityCode;
+    });
+  }
+  return activityCodeModelList.find((code) => {
+    return code.activityCode === test.activityCode;
+  });
 };
 
 export const isPracticeMode = (tests: TestsModel) : boolean =>

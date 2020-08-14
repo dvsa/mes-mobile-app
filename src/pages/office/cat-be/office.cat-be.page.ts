@@ -88,7 +88,7 @@ import { EyesightTestAddComment } from '../../../modules/tests/test-data/common/
 import { CommentSource, FaultSummary } from '../../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map.cat-be';
-import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
+import { ActivityCodeModel, getActivityCodeOptions } from '../components/activity-code/activity-code.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
@@ -106,6 +106,8 @@ import {
   vehicleChecksExist,
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.selector';
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -176,12 +178,13 @@ export class OfficeCatBEPage extends BasePageComponent {
     public alertController: AlertController,
     private faultCountProvider: FaultCountProvider,
     private faultSummaryProvider: FaultSummaryProvider,
+    public appConfig: AppConfigProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-    this.activityCodeOptions = activityCodeModelList;
+    this.activityCodeOptions = getActivityCodeOptions(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
   }
 
   ionViewDidEnter(): void {
