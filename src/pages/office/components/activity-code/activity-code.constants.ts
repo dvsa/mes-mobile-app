@@ -79,7 +79,6 @@ export function populateActivityCodeModelList(isDelegatedExaminer?: boolean): Ac
   }
 
   codeList.sort((a, b) => (Number(a.activityCode) > Number(b.activityCode)) ? 1 : -1);
-  console.log('codeList', codeList);
   return codeList;
 }
 
