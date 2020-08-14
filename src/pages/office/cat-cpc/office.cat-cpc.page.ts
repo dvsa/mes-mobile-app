@@ -60,7 +60,7 @@ import {
 } from '@dvsa/mes-test-schema/categories/common';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map.cat-adi-part2';
-import { ActivityCodeModel, activityCodeModelList } from '../components/activity-code/activity-code.constants';
+import { ActivityCodeModel } from '../components/activity-code/activity-code.constants';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_CPC, JOURNAL_PAGE } from '../../page-names.constants';
@@ -79,6 +79,9 @@ import {
   questionCombinations,
 } from '../../../shared/constants/cpc-questions/cpc-question-combinations.constants';
 import { TestOutcome } from '../../../shared/models/test-outcome';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { ActivityCodeOptionsProvider } from '../../../providers/activity-code-options/activity-code-options';
+import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -133,11 +136,14 @@ export class OfficeCatCPCPage extends BasePageComponent {
     public keyboard: Keyboard,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public alertController: AlertController,
+    public appConfig: AppConfigProvider,
+    public activityCodeOptionsProvider: ActivityCodeOptionsProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-    this.activityCodeOptions = activityCodeModelList;
+    this.activityCodeOptions =
+      this.activityCodeOptionsProvider.getActivityCode(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
   }
 
   ionViewDidEnter(): void {
