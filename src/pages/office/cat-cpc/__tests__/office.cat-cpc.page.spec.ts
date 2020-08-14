@@ -47,6 +47,8 @@ import { CompleteTest, OfficeValidationError } from '../../office.actions';
 import { of, Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
+import { AppConfigProvider } from '../../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
 
 describe('OfficeCatCPCPage', () => {
   let fixture: ComponentFixture<OfficeCatCPCPage>;
@@ -253,6 +255,7 @@ describe('OfficeCatCPCPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: AlertController, useClass: AlertControllerMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     });
   });

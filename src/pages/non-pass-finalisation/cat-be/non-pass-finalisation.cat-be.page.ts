@@ -33,7 +33,7 @@ import {
 import { isWelshTest }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
-  ActivityCodeModel,
+  ActivityCodeModel, getActivityCodeOptions,
 } from '../../office/components/activity-code/activity-code.constants';
 import { FormGroup } from '@angular/forms';
 import { PersistTests } from '../../../modules/tests/tests.actions';
@@ -54,7 +54,6 @@ import { SetActivityCode } from '../../../modules/tests/activity-code/activity-c
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
-import { ActivityCodeOptionsProvider } from '../../../providers/activity-code-options/activity-code-options';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -89,12 +88,10 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
     public authenticationProvider: AuthenticationProvider,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public appConfig: AppConfigProvider,
-    public activityCodeOptionsProvider: ActivityCodeOptionsProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
-    this.activityCodeOptions =
-      this.activityCodeOptionsProvider.getActivityCode(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
+    this.activityCodeOptions = getActivityCodeOptions(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 
