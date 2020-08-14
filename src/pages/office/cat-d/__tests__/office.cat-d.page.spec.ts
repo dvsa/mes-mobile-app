@@ -66,6 +66,8 @@ import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-
 import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-checks/vehicle-checks-office-card';
 import { configureTestSuite } from 'ng-bullet';
 import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
+import { AppConfigProvider } from '../../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
 
 describe('OfficePage Cat D', () => {
   let fixture: ComponentFixture<OfficeCatDPage>;
@@ -149,6 +151,7 @@ describe('OfficePage Cat D', () => {
         { provide: ToastController, useClass: ToastControllerMock },
         { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
         { provide: FaultSummaryProvider, useClass: FaultSummaryProvider },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     });
   });

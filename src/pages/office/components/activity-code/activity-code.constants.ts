@@ -85,3 +85,8 @@ export function populateActivityCodeModelList(isDelegatedExaminer?: boolean): Ac
 
 export let activityCodeModelListDelegatedExaminer: ActivityCodeModel[] = populateActivityCodeModelList(true);
 export let activityCodeModelList: ActivityCodeModel[] = populateActivityCodeModelList(false);
+
+export function getActivityCodeOptions(delegatedExaminer: boolean): ActivityCodeModel[] {
+  if (delegatedExaminer) return activityCodeModelListDelegatedExaminer;
+  return activityCodeModelList;
+}

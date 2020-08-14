@@ -90,7 +90,7 @@ import { CommentSource, FaultSummary } from '../../../shared/models/fault-markin
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office-behaviour-map.cat-c';
 import {
-  ActivityCodeModel,
+  ActivityCodeModel, getActivityCodeOptions,
 } from '../components/activity-code/activity-code.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
@@ -112,7 +112,6 @@ import { getVehicleChecks } from '../../../modules/tests/test-data/cat-c/test-da
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
-import { ActivityCodeOptionsProvider } from '../../../providers/activity-code-options/activity-code-options';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -187,14 +186,12 @@ export class OfficeCatCPage extends BasePageComponent {
     private faultCountProvider: FaultCountProvider,
     private faultSummaryProvider: FaultSummaryProvider,
     public appConfig: AppConfigProvider,
-    public activityCodeOptionsProvider: ActivityCodeOptionsProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-    this.activityCodeOptions =
-      this.activityCodeOptionsProvider.getActivityCode(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
+    this.activityCodeOptions = getActivityCodeOptions(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
   }
 
   ionViewDidEnter(): void {
