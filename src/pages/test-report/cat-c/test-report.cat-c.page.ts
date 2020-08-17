@@ -235,11 +235,19 @@ export class TestReportCatCPage extends BasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        this.navController.push(CAT_C.DEBRIEF_PAGE);
+        if (this.isDelegated) {
+          this.navController.push(CAT_C.OFFICE_PAGE);
+        } else {
+          this.navController.push(CAT_C.DEBRIEF_PAGE);
+        }
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new TerminateTestFromTestReport());
-        this.navController.push(CAT_C.DEBRIEF_PAGE);
+        if (this.isDelegated) {
+          this.navController.push(CAT_C.OFFICE_PAGE);
+        } else {
+          this.navController.push(CAT_C.DEBRIEF_PAGE);
+        }
         break;
     }
   }
