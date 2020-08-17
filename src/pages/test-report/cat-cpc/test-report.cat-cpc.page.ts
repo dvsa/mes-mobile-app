@@ -35,6 +35,9 @@ import { ModalEvent } from '../test-report.constants';
 import { CalculateTestResult, TerminateTestFromTestReport } from '../test-report.actions';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import { getNextPageDebriefOffice } from '../../../shared/constants/getNextPageDebriefOffice.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -46,6 +49,7 @@ interface TestReportPageState {
   question5$: Observable<Question5>;
   overallPercentage$: Observable<number>;
   category$: Observable<CategoryCode>;
+  delegatedTest$: Observable<boolean>;
 }
 
 type ToggleEvent = {
@@ -73,6 +77,7 @@ export class TestReportCatCPCPage extends BasePageComponent {
   questions: (Question | Question5) [];
   overallPercentage: number;
   category: CategoryCode;
+  isDelegated: boolean;
 
   constructor(
     private testResultProvider: TestResultProvider,
@@ -134,6 +139,10 @@ export class TestReportCatCPCPage extends BasePageComponent {
       category$: currentTest$.pipe(
         select(getTestCategory),
       ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
     };
   }
 
@@ -192,11 +201,11 @@ export class TestReportCatCPCPage extends BasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        this.navController.push(CAT_CPC.DEBRIEF_PAGE);
+        this.navController.push(getNextPageDebriefOffice(CAT_CPC, this.isDelegated));
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new TerminateTestFromTestReport());
-        this.navController.push(CAT_CPC.DEBRIEF_PAGE);
+        this.navController.push(getNextPageDebriefOffice(CAT_CPC, this.isDelegated));
         break;
     }
   }
@@ -216,10 +225,12 @@ export class TestReportCatCPCPage extends BasePageComponent {
       this.pageState.question5$,
       this.pageState.overallPercentage$,
       this.pageState.category$,
-    ).subscribe(([question1, question2, question3, question4, question5, overallPercentage, category]) => {
+      this.pageState.delegatedTest$,
+    ).subscribe(([question1, question2, question3, question4, question5, overallPercentage, category, delegated]) => {
       this.questions = [question1, question2, question3, question4, question5];
       this.overallPercentage = overallPercentage;
       this.category = category;
+      this.isDelegated = delegated;
     });
   }
 }

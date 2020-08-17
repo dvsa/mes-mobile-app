@@ -24,7 +24,7 @@
           [eyesightFailRadioChecked]="pageState.eyesightTestFailed$ | async" (eyesightTestResultChange)="eyesightTestResultChanged($event)"></eyesight-test>
 
         <ion-row *ngIf="pageState.eyesightTestFailed$ | async">
-          <eyesight-failure-confirmation [nextPageOnFail]="this.getDebriefPage()" [cancelFn]="eyesightFailCancelled"></eyesight-failure-confirmation>
+          <eyesight-failure-confirmation [nextPageOnFail]="this.nextPage()" [cancelFn]="eyesightFailCancelled"></eyesight-failure-confirmation>
         </ion-row>
 
         <ion-row no-padding [hidden]="pageState.eyesightTestFailed$ | async" id="post-eyesight-form-content">
