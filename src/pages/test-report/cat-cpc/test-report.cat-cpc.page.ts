@@ -37,7 +37,7 @@ import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
-import { getNextPage } from '../../../shared/constants/getNextPage.constants';
+import { getNextPageDebriefOffice } from '../../../shared/constants/getNextPageDebriefOffice.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -201,11 +201,11 @@ export class TestReportCatCPCPage extends BasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        this.navController.push(getNextPage(CAT_CPC, this.isDelegated));
+        this.navController.push(getNextPageDebriefOffice(CAT_CPC, this.isDelegated));
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new TerminateTestFromTestReport());
-        this.navController.push(getNextPage(CAT_CPC, this.isDelegated));
+        this.navController.push(getNextPageDebriefOffice(CAT_CPC, this.isDelegated));
         break;
     }
   }

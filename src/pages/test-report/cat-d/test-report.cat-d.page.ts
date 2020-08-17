@@ -47,7 +47,7 @@ import { getTestRequirementsCatD }
 import { getTestData } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
-import { getNextPage } from '../../../shared/constants/getNextPage.constants';
+import { getNextPageDebriefOffice } from '../../../shared/constants/getNextPageDebriefOffice.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -233,11 +233,11 @@ export class TestReportCatDPage extends BasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        this.navController.push(getNextPage(CAT_D, this.isDelegated));
+        this.navController.push(getNextPageDebriefOffice(CAT_D, this.isDelegated));
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new TerminateTestFromTestReport());
-        this.navController.push(getNextPage(CAT_D, this.isDelegated));
+        this.navController.push(getNextPageDebriefOffice(CAT_D, this.isDelegated));
         break;
     }
   }
@@ -247,11 +247,11 @@ export class TestReportCatDPage extends BasePageComponent {
   }
 
   onContinue = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(getNextPage(CAT_D, this.isDelegated)));
+    this.modal.dismiss().then(() => this.navController.push(getNextPageDebriefOffice(CAT_D, this.isDelegated)));
   }
 
   onTerminate = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(getNextPage(CAT_D, this.isDelegated)));
+    this.modal.dismiss().then(() => this.navController.push(getNextPageDebriefOffice(CAT_D, this.isDelegated)));
   }
 
   showUncoupleRecouple = (): boolean => this.testCategory === TestCategory.DE || this.testCategory === TestCategory.D1E;

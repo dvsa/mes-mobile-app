@@ -48,7 +48,7 @@ import { getTestCategory } from '../../../modules/tests/category/category.reduce
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
-import { getNextPage } from '../../../shared/constants/getNextPage.constants';
+import { getNextPageDebriefOffice } from '../../../shared/constants/getNextPageDebriefOffice.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -236,11 +236,11 @@ export class TestReportCatCPage extends BasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        this.navController.push(getNextPage(CAT_C, this.isDelegated));
+        this.navController.push(getNextPageDebriefOffice(CAT_C, this.isDelegated));
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new TerminateTestFromTestReport());
-        this.navController.push(getNextPage(CAT_C, this.isDelegated));
+        this.navController.push(getNextPageDebriefOffice(CAT_C, this.isDelegated));
         break;
     }
   }
@@ -250,11 +250,11 @@ export class TestReportCatCPage extends BasePageComponent {
   }
 
   onContinue = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(getNextPage(CAT_C, this.isDelegated)));
+    this.modal.dismiss().then(() => this.navController.push(getNextPageDebriefOffice(CAT_C, this.isDelegated)));
   }
 
   onTerminate = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(getNextPage(CAT_C, this.isDelegated)));
+    this.modal.dismiss().then(() => this.navController.push(getNextPageDebriefOffice(CAT_C, this.isDelegated)));
   }
 
   showUncoupleRecouple = (): boolean => this.testCategory === TestCategory.CE || this.testCategory === TestCategory.C1E;
