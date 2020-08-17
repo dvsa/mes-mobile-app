@@ -48,6 +48,7 @@ import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import { getNextPage } from '../../../shared/constants/getNextPage.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -227,19 +228,11 @@ export class TestReportCatBEPage extends BasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        if (this.isDelegated) {
-          this.navController.push(CAT_BE.OFFICE_PAGE);
-        } else {
-          this.navController.push(CAT_BE.DEBRIEF_PAGE);
-        }
+        this.navController.push(getNextPage(CAT_BE, this.isDelegated));
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new TerminateTestFromTestReport());
-        if (this.isDelegated) {
-          this.navController.push(CAT_BE.OFFICE_PAGE);
-        } else {
-          this.navController.push(CAT_BE.DEBRIEF_PAGE);
-        }
+        this.navController.push(getNextPage(CAT_BE, this.isDelegated));
         break;
     }
   }
@@ -249,10 +242,10 @@ export class TestReportCatBEPage extends BasePageComponent {
   }
 
   onContinue = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(CAT_BE.DEBRIEF_PAGE));
+    this.modal.dismiss().then(() => this.navController.push(getNextPage(CAT_BE, this.isDelegated)));
   }
 
   onTerminate = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(CAT_BE.DEBRIEF_PAGE));
+    this.modal.dismiss().then(() => this.navController.push(getNextPage(CAT_BE, this.isDelegated)));
   }
 }

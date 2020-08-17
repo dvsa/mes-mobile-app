@@ -90,6 +90,7 @@ import {
 import {
   VehicleChecksCompletedToggled,
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
+import { getNextPage } from '../../../shared/constants/getNextPage.constants';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -368,8 +369,8 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
     this.store$.dispatch(action);
   }
 
-  getDebriefPage() {
-    return CAT_BE.DEBRIEF_PAGE;
+  nextPage() {
+    return getNextPage(CAT_BE, this.isDelegated);
   }
 
 }
