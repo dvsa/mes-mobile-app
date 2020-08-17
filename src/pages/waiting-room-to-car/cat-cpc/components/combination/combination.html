@@ -11,6 +11,7 @@
                         cancelText="Cancel"
                         placeholder="Select a combination"
                         formControlName="combination"
+                        id="combination"
                         [class.ng-invalid]="invalid"
                         (ionChange)="combinationChanged($event)"
                         [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}">
