@@ -17,7 +17,7 @@ import {
   SavingWriteUpForLater,
   OfficeValidationError,
 } from '../office.actions';
-import { Observable } from 'rxjs';
+import { Observable, merge, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
@@ -108,6 +108,8 @@ import {
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -145,6 +147,7 @@ interface OfficePageState {
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
+  delegatedTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -159,10 +162,12 @@ export class OfficeCatBEPage extends BasePageComponent {
   drivingFaultCtrl: String = 'drivingFaultCtrl';
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
+  isDelegated: boolean = false;
   static readonly maxFaultCount = 15;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
+  subscription: Subscription;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -399,7 +404,22 @@ export class OfficeCatBEPage extends BasePageComponent {
         select(getVehicleChecks),
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
     };
+    this.setupSubscription();
+  }
+
+  setupSubscription() {
+    this.subscription = merge(
+      this.pageState.delegatedTest$.pipe(map(value => this.isDelegated = value)),
+      ).subscribe();
+  }
+
+  ionViewDidLeave() {
+    this.subscription.unsubscribe();
   }
 
   popToRoot() {

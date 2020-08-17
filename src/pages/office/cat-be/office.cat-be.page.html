@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar hideBackButton>
+  <ion-navbar [hideBackButton]="!this.isDelegated">
     <ion-title>Office</ion-title>
     <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
       <button ion-button (click)="logout()">Sign Out</button>
