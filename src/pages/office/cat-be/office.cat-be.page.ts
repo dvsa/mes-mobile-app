@@ -166,9 +166,9 @@ export class OfficeCatBEPage extends BasePageComponent {
   drivingFaultCtrl: String = 'drivingFaultCtrl';
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
+  isDelegated: boolean = false;
   static readonly maxFaultCount = 15;
   subscription: Subscription;
-  isDelegated: boolean;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
@@ -417,10 +417,13 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   setupSubscription() {
-    const { delegatedTest$ } = this.pageState;
     this.subscription = merge(
-      delegatedTest$.pipe(map(value => this.isDelegated = value)),
-    ).subscribe();
+      this.pageState.delegatedTest$.pipe(map(value => this.isDelegated = value)),
+      ).subscribe();
+  }
+
+  ionViewDidLeave() {
+    this.subscription.unsubscribe();
   }
 
   popToRoot() {
