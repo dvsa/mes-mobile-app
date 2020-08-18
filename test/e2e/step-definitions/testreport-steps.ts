@@ -50,6 +50,10 @@ Before({ tags: '@catADI2' }, () => {
   this.testCategory = 'adi-part2';
 });
 
+Before({ tags: '@catcpc' }, () => {
+  this.testCategory = 'cpc';
+});
+
 When('I end the test', () => {
   TestReportPage.clickEndTestButton();
 });
@@ -60,6 +64,9 @@ When('I end the test with the speed requirements not met', () => {
 });
 
 When('I continue to debrief', () => {
+  if (this.testCategory === 'cpc') {
+    TestReportPage.waitForTerminateButton();
+  }
   TestReportPage.clickContinueToDebriefbutton();
 });
 
@@ -320,4 +327,16 @@ When('I click Emergency Stop Not Met', () => {
 
 When('I click Avoidance Stop Not Met', () => {
   TestReportPage.bikeControlStops.clickAvoidanceMetCondition();
+});
+
+When('I select CPC module assessment question {string}', (question: string) => {
+  TestReportPage.clickCPCModuleAssessmentCheckBox(question);
+});
+
+When('I click on Next Question button', () => {
+  TestReportPage.clickNextQuestion();
+});
+
+When('I click on View Test Summary button', () => {
+  TestReportPage.clickViewTestSummary();
 });

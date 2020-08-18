@@ -69,6 +69,11 @@ Before({ tags: '@catADI2' }, () => {
   this.testCategory = 'adi-part2';
 });
 
+Before({ tags: '@catcpc' }, () => {
+  this.testCategory = 'cpc';
+});
+
+
 // We need this much timeout for the login process to complete
 setDefaultTimeout(TEST_CONFIG.DEFAULT_TIMEOUT);
 

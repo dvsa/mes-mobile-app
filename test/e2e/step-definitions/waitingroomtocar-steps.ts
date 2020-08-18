@@ -48,6 +48,10 @@ Before({ tags: '@catADI2' }, () => {
   this.testCategory = 'adi-part2';
 });
 
+Before({ tags: '@catcpc' }, () => {
+  this.testCategory = 'cpc';
+});
+
 When('I select a tell me question', () => {
   WaitingRoomToCarPage.selectTellMeQuestion('T2 - Tyre pressures');
 });
@@ -115,4 +119,12 @@ When('I select the {string} page', (pageTitle, questionsAndResults) => {
 
 When('I continue to test report', () => {
   WaitingRoomToCarPage.submitWRTC();
+});
+
+When('I select the vehicle details', () => {
+  WaitingRoomToCarPage.selectVehicleDetails();
+});
+
+When('I select the Combination options {string}', (optionValue) => {
+  WaitingRoomToCarPage.selectCombination(optionValue);
 });

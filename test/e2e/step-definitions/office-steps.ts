@@ -48,31 +48,40 @@ Before({tags: '@catADI2'}, () => {
   this.testCategory = 'adi-part2';
 });
 
+Before({ tags: '@catcpc' }, () => {
+  this.testCategory = 'cpc';
+});
+
+
 When('I complete the office write up', () => {
-  if (this.testCategory !== 'home-test') {
-    if (!(this.testCategory === 'a-mod1')) {
-      OfficePage.enterRouteNumber('2');
-      if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' ||
-        this.testCategory === 'ce' || this.testCategory === 'd') {
-        OfficePage.enterIndependentDriving('diagram');
-      } else if (this.testCategory === 'a-mod2') {
-        OfficePage.enterTestConductedOn('cartobike');
-        OfficePage.enterIndependentDriving('diagram');
-      } else if (this.testCategory === 'adi-part2') {
-        OfficePage.enterIndependentDriving('satnav');
-        OfficePage.selectShowMeQuestion('1', 'A20 - Front demister');
-        OfficePage.selectShowMeQuestion('2', 'A21 - Side window');
+  if (this.testCategory === 'cpc') {
+    OfficePage.enterCandidateDescription();
+  } else {
+    if (this.testCategory !== 'home-test') {
+      if (!(this.testCategory === 'a-mod1')) {
+        OfficePage.enterRouteNumber('2');
+        if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' ||
+          this.testCategory === 'ce' || this.testCategory === 'd') {
+          OfficePage.enterIndependentDriving('diagram');
+        } else if (this.testCategory === 'a-mod2') {
+          OfficePage.enterTestConductedOn('cartobike');
+          OfficePage.enterIndependentDriving('diagram');
+        } else if (this.testCategory === 'adi-part2') {
+          OfficePage.enterIndependentDriving('satnav');
+          OfficePage.selectShowMeQuestion('1', 'A20 - Front demister');
+          OfficePage.selectShowMeQuestion('2', 'A21 - Side window');
+        } else {
+          OfficePage.enterShowMe('S5 - Horn');
+          OfficePage.enterIndependentDriving('satnav');
+          OfficePage.enterShowMe('S1 - Rear windscreen');
+        }
       } else {
-        OfficePage.enterShowMe('S5 - Horn');
-        OfficePage.enterIndependentDriving('satnav');
-        OfficePage.enterShowMe('S1 - Rear windscreen');
+        OfficePage.clickCircuit('left');
       }
-    } else {
-      OfficePage.clickCircuit('left');
     }
+    OfficePage.enterCandidateDescription();
+    OfficePage.enterWeatherConditions();
   }
-  OfficePage.enterCandidateDescription();
-  OfficePage.enterWeatherConditions();
 });
 
 When('I complete the office write up with Not applicable to independent driving and show me question', () => {

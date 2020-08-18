@@ -23,6 +23,20 @@ class TestReportPage extends Page {
 
   }
 
+  clickCPCModuleAssessmentCheckBox(resultNumber) {
+    const checkBox = this.getElementById(`answer${resultNumber}`);
+    checkBox.click();
+  }
+  clickNextQuestion() {
+    const nextButton = this.getElementById(`next-page-button`);
+    nextButton.click();
+  }
+
+  clickViewTestSummary() {
+    const viewTestSummary = this.getElementById(`view-summary-button`);
+    viewTestSummary.click();
+  }
+
   completeUncoupleRecouple() {
     this.longPressElementByXPath('//competency-button[contains(@class, "uncouple-recouple-tick")]');
   }
@@ -141,7 +155,12 @@ class TestReportPage extends Page {
     this.clickElementById('dangerous-button');
   }
 
+  waitForTerminateButton() {
+    this.getElementByXPath('//button/span[contains(text(),"Terminate test")]');
+  }
+
   clickContinueToDebriefbutton() {
+    this.getElementByXPath('//button[span[h3[text() = "Continue to debrief"]]]');
     this.clickElementByXPath('//button[span[h3[text() = "Continue to debrief"]]]');
   }
 

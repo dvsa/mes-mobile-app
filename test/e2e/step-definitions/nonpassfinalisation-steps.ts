@@ -45,6 +45,11 @@ Before({ tags: '@catADI2' }, () => {
   this.testCategory = 'adi-part2';
 });
 
+Before({ tags: '@catcpc' }, () => {
+  this.testCategory = 'cpc';
+});
+
+
 When('I continue to the back to office page', () => {
   NonPassFinalisationPage.clickD255Yes();
   DebriefPage.clickDebriefWitnessedYes();

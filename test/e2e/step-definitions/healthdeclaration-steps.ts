@@ -49,6 +49,10 @@ Before({ tags: '@catADI2' }, () => {
   this.testCategory = 'adi-part2';
 });
 
+Before({ tags: '@catcpc' }, () => {
+  this.testCategory = 'cpc';
+});
+
 Then('the pass certificate number should be {string}', (certificateNumber) => {
   const passCertificateNumber = HealthDeclarationPage.getPassCertificateNumber();
   passCertificateNumber.getText().then((textValue) => {
@@ -61,7 +65,9 @@ When('I try to confirm the health declaration', () => {
 });
 
 When('I complete the health declaration', () => {
-  HealthDeclarationPage.clickHealthDeclarationCheckbox();
+  if (this.testCategory !== 'cpc') {
+    HealthDeclarationPage.clickHealthDeclarationCheckbox();
+  }
   HealthDeclarationPage.clickReceiptDeclarationCheckbox();
   HealthDeclarationPage.clickHealthSignatureField(this.testCategory);
   HealthDeclarationPage.confirmHealthDeclaration(this.testCategory);

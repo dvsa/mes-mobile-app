@@ -21,9 +21,13 @@ class DebriefPage extends Page {
       } else {
         this.textFieldInputViaNativeMode('//XCUIElementTypeOther[XCUIElementTypeOther[@name="Pass certificate number"]]/'
           + 'following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField', 'A123456X');
-        this.clickProvisionalLicenceReceived();
+        if (testCategory !== 'cpc') {
+          this.clickProvisionalLicenceReceived();
+        }
       }
-      this.clickD255Yes();
+      if (testCategory !== 'cpc') {
+        this.clickD255Yes();
+      }
       this.clickDebriefWitnessedYes();
     }
   }
