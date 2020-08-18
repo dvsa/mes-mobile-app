@@ -168,10 +168,10 @@ export class OfficeCatBEPage extends BasePageComponent {
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
   isDelegated: boolean = false;
   static readonly maxFaultCount = 15;
-  subscription: Subscription;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
+  subscription: Subscription;
 
   constructor(
     private store$: Store<StoreModel>,
