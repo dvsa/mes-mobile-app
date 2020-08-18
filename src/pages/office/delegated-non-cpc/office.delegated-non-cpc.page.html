@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar hideBackButton>
+  <ion-navbar [hideBackButton]="!this.isDelegated">
     <ion-title>Office</ion-title>
     <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
       <button ion-button (click)="logout()">Sign Out</button>
@@ -34,6 +34,49 @@
                           [routeNumber]="pageState.routeNumber$ | async" [outcome]="pageState.testOutcome$ | async"
                           (routeNumberChange)="routeNumberChanged($event)" [formGroup]="form">
             </route-number>
+
+            <license-provided
+              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              [form]="form"
+              [license]="pageState.provisionalLicense$ | async"
+              [licenseReceivedLabel] = "'Provisional licence Received'"
+              (licenseReceived)="provisionalLicenseReceived()"
+              (licenseNotReceived)="provisionalLicenseNotReceived()">
+            </license-provided>
+
+            <transmission
+              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              [formGroup]="form"
+              [transmission]="pageState.transmission$ | async"
+              (transmissionChange)="transmissionChanged($event)">
+            </transmission>
+
+            <warning-banner *ngIf="displayTransmissionBanner() && (pageState.isPassed$ | async) && isDelegated" warningText="An automatic licence will be issued.">
+            </warning-banner>
+
+            <pass-certificate-number
+              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              [form]="form"
+              [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
+              (passCertificateNumberChange)="passCertificateNumberChanged($event)">
+            </pass-certificate-number>
+
+            <d255
+              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
+              (d255Change)="d255Changed($event)"></d255>
+            <warning-banner *ngIf="(pageState.d255$ | async) && (pageState.isPassed$ | async) && isDelegated"
+                            warningText="By selecting Yes you are confirming a D255 is required."></warning-banner>
+
+            <language-preferences
+              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              [formGroup]="form"
+              [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"
+              (welshChanged)="isWelshChanged($event)"></language-preferences>
+
+            <debrief-witnessed [display]=true [formGroup]="form" [debriefWitnessed]="pageState.debriefWitnessed$ | async"
+                               [outcome]="testOutcome" (debriefWitnessedChange)="debriefWitnessedChanged($event)">
+            </debrief-witnessed>
 
             <independent-driving [display]="pageState.displayIndependentDriving$ | async" option1="Diagram" option1label="Diagram" option2="Traffic signs" option2label="Traffic Signs" [formGroup]="form"
                                  [outcome]="pageState.testOutcome$ | async" [independentDriving]="pageState.independentDriving$ | async"
