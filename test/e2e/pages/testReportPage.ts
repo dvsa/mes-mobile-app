@@ -1,5 +1,6 @@
 import Page from './page';
 import { browser, by, element } from 'protractor';
+import {TEST_CONFIG} from '../test.config';
 
 const buttonPadding = 30;
 const request = require('request');
@@ -157,6 +158,7 @@ class TestReportPage extends Page {
 
   waitForTerminateButton() {
     this.getElementByXPath('//button/span[contains(text(),"Terminate test")]');
+    browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
   }
 
   clickContinueToDebriefbutton() {

@@ -26,7 +26,7 @@ class NonPassFinalisationPage extends Page {
   }
 
   submitDialog() {
-    this.clickElementByXPath('//button[span[text() = "Submit"]]');
+    this.clickElementByXPath('//button/span[contains(text(), "Submit")]');
   }
 
   selectAutomaticTransmission() {

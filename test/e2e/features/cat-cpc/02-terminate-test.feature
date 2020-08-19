@@ -1,8 +1,8 @@
 @catcpc @full_smoke @regression
 
-Feature: Driver Examiner complete the pass journey for CPC
+Feature: Driver Examiner terminate CPC journey
 
-  Scenario: Driving Examiner completes a passed test for category CCPC
+  Scenario: Driving Examiner terminate the test for category CCPC
 
     Given I am logged in as "desexaminerbe" and I have a test for "Miss Jennifer Aniston"
     When I view candidate details for "Miss Jennifer Aniston"
@@ -27,17 +27,14 @@ Feature: Driver Examiner complete the pass journey for CPC
     And I select CPC module assessment question "1"
     And I select CPC module assessment question "2"
     And I select CPC module assessment question "3"
-    And I select CPC module assessment question "4"
     When I click on Next Question button
     And I select CPC module assessment question "1"
     And I select CPC module assessment question "2"
     And I select CPC module assessment question "3"
-    And I select CPC module assessment question "4"
     When I click on Next Question button
     And I select CPC module assessment question "1"
     And I select CPC module assessment question "2"
     And I select CPC module assessment question "3"
-    And I select CPC module assessment question "4"
     When I click on Next Question button
     And I select CPC module assessment question "1"
     And I select CPC module assessment question "2"
@@ -53,42 +50,12 @@ Feature: Driver Examiner complete the pass journey for CPC
     And I select CPC module assessment question "7"
     And I select CPC module assessment question "8"
     When I click on View Test Summary button
-    And I continue to debrief
-    Then I should see the "Debrief - Jennifer Aniston" page
-    And I should see the Debrief page with outcome "Passed"
+    And I terminate the test
+    Then I should see the Debrief page with outcome "Terminated"
+    And I should see the "Debrief - Jennifer Aniston" page
     When I end the debrief
-    Then I should see the "Test debrief - Jennifer Aniston" page
-    And I complete the pass details
-    And I complete the health declaration
-    And I continue to the office write up
-    Then I should see the "Office" page
-    And the office page test outcome is "Passed"
-    When I complete the office write up
-    And I upload the test
-    Then I should see the "Journal" page
-    And the test result for "Miss Jennifer Aniston" is "1"
-
-
-  Scenario: A Driving Examiner Completes a pass test for autosave
-
-    Given I am on the "Journal" page
-    And  I click the back button
-    Then I should see the "My dashboard" page
-    When I click search completed tests
-    When I search for a completed test with the application reference of "22123466011"
-    And the search result is clicked
-    Then I should see the "Test information" page
-    And the test result outcome is "Passed"
-    And the test result has the following data present
-      | label                             | value                                  |
-      | Application reference             | 22123466011                            |
-      | Test category                     | CCPC                                   |
-      | Slot type                         | Standard Test                          |
-      | Vehicle details                   | Rigid                                  |
-      | Certificate number                | A123456X                               |
-    When I click the close button
-    Then I should see the "Search submitted test" page
-    When I click the back button on the search submitted test page
-    Then I should see the "My dashboard" page
-
-
+    When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Jennifer Aniston" page
+    When I select activity code "20 - Documents not produced"
+    And I continue to the back to office page
+    Then I am on the back to office page
