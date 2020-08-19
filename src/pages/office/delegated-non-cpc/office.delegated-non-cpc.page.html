@@ -65,6 +65,7 @@
               *ngIf="isDelegated && (pageState.isPassed$ | async)"
               [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
               (d255Change)="d255Changed($event)"></d255>
+
             <warning-banner *ngIf="(pageState.d255$ | async) && (pageState.isPassed$ | async) && isDelegated"
                             warningText="By selecting Yes you are confirming a D255 is required."></warning-banner>
 
@@ -74,8 +75,12 @@
               [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"
               (welshChanged)="isWelshChanged($event)"></language-preferences>
 
-            <debrief-witnessed [display]=true [formGroup]="form" [debriefWitnessed]="pageState.debriefWitnessed$ | async"
-                               [outcome]="testOutcome" (debriefWitnessedChange)="debriefWitnessedChanged($event)">
+            <debrief-witnessed
+              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              [display]=true [formGroup]="form"
+              [debriefWitnessed]="pageState.debriefWitnessed$ | async"
+              [outcome]="testOutcome"
+              (debriefWitnessedChange)="debriefWitnessedChanged($event)">
             </debrief-witnessed>
 
             <independent-driving [display]="pageState.displayIndependentDriving$ | async" option1="Diagram" option1label="Diagram" option2="Traffic signs" option2label="Traffic Signs" [formGroup]="form"
