@@ -14,6 +14,7 @@ export const SPECIAL_REQUIREMENT_MODAL = 'SpecialLegalRequirementModal';
 export const REVERSE_DIAGRAM_PAGE = 'ReverseDiagramPage';
 export const REKEY_UPLOAD_OUTCOME_PAGE = 'RekeyUploadOutcomePage';
 export const DELEGATED_REKEY_SEARCH_PAGE = 'DelegatedRekeySearchPage';
+export const DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE = 'DelegatedRekeyUploadOutcomePage';
 
 export const CAT_B = {
   REKEY_UPLOAD_OUTCOME_PAGE,

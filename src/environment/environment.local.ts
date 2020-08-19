@@ -24,7 +24,7 @@ export const environment: LocalEnvironmentFile = {
     'iPad7,4',
     'x86_64',
   ],
-  role: ExaminerRole.DE,
+  role: ExaminerRole.DLG,
   journal: {
     journalUrl: '/assets/mock/local-journal.json',
     searchBookingUrl: 'dummy/search/booking/url',

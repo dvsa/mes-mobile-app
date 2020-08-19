@@ -93,7 +93,12 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
-import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
+import {
+  CAT_BE,
+  DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE,
+  JOURNAL_PAGE,
+  REKEY_SEARCH_PAGE,
+} from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
@@ -336,13 +341,13 @@ export class OfficeCatBEPage extends BasePageComponent {
           )),
       ),
       displayVehicleChecks$: currentTest$.pipe(
-          select(getTestOutcome),
-          withLatestFrom(currentTest$.pipe(
-            select(getTestData))),
-            map(([outcome, data]) =>
-            this.outcomeBehaviourProvider.isVisible(outcome,
-              'vehicleChecks',
-              vehicleChecksExist(data.vehicleChecks))),
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestData))),
+        map(([outcome, data]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome,
+            'vehicleChecks',
+            vehicleChecksExist(data.vehicleChecks))),
       ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
@@ -403,7 +408,9 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   popToRoot() {
+    // const rekeySearchPage = this.navController.getViews().find(view => view.id === REKEY_SEARCH_PAGE);
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
+    // this.navController.popTo(true ? rekeySearchPage : journalPage);
     this.navController.popTo(journalPage);
   }
 
@@ -548,7 +555,8 @@ export class OfficeCatBEPage extends BasePageComponent {
       buttons: [
         {
           text: 'Cancel',
-          handler: () => { },
+          handler: () => {
+          },
         },
         {
           text: 'Upload',
@@ -581,8 +589,15 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   completeTest() {
+    const rekeySearchPage = this.navController.getViews().find(view => view.id === REKEY_SEARCH_PAGE);
+    console.log('rekeySearchPage', rekeySearchPage);
     this.store$.dispatch(new CompleteTest());
-    this.popToRoot();
+    // if (false) {
+    //   this.popToRoot();
+    // } else {
+    // this.navController.popTo(rekeySearchPage);
+    this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
+    // }
   }
 
   shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {

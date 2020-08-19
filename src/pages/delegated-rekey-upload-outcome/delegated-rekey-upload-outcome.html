@@ -1,0 +1,46 @@
+<ion-content no-bounce id="delegated-rekey-upload-outcome">
+  <ion-grid>
+    <!--    <ion-row align-items-center class="message-wrapper" *ngIf="!(pageState.duplicateUpload$ | async)">-->
+    <ion-row align-items-center class="message-wrapper" *ngIf="true">
+      <ion-col no-padding>
+        <ion-row justify-content-center>
+          <ion-icon class="tick-icon" ios="ios-checkmark-circle"></ion-icon>
+        </ion-row>
+        <ion-row justify-content-center>
+          <h2 class="modal-alert-header">Rekeyed test uploaded successfully</h2>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center class="message-wrapper" *ngIf="false">
+      <ion-col no-padding>
+        <ion-row justify-content-center>
+          <ion-icon class="warning-icon" ios="ios-close-circle"></ion-icon>
+        </ion-row>
+        <ion-row justify-content-center>
+          <h2 class="modal-alert-header">Rekeyed upload was unsuccessful</h2>
+        </ion-row>
+        <br>
+        <ion-row justify-content-center>
+          <button ion-button class="mes-grey-button retry-button" (click)="goToDashboard()">
+            <h3>Retry upload</h3>
+          </button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-row class="mes-full-width-card">
+    <ion-col no-padding align="left">
+      <button ion-button class="mes-grey-button retry-button" (click)="goToDashboard()">
+        <h3>Return to dashboard</h3>
+      </button>
+    </ion-col>
+    <ion-col no-padding align="right">
+      <button ion-button class="mes-primary-button retry-button" (click)="goToDelegatedSearch()">
+        <h3>Rekey another test</h3>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
