@@ -18,7 +18,7 @@ import {
   OfficeValidationError,
 } from '../office.actions';
 import { Observable, Subscription, merge } from 'rxjs';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
   getTestOutcome,
@@ -715,7 +715,8 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   displayTransmissionBanner(): boolean {
-    return !this.form.controls['transmissionCtrl'].pristine && this.transmission === TransmissionType.Automatic;
+    const control: AbstractControl = this.form.get('transmissionCtrl');
+    return control && !control.pristine && (this.transmission === TransmissionType.Automatic);
   }
 
 }
