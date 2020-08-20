@@ -211,9 +211,9 @@ export class TestsEffects {
         ));
       }
 
-      if (startTestAction.rekey) {
-        arrayOfActions.push(new MarkAsRekey());
-      }
+      // if (startTestAction.rekey) {
+      arrayOfActions.push(new MarkAsRekey());
+      // }
 
       if (startTestAction.delegatedTest) {
         arrayOfActions.push(new StartDelegatedTest());
