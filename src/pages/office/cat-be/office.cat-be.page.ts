@@ -13,7 +13,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
   OfficeViewDidEnter,
-  CompleteTest,
+  // CompleteTest,
   SavingWriteUpForLater,
   OfficeValidationError,
 } from '../office.actions';
@@ -66,7 +66,7 @@ import {
   getEcoFaultText,
 } from '../../../modules/tests/test-data/common/test-data.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
-import { PersistTests } from '../../../modules/tests/tests.actions';
+import { PersistTests, SendCurrentTest } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
 import {
@@ -97,7 +97,6 @@ import {
   CAT_BE,
   DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE,
   JOURNAL_PAGE,
-  REKEY_SEARCH_PAGE,
 } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -589,15 +588,11 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   completeTest() {
-    const rekeySearchPage = this.navController.getViews().find(view => view.id === REKEY_SEARCH_PAGE);
-    console.log('rekeySearchPage', rekeySearchPage);
-    this.store$.dispatch(new CompleteTest());
-    // if (false) {
-    //   this.popToRoot();
-    // } else {
-    // this.navController.popTo(rekeySearchPage);
+    // this.store$.dispatch(new CompleteTest());
+    // this.popToRoot();
+
+    this.store$.dispatch(new SendCurrentTest());
     this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
-    // }
   }
 
   shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {

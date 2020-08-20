@@ -4,7 +4,7 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import {
   Store,
-  // select,
+  select,
 } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { DelegatedRekeyUploadOutcomeViewDidEnter } from './delegated-rekey-upload-outcome.actions';
@@ -13,15 +13,13 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { Observable, Subscription } from 'rxjs';
 import { DASHBOARD_PAGE, DELEGATED_REKEY_SEARCH_PAGE } from '../page-names.constants';
-// import { getRekeyReasonState } from './../rekey-reason/rekey-reason.reducer';
-// import { map } from 'rxjs/operators';
-// import { getUploadStatus } from './../rekey-reason/rekey-reason.selector';
-// import { EndRekey } from '../../modules/tests/rekey/rekey.actions';
-// import { REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../page-names.constants';
+import { getDelegatedRekeyUploadOutcomeState } from './delegated-rekey-upload-outcome.reducer';
+import { getDelegatedUploadStatus } from './delegated-rekey-upload-outcome.selector';
+import { SendCurrentTest } from '../../modules/tests/tests.actions';
 
-interface DelegatedRekeyUploadOutcomePageState {
-  uploadSuccessful$: Observable<boolean>;
-}
+// interface DelegatedRekeyUploadOutcomePageState {
+//   uploadSuccessful$: Observable<boolean>;
+// }
 
 @IonicPage()
 @Component({
@@ -30,7 +28,7 @@ interface DelegatedRekeyUploadOutcomePageState {
 })
 export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
 
-  pageState: DelegatedRekeyUploadOutcomePageState;
+  pageState: { uploadSuccessful$: Observable<boolean> };
   subscription: Subscription = Subscription.EMPTY;
 
   constructor(
@@ -47,13 +45,12 @@ export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
   }
 
   ngOnInit(): void {
-    // this.pageState = {
-    //   duplicateUpload$: this.store$.pipe(
-    //     select(getRekeyReasonState),
-    //     select(getUploadStatus),
-    //     map(uploadStatus => uploadStatus.isDuplicate),
-    //   ),
-    // };
+    this.pageState = {
+      uploadSuccessful$: this.store$.pipe(
+        select(getDelegatedRekeyUploadOutcomeState),
+        select(getDelegatedUploadStatus),
+      ),
+    };
   }
 
   ionViewDidEnter(): void {
@@ -64,6 +61,10 @@ export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
     }
 
     this.store$.dispatch(new DelegatedRekeyUploadOutcomeViewDidEnter());
+  }
+
+  retryUpload() {
+    this.store$.dispatch(new SendCurrentTest());
   }
 
   goToDashboard() {

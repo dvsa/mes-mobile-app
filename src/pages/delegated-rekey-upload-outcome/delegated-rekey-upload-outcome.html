@@ -1,7 +1,6 @@
 <ion-content no-bounce id="delegated-rekey-upload-outcome">
   <ion-grid>
-    <!--    <ion-row align-items-center class="message-wrapper" *ngIf="!(pageState.duplicateUpload$ | async)">-->
-    <ion-row align-items-center class="message-wrapper" *ngIf="true">
+    <ion-row align-items-center class="message-wrapper" *ngIf="(pageState.uploadSuccessful$ | async)">
       <ion-col no-padding>
         <ion-row justify-content-center>
           <ion-icon class="tick-icon" ios="ios-checkmark-circle"></ion-icon>
@@ -11,7 +10,7 @@
         </ion-row>
       </ion-col>
     </ion-row>
-    <ion-row align-items-center class="message-wrapper" *ngIf="false">
+    <ion-row align-items-center class="message-wrapper" *ngIf="!(pageState.uploadSuccessful$ | async)">
       <ion-col no-padding>
         <ion-row justify-content-center>
           <ion-icon class="warning-icon" ios="ios-close-circle"></ion-icon>
@@ -21,7 +20,7 @@
         </ion-row>
         <br>
         <ion-row justify-content-center>
-          <button ion-button class="mes-grey-button retry-button" (click)="goToDashboard()">
+          <button ion-button class="mes-grey-button retry-button" (click)="retryUpload()">
             <h3>Retry upload</h3>
           </button>
         </ion-row>

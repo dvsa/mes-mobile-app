@@ -5,5 +5,4 @@ export type DelegatedRekeyUploadStatusModel = {
 export type DelegatedRekeyUploadOutcomeModel = {
   isUploading: boolean,
   hasUploadSucceeded: boolean,
-  hasUploadFailed: boolean,
 };
