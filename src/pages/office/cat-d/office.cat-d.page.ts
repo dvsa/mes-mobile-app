@@ -18,7 +18,7 @@ import {
   OfficeValidationError,
 } from '../office.actions';
 import { Observable, merge, Subscription } from 'rxjs';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
   getTestOutcome,
@@ -35,7 +35,7 @@ import {
   getAdditionalInformation,
   getWeatherConditions,
   getIdentification,
-  getIndependentDriving,
+  getIndependentDriving, isDebriefWitnessed, getD255,
 } from '../../../modules/tests/test-summary/common/test-summary.selector';
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import { map, withLatestFrom } from 'rxjs/operators';
@@ -45,7 +45,7 @@ import {
   IdentificationUsedChanged,
   CandidateDescriptionChanged,
   WeatherConditionsChanged,
-  AdditionalInformationChanged,
+  AdditionalInformationChanged, D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-d/candidate/candidate.cat-d.reducer';
 import {
@@ -74,7 +74,7 @@ import {
   Identification,
   IndependentDriving,
   QuestionResult,
-  CategoryCode,
+  CategoryCode, GearboxCategory,
 } from '@dvsa/mes-test-schema/categories/common';
 import {
   AddDangerousFaultComment,
@@ -116,8 +116,30 @@ import {
 } from '../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
+import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
+import {
+  getPassCertificateNumber,
+  isProvisionalLicenseProvided,
+} from '../../../modules/tests/pass-completion/pass-completion.selector';
+import { getGearboxCategory } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import { getCommunicationPreference }
+ from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
+import { getConductedLanguage }
+ from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.reducer';
+import {
+  PassCertificateNumberChanged,
+  ProvisionalLicenseNotReceived,
+  ProvisionalLicenseReceived,
+} from '../../../modules/tests/pass-completion/pass-completion.actions';
+import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
+import {
+  CandidateChoseToProceedWithTestInEnglish,
+  CandidateChoseToProceedWithTestInWelsh,
+} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { TransmissionType } from '../../../shared/models/transmission-type';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -156,6 +178,12 @@ interface OfficePageState {
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
   testCategory$: Observable<CategoryCode>;
+  provisionalLicense$: Observable<boolean>;
+  passCertificateNumber$: Observable<string>;
+  transmission$: Observable<GearboxCategory>;
+  d255$: Observable<boolean>;
+  debriefWitnessed$: Observable<boolean>;
+  conductedLanguage$: Observable<string>;
   delegatedTest$: Observable<boolean>;
 }
 
@@ -178,6 +206,8 @@ export class OfficeCatDPage extends BasePageComponent {
   activityCodeOptions: ActivityCodeModel[];
   testCategory: CategoryCode;
   isDelegated: boolean;
+  transmission: GearboxCategory;
+  testOutcome: string;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -422,6 +452,30 @@ export class OfficeCatDPage extends BasePageComponent {
         select(getVehicleChecks),
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
+      provisionalLicense$: currentTest$.pipe(
+        select(getPassCompletion),
+        map(isProvisionalLicenseProvided),
+      ),
+      passCertificateNumber$: currentTest$.pipe(
+        select(getPassCompletion),
+        select(getPassCertificateNumber),
+      ),
+      transmission$: currentTest$.pipe(
+        select(getVehicleDetails),
+        select(getGearboxCategory),
+      ),
+      debriefWitnessed$: currentTest$.pipe(
+        select(getTestSummary),
+        select(isDebriefWitnessed),
+      ),
+      d255$: currentTest$.pipe(
+        select(getTestSummary),
+        select(getD255),
+      ),
+      conductedLanguage$: currentTest$.pipe(
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
+      ),
       delegatedTest$: currentTest$.pipe(
         select(getDelegatedTestIndicator),
         select(isDelegatedTest),
@@ -431,11 +485,13 @@ export class OfficeCatDPage extends BasePageComponent {
   }
 
   setupSubscription() {
-    const { testCategory$, delegatedTest$ } = this.pageState;
+    const { testCategory$, delegatedTest$, transmission$, testOutcome$ } = this.pageState;
 
     this.subscription = merge(
+      testOutcome$.pipe(map(result => this.testOutcome = result)),
+      transmission$.pipe(map(result => this.transmission = result)),
+      delegatedTest$.pipe(map(result => this.isDelegated = result)),
       testCategory$.pipe(map(result => this.testCategory = result)),
-      delegatedTest$.pipe(map(value => this.isDelegated = value)),
     ).subscribe();
   }
 
@@ -653,5 +709,46 @@ export class OfficeCatDPage extends BasePageComponent {
       this.faultCountProvider.getDangerousFaultSumCount(this.testCategory as TestCategory, data);
 
     return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
+  }
+
+  provisionalLicenseReceived(): void {
+    this.store$.dispatch(new ProvisionalLicenseReceived());
+  }
+
+  provisionalLicenseNotReceived(): void {
+    this.store$.dispatch(new ProvisionalLicenseNotReceived());
+  }
+
+  transmissionChanged(transmission: GearboxCategory): void {
+    this.store$.dispatch(new GearboxCategoryChanged(transmission));
+  }
+
+  passCertificateNumberChanged(passCertificateNumber: string): void {
+    this.store$.dispatch(
+      new PassCertificateNumberChanged(passCertificateNumber),
+    );
+  }
+
+  d255Changed(d255: boolean): void {
+    this.store$.dispatch(d255 ? new D255Yes() : new D255No());
+  }
+
+  debriefWitnessedChanged(debriefWitnessed: boolean) {
+    this.store$.dispatch(
+      debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed(),
+    );
+  }
+
+  isWelshChanged(isWelsh: boolean) {
+    this.store$.dispatch(
+      isWelsh
+        ? new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
+        : new CandidateChoseToProceedWithTestInEnglish('English'),
+    );
+  }
+
+  displayTransmissionBanner(): boolean {
+    const control: AbstractControl = this.form.get('transmissionCtrl');
+    return control && !control.pristine && (this.transmission === TransmissionType.Automatic);
   }
 }
