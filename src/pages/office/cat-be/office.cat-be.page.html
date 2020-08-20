@@ -30,11 +30,6 @@
                          (activityCodeChange)="activityCodeChanged($event)" [disabled]="true"></activity-code>
 
           <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
-            <route-number [display]="pageState.displayRouteNumber$ | async"
-                          [routeNumber]="pageState.routeNumber$ | async" [outcome]="pageState.testOutcome$ | async"
-                          (routeNumberChange)="routeNumberChanged($event)" [formGroup]="form">
-            </route-number>
-
             <license-provided
               *ngIf="isDelegated && (pageState.isPassed$ | async)"
               [form]="form"
@@ -83,6 +78,11 @@
               [debriefWitnessed]="pageState.debriefWitnessed$ | async"
               [outcome]="testOutcome" (debriefWitnessedChange)="debriefWitnessedChanged($event)">
             </debrief-witnessed>
+
+            <route-number [display]="pageState.displayRouteNumber$ | async"
+                          [routeNumber]="pageState.routeNumber$ | async" [outcome]="pageState.testOutcome$ | async"
+                          (routeNumberChange)="routeNumberChanged($event)" [formGroup]="form">
+            </route-number>
 
             <independent-driving [display]="pageState.displayIndependentDriving$ | async" option1="Diagram" option1label="Diagram" option2="Traffic signs" option2label="Traffic Signs" [formGroup]="form"
                                  [outcome]="pageState.testOutcome$ | async" [independentDriving]="pageState.independentDriving$ | async"
