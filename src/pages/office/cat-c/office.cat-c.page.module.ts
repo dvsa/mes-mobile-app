@@ -7,6 +7,10 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { OfficeComponentsModule } from '../components/office.components.module';
 import { OfficeEffects } from '../office.effects';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
+import { PassFinalisationComponentsModule }
+ from '../../pass-finalisation/components/pass-finalisation-components.module';
+import { TestFinalisationComponentsModule }
+ from '../../../components/test-finalisation/test-finalisation-component.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +24,8 @@ import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-sum
     ]),
     ComponentsModule,
     OfficeComponentsModule,
+    PassFinalisationComponentsModule,
+    TestFinalisationComponentsModule,
   ],
   providers: [
     FaultSummaryProvider,
