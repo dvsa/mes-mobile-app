@@ -174,7 +174,3 @@ export const CAT_CPC = {
   VIEW_TEST_RESULT_PAGE: 'ViewTestResultCatCPCPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatCPCPage',
 };
-
-export const DELEGATED_EXAMINER = {
-  NON_CPC_OFFICE_PAGE: 'OfficeDelegatedNonCPCPage',
-};
