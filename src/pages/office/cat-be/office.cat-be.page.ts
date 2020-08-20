@@ -45,7 +45,7 @@ import {
   IdentificationUsedChanged,
   CandidateDescriptionChanged,
   WeatherConditionsChanged,
-  AdditionalInformationChanged,
+  AdditionalInformationChanged, D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import {
@@ -73,7 +73,7 @@ import {
   WeatherConditions,
   Identification,
   IndependentDriving,
-  QuestionResult,
+  QuestionResult, GearboxCategory,
 } from '@dvsa/mes-test-schema/categories/common';
 import {
   AddDangerousFaultComment,
@@ -114,6 +114,17 @@ import { ExaminerRole } from '../../../providers/app-config/constants/examiner-r
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import {
+  PassCertificateNumberChanged,
+  ProvisionalLicenseNotReceived,
+  ProvisionalLicenseReceived,
+} from '../../../modules/tests/pass-completion/pass-completion.actions';
+import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
+import {
+  CandidateChoseToProceedWithTestInEnglish,
+  CandidateChoseToProceedWithTestInWelsh,
+} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { TransmissionType } from '../../../shared/models/transmission-type';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -168,6 +179,7 @@ export class OfficeCatBEPage extends BasePageComponent {
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
   isDelegated: boolean = false;
   static readonly maxFaultCount = 15;
+  transmission: GearboxCategory;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
@@ -621,6 +633,41 @@ export class OfficeCatBEPage extends BasePageComponent {
     const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data);
 
     return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
+  }
+
+  provisionalLicenseReceived(): void {
+    this.store$.dispatch(new ProvisionalLicenseReceived());
+  }
+
+  provisionalLicenseNotReceived(): void {
+    this.store$.dispatch(new ProvisionalLicenseNotReceived());
+  }
+
+  transmissionChanged(transmission: GearboxCategory): void {
+    this.store$.dispatch(new GearboxCategoryChanged(transmission));
+  }
+  passCertificateNumberChanged(passCertificateNumber: string): void {
+    this.store$.dispatch(new PassCertificateNumberChanged(passCertificateNumber));
+  }
+
+  d255Changed(d255: boolean): void {
+    this.store$.dispatch(d255 ? new D255Yes() : new D255No());
+  }
+
+  debriefWitnessedChanged(debriefWitnessed: boolean) {
+    this.store$.dispatch(debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed());
+  }
+
+  isWelshChanged(isWelsh: boolean) {
+    this.store$.dispatch(
+      isWelsh ?
+        new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
+        : new CandidateChoseToProceedWithTestInEnglish('English'),
+    );
+  }
+
+  displayTransmissionBanner(): boolean {
+    return !this.form.controls['transmissionCtrl'].pristine && this.transmission === TransmissionType.Automatic;
   }
 
 }
