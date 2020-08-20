@@ -17,7 +17,7 @@ import {
   SavingWriteUpForLater,
   OfficeValidationError,
 } from '../office.actions';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, merge } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
@@ -35,7 +35,7 @@ import {
   getAdditionalInformation,
   getWeatherConditions,
   getIdentification,
-  getIndependentDriving,
+  getIndependentDriving, isDebriefWitnessed, getD255,
 } from '../../../modules/tests/test-summary/common/test-summary.selector';
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import { map, withLatestFrom } from 'rxjs/operators';
@@ -119,6 +119,19 @@ import {
   CandidateChoseToProceedWithTestInWelsh,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { TransmissionType } from '../../../shared/models/transmission-type';
+import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
+import {
+  getPassCertificateNumber,
+  isProvisionalLicenseProvided,
+} from '../../../modules/tests/pass-completion/pass-completion.selector';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
+import { getGearboxCategory } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import { getCommunicationPreference }
+ from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
+import { getConductedLanguage }
+ from '../../../modules/tests/communication-preferences/communication-preferences.selector';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -156,6 +169,13 @@ interface OfficePageState {
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
+  provisionalLicense$: Observable<boolean>;
+  passCertificateNumber$: Observable<string>;
+  transmission$: Observable<GearboxCategory>;
+  d255$: Observable<boolean>;
+  debriefWitnessed$: Observable<boolean>;
+  conductedLanguage$: Observable<string>;
+  delegatedTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -172,6 +192,9 @@ export class OfficeCatBEPage extends BasePageComponent {
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
   static readonly maxFaultCount = 15;
   transmission: GearboxCategory;
+  testOutcome: string;
+  subscription: Subscription;
+  isDelegated: boolean;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
@@ -411,7 +434,45 @@ export class OfficeCatBEPage extends BasePageComponent {
         select(getVehicleChecks),
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
+      provisionalLicense$: currentTest$.pipe(
+        select(getPassCompletion),
+        map(isProvisionalLicenseProvided),
+      ),
+      passCertificateNumber$: currentTest$.pipe(
+        select(getPassCompletion),
+        select(getPassCertificateNumber),
+      ),
+      transmission$: currentTest$.pipe(
+        select(getVehicleDetails),
+        select(getGearboxCategory),
+      ),
+      debriefWitnessed$: currentTest$.pipe(
+        select(getTestSummary),
+        select(isDebriefWitnessed),
+      ),
+      d255$: currentTest$.pipe(
+        select(getTestSummary),
+        select(getD255),
+      ),
+      conductedLanguage$: currentTest$.pipe(
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
+      ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
     };
+    this.setupSubscription();
+  }
+
+  setupSubscription() {
+    const { transmission$, testOutcome$, delegatedTest$ } = this.pageState;
+    this.subscription = merge(
+      delegatedTest$.pipe(map(value => this.isDelegated = value)),
+      transmission$.pipe(map(value => this.transmission = value)),
+      testOutcome$.pipe(map(value => this.testOutcome = value)),
+    ).subscribe();
   }
 
   popToRoot() {
