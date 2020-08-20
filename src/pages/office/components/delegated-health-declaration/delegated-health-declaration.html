@@ -6,20 +6,23 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col col-48>
-        <input type="radio" formControlName="debriefWitnessed" id="debrief-witnessed-yes" name="debriefWitnessed"
-               formControlName="debriefWitnessed" class="gds-radio-button" value="Yes"
-               [checked]="debriefWitnessed === true" (change)="debriefWitnessedChanged($event.target.value)">
-        <label for="debrief-witnessed-yes" class="radio-label">Yes</label>
+        <input type="radio"
+               formControlName="healthDeclaration"
+               id="health-declaration-signed"
+               name="healthDeclaration"
+               class="gds-radio-button" value="Signed"
+               [checked]="healthDeclarationSigned === true" (change)="healthDeclarationChanged($event.target.value)">
+        <label for="health-declaration-signed" class="radio-label">Signed</label>
       </ion-col>
       <ion-col>
         <input type="radio" formControlName="debriefWitnessed" id="debrief-witnessed-no" name="debriefWitnessed"
                formControlName="debriefWitnessed" class="gds-radio-button" value="No"
-               [checked]="debriefWitnessed === false" (change)="debriefWitnessedChanged($event.target.value)">
+               [checked]="healthDeclarationSigned === false" (change)="healthDeclarationChanged($event.target.value)">
         <label for="debrief-witnessed-no" class="radio-label">No</label>
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>
-      <div class="validation-text" [class.ng-invalid]="invalid" id="office-debrief-witnessed-validation-text">
+      <div class="validation-text" id="office-health-declaration-validation-text">
         Was the debrief witnessed?
       </div>
     </ion-row>

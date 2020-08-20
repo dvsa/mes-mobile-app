@@ -15,6 +15,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
 import { VehicleChecksOfficeCardComponent } from './vehicle-checks/vehicle-checks-office-card';
 import { IndependentDrivingComponent } from './independent-driving/independent-driving';
 import { CandidateSectionComponent } from './candidate-section/candidate-section';
+import { DelegatedHealthDeclarationComponent } from './delegated-health-declaration/delegated-health-declaration';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CandidateSectionComponent } from './candidate-section/candidate-section
     AdditionalInformationComponent,
     VehicleChecksOfficeCardComponent,
     CandidateSectionComponent,
+    DelegatedHealthDeclarationComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +49,7 @@ import { CandidateSectionComponent } from './candidate-section/candidate-section
     WeatherConditionsComponent,
     AdditionalInformationComponent,
     VehicleChecksOfficeCardComponent,
+    DelegatedHealthDeclarationComponent,
     CandidateSectionComponent,
   ],
 })
