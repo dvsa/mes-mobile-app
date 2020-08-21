@@ -14,12 +14,8 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { Observable, Subscription } from 'rxjs';
 import { DASHBOARD_PAGE, DELEGATED_REKEY_SEARCH_PAGE } from '../page-names.constants';
 import { getDelegatedRekeyUploadOutcomeState } from './delegated-rekey-upload-outcome.reducer';
-import { getDelegatedUploadStatus } from './delegated-rekey-upload-outcome.selector';
+import { getDelegatedisUploadingStatus, getDelegatedUploadStatus } from './delegated-rekey-upload-outcome.selector';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
-
-// interface DelegatedRekeyUploadOutcomePageState {
-//   uploadSuccessful$: Observable<boolean>;
-// }
 
 @IonicPage()
 @Component({
@@ -28,7 +24,10 @@ import { SendCurrentTest } from '../../modules/tests/tests.actions';
 })
 export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
 
-  pageState: { uploadSuccessful$: Observable<boolean> };
+  pageState: {
+    uploadSuccessful$: Observable<boolean>,
+    isUploading$: Observable<boolean>,
+  };
   subscription: Subscription = Subscription.EMPTY;
 
   constructor(
@@ -49,6 +48,10 @@ export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
       uploadSuccessful$: this.store$.pipe(
         select(getDelegatedRekeyUploadOutcomeState),
         select(getDelegatedUploadStatus),
+      ),
+      isUploading$: this.store$.pipe(
+        select(getDelegatedRekeyUploadOutcomeState),
+        select(getDelegatedisUploadingStatus),
       ),
     };
   }

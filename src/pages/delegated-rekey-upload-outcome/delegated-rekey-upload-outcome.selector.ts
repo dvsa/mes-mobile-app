@@ -5,3 +5,7 @@ import {
 export const getDelegatedUploadStatus =
   (delegatedRekeyUploadOutcome: DelegatedRekeyUploadStatusModel):
   boolean => delegatedRekeyUploadOutcome.uploadStatus.hasUploadSucceeded;
+
+export const getDelegatedisUploadingStatus =
+  (delegatedRekeyUploadOutcome: DelegatedRekeyUploadStatusModel):
+    boolean => delegatedRekeyUploadOutcome.uploadStatus.isUploading;
