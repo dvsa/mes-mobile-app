@@ -1,12 +1,22 @@
-<ion-content no-bounce id="delegated-rekey-upload-outcome" *ngIf="!(pageState.isUploading$ | async)">
-  <ion-grid>
+<ion-content no-bounce id="delegated-rekey-upload-outcome">
+
+  <ion-grid *ngIf="pageState.isUploading$ | async">
+    <ion-row align-items-center class="message-wrapper">
+      <ion-col no-padding>
+        <ion-row justify-content-center>
+          <ion-spinner name="bubbles"></ion-spinner>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="!(pageState.isUploading$ | async)">
     <ion-row align-items-center class="message-wrapper" *ngIf="(pageState.uploadSuccessful$ | async)">
       <ion-col no-padding>
         <ion-row justify-content-center>
           <ion-icon class="tick-icon" ios="ios-checkmark-circle"></ion-icon>
         </ion-row>
         <ion-row justify-content-center>
-          <h2 class="modal-alert-header">Rekeyed test uploaded successfully</h2>
+          <h2 class="modal-alert-header">Rekey upload was successfully</h2>
         </ion-row>
       </ion-col>
     </ion-row>
@@ -16,7 +26,7 @@
           <ion-icon class="warning-icon" ios="ios-close-circle"></ion-icon>
         </ion-row>
         <ion-row justify-content-center>
-          <h2 class="modal-alert-header">Rekeyed upload was unsuccessful</h2>
+          <h2 class="modal-alert-header">Rekey upload was unsuccessful</h2>
         </ion-row>
         <br>
         <ion-row justify-content-center>

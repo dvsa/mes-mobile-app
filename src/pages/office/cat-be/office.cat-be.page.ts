@@ -13,11 +13,11 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
   OfficeViewDidEnter,
-  // CompleteTest,
+  CompleteTest,
   SavingWriteUpForLater,
   OfficeValidationError,
 } from '../office.actions';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, merge } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
@@ -112,6 +112,8 @@ import {
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -149,6 +151,7 @@ interface OfficePageState {
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
+  delegatedTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -164,6 +167,8 @@ export class OfficeCatBEPage extends BasePageComponent {
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
   static readonly maxFaultCount = 15;
+  subscription: Subscription;
+  isDelegated: boolean;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
@@ -403,13 +408,23 @@ export class OfficeCatBEPage extends BasePageComponent {
         select(getVehicleChecks),
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
     };
+    this.setupSubscription();
+  }
+
+  setupSubscription() {
+    const { delegatedTest$ } = this.pageState;
+    this.subscription = merge(
+      delegatedTest$.pipe(map(value => this.isDelegated = value)),
+    ).subscribe();
   }
 
   popToRoot() {
-    // const rekeySearchPage = this.navController.getViews().find(view => view.id === REKEY_SEARCH_PAGE);
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
-    // this.navController.popTo(true ? rekeySearchPage : journalPage);
     this.navController.popTo(journalPage);
   }
 
@@ -588,11 +603,13 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   completeTest() {
-    // this.store$.dispatch(new CompleteTest());
-    // this.popToRoot();
-
-    this.store$.dispatch(new SendCurrentTest());
-    this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
+    if (!this.isDelegated) {
+      this.store$.dispatch(new CompleteTest());
+      this.popToRoot();
+    } else {
+      this.store$.dispatch(new SendCurrentTest());
+      this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
+    }
   }
 
   shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {
