@@ -45,9 +45,6 @@
               (transmissionChange)="transmissionChanged($event)">
             </transmission>
 
-            <warning-banner *ngIf="displayTransmissionBanner() && isDelegated && (pageState.isPassed$ | async)" warningText="An automatic licence will be issued.">
-            </warning-banner>
-
             <pass-certificate-number
               *ngIf="isDelegated && (pageState.isPassed$ | async)"
               [form]="form"
@@ -62,7 +59,6 @@
               [outcome]="testOutcome"
               [formGroup]="form"
               (d255Change)="d255Changed($event)"></d255>
-            <warning-banner *ngIf="(pageState.d255$ | async) && isDelegated && (pageState.isPassed$ | async)" warningText="By selecting Yes you are confirming a D255 is required."></warning-banner>
 
             <language-preferences
               *ngIf="isDelegated && (pageState.isPassed$ | async)"
