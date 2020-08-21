@@ -50,6 +50,10 @@ Before({ tags: '@catADI2' }, () => {
   this.testCategory = 'adi-part2';
 });
 
+Before({ tags: '@catcpc' }, () => {
+  this.testCategory = 'cpc';
+});
+
 When('the candidate enters a new email address', () => {
   WaitingRoomPage.clickNewEmailRadioButton();
   WaitingRoomPage.enterNewEmail('testemail@example.com');

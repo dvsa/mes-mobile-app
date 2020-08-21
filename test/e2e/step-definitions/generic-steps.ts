@@ -69,6 +69,11 @@ Before({ tags: '@catADI2' }, () => {
   this.testCategory = 'adi-part2';
 });
 
+Before({ tags: '@catcpc' }, () => {
+  this.testCategory = 'cpc';
+});
+
+
 // We need this much timeout for the login process to complete
 setDefaultTimeout(TEST_CONFIG.DEFAULT_TIMEOUT);
 
@@ -234,9 +239,14 @@ Then('validation item {string} should be {string}', (validationId: string, valid
 });
 
 When('I terminate the test', () => {
-  TestReportPage.clickLastEndTestButton();
+  if (this.testCategory !== 'cpc') {
+    TestReportPage.clickLastEndTestButton();
+  }
+  TestReportPage.waitForTerminateButton();
   TestReportPage.clickTerminateTestButton();
-  PageHelper.enterPasscode();
+  if (this.testCategory !== 'cpc') {
+    PageHelper.enterPasscode();
+  }
 });
 
 When('I terminate the test in practice mode', () => {

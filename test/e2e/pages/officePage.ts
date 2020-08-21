@@ -161,6 +161,15 @@ class OfficePage extends Page {
     this.clickElementById('defer-button');
   }
 
+  getAssessmentReport() {
+    return this.getElementById('assessment report');
+  }
+
+  enterAssessmentReport() {
+    const assessmentReport = this.getAssessmentReport();
+    assessmentReport.sendKeys('Tall, slim build with dark brown hair.');
+  }
+
 }
 
 export default new OfficePage();
