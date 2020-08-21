@@ -68,6 +68,71 @@ Feature: Driver Examiner complete the pass journey for CPC
     Then I should see the "Journal" page
     And the test result for "Miss Jennifer Aniston" is "1"
 
+  Scenario: Driving Examiner completes a passed test for category DCPC
+
+    Given I am logged in as "desexaminerbe" and I have a test for "Mr Johny Bravo"
+    When I view candidate details for "Mr Johny Bravo"
+    Then I should see the "Test details - Mr Johny Bravo" page
+    And I should see the "Test category" contains "Category DCPC"
+    And I should see the "Slot type" contains "Standard Test"
+    And I should see the "Special requirements" contains "None"
+    When I close the candidate test details modal
+    Then I should see the "Journal" page
+    When I start the test for "Mr Johny Bravo"
+    And the candidate completes the declaration page
+    And the candidate confirms their declaration
+    Then I should see the "Declaration - Johny Bravo" page
+    When the candidate requests to receive results by post
+    And I proceed to the car
+    Then I should see the "Johny Bravo" page
+    And I enter the vehicle registration number "SG54BN"
+    And I select the Combination options "LGV4 - LSDT & Fire ex"
+    Then I continue to test report
+    Then I should see the "Test report - Johny Bravo" page
+    And I select CPC module assessment question "1"
+    And I select CPC module assessment question "2"
+    And I select CPC module assessment question "3"
+    And I select CPC module assessment question "4"
+    When I click on Next Question button
+    And I select CPC module assessment question "1"
+    And I select CPC module assessment question "2"
+    And I select CPC module assessment question "3"
+    And I select CPC module assessment question "4"
+    When I click on Next Question button
+    And I select CPC module assessment question "1"
+    And I select CPC module assessment question "2"
+    And I select CPC module assessment question "3"
+    And I select CPC module assessment question "4"
+    When I click on Next Question button
+    And I select CPC module assessment question "1"
+    And I select CPC module assessment question "2"
+    And I select CPC module assessment question "3"
+    And I select CPC module assessment question "4"
+    When I click on Next Question button
+    And I select CPC module assessment question "1"
+    And I select CPC module assessment question "2"
+    And I select CPC module assessment question "3"
+    And I select CPC module assessment question "4"
+    And I select CPC module assessment question "5"
+    And I select CPC module assessment question "6"
+    And I select CPC module assessment question "7"
+    And I select CPC module assessment question "8"
+    When I click on View Test Summary button
+    And I continue to debrief
+    Then I should see the "Debrief - Johny Bravo" page
+    And I should see the Debrief page with outcome "Passed"
+    When I end the debrief
+    Then I should see the "Test debrief - Johny Bravo" page
+    And I complete the pass details
+    And I complete the health declaration
+    And I continue to the office write up
+    Then I should see the "Office" page
+    And the office page test outcome is "Passed"
+    When I complete the office write up
+    And I upload the test
+    Then I should see the "Journal" page
+    And the test result for "Mr Johny Bravo" is "1"
+
 
   Scenario: A Driving Examiner Completes a pass test for autosave
 

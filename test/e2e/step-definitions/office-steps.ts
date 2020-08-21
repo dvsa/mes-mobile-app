@@ -104,6 +104,10 @@ When('I enter a candidate description', () => {
   OfficePage.enterCandidateDescription();
 });
 
+When('I enter assessment report description', () => {
+  OfficePage.enterAssessmentReport();
+});
+
 When('I complete the weather conditions', () => {
   OfficePage.enterWeatherConditions();
 });
