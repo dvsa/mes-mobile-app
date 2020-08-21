@@ -1,8 +1,8 @@
 @catcpc @full_smoke @regression
 
-Feature: Driver Examiner terminate CPC journey
+Feature: Driver Examiner fail the CPC journey
 
-  Scenario: Driving Examiner terminate the test for category CCPC
+  Scenario: Driving Examiner fail the test for category CCPC
 
     Given I am logged in as "desexaminerbe" and I have a test for "Miss Jennifer Aniston"
     When I view candidate details for "Miss Jennifer Aniston"
@@ -26,43 +26,34 @@ Feature: Driver Examiner terminate CPC journey
     Then I should see the "Test report - Jennifer Aniston" page
     And I select CPC module assessment question "1"
     And I select CPC module assessment question "2"
-    And I select CPC module assessment question "3"
     When I click on Next Question button
     And I select CPC module assessment question "1"
     And I select CPC module assessment question "2"
-    And I select CPC module assessment question "3"
     When I click on Next Question button
     And I select CPC module assessment question "1"
     And I select CPC module assessment question "2"
-    And I select CPC module assessment question "3"
     When I click on Next Question button
     And I select CPC module assessment question "1"
     And I select CPC module assessment question "2"
-    And I select CPC module assessment question "3"
-    And I select CPC module assessment question "4"
     When I click on Next Question button
     And I select CPC module assessment question "1"
     And I select CPC module assessment question "2"
     And I select CPC module assessment question "3"
     And I select CPC module assessment question "4"
-    And I select CPC module assessment question "5"
-    And I select CPC module assessment question "6"
-    And I select CPC module assessment question "7"
-    And I select CPC module assessment question "8"
     When I click on View Test Summary button
-    And I terminate the test
-    Then I should see the Debrief page with outcome "Terminated"
-    And I should see the "Debrief - Jennifer Aniston" page
-    When I end the debrief
-    And I continue to the non pass finalisation page
-    Then I should see the "Finalise outcome - Jennifer Aniston" page
-    When I select activity code "20 - Documents not produced"
+    And I continue to debrief
+    Then I should see the "Debrief - Jennifer Aniston" page
+    And I should see the Debrief page with outcome "Unsuccessful"
+    And I end the debrief
+    When I continue to the non pass finalisation page
+    And I should see the "Finalise outcome - Jennifer Aniston" page
     And I continue to the back to office page
     Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
-    Then the office page test outcome is "Terminated"
+    And  the office page test outcome is "Unsuccessful"
     When I complete the office write up
+    And I enter assessment report description
     And I upload the test
     Then I should see the "Journal" page
-    And the test result for "Miss Jennifer Aniston" is "20"
+    And the test result for "Miss Jennifer Aniston" is "2"
