@@ -52,6 +52,13 @@
               (passCertificateNumberChange)="passCertificateNumberChanged($event)">
             </pass-certificate-number>
 
+            <delegated-health-declaration
+              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              [formGroup]="form"
+              (healthDeclarationChange)="healthDeclarationChanged($event)"
+            >
+            </delegated-health-declaration>
+
             <d255
               *ngIf="isDelegated && (pageState.isPassed$ | async)"
               [display]=true
@@ -175,7 +182,7 @@
 </ion-content>
 <ion-footer>
   <ion-row class="mes-full-width-card box-shadow">
-    <ion-col *ngIf="!(pageState.isRekey$ | async)">
+    <ion-col *ngIf="!(pageState.isRekey$ | async) && !isDelegated">
       <button float-left id="defer-button" ion-button (click)="defer()">
         <h3>Save and continue later</h3>
       </button>
@@ -183,9 +190,16 @@
         <h3>Upload</h3>
       </button>
     </ion-col>
-    <ion-col *ngIf="(pageState.isRekey$ | async)">
-      <button id="reason-for-rekey" class="mes-primary-button padding-x-5 full-width" ion-button (click)="goToReasonForRekey()">
+    <ion-col *ngIf="(pageState.isRekey$ | async) && !isDelegated">
+      <button id="reason-for-rekey" class="mes-primary-button padding-x-5 full-width" ion-button
+              (click)="goToReasonForRekey()">
         <h3>Continue</h3>
+      </button>
+    </ion-col>
+    <ion-col *ngIf="isDelegated">
+      <button id="submit-button" class="mes-primary-button padding-x-5 full-width" ion-button
+              (click)="onSubmit()">
+        <h3>Submit</h3>
       </button>
     </ion-col>
   </ion-row>
