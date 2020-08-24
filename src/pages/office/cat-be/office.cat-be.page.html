@@ -55,7 +55,9 @@
 
             <delegated-health-declaration
               *ngIf="isDelegated && (pageState.isPassed$ | async)"
-             [formGroup]="form">
+             [formGroup]="form"
+              (healthDeclarationChange)="healthDeclarationChanged($event)"
+            >
             </delegated-health-declaration>
 
             <d255
