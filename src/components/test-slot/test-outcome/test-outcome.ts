@@ -35,6 +35,8 @@ import { getBookedTestSlot } from '../../../pages/rekey-search/rekey-search.sele
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { MarkAsNonRekey } from '../../../modules/tests/rekey/rekey.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { SetExaminerConducted } from '../../../modules/tests/examiner-conducted/examiner-conducted.actions';
+import { SetExaminerBooked } from '../../../modules/tests/examiner-booked/examiner-booked.actions';
 
 @Component({
   selector: 'test-outcome',
@@ -65,6 +67,9 @@ export class TestOutcomeComponent implements OnInit {
 
   @Input()
   isDelegatedTest: boolean = false;
+
+  @Input()
+  examinerId: number;
 
   @Input()
   category: TestCategory;
@@ -240,6 +245,9 @@ export class TestOutcomeComponent implements OnInit {
 
   rekeyDelegatedTest(): void {
     this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.category, false, true));
+    console.log('this.slotDetail', this.slotDetail);
+    this.store$.dispatch(new SetExaminerConducted(this.examinerId));
+    this.store$.dispatch(new SetExaminerBooked(this.examinerId));
 
     switch (this.category) {
       case TestCategory.BE:
