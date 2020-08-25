@@ -15,7 +15,7 @@ import {
   OfficeViewDidEnter,
   CompleteTest,
   SavingWriteUpForLater,
-  OfficeValidationError, HealthDeclarationChanged,
+  OfficeValidationError,
 } from '../office.actions';
 import { Observable, merge, Subscription } from 'rxjs';
 import { AbstractControl, FormGroup } from '@angular/forms';
@@ -750,9 +750,5 @@ export class OfficeCatDPage extends BasePageComponent {
   displayTransmissionBanner(): boolean {
     const control: AbstractControl = this.form.get('transmissionCtrl');
     return control && !control.pristine && (this.transmission === TransmissionType.Automatic);
-  }
-
-  healthDeclarationChanged(healthDeclaration: boolean): void {
-    this.store$.dispatch(new HealthDeclarationChanged(healthDeclaration));
   }
 }

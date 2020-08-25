@@ -1,4 +1,6 @@
-<ion-row *ngIf="display" class="mes-validated-row" id="debrief-card" [formGroup]="formGroup">
+<ion-row *ngIf="display" class="mes-validated-row"
+         [ngClass]="{ 'mes-row-separator' : isDelegated }"
+         id="debrief-card" [formGroup]="formGroup">
   <div class="validation-bar" [class.ng-invalid]="invalid">
   </div>
   <ion-col class="component-label" col-32 align-self-center>
