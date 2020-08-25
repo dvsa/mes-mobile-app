@@ -72,8 +72,6 @@ import { PassFinalisationComponentsModule }
  from '../../../pass-finalisation/components/pass-finalisation-components.module';
 import { TestFinalisationComponentsModule }
  from '../../../../components/test-finalisation/test-finalisation-component.module';
-import { DelegatedHealthDeclarationComponent }
- from '../../components/delegated-health-declaration/delegated-health-declaration';
 
 describe('OfficePage Cat D', () => {
   let fixture: ComponentFixture<OfficeCatDPage>;
@@ -95,7 +93,6 @@ describe('OfficePage Cat D', () => {
         MockComponent(FaultCommentCardComponent),
         MockComponent(VehicleChecksOfficeCardComponent),
         MockComponent(CandidateSectionComponent),
-        MockComponent(DelegatedHealthDeclarationComponent),
       ],
       imports: [
         IonicModule,

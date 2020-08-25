@@ -53,13 +53,6 @@
               (passCertificateNumberChange)="passCertificateNumberChanged($event)">
             </pass-certificate-number>
 
-            <delegated-health-declaration
-              *ngIf="isDelegated && (pageState.isPassed$ | async)"
-             [formGroup]="form"
-              (healthDeclarationChange)="healthDeclarationChanged($event)"
-            >
-            </delegated-health-declaration>
-
             <d255
               *ngIf="isDelegated && (pageState.isPassed$ | async)"
               [display]=true
@@ -79,7 +72,8 @@
               [display]=true
               [formGroup]="form"
               [debriefWitnessed]="pageState.debriefWitnessed$ | async"
-              [outcome]="testOutcome" (debriefWitnessedChange)="debriefWitnessedChanged($event)">
+              [outcome]="testOutcome" (debriefWitnessedChange)="debriefWitnessedChanged($event)"
+              [isDelegated]="isDelegated">
             </debrief-witnessed>
 
             <route-number [display]="pageState.displayRouteNumber$ | async"

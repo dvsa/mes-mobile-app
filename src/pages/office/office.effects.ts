@@ -15,7 +15,7 @@ import * as testsActions from '../../modules/tests/tests.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTest, getCurrentTestSlotId } from '../../modules/tests/tests.selector';
+import { getCurrentTestSlotId } from '../../modules/tests/tests.selector';
 import { of } from 'rxjs';
 
 @Injectable()
@@ -63,18 +63,5 @@ export class OfficeEffects {
         new testsActions.PersistTests(),
       ];
     }),
-  );
-
-  @Effect()
-  healthDeclarationChangedEffect$ = this.actions$.pipe(
-    ofType(officeActions.HEALTH_DECLARATION_CHANGED),
-    concatMap(action => of(action).pipe(
-      withLatestFrom(
-        this.store$.pipe(
-          select(getTests),
-          select(getCurrentTest),
-        ),
-      ),
-    )),
   );
 }

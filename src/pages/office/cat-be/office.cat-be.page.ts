@@ -15,7 +15,7 @@ import {
   OfficeViewDidEnter,
   CompleteTest,
   SavingWriteUpForLater,
-  OfficeValidationError, HealthDeclarationChanged,
+  OfficeValidationError,
 } from '../office.actions';
 import { Observable, Subscription, merge } from 'rxjs';
 import { AbstractControl, FormGroup } from '@angular/forms';
@@ -514,10 +514,6 @@ export class OfficeCatBEPage extends BasePageComponent {
 
   additionalInformationChanged(additionalInformation: string): void {
     this.store$.dispatch(new AdditionalInformationChanged(additionalInformation));
-  }
-
-  healthDeclarationChanged(healthDeclaration: boolean): void {
-    this.store$.dispatch(new HealthDeclarationChanged(healthDeclaration));
   }
 
   dangerousFaultCommentChanged(dangerousFaultComment: FaultSummary) {
