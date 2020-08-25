@@ -1,0 +1,55 @@
+<ion-content no-bounce id="delegated-rekey-upload-outcome">
+
+  <ion-grid *ngIf="pageState.isUploading$ | async">
+    <ion-row align-items-center class="message-wrapper">
+      <ion-col no-padding>
+        <ion-row justify-content-center>
+          <ion-spinner name="bubbles"></ion-spinner>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="!(pageState.isUploading$ | async)">
+    <ion-row align-items-center class="message-wrapper" *ngIf="(pageState.uploadSuccessful$ | async)">
+      <ion-col no-padding>
+        <ion-row justify-content-center>
+          <ion-icon class="tick-icon" ios="ios-checkmark-circle"></ion-icon>
+        </ion-row>
+        <ion-row justify-content-center>
+          <h2 class="modal-alert-header">Rekey upload was successful</h2>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center class="message-wrapper" *ngIf="!(pageState.uploadSuccessful$ | async)">
+      <ion-col no-padding>
+        <ion-row justify-content-center>
+          <ion-icon class="warning-icon" ios="ios-close-circle"></ion-icon>
+        </ion-row>
+        <ion-row justify-content-center>
+          <h2 class="modal-alert-header">Rekey upload was unsuccessful</h2>
+        </ion-row>
+        <br>
+        <ion-row justify-content-center>
+          <button ion-button class="mes-grey-button retry-button" (click)="retryUpload()">
+            <h3>Retry upload</h3>
+          </button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-row class="mes-full-width-card">
+    <ion-col no-padding align="left">
+      <button ion-button class="mes-grey-button retry-button" (click)="goToDashboard()">
+        <h3>Return to dashboard</h3>
+      </button>
+    </ion-col>
+    <ion-col no-padding align="right">
+      <button ion-button class="mes-primary-button retry-button" (click)="goToDelegatedSearch()">
+        <h3>Rekey another test</h3>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

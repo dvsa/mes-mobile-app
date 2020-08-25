@@ -78,6 +78,19 @@
   }
 }
 
+.mes-grey-button {
+  background: map-get($colors-gds, gds-grey-3);
+  color: map-get($colors-gds, gds-black);
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 0 0.8rem;
+  margin: 0 0.2rem;
+  line-height: 2.6rem;
+  &.activated {
+    background:  map-get($colors-gds, gds-grey-1);
+  }
+}
+
 .mes-link-button {
   background: map-get($colors, mes-white);
   color: map-get($colors-gds, gds-black);

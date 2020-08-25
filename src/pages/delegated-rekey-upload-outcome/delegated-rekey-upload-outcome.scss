@@ -1,0 +1,30 @@
+page-delegated-rekey-upload-outcome {
+
+  ion-grid {
+    height: 100%;
+  }
+
+  .message-wrapper {
+    height: 100%;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .tick-icon,
+  .warning-icon {
+    color: map-get($colors, danger);
+    margin: 40px 0px 16px;
+    font-size: 84px;
+  }
+
+  .tick-icon {
+    color: map-get($colors-gds, 'gds-dark-green');
+  }
+  .retry-button{
+    width: 300px;
+    min-height: 56px;
+  }
+
+}

@@ -17,7 +17,7 @@ import {
   SavingWriteUpForLater,
   OfficeValidationError,
 } from '../office.actions';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, merge } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
@@ -66,7 +66,7 @@ import {
   getEcoFaultText,
 } from '../../../modules/tests/test-data/common/test-data.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
-import { PersistTests } from '../../../modules/tests/tests.actions';
+import { PersistTests, SendCurrentTest } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
 import {
@@ -93,7 +93,11 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
-import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
+import {
+  CAT_BE,
+  DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE,
+  JOURNAL_PAGE,
+} from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
@@ -108,6 +112,8 @@ import {
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -145,6 +151,7 @@ interface OfficePageState {
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
+  delegatedTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -160,6 +167,8 @@ export class OfficeCatBEPage extends BasePageComponent {
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
   static readonly maxFaultCount = 15;
+  subscription: Subscription;
+  isDelegated: boolean;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
@@ -336,13 +345,13 @@ export class OfficeCatBEPage extends BasePageComponent {
           )),
       ),
       displayVehicleChecks$: currentTest$.pipe(
-          select(getTestOutcome),
-          withLatestFrom(currentTest$.pipe(
-            select(getTestData))),
-            map(([outcome, data]) =>
-            this.outcomeBehaviourProvider.isVisible(outcome,
-              'vehicleChecks',
-              vehicleChecksExist(data.vehicleChecks))),
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestData))),
+        map(([outcome, data]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome,
+            'vehicleChecks',
+            vehicleChecksExist(data.vehicleChecks))),
       ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
@@ -399,7 +408,19 @@ export class OfficeCatBEPage extends BasePageComponent {
         select(getVehicleChecks),
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
     };
+    this.setupSubscription();
+  }
+
+  setupSubscription() {
+    const { delegatedTest$ } = this.pageState;
+    this.subscription = merge(
+      delegatedTest$.pipe(map(value => this.isDelegated = value)),
+    ).subscribe();
   }
 
   popToRoot() {
@@ -548,7 +569,8 @@ export class OfficeCatBEPage extends BasePageComponent {
       buttons: [
         {
           text: 'Cancel',
-          handler: () => { },
+          handler: () => {
+          },
         },
         {
           text: 'Upload',
@@ -581,8 +603,13 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   completeTest() {
-    this.store$.dispatch(new CompleteTest());
-    this.popToRoot();
+    if (!this.isDelegated) {
+      this.store$.dispatch(new CompleteTest());
+      this.popToRoot();
+    } else {
+      this.store$.dispatch(new SendCurrentTest());
+      this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
+    }
   }
 
   shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {

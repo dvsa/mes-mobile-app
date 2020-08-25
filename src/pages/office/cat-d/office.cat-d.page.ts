@@ -66,7 +66,7 @@ import {
   getEcoFaultText,
 } from '../../../modules/tests/test-data/common/test-data.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
-import { PersistTests } from '../../../modules/tests/tests.actions';
+import { PersistTests, SendCurrentTest } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
 import {
@@ -94,7 +94,7 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
-import { CAT_D, JOURNAL_PAGE } from '../../page-names.constants';
+import { CAT_D, DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
@@ -116,6 +116,8 @@ import {
 } from '../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -154,6 +156,7 @@ interface OfficePageState {
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
   testCategory$: Observable<CategoryCode>;
+  delegatedTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -174,6 +177,7 @@ export class OfficeCatDPage extends BasePageComponent {
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
   testCategory: CategoryCode;
+  isDelegated: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -418,15 +422,20 @@ export class OfficeCatDPage extends BasePageComponent {
         select(getVehicleChecks),
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
     };
     this.setupSubscription();
   }
 
   setupSubscription() {
-    const { testCategory$ } = this.pageState;
+    const { testCategory$, delegatedTest$ } = this.pageState;
 
     this.subscription = merge(
       testCategory$.pipe(map(result => this.testCategory = result)),
+      delegatedTest$.pipe(map(value => this.isDelegated = value)),
     ).subscribe();
   }
 
@@ -626,8 +635,13 @@ export class OfficeCatDPage extends BasePageComponent {
   }
 
   completeTest() {
-    this.store$.dispatch(new CompleteTest());
-    this.popToRoot();
+    if (!this.isDelegated) {
+      this.store$.dispatch(new CompleteTest());
+      this.popToRoot();
+    } else {
+      this.store$.dispatch(new SendCurrentTest());
+      this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
+    }
   }
 
   shouldDisplayDrivingFaultComments = (data: CatDUniqueTypes.TestData): boolean => {

@@ -54,7 +54,7 @@ import {
 } from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
 import { getTestTime }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
-import { PersistTests } from '../../../modules/tests/tests.actions';
+import { PersistTests, SendCurrentTest } from '../../../modules/tests/tests.actions';
 import {
   Identification,
 } from '@dvsa/mes-test-schema/categories/common';
@@ -63,7 +63,7 @@ import { behaviourMap } from '../office-behaviour-map.cat-adi-part2';
 import { ActivityCodeModel, getActivityCodeOptions } from '../components/activity-code/activity-code.constants';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
-import { CAT_CPC, JOURNAL_PAGE } from '../../page-names.constants';
+import { CAT_CPC, DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE, JOURNAL_PAGE } from '../../page-names.constants';
 
 import { AssessmentReportChanged } from '../../../modules/tests/test-summary/cat-cpc/test-summary.cat-cpc.actions';
 import { getAssessmentReport } from '../../../modules/tests/test-summary/cat-cpc/test-summary.cat-cpc.selector';
@@ -81,6 +81,8 @@ import {
 import { TestOutcome } from '../../../shared/models/test-outcome';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
+import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -107,6 +109,7 @@ interface OfficePageState {
   question5$: Observable<Question5>;
   testResult$: Observable<string>;
   isRekey$: Observable<boolean>;
+  delegatedTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -119,6 +122,7 @@ export class OfficeCatCPCPage extends BasePageComponent {
   form: FormGroup;
   toast: Toast;
   subscription: Subscription;
+  isDelegated: boolean;
 
   public outcome: TestOutcome;
   combinationCode: CombinationCodes;
@@ -259,13 +263,18 @@ export class OfficeCatCPCPage extends BasePageComponent {
         select(getRekeyIndicator),
         select(isRekey),
       ),
+      delegatedTest$: currentTest$.pipe(
+        select(getDelegatedTestIndicator),
+        select(isDelegatedTest),
+      ),
     };
 
-    const { testResult$, combination$ } = this.pageState;
+    const { testResult$, combination$, delegatedTest$ } = this.pageState;
 
     this.subscription = merge(
       testResult$.pipe(map(result => this.outcome = result as TestOutcome)),
       combination$.pipe(map(result => this.combinationCode = result as CombinationCodes)),
+      delegatedTest$.pipe(map(value => this.isDelegated = value)),
     ).subscribe();
 
   }
@@ -368,8 +377,13 @@ export class OfficeCatCPCPage extends BasePageComponent {
   }
 
   completeTest() {
-    this.store$.dispatch(new CompleteTest());
-    this.popToRoot();
+    if (!this.isDelegated) {
+      this.store$.dispatch(new CompleteTest());
+      this.popToRoot();
+    } else {
+      this.store$.dispatch(new SendCurrentTest());
+      this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
+    }
   }
 
   ionViewDidLeave(): void {
