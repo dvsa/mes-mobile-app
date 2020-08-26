@@ -140,6 +140,7 @@ import {
   CandidateChoseToProceedWithTestInWelsh,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { TransmissionType } from '../../../shared/models/transmission-type';
+import { TestOutcome } from '../../../modules/tests/tests.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -208,6 +209,7 @@ export class OfficeCatDPage extends BasePageComponent {
   isDelegated: boolean;
   transmission: GearboxCategory;
   testOutcome: string;
+  testOutcomeText: string;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -485,9 +487,10 @@ export class OfficeCatDPage extends BasePageComponent {
   }
 
   setupSubscription() {
-    const { testCategory$, delegatedTest$, transmission$, testOutcome$ } = this.pageState;
+    const { testCategory$, delegatedTest$, transmission$, testOutcome$, testOutcomeText$ } = this.pageState;
 
     this.subscription = merge(
+      testOutcomeText$.pipe(map(result => this.testOutcomeText = result)),
       testOutcome$.pipe(map(result => this.testOutcome = result)),
       transmission$.pipe(map(result => this.transmission = result)),
       delegatedTest$.pipe(map(result => this.isDelegated = result)),
@@ -750,5 +753,13 @@ export class OfficeCatDPage extends BasePageComponent {
   displayTransmissionBanner(): boolean {
     const control: AbstractControl = this.form.get('transmissionCtrl');
     return control && !control.pristine && (this.transmission === TransmissionType.Automatic);
+  }
+
+  isFail(): boolean {
+    return this.testOutcomeText === TestOutcome.Failed;
+  }
+
+  isTerminated(): boolean {
+    return this.testOutcomeText === TestOutcome.Terminated;
   }
 }

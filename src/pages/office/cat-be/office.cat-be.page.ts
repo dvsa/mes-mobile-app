@@ -112,8 +112,6 @@ import {
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
-import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
-import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import {
   PassCertificateNumberChanged,
   ProvisionalLicenseNotReceived,
@@ -138,6 +136,7 @@ import { getConductedLanguage }
  from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import { TestOutcome } from '../../../modules/tests/tests.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -196,14 +195,15 @@ export class OfficeCatBEPage extends BasePageComponent {
   drivingFaultCtrl: String = 'drivingFaultCtrl';
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
-  isDelegated: boolean = false;
   static readonly maxFaultCount = 15;
   transmission: GearboxCategory;
   testOutcome: string;
+  subscription: Subscription;
+  isDelegated: boolean;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
-  subscription: Subscription;
+  testOutcomeText: string;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -478,11 +478,12 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   setupSubscription() {
-    const { transmission$, testOutcome$, delegatedTest$ } = this.pageState;
+    const { transmission$, testOutcome$, delegatedTest$, testOutcomeText$ } = this.pageState;
     this.subscription = merge(
       delegatedTest$.pipe(map(value => this.isDelegated = value)),
       transmission$.pipe(map(value => this.transmission = value)),
       testOutcome$.pipe(map(value => this.testOutcome = value)),
+      testOutcomeText$.pipe(map(value => this.testOutcomeText = value)),
     ).subscribe();
   }
 
@@ -632,8 +633,7 @@ export class OfficeCatBEPage extends BasePageComponent {
       buttons: [
         {
           text: 'Cancel',
-          handler: () => {
-          },
+          handler: () => { },
         },
         {
           text: 'Upload',
@@ -712,6 +712,14 @@ export class OfficeCatBEPage extends BasePageComponent {
         new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
         : new CandidateChoseToProceedWithTestInEnglish('English'),
     );
+  }
+
+  isFail(): boolean {
+    return this.testOutcomeText === TestOutcome.Failed;
+  }
+
+  isTerminated(): boolean {
+    return this.testOutcomeText === TestOutcome.Terminated;
   }
 
   displayTransmissionBanner(): boolean {
