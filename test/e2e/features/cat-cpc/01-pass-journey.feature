@@ -151,9 +151,10 @@ Feature: Driver Examiner complete the pass journey for CPC
       | Slot type                         | Standard Test                          |
       | Vehicle details                   | Rigid                                  |
       | Certificate number                | A123456X                               |
-#    When I click the close button
-#    Then I should see the "Search submitted test" page
-#    When I click the back button on the search submitted test page
-#    Then I should see the "My dashboard" page
+    And I should see the "Test information" page
+    When I click the close button
+    Then I should see the "Search submitted test" page
+    When I click the back button on the search submitted test page
+    Then I should see the "My dashboard" page
 
 

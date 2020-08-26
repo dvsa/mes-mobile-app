@@ -17,8 +17,8 @@ class SearchPage extends Page {
   }
 
   clickCloseButton() {
-    this.clickElementByXPath('//div[2]/ion-header/ion-navbar/ion-buttons/button');
-    //this.clickElementByCss('button.close-button-padding');
+    this.clickElementByXPath('//div//ion-header/ion-navbar/ion-buttons/button');
+    // this.clickElementByCss('button.close-button-padding');
   }
 
   getTestOutcome() {
