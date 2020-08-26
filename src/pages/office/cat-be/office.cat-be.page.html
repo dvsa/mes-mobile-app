@@ -54,7 +54,7 @@
             </pass-certificate-number>
 
             <d255
-              *ngIf="isDelegated && !isFail()"
+              *ngIf="isDelegated"
               [display]=true
               [d255]="pageState.d255$ | async"
               [outcome]="testOutcome"
@@ -62,13 +62,13 @@
               (d255Change)="d255Changed($event)"></d255>
 
             <language-preferences
-              *ngIf="isDelegated && !isFail()"
+              *ngIf="isDelegated"
               [formGroup]="form"
               [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"
               (welshChanged)="isWelshChanged($event)"></language-preferences>
 
             <debrief-witnessed
-              *ngIf="isDelegated && !isFail()"
+              *ngIf="isDelegated"
               [display]=true
               [formGroup]="form"
               [debriefWitnessed]="pageState.debriefWitnessed$ | async"
