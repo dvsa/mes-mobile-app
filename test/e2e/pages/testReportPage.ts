@@ -1,5 +1,6 @@
 import Page from './page';
 import { browser, by, element } from 'protractor';
+import {TEST_CONFIG} from '../test.config';
 
 const buttonPadding = 30;
 const request = require('request');
@@ -21,6 +22,20 @@ class TestReportPage extends Page {
     this.competency = new Competency();
     this.bikeControlStops = new BikeControlStops();
 
+  }
+
+  clickCPCModuleAssessmentCheckBox(resultNumber) {
+    const checkBox = this.getElementById(`answer${resultNumber}`);
+    checkBox.click();
+  }
+  clickNextQuestion() {
+    const nextButton = this.getElementById(`next-page-button`);
+    nextButton.click();
+  }
+
+  clickViewTestSummary() {
+    const viewTestSummary = this.getElementById(`view-summary-button`);
+    viewTestSummary.click();
   }
 
   completeUncoupleRecouple() {
@@ -141,7 +156,13 @@ class TestReportPage extends Page {
     this.clickElementById('dangerous-button');
   }
 
+  waitForTerminateButton() {
+    this.getElementByXPath('//button/span[contains(text(),"Terminate test")]');
+    browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
+  }
+
   clickContinueToDebriefbutton() {
+    this.getElementByXPath('//button[span[h3[text() = "Continue to debrief"]]]');
     this.clickElementByXPath('//button[span[h3[text() = "Continue to debrief"]]]');
   }
 

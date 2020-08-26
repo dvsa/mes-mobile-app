@@ -66,7 +66,7 @@ import {
   getEcoFaultText,
 } from '../../../modules/tests/test-data/common/test-data.selector';
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
-import { PersistTests } from '../../../modules/tests/tests.actions';
+import { PersistTests, SendCurrentTest } from '../../../modules/tests/tests.actions';
 import { WeatherConditionSelection } from '../../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../../providers/weather-conditions/weather-condition';
 import {
@@ -93,7 +93,11 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
-import { CAT_BE, JOURNAL_PAGE } from '../../page-names.constants';
+import {
+  CAT_BE,
+  DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE,
+  JOURNAL_PAGE,
+} from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
@@ -475,6 +479,9 @@ export class OfficeCatBEPage extends BasePageComponent {
       transmission$.pipe(map(value => this.transmission = value)),
       testOutcome$.pipe(map(value => this.testOutcome = value)),
       testOutcomeText$.pipe(map(value => this.testOutcomeText = value)),
+    const { delegatedTest$ } = this.pageState;
+    this.subscription = merge(
+      delegatedTest$.pipe(map(value => this.isDelegated = value)),
     ).subscribe();
   }
 
@@ -624,7 +631,8 @@ export class OfficeCatBEPage extends BasePageComponent {
       buttons: [
         {
           text: 'Cancel',
-          handler: () => { },
+          handler: () => {
+          },
         },
         {
           text: 'Upload',
@@ -657,8 +665,13 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   completeTest() {
-    this.store$.dispatch(new CompleteTest());
-    this.popToRoot();
+    if (!this.isDelegated) {
+      this.store$.dispatch(new CompleteTest());
+      this.popToRoot();
+    } else {
+      this.store$.dispatch(new SendCurrentTest());
+      this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
+    }
   }
 
   shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {

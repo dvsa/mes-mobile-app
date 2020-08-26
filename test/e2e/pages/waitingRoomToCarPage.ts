@@ -279,6 +279,19 @@ class WaitingRoomToCarPage extends Page {
     this.clickElementById('safetyQuestionsCorrect_16');
     this.submitVehicleChecksButton();
   }
+
+
+  selectVehicleDetails() {
+    this.clickElementById('configuration-rigid');
+  }
+
+  selectCombination(value) {
+    this.clickElementByCss('button[ion-button="item-cover"]');
+    //this.clickElementByXPath(`//ion-alert[contains(@class,'single-select-alert')]//div[contains(text(),'${value}')]/../..`);
+    this.clickElementById(`alert-input-0-3`);
+    //ion-alert[contains(@class,'single-select-alert')]//div[contains(text(),'L')]
+    this.clickSubmitButton();
+  }
 }
 
 export default new WaitingRoomToCarPage();

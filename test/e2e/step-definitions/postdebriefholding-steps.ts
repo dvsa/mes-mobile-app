@@ -39,6 +39,11 @@ Before({ tags: '@catADI2' }, () => {
   this.testCategory = 'adi-part2';
 });
 
+Before({ tags: '@catcpc' }, () => {
+  this.testCategory = 'cpc';
+});
+
+
 Then('I am on the post debrief holding page', () => {
   // No page title so need to check something else exists that exists on the page
   return PostDebriefHoldingPage.isCurrentPage(this.testCategory);
