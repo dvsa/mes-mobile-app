@@ -27,11 +27,11 @@
         <ion-grid class="grid">
           <activity-code id="activity-code-card" [formGroup]="form"
                          [activityCodeModel]="pageState.activityCode$ | async" [activityCodeOptions]="activityCodeOptions"
-                         (activityCodeChange)="activityCodeChanged($event)" [disabled]="true"></activity-code>
+                         (activityCodeChange)="activityCodeChanged($event)" [disabled]="!isTerminated() || !isDelegated"></activity-code>
 
           <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
             <license-provided
-              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              *ngIf="isDelegated && !isFail()"
               [form]="form"
               [license]="pageState.provisionalLicense$ | async"
               [licenseReceivedLabel] = "'Provisional licence Received'"
@@ -40,21 +40,21 @@
             </license-provided>
 
             <transmission
-              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              *ngIf="isDelegated && !isFail()"
               [formGroup]="form"
               [transmission]="pageState.transmission$ | async"
               (transmissionChange)="transmissionChanged($event)">
             </transmission>
 
             <pass-certificate-number
-              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              *ngIf="isDelegated && !isFail()"
               [form]="form"
               [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
               (passCertificateNumberChange)="passCertificateNumberChanged($event)">
             </pass-certificate-number>
 
             <d255
-              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              *ngIf="isDelegated && !isFail()"
               [display]=true
               [d255]="pageState.d255$ | async"
               [outcome]="testOutcome"
@@ -62,13 +62,13 @@
               (d255Change)="d255Changed($event)"></d255>
 
             <language-preferences
-              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              *ngIf="isDelegated && !isFail()"
               [formGroup]="form"
               [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"
               (welshChanged)="isWelshChanged($event)"></language-preferences>
 
             <debrief-witnessed
-              *ngIf="isDelegated && (pageState.isPassed$ | async)"
+              *ngIf="isDelegated && !isFail()"
               [display]=true
               [formGroup]="form"
               [debriefWitnessed]="pageState.debriefWitnessed$ | async"
@@ -85,20 +85,28 @@
                                  [outcome]="pageState.testOutcome$ | async" [independentDriving]="pageState.independentDriving$ | async"
                                  (independentDrivingChange)="independentDrivingChanged($event)"></independent-driving>
 
-            <candidate-description [display]="pageState.displayCandidateDescription$ | async" [formGroup]="form"
+            <candidate-description
+              *ngIf="!isDelegated"
+              [display]="pageState.displayCandidateDescription$ | async" [formGroup]="form"
                                    [candidateDescription]="pageState.candidateDescription$ | async"
                                    [outcome]="pageState.testOutcome$ | async"
                                    (candidateDescriptionChange)="candidateDescriptionChanged($event)"></candidate-description>
 
-            <identification [display]="pageState.displayIdentification$ | async" [formGroup]="form"
+            <identification
+              *ngIf="!isDelegated"
+              [display]="pageState.displayIdentification$ | async" [formGroup]="form"
                             [identification]="pageState.identification$ | async" [outcome]="pageState.testOutcome$ | async"
                             (identificationChange)="identificationChanged($event)">
             </identification>
 
-            <vehicle-checks-office-card [display]="pageState.displayVehicleChecks$ | async"
+            <vehicle-checks-office-card
+              *ngIf="!isDelegated"
+              [display]="pageState.displayVehicleChecks$ | async"
                                         [checks]="pageState.vehicleChecks$ | async"></vehicle-checks-office-card>
 
-            <weather-conditions [display]="pageState.displayWeatherConditions$ | async"
+            <weather-conditions
+              *ngIf="!isDelegated"
+              [display]="pageState.displayWeatherConditions$ | async"
                                 [weatherConditions]="pageState.weatherConditions$ | async" [formGroup]="form"
                                 [outcome]="pageState.testOutcome$ | async" [weatherConditionsOptions]="weatherConditions"
                                 (weatherConditionsChange)="weatherConditionsChanged($event)">
