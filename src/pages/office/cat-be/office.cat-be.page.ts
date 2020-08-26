@@ -479,10 +479,13 @@ export class OfficeCatBEPage extends BasePageComponent {
       transmission$.pipe(map(value => this.transmission = value)),
       testOutcome$.pipe(map(value => this.testOutcome = value)),
       testOutcomeText$.pipe(map(value => this.testOutcomeText = value)),
-    const { delegatedTest$ } = this.pageState;
-    this.subscription = merge(
-      delegatedTest$.pipe(map(value => this.isDelegated = value)),
     ).subscribe();
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   popToRoot() {

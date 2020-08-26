@@ -126,8 +126,6 @@ import { getCommunicationPreference }
  from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage }
  from '../../../modules/tests/communication-preferences/communication-preferences.selector';
-import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
-import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.reducer';
 import {
   PassCertificateNumberChanged,
