@@ -17,8 +17,8 @@
       <h3><span class="link" (click)="login()">Sign in</span> to continue.</h3>
     </div>
     <div *ngIf="isUnknownError()">
-      <h2>Sorry, something went wrong</h2>
-      <h3>Please try again later.</h3>
+      <h2 id="loginSorry">Sorry, something went wrong</h2>
+      <h3 id="loginPleaseTryAgain">Please try again later.</h3>
       <span class="link error-details-link" (click)="showErrorDetails()">Show error details</span>
     </div>
     <div *ngIf="hasDeviceTypeError">
