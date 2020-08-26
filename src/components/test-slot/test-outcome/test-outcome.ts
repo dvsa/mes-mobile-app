@@ -245,7 +245,6 @@ export class TestOutcomeComponent implements OnInit {
 
   rekeyDelegatedTest(): void {
     this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.category, false, true));
-    console.log('this.slotDetail', this.slotDetail);
     this.store$.dispatch(new SetExaminerConducted(this.examinerId));
     this.store$.dispatch(new SetExaminerBooked(this.examinerId));
 
