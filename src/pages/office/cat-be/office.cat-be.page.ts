@@ -487,6 +487,12 @@ export class OfficeCatBEPage extends BasePageComponent {
     ).subscribe();
   }
 
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   popToRoot() {
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
     this.navController.popTo(journalPage);
