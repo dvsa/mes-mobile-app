@@ -9,9 +9,22 @@
   <ion-col align-self-center padding-left>
     <ion-row>
       <ion-col col-32>
-        <input id="cbt-number" type="text" class="cbt-number-input" formControlName="cbtNumber" numbersOnly
-          [class.ng-invalid]="invalid()" (change)="cbtNumberChanged($event.target.value)">
+        <input id="cbt-number"
+               type="text"
+               class="cbt-number-input"
+               formControlName="cbtNumber"
+               numbersOnly
+               maxlength="7"
+               [class.ng-invalid]="invalid()"
+               (change)="cbtNumberChanged($event.target.value)">
       </ion-col>
+    </ion-row>
+    <ion-row class="validation-message-row" align-items-center>
+      <div class="validation-text"
+           [class.ng-invalid]="invalid()"
+           id="cbt-validation-text">
+        Please provide exactly 7 numbers
+      </div>
     </ion-row>
   </ion-col>
 </ion-row>

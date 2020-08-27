@@ -50,3 +50,10 @@ export const getPassCertificateAMOD1Validator = (): FieldValidators => {
     maxByteLength: 8,
   };
 };
+
+export const getDL196CBTCertificateNumberValidator = (): FieldValidators => {
+  return {
+    pattern: /^[1-9][0-9]{6,6}$/g,
+    maxLength: '7',
+  };
+};
