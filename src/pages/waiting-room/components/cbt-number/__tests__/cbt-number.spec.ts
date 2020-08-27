@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
 import { CBTNumberComponent } from '../cbt-number';
 import { configureTestSuite } from 'ng-bullet';
 
-fdescribe('CBTNumberComponent', () => {
+describe('CBTNumberComponent', () => {
   let fixture: ComponentFixture<CBTNumberComponent>;
   let component: CBTNumberComponent;
 
