@@ -59,6 +59,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('slot', this.slot);
     const { slotId } = this.slot.slotDetail;
     this.componentState = {
       testStatus$: this.store$.pipe(
