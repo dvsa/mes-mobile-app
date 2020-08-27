@@ -104,6 +104,10 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
     this.applicationReference = val;
   }
 
+  invalid(): boolean {
+    return this.applicationReference.length < 11 ? true : false;
+  }
+
   searchTests() {
     this.store$.dispatch(new SearchBookedDelegatedTest(this.applicationReference));
   }

@@ -17,7 +17,12 @@
             <ion-col col-32>
               <ion-item no-padding no-lines>
                 <ion-input placeholder="Application reference" type="tel" id="application-reference"
-                           numbersOnly maxlength="11" clearInput [class.ng-invalid]="invalid" [value]="applicationReference" (change)="applicationReferenceChanged($event.target.value)">
+                           numbersOnly
+                           maxlength="11"
+                           clearInput
+                           [class.ng-invalid]="invalid()"
+                           [value]="applicationReference"
+                           (change)="applicationReferenceChanged($event.target.value)">
                 </ion-input>
               </ion-item>
             </ion-col>
