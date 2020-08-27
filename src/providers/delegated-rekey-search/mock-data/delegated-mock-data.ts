@@ -2,11 +2,15 @@ import { TestSlot } from '@dvsa/mes-journal-schema';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 // TODO add to schema
-export interface DelegatedExaminerTestSlot extends TestSlot{
+export interface DelegatedExaminerTestSlot extends TestSlot {
   examinerId: number;
 }
 
-export function getDelegatedBooking(category: TestCategory, isWelshTest: boolean, slotNumber: number): DelegatedExaminerTestSlot {
+export function getDelegatedBooking(
+  category: TestCategory,
+  isWelshTest: boolean,
+  slotNumber: number,
+): DelegatedExaminerTestSlot {
   return {
     booking: {
       application: {
