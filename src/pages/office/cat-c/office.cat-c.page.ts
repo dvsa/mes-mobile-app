@@ -137,8 +137,11 @@ import { getConductedLanguage }
  from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { TestOutcome } from '../../../modules/tests/tests.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { getApplicationReference } from '../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
+import { getApplicationNumber } from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
 
 interface OfficePageState {
+  applicationNumber$: Observable<string>;
   activityCode$: Observable<ActivityCodeModel>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
@@ -245,6 +248,11 @@ export class OfficeCatCPage extends BasePageComponent {
     );
 
     this.pageState = {
+      applicationNumber$: currentTest$.pipe(
+        select(getJournalData),
+        select(getApplicationReference),
+        select(getApplicationNumber),
+      ),
       testCategory$: currentTest$.pipe(
         select(getTestCategory),
         map(result => this.testCategory = result),

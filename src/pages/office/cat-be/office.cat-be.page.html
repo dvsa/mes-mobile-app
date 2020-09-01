@@ -25,6 +25,16 @@
 
       <ion-card-content class="card-content-ios" no-bounce no-padding>
         <ion-grid class="grid">
+
+          <ion-row class="mes-component-row mes-row-separator" id="application-reference-card" align-items-center>
+            <ion-col class="component-label" col-32>
+              <label>Application reference</label>
+            </ion-col>
+            <ion-col padding-left>
+              <span class="mes-data">{{pageState.applicationNumber$ | async }}</span>
+            </ion-col>
+          </ion-row>
+
           <activity-code id="activity-code-card" [formGroup]="form"
                          [activityCodeModel]="pageState.activityCode$ | async" [activityCodeOptions]="activityCodeOptions"
                          (activityCodeChange)="activityCodeChanged($event)" [disabled]="!isTerminated() || !isDelegated"></activity-code>
@@ -167,9 +177,12 @@
                           (faultCommentsChange)="seriousFaultCommentChanged($event)">
       </fault-comment-card>
 
-      <fault-comment-card id="driving-fault-comment-card" [formGroup]="form" [faultComments]="pageState.drivingFaults$ | async"
+      <fault-comment-card id="driving-fault-comment-card"
+                          [formGroup]="form"
+                          [faultComments]="pageState.drivingFaults$ | async"
                           [shouldRender]="(pageState.displayDrivingFaultComments$ | async) && (pageState.displayDrivingFault$ | async)"
-                          [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults" [faultCount]="pageState.drivingFaultCount$ | async"
+                          [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults"
+                          [faultCount]="pageState.drivingFaultCount$ | async"
                           [maxFaultCount]="maxFaultCount"
                           (faultCommentsChange)="drivingFaultCommentChanged($event)">
       </fault-comment-card>
@@ -177,7 +190,7 @@
       <ion-card id="driving-fault-no-commentary"
                 *ngIf="!(pageState.displayDrivingFaultComments$ | async) && (pageState.drivingFaultCount$ | async) > 0 && pageState.displayDrivingFault$ | async">
         <ion-card-header>
-          <h4>Driving faults</h4>
+          <h4>Driving faults {{isDelegated ? (pageState.drivingFaultCount$ | async) : null}}</h4>
         </ion-card-header>
         <ion-card-content>
           <ion-row class="driving-fault-no-commentary-row" id="driving-fault-commentary-label"
