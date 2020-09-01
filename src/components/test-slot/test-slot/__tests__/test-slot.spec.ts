@@ -36,6 +36,7 @@ import { SlotProvider } from '../../../../providers/slot/slot';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { configureTestSuite } from 'ng-bullet';
 import moment from 'moment';
+import { DateComponent } from '../../date/date';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -110,6 +111,7 @@ describe('TestSlotComponent', () => {
         MockComponent(IndicatorsComponent),
         MockComponent(LocationComponent),
         MockComponent(TimeComponent),
+        MockComponent(DateComponent),
         MockComponent(TestCategoryComponent),
         MockComponent(TestOutcomeComponent),
         MockComponent(VehicleDetailsComponent),

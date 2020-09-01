@@ -9,6 +9,10 @@
           <language align-items-center [welshLanguage]="slot.booking.application.welshTest">
           </language>
         </ion-col>
+        <ion-col class="date-exclamation-col" *ngIf="delegatedTest">
+          <date [date]="slot.slotDetail.start">
+          </date>
+        </ion-col>
         <ion-col no-padding>
           <submission-status float-end [testStatus]="componentState.testStatus$ | async"></submission-status>
         </ion-col>

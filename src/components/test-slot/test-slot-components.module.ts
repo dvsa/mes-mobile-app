@@ -10,6 +10,7 @@ import { TestCategoryComponent } from './test-category/test-category';
 import { TestOutcomeComponent } from './test-outcome/test-outcome';
 import { TestSlotComponent } from './test-slot/test-slot';
 import { TimeComponent } from './time/time';
+import { DateComponent } from './date/date';
 import { VehicleDetailsComponent } from './vehicle-details/vehicle-details';
 import { LocationComponent } from './location/location';
 import { AdditionalCandidateDetailsComponent } from './additional-candidate-details/additional-candidate-details';
@@ -26,6 +27,7 @@ import { AdditionalCandidateDetailsComponent } from './additional-candidate-deta
     TestOutcomeComponent,
     TestSlotComponent,
     TimeComponent,
+    DateComponent,
     VehicleDetailsComponent,
     LocationComponent,
   ],
@@ -47,6 +49,7 @@ import { AdditionalCandidateDetailsComponent } from './additional-candidate-deta
     TestOutcomeComponent,
     TestSlotComponent,
     TimeComponent,
+    DateComponent,
     VehicleDetailsComponent,
     LocationComponent,
   ],
