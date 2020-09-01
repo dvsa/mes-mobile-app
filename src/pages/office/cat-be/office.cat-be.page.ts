@@ -138,8 +138,13 @@ import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import { TestOutcome } from '../../../modules/tests/tests.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { getApplicationReference }
+  from '../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
+import { getApplicationNumber }
+  from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
 
 interface OfficePageState {
+  applicationNumber$: Observable<string>;
   activityCode$: Observable<ActivityCodeModel>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
@@ -240,6 +245,11 @@ export class OfficeCatBEPage extends BasePageComponent {
       select(getCurrentTest),
     );
     this.pageState = {
+      applicationNumber$: currentTest$.pipe(
+        select(getJournalData),
+        select(getApplicationReference),
+        select(getApplicationNumber),
+      ),
       activityCode$: currentTest$.pipe(
         select(getActivityCode),
       ),
@@ -690,6 +700,8 @@ export class OfficeCatBEPage extends BasePageComponent {
     const drivingFaultCount: number = this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data);
     const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, data);
     const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data);
+
+    console.log('drivingFaults', drivingFaultCount);
 
     return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
   }
