@@ -137,6 +137,7 @@ import { getConductedLanguage }
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import { TestOutcome } from '../../../modules/tests/tests.constants';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -204,6 +205,7 @@ export class OfficeCatBEPage extends BasePageComponent {
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
   testOutcomeText: string;
+  conductedLanguage: string;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -478,8 +480,15 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   setupSubscription() {
-    const { transmission$, testOutcome$, delegatedTest$, testOutcomeText$ } = this.pageState;
+    const {
+      transmission$,
+      testOutcome$,
+      delegatedTest$,
+      testOutcomeText$,
+      conductedLanguage$,
+    } = this.pageState;
     this.subscription = merge(
+      conductedLanguage$.pipe(map(value => this.conductedLanguage = value)),
       delegatedTest$.pipe(map(value => this.isDelegated = value)),
       transmission$.pipe(map(value => this.transmission = value)),
       testOutcome$.pipe(map(value => this.testOutcome = value)),
@@ -726,6 +735,10 @@ export class OfficeCatBEPage extends BasePageComponent {
 
   isTerminated(): boolean {
     return this.testOutcomeText === TestOutcome.Terminated;
+  }
+
+  isWelsh(): boolean {
+    return this.conductedLanguage === Language.CYMRAEG;
   }
 
   displayTransmissionBanner(): boolean {

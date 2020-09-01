@@ -46,7 +46,7 @@
             </transmission>
 
             <pass-certificate-number
-              *ngIf="isDelegated && !isFail()"
+              *ngIf="isDelegated && !isFail() && !isTerminated()"
               [form]="form"
               [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
               (passCertificateNumberChange)="passCertificateNumberChanged($event)">
@@ -63,7 +63,7 @@
             <language-preferences
               *ngIf="isDelegated"
               [formGroup]="form"
-              [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"
+              [isWelsh]="isWelsh()"
               (welshChanged)="isWelshChanged($event)"></language-preferences>
 
             <debrief-witnessed
