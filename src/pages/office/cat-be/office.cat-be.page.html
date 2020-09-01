@@ -47,7 +47,7 @@
             </transmission>
 
             <pass-certificate-number
-              *ngIf="isDelegated && !isFail()"
+              *ngIf="isDelegated && !isFail() && !isTerminated()"
               [form]="form"
               [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
               (passCertificateNumberChange)="passCertificateNumberChanged($event)">
@@ -64,7 +64,7 @@
             <language-preferences
               *ngIf="isDelegated"
               [formGroup]="form"
-              [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"
+              [isWelsh]="isWelsh()"
               (welshChanged)="isWelshChanged($event)"></language-preferences>
 
             <debrief-witnessed
@@ -81,7 +81,9 @@
                           (routeNumberChange)="routeNumberChanged($event)" [formGroup]="form">
             </route-number>
 
-            <independent-driving [display]="pageState.displayIndependentDriving$ | async" option1="Diagram" option1label="Diagram" option2="Traffic signs" option2label="Traffic Signs" [formGroup]="form"
+            <independent-driving
+              *ngIf="!isDelegated"
+              [display]="pageState.displayIndependentDriving$ | async" option1="Diagram" option1label="Diagram" option2="Traffic signs" option2label="Traffic Signs" [formGroup]="form"
                                  [outcome]="pageState.testOutcome$ | async" [independentDriving]="pageState.independentDriving$ | async"
                                  (independentDrivingChange)="independentDrivingChanged($event)"></independent-driving>
 

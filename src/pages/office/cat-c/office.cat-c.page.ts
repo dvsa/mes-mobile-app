@@ -136,6 +136,7 @@ import { getCommunicationPreference }
 import { getConductedLanguage }
  from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { TestOutcome } from '../../../modules/tests/tests.constants';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -205,6 +206,7 @@ export class OfficeCatCPage extends BasePageComponent {
   transmission: GearboxCategory;
   testOutcome: string;
   testOutcomeText: string;
+  conductedLanguage: string;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -482,9 +484,17 @@ export class OfficeCatCPage extends BasePageComponent {
   }
 
   setupSubscription() {
-    const { testCategory$, delegatedTest$, transmission$, testOutcome$, testOutcomeText$ } = this.pageState;
+    const {
+      testCategory$,
+      delegatedTest$,
+      transmission$,
+      testOutcome$,
+      testOutcomeText$,
+      conductedLanguage$,
+    } = this.pageState;
 
     this.subscription = merge(
+      conductedLanguage$.pipe(map(result => this.conductedLanguage = result)),
       testOutcomeText$.pipe(map(result => this.testOutcomeText = result)),
       testOutcome$.pipe(map(result => this.testOutcome = result)),
       transmission$.pipe(map(result => this.transmission = result)),
@@ -745,5 +755,9 @@ export class OfficeCatCPage extends BasePageComponent {
 
   isTerminated(): boolean {
     return this.testOutcomeText === TestOutcome.Passed;
+  }
+
+  isWelsh(): boolean {
+    return this.conductedLanguage === Language.CYMRAEG;
   }
 }
