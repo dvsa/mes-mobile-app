@@ -25,10 +25,10 @@ export function postTestDeclarationsReducer(
         ...state,
         healthDeclarationAccepted: action.payload,
       };
-    case postTestDeclarationActions.HEALTH_DECLARATION_SIGNED:
+    case postTestDeclarationActions.TOGGLE_RECEIPT_DECLARATION:
       return {
         ...state,
-        healthDeclarationSigned: action.payload,
+        passCertificateNumberReceived: !state.passCertificateNumberReceived,
       };
     case postTestDeclarationActions.HEALTH_DECLARATION_SIGNED:
       return {

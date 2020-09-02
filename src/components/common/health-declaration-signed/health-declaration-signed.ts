@@ -1,14 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-// import {
-//   OutcomeBehaviourMapProvider,
-//   VisibilityType,
-// } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-
-// enum HealthDeclarationValues {
-//   SIGNED = 'true',
-//   NOTSIGNED = 'false',
-// }
 
 @Component({
   selector: 'health-declaration-signed',
@@ -23,7 +14,7 @@ export class HealthDeclarationSignedComponent implements OnChanges {
   formGroup: FormGroup;
 
   @Input()
-  outcome: string;
+  label: string;
 
   @Output()
   healthDeclarationChange = new EventEmitter<boolean>();
