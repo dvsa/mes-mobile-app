@@ -142,6 +142,11 @@ import { getApplicationReference }
   from '../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
 import { getApplicationNumber }
   from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
+import { getPostTestDeclarations } from '../../../modules/tests/post-test-declarations/post-test-declarations.reducer';
+import { getHealthDeclarationStatus }
+  from '../../../modules/tests/post-test-declarations/post-test-declarations.selector';
+import * as postTestDeclarationsActions
+  from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 
 interface OfficePageState {
   applicationNumber$: Observable<string>;
@@ -187,6 +192,7 @@ interface OfficePageState {
   debriefWitnessed$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
   delegatedTest$: Observable<boolean>;
+  healthDeclarationAccepted$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -480,6 +486,10 @@ export class OfficeCatBEPage extends BasePageComponent {
         select(getDelegatedTestIndicator),
         select(isDelegatedTest),
       ),
+      healthDeclarationAccepted$: currentTest$.pipe(
+        select(getPostTestDeclarations),
+        select(getHealthDeclarationStatus),
+      ),
     };
     this.setupSubscription();
   }
@@ -705,8 +715,6 @@ export class OfficeCatBEPage extends BasePageComponent {
     const seriousFaultCount: number = this.faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, data);
     const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data);
 
-    console.log('drivingFaults', drivingFaultCount);
-
     return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
   }
 
@@ -721,8 +729,16 @@ export class OfficeCatBEPage extends BasePageComponent {
   transmissionChanged(transmission: GearboxCategory): void {
     this.store$.dispatch(new GearboxCategoryChanged(transmission));
   }
+
+  healthDeclarationChanged(healthSigned: boolean): void {
+    this.store$.dispatch(new postTestDeclarationsActions.HealthDeclarationAccepted(healthSigned));
+    this.store$.dispatch(new postTestDeclarationsActions.HealthDeclarationSigned(healthSigned));
+  }
+
   passCertificateNumberChanged(passCertificateNumber: string): void {
     this.store$.dispatch(new PassCertificateNumberChanged(passCertificateNumber));
+    this.store$.dispatch(
+      new postTestDeclarationsActions.PassCertificateNumberRecieved(this.form.get('passCertificateNumberCtrl').valid));
   }
 
   d255Changed(d255: boolean): void {

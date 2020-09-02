@@ -63,6 +63,14 @@
               (passCertificateNumberChange)="passCertificateNumberChanged($event)">
             </pass-certificate-number>
 
+            <health-declaration-signed
+              *ngIf="isDelegated && !isFail() && !isTerminated()"
+              [formGroup]="form"
+              [outcome]="testOutcome"
+              [healthDeclaration]="pageState.healthDeclarationAccepted$ | async"
+              (healthDeclarationChange)="healthDeclarationChanged($event)">
+            </health-declaration-signed>
+
             <d255
               *ngIf="isDelegated"
               [display]=true
