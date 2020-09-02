@@ -1,0 +1,40 @@
+<ion-row class="mes-validated-row mes-row-separator" id="health-declaration-card">
+    <div class="validation-bar" [class.ng-invalid]="invalid">
+    </div>
+    <ion-col class="component-label" col-32 align-self-center>
+      <label>Health declaration</label>
+    </ion-col>
+    <ion-col align-self-center padding-left>
+      <ion-row class="spacing-row"></ion-row>
+      <ion-row [formGroup]="formGroup">
+        <ion-col col-48>
+          <input type="radio"
+                 id="health-declaration-signed"
+                 formControlName="healthDeclarationCtrl"
+                 name="healthDeclarationCtrl"
+                 class="gds-radio-button"
+                 [class.ng-invalid]="invalid"
+                 (change)="healthDeclarationChanged($event.target.value)"
+                 value="true">
+          <label for="health-declaration-signed" class="radio-label">Signed</label>
+        </ion-col>
+        <ion-col>
+          <input type="radio"
+                 id="health-declaration-unsigned"
+                 formControlName="healthDeclarationCtrl"
+                 name="healthDeclarationCtrl"
+                 class="gds-radio-button"
+                 [class.ng-invalid]="invalid"
+                 (change)="healthDeclarationChanged($event.target.value)"
+                 value="false">
+          <label for="health-declaration-unsigned">Not Signed</label>
+        </ion-col>
+      </ion-row>
+      <ion-row class="validation-message-row" align-items-center>
+        <div class="validation-text" id="health-declaration-validation-text"
+          [class.ng-invalid]="invalid">
+          Select health declaration
+        </div>
+      </ion-row>
+    </ion-col>
+  </ion-row>
