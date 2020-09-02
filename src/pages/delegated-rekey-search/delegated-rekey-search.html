@@ -41,7 +41,7 @@
       </tab>
     </tabs>
 
-    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async) && !(hasBookingAlreadyBeenCompleted(pageState.rekeySearchErr$ | async))">
+    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async) && !(hasBookingAlreadyBeenCompleted(pageState.rekeySearchErr$ | async) && !invalid())">
       <p class="error-text">
         There were no results found for your search.
       </p>
@@ -50,7 +50,7 @@
       </p>
     </div>
 
-    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && (hasBookingAlreadyBeenCompleted(pageState.rekeySearchErr$ | async))">
+    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && (hasBookingAlreadyBeenCompleted(pageState.rekeySearchErr$ | async) && !invalid())">
       <p class="error-text">
         You can't rekey this test as it has already been submitted.
       </p>
@@ -59,7 +59,13 @@
       </p>
     </div>
 
-    <p class="results-message" *ngIf="!isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async)">
+    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && invalid()">
+      <p class="error-text">
+        The application reference must be 11 characters.
+      </p>
+    </div>
+
+    <p class="results-message" *ngIf="!isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async) && !invalid()">
       <test-slot [slot]="(pageState.bookedTestSlot$ | async)" [hasSlotChanged]="false" [delegatedTest]="true"
                  [hasSeenCandidateDetails]="true" [showLocation]="false"></test-slot>
     </p>
