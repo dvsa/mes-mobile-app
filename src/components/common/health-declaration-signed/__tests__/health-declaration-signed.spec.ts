@@ -1,66 +1,63 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-// import { IonicModule } from 'ionic-angular';
-// import { FormGroup } from '@angular/forms';
-// import { TransmissionComponent } from '../health-declaration-signed';
-// import { TransmissionType } from '../../../../shared/models/transmission-type';
-// import { configureTestSuite } from 'ng-bullet';
-//
-// describe('transmissionComponent', () => {
-//   let fixture: ComponentFixture<TransmissionComponent>;
-//   let component: TransmissionComponent;
-//
-//   configureTestSuite(() => {
-//     TestBed.configureTestingModule({
-//       declarations: [
-//         TransmissionComponent,
-//       ],
-//       imports: [
-//         IonicModule,
-//       ],
-//       providers: [
-//       ],
-//     });
-//   });
-//
-//   beforeEach(async(() => {
-//     fixture = TestBed.createComponent(TransmissionComponent);
-//     component = fixture.componentInstance;
-//     component.formGroup = new FormGroup({});
-//   }));
-//
-//   describe('Class', () => {
-//     describe('TransmissionChanged', () => {
-//       it('should emit manual if manual transmission selected', () => {
-//         spyOn(component.transmissionChange, 'emit');
-//         const transmission = TransmissionType.Manual;
-//         component.transmissionChanged(transmission);
-//         expect(component.transmissionChange.emit).toHaveBeenCalledWith(transmission);
-//       });
-//
-//       it('should emit automatic if automatic transmission selected', () => {
-//         spyOn(component.transmissionChange, 'emit');
-//         const transmission = TransmissionType.Automatic;
-//         component.transmissionChanged(transmission);
-//         expect(component.transmissionChange.emit).toHaveBeenCalledWith(transmission);
-//       });
-//     });
-//
-//     describe('isInvalid', () => {
-//       it('should validate the field when it is valid', () => {
-//         component.ngOnChanges();
-//         component.formGroup.get(TransmissionComponent.fieldName).setValue(TransmissionType.Manual);
-//         fixture.detectChanges();
-//         const result: boolean = component.isInvalid();
-//         expect(result).toEqual(false);
-//       });
-//
-//       it('should not validate the field when it is dirty', () => {
-//         component.ngOnChanges();
-//         component.formControl.markAsDirty();
-//         fixture.detectChanges();
-//         const result: boolean = component.isInvalid();
-//         expect(result).toEqual(true);
-//       });
-//     });
-//   });
-// });
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { IonicModule } from 'ionic-angular';
+import { FormGroup } from '@angular/forms';
+import { HealthDeclarationSignedComponent } from '../health-declaration-signed';
+import { configureTestSuite } from 'ng-bullet';
+
+describe('HealthDeclarationSignedComponent', () => {
+  let fixture: ComponentFixture<HealthDeclarationSignedComponent>;
+  let component: HealthDeclarationSignedComponent;
+
+  configureTestSuite(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        HealthDeclarationSignedComponent,
+      ],
+      imports: [
+        IonicModule,
+      ],
+      providers: [
+      ],
+    });
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(HealthDeclarationSignedComponent);
+    component = fixture.componentInstance;
+    component.formGroup = new FormGroup({});
+  }));
+
+  describe('Class', () => {
+    describe('healthDeclarationChanged', () => {
+      it('should emit selected value - true', () => {
+        spyOn(component.healthDeclarationChange, 'emit');
+        component.healthDeclarationChanged(true);
+        expect(component.healthDeclarationChange.emit).toHaveBeenCalledWith(true);
+      });
+
+      it('should emit selected value - false', () => {
+        spyOn(component.healthDeclarationChange, 'emit');
+        component.healthDeclarationChanged(false);
+        expect(component.healthDeclarationChange.emit).toHaveBeenCalledWith(false);
+      });
+    });
+
+    describe('invalid', () => {
+      it('should validate the field when it is valid', () => {
+        component.ngOnChanges();
+        component.formGroup.get(HealthDeclarationSignedComponent.fieldName).setValue(true);
+        fixture.detectChanges();
+        const result: boolean = component.invalid;
+        expect(result).toEqual(false);
+      });
+
+      it('should not validate the field when it is dirty', () => {
+        component.ngOnChanges();
+        component.formControl.markAsDirty();
+        fixture.detectChanges();
+        const result: boolean = component.invalid;
+        expect(result).toEqual(true);
+      });
+    });
+  });
+});

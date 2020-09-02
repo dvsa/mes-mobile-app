@@ -142,8 +142,15 @@ import { TestOutcome } from '../../../modules/tests/tests.constants';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
-import { getApplicationReference } from '../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
-import { getApplicationNumber } from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
+import { getApplicationReference }
+  from '../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
+import { getApplicationNumber }
+  from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
+import { getPostTestDeclarations } from '../../../modules/tests/post-test-declarations/post-test-declarations.reducer';
+import { getHealthDeclarationStatus }
+  from '../../../modules/tests/post-test-declarations/post-test-declarations.selector';
+import * as postTestDeclarationsActions
+  from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 
 interface OfficePageState {
   applicationNumber$: Observable<string>;
@@ -190,6 +197,7 @@ interface OfficePageState {
   debriefWitnessed$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
   delegatedTest$: Observable<boolean>;
+  healthDeclarationAccepted$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -492,6 +500,10 @@ export class OfficeCatDPage extends BasePageComponent {
         select(getDelegatedTestIndicator),
         select(isDelegatedTest),
       ),
+      healthDeclarationAccepted$: currentTest$.pipe(
+        select(getPostTestDeclarations),
+        select(getHealthDeclarationStatus),
+      ),
     };
     this.setupSubscription();
   }
@@ -744,10 +756,15 @@ export class OfficeCatDPage extends BasePageComponent {
     this.store$.dispatch(new GearboxCategoryChanged(transmission));
   }
 
+  healthDeclarationChanged(healthSigned: boolean): void {
+    this.store$.dispatch(new postTestDeclarationsActions.HealthDeclarationAccepted(healthSigned));
+    this.store$.dispatch(new postTestDeclarationsActions.HealthDeclarationSigned(healthSigned));
+  }
+
   passCertificateNumberChanged(passCertificateNumber: string): void {
+    this.store$.dispatch(new PassCertificateNumberChanged(passCertificateNumber));
     this.store$.dispatch(
-      new PassCertificateNumberChanged(passCertificateNumber),
-    );
+      new postTestDeclarationsActions.PassCertificateNumberRecieved(this.form.get('passCertificateNumberCtrl').valid));
   }
 
   d255Changed(d255: boolean): void {
