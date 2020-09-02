@@ -134,7 +134,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     let returnValue = null;
     if (this.delegatedTest) {
       const slot = this.slot as DelegatedExaminerTestSlot;
-      returnValue =  this.delegatedTest ? slot.examinerId : null;
+      returnValue =  slot.examinerId;
     }
     return returnValue;
   }
