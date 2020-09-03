@@ -494,11 +494,6 @@ export class OfficeCatBEPage extends BasePageComponent {
     this.setupSubscription();
   }
 
-  ionViewDidLeave() {
-    this.subscription.unsubscribe();
-    this.setupSubscription();
-  }
-
   setupSubscription() {
     const {
       transmission$,
