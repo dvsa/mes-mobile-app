@@ -21,7 +21,6 @@ export class HealthDeclarationSignedComponent implements OnChanges {
 
   formControl: FormControl;
   static readonly fieldName: string = 'healthDeclarationCtrl';
-  // constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {

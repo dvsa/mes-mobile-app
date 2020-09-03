@@ -26,7 +26,7 @@
       <ion-card-content class="card-content-ios" no-bounce no-padding>
         <ion-grid class="grid">
 
-          <ion-row class="mes-component-row mes-row-separator" id="application-reference-card" align-items-center>
+          <ion-row class="mes-component-row mes-row-separator" id="application-reference-card" align-items-center *ngIf="isDelegated">
             <ion-col class="component-label" col-32>
               <label>Application reference</label>
             </ion-col>

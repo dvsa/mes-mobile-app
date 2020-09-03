@@ -21,6 +21,7 @@ export class OfficeValidationError implements Action {
   readonly type = OFFICE_VALIDATION_ERROR;
   constructor(public errorMessage: string) {}
 }
+
 export type OfficeActionTypes =
   | CompleteTest
   | OfficeViewDidEnter
