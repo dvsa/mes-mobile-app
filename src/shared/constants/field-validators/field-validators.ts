@@ -53,7 +53,7 @@ export const getPassCertificateAMOD1Validator = (): FieldValidators => {
 
 export const getDL196CBTCertificateNumberValidator = (): FieldValidators => {
   return {
-    pattern: /^[1-9][0-9]{6}$/g,
+    pattern: /^\d{7}?$/,
     maxLength: '7',
   };
 };

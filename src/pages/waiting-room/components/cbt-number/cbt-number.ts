@@ -24,17 +24,13 @@ export class CBTNumberComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl(null);
-      this.formGroup.addControl(CBTNumberComponent.fieldName, this.formControl);
-    }
-
-    if (this.cbtNumber.length === +this.dl196cbtCertNumberValidator.maxLength) {
-      this.formGroup.get(CBTNumberComponent.fieldName).clearValidators();
-    } else {
-      this.formGroup.get(CBTNumberComponent.fieldName).setValidators([
+      this.formControl = new FormControl(null, [
+        Validators.maxLength(+this.dl196cbtCertNumberValidator.maxLength),
+        Validators.minLength(+this.dl196cbtCertNumberValidator.maxLength),
         Validators.pattern(this.dl196cbtCertNumberValidator.pattern),
         Validators.required,
       ]);
+      this.formGroup.addControl(CBTNumberComponent.fieldName, this.formControl);
     }
     this.formControl.patchValue(this.cbtNumber);
   }
