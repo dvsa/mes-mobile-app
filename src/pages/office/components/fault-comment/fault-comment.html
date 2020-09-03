@@ -10,7 +10,7 @@
     <ion-col class="component-label" col-28 align-self-start>
       <label class="fault-label">{{faultComment.competencyDisplayName | modifyCompetencyLabel:testCategory:faultComment.competencyDisplayName}}</label>
     </ion-col>
-    <ion-col padding-left>
+    <ion-col *ngIf="!isDelegatedTest" padding-left>
       <ion-row class="spacing-row"></ion-row>
       <ion-row>
         <ion-col class="textarea-input" [formGroup]="parentForm">
