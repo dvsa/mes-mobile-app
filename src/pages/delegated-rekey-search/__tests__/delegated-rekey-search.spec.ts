@@ -15,7 +15,7 @@ import { TestSlotComponentsModule } from '../../../components/test-slot/test-slo
 import { bookedTestSlotMock } from '../../../shared/mocks/test-slot-data.mock';
 import { configureTestSuite } from 'ng-bullet';
 
-fdescribe('DelegatedRekeySearchPage', () => {
+describe('DelegatedRekeySearchPage', () => {
   let fixture: ComponentFixture<DelegatedRekeySearchPage>;
   let component: DelegatedRekeySearchPage;
   let store$: Store<DelegatedRekeySearchModel>;
@@ -62,12 +62,16 @@ fdescribe('DelegatedRekeySearchPage', () => {
 
     describe('applicationReferenceInvalid', () => {
       it('should return true if the applicationReference is less than 11 characters', () => {
-        component.applicationReference = '123456789';
+        const appRefInput = component.delegatedRekeyForm.get('applicationReferenceInput');
+        appRefInput.patchValue('1234567891');
+        appRefInput.markAsDirty();
         const value: boolean = component.applicationReferenceInvalid;
         expect(value).toEqual(true);
       });
       it('should return false if the applicationReference is 11 characters', () => {
-        component.applicationReference = '12345678910';
+        const appRefInput = component.delegatedRekeyForm.get('applicationReferenceInput');
+        appRefInput.patchValue('12345678910');
+        appRefInput.markAsDirty();
         const value: boolean = component.applicationReferenceInvalid;
         expect(value).toEqual(false);
       });
