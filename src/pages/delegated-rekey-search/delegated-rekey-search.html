@@ -6,7 +6,7 @@
 
 <ion-content no-bounce>
 
-  <div class="search-inputs">
+  <div class="search-inputs" [formGroup]="delegatedRekeyForm">
     <tabs (activeTabSelected)="activeSearchTabSelected($event)">
       <tab [tabTitle]="'Rekey backlog'" id="tab-search-rekey">
         <ion-grid>
@@ -17,11 +17,24 @@
             <ion-col col-32>
               <ion-item no-padding no-lines>
                 <ion-input placeholder="Application reference" type="tel" id="application-reference"
-                           numbersOnly maxlength="11" clearInput [class.ng-invalid]="invalid" [value]="applicationReference" (change)="applicationReferenceChanged($event.target.value)">
+                           numbersOnly
+                           formControlName="applicationReferenceInput"
+                           maxlength="11"
+                           clearInput
+                           [class.ng-invalid]="applicationReferenceInvalid"
+                           [value]="applicationReference"
+                           (change)="applicationReferenceChanged($event.target.value)">
                 </ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
+
+          <ion-row *ngIf="hasClickedSearch && applicationReferenceInvalid" class="validation-message-row" align-items-center>
+            <div padding-left class="validation-text" [class.ng-invalid]="applicationReferenceInvalid" id="delegated-search-validation-text">
+              Please enter a valid application reference number (11 digits)
+            </div>
+          </ion-row>
+
           <ion-row padding-top>
             <button [disabled]="(pageState.isLoading$ | async)" class="mes-primary-button search-tests" ion-button
                     (click)="searchTests()">
@@ -36,7 +49,7 @@
       </tab>
     </tabs>
 
-    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async) && !(hasBookingAlreadyBeenCompleted(pageState.rekeySearchErr$ | async))">
+    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async) && !hasBookingAlreadyBeenCompleted(pageState.rekeySearchErr$ | async) && !applicationReferenceInvalid">
       <p class="error-text">
         There were no results found for your search.
       </p>
@@ -45,7 +58,7 @@
       </p>
     </div>
 
-    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && (hasBookingAlreadyBeenCompleted(pageState.rekeySearchErr$ | async))">
+    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && hasBookingAlreadyBeenCompleted(pageState.rekeySearchErr$ | async) && !applicationReferenceInvalid">
       <p class="error-text">
         You can't rekey this test as it has already been submitted.
       </p>
@@ -54,7 +67,7 @@
       </p>
     </div>
 
-    <p class="results-message" *ngIf="!isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async)">
+    <p class="results-message" *ngIf="!isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async) && !applicationReferenceInvalid">
       <test-slot [slot]="(pageState.bookedTestSlot$ | async)" [hasSlotChanged]="false" [delegatedTest]="true"
                  [hasSeenCandidateDetails]="true" [showLocation]="false"></test-slot>
     </p>

@@ -47,16 +47,34 @@ describe('DelegatedRekeySearchPage', () => {
     });
   });
 
-  beforeEach(async(() => {
+  beforeEach(async(async () => {
     fixture = TestBed.createComponent(DelegatedRekeySearchPage);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
+    await component.ngOnInit();
   }));
 
   describe('Class', () => {
 
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+
+    describe('applicationReferenceInvalid', () => {
+      it('should return true if the applicationReference is less than 11 characters', () => {
+        const appRefInput = component.delegatedRekeyForm.get('applicationReferenceInput');
+        appRefInput.patchValue('1234567891');
+        appRefInput.markAsDirty();
+        const value: boolean = component.applicationReferenceInvalid;
+        expect(value).toEqual(true);
+      });
+      it('should return false if the applicationReference is 11 characters', () => {
+        const appRefInput = component.delegatedRekeyForm.get('applicationReferenceInput');
+        appRefInput.patchValue('12345678910');
+        appRefInput.markAsDirty();
+        const value: boolean = component.applicationReferenceInvalid;
+        expect(value).toEqual(false);
+      });
     });
 
     it('should dispatch RekeySearchViewDidEnter action', () => {

@@ -27,6 +27,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ERROR_PAGE } from '../page-names.constants';
 import { ErrorTypes } from '../../shared/models/error-message';
 import { App } from './../../app/app.component';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 interface DelegatedRekeySearchPageState {
   isLoading$: Observable<boolean>;
@@ -43,6 +44,8 @@ interface DelegatedRekeySearchPageState {
 export class DelegatedRekeySearchPage extends BasePageComponent implements OnInit {
 
   pageState: DelegatedRekeySearchPageState;
+  delegatedRekeyForm: FormGroup;
+  hasClickedSearch: boolean = false;
 
   applicationReference: string = '';
   subscription: Subscription = Subscription.EMPTY;
@@ -80,7 +83,20 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
         distinctUntilChanged(),
       ),
     };
+    this.delegatedRekeyForm = new FormGroup({});
+    this.delegatedRekeyForm
+      .addControl('applicationReferenceInput', new FormControl({}, [
+        Validators.required,
+        Validators.minLength(11),
+        Validators.maxLength(11),
+      ]));
   }
+
+  get applicationReferenceInvalid(): boolean {
+    const applicationReferenceControl: AbstractControl = this.delegatedRekeyForm.get('applicationReferenceInput');
+    return !applicationReferenceControl.valid && applicationReferenceControl.dirty;
+  }
+
   ionViewDidEnter() {
     this.store$.dispatch(new DelegatedRekeySearchViewDidEnter());
     this.setUpSubscription();
@@ -105,7 +121,11 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
   }
 
   searchTests() {
-    this.store$.dispatch(new SearchBookedDelegatedTest(this.applicationReference));
+    this.hasClickedSearch = true;
+    const applicationReferenceInputValue: AbstractControl = this.delegatedRekeyForm.get('applicationReferenceInput');
+    if (applicationReferenceInputValue.valid) {
+      this.store$.dispatch(new SearchBookedDelegatedTest(this.applicationReference));
+    }
   }
 
   isBookedTestSlotEmpty(bookedTestsSlot: TestSlot) {
