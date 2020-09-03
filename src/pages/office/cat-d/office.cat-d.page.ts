@@ -463,11 +463,11 @@ export class OfficeCatDPage extends BasePageComponent {
       ),
       seriousFaultCount$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, data)),
+        map(data => this.faultCountProvider.getSeriousFaultSumCount(this.testCategory as TestCategory, data)),
       ),
       dangerousFaultCount$: currentTest$.pipe(
         select(getTestData),
-        map(data => this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data)),
+        map(data => this.faultCountProvider.getDangerousFaultSumCount(this.testCategory as TestCategory, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
