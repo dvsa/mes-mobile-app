@@ -68,6 +68,10 @@ import { configureTestSuite } from 'ng-bullet';
 import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
+import { PassFinalisationComponentsModule }
+ from '../../../pass-finalisation/components/pass-finalisation-components.module';
+import { TestFinalisationComponentsModule }
+ from '../../../../components/test-finalisation/test-finalisation-component.module';
 
 describe('OfficePage Cat D', () => {
   let fixture: ComponentFixture<OfficeCatDPage>;
@@ -94,6 +98,8 @@ describe('OfficePage Cat D', () => {
         IonicModule,
         AppModule,
         ComponentsModule,
+        PassFinalisationComponentsModule,
+        TestFinalisationComponentsModule,
         StoreModule.forRoot({
           tests: () => ({
             currentTest: {

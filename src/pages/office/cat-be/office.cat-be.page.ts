@@ -18,7 +18,7 @@ import {
   OfficeValidationError,
 } from '../office.actions';
 import { Observable, Subscription, merge } from 'rxjs';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
   getTestOutcome,
@@ -35,7 +35,7 @@ import {
   getAdditionalInformation,
   getWeatherConditions,
   getIdentification,
-  getIndependentDriving,
+  getIndependentDriving, isDebriefWitnessed, getD255,
 } from '../../../modules/tests/test-summary/common/test-summary.selector';
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import { map, withLatestFrom } from 'rxjs/operators';
@@ -45,7 +45,7 @@ import {
   IdentificationUsedChanged,
   CandidateDescriptionChanged,
   WeatherConditionsChanged,
-  AdditionalInformationChanged,
+  AdditionalInformationChanged, D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-be/candidate/candidate.cat-be.reducer';
 import {
@@ -73,7 +73,7 @@ import {
   WeatherConditions,
   Identification,
   IndependentDriving,
-  QuestionResult,
+  QuestionResult, GearboxCategory,
 } from '@dvsa/mes-test-schema/categories/common';
 import {
   AddDangerousFaultComment,
@@ -112,10 +112,44 @@ import {
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import {
+  PassCertificateNumberChanged,
+  ProvisionalLicenseNotReceived,
+  ProvisionalLicenseReceived,
+} from '../../../modules/tests/pass-completion/pass-completion.actions';
+import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
+import {
+  CandidateChoseToProceedWithTestInEnglish,
+  CandidateChoseToProceedWithTestInWelsh,
+} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { TransmissionType } from '../../../shared/models/transmission-type';
+import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
+import {
+  getPassCertificateNumber,
+  isProvisionalLicenseProvided,
+} from '../../../modules/tests/pass-completion/pass-completion.selector';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
+import { getGearboxCategory } from '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
+import { getCommunicationPreference }
+ from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
+import { getConductedLanguage }
+ from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import { TestOutcome } from '../../../modules/tests/tests.constants';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { getApplicationReference }
+  from '../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
+import { getApplicationNumber }
+  from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
+import { getPostTestDeclarations } from '../../../modules/tests/post-test-declarations/post-test-declarations.reducer';
+import { getHealthDeclarationStatus }
+  from '../../../modules/tests/post-test-declarations/post-test-declarations.selector';
+import * as postTestDeclarationsActions
+  from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 
 interface OfficePageState {
+  applicationNumber$: Observable<string>;
   activityCode$: Observable<ActivityCodeModel>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
@@ -151,7 +185,14 @@ interface OfficePageState {
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
   vehicleChecks$: Observable<QuestionResult[]>;
+  provisionalLicense$: Observable<boolean>;
+  passCertificateNumber$: Observable<string>;
+  transmission$: Observable<GearboxCategory>;
+  d255$: Observable<boolean>;
+  debriefWitnessed$: Observable<boolean>;
+  conductedLanguage$: Observable<string>;
   delegatedTest$: Observable<boolean>;
+  healthDeclarationAccepted$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -167,11 +208,15 @@ export class OfficeCatBEPage extends BasePageComponent {
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
   static readonly maxFaultCount = 15;
+  transmission: GearboxCategory;
+  testOutcome: string;
   subscription: Subscription;
   isDelegated: boolean;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
+  testOutcomeText: string;
+  conductedLanguage: string;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -206,6 +251,11 @@ export class OfficeCatBEPage extends BasePageComponent {
       select(getCurrentTest),
     );
     this.pageState = {
+      applicationNumber$: currentTest$.pipe(
+        select(getJournalData),
+        select(getApplicationReference),
+        select(getApplicationNumber),
+      ),
       activityCode$: currentTest$.pipe(
         select(getActivityCode),
       ),
@@ -408,19 +458,63 @@ export class OfficeCatBEPage extends BasePageComponent {
         select(getVehicleChecks),
         map(checks => [...checks.tellMeQuestions, ...checks.showMeQuestions]),
       ),
+      provisionalLicense$: currentTest$.pipe(
+        select(getPassCompletion),
+        map(isProvisionalLicenseProvided),
+      ),
+      passCertificateNumber$: currentTest$.pipe(
+        select(getPassCompletion),
+        select(getPassCertificateNumber),
+      ),
+      transmission$: currentTest$.pipe(
+        select(getVehicleDetails),
+        select(getGearboxCategory),
+      ),
+      debriefWitnessed$: currentTest$.pipe(
+        select(getTestSummary),
+        select(isDebriefWitnessed),
+      ),
+      d255$: currentTest$.pipe(
+        select(getTestSummary),
+        select(getD255),
+      ),
+      conductedLanguage$: currentTest$.pipe(
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
+      ),
       delegatedTest$: currentTest$.pipe(
         select(getDelegatedTestIndicator),
         select(isDelegatedTest),
+      ),
+      healthDeclarationAccepted$: currentTest$.pipe(
+        select(getPostTestDeclarations),
+        select(getHealthDeclarationStatus),
       ),
     };
     this.setupSubscription();
   }
 
   setupSubscription() {
-    const { delegatedTest$ } = this.pageState;
+    const {
+      transmission$,
+      testOutcome$,
+      delegatedTest$,
+      testOutcomeText$,
+      conductedLanguage$,
+    } = this.pageState;
     this.subscription = merge(
+      conductedLanguage$.pipe(map(value => this.conductedLanguage = value)),
       delegatedTest$.pipe(map(value => this.isDelegated = value)),
+      transmission$.pipe(map(value => this.transmission = value)),
+      testOutcome$.pipe(map(value => this.testOutcome = value)),
+      testOutcomeText$.pipe(map(value => this.testOutcomeText = value)),
     ).subscribe();
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   popToRoot() {
@@ -569,8 +663,7 @@ export class OfficeCatBEPage extends BasePageComponent {
       buttons: [
         {
           text: 'Cancel',
-          handler: () => {
-          },
+          handler: () => { },
         },
         {
           text: 'Upload',
@@ -618,6 +711,62 @@ export class OfficeCatBEPage extends BasePageComponent {
     const dangerousFaultCount: number = this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data);
 
     return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
+  }
+
+  provisionalLicenseReceived(): void {
+    this.store$.dispatch(new ProvisionalLicenseReceived());
+  }
+
+  provisionalLicenseNotReceived(): void {
+    this.store$.dispatch(new ProvisionalLicenseNotReceived());
+  }
+
+  transmissionChanged(transmission: GearboxCategory): void {
+    this.store$.dispatch(new GearboxCategoryChanged(transmission));
+  }
+
+  healthDeclarationChanged(healthSigned: boolean): void {
+    this.store$.dispatch(new postTestDeclarationsActions.HealthDeclarationAccepted(healthSigned));
+    this.store$.dispatch(new postTestDeclarationsActions.HealthDeclarationSigned(healthSigned));
+  }
+
+  passCertificateNumberChanged(passCertificateNumber: string): void {
+    this.store$.dispatch(new PassCertificateNumberChanged(passCertificateNumber));
+    this.store$.dispatch(
+      new postTestDeclarationsActions.PassCertificateNumberRecieved(this.form.get('passCertificateNumberCtrl').valid));
+  }
+
+  d255Changed(d255: boolean): void {
+    this.store$.dispatch(d255 ? new D255Yes() : new D255No());
+  }
+
+  debriefWitnessedChanged(debriefWitnessed: boolean) {
+    this.store$.dispatch(debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed());
+  }
+
+  isWelshChanged(isWelsh: boolean) {
+    this.store$.dispatch(
+      isWelsh ?
+        new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
+        : new CandidateChoseToProceedWithTestInEnglish('English'),
+    );
+  }
+
+  isFail(): boolean {
+    return this.testOutcomeText === TestOutcome.Failed;
+  }
+
+  isTerminated(): boolean {
+    return this.testOutcomeText === TestOutcome.Terminated;
+  }
+
+  isWelsh(): boolean {
+    return this.conductedLanguage === Language.CYMRAEG;
+  }
+
+  displayTransmissionBanner(): boolean {
+    const control: AbstractControl = this.form.get('transmissionCtrl');
+    return control && !control.pristine && (this.transmission === TransmissionType.Automatic);
   }
 
 }

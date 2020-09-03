@@ -30,6 +30,9 @@ export class DebriefWitnessedComponent implements OnChanges {
   @Output()
   debriefWitnessedChange = new EventEmitter<boolean>();
 
+  @Input()
+  isDelegated: boolean = false;
+
   private formControl: FormControl;
   static readonly fieldName: string = 'debriefWitnessed';
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }

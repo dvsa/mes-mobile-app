@@ -69,6 +69,10 @@ import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-check
 import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
+import { PassFinalisationComponentsModule }
+ from '../../../pass-finalisation/components/pass-finalisation-components.module';
+import { TestFinalisationComponentsModule }
+ from '../../../../components/test-finalisation/test-finalisation-component.module';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatBEPage>;
@@ -95,6 +99,8 @@ describe('OfficePage', () => {
         IonicModule,
         AppModule,
         ComponentsModule,
+        PassFinalisationComponentsModule,
+        TestFinalisationComponentsModule,
         StoreModule.forRoot({
           tests: () => ({
             currentTest: {
