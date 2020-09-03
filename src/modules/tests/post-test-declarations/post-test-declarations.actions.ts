@@ -3,7 +3,6 @@ import { Action } from '@ngrx/store';
 export const CLEAR_DECLARATIONS = '[HealthDeclarations] Clear declarations';
 export const TOGGLE_HEALTH_DECLARATION = '[HealthDeclarations] Health declaration toggled';
 export const HEALTH_DECLARATION_ACCEPTED = '[HealthDeclarations] Health declaration accepted';
-export const HEALTH_DECLARATION_SIGNED = '[HealthDeclarations] Health declaration signed';
 export const PASS_CERTIFICATE_RECIEVED = '[HealthDeclarations] Pass certificate recieved';
 export const TOGGLE_RECEIPT_DECLARATION = '[HealthDeclarations] Receipt declaration toggled';
 export const SIGNATURE_DATA_CHANGED = '[HealthDeclarations] Signature data changed';
@@ -19,11 +18,6 @@ export class ToggleHealthDeclaration implements Action {
 
 export class HealthDeclarationAccepted implements Action {
   readonly type = HEALTH_DECLARATION_ACCEPTED;
-  constructor(public payload: boolean) {}
-}
-
-export class HealthDeclarationSigned implements Action {
-  readonly type = HEALTH_DECLARATION_SIGNED;
   constructor(public payload: boolean) {}
 }
 
@@ -49,7 +43,6 @@ export type Types =
   | ClearPostTestDeclarations
   | ToggleHealthDeclaration
   | HealthDeclarationAccepted
-  | HealthDeclarationSigned
   | PassCertificateNumberRecieved
   | ToggleReceiptDeclaration
   | SignatureDataChanged

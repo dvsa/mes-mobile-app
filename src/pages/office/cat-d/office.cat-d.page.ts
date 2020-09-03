@@ -758,7 +758,6 @@ export class OfficeCatDPage extends BasePageComponent {
 
   healthDeclarationChanged(healthSigned: boolean): void {
     this.store$.dispatch(new postTestDeclarationsActions.HealthDeclarationAccepted(healthSigned));
-    this.store$.dispatch(new postTestDeclarationsActions.HealthDeclarationSigned(healthSigned));
   }
 
   passCertificateNumberChanged(passCertificateNumber: string): void {

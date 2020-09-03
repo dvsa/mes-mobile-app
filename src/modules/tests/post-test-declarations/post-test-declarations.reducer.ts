@@ -30,11 +30,6 @@ export function postTestDeclarationsReducer(
         ...state,
         passCertificateNumberReceived: !state.passCertificateNumberReceived,
       };
-    case postTestDeclarationActions.HEALTH_DECLARATION_SIGNED:
-      return {
-        ...state,
-        healthDeclarationSigned: action.payload,
-      };
     case postTestDeclarationActions.PASS_CERTIFICATE_RECIEVED:
       return {
         ...state,
