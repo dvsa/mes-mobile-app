@@ -33,6 +33,9 @@ export class FaultCommentCardComponent {
   maxFaultCount: number;
 
   @Input()
+  isDelegatedTest?: boolean = false;
+
+  @Input()
   testCategory?: TestCategory;
 
   @Output()

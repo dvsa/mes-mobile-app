@@ -42,6 +42,9 @@ export class FaultCommentComponent implements OnChanges {
   maxFaultCount: number;
 
   @Input()
+  isDelegatedTest?: boolean = false;
+
+  @Input()
   testCategory?: TestCategory;
 
   @Output()
@@ -112,7 +115,7 @@ export class FaultCommentComponent implements OnChanges {
     const fieldVisibility = this.outcomeBehaviourProvider.getVisibilityType(
       this.outcome, FaultCommentComponent.fieldName);
 
-    return fieldVisibility === VisibilityType.NotVisible;
+    return fieldVisibility === VisibilityType.NotVisible || this.isDelegatedTest;
   }
 
 }

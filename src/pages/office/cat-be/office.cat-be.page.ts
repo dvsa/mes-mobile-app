@@ -179,6 +179,8 @@ interface OfficePageState {
   ecoFaults$: Observable<string>;
   drivingFaults$: Observable<FaultSummary[]>;
   drivingFaultCount$: Observable<number>;
+  seriousFaultCount$: Observable<number>;
+  dangerousFaultCount$: Observable<number>;
   displayDrivingFaultComments$: Observable<boolean>;
   weatherConditions$: Observable<WeatherConditions[]>;
   dangerousFaults$: Observable<FaultSummary[]>;
@@ -444,6 +446,14 @@ export class OfficeCatBEPage extends BasePageComponent {
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
         map(data => this.faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, data)),
+      ),
+      seriousFaultCount$: currentTest$.pipe(
+        select(getTestData),
+        map(data => this.faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, data)),
+      ),
+      dangerousFaultCount$: currentTest$.pipe(
+        select(getTestData),
+        map(data => this.faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, data)),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
