@@ -41,7 +41,7 @@
 
           <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
             <license-provided
-              *ngIf="isDelegated && !isFail()"
+              *ngIf="isDelegated && isPass()"
               [form]="form"
               [license]="pageState.provisionalLicense$ | async"
               [licenseReceivedLabel] = "'Provisional licence Received'"
@@ -50,21 +50,21 @@
             </license-provided>
 
             <transmission
-              *ngIf="isDelegated && !isFail()"
+              *ngIf="isDelegated && isPass()"
               [formGroup]="form"
               [transmission]="pageState.transmission$ | async"
               (transmissionChange)="transmissionChanged($event)">
             </transmission>
 
             <pass-certificate-number
-              *ngIf="isDelegated && !isFail() && !isTerminated()"
+              *ngIf="isDelegated && isPass()"
               [form]="form"
               [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
               (passCertificateNumberChange)="passCertificateNumberChanged($event)">
             </pass-certificate-number>
 
             <health-declaration-signed
-              *ngIf="isDelegated && !isFail() && !isTerminated()"
+              *ngIf="isDelegated && isPass()"
               [formGroup]="form"
               [label]="'Health declaration'"
               [healthDeclaration]="pageState.healthDeclarationAccepted$ | async"
