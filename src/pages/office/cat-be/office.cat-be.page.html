@@ -174,13 +174,15 @@
       </ion-card>
 
       <fault-comment-card [formGroup]="form" [faultComments]="pageState.dangerousFaults$ | async"
-                          [shouldRender]="(pageState.dangerousFaults$ | async).length > 0 && pageState.displayDangerousFault$ | async" [isDelegatedTest]="pageState.delegatedTest$ | async"
+                          [shouldRender]="(pageState.dangerousFaults$ | async).length > 0 && ((pageState.displayDangerousFault$ | async) || isDelegated)"
+                          [isDelegatedTest]="pageState.delegatedTest$ | async"
                           [outcome]="pageState.testOutcome$ | async" faultType="dangerous" header="Dangerous faults {{isDelegated ? (pageState.dangerousFaultCount$ | async) : null}}" [maxFaultCount]="maxFaultCount"
                           (faultCommentsChange)="dangerousFaultCommentChanged($event)">
       </fault-comment-card>
 
       <fault-comment-card [formGroup]="form" [faultComments]="pageState.seriousFaults$ | async"
-                          [shouldRender]="(pageState.seriousFaults$ | async).length > 0  && pageState.displaySeriousFault$ | async" [isDelegatedTest]="pageState.delegatedTest$ | async"
+                          [shouldRender]="(pageState.seriousFaults$ | async).length > 0  && ((pageState.displaySeriousFault$ | async) || isDelegated)"
+                          [isDelegatedTest]="pageState.delegatedTest$ | async"
                           [outcome]="pageState.testOutcome$ | async" faultType="serious" header="Serious faults {{isDelegated ? (pageState.seriousFaultCount$ | async) : null}}" [maxFaultCount]="maxFaultCount"
                           (faultCommentsChange)="seriousFaultCommentChanged($event)">
       </fault-comment-card>
@@ -189,7 +191,7 @@
                           [formGroup]="form"
                           [isDelegatedTest]="pageState.delegatedTest$ | async"
                           [faultComments]="pageState.drivingFaults$ | async"
-                          [shouldRender]="(pageState.displayDrivingFaultComments$ | async) && (pageState.displayDrivingFault$ | async)"
+                          [shouldRender]="(pageState.displayDrivingFaultComments$ | async) && ((pageState.displayDrivingFault$ | async) || isDelegated)"
                           [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults"
                           [faultCount]="pageState.drivingFaultCount$ | async"
                           [maxFaultCount]="maxFaultCount"

@@ -761,10 +761,6 @@ export class OfficeCatBEPage extends BasePageComponent {
     );
   }
 
-  isFail(): boolean {
-    return this.testOutcomeText === TestOutcome.Failed;
-  }
-
   isTerminated(): boolean {
     return this.testOutcomeText === TestOutcome.Terminated;
   }

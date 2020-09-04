@@ -783,12 +783,12 @@ export class OfficeCatCPage extends BasePageComponent {
     return control && !control.pristine && (this.transmission === TransmissionType.Automatic);
   }
 
-  isFail(): boolean {
-    return this.testOutcomeText === TestOutcome.Failed;
-  }
-
   isTerminated(): boolean {
     return this.testOutcomeText === TestOutcome.Terminated;
+  }
+
+  isPass(): boolean {
+    return this.testOutcomeText === TestOutcome.Passed;
   }
 
   isWelsh(): boolean {
