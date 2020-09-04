@@ -14,8 +14,14 @@ export abstract class BasePageComponent {
   }
 
   ionViewWillEnter() {
-    if (this.loginRequired && this.isIos() && !this.authenticationProvider.isAuthenticated()) {
-      this.navController.setRoot(LOGIN_PAGE);
+    if (this.loginRequired && this.isIos()) {
+      this.authenticationProvider.isAuthenticated().then(
+        (isAuthenticated) => {
+          if (!isAuthenticated) {
+            this.navController.setRoot(LOGIN_PAGE);
+          }
+        },
+      );
     }
   }
 
@@ -23,13 +29,17 @@ export abstract class BasePageComponent {
     return this.platform.is('ios');
   }
 
-  logout() {
+  async logout() {
     if (this.isIos()) {
-      this.authenticationProvider.logout();
-      this.navController.setRoot(LOGIN_PAGE, {
-        hasLoggedOut: true,
-      });
+      try {
+        await this.authenticationProvider.logout();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        await this.navController.setRoot(LOGIN_PAGE, {
+          hasLoggedOut: true,
+        });
+      }
     }
   }
-
 }

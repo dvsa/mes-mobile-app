@@ -122,17 +122,20 @@ describe('LoginPage', () => {
     it('should fail to login gracefully', fakeAsync(() => {
       component.platform.ready =
         jasmine.createSpy('platform.ready').and.returnValue(Promise.resolve());
+      component.initialisePersistentStorage =
+        jasmine.createSpy('component.initialisePersistentStorage').and.returnValue(Promise.resolve());
       authenticationProvider.login =
         jasmine.createSpy('authenticationProvider.login')
           .and.returnValue(Promise.reject(AuthenticationError.NO_INTERNET));
       component.handleLoadingUI =
         jasmine.createSpy('component.handleLoadingUI').and.callThrough();
+      spyOn(component.authenticationProvider, 'isAuthenticated').and.returnValue(Promise.resolve(false));
       component.login();
-      tick();
-      expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
+      expect(component.loadingSpinner).toEqual(null);
       expect(component.appInitError === AuthenticationError.NO_INTERNET);
       expect(component.hasUserLoggedOut).toEqual(false);
       expect(splashScreen.hide).toHaveBeenCalled();
+      tick();
     }));
 
     it('should login successfully but display a message when the user is not authorised ', fakeAsync(() => {
@@ -291,6 +294,7 @@ describe('LoginPage', () => {
     }));
 
     it('should not call any further methods when authenticationProvider.login() fails', fakeAsync(() => {
+      spyOn(component.authenticationProvider, 'isAuthenticated').and.returnValue(Promise.resolve(false));
       component.authenticationProvider.login =
         jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.reject(''));
 
@@ -299,8 +303,8 @@ describe('LoginPage', () => {
       // Should be called
       expect(component.platform.ready).toHaveBeenCalled();
       expect(component.initialiseAppConfig).toHaveBeenCalled();
+      expect(component.initialisePersistentStorage).toHaveBeenCalled();
       // Shouldn't be called
-      expect(component.initialisePersistentStorage).not.toHaveBeenCalled();
       expect(component.appConfigProvider.loadRemoteConfig).not.toHaveBeenCalled();
       expect(component.analytics.initialiseAnalytics).not.toHaveBeenCalled();
       expect(component.validateDeviceType).not.toHaveBeenCalled();

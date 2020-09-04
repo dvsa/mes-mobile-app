@@ -95,13 +95,19 @@ export class LoginPage extends BasePageComponent {
 
       this.initialiseAuthentication();
 
-      await this.authenticationProvider.login();
+      await this.initialisePersistentStorage();
+
+      const isAuthenticated = await this.authenticationProvider.isAuthenticated();
+
+      if (!isAuthenticated) {
+        await this.authenticationProvider.login();
+      }
+
+      await this.authenticationProvider.setEmployeeId();
 
       this.store$.dispatch(new LoadEmployeeId(this.authenticationProvider.getEmployeeId()));
 
       this.store$.dispatch(new LoadLog());
-
-      await this.initialisePersistentStorage();
 
       await this.appConfigProvider.loadRemoteConfig();
       this.store$.dispatch(new LoadConfigSuccess());
@@ -132,7 +138,7 @@ export class LoginPage extends BasePageComponent {
         } else {
           this.dispatchLog(`user ${examiner} not authorised: Could not get token`);
         }
-        this.authenticationProvider.logout();
+        await this.authenticationProvider.logout();
       }
       this.appInitError = error;
       console.log(error);

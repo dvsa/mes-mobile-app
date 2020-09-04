@@ -252,8 +252,8 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.loadJournalManually();
   }
 
-  logout() {
+  async logout() {
     this.store$.dispatch(new journalActions.UnloadJournal());
-    super.logout();
+    await super.logout();
   }
 }
