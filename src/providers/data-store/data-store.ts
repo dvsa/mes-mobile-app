@@ -86,7 +86,9 @@ export class DataStoreProvider {
     if (!this.secureContainer) {
       return Promise.resolve('');
     }
-    return this.secureContainer.remove(key);
+    return this.secureContainer.remove(key).catch((error) => {
+      console.error(`error removing ${key}. Error is: ${error.message}`);
+      return Promise.resolve('');
+    });
   }
-
 }

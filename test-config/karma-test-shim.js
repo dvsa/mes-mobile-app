@@ -1,7 +1,7 @@
 Error.stackTraceLimit = Infinity;
 
-require('core-js/es6');
-require('core-js/es7/reflect');
+require('core-js/es');
+require('core-js/proposals/reflect-metadata');
 require('rxjs-compat');
 
 require('zone.js/dist/zone');

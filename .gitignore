@@ -14,6 +14,8 @@ npm-debug.log*
 .env
 *.DS_Store
 .editorconfig
+ionic.config.json
+.npmrc
 
 .idea/
 .sourcemaps/

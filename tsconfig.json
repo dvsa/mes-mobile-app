@@ -11,7 +11,16 @@
     "sourceMap": true,
     "target": "es5",
     "noUnusedLocals": true,
-    "noUnusedParameters": false
+    "noUnusedParameters": false,
+    "paths": {
+      "core-js/es7/reflect": [
+        "node_modules/core-js/proposals/reflect-metadata"
+      ],
+      "core-js/es6": [
+        "node_modules/core-js/es"
+      ]
+    },
+    "baseUrl": "./"
   },
   "include": ["src/**/*.ts", "typings/typings.d.ts"],
   "exclude": ["node_modules", "test"],

@@ -10,11 +10,11 @@ export const environment: MdmConfig = {
   logsApiUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/logs',
   logsAutoSendInterval: 6000,
   authentication: {
-    context: 'https://login.windows.net/common',
+    context: 'https://login.microsoftonline.com/6c448d90-4ca1-4caf-ab59-0a2aa67d7801',
     resourceUrl: '923b07d4-80ee-4524-8f38-c1230aefe151',
     clientId: '923b07d4-80ee-4524-8f38-c1230aefe151',
-    redirectUrl: 'https://uk.gov.dvsa.mobile-examiner-app',
-    logoutUrl: 'https://login.windows.net/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/oauth2/logout',
+    redirectUrl: 'mesmobileappscheme://callback',
+    logoutUrl: 'mesmobileappscheme://callback?logout=true',
     employeeIdKey: 'employeeid',
   },
 };

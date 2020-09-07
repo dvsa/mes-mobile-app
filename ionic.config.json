@@ -1,7 +1,0 @@
-{
-  "name": "mes-mobile-app",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic-angular"
-}
