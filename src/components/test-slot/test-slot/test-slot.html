@@ -47,8 +47,10 @@
         </ion-col>
         <ion-col class="test-outcome-col" no-padding padding-right>
           <test-outcome
-            [slotDetail]="slot.slotDetail" [canStartTest]="canStartTest()"
+            [slotDetail]="slot.slotDetail"
+            [canStartTest]="canStartTest()"
             [isDelegatedTest]="delegatedTest"
+            [examinerId]="getExaminerId()"
             [testStatus]="componentState.testStatus$ | async"
             [activityCode]="componentState.testActivityCode$ | async"
             [specialRequirements]="isIndicatorNeededForSlot()"

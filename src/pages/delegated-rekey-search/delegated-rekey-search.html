@@ -68,8 +68,11 @@
     </div>
 
     <p class="results-message" *ngIf="!isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async) && !applicationReferenceInvalid">
-      <test-slot [slot]="(pageState.bookedTestSlot$ | async)" [hasSlotChanged]="false" [delegatedTest]="true"
-                 [hasSeenCandidateDetails]="true" [showLocation]="false"></test-slot>
+      <test-slot [slot]="(pageState.bookedTestSlot$ | async)"
+                 [hasSlotChanged]="false"
+                 [delegatedTest]="true"
+                 [hasSeenCandidateDetails]="true"
+                 [showLocation]="false"></test-slot>
     </p>
 
   </div>

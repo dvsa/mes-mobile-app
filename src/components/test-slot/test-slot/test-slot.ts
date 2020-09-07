@@ -21,6 +21,7 @@ import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import * as moment from 'moment';
+import { DelegatedExaminerTestSlot } from '../../../providers/delegated-rekey-search/mock-data/delegated-mock-data';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
@@ -127,5 +128,14 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     // add 3 days if current day is friday, 2 if saturday, else add 1
     const daysToAdd = today.isoWeekday() === 5 ? 3 : today.isoWeekday() === 6 ? 2 : 1;
     return  moment().add(daysToAdd, 'days').startOf('day').toDate();
+  }
+
+  getExaminerId(): number {
+    let returnValue = null;
+    if (this.delegatedTest) {
+      const slot = this.slot as DelegatedExaminerTestSlot;
+      returnValue =  slot.examinerId;
+    }
+    return returnValue;
   }
 }

@@ -1,7 +1,16 @@
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-export function getDelegatedBooking(category: TestCategory, isWelshTest: boolean, slotNumber: number): TestSlot {
+// TODO add to schema
+export interface DelegatedExaminerTestSlot extends TestSlot {
+  examinerId: number;
+}
+
+export function getDelegatedBooking(
+  category: TestCategory,
+  isWelshTest: boolean,
+  slotNumber: number,
+): DelegatedExaminerTestSlot {
   return {
     booking: {
       application: {
@@ -25,5 +34,6 @@ export function getDelegatedBooking(category: TestCategory, isWelshTest: boolean
       start: '2020-07-15T08:10:00',
     },
     vehicleTypeCode: category,
+    examinerId: 4583912,
   };
 }
