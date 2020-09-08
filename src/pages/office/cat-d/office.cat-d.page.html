@@ -36,11 +36,11 @@
           </ion-row>
 
           <activity-code id="activity-code-card" [formGroup]="form" [activityCodeModel]="pageState.activityCode$ | async"
-            [activityCodeOptions]="activityCodeOptions" (activityCodeChange)="activityCodeChanged($event)" [disabled]="!isTerminated() || !isDelegated"></activity-code>
+            [activityCodeOptions]="activityCodeOptions" (activityCodeChange)="activityCodeChanged($event)" [disabled]="!isDelegated"></activity-code>
 
           <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
             <license-provided
-              *ngIf="isDelegated && !isFail()"
+              *ngIf="isDelegated && isPass()"
               [form]="form"
               [license]="pageState.provisionalLicense$ | async"
               [licenseReceivedLabel] = "'Provisional licence Received'"
@@ -49,21 +49,21 @@
             </license-provided>
 
             <transmission
-              *ngIf="isDelegated && !isFail()"
+              *ngIf="isDelegated && isPass()"
               [formGroup]="form"
               [transmission]="pageState.transmission$ | async"
               (transmissionChange)="transmissionChanged($event)">
             </transmission>
 
             <pass-certificate-number
-              *ngIf="isDelegated && !isFail() && !isTerminated()"
+              *ngIf="isDelegated && isPass()"
               [form]="form"
               [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
               (passCertificateNumberChange)="passCertificateNumberChanged($event)">
             </pass-certificate-number>
 
             <health-declaration-signed
-              *ngIf="isDelegated && !isFail() && !isTerminated()"
+              *ngIf="isDelegated && isPass()"
               [formGroup]="form"
               [label]="'Health declaration'"
               [healthDeclaration]="pageState.healthDeclarationAccepted$ | async"
@@ -165,7 +165,7 @@
       </ion-card>
 
       <fault-comment-card [formGroup]="form" [faultComments]="pageState.dangerousFaults$ | async"
-                          [shouldRender]="(pageState.dangerousFaults$ | async).length > 0 && pageState.displayDangerousFault$ | async"
+                          [shouldRender]="(pageState.dangerousFaults$ | async).length > 0 && ((pageState.displayDangerousFault$ | async) || isDelegated)"
                           [outcome]="pageState.testOutcome$ | async" faultType="dangerous" header="Dangerous faults {{isDelegated ? (pageState.dangerousFaultCount$ | async) : null}}"
                           [isDelegatedTest]="pageState.delegatedTest$ | async"
                           (faultCommentsChange)="dangerousFaultCommentChanged($event)"
@@ -173,25 +173,27 @@
       </fault-comment-card>
 
       <fault-comment-card [formGroup]="form" [faultComments]="pageState.seriousFaults$ | async"
-                          [shouldRender]="(pageState.seriousFaults$ | async).length > 0  && pageState.displaySeriousFault$ | async"
+                          [shouldRender]="(pageState.seriousFaults$ | async).length > 0  && ((pageState.displaySeriousFault$ | async) || isDelegated)"
                           [outcome]="pageState.testOutcome$ | async"
                           [isDelegatedTest]="pageState.delegatedTest$ | async" faultType="serious"
                           header="Serious faults {{isDelegated ? (pageState.seriousFaultCount$ | async) : null}}" (faultCommentsChange)="seriousFaultCommentChanged($event)"
                           [maxFaultCount]="maxFaultCount">
       </fault-comment-card>
 
-      <fault-comment-card id="driving-fault-comment-card" [formGroup]="form"
+      <fault-comment-card id="driving-fault-comment-card"
+                          [formGroup]="form"
                           [faultComments]="pageState.drivingFaults$ | async"
-                          [shouldRender]="(pageState.displayDrivingFaultComments$ | async) && (pageState.displayDrivingFault$ | async)"
-                          [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults"
+                          [shouldRender]="((pageState.displayDrivingFaultComments$ | async) && (pageState.displayDrivingFault$ | async)) || (isDelegated && (pageState.drivingFaults$ | async).length > 0 )"
+                          [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults  {{isDelegated ? (pageState.drivingFaultCount$ | async) : null}}"
                           [faultCount]="pageState.drivingFaultCount$ | async"
                           [isDelegatedTest]="pageState.delegatedTest$ | async"
                           (faultCommentsChange)="drivingFaultCommentChanged($event)" [maxFaultCount]="maxFaultCount">
       </fault-comment-card>
 
-      <ion-card id="driving-fault-no-commentary" *ngIf="!(pageState.displayDrivingFaultComments$ | async) && (pageState.drivingFaultCount$ | async) > 0 && pageState.displayDrivingFault$ | async">
+      <ion-card id="driving-fault-no-commentary"
+                *ngIf="(!(pageState.displayDrivingFaultComments$ | async) && (pageState.drivingFaultCount$ | async) > 0 && pageState.displayDrivingFault$ | async) && !isDelegated">
         <ion-card-header>
-          <h4>Driving faults {{isDelegated ? (pageState.drivingFaultCount$ | async) : null}}</h4>
+          <h4>Driving faults</h4>
         </ion-card-header>
         <ion-card-content>
           <ion-row class="driving-fault-no-commentary-row" id="driving-fault-commentary-label" *ngFor="let drivingFault of (pageState.drivingFaults$ | async)">

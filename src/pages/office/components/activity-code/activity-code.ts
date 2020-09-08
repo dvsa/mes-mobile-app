@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivityCodeModel } from './activity-code.constants';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 
@@ -8,7 +8,7 @@ import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
   templateUrl: 'activity-code.html',
 })
 export class ActivityCodeComponent implements OnChanges {
-
+  constructor(private changeDetectorRef: ChangeDetectorRef) {}
   @Input()
   activityCodeModel: ActivityCodeModel;
 
@@ -26,6 +26,10 @@ export class ActivityCodeComponent implements OnChanges {
 
   private formControl: FormControl;
   static readonly fieldName: string = 'activityCode';
+
+  ngAfterViewChecked() {
+    this.changeDetectorRef.detectChanges();
+  }
 
   ngOnChanges(): void {
     if (!this.formControl) {
