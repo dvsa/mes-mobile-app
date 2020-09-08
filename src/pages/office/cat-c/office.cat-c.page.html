@@ -177,18 +177,20 @@
                           (faultCommentsChange)="seriousFaultCommentChanged($event)" [maxFaultCount]="maxFaultCount">
       </fault-comment-card>
 
-      <fault-comment-card id="driving-fault-comment-card" [formGroup]="form"
+      <fault-comment-card id="driving-fault-comment-card"
+                          [formGroup]="form"
                           [faultComments]="pageState.drivingFaults$ | async"
-                          [shouldRender]="(pageState.displayDrivingFaultComments$ | async) && ((pageState.displayDrivingFault$ | async) || isDelegated)"
+                          [shouldRender]="((pageState.displayDrivingFaultComments$ | async) && (pageState.displayDrivingFault$ | async)) || (isDelegated && (pageState.drivingFaults$ | async).length > 0 )"
                           [isDelegatedTest]="pageState.delegatedTest$ | async"
-                          [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults"
+                          [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults {{isDelegated ? (pageState.drivingFaultCount$ | async) : null}}"
                           [faultCount]="pageState.drivingFaultCount$ | async"
                           (faultCommentsChange)="drivingFaultCommentChanged($event)" [maxFaultCount]="maxFaultCount">
       </fault-comment-card>
 
-      <ion-card id="driving-fault-no-commentary" *ngIf="!(pageState.displayDrivingFaultComments$ | async) && (pageState.drivingFaultCount$ | async) > 0 && pageState.displayDrivingFault$ | async">
+      <ion-card id="driving-fault-no-commentary"
+                *ngIf="(!(pageState.displayDrivingFaultComments$ | async) && (pageState.drivingFaultCount$ | async) > 0 && pageState.displayDrivingFault$ | async) && !isDelegated">
         <ion-card-header>
-          <h4>Driving faults {{isDelegated ? (pageState.drivingFaultCount$ | async) : null}}</h4>
+          <h4>Driving faults</h4>
         </ion-card-header>
         <ion-card-content>
           <ion-row class="driving-fault-no-commentary-row" id="driving-fault-commentary-label" *ngFor="let drivingFault of (pageState.drivingFaults$ | async)">
