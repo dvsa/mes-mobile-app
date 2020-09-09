@@ -28,7 +28,6 @@ export class CBTNumberComponent implements OnChanges {
         Validators.maxLength(+this.dl196cbtCertNumberValidator.maxLength),
         Validators.minLength(+this.dl196cbtCertNumberValidator.maxLength),
         Validators.pattern(this.dl196cbtCertNumberValidator.pattern),
-        Validators.required,
       ]);
       this.formGroup.addControl(CBTNumberComponent.fieldName, this.formControl);
     }
