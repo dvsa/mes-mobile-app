@@ -11,12 +11,15 @@ import { legalRequirementsLabels } from '../../../../shared/constants/legal-requ
 export class LegalRequirementsModal {
 
   legalRequirements: legalRequirementsLabels[];
+  isDelegated: boolean;
 
   constructor(
     private viewCtrl: ViewController,
     private navParams: NavParams,
   ) {
     this.legalRequirements = this.navParams.get('legalRequirements');
+    this.isDelegated = this.navParams.get('isDelegated');
+    console.log(`isDelegated: ${this.isDelegated}`);
   }
 
   onCancel() {

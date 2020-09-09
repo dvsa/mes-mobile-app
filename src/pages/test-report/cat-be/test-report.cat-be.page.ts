@@ -212,6 +212,7 @@ export class TestReportCatBEPage extends BasePageComponent {
         LEGAL_REQUIREMENTS_MODAL,
         {
           legalRequirements: this.missingLegalRequirements,
+          isDelegated: this.isDelegated,
         },
         options,
       );
