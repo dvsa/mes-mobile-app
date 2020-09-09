@@ -766,7 +766,7 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   isPass(): boolean {
-    return this.testOutcome === TestOutcome.Passed;
+    return this.testOutcomeText === TestOutcome.Passed;
   }
 
   isWelsh(): boolean {
