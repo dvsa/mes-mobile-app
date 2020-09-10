@@ -19,7 +19,10 @@ export class LegalRequirementsModal {
   ) {
     this.legalRequirements = this.navParams.get('legalRequirements');
     this.isDelegated = this.navParams.get('isDelegated');
-    console.log(`isDelegated: ${this.isDelegated}`);
+  }
+
+  onContinue() {
+    this.viewCtrl.dismiss(ModalEvent.CONTINUE);
   }
 
   onCancel() {
