@@ -18,7 +18,7 @@ export class LegalRequirementsModal {
     private navParams: NavParams,
   ) {
     this.legalRequirements = this.navParams.get('legalRequirements');
-    this.isDelegated = this.navParams.get('isDelegated');
+    this.isDelegated = this.navParams.get('isDelegated') === null ? false : this.navParams.get('isDelegated');
   }
 
   onContinue() {
