@@ -28,7 +28,7 @@ export class CandidateDeclarationSignedComponent {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl('', [Validators.required]);
+      this.formControl = new FormControl(null, [Validators.required]);
       this.formGroup.addControl('candidateDeclarationCtrl', this.formControl);
     }
     this.formControl.patchValue(this.declarationSelected);
