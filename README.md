@@ -9,10 +9,11 @@ DVSA Mobile Examiner Services (GDS Beta phase)
 - Node (v 10.13.0)
 - npm (v 6.4.1)
 - Ionic CLI + Cordova: `npm install -g ionic`
-- Cordova (v 8.1.2) `npm install -g cordova@8.1.2`
+- Cordova (ionic enterprise version - uninstall any other globally installed version) `npm install -g @ionic-enterprise/cordova`
 - Security
   - [Git secrets](https://github.com/awslabs/git-secrets)
   - [ScanRepo](https://github.com/UKHomeOffice/repo-security-scanner)
+ - NOTE: you wil need to obtain `ionic-config.json` and `.npmrc` files containing the ionic enterprise licence keys and save to the project root in order to build the app.
 
 ### Get started
 
