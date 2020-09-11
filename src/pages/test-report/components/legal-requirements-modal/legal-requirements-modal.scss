@@ -1,6 +1,6 @@
 legal-requirements-modal {
   @extend .modal-alert-wrapper;
-  
+
   .modal-alert {
     width: 450px;
   }
@@ -17,8 +17,19 @@ legal-requirements-modal {
     }
   }
 
+  .mes-primary-button {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+    height: 56px;
+  }
+
   .terminate-button {
     color: map-get($colors-gds, gds-red);
+  }
+
+  .return-button {
+    color: map-get($colors-gds, gds-black);
   }
 
 }
