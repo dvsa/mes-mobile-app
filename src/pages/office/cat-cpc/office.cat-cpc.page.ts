@@ -83,9 +83,19 @@ import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import { getApplicationReference }
+ from '../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
+import { getApplicationNumber }
+ from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
+import {
+  CandidateChoseToProceedWithTestInEnglish,
+  CandidateChoseToProceedWithTestInWelsh,
+} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
+  applicationNumber$: Observable<string>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
@@ -123,6 +133,7 @@ export class OfficeCatCPCPage extends BasePageComponent {
   toast: Toast;
   subscription: Subscription;
   isDelegated: boolean;
+  conductedLanguage: string = Language.ENGLISH;
 
   public outcome: TestOutcome;
   combinationCode: CombinationCodes;
@@ -267,6 +278,11 @@ export class OfficeCatCPCPage extends BasePageComponent {
         select(getDelegatedTestIndicator),
         select(isDelegatedTest),
       ),
+      applicationNumber$: currentTest$.pipe(
+        select(getJournalData),
+        select(getApplicationReference),
+        select(getApplicationNumber),
+      ),
     };
 
     const { testResult$, combination$, delegatedTest$ } = this.pageState;
@@ -391,6 +407,18 @@ export class OfficeCatCPCPage extends BasePageComponent {
       this.subscription.unsubscribe();
 
     }
+  }
+
+  isWelshChanged(isWelsh: boolean) {
+    this.store$.dispatch(
+      isWelsh
+        ? new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
+        : new CandidateChoseToProceedWithTestInEnglish('English'),
+    );
+  }
+
+  isWelsh(): boolean {
+    return this.conductedLanguage === Language.CYMRAEG;
   }
 
 }

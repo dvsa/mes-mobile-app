@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar hideBackButton>
+  <ion-navbar [hideBackButton]="!isDelegated">
     <ion-title>Office</ion-title>
     <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
       <button ion-button (click)="logout()">Sign Out</button>
@@ -25,6 +25,16 @@
 
       <ion-card-content class="card-content-ios" no-bounce no-padding>
         <ion-grid class="grid">
+
+          <ion-row class="mes-component-row mes-row-separator" id="application-reference-card" align-items-center *ngIf="isDelegated">
+            <ion-col class="component-label" col-32>
+              <label>Application reference</label>
+            </ion-col>
+            <ion-col padding-left>
+              <span class="mes-data">{{pageState.applicationNumber$ | async }}</span>
+            </ion-col>
+          </ion-row>
+
           <activity-code id="activity-code-card" [formGroup]="form"
                          [activityCodeModel]="pageState.activityCode$ | async"
                          [activityCodeOptions]="activityCodeOptions"
@@ -32,6 +42,12 @@
           </activity-code>
 
           <div no-padding>
+
+            <language-preferences
+              *ngIf="isDelegated"
+              [formGroup]="form"
+              [isWelsh]="isWelsh()"
+              (welshChanged)="isWelshChanged($event)"></language-preferences>
 
             <candidate-description [display]="pageState.displayCandidateDescription$ | async" [formGroup]="form"
                                    [candidateDescription]="pageState.candidateDescription$ | async"
