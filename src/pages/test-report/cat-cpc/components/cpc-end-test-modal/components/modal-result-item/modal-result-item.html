@@ -2,7 +2,7 @@
   <ion-col col-84 class="result-item">
     <div class="row">
       <div class="col question-code">{{label}}</div>
-      <div class="col question-score">{{score}}%
+      <div class="col question-score">{{displayScore(score)}}%
         <img class="outcome-icon"[src]="getOutcomeIcon()"/>
       </div>
     </div>

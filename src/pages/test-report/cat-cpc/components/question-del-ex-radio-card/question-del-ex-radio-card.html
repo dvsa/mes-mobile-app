@@ -1,0 +1,91 @@
+<ion-card>
+  <question-title [question]="question"></question-title>
+
+  <ion-card-content>
+
+    <ion-grid>
+      <ion-row [formGroup]="formGroup">
+          <div class="validation-bar" [class.ng-invalid]="invalid">
+          </div>
+        <ion-col col-2>
+        </ion-col>
+        <ion-col>
+          <input
+            type="radio"
+            id="question{{questionNumber}}answer0"
+            class="gds-radio-button"
+            name="cpcQuestion{{questionNumber}}ResultCtrl"
+            formControlName="cpcQuestion{{questionNumber}}ResultCtrl"
+            (change)="questionScoreChanged($event.target.value)"
+            value="0"
+            [class.ng-invalid]="invalid"
+          />
+          <label for="question{{questionNumber}}answer0" class="radio-label">0%</label>
+        </ion-col>
+
+        <ion-col>
+          <input
+            type="radio"
+            id="question{{questionNumber}}answer5"
+            class="gds-radio-button"
+            name="cpcQuestion{{questionNumber}}ResultCtrl"
+            formControlName="cpcQuestion{{questionNumber}}ResultCtrl"
+            (change)="questionScoreChanged($event.target.value)"
+            value="5"
+            [class.ng-invalid]="invalid"
+          />
+          <label for="question{{questionNumber}}answer5" class="radio-label">5%</label>
+        </ion-col>
+
+        <ion-col>
+          <input
+            type="radio"
+            id="question{{questionNumber}}answer10"
+            class="gds-radio-button"
+            name="cpcQuestion{{questionNumber}}ResultCtrl"
+            formControlName="cpcQuestion{{questionNumber}}ResultCtrl"
+            (change)="questionScoreChanged($event.target.value)"
+            value="10"
+            [class.ng-invalid]="invalid"
+          />
+          <label for="question{{questionNumber}}answer10" class="radio-label">10%</label>
+        </ion-col>
+
+        <ion-col>
+          <input
+            type="radio"
+            id="question{{questionNumber}}answer15"
+            class="gds-radio-button"
+            name="cpcQuestion{{questionNumber}}ResultCtrl"
+            formControlName="cpcQuestion{{questionNumber}}ResultCtrl"
+            (change)="questionScoreChanged($event.target.value)"
+            value="15"
+            [class.ng-invalid]="invalid"
+          />
+          <label for="question{{questionNumber}}answer15" class="radio-label">15%</label>
+        </ion-col>
+
+        <ion-col>
+          <input
+            type="radio"
+            id="question{{questionNumber}}answer20"
+            class="gds-radio-button"
+            name="cpcQuestion{{questionNumber}}ResultCtrl"
+            formControlName="cpcQuestion{{questionNumber}}ResultCtrl"
+            (change)="questionScoreChanged($event.target.value)"
+            value="20"
+            [class.ng-invalid]="invalid"
+          />
+          <label for="question{{questionNumber}}answer20" class="radio-label">20%</label>
+        </ion-col>
+      </ion-row>
+      <ion-row class="validation-message-row" align-items-center *ngIf="invalid">
+        <div class="validation-text" [class.ng-invalid]="invalid" id="question{{questionNumber}}-validation-text">
+          Please select a score
+        </div>
+      </ion-row>
+    </ion-grid>
+
+  </ion-card-content>
+
+</ion-card>

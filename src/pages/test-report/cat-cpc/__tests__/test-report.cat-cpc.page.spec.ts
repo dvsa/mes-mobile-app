@@ -41,7 +41,7 @@ import { CAT_CPC } from '../../../page-names.constants';
 import { Subscription, of } from 'rxjs';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-describe('TestReportCatCPCPage', () => {
+fdescribe('TestReportCatCPCPage', () => {
   let fixture: ComponentFixture<TestReportCatCPCPage>;
   let component: TestReportCatCPCPage;
   let store$: Store<StoreModel>;

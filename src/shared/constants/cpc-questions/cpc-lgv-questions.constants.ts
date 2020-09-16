@@ -25,7 +25,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Further check by taking vehicle to nearest weigh bridge',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q02',
@@ -52,7 +52,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Walk around security check. For example, check the seals',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q03',
@@ -76,7 +76,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Check fuel cap in place (not tampered with). Visual check',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q04',
@@ -103,7 +103,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Call the police and railway authority using the bridge ID plate ',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q06',
@@ -129,7 +129,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Further check by taking vehicle to nearest weigh bridge',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q07',
@@ -153,7 +153,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Check fuel cap in place (not tampered with). Visual check',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q08',
@@ -181,7 +181,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Demonstrates how to release the restraining device',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q09',
@@ -207,7 +207,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Physical check of the air system to make sure air lines are serviceable',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q10',
@@ -232,7 +232,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Checks fuel fill level and fuel cap security',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q11',
@@ -258,7 +258,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Isolate the vehicle (disconnect electric supply)',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q12',
@@ -285,7 +285,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Further check by taking vehicle to nearest weigh bridge',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q13',
@@ -309,7 +309,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Enough fuel for the journey',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q14',
@@ -338,7 +338,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Demonstrates how to release the restraining device',
     },
-    score: 0,
+    score: null,
   },
   {
     questionCode: 'Q15',
@@ -362,7 +362,7 @@ export const lgvQuestions: CPCQuestion[] = [
       selected: false,
       label: 'Check fuel cap in place (not tampered with). Visual check',
     },
-    score: 0,
+    score: null,
   },
 ];
 
@@ -411,5 +411,5 @@ export const lgvQuestion5: Question5 = {
     selected: false,
     label: 'Air leaks',
   },
-  score: 0,
+  score: null,
 };

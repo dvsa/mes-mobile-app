@@ -21,4 +21,8 @@ export class ModalResultItemComponent {
     return (this.isPass ? passImage : failImage);
   }
 
+  displayScore(score: number): number {
+    return score ? score : 0;
+  }
+
 }

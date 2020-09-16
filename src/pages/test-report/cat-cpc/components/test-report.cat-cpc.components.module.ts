@@ -13,6 +13,7 @@ import { QuestionSubtitleComponent } from './question-subtitle/question-subtitle
 import { QuestionAnswerComponent } from './question-answer/question-answer';
 import { QuestionFiveCardComponent } from './question-five-card/question-five-card';
 import { QuestionScoreComponent } from './question-score/question-score';
+import { QuestionDelExRadioCardComponent } from './question-del-ex-radio-card/question-del-ex-radio-card';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { QuestionScoreComponent } from './question-score/question-score';
     QuestionSubtitleComponent,
     QuestionAnswerComponent,
     QuestionScoreComponent,
+    QuestionDelExRadioCardComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +45,7 @@ import { QuestionScoreComponent } from './question-score/question-score';
     QuestionSubtitleComponent,
     QuestionAnswerComponent,
     QuestionScoreComponent,
+    QuestionDelExRadioCardComponent,
   ],
 })
 export class TestReportCatCPCComponentsModule { }
