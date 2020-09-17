@@ -21,6 +21,7 @@ export class QuestionDelExRadioCardComponent {
   questionScore = new EventEmitter();
 
   formControl: FormControl;
+  answerArray = [0, 5, 10, 15, 20];
 
   questionScoreChanged = (value: number): void => {
     this.questionScore.emit({
