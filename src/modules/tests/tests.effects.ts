@@ -69,6 +69,7 @@ import {
   DelegatedRekeySearchModel,
   getDelegatedRekeySearchState,
 } from '../../pages/delegated-rekey-search/delegated-rekey-search.reducer';
+import { OtherReasonUpdated, OtherSelected } from './rekey-reason/rekey-reason.actions';
 
 @Injectable()
 export class TestsEffects {
@@ -217,6 +218,8 @@ export class TestsEffects {
 
       if (startTestAction.delegatedTest) {
         arrayOfActions.push(new StartDelegatedTest());
+        arrayOfActions.push(new OtherSelected(true));
+        arrayOfActions.push(new OtherReasonUpdated('Delegated Examiner'));
       }
 
       if (

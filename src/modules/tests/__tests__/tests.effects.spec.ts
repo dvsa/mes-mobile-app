@@ -45,6 +45,8 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { PopulateTestCategory } from '../category/category.actions';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
+import { OtherReasonUpdated, OtherSelected } from '../rekey-reason/rekey-reason.actions';
+import { StartDelegatedTest } from '../delegated-test/delegated-test.actions';
 
 describe('Tests Effects', () => {
 
@@ -295,6 +297,33 @@ describe('Tests Effects', () => {
         expect(res8).toEqual(new SetExaminerConducted(parseInt(staffNumber, 10))),
         expect(res9).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
         expect(res12).toEqual(new rekeyActions.MarkAsRekey()),
+        done();
+      });
+    });
+
+    fit('should set the rekey reason and reason correctly when it is a delegated examiner test', (done) => {
+      const selectedDate: string = new DateTime().format('YYYY-MM-DD');
+      const examiner = { staffNumber: '123', individualId: 456 };
+      store$.dispatch(new journalActions.SetSelectedDate(selectedDate));
+      store$.dispatch(
+        new journalActions.LoadJournalSuccess(
+          { examiner, slotItemsByDate: journalSlotsDataMock },
+          ConnectionStatus.ONLINE,
+          false,
+          new Date(),
+        ),
+      ); // Load in mock journal state
+      // ACT
+      actions$.next(new testsActions.StartTest(1001, TestCategory.B, false, true));
+      // ASSERT
+      effects.startTestEffect$
+      .pipe(
+        bufferCount(15),
+      )
+      .subscribe(([res0, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14]) => {
+        expect(res12).toEqual(new StartDelegatedTest());
+        expect(res13).toEqual(new OtherSelected(true));
+        expect(res14).toEqual(new OtherReasonUpdated('Delegated Examiner'));
         done();
       });
     });
