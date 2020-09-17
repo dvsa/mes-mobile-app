@@ -45,14 +45,14 @@ export class QuestionFooterComponent {
     this.questionPageChange.emit(questionNumber);
   }
 
-  goToSummary = (): void => {
+  goToSummary = () => {
     if (this.isDelegated) {
       if (this.isFormValid()) {
         this.testSummaryRequested.emit(true);
       }
-    } else {
-      this.testSummaryRequested.emit(true);
+      return;
     }
+    this.testSummaryRequested.emit(true);
   }
 
   isFormValid() {
