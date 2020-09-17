@@ -5,7 +5,7 @@ export const SET_EXAMINER_BOOKED = '[Test Actions] Set the examiner the test was
 export class SetExaminerBooked implements Action {
   readonly type = SET_EXAMINER_BOOKED;
 
-  constructor(public examinerBooked: number) {}
+  constructor(public examinerBooked: number | string) {}
 }
 
 export type Types = SetExaminerBooked;

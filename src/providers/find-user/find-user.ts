@@ -14,7 +14,7 @@ export class FindUserProvider {
     private appConfig: AppConfigProvider,
   ) { }
 
-  userExists(staffNumber: number): Observable<Object> {
+  userExists(staffNumber: number | string): Observable<Object> {
     return this.httpClient.get(
       this.urlProvider.getRekeyFindUserUrl(staffNumber.toString()))
       .pipe(timeout(this.appConfig.getAppConfig().requestTimeout));
