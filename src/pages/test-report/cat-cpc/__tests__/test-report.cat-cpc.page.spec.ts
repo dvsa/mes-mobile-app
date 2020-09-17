@@ -40,8 +40,9 @@ import { CalculateTestResult, TerminateTestFromTestReport } from '../../test-rep
 import { CAT_CPC } from '../../../page-names.constants';
 import { Subscription, of } from 'rxjs';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { QuestionDelExRadioCardComponent } from '../components/question-del-ex-radio-card/question-del-ex-radio-card';
 
-fdescribe('TestReportCatCPCPage', () => {
+describe('TestReportCatCPCPage', () => {
   let fixture: ComponentFixture<TestReportCatCPCPage>;
   let component: TestReportCatCPCPage;
   let store$: Store<StoreModel>;
@@ -60,6 +61,7 @@ fdescribe('TestReportCatCPCPage', () => {
         MockComponent(QuestionScoreComponent),
         MockComponent(QuestionSubtitleComponent),
         MockComponent(QuestionTitleComponent),
+        MockComponent(QuestionDelExRadioCardComponent),
       ],
       imports: [
         IonicModule,
@@ -104,7 +106,7 @@ fdescribe('TestReportCatCPCPage', () => {
   describe('Class', () => {
 
     describe('questionPageChanged', () => {
-      it('should should set the value passed into the function to a variable', () => {
+      it('should set the value passed into the function to a variable', () => {
         expect(component.pageNumber).toEqual(1);
         component.questionPageChanged(2);
         expect(component.pageNumber).toEqual(2);
