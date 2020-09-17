@@ -301,7 +301,7 @@ describe('Tests Effects', () => {
       });
     });
 
-    fit('should set the rekey reason and reason correctly when it is a delegated examiner test', (done) => {
+    it('should set the rekey reason and reason correctly when it is a delegated examiner test', (done) => {
       const selectedDate: string = new DateTime().format('YYYY-MM-DD');
       const examiner = { staffNumber: '123', individualId: 456 };
       store$.dispatch(new journalActions.SetSelectedDate(selectedDate));
