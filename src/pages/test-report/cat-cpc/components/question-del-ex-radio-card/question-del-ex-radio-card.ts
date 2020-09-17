@@ -23,7 +23,6 @@ export class QuestionDelExRadioCardComponent {
   formControl: FormControl;
 
   questionScoreChanged = (value: number): void => {
-    console.log('value', value);
     this.questionScore.emit({
       questionNumber: this.questionNumber,
       score: value,
