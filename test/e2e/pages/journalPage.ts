@@ -1,5 +1,5 @@
 import Page from './page';
-import { browser } from 'protractor';
+import { element, by } from 'protractor';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -112,6 +112,14 @@ class JournalPage extends Page {
     return this.getElementByXPath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`, waitForElement);
+  }
+
+  async hasStartTestButtonFor(candidateName) {
+    return element.all(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
+    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    h3[text() = "${candidateName}"]]`)).count().then((count) => {
+      return count > 0;
+    });
   }
 
   startTestFor(candidateName) {
