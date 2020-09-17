@@ -49,21 +49,29 @@
               [isWelsh]="isWelsh()"
               (welshChanged)="isWelshChanged($event)"></language-preferences>
 
-            <candidate-description [display]="pageState.displayCandidateDescription$ | async" [formGroup]="form"
-                                   [candidateDescription]="pageState.candidateDescription$ | async"
-                                   [outcome]="pageState.testOutcome$ | async"
-                                   (candidateDescriptionChange)="candidateDescriptionChanged($event)">
+            <debrief-witnessed
+              [display]="isDelegated"
+              [formGroup]="form"
+              [debriefWitnessed]="pageState.debriefWitnessed$ | async"
+              [outcome]="outcome"
+              (debriefWitnessedChange)="debriefWitnessedChanged($event)">
+            </debrief-witnessed>
+
+            <candidate-description
+              [display]="(pageState.displayCandidateDescription$ | async) && !(isDelegated && isFail())"
+              [formGroup]="form"
+              [candidateDescription]="pageState.candidateDescription$ | async"
+              [outcome]="pageState.testOutcome$ | async"
+              (candidateDescriptionChange)="candidateDescriptionChanged($event)">
             </candidate-description>
 
-            <identification [display]="pageState.displayIdentification$ | async" [formGroup]="form"
-                            [identification]="pageState.identification$ | async"
-                            [outcome]="pageState.testOutcome$ | async"
-                            (identificationChange)="identificationChanged($event)">
+            <identification
+              [display]="(pageState.displayIdentification$ | async) && !(isDelegated && isFail())"
+              [formGroup]="form"
+              [identification]="pageState.identification$ | async"
+              [outcome]="pageState.testOutcome$ | async"
+              (identificationChange)="identificationChanged($event)">
             </identification>
-
-            <combination [combination]="pageState.combination$ | async"
-                         [combinationAdditionalText]="getCombinationAdditionalText(combinationCode)">
-            </combination>
 
             <additional-information [display]="pageState.displayAdditionalInformation$ | async"
                                     [additionalInformation]="pageState.additionalInformation$ | async"
@@ -72,13 +80,18 @@
                                     (additionalInformationChange)="additionalInformationChanged($event)">
             </additional-information>
 
-            <assessment-report *ngIf="displayIfFail(outcome)"
+            <combination
+              [combination]="pageState.combination$ | async"
+              [combinationAdditionalText]="getCombinationAdditionalText(combinationCode)">
+            </combination>
+
+            <assessment-report *ngIf="isFail() && !isDelegated"
                                [assessmentReport]="pageState.assessmentReport$ | async"
                                [formGroup]="form"
                                (assessmentReportChange)="assessmentReportChanged($event)">
             </assessment-report>
 
-            <cpc-debrief-card *ngIf="displayIfFail(outcome) && pageState.combination$ | async"
+            <cpc-debrief-card *ngIf="isFail() && pageState.combination$ | async"
                               [overallScore]="pageState.overallScore$ | async"
                               [question1]="pageState.question1$ | async"
                               [question2]="pageState.question2$ | async"

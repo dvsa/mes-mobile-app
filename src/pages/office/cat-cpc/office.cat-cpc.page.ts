@@ -35,13 +35,13 @@ import { getTests } from '../../../modules/tests/tests.reducer';
 import {
   getCandidateDescription,
   getAdditionalInformation,
-  getIdentification,
+  getIdentification, isDebriefWitnessed,
 } from '../../../modules/tests/test-summary/common/test-summary.selector';
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import {
   IdentificationUsedChanged,
   CandidateDescriptionChanged,
-  AdditionalInformationChanged,
+  AdditionalInformationChanged, DebriefWitnessed, DebriefUnwitnessed,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
@@ -120,6 +120,7 @@ interface OfficePageState {
   testResult$: Observable<string>;
   isRekey$: Observable<boolean>;
   delegatedTest$: Observable<boolean>;
+  debriefWitnessed$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -283,6 +284,10 @@ export class OfficeCatCPCPage extends BasePageComponent {
         select(getApplicationReference),
         select(getApplicationNumber),
       ),
+      debriefWitnessed$: currentTest$.pipe(
+        select(getTestSummary),
+        select(isDebriefWitnessed),
+      ),
     };
 
     const { testResult$, combination$, delegatedTest$ } = this.pageState;
@@ -314,8 +319,8 @@ export class OfficeCatCPCPage extends BasePageComponent {
     return question ? question.additionalText || null : null;
   }
 
-  displayIfFail = (outcome: TestOutcome): boolean => {
-    return outcome === TestOutcome.FAIL;
+  isFail(): boolean {
+    return this.outcome === TestOutcome.FAIL;
   }
 
   onSubmit() {
@@ -419,6 +424,12 @@ export class OfficeCatCPCPage extends BasePageComponent {
 
   isWelsh(): boolean {
     return this.conductedLanguage === Language.CYMRAEG;
+  }
+
+  debriefWitnessedChanged(debriefWitnessed: boolean) {
+    this.store$.dispatch(
+      debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed(),
+    );
   }
 
 }

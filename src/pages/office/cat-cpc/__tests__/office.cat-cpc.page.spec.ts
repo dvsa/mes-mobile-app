@@ -301,13 +301,15 @@ describe('OfficeCatCPCPage', () => {
     });
   });
 
-  describe('displayIfFail', () => {
+  describe('isFail', () => {
     it('should return false if test outcome is pass', () => {
-      expect(component.displayIfFail(TestOutcome.PASS)).toEqual(false);
+      component.outcome = TestOutcome.PASS;
+      expect(component.isFail()).toEqual(false);
     });
 
     it('should return true if test outcome is fail', () => {
-      expect(component.displayIfFail(TestOutcome.FAIL)).toEqual(true);
+      component.outcome = TestOutcome.FAIL;
+      expect(component.isFail()).toEqual(true);
     });
   });
 
