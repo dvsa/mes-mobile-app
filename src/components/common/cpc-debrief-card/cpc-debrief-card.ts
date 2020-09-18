@@ -51,7 +51,7 @@ export class CPCDebriefCardComponent implements OnInit {
   }
 
   getQuestionPercentage = (question: Question | Question5): number => {
-    return question.score;
+    return question.score || 0;
   }
 
   shouldTickBox = (question: Question | Question5): boolean => {

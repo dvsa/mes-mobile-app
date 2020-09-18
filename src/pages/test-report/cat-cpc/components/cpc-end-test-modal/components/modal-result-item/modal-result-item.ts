@@ -21,4 +21,12 @@ export class ModalResultItemComponent {
     return (this.isPass ? passImage : failImage);
   }
 
+  /**
+   * Function to return zero is score is null or undefined
+   * @param score
+   */
+  displayScore(score: number): number {
+    return score ? score : 0;
+  }
+
 }

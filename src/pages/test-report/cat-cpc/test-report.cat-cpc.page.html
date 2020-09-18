@@ -1,49 +1,65 @@
 <ion-header>
-    <ion-navbar [hideBackButton]="!isDelegated">
-        <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
-        <ion-buttons end>
-            <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>
-        </ion-buttons>
-    </ion-navbar>
+  <ion-navbar [hideBackButton]="!isDelegated">
+    <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 <ion-content no-padding no-bounce>
-    <module-assessment [combinationCode]="pageState.combinationCode$ | async"></module-assessment>
+  <module-assessment [combinationCode]="pageState.combinationCode$ | async"></module-assessment>
 
+  <div *ngIf="!isDelegated">
     <question-card
-            *ngIf="pageNumber === 1"
-            (answerPayload)="populateAnswer($event)"
-            [question]="pageState.question1$ | async"
-            [questionNumber]="pageNumber">
+      *ngIf="pageNumber === 1"
+      (answerPayload)="populateAnswer($event)"
+      [question]="pageState.question1$ | async"
+      [questionNumber]="pageNumber">
     </question-card>
 
     <question-card
-            *ngIf="pageNumber === 2"
-            (answerPayload)="populateAnswer($event)"
-            [question]="pageState.question2$ | async"
-            [questionNumber]="pageNumber">
+      *ngIf="pageNumber === 2"
+      (answerPayload)="populateAnswer($event)"
+      [question]="pageState.question2$ | async"
+      [questionNumber]="pageNumber">
     </question-card>
 
     <question-card
-            *ngIf="pageNumber === 3"
-            (answerPayload)="populateAnswer($event)"
-            [question]="pageState.question3$ | async"
-            [questionNumber]="pageNumber">
+      *ngIf="pageNumber === 3"
+      (answerPayload)="populateAnswer($event)"
+      [question]="pageState.question3$ | async"
+      [questionNumber]="pageNumber">
     </question-card>
 
     <question-card
-            *ngIf="pageNumber === 4"
-            (answerPayload)="populateAnswer($event)"
-            [question]="pageState.question4$ | async"
-            [questionNumber]="pageNumber">
+      *ngIf="pageNumber === 4"
+      (answerPayload)="populateAnswer($event)"
+      [question]="pageState.question4$ | async"
+      [questionNumber]="pageNumber">
     </question-card>
 
     <question-five-card
-            *ngIf="pageNumber === 5"
-            (answerPayload)="populateAnswer($event)"
-            [question]="pageState.question5$ | async">
+      *ngIf="pageNumber === 5"
+      (answerPayload)="populateAnswer($event)"
+      [question]="pageState.question5$ | async">
     </question-five-card>
+  </div>
+
+  <div *ngIf="isDelegated">
+    <question-del-ex-radio-card *ngFor="let number of [1,2,3,4,5]"
+                                [formGroup]="form"
+                                (questionScore)="populateScore($event)"
+                                [question]="pageState['question' + number + '$'] | async"
+                                [questionNumber]="number">
+    </question-del-ex-radio-card>
+  </div>
 
 </ion-content>
 
-<question-footer [questionNumber]="pageNumber" (questionPageChange)="questionPageChanged($event)" (testSummaryRequested)="onEndTestClick()"></question-footer>
+<question-footer [questionNumber]="pageNumber"
+                 (questionPageChange)="questionPageChanged($event)"
+                 (testSummaryRequested)="onEndTestClick()"
+                 [isDelegated]="isDelegated"
+                 [formGroup]="form">
+</question-footer>

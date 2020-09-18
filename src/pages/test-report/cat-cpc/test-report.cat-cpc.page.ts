@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Modal, ModalController } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Platform,
+  Modal,
+  ModalController,
+} from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
 import { CombinationCodes, CategoryCode, Question, Question5, TestData } from '@dvsa/mes-test-schema/categories/CPC';
 import { Observable, Subscription, combineLatest } from 'rxjs';
@@ -38,6 +45,7 @@ import { getTestCategory } from '../../../modules/tests/category/category.reduce
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import { getNextPageDebriefOffice } from '../../../shared/constants/getNextPageDebriefOffice.constants';
+import { FormGroup } from '@angular/forms';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -78,6 +86,7 @@ export class TestReportCatCPCPage extends BasePageComponent {
   overallPercentage: number;
   category: CategoryCode;
   isDelegated: boolean;
+  form: FormGroup;
 
   constructor(
     private testResultProvider: TestResultProvider,
@@ -90,6 +99,7 @@ export class TestReportCatCPCPage extends BasePageComponent {
     public cpcQuestionProvider: CPCQuestionProvider) {
 
     super(platform, navController, authenticationProvider);
+    this.form = new FormGroup({});
   }
 
   ngOnInit(): void {
@@ -180,6 +190,19 @@ export class TestReportCatCPCPage extends BasePageComponent {
       [4, QuestionNumber.FOUR],
       [5, QuestionNumber.FIVE],
     ]).get(questionNumber);
+  }
+
+  populateScore = (event: ToggleEvent): void => {
+
+    // Update question answered selected value
+    const questionNum: QuestionNumber = this.translateToQuestionNumberInterface(event.questionNumber);
+
+    // Update question score
+    this.store$.dispatch(new PopulateQuestionScore(questionNum, Number(event.score)));
+
+    // Update total score
+    const totalScore: number = this.cpcQuestionProvider.getTotalQuestionScore(this.testData);
+    this.store$.dispatch(new PopulateTestScore(totalScore));
   }
 
   onEndTestClick = async (): Promise<void> => {

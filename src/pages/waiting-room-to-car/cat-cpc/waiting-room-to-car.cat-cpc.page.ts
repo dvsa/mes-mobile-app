@@ -61,6 +61,7 @@ import {
   CandidateDeclarationSigned,
   SetDeclarationStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
+import { PopulateTestScore } from '../../../modules/tests/test-data/cat-cpc/overall-score/total-percentage.action';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -170,6 +171,9 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
 
     this.store$.dispatch(new PopulateCombination(combination));
     this.store$.dispatch(new PopulateQuestions([...questions, question5]));
+
+    // reset total score
+    this.store$.dispatch(new PopulateTestScore(0));
   }
 
   supervisorAccompanimentToggled(): void {
