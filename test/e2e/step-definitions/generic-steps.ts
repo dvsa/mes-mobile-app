@@ -98,7 +98,7 @@ Given('I am not logged in', () => {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP').then(() => {
       // Wait until we are on the login page before proceeding
-      LoginPage.isCurrentPage();
+      LoginPage.getToSignInPopUp();
 
       // Switch back to WEBVIEW context
       browser.driver.selectContext(LoginPage.getParentContext(webviewContext));
@@ -115,9 +115,9 @@ Given('I am logged in as {string} and I have a test for {string}', async (userna
   // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
   JournalPage.getRefreshButton();
   const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
+  const hasStartTest = await JournalPage.hasStartTestButtonFor(candidateName);
 
-  const startButtonIsPresent = buttonElement.isPresent();
-  if (startButtonIsPresent) {
+  if (!hasStartTest) {
     PageHelper.waitForOverlay('click-block-active');
     JournalPage.clickBackButton();
     // Logout
