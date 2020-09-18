@@ -84,14 +84,6 @@ class LoginPage extends Page {
                 }
               });
           });
-        // Fill in password and click Sign in
-        // const pFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label=
-        // "Enter the password for ${username}"]`));
-        // browser.wait(ExpectedConditions.presenceOf(pFld));
-        // pFld.sendKeys(password);
-        // const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
-        // signInButtonElement.click();
-
         // Switch back to WEBVIEW context
         browser.driver.selectContext(this.getParentContext(webviewContext));
 
@@ -151,10 +143,6 @@ class LoginPage extends Page {
               // Switch back to WEBVIEW context
               browser.driver.selectContext(this.getParentContext(webviewContext));
             });
-            //     browser.driver.selectContext(this.getParentContext(webviewContext));
-            // browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-            // const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
-            // this.clickElement(signIn);
           });
         } else {
           return Promise.resolve();

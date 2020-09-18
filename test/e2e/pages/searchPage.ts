@@ -18,7 +18,6 @@ class SearchPage extends Page {
 
   clickCloseButton() {
     this.clickElementByXPath('//div//ion-header/ion-navbar/ion-buttons/button');
-    //this.clickElementByCss('button.close-button-padding');
   }
 
   getTestOutcome() {

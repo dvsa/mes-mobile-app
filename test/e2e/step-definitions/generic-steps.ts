@@ -98,7 +98,6 @@ Given('I am not logged in', () => {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP').then(() => {
       // Wait until we are on the login page before proceeding
-      // LoginPage.isCurrentPage();
       LoginPage.getToSignInPopUp();
 
       // Switch back to WEBVIEW context
