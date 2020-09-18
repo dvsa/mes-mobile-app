@@ -7,7 +7,6 @@ class LoginPage extends Page {
     // wait for username field to appear
     this.getUsernameField();
   }
-
   /**
    * Logs into the application with the given username and password. Assumes we will be on the Microsoft login page.
    * @param user the user
@@ -85,14 +84,9 @@ class LoginPage extends Page {
                 }
               });
           });
-
-        //
-
-
-
-
         // Fill in password and click Sign in
-        // const pFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
+        // const pFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label=
+        // "Enter the password for ${username}"]`));
         // browser.wait(ExpectedConditions.presenceOf(pFld));
         // pFld.sendKeys(password);
         // const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
@@ -121,7 +115,6 @@ class LoginPage extends Page {
       });
     });
   }
-
   /**
    * Logs out of the application and takes them to the login page if they were logged in else returns current page
    */
@@ -155,16 +148,9 @@ class LoginPage extends Page {
               const signInLink = element(by.xpath(`//XCUIElementTypeStaticText[@name="Sign in"]`));
               browser.wait(ExpectedConditions.presenceOf(signInLink));
               signInLink.click();
-
-
-
-
               // Switch back to WEBVIEW context
               browser.driver.selectContext(this.getParentContext(webviewContext));
             });
-
-
-
             //     browser.driver.selectContext(this.getParentContext(webviewContext));
             // browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
             // const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
