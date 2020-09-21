@@ -13,6 +13,9 @@ export class LanguagePreferencesComponent implements OnChanges {
   @Input()
   formGroup: FormGroup;
 
+  @Input()
+  isDelegated: boolean = false;
+
   @Output()
   welshChanged = new EventEmitter<boolean>();
 
@@ -21,9 +24,17 @@ export class LanguagePreferencesComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl('', Validators.required);
+      this.formControl = new FormControl(null, Validators.required);
       this.formGroup.addControl(this.formField, this.formControl);
       this.formGroup.get(this.formField).setValidators([Validators.required]);
+    }
+
+    if (this.isDelegated) {
+      if (!this.formControl.dirty) {
+        this.formControl.patchValue('false');
+        this.isWelshChanged('false');
+      }
+      return;
     }
     this.formControl.patchValue(this.isWelsh);
   }
