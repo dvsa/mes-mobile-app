@@ -26,8 +26,9 @@ export class UrlProvider {
     return this.appConfigProvider.getAppConfig().tests.testSubmissionUrl;
   }
 
-  getDelegatedExaminerSearchBookingUrl(): string {
-    return this.appConfigProvider.getAppConfig().journal.delegatedExaminerSearchBookingUrl;
+  getDelegatedExaminerSearchBookingUrl(applicationReference: string): string {
+    const urlTemplate = this.appConfigProvider.getAppConfig().journal.delegatedExaminerSearchBookingUrl;
+    return urlTemplate.replace('{staffNumber}', isNil(applicationReference) ? '00000000' : applicationReference);
   }
 
   getRekeySearchUrl(staffNumber: string): string {
