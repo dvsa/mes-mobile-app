@@ -42,6 +42,17 @@ describe('LanguagePreferencesComponent', () => {
       component.ngOnChanges();
       expect(component.formGroup.get('languagePreferences').value).toEqual(false);
     });
+    it('should set the value to isWelsh if not a delegated test', () => {
+      component.isWelsh = false;
+      component.isDelegated = false;
+      component.ngOnChanges();
+      expect(component.formGroup.get('languagePreferences').value).toEqual(false);
+    });
+    it('should set the value to false if its a delegated test and form isnt dirty', () => {
+      component.isDelegated = true;
+      component.ngOnChanges();
+      expect(component.formGroup.get('languagePreferences').value).toEqual('false');
+    });
   });
 
 });
