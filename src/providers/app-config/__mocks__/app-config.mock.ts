@@ -36,6 +36,7 @@ export class AppConfigProviderMock {
       journal: {
         journalUrl: localEnvironmentMock.journal.journalUrl,
         searchBookingUrl: localEnvironmentMock.journal.searchBookingUrl,
+        delegatedExaminerSearchBookingUrl: localEnvironmentMock.journal.delegatedExaminerSearchBookingUrl,
         autoRefreshInterval: localEnvironmentMock.journal.autoRefreshInterval,
         numberOfDaysToView: localEnvironmentMock.journal.numberOfDaysToView,
         daysToCacheJournalData: localEnvironmentMock.journal.daysToCacheJournalData,
