@@ -59,7 +59,7 @@ import {
   Identification,
 } from '@dvsa/mes-test-schema/categories/common';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../office-behaviour-map.cat-adi-part2';
+import { behaviourMap } from '../office-behaviour-map.cat-cpc';
 import { ActivityCodeModel, getActivityCodeOptions } from '../components/activity-code/activity-code.constants';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
