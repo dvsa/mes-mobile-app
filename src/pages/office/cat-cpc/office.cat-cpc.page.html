@@ -54,7 +54,7 @@
               [isDelegated]="isDelegated"
               [formGroup]="form"
               [debriefWitnessed]="pageState.debriefWitnessed$ | async"
-              [outcome]="outcome"
+              [outcome]="pageState.testOutcome$ | async"
               (debriefWitnessedChange)="debriefWitnessedChanged($event)">
             </debrief-witnessed>
 
