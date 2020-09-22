@@ -49,6 +49,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
+import { TestFinalisationComponentsModule }
+ from '../../../../components/test-finalisation/test-finalisation-component.module';
+import { PassFinalisationComponentsModule }
+ from '../../../pass-finalisation/components/pass-finalisation-components.module';
 
 describe('OfficeCatCPCPage', () => {
   let fixture: ComponentFixture<OfficeCatCPCPage>;
@@ -71,6 +75,8 @@ describe('OfficeCatCPCPage', () => {
         IonicModule,
         AppModule,
         ComponentsModule,
+        PassFinalisationComponentsModule,
+        TestFinalisationComponentsModule,
         StoreModule.forRoot({
           tests: () => ({
             currentTest: {
