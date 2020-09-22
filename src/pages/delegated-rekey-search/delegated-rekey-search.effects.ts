@@ -37,10 +37,6 @@ export class DelegatedRekeySearchEffects {
         catchError((err: HttpErrorResponse): Observable<DelegatedRekeySearchActionTypes> => {
           if (err.status === HttpStatusCodes.BAD_REQUEST) {
             return this.delegatedRekeySearchProvider.getDelegatedExaminerBookingByAppRef(action.appRef).pipe(
-              // @TODO - MES-5436 - map real response once available
-              map((response: HttpResponse<any>) => {
-                return response.body;
-              }),
               map((testSlot: any) => new SearchBookedDelegatedTestSuccess(testSlot)),
               catchError((err: any) => {
                 return of(new SearchBookedDelegatedTestFailure(err));

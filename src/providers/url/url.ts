@@ -28,7 +28,9 @@ export class UrlProvider {
 
   getDelegatedExaminerSearchBookingUrl(applicationReference: string): string {
     const urlTemplate = this.appConfigProvider.getAppConfig().journal.delegatedExaminerSearchBookingUrl;
-    return urlTemplate.replace('{staffNumber}', isNil(applicationReference) ? '00000000' : applicationReference);
+    return urlTemplate.replace(
+      '{applicationReference}', isNil(applicationReference) ? '00000000' : applicationReference,
+    );
   }
 
   getRekeySearchUrl(staffNumber: string): string {
