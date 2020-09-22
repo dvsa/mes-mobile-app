@@ -45,6 +45,7 @@
 
             <language-preferences
               *ngIf="isDelegated"
+              [isDelegated]="isDelegated"
               [formGroup]="form"
               [isWelsh]="isWelsh()"
               (welshChanged)="isWelshChanged($event)"></language-preferences>
