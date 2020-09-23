@@ -44,7 +44,7 @@ export class DelegatedRekeySearchEffects {
                   delegatedExaminerTestSlot = {
                     booking: {
                       application: {
-                        applicationId: response.testSlot.application.applicationId,
+                        applicationId: response.testSlot.booking.application.applicationId,
                         bookingSequence: response.testSlot.booking.application.bookingSequence,
                         checkDigit: response.testSlot.booking.application.checkDigit,
                         testCategory: response.testSlot.booking.application.testCategory,
