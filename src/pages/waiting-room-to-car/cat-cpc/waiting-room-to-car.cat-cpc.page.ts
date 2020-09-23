@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { CombinationCodes, Configuration, Question, Question5 } from '@dvsa/mes-test-schema/categories/CPC';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { Observable } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -62,6 +62,7 @@ import {
   SetDeclarationStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import { PopulateTestScore } from '../../../modules/tests/test-data/cat-cpc/overall-score/total-percentage.action';
+import { map } from 'rxjs/operators';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -87,6 +88,10 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
   form: FormGroup;
   testCategory: CategoryCode;
   combinations: Combination[];
+
+  isDelegated: boolean;
+
+  subscription: Subscription;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -154,6 +159,8 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
       ),
     };
 
+    this.setupSubscriptions();
+
     this.combinations = this.cpcQuestionProvider.getCombinations(this.testCategory as TestCategory);
   }
 
@@ -163,6 +170,20 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
 
   ionViewWillLeave(): void {
     this.store$.dispatch(new PersistTests());
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  setupSubscriptions(): void {
+    const { delegatedTest$ } = this.pageState;
+
+    this.subscription = merge(
+      delegatedTest$.pipe(map(result => this.isDelegated = result)),
+    ).subscribe();
   }
 
   combinationSelected(combination: CombinationCodes): void {
@@ -199,9 +220,8 @@ export class WaitingRoomToCarCatCPCPage extends BasePageComponent {
         // remove Waiting Room To Car Page
         const view =
           this.navController.getViews().find(view => view.id === CAT_CPC.WAITING_ROOM_TO_CAR_PAGE);
-        const isDelegated = await this.pageState.delegatedTest$.toPromise();
 
-        if (view && !isDelegated) {
+        if (view && !this.isDelegated) {
           await this.navController.removeView(view);
         }
       });
