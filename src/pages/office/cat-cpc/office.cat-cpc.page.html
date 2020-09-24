@@ -50,6 +50,13 @@
               [isWelsh]="isWelsh()"
               (welshChanged)="isWelshChanged($event)"></language-preferences>
 
+            <pass-certificate-number
+              *ngIf="isDelegated && isPass()"
+              [form]="form"
+              [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
+              (passCertificateNumberChange)="passCertificateNumberChanged($event)">
+            </pass-certificate-number>
+
             <debrief-witnessed
               [display]="isDelegated"
               [isDelegated]="isDelegated"

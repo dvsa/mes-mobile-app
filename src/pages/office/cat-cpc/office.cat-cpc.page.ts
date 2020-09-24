@@ -92,6 +92,11 @@ import {
   CandidateChoseToProceedWithTestInWelsh,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { PassCertificateNumberChanged } from '../../../modules/tests/pass-completion/pass-completion.actions';
+import * as postTestDeclarationsActions
+  from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
+import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
+import { getPassCertificateNumber } from '../../../modules/tests/pass-completion/pass-completion.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -121,6 +126,7 @@ interface OfficePageState {
   isRekey$: Observable<boolean>;
   delegatedTest$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
+  passCertificateNumber$: Observable<string>;
 }
 
 @IonicPage()
@@ -288,6 +294,10 @@ export class OfficeCatCPCPage extends BasePageComponent {
         select(getTestSummary),
         select(isDebriefWitnessed),
       ),
+      passCertificateNumber$: currentTest$.pipe(
+        select(getPassCompletion),
+        select(getPassCertificateNumber),
+      ),
     };
 
     const { testResult$, combination$, delegatedTest$ } = this.pageState;
@@ -384,6 +394,12 @@ export class OfficeCatCPCPage extends BasePageComponent {
     if (this.isFormValid()) {
       this.navController.push(CAT_CPC.REKEY_REASON_PAGE);
     }
+  }
+
+  passCertificateNumberChanged(passCertificateNumber: string): void {
+    this.store$.dispatch(new PassCertificateNumberChanged(passCertificateNumber));
+    this.store$.dispatch(
+      new postTestDeclarationsActions.PassCertificateNumberRecieved(this.form.get('passCertificateNumberCtrl').valid));
   }
 
   isFormValid() {
