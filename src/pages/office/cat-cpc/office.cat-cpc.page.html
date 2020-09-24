@@ -60,7 +60,7 @@
             </debrief-witnessed>
 
             <candidate-description
-              *ngIf="!(isDelegated && isFail())"
+              *ngIf="!(isDelegated && isPass())"
               [display]="(pageState.displayCandidateDescription$ | async)"
               [formGroup]="form"
               [candidateDescription]="pageState.candidateDescription$ | async"
@@ -69,7 +69,7 @@
             </candidate-description>
 
             <identification
-              *ngIf="!(isDelegated && isFail())"
+              *ngIf="!(isDelegated && isPass())"
               [display]="(pageState.displayIdentification$ | async)"
               [formGroup]="form"
               [identification]="pageState.identification$ | async"

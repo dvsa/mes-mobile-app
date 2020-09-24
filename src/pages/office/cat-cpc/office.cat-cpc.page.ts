@@ -323,6 +323,10 @@ export class OfficeCatCPCPage extends BasePageComponent {
     return this.outcome === TestOutcome.FAIL;
   }
 
+  isPass(): boolean {
+    return this.outcome === TestOutcome.PASS;
+  }
+
   onSubmit() {
     if (this.isFormValid()) {
       this.showFinishTestModal();
