@@ -79,6 +79,7 @@ export class DelegatedRekeySearchEffects {
           }
           return of(new SearchBookedDelegatedTestFailure(err));
         }),
+        catchError(err => of(new SearchBookedDelegatedTestFailure(err))),
       );
     }),
   );
