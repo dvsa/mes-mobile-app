@@ -35,13 +35,13 @@ import { getTests } from '../../../modules/tests/tests.reducer';
 import {
   getCandidateDescription,
   getAdditionalInformation,
-  getIdentification,
+  getIdentification, isDebriefWitnessed,
 } from '../../../modules/tests/test-summary/common/test-summary.selector';
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import {
   IdentificationUsedChanged,
   CandidateDescriptionChanged,
-  AdditionalInformationChanged,
+  AdditionalInformationChanged, DebriefWitnessed, DebriefUnwitnessed,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
 import { getCandidate } from '../../../modules/tests/journal-data/common/candidate/candidate.reducer';
 import {
@@ -59,7 +59,7 @@ import {
   Identification,
 } from '@dvsa/mes-test-schema/categories/common';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../office-behaviour-map.cat-adi-part2';
+import { behaviourMap } from '../office-behaviour-map.cat-cpc';
 import { ActivityCodeModel, getActivityCodeOptions } from '../components/activity-code/activity-code.constants';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
@@ -83,9 +83,19 @@ import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import { getApplicationReference }
+ from '../../../modules/tests/journal-data/common/application-reference/application-reference.reducer';
+import { getApplicationNumber }
+ from '../../../modules/tests/journal-data/common/application-reference/application-reference.selector';
+import {
+  CandidateChoseToProceedWithTestInEnglish,
+  CandidateChoseToProceedWithTestInWelsh,
+} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
+  applicationNumber$: Observable<string>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
@@ -110,6 +120,7 @@ interface OfficePageState {
   testResult$: Observable<string>;
   isRekey$: Observable<boolean>;
   delegatedTest$: Observable<boolean>;
+  debriefWitnessed$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -123,6 +134,7 @@ export class OfficeCatCPCPage extends BasePageComponent {
   toast: Toast;
   subscription: Subscription;
   isDelegated: boolean;
+  conductedLanguage: string = Language.ENGLISH;
 
   public outcome: TestOutcome;
   combinationCode: CombinationCodes;
@@ -267,6 +279,15 @@ export class OfficeCatCPCPage extends BasePageComponent {
         select(getDelegatedTestIndicator),
         select(isDelegatedTest),
       ),
+      applicationNumber$: currentTest$.pipe(
+        select(getJournalData),
+        select(getApplicationReference),
+        select(getApplicationNumber),
+      ),
+      debriefWitnessed$: currentTest$.pipe(
+        select(getTestSummary),
+        select(isDebriefWitnessed),
+      ),
     };
 
     const { testResult$, combination$, delegatedTest$ } = this.pageState;
@@ -298,8 +319,8 @@ export class OfficeCatCPCPage extends BasePageComponent {
     return question ? question.additionalText || null : null;
   }
 
-  displayIfFail = (outcome: TestOutcome): boolean => {
-    return outcome === TestOutcome.FAIL;
+  isFail(): boolean {
+    return this.outcome === TestOutcome.FAIL;
   }
 
   onSubmit() {
@@ -391,6 +412,24 @@ export class OfficeCatCPCPage extends BasePageComponent {
       this.subscription.unsubscribe();
 
     }
+  }
+
+  isWelshChanged(isWelsh: boolean) {
+    this.store$.dispatch(
+      isWelsh
+        ? new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
+        : new CandidateChoseToProceedWithTestInEnglish('English'),
+    );
+  }
+
+  isWelsh(): boolean {
+    return this.conductedLanguage === Language.CYMRAEG;
+  }
+
+  debriefWitnessedChanged(debriefWitnessed: boolean) {
+    this.store$.dispatch(
+      debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed(),
+    );
   }
 
 }

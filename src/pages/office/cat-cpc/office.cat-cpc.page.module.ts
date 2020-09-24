@@ -8,6 +8,8 @@ import { OfficeComponentsModule } from '../components/office.components.module';
 import { OfficeEffects } from '../office.effects';
 import { AssessmentReportComponent } from './components/assessment-report/assessment-report';
 import { CombinationComponent } from './components/combination/combination';
+import { TestFinalisationComponentsModule }
+ from '../../../components/test-finalisation/test-finalisation-component.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { CombinationComponent } from './components/combination/combination';
     ]),
     ComponentsModule,
     OfficeComponentsModule,
+    TestFinalisationComponentsModule,
   ],
   providers: [
   ],

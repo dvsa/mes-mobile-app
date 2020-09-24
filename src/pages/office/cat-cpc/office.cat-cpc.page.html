@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar hideBackButton>
+  <ion-navbar [hideBackButton]="!isDelegated">
     <ion-title>Office</ion-title>
     <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
       <button ion-button (click)="logout()">Sign Out</button>
@@ -25,6 +25,16 @@
 
       <ion-card-content class="card-content-ios" no-bounce no-padding>
         <ion-grid class="grid">
+
+          <ion-row class="mes-component-row mes-row-separator" id="application-reference-card" align-items-center *ngIf="isDelegated">
+            <ion-col class="component-label" col-32>
+              <label>Application reference</label>
+            </ion-col>
+            <ion-col padding-left>
+              <span class="mes-data">{{pageState.applicationNumber$ | async }}</span>
+            </ion-col>
+          </ion-row>
+
           <activity-code id="activity-code-card" [formGroup]="form"
                          [activityCodeModel]="pageState.activityCode$ | async"
                          [activityCodeOptions]="activityCodeOptions"
@@ -33,21 +43,39 @@
 
           <div no-padding>
 
-            <candidate-description [display]="pageState.displayCandidateDescription$ | async" [formGroup]="form"
-                                   [candidateDescription]="pageState.candidateDescription$ | async"
-                                   [outcome]="pageState.testOutcome$ | async"
-                                   (candidateDescriptionChange)="candidateDescriptionChanged($event)">
+            <language-preferences
+              *ngIf="isDelegated"
+              [isDelegated]="isDelegated"
+              [formGroup]="form"
+              [isWelsh]="isWelsh()"
+              (welshChanged)="isWelshChanged($event)"></language-preferences>
+
+            <debrief-witnessed
+              [display]="isDelegated"
+              [isDelegated]="isDelegated"
+              [formGroup]="form"
+              [debriefWitnessed]="pageState.debriefWitnessed$ | async"
+              [outcome]="pageState.testOutcome$ | async"
+              (debriefWitnessedChange)="debriefWitnessedChanged($event)">
+            </debrief-witnessed>
+
+            <candidate-description
+              *ngIf="!(isDelegated && isFail())"
+              [display]="(pageState.displayCandidateDescription$ | async)"
+              [formGroup]="form"
+              [candidateDescription]="pageState.candidateDescription$ | async"
+              [outcome]="pageState.testOutcome$ | async"
+              (candidateDescriptionChange)="candidateDescriptionChanged($event)">
             </candidate-description>
 
-            <identification [display]="pageState.displayIdentification$ | async" [formGroup]="form"
-                            [identification]="pageState.identification$ | async"
-                            [outcome]="pageState.testOutcome$ | async"
-                            (identificationChange)="identificationChanged($event)">
+            <identification
+              *ngIf="!(isDelegated && isFail())"
+              [display]="(pageState.displayIdentification$ | async)"
+              [formGroup]="form"
+              [identification]="pageState.identification$ | async"
+              [outcome]="pageState.testOutcome$ | async"
+              (identificationChange)="identificationChanged($event)">
             </identification>
-
-            <combination [combination]="pageState.combination$ | async"
-                         [combinationAdditionalText]="getCombinationAdditionalText(combinationCode)">
-            </combination>
 
             <additional-information [display]="pageState.displayAdditionalInformation$ | async"
                                     [additionalInformation]="pageState.additionalInformation$ | async"
@@ -56,13 +84,18 @@
                                     (additionalInformationChange)="additionalInformationChanged($event)">
             </additional-information>
 
-            <assessment-report *ngIf="displayIfFail(outcome)"
+            <combination
+              [combination]="pageState.combination$ | async"
+              [combinationAdditionalText]="getCombinationAdditionalText(combinationCode)">
+            </combination>
+
+            <assessment-report *ngIf="isFail() && !isDelegated"
                                [assessmentReport]="pageState.assessmentReport$ | async"
                                [formGroup]="form"
                                (assessmentReportChange)="assessmentReportChanged($event)">
             </assessment-report>
 
-            <cpc-debrief-card *ngIf="displayIfFail(outcome) && pageState.combination$ | async"
+            <cpc-debrief-card *ngIf="isFail() && pageState.combination$ | async"
                               [overallScore]="pageState.overallScore$ | async"
                               [question1]="pageState.question1$ | async"
                               [question2]="pageState.question2$ | async"
@@ -81,8 +114,9 @@
   </form>
 </ion-content>
 <ion-footer>
+
   <ion-row class="mes-full-width-card box-shadow">
-    <ion-col *ngIf="!(pageState.isRekey$ | async)">
+    <ion-col *ngIf="!(pageState.isRekey$ | async) && !isDelegated">
       <button float-left id="defer-button" ion-button (click)="defer()">
         <h3>Save and continue later</h3>
       </button>
@@ -90,10 +124,16 @@
         <h3>Upload</h3>
       </button>
     </ion-col>
-    <ion-col *ngIf="(pageState.isRekey$ | async)">
+    <ion-col *ngIf="(pageState.isRekey$ | async) && !isDelegated">
       <button id="reason-for-rekey" class="mes-primary-button padding-x-5 full-width" ion-button
               (click)="goToReasonForRekey()">
         <h3>Continue</h3>
+      </button>
+    </ion-col>
+    <ion-col *ngIf="isDelegated">
+      <button id="submit-button" class="mes-primary-button padding-x-5 full-width" ion-button
+              (click)="onSubmit()">
+        <h3>Submit</h3>
       </button>
     </ion-col>
   </ion-row>

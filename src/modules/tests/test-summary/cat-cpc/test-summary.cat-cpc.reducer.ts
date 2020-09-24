@@ -37,6 +37,16 @@ export function testSummaryCPCReducer(
         ...state,
         assessmentReport: action.assessmentReport,
       };
+    case fromTestSummaryActions.DEBRIEF_WITNESSED:
+      return {
+        ...state,
+        debriefWitnessed: true,
+      };
+    case fromTestSummaryActions.DEBRIEF_UNWITNESSED:
+      return {
+        ...state,
+        debriefWitnessed: false,
+      };
     default:
       return state;
   }
