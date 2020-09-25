@@ -22,4 +22,7 @@ export class AuthenticationProviderMock {
   logoutEnabled = jasmine.createSpy('logoutEnabled').and.returnValue(true);
 
   setEmployeeId = jasmine.createSpy('setEmployeeId').and.returnValue(Promise.resolve());
+
+  expireTokens = jasmine.createSpy('expireTokens').and.returnValue(Promise.resolve());
+
 }

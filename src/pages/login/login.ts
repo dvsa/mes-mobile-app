@@ -97,6 +97,8 @@ export class LoginPage extends BasePageComponent {
 
       await this.initialisePersistentStorage();
 
+      await this.authenticationProvider.expireTokens();
+
       const isAuthenticated = await this.authenticationProvider.isAuthenticated();
 
       if (!isAuthenticated) {
