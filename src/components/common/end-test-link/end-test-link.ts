@@ -23,6 +23,9 @@ export class EndTestLinkComponent {
   @Input()
   shouldAuthenticate: boolean = true;
 
+  @Input()
+  isDelegated: boolean = false;
+
   constructor(
     public modalController: ModalController,
     public navController: NavController,
@@ -45,6 +48,12 @@ export class EndTestLinkComponent {
 
   onTerminate = () => {
     this.terminateTestModal.dismiss();
+
+    if (this.isDelegated) {
+      this.navigateToOfficePage();
+      return;
+    }
+
     switch (this.category) {
       case TestCategory.ADI2:
         this.navController.push(CAT_ADI_PART2.DEBRIEF_PAGE);
@@ -82,6 +91,24 @@ export class EndTestLinkComponent {
       case TestCategory.EUAM2:
       case TestCategory.EUAMM2:
         this.navController.push(CAT_A_MOD2.DEBRIEF_PAGE);
+        break;
+    }
+  }
+
+  navigateToOfficePage = () => {
+    switch (this.category) {
+      case TestCategory.BE:
+        this.navController.push(CAT_BE.OFFICE_PAGE);
+        break;
+      case TestCategory.C:
+        this.navController.push(CAT_C.OFFICE_PAGE);
+        break;
+      case TestCategory.CCPC:
+      case TestCategory.DCPC:
+        this.navController.push(CAT_CPC.OFFICE_PAGE);
+        break;
+      case TestCategory.D:
+        this.navController.push(CAT_D.OFFICE_PAGE);
         break;
     }
   }
