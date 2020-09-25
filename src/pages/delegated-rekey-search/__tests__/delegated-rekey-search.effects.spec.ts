@@ -1,5 +1,5 @@
 import { DelegatedRekeySearchEffects } from '../delegated-rekey-search.effects';
-import { defer, ReplaySubject } from 'rxjs';
+import { defer, of, ReplaySubject } from 'rxjs';
 import { async, TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { delegatedSearchReducer } from '../delegated-rekey-search.reducer';
@@ -12,6 +12,12 @@ import { SearchProvider } from '../../../providers/search/search';
 import { HttpStatusCodes } from '../../../shared/models/http-status-codes';
 import { SearchProviderMock } from '../../../providers/search/__mocks__/search.mock';
 import { DelegatedRekeySearchErrorMessages } from '../delegated-rekey-search-error-model';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { UrlProvider } from '../../../providers/url/url';
+import { UrlProviderMock } from '../../../providers/url/__mocks__/url.mock';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
+import { mockGetDelegatedBooking } from '../../../providers/delegated-rekey-search/mock-data/delegated-mock-data';
 
 describe('Delegated Rekey Search Effects', () => {
 
@@ -33,6 +39,7 @@ describe('Delegated Rekey Search Effects', () => {
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [
+        HttpClientTestingModule,
         StoreModule.forRoot({
           delegatedRekeySearch: delegatedSearchReducer,
         }),
@@ -42,7 +49,9 @@ describe('Delegated Rekey Search Effects', () => {
         provideMockActions(() => actions$),
         Store,
         DelegatedRekeySearchProvider,
+        { provide: UrlProvider, useClass: UrlProviderMock },
         { provide: SearchProvider, useClass: SearchProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     });
   });
@@ -56,7 +65,8 @@ describe('Delegated Rekey Search Effects', () => {
 
   it('should dispatch the SearchBookedTestSuccess action when searched with success', (done) => {
 
-    spyOn(delegatedRekeySearchProvider, 'getDelegatedExaminerBookingByAppRef').and.callThrough();
+    spyOn(delegatedRekeySearchProvider, 'getDelegatedExaminerBookingByAppRef')
+      .and.returnValue(of(mockGetDelegatedBooking()));
     spyOn(searchProvider, 'getTestResult')
       .and.returnValue(asyncError(getTestResultHttpErrorResponse(HttpStatusCodes.BAD_REQUEST)));
     actions$.next(new delegatedRekeySearchActions.SearchBookedDelegatedTest('12345678910'));
@@ -91,7 +101,8 @@ describe('Delegated Rekey Search Effects', () => {
   it('should call getDelegatedExaminerBookingByAppRef on the test search provider', (done) => {
     spyOn(searchProvider, 'getTestResult')
       .and.returnValue(asyncError(getTestResultHttpErrorResponse(HttpStatusCodes.BAD_REQUEST)));
-    spyOn(delegatedRekeySearchProvider, 'getDelegatedExaminerBookingByAppRef').and.callThrough();
+    spyOn(delegatedRekeySearchProvider, 'getDelegatedExaminerBookingByAppRef')
+      .and.returnValue(of(mockGetDelegatedBooking()));
 
     actions$.next(new delegatedRekeySearchActions.SearchBookedDelegatedTest(appRef));
 
@@ -104,7 +115,8 @@ describe('Delegated Rekey Search Effects', () => {
 
   it('should not call getBooking if getTestResult succeeds', (done) => {
 
-    spyOn(delegatedRekeySearchProvider, 'getDelegatedExaminerBookingByAppRef').and.callThrough();
+    spyOn(delegatedRekeySearchProvider, 'getDelegatedExaminerBookingByAppRef')
+      .and.returnValue(of(mockGetDelegatedBooking()));
 
     const expectedFailureAction = new delegatedRekeySearchActions.SearchBookedDelegatedTestFailure({
       message: DelegatedRekeySearchErrorMessages.BookingAlreadyCompleted,
