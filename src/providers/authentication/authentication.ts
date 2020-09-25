@@ -50,6 +50,10 @@ export class AuthenticationProvider {
     };
   }
 
+  public async expireTokens(): Promise<void> {
+    await this.ionicAuth.expire();
+  }
+
   private async getToken(tokenName: Token): Promise<string | null> {
     try {
       return JSON.parse(await this.dataStoreProvider.getItem(tokenName));
