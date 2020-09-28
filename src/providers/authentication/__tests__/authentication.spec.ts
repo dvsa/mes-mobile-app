@@ -165,5 +165,12 @@ describe('Authentication', () => {
         expect(logoutEnabled).toEqual(true);
       });
     });
+    describe('expireTokens', () => {
+      it('should call through to ionic auth expire() method', async() => {
+        spyOn(authenticationProvider.ionicAuth, 'expire').and.returnValue(Promise.resolve());
+        await authenticationProvider.expireTokens();
+        expect(authenticationProvider.ionicAuth.expire).toHaveBeenCalled();
+      });
+    });
   });
 });

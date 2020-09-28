@@ -256,6 +256,7 @@ describe('LoginPage', () => {
       component.initialiseAppConfig = jasmine.createSpy('component.initialiseAppConfig');
       component.initialiseAuthentication = jasmine.createSpy('component.initialiseAuthentication');
       component.authenticationProvider.login = jasmine.createSpy('authenticationProvider.login');
+      component.authenticationProvider.expireTokens = jasmine.createSpy('authenticationProvider.expireTokens ');
       component.appConfigProvider.loadRemoteConfig = jasmine.createSpy('appConfigProvider.loadRemoteConfig');
       component.analytics.initialiseAnalytics = jasmine.createSpy('analytics.initialiseAnalytics');
       component.validateDeviceType = jasmine.createSpy('component.validateDeviceType');
@@ -269,6 +270,7 @@ describe('LoginPage', () => {
       // Shouldn't be called
       expect(component.initialiseAppConfig).not.toHaveBeenCalled();
       expect(component.initialiseAuthentication).not.toHaveBeenCalled();
+      expect(component.authenticationProvider.expireTokens).not.toHaveBeenCalled();
       expect(component.authenticationProvider.login).not.toHaveBeenCalled();
       expect(component.initialisePersistentStorage).not.toHaveBeenCalled();
       expect(component.appConfigProvider.loadRemoteConfig).not.toHaveBeenCalled();
@@ -286,6 +288,7 @@ describe('LoginPage', () => {
       expect(component.platform.ready).toHaveBeenCalled();
       // Shouldn't be called
       expect(component.initialiseAuthentication).not.toHaveBeenCalled();
+      expect(component.authenticationProvider.expireTokens).not.toHaveBeenCalled();
       expect(component.authenticationProvider.login).not.toHaveBeenCalled();
       expect(component.initialisePersistentStorage).not.toHaveBeenCalled();
       expect(component.appConfigProvider.loadRemoteConfig).not.toHaveBeenCalled();
@@ -304,6 +307,7 @@ describe('LoginPage', () => {
       expect(component.platform.ready).toHaveBeenCalled();
       expect(component.initialiseAppConfig).toHaveBeenCalled();
       expect(component.initialisePersistentStorage).toHaveBeenCalled();
+      expect(component.authenticationProvider.expireTokens).toHaveBeenCalled();
       // Shouldn't be called
       expect(component.appConfigProvider.loadRemoteConfig).not.toHaveBeenCalled();
       expect(component.analytics.initialiseAnalytics).not.toHaveBeenCalled();
@@ -321,6 +325,7 @@ describe('LoginPage', () => {
       expect(component.initialiseAppConfig).toHaveBeenCalled();
       expect(component.initialisePersistentStorage).toHaveBeenCalled();
       // Shouldn't be called
+      expect(component.authenticationProvider.expireTokens).not.toHaveBeenCalled();
       expect(component.appConfigProvider.loadRemoteConfig).not.toHaveBeenCalled();
       expect(component.analytics.initialiseAnalytics).not.toHaveBeenCalled();
       expect(component.validateDeviceType).not.toHaveBeenCalled();
@@ -336,6 +341,7 @@ describe('LoginPage', () => {
       expect(component.platform.ready).toHaveBeenCalled();
       expect(component.initialiseAppConfig).toHaveBeenCalled();
       expect(component.initialisePersistentStorage).toHaveBeenCalled();
+      expect(component.authenticationProvider.expireTokens).toHaveBeenCalled();
       expect(component.appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       // Shouldn't be called
       expect(component.analytics.initialiseAnalytics).not.toHaveBeenCalled();
