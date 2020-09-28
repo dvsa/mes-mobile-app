@@ -174,7 +174,7 @@ export class TestsEffects {
         };
         slot = getDelegatedBookedTestSlot(delegatedRekeySearch);
 
-        // TODO remove this temporary hard keyed test centre when real data is available
+        // TODO MES-5790: remove this temporary hard keyed test centre when real data is available
         slot = {
           ...slot, testCentre: {
             centreId: 11111,
