@@ -49,6 +49,7 @@ export class DelegatedRekeySearchEffects {
                         checkDigit: response.testSlot.booking.application.checkDigit,
                         testCategory: response.testSlot.booking.application.testCategory,
                         welshTest: false,
+                        extendedTest: false,
                       },
                       candidate: {
                         candidateName: {

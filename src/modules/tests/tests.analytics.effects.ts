@@ -66,8 +66,8 @@ export class TestsAnalyticsEffects {
         formatApplicationReference(journalDataOfTest.applicationReference),
       );
       this.analytics.addCustomDimension(
-        AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
-
+        AnalyticsDimensionIndices.CANDIDATE_ID,
+        journalDataOfTest.candidate.candidateId ? journalDataOfTest.candidate.candidateId.toString() : null);
       return of(new AnalyticRecorded());
     }),
   );
