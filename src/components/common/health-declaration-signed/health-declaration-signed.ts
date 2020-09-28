@@ -24,8 +24,11 @@ export class HealthDeclarationSignedComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl('HealthDec', [Validators.required]);
+      this.formControl = new FormControl(null, [Validators.required]);
       this.formGroup.addControl(HealthDeclarationSignedComponent.fieldName, this.formControl);
+
+      // set to null on form creation to allow validation to fire if no user interaction
+      if (!this.healthDeclaration) this.healthDeclaration = null;
     }
     this.formControl.patchValue(this.healthDeclaration);
   }
