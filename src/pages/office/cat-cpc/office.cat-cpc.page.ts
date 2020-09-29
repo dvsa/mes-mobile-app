@@ -97,6 +97,9 @@ import * as postTestDeclarationsActions
   from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import { getPassCertificateNumber } from '../../../modules/tests/pass-completion/pass-completion.selector';
+import { getPostTestDeclarations } from '../../../modules/tests/post-test-declarations/post-test-declarations.reducer';
+import { getReceiptDeclarationStatus }
+ from '../../../modules/tests/post-test-declarations/post-test-declarations.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -127,6 +130,7 @@ interface OfficePageState {
   delegatedTest$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
+  passCertificateNumberReceived$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -298,6 +302,10 @@ export class OfficeCatCPCPage extends BasePageComponent {
         select(getPassCompletion),
         select(getPassCertificateNumber),
       ),
+      passCertificateNumberReceived$: currentTest$.pipe(
+        select(getPostTestDeclarations),
+        select(getReceiptDeclarationStatus),
+      ),
     };
 
     const { testResult$, combination$, delegatedTest$ } = this.pageState;
@@ -444,6 +452,10 @@ export class OfficeCatCPCPage extends BasePageComponent {
 
   isWelsh(): boolean {
     return this.conductedLanguage === Language.CYMRAEG;
+  }
+
+  passCertificateDeclarationChanged(passCertificateSigned: boolean): void {
+    this.store$.dispatch(new postTestDeclarationsActions.PassCertificateNumberRecieved(passCertificateSigned));
   }
 
   debriefWitnessedChanged(debriefWitnessed: boolean) {

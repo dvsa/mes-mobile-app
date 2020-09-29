@@ -57,6 +57,14 @@
               (passCertificateNumberChange)="passCertificateNumberChanged($event)">
             </pass-certificate-number>
 
+            <pass-certificate-declaration
+              *ngIf="isDelegated && isPass()"
+              [label]="'Pass certificate declaration'"
+              [formGroup]="form"
+              [passCertificateNumberReceived]="pageState.passCertificateNumberReceived$ | async"
+              (passCertificateDeclarationChange)="passCertificateDeclarationChanged($event)">
+            </pass-certificate-declaration>
+
             <debrief-witnessed
               [display]="isDelegated"
               [isDelegated]="isDelegated"

@@ -12,12 +12,15 @@ import { TestFinalisationComponentsModule }
  from '../../../components/test-finalisation/test-finalisation-component.module';
 import { PassFinalisationComponentsModule }
  from '../../pass-finalisation/components/pass-finalisation-components.module';
+import { PassCertificateDeclarationComponent }
+ from './components/pass-certificate-declaration/pass-certificate-declaration';
 
 @NgModule({
   declarations: [
     OfficeCatCPCPage,
     AssessmentReportComponent,
     CombinationComponent,
+    PassCertificateDeclarationComponent,
   ],
   imports: [
     IonicPageModule.forChild(OfficeCatCPCPage),
