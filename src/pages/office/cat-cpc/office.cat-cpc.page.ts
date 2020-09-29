@@ -100,6 +100,7 @@ import { getPassCertificateNumber } from '../../../modules/tests/pass-completion
 import { getPostTestDeclarations } from '../../../modules/tests/post-test-declarations/post-test-declarations.reducer';
 import { getReceiptDeclarationStatus }
  from '../../../modules/tests/post-test-declarations/post-test-declarations.selector';
+import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -361,6 +362,16 @@ export class OfficeCatCPCPage extends BasePageComponent {
 
   additionalInformationChanged(additionalInformation: string): void {
     this.store$.dispatch(new AdditionalInformationChanged(additionalInformation));
+  }
+
+  activityCodeChanged(activityCodeModel: ActivityCodeModel) {
+    const showMeQuestion = this.form.controls['showMeQuestion'];
+    if (showMeQuestion) {
+      if (showMeQuestion.value && showMeQuestion.value.code === 'N/A') {
+        this.form.controls['showMeQuestion'].setValue({});
+      }
+    }
+    this.store$.dispatch(new SetActivityCode(activityCodeModel.activityCode));
   }
 
   assessmentReportChanged(assessmentReport: string): void {

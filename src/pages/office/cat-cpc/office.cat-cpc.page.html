@@ -36,10 +36,8 @@
           </ion-row>
 
           <activity-code id="activity-code-card" [formGroup]="form"
-                         [activityCodeModel]="pageState.activityCode$ | async"
-                         [activityCodeOptions]="activityCodeOptions"
-                         [disabled]="true">
-          </activity-code>
+                         [activityCodeModel]="pageState.activityCode$ | async" [activityCodeOptions]="activityCodeOptions"
+                         (activityCodeChange)="activityCodeChanged($event)" [disabled]="!isDelegated"></activity-code>
 
           <div no-padding>
 
