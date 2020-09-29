@@ -116,11 +116,14 @@ class LoginPage extends Page {
       browser.driver.selectContext(this.getParentContext(webviewContext));
       browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
       browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-      const logout = element(by.xpath('//button/span/span[contains(text(), "Sign Out")]'));
+      const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
       logout.isPresent().then((result) => {
         if (result) {
           browser.wait(ExpectedConditions.elementToBeClickable(logout));
           logout.click().then(() => {
+            browser.sleep(TEST_CONFIG.ACTION_WAIT);
+            const logoutPopup = element(by.xpath('//button[@ion-button="alert-button"]/span[text()=\'Logout\']'));
+            logoutPopup.click();
             // After logout click sign in to get us to the login screen
             browser.sleep(TEST_CONFIG.ACTION_WAIT);
 
