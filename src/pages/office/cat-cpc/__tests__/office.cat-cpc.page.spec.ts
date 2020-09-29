@@ -53,6 +53,8 @@ import { TestFinalisationComponentsModule }
  from '../../../../components/test-finalisation/test-finalisation-component.module';
 import { PassFinalisationComponentsModule }
  from '../../../pass-finalisation/components/pass-finalisation-components.module';
+import { PassCertificateDeclarationComponent }
+ from '../components/pass-certificate-declaration/pass-certificate-declaration';
 
 describe('OfficeCatCPCPage', () => {
   let fixture: ComponentFixture<OfficeCatCPCPage>;
@@ -70,6 +72,7 @@ describe('OfficeCatCPCPage', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(AssessmentReportComponent),
         MockComponent(CandidateSectionComponent),
+        MockComponent(PassCertificateDeclarationComponent),
       ],
       imports: [
         IonicModule,
