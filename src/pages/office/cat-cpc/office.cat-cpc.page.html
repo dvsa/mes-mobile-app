@@ -41,13 +41,6 @@
 
           <div no-padding>
 
-            <language-preferences
-              *ngIf="isDelegated"
-              [isDelegated]="isDelegated"
-              [formGroup]="form"
-              [isWelsh]="isWelsh()"
-              (welshChanged)="isWelshChanged($event)"></language-preferences>
-
             <pass-certificate-number
               *ngIf="isDelegated && isPass()"
               [form]="form"
@@ -62,6 +55,13 @@
               [passCertificateNumberReceived]="pageState.passCertificateNumberReceived$ | async"
               (passCertificateDeclarationChange)="passCertificateDeclarationChanged($event)">
             </pass-certificate-declaration>
+
+            <language-preferences
+              *ngIf="isDelegated"
+              [isDelegated]="isDelegated"
+              [formGroup]="form"
+              [isWelsh]="isWelsh()"
+              (welshChanged)="isWelshChanged($event)"></language-preferences>
 
             <debrief-witnessed
               [display]="isDelegated"
