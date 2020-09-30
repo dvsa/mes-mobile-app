@@ -10,6 +10,7 @@ import {
   getIncompleteTests,
   getIncompleteTestsCount,
   getOldestIncompleteTest,
+  isDelegatedTest,
 } from '../tests.selector';
 import { JournalModel } from '../../../modules/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
@@ -504,4 +505,124 @@ describe('testsSelector', () => {
     });
   });
 
+  describe('isDelegatedTest', () => {
+    const testsState: TestsModel = {
+      currentTest: { slotId: '12345' },
+      startedTests: {
+        12345: {
+          version: '0.0.1',
+          category: 'B',
+          activityCode: ActivityCodes.PASS,
+          journalData: {
+            testSlotAttributes: {
+              welshTest: false,
+              slotId: 3002,
+              start: '2019-08-30T10:14:00',
+              vehicleTypeCode: 'C',
+              extendedTest: false,
+              specialNeeds: false,
+            },
+            examiner: {
+              staffNumber: '',
+            },
+            testCentre: {
+              centreId: 1,
+              costCode: '',
+            },
+            candidate: {},
+            applicationReference: {
+              applicationId: 999,
+              bookingSequence: 3,
+              checkDigit: 5,
+            },
+          },
+          rekey: false,
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+      },
+      testStatus: {},
+    };
+
+    it('should return false when no delegated tests possible for the category', () => {
+      const localTestsState: TestsModel = {
+        ...testsState,
+        startedTests: {
+          ...testsState.startedTests,
+          12345: {
+            ...testsState.startedTests['12345'],
+            category: 'B',
+          },
+        },
+      };
+      const result = isDelegatedTest(localTestsState);
+      expect(result).toBe(false);
+    });
+
+    it('should return false when test has valid category but delegatedTest flag is not set', () => {
+      const localTestsState: TestsModel = {
+        ...testsState,
+        startedTests: {
+          ...testsState.startedTests,
+          12345: {
+            ...testsState.startedTests['12345'],
+            category: 'B+E',
+            delegatedTest: undefined,
+          },
+        },
+      };
+      const result = isDelegatedTest(localTestsState);
+      expect(result).toBe(false);
+    });
+
+    it('should return false when test has valid category but delegatedTest flag is set to false', () => {
+      const localTestsState: TestsModel = {
+        ...testsState,
+        startedTests: {
+          ...testsState.startedTests,
+          12345: {
+            ...testsState.startedTests['12345'],
+            category: 'B+E',
+            delegatedTest: false,
+          },
+        },
+      };
+      const result = isDelegatedTest(localTestsState);
+      expect(result).toBe(false);
+    });
+
+    it('should return true when test has valid common category and delegatedTest flag is set to true', () => {
+      const localTestsState: TestsModel = {
+        ...testsState,
+        startedTests: {
+          ...testsState.startedTests,
+          12345: {
+            ...testsState.startedTests['12345'],
+            category: 'B+E',
+            delegatedTest: true,
+          },
+        },
+      };
+      const result = isDelegatedTest(localTestsState);
+      expect(result).toBe(true);
+    });
+
+    it('should return true when test has valid CPC category and delegatedTest flag is set to true', () => {
+      const localTestsState: TestsModel = {
+        ...testsState,
+        startedTests: {
+          ...testsState.startedTests,
+          12345: {
+            ...testsState.startedTests['12345'],
+            category: 'CCPC',
+            delegatedTest: true,
+          },
+        },
+      };
+      const result = isDelegatedTest(localTestsState);
+      expect(result).toBe(true);
+    });
+  });
 });

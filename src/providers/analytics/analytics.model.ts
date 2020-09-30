@@ -63,6 +63,7 @@ export enum AnalyticsEventCategories {
   WAITING_ROOM = 'waiting room',
   WAITING_ROOM_TO_CAR = 'waiting room to car',
   OFFICE = 'office',
+  DELEGATED_TEST = 'DelExRk',
 }
 
 export enum AnalyticsEvents {

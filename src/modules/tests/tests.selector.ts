@@ -12,6 +12,8 @@ import { TestOutcome } from './tests.constants';
 import { ActivityCodes } from '../../shared/models/activity-codes';
 import { DateTime } from '../../shared/helpers/date-time';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { TestResultCatCPCSchema } from '@dvsa/mes-test-schema/categories/CPC';
 
 export const getCurrentTestSlotId = (tests: TestsModel): string => tests.currentTest.slotId;
 
@@ -83,6 +85,29 @@ export const isTestReportPracticeTest = (tests: TestsModel): boolean =>
 
 export const isEndToEndPracticeTest = (tests: TestsModel) : boolean =>
   startsWith(tests.currentTest.slotId, end2endPracticeSlotId);
+
+export const isDelegatedTest = (tests: TestsModel): boolean => {
+  const test = getCurrentTest(tests);
+
+  if (test.category === TestCategory.BE
+    || test.category === TestCategory.C
+    || test.category === TestCategory.CE
+    || test.category === TestCategory.C1
+    || test.category === TestCategory.C1E
+    || test.category === TestCategory.D
+    || test.category === TestCategory.DE
+    || test.category === TestCategory.D1
+    || test.category === TestCategory.D1E) {
+    return (test as TestResultCommonSchema).delegatedTest || false;
+  }
+
+  if (test.category === TestCategory.CCPC
+    || test.category === TestCategory.DCPC) {
+    return (test as TestResultCatCPCSchema).delegatedTest || false;
+  }
+
+  return false;
+};
 
 export const getAllTestStatuses = (test: TestsModel): { [slotId: string]: TestStatus; } => {
   return test.testStatus;
