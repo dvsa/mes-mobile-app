@@ -173,16 +173,6 @@ export class TestsEffects {
           staffNumber: employeeId,
         };
         slot = getDelegatedBookedTestSlot(delegatedRekeySearch);
-
-        // TODO MES-5790: remove this temporary hard keyed test centre when real data is available
-        slot = {
-          ...slot, testCentre: {
-            centreId: 11111,
-            centreName: 'Temp Test Centre',
-            costCode: 'EXAM1',
-          },
-          vehicleTypeCode: 'X',
-        };
       } else if (isRekeySearch) {
         examinerBooked = getStaffNumber(rekeySearch);
         examiner = {
