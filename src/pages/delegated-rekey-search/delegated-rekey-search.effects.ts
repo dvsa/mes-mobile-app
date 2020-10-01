@@ -42,6 +42,11 @@ export class DelegatedRekeySearchEffects {
                 let delegatedExaminerTestSlot: DelegatedExaminerTestSlot;
                 try {
                   delegatedExaminerTestSlot = {
+                    testCentre: {
+                      centreId: response.testSlot.testCentre.centreId,
+                      centreName: response.testSlot.testCentre.centreName,
+                      costCode: response.testSlot.testCentre.costCode,
+                    },
                     booking: {
                       application: {
                         applicationId: response.testSlot.booking.application.applicationId,
@@ -52,6 +57,7 @@ export class DelegatedRekeySearchEffects {
                         extendedTest: false,
                       },
                       candidate: {
+                        candidateId: response.testSlot.booking.candidate.candidateId,
                         candidateName: {
                           firstName: response.testSlot.booking.candidate.candidateName.firstName,
                           lastName: response.testSlot.booking.candidate.candidateName.lastName,

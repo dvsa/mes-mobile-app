@@ -14,6 +14,11 @@ export function mockGetDelegatedBooking(
   return {
     examinerId: 4583912,
     testSlot: {
+      testCentre: {
+        centreId: 1,
+        centreName: 'test centre',
+        costCode: 'cost code',
+      },
       slotDetail: {
         slotId: '35294119',
         start: '2020-09-17T08:00:00',
@@ -22,6 +27,7 @@ export function mockGetDelegatedBooking(
       vehicleSlotTypeCode: '122',
       booking: {
         candidate: {
+          candidateId: 1,
           driverNumber: 'RED99808065W97NM',
           dateOfBirth: '1985-08-06',
           candidateName: {
