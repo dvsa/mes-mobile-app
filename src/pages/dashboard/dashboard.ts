@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Navbar, AlertController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -15,10 +15,10 @@ import { DeviceProvider } from '../../providers/device/device';
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ExaminerRole, ExaminerRoleDescription } from '../../providers/app-config/constants/examiner-role.constants';
-import { BasePageComponent } from '../../shared/classes/base-page';
 import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
 import * as journalActions from './../../modules/journal/journal.actions';
 import { DateTime } from '../../shared/helpers/date-time';
+import { LogoutBasePageComponent } from '../../shared/classes/logout-base-page';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
@@ -30,7 +30,7 @@ interface DashboardPageState {
   selector: 'page-dashboard',
   templateUrl: 'dashboard.html',
 })
-export class DashboardPage extends BasePageComponent {
+export class DashboardPage extends LogoutBasePageComponent {
 
   @ViewChild(Navbar) navBar: Navbar;
 
@@ -49,6 +49,7 @@ export class DashboardPage extends BasePageComponent {
   constructor(
     public store$: Store<StoreModel>,
     public navController: NavController,
+    public alertController: AlertController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
@@ -59,7 +60,7 @@ export class DashboardPage extends BasePageComponent {
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, alertController);
     this.employeeId = this.authenticationProvider.getEmployeeId() || 'NOT_KNOWN';
     this.role = ExaminerRoleDescription[this.appConfigProvider.getAppConfig().role] || 'Unknown Role';
     this.todaysDate = this.dateTimeProvider.now();

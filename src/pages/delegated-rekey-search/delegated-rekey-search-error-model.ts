@@ -4,4 +4,5 @@ export interface DelegatedRekeySearchError {
 
 export enum DelegatedRekeySearchErrorMessages {
   BookingAlreadyCompleted = 'BookingAlreadyCompleted',
+  MappingToTestSlotError = 'Error mapping delegated examiner search response to test slot',
 }

@@ -11,6 +11,7 @@ import {
   CAT_A_MOD1,
   CAT_A_MOD2,
   CAT_ADI_PART2,
+  CAT_CPC,
 } from '../../../../pages/page-names.constants';
 import { configureTestSuite } from 'ng-bullet';
 
@@ -138,6 +139,58 @@ describe('EndTestLinkComponent', () => {
         expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(CAT_ADI_PART2.DEBRIEF_PAGE);
+      });
+
+      describe('delegate tests navigate to Office page', () => {
+
+        beforeEach(() => {
+          component.isDelegated = true;
+        });
+
+        it('should dismiss the termination confirmation dialog and navigate to CAT BE Office Page', () => {
+          component.category = 'B+E';
+          component.terminateTestModal = jasmine.createSpyObj('terminateTestModal', ['dismiss']);
+          component.onTerminate();
+          expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
+          const { calls } = navController.push as jasmine.Spy;
+          expect(calls.argsFor(0)[0]).toBe(CAT_BE.OFFICE_PAGE);
+        });
+
+        it('should dismiss the termination confirmation dialog and navigate to CAT C Office Page', () => {
+          component.category = 'C';
+          component.terminateTestModal = jasmine.createSpyObj('terminateTestModal', ['dismiss']);
+          component.onTerminate();
+          expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
+          const { calls } = navController.push as jasmine.Spy;
+          expect(calls.argsFor(0)[0]).toBe(CAT_C.OFFICE_PAGE);
+        });
+
+        it('should dismiss the termination confirmation dialog and navigate to CAT (C)CPC Office Page', () => {
+          component.category = 'CCPC';
+          component.terminateTestModal = jasmine.createSpyObj('terminateTestModal', ['dismiss']);
+          component.onTerminate();
+          expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
+          const { calls } = navController.push as jasmine.Spy;
+          expect(calls.argsFor(0)[0]).toBe(CAT_CPC.OFFICE_PAGE);
+        });
+
+        it('should dismiss the termination confirmation dialog and navigate to CAT (D)CPC Office Page', () => {
+          component.category = 'DCPC';
+          component.terminateTestModal = jasmine.createSpyObj('terminateTestModal', ['dismiss']);
+          component.onTerminate();
+          expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
+          const { calls } = navController.push as jasmine.Spy;
+          expect(calls.argsFor(0)[0]).toBe(CAT_CPC.OFFICE_PAGE);
+        });
+
+        it('should dismiss the termination confirmation dialog and navigate to CAT D Office Page', () => {
+          component.category = 'D';
+          component.terminateTestModal = jasmine.createSpyObj('terminateTestModal', ['dismiss']);
+          component.onTerminate();
+          expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
+          const { calls } = navController.push as jasmine.Spy;
+          expect(calls.argsFor(0)[0]).toBe(CAT_D.OFFICE_PAGE);
+        });
       });
 
     });
