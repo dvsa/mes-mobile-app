@@ -101,6 +101,7 @@ import { getPostTestDeclarations } from '../../../modules/tests/post-test-declar
 import { getReceiptDeclarationStatus }
  from '../../../modules/tests/post-test-declarations/post-test-declarations.selector';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
+import { get } from 'lodash';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -365,11 +366,9 @@ export class OfficeCatCPCPage extends BasePageComponent {
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {
-    const showMeQuestion = this.form.controls['showMeQuestion'];
-    if (showMeQuestion) {
-      if (showMeQuestion.value && showMeQuestion.value.code === 'N/A') {
-        this.form.controls['showMeQuestion'].setValue({});
-      }
+    const showMeQuestion = get(this.form.controls, 'showMeQuestion.value.code', null);
+    if (showMeQuestion === 'N/A') {
+      this.form.controls['showMeQuestion'].setValue({});
     }
     this.store$.dispatch(new SetActivityCode(activityCodeModel.activityCode));
   }
