@@ -33,12 +33,25 @@
           </ion-row>
 
           <activity-code id="activity-code-card" [formGroup]="form"
-                         [activityCodeModel]="pageState.activityCode$ | async"
-                         [activityCodeOptions]="activityCodeOptions"
-                         [disabled]="true">
-          </activity-code>
+                         [activityCodeModel]="pageState.activityCode$ | async" [activityCodeOptions]="activityCodeOptions"
+                         (activityCodeChange)="activityCodeChanged($event)" [disabled]="!isDelegated"></activity-code>
 
           <div no-padding>
+
+            <pass-certificate-number
+              *ngIf="isDelegated && isPass()"
+              [form]="form"
+              [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
+              (passCertificateNumberChange)="passCertificateNumberChanged($event)">
+            </pass-certificate-number>
+
+            <pass-certificate-declaration
+              *ngIf="isDelegated && isPass()"
+              [label]="'Pass certificate declaration'"
+              [formGroup]="form"
+              [passCertificateNumberReceived]="pageState.passCertificateNumberReceived$ | async"
+              (passCertificateDeclarationChange)="passCertificateDeclarationChanged($event)">
+            </pass-certificate-declaration>
 
             <language-preferences
               *ngIf="isDelegated"
@@ -66,7 +79,7 @@
             </candidate-description>
 
             <identification
-              *ngIf="!(isDelegated && isPass())"
+              *ngIf="!isDelegated"
               [display]="(pageState.displayIdentification$ | async)"
               [formGroup]="form"
               [identification]="pageState.identification$ | async"
