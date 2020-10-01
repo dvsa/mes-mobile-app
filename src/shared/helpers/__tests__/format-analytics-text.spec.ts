@@ -57,4 +57,49 @@ describe('formatAnalyticsText', () => {
     expect(result).toBe(eventString);
   });
 
+  it('should prefix delegated tests with the correct text', () => {
+    const state = { ...initialState };
+    const action = new testsActions.StartTest(slotId, TestCategory.BE, false, true);
+    const tests = testsReducer(state, action);
+
+    const localTests: TestsModel = {
+      ...tests,
+      startedTests: {
+        ...tests.startedTests,
+        [slotId]: {
+          ...tests.startedTests[slotId],
+          category: 'B+E',
+          delegatedTest: true,
+        },
+      },
+    };
+
+    const result = formatAnalyticsText(eventString, localTests);
+
+    expect(result).toBe(`${AnalyticsEventCategories.DELEGATED_TEST} - ${eventString}`);
+  });
+
+  it('should prefix delegated tests with the DelExRk even though test is rekey', () => {
+    const state = { ...initialState };
+    const action = new testsActions.StartTest(slotId, TestCategory.BE, true, true);
+    const tests = testsReducer(state, action);
+
+    const localTests: TestsModel = {
+      ...tests,
+      startedTests: {
+        ...tests.startedTests,
+        [slotId]: {
+          ...tests.startedTests[slotId],
+          category: 'B+E',
+          delegatedTest: true,
+          rekey: true,
+        },
+      },
+    };
+
+    const result = formatAnalyticsText(eventString, localTests);
+
+    expect(result).toBe(`${AnalyticsEventCategories.DELEGATED_TEST} - ${eventString}`);
+  });
+
 });
