@@ -82,7 +82,7 @@
             </candidate-description>
 
             <identification
-              *ngIf="!(isDelegated && isPass())"
+              *ngIf="!isDelegated"
               [display]="(pageState.displayIdentification$ | async)"
               [formGroup]="form"
               [identification]="pageState.identification$ | async"
