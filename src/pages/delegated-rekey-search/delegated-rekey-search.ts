@@ -114,6 +114,7 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.store$.dispatch(new DelegatedRekeySearchClearState());
     this.applicationReference = '';
     this.hasClickedSearch = false;
   }
