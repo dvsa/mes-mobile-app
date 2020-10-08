@@ -416,8 +416,13 @@ export class OfficeCatCPCPage extends BasePageComponent {
 
   passCertificateNumberChanged(passCertificateNumber: string): void {
     this.store$.dispatch(new PassCertificateNumberChanged(passCertificateNumber));
-    this.store$.dispatch(
-      new postTestDeclarationsActions.PassCertificateNumberRecieved(this.form.get('passCertificateNumberCtrl').valid));
+    if (!this.isDelegated) {
+      this.store$.dispatch(
+        new postTestDeclarationsActions.PassCertificateNumberRecieved(
+          this.form.get('passCertificateNumberCtrl').valid,
+        ),
+      );
+    }
   }
 
   isFormValid() {
