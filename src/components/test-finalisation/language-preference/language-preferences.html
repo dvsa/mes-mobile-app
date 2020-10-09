@@ -15,6 +15,7 @@
                  name="languagePreferences"
                  formControlName="languagePreferences"
                  value=false
+                 [checked]="!isWelsh"
                  (change)="isWelshChanged($event.target.value)">
           <label for="lang-pref-english" class="radio-label">English</label>
         </ion-col>
@@ -25,6 +26,7 @@
                  name="languagePreferences"
                  formControlName="languagePreferences"
                  value=true
+                 [checked]="isWelsh"
                  (change)="isWelshChanged($event.target.value)">
           <label for="lang-pref-welsh" class="radio-label">Cymraeg</label>
         </ion-col>
