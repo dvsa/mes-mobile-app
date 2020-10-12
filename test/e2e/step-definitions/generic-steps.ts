@@ -209,8 +209,8 @@ Given('I am on the {string} page', (pageTitle) => {
     .to.eventually.equal(pageTitle);
 });
 
-Then('I should see the {string} contains {string}', (rowName, rowValue) => {
-  JournalPage.rowContains(rowName, rowValue);
+Then('I should see the {string} contains {string}', async (rowName, rowValue) => {
+  await JournalPage.rowContains(rowName, rowValue);
 });
 
 When('I click on the {string} button', (buttonId) => {

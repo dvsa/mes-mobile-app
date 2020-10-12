@@ -9,7 +9,7 @@ exports.config = {
     deviceName: 'iPad Pro (10.5-inch)',
     browserName: '',
     autoWebview: true,
-    //fullReset: true,
+    fullReset: true,
     app: appPath,
     automationName: 'XCUITest',
     isHeadless: false,
