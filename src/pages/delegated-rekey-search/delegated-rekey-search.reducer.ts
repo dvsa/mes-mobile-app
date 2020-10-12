@@ -4,6 +4,7 @@ import { createFeatureSelector } from '@ngrx/store';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { DelegatedRekeySearchError, DelegatedRekeySearchErrorMessages } from './delegated-rekey-search-error-model';
 import { HttpErrorResponse } from '@angular/common/http';
+import * as testActions from '../../modules/tests/tests.actions';
 
 export type DelegatedRekeySearchModel = {
   isLoading: boolean,
@@ -22,7 +23,7 @@ export const initialState: DelegatedRekeySearchModel = {
 };
 
 export function delegatedSearchReducer(
-  state = initialState, action: delegatedRekeySearchActions.DelegatedRekeySearchActionTypes) {
+  state = initialState, action: testActions.Types | delegatedRekeySearchActions.DelegatedRekeySearchActionTypes) {
   switch (action.type) {
     case delegatedRekeySearchActions.DELEGATED_REKEY_SEARCH_CLEAR_STATE:
       return initialState;
@@ -46,6 +47,21 @@ export function delegatedSearchReducer(
         err: action.err,
         isLoading: false,
         hasSearched: true,
+      };
+    case testActions.SEND_CURRENT_TEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case testActions.SEND_CURRENT_TEST_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case testActions.SEND_CURRENT_TEST_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
       };
     default:
       return state;

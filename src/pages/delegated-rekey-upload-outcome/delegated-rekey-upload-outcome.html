@@ -10,7 +10,7 @@
     </ion-row>
   </ion-grid>
   <ion-grid *ngIf="!(pageState.isUploading$ | async)">
-    <ion-row align-items-center class="message-wrapper" *ngIf="(pageState.uploadSuccessful$ | async)">
+    <ion-row align-items-center class="message-wrapper" *ngIf="isStatusSubmitted(pageState.testStatus$ | async)">
       <ion-col no-padding>
         <ion-row justify-content-center>
           <ion-icon class="tick-icon" ios="ios-checkmark-circle"></ion-icon>
@@ -20,7 +20,7 @@
         </ion-row>
       </ion-col>
     </ion-row>
-    <ion-row align-items-center class="message-wrapper" *ngIf="!(pageState.uploadSuccessful$ | async)">
+    <ion-row align-items-center class="message-wrapper" *ngIf="!isStatusSubmitted(pageState.testStatus$ | async)">
       <ion-col no-padding>
         <ion-row justify-content-center>
           <ion-icon class="warning-icon" ios="ios-close-circle"></ion-icon>

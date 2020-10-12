@@ -20,7 +20,7 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite } from 'ng-bullet';
-import { delegatedRekeyUploadOutcomeReducer } from '../delegated-rekey-upload-outcome.reducer';
+import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
 
 describe('DelegatedRekeyUploadOutcomePage', () => {
   let fixture: ComponentFixture<DelegatedRekeyUploadOutcomePage>;
@@ -41,7 +41,6 @@ describe('DelegatedRekeyUploadOutcomePage', () => {
         AppModule,
         StoreModule.forRoot({
           tests: testsReducer,
-          delegatedRekeyUploadOutcome: delegatedRekeyUploadOutcomeReducer,
         }),
       ],
       providers: [
@@ -92,6 +91,18 @@ describe('DelegatedRekeyUploadOutcomePage', () => {
         expect(navController.popTo).toHaveBeenCalled();
       });
     });
+
+    describe('isStatusSubmitted', () => {
+      it('should return false when a value other then Submitted is passed in', () => {
+        const returnValue = component.isStatusSubmitted('Booked');
+        expect(returnValue).toEqual(false);
+      });
+
+      it('should return true when a value of Submitted is passed in', () => {
+        const returnValue = component.isStatusSubmitted('Submitted');
+        expect(returnValue).toEqual(true);
+      });
+    });
   });
 
   describe('DOM', () => {
@@ -99,7 +110,7 @@ describe('DelegatedRekeyUploadOutcomePage', () => {
     describe('isDuplicate', () => {
       it('should show the sucess message when the upload succeeded', () => {
         fixture.detectChanges();
-        component.pageState.uploadSuccessful$ = of(true);
+        component.pageState.testStatus$ = of(TestStatus.Submitted);
         fixture.detectChanges();
         const element: HTMLElement = fixture.debugElement.query(By.css('.modal-alert-header')).nativeElement;
         expect(element.textContent).toEqual('Rekey upload was successful');
@@ -108,7 +119,7 @@ describe('DelegatedRekeyUploadOutcomePage', () => {
       });
       it('should show the duplicate upload message when the upload was detected as a duplicate', () => {
         fixture.detectChanges();
-        component.pageState.uploadSuccessful$ = of(false);
+        component.pageState.testStatus$ = of(TestStatus.Booked);
         fixture.detectChanges();
         const element: HTMLElement = fixture.debugElement.query(By.css('.modal-alert-header')).nativeElement;
         expect(element.textContent).toEqual('Rekey upload was unsuccessful');

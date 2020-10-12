@@ -7,15 +7,18 @@ import {
   select,
 } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { DelegatedRekeyUploadOutcomeViewDidEnter } from './delegated-rekey-upload-outcome.actions';
 import { DeviceProvider } from '../../providers/device/device';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DASHBOARD_PAGE, DELEGATED_REKEY_SEARCH_PAGE } from '../page-names.constants';
-import { getDelegatedRekeyUploadOutcomeState } from './delegated-rekey-upload-outcome.reducer';
-import { getDelegatedisUploadingStatus, getDelegatedUploadStatus } from './delegated-rekey-upload-outcome.selector';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
+import { getDelegatedRekeySearchState } from '../delegated-rekey-search/delegated-rekey-search.reducer';
+import { map } from 'rxjs/operators';
+import { getIsLoading } from '../delegated-rekey-search/delegated-rekey-search.selector';
+import { TestStatus } from '../../modules/tests/test-status/test-status.model';
+import { getTests } from '../../modules/tests/tests.reducer';
+import { getCurrentTestStatus } from '../../modules/tests/tests.selector';
 
 @IonicPage()
 @Component({
@@ -24,11 +27,11 @@ import { SendCurrentTest } from '../../modules/tests/tests.actions';
 })
 export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
 
+  bookedTestSlotId: any;
   pageState: {
-    uploadSuccessful$: Observable<boolean>,
+    testStatus$: Observable<TestStatus>
     isUploading$: Observable<boolean>,
   };
-  subscription: Subscription = Subscription.EMPTY;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -45,13 +48,13 @@ export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
 
   ngOnInit(): void {
     this.pageState = {
-      uploadSuccessful$: this.store$.pipe(
-        select(getDelegatedRekeyUploadOutcomeState),
-        select(getDelegatedUploadStatus),
+      testStatus$: this.store$.pipe(
+        select(getTests),
+        map(tests => getCurrentTestStatus(tests)),
       ),
       isUploading$: this.store$.pipe(
-        select(getDelegatedRekeyUploadOutcomeState),
-        select(getDelegatedisUploadingStatus),
+        select(getDelegatedRekeySearchState),
+        map(getIsLoading),
       ),
     };
   }
@@ -62,12 +65,14 @@ export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
       this.insomnia.allowSleepAgain();
       this.deviceProvider.disableSingleAppMode();
     }
-
-    this.store$.dispatch(new DelegatedRekeyUploadOutcomeViewDidEnter());
   }
 
   retryUpload() {
     this.store$.dispatch(new SendCurrentTest());
+  }
+
+  isStatusSubmitted(status): boolean {
+    return status === TestStatus.Submitted;
   }
 
   goToDashboard() {
@@ -81,4 +86,5 @@ export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
       this.navController.getViews().find(view => view.id === DELEGATED_REKEY_SEARCH_PAGE);
     this.navController.popTo(delegatedExaminerRekeySearchPage);
   }
+
 }
