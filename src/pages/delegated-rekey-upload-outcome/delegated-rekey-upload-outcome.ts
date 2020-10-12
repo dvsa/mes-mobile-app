@@ -15,10 +15,10 @@ import { DASHBOARD_PAGE, DELEGATED_REKEY_SEARCH_PAGE } from '../page-names.const
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
 import { getDelegatedRekeySearchState } from '../delegated-rekey-search/delegated-rekey-search.reducer';
 import { map } from 'rxjs/operators';
-import { getBookedTestSlot, getIsLoading } from '../delegated-rekey-search/delegated-rekey-search.selector';
+import { getIsLoading } from '../delegated-rekey-search/delegated-rekey-search.selector';
 import { TestStatus } from '../../modules/tests/test-status/test-status.model';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getTestStatus } from '../../modules/tests/tests.selector';
+import { getCurrentTestStatus } from '../../modules/tests/tests.selector';
 
 @IonicPage()
 @Component({
@@ -27,13 +27,11 @@ import { getTestStatus } from '../../modules/tests/tests.selector';
 })
 export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
 
-  bookedTestSlotId: number;
+  bookedTestSlotId: any;
   pageState: {
     testStatus$: Observable<TestStatus>
     isUploading$: Observable<boolean>,
   };
-  // testUploadStatus: TestStatus;
-  // subscription: Subscription;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -49,34 +47,17 @@ export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
   }
 
   ngOnInit(): void {
-
-    this.store$.pipe(
-      select(getDelegatedRekeySearchState),
-      map(getBookedTestSlot),
-      map(result => this.bookedTestSlotId = result.slotDetail.slotId),
-    );
-
     this.pageState = {
       testStatus$: this.store$.pipe(
         select(getTests),
-        select(tests => getTestStatus(tests, this.bookedTestSlotId)),
+        map(tests => getCurrentTestStatus(tests)),
       ),
       isUploading$: this.store$.pipe(
         select(getDelegatedRekeySearchState),
         map(getIsLoading),
       ),
     };
-
-    // this.setupSubscription();
   }
-
-  // setupSubscription() {
-  //   const {
-  //     testStatus$,
-  //   } = this.pageState;
-  //   this.subscription = testStatus$.pipe(map(value => this.testUploadStatus = value),
-  //   ).subscribe();
-  // }
 
   ionViewDidEnter(): void {
     if (super.isIos()) {
@@ -91,7 +72,6 @@ export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
   }
 
   isStatusSubmitted(status): boolean {
-    console.log('status', status);
     return status === TestStatus.Submitted;
   }
 
@@ -106,11 +86,5 @@ export class DelegatedRekeyUploadOutcomePage extends BasePageComponent {
       this.navController.getViews().find(view => view.id === DELEGATED_REKEY_SEARCH_PAGE);
     this.navController.popTo(delegatedExaminerRekeySearchPage);
   }
-
-  // ionViewDidLeave(): void {
-  //   if (this.subscription) {
-  //     this.subscription.unsubscribe();
-  //   }
-  // }
 
 }
