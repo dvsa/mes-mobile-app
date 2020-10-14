@@ -31,6 +31,7 @@ export class AuthenticationProvider {
   private getAuthOptions =  (): IonicAuthOptions => {
     const authSettings = this.appConfig.getAppConfig().authentication;
     return {
+      logLevel: 'DEBUG',
       authConfig: 'azure',
       platform: 'cordova',
       clientID: authSettings.clientId,
@@ -101,6 +102,15 @@ export class AuthenticationProvider {
   }
 
   public getAuthenticationToken = async (): Promise<string> => {
+
+    // check if token expired then expire the token
+    const token: any = await this.ionicAuth.getIdToken();
+    console.log('token', JSON.stringify(token));
+    console.log('token', JSON.stringify(token.exp));
+    if (new Date(token.exp * 1000) < new Date()) {
+      console.log('need to refresh');
+      await this.expireTokens();
+    }
     await this.isAuthenticated();
     return this.getToken(Token.ID);
   }
