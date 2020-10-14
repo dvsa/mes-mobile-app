@@ -31,7 +31,6 @@ export class AuthenticationProvider {
   private getAuthOptions =  (): IonicAuthOptions => {
     const authSettings = this.appConfig.getAppConfig().authentication;
     return {
-      logLevel: 'DEBUG',
       authConfig: 'azure',
       platform: 'cordova',
       clientID: authSettings.clientId,
