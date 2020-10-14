@@ -42,12 +42,12 @@
 <ion-footer>
   <ion-row class="mes-full-width-card">
     <ion-col no-padding align="left">
-      <button ion-button class="mes-grey-button retry-button" (click)="goToDashboard()">
+      <button ion-button class="mes-grey-button retry-button" (click)="goToDashboard()" [disabled]="pageState.isUploading$ | async">
         <h3>Return to dashboard</h3>
       </button>
     </ion-col>
     <ion-col no-padding align="right">
-      <button ion-button class="mes-primary-button retry-button" (click)="goToDelegatedSearch()">
+      <button ion-button class="mes-primary-button retry-button" (click)="goToDelegatedSearch()" [disabled]="pageState.isUploading$ | async">
         <h3>Rekey another test</h3>
       </button>
     </ion-col>
