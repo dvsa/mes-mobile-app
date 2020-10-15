@@ -40,12 +40,12 @@ export class AuthenticationProvider {
       logoutUrl: authSettings.logoutUrl,
       iosWebView: 'shared',
       tokenStorageProvider: {
-        getAccessToken: async () => this.getToken(Token.ACCESS),
-        setAccessToken: async (token: string) => this.setToken(Token.ACCESS, token),
-        getIdToken: async () => this.getToken(Token.ID),
-        setIdToken: async (token: string) => this.setToken(Token.ID, token),
-        getRefreshToken: async () => this.getToken(Token.REFRESH),
-        setRefreshToken: async (token: string) => this.setToken(Token.REFRESH, token),
+        getAccessToken: async () => await this.getToken(Token.ACCESS),
+        setAccessToken: async (token: string) => await this.setToken(Token.ACCESS, token),
+        getIdToken: async () => await this.getToken(Token.ID),
+        setIdToken: async (token: string) => await this.setToken(Token.ID, token),
+        getRefreshToken: async () => await this.getToken(Token.REFRESH),
+        setRefreshToken: async (token: string) => await this.setToken(Token.REFRESH, token),
       },
     };
   }
