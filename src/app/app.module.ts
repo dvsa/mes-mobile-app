@@ -144,7 +144,6 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
     LogsProvider,
     AppInfoProvider,
     DeviceProvider,
-    SecureStorage,
     DeviceAuthenticationProvider,
     QuestionProvider,
     WeatherConditionProvider,
