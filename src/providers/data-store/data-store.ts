@@ -72,7 +72,8 @@ export class DataStoreProvider {
     return this.secureContainer.set(key, value).then((response: string) => {
       return response;
     }).catch((error) => {
-      this.store$.dispatch(new SaveLog(this.logHelper.createLog(LogType.ERROR, 'Setting local storage item', error)));
+      this.store$.dispatch(new SaveLog(this.logHelper
+        .createLog(LogType.ERROR, `Setting local storage item: ${key}`, error)));
       return error;
     });
   }
