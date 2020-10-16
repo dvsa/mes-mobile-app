@@ -103,13 +103,14 @@ export class AuthenticationProvider {
 
   async hasValidToken(): Promise<boolean> {
     const token: any = await this.ionicAuth.getIdToken();
-    return token.exp && new Date(token.exp * 1000) < new Date();
+    return token.exp && new Date(token.exp * 1000) > new Date();
   }
 
   public getAuthenticationToken = async (): Promise<string> => {
 
     // @TODO remove temporary solution which checks if token has expired manually then forces token expiry
-    if (await this.hasValidToken()) {
+    const hasValidToken: boolean = await this.hasValidToken();
+    if (!hasValidToken) {
       await this.expireTokens();
     }
 
