@@ -61,6 +61,8 @@ describe('Base Page', () => {
       flushMicrotasks();
     }));
     it('should allow user access if authenticated , is an ios device and is required', fakeAsync(() => {
+      authenticationProvider.hasValidToken =
+        jasmine.createSpy('authenticationProvider.hasValidToken').and.returnValue(Promise.resolve(false));
       basePageComponent.ionViewWillEnter();
       expect(basePageComponent.navController.setRoot).not.toHaveBeenCalled();
       flushMicrotasks();
