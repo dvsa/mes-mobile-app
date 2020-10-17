@@ -72,6 +72,9 @@ describe('Base Page', () => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(true);
       authenticationProvider.hasValidToken =
       jasmine.createSpy('authenticationProvider.hasValidToken').and.returnValue(Promise.resolve(false));
+      authenticationProvider.isInUnAuthenticatedMode =
+        jasmine.createSpy('authenticationProvider.isInUnAuthenticatedMode').and.returnValue(false);
+
       basePageComponent.loginRequired = true;
       basePageComponent.ionViewWillEnter();
       flushMicrotasks();
