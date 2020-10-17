@@ -102,6 +102,7 @@ export class AuthenticationProvider {
   }
 
   async hasValidToken(): Promise<boolean> {
+    await this.ionicAuth.isAuthenticated();
     const token: any = await this.ionicAuth.getIdToken();
     return token.exp && new Date(token.exp * 1000) > new Date();
   }
