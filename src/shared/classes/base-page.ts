@@ -16,7 +16,8 @@ export abstract class BasePageComponent {
   ionViewWillEnter() {
     if (this.loginRequired && this.isIos()) {
       this.authenticationProvider.hasValidToken().then(async(hasValidToken) => {
-        if (!hasValidToken) {
+        this.authenticationProvider.determineAuthenticationMode();
+        if (!hasValidToken && !this.authenticationProvider.isInUnAuthenticatedMode()) {
           await this.navController.setRoot(LOGIN_PAGE);
         }
       });
