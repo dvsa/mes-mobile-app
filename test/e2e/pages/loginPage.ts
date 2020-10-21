@@ -41,7 +41,7 @@ class LoginPage extends Page {
           return browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
         })
           .then((result) => {
-            const useAnotherAccountButton = element(by.xpath(`//XCUIElementTypeOther[@name="Use another account, Use another account"]`));
+            const useAnotherAccountButton = element(by.xpath(`//XCUIElementTypeButton[@name="Use another account, Use another account"]`));
             useAnotherAccountButton.isPresent().then((result) => {
               if (result) {
                 return useAnotherAccountButton.click();
