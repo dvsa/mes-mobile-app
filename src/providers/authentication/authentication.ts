@@ -31,6 +31,7 @@ export class AuthenticationProvider {
   private getAuthOptions =  (): IonicAuthOptions => {
     const authSettings = this.appConfig.getAppConfig().authentication;
     return {
+      logLevel: 'DEBUG',
       authConfig: 'azure',
       platform: 'cordova',
       clientID: authSettings.clientId,
@@ -100,11 +101,30 @@ export class AuthenticationProvider {
     this.setUnAuthenticatedMode(mode);
   }
 
+  async hasValidToken(): Promise<boolean> {
+    // refresh token if required
+    await this.ionicAuth.isAuthenticated();
+    await this.refreshTokenIfExpired();
+    const token = await this.ionicAuth.getIdToken();
+    return token.exp && new Date(token.exp * 1000) > new Date();
+  }
+
+  async refreshTokenIfExpired(): Promise<void> {
+    const token = await this.ionicAuth.getIdToken();
+    if (this.isTokenExpired(token)) {
+      await this.ionicAuth.refreshSession();
+    }
+  }
+
+  isTokenExpired(token: any): boolean {
+    return token.exp && new Date(token.exp * 1000) < new Date();
+  }
+
   public getAuthenticationToken = async (): Promise<string> => {
 
     // @TODO MES-5942: remove temporary solution which checks if token has expired manually then forces token expiry
-    const token: any = await this.ionicAuth.getIdToken();
-    if (new Date(token.exp * 1000) < new Date()) {
+    const hasValidToken: boolean = await this.hasValidToken();
+    if (!hasValidToken) {
       await this.expireTokens();
     }
 

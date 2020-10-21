@@ -15,13 +15,12 @@ export abstract class BasePageComponent {
 
   ionViewWillEnter() {
     if (this.loginRequired && this.isIos()) {
-      this.authenticationProvider.isAuthenticated().then(
-        (isAuthenticated) => {
-          if (!isAuthenticated) {
-            this.navController.setRoot(LOGIN_PAGE);
-          }
-        },
-      );
+      this.authenticationProvider.hasValidToken().then(async(hasValidToken) => {
+        this.authenticationProvider.determineAuthenticationMode();
+        if (!hasValidToken && !this.authenticationProvider.isInUnAuthenticatedMode()) {
+          await this.navController.setRoot(LOGIN_PAGE);
+        }
+      });
     }
   }
 

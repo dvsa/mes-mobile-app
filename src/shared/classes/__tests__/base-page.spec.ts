@@ -61,6 +61,8 @@ describe('Base Page', () => {
       flushMicrotasks();
     }));
     it('should allow user access if authenticated , is an ios device and is required', fakeAsync(() => {
+      authenticationProvider.hasValidToken =
+        jasmine.createSpy('authenticationProvider.hasValidToken').and.returnValue(Promise.resolve(false));
       basePageComponent.ionViewWillEnter();
       expect(basePageComponent.navController.setRoot).not.toHaveBeenCalled();
       flushMicrotasks();
@@ -68,8 +70,11 @@ describe('Base Page', () => {
     // tslint:disable-next-line:max-line-length
     it('should not allow user access if user is not authenticated, authentication is required and device is ios', fakeAsync(() => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(true);
-      authenticationProvider.isAuthenticated =
-      jasmine.createSpy('authenticationProvider.isAuthenticated').and.returnValue(Promise.resolve(false));
+      authenticationProvider.hasValidToken =
+      jasmine.createSpy('authenticationProvider.hasValidToken').and.returnValue(Promise.resolve(false));
+      authenticationProvider.isInUnAuthenticatedMode =
+        jasmine.createSpy('authenticationProvider.isInUnAuthenticatedMode').and.returnValue(false);
+
       basePageComponent.loginRequired = true;
       basePageComponent.ionViewWillEnter();
       flushMicrotasks();
