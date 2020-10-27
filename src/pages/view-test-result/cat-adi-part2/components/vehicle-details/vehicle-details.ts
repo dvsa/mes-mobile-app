@@ -36,4 +36,12 @@ export class VehicleDetailsCatADIPt2Component {
     return get(this.trainerData, 'trainingRecords', false) ? 'Yes' : 'No';
   }
 
+  public displayVehicleDetails(): boolean {
+    return get(this.data, 'schoolCar', false) || get(this.data, 'dualControls', false);
+  }
+
+  public getVehicleDetails(): string {
+    return get(this.data, 'schoolCar') ? 'School Car' : 'Dual Controls';
+  }
+
 }
