@@ -18,42 +18,26 @@ describe('FaultsDataRowComponent', () => {
       comment: 'comment',
     };
 
-    it('should return false when drivingFaultCount is less than minDrivingFaultCount and a serious fault exist', () => {
+    it('should return false when drivingFaultCount is less than minDrivingFaultCount', () => {
       const component = new FaultsDataRowComponent();
 
       component.drivingFaultCount = 5;
       component.minDrivingFaultCount = 6;
-      component.dangerousFaults = [];
-      component.seriousFaults = [faultSummary];
 
       const result = component.showFaultComment(faultSummary);
 
       expect(result).toBe(false);
     });
 
-    it('should return false when drivingFaultCount is equal to minDrivingFaultCount and a serious fault exist', () => {
+    it('should return false when drivingFaultCount is equal to minDrivingFaultCount', () => {
       const component = new FaultsDataRowComponent();
 
       component.drivingFaultCount = 6;
       component.minDrivingFaultCount = 6;
-      component.dangerousFaults = [];
-      component.seriousFaults = [faultSummary];
 
       const result = component.showFaultComment(faultSummary);
 
       expect(result).toBe(false);
-    });
-
-    it('should return true when drivingFault comments present and no serious/dangerous fault exist', () => {
-      const component = new FaultsDataRowComponent();
-
-      component.drivingFaultCount = 6;
-      component.dangerousFaults = [];
-      component.seriousFaults = [];
-
-      const result = component.showFaultComment(faultSummary);
-
-      expect(result).toBe(true);
     });
 
     it('should return false when there are no comments', () => {
