@@ -13,7 +13,8 @@
         [dangerousFaults]="getDangerousFaults()"
         [drivingFaultCount]="getDrivingFaultCount()"
         [isRider]=true
-        [testCategory]='testCategory'>
+        [testCategory]='testCategory'
+        [minDrivingFaultCount]='6'>
     </faults-data-row>
       <data-row [label]="'ETA'" [value]="getETA()"></data-row>
       <safety-and-balance-data-row
