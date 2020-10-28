@@ -214,7 +214,11 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
   }
 
   continue() {
-    this.validateActivityCodeAgainstTestData();
+
+    if (this.testDataIsInvalid()) {
+      console.log('### test data is invalid');
+      this.openTestDataValidationModal();
+    }
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       if (this.activityCodeFinalisationProvider.testDataIsInvalid(this.activityCode.activityCode, this.testData)) {
@@ -233,7 +237,7 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
     });
   }
 
-  validateActivityCodeAgainstTestData(): boolean {
+  testDataIsInvalid(): boolean {
 
     const { activityCode } = this.activityCode;
     const { dangerousFaults, seriousFaults } = this.testData;
@@ -243,10 +247,6 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
     const hasSeriousOrDangerousFaults =
       !isEmpty(dangerousFaults) ||
       !isEmpty(seriousFaults);
-
-    if (activityCodeIs4or5 && !hasSeriousOrDangerousFaults) {
-      console.log('### please add an S or a D fault');
-    }
 
     return activityCodeIs4or5 && !hasSeriousOrDangerousFaults;
   }
