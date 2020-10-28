@@ -32,9 +32,12 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
 import { ActivityCodeDescription } from '../../../../pages/office/components/activity-code/activity-code.constants';
+<<<<<<< HEAD
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../../providers/activity-code-finalisation/activity-code-finalisation';
+=======
+>>>>>>> fixes unit tests
 
 describe('NonPassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatBPage>;
