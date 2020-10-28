@@ -58,6 +58,8 @@ import { TestData } from '@dvsa/mes-test-schema/categories/common';
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { isEmpty } from 'lodash';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -212,6 +214,7 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
   }
 
   continue() {
+    this.validateActivityCodeAgainstTestData();
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       if (this.activityCodeFinalisationProvider.testDataIsInvalid(this.activityCode.activityCode, this.testData)) {
@@ -228,6 +231,24 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
         this.store$.dispatch(new NonPassFinalisationValidationError(`${controlName} is blank`));
       }
     });
+  }
+
+  validateActivityCodeAgainstTestData(): boolean {
+
+    const { activityCode } = this.activityCode;
+    const { dangerousFaults, seriousFaults } = this.testData;
+    const activityCodeIs4or5 =
+      (activityCode === ActivityCodes.FAIL_PUBLIC_SAFETY) ||
+      (activityCode === ActivityCodes.FAIL_CANDIDATE_STOPS_TEST);
+    const hasSeriousOrDangerousFaults =
+      !isEmpty(dangerousFaults) ||
+      !isEmpty(seriousFaults);
+
+    if (activityCodeIs4or5 && !hasSeriousOrDangerousFaults) {
+      console.log('### please add an S or a D fault');
+    }
+
+    return activityCodeIs4or5 && !hasSeriousOrDangerousFaults;
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {
