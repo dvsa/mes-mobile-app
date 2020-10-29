@@ -1,7 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
 import { flattenArray, convertBooleanToString } from '../../view-test-result-helpers';
-import { Accompaniment, TestSummary, PassCompletion } from '@dvsa/mes-test-schema/categories/common';
+import {
+  Accompaniment,
+  TestSummary,
+  PassCompletion,
+  CommunicationPreferences,
+} from '@dvsa/mes-test-schema/categories/common';
 import { TestSummary as CatAMod2TestSummary } from '@dvsa/mes-test-schema/categories/AM2';
 
 @Component({
@@ -18,6 +23,9 @@ export class TestSummaryCardComponent {
 
   @Input()
   testSummary: TestSummary | CatAMod2TestSummary;
+
+  @Input()
+  communicationPreferences: CommunicationPreferences;
 
   constructor() {}
 
@@ -94,5 +102,9 @@ export class TestSummaryCardComponent {
 
   public getTestConductedOn(): string {
     return get(this.testSummary, 'modeOfTransport', 'None');
+  }
+
+  public getConductedLanguage(): string {
+    return get(this.communicationPreferences, 'conductedLanguage', 'None');
   }
 }

@@ -190,5 +190,21 @@ describe('TestSummaryCardComponent', () => {
       });
     });
 
+    describe('getConductedLanguage', () => {
+      it('should return the correct data', () => {
+        component.communicationPreferences = {
+          conductedLanguage: 'English',
+          updatedEmail: 'value',
+          communicationMethod: 'Email',
+        };
+        fixture.detectChanges();
+        expect(component.getConductedLanguage()).toEqual('English');
+      });
+
+      it('should return None if the communicationPreferences is missing', () => {
+        expect(component.getAdditionalInformation()).toEqual('None');
+      });
+    });
+
   });
 });

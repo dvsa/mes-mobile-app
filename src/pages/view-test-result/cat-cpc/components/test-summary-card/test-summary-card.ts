@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
-import { Accompaniment, PassCompletion } from '@dvsa/mes-test-schema/categories/common';
+import { Accompaniment, CommunicationPreferences, PassCompletion } from '@dvsa/mes-test-schema/categories/common';
 import { convertBooleanToString, flattenArray } from '../../../view-test-result-helpers';
 import { TestOutcome } from '../../../../../modules/tests/tests.constants';
 import { TestSummary } from '@dvsa/mes-test-schema/categories/CPC';
@@ -22,6 +22,9 @@ export class CPCTestSummaryCardComponent {
 
   @Input()
   testOutcome: TestOutcome;
+
+  @Input()
+  communicationPreferences: CommunicationPreferences;
 
   constructor() {}
 
@@ -81,5 +84,9 @@ export class CPCTestSummaryCardComponent {
 
   public shouldDisplayAssessmentReport() : boolean {
     return this.testOutcome === TestOutcome.Failed;
+  }
+
+  public getConductedLanguage(): string {
+    return get(this.communicationPreferences, 'conductedLanguage', 'None');
   }
 }
