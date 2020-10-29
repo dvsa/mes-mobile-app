@@ -215,10 +215,6 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
 
   continue() {
 
-    if (this.testDataIsInvalid()) {
-      console.log('### test data is invalid');
-      this.openTestDataValidationModal();
-    }
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       if (this.activityCodeFinalisationProvider.testDataIsInvalid(this.activityCode.activityCode, this.testData)) {
@@ -238,7 +234,6 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
   }
 
   testDataIsInvalid(): boolean {
-
     const { activityCode } = this.activityCode;
     const { dangerousFaults, seriousFaults } = this.testData;
     const activityCodeIs4or5 =

@@ -29,19 +29,19 @@ describe('TestFinalisationInvalidTestDataModal', () => {
   beforeEach(async(() => {
     fixture = TestBed.createComponent(TestFinalisationInvalidTestDataModal);
     component = fixture.componentInstance;
-    component.onContinue = () => {};
+    component.onReturnToTestReport = () => {};
     component.onCancel = () => {};
   }));
 
   describe('DOM', () => {
-    it('should call onContinue when the Continue to debrief button is clicked', () => {
+    it('should call onReturnToTestReport when the Continue to debrief button is clicked', () => {
       fixture.detectChanges();
-      spyOn(component, 'onContinue');
+      spyOn(component, 'onReturnToTesReport');
       const button = fixture.debugElement.query(By.css('button.mes-primary-button'));
       button.triggerEventHandler('click', null);
 
       fixture.detectChanges();
-      expect(component.onContinue).toHaveBeenCalled();
+      expect(component.onReturnToTestReport).toHaveBeenCalled();
     });
 
     it('should call onCancel when the Return to test button is clicked', () => {
