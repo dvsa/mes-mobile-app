@@ -36,7 +36,7 @@ describe('TestFinalisationInvalidTestDataModal', () => {
   describe('DOM', () => {
     it('should call onReturnToTestReport when the Continue to debrief button is clicked', () => {
       fixture.detectChanges();
-      spyOn(component, 'onReturnToTesReport');
+      spyOn(component, 'onReturnToTestReport');
       const button = fixture.debugElement.query(By.css('button.mes-primary-button'));
       button.triggerEventHandler('click', null);
 
