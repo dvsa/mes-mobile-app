@@ -131,6 +131,14 @@ describe('NonPassFinalisationCatCPage', () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.C));
         component.slotId = '123';
+        component.activityCode = {
+          activityCode: ActivityCodes.FAIL_CANDIDATE_STOPS_TEST,
+          description: ActivityCodeDescription.FAIL_CANDIDATE_STOPS_TEST,
+        },
+        component.testData = {
+          dangerousFaults: {},
+          seriousFaults: {},
+        };
 
         // Act
         component.continue();
@@ -192,6 +200,14 @@ describe('NonPassFinalisationCatCPage', () => {
           requiredControl2: new FormControl(null, [Validators.required]),
           notRequiredControl: new FormControl(null),
         });
+        component.activityCode = {
+          activityCode: ActivityCodes.FAIL_CANDIDATE_STOPS_TEST,
+          description: ActivityCodeDescription.FAIL_CANDIDATE_STOPS_TEST,
+        },
+        component.testData = {
+          dangerousFaults: {},
+          seriousFaults: {},
+        };
 
         component.continue();
         tick();
