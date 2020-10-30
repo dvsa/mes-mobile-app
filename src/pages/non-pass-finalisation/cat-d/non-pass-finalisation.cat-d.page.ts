@@ -63,7 +63,9 @@ import { GearboxCategory, TestData } from '@dvsa/mes-test-schema/categories/comm
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
-import { ActivityCodeFinalisationProvider } from 'src/providers/activity-code-finalisation/activity-code-finalisation';
+import {
+  ActivityCodeFinalisationProvider,
+} from '../../../providers/activity-code-finalisation/activity-code-finalisation';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;

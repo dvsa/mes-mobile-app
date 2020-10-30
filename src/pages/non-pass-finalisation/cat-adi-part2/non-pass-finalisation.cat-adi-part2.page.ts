@@ -54,7 +54,9 @@ import { SetActivityCode } from '../../../modules/tests/activity-code/activity-c
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { includes } from 'lodash';
 import { TestData } from '@dvsa/mes-test-schema/categories/common';
-import { ActivityCodeFinalisationProvider } from 'src/providers/activity-code-finalisation/activity-code-finalisation';
+import {
+  ActivityCodeFinalisationProvider,
+} from '../../../providers/activity-code-finalisation/activity-code-finalisation';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;

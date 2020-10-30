@@ -30,6 +30,11 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
 import { CAT_ADI_PART2 } from '../../../page-names.constants';
+import { ActivityCodes } from '../../../../shared/models/activity-codes';
+import { ActivityCodeDescription } from '../../../../pages/office/components/activity-code/activity-code.constants';
+import {
+  ActivityCodeFinalisationProvider,
+} from '../../../../providers/activity-code-finalisation/activity-code-finalisation';
 
 describe('NonPassFinalisationCatADIPart2Page', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatADIPart2Page>;
@@ -55,6 +60,7 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        ActivityCodeFinalisationProvider,
       ],
     });
   });
@@ -129,6 +135,53 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
 
         // Assert
         expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
+      });
+
+      it('should create the TestFinalisationInvalidTestDataModal when activityCode is 5 and no S/D faults', () => {
+        // Arrange
+        store$.dispatch(new testActions.StartTest(123, TestCategory.B));
+        spyOn(component, 'openTestDataValidationModal').and.callThrough();
+
+        component.slotId = '123';
+        component.activityCode = {
+          activityCode: ActivityCodes.FAIL_CANDIDATE_STOPS_TEST,
+          description: ActivityCodeDescription.FAIL_CANDIDATE_STOPS_TEST,
+        },
+        component.testData = {
+          dangerousFaults: {},
+          seriousFaults: {},
+        };
+
+        // Act
+        component.continue();
+
+        // Assert
+        expect(component.openTestDataValidationModal).toHaveBeenCalled();
+        expect(component.modalController.create).toHaveBeenCalled();
+        expect(store$.dispatch).not.toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
+      });
+      it('should create the TestFinalisationInvalidTestDataModal when activityCode is 4 and no S/D faults', () => {
+        // Arrange
+        store$.dispatch(new testActions.StartTest(123, TestCategory.B));
+        spyOn(component, 'openTestDataValidationModal').and.callThrough();
+
+        component.slotId = '123';
+        component.activityCode = {
+          activityCode: ActivityCodes.FAIL_PUBLIC_SAFETY,
+          description: ActivityCodeDescription.FAIL_PUBLIC_SAFETY,
+        },
+        component.testData = {
+          dangerousFaults: {},
+          seriousFaults: {},
+        };
+
+        // Act
+        component.continue();
+
+        // Assert
+        expect(component.openTestDataValidationModal).toHaveBeenCalled();
+        expect(component.modalController.create).toHaveBeenCalled();
+        expect(store$.dispatch).not.toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
 
       it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
