@@ -60,10 +60,13 @@ import {
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { CategoryCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { TransmissionType } from '../../../shared/models/transmission-type';
+import * as waitingRoomToCarActions from '../../waiting-room-to-car/waiting-room-to-car.actions';
+import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -76,6 +79,7 @@ interface PassFinalisationPageState {
   d255$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
+  testCategory$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -91,6 +95,7 @@ export class PassFinalisationCatAMod1Page extends BasePageComponent {
   testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
   category: TestCategory = TestCategory.EUA1M1;
+  categoryCode: CategoryCode;
   merged$: Observable<string>;
   transmission: GearboxCategory;
   subscription: Subscription;
@@ -160,11 +165,15 @@ export class PassFinalisationCatAMod1Page extends BasePageComponent {
         select(getCommunicationPreference),
         select(getConductedLanguage),
       ),
+      testCategory$: currentTest$.pipe(
+        select(getTestCategory),
+      ),
     };
-    const { transmission$ } = this.pageState;
+    const { transmission$, testCategory$ } = this.pageState;
 
     this.merged$ = merge(
       transmission$.pipe(map(value => this.transmission = value)),
+      testCategory$.pipe(map(value => this.categoryCode = value)),
     );
     this.subscription = this.merged$.subscribe();
   }
@@ -225,5 +234,18 @@ export class PassFinalisationCatAMod1Page extends BasePageComponent {
 
   displayTransmissionBanner(): boolean {
     return !this.form.controls['transmissionCtrl'].pristine && this.transmission === TransmissionType.Automatic;
+  }
+
+  categoryCodeChanged(category: CategoryCode) {
+    this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarBikeCategorySelected(category));
+    if (this.categoryCode !== category) {
+      this.store$.dispatch(
+        new waitingRoomToCarActions.WaitingRoomToCarBikeCategoryChanged(
+          category,
+          this.categoryCode,
+        ),
+      );
+    }
+    this.store$.dispatch(new PopulateTestCategory(category));
   }
 }

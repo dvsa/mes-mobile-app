@@ -1,15 +1,15 @@
 import { Component, OnChanges, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Select } from 'ionic-angular';
-import { BikeCategoryDetailProvider } from '../../../../providers/bike-category-detail/bike-category-detail';
+import { BikeCategoryDetailProvider } from '../../../providers/bike-category-detail/bike-category-detail';
 import {
   BikeCategoryDetail,
   BikeTestType,
-} from '../../../../providers/bike-category-detail/bike-category-detail.model';
+} from '../../../providers/bike-category-detail/bike-category-detail.model';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { Store } from '@ngrx/store';
-import { StoreModel } from '../../../../shared/models/store.model';
-import * as waitingRoomToCarActions from '../../waiting-room-to-car.actions';
+import { StoreModel } from '../../../shared/models/store.model';
+import * as waitingRoomToCarActions from '../../../pages/waiting-room-to-car/waiting-room-to-car.actions';
 
 @Component({
   selector: 'bike-category-type',
@@ -28,12 +28,14 @@ export class BikeCategoryTypeComponent implements OnChanges {
   @Input()
   testType: BikeTestType;
 
+  @Input()
+  categoryConfirmed?: boolean = false;
+
   @Output()
   categoryCodeChange = new EventEmitter<CategoryCode>();
 
   formControl: FormControl;
   bikeCategoryDetails: BikeCategoryDetail[];
-  categoryConfirmed: boolean;
 
   constructor(
     private bikeCategoryDetailProvider: BikeCategoryDetailProvider,
@@ -81,7 +83,6 @@ export class BikeCategoryTypeComponent implements OnChanges {
   }
 
   ngOnInit(): void {
-    this.categoryConfirmed = false;
     // default to MOD1 if any input other than MOD1 or MOD2 provided
     this.testType  = (this.testType === BikeTestType.MOD1 || this.testType === BikeTestType.MOD2) ?
       this.testType : BikeTestType.MOD1;

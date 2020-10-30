@@ -28,7 +28,7 @@ import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actio
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TransmissionComponent } from '../../../../components/common/transmission/transmission';
 import { configureTestSuite } from 'ng-bullet';
-import { BikeCategoryTypeComponent } from '../../components/bike-category-type/bike-category-type';
+import { BikeCategoryTypeComponent } from '../../../../components/common/bike-category-type/bike-category-type';
 
 describe('WaitingRoomToCarCatAMod1Page', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatAMod1Page>;

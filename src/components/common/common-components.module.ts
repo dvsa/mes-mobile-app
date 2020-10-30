@@ -28,6 +28,7 @@ import { DataRowCustomComponent } from './data-row-custom/data-row-custom';
 import { CPCDebriefCardComponent } from './cpc-debrief-card/cpc-debrief-card';
 import { PipesModule } from '../../shared/pipes/pipes.module';
 import { HealthDeclarationSignedComponent } from './health-declaration-signed/health-declaration-signed';
+import { BikeCategoryTypeComponent } from './bike-category-type/bike-category-type';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { HealthDeclarationSignedComponent } from './health-declaration-signed/he
     DataRowCustomComponent,
     CPCDebriefCardComponent,
     HealthDeclarationSignedComponent,
+    BikeCategoryTypeComponent,
   ],
   imports: [
     SignaturePadModule,
@@ -87,6 +89,7 @@ import { HealthDeclarationSignedComponent } from './health-declaration-signed/he
     CPCDebriefCardComponent,
     PipesModule,
     HealthDeclarationSignedComponent,
+    BikeCategoryTypeComponent,
   ],
 })
 export class ComponentsModule { }

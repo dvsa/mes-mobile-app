@@ -50,7 +50,7 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
-import { BikeCategoryTypeComponent } from '../components/bike-category-type/bike-category-type';
+import { BikeCategoryTypeComponent } from '../../../components/common/bike-category-type/bike-category-type';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
