@@ -39,6 +39,7 @@ import { PASS_CERTIFICATE_NUMBER_CTRL }
 import { Subscription } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 import { PopulateTestCategory } from '../../../../modules/tests/category/category.actions';
+import { BikeCategoryTypeComponent } from '../../../../components/common/bike-category-type/bike-category-type';
 
 describe('PassFinalisationCatAMod2Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatAMod2Page>;
@@ -57,6 +58,7 @@ describe('PassFinalisationCatAMod2Page', () => {
         MockComponent(FinalisationHeaderComponent),
         MockComponent(LanguagePreferencesComponent),
         MockComponent(WarningBannerComponent),
+        MockComponent(BikeCategoryTypeComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [

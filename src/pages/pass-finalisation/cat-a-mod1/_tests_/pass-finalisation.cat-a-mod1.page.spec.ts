@@ -40,8 +40,9 @@ import { configureTestSuite } from 'ng-bullet';
 import { PassCertificateNumberCatAMod1Component }
   from '../components/pass-certificate-number/pass-certificate-number.cat-a-mod1';
 import { PopulateTestCategory } from '../../../../modules/tests/category/category.actions';
+import { BikeCategoryTypeComponent } from '../../../../components/common/bike-category-type/bike-category-type';
 
-describe('PassFinalisationCatAMod1Page', () => {
+fdescribe('PassFinalisationCatAMod1Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatAMod1Page>;
   let component: PassFinalisationCatAMod1Page;
   let store$: Store<StoreModel>;
@@ -58,6 +59,7 @@ describe('PassFinalisationCatAMod1Page', () => {
         MockComponent(FinalisationHeaderComponent),
         MockComponent(LanguagePreferencesComponent),
         MockComponent(WarningBannerComponent),
+        MockComponent(BikeCategoryTypeComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
