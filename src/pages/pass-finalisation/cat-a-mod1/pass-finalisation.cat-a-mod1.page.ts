@@ -64,7 +64,6 @@ import { CategoryCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { TransmissionType } from '../../../shared/models/transmission-type';
-import * as waitingRoomToCarActions from '../../waiting-room-to-car/waiting-room-to-car.actions';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
@@ -237,15 +236,6 @@ export class PassFinalisationCatAMod1Page extends BasePageComponent {
   }
 
   categoryCodeChanged(category: CategoryCode) {
-    this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarBikeCategorySelected(category));
-    if (this.categoryCode !== category) {
-      this.store$.dispatch(
-        new waitingRoomToCarActions.WaitingRoomToCarBikeCategoryChanged(
-          category,
-          this.categoryCode,
-        ),
-      );
-    }
     this.store$.dispatch(new PopulateTestCategory(category));
   }
 }
