@@ -31,6 +31,10 @@ export class CandidateDeclarationSignedComponent {
       this.formControl = new FormControl(null, [Validators.required]);
       this.formGroup.addControl('candidateDeclarationCtrl', this.formControl);
     }
+
+    if (this.candidateSigned) {
+      this.formControl.patchValue(this.declarationSelected ? DeclarationSigned.YES : DeclarationSigned.NO);
+    }
   }
 
   get invalid(): boolean {
