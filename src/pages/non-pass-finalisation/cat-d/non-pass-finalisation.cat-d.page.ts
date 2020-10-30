@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, Platform } from 'ionic-angular';
+import { IonicPage, Modal, ModalController, NavController, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { CAT_D } from '../../page-names.constants';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
   getCurrentTest,
@@ -59,10 +59,11 @@ import {
 } from
   '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.reducer';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { GearboxCategory, TestData } from '@dvsa/mes-test-schema/categories/common';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
+import { ActivityCodeFinalisationProvider } from 'src/providers/activity-code-finalisation/activity-code-finalisation';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -79,6 +80,7 @@ interface NonPassFinalisationPageState {
   transmission$: Observable<GearboxCategory>;
   transmissionAutomaticRadioChecked$: Observable<boolean>;
   transmissionManualRadioChecked$: Observable<boolean>;
+  slotId$: Observable<string>;
 }
 
 @IonicPage()
@@ -92,6 +94,10 @@ export class NonPassFinalisationCatDPage extends BasePageComponent implements On
   form: FormGroup;
   activityCodeOptions: ActivityCodeModel[];
   slotId: string;
+  testData: TestData;
+  activityCode: ActivityCodeModel;
+  subscription: Subscription;
+  invalidTestDataModal: Modal;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -100,6 +106,8 @@ export class NonPassFinalisationCatDPage extends BasePageComponent implements On
     public authenticationProvider: AuthenticationProvider,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public appConfig: AppConfigProvider,
+    public modalController: ModalController,
+    public activityCodeFinalisationProvider: ActivityCodeFinalisationProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
@@ -108,16 +116,16 @@ export class NonPassFinalisationCatDPage extends BasePageComponent implements On
   }
 
   ngOnInit() {
-    this.store$.pipe(
-      select(getTests),
-      map(tests => tests.currentTest.slotId),
-    ).subscribe(slotId => this.slotId = slotId);
 
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
     );
     this.pageState = {
+      slotId$: this.store$.pipe(
+        select(getTests),
+        map(tests => tests.currentTest.slotId),
+      ),
       candidateName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
@@ -195,9 +203,36 @@ export class NonPassFinalisationCatDPage extends BasePageComponent implements On
     this.store$.dispatch(new NonPassFinalisationViewDidEnter());
   }
 
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  openTestDataValidationModal() {
+    this.invalidTestDataModal = this.modalController.create('TestFinalisationInvalidTestDataModal', {
+      onCancel: this.onCancel,
+      onReturnToTestReport: this.onReturnToTestReport,
+    }, { cssClass: 'mes-modal-alert text-zoom-regular' });
+    this.invalidTestDataModal.present();
+  }
+
+  onCancel = () => {
+    this.invalidTestDataModal.dismiss();
+  }
+
+  onReturnToTestReport = () => {
+    this.invalidTestDataModal.dismiss();
+    this.navController.push(CAT_D.TEST_REPORT_PAGE);
+  }
+
   continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
+      if (this.activityCodeFinalisationProvider.testDataIsInvalid(this.activityCode.activityCode, this.testData)) {
+        this.openTestDataValidationModal();
+        return;
+      }
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_D.BACK_TO_OFFICE_PAGE);

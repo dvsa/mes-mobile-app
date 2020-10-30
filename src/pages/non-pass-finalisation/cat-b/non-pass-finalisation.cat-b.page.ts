@@ -58,8 +58,6 @@ import { TestData } from '@dvsa/mes-test-schema/categories/common';
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
-import { ActivityCodes } from '../../../shared/models/activity-codes';
-import { isEmpty } from 'lodash';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -230,19 +228,6 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
         this.store$.dispatch(new NonPassFinalisationValidationError(`${controlName} is blank`));
       }
     });
-  }
-
-  testDataIsInvalid(): boolean {
-    const { activityCode } = this.activityCode;
-    const { dangerousFaults, seriousFaults } = this.testData;
-    const activityCodeIs4or5 =
-      (activityCode === ActivityCodes.FAIL_PUBLIC_SAFETY) ||
-      (activityCode === ActivityCodes.FAIL_CANDIDATE_STOPS_TEST);
-    const hasSeriousOrDangerousFaults =
-      !isEmpty(dangerousFaults) ||
-      !isEmpty(seriousFaults);
-
-    return activityCodeIs4or5 && !hasSeriousOrDangerousFaults;
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {
