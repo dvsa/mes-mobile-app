@@ -114,6 +114,15 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
           { id: CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE },
         ]);
         spyOn(navController$, 'removeView');
+        component.activityCode = {
+          activityCode: ActivityCodes.FAIL,
+          description: ActivityCodeDescription.FAIL,
+        },
+        component.testData = {
+          dangerousFaults: {},
+          seriousFaults: {},
+        };
+
         component.continue();
         flushMicrotasks();
         expect(navController$.push).toHaveBeenCalledWith(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE);
@@ -130,8 +139,8 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
         store$.dispatch(new testActions.StartTest(123, TestCategory.ADI2));
         component.slotId = '123';
         component.activityCode = {
-          activityCode: ActivityCodes.FAIL_CANDIDATE_STOPS_TEST,
-          description: ActivityCodeDescription.FAIL_CANDIDATE_STOPS_TEST,
+          activityCode: ActivityCodes.FAIL,
+          description: ActivityCodeDescription.FAIL,
         },
         component.testData = {
           dangerousFaults: {},
@@ -149,6 +158,7 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.B));
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
+        spyOn(component.modalController, 'create').and.callThrough();
 
         component.slotId = '123';
         component.activityCode = {
@@ -172,6 +182,7 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.B));
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
+        spyOn(component.modalController, 'create').and.callThrough();
 
         component.slotId = '123';
         component.activityCode = {

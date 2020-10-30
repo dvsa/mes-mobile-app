@@ -119,8 +119,8 @@ describe('NonPassFinalisationCatAMod1Page', () => {
         store$.dispatch(new testActions.StartTest(123, TestCategory.EUA1M1));
         component.slotId = '123';
         component.activityCode = {
-          activityCode: ActivityCodes.FAIL_CANDIDATE_STOPS_TEST,
-          description: ActivityCodeDescription.FAIL_CANDIDATE_STOPS_TEST,
+          activityCode: ActivityCodes.FAIL,
+          description: ActivityCodeDescription.FAIL,
         },
         component.testData = {
           dangerousFaults: {},
@@ -138,6 +138,7 @@ describe('NonPassFinalisationCatAMod1Page', () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.B));
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
+        spyOn(component.modalController, 'create').and.callThrough();
 
         component.slotId = '123';
         component.activityCode = {
@@ -161,6 +162,7 @@ describe('NonPassFinalisationCatAMod1Page', () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.B));
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
+        spyOn(component.modalController, 'create').and.callThrough();
 
         component.slotId = '123';
         component.activityCode = {
