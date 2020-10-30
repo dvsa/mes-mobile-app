@@ -1,6 +1,6 @@
 import { ComponentFixture, async, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { IonicModule, NavController, Platform } from 'ionic-angular';
-import { NavControllerMock, PlatformMock } from 'ionic-mocks';
+import { IonicModule, ModalController, NavController, Platform } from 'ionic-angular';
+import { ModalControllerMock, NavControllerMock, PlatformMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
@@ -58,6 +58,7 @@ describe('NonPassFinalisationCatBPage', () => {
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         ActivityCodeFinalisationProvider,
