@@ -10,7 +10,6 @@ import { AccompanimentComponent } from './accompaniment/accompaniment';
 import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
 import { VehicleDetailsComponent } from './vehicle-details/vehicle-details';
 import { DirectivesModule } from '../../../directives/directives.module';
-import { BikeCategoryTypeComponent } from './bike-category-type/bike-category-type';
 import { VehicleChecksToggleComponent } from './vehicle-checks-completed/vehicle-checks-completed';
 import { CandidateDeclarationSignedComponent } from './candidate-declaration/candidate-declaration';
 
@@ -23,7 +22,6 @@ import { CandidateDeclarationSignedComponent } from './candidate-declaration/can
     AccompanimentComponent,
     VehicleDetailsCardComponent,
     VehicleDetailsComponent,
-    BikeCategoryTypeComponent,
     VehicleChecksToggleComponent,
     CandidateDeclarationSignedComponent,
   ],
@@ -41,7 +39,6 @@ import { CandidateDeclarationSignedComponent } from './candidate-declaration/can
     AccompanimentComponent,
     VehicleDetailsCardComponent,
     VehicleDetailsComponent,
-    BikeCategoryTypeComponent,
     VehicleChecksToggleComponent,
     CandidateDeclarationSignedComponent,
   ],

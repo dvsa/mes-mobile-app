@@ -22,6 +22,13 @@
           </ion-col>
         </ion-row>
 
+        <bike-category-type testType="MOD2"
+                            [testCategory] = "pageState.testCategory$ | async"
+                            (categoryCodeChange)="categoryCodeChanged($event)"
+                            [categoryConfirmed]="true"
+                            [formGroup]="form">
+        </bike-category-type>
+
         <license-provided
           [form]="form"
           [license]="pageState.provisionalLicense$ | async"

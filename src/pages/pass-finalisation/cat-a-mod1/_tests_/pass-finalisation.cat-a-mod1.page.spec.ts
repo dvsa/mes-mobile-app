@@ -39,6 +39,8 @@ import { Subscription } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 import { PassCertificateNumberCatAMod1Component }
   from '../components/pass-certificate-number/pass-certificate-number.cat-a-mod1';
+import { PopulateTestCategory } from '../../../../modules/tests/category/category.actions';
+import { BikeCategoryTypeComponent } from '../../../../components/common/bike-category-type/bike-category-type';
 
 describe('PassFinalisationCatAMod1Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatAMod1Page>;
@@ -57,6 +59,7 @@ describe('PassFinalisationCatAMod1Page', () => {
         MockComponent(FinalisationHeaderComponent),
         MockComponent(LanguagePreferencesComponent),
         MockComponent(WarningBannerComponent),
+        MockComponent(BikeCategoryTypeComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
@@ -163,6 +166,14 @@ describe('PassFinalisationCatAMod1Page', () => {
           .not
           .toHaveBeenCalledWith(new PassFinalisationValidationError('notRequiredControl is blank'));
       }));
+    });
+
+    describe('categoryCodeChanged', () => {
+      it('should dispatch action when categoryCodeChanged called', () => {
+        component.categoryCodeChanged('EUA1M1');
+        expect(store$.dispatch).toHaveBeenCalledWith(new PopulateTestCategory('EUA1M1'));
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });
