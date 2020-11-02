@@ -57,7 +57,7 @@ import { TestData } from '@dvsa/mes-test-schema/categories/common';
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
-import { getTestData } from 'src/modules/tests/test-data/cat-b/test-data.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
