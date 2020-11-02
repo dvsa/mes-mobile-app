@@ -42,7 +42,7 @@ import { PassCertificateNumberCatAMod1Component }
 import { PopulateTestCategory } from '../../../../modules/tests/category/category.actions';
 import { BikeCategoryTypeComponent } from '../../../../components/common/bike-category-type/bike-category-type';
 
-fdescribe('PassFinalisationCatAMod1Page', () => {
+describe('PassFinalisationCatAMod1Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatAMod1Page>;
   let component: PassFinalisationCatAMod1Page;
   let store$: Store<StoreModel>;
