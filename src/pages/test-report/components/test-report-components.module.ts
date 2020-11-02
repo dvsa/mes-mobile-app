@@ -24,6 +24,9 @@ import { ControlledStopComponent } from './controlled-stop/controlled-stop';
 import {
   SpecialLegalRequirementModalModule,
 } from './special-legal-requirement-modal/special-legal-requirement-modal.module';
+import {
+  TestFinalisationInvalidTestDataModalModule,
+} from './test-finalisation-invalid-test-data-modal/test-finalisation-invalid-test-data-modal.module';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,7 @@ import {
     LegalRequirementsModalModule,
     SpecialLegalRequirementModalModule,
     EtaInvalidModalModule,
+    TestFinalisationInvalidTestDataModalModule,
   ],
   exports:[
     EtaComponent,
