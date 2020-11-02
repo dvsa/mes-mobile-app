@@ -4,7 +4,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { CAT_BE } from '../../page-names.constants';
-import { Observable, Subscription } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
   getCurrentTest,
@@ -58,6 +58,7 @@ import { TestData } from '@dvsa/mes-test-schema/categories/common';
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
+import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -71,6 +72,7 @@ interface NonPassFinalisationPageState {
   displayD255$: Observable<boolean>;
   d255$: Observable<boolean>;
   isWelshTest$: Observable<boolean>;
+  testData$: Observable<TestData>;
   slotId$: Observable<string>;
 }
 
@@ -169,7 +171,19 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
         select(getTestSlotAttributes),
         select(isWelshTest),
       ),
+      testData$: currentTest$.pipe(
+        select(getTestData),
+      ),
     };
+
+    const { testData$, slotId$ } = this.pageState;
+
+    this.subscription = merge(
+      slotId$.pipe(map(slotId => this.slotId = slotId)),
+      testData$.pipe(
+        map(testData => this.testData = testData),
+      ),
+    ).subscribe();
   }
 
   ionViewDidEnter(): void {
@@ -219,6 +233,7 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {
+    this.activityCode = activityCodeModel;
     this.store$.dispatch(new SetActivityCode(activityCodeModel.activityCode));
   }
 

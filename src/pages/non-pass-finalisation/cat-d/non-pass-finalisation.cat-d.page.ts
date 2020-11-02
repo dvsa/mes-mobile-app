@@ -4,7 +4,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { CAT_D } from '../../page-names.constants';
-import { Observable, Subscription } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
   getCurrentTest,
@@ -66,6 +66,7 @@ import { ExaminerRole } from '../../../providers/app-config/constants/examiner-r
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
+import { getTestData } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -82,6 +83,7 @@ interface NonPassFinalisationPageState {
   transmission$: Observable<GearboxCategory>;
   transmissionAutomaticRadioChecked$: Observable<boolean>;
   transmissionManualRadioChecked$: Observable<boolean>;
+  testData$: Observable<TestData>;
   slotId$: Observable<string>;
 }
 
@@ -198,7 +200,19 @@ export class NonPassFinalisationCatDPage extends BasePageComponent implements On
           if (val) this.form.controls['transmissionCtrl'].setValue('Manual');
         }),
       ),
+      testData$: currentTest$.pipe(
+        select(getTestData),
+      ),
     };
+
+    const { testData$, slotId$ } = this.pageState;
+
+    this.subscription = merge(
+      slotId$.pipe(map(slotId => this.slotId = slotId)),
+      testData$.pipe(
+        map(testData => this.testData = testData),
+      ),
+    ).subscribe();
   }
 
   ionViewDidEnter(): void {
@@ -248,6 +262,7 @@ export class NonPassFinalisationCatDPage extends BasePageComponent implements On
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {
+    this.activityCode = activityCodeModel;
     this.store$.dispatch(new SetActivityCode(activityCodeModel.activityCode));
   }
 
