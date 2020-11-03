@@ -6,6 +6,9 @@ import { TestFinalisationComponentsModule } from
   '../../../components/test-finalisation/test-finalisation-component.module';
 import { NonPassFinalisationCatHomeTestPage } from './non-pass-finalisation.cat-home-test.page';
 import { NonPassFinalisationAnalyticsEffects } from '../non-pass-finalisation.analytics.effects';
+import {
+  ActivityCodeFinalisationProvider,
+} from '../../../providers/activity-code-finalisation/activity-code-finalisation';
 
 @NgModule({
   declarations: [
@@ -17,5 +20,6 @@ import { NonPassFinalisationAnalyticsEffects } from '../non-pass-finalisation.an
     ComponentsModule,
     TestFinalisationComponentsModule,
   ],
+  providers: [ActivityCodeFinalisationProvider],
 })
 export class NonPassFinalisationCatHomeTestPageModule { }

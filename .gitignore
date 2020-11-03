@@ -37,6 +37,7 @@ $RECYCLE.BIN/
 typings/cordova-*
 test-reports/
 src/environment/environment.ts
+src/environment/environment.uat.ts
 src/environment/test-schema-version.ts
 src/assets/mock/*
 fastlane/report.xml

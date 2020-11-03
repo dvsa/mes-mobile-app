@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, Platform } from 'ionic-angular';
+import { IonicPage, Modal, ModalController, NavController, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { CAT_A_MOD1 } from '../../page-names.constants';
-import { Observable } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
   getCurrentTest,
@@ -55,6 +55,11 @@ import {
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { TestData } from '@dvsa/mes-test-schema/categories/common';
+import {
+  ActivityCodeFinalisationProvider,
+} from '../../../providers/activity-code-finalisation/activity-code-finalisation';
+import { getTestData } from '../../../modules/tests/test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -68,6 +73,8 @@ interface NonPassFinalisationPageState {
   displayD255$: Observable<boolean>;
   d255$: Observable<boolean>;
   isWelshTest$: Observable<boolean>;
+  testData$: Observable<TestData>;
+  slotId$: Observable<string>;
 }
 
 @IonicPage()
@@ -81,6 +88,10 @@ export class NonPassFinalisationCatAMod1Page extends BasePageComponent implement
   form: FormGroup;
   activityCodeOptions: ActivityCodeModel[];
   slotId: string;
+  testData: TestData;
+  activityCode: ActivityCodeModel;
+  subscription: Subscription;
+  invalidTestDataModal: Modal;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -88,6 +99,8 @@ export class NonPassFinalisationCatAMod1Page extends BasePageComponent implement
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
+    public modalController: ModalController,
+    public activityCodeFinalisationProvider: ActivityCodeFinalisationProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
@@ -96,16 +109,16 @@ export class NonPassFinalisationCatAMod1Page extends BasePageComponent implement
   }
 
   ngOnInit() {
-    this.store$.pipe(
-      select(getTests),
-      map(tests => tests.currentTest.slotId),
-    ).subscribe(slotId => this.slotId = slotId);
 
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
     );
     this.pageState = {
+      slotId$: this.store$.pipe(
+        select(getTests),
+        map(tests => tests.currentTest.slotId),
+      ),
       candidateName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
@@ -158,16 +171,55 @@ export class NonPassFinalisationCatAMod1Page extends BasePageComponent implement
         select(getTestSlotAttributes),
         select(isWelshTest),
       ),
+      testData$: currentTest$.pipe(
+        select(getTestData),
+      ),
     };
+
+    const { testData$, slotId$ } = this.pageState;
+
+    this.subscription = merge(
+      slotId$.pipe(map(slotId => this.slotId = slotId)),
+      testData$.pipe(
+        map(testData => this.testData = testData),
+      ),
+    ).subscribe();
   }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new NonPassFinalisationViewDidEnter());
   }
 
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  openTestDataValidationModal() {
+    this.invalidTestDataModal = this.modalController.create('TestFinalisationInvalidTestDataModal', {
+      onCancel: this.onCancel,
+      onReturnToTestReport: this.onReturnToTestReport,
+    }, { cssClass: 'mes-modal-alert text-zoom-regular' });
+    this.invalidTestDataModal.present();
+  }
+
+  onCancel = () => {
+    this.invalidTestDataModal.dismiss();
+  }
+
+  onReturnToTestReport = () => {
+    this.invalidTestDataModal.dismiss();
+    this.navController.push(CAT_A_MOD1.TEST_REPORT_PAGE);
+  }
+
   continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
+      if (this.activityCodeFinalisationProvider.testDataIsInvalid(this.activityCode.activityCode, this.testData)) {
+        this.openTestDataValidationModal();
+        return;
+      }
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_A_MOD1.BACK_TO_OFFICE_PAGE);
@@ -181,6 +233,7 @@ export class NonPassFinalisationCatAMod1Page extends BasePageComponent implement
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {
+    this.activityCode = activityCodeModel;
     this.store$.dispatch(new SetActivityCode(activityCodeModel.activityCode));
   }
 
