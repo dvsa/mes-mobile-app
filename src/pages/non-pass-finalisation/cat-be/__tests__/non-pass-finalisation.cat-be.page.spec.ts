@@ -139,7 +139,7 @@ describe('NonPassFinalisationCatBEPage', () => {
 
       it('should create the TestFinalisationInvalidTestDataModal when activityCode is 5 and no S/D faults', () => {
         // Arrange
-        store$.dispatch(new testActions.StartTest(123, TestCategory.B));
+        store$.dispatch(new testActions.StartTest(123, TestCategory.BE));
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
         spyOn(component.modalController, 'create').and.callThrough();
 
@@ -163,7 +163,7 @@ describe('NonPassFinalisationCatBEPage', () => {
       });
       it('should create the TestFinalisationInvalidTestDataModal when activityCode is 4 and no S/D faults', () => {
         // Arrange
-        store$.dispatch(new testActions.StartTest(123, TestCategory.B));
+        store$.dispatch(new testActions.StartTest(123, TestCategory.BE));
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
         spyOn(component.modalController, 'create').and.callThrough();
 
