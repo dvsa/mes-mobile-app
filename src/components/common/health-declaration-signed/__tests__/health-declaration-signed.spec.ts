@@ -31,13 +31,13 @@ describe('HealthDeclarationSignedComponent', () => {
     describe('healthDeclarationChanged', () => {
       it('should emit selected value - true', () => {
         spyOn(component.healthDeclarationChange, 'emit');
-        component.healthDeclarationChanged(true);
+        component.healthDeclarationChanged('Signed');
         expect(component.healthDeclarationChange.emit).toHaveBeenCalledWith(true);
       });
 
       it('should emit selected value - false', () => {
         spyOn(component.healthDeclarationChange, 'emit');
-        component.healthDeclarationChanged(false);
+        component.healthDeclarationChanged('NotSigned');
         expect(component.healthDeclarationChange.emit).toHaveBeenCalledWith(false);
       });
     });
