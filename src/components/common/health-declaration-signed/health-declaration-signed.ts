@@ -1,6 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+export enum HealthDeclatationValidValues {
+  SIGNED = 'Signed',
+  NOTSIGNED = 'NotSigned',
+}
+
 @Component({
   selector: 'health-declaration-signed',
   templateUrl: 'health-declaration-signed.html',
@@ -29,12 +34,14 @@ export class HealthDeclarationSignedComponent implements OnChanges {
 
       // set to null on form creation to allow validation to fire if no user interaction
       if (!this.healthDeclaration) this.healthDeclaration = null;
+      return this.formControl.patchValue(this.healthDeclaration);
     }
-    this.formControl.patchValue(this.healthDeclaration);
+    this.formControl.patchValue(
+      this.healthDeclaration ? HealthDeclatationValidValues.SIGNED : HealthDeclatationValidValues.NOTSIGNED);
   }
 
-  healthDeclarationChanged(health: boolean): void {
-    this.healthDeclarationChange.emit(health);
+  healthDeclarationChanged(healthFormValue: string): void {
+    this.healthDeclarationChange.emit(healthFormValue === HealthDeclatationValidValues.SIGNED);
   }
 
   get invalid(): boolean {
