@@ -174,12 +174,15 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
       ),
     };
 
-    const { testData$, slotId$ } = this.pageState;
+    const { testData$, slotId$, activityCode$ } = this.pageState;
 
     this.subscription = merge(
       slotId$.pipe(map(slotId => this.slotId = slotId)),
       testData$.pipe(
         map(testData => this.testData = testData),
+      ),
+      activityCode$.pipe(
+        map(activityCode => this.activityCode = activityCode),
       ),
     ).subscribe();
   }
