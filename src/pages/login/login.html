@@ -1,5 +1,12 @@
 <ion-header>
-
+  <ion-navbar *ngIf="!hasUserLoggedOut && !isUserCancelledError()">
+    <ion-buttons start>
+      <button ion-button (click)="openLogoutModal()" id="logout-button">
+        <span>Logout</span>
+      </button>
+    </ion-buttons>
+    <ion-title>Driving Examiner Services</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>

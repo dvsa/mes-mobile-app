@@ -12,7 +12,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Store } from '@ngrx/store';
 
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationError } from '../../providers/authentication/authentication.constants';
 import { DeviceError } from '../../providers/device/device.constants';
 import { DeviceProvider } from '../../providers/device/device';
@@ -30,13 +29,14 @@ import { LogsProvider } from '../../providers/logs/logs';
 import { LogType } from '../../shared/models/log.model';
 import { DASHBOARD_PAGE } from '../page-names.constants';
 import { LogHelper } from '../../providers/logs/logsHelper';
+import { LogoutBasePageComponent } from '../../shared/classes/logout-base-page';
 
 @IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
-export class LoginPage extends BasePageComponent {
+export class LoginPage extends LogoutBasePageComponent {
 
   appInitError: AuthenticationError | AppConfigError;
   deviceTypeError: DeviceError;
@@ -47,6 +47,7 @@ export class LoginPage extends BasePageComponent {
 
   constructor(
     public navController: NavController,
+    public alertController: AlertController,
     public navParams: NavParams,
     public platform: Platform,
     public splashScreen: SplashScreen,
@@ -63,7 +64,7 @@ export class LoginPage extends BasePageComponent {
     public logProvider: LogsProvider,
     private logHelper: LogHelper,
   ) {
-    super(platform, navController, authenticationProvider, false);
+    super(platform, navController, authenticationProvider, alertController, false);
 
     // Check to see if redirect to page was from a logout
     this.hasUserLoggedOut = navParams.get('hasLoggedOut');
@@ -247,5 +248,4 @@ export class LoginPage extends BasePageComponent {
       this.loadingSpinner = null;
     }
   }
-
 }
