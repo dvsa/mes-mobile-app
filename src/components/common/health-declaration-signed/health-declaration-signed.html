@@ -15,7 +15,7 @@
                  class="gds-radio-button"
                  [class.ng-invalid]="invalid"
                  (change)="healthDeclarationChanged($event.target.value)"
-                 value="true">
+                 value="Signed">
           <label for="health-declaration-signed" class="radio-label">Signed</label>
         </ion-col>
         <ion-col>
@@ -26,7 +26,7 @@
                  class="gds-radio-button"
                  [class.ng-invalid]="invalid"
                  (change)="healthDeclarationChanged($event.target.value)"
-                 value="false">
+                 value="NotSigned">
           <label for="health-declaration-unsigned">Not Signed</label>
         </ion-col>
       </ion-row>
