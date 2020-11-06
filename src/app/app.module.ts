@@ -53,6 +53,7 @@ import {
   BikeCategoryDetailProvider,
 } from '../providers/bike-category-detail/bike-category-detail';
 import { CPCQuestionProvider } from '../providers/cpc-questions/cpc-questions';
+import { SearchProvider } from '../providers/search/search';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -158,6 +159,7 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
     PassCertificateValidationProvider,
     BikeCategoryDetailProvider,
     CPCQuestionProvider,
+    SearchProvider,
   ],
 })
 export class AppModule { }

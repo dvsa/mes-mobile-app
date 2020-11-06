@@ -4,8 +4,8 @@ import {
   NavParams, Platform, Refresher, ModalController,
 } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subscription, merge } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subscription, merge, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -34,6 +34,14 @@ import { PersonalCommitmentSlotComponent } from './personal-commitment/personal-
 import { TestSlotComponent } from '../../components/test-slot/test-slot/test-slot';
 import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
 import { DateTime } from '../../shared/helpers/date-time';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Log, LogType } from '../../shared/models/log.model';
+import { SaveLog } from '../../modules/logs/logs.actions';
+import { SearchProvider } from '../../providers/search/search';
+import { AdvancedSearchParams } from '../../providers/search/search.models';
+import { removeLeadingZeros } from '../../shared/helpers/formatters';
+import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
+import { LogHelper } from '../../providers/logs/logsHelper';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -67,6 +75,8 @@ export class JournalPage extends BasePageComponent implements OnInit {
   start = '2018-12-10T08:10:00+00:00';
   merged$: Observable<void | number>;
   todaysDate: DateTime;
+  searchResults: SearchResultTestSchema[] = [];
+  searchSubscription: Subscription = Subscription.EMPTY;
 
   constructor(
     public modalController: ModalController,
@@ -84,7 +94,8 @@ export class JournalPage extends BasePageComponent implements OnInit {
     private deviceProvider: DeviceProvider,
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
-
+    public searchProvider: SearchProvider,
+    private logHelper: LogHelper,
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId();
@@ -142,11 +153,20 @@ export class JournalPage extends BasePageComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
   }
 
   ionViewWillEnter() {
     super.ionViewWillEnter();
+
+    // TODO add if here to check for cache, if no cache call search endpoint, loadjournal and compare
+    //  else just loadjournal
+    this.searchForCompletedTests();
     this.loadJournalManually();
+    this.journalComparison();
     this.setupPolling();
 
     if (this.merged$) {
@@ -169,6 +189,49 @@ export class JournalPage extends BasePageComponent implements OnInit {
       this.insomnia.allowSleepAgain();
       this.deviceProvider.disableSingleAppMode();
     }
+  }
+
+  searchForCompletedTests(): void {
+
+    const advancedSearchParams: AdvancedSearchParams = {
+      startDate: '',
+      endDate: '',
+      staffNumber: removeLeadingZeros('78471231'),
+      costCode: '',
+    };
+
+    console.log('im gonna search');
+
+    // start spinner
+    this.searchSubscription = this.searchProvider.advancedSearch(advancedSearchParams)
+      .pipe(
+        map((results) => {
+          console.log('resultsHere', results);
+          this.searchResults = results;
+          // stop spinner
+        }),
+        catchError((err: HttpErrorResponse) => {
+          const log: Log = this.logHelper
+            .createLog(
+              LogType.ERROR, `Advanced search with params (${advancedSearchParams})`, err.message,
+            );
+          this.store$.dispatch(new SaveLog(log));
+          this.searchResults = [];
+          // stop spinner
+          if (err) {
+            this.showError(err);
+          }
+          return of(console.log('ERROR', JSON.stringify(err)));
+        }),
+      ).subscribe();
+
+    console.log('results2', this.searchResults);
+  }
+
+  journalComparison() {
+    console.log('JC results', this.searchResults);
+    console.log('slotdata', this.pageState.slots$);
+    console.log('subscription', this.subscription);
   }
 
   loadJournalManually() {
@@ -249,6 +312,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
   }
 
   public refreshJournal = () => {
+    console.log('results', this.searchResults);
     this.loadJournalManually();
   }
 
