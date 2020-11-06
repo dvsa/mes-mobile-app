@@ -409,5 +409,29 @@ describe('LoginPage', () => {
       expect((tags[0].nativeElement as HTMLElement).textContent).toContain('Unsupported application version');
     });
 
+    it('should display Logout button if not logged out and login has not been cancelled', () => {
+      component.hasUserLoggedOut = false;
+      fixture.detectChanges();
+
+      const logoutButton = fixture.debugElement.queryAll(By.css('#logout-button'));
+      expect(logoutButton.length).toBe(1);
+    });
+
+    it('should not display Logout button if logged out', () => {
+      component.hasUserLoggedOut = true;
+      fixture.detectChanges();
+
+      const logoutButton = fixture.debugElement.queryAll(By.css('#logout-button'));
+      expect(logoutButton.length).toBe(0);
+    });
+
+    it('should not display Logout button if login has been cancelled', () => {
+      component.hasUserLoggedOut = false;
+      component.appInitError = AuthenticationError.USER_CANCELLED;
+      fixture.detectChanges();
+
+      const logoutButton = fixture.debugElement.queryAll(By.css('#logout-button'));
+      expect(logoutButton.length).toBe(0);
+    });
   });
 });

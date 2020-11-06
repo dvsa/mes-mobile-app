@@ -1,13 +1,15 @@
 import { AppModule } from './../../../app/app.module';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
+import { IonicModule, NavController, NavParams, Config, Platform, AlertController } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, AlertControllerMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 
 import { ErrorPage } from './../error';
 import { ErrorMessageComponent } from '../../../components/common/error-message/error-message';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite } from 'ng-bullet';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 
 describe('ErrorPage', () => {
   let fixture: ComponentFixture<ErrorPage>;
@@ -28,6 +30,8 @@ describe('ErrorPage', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
+        { provide: AlertController, useFactory: () => AlertControllerMock.instance() },
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ],
     });
   });
