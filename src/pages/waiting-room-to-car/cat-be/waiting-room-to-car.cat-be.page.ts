@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable, merge, Subscription } from 'rxjs';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { GearboxCategory, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   SchoolCarToggled,
@@ -91,6 +91,7 @@ import {
   VehicleChecksCompletedToggled, VehicleChecksDrivingFaultsNumberChanged, VehicleChecksSeriousFaultsNumberChanged,
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 import { getNextPageDebriefOffice } from '../../../shared/constants/getNextPageDebriefOffice.constants';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -222,7 +223,6 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
       delegatedTest$: currentTest$.pipe(
         select(getDelegatedTestIndicator),
         select(isDelegatedTest),
-        // select(() => true),
       ),
       vehicleChecksCompleted$: currentTest$.pipe(
         select(getTestData),
@@ -302,16 +302,24 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
     this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
   }
 
-  vehicleChecksCompletedOutcomeChanged(toggled: boolean) {
-    this.store$.dispatch(new VehicleChecksCompletedToggled(toggled));
+  generateDelegatedQuestionResults(number: number, outcome: CompetencyOutcome): QuestionResult[] {
+    return Array(number).fill(null).map(() => {
+      return this.createDelegatedQuestionResult(outcome);
+    });
   }
 
-  vehicleChecksDrivingFaultsNumberChanged() {
-    this.store$.dispatch(new VehicleChecksDrivingFaultsNumberChanged());
+  vehicleChecksDrivingFaultsNumberChanged(number: number) {
+    this.store$.dispatch(new VehicleChecksDrivingFaultsNumberChanged(
+      this.generateDelegatedQuestionResults(number, CompetencyOutcome.DF),
+    ));
   }
 
-  vehicleChecksSeriousFaultsNumberChanged() {
-    this.store$.dispatch(new VehicleChecksSeriousFaultsNumberChanged());
+  vehicleChecksSeriousFaultsNumberChanged(number: number) {
+    let payload: QuestionResult = {};
+    if (number > 0) {
+      payload = this.createDelegatedQuestionResult(CompetencyOutcome.S);
+    }
+    this.store$.dispatch(new VehicleChecksSeriousFaultsNumberChanged(payload));
   }
 
   candidateDeclarationOutcomeChanged(declaration: boolean) {
@@ -377,6 +385,12 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
     const action = passed ? new EyesightTestPassed() : new EyesightTestFailed();
     this.store$.dispatch(action);
   }
+
+  vehicleChecksCompletedOutcomeChanged(toggled: boolean) {
+    this.store$.dispatch(new VehicleChecksCompletedToggled(toggled));
+  }
+
+  createDelegatedQuestionResult = (outcome: CompetencyOutcome) => ({ outcome, code: 'delegated' });
 
   nextPage() {
     return getNextPageDebriefOffice(CAT_BE, this.isDelegated);

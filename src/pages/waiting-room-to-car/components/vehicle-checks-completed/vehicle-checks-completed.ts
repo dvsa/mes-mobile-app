@@ -30,10 +30,10 @@ export class VehicleChecksToggleComponent implements OnChanges {
   vehicleChecksCompletedOutcomeChange = new EventEmitter<boolean>();
 
   @Output()
-  vehicleChecksDrivingFaultsNumberChange = new EventEmitter<boolean>();
+  vehicleChecksDrivingFaultsNumberChange = new EventEmitter<number>();
 
   @Output()
-  vehicleChecksSeriousFaultsNumberChange = new EventEmitter<boolean>();
+  vehicleChecksSeriousFaultsNumberChange = new EventEmitter<number>();
 
   drivingFaultsNumberOptions: number[] = Array(
     NUMBER_OF_SHOW_ME_QUESTIONS +
@@ -57,14 +57,12 @@ export class VehicleChecksToggleComponent implements OnChanges {
     }
   }
 
-  vehicleChecksDrivingFaultsNumberChanged() {
-    console.log('vehicleChecksDrivingFaultsNumberChanged');
-    this.vehicleChecksDrivingFaultsNumberChange.emit();
+  vehicleChecksDrivingFaultsNumberChanged(number: number) {
+    this.vehicleChecksDrivingFaultsNumberChange.emit(number);
   }
 
-  vehicleChecksSeriousFaultsNumberChanged() {
-    console.log('vehicleChecksSeriousFaultsNumberChanged');
-    this.vehicleChecksSeriousFaultsNumberChange.emit();
+  vehicleChecksSeriousFaultsNumberChanged(number: number) {
+    this.vehicleChecksSeriousFaultsNumberChange.emit(number);
   }
 
   get invalid(): boolean {

@@ -41,11 +41,11 @@ export class VehicleChecksCompletedToggled implements Action {
   readonly type = VEHICLE_CHECKS_COMPLETED;
 }
 export class VehicleChecksDrivingFaultsNumberChanged implements Action {
-  constructor() { }
+  constructor(public payload: QuestionResult[]) { }
   readonly type = VEHICLE_CHECKS_DRIVING_FAULTS_NUMBER_CHANGED;
 }
 export class VehicleChecksSeriousFaultsNumberChanged implements Action {
-  constructor() { }
+  constructor(public payload: QuestionResult) { }
   readonly type = VEHICLE_CHECKS_SERIOUS_FAULTS_NUMBER_CHANGED;
 }
 
