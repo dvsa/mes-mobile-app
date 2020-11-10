@@ -88,7 +88,7 @@ import {
   SetDeclarationStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
-  VehicleChecksCompletedToggled,
+  VehicleChecksCompletedToggled, VehicleChecksDrivingFaultsNumberChanged, VehicleChecksSeriousFaultsNumberChanged,
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 import { getNextPageDebriefOffice } from '../../../shared/constants/getNextPageDebriefOffice.constants';
 
@@ -222,6 +222,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
       delegatedTest$: currentTest$.pipe(
         select(getDelegatedTestIndicator),
         select(isDelegatedTest),
+        // select(() => true),
       ),
       vehicleChecksCompleted$: currentTest$.pipe(
         select(getTestData),
@@ -303,6 +304,14 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
 
   vehicleChecksCompletedOutcomeChanged(toggled: boolean) {
     this.store$.dispatch(new VehicleChecksCompletedToggled(toggled));
+  }
+
+  vehicleChecksDrivingFaultsNumberChanged() {
+    this.store$.dispatch(new VehicleChecksDrivingFaultsNumberChanged());
+  }
+
+  vehicleChecksSeriousFaultsNumberChanged() {
+    this.store$.dispatch(new VehicleChecksSeriousFaultsNumberChanged());
   }
 
   candidateDeclarationOutcomeChanged(declaration: boolean) {

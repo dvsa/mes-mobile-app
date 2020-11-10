@@ -38,5 +38,39 @@
                 Select the vehicle checks completed outcome
             </div>
         </ion-row>
+        <ion-row class="spacing-row">
+            <ion-col col-36>
+                <ion-select id="vehicle-checks-driving-fault-selector"
+                            class="vehicle-checks-driving-fault-selector"
+                            placeholder="Driving faults" 
+                            okText="Submit"
+                            cancelText="Cancel"
+                            [formControlName]="'vehicleChecksDrivingFaultsNumber'"
+                            (ionChange)="vehicleChecksDrivingFaultsNumberChanged($event)"
+                            [disabled]="!vehicleChecksCompleted"
+                            [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}"
+                >
+                    <ion-option *ngFor="let number of drivingFaultsNumberOptions" [value]="number">
+                        {{number}}
+                    </ion-option>
+                </ion-select>
+            </ion-col>
+            <ion-col col-36>
+                <ion-select id="vehicle-checks-serious-fault-selector"
+                            class="vehicle-checks-serious-fault-selector"
+                            placeholder="Serious faults" 
+                            okText="Submit"
+                            cancelText="Cancel"
+                            [formControlName]="'vehicleChecksSeriousFaultsNumber'"
+                            (ionChange)="vehicleChecksSeriousFaultsNumberChanged($event)"
+                            [disabled]="!vehicleChecksCompleted"
+                            [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}"
+                >
+                    <ion-option *ngFor="let number of seriousFaultsNumberOptions" [value]="number">
+                        {{number}}
+                    </ion-option>
+                </ion-select>
+            </ion-col>
+        </ion-row>
     </ion-col>
 </ion-row>

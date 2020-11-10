@@ -59,6 +59,16 @@ export function vehicleChecksCatBEReducer(
         ...state,
         vehicleChecksCompleted: action.toggled,
       };
+    case vehicleChecksCatBeActionTypes.VEHICLE_CHECKS_DRIVING_FAULTS_NUMBER_CHANGED:
+      console.log(`state`, state);
+      return {
+        ...state,
+      };
+    case vehicleChecksCatBeActionTypes.VEHICLE_CHECKS_SERIOUS_FAULTS_NUMBER_CHANGED:
+      console.log(`state`, state);
+      return {
+        ...state,
+      };
     default:
       return state;
   }

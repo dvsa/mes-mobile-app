@@ -1,5 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  NUMBER_OF_SHOW_ME_QUESTIONS,
+} from '../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
+import {
+  NUMBER_OF_TELL_ME_QUESTIONS,
+} from '../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
 
 enum VehicleChecksCompletedResult {
   COMPLETED = 'Completed',
@@ -23,10 +29,25 @@ export class VehicleChecksToggleComponent implements OnChanges {
   @Output()
   vehicleChecksCompletedOutcomeChange = new EventEmitter<boolean>();
 
+  @Output()
+  vehicleChecksDrivingFaultsNumberChange = new EventEmitter<boolean>();
+
+  @Output()
+  vehicleChecksSeriousFaultsNumberChange = new EventEmitter<boolean>();
+
+  drivingFaultsNumberOptions: number[] = Array(
+    NUMBER_OF_SHOW_ME_QUESTIONS +
+    NUMBER_OF_TELL_ME_QUESTIONS + 1,
+  ).fill(null).map((v, i) => i);
+
+  seriousFaultsNumberOptions = [0, 1];
+
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl('', [Validators.required]);
       this.formGroup.addControl('vehicleChecksToggleCtrl', this.formControl);
+      this.formGroup.addControl('vehicleChecksDrivingFaultsNumber', this.formControl);
+      this.formGroup.addControl('vehicleChecksSeriousFaultsNumber', this.formControl);
     }
     this.formControl.patchValue(this.vehicleChecksCompleted);
   }
@@ -34,6 +55,16 @@ export class VehicleChecksToggleComponent implements OnChanges {
     if (this.formControl.valid) {
       this.vehicleChecksCompletedOutcomeChange.emit(result === VehicleChecksCompletedResult.COMPLETED);
     }
+  }
+
+  vehicleChecksDrivingFaultsNumberChanged() {
+    console.log('vehicleChecksDrivingFaultsNumberChanged');
+    this.vehicleChecksDrivingFaultsNumberChange.emit();
+  }
+
+  vehicleChecksSeriousFaultsNumberChanged() {
+    console.log('vehicleChecksSeriousFaultsNumberChanged');
+    this.vehicleChecksSeriousFaultsNumberChange.emit();
   }
 
   get invalid(): boolean {
