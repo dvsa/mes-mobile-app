@@ -64,11 +64,6 @@ export function vehicleChecksCatBEReducer(
         ...state,
         showMeQuestions: [...action.payload],
       };
-    case vehicleChecksCatBeActionTypes.VEHICLE_CHECKS_SERIOUS_FAULTS_NUMBER_CHANGED:
-      return {
-        ...state,
-        tellMeQuestions: [action.payload],
-      };
     default:
       return state;
   }

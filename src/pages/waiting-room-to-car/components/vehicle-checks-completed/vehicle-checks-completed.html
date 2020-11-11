@@ -54,21 +54,6 @@
                     </ion-option>
                 </ion-select>
             </ion-col>
-            <ion-col col-48>
-                <ion-select id="vehicle-checks-serious-fault-selector"
-                            class="vehicle-checks-fault-selector"
-                            placeholder="Serious faults" 
-                            okText="Submit"
-                            cancelText="Cancel"
-                            [formControlName]="'vehicleChecksSeriousFaultsNumber'"
-                            (ionChange)="vehicleChecksSeriousFaultsNumberChanged($event)"
-                            [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}"
-                >
-                    <ion-option *ngFor="let number of seriousFaultsNumberOptions" [value]="number">
-                        {{number}}
-                    </ion-option>
-                </ion-select>
-            </ion-col>
         </ion-row>
     </ion-col>
 </ion-row>

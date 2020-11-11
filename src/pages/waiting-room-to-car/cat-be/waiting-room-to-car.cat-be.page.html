@@ -46,7 +46,6 @@
                     [vehicleChecksCompleted]="pageState.vehicleChecksCompleted$ | async"
                     (vehicleChecksCompletedOutcomeChange)="vehicleChecksCompletedOutcomeChanged($event)"
                     (vehicleChecksDrivingFaultsNumberChange)="vehicleChecksDrivingFaultsNumberChanged($event)"
-                    (vehicleChecksSeriousFaultsNumberChange)="vehicleChecksSeriousFaultsNumberChanged($event)"
             ></vehicle-checks-completed>
 
             <accompaniment-card [formGroup]="form" [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"

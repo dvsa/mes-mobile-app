@@ -32,15 +32,10 @@ export class VehicleChecksToggleComponent implements OnChanges {
   @Output()
   vehicleChecksDrivingFaultsNumberChange = new EventEmitter<number>();
 
-  @Output()
-  vehicleChecksSeriousFaultsNumberChange = new EventEmitter<number>();
-
   drivingFaultsNumberOptions: number[] = Array(
     NUMBER_OF_SHOW_ME_QUESTIONS +
     NUMBER_OF_TELL_ME_QUESTIONS + 1,
   ).fill(null).map((v, i) => i);
-
-  seriousFaultsNumberOptions = [0, 1];
 
   ngOnChanges(): void {
     if (!this.formControl) {
@@ -59,10 +54,6 @@ export class VehicleChecksToggleComponent implements OnChanges {
 
   vehicleChecksDrivingFaultsNumberChanged(number: number) {
     this.vehicleChecksDrivingFaultsNumberChange.emit(number);
-  }
-
-  vehicleChecksSeriousFaultsNumberChanged(number: number) {
-    this.vehicleChecksSeriousFaultsNumberChange.emit(number);
   }
 
   get invalid(): boolean {

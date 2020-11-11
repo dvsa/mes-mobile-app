@@ -82,13 +82,13 @@ import {
   getResidencyDeclarationStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
-import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+// import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import {
   CandidateDeclarationSigned,
   SetDeclarationStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import {
-  VehicleChecksCompletedToggled, VehicleChecksDrivingFaultsNumberChanged, VehicleChecksSeriousFaultsNumberChanged,
+  VehicleChecksCompletedToggled, VehicleChecksDrivingFaultsNumberChanged,
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 import { getNextPageDebriefOffice } from '../../../shared/constants/getNextPageDebriefOffice.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
@@ -222,7 +222,8 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
       ),
       delegatedTest$: currentTest$.pipe(
         select(getDelegatedTestIndicator),
-        select(isDelegatedTest),
+        select(() => true),
+        // select(isDelegatedTest),
       ),
       vehicleChecksCompleted$: currentTest$.pipe(
         select(getTestData),
@@ -316,13 +317,6 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
     }
   }
 
-  vehicleChecksSeriousFaultsNumberChanged(number: number) {
-    if (number > 0) {
-      const payload = this.createDelegatedQuestionResult(CompetencyOutcome.S);
-      this.store$.dispatch(new VehicleChecksSeriousFaultsNumberChanged(payload));
-    }
-  }
-
   candidateDeclarationOutcomeChanged(declaration: boolean) {
     this.store$.dispatch(new SetDeclarationStatus(declaration));
     this.store$.dispatch(new CandidateDeclarationSigned());
@@ -391,7 +385,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
     this.store$.dispatch(new VehicleChecksCompletedToggled(toggled));
   }
 
-  createDelegatedQuestionResult = (outcome: CompetencyOutcome) => ({ outcome, code: 'delegated' });
+  createDelegatedQuestionResult = (outcome: CompetencyOutcome) => ({ outcome, code: 'DELEGATED EXAMINER' });
 
   nextPage() {
     return getNextPageDebriefOffice(CAT_BE, this.isDelegated);
