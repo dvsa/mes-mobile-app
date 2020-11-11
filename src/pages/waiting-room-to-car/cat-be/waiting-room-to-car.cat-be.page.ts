@@ -82,7 +82,7 @@ import {
   getResidencyDeclarationStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
-// import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import {
   CandidateDeclarationSigned,
   SetDeclarationStatus,
@@ -222,8 +222,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
       ),
       delegatedTest$: currentTest$.pipe(
         select(getDelegatedTestIndicator),
-        select(() => true),
-        // select(isDelegatedTest),
+        select(isDelegatedTest),
       ),
       vehicleChecksCompleted$: currentTest$.pipe(
         select(getTestData),
