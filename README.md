@@ -13,6 +13,8 @@ DVSA Mobile Examiner Services (GDS Beta phase)
 - Security
   - [Git secrets](https://github.com/awslabs/git-secrets)
   - [ScanRepo](https://github.com/UKHomeOffice/repo-security-scanner)
+    - latest version: scanrepo-0.4.0-darwin-amd64.tar.gz
+    - Add to path (using echo $PATH to find your path)
  - NOTE: you wil need to obtain `ionic-config.json` and `.npmrc` files containing the ionic enterprise licence keys and save to the project root in order to build the app.
 
 ### Get started
