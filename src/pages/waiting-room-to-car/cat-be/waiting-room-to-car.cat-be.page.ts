@@ -309,17 +309,18 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
   }
 
   vehicleChecksDrivingFaultsNumberChanged(number: number) {
-    this.store$.dispatch(new VehicleChecksDrivingFaultsNumberChanged(
-      this.generateDelegatedQuestionResults(number, CompetencyOutcome.DF),
-    ));
+    if (number > 0) {
+      this.store$.dispatch(new VehicleChecksDrivingFaultsNumberChanged(
+        this.generateDelegatedQuestionResults(number, CompetencyOutcome.DF),
+      ));
+    }
   }
 
   vehicleChecksSeriousFaultsNumberChanged(number: number) {
-    let payload: QuestionResult = {};
     if (number > 0) {
-      payload = this.createDelegatedQuestionResult(CompetencyOutcome.S);
+      const payload = this.createDelegatedQuestionResult(CompetencyOutcome.S);
+      this.store$.dispatch(new VehicleChecksSeriousFaultsNumberChanged(payload));
     }
-    this.store$.dispatch(new VehicleChecksSeriousFaultsNumberChanged(payload));
   }
 
   candidateDeclarationOutcomeChanged(declaration: boolean) {
