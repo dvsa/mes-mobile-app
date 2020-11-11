@@ -47,7 +47,6 @@
                             cancelText="Cancel"
                             [formControlName]="'vehicleChecksDrivingFaultsNumber'"
                             (ionChange)="vehicleChecksDrivingFaultsNumberChanged($event)"
-                            [disabled]="!vehicleChecksCompleted"
                             [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}"
                 >
                     <ion-option *ngFor="let number of drivingFaultsNumberOptions" [value]="number">
@@ -63,7 +62,6 @@
                             cancelText="Cancel"
                             [formControlName]="'vehicleChecksSeriousFaultsNumber'"
                             (ionChange)="vehicleChecksSeriousFaultsNumberChanged($event)"
-                            [disabled]="!vehicleChecksCompleted"
                             [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}"
                 >
                     <ion-option *ngFor="let number of seriousFaultsNumberOptions" [value]="number">
