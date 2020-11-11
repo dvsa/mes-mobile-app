@@ -102,6 +102,7 @@ import { getReceiptDeclarationStatus }
  from '../../../modules/tests/post-test-declarations/post-test-declarations.selector';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { get } from 'lodash';
+import { SetRekeyDate } from '../../../modules/tests/rekey-date/rekey-date.actions';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -445,6 +446,7 @@ export class OfficeCatCPCPage extends BasePageComponent {
       this.store$.dispatch(new CompleteTest());
       this.popToRoot();
     } else {
+      this.store$.dispatch(new SetRekeyDate());
       this.store$.dispatch(new SendCurrentTest());
       this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
     }

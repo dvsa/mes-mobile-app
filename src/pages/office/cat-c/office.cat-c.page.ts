@@ -146,6 +146,7 @@ import * as postTestDeclarationsActions
 import { getPostTestDeclarations } from '../../../modules/tests/post-test-declarations/post-test-declarations.reducer';
 import { getHealthDeclarationStatus }
   from '../../../modules/tests/post-test-declarations/post-test-declarations.selector';
+import { SetRekeyDate } from '../../../modules/tests/rekey-date/rekey-date.actions';
 
 interface OfficePageState {
   applicationNumber$: Observable<string>;
@@ -722,6 +723,7 @@ export class OfficeCatCPage extends BasePageComponent {
       this.store$.dispatch(new CompleteTest());
       this.popToRoot();
     } else {
+      this.store$.dispatch(new SetRekeyDate());
       this.store$.dispatch(new SendCurrentTest());
       this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
     }
