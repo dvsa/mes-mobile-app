@@ -59,6 +59,11 @@ export function vehicleChecksCatBEReducer(
         ...state,
         vehicleChecksCompleted: action.toggled,
       };
+    case vehicleChecksCatBeActionTypes.VEHICLE_CHECKS_DRIVING_FAULTS_NUMBER_CHANGED:
+      return {
+        ...state,
+        showMeQuestions: [...action.payload],
+      };
     default:
       return state;
   }
