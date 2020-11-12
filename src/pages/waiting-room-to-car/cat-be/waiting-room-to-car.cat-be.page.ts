@@ -310,11 +310,9 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
   }
 
   vehicleChecksDrivingFaultsNumberChanged(number: number) {
-    if (number > 0) {
-      this.store$.dispatch(new VehicleChecksDrivingFaultsNumberChanged(
-        this.generateDelegatedQuestionResults(number, CompetencyOutcome.DF),
-      ));
-    }
+    this.store$.dispatch(new VehicleChecksDrivingFaultsNumberChanged(
+      this.generateDelegatedQuestionResults(number, CompetencyOutcome.DF),
+    ));
   }
 
   candidateDeclarationOutcomeChanged(declaration: boolean) {
