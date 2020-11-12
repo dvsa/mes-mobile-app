@@ -124,6 +124,7 @@ interface WaitingRoomToCarPageState {
 export class WaitingRoomToCarCatBEPage extends BasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
+  testCategory = TestCategory.BE;
 
   @ViewChild(VehicleChecksCatBEComponent)
   vehicleChecks: VehicleChecksCatBEComponent;

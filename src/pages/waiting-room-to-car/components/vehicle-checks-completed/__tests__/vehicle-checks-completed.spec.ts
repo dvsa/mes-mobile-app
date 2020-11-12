@@ -6,6 +6,7 @@ import { configureTestSuite } from 'ng-bullet';
 
 import { AppModule } from '../../../../../app/app.module';
 import { VehicleChecksToggleComponent } from '../vehicle-checks-completed';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('VehicleChecksToggleComponent', () => {
   let fixture: ComponentFixture<VehicleChecksToggleComponent>;
@@ -32,6 +33,7 @@ describe('VehicleChecksToggleComponent', () => {
   describe('DOM', () => {
     it('should call VehicleChecksToggleResultChanged with Completed when selected', () => {
       spyOn(component, 'vehicleChecksToggleResultChanged');
+      component.testCategory = TestCategory.BE;
       component.ngOnChanges();
       const vehicleChecksCompletedRadio =
         fixture.debugElement.query(By.css('#vehicle-checks-toggle-completed'));
@@ -42,6 +44,7 @@ describe('VehicleChecksToggleComponent', () => {
     });
     it('should call VehicleChecksToggleResultChanged with Not completed when not selected', () => {
       spyOn(component, 'vehicleChecksToggleResultChanged');
+      component.testCategory = TestCategory.BE;
       component.ngOnChanges();
       const vehicleChecksCompletedRadio =
         fixture.debugElement.query(By.css('#vehicle-checks-toggle-non-completed'));

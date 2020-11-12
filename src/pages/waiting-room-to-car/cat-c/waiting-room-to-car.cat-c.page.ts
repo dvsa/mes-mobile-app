@@ -46,11 +46,12 @@ import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { VehicleChecksCatCComponent } from './components/vehicle-checks/vehicle-checks.cat-c';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
-import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { CategoryCode, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import {
   VehicleChecksCompletedToggled,
+  VehicleChecksDrivingFaultsNumberChanged,
 } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 import {
   getPreTestDeclarations,
@@ -64,6 +65,7 @@ import {
   CandidateDeclarationSigned,
   SetDeclarationStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -229,6 +231,20 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
 
   closeVehicleChecksModal = () => {
     this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
+  }
+
+  generateDelegatedQuestionResults(number: number, outcome: CompetencyOutcome): QuestionResult[] {
+    return Array(number).fill(null).map(() => {
+      return this.createDelegatedQuestionResult(outcome);
+    });
+  }
+
+  createDelegatedQuestionResult = (outcome: CompetencyOutcome) => ({ outcome, code: 'DELEGATED EXAMINER' });
+
+  vehicleChecksDrivingFaultsNumberChanged(number: number) {
+    this.store$.dispatch(new VehicleChecksDrivingFaultsNumberChanged(
+      this.generateDelegatedQuestionResults(number, CompetencyOutcome.DF),
+    ));
   }
 
   setupSubscription() {
