@@ -55,7 +55,7 @@ import { getTestCategory } from '../../../modules/tests/category/category.reduce
 
 import { CategoryCode, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
-import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
+// import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import {
   getVehicleChecksCompleted,
 } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
@@ -191,7 +191,8 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
       ),
       delegatedTest$: currentTest$.pipe(
         select(getDelegatedTestIndicator),
-        select(isDelegatedTest),
+        // select(isDelegatedTest),
+        select(() => true),
       ),
       vehicleChecksCompleted$: currentTest$.pipe(
         select(getTestData),

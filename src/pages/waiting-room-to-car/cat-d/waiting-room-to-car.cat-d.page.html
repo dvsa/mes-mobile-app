@@ -28,7 +28,6 @@
             <vehicle-checks-cat-d
                     *ngIf="!(pageState.delegatedTest$ | async)"
                     [formGroup]="form"
-                    [testCategory]="testCategory"
                     [vehicleChecksScore]="pageState.vehicleChecksScore$ | async"
                     [safetyQuestionsScore]="pageState.safetyQuestionsScore$ | async"
                     [vehicleChecks]="pageState.vehicleChecks$ | async"
@@ -39,6 +38,7 @@
             <vehicle-checks-completed
                     *ngIf="pageState.delegatedTest$ | async"
                     [formGroup]="form"
+                    [testCategory]="testCategory"
                     [vehicleChecksCompleted]="pageState.vehicleChecksCompleted$ | async"
                     (vehicleChecksCompletedOutcomeChange)="vehicleChecksCompletedOutcomeChanged($event)"
                     (vehicleChecksDrivingFaultsNumberChange)="vehicleChecksDrivingFaultsNumberChanged($event)"
