@@ -1,11 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {
-  NUMBER_OF_SHOW_ME_QUESTIONS,
-} from '../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
-import {
-  NUMBER_OF_TELL_ME_QUESTIONS,
-} from '../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { vehicleChecksQuestionsByCategory } from '../../../../shared/helpers/vehicle-checks-questions-by-category';
 
 enum VehicleChecksCompletedResult {
   COMPLETED = 'Completed',
@@ -24,6 +20,9 @@ export class VehicleChecksToggleComponent implements OnChanges {
   vehicleChecksCompleted: boolean;
 
   @Input()
+  testCategory: TestCategory;
+
+  @Input()
   formGroup: FormGroup;
 
   @Output()
@@ -32,10 +31,13 @@ export class VehicleChecksToggleComponent implements OnChanges {
   @Output()
   vehicleChecksDrivingFaultsNumberChange = new EventEmitter<number>();
 
-  drivingFaultsNumberOptions: number[] = Array(
-    NUMBER_OF_SHOW_ME_QUESTIONS +
-    NUMBER_OF_TELL_ME_QUESTIONS + 1,
-  ).fill(null).map((v, i) => i);
+  drivingFaultsNumberOptions: number[];
+
+  ngOnInit(): void {
+    this.drivingFaultsNumberOptions = Array(
+      vehicleChecksQuestionsByCategory(this.testCategory) + 1,
+    ).fill(null).map((v, i) => i);
+  }
 
   ngOnChanges(): void {
     if (!this.formControl) {
