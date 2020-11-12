@@ -38,5 +38,22 @@
                 Select the vehicle checks completed outcome
             </div>
         </ion-row>
+        <ion-row class="spacing-row" margin-bottom>
+            <ion-col col-48>
+                <ion-select id="vehicle-checks-driving-fault-selector"
+                            class="vehicle-checks-fault-selector"
+                            placeholder="Driving faults" 
+                            okText="Submit"
+                            cancelText="Cancel"
+                            [formControlName]="'vehicleChecksDrivingFaultsNumber'"
+                            (ionChange)="vehicleChecksDrivingFaultsNumberChanged($event)"
+                            [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}"
+                >
+                    <ion-option *ngFor="let number of drivingFaultsNumberOptions" [value]="number">
+                        {{number}}
+                    </ion-option>
+                </ion-select>
+            </ion-col>
+        </ion-row>
     </ion-col>
 </ion-row>
