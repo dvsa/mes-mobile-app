@@ -242,11 +242,9 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   createDelegatedQuestionResult = (outcome: CompetencyOutcome) => ({ outcome, code: 'DELEGATED EXAMINER' });
 
   vehicleChecksDrivingFaultsNumberChanged(number: number) {
-    if (number > 0) {
-      this.store$.dispatch(new VehicleChecksDrivingFaultsNumberChanged(
-        this.generateDelegatedQuestionResults(number, CompetencyOutcome.DF),
-      ));
-    }
+    this.store$.dispatch(new VehicleChecksDrivingFaultsNumberChanged(
+      this.generateDelegatedQuestionResults(number, CompetencyOutcome.DF),
+    ));
   }
 
   setupSubscription() {
