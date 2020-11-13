@@ -45,12 +45,12 @@
                             placeholder="Driving faults" 
                             okText="Submit"
                             cancelText="Cancel"
-                            [formControlName]="'vehicleChecksDrivingFaultsNumber'"
+                            formControlName="vehicleChecksDrivingFaultsNumber"
                             (ionChange)="vehicleChecksDrivingFaultsNumberChanged($event)"
                             [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}"
                 >
                     <ion-option *ngFor="let number of drivingFaultsNumberOptions" [value]="number">
-                        {{number}}
+                        {{number}} {{number === 1 ? 'driving fault' : 'driving faults'}}
                     </ion-option>
                 </ion-select>
             </ion-col>
