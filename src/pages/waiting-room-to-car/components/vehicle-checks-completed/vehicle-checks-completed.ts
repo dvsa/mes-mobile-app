@@ -15,6 +15,7 @@ enum VehicleChecksCompletedResult {
 export class VehicleChecksToggleComponent implements OnChanges {
 
   formControl: FormControl;
+  drivingFaultNumberFormControl: FormControl;
 
   @Input()
   vehicleChecksCompleted: boolean;
@@ -43,8 +44,10 @@ export class VehicleChecksToggleComponent implements OnChanges {
     if (!this.formControl) {
       this.formControl = new FormControl('', [Validators.required]);
       this.formGroup.addControl('vehicleChecksToggleCtrl', this.formControl);
-      this.formGroup.addControl('vehicleChecksDrivingFaultsNumber', this.formControl);
-      this.formGroup.addControl('vehicleChecksSeriousFaultsNumber', this.formControl);
+    }
+    if (!this.drivingFaultNumberFormControl) {
+      this.drivingFaultNumberFormControl = new FormControl();
+      this.formGroup.addControl('vehicleChecksDrivingFaultsNumber', this.drivingFaultNumberFormControl);
     }
     this.formControl.patchValue(this.vehicleChecksCompleted);
   }
