@@ -36,8 +36,9 @@ import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-
 import { DateTime } from '../../shared/helpers/date-time';
 import { SearchProvider } from '../../providers/search/search';
 import { AdvancedSearchParams } from '../../providers/search/search.models';
-import { removeLeadingZeros } from '../../shared/helpers/formatters';
+import { formatApplicationReference, removeLeadingZeros } from '../../shared/helpers/formatters';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
+import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -72,6 +73,8 @@ export class JournalPage extends BasePageComponent implements OnInit {
   merged$: Observable<void | number>;
   todaysDate: DateTime;
   searchResults: SearchResultTestSchema[] = [];
+  searchResultsAppRefs: number[];
+  slotsForDay: any;
 
   constructor(
     public modalController: ModalController,
@@ -190,14 +193,29 @@ export class JournalPage extends BasePageComponent implements OnInit {
     };
     forkJoin([
       this.searchProvider.advancedSearch(advancedSearchParams),
-      this.searchProvider.advancedSearch(advancedSearchParams),
     ]).subscribe(
       ([
          searchResultsTemp,
-         slotData,
        ]) => {
         console.log('searchResultsTemp', searchResultsTemp);
-        console.log('slotData', slotData);
+        console.log('slotsForDay', this.slotsForDay);
+        this.searchResultsAppRefs = searchResultsTemp.map((res) => {
+          return res.applicationReference;
+        });
+
+        const slotAppRefs = this.slotsForDay.map((res) => {
+          const applicationReference: ApplicationReference = {
+            applicationId: res.slotData.booking.application.applicationId,
+            bookingSequence: res.slotData.booking.application.bookingSequence,
+            checkDigit: res.slotData.booking.application.checkDigit,
+          };
+          return formatApplicationReference(applicationReference);
+        });
+
+        // console.log(JSON.stringify(searchResultsTemp));
+        console.log('searchResultsAppRefs', this.searchResultsAppRefs);
+        console.log('slotAppRefs', slotAppRefs);
+        // console.log(JSON.stringify(this.slotsForDay));
 
         console.log('do some logic here');
       },
@@ -255,7 +273,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     if (emission.length === 0) return;
 
     const slots = this.slotSelector.getSlotTypes(emission);
-    console.log('slots', slots);
+    this.slotsForDay = slots;
     let lastLocation;
     for (const slot of slots) {
       const factory = this.resolver.resolveComponentFactory(slot.component);
