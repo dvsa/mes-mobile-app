@@ -74,7 +74,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
   todaysDate: DateTime;
   searchResults: SearchResultTestSchema[] = [];
   searchResultsAppRefs: number[];
-  slotsForDay: any;
 
   constructor(
     public modalController: ModalController,
@@ -136,7 +135,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.merged$ = merge(
       selectedDate$.pipe(map(this.setSelectedDate)),
       slots$.pipe(
-        map(this.createSlots),
+        map(this.generateSlotAndSearchResults),
       ),
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
@@ -154,11 +153,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
   ionViewWillEnter() {
     super.ionViewWillEnter();
-
-    // TODO add if here to check for cache, if no cache call search endpoint, loadjournal and compare
-    //  else just loadjournal
-    // this.loadJournalManually();
-    this.journalSearchResultsComparison();
+    this.loadJournalManually();
     this.setupPolling();
 
     if (this.merged$) {
@@ -183,12 +178,30 @@ export class JournalPage extends BasePageComponent implements OnInit {
     }
   }
 
-  journalSearchResultsComparison() {
+  /**
+   * If state contains no cached data then get users search results
+   * otherwise get create slot data directly
+   * @param emission
+   */
+  generateSlotAndSearchResults = (emission: SlotItem[]) => {
+    const noCacheData: boolean = true;
+    if (noCacheData && !this.searchResultsAppRefs) {
+      return this.getSearchResults(emission);
+    }
+    this.createSlots(emission, this.searchResultsAppRefs);
 
+  }
+
+  /**
+   * Call endpoint to obtain users previously completed tests and pass to createSlots function
+   * for evaluation
+   * @param emission
+   */
+  getSearchResults = (emission: SlotItem[]) => {
     const advancedSearchParams: AdvancedSearchParams = {
       startDate: '',
       endDate: '',
-      staffNumber: removeLeadingZeros('78471231'),
+      staffNumber: removeLeadingZeros('1234567'),
       costCode: '',
     };
     forkJoin([
@@ -197,30 +210,25 @@ export class JournalPage extends BasePageComponent implements OnInit {
       ([
          searchResultsTemp,
        ]) => {
-        console.log('searchResultsTemp', searchResultsTemp);
-        console.log('slotsForDay', this.slotsForDay);
         this.searchResultsAppRefs = searchResultsTemp.map((res) => {
           return res.applicationReference;
         });
-
-        const slotAppRefs = this.slotsForDay.map((res) => {
-          const applicationReference: ApplicationReference = {
-            applicationId: res.slotData.booking.application.applicationId,
-            bookingSequence: res.slotData.booking.application.bookingSequence,
-            checkDigit: res.slotData.booking.application.checkDigit,
-          };
-          return formatApplicationReference(applicationReference);
-        });
-
-        // console.log(JSON.stringify(searchResultsTemp));
-        console.log('searchResultsAppRefs', this.searchResultsAppRefs);
-        console.log('slotAppRefs', slotAppRefs);
-        // console.log(JSON.stringify(this.slotsForDay));
-
-        console.log('do some logic here');
+        this.createSlots(emission, this.searchResultsAppRefs);
       },
       err => this.showError(err),
     );
+  }
+
+  hasSlotBeenTested(slot, references): boolean {
+    const applicationReference: ApplicationReference = {
+      applicationId: slot.slotData.booking.application.applicationId,
+      bookingSequence: slot.slotData.booking.application.bookingSequence,
+      checkDigit: slot.slotData.booking.application.checkDigit,
+    };
+
+    return references.some((reference) => {
+      return reference === parseInt(formatApplicationReference(applicationReference), 10);
+    });
   }
 
   loadJournalManually() {
@@ -264,7 +272,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     errorModal.present();
   }
 
-  private createSlots = (emission: SlotItem[]) => {
+  private createSlots = (emission: SlotItem[], searchresults?) => {
     // Clear any dynamically created slots before adding the latest
     this.slotContainer.clear();
 
@@ -272,12 +280,24 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
     if (emission.length === 0) return;
 
+    console.log('searchResults', searchresults);
+
     const slots = this.slotSelector.getSlotTypes(emission);
-    this.slotsForDay = slots;
+
+    // TODO Add check to only call if no cached data
+    // TODO add logic to prevent calling search endpoint again if already populated
+    // this.journalSearchResultsComparison(slots);
+    // this.getSearchResults();
+    // console.log('this.searchResultsAppRefs', this.searchResultsAppRefs);
+
     let lastLocation;
     for (const slot of slots) {
+      // do comparison here-much better.
       const factory = this.resolver.resolveComponentFactory(slot.component);
       const componentRef = this.slotContainer.createComponent(factory);
+      console.log('slot', slot);
+      const alreadyTested = this.hasSlotBeenTested(slot, this.searchResultsAppRefs);
+      console.log('alreadyTested', alreadyTested);
 
       (<SlotComponent>componentRef.instance).slot = slot.slotData;
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
