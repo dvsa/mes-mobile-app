@@ -267,7 +267,7 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
     ));
   }
 
-  createDelegatedQuestionResult = (outcome: CompetencyOutcome) => ({ outcome, code: 'DELEGATED EXAMINER' });
+  createDelegatedQuestionResult = (outcome: CompetencyOutcome) => ({ outcome, code: 'DEL' });
 
   candidateDeclarationOutcomeChanged(declaration: boolean) {
     this.store$.dispatch(new SetDeclarationStatus(declaration));
