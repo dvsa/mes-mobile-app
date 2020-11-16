@@ -127,7 +127,7 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   showRekeyButton(): boolean {
-    if (!this.disable) {
+    if (this.disable) {
       return false;
     }
 
@@ -156,7 +156,10 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   showStartTestButton(): boolean {
-    return !this.isDelegatedTest && (this.testStatus === TestStatus.Booked) && !this.disable;
+    if (this.disable) {
+      return false;
+    }
+    return !this.isDelegatedTest && (this.testStatus === TestStatus.Booked);
   }
 
   showDelegatedExaminerRekeyButton(): boolean {
