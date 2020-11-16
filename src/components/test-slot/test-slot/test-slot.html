@@ -52,7 +52,8 @@
             [specialRequirements]="isIndicatorNeededForSlot()"
             [hasSeenCandidateDetails]="hasSeenCandidateDetails"
             [isRekey]="componentState.isRekey$ | async"
-            [category]="slot.booking.application.testCategory">
+            [category]="slot.booking.application.testCategory"
+            [disable]="disable">
           </test-outcome>
         </ion-col>
       </ion-row>
