@@ -219,6 +219,11 @@ export class JournalPage extends BasePageComponent implements OnInit {
     );
   }
 
+  /**
+   * Search for slots appReference in returned search results
+   * @param slot
+   * @param references
+   */
   hasSlotBeenTested(slot, references): boolean {
     const applicationReference: ApplicationReference = {
       applicationId: slot.slotData.booking.application.applicationId,
@@ -284,15 +289,8 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
     const slots = this.slotSelector.getSlotTypes(emission);
 
-    // TODO Add check to only call if no cached data
-    // TODO add logic to prevent calling search endpoint again if already populated
-    // this.journalSearchResultsComparison(slots);
-    // this.getSearchResults();
-    // console.log('this.searchResultsAppRefs', this.searchResultsAppRefs);
-
     let lastLocation;
     for (const slot of slots) {
-      // do comparison here-much better.
       const factory = this.resolver.resolveComponentFactory(slot.component);
       const componentRef = this.slotContainer.createComponent(factory);
       console.log('slot', slot);
@@ -302,6 +300,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
       (<SlotComponent>componentRef.instance).slot = slot.slotData;
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
       (<SlotComponent>componentRef.instance).showLocation = (slot.slotData.testCentre.centreName !== lastLocation);
+      (<SlotComponent>componentRef.instance).disable = alreadyTested;
       lastLocation = slot.slotData.testCentre.centreName;
 
       if (componentRef.instance instanceof PersonalCommitmentSlotComponent) {

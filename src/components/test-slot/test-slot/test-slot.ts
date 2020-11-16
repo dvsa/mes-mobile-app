@@ -47,6 +47,9 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   showLocation: boolean;
 
   @Input()
+  disable: boolean = false;
+
+  @Input()
   delegatedTest: boolean = false;
 
   componentState: TestSlotComponentState;
