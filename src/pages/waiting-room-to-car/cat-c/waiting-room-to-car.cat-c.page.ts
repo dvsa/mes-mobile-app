@@ -239,7 +239,7 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
     });
   }
 
-  createDelegatedQuestionResult = (outcome: CompetencyOutcome) => ({ outcome, code: 'DELEGATED EXAMINER' });
+  createDelegatedQuestionResult = (outcome: CompetencyOutcome) => ({ outcome, code: 'DEL' });
 
   vehicleChecksDrivingFaultsNumberChanged(number: number) {
     this.store$.dispatch(new VehicleChecksDrivingFaultsNumberChanged(
