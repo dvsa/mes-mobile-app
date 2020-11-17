@@ -143,12 +143,13 @@ export class JournalPage extends BasePageComponent implements OnInit {
       ),
     };
 
-    const { selectedDate$, slots$, error$, isLoading$, startedTests$ } = this.pageState;
+    const { selectedDate$, slots$, error$, isLoading$, startedTests$, completedTests$ } = this.pageState;
 
     // Merge observables into one
     this.merged$ = merge(
       selectedDate$.pipe(map(this.setSelectedDate)),
       startedTests$.pipe(map(this.setCachedTests)),
+      completedTests$.pipe(map(this.setCompletedTests)),
       slots$.pipe(
         map(this.generateSlotAndSearchResults),
       ),
@@ -230,12 +231,11 @@ export class JournalPage extends BasePageComponent implements OnInit {
       ([
          searchResultsTemp,
        ]) => {
-        // TODO add to state
-        this.searchResultsAppRefs = searchResultsTemp.map((res) => {
+        const searchResultsAppRefs = searchResultsTemp.map((res) => {
           return res.applicationReference;
         });
-        this.store$.dispatch(new AddCompletedTests(this.searchResultsAppRefs));
-        this.createSlots(emission, this.searchResultsAppRefs);
+        this.store$.dispatch(new AddCompletedTests(searchResultsAppRefs));
+        this.createSlots(emission, searchResultsAppRefs);
       },
       err => this.showError(err),
     );
@@ -319,17 +319,13 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
     if (emission.length === 0) return;
 
-    console.log('searchResults', searchresults);
-
     const slots = this.slotSelector.getSlotTypes(emission);
 
     let lastLocation;
     for (const slot of slots) {
       const factory = this.resolver.resolveComponentFactory(slot.component);
       const componentRef = this.slotContainer.createComponent(factory);
-      console.log('slot', slot);
-      const alreadyTested = this.hasSlotBeenTested(slot, this.searchResultsAppRefs);
-      console.log('alreadyTested', alreadyTested);
+      const alreadyTested = this.hasSlotBeenTested(slot, searchresults);
 
       (<SlotComponent>componentRef.instance).slot = slot.slotData;
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
