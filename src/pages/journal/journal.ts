@@ -42,6 +42,7 @@ import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
 import { getCompletedTests, getStartedTestFlag } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { AddCompletedTests } from '../../modules/tests/tests.actions';
+import moment from 'moment';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -204,7 +205,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     // TODO retrieve search results from state
     console.log('cachedTests', this.cachedTests);
     console.log('this.searchResultsAppRefs', this.searchResultsAppRefs);
-    if (!this.cachedTests && !this.searchResultsAppRefs) {
+    if (!this.cachedTests && this.searchResultsAppRefs.length === 0) {
       return this.getSearchResults(emission);
     }
     this.createSlots(emission, this.searchResultsAppRefs);
@@ -219,11 +220,12 @@ export class JournalPage extends BasePageComponent implements OnInit {
   getSearchResults = (emission: SlotItem[]) => {
     // TODO move call to service
     const advancedSearchParams: AdvancedSearchParams = {
-      startDate: '',
-      endDate: '',
+      startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
+      endDate: moment().format('YYYY-MM-DD'),
       staffNumber: removeLeadingZeros('1234567'),
       costCode: '',
     };
+    console.log('advancedSearchParams', advancedSearchParams);
     // TODO remove forkjoin
     forkJoin([
       this.searchProvider.advancedSearch(advancedSearchParams),
