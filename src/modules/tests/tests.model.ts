@@ -9,4 +9,5 @@ export interface TestsModel {
   currentTest: CurrentTest;
   startedTests: { [slotId: string]: TestResultSchemasUnion };
   testStatus: { [slotId: string]: TestStatus };
+  completedTests: number[];
 }

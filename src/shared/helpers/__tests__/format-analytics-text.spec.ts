@@ -12,6 +12,7 @@ describe('formatAnalyticsText', () => {
     currentTest: { slotId: null },
     startedTests: {},
     testStatus: {},
+    completedTests: [],
   };
   const eventString = 'analytics event';
   const slotId = 123;

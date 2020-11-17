@@ -14,6 +14,7 @@ export const initialState: TestsModel = {
   currentTest: { slotId: null },
   startedTests: {},
   testStatus: {},
+  completedTests: [],
 };
 
 /**
@@ -36,6 +37,11 @@ export function testsReducer(
       return slotId ? createStateObject(removeTest(state, slotId), action, slotId, category) : state;
     case fakeJournalActions.START_E2E_PRACTICE_TEST:
       return slotId ? createStateObject(removeTest(state, slotId), action, slotId, category) : state;
+    case testsActions.ADD_COMPLETED_TESTS:
+      return {
+        ...state,
+        completedTests: action.references,
+      };
     default:
       return slotId ? createStateObject(state, action, slotId, category) : state;
   }

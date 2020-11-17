@@ -76,7 +76,12 @@ describe('testsSelector', () => {
         journal,
         appInfo,
         logs,
-        tests: { startedTests: { 123: currentTest }, currentTest: { slotId: '123' }, testStatus: {} },
+        tests: {
+          startedTests: { 123: currentTest },
+          currentTest: { slotId: '123' },
+          testStatus: {},
+          completedTests: [],
+        },
       };
 
       const result = getCurrentTest(state.tests);
@@ -91,6 +96,7 @@ describe('testsSelector', () => {
         currentTest: { slotId: null },
         startedTests: {},
         testStatus: { 12345: TestStatus.Decided },
+        completedTests: [],
       };
 
       const result = getTestStatus(testState, 12345);
@@ -103,6 +109,7 @@ describe('testsSelector', () => {
         currentTest: { slotId: null },
         startedTests: {},
         testStatus: {},
+        completedTests: [],
       };
 
       const result = getTestStatus(testState, 12345);
@@ -244,6 +251,7 @@ describe('testsSelector', () => {
       currentTest: { slotId: null },
       startedTests: {},
       testStatus: { 12345: TestStatus.Decided },
+      completedTests: [],
     };
 
     it('should return false when no tests started', () => {
@@ -269,6 +277,7 @@ describe('testsSelector', () => {
       currentTest: { slotId: null },
       startedTests: {},
       testStatus: { 12345: TestStatus.Decided },
+      completedTests: [],
     };
 
     it('should return false when no tests started', () => {
@@ -307,6 +316,7 @@ describe('testsSelector', () => {
           },
         },
         testStatus: {},
+        completedTests: [],
       };
       const result = getActivityCodeBySlotId(testState, 1234);
       expect(result).toEqual(ActivityCodes.ACCIDENT);
@@ -318,6 +328,7 @@ describe('testsSelector', () => {
           1234: null,
         },
         testStatus: {},
+        completedTests: [],
       };
       const result = getActivityCodeBySlotId(testState, 1234);
       expect(result).toBeNull();
@@ -329,6 +340,7 @@ describe('testsSelector', () => {
       currentTest: { slotId: null },
       startedTests: {},
       testStatus: {},
+      completedTests: [],
     };
     const testState: TestsModel = {
       currentTest: { slotId: null },
@@ -472,6 +484,7 @@ describe('testsSelector', () => {
         2027: TestStatus.Decided,
         3002: TestStatus.Submitted,
       },
+      completedTests: [],
     };
     describe('getIncompleteTests', () => {
       it('should return the unsubmitted tests', () => {
@@ -544,6 +557,7 @@ describe('testsSelector', () => {
         },
       },
       testStatus: {},
+      completedTests: [],
     };
 
     it('should return false when no delegated tests possible for the category', () => {

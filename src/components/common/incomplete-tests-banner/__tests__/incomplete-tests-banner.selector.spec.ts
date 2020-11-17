@@ -247,6 +247,7 @@ describe('IncompleteTestsBannerSelector', () => {
         testStatus: {
           1003: TestStatus.WriteUp,
         },
+        completedTests: [],
       };
 
       const count = getIncompleteTestsCount(journal, tests, DateTime.at('2019-01-14'), slotProvider);

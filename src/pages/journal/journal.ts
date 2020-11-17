@@ -39,6 +39,9 @@ import { AdvancedSearchParams } from '../../providers/search/search.models';
 import { formatApplicationReference, removeLeadingZeros } from '../../shared/helpers/formatters';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
+import { getCompletedTests, getStartedTestFlag } from '../../modules/tests/tests.selector';
+import { getTests } from '../../modules/tests/tests.reducer';
+import { AddCompletedTests } from '../../modules/tests/tests.actions';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -47,6 +50,8 @@ interface JournalPageState {
   isLoading$: Observable<boolean>;
   lastRefreshedTime$: Observable<string>;
   appVersion$: Observable<string>;
+  startedTests$: Observable<boolean>;
+  completedTests$: Observable<number[]>;
 }
 
 @IonicPage()
@@ -74,6 +79,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
   todaysDate: DateTime;
   searchResults: SearchResultTestSchema[] = [];
   searchResultsAppRefs: number[];
+  cachedTests: boolean;
 
   constructor(
     public modalController: ModalController,
@@ -127,13 +133,22 @@ export class JournalPage extends BasePageComponent implements OnInit {
         select(getAppInfoState),
         map(getVersionNumber),
       ),
+      startedTests$: this.store$.pipe(
+        select(getTests),
+        select(getStartedTestFlag),
+      ),
+      completedTests$: this.store$.pipe(
+        select(getTests),
+        select(getCompletedTests),
+      ),
     };
 
-    const { selectedDate$, slots$, error$, isLoading$ } = this.pageState;
+    const { selectedDate$, slots$, error$, isLoading$, startedTests$ } = this.pageState;
 
     // Merge observables into one
     this.merged$ = merge(
       selectedDate$.pipe(map(this.setSelectedDate)),
+      startedTests$.pipe(map(this.setCachedTests)),
       slots$.pipe(
         map(this.generateSlotAndSearchResults),
       ),
@@ -178,14 +193,17 @@ export class JournalPage extends BasePageComponent implements OnInit {
     }
   }
 
-  /**
-   * If state contains no cached data then get users search results
+  /**selectedDate
+   * If state contains no cached data and search hasn't
+   * previously returned results then get users search results
    * otherwise get create slot data directly
    * @param emission
    */
   generateSlotAndSearchResults = (emission: SlotItem[]) => {
-    const noCacheData: boolean = true;
-    if (noCacheData && !this.searchResultsAppRefs) {
+    // TODO retrieve search results from state
+    console.log('cachedTests', this.cachedTests);
+    console.log('this.searchResultsAppRefs', this.searchResultsAppRefs);
+    if (!this.cachedTests && !this.searchResultsAppRefs) {
       return this.getSearchResults(emission);
     }
     this.createSlots(emission, this.searchResultsAppRefs);
@@ -193,26 +211,30 @@ export class JournalPage extends BasePageComponent implements OnInit {
   }
 
   /**
-   * Call endpoint to obtain users previously completed tests and pass to createSlots function
-   * for evaluation
+   * Call endpoint to obtain users previously completed tests and
+   * pass to createSlots function for evaluation
    * @param emission
    */
   getSearchResults = (emission: SlotItem[]) => {
+    // TODO move call to service
     const advancedSearchParams: AdvancedSearchParams = {
       startDate: '',
       endDate: '',
       staffNumber: removeLeadingZeros('1234567'),
       costCode: '',
     };
+    // TODO remove forkjoin
     forkJoin([
       this.searchProvider.advancedSearch(advancedSearchParams),
     ]).subscribe(
       ([
          searchResultsTemp,
        ]) => {
+        // TODO add to state
         this.searchResultsAppRefs = searchResultsTemp.map((res) => {
           return res.applicationReference;
         });
+        this.store$.dispatch(new AddCompletedTests(this.searchResultsAppRefs));
         this.createSlots(emission, this.searchResultsAppRefs);
       },
       err => this.showError(err),
@@ -225,6 +247,10 @@ export class JournalPage extends BasePageComponent implements OnInit {
    * @param references
    */
   hasSlotBeenTested(slot, references): boolean {
+    if (!references) {
+      return false;
+    }
+
     const applicationReference: ApplicationReference = {
       applicationId: slot.slotData.booking.application.applicationId,
       bookingSequence: slot.slotData.booking.application.bookingSequence,
@@ -246,6 +272,14 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
   setSelectedDate = (selectedDate: string): void => {
     this.selectedDate = selectedDate;
+  }
+
+  setCachedTests = (cachedTests: boolean): void => {
+    this.cachedTests = cachedTests;
+  }
+
+  setCompletedTests = (completedTests: number[]): void => {
+    this.searchResultsAppRefs = completedTests;
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
