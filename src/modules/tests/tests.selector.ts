@@ -162,3 +162,11 @@ export const getOldestIncompleteTest = (tests: TestsModel): TestResultSchemasUni
   });
   return oldestTest;
 };
+
+export const getStartedTestFlag = (tests: TestsModel): boolean => {
+  return Object.keys(tests.startedTests).length > 0;
+};
+
+export const getCompletedTests = (tests: TestsModel): number[] => {
+  return tests.completedTests;
+};

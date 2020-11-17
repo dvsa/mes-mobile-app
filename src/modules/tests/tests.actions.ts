@@ -25,6 +25,8 @@ export const ACTIVATE_TEST = '[Tests] Activate Test';
 
 export const TEST_OUTCOME_CHANGED = '[TestReportEffects] Test outcome changed';
 
+export const ADD_COMPLETED_TESTS = '[Tests] Add completed tests from test results';
+
 export class PersistTests implements Action {
   readonly type = PERSIST_TESTS;
 }
@@ -102,6 +104,11 @@ export class SendCurrentTestFailure implements Action {
   constructor(public isDuplicateUpload: boolean) { }
 }
 
+export class AddCompletedTests implements Action {
+  readonly type = ADD_COMPLETED_TESTS;
+  constructor(public references: number[]) {}
+}
+
 export type Types =
   | PersistTests
   | LoadPersistedTests
@@ -118,4 +125,5 @@ export type Types =
   | SendCurrentTestSuccess
   | SendCurrentTestFailure
   | SendPartialTestSuccess
-  | SendPartialTestsFailure;
+  | SendPartialTestsFailure
+  | AddCompletedTests;

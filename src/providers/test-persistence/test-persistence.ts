@@ -56,6 +56,7 @@ export class TestPersistenceProvider {
       testStatus: {
         ...this.deleteTestsFromTestObject(tests.testStatus, testsToDelete),
       },
+      completedTests: tests.completedTests,
     };
 
   }
