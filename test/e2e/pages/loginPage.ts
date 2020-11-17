@@ -116,40 +116,51 @@ class LoginPage extends Page {
       browser.driver.selectContext(this.getParentContext(webviewContext));
       browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
       browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-      const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
-      logout.isPresent().then((result) => {
-        if (result) {
-          browser.wait(ExpectedConditions.elementToBeClickable(logout));
-          logout.click().then(() => {
-            browser.sleep(TEST_CONFIG.ACTION_WAIT);
-            const logoutPopup = element(by.xpath('//button[@ion-button="alert-button"]/span[text()=\'Logout\']'));
-            logoutPopup.click();
-            // After logout click sign in to get us to the login screen
-            browser.sleep(TEST_CONFIG.ACTION_WAIT);
 
-            browser.driver.selectContext('NATIVE_APP').then(() => {
-              // Wait until we are on the login page before proceeding
-              const microsoftOnlineContinue = element(by.xpath(`//XCUIElementTypeButton[@name="Continue"]`));
-              browser.wait(ExpectedConditions.presenceOf(microsoftOnlineContinue));
-              microsoftOnlineContinue.click();
-              const selectUserToSignOut = element(by.xpath(`//XCUIElementTypeOther[@name="Sign out"]/XCUIElementTypeOther[4]`));
-              browser.wait(ExpectedConditions.presenceOf(selectUserToSignOut));
-              selectUserToSignOut.click();
-
-              const cancelButton = element(by.xpath(`//XCUIElementTypeButton[@name="Cancel"]`));
-              browser.wait(ExpectedConditions.presenceOf(cancelButton));
-              cancelButton.click();
-
-              const signInLink = element(by.xpath(`//XCUIElementTypeStaticText[@name="Sign in"]`));
-              browser.wait(ExpectedConditions.presenceOf(signInLink));
-              signInLink.click();
-              // Switch back to WEBVIEW context
-              browser.driver.selectContext(this.getParentContext(webviewContext));
-            });
-          });
-        } else {
+      // If we are already on the login page then there is no need to logout
+      const onLogin = element(by.xpath('//page-login'));
+      onLogin.isPresent().then((loginPagePresent) => {
+        if (loginPagePresent) {
           return Promise.resolve();
         }
+
+        // If we have the logout button then logout
+        const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
+        logout.isPresent().then((result) => {
+          if (result) {
+            browser.wait(ExpectedConditions.elementToBeClickable(logout));
+            logout.click().then(() => {
+              browser.sleep(TEST_CONFIG.ACTION_WAIT);
+              const logoutPopup = element(by.xpath('//button[@ion-button="alert-button"]/span[text()=\'Logout\']'));
+              logoutPopup.click();
+              // After logout click sign in to get us to the login screen
+              browser.sleep(TEST_CONFIG.ACTION_WAIT);
+
+              browser.driver.selectContext('NATIVE_APP').then(() => {
+                // Wait until we are on the login page before proceeding
+                const microsoftOnlineContinue = element(by.xpath(`//XCUIElementTypeButton[@name="Continue"]`));
+                browser.wait(ExpectedConditions.presenceOf(microsoftOnlineContinue));
+                microsoftOnlineContinue.click();
+                const selectUserToSignOut =
+                  element(by.xpath(`//XCUIElementTypeOther[@name="Sign out"]/XCUIElementTypeOther[4]`));
+                browser.wait(ExpectedConditions.presenceOf(selectUserToSignOut));
+                selectUserToSignOut.click();
+
+                const cancelButton = element(by.xpath(`//XCUIElementTypeButton[@name="Cancel"]`));
+                browser.wait(ExpectedConditions.presenceOf(cancelButton));
+                cancelButton.click();
+
+                const signInLink = element(by.xpath(`//XCUIElementTypeStaticText[@name="Sign in"]`));
+                browser.wait(ExpectedConditions.presenceOf(signInLink));
+                signInLink.click();
+                // Switch back to WEBVIEW context
+                browser.driver.selectContext(this.getParentContext(webviewContext));
+              });
+            });
+          } else {
+            return Promise.resolve();
+          }
+        });
       });
     });
   }
