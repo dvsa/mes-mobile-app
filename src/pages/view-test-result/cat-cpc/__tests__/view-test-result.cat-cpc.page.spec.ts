@@ -182,7 +182,17 @@ describe('ViewTestResultCatCPCPage', () => {
         fixture.debugElement.query(By.css('test-summary-card')),
       ).toBeNull();
     });
-    it('should show vehicle details', () => {
+    it('should show vehicle details if testCategory is DCPC', () => {
+      component.isLoading = false;
+      const mockData = categoryCPCTestResultMock;
+      mockData.category = TestCategory.DCPC;
+      spyOn(component.compressionProvider, 'extractTestResult').and.returnValue(mockData);
+      fixture.detectChanges();
+      expect(
+        fixture.debugElement.query(By.css('cpc-vehicle-details-card')),
+      ).not.toBeNull();
+    });
+    it('should show vehicle details if testCategory is CCPC', () => {
       component.isLoading = false;
       const mockData = categoryCPCTestResultMock;
       mockData.category = TestCategory.CCPC;
