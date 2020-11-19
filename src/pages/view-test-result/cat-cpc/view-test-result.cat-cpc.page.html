@@ -27,7 +27,6 @@
     </div>
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
     <cpc-vehicle-details-card
-      *ngIf="testCategory !== 'DCPC'"
       [vehicleDetails]="testResult.vehicleDetails">
     </cpc-vehicle-details-card>
     <cpc-debrief-card
