@@ -45,7 +45,6 @@ import {
   VehicleChecksComponent,
 } from '../components/vehicle-checks/vehicle-checks';
 import { MultiLegalRequirementComponent } from '../../components/multi-legal-requirement/multi-legal-requirement';
-import { SafetyQuestionsCatDComponent } from '../components/safety-questions/safety-questions.cat-d';
 import { PcvDoorExerciseComponent } from '../components/pcv-door-exercise/pcv-door-exercise';
 
 describe('TestReportCatDPage', () => {
@@ -69,7 +68,6 @@ describe('TestReportCatDPage', () => {
         MockComponent(ReverseLeftComponent),
         MockComponent(ReverseLeftPopoverComponent),
         MockComponent(VehicleChecksComponent),
-        MockComponent(SafetyQuestionsCatDComponent),
         MockComponent(PcvDoorExerciseComponent),
       ],
       imports: [

@@ -5,13 +5,11 @@ import { DirectivesModule } from '../../../../directives/directives.module';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { TestReportComponentsModule } from '../../components/test-report-components.module';
 import { VehicleChecksComponent } from './vehicle-checks/vehicle-checks';
-import { SafetyQuestionsCatDComponent } from './safety-questions/safety-questions.cat-d';
 import { PcvDoorExerciseComponent } from './pcv-door-exercise/pcv-door-exercise';
 
 @NgModule({
   declarations: [
     VehicleChecksComponent,
-    SafetyQuestionsCatDComponent,
     PcvDoorExerciseComponent,
   ],
   imports: [
@@ -23,7 +21,6 @@ import { PcvDoorExerciseComponent } from './pcv-door-exercise/pcv-door-exercise'
   ],
   exports: [
     VehicleChecksComponent,
-    SafetyQuestionsCatDComponent,
     PcvDoorExerciseComponent,
   ],
 })
