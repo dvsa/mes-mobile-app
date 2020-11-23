@@ -30,19 +30,19 @@ import {
 
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER,
-} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.vocational.constants';
+} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-c.constants';
 
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER,
-} from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
+} from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-c.constants';
 
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_TRAILER,
-} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.vocational-trailer.constants';
+} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-d.constants';
 
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER,
-} from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
+} from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-d.constants';
 
 import {
   NUMBER_OF_SAFETY_QUESTIONS,
