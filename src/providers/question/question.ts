@@ -47,17 +47,17 @@ export class QuestionProvider {
       case TestCategory.BE:
         return tellMeQuestionsCatBeConstants;
       case TestCategory.C:
-      case TestCategory.C1: // return tellMeQuestionsCatCConstants;
+      case TestCategory.C1:
         return tellMeQuestionsCatCConstants;
       case TestCategory.CE:
       case TestCategory.C1E:
-        return tellMeQuestionsCatCeConstants; // return tellMeQuestionsCatCeConstants;
+        return tellMeQuestionsCatCeConstants;
       case TestCategory.D:
-      case TestCategory.D1: // return tellMeQuestionsCatDConstants;
+      case TestCategory.D1:
         return tellMeQuestionsCatDConstants;
       case TestCategory.DE:
       case TestCategory.D1E:
-        return tellMeQuestionsCatDeConstants; // return tellMeQuestionsCatDeonstants;
+        return tellMeQuestionsCatDeConstants;
       case TestCategory.K:
       case TestCategory.F:
       case TestCategory.G:
