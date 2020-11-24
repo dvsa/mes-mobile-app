@@ -98,8 +98,9 @@ describe('VehicleChecksCardComponent', () => {
         component.category = TestCategory.BE;
         component.tellMeShowMeQuestions = [
           {
-            code: 'S01',
-            description: 'Show me how you would check that the direction indicators are working.',
+            code: 'E01',
+            // tslint:disable-next-line: max-line-length
+            description: 'Open the bonnet and tell me how you would check that you have a safe level of hydraulic brake fluid, power steering fluid, engine oil or coolant (examiner to choose one)',
             outcome: 'P',
           },
         ];
@@ -109,15 +110,16 @@ describe('VehicleChecksCardComponent', () => {
           .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
         expect(tellMeQuestionText.innerHTML.trim())
-          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions[TestCategory.BE].S01);
+          .toContain((<any>englishTranslations).debrief.showMeTellMeQuestions[TestCategory.BE].E01);
       });
 
       it('should show results in Welsh for a Welsh test', (done) => {
         component.category = TestCategory.BE;
         component.tellMeShowMeQuestions = [
           {
-            code: 'S01',
-            description: 'Show me how you would check that the direction indicators are working.',
+            code: 'E01',
+            // tslint:disable-next-line: max-line-length
+            description: 'Open the bonnet and tell me how you would check that you have a safe level of hydraulic brake fluid, power steering fluid, engine oil or coolant (examiner to choose one)',
             outcome: 'P',
           },
         ];
@@ -131,7 +133,7 @@ describe('VehicleChecksCardComponent', () => {
             .query(By.css('#vehicle-checks .counter-label')).nativeElement;
 
           expect(tellMeQuestionText.innerHTML.trim())
-            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions[TestCategory.BE].S01);
+            .toContain((<any>welshTranslations).debrief.showMeTellMeQuestions[TestCategory.BE].E01);
           done();
         });
       });
