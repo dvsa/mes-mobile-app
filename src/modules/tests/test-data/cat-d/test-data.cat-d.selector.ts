@@ -9,10 +9,10 @@ import {
 } from '../../../../shared/unions/test-schema-unions';
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS,
-} from '../../../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
+} from '../../../../shared/constants/show-me-questions/show-me-questions.cat-d.constants';
 import {
    NUMBER_OF_TELL_ME_QUESTIONS,
-  } from '../../../../shared/constants/tell-me-questions/tell-me-questions.vocational.constants';
+  } from '../../../../shared/constants/tell-me-questions/tell-me-questions.cat-d.constants';
 
 export const getDrivingFaultCount = (
   data: CatDTestData, competency: Competencies) => data.drivingFaults[competency];

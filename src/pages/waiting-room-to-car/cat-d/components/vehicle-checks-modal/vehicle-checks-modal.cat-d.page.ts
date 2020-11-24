@@ -29,20 +29,20 @@ import {
 } from '../../../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.action';
 
 import {
-  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER,
-} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.vocational.constants';
+  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_CAT_D,
+} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-d.constants';
 
 import {
-  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER,
-} from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
+  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_CAT_D,
+} from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-d.constants';
 
 import {
-  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_TRAILER,
-} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.vocational-trailer.constants';
+  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_CAT_DE,
+} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-de.constants';
 
 import {
-  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER,
-} from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
+  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_CAT_DE,
+} from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-de.constants';
 
 import {
   NUMBER_OF_SAFETY_QUESTIONS,
@@ -120,13 +120,13 @@ export class VehicleChecksCatDModal {
     switch (this.category) {
       case TestCategory.D:
       case TestCategory.D1:
-        numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER;
-        numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER;
+        numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_CAT_D;
+        numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_CAT_D;
         break;
       case TestCategory.DE:
       case TestCategory.D1E:
-        numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER;
-        numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_TRAILER;
+        numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_CAT_DE;
+        numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_CAT_DE;
     }
     this.showMeQuestionsNumberArray = Array(numberOfShowMeQuestions);
     this.tellMeQuestionsNumberArray = Array(numberOfTellMeQuestions);
