@@ -9,8 +9,8 @@
           <language align-items-center [welshLanguage]="slot.booking.application.welshTest">
           </language>
         </ion-col>
-        <ion-col class="date-exclamation-col" *ngIf="delegatedTest">
-          <date [date]="slot.slotDetail.start">
+        <ion-col *ngIf="delegatedTest">
+          <date id="del-ex-date" [date]="slot.slotDetail.start">
           </date>
         </ion-col>
         <ion-col no-padding>
@@ -66,7 +66,7 @@
           </progressive-access>
         </ion-col>
         <ion-col class="vehicle-details-col" no-padding>
-          <h3 [style.padding]="'5px 10px'" *ngIf="delegatedTest && slot.booking.candidate.driverNumber">{{slot.booking.candidate.driverNumber}}</h3>
+          <h3 id="del-ex-driver-number" *ngIf="delegatedTest && slot.booking.candidate.driverNumber">{{slot.booking.candidate.driverNumber}}</h3>
 
           <vehicle-details
             *ngIf="showVehicleDetails()"

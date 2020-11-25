@@ -71,4 +71,13 @@ test-slot {
   .slot-changed {
     background: map-get($colors, journalSlotChangeIdentifier);
   }
+
+  #del-ex-driver-number {
+    padding: 5px 10px;
+  }
+
+  #del-ex-date {
+    position: relative;
+    right: 135px;
+  }
 }
