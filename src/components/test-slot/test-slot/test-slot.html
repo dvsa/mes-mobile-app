@@ -66,6 +66,8 @@
           </progressive-access>
         </ion-col>
         <ion-col class="vehicle-details-col" no-padding>
+          <h3 [style.padding]="'5px 10px'" *ngIf="delegatedTest && slot.booking.candidate.driverNumber">{{slot.booking.candidate.driverNumber}}</h3>
+
           <vehicle-details
             *ngIf="showVehicleDetails()"
             [height]="slot.booking.application.vehicleHeight"
