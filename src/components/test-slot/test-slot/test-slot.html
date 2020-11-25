@@ -9,10 +9,6 @@
           <language align-items-center [welshLanguage]="slot.booking.application.welshTest">
           </language>
         </ion-col>
-        <ion-col *ngIf="delegatedTest">
-          <date id="del-ex-date" [date]="slot.slotDetail.start">
-          </date>
-        </ion-col>
         <ion-col no-padding>
           <submission-status float-end [testStatus]="componentState.testStatus$ | async"></submission-status>
         </ion-col>
@@ -62,6 +58,8 @@
       </ion-row>
       <ion-row class="slot-footer" [ngClass]="{'vehicle-details-displayed': showVehicleDetails()}" align-items-center>
         <ion-col class="progressive-access-col">
+          <date *ngIf="delegatedTest" id="del-ex-date" [date]="slot.slotDetail.start">
+          </date>
           <progressive-access align-items-center [progressiveAccess]="slot.booking.application.progressiveAccess">
           </progressive-access>
         </ion-col>
