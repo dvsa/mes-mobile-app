@@ -67,7 +67,7 @@
           <h3 id="del-ex-driver-number" *ngIf="delegatedTest && slot.booking.candidate.driverNumber">{{slot.booking.candidate.driverNumber}}</h3>
 
           <vehicle-details
-            *ngIf="showVehicleDetails()"
+            *ngIf="showVehicleDetails() && !delegatedTest"
             [height]="slot.booking.application.vehicleHeight"
             [width]="slot.booking.application.vehicleWidth"
             [length]="slot.booking.application.vehicleLength"
