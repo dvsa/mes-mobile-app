@@ -4,7 +4,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
-import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
 
 import { catAM1TestDataStateObject } from '../__mocks__/cat-AM1-test-data-state-object';
 import { catAM2TestDataStateObject } from '../__mocks__/cat-AM2-test-data-state-object';
@@ -310,47 +309,6 @@ describe('FaultCountProvider', () => {
       it('should call the category D1E specific method for getting the dangerous fault sum count', () => {
         faultCountProvider.getDangerousFaultSumCount(TestCategory.D1E, catD1ETestDataStateObject);
         expect((FaultCountDHelper as any).getDangerousFaultSumCountCatD1E).toHaveBeenCalled();
-      });
-    });
-  });
-
-  describe('getSafetyQuestionsFaultSumCount', () => {
-    describe('CAT D', () => {
-      it('should call the category D method for getting the safetyQuestions fault sum count', () => {
-        faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.D, catDTestDataStateObject.safetyQuestions);
-        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount).toHaveBeenCalled();
-      });
-      it('should call the category D method for getting the safetyQuestions fault sum count', () => {
-        faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.DE, catDTestDataStateObject.safetyQuestions);
-        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount).toHaveBeenCalled();
-      });
-      it('should call the category D method for getting the safetyQuestions fault sum count', () => {
-        faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.D1E, catDTestDataStateObject.safetyQuestions);
-        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount).toHaveBeenCalled();
-      });
-      it('should call the category D method for getting the safetyQuestions fault sum count', () => {
-        faultCountProvider.getSafetyQuestionsFaultCount(TestCategory.D1, catDTestDataStateObject.safetyQuestions);
-        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount).toHaveBeenCalled();
-      });
-
-      it('should return the correct number of driving faults', () => {
-        const faultsState: CatDUniqueTypes.SafetyQuestions = {
-          questions: [
-            {
-              description: 'string',
-              outcome: 'DF',
-            },
-            {
-              description: 'string',
-              outcome: 'DF',
-            },
-            {
-              description: 'string',
-              outcome: 'P',
-            },
-          ],
-        };
-        expect((FaultCountDHelper as any).getSafetyQuestionsFaultCount(faultsState)).toEqual({ drivingFaults: 1 });
       });
     });
   });

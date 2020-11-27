@@ -52,24 +52,6 @@
   </ion-card>
   <warning-banner warningText="This will result in {{vehicleChecksScore.drivingFaults}} driving faults and {{vehicleChecksScore.seriousFaults}} serious fault"
       *ngIf="shouldDisplayBanner()"></warning-banner>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        <h4>
-          Safety questions
-        </h4>
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <safety-question *ngFor="let question of safetyQuestionsNumberArray; let i = index; let l = last" [formGroup]="formGroup"
-          [questionResult]="(pageState.safetyQuestions$ | async)[i]"
-          [questionIndex]="i"
-          [isLastSafetyQuestion]= "l"
-          [questions]="safetyQuestions"
-          (safetyQuestionOutcomeChange)="safetyQuestionOutcomeChanged($event, i)">
-      </safety-question>
-    </ion-card-content>
-  </ion-card>
 </ion-content>
 
 <ion-footer>

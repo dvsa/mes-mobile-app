@@ -26,10 +26,6 @@ import {
   TellMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
 } from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
-import {
-  SAFETY_QUESTION_OUTCOME_CHANGED,
-  SafetyQuestionOutcomeChanged,
-} from '../../../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.action';
 
 @Injectable()
 export class VehicleChecksModalCatDAnalyticsEffects {
@@ -136,28 +132,6 @@ export class VehicleChecksModalCatDAnalyticsEffects {
     switchMap(([action, tests]: [TellMeQuestionOutcomeChanged, TestsModel]) => {
       const eventText = `tell me question ${action.index + 1} outcome changed`;
       const outComeText = action.tellMeQuestionOutcome === 'P' ? 'correct' : 'driving fault';
-      this.analytics.logEvent(
-        formatAnalyticsText(AnalyticsEventCategories.VEHICLE_CHECKS, tests),
-        eventText,
-        outComeText,
-      );
-      return of(new AnalyticRecorded());
-    }),
-  );
-
-  @Effect()
-  safetyQuestionOutcomeChanged$ = this.actions$.pipe(
-    ofType(SAFETY_QUESTION_OUTCOME_CHANGED),
-    concatMap(action => of(action).pipe(
-      withLatestFrom(
-        this.store$.pipe(
-          select(getTests),
-        ),
-      ),
-    )),
-    switchMap(([action, tests]: [SafetyQuestionOutcomeChanged, TestsModel]) => {
-      const eventText = `safety question ${action.index + 1} outcome changed`;
-      const outComeText = action.safetyQuestionOutcome === 'P' ? 'correct' : 'driving fault';
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.VEHICLE_CHECKS, tests),
         eventText,
