@@ -102,8 +102,6 @@ describe('FaultCountProvider', () => {
     spyOn(FaultCountDHelper, 'getDrivingFaultSumCountCatD1E').and.callThrough();
     spyOn(FaultCountDHelper, 'getSeriousFaultSumCountCatD1E').and.callThrough();
     spyOn(FaultCountDHelper, 'getDangerousFaultSumCountCatD1E').and.callThrough();
-
-    spyOn(FaultCountDHelper, 'getSafetyQuestionsFaultCount').and.callThrough();
   });
 
   describe('getDrivingFaultSumCount', () => {
