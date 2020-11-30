@@ -43,6 +43,8 @@ import { getCompletedTests, getStartedTestFlag } from '../../modules/tests/tests
 import { getTests } from '../../modules/tests/tests.reducer';
 import { AddCompletedTests } from '../../modules/tests/tests.actions';
 import moment from 'moment';
+import { getStaffNumber } from '../../modules/tests/journal-data/common/examiner/examiner.selector';
+import { getExaminer } from '../../modules/tests/journal-data/common/examiner/examiner.reducer';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -53,6 +55,7 @@ interface JournalPageState {
   appVersion$: Observable<string>;
   startedTests$: Observable<boolean>;
   completedTests$: Observable<number[]>;
+  examinerId$: Observable<string>;
 }
 
 @IonicPage()
@@ -80,7 +83,8 @@ export class JournalPage extends BasePageComponent implements OnInit {
   todaysDate: DateTime;
   searchResults: SearchResultTestSchema[] = [];
   searchResultsAppRefs: number[];
-  cachedTests: boolean;
+  isCachedTests: boolean;
+  staffNumber: string;
 
   constructor(
     public modalController: ModalController,
@@ -142,12 +146,18 @@ export class JournalPage extends BasePageComponent implements OnInit {
         select(getTests),
         select(getCompletedTests),
       ),
+      examinerId$: this.store$.pipe(
+        select(getJournalState),
+        select(getExaminer),
+        select(getStaffNumber),
+      ),
     };
 
-    const { selectedDate$, slots$, error$, isLoading$, startedTests$, completedTests$ } = this.pageState;
+    const { selectedDate$, slots$, error$, isLoading$, startedTests$, completedTests$, examinerId$ } = this.pageState;
 
     // Merge observables into one
     this.merged$ = merge(
+      examinerId$.pipe(map((value) => { this.staffNumber = value; })),
       selectedDate$.pipe(map(this.setSelectedDate)),
       startedTests$.pipe(map(this.setCachedTests)),
       completedTests$.pipe(map(this.setCompletedTests)),
@@ -202,10 +212,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
    * @param emission
    */
   generateSlotAndSearchResults = (emission: SlotItem[]) => {
-    // TODO retrieve search results from state
-    console.log('cachedTests', this.cachedTests);
-    console.log('this.searchResultsAppRefs', this.searchResultsAppRefs);
-    if (!this.cachedTests && this.searchResultsAppRefs.length === 0) {
+    if (!this.isCachedTests && this.searchResultsAppRefs.length === 0) {
       return this.getSearchResults(emission);
     }
     this.createSlots(emission, this.searchResultsAppRefs);
@@ -218,15 +225,12 @@ export class JournalPage extends BasePageComponent implements OnInit {
    * @param emission
    */
   getSearchResults = (emission: SlotItem[]) => {
-    // TODO move call to service
     const advancedSearchParams: AdvancedSearchParams = {
       startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
       endDate: moment().format('YYYY-MM-DD'),
-      staffNumber: removeLeadingZeros('1234567'),
+      staffNumber: removeLeadingZeros(this.staffNumber),
       costCode: '',
     };
-    console.log('advancedSearchParams', advancedSearchParams);
-    // TODO remove forkjoin
     forkJoin([
       this.searchProvider.advancedSearch(advancedSearchParams),
     ]).subscribe(
@@ -277,7 +281,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
   }
 
   setCachedTests = (cachedTests: boolean): void => {
-    this.cachedTests = cachedTests;
+    this.isCachedTests = cachedTests;
   }
 
   setCompletedTests = (completedTests: number[]): void => {

@@ -10,7 +10,7 @@ import {
   getIncompleteTests,
   getIncompleteTestsCount,
   getOldestIncompleteTest,
-  isDelegatedTest,
+  isDelegatedTest, getCompletedTests, getStartedTestFlag,
 } from '../tests.selector';
 import { JournalModel } from '../../../modules/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
@@ -637,6 +637,36 @@ describe('testsSelector', () => {
       };
       const result = isDelegatedTest(localTestsState);
       expect(result).toBe(true);
+    });
+  });
+  describe('getStartedTestFlag', () => {
+    it('should return correct data', () => {
+      const testsModel: TestsModel = {
+        currentTest: null,
+        startedTests: {
+          entry1: null,
+        },
+        testStatus: null,
+        completedTests: null,
+      };
+
+      const data = getStartedTestFlag(testsModel);
+
+      expect(data).toEqual(true);
+    });
+  });
+  describe('getCompletedTests', () => {
+    it('should return correct data', () => {
+      const testsModel: TestsModel = {
+        currentTest: null,
+        startedTests: null,
+        testStatus: null,
+        completedTests: [1, 2, 3],
+      };
+
+      const data = getCompletedTests(testsModel);
+
+      expect(data).toEqual(testsModel.completedTests);
     });
   });
 });
