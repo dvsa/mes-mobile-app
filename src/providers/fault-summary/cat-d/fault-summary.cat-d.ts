@@ -22,12 +22,6 @@ export type PcvDoorExerciseTypes =
 | CatD1UniqueTypes.PcvDoorExercise
 | CatD1EUniqueTypes.PcvDoorExercise;
 
-export type SafteyQuestionsTypes =
-  | CatDUniqueTypes.SafetyQuestions
-  | CatDEUniqueTypes.SafetyQuestions
-  | CatD1UniqueTypes.SafetyQuestions
-  | CatD1EUniqueTypes.SafetyQuestions;
-
 export class FaultSummaryCatDHelper {
 
   public static getDrivingFaultsNonTrailer(
@@ -40,7 +34,6 @@ export class FaultSummaryCatDHelper {
       ...this.getManoeuvreFaultsCatD(data.manoeuvres, CompetencyOutcome.DF),
       ...this.getVehicleCheckDrivingFaultsCatD(data.vehicleChecks, category, vehicleChecksScore),
       ...this.getPCVDoorExerciseDrivingFault(data.pcvDoorExercise),
-      ...this.getSafetyQuestionsDrivingFault(data.safetyQuestions),
     ];
   }
 
@@ -76,7 +69,6 @@ export class FaultSummaryCatDHelper {
       ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.DF),
       ...this.getVehicleCheckDrivingFaultsCatD(data.vehicleChecks, category, vehicleChecksScore),
       ... this.getPCVDoorExerciseDrivingFault(data.pcvDoorExercise),
-      ...this.getSafetyQuestionsDrivingFault(data.safetyQuestions),
     ];
   }
 
@@ -279,28 +271,6 @@ export class FaultSummaryCatDHelper {
       competencyIdentifier: 'pcvDoorExercise',
       comment: pcvDoorExercise.dangerousFaultComments || '',
       source: CommentSource.PCV_DOOR_EXERCISE,
-      faultCount: 1,
-    }];
-  }
-
-  private static getSafetyQuestionsDrivingFault(safetyQuestions: SafteyQuestionsTypes) {
-
-    if (!safetyQuestions || safetyQuestions.questions.length === 0) {
-      return [];
-    }
-
-    const hasFault: boolean =
-      safetyQuestions.questions.filter(question => question.outcome === CompetencyOutcome.DF).length > 0;
-
-    if (!hasFault) {
-      return [];
-    }
-
-    return [{
-      competencyDisplayName: CompetencyDisplayName.SAFETY_QUESTIONS,
-      competencyIdentifier: 'safetyQuestions',
-      comment: safetyQuestions.faultComments || '',
-      source: CommentSource.SAFETY_QUESTIONS,
       faultCount: 1,
     }];
   }

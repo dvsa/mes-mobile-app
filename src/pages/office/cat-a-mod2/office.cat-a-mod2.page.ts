@@ -80,7 +80,6 @@ import {
   WeatherConditions,
   Identification,
   IndependentDriving,
-  SafetyQuestionResult,
 } from '@dvsa/mes-test-schema/categories/common';
 import {
   AddDangerousFaultComment,
@@ -101,7 +100,7 @@ import { CAT_A_MOD2, JOURNAL_PAGE } from '../../page-names.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FaultSummaryProvider } from '../../../providers/fault-summary/fault-summary';
-import { TestData, ModeOfTransport } from '@dvsa/mes-test-schema/categories/AM2';
+import { TestData, ModeOfTransport, QuestionResult } from '@dvsa/mes-test-schema/categories/AM2';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import {
   safetyAndBalanceQuestionsExist,
@@ -148,7 +147,7 @@ interface OfficePageState {
   dangerousFaults$: Observable<FaultSummary[]>;
   seriousFaults$: Observable<FaultSummary[]>;
   isRekey$: Observable<boolean>;
-  safetyAndBalanceQuestions$: Observable<SafetyQuestionResult[]>;
+  safetyAndBalanceQuestions$: Observable<QuestionResult[]>;
 }
 
 @IonicPage()

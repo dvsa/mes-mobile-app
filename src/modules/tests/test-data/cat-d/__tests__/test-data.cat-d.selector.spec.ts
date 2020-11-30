@@ -62,14 +62,6 @@ describe('TestDataSelectors', () => {
         },
       ],
     },
-    safetyQuestions: {
-      questions: [
-        {
-          description: '',
-          outcome: CompetencyOutcome.DF,
-        },
-      ],
-    },
   };
 
   describe('getDrivingFaultCount', () => {
