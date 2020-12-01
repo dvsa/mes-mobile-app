@@ -209,9 +209,23 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
     this.invalidTestDataModal.dismiss();
   }
 
+  removePostTestReportViews() {
+    const postDebriefPage = this.navController.getViews().find(view => view.id === CAT_B.POST_DEBRIEF_HOLDING_PAGE);
+    const nonPassFinalisationPage = this.navController
+      .getViews().find(view => view.id === CAT_B.NON_PASS_FINALISATION_PAGE);
+
+    this.navController.removeView(postDebriefPage);
+    this.navController.removeView(nonPassFinalisationPage);
+  }
+
   onReturnToTestReport = () => {
     this.invalidTestDataModal.dismiss();
-    this.navController.push(CAT_B.TEST_REPORT_PAGE);
+    this.navController.push(
+      CAT_B.TEST_REPORT_PAGE,
+      null,
+      null,
+      hasCompleted => hasCompleted && this.removePostTestReportViews(),
+    );
   }
 
   continue() {
