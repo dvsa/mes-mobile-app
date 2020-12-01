@@ -4,7 +4,7 @@ import {
   NavParams, Platform, Refresher, ModalController,
 } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subscription, merge, forkJoin } from 'rxjs';
+import { Observable, Subscription, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { BasePageComponent } from '../../shared/classes/base-page';
@@ -157,7 +157,9 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
     // Merge observables into one
     this.merged$ = merge(
-      examinerId$.pipe(map((value) => { this.staffNumber = value; })),
+      examinerId$.pipe(map((value) => {
+        this.staffNumber = value;
+      })),
       selectedDate$.pipe(map(this.setSelectedDate)),
       startedTests$.pipe(map(this.setCachedTests)),
       completedTests$.pipe(map(this.setCompletedTests)),
@@ -213,10 +215,9 @@ export class JournalPage extends BasePageComponent implements OnInit {
    */
   generateSlotAndSearchResults = (emission: SlotItem[]) => {
     if (!this.isCachedTests && this.searchResultsAppRefs.length === 0) {
-      return this.getSearchResults(emission);
+      this.getSearchResults(emission);
     }
     this.createSlots(emission, this.searchResultsAppRefs);
-
   }
 
   /**
@@ -231,20 +232,22 @@ export class JournalPage extends BasePageComponent implements OnInit {
       staffNumber: removeLeadingZeros(this.staffNumber),
       costCode: '',
     };
-    forkJoin([
-      this.searchProvider.advancedSearch(advancedSearchParams),
-    ]).subscribe(
-      ([
-         searchResultsTemp,
-       ]) => {
-        const searchResultsAppRefs = searchResultsTemp.map((res) => {
-          return res.applicationReference;
-        });
-        this.store$.dispatch(new AddCompletedTests(searchResultsAppRefs));
-        this.createSlots(emission, searchResultsAppRefs);
-      },
-      err => this.showError(err),
-    );
+    return new Promise((resolve) => {
+      this.searchProvider.advancedSearch(advancedSearchParams)
+        .subscribe((searchResultsTemp) => {
+          const searchResultsAppRefs = searchResultsTemp.map((res) => {
+            return res.applicationReference;
+          });
+          this.store$.dispatch(new AddCompletedTests(searchResultsAppRefs));
+          this.createSlots(emission, searchResultsAppRefs);
+          resolve();
+        },
+          (err) => {
+            resolve();
+            return this.showError(err);
+          },
+        );
+    });
   }
 
   /**
