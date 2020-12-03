@@ -20,7 +20,7 @@ class WaitingRoomToCarPage extends Page {
   orditTrainerResultFail() {
     this.clickElementByCss('label[for="ordit-trained-no"]');
   }
- trainigRecordsPass() {
+  trainigRecordsPass() {
     this.clickElementByCss('label[for="training-record-yes"]');
   }
   trainigRecordsFail() {
@@ -65,7 +65,7 @@ class WaitingRoomToCarPage extends Page {
     this.clickSubmitButton();
   }
 
-  clickVehicleCheck(showMeQuestionsArray, index) {
+  async clickVehicleCheck(showMeQuestionsArray, index) {
     this.clickElementByXPath(`//button//div[normalize-space(text()) =  "${showMeQuestionsArray[0][index]}"]`);
   }
 
@@ -105,8 +105,6 @@ class WaitingRoomToCarPage extends Page {
     elements.each((element, index) => {
       this.clickElement(element);
       this.clickVehicleCheck(showMeQuestionsArray, index);
-      // const submitDialog = TempPage.getAndAwaitElement(by.xpath('//ion-alert//button[span[text() =  "Submit"]]'));
-      // TempPage.clickElement(submitDialog);
       this.clickSubmitButton();
       let resultFromQuestions;
       if (questionResult === true || questionResult[count] === 'false') {
@@ -190,7 +188,7 @@ class WaitingRoomToCarPage extends Page {
       this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
     } else if (testCategory === 'd') {
       this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
-      this.completeSafetyQuestions();
+      // this.completeSafetyQuestions();
     } else if (testCategory === 'ce') {
       this.multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
     } else if (testCategory === 'a-mod1') {
