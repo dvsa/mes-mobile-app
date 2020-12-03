@@ -10,6 +10,10 @@ export const LOAD_JOURNAL_FAILURE = '[JournalEffects] Load Journal Failure';
 export const LOAD_JOURNAL_SILENT = '[JournalEffect] Load Journal Silent';
 export const LOAD_JOURNAL_SILENT_FAILURE = '[JournalEffect] Load Journal Silent Failure';
 
+export const LOAD_COMPLETED_TESTS = '[JoarnalEffect] Load Completed Tests';
+export const LOAD_COMPLETED_TESTS_SUCCESS = '[JoarnalEffect] Load Completed Tests Success';
+export const LOAD_COMPLETED_TESTS_FAILURE = '[JoarnalEffect] Load Completed Tests Failure';
+
 export const SETUP_JOURNAL_POLLING = '[JournalPage] Setup Journal Polling';
 export const STOP_JOURNAL_POLLING = '[JournalPage] Stop Journal Polling';
 export const UNLOAD_JOURNAL = '[JournalPage] Unload Journal';
@@ -74,6 +78,20 @@ export class LoadJournalSilentFailure implements Action {
 
 export class UnloadJournal implements Action {
   readonly type = UNLOAD_JOURNAL;
+}
+
+export class LoadCompletedTests implements Action {
+  readonly type = LOAD_COMPLETED_TESTS;
+}
+
+export class LoadCompletedTestsSuccess implements Action {
+  readonly type = LOAD_COMPLETED_TESTS_SUCCESS;
+  constructor(public payload: any) { }
+}
+
+export class LoadCompletedTestsFailure implements Action {
+  readonly type = LOAD_COMPLETED_TESTS_FAILURE;
+  constructor(public payload: MesError) { }
 }
 
 export class UnsetError implements Action {

@@ -185,6 +185,8 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.loadJournalManually();
     this.setupPolling();
 
+    this.store$.dispatch(new journalActions.LoadCompletedTests());
+
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
     }

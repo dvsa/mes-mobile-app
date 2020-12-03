@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { UrlProvider } from '../url/url';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AdvancedSearchParams } from './search.models';
 import { timeout } from 'rxjs/operators';
 import { AppConfigProvider } from '../app-config/app-config';
@@ -38,17 +38,27 @@ export class SearchProvider {
   }
 
   advancedSearch(advancedSearchParams: AdvancedSearchParams): Observable<any> {
-    return this.http.get(
-      this.urlProvider.getTestResultServiceUrl(),
+
+    return of([
       {
-        params: {
-          startDate: advancedSearchParams.startDate,
-          endDate: advancedSearchParams.endDate,
-          staffNumber: advancedSearchParams.staffNumber,
-          dtcCode: advancedSearchParams.costCode,
-        },
+        applicationReference: 1234567,
       },
-    ).pipe(timeout(this.appConfig.getAppConfig().requestTimeout));
+      {
+        applicationReference: 1234569,
+      },
+    ]);
+
+    // return this.http.get(
+    //   this.urlProvider.getTestResultServiceUrl(),
+    //   {
+    //     params: {
+    //       startDate: advancedSearchParams.startDate,
+    //       endDate: advancedSearchParams.endDate,
+    //       staffNumber: advancedSearchParams.staffNumber,
+    //       dtcCode: advancedSearchParams.costCode,
+    //     },
+    //   },
+    // ).pipe(timeout(this.appConfig.getAppConfig().requestTimeout));
   }
 
   getTestResult(applicationReference: string, staffNumber: string): Observable<HttpResponse<any>> {

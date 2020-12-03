@@ -34,6 +34,12 @@ import { LogHelper } from '../../providers/logs/logsHelper';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
+import { SearchProvider } from '../../providers/search/search';
+import { AdvancedSearchParams } from '../../providers/search/search.models';
+import moment from 'moment';
+import { removeLeadingZeros } from '../../shared/helpers/formatters';
+import { getExaminer } from '../tests/journal-data/common/examiner/examiner.reducer';
+import { getStaffNumber } from '../tests/journal-data/common/examiner/examiner.selector';
 
 @Injectable()
 export class JournalEffects {
@@ -47,6 +53,7 @@ export class JournalEffects {
     public dataStoreprovider: DataStoreProvider,
     public authProvider: AuthenticationProvider,
     public dateTimeProvider: DateTimeProvider,
+    public searchProvider: SearchProvider,
     private logHelper: LogHelper,
   ) {
   }
@@ -178,6 +185,41 @@ export class JournalEffects {
           takeUntil(this.actions$.pipe(ofType(journalActions.STOP_JOURNAL_POLLING))),
           mapTo({ type: journalActions.LOAD_JOURNAL_SILENT }),
         );
+    }),
+  );
+
+  @Effect()
+  loadTestStatuses$ = this.actions$.pipe(
+    ofType(journalActions.LOAD_COMPLETED_TESTS),
+
+    withLatestFrom(
+      this.store$.pipe(
+        select(getJournalState),
+        select(getExaminer),
+        select(getStaffNumber),
+      ),
+    ),
+
+    switchMap(([action, staffNumber]: [journalActions.LoadCompletedTests, string]) => {
+
+      const advancedSearchParams: AdvancedSearchParams = {
+        startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
+        endDate: moment().format('YYYY-MM-DD'),
+        staffNumber: removeLeadingZeros(staffNumber),
+        costCode: '',
+      };
+
+      return this.searchProvider.advancedSearch(advancedSearchParams).pipe(
+        map((result) => {
+          console.log('load test statuses happened successfully', result);
+          return new journalActions.LoadCompletedTestsSuccess({});
+        }),
+        catchError((err) => {
+          console.log('load test statuses failed', err);
+          return of(new journalActions.LoadCompletedTestsFailure(err));
+        }),
+      );
+
     }),
   );
 
