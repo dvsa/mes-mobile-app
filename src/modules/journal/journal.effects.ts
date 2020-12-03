@@ -19,7 +19,7 @@ import { SlotProvider } from '../../providers/slot/slot';
 import { JournalRefreshModes } from '../../providers/analytics/analytics.model';
 import {
   getSelectedDate, getLastRefreshed, getSlots,
-  canNavigateToPreviousDay, canNavigateToNextDay,
+  canNavigateToPreviousDay, canNavigateToNextDay, getCompletedTests,
 } from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
@@ -40,6 +40,8 @@ import moment from 'moment';
 import { removeLeadingZeros } from '../../shared/helpers/formatters';
 import { getExaminer } from '../tests/journal-data/common/examiner/examiner.reducer';
 import { getStaffNumber } from '../tests/journal-data/common/examiner/examiner.selector';
+import { hasStartedTests } from '../tests/tests.selector';
+import { getTests } from '../tests/tests.reducer';
 
 @Injectable()
 export class JournalEffects {
@@ -198,10 +200,19 @@ export class JournalEffects {
         select(getExaminer),
         select(getStaffNumber),
       ),
+      this.store$.pipe(
+        select(getTests),
+        select(hasStartedTests),
+      ),
+      this.store$.pipe(
+        select(getJournalState),
+        select(getCompletedTests),
+      ),
     ),
 
-    switchMap(([action, staffNumber]: [journalActions.LoadCompletedTests, string]) => {
+    filter(([action, staffNumber, hasStartedTests, completedTests]) => !hasStartedTests && completedTests.length === 0),
 
+    switchMap(([action, staffNumber]) => {
       const advancedSearchParams: AdvancedSearchParams = {
         startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
         endDate: moment().format('YYYY-MM-DD'),
@@ -212,7 +223,10 @@ export class JournalEffects {
       return this.searchProvider.advancedSearch(advancedSearchParams).pipe(
         map((result) => {
           console.log('load test statuses happened successfully', result);
-          return new journalActions.LoadCompletedTestsSuccess({});
+
+          const appRefs = result.map(completedTest => completedTest.applicationReference as number);
+
+          return new journalActions.LoadCompletedTestsSuccess(appRefs);
         }),
         catchError((err) => {
           console.log('load test statuses failed', err);

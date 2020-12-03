@@ -86,7 +86,7 @@ export class LoadCompletedTests implements Action {
 
 export class LoadCompletedTestsSuccess implements Action {
   readonly type = LOAD_COMPLETED_TESTS_SUCCESS;
-  constructor(public payload: any) { }
+  constructor(public payload: number[]) { }
 }
 
 export class LoadCompletedTestsFailure implements Action {

@@ -241,9 +241,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     return new Promise((resolve) => {
       this.searchProvider.advancedSearch(advancedSearchParams)
         .subscribe((searchResultsTemp) => {
-          const searchResultsAppRefs = searchResultsTemp.map((res) => {
-            return res.applicationReference;
-          });
+          const searchResultsAppRefs = searchResultsTemp.map(res => res.applicationReference);
           this.store$.dispatch(new AddCompletedTests(searchResultsAppRefs));
           this.createSlots(emission, searchResultsAppRefs);
           resolve();

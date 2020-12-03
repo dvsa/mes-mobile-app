@@ -91,7 +91,7 @@ export function journalReducer(state = initialState, action: journalActions.Jour
     case journalActions.LOAD_COMPLETED_TESTS_SUCCESS:
       return {
         ...state,
-        completedTests: [],
+        completedTests: action.payload,
       };
     default:
       return state;

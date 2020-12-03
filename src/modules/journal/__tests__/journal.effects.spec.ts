@@ -28,6 +28,8 @@ import { Device } from '@ionic-native/device';
 import { LogHelperMock } from '../../../providers/logs/__mocks__/logsHelper.mock';
 import { HttpErrorResponse } from '@angular/common/http';
 import { configureTestSuite } from 'ng-bullet';
+import { SearchProviderMock } from '../../../providers/search/__mocks__/search.mock';
+import { SearchProvider } from '../../../providers/search/search';
 
 export class TestActions extends Actions {
   constructor() {
@@ -68,6 +70,7 @@ describe('Journal Effects', () => {
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: SearchProvider, useClass: SearchProviderMock },
         Store,
         SlotProvider,
         { provide: LogHelper, useClass: LogHelperMock },
