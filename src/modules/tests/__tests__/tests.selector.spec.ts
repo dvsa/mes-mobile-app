@@ -10,7 +10,7 @@ import {
   getIncompleteTests,
   getIncompleteTestsCount,
   getOldestIncompleteTest,
-  isDelegatedTest, getCompletedTests, getStartedTestFlag,
+  isDelegatedTest, hasStartedTests,
 } from '../tests.selector';
 import { JournalModel } from '../../../modules/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
@@ -69,6 +69,7 @@ describe('testsSelector', () => {
         slots: {},
         selectedDate: 'dummy',
         examiner: { staffNumber: '123', individualId: 456 },
+        completedTests: [],
       };
       const appInfo: AppInfoModel = { versionNumber: '0.0.0', employeeId: '1234567', employeeName: 'Fake Name' };
       const logs: LogsModel = [];
@@ -96,7 +97,6 @@ describe('testsSelector', () => {
         currentTest: { slotId: null },
         startedTests: {},
         testStatus: { 12345: TestStatus.Decided },
-        completedTests: [],
       };
 
       const result = getTestStatus(testState, 12345);
@@ -109,7 +109,6 @@ describe('testsSelector', () => {
         currentTest: { slotId: null },
         startedTests: {},
         testStatus: {},
-        completedTests: [],
       };
 
       const result = getTestStatus(testState, 12345);
@@ -251,7 +250,6 @@ describe('testsSelector', () => {
       currentTest: { slotId: null },
       startedTests: {},
       testStatus: { 12345: TestStatus.Decided },
-      completedTests: [],
     };
 
     it('should return false when no tests started', () => {
@@ -277,7 +275,6 @@ describe('testsSelector', () => {
       currentTest: { slotId: null },
       startedTests: {},
       testStatus: { 12345: TestStatus.Decided },
-      completedTests: [],
     };
 
     it('should return false when no tests started', () => {
@@ -316,7 +313,6 @@ describe('testsSelector', () => {
           },
         },
         testStatus: {},
-        completedTests: [],
       };
       const result = getActivityCodeBySlotId(testState, 1234);
       expect(result).toEqual(ActivityCodes.ACCIDENT);
@@ -328,7 +324,6 @@ describe('testsSelector', () => {
           1234: null,
         },
         testStatus: {},
-        completedTests: [],
       };
       const result = getActivityCodeBySlotId(testState, 1234);
       expect(result).toBeNull();
@@ -340,7 +335,6 @@ describe('testsSelector', () => {
       currentTest: { slotId: null },
       startedTests: {},
       testStatus: {},
-      completedTests: [],
     };
     const testState: TestsModel = {
       currentTest: { slotId: null },
@@ -484,7 +478,6 @@ describe('testsSelector', () => {
         2027: TestStatus.Decided,
         3002: TestStatus.Submitted,
       },
-      completedTests: [],
     };
     describe('getIncompleteTests', () => {
       it('should return the unsubmitted tests', () => {
@@ -557,7 +550,6 @@ describe('testsSelector', () => {
         },
       },
       testStatus: {},
-      completedTests: [],
     };
 
     it('should return false when no delegated tests possible for the category', () => {
@@ -639,7 +631,7 @@ describe('testsSelector', () => {
       expect(result).toBe(true);
     });
   });
-  describe('getStartedTestFlag', () => {
+  describe('hasStartedTests', () => {
     it('should return correct data', () => {
       const testsModel: TestsModel = {
         currentTest: null,
@@ -647,26 +639,11 @@ describe('testsSelector', () => {
           entry1: null,
         },
         testStatus: null,
-        completedTests: null,
       };
 
-      const data = getStartedTestFlag(testsModel);
+      const data = hasStartedTests(testsModel);
 
       expect(data).toEqual(true);
-    });
-  });
-  describe('getCompletedTests', () => {
-    it('should return correct data', () => {
-      const testsModel: TestsModel = {
-        currentTest: null,
-        startedTests: null,
-        testStatus: null,
-        completedTests: [1, 2, 3],
-      };
-
-      const data = getCompletedTests(testsModel);
-
-      expect(data).toEqual(testsModel.completedTests);
     });
   });
 });

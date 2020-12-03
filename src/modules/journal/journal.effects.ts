@@ -189,7 +189,7 @@ export class JournalEffects {
   );
 
   @Effect()
-  loadTestStatuses$ = this.actions$.pipe(
+  loadCompletedTests$ = this.actions$.pipe(
     ofType(journalActions.LOAD_COMPLETED_TESTS),
 
     withLatestFrom(

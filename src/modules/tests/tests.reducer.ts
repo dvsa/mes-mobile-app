@@ -1,4 +1,3 @@
-import * as journalActions from '../../modules/journal/journal.actions';
 import * as testsActions from './tests.actions';
 import { TestsModel } from './tests.model';
 import * as testStatusActions from './test-status/test-status.actions';
@@ -14,7 +13,6 @@ export const initialState: TestsModel = {
   currentTest: { slotId: null },
   startedTests: {},
   testStatus: {},
-  completedTests: [],
 };
 
 /**
@@ -25,7 +23,7 @@ export const initialState: TestsModel = {
  */
 export function testsReducer(
   state = initialState,
-  action: testsActions.Types | journalActions.JournalActionTypes | fakeJournalActions.Types,
+  action: testsActions.Types | fakeJournalActions.Types,
 ): TestsModel {
 
   const slotId = deriveSlotId(state, action);
@@ -37,11 +35,6 @@ export function testsReducer(
       return slotId ? createStateObject(removeTest(state, slotId), action, slotId, category) : state;
     case fakeJournalActions.START_E2E_PRACTICE_TEST:
       return slotId ? createStateObject(removeTest(state, slotId), action, slotId, category) : state;
-    case testsActions.ADD_COMPLETED_TESTS:
-      return {
-        ...state,
-        completedTests: action.references,
-      };
     default:
       return slotId ? createStateObject(state, action, slotId, category) : state;
   }

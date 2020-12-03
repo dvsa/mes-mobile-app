@@ -119,7 +119,6 @@ describe('testsReducer', () => {
         },
       },
       testStatus: {},
-      completedTests: [],
     };
     const slotId = testReportPracticeSlotId;
     const action = new testsActions.StartTestReportPracticeTest(slotId);
@@ -166,7 +165,6 @@ describe('testsReducer', () => {
       currentTest: { slotId: null },
       startedTests: {},
       testStatus: {},
-      completedTests: [],
     };
 
     const result = testsReducer(state, new testsActions.StartTest(123, TestCategory.B));
@@ -182,7 +180,6 @@ describe('testsReducer', () => {
       currentTest: { slotId: '123' },
       startedTests: {},
       testStatus: {},
-      completedTests: [],
     };
 
     const result = testsReducer(state, new testsActions.ActivateTest(456, TestCategory.B));

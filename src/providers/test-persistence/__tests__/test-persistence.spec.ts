@@ -106,7 +106,6 @@ describe('TestPersistenceProvider', () => {
         12345678: TestStatus.Booked,
         23456789: TestStatus.Booked,
       },
-      completedTests: [],
     };
     testPersistenceProvider = TestBed.get(TestPersistenceProvider);
     dataStoreProvider = TestBed.get(DataStoreProvider);

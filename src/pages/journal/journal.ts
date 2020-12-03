@@ -39,7 +39,7 @@ import { AdvancedSearchParams } from '../../providers/search/search.models';
 import { formatApplicationReference, removeLeadingZeros } from '../../shared/helpers/formatters';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
-import { getCompletedTests, getStartedTestFlag } from '../../modules/tests/tests.selector';
+import { hasStartedTests } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { AddCompletedTests } from '../../modules/tests/tests.actions';
 import moment from 'moment';
@@ -53,7 +53,7 @@ interface JournalPageState {
   isLoading$: Observable<boolean>;
   lastRefreshedTime$: Observable<string>;
   appVersion$: Observable<string>;
-  startedTests$: Observable<boolean>;
+  hasStartedTests$: Observable<boolean>;
   completedTests$: Observable<number[]>;
   examinerId$: Observable<string>;
 }
@@ -138,13 +138,15 @@ export class JournalPage extends BasePageComponent implements OnInit {
         select(getAppInfoState),
         map(getVersionNumber),
       ),
-      startedTests$: this.store$.pipe(
+      hasStartedTests$: this.store$.pipe(
         select(getTests),
-        select(getStartedTestFlag),
+        select(hasStartedTests),
       ),
       completedTests$: this.store$.pipe(
         select(getTests),
-        select(getCompletedTests),
+        select(() => {
+          return [];
+        }),
       ),
       examinerId$: this.store$.pipe(
         select(getJournalState),
@@ -153,7 +155,9 @@ export class JournalPage extends BasePageComponent implements OnInit {
       ),
     };
 
-    const { selectedDate$, slots$, error$, isLoading$, startedTests$, completedTests$, examinerId$ } = this.pageState;
+    const {
+      selectedDate$, slots$, error$, isLoading$, hasStartedTests$, completedTests$, examinerId$,
+    } = this.pageState;
 
     // Merge observables into one
     this.merged$ = merge(
@@ -161,7 +165,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
         this.staffNumber = value;
       })),
       selectedDate$.pipe(map(this.setSelectedDate)),
-      startedTests$.pipe(map(this.setCachedTests)),
+      hasStartedTests$.pipe(map(this.setCachedTests)),
       completedTests$.pipe(map(this.setCompletedTests)),
       slots$.pipe(
         map(this.generateSlotAndSearchResults),

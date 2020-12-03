@@ -122,7 +122,6 @@ export class TestsEffects {
       },
       startedTests: omit(tests.startedTests, testsNotToSave),
       testStatus: omit(tests.testStatus, testsNotToSave),
-      completedTests: tests.completedTests,
     };
   }
 

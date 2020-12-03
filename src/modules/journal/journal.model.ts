@@ -18,6 +18,7 @@ export type JournalModel = {
   error?: MesError,
   selectedDate: string,
   examiner: Examiner,
+  completedTests: number[],
 };
 
 export interface ExaminerSlotItems {

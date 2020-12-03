@@ -38,6 +38,7 @@ describe('IncompleteTestsBannerSelector', () => {
       const journal: JournalModel = {
         isLoading: true,
         lastRefreshed: new Date(0),
+        completedTests: [],
         slots: {
           ['2019-01-12']: [
             {
@@ -247,7 +248,6 @@ describe('IncompleteTestsBannerSelector', () => {
         testStatus: {
           1003: TestStatus.WriteUp,
         },
-        completedTests: [],
       };
 
       const count = getIncompleteTestsCount(journal, tests, DateTime.at('2019-01-14'), slotProvider);

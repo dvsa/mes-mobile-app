@@ -158,6 +158,9 @@ export type JournalActionTypes =
   | LoadJournalSilent
   | LoadJournalSuccess
   | LoadJournalFailure
+  | LoadCompletedTests
+  | LoadCompletedTestsSuccess
+  | LoadCompletedTestsFailure
   | UnloadJournal
   | UnsetError
   | ClearChangedSlot

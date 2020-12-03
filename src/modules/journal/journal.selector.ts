@@ -68,3 +68,7 @@ export const getPermittedSlotIdsBeforeToday = (
   return flatten((arrayOfDateStrings.map(date => slots[date].filter(slot => slotProvider.canStartTest(slot.slotData))
     .map(slot => slot.slotData.slotDetail.slotId))));
 };
+
+export const getCompletedTests = (journalModel: JournalModel): number[] => {
+  return journalModel.completedTests;
+};

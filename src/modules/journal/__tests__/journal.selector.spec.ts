@@ -1,8 +1,15 @@
 import { JournalModel } from '../journal.model';
 import {
-  getSlotsOnSelectedDate, getLastRefreshed, getIsLoading,
-  getError, getLastRefreshedTime,
-  canNavigateToNextDay, canNavigateToPreviousDay, getPermittedSlotIdsBeforeToday, hasSlotsAfterSelectedDate,
+  getSlotsOnSelectedDate,
+  getLastRefreshed,
+  getIsLoading,
+  getError,
+  getLastRefreshedTime,
+  canNavigateToNextDay,
+  canNavigateToPreviousDay,
+  getPermittedSlotIdsBeforeToday,
+  hasSlotsAfterSelectedDate,
+  getCompletedTests,
 } from '../journal.selector';
 import { MesError } from '../../../shared/models/mes-error.model';
 import { DateTime } from '../../../shared/helpers/date-time';
@@ -57,6 +64,7 @@ describe('JournalSelector', () => {
     },
     selectedDate: '2019-01-17',
     examiner: { staffNumber: '123', individualId: 456 },
+    completedTests: [],
   };
 
   describe('getIsLoading', () => {
@@ -125,6 +133,7 @@ describe('JournalSelector', () => {
         },
         selectedDate: '2019-01-29',
         examiner: { staffNumber: '123', individualId: 456 },
+        completedTests: [],
       };
 
       const result = canNavigateToNextDay(journal);
@@ -154,6 +163,7 @@ describe('JournalSelector', () => {
         },
         selectedDate: '2019-01-28',
         examiner: { staffNumber: '123', individualId: 456 },
+        completedTests: [],
       };
 
       const result = canNavigateToNextDay(journal);
@@ -183,6 +193,7 @@ describe('JournalSelector', () => {
         },
         selectedDate: '2019-02-04',
         examiner: { staffNumber: '123', individualId: 456 },
+        completedTests: [],
       };
 
       const result = canNavigateToNextDay(journal);
@@ -207,6 +218,7 @@ describe('JournalSelector', () => {
         },
         selectedDate: '2019-01-01',
         examiner: { staffNumber: '123', individualId: 456 },
+        completedTests: [],
       };
 
       const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-15'));
@@ -236,6 +248,7 @@ describe('JournalSelector', () => {
         },
         selectedDate: '2019-01-14',
         examiner: { staffNumber: '123', individualId: 456 },
+        completedTests: [],
       };
 
       const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-13'));
@@ -343,6 +356,7 @@ describe('JournalSelector', () => {
         },
         selectedDate: '2019-01-14',
         examiner: { staffNumber: '123', individualId: 456 },
+        completedTests: [],
       };
 
       const slotIds = getPermittedSlotIdsBeforeToday(journal, DateTime.at('2019-01-14'), slotProvider);
@@ -361,6 +375,22 @@ describe('JournalSelector', () => {
       const journalWithoutSlotsAfterSelectedDate = cloneDeep(baseJournalData);
       journalWithoutSlotsAfterSelectedDate.slots['2019-01-03'] = [];
       expect(hasSlotsAfterSelectedDate(journalWithoutSlotsAfterSelectedDate)).toEqual(false);
+    });
+  });
+  describe('getCompletedTests', () => {
+    it('should return correct data', () => {
+      const journalModel: JournalModel = {
+        isLoading: false,
+        lastRefreshed: new Date(0),
+        slots: { },
+        selectedDate: '2019-01-01',
+        examiner: { staffNumber: '123', individualId: 456 },
+        completedTests: [1, 2, 3],
+      };
+
+      const data = getCompletedTests(journalModel);
+
+      expect(data).toEqual(journalModel.completedTests);
     });
   });
 
