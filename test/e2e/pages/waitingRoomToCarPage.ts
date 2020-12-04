@@ -20,9 +20,11 @@ class WaitingRoomToCarPage extends Page {
   orditTrainerResultFail() {
     this.clickElementByCss('label[for="ordit-trained-no"]');
   }
- trainigRecordsPass() {
+
+  trainigRecordsPass() {
     this.clickElementByCss('label[for="training-record-yes"]');
   }
+
   trainigRecordsFail() {
     this.clickElementByCss('label[for="training-record-no"]');
   }
@@ -190,7 +192,6 @@ class WaitingRoomToCarPage extends Page {
       this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
     } else if (testCategory === 'd') {
       this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
-      this.completeSafetyQuestions();
     } else if (testCategory === 'ce') {
       this.multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
     } else if (testCategory === 'a-mod1') {
