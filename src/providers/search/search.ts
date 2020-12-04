@@ -41,10 +41,22 @@ export class SearchProvider {
 
     return of([
       {
+        costCode: 'costCode',
+        testDate: 'testDate',
+        driverNumber: 'diverNumber',
+        candidateName: {},
         applicationReference: 1234567031,
+        category: 'category',
+        activityCode: '2',
       },
       {
+        costCode: 'costCode',
+        testDate: 'testDate',
+        driverNumber: 'diverNumber',
+        candidateName: {},
         applicationReference: 1234569019,
+        category: 'category',
+        activityCode: '11',
       },
     ]);
 

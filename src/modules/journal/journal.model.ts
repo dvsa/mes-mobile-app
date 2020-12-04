@@ -2,6 +2,7 @@ import { MesError } from '../../shared/models/mes-error.model';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { Examiner } from '@dvsa/mes-test-schema/categories/common';
 import { Booking, SlotDetail, TestCentre } from '@dvsa/mes-journal-schema';
+import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 
 export type Slot = {
   booking?: Booking,
@@ -18,7 +19,7 @@ export type JournalModel = {
   error?: MesError,
   selectedDate: string,
   examiner: Examiner,
-  completedTests: number[],
+  completedTests: SearchResultTestSchema[],
 };
 
 export interface ExaminerSlotItems {

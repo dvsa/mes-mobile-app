@@ -3,6 +3,7 @@ import { flatten, isEmpty, isNil } from 'lodash';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
+import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 
 export const getSlots = (journal: JournalModel) => journal.slots;
 
@@ -69,6 +70,6 @@ export const getPermittedSlotIdsBeforeToday = (
     .map(slot => slot.slotData.slotDetail.slotId))));
 };
 
-export const getCompletedTests = (journalModel: JournalModel): number[] => {
+export const getCompletedTests = (journalModel: JournalModel): SearchResultTestSchema[] => {
   return journalModel.completedTests;
 };

@@ -36,9 +36,11 @@ import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-
 import { DateTime } from '../../shared/helpers/date-time';
 import { SearchProvider } from '../../providers/search/search';
 import { formatApplicationReference } from '../../shared/helpers/formatters';
-import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
+import { ActivityCode, SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
 import { TestSlot } from '@dvsa/mes-journal-schema';
+import { isEmpty } from 'lodash';
+import { TestStatus } from '../../modules/tests/test-status/test-status.model';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -47,7 +49,7 @@ interface JournalPageState {
   isLoading$: Observable<boolean>;
   lastRefreshedTime$: Observable<string>;
   appVersion$: Observable<string>;
-  completedTests$: Observable<number[]>;
+  completedTests$: Observable<SearchResultTestSchema[]>;
 }
 
 @IonicPage()
@@ -73,9 +75,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
   start = '2018-12-10T08:10:00+00:00';
   merged$: Observable<void | number>;
   todaysDate: DateTime;
-  searchResults: SearchResultTestSchema[] = [];
-
-  completedTests: number[];
+  completedTests: SearchResultTestSchema[];
 
   constructor(
     public modalController: ModalController,
@@ -195,7 +195,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.selectedDate = selectedDate;
   }
 
-  setCompletedTests = (completedTests: number[]): void => {
+  setCompletedTests = (completedTests: SearchResultTestSchema[]): void => {
     this.completedTests = completedTests;
     console.log('Completed Tests', completedTests);
   }
@@ -229,10 +229,14 @@ export class JournalPage extends BasePageComponent implements OnInit {
     errorModal.present();
   }
 
-  hasSlotBeenTested(slotData: TestSlot): boolean {
+  /**
+   * Returns the activity code if the test has been completed already
+   * Returns null if test hasn't been completed yet
+   */
+  hasSlotBeenTested(slotData: TestSlot): ActivityCode | null {
     console.log('completed tests at this point', this.completedTests);
-    if (!this.completedTests) {
-      return false;
+    if (isEmpty(this.completedTests)) {
+      return null;
     }
 
     const applicationReference: ApplicationReference = {
@@ -244,9 +248,11 @@ export class JournalPage extends BasePageComponent implements OnInit {
     const appRef = parseInt(formatApplicationReference(applicationReference), 10);
     console.log(appRef);
 
-    return this.completedTests.some((completedTest) => {
-      return completedTest === parseInt(formatApplicationReference(applicationReference), 10);
+    const completedTest = this.completedTests.find((completedTest) => {
+      return completedTest.applicationReference === parseInt(formatApplicationReference(applicationReference), 10);
     });
+
+    return completedTest ? completedTest.activityCode : null;
   }
 
   private createSlots = (emission: SlotItem[]) => {
@@ -276,7 +282,13 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
       if (componentRef.instance instanceof TestSlotComponent) {
         // Disable slot if it has been tested already
-        (<TestSlotComponent>componentRef.instance).disable = this.hasSlotBeenTested(slot.slotData as TestSlot);
+        const activityCode = this.hasSlotBeenTested(slot.slotData as TestSlot);
+
+        if (activityCode) {
+          console.log('Activity code is', activityCode);
+          (<TestSlotComponent>componentRef.instance).derivedActivityCode = activityCode;
+          (<TestSlotComponent>componentRef.instance).derivedTestStatus = TestStatus.Submitted;
+        }
         // if this is a test slot assign hasSeenCandidateDetails separately
         (<TestSlotComponent>componentRef.instance).hasSeenCandidateDetails = slot.hasSeenCandidateDetails;
       }

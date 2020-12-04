@@ -385,7 +385,26 @@ describe('JournalSelector', () => {
         slots: { },
         selectedDate: '2019-01-01',
         examiner: { staffNumber: '123', individualId: 456 },
-        completedTests: [1, 2, 3],
+        completedTests: [
+          {
+            costCode: 'costCode',
+            testDate: 'testDate',
+            driverNumber: 'diverNumber',
+            candidateName: {},
+            applicationReference: 1234567031,
+            category: 'category',
+            activityCode: '2',
+          },
+          {
+            costCode: 'costCode',
+            testDate: 'testDate',
+            driverNumber: 'diverNumber',
+            candidateName: {},
+            applicationReference: 1234569019,
+            category: 'category',
+            activityCode: '11',
+          },
+        ],
       };
 
       const data = getCompletedTests(journalModel);

@@ -47,10 +47,13 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   showLocation: boolean;
 
   @Input()
-  disable: boolean = false;
+  delegatedTest: boolean = false;
 
   @Input()
-  delegatedTest: boolean = false;
+  derivedTestStatus: TestStatus | null = null;
+
+  @Input()
+  derivedActivityCode: ActivityCode | null = null;
 
   componentState: TestSlotComponentState;
 
@@ -67,11 +70,11 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     this.componentState = {
       testStatus$: this.store$.pipe(
         select(getTests),
-        select(tests => getTestStatus(tests, slotId)),
+        select(tests => this.derivedTestStatus || getTestStatus(tests, slotId)),
       ),
       testActivityCode$: this.store$.pipe(
         select(getTests),
-        map(tests => getActivityCodeBySlotId(tests, this.slot.slotDetail.slotId)),
+        map(tests => this.derivedActivityCode || getActivityCodeBySlotId(tests, this.slot.slotDetail.slotId)),
       ),
       isRekey$: this.store$.pipe(
         select(getTests),

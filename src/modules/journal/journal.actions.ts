@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { MesError } from '../../shared/models/mes-error.model';
 import { ConnectionStatus } from '../../providers/network-state/network-state';
 import { ExaminerSlotItemsByDate } from './journal.model';
+import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';
 export const LOAD_JOURNAL_SUCCESS = '[JournalEffects] Load Journal Success';
@@ -86,7 +87,7 @@ export class LoadCompletedTests implements Action {
 
 export class LoadCompletedTestsSuccess implements Action {
   readonly type = LOAD_COMPLETED_TESTS_SUCCESS;
-  constructor(public payload: number[]) { }
+  constructor(public payload: SearchResultTestSchema[]) { }
 }
 
 export class LoadCompletedTestsFailure implements Action {

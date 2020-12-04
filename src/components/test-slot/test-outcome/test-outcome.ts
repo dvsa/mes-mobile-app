@@ -74,9 +74,6 @@ export class TestOutcomeComponent implements OnInit {
   @Input()
   category: TestCategory;
 
-  @Input()
-  disable: boolean = false;
-
   modal: Modal;
   startTestAsRekey: boolean = false;
   isTestSlotOnRekeySearch: boolean = false;
@@ -127,9 +124,6 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   showRekeyButton(): boolean {
-    if (this.disable) {
-      return false;
-    }
 
     if (this.testStatus === TestStatus.Completed || this.testStatus === TestStatus.Submitted) {
       return false; // because the test is complete
@@ -156,9 +150,6 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   showStartTestButton(): boolean {
-    if (this.disable) {
-      return false;
-    }
     return !this.isDelegatedTest && (this.testStatus === TestStatus.Booked);
   }
 
