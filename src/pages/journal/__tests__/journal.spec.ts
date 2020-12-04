@@ -106,43 +106,6 @@ describe('JournalPage', () => {
   }));
 
   describe('Class', () => {
-    describe('generateSlotAndSearchResults', () => {
-      it('should call getSearchResults if cache is empty', () => {
-        spyOn(component, 'getSearchResults');
-        component.isCachedTests = false;
-        component.searchResultsAppRefs = [];
-        component.generateSlotAndSearchResults([]);
-        expect(component.getSearchResults).toHaveBeenCalled();
-      });
-      it('should not call getSearchResults if cache is not empty', () => {
-        spyOn(component, 'getSearchResults');
-        component.isCachedTests = true;
-        component.searchResultsAppRefs = [];
-        component.generateSlotAndSearchResults([]);
-        expect(component.getSearchResults).not.toHaveBeenCalled();
-      });
-    });
-    describe('hasSlotBeenTested', () => {
-      it('should return false if references is false', () => {
-        const data = component.hasSlotBeenTested(null, false);
-
-        expect(data).toEqual(false);
-      });
-    });
-    describe('setCachedTests', () => {
-      it('should set isCachedTests to true when parsed with true', () => {
-        component.setCachedTests(true);
-
-        expect(component.isCachedTests).toEqual(true);
-      });
-    });
-    describe('setCompletedTests', () => {
-      it('should set searchResultsAppRefs to its parameter', () => {
-        component.setCompletedTests([]);
-
-        expect(component.searchResultsAppRefs).toEqual([]);
-      });
-    });
     describe('logout', () => {
       it('should dispatch an UnloadJournal action and call base page logout', () => {
         spyOn(BasePageComponent.prototype, 'logout');

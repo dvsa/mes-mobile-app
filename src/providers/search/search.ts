@@ -41,10 +41,10 @@ export class SearchProvider {
 
     return of([
       {
-        applicationReference: 1234567,
+        applicationReference: 1234567031,
       },
       {
-        applicationReference: 1234569,
+        applicationReference: 1234569019,
       },
     ]);
 

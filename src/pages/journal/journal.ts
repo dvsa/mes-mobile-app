@@ -13,7 +13,7 @@ import * as journalActions from './../../modules/journal/journal.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import {
   getError, getIsLoading, getSelectedDate, getLastRefreshed,
-  getLastRefreshedTime, getSlotsOnSelectedDate,
+  getLastRefreshedTime, getSlotsOnSelectedDate, getCompletedTests,
 } from './../../modules/journal/journal.selector';
 import { getJournalState } from './../../modules/journal/journal.reducer';
 import { MesError } from '../../shared/models/mes-error.model';
@@ -35,16 +35,10 @@ import { TestSlotComponent } from '../../components/test-slot/test-slot/test-slo
 import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
 import { DateTime } from '../../shared/helpers/date-time';
 import { SearchProvider } from '../../providers/search/search';
-import { AdvancedSearchParams } from '../../providers/search/search.models';
-import { formatApplicationReference, removeLeadingZeros } from '../../shared/helpers/formatters';
+import { formatApplicationReference } from '../../shared/helpers/formatters';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
-import { hasStartedTests } from '../../modules/tests/tests.selector';
-import { getTests } from '../../modules/tests/tests.reducer';
-import { AddCompletedTests } from '../../modules/tests/tests.actions';
-import moment from 'moment';
-import { getStaffNumber } from '../../modules/tests/journal-data/common/examiner/examiner.selector';
-import { getExaminer } from '../../modules/tests/journal-data/common/examiner/examiner.reducer';
+import { TestSlot } from '@dvsa/mes-journal-schema';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -53,9 +47,7 @@ interface JournalPageState {
   isLoading$: Observable<boolean>;
   lastRefreshedTime$: Observable<string>;
   appVersion$: Observable<string>;
-  hasStartedTests$: Observable<boolean>;
   completedTests$: Observable<number[]>;
-  examinerId$: Observable<string>;
 }
 
 @IonicPage()
@@ -82,9 +74,8 @@ export class JournalPage extends BasePageComponent implements OnInit {
   merged$: Observable<void | number>;
   todaysDate: DateTime;
   searchResults: SearchResultTestSchema[] = [];
-  searchResultsAppRefs: number[];
-  isCachedTests: boolean;
-  staffNumber: string;
+
+  completedTests: number[];
 
   constructor(
     public modalController: ModalController,
@@ -138,39 +129,18 @@ export class JournalPage extends BasePageComponent implements OnInit {
         select(getAppInfoState),
         map(getVersionNumber),
       ),
-      hasStartedTests$: this.store$.pipe(
-        select(getTests),
-        select(hasStartedTests),
-      ),
       completedTests$: this.store$.pipe(
-        select(getTests),
-        select(() => {
-          return [];
-        }),
-      ),
-      examinerId$: this.store$.pipe(
         select(getJournalState),
-        select(getExaminer),
-        select(getStaffNumber),
+        select(getCompletedTests),
       ),
     };
 
-    const {
-      selectedDate$, slots$, error$, isLoading$, hasStartedTests$, completedTests$, examinerId$,
-    } = this.pageState;
+    const { selectedDate$, slots$, error$, isLoading$, completedTests$ } = this.pageState;
 
-    // Merge observables into one
     this.merged$ = merge(
-      examinerId$.pipe(map((value) => {
-        this.staffNumber = value;
-      })),
       selectedDate$.pipe(map(this.setSelectedDate)),
-      hasStartedTests$.pipe(map(this.setCachedTests)),
       completedTests$.pipe(map(this.setCompletedTests)),
-      slots$.pipe(
-        map(this.generateSlotAndSearchResults),
-      ),
-      // Run any transformations necessary here
+      slots$.pipe(map(this.createSlots)),
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),
     );
@@ -213,68 +183,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
     }
   }
 
-  /**selectedDate
-   * If state contains no cached data and search hasn't
-   * previously returned results then get users search results
-   * otherwise get create slot data directly
-   * @param emission
-   */
-  generateSlotAndSearchResults = (emission: SlotItem[]) => {
-    if (!this.isCachedTests && this.searchResultsAppRefs.length === 0) {
-      this.getSearchResults(emission);
-    }
-    this.createSlots(emission, this.searchResultsAppRefs);
-  }
-
-  /**
-   * Call endpoint to obtain users previously completed tests and
-   * pass to createSlots function for evaluation
-   * @param emission
-   */
-  getSearchResults = (emission: SlotItem[]) => {
-    const advancedSearchParams: AdvancedSearchParams = {
-      startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
-      endDate: moment().format('YYYY-MM-DD'),
-      staffNumber: removeLeadingZeros(this.staffNumber),
-      costCode: '',
-    };
-    return new Promise((resolve) => {
-      this.searchProvider.advancedSearch(advancedSearchParams)
-        .subscribe((searchResultsTemp) => {
-          const searchResultsAppRefs = searchResultsTemp.map(res => res.applicationReference);
-          this.store$.dispatch(new AddCompletedTests(searchResultsAppRefs));
-          this.createSlots(emission, searchResultsAppRefs);
-          resolve();
-        },
-          (err) => {
-            resolve();
-            return this.showError(err);
-          },
-        );
-    });
-  }
-
-  /**
-   * Search for slots appReference in returned search results
-   * @param slot
-   * @param references
-   */
-  hasSlotBeenTested(slot, references): boolean {
-    if (!references) {
-      return false;
-    }
-
-    const applicationReference: ApplicationReference = {
-      applicationId: slot.slotData.booking.application.applicationId,
-      bookingSequence: slot.slotData.booking.application.bookingSequence,
-      checkDigit: slot.slotData.booking.application.checkDigit,
-    };
-
-    return references.some((reference) => {
-      return reference === parseInt(formatApplicationReference(applicationReference), 10);
-    });
-  }
-
   loadJournalManually() {
     this.store$.dispatch(new journalActions.LoadJournal());
   }
@@ -287,12 +195,9 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.selectedDate = selectedDate;
   }
 
-  setCachedTests = (cachedTests: boolean): void => {
-    this.isCachedTests = cachedTests;
-  }
-
   setCompletedTests = (completedTests: number[]): void => {
-    this.searchResultsAppRefs = completedTests;
+    this.completedTests = completedTests;
+    console.log('Completed Tests', completedTests);
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
@@ -324,7 +229,27 @@ export class JournalPage extends BasePageComponent implements OnInit {
     errorModal.present();
   }
 
-  private createSlots = (emission: SlotItem[], searchresults?) => {
+  hasSlotBeenTested(slotData: TestSlot): boolean {
+    console.log('completed tests at this point', this.completedTests);
+    if (!this.completedTests) {
+      return false;
+    }
+
+    const applicationReference: ApplicationReference = {
+      applicationId: slotData.booking.application.applicationId,
+      bookingSequence: slotData.booking.application.bookingSequence,
+      checkDigit: slotData.booking.application.checkDigit,
+    };
+
+    const appRef = parseInt(formatApplicationReference(applicationReference), 10);
+    console.log(appRef);
+
+    return this.completedTests.some((completedTest) => {
+      return completedTest === parseInt(formatApplicationReference(applicationReference), 10);
+    });
+  }
+
+  private createSlots = (emission: SlotItem[]) => {
     // Clear any dynamically created slots before adding the latest
     this.slotContainer.clear();
 
@@ -338,12 +263,10 @@ export class JournalPage extends BasePageComponent implements OnInit {
     for (const slot of slots) {
       const factory = this.resolver.resolveComponentFactory(slot.component);
       const componentRef = this.slotContainer.createComponent(factory);
-      const alreadyTested = this.hasSlotBeenTested(slot, searchresults);
 
       (<SlotComponent>componentRef.instance).slot = slot.slotData;
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
       (<SlotComponent>componentRef.instance).showLocation = (slot.slotData.testCentre.centreName !== lastLocation);
-      (<SlotComponent>componentRef.instance).disable = alreadyTested;
       lastLocation = slot.slotData.testCentre.centreName;
 
       if (componentRef.instance instanceof PersonalCommitmentSlotComponent) {
@@ -352,6 +275,8 @@ export class JournalPage extends BasePageComponent implements OnInit {
       }
 
       if (componentRef.instance instanceof TestSlotComponent) {
+        // Disable slot if it has been tested already
+        (<TestSlotComponent>componentRef.instance).disable = this.hasSlotBeenTested(slot.slotData as TestSlot);
         // if this is a test slot assign hasSeenCandidateDetails separately
         (<TestSlotComponent>componentRef.instance).hasSeenCandidateDetails = slot.hasSeenCandidateDetails;
       }
