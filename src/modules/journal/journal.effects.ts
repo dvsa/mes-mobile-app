@@ -19,7 +19,7 @@ import { SlotProvider } from '../../providers/slot/slot';
 import { JournalRefreshModes } from '../../providers/analytics/analytics.model';
 import {
   getSelectedDate, getLastRefreshed, getSlots,
-  canNavigateToPreviousDay, canNavigateToNextDay,
+  canNavigateToPreviousDay, canNavigateToNextDay, getCompletedTests,
 } from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
@@ -34,6 +34,14 @@ import { LogHelper } from '../../providers/logs/logsHelper';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
+import { SearchProvider } from '../../providers/search/search';
+import { AdvancedSearchParams } from '../../providers/search/search.models';
+import moment from 'moment';
+import { removeLeadingZeros } from '../../shared/helpers/formatters';
+import { getExaminer } from '../tests/journal-data/common/examiner/examiner.reducer';
+import { getStaffNumber } from '../tests/journal-data/common/examiner/examiner.selector';
+import { hasStartedTests } from '../tests/tests.selector';
+import { getTests } from '../tests/tests.reducer';
 
 @Injectable()
 export class JournalEffects {
@@ -47,6 +55,7 @@ export class JournalEffects {
     public dataStoreprovider: DataStoreProvider,
     public authProvider: AuthenticationProvider,
     public dateTimeProvider: DateTimeProvider,
+    public searchProvider: SearchProvider,
     private logHelper: LogHelper,
   ) {
   }
@@ -178,6 +187,49 @@ export class JournalEffects {
           takeUntil(this.actions$.pipe(ofType(journalActions.STOP_JOURNAL_POLLING))),
           mapTo({ type: journalActions.LOAD_JOURNAL_SILENT }),
         );
+    }),
+  );
+
+  @Effect()
+  loadCompletedTests$ = this.actions$.pipe(
+    ofType(journalActions.LOAD_COMPLETED_TESTS),
+
+    withLatestFrom(
+      this.store$.pipe(
+        select(getJournalState),
+        select(getExaminer),
+        select(getStaffNumber),
+      ),
+      this.store$.pipe(
+        select(getTests),
+        select(hasStartedTests),
+      ),
+      this.store$.pipe(
+        select(getJournalState),
+        select(getCompletedTests),
+      ),
+    ),
+
+    filter(([action, staffNumber, hasStartedTests, completedTests]) => !hasStartedTests && completedTests.length === 0),
+
+    switchMap(([action, staffNumber]) => {
+      const numberOfDaysToView = this.appConfig.getAppConfig().journal.numberOfDaysToView;
+      const advancedSearchParams: AdvancedSearchParams = {
+        startDate: moment().subtract(numberOfDaysToView, 'days').format('YYYY-MM-DD'),
+        endDate: moment().format('YYYY-MM-DD'),
+        staffNumber: removeLeadingZeros(staffNumber),
+        costCode: '',
+      };
+
+      return this.searchProvider.advancedSearch(advancedSearchParams).pipe(
+        map((searchResults) => {
+          return new journalActions.LoadCompletedTestsSuccess(searchResults);
+        }),
+        catchError((err) => {
+          return of(new journalActions.LoadCompletedTestsFailure(err));
+        }),
+      );
+
     }),
   );
 

@@ -35,6 +35,7 @@ describe('Test Outcome', () => {
     slots: {},
     selectedDate: 'dummy',
     examiner: { staffNumber: '123', individualId: 456 },
+    completedTests: [],
   };
 
   const categoryPages = [

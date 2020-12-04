@@ -11,6 +11,7 @@ import {
   getIncompleteTestsCount,
   getOldestIncompleteTest,
   isDelegatedTest,
+  hasStartedTests,
 } from '../tests.selector';
 import { JournalModel } from '../../../modules/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
@@ -69,6 +70,7 @@ describe('testsSelector', () => {
         slots: {},
         selectedDate: 'dummy',
         examiner: { staffNumber: '123', individualId: 456 },
+        completedTests: [],
       };
       const appInfo: AppInfoModel = { versionNumber: '0.0.0', employeeId: '1234567', employeeName: 'Fake Name' };
       const logs: LogsModel = [];
@@ -76,7 +78,12 @@ describe('testsSelector', () => {
         journal,
         appInfo,
         logs,
-        tests: { startedTests: { 123: currentTest }, currentTest: { slotId: '123' }, testStatus: {} },
+        tests: {
+          startedTests: { 123: currentTest },
+          currentTest: { slotId: '123' },
+          testStatus: {},
+          completedTests: [],
+        },
       };
 
       const result = getCurrentTest(state.tests);
@@ -623,6 +630,21 @@ describe('testsSelector', () => {
       };
       const result = isDelegatedTest(localTestsState);
       expect(result).toBe(true);
+    });
+  });
+  describe('hasStartedTests', () => {
+    it('should return correct data', () => {
+      const testsModel: TestsModel = {
+        currentTest: null,
+        startedTests: {
+          entry1: null,
+        },
+        testStatus: null,
+      };
+
+      const data = hasStartedTests(testsModel);
+
+      expect(data).toEqual(true);
     });
   });
 });

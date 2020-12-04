@@ -135,7 +135,8 @@ describe('TestPersistenceProvider', () => {
         },
         testStatus: {
           23456789: testState.testStatus[23456789],
-        }});
+        },
+      });
     });
     it('should return null if the data store provider throws', async () => {
       dataStoreProvider.getItem.and.throwError('test error');
@@ -165,7 +166,8 @@ describe('TestPersistenceProvider', () => {
         },
         testStatus: {
           23456789: testState.testStatus[23456789],
-        }});
+        },
+      });
     });
   });
   describe('getTestsToDelete', () => {

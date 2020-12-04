@@ -11,6 +11,7 @@ export const initialState: JournalModel = {
   slots: {},
   selectedDate: '',
   examiner: null,
+  completedTests: [],
 };
 
 export function journalReducer(state = initialState, action: journalActions.JournalActionTypes): JournalModel {
@@ -86,6 +87,11 @@ export function journalReducer(state = initialState, action: journalActions.Jour
       return {
         ...state,
         selectedDate: action.payload,
+      };
+    case journalActions.LOAD_COMPLETED_TESTS_SUCCESS:
+      return {
+        ...state,
+        completedTests: action.payload,
       };
     default:
       return state;

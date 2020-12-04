@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { MesError } from '../../shared/models/mes-error.model';
 import { ConnectionStatus } from '../../providers/network-state/network-state';
 import { ExaminerSlotItemsByDate } from './journal.model';
+import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';
 export const LOAD_JOURNAL_SUCCESS = '[JournalEffects] Load Journal Success';
@@ -9,6 +10,10 @@ export const LOAD_JOURNAL_FAILURE = '[JournalEffects] Load Journal Failure';
 
 export const LOAD_JOURNAL_SILENT = '[JournalEffect] Load Journal Silent';
 export const LOAD_JOURNAL_SILENT_FAILURE = '[JournalEffect] Load Journal Silent Failure';
+
+export const LOAD_COMPLETED_TESTS = '[JournalEffect] Load Completed Tests';
+export const LOAD_COMPLETED_TESTS_SUCCESS = '[JournalEffect] Load Completed Tests Success';
+export const LOAD_COMPLETED_TESTS_FAILURE = '[JournalEffect] Load Completed Tests Failure';
 
 export const SETUP_JOURNAL_POLLING = '[JournalPage] Setup Journal Polling';
 export const STOP_JOURNAL_POLLING = '[JournalPage] Stop Journal Polling';
@@ -76,6 +81,20 @@ export class UnloadJournal implements Action {
   readonly type = UNLOAD_JOURNAL;
 }
 
+export class LoadCompletedTests implements Action {
+  readonly type = LOAD_COMPLETED_TESTS;
+}
+
+export class LoadCompletedTestsSuccess implements Action {
+  readonly type = LOAD_COMPLETED_TESTS_SUCCESS;
+  constructor(public payload: SearchResultTestSchema[]) { }
+}
+
+export class LoadCompletedTestsFailure implements Action {
+  readonly type = LOAD_COMPLETED_TESTS_FAILURE;
+  constructor(public payload: MesError) { }
+}
+
 export class UnsetError implements Action {
   readonly type = UNSET_ERROR;
 }
@@ -140,6 +159,9 @@ export type JournalActionTypes =
   | LoadJournalSilent
   | LoadJournalSuccess
   | LoadJournalFailure
+  | LoadCompletedTests
+  | LoadCompletedTestsSuccess
+  | LoadCompletedTestsFailure
   | UnloadJournal
   | UnsetError
   | ClearChangedSlot

@@ -94,6 +94,7 @@ describe('Journal Reducer', () => {
         slots: { ['2019-01-13']: [new SlotItem({}, false, false)] },
         examiner: { staffNumber: '123', individualId: 456 },
         checkComplete: [],
+        completedTests: [],
       };
       const action = new UnloadJournal();
       const result = journalReducer(stateWithJournals, action);

@@ -1,4 +1,3 @@
-import * as journalActions from '../../modules/journal/journal.actions';
 import * as testsActions from './tests.actions';
 import { TestsModel } from './tests.model';
 import * as testStatusActions from './test-status/test-status.actions';
@@ -24,7 +23,7 @@ export const initialState: TestsModel = {
  */
 export function testsReducer(
   state = initialState,
-  action: testsActions.Types | journalActions.JournalActionTypes | fakeJournalActions.Types,
+  action: testsActions.Types | fakeJournalActions.Types,
 ): TestsModel {
 
   const slotId = deriveSlotId(state, action);

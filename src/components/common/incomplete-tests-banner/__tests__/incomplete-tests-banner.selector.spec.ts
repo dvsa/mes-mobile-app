@@ -38,6 +38,7 @@ describe('IncompleteTestsBannerSelector', () => {
       const journal: JournalModel = {
         isLoading: true,
         lastRefreshed: new Date(0),
+        completedTests: [],
         slots: {
           ['2019-01-12']: [
             {

@@ -13,7 +13,7 @@ import * as journalActions from './../../modules/journal/journal.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import {
   getError, getIsLoading, getSelectedDate, getLastRefreshed,
-  getLastRefreshedTime, getSlotsOnSelectedDate,
+  getLastRefreshedTime, getSlotsOnSelectedDate, getCompletedTests,
 } from './../../modules/journal/journal.selector';
 import { getJournalState } from './../../modules/journal/journal.reducer';
 import { MesError } from '../../shared/models/mes-error.model';
@@ -34,6 +34,13 @@ import { PersonalCommitmentSlotComponent } from './personal-commitment/personal-
 import { TestSlotComponent } from '../../components/test-slot/test-slot/test-slot';
 import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
 import { DateTime } from '../../shared/helpers/date-time';
+import { SearchProvider } from '../../providers/search/search';
+import { formatApplicationReference } from '../../shared/helpers/formatters';
+import { ActivityCode, SearchResultTestSchema } from '@dvsa/mes-search-schema';
+import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
+import { TestSlot } from '@dvsa/mes-journal-schema';
+import { isEmpty } from 'lodash';
+import { TestStatus } from '../../modules/tests/test-status/test-status.model';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -42,6 +49,7 @@ interface JournalPageState {
   isLoading$: Observable<boolean>;
   lastRefreshedTime$: Observable<string>;
   appVersion$: Observable<string>;
+  completedTests$: Observable<SearchResultTestSchema[]>;
 }
 
 @IonicPage()
@@ -67,6 +75,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
   start = '2018-12-10T08:10:00+00:00';
   merged$: Observable<void | number>;
   todaysDate: DateTime;
+  completedTests: SearchResultTestSchema[];
 
   constructor(
     public modalController: ModalController,
@@ -84,7 +93,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     private deviceProvider: DeviceProvider,
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
-
+    public searchProvider: SearchProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId();
@@ -120,17 +129,18 @@ export class JournalPage extends BasePageComponent implements OnInit {
         select(getAppInfoState),
         map(getVersionNumber),
       ),
+      completedTests$: this.store$.pipe(
+        select(getJournalState),
+        select(getCompletedTests),
+      ),
     };
 
-    const { selectedDate$, slots$, error$, isLoading$ } = this.pageState;
+    const { selectedDate$, slots$, error$, isLoading$, completedTests$ } = this.pageState;
 
-    // Merge observables into one
     this.merged$ = merge(
       selectedDate$.pipe(map(this.setSelectedDate)),
-      slots$.pipe(
-        map(this.createSlots),
-      ),
-      // Run any transformations necessary here
+      completedTests$.pipe(map(this.setCompletedTests)),
+      slots$.pipe(map(this.createSlots)),
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),
     );
@@ -148,6 +158,8 @@ export class JournalPage extends BasePageComponent implements OnInit {
     super.ionViewWillEnter();
     this.loadJournalManually();
     this.setupPolling();
+
+    this.store$.dispatch(new journalActions.LoadCompletedTests());
 
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
@@ -183,6 +195,10 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.selectedDate = selectedDate;
   }
 
+  setCompletedTests = (completedTests: SearchResultTestSchema[]): void => {
+    this.completedTests = completedTests;
+  }
+
   handleLoadingUI = (isLoading: boolean): void => {
     if (isLoading) {
       this.loadingSpinner = this.loadingController.create({
@@ -212,6 +228,28 @@ export class JournalPage extends BasePageComponent implements OnInit {
     errorModal.present();
   }
 
+  /**
+   * Returns the activity code if the test has been completed already
+   * Returns null if test hasn't been completed yet
+   */
+  hasSlotBeenTested(slotData: TestSlot): ActivityCode | null {
+    if (isEmpty(this.completedTests)) {
+      return null;
+    }
+
+    const applicationReference: ApplicationReference = {
+      applicationId: slotData.booking.application.applicationId,
+      bookingSequence: slotData.booking.application.bookingSequence,
+      checkDigit: slotData.booking.application.checkDigit,
+    };
+
+    const completedTest = this.completedTests.find((completedTest) => {
+      return completedTest.applicationReference === parseInt(formatApplicationReference(applicationReference), 10);
+    });
+
+    return completedTest ? completedTest.activityCode : null;
+  }
+
   private createSlots = (emission: SlotItem[]) => {
     // Clear any dynamically created slots before adding the latest
     this.slotContainer.clear();
@@ -221,6 +259,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     if (emission.length === 0) return;
 
     const slots = this.slotSelector.getSlotTypes(emission);
+
     let lastLocation;
     for (const slot of slots) {
       const factory = this.resolver.resolveComponentFactory(slot.component);
@@ -237,6 +276,13 @@ export class JournalPage extends BasePageComponent implements OnInit {
       }
 
       if (componentRef.instance instanceof TestSlotComponent) {
+        const activityCode = this.hasSlotBeenTested(slot.slotData as TestSlot);
+
+        if (activityCode) {
+          (<TestSlotComponent>componentRef.instance).derivedActivityCode = activityCode;
+          (<TestSlotComponent>componentRef.instance).derivedTestStatus = TestStatus.Submitted;
+        }
+
         // if this is a test slot assign hasSeenCandidateDetails separately
         (<TestSlotComponent>componentRef.instance).hasSeenCandidateDetails = slot.hasSeenCandidateDetails;
       }

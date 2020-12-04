@@ -162,3 +162,7 @@ export const getOldestIncompleteTest = (tests: TestsModel): TestResultSchemasUni
   });
   return oldestTest;
 };
+
+export const hasStartedTests = (tests: TestsModel): boolean => {
+  return Object.keys(tests.startedTests).length > 0;
+};

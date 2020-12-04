@@ -110,6 +110,7 @@ export const baseJournalData: JournalModel = {
   },
   selectedDate: '2019-01-02',
   examiner: { staffNumber: '123', individualId: 456 },
+  completedTests: [],
 };
 
 const slots:{[k: string]: SlotItem[]} = groupBy(
