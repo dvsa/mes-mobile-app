@@ -222,12 +222,9 @@ export class JournalEffects {
 
       return this.searchProvider.advancedSearch(advancedSearchParams).pipe(
         map((searchResults) => {
-          console.log('load test statuses happened successfully', searchResults);
-
           return new journalActions.LoadCompletedTestsSuccess(searchResults);
         }),
         catchError((err) => {
-          console.log('load test statuses failed', err);
           return of(new journalActions.LoadCompletedTestsFailure(err));
         }),
       );

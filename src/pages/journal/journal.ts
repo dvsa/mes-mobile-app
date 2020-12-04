@@ -197,7 +197,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
   setCompletedTests = (completedTests: SearchResultTestSchema[]): void => {
     this.completedTests = completedTests;
-    console.log('Completed Tests', completedTests);
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
@@ -234,7 +233,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
    * Returns null if test hasn't been completed yet
    */
   hasSlotBeenTested(slotData: TestSlot): ActivityCode | null {
-    console.log('completed tests at this point', this.completedTests);
     if (isEmpty(this.completedTests)) {
       return null;
     }
@@ -244,9 +242,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
       bookingSequence: slotData.booking.application.bookingSequence,
       checkDigit: slotData.booking.application.checkDigit,
     };
-
-    const appRef = parseInt(formatApplicationReference(applicationReference), 10);
-    console.log(appRef);
 
     const completedTest = this.completedTests.find((completedTest) => {
       return completedTest.applicationReference === parseInt(formatApplicationReference(applicationReference), 10);
@@ -281,14 +276,13 @@ export class JournalPage extends BasePageComponent implements OnInit {
       }
 
       if (componentRef.instance instanceof TestSlotComponent) {
-        // Disable slot if it has been tested already
         const activityCode = this.hasSlotBeenTested(slot.slotData as TestSlot);
 
         if (activityCode) {
-          console.log('Activity code is', activityCode);
           (<TestSlotComponent>componentRef.instance).derivedActivityCode = activityCode;
           (<TestSlotComponent>componentRef.instance).derivedTestStatus = TestStatus.Submitted;
         }
+
         // if this is a test slot assign hasSeenCandidateDetails separately
         (<TestSlotComponent>componentRef.instance).hasSeenCandidateDetails = slot.hasSeenCandidateDetails;
       }

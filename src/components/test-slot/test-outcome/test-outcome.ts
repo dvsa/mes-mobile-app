@@ -124,7 +124,6 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   showRekeyButton(): boolean {
-
     if (this.testStatus === TestStatus.Completed || this.testStatus === TestStatus.Submitted) {
       return false; // because the test is complete
     }

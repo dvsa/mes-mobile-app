@@ -10,7 +10,8 @@ import {
   getIncompleteTests,
   getIncompleteTestsCount,
   getOldestIncompleteTest,
-  isDelegatedTest, hasStartedTests,
+  isDelegatedTest,
+  hasStartedTests,
 } from '../tests.selector';
 import { JournalModel } from '../../../modules/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
