@@ -213,8 +213,9 @@ export class JournalEffects {
     filter(([action, staffNumber, hasStartedTests, completedTests]) => !hasStartedTests && completedTests.length === 0),
 
     switchMap(([action, staffNumber]) => {
+      const numberOfDaysToView = this.appConfig.getAppConfig().journal.numberOfDaysToView;
       const advancedSearchParams: AdvancedSearchParams = {
-        startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
+        startDate: moment().subtract(numberOfDaysToView, 'days').format('YYYY-MM-DD'),
         endDate: moment().format('YYYY-MM-DD'),
         staffNumber: removeLeadingZeros(staffNumber),
         costCode: '',
