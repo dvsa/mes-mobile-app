@@ -79,6 +79,7 @@ Feature: A Driving Examiner Completes failed tests
     And I enter "Emergency Stop" first value "23" and second value "45"
     And I enter "Avoidance Stop" first value "34" and second value "55"
     And I click Emergency Stop Not Met
+    And I add a "Control" serious fault with a long press
     When I end the test with the speed requirements not met
     Then I should see the Debrief page with outcome "Unsuccessful"
     Then I should see the "Debrief - Alisa Garza" page
@@ -92,6 +93,7 @@ Feature: A Driving Examiner Completes failed tests
     And the office page test outcome is "Unsuccessful"
     When I complete the office write up
     And I enter a comment for "serious" fault "Emergency stop - Speed requirement not met"
+    And I enter a comment for "serious" fault "Move away  - Control"
     And I upload the test
     Then I should see the "Journal" page
     And the test result for "Ms Alisa Garza" is "4"
