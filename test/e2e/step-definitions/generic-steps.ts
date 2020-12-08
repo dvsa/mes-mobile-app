@@ -144,7 +144,6 @@ Given('I am logged in as {string} and I have a test for {string}', async (userna
   return expect(buttonElement.isPresent()).to.eventually.be.true;
 });
 
-
 When('I launch the mobile app', () => {
   // Application is already launched by framework
 });
