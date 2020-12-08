@@ -111,10 +111,10 @@ Given('I am logged in as {string} and I have a test for {string}', async (userna
   // Load the landing page
   await LandingPage.onLandingPageAsAsync(username);
   // Navigate to journal page
-  DashboardPage.clickGoToMyJournalButton();
+  await DashboardPage.clickGoToMyJournalButton();
   // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
-  JournalPage.getRefreshButton();
-  const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
+  await JournalPage.getRefreshButton();
+  const buttonElement = await JournalPage.getStartTestButtonFor(candidateName, false);
   const hasStartTest = await JournalPage.hasStartTestButtonFor(candidateName);
 
   if (!hasStartTest) {
@@ -143,6 +143,7 @@ Given('I am logged in as {string} and I have a test for {string}', async (userna
 
   return expect(buttonElement.isPresent()).to.eventually.be.true;
 });
+
 
 When('I launch the mobile app', () => {
   // Application is already launched by framework
