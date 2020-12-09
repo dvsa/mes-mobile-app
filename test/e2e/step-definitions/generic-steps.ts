@@ -111,10 +111,10 @@ Given('I am logged in as {string} and I have a test for {string}', async (userna
   // Load the landing page
   await LandingPage.onLandingPageAsAsync(username);
   // Navigate to journal page
-  await DashboardPage.clickGoToMyJournalButton();
+  DashboardPage.clickGoToMyJournalButton();
   // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
-  await JournalPage.getRefreshButton();
-  const buttonElement = await JournalPage.getStartTestButtonFor(candidateName, false);
+  JournalPage.getRefreshButton();
+  const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
   const hasStartTest = await JournalPage.hasStartTestButtonFor(candidateName);
 
   if (!hasStartTest) {
