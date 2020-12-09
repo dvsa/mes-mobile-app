@@ -93,7 +93,7 @@ Feature: A Driving Examiner Completes failed tests
     And the office page test outcome is "Unsuccessful"
     When I complete the office write up
     And I enter a comment for "serious" fault "Emergency stop - Speed requirement not met"
-    And I enter a comment for "serious" fault "Move away  - Control"
+    And I enter a comment for "serious" fault "Move away - Control"
     And I upload the test
     Then I should see the "Journal" page
     And the test result for "Ms Alisa Garza" is "4"
