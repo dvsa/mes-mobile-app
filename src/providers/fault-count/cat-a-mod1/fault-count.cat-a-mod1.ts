@@ -63,7 +63,7 @@ export class FaultCountAM1Helper {
     const uTurnSeriousFaults = (
       get(singleFaultCompetencies, 'uTurn') === CompetencyOutcome.S) ? 1 : 0;
     const emergencyStopSeriousFaults = (
-      get(singleFaultCompetencies, 'emergeencyStop') === CompetencyOutcome.S) ? 1 : 0;
+      get(singleFaultCompetencies, 'emergencyStop') === CompetencyOutcome.S) ? 1 : 0;
     const avoidanceSeriousFaults = (
       get(singleFaultCompetencies, 'avoidance') === CompetencyOutcome.S) ? 1 : 0;
     const emergencyStopSpeedRequirementSeriousFaults = (
