@@ -53,7 +53,7 @@ import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-st
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { includes } from 'lodash';
-import { TestData } from '@dvsa/mes-test-schema/categories/common';
+import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
@@ -69,7 +69,7 @@ interface NonPassFinalisationPageState {
   displayDebriefWitnessed$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   isWelshTest$: Observable<boolean>;
-  testData$: Observable<TestData>;
+  testData$: Observable<CatADI2UniqueTypes.TestData>;
   slotId$: Observable<string>;
 }
 
@@ -84,7 +84,7 @@ export class NonPassFinalisationCatADIPart2Page extends BasePageComponent implem
   form: FormGroup;
   activityCodeOptions: ActivityCodeModel[];
   slotId: string;
-  testData: TestData;
+  testData: CatADI2UniqueTypes.TestData;
   activityCode: ActivityCodeModel;
   subscription: Subscription;
   invalidTestDataModal: Modal;
@@ -221,10 +221,14 @@ export class NonPassFinalisationCatADIPart2Page extends BasePageComponent implem
   continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      if (this.activityCodeFinalisationProvider.testDataIsInvalid(this.activityCode.activityCode, this.testData)) {
+      const testDataIsInvalid = this.activityCodeFinalisationProvider
+        .catADIPart2TestDataIsInvalid(this.activityCode.activityCode, this.testData);
+
+      if (testDataIsInvalid) {
         this.openTestDataValidationModal();
         return;
       }
+
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE).then(() => {

@@ -53,7 +53,7 @@ import {
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { TestData } from '@dvsa/mes-test-schema/categories/common';
+import { TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
@@ -232,10 +232,14 @@ export class NonPassFinalisationCatAMod2Page extends BasePageComponent implement
   continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      if (this.activityCodeFinalisationProvider.testDataIsInvalid(this.activityCode.activityCode, this.testData)) {
+      const testDataIsInvalid = this.activityCodeFinalisationProvider
+        .catAMod2TestDataIsInvalid(this.activityCode.activityCode, this.testData);
+
+      if (testDataIsInvalid) {
         this.openTestDataValidationModal();
         return;
       }
+
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_A_MOD2.BACK_TO_OFFICE_PAGE);
