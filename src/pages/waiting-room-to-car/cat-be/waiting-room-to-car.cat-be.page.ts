@@ -383,7 +383,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
     this.store$.dispatch(new VehicleChecksCompletedToggled(toggled));
   }
 
-  createDelegatedQuestionResult = (outcome: CompetencyOutcome) => ({ outcome, code: 'DELEGATED EXAMINER' });
+  createDelegatedQuestionResult = (outcome: CompetencyOutcome) => ({ outcome, code: 'DEL' });
 
   nextPage() {
     return getNextPageDebriefOffice(CAT_BE, this.isDelegated);
