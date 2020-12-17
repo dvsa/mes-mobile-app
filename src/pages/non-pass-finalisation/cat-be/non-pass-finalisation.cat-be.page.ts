@@ -54,7 +54,7 @@ import { SetActivityCode } from '../../../modules/tests/activity-code/activity-c
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
-import { TestData } from '@dvsa/mes-test-schema/categories/common';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
@@ -72,7 +72,7 @@ interface NonPassFinalisationPageState {
   displayD255$: Observable<boolean>;
   d255$: Observable<boolean>;
   isWelshTest$: Observable<boolean>;
-  testData$: Observable<TestData>;
+  testData$: Observable<CatBEUniqueTypes.TestData>;
   slotId$: Observable<string>;
 }
 
@@ -87,7 +87,7 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
   form: FormGroup;
   activityCodeOptions: ActivityCodeModel[];
   slotId: string;
-  testData: TestData;
+  testData: CatBEUniqueTypes.TestData;
   activityCode: ActivityCodeModel;
   subscription: Subscription;
   invalidTestDataModal: Modal;
@@ -233,10 +233,14 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
   continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      if (this.activityCodeFinalisationProvider.testDataIsInvalid(this.activityCode.activityCode, this.testData)) {
+      const testDataIsInvalid = this.activityCodeFinalisationProvider
+        .catBETestDataIsInvalid(this.activityCode.activityCode, this.testData);
+
+      if (testDataIsInvalid) {
         this.openTestDataValidationModal();
         return;
       }
+
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_BE.BACK_TO_OFFICE_PAGE);

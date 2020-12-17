@@ -35,7 +35,7 @@ export class FaultCountADIPart2Helper {
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
     const controlledStopSeriousFaults = (controlledStop && controlledStop.fault === CompetencyOutcome.S) ? 1 : 0;
     const eyesightTestSeriousFaults = (eyesightTest && eyesightTest.seriousFault) ? 1 : 0;
-    const seriousFaultFromVehicleChecks = vehicleChecks.seriousFault ? 1 : 0;
+    const seriousFaultFromVehicleChecks = (vehicleChecks && vehicleChecks.seriousFault) ? 1 : 0;
 
     const result =
       seriousFaultSumOfSimpleCompetencies +
@@ -55,7 +55,7 @@ export class FaultCountADIPart2Helper {
 
     const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
     const controlledStopDangerousFaults = (controlledStop && controlledStop.fault === CompetencyOutcome.D) ? 1 : 0;
-    const dangerousFaultFromVehicleChecks = vehicleChecks.dangerousFault ? 1 : 0;
+    const dangerousFaultFromVehicleChecks = (vehicleChecks && vehicleChecks.dangerousFault) ? 1 : 0;
 
     const result =
       dangerousFaultSumOfSimpleCompetencies +

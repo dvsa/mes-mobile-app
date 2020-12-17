@@ -53,11 +53,13 @@ import {
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
-import { TestData } from '@dvsa/mes-test-schema/categories/common';
+import { CatHomeTestData } from '../../../shared/unions/test-schema-unions';
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
-import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -71,7 +73,7 @@ interface NonPassFinalisationPageState {
   displayD255$: Observable<boolean>;
   d255$: Observable<boolean>;
   isWelshTest$: Observable<boolean>;
-  testData$: Observable<TestData>;
+  testData$: Observable<CatHomeTestData>;
   slotId$: Observable<string>;
 }
 
@@ -86,7 +88,7 @@ export class NonPassFinalisationCatHomeTestPage extends BasePageComponent implem
   form: FormGroup;
   activityCodeOptions: ActivityCodeModel[];
   slotId: string;
-  testData: TestData;
+  testData: CatHomeTestData;
   activityCode: ActivityCodeModel;
   subscription: Subscription;
   invalidTestDataModal: Modal;
@@ -99,6 +101,7 @@ export class NonPassFinalisationCatHomeTestPage extends BasePageComponent implem
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public modalController: ModalController,
     public activityCodeFinalisationProvider: ActivityCodeFinalisationProvider,
+    private testDataByCategory: TestDataByCategoryProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup({});
@@ -112,6 +115,12 @@ export class NonPassFinalisationCatHomeTestPage extends BasePageComponent implem
       select(getTests),
       select(getCurrentTest),
     );
+
+    const category$ = currentTest$.pipe(
+      select(getTestCategory),
+      map(category => category as TestCategory),
+    );
+
     this.pageState = {
       slotId$: this.store$.pipe(
         select(getTests),
@@ -170,7 +179,8 @@ export class NonPassFinalisationCatHomeTestPage extends BasePageComponent implem
         select(isWelshTest),
       ),
       testData$: currentTest$.pipe(
-        select(getTestData),
+        withLatestFrom(category$),
+        map(([data , category]) => this.testDataByCategory.getTestDataByCategoryCode(category)(data)),
       ),
     };
 
@@ -217,10 +227,14 @@ export class NonPassFinalisationCatHomeTestPage extends BasePageComponent implem
   continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      if (this.activityCodeFinalisationProvider.testDataIsInvalid(this.activityCode.activityCode, this.testData)) {
+      const testDataIsInvalid = this.activityCodeFinalisationProvider
+        .catHomeTestDataIsInvalid(this.activityCode.activityCode, this.testData);
+
+      if (testDataIsInvalid) {
         this.openTestDataValidationModal();
         return;
       }
+
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_HOME_TEST.BACK_TO_OFFICE_PAGE);
