@@ -59,7 +59,7 @@ import {
 } from
   '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
-import { GearboxCategory, TestData } from '@dvsa/mes-test-schema/categories/common';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
@@ -67,6 +67,7 @@ import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
 import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
+import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -83,7 +84,7 @@ interface NonPassFinalisationPageState {
   transmission$: Observable<GearboxCategory>;
   transmissionAutomaticRadioChecked$: Observable<boolean>;
   transmissionManualRadioChecked$: Observable<boolean>;
-  testData$: Observable<TestData>;
+  testData$: Observable<CatCUniqueTypes.TestData>;
   slotId$: Observable<string>;
 }
 
@@ -98,7 +99,7 @@ export class NonPassFinalisationCatCPage extends BasePageComponent implements On
   form: FormGroup;
   activityCodeOptions: ActivityCodeModel[];
   slotId: string;
-  testData: TestData;
+  testData: CatCUniqueTypes.TestData;
   activityCode: ActivityCodeModel;
   subscription: Subscription;
   invalidTestDataModal: Modal;
@@ -262,10 +263,14 @@ export class NonPassFinalisationCatCPage extends BasePageComponent implements On
   continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      if (this.activityCodeFinalisationProvider.testDataIsInvalid(this.activityCode.activityCode, this.testData)) {
+      const testDataIsInvalid = this.activityCodeFinalisationProvider
+        .catCTestDataIsInvalid(this.activityCode.activityCode, this.testData);
+
+      if (testDataIsInvalid) {
         this.openTestDataValidationModal();
         return;
       }
+
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
       this.navController.push(CAT_C.BACK_TO_OFFICE_PAGE);
