@@ -149,6 +149,9 @@ describe('NonPassFinalisationCatAMod1Page', () => {
         component.testData = {
           dangerousFaults: {},
           seriousFaults: {},
+          emergencyStop: {
+            outcome: null,
+          },
         };
 
         // Act
@@ -174,6 +177,9 @@ describe('NonPassFinalisationCatAMod1Page', () => {
         component.testData = {
           dangerousFaults: {},
           seriousFaults: {},
+          emergencyStop: {
+            outcome: null,
+          },
         };
 
         // Act
