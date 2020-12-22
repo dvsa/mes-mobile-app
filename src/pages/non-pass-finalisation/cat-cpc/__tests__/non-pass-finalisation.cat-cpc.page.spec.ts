@@ -97,7 +97,7 @@ describe('NonPassFinalisationCatCPCPage', () => {
       });
     });
     describe('OnContinue', () => {
-      it('should dispatch a change test state to WriteUp action', () => {
+      it('should dispatch a change test state to WriteUp action', async () => {
         store$.dispatch(new testActions.StartTest(123, TestCategory.C));
         component.slotId = '123';
         component.continue();
