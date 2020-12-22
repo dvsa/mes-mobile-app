@@ -230,10 +230,10 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
     );
   }
 
-  continue() {
+  async continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      const testDataIsInvalid = this.activityCodeFinalisationProvider
+      const testDataIsInvalid = await this.activityCodeFinalisationProvider
         .catBETestDataIsInvalid(this.activityCode.activityCode, this.testData);
 
       if (testDataIsInvalid) {
