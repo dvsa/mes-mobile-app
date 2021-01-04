@@ -8,7 +8,7 @@ import { TestResultProvider } from '../../test-result/test-result';
 import { ActivityCodeFinalisationProvider } from '../activity-code-finalisation';
 // import { TestResultProviderMock } from '../../test-result/__mocks__/test-result.mock';
 
-fdescribe('Activity code finalisation Provider', () => {
+describe('Activity code finalisation Provider', () => {
 
   let testResultProvider: TestResultProvider;
   let activityCodeFinalisationProvider: ActivityCodeFinalisationProvider;
