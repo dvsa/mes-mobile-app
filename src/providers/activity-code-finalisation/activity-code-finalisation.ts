@@ -21,7 +21,7 @@ export class ActivityCodeFinalisationProvider {
     }
 
     const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.EUA1M1, testData).toPromise()
+      this.testResultProvider.calculateTestResult(TestCategory.EUAM1, testData).toPromise()
     ) === ActivityCodes.PASS;
 
     return isPass;
@@ -31,7 +31,7 @@ export class ActivityCodeFinalisationProvider {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
     const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.B, testData).toPromise()
+      this.testResultProvider.calculateTestResult(TestCategory.EUAM2, testData).toPromise()
     ) === ActivityCodes.PASS;
 
     return isPass;
@@ -43,7 +43,7 @@ export class ActivityCodeFinalisationProvider {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
     const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.B, testData).toPromise()
+      this.testResultProvider.calculateTestResult(TestCategory.ADI2, testData).toPromise()
     ) === ActivityCodes.PASS;
 
     return isPass;
@@ -63,7 +63,7 @@ export class ActivityCodeFinalisationProvider {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
     const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.B, testData).toPromise()
+      this.testResultProvider.calculateTestResult(TestCategory.BE, testData).toPromise()
     ) === ActivityCodes.PASS;
 
     return isPass;
@@ -73,7 +73,7 @@ export class ActivityCodeFinalisationProvider {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
     const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.B, testData).toPromise()
+      this.testResultProvider.calculateTestResult(TestCategory.C, testData).toPromise()
     ) === ActivityCodes.PASS;
 
     return isPass;
@@ -83,7 +83,7 @@ export class ActivityCodeFinalisationProvider {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
     const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.B, testData).toPromise()
+      this.testResultProvider.calculateTestResult(TestCategory.D, testData).toPromise()
     ) === ActivityCodes.PASS;
 
     return isPass;
@@ -93,7 +93,7 @@ export class ActivityCodeFinalisationProvider {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
     const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.B, testData).toPromise()
+      this.testResultProvider.calculateTestResult(TestCategory.F, testData).toPromise()
     ) === ActivityCodes.PASS;
 
     return isPass;
