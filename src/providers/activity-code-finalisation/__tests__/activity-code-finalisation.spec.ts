@@ -6,7 +6,6 @@ import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { FaultCountProvider } from '../../fault-count/fault-count';
 import { TestResultProvider } from '../../test-result/test-result';
 import { ActivityCodeFinalisationProvider } from '../activity-code-finalisation';
-// import { TestResultProviderMock } from '../../test-result/__mocks__/test-result.mock';
 
 describe('Activity code finalisation Provider', () => {
 
@@ -16,7 +15,6 @@ describe('Activity code finalisation Provider', () => {
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       providers: [
-        // { provide: TestResultProvider, useClass: TestResultProviderMock },
         TestResultProvider,
         FaultCountProvider,
         ActivityCodeFinalisationProvider,
@@ -66,6 +64,42 @@ describe('Activity code finalisation Provider', () => {
       activityCodeFinalisationProvider.catHomeTestDataIsInvalid(ActivityCodes.FAIL_PUBLIC_SAFETY, {});
       expect(testResultProvider.calculateTestResult).toHaveBeenCalledWith(TestCategory.F, {});
     });
+  });
+
+  it('should return false when activity code is not 4/5 for Home', () => {
+    const result = activityCodeFinalisationProvider.catHomeTestDataIsInvalid(ActivityCodes.BAD_LIGHT, {});
+    expect(result).toBe(false);
+  });
+  it('should return false when activity code is not 4/5 for B', () => {
+    const result = activityCodeFinalisationProvider.catBTestDataIsInvalid(ActivityCodes.ACCIDENT, {});
+    expect(result).toBe(false);
+  });
+  it('should return false when activity code is not 4/5 for BE', () => {
+    const result = activityCodeFinalisationProvider.catBETestDataIsInvalid(ActivityCodes.CANDIDATE_LATE, {});
+    expect(result).toBe(false);
+  });
+  it('should return false when activity code is not 4/5 for C', () => {
+    const result = activityCodeFinalisationProvider.catCTestDataIsInvalid(ActivityCodes.EXAMINER_ILL_PRE_TEST, {});
+    expect(result).toBe(false);
+  });
+  it('should return false when activity code is not 4/5 for D', () => {
+    const result = activityCodeFinalisationProvider.catDTestDataIsInvalid(ActivityCodes.CANDIDATE_PREGNANT, {});
+    expect(result).toBe(false);
+  });
+  it('should return false when activity code is not 4/5 for AMod1', () => {
+    // tslint:disable-next-line:max-line-length
+    const result = activityCodeFinalisationProvider.catAMod1TestDataIsInvalid(ActivityCodes.CANDIDATE_REFUSED_TO_SIGN_RESIDENCY_DECLARATION, {});
+    expect(result).toBe(false);
+  });
+  it('should return false when activity code is not 4/5 for AMod2', () => {
+    // tslint:disable-next-line:max-line-length
+    const result = activityCodeFinalisationProvider.catAMod2TestDataIsInvalid(ActivityCodes.ILLEGAL_ACTIVITY_FROM_CANDIDATE, {});
+    expect(result).toBe(false);
+  });
+  it('should return false when activity code is not 4/5 for ADI2', () => {
+    // tslint:disable-next-line:max-line-length
+    const result = activityCodeFinalisationProvider.catADIPart2TestDataIsInvalid(ActivityCodes.BAD_LIGHT, {});
+    expect(result).toBe(false);
   });
 
 });
