@@ -11,7 +11,7 @@ When('I click search completed tests', () => {
 });
 
 When('I search for a completed test with the application reference of {string}', (searchTerm) => {
-  SearchPage.enterSearchTerm(searchTerm)
+  SearchPage.enterSearchTerm(searchTerm);
   SearchPage.clickSearchButton();
 });
 
@@ -41,4 +41,14 @@ Then('I click the close button', () => {
 
 Then('I click the back button on the search submitted test page', () => {
   SearchPage.clickBackButton();
+});
+
+Then('I click on Search booked tests button', () => {
+  SearchPage.clickRekeySearchBookTestButton();
+});
+
+Then('I search for a completed test with the application reference {string}', (searchTerm) => {
+  const searchField = SearchPage.getRekeyApplicationRefNumberInput();
+  searchField.sendKeys(searchTerm);
+  SearchPage.clickRekeySearchBookTestButton();
 });

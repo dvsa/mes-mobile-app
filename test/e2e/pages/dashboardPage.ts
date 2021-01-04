@@ -13,6 +13,10 @@ class DashboardPage extends Page {
       `//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`);
   }
 
+  getRekeyDelegatedExaminerTestButton() {
+    return this.getElementByXPath(`//*[@id="card-content-wrapper"]/ion-grid/ion-row[2]/button/span/h3`, false);
+  }
+
   clickGoToMyJournalButton () {
     this.clickElementByXPath('//go-to-journal-card/button');
   }
@@ -23,6 +27,10 @@ class DashboardPage extends Page {
 
   clickStartWithOrWithoutADrivingFault(withDrivingFault) {
     this.clickElementByXPath(`//button/span/h3[text() = "Start ${withDrivingFault} a driving fault"]`);
+  }
+
+  clickRekeyDelegatedExaminerTestButton () {
+    this.clickElementByXPath('//*[@id="card-content-wrapper"]/ion-grid/ion-row[2]/button/span/h3');
   }
 
   clickStartFullPracticeMode() {
