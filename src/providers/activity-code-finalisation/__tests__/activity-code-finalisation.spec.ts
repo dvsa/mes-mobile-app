@@ -66,39 +66,40 @@ describe('Activity code finalisation Provider', () => {
     });
   });
 
-  it('should return false when activity code is not 4/5 for Home', () => {
-    const result = activityCodeFinalisationProvider.catHomeTestDataIsInvalid(ActivityCodes.BAD_LIGHT, {});
+  it('should return false when activity code is not 4/5 for Home', async () => {
+    const result = await activityCodeFinalisationProvider.catHomeTestDataIsInvalid(ActivityCodes.BAD_LIGHT, {});
     expect(result).toBe(false);
   });
-  it('should return false when activity code is not 4/5 for B', () => {
-    const result = activityCodeFinalisationProvider.catBTestDataIsInvalid(ActivityCodes.ACCIDENT, {});
+  it('should return false when activity code is not 4/5 for B', async () => {
+    const result = await activityCodeFinalisationProvider.catBTestDataIsInvalid(ActivityCodes.ACCIDENT, {});
     expect(result).toBe(false);
   });
-  it('should return false when activity code is not 4/5 for BE', () => {
-    const result = activityCodeFinalisationProvider.catBETestDataIsInvalid(ActivityCodes.CANDIDATE_LATE, {});
+  it('should return false when activity code is not 4/5 for BE', async () => {
+    const result = await activityCodeFinalisationProvider.catBETestDataIsInvalid(ActivityCodes.CANDIDATE_LATE, {});
     expect(result).toBe(false);
   });
-  it('should return false when activity code is not 4/5 for C', () => {
-    const result = activityCodeFinalisationProvider.catCTestDataIsInvalid(ActivityCodes.EXAMINER_ILL_PRE_TEST, {});
-    expect(result).toBe(false);
-  });
-  it('should return false when activity code is not 4/5 for D', () => {
-    const result = activityCodeFinalisationProvider.catDTestDataIsInvalid(ActivityCodes.CANDIDATE_PREGNANT, {});
-    expect(result).toBe(false);
-  });
-  it('should return false when activity code is not 4/5 for AMod1', () => {
+  it('should return false when activity code is not 4/5 for C', async () => {
     // tslint:disable-next-line:max-line-length
-    const result = activityCodeFinalisationProvider.catAMod1TestDataIsInvalid(ActivityCodes.CANDIDATE_REFUSED_TO_SIGN_RESIDENCY_DECLARATION, {});
+    const result = await activityCodeFinalisationProvider.catCTestDataIsInvalid(ActivityCodes.EXAMINER_ILL_PRE_TEST, {});
     expect(result).toBe(false);
   });
-  it('should return false when activity code is not 4/5 for AMod2', () => {
-    // tslint:disable-next-line:max-line-length
-    const result = activityCodeFinalisationProvider.catAMod2TestDataIsInvalid(ActivityCodes.ILLEGAL_ACTIVITY_FROM_CANDIDATE, {});
+  it('should return false when activity code is not 4/5 for D', async () => {
+    const result = await activityCodeFinalisationProvider.catDTestDataIsInvalid(ActivityCodes.CANDIDATE_PREGNANT, {});
     expect(result).toBe(false);
   });
-  it('should return false when activity code is not 4/5 for ADI2', () => {
+  it('should return false when activity code is not 4/5 for AMod1', async () => {
     // tslint:disable-next-line:max-line-length
-    const result = activityCodeFinalisationProvider.catADIPart2TestDataIsInvalid(ActivityCodes.BAD_LIGHT, {});
+    const result = await activityCodeFinalisationProvider.catAMod1TestDataIsInvalid(ActivityCodes.CANDIDATE_REFUSED_TO_SIGN_RESIDENCY_DECLARATION, {});
+    expect(result).toBe(false);
+  });
+  it('should return false when activity code is not 4/5 for AMod2', async () => {
+    // tslint:disable-next-line:max-line-length
+    const result = await activityCodeFinalisationProvider.catAMod2TestDataIsInvalid(ActivityCodes.ILLEGAL_ACTIVITY_FROM_CANDIDATE, {});
+    expect(result).toBe(false);
+  });
+  it('should return false when activity code is not 4/5 for ADI2', async () => {
+    // tslint:disable-next-line:max-line-length
+    const result = await activityCodeFinalisationProvider.catADIPart2TestDataIsInvalid(ActivityCodes.BAD_LIGHT, {});
     expect(result).toBe(false);
   });
 
