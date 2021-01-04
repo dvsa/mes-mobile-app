@@ -150,7 +150,7 @@ export class NonPassFinalisationCatCPCPage extends BasePageComponent implements 
     this.store$.dispatch(new NonPassFinalisationViewDidEnter());
   }
 
-  continue() {
+  async continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));

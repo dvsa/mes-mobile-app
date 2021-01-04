@@ -224,10 +224,10 @@ export class NonPassFinalisationCatHomeTestPage extends BasePageComponent implem
     this.navController.push(CAT_HOME_TEST.TEST_REPORT_PAGE);
   }
 
-  continue() {
+  async continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      const testDataIsInvalid = this.activityCodeFinalisationProvider
+      const testDataIsInvalid = await this.activityCodeFinalisationProvider
         .catHomeTestDataIsInvalid(this.activityCode.activityCode, this.testData);
 
       if (testDataIsInvalid) {

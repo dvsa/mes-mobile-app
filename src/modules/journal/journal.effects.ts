@@ -210,7 +210,8 @@ export class JournalEffects {
       ),
     ),
 
-    filter(([action, staffNumber, hasStartedTests, completedTests]) => !hasStartedTests && completedTests.length === 0),
+    filter(([action, staffNumber, hasStartedTests, completedTests]) =>
+      !hasStartedTests && completedTests && completedTests.length === 0),
 
     switchMap(([action, staffNumber]) => {
       const numberOfDaysToView = this.appConfig.getAppConfig().journal.numberOfDaysToView;
