@@ -38,6 +38,10 @@ class SearchPage extends Page {
     return this.getElementByXPath('//debrief-card');
   }
 
+  getRekeyApplicationRefNumberInput() {
+    return this.getElementByXPath('//*[@id="application-reference"]/input');
+  }
+
   scrollToDebriefSection() {
     const debriefSection = this.getDebriefSection();
     this.scrollToElement(debriefSection);
@@ -71,6 +75,9 @@ class SearchPage extends Page {
 
   clickSearchForCompletedTestsButton() {
     this.clickElementByXPath('//page-dashboard//test-results-search-card//span');
+  }
+  clickRekeySearchBookTestButton() {
+    this.clickElementByXPath('//*[@name=\'search\']');
   }
 }
 
