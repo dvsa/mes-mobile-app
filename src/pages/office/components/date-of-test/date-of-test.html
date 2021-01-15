@@ -6,7 +6,9 @@
 
     <span *ngIf="!editMode" 
       class="mes-data"
-      (click)="enableEdit()">{{dateOfTest}}</span>
+      (tap)="onTap()"
+      (press)="onPress()">{{dateOfTest}}</span>
+      <!-- (click)="enableEdit()">{{dateOfTest}}</span> -->
 
     <input *ngIf="editMode"
       #editDateInput

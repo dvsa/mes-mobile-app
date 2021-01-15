@@ -16,6 +16,14 @@ export class DateOfTest {
 
   editMode: Boolean = false;
 
+  onTap(): void {
+    console.log('On Tap event fired');
+  }
+
+  onPress(): void {
+    console.log('On Press event fired');
+  }
+
   enableEdit(): void {
     this.editMode = true;
     setTimeout(() => this.inputEl.nativeElement.focus());
