@@ -29,6 +29,12 @@ describe('testSlotAttributes selector', () => {
     });
   });
 
+  describe('getTestDate', () => {
+    it('should return the date of the test', () => {
+      expect(true).toBe(false);
+    });
+  });
+
   describe('isExtendedTest', () => {
     it('should return true if test is an extended test', () => {
       expect(isExtendedTest(testSlotAttributes)).toEqual(true);

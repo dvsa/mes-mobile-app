@@ -57,7 +57,7 @@ import { QuestionProvider } from '../../../providers/question/question';
 import {
   getTestSlotAttributes,
 } from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
-import { getTestTime }
+import { getTestDate, getTestTime }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
   getETA,
@@ -153,6 +153,7 @@ interface OfficePageState {
   applicationNumber$: Observable<string>;
   activityCode$: Observable<ActivityCodeModel>;
   startTime$: Observable<string>;
+  startDate$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
   isPassed$: Observable<boolean>;
@@ -282,6 +283,11 @@ export class OfficeCatBEPage extends BasePageComponent {
         select(getJournalData),
         select(getTestSlotAttributes),
         select(getTestTime),
+      ),
+      startDate$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(getTestDate),
       ),
       candidateName$: currentTest$.pipe(
         select(getJournalData),
@@ -543,6 +549,10 @@ export class OfficeCatBEPage extends BasePageComponent {
     if (this.isFormValid()) {
       this.showFinishTestModal();
     }
+  }
+
+  dateOfTestChanged(date: string) {
+    console.log('new date is', date);
   }
 
   identificationChanged(identification: Identification): void {
