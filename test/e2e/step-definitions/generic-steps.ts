@@ -10,8 +10,6 @@ import BackToOfficePage from '../pages/backToOfficePage';
 import PageHelper from '../pages/pageHelper';
 import {waitForOverlay} from "../../helpers/interactionHelpers";
 
-
-
 const {
   Given,
   Then,
@@ -86,7 +84,6 @@ browser.getProcessedConfig().then((config) => {
 });
 
 Given('I am not logged in', () => {
-
   // Wait for app to be ready
   browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
   browser.waitForAngular();
@@ -180,22 +177,22 @@ Given(/^I start full practice mode$/, () => {
   return expect(practiceModeBanner.isPresent()).to.eventually.be.true;
 });
 
-When('I log in to the application as {string}', (username) => {
+When('I log in to the application as {string}', async (username) => {
   LoginPage.login(username);
 
   // If the dashboard has loaded we should see the employee id
   // todo: kc seems we should also see employee id if landing page is loaded (see ln 107) which is right?
   const employeeId = DashboardPage.getEmployeeId(username);
-  return expect(employeeId.isPresent()).to.eventually.be.true;
+  return await expect(employeeId.isPresent()).to.eventually.be.true;
 });
 
-Then('I should see the {string} page', (pageTitle) => {
+Then('I should see the {string} page', async (pageTitle) => {
   PageHelper.waitForOverlay('click-block-active');
   // Wait for the page title to exist
   PageHelper.getPageTitle(pageTitle);
 
   // Check that it is the last page title i.e. the displayed one
-  return expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
+  return await expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
     .to.eventually.equal(pageTitle);
 });
 

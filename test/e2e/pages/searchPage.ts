@@ -77,7 +77,7 @@ class SearchPage extends Page {
     this.clickElementByXPath('//page-dashboard//test-results-search-card//span');
   }
   clickRekeySearchBookTestButton() {
-    this.clickElementByXPath('//*[@name=\'search\']');
+    this.clickElementByXPath('//*[@id="tab-search-rekey"]//ion-row[2]/button');
   }
 }
 
