@@ -10,6 +10,7 @@ import { Component } from '@angular/core';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
+import * as moment from 'moment';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
   OfficeViewDidEnter,
@@ -57,7 +58,7 @@ import { QuestionProvider } from '../../../providers/question/question';
 import {
   getTestSlotAttributes,
 } from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
-import { getTestDate, getTestTime }
+import { getTestDate, getTestStartDateTime, getTestTime }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
   getETA,
@@ -148,12 +149,15 @@ import { getHealthDeclarationStatus }
 import * as postTestDeclarationsActions
   from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import { SetRekeyDate } from '../../../modules/tests/rekey-date/rekey-date.actions';
+import { SetStartDate }
+  from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
 
 interface OfficePageState {
   applicationNumber$: Observable<string>;
   activityCode$: Observable<ActivityCodeModel>;
   startTime$: Observable<string>;
   startDate$: Observable<string>;
+  startDateTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
   isPassed$: Observable<boolean>;
@@ -221,6 +225,7 @@ export class OfficeCatBEPage extends BasePageComponent {
   activityCodeOptions: ActivityCodeModel[];
   testOutcomeText: string;
   conductedLanguage: string;
+  startDateTime: string;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -288,6 +293,11 @@ export class OfficeCatBEPage extends BasePageComponent {
         select(getJournalData),
         select(getTestSlotAttributes),
         select(getTestDate),
+      ),
+      startDateTime$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(getTestStartDateTime),
       ),
       candidateName$: currentTest$.pipe(
         select(getJournalData),
@@ -518,6 +528,7 @@ export class OfficeCatBEPage extends BasePageComponent {
       delegatedTest$,
       testOutcomeText$,
       conductedLanguage$,
+      startDateTime$,
     } = this.pageState;
     this.subscription = merge(
       conductedLanguage$.pipe(map(value => this.conductedLanguage = value)),
@@ -525,6 +536,7 @@ export class OfficeCatBEPage extends BasePageComponent {
       transmission$.pipe(map(value => this.transmission = value)),
       testOutcome$.pipe(map(value => this.testOutcome = value)),
       testOutcomeText$.pipe(map(value => this.testOutcomeText = value)),
+      startDateTime$.pipe(map(value => this.startDateTime = value)),
     ).subscribe();
   }
 
@@ -551,8 +563,32 @@ export class OfficeCatBEPage extends BasePageComponent {
     }
   }
 
-  dateOfTestChanged(date: string) {
-    console.log('new date is', date);
+  dateOfTestChanged(formInputValue: string) {
+
+    const date = formInputValue.trim();
+
+    if (moment(date, 'DD/MM/YYYY').isValid()) {
+      console.log(date, ' - is invalid date');
+    }
+
+    const dateArray = date.split('/').map(d => parseInt(d, 10));
+    const day = dateArray[0];
+    const month = dateArray[1];
+    const year = dateArray[2];
+
+    console.log('start date is', this.startDateTime);
+
+    const startDateTemp = moment(this.startDateTime);
+
+    startDateTemp.date(day);
+    startDateTemp.month(month - 1);
+    startDateTemp.year(year);
+
+    const formattedStartTime = `${startDateTemp.format('YYYY-MM-DDThh:mm:ss.SSS')}Z`;
+
+    console.log('new date is', formattedStartTime);
+
+    this.store$.dispatch(new SetStartDate(formattedStartTime));
   }
 
   identificationChanged(identification: Identification): void {

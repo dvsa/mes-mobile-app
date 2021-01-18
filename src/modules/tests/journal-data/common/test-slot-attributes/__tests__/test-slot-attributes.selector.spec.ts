@@ -35,6 +35,12 @@ describe('testSlotAttributes selector', () => {
     });
   });
 
+  describe('getTestStartDateTime', () => {
+    it('should return the start date and time of the test as string', () => {
+      expect(true).toBe(false);
+    });
+  });
+
   describe('isExtendedTest', () => {
     it('should return true if test is an extended test', () => {
       expect(isExtendedTest(testSlotAttributes)).toEqual(true);

@@ -6,13 +6,21 @@
 
     <span *ngIf="!editMode" 
       class="mes-data"
-      (tap)="onTap()"
-      (press)="onPress()">{{dateOfTest}}</span>
-      <!-- (click)="enableEdit()">{{dateOfTest}}</span> -->
+      (click)="enableEdit()">{{dateOfTest}}</span>
+      <!-- (tap)="onTap()"
+      (press)="onPress()">{{dateOfTest}}</span> -->
 
+    <!-- <ion-datetime *ngIf="editMode"
+      displayFormat="DD/MM/YYYY"
+      min="minDate"
+      max="maxDate"
+      [(ngModel)]="customTestDate"
+      (blur)="disableEdit()"></ion-datetime> -->
+      
     <input *ngIf="editMode"
       #editDateInput
-      type="text" id="date-of-test" class="mes-data" 
+      type="text" id="date-of-test" class="mes-data"
+      placeholder="DD/MM/YYYY"
       [value]="dateOfTest"
       (change)="dateOfTestChanged($event.target.value)"
       (blur)="disableEdit()">

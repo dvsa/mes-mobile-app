@@ -14,8 +14,16 @@ describe('testSlotAttributes reducer', () => {
     extendedTest: true,
     welshTest: null,
   };
+
   it('should return the testSlotAttributes for populate test centre actions', () => {
     const result = testSlotsAttributesReducer(null, new PopulateTestSlotAttributes(mockTestSlotAttributes));
     expect(result).toBe(mockTestSlotAttributes);
   });
+
+  describe('SET_START_DATE', () => {
+    it('should return the testSlotAttributes with new start property', () => {
+      expect(true).toBe(false);
+    });
+  });
+
 });
