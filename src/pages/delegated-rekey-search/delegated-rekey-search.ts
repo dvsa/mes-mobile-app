@@ -1,6 +1,8 @@
 import { Subscription, Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ViewController, ModalController } from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams, Platform, ViewController, ModalController, AlertController,
+} from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
@@ -59,6 +61,7 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
     private store$: Store<StoreModel>,
     private modalController: ModalController,
     private app: App,
+    private alertController: AlertController,
   ) {
     super(platform, navController, authenticationProvider);
   }
@@ -105,7 +108,7 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
   setUpSubscription() {
     this.subscription = this.pageState.rekeySearchErr$.subscribe((error) => {
       if (!this.hasBookingAlreadyBeenCompleted(error) && this.pageState.hasSearched$) {
-        this.showError(error);
+        this.showAlert(error);
       }
     });
   }
@@ -150,6 +153,22 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
       { type: ErrorTypes.SEARCH },
       { cssClass: zoomClass });
     await errorModal.present();
+  }
+
+  async showAlert(message: any) {
+    const alert = this.alertController.create({
+      message: JSON.stringify(message),
+      title: 'There was an error getting the delegated examiner booking',
+      cssClass: 'confirm-declaration-modal',
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {},
+        },
+      ],
+      enableBackdropDismiss: true,
+    });
+    await alert.present();
   }
 
 }
