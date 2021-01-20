@@ -10,7 +10,6 @@ import { Component } from '@angular/core';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
-import * as moment from 'moment';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
   OfficeViewDidEnter,
@@ -151,6 +150,7 @@ import * as postTestDeclarationsActions
 import { SetRekeyDate } from '../../../modules/tests/rekey-date/rekey-date.actions';
 import { SetStartDate }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
+import { getNewTestStartTime } from '../../../shared/helpers/get-new-test-start-time';
 
 interface OfficePageState {
   applicationNumber$: Observable<string>;
@@ -563,24 +563,8 @@ export class OfficeCatBEPage extends BasePageComponent {
     }
   }
 
-  dateOfTestChanged(formInputValue: string) {
-
-    const date = formInputValue.trim();
-
-    const dateArray = date.split('-').map(d => parseInt(d, 10));
-    const year = dateArray[0];
-    const month = dateArray[1];
-    const day = dateArray[2];
-
-    const startDateTemp = moment(this.startDateTime);
-
-    startDateTemp.date(day);
-    startDateTemp.month(month - 1);
-    startDateTemp.year(year);
-
-    const formattedStartTime = startDateTemp.toISOString();
-
-    this.store$.dispatch(new SetStartDate(formattedStartTime));
+  dateOfTestChanged(inputDate: string) {
+    this.store$.dispatch(new SetStartDate(getNewTestStartTime(inputDate, this.startDateTime)));
   }
 
   identificationChanged(identification: Identification): void {
