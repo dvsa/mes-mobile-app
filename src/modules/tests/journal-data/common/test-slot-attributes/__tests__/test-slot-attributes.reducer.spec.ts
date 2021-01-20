@@ -1,6 +1,6 @@
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { testSlotsAttributesReducer } from '../test-slot-attributes.reducer';
-import { PopulateTestSlotAttributes } from '../test-slot-attributes.actions';
+import { PopulateTestSlotAttributes, SetStartDate } from '../test-slot-attributes.actions';
 import { DateTime } from '../../../../../../shared/helpers/date-time';
 
 const testTime = new DateTime().toString();
@@ -22,7 +22,13 @@ describe('testSlotAttributes reducer', () => {
 
   describe('SET_START_DATE', () => {
     it('should return the testSlotAttributes with new start property', () => {
-      expect(true).toBe(false);
+      mockTestSlotAttributes.start = '2021-01-15T08:10:00.000Z';
+      const updatedDate = '2020-12-25T08:10:00.000Z';
+      const state = testSlotsAttributesReducer(null, new PopulateTestSlotAttributes(mockTestSlotAttributes));
+
+      const result = testSlotsAttributesReducer(state, new SetStartDate(updatedDate));
+
+      expect(result.start).toBe(updatedDate);
     });
   });
 
