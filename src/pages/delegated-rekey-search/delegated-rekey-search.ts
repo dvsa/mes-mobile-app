@@ -133,6 +133,11 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
   searchTests() {
     this.hasClickedSearch = true;
     const applicationReferenceInputValue: AbstractControl = this.delegatedRekeyForm.get('applicationReferenceInput');
+    this.showAlert({
+      appRefInputValid: applicationReferenceInputValue.valid.toString(),
+      applicationReference: this.applicationReference,
+      delexBookingSearchUrl: this.appConfigProvider.getAppConfig().journal.delegatedExaminerSearchBookingUrl,
+    });
     if (applicationReferenceInputValue.valid) {
       this.store$.dispatch(new SearchBookedDelegatedTest(this.applicationReference));
     }
@@ -161,10 +166,7 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
 
   async showAlert(error: any) {
     const alert = this.alertController.create({
-      message: JSON.stringify({
-        ...error,
-        ...this.appConfigProvider.getAppConfig().journal,
-      }),
+      message: JSON.stringify(error),
       title: 'There was an error getting the delegated examiner booking',
       cssClass: 'confirm-declaration-modal',
       buttons: [
