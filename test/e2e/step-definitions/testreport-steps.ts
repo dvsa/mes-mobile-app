@@ -340,3 +340,7 @@ When('I click on Next Question button', () => {
 When('I click on View Test Summary button', () => {
   TestReportPage.clickViewTestSummary();
 });
+
+When('I add a {string} fault to {string}', (fault: string , competency: string) => {
+
+});
