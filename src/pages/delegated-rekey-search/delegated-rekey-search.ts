@@ -30,6 +30,7 @@ import { ERROR_PAGE } from '../page-names.constants';
 import { ErrorTypes } from '../../shared/models/error-message';
 import { App } from './../../app/app.component';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AppConfigProvider } from '../../providers/app-config/app-config';
 
 interface DelegatedRekeySearchPageState {
   isLoading$: Observable<boolean>;
@@ -62,6 +63,7 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
     private modalController: ModalController,
     private app: App,
     private alertController: AlertController,
+    private appConfigProvider: AppConfigProvider,
   ) {
     super(platform, navController, authenticationProvider);
   }
@@ -159,7 +161,10 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
 
   async showAlert(error: any) {
     const alert = this.alertController.create({
-      message: JSON.stringify(error),
+      message: JSON.stringify({
+        ...error,
+        ...this.appConfigProvider.getAppConfig().journal,
+      }),
       title: 'There was an error getting the delegated examiner booking',
       cssClass: 'confirm-declaration-modal',
       buttons: [
