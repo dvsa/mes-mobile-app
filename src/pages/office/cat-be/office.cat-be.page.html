@@ -24,6 +24,7 @@
         <ion-grid class="grid">
 
           <date-of-test
+            *ngIf="isDelegated"
             [dateOfTest]="pageState.startDate$ | async"
             (dateOfTestChange)="dateOfTestChanged($event)">
           </date-of-test>

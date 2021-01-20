@@ -57,7 +57,7 @@ import { QuestionProvider } from '../../../providers/question/question';
 import {
   getTestSlotAttributes,
 } from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
-import { getTestTime }
+import { getTestDate, getTestStartDateTime, getTestTime }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
   getETA,
@@ -149,11 +149,16 @@ import { getHealthDeclarationStatus }
 import * as postTestDeclarationsActions
   from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import { SetRekeyDate } from '../../../modules/tests/rekey-date/rekey-date.actions';
+import { SetStartDate }
+  from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
+import { getNewTestStartTime } from '../../../shared/helpers/get-new-test-start-time';
 
 interface OfficePageState {
   applicationNumber$: Observable<string>;
   activityCode$: Observable<ActivityCodeModel>;
   startTime$: Observable<string>;
+  startDate$: Observable<string>;
+  startDateTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
   isPassed$: Observable<boolean>;
@@ -223,6 +228,7 @@ export class OfficeCatDPage extends BasePageComponent {
   testOutcome: string;
   testOutcomeText: string;
   conductedLanguage: string;
+  startDateTime: string;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -293,6 +299,16 @@ export class OfficeCatDPage extends BasePageComponent {
         select(getJournalData),
         select(getTestSlotAttributes),
         select(getTestTime),
+      ),
+      startDate$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(getTestDate),
+      ),
+      startDateTime$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(getTestStartDateTime),
       ),
       candidateName$: currentTest$.pipe(
         select(getJournalData),
@@ -524,6 +540,7 @@ export class OfficeCatDPage extends BasePageComponent {
       testOutcome$,
       testOutcomeText$,
       conductedLanguage$,
+      startDateTime$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -533,6 +550,7 @@ export class OfficeCatDPage extends BasePageComponent {
       transmission$.pipe(map(result => this.transmission = result)),
       delegatedTest$.pipe(map(result => this.isDelegated = result)),
       testCategory$.pipe(map(result => this.testCategory = result)),
+      startDateTime$.pipe(map(value => this.startDateTime = value)),
     ).subscribe();
   }
 
@@ -557,6 +575,10 @@ export class OfficeCatDPage extends BasePageComponent {
     if (this.isFormValid()) {
       this.showFinishTestModal();
     }
+  }
+
+  dateOfTestChanged(inputDate: string) {
+    this.store$.dispatch(new SetStartDate(getNewTestStartTime(inputDate, this.startDateTime)));
   }
 
   identificationChanged(identification: Identification): void {

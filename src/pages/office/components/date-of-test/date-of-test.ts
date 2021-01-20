@@ -54,9 +54,7 @@ export class DateOfTest implements OnInit {
     clearTimeout(this.timeoutId);
   }
 
-  enableEdit = (): void => {
-    this.editMode = true;
-  }
+  enableEdit = () => this.editMode = true;
 
   disableEdit = () => this.editMode = false;
 
