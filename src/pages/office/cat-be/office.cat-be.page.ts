@@ -567,14 +567,10 @@ export class OfficeCatBEPage extends BasePageComponent {
 
     const date = formInputValue.trim();
 
-    console.log('new date', formInputValue);
-
     const dateArray = date.split('-').map(d => parseInt(d, 10));
     const year = dateArray[0];
     const month = dateArray[1];
     const day = dateArray[2];
-
-    console.log('start date is', this.startDateTime);
 
     const startDateTemp = moment(this.startDateTime);
 
@@ -583,8 +579,6 @@ export class OfficeCatBEPage extends BasePageComponent {
     startDateTemp.year(year);
 
     const formattedStartTime = startDateTemp.toISOString();
-
-    console.log('new date is', formattedStartTime);
 
     this.store$.dispatch(new SetStartDate(formattedStartTime));
   }
