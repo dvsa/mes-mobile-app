@@ -107,7 +107,9 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
 
   setUpSubscription() {
     this.subscription = this.pageState.rekeySearchErr$.subscribe((error) => {
-      if (!this.hasBookingAlreadyBeenCompleted(error) && this.pageState.hasSearched$) {
+      // tslint:disable-next-line:max-line-length
+      console.log(`🚀 ~ file: delegated-rekey-search.ts ~ line 110 ~ this.subscription=this.pageState.rekeySearchErr$.subscribe ~ error`, JSON.stringify(error));
+      if (!this.hasBookingAlreadyBeenCompleted(error) && this.hasClickedSearch) {
         this.showAlert(error);
       }
     });
@@ -155,9 +157,9 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
     await errorModal.present();
   }
 
-  async showAlert(message: any) {
+  async showAlert(error: any) {
     const alert = this.alertController.create({
-      message: JSON.stringify(message),
+      message: JSON.stringify(error),
       title: 'There was an error getting the delegated examiner booking',
       cssClass: 'confirm-declaration-modal',
       buttons: [
