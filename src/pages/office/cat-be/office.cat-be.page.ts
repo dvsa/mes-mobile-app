@@ -1,5 +1,5 @@
 import {
-  IonicPage,
+IonicPage,
   NavController,
   NavParams,
   Platform,
@@ -567,14 +567,12 @@ export class OfficeCatBEPage extends BasePageComponent {
 
     const date = formInputValue.trim();
 
-    if (moment(date, 'DD/MM/YYYY').isValid()) {
-      console.log(date, ' - is invalid date');
-    }
+    console.log('new date', formInputValue);
 
-    const dateArray = date.split('/').map(d => parseInt(d, 10));
-    const day = dateArray[0];
+    const dateArray = date.split('-').map(d => parseInt(d, 10));
+    const year = dateArray[0];
     const month = dateArray[1];
-    const year = dateArray[2];
+    const day = dateArray[2];
 
     console.log('start date is', this.startDateTime);
 
@@ -584,7 +582,7 @@ export class OfficeCatBEPage extends BasePageComponent {
     startDateTemp.month(month - 1);
     startDateTemp.year(year);
 
-    const formattedStartTime = `${startDateTemp.format('YYYY-MM-DDThh:mm:ss.SSS')}Z`;
+    const formattedStartTime = startDateTemp.toISOString();
 
     console.log('new date is', formattedStartTime);
 
