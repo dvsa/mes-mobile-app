@@ -23,6 +23,12 @@
       <ion-card-content class="card-content-ios" no-bounce no-padding>
         <ion-grid class="grid">
 
+          <date-of-test
+            *ngIf="isDelegated"
+            [dateOfTest]="pageState.startDate$ | async"
+            (dateOfTestChange)="dateOfTestChanged($event)">
+          </date-of-test>
+
           <ion-row class="mes-component-row mes-row-separator" id="application-reference-card" align-items-center *ngIf="isDelegated">
             <ion-col class="component-label" col-32>
               <label>Application reference</label>

@@ -55,6 +55,7 @@ import { PassFinalisationComponentsModule }
  from '../../../pass-finalisation/components/pass-finalisation-components.module';
 import { PassCertificateDeclarationComponent }
  from '../components/pass-certificate-declaration/pass-certificate-declaration';
+import { DateOfTest } from '../../components/date-of-test/date-of-test';
 
 describe('OfficeCatCPCPage', () => {
   let fixture: ComponentFixture<OfficeCatCPCPage>;
@@ -73,6 +74,7 @@ describe('OfficeCatCPCPage', () => {
         MockComponent(AssessmentReportComponent),
         MockComponent(CandidateSectionComponent),
         MockComponent(PassCertificateDeclarationComponent),
+        MockComponent(DateOfTest),
       ],
       imports: [
         IonicModule,

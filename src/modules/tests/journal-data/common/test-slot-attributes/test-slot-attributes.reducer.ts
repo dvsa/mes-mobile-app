@@ -18,6 +18,11 @@ export function testSlotsAttributesReducer(
   switch (action.type) {
     case testSlotAttributesActions.POPULATE_TEST_SLOT_ATTRIBUTES:
       return action.payload;
+    case testSlotAttributesActions.SET_START_TIME:
+      return {
+        ...state,
+        start: action.payload,
+      };
     default:
       return state;
   }

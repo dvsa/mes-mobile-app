@@ -15,6 +15,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
 import { VehicleChecksOfficeCardComponent } from './vehicle-checks/vehicle-checks-office-card';
 import { IndependentDrivingComponent } from './independent-driving/independent-driving';
 import { CandidateSectionComponent } from './candidate-section/candidate-section';
+import { DateOfTest } from './date-of-test/date-of-test';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CandidateSectionComponent } from './candidate-section/candidate-section
     AdditionalInformationComponent,
     VehicleChecksOfficeCardComponent,
     CandidateSectionComponent,
+    DateOfTest,
   ],
   imports: [
     CommonModule,
@@ -48,6 +50,7 @@ import { CandidateSectionComponent } from './candidate-section/candidate-section
     AdditionalInformationComponent,
     VehicleChecksOfficeCardComponent,
     CandidateSectionComponent,
+    DateOfTest,
   ],
 })
 export class OfficeComponentsModule { }
