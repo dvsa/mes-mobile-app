@@ -1,0 +1,22 @@
+<ion-row class="mes-component-row mes-row-separator" id="date-of-test-row" align-items-center>
+  <ion-col class="component-label" col-32>
+    <label>Date of test</label>
+  </ion-col>
+  <ion-col col-63 align-self-center padding-left>
+
+    <span *ngIf="!editMode" 
+      class="mes-data"
+      (touchstart)="onTouchStart()"
+      (touchend)="onTouchEnd()">{{dateOfTest}}</span>
+
+    <ion-datetime *ngIf="editMode"
+      class="date-of-test-picker"
+      displayFormat="DD/MM/YYYY"
+      [min]="minDate"
+      [max]="maxDate"
+      (ionChange)="datePickerChange()"
+      (ionCancel)="datePickerCancel()"
+      [(ngModel)]="customTestDate"></ion-datetime>
+
+  </ion-col>
+</ion-row>
