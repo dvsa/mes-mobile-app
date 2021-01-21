@@ -22,8 +22,8 @@ export class DateOfTest implements OnInit {
   editMode: Boolean = false;
 
   customTestDate: string = '';
-  maxDate: string = '2021-01-17';
-  minDate: string = '2020-01-18';
+  maxDate: string;
+  minDate: string;
 
   ngOnInit() {
     this.customTestDate = moment(this.dateOfTest, 'DD/MM/YYYY').format('YYYY-MM-DD');
