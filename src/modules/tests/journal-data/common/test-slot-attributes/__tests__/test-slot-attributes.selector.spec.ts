@@ -5,6 +5,8 @@ import {
   isSpecialNeeds,
   isExtendedTest,
   extractTestSlotAttributes,
+  getTestDate,
+  getTestStartDateTime,
 } from '../test-slot-attributes.selector';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { DateTime } from '../../../../../../shared/helpers/date-time';
@@ -26,6 +28,22 @@ describe('testSlotAttributes selector', () => {
   describe('getTestTime', () => {
     it('should return the time of the test', () => {
       expect(getTestTime(testSlotAttributes)).toBe(formattedTime);
+    });
+  });
+
+  describe('getTestDate', () => {
+    it('should return the date of the test', () => {
+      const startDateTime = '2021-01-15T08:10:00.000Z';
+      testSlotAttributes.start = startDateTime;
+      expect(getTestDate(testSlotAttributes)).toBe('15/01/2021');
+    });
+  });
+
+  describe('getTestStartDateTime', () => {
+    it('should return the start date and time of the test as string', () => {
+      const startDateTime = '2021-01-15T08:10:00.000Z';
+      testSlotAttributes.start = startDateTime;
+      expect(getTestStartDateTime(testSlotAttributes)).toBe(startDateTime);
     });
   });
 

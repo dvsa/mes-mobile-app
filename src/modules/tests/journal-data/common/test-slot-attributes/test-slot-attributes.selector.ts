@@ -3,6 +3,8 @@ import { getSlotType } from '../../../../../shared/helpers/get-slot-type';
 import moment from 'moment';
 
 export const getTestTime = (attributes: TestSlotAttributes) => moment(attributes.start).format('HH:mm');
+export const getTestDate = (attributes: TestSlotAttributes): string => moment(attributes.start).format('DD/MM/YYYY');
+export const getTestStartDateTime = (attributes: TestSlotAttributes): string => attributes.start;
 export const isExtendedTest = (attributes: TestSlotAttributes) => attributes.extendedTest || false;
 export const isSpecialNeeds = (attributes: TestSlotAttributes) => attributes.specialNeeds || false;
 export const getSlotId = (attributes: TestSlotAttributes) => attributes.slotId;
