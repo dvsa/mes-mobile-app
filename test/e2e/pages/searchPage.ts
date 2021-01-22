@@ -38,8 +38,8 @@ class SearchPage extends Page {
     return this.getElementByXPath('//debrief-card');
   }
 
-  getRekeyApplicationRefNumberInput() {
-    return this.getElementByXPath('//*[@id="application-reference"]/input');
+  enterRekeyApplicationRefNumberInput(searchTerm) {
+    return this.textFieldInputViaNativeMode('//*[@id="application-reference"]/input', searchTerm);
   }
 
   scrollToDebriefSection() {

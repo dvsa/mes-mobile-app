@@ -48,6 +48,5 @@ Then('I click on Search booked tests button', () => {
 });
 
 Then('I search for a completed test with the application reference {string}', (searchTerm) => {
-  const searchField = SearchPage.getRekeyApplicationRefNumberInput();
-  searchField.sendKeys(searchTerm);
+  SearchPage.enterRekeyApplicationRefNumberInput(searchTerm);
 });
