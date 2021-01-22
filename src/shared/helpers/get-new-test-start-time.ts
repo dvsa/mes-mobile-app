@@ -17,5 +17,6 @@ export function getNewTestStartTime(inputDate: string, startDateTime: string): s
   startDateTemp.month(month - 1);
   startDateTemp.year(year);
 
-  return startDateTemp.toISOString();
+  // Database schema accepts only 19 characters for the start date time property
+  return startDateTemp.format('YYYY-MM-DDTHH:mm:ss');
 }
