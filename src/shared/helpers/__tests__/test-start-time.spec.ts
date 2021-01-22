@@ -1,6 +1,6 @@
 import { getNewTestStartTime, isValidStartDate } from '../test-start-time';
 
-fdescribe('Test Start Time helper functions', () => {
+describe('Test Start Time helper functions', () => {
 
   describe('getNewTestStartTime', () => {
     it('should return the correct date', () => {
