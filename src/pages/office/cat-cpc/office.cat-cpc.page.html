@@ -26,6 +26,7 @@
           <date-of-test
             *ngIf="isDelegated"
             [dateOfTest]="pageState.startDate$ | async"
+            (setIsValidStartDateTime)="setIsValidStartDateTime($event)"
             (dateOfTestChange)="dateOfTestChanged($event)">
           </date-of-test>
 
@@ -147,7 +148,7 @@
       </button>
     </ion-col>
     <ion-col *ngIf="isDelegated">
-      <button id="submit-button" class="mes-primary-button padding-x-5 full-width" ion-button
+      <button id="submit-button" class="mes-primary-button padding-x-5 full-width" ion-button [disabled]="!isValidStartDateTime"
               (click)="onSubmit()">
         <h3>Submit</h3>
       </button>
