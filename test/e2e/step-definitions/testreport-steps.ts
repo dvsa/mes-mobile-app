@@ -2,6 +2,7 @@ import { Then, When, Before } from 'cucumber';
 import TestReportPage from '../pages/testReportPage';
 import testReportPage from '../pages/testReportPage';
 import {Test} from 'tslint';
+import PageHelper from '../pages/pageHelper';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -341,6 +342,6 @@ When('I click on View Test Summary button', () => {
   TestReportPage.clickViewTestSummary();
 });
 
-When('I add a {string} fault to {string}', (fault: string , competency: string) => {
+When(/^I add a (driving|serious|dangerous) fault to "(.+)"$/, (fault: string, competency: string) => {
 
 });
