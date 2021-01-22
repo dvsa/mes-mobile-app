@@ -112,7 +112,7 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
       // tslint:disable-next-line:max-line-length
       console.log(`🚀 ~ file: delegated-rekey-search.ts ~ line 110 ~ this.subscription=this.pageState.rekeySearchErr$.subscribe ~ error`, JSON.stringify(error));
       if (!this.hasBookingAlreadyBeenCompleted(error) && this.hasClickedSearch) {
-        this.showAlert(error);
+        this.showAlert('There was an error getting the delegated examiner booking', error);
       }
     });
   }
@@ -133,7 +133,7 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
   searchTests() {
     this.hasClickedSearch = true;
     const applicationReferenceInputValue: AbstractControl = this.delegatedRekeyForm.get('applicationReferenceInput');
-    this.showAlert({
+    this.showAlert('Searching tests information', {
       appRefInputValid: applicationReferenceInputValue.valid.toString(),
       applicationReference: this.applicationReference,
       delexBookingSearchUrl: this.appConfigProvider.getAppConfig().journal.delegatedExaminerSearchBookingUrl,
@@ -164,10 +164,10 @@ export class DelegatedRekeySearchPage extends BasePageComponent implements OnIni
     await errorModal.present();
   }
 
-  async showAlert(error: any) {
+  async showAlert(title: string, error: any) {
     const alert = this.alertController.create({
+      title,
       message: JSON.stringify(error),
-      title: 'There was an error getting the delegated examiner booking',
       cssClass: 'confirm-declaration-modal',
       buttons: [
         {
