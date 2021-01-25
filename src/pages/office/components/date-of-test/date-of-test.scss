@@ -1,6 +1,16 @@
 date-of-test {
   .date-of-test-picker {
-    max-width: 140px;
+    max-width: 184px;
     margin-right: 48px;
   }
+
+  .date-spacing-row {
+    min-height: 52px;
+    padding-left: 2px;
+  }
+
+  .date-error-message{
+    margin: 4px 48px 4px 0;
+  }
+
 }
