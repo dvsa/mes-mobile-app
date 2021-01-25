@@ -105,7 +105,7 @@ import { get } from 'lodash';
 import { SetRekeyDate } from '../../../modules/tests/rekey-date/rekey-date.actions';
 import { SetStartDate }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
-import { getNewTestStartTime } from '../../../shared/helpers/get-new-test-start-time';
+import { getNewTestStartTime } from '../../../shared/helpers/test-start-time';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -154,6 +154,7 @@ export class OfficeCatCPCPage extends BasePageComponent {
   isDelegated: boolean;
   conductedLanguage: string = Language.ENGLISH;
   startDateTime: string;
+  isValidStartDateTime: boolean = true;
 
   public outcome: TestOutcome;
   combinationCode: CombinationCodes;
@@ -374,6 +375,10 @@ export class OfficeCatCPCPage extends BasePageComponent {
     if (this.isFormValid()) {
       this.showFinishTestModal();
     }
+  }
+
+  setIsValidStartDateTime(isValid: boolean) {
+    this.isValidStartDateTime = isValid;
   }
 
   dateOfTestChanged(inputDate: string) {
