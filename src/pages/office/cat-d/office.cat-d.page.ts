@@ -154,7 +154,7 @@ import * as postTestDeclarationsActions
 import { SetRekeyDate } from '../../../modules/tests/rekey-date/rekey-date.actions';
 import { SetStartDate }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
-import { getNewTestStartTime } from '../../../shared/helpers/get-new-test-start-time';
+import { getNewTestStartTime } from '../../../shared/helpers/test-start-time';
 
 interface OfficePageState {
   applicationNumber$: Observable<string>;
@@ -232,6 +232,7 @@ export class OfficeCatDPage extends BasePageComponent {
   testOutcomeText: string;
   conductedLanguage: string;
   startDateTime: string;
+  isValidStartDateTime: boolean = true;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -578,6 +579,10 @@ export class OfficeCatDPage extends BasePageComponent {
     if (this.isFormValid()) {
       this.showFinishTestModal();
     }
+  }
+
+  setIsValidStartDateTime(isValid: boolean) {
+    this.isValidStartDateTime = isValid;
   }
 
   dateOfTestChanged(inputDate: string) {

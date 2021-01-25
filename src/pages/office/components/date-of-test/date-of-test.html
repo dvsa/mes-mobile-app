@@ -3,20 +3,28 @@
     <label>Date of test</label>
   </ion-col>
   <ion-col col-63 align-self-center padding-left>
+    <ion-row [class.spacing-row]="!isInvalid" [class.date-spacing-row]="isInvalid" class="spacing-row"></ion-row>
+    <ion-row>
+      <ion-col>
+        <span *ngIf="!editMode" 
+          class="mes-data"
+          (touchstart)="onTouchStart()"
+          (touchend)="onTouchEnd()">{{dateOfTest}}</span>
 
-    <span *ngIf="!editMode" 
-      class="mes-data"
-      (touchstart)="onTouchStart()"
-      (touchend)="onTouchEnd()">{{dateOfTest}}</span>
-
-    <ion-datetime *ngIf="editMode"
-      class="date-of-test-picker"
-      displayFormat="DD/MM/YYYY"
-      [min]="minDate"
-      [max]="maxDate"
-      (ionChange)="datePickerChange()"
-      (ionCancel)="datePickerCancel()"
-      [(ngModel)]="customTestDate"></ion-datetime>
-
+        <ion-datetime *ngIf="editMode"
+          class="date-of-test-picker"
+          displayFormat="DD/MM/YYYY"
+          [min]="minDate"
+          [max]="maxDate"
+          (ionChange)="datePickerChange()"
+          (ionCancel)="datePickerCancel()"
+          [(ngModel)]="customTestDate"></ion-datetime>
+      </ion-col>
+    </ion-row>
+    <ion-row class="validation-message-row" align-items-center>
+      <div *ngIf="isInvalid" class="validation-text ng-invalid date-error-message">
+        Please enter a date in the past, and no more than 12 months ago
+      </div>
+    </ion-row>
   </ion-col>
 </ion-row>

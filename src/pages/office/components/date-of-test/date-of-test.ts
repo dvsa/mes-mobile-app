@@ -1,7 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import * as moment from 'moment';
-
-const PRESS_TIME_TO_ENABLE_EDIT = 10000;
+import { isValidStartDate, PRESS_TIME_TO_ENABLE_EDIT } from '../../../../shared/helpers/test-start-time';
 
 @Component({
   selector: 'date-of-test',
@@ -15,11 +14,15 @@ export class DateOfTest implements OnInit {
   @Output()
   dateOfTestChange = new EventEmitter<string>();
 
+  @Output()
+  setIsValidStartDateTime = new EventEmitter<boolean>();
+
   @ViewChild('editDateInput') inputEl: ElementRef;
 
-  isPressed: Boolean = false;
+  isPressed: boolean = false;
   timeoutId: NodeJS.Timeout;
-  editMode: Boolean = false;
+  editMode: boolean = false;
+  isInvalid: boolean = false;
 
   customTestDate: string = '';
   maxDate: string;
@@ -32,6 +35,15 @@ export class DateOfTest implements OnInit {
   }
 
   datePickerChange() {
+    const currentDate = moment().format('YYYY-MM-DD');
+    if (!isValidStartDate(this.customTestDate, currentDate)) {
+      this.isInvalid = true;
+      this.setIsValidStartDateTime.emit(false);
+      return;
+    }
+
+    this.isInvalid = false;
+    this.setIsValidStartDateTime.emit(true);
     this.dateOfTestChange.emit(this.customTestDate);
     this.disableEdit();
   }
