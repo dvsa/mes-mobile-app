@@ -10,10 +10,10 @@ describe('Test Start Time helper functions', () => {
     });
   });
 
-  describe('', () => {
+  describe('isValidStartDate', () => {
     const currentDate = '2021-01-22';
 
-    it('should return true when date is between current date and on year in the past', () => {
+    it('should return true when date is between current date and one year in the past', () => {
       const inputDate = '2020-11-19';
       expect(isValidStartDate(inputDate, currentDate)).toBe(true);
     });
