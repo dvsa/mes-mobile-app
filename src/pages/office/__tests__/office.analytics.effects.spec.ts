@@ -163,6 +163,12 @@ describe('Office Analytics Effects', () => {
 
   });
 
+  describe('dateOfTestChangedEffect', () => {
+    it('should call the logEvent with the previous and new date text', () => {
+      expect(true).toBe(false);
+    });
+  });
+
   describe('savingWriteUpForLaterEffect', () => {
     it('should call logEvent with pass page and addCustomDimension', (done) => {
       // ARRANGE

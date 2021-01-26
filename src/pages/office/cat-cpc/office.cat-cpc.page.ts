@@ -19,6 +19,7 @@ import {
   CompleteTest,
   SavingWriteUpForLater,
   OfficeValidationError,
+  TestStartDateChanged,
 } from '../office.actions';
 import { merge, Observable, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
@@ -382,7 +383,9 @@ export class OfficeCatCPCPage extends BasePageComponent {
   }
 
   dateOfTestChanged(inputDate: string) {
-    this.store$.dispatch(new SetStartDate(getNewTestStartTime(inputDate, this.startDateTime)));
+    const customStartDate = getNewTestStartTime(inputDate, this.startDateTime);
+    this.store$.dispatch(new TestStartDateChanged(this.startDateTime, customStartDate));
+    this.store$.dispatch(new SetStartDate(customStartDate));
   }
 
   candidateDescriptionChanged(candidateDescription: string) {
