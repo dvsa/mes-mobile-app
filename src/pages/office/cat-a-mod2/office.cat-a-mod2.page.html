@@ -22,6 +22,14 @@
 
       <ion-card-content class="card-content-ios" no-bounce no-padding>
         <ion-grid class="grid">
+
+          <date-of-test
+            *ngIf="(pageState.isRekey$ | async)"
+            [dateOfTest]="pageState.startDate$ | async"
+            (setIsValidStartDateTime)="setIsValidStartDateTime($event)"
+            (dateOfTestChange)="dateOfTestChanged($event)">
+          </date-of-test>
+
           <activity-code id="activity-code-card" [formGroup]="form"
             [activityCodeModel]="pageState.activityCode$ | async" [activityCodeOptions]="activityCodeOptions"
             (activityCodeChange)="activityCodeChanged($event)" [disabled]="true"></activity-code>
@@ -207,7 +215,7 @@
     </ion-col>
     <ion-col *ngIf="(pageState.isRekey$ | async)">
       <button id="reason-for-rekey" class="mes-primary-button padding-x-5 full-width" ion-button
-        (click)="goToReasonForRekey()">
+        (click)="goToReasonForRekey()" [disabled]="!isValidStartDateTime">
         <h3>Continue</h3>
       </button>
     </ion-col>
