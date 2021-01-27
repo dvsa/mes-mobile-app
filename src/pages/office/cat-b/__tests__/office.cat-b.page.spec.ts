@@ -71,6 +71,7 @@ import { FaultCountProvider } from '../../../../providers/fault-count/fault-coun
 import { FaultSummaryProvider } from '../../../../providers/fault-summary/fault-summary';
 import { configureTestSuite } from 'ng-bullet';
 import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
+import { DateOfTest } from '../../components/date-of-test/date-of-test';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatBPage>;
@@ -92,6 +93,7 @@ describe('OfficePage', () => {
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
         MockComponent(CandidateSectionComponent),
+        MockComponent(DateOfTest),
       ],
       imports: [
         IonicModule,
