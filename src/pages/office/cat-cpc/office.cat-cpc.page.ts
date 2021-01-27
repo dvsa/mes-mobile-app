@@ -19,6 +19,7 @@ import {
   CompleteTest,
   SavingWriteUpForLater,
   OfficeValidationError,
+  TestStartDateChanged,
 } from '../office.actions';
 import { merge, Observable, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
@@ -52,7 +53,7 @@ import {
 import {
   getTestSlotAttributes,
 } from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
-import { getTestTime }
+import { getTestDate, getTestStartDateTime, getTestTime }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import { PersistTests, SendCurrentTest } from '../../../modules/tests/tests.actions';
 import {
@@ -103,11 +104,16 @@ import { getReceiptDeclarationStatus }
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { get } from 'lodash';
 import { SetRekeyDate } from '../../../modules/tests/rekey-date/rekey-date.actions';
+import { SetStartDate }
+  from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
+import { getNewTestStartTime } from '../../../shared/helpers/test-start-time';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
   applicationNumber$: Observable<string>;
   startTime$: Observable<string>;
+  startDate$: Observable<string>;
+  startDateTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
   isPassed$: Observable<boolean>;
@@ -148,6 +154,8 @@ export class OfficeCatCPCPage extends BasePageComponent {
   subscription: Subscription;
   isDelegated: boolean;
   conductedLanguage: string = Language.ENGLISH;
+  startDateTime: string;
+  isValidStartDateTime: boolean = true;
 
   public outcome: TestOutcome;
   combinationCode: CombinationCodes;
@@ -189,6 +197,16 @@ export class OfficeCatCPCPage extends BasePageComponent {
         select(getJournalData),
         select(getTestSlotAttributes),
         select(getTestTime),
+      ),
+      startDate$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(getTestDate),
+      ),
+      startDateTime$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(getTestStartDateTime),
       ),
       testOutcome$: currentTest$.pipe(
         select(getTestOutcome),
@@ -311,12 +329,18 @@ export class OfficeCatCPCPage extends BasePageComponent {
       ),
     };
 
-    const { testResult$, combination$, delegatedTest$ } = this.pageState;
+    const {
+      testResult$,
+      combination$,
+      delegatedTest$,
+      startDateTime$,
+    } = this.pageState;
 
     this.subscription = merge(
       testResult$.pipe(map(result => this.outcome = result as TestOutcome)),
       combination$.pipe(map(result => this.combinationCode = result as CombinationCodes)),
       delegatedTest$.pipe(map(value => this.isDelegated = value)),
+      startDateTime$.pipe(map(value => this.startDateTime = value)),
     ).subscribe();
 
   }
@@ -352,6 +376,16 @@ export class OfficeCatCPCPage extends BasePageComponent {
     if (this.isFormValid()) {
       this.showFinishTestModal();
     }
+  }
+
+  setIsValidStartDateTime(isValid: boolean) {
+    this.isValidStartDateTime = isValid;
+  }
+
+  dateOfTestChanged(inputDate: string) {
+    const customStartDate = getNewTestStartTime(inputDate, this.startDateTime);
+    this.store$.dispatch(new TestStartDateChanged(this.startDateTime, customStartDate));
+    this.store$.dispatch(new SetStartDate(customStartDate));
   }
 
   candidateDescriptionChanged(candidateDescription: string) {

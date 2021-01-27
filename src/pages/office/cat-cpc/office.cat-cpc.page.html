@@ -23,6 +23,13 @@
       <ion-card-content class="card-content-ios" no-bounce no-padding>
         <ion-grid class="grid">
 
+          <date-of-test
+            *ngIf="isDelegated || (pageState.isRekey$ | async)"
+            [dateOfTest]="pageState.startDate$ | async"
+            (setIsValidStartDateTime)="setIsValidStartDateTime($event)"
+            (dateOfTestChange)="dateOfTestChanged($event)">
+          </date-of-test>
+
           <ion-row class="mes-component-row mes-row-separator" id="application-reference-card" align-items-center *ngIf="isDelegated">
             <ion-col class="component-label" col-32>
               <label>Application reference</label>
@@ -135,13 +142,13 @@
       </button>
     </ion-col>
     <ion-col *ngIf="(pageState.isRekey$ | async) && !isDelegated">
-      <button id="reason-for-rekey" class="mes-primary-button padding-x-5 full-width" ion-button
+      <button id="reason-for-rekey" class="mes-primary-button padding-x-5 full-width" ion-button [disabled]="!isValidStartDateTime"
               (click)="goToReasonForRekey()">
         <h3>Continue</h3>
       </button>
     </ion-col>
     <ion-col *ngIf="isDelegated">
-      <button id="submit-button" class="mes-primary-button padding-x-5 full-width" ion-button
+      <button id="submit-button" class="mes-primary-button padding-x-5 full-width" ion-button [disabled]="!isValidStartDateTime"
               (click)="onSubmit()">
         <h3>Submit</h3>
       </button>

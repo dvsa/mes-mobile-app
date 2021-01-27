@@ -14,6 +14,8 @@ import {
   OfficeViewDidEnter,
   COMPLETE_TEST,
   CompleteTest,
+  TEST_START_DATE_CHANGED,
+  TestStartDateChanged,
 } from '../../pages/office/office.actions';
 import {
   CIRCUIT_TYPE_CHANGED,
@@ -99,6 +101,48 @@ export class OfficeAnalyticsEffects {
       return of(new AnalyticRecorded());
     },
     ),
+  );
+
+  @Effect()
+  testStartDateChanged$ = this.actions$.pipe(
+    ofType(TEST_START_DATE_CHANGED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getJournalData),
+          select(getCandidate),
+          select(getCandidateId),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getJournalData),
+          select(getApplicationReference),
+          select(getApplicationNumber),
+        ),
+      ),
+    )),
+    switchMap((
+      [action, tests, candidateId, applicationReference]:
+      [TestStartDateChanged, TestsModel, number, string],
+    ) => {
+
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, applicationReference);
+
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.OFFICE, tests),
+        formatAnalyticsText(AnalyticsEvents.DATE_OF_TEST_CHANGED, tests),
+        `previous date: ${action.previousStartDate}; new date: ${action.customStartDate}`,
+      );
+
+      return of(new AnalyticRecorded());
+    }),
   );
 
   @Effect()
