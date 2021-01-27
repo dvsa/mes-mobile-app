@@ -29,7 +29,11 @@ class LoginPage extends Page {
    * @param password the password
    */
   logInToApplication(username : string, password : string) {
-
+    //Steps to Login made better
+    //  1. See if you are logged in
+    //  2. Logout Step
+    //  3. Individual Steps for login
+    // ------------------------------------------------------------------------------------
     // tslint:disable-next-line:max-line-length
     // To be able to fill in the Authenticator login we need to switch to NATIVE context then switch back to WEBVIEW after
     browser.driver.getCurrentContext().then((webviewContext) => {
