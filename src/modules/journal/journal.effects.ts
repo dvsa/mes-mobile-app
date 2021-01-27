@@ -42,6 +42,7 @@ import { getExaminer } from '../tests/journal-data/common/examiner/examiner.redu
 import { getStaffNumber } from '../tests/journal-data/common/examiner/examiner.selector';
 import { hasStartedTests } from '../tests/tests.selector';
 import { getTests } from '../tests/tests.reducer';
+import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 
 @Injectable()
 export class JournalEffects {
@@ -210,8 +211,18 @@ export class JournalEffects {
       ),
     ),
 
-    filter(([action, staffNumber, hasStartedTests, completedTests]) =>
-      !hasStartedTests && completedTests && completedTests.length === 0),
+    filter((
+      [action, staffNumber, hasStartedTests, completedTests]:
+      [journalActions.LoadCompletedTests, string, boolean, SearchResultTestSchema[]],
+    ) => {
+
+      // The callThrough property is set to true when doing a manual journal refresh for example
+      if (action.callThrough) {
+        return true;
+      }
+
+      return !hasStartedTests && completedTests && completedTests.length === 0;
+    }),
 
     switchMap(([action, staffNumber]) => {
       const numberOfDaysToView = this.appConfig.getAppConfig().journal.numberOfDaysToView;
