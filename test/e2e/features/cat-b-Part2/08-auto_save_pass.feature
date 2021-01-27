@@ -1,7 +1,8 @@
 @catb @full_smoke @regression
 Feature: A Driving Examiner Completes a Passed Journey for Category B Using Autosave
 
-  Scenario: Examiner completes a passed test for autosave
+  Scenario: Examiner completes a passed test for auto save
+
     Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
     When I start the test for "Miss Florence Pearson"
     And the candidate completes the declaration page

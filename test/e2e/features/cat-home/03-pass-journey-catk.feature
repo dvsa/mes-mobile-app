@@ -43,7 +43,7 @@ Feature: Driver Examiner complete the pass journey for Home test cat K
     Then I should see the "Journal" page
     And the test result for "Mr James Brown" is "1"
 
-Scenario: A Driving Examiner Completes a pass test for autosave
+Scenario: A Driving Examiner Completes a pass test for auto save
 
     Given I am on the "Journal" page
     And  I click the back button

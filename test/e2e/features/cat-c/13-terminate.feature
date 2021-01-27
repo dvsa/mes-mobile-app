@@ -2,6 +2,7 @@
 Feature: Driving Examiner Completes Terminated Tests for Category C
 
   Scenario: Examiner terminates a test on the test report due to mechanical failure
+
     Given I am logged in as "mobexaminer5" and I have a test for "Mr Right Ford"
     When I check candidate details for "Mr Right Ford"
     And I start the test for "Mr Right Ford"

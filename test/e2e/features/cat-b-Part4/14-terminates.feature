@@ -3,6 +3,7 @@ Feature: A Driving Examiner Completes Multiple Terminated Journeys For Category 
 
    @smoke
    Scenario: Examiner terminates test as candidate failed to attend (No mandatory office fields)
+
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
       When I check candidate details for "Miss Theresa Shaw"
       And I start the test for "Miss Theresa Shaw"

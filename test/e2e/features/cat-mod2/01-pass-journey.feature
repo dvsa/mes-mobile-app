@@ -2,17 +2,15 @@
 
   Feature: Driver Examiner complete the pass journey for Mod2
 
-    Background:
-      Given I am logged in as "desexamineram2" and I have a test for "Dr Fox Farrell"
-      When I start the test for "Dr Fox Farrell"
-      And the candidate completes the declaration page
-      And the candidate confirms their declaration
-      Then I should see the "Declaration - Fox Farrell" page
-      When the candidate requests to receive results by post
-      And I proceed to the bike
-
       Scenario: Driving Examiner completes a passed test for category A with no faults
-        Given I should see the "Fox Farrell" page
+        Given I am logged in as "desexamineram2" and I have a test for "Dr Fox Farrell"
+        When I start the test for "Dr Fox Farrell"
+        And the candidate completes the declaration page
+        And the candidate confirms their declaration
+        Then I should see the "Declaration - Fox Farrell" page
+        When the candidate requests to receive results by post
+        And I proceed to the bike
+        Then I should see the "Fox Farrell" page
         And I select the test category "A"
         And I select the Transmission Type "Manual"
         And I select the Eyesight test result "Pass"
@@ -40,7 +38,14 @@
         And the test result for "Dr Fox Farrell" is "1"
 
     Scenario: Driver Examiner Pass the candidate on wrong answer for Safety and Balance Questions
-      Given I should see the "Fox Farrell" page
+      Given I am logged in as "desexamineram2" and I have a test for "Dr Fox Farrell"
+      When I start the test for "Dr Fox Farrell"
+      And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Fox Farrell" page
+      When the candidate requests to receive results by post
+      And I proceed to the bike
+      Then I should see the "Fox Farrell" page
       And I select the test category "AM"
       And I select the Transmission Type "Manual"
       And I select the Eyesight test result "Pass"

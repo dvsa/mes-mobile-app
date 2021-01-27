@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Completes a pass test for category B
 
   Scenario: Examiner completes a passed test with no faults
+
     Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
     When I start the test for "Miss Florence Pearson"
     And the candidate completes the declaration page

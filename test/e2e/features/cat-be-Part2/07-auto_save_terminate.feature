@@ -1,7 +1,8 @@
 @catbe @full_smoke @regression
 Feature: Autosave end to end terminate journey for Category B+E
 
-   Scenario: Examiner terminates test as candidate failed eye sight test and completes write-up later using autosave
+   Scenario: Examiner terminates test as candidate failed eye sight test and completes write-up later using auto save
+
       Given I am logged in as "mobexaminer2" and I have a test for "Miss Jeannette Bender"
       When I check candidate details for "Miss Jeannette Bender"
       And I start the test for "Miss Jeannette Bender"

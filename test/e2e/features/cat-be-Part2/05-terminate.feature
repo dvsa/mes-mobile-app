@@ -2,6 +2,7 @@
 Feature: Driving Examiner Completes Terminated Tests for Category B+E
 
    Scenario: Examiner terminates a test on the test report due to mechanical failure
+
       Given I am logged in as "mobexaminer2" and I have a test for "Mr Dixon Clayton"
       When I check candidate details for "Mr Dixon Clayton"
       And I start the test for "Mr Dixon Clayton"

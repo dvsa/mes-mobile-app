@@ -2,7 +2,7 @@
 
 Feature: Autosave end to end failed journey for Category B+E Mod2
 
-  Background:
+  Scenario: Examiner fail the candidate with 11 driving faults
     Given I am logged in as "desexamineram2" and I have a test for "Mr Richard Rhys"
     When I start the test for "Mr Richard Rhys"
     And the candidate completes the declaration page
@@ -10,9 +10,7 @@ Feature: Autosave end to end failed journey for Category B+E Mod2
     Then I should see the "Declaration - Richard Rhys" page
     When the candidate requests to receive results by post
     And I proceed to the bike
-
-  Scenario: Examiner fail the candidate with 11 driving faults
-    Given I should see the "Richard Rhys" page
+    Then I should see the "Richard Rhys" page
     And I select the test category "A2"
     And I select the Transmission Type "Manual"
     And I select the Eyesight test result "Pass"

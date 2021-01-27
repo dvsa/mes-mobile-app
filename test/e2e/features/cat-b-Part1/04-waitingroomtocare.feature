@@ -2,6 +2,7 @@
 Feature: Waiting Room to Car
 
   Scenario: Waiting room to Car validation
+
     Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
     When I check candidate details for "Miss Theresa Shaw"
     And I start the test for "Miss Theresa Shaw"

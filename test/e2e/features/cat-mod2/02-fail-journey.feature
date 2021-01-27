@@ -59,7 +59,7 @@ Feature: Driver Examiner complete the fail journey for Mod2
     Then I should see the "Journal" page
     And the test result for "Mr Richard Rhys" is "2"
 
-  Scenario: A Driving Examiner Completes a fail test for autosave
+  Scenario: A Driving Examiner Completes a fail test for autos ave
 
     Given I am on the "Journal" page
     And  I click the back button

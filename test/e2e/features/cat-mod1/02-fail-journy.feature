@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Completes failed tests
 
   Scenario: Examiner completes failed test with more than 6 faults
+
     Given I am logged in as "desexamineram1" and I have a test for "Mr Right Ford"
     When I start the test for "Mr Right Ford"
     And the candidate completes the declaration page
@@ -66,6 +67,7 @@ Feature: A Driving Examiner Completes failed tests
     And the test result for "Mr Right Ford" is "2"
 
   Scenario: Examiner fail candidate by no meeting emergency stop requirements
+
     Given I am logged in as "desexamineram1" and I have a test for "Ms Alisa Garza"
     When I start the test for "Ms Alisa Garza"
     And the candidate completes the declaration page
@@ -96,7 +98,7 @@ Feature: A Driving Examiner Completes failed tests
     Then I should see the "Journal" page
     And the test result for "Ms Alisa Garza" is "4"
 
-  Scenario: A Driving Examiner Completes a fail test for autosave
+  Scenario: A Driving Examiner Completes a fail test for auto save
 
     Given I am on the "Journal" page
     And  I click the back button

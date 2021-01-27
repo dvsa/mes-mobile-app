@@ -2,6 +2,7 @@
 Feature: Driving Examiner Completes a Failed Journey on Category B+E
 
   Scenario: Examiner completes a failed test with various faults
+
     Given I am logged in as "mobexaminer2" and I have a test for "Mr Dillon Jennings"
     When I check candidate details for "Mr Dillon Jennings"
     And I start the test for "Mr Dillon Jennings"
@@ -61,6 +62,7 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     And the test result for "Mr Dillon Jennings" is "2"
 
   Scenario: Examiner completes a failed test with multiple faults and search for the test
+
     Given I am logged in as "mobexaminer2" and I have a test for "Mr Dillon Jennings"
     When I check candidate details for "Mr Dillon Jennings"
     And I start the test for "Mr Dillon Jennings"

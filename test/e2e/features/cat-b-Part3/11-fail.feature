@@ -3,6 +3,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
 
    @smoke
    Scenario: Examiner completes a failed test with various faults
+
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
       When I check candidate details for "Mrs Jane Doe"
       And I start the test for "Mrs Jane Doe"
@@ -105,6 +106,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And the test result for "Mrs Jane Doe" is "2"
 
    Scenario: Candidate fails a test with 16 driver faults
+
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"
       And the candidate completes the declaration page
@@ -164,6 +166,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And the test result for "Miss Florence Pearson" is "2"
 
    Scenario: Candidate fails a test with a dangerous and 16 driver faults
+
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
       When I check candidate details for "Miss Theresa Shaw"
       And I start the test for "Miss Theresa Shaw"
@@ -226,6 +229,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And the test result for "Miss Theresa Shaw" is "2"
 
  Scenario: Candidate fails a test with a single serious fault
+
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
       When I check candidate details for "Mrs Jane Doe"
       And I start the test for "Mrs Jane Doe"

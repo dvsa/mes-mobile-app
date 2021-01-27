@@ -1,8 +1,9 @@
 @catd @full_smoke @regression
 
-  Feature: Driver Examiner failed the test journey for category D with serious fault
+Feature: Driver Examiner failed the test journey for category D with serious fault
 
 Scenario: Examiner completes a passed test with no faults
+
   Given I am logged in as "desexaminerd" and I have a test for "Mr Right Ford"
   When I start the test for "Mr Right Ford"
   And the candidate completes the declaration page
@@ -48,7 +49,8 @@ Scenario: Examiner completes a passed test with no faults
   And I upload the test
   Then I should see the "Journal" page
   And the test result for "Mr Right Ford" is "2"
-    Scenario: A Driving Examiner Completes a pass test for autosave
+
+    Scenario: A Driving Examiner Completes a pass test for auto save
 
       Given I am on the "Journal" page
       And  I click the back button

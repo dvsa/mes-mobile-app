@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Rekeys Category B tests
 
   Scenario: User can rekey a test pass for the previous day
+
     Given I am logged in as "mobexaminer1" and I have a test for "Miss Doris Pearson"
     When I navigate to 1 day previously
     And I rekey a test for "Miss Doris Pearson"
@@ -48,6 +49,7 @@ Feature: A Driving Examiner Rekeys Category B tests
     And the test result for "Miss Doris Pearson" is "1"
 
   Scenario: Driving Examiner rekeys a failed test for two days ago
+
     Given I am logged in as "mobexaminer1" and I have a test for "Mrs Carly Doe"
     When I navigate to 2 day previously
     And I rekey a test for "Mrs Carly Doe"
@@ -90,6 +92,7 @@ Feature: A Driving Examiner Rekeys Category B tests
     And the test result for "Mrs Carly Doe" is "2"
 
   Scenario: Driver Examiner rekeys a late test from paper
+
     Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
     And I rekey a late test for "Miss Florence Pearson"
     And the candidate completes the declaration page

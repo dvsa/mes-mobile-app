@@ -3,6 +3,7 @@
 Feature: A Driving Examiner Completes a pass test for category d
 
   Scenario: Examiner completes a passed test with no faults
+
     Given I am logged in as "desexaminerd" and I have a test for "Mr Right Ford"
     When I start the test for "Mr Right Ford"
     And the candidate completes the declaration page
@@ -35,7 +36,7 @@ Feature: A Driving Examiner Completes a pass test for category d
     Then I should see the "Journal" page
     And the test result for "Mr Right Ford" is "1"
 
-  Scenario: A Driving Examiner Completes a pass test for autosave
+  Scenario: A Driving Examiner Completes a pass test for auto save
 
     Given I am on the "Journal" page
     And  I click the back button

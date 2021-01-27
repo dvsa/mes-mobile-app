@@ -44,7 +44,7 @@ Feature: Driver Examiner complete the pass journey for ADI2
     Then I should see the "Journal" page
     And the test result for "miss Anna Firstlis" is "1"
 
-  Scenario: A Driving Examiner Completes a pass test for autosave
+  Scenario: A Driving Examiner Completes a pass test for auto save
 
     Given I am on the "Journal" page
     And  I click the back button

@@ -134,7 +134,7 @@ Feature: Driver Examiner complete the pass journey for CPC
     And the test result for "Mr Johny Bravo" is "1"
 
 
-  Scenario: A Driving Examiner Completes a pass test for autosave
+  Scenario: A Driving Examiner Completes a pass test for auto save
 
     Given I am on the "Journal" page
     And  I click the back button

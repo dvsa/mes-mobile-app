@@ -1,7 +1,8 @@
 @catbe @full_smoke @regression
 Feature: Autosave end to end failed journey for Category B+E
 
-   Scenario: Examiner completes a failed test for autosave
+   Scenario: Examiner completes a failed test for auto save
+
    Given I am logged in as "mobexaminer2" and I have a test for "Mr Dillon Jennings"
    When I check candidate details for "Mr Dillon Jennings"
    And I start the test for "Mr Dillon Jennings"
@@ -13,7 +14,7 @@ Feature: Autosave end to end failed journey for Category B+E
    Then I should see the "Dillon Jennings" page
    And I complete the waiting room to car page with the following vehicle checks
       | show_me_1   | show_me_2   | show_me_3   | show_me_4   | show_me_5   |
-      | true        | true        | true        | false       | false       |   
+      | true        | true        | true        | false       | false       |
    Then I should see the "Test report - Dillon Jennings" page
    And the driver fault count is "3"
    And I enter the legal requirements

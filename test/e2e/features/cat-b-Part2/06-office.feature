@@ -2,6 +2,7 @@
 Feature: Office page
 
   Scenario: Office page validation for pass
+
     Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
     When I start the test for "Miss Florence Pearson"
     And the candidate completes the declaration page
@@ -37,6 +38,7 @@ Feature: Office page
     And validation item "office-weather-validation-text" should be visible
 
   Scenario: Office page validation for fail
+
     Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
     When I check candidate details for "Mrs Jane Doe"
     And I start the test for "Mrs Jane Doe"

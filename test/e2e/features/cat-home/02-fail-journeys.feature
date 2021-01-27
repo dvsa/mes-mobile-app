@@ -2,7 +2,8 @@
 
 Feature: Driver Examiner complete the fail journey for Home test H
 
-  Background:
+  Scenario: Driving Examiner fail the Eyesight test
+
     Given I am logged in as "desexaminerbe" and I have a test for "Miss Florence Pearson"
     When I start the test for "Miss Florence Pearson"
     And the candidate completes the declaration page
@@ -10,9 +11,7 @@ Feature: Driver Examiner complete the fail journey for Home test H
     Then I should see the "Declaration - Florence Pearson" page
     When the candidate requests to receive results by post
     And I proceed to the car
-
-  Scenario: Driving Examiner fail the Eyesight test
-    Given I should see the "Florence Pearson" page
+    Then I should see the "Florence Pearson" page
     And I fail the eye sight test
     Then I should see the Debrief page with outcome "Unsuccessful"
     And I should see the "Debrief - Florence Pearson" page
@@ -31,7 +30,14 @@ Feature: Driver Examiner complete the fail journey for Home test H
     And the test result for "Miss Florence Pearson" is "3"
 
   Scenario: Driving Examiner fail the test for category H with 16 faults
-    Given I should see the "Florence Pearson" page
+    Given I am logged in as "desexaminerbe" and I have a test for "Miss Florence Pearson"
+    When I start the test for "Miss Florence Pearson"
+    And the candidate completes the declaration page
+    And the candidate confirms their declaration
+    Then I should see the "Declaration - Florence Pearson" page
+    When the candidate requests to receive results by post
+    And I proceed to the car
+    Then I should see the "Florence Pearson" page
     And I select the Eyesight test result "Pass"
     And I enter the vehicle registration number "AB12CDE"
     And I select the "Vehicle checks - Florence Pearson" page
@@ -87,7 +93,14 @@ Feature: Driver Examiner complete the fail journey for Home test H
 
 
   Scenario: Driving Examiner fail the test for category H with 1 serious fault
-    Given I should see the "Florence Pearson" page
+    Given I am logged in as "desexaminerbe" and I have a test for "Miss Florence Pearson"
+    When I start the test for "Miss Florence Pearson"
+    And the candidate completes the declaration page
+    And the candidate confirms their declaration
+    Then I should see the "Declaration - Florence Pearson" page
+    When the candidate requests to receive results by post
+    And I proceed to the car
+    Then I should see the "Florence Pearson" page
     And I select the Eyesight test result "Pass"
     And I enter the vehicle registration number "AB12CDE"
     And I select the "Vehicle checks - Florence Pearson" page
@@ -116,7 +129,14 @@ Feature: Driver Examiner complete the fail journey for Home test H
     And the test result for "Miss Florence Pearson" is "2"
 
   Scenario: Driving Examiner fail the test for category H with 1 dangerous fault
-    Given I should see the "Florence Pearson" page
+    Given I am logged in as "desexaminerbe" and I have a test for "Miss Florence Pearson"
+    When I start the test for "Miss Florence Pearson"
+    And the candidate completes the declaration page
+    And the candidate confirms their declaration
+    Then I should see the "Declaration - Florence Pearson" page
+    When the candidate requests to receive results by post
+    And I proceed to the car
+    Then I should see the "Florence Pearson" page
     And I select the Eyesight test result "Pass"
     And I enter the vehicle registration number "AB12CDE"
     And I select the "Vehicle checks - Florence Pearson" page
