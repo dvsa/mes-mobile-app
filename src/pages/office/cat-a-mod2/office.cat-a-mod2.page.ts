@@ -16,8 +16,9 @@ import {
   CompleteTest,
   SavingWriteUpForLater,
   OfficeValidationError,
+  TestStartDateChanged,
 } from '../office.actions';
-import { Observable } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
@@ -64,7 +65,7 @@ import { QuestionProvider } from '../../../providers/question/question';
 import {
   getTestSlotAttributes,
 } from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
-import { getTestTime }
+import { getTestDate, getTestStartDateTime, getTestTime }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.selector';
 import {
   getETA,
@@ -108,10 +109,15 @@ import {
 import {
   getSafetyAndBalanceQuestions,
 } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
+import { getNewTestStartTime } from '../../../shared/helpers/test-start-time';
+import { SetStartDate }
+  from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
   startTime$: Observable<string>;
+  startDate$: Observable<string>;
+  startDateTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
   testCategory$: Observable<TestCategory>;
@@ -163,9 +169,12 @@ export class OfficeCatAMod2Page extends BasePageComponent {
   seriousFaultCtrl: string = 'seriousFaultCtrl';
   dangerousFaultCtrl: string = 'dangerousFaultCtrl';
   static readonly maxFaultCount = 10;
+  subscription: Subscription;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
+  startDateTime: string;
+  isValidStartDateTime: boolean = true;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -228,6 +237,16 @@ export class OfficeCatAMod2Page extends BasePageComponent {
         select(getJournalData),
         select(getTestSlotAttributes),
         select(getTestTime),
+      ),
+      startDate$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(getTestDate),
+      ),
+      startDateTime$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(getTestStartDateTime),
       ),
       candidateName$: currentTest$.pipe(
         select(getJournalData),
@@ -444,6 +463,23 @@ export class OfficeCatAMod2Page extends BasePageComponent {
         map(checks => [...checks.safetyQuestions, ...checks.balanceQuestions]),
       ),
     };
+
+    this.setupSubscriptions();
+  }
+
+  setupSubscriptions() {
+    const {
+      startDateTime$,
+    } = this.pageState;
+    this.subscription = merge(
+      startDateTime$.pipe(map(value => this.startDateTime = value)),
+    ).subscribe();
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   popToRoot() {
@@ -461,6 +497,16 @@ export class OfficeCatAMod2Page extends BasePageComponent {
     if (this.isFormValid()) {
       this.showFinishTestModal();
     }
+  }
+
+  setIsValidStartDateTime(isValid: boolean) {
+    this.isValidStartDateTime = isValid;
+  }
+
+  dateOfTestChanged(inputDate: string) {
+    const customStartDate = getNewTestStartTime(inputDate, this.startDateTime);
+    this.store$.dispatch(new TestStartDateChanged(this.startDateTime, customStartDate));
+    this.store$.dispatch(new SetStartDate(customStartDate));
   }
 
   identificationChanged(identification: Identification): void {

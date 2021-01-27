@@ -24,7 +24,7 @@
         <ion-grid class="grid">
 
           <date-of-test
-            *ngIf="isDelegated"
+            *ngIf="isDelegated || (pageState.isRekey$ | async)"
             [dateOfTest]="pageState.startDate$ | async"
             (setIsValidStartDateTime)="setIsValidStartDateTime($event)"
             (dateOfTestChange)="dateOfTestChanged($event)">
@@ -226,7 +226,7 @@
       </button>
     </ion-col>
     <ion-col *ngIf="(pageState.isRekey$ | async) && !isDelegated">
-      <button id="reason-for-rekey" class="mes-primary-button padding-x-5 full-width" ion-button
+      <button id="reason-for-rekey" class="mes-primary-button padding-x-5 full-width" ion-button [disabled]="!isValidStartDateTime"
               (click)="goToReasonForRekey()">
         <h3>Continue</h3>
       </button>

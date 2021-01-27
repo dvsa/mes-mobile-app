@@ -163,6 +163,38 @@ describe('Office Analytics Effects', () => {
 
   });
 
+  describe('dateOfTestChangedEffect', () => {
+    it('should call the logEvent with the previous and new date text', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
+
+      const previousStartDate = '2020-12-25T08:10:00';
+      const customStartDate = '2021-01-19T08:10:00';
+
+      // ACT
+      actions$.next(new officeActions.TestStartDateChanged(previousStartDate, customStartDate));
+
+      // ASSERT
+      effects.testStartDateChanged$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
+
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.OFFICE,
+          AnalyticsEvents.DATE_OF_TEST_CHANGED,
+          'previous date: 2020-12-25T08:10:00; new date: 2021-01-19T08:10:00',
+        );
+
+        done();
+      });
+    });
+  });
+
   describe('savingWriteUpForLaterEffect', () => {
     it('should call logEvent with pass page and addCustomDimension', (done) => {
       // ARRANGE

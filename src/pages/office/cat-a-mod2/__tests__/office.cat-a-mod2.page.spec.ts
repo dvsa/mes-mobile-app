@@ -79,6 +79,7 @@ import { VehicleChecksOfficeCardComponent } from '../../components/vehicle-check
 import { configureTestSuite } from 'ng-bullet';
 import { ModeOfTransport } from '@dvsa/mes-test-schema/categories/AM2';
 import { CandidateSectionComponent } from '../../components/candidate-section/candidate-section';
+import { DateOfTest } from '../../components/date-of-test/date-of-test';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficeCatAMod2Page>;
@@ -102,6 +103,7 @@ describe('OfficePage', () => {
         MockComponent(FaultCommentCardComponent),
         MockComponent(VehicleChecksOfficeCardComponent),
         MockComponent(CandidateSectionComponent),
+        MockComponent(DateOfTest),
       ],
       imports: [
         IonicModule,
