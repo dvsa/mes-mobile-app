@@ -3,23 +3,23 @@
 Feature: Autosave end to end failed journey for Category B+E Mod2
 
   Scenario: Examiner fail the candidate with 11 driving faults
-    Given I am logged in as "desexamineram2" and I have a test for "Mr Richard Rhys"
-    When I start the test for "Mr Richard Rhys"
+    Given I am logged in as "desexamineram2" and I have a test for "Miss Sheila Kirk"
+    When I start the test for "Miss Sheila Kirk"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
-    Then I should see the "Declaration - Richard Rhys" page
+    Then I should see the "Declaration - Sheila Kirk" page
     When the candidate requests to receive results by post
     And I proceed to the bike
-    Then I should see the "Richard Rhys" page
+    Then I should see the "Sheila Kirk" page
     And I select the test category "A2"
     And I select the Transmission Type "Manual"
     And I select the Eyesight test result "Pass"
     And I enter the vehicle registration number "AB12CDE"
-    And I select the "Safety and Balance Questions - Richard Rhys" page
+    And I select the "Safety and Balance Questions - Sheila Kirk" page
       |M4 - Lights|M11 - Engine Cut Out Switch|B3 - Balance with passenger|
       |true       |true                       |false                      |
     Then I continue to test report
-    Then I should see the "Test report - Richard Rhys" page
+    Then I should see the "Test report - Sheila Kirk" page
     When I add a "Precautions" driver fault
     And I add a "Change Speed" driver fault
     And I add a "Safety" driver fault

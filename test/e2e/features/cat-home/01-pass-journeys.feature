@@ -4,11 +4,11 @@ Feature: Driver Examiner complete the pass journey for Home test H
 
   Scenario: Driving Examiner completes a passed test for category H with wrong vehicle checks answers
 
-    Given I am logged in as "desexaminerd" and I have a test for "Mr Right Ford"
-    When I start the test for "Mr Right Ford"
+    Given I am logged in as "desexaminerbe" and I have a test for "Miss Florence Pearson"
+    When I start the test for "Miss Florence Pearson"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
-    Then I should see the "Declaration - Right Ford" page
+    Then I should see the "Declaration - Florence Pearson" page
     And the candidate enters a new email address
     And I proceed to the car
     Then I should see the "Florence Pearson" page
@@ -34,5 +34,5 @@ Feature: Driver Examiner complete the pass journey for Home test H
     When I complete the office write up
     And I upload the test
     Then I should see the "Journal" page
-    And the test result for "Miss Florence Pearson" is "1"
+    And the test result for "Florence Pearson" is "1"
 
