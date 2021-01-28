@@ -83,6 +83,7 @@ export class UnloadJournal implements Action {
 
 export class LoadCompletedTests implements Action {
   readonly type = LOAD_COMPLETED_TESTS;
+  constructor(public callThrough: boolean = false) {}
 }
 
 export class LoadCompletedTestsSuccess implements Action {
