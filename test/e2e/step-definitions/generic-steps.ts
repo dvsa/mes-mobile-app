@@ -282,6 +282,10 @@ When('I click go to my Journal', () => {
   DashboardPage.clickGoToMyJournalButton();
 });
 
+When(/^I wait "([^"]*)" seconds?$/, { timeout: 2 * 5000 }, async (seconds) => {
+  await browser.sleep(seconds * 1000);
+});
+
 /**
  * Take a screenshot of the page at the end of the scenario.
  */
