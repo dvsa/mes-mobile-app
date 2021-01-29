@@ -38,29 +38,29 @@
         And the test result for "Dr Fox Farrell" is "1"
 
     Scenario: Driver Examiner Pass the candidate on wrong answer for Safety and Balance Questions
-      Given I am logged in as "desexamineram2" and I have a test for "Dr Fox Farrell"
-      When I start the test for "Dr Fox Farrell"
+      Given I am logged in as "desexamineram2" and I have a test for "Mr Osborne Wolfe"
+      When I start the test for "Mr Osborne Wolfe"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Declaration - Fox Farrell" page
+      Then I should see the "Declaration - Osborne Wolfe" page
       When the candidate requests to receive results by post
       And I proceed to the bike
-      Then I should see the "Fox Farrell" page
+      Then I should see the "Osborne Wolfe" page
       And I select the test category "AM"
       And I select the Transmission Type "Manual"
       And I select the Eyesight test result "Pass"
       And I enter the vehicle registration number "AB12CDE"
-      And I select the "Safety and Balance Questions - Fox Farrell" page
+      And I select the "Safety and Balance Questions - Osborne Wolfe" page
         |M4 - Lights|M11 - Engine Cut Out Switch|B3 - Balance with passenger|
         |false      |false                      |false                      |
       Then I continue to test report
-      Then I should see the "Test report - Fox Farrell" page
+      Then I should see the "Test report - Osborne Wolfe" page
       And I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
-      And I should see the "Debrief - Fox Farrell" page
+      And I should see the "Debrief - Osborne Wolfe" page
       When I end the debrief
-      Then I should see the "Test debrief - Fox Farrell" page
+      Then I should see the "Test debrief - Osborne Wolfe" page
       And I complete the pass details
       And I complete the health declaration
       Then I am on the back to office page
@@ -70,6 +70,6 @@
       When I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Dr Fox Farrell" is "1"
+      And the test result for "Mr Osborne Wolfe" is "1"
 
 
