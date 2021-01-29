@@ -4,12 +4,14 @@ import { IonicModule } from 'ionic-angular';
 import { DirectivesModule } from '../../../../directives/directives.module';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { TestReportComponentsModule } from '../../components/test-report-components.module';
-import { VehicleChecksComponent } from './vehicle-checks/vehicle-checks';
+import { VehicleChecksCompactCatDComponent } from './vehicle-checks-compact/vehicle-checks-compact.cat-d';
+import { SafetyQuestionsCatDComponent } from './safety-questions/safety-questions.cat-d';
 import { PcvDoorExerciseComponent } from './pcv-door-exercise/pcv-door-exercise';
 
 @NgModule({
   declarations: [
-    VehicleChecksComponent,
+    VehicleChecksCompactCatDComponent,
+    SafetyQuestionsCatDComponent,
     PcvDoorExerciseComponent,
   ],
   imports: [
@@ -20,7 +22,8 @@ import { PcvDoorExerciseComponent } from './pcv-door-exercise/pcv-door-exercise'
     DirectivesModule,
   ],
   exports: [
-    VehicleChecksComponent,
+    VehicleChecksCompactCatDComponent,
+    SafetyQuestionsCatDComponent,
     PcvDoorExerciseComponent,
   ],
 })
