@@ -107,7 +107,7 @@ Feature: A Driving Examiner Completes failed tests
     When I search for a completed test with the application reference of "20123400011 "
     And the search result is clicked
     Then I should see the "Test information" page
-    And the test result outcome is "Unsuccessful"
+    And the test result outcome is "Passed"
     And the test result has the following data present
       | label                             | value                                  |
       | Application reference             | 20123400011                            |
