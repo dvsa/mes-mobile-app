@@ -29,7 +29,9 @@
                     *ngIf="!(pageState.delegatedTest$ | async)"
                     [formGroup]="form"
                     [vehicleChecksScore]="pageState.vehicleChecksScore$ | async"
+                    [safetyQuestionsScore]="pageState.safetyQuestionsScore$ | async"
                     [vehicleChecks]="pageState.vehicleChecks$ | async"
+                    [safetyQuestions]="pageState.safetyQuestions$ | async"
                     [onCloseVehicleChecksModal]="closeVehicleChecksModal"
             ></vehicle-checks-cat-d>
 

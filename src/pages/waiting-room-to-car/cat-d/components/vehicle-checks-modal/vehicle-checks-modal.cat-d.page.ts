@@ -12,7 +12,7 @@ import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../../../providers/question/question';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 import { SafetyQuestion } from '../../../../../providers/question/safety-question.model';
-import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
+import { QuestionResult, QuestionOutcome, SafetyQuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 import { getTestData } from '../../../../../modules/tests/test-data/cat-d/test-data.cat-d.reducer';
@@ -23,6 +23,10 @@ import {
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
 } from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
+
+import {
+  SafetyQuestionOutcomeChanged,
+} from '../../../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.action';
 
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_CAT_D,
@@ -45,6 +49,7 @@ import {
 } from '../../../../../shared/constants/safety-questions.cat-d.constants';
 
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
+import { SafetyQuestionsScore } from '../../../../../shared/models/safety-questions-score.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 import { map } from 'rxjs/operators';
 import * as vehicleChecksModalActions from './vehicle-checks-modal.cat-d.actions';
@@ -53,12 +58,18 @@ import {
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
 } from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
+import {
+  getSafetyQuestionsCatD,
+  getSafetyQuestions,
+} from '../../../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.selector';
 
 interface VehicleChecksModalCatDState {
   candidateName$: Observable<string>;
   showMeQuestions$: Observable<QuestionResult[]>;
   tellMeQuestions$: Observable<QuestionResult[]>;
+  safetyQuestions$: Observable<SafetyQuestionResult[]>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
+  safetyQuestionsScore$: Observable<SafetyQuestionsScore>;
 }
 
 @IonicPage()
@@ -81,6 +92,7 @@ export class VehicleChecksCatDModal {
   safetyQuestionsNumberArray: number[];
 
   vehicleChecksScore: VehicleChecksScore;
+  safetyQuestionsScore: SafetyQuestionsScore;
 
   subscription: Subscription;
 
@@ -141,6 +153,11 @@ export class VehicleChecksCatDModal {
         select(getVehicleChecksCatD),
         select(getSelectedTellMeQuestions),
       ),
+      safetyQuestions$: currentTest$.pipe(
+        select(getTestData),
+        select(getSafetyQuestionsCatD),
+        select(getSafetyQuestions),
+      ),
       vehicleChecksScore$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatD),
@@ -148,12 +165,20 @@ export class VehicleChecksCatDModal {
           return this.faultCountProvider.getVehicleChecksFaultCount(this.category, vehicleChecks);
         }),
       ),
+      safetyQuestionsScore$: currentTest$.pipe(
+        select(getTestData),
+        select(getSafetyQuestionsCatD),
+        map((safetyQuestions) => {
+          return this.faultCountProvider.getSafetyQuestionsFaultCount(this.category, safetyQuestions);
+        }),
+      ),
     };
 
-    const { vehicleChecksScore$ } = this.pageState;
+    const { vehicleChecksScore$, safetyQuestionsScore$ } = this.pageState;
 
     const merged$ = merge(
       vehicleChecksScore$.pipe(map(score => (this.vehicleChecksScore = score))),
+      safetyQuestionsScore$.pipe(map(score => (this.safetyQuestionsScore = score))),
     );
 
     this.subscription = merged$.subscribe();
@@ -189,6 +214,10 @@ export class VehicleChecksCatDModal {
 
   tellMeQuestionOutcomeChanged(result: QuestionOutcome, index: number): void {
     this.store$.dispatch(new TellMeQuestionOutcomeChanged(result, index));
+  }
+
+  safetyQuestionOutcomeChanged(result: QuestionOutcome, index: number): void {
+    this.store$.dispatch(new SafetyQuestionOutcomeChanged(result, index));
   }
 
   isNonTrailerBanner(): boolean {
