@@ -6,29 +6,34 @@ export const NUMBER_OF_TELL_ME_QUESTIONS = 2;
 /* tslint:disable:max-line-length */
 export const questions : VehicleChecksQuestion[] = [
   {
-    code: 'E20',
-    description: 'Tell me how you would check your trailer is safely hitched to the towing vehicle.',
-    shortName: 'Safely hitched',
+    code: 'T01',
+    description: 'Open the bonnet, identify where the brake fluid reservoir is and tell me how you would check that you have a safe level of hydraulic brake fluid.',
+    shortName: 'Brakes',
   },
   {
-    code: 'E21',
-    description: 'Tell me where you would find the information on the maximum weight your vehicle can tow.',
-    shortName: 'Max weight for towing',
-  },
-  {
-    code: 'E22',
-    description: 'Tell me the main safety factors involved in securing a load on this trailer.',
-    shortName: 'Secure a load',
-  },
-  {
-    code: 'E23',
-    description: 'Tell me how you would check the condition of the tyres on this trailer.',
-    shortName: 'Tyres',
-  },
-  {
-    code: 'E24',
+    code: 'T02',
     description: 'Tell me the main safety factors involved in loading this vehicle.',
-    shortName: 'Safe loading',
+    shortName: 'Safety factors while loading',
+  },
+  {
+    code: 'T03',
+    description: 'Tell me the main safety factors involved in securing a load on this vehicle.',
+    shortName: 'Safety factors while securing a load',
+  },
+  {
+    code: 'T04',
+    description: 'Tell me how you would check the tyres to ensure that they have sufficient tread depth and that their general condition is safe to use on the road.',
+    shortName: 'Sufficient tread',
+  },
+  {
+    code: 'T05',
+    description: 'Open the bonnet, identify where you would check the engine coolant level and tell me how you would check that the engine has the correct level.',
+    shortName: 'Engine coolant',
+  },
+  {
+    code: 'T06',
+    description: 'Tell me how you make sure your head restraint is correctly adjusted so it provides the best protection in the event of a crash.',
+    shortName: 'Head restraint',
   },
 ];
 /* tslint:enable:max-line-length */
