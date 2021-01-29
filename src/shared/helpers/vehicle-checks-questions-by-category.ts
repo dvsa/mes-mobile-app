@@ -6,36 +6,20 @@ import {
   NUMBER_OF_TELL_ME_QUESTIONS,
 } from '../constants/tell-me-questions/tell-me-questions.cat-be.constants';
 import {
-  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_CAT_C,
-} from '../constants/tell-me-questions/tell-me-questions.cat-c.constants';
+  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER,
+} from '../constants/tell-me-questions/tell-me-questions.vocational.constants';
 
 import {
-  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_CAT_C,
-} from '../constants/show-me-questions/show-me-questions.cat-c.constants';
+  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER,
+} from '../constants/show-me-questions/show-me-questions.vocational.constants';
 
 import {
-  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_CAT_CE,
-} from '../constants/tell-me-questions/tell-me-questions.cat-ce.constants';
+  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_TRAILER,
+} from '../constants/tell-me-questions/tell-me-questions.vocational-trailer.constants';
 
 import {
-  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_CAT_CE,
-} from '../constants/show-me-questions/show-me-questions.cat-ce.constants';
-
-import {
-  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_CAT_D,
-} from '../constants/tell-me-questions/tell-me-questions.cat-d.constants';
-
-import {
-  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_CAT_D,
-} from '../constants/show-me-questions/show-me-questions.cat-d.constants';
-
-import {
-  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_CAT_DE,
-} from '../constants/tell-me-questions/tell-me-questions.cat-de.constants';
-
-import {
-  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_CAT_DE,
-} from '../constants/show-me-questions/show-me-questions.cat-de.constants';
+  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER,
+} from '../constants/show-me-questions/show-me-questions.vocational-trailer.constants';
 
 export const vehicleChecksQuestionsByCategory = (category: TestCategory): number => {
   switch (category) {
@@ -43,15 +27,13 @@ export const vehicleChecksQuestionsByCategory = (category: TestCategory): number
       return NUMBER_OF_SHOW_ME_QUESTIONS + NUMBER_OF_TELL_ME_QUESTIONS;
     case TestCategory.C:
     case TestCategory.C1:
-      return NUMBER_OF_TELL_ME_QUESTIONS_CAT_C + NUMBER_OF_SHOW_ME_QUESTIONS_CAT_C;
     case TestCategory.D:
     case TestCategory.D1:
-      return NUMBER_OF_TELL_ME_QUESTIONS_CAT_D + NUMBER_OF_SHOW_ME_QUESTIONS_CAT_D;
+      return NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER + NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER;
     case TestCategory.CE:
     case TestCategory.C1E:
-      return NUMBER_OF_TELL_ME_QUESTIONS_CAT_CE + NUMBER_OF_SHOW_ME_QUESTIONS_CAT_CE;
     case TestCategory.DE:
     case TestCategory.D1E:
-      return NUMBER_OF_TELL_ME_QUESTIONS_CAT_DE + NUMBER_OF_SHOW_ME_QUESTIONS_CAT_DE;
+      return NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER + NUMBER_OF_TELL_ME_QUESTIONS_TRAILER;
   }
 };
