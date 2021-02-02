@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Completes a Terminated Journey For Category B in Welsh
 
    Scenario: Examiner terminates test as candidate failed eye sight test
+
       Given I am logged in as "desexaminerw" and I have a test for "Mr Vance English"
       When I check candidate details for "Mr Vance English"
       And I start the test for "Mr Vance English"

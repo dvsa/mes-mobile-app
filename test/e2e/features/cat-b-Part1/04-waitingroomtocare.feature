@@ -2,15 +2,16 @@
 Feature: Waiting Room to Car
 
   Scenario: Waiting room to Car validation
-    Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
-    When I check candidate details for "Miss Theresa Shaw"
-    And I start the test for "Miss Theresa Shaw"
+
+    Given I am logged in as "mobexaminer1" and I have a test for "Miss Mcclaining Misha"
+    When I check candidate details for "Miss Mcclaining Misha"
+    And I start the test for "Miss Mcclaining Misha"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
-    Then I should see the "Declaration - Theresa Shaw" page
+    Then I should see the "Declaration - Mcclaining Misha" page
     And the candidate enters a new email address
     And I proceed to the car
-    Then I should see the "Theresa Shaw" page
+    Then I should see the "Mcclaining Misha" page
     And validation item "waiting-room-to-car-eyesight-validation-text" should not be visible
     And validation item "waiting-room-to-car-tell-me-validation-text" should not be visible
     And validation item "waiting-room-to-car-registration-validation-text" should not be visible

@@ -2,21 +2,23 @@
 Feature: Office page
 
   Scenario: Office page validation for pass
-    Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
-    When I start the test for "Miss Florence Pearson"
+
+    Given I am logged in as "mobexaminer1" and I have a test for "Mr Craig Daniel"
+    When I check candidate details for "Mr Craig Daniel"
+    When I start the test for "Mr Craig Daniel"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
-    Then I should see the "Declaration - Florence Pearson" page
+    Then I should see the "Declaration - Craig Daniel" page
     And the candidate enters a new email address
     And I proceed to the car
-    Then I should see the "Florence Pearson" page
+    Then I should see the "Craig Daniel" page
     And I complete the waiting room to car page
-    Then I should see the "Test report - Florence Pearson" page
+    Then I should see the "Test report - Craig Daniel" page
     And I complete the test
     And I continue to debrief
     Then I should see the Debrief page with outcome "Passed"
     When I end the debrief
-    Then I should see the "Test debrief - Florence Pearson" page
+    Then I should see the "Test debrief - Craig Daniel" page
     And I complete the pass details
     And I complete the health declaration
     Then I am on the back to office page
@@ -37,17 +39,18 @@ Feature: Office page
     And validation item "office-weather-validation-text" should be visible
 
   Scenario: Office page validation for fail
-    Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-    When I check candidate details for "Mrs Jane Doe"
-    And I start the test for "Mrs Jane Doe"
+
+    Given I am logged in as "mobexaminer1" and I have a test for "Mr Daniel Daniels"
+    When I check candidate details for "Mr Daniel Daniels"
+    And I start the test for "Mr Daniel Daniels"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
-    Then I should see the "Declaration - Jane Doe" page
+    Then I should see the "Declaration - Daniel Daniels" page
     And the candidate enters a new email address
     And I proceed to the car
-    Then I should see the "Jane Doe" page
+    Then I should see the "Daniel Daniels" page
     And I complete the waiting room to car page with automatic transmission
-    Then I should see the "Test report - Jane Doe" page
+    Then I should see the "Test report - Daniel Daniels" page
     When I add a "Accelerator" driver fault
     And the competency "Accelerator" driver fault count is "1"
     When I add a "Safety" driver fault
@@ -64,7 +67,7 @@ Feature: Office page
     When I end the debrief
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
-    Then I should see the "Finalise outcome - Jane Doe" page
+    Then I should see the "Finalise outcome - Daniel Daniels" page
     When I continue to the back to office page
     Then I am on the back to office page
     And I continue to the office write up

@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Rekeys Category B tests
 
   Scenario: User can rekey a test pass for the previous day
+
     Given I am logged in as "mobexaminer1" and I have a test for "Miss Doris Pearson"
     When I navigate to 1 day previously
     And I rekey a test for "Miss Doris Pearson"
@@ -48,6 +49,7 @@ Feature: A Driving Examiner Rekeys Category B tests
     And the test result for "Miss Doris Pearson" is "1"
 
   Scenario: Driving Examiner rekeys a failed test for two days ago
+
     Given I am logged in as "mobexaminer1" and I have a test for "Mrs Carly Doe"
     When I navigate to 2 day previously
     And I rekey a test for "Mrs Carly Doe"
@@ -90,16 +92,17 @@ Feature: A Driving Examiner Rekeys Category B tests
     And the test result for "Mrs Carly Doe" is "2"
 
   Scenario: Driver Examiner rekeys a late test from paper
-    Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
-    And I rekey a late test for "Miss Florence Pearson"
+
+    Given I am logged in as "mobexaminer1" and I have a test for "Mr Cooper Alice"
+    And I rekey a late test for "Mr Cooper Alice"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
-    Then I should see the "Declaration - Florence Pearson" page
+    Then I should see the "Declaration - Cooper AliceCooper Alice" page
     And the candidate enters a new email address
     And I proceed to the car
-    Then I should see the "Florence Pearson" page
+    Then I should see the "Cooper Alice" page
     And I complete the waiting room to car page
-    Then I should see the "Test report - Florence Pearson" page
+    Then I should see the "Test report - Cooper Alice" page
     When I add a "Undue hesitation" driver fault
     And I add a "Traffic lights" driver fault
     And I add a "Crossing" driver fault
@@ -115,7 +118,7 @@ Feature: A Driving Examiner Rekeys Category B tests
     And I see a "driving" fault for "Control - Ancillary Controls"
     And I see a "driving" fault for "Control - Gears"
     When I end the debrief
-    Then I should see the "Test debrief - Florence Pearson" page
+    Then I should see the "Test debrief - Cooper Alice" page
     And I complete the pass details
     And I complete the health declaration
     Then I am on the back to office page
@@ -132,4 +135,4 @@ Feature: A Driving Examiner Rekeys Category B tests
     Then the rekey is successfully uploaded
     And I return to the journal
     Then I should see the "Journal" page
-    And the test result for "Miss Florence Pearson" is "1"
+    And the test result for "Mr Cooper Alice" is "1"

@@ -2,8 +2,9 @@
 Feature: Comms Capture and Waiting Room
 
   Scenario: Communications and Waiting room validation
-    Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
-    When I start the test for "Miss Florence Pearson"
+
+    Given I am logged in as "mobexaminer1" and I have a test for " - Shaw"
+    When I start the test for " - Shaw"
     Then validation item "waiting-room-insurance-validation-text" should not exist
     And validation item "waiting-room-residency-validation-text" should not exist
     And validation item "waiting-room-signature-validation-text" should not be visible

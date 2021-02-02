@@ -116,7 +116,7 @@ export default class Page {
         nativeField.sendKeys(searchTerm);
         // Switch back to WEBVIEW context
         browser.driver.selectContext(this.getParentContext(webviewContext)).then(() => {
-          browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+          browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
         });
       });
     });

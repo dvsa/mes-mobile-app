@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Completes pass test's for Mod1
 
   Scenario: Examiner changes test category to A
+
     Given I am logged in as "desexamineram1" and I have a test for "Ms Alisa Garza"
     When I start the test for "Ms Alisa Garza"
     And the candidate completes the declaration page
@@ -46,6 +47,7 @@ Feature: A Driving Examiner Completes pass test's for Mod1
     And the test result for "Ms Alisa Garza" is "1"
 
   Scenario: Examiner changes test category to A1
+
     Given I am logged in as "desexamineram1" and I have a test for "Mr Denny Carlson"
     When I start the test for "Mr Denny Carlson"
     And the candidate completes the declaration page

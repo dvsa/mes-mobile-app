@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Rekeys Category Mod1 tests
 
   Scenario: User can rekey a test pass for the previous day
+
     Given I am logged in as "desexamineram1" and I have a test for "Ms Shelia Cantu"
     When I navigate to 1 day previously
     When I view candidate details for "Ms Shelia Cantu"

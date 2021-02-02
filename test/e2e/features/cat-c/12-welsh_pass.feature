@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Completes a Passed User Journey for Category C in Welsh
 
     Scenario: Examiner completes a passed welsh test with no faults
+
         Given I am logged in as "desexaminerw" and I have a test for "Miss Luella Lowery"
         When I start the test for "Miss Luella Lowery"
         And the candidate completes the declaration page

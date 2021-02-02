@@ -2,23 +2,24 @@
 Feature: Driving Examiner Completes Terminated Tests for Category B+E
 
    Scenario: Examiner terminates a test on the test report due to mechanical failure
-      Given I am logged in as "mobexaminer2" and I have a test for "Mr Dixon Clayton"
-      When I check candidate details for "Mr Dixon Clayton"
-      And I start the test for "Mr Dixon Clayton"
+
+      Given I am logged in as "mobexaminer2" and I have a test for "Mr Eaton Callahan"
+      When I check candidate details for "Mr Eaton Callahan"
+      And I start the test for "Mr Eaton Callahan"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Declaration - Dixon Clayton" page
+      Then I should see the "Declaration - Eaton Callahan" page
       And the candidate enters a new email address
       And I proceed to the car
-      Then I should see the "Dixon Clayton" page
+      Then I should see the "Eaton Callahan" page
       And I complete the waiting room to car page
-      Then I should see the "Test report - Dixon Clayton" page
+      Then I should see the "Test report - Eaton Callahan" page
       When I terminate the test from the test report page
       Then I should see the Debrief page with outcome "Terminated"
       When I end the debrief
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
-      Then I should see the "Finalise outcome BE - Dixon Clayton" page
+      Then I should see the "Finalise outcome BE - Eaton Callahan" page
       When I select activity code "11 - Mechanical failure"
       And I continue to the back to office page
       Then I am on the back to office page
@@ -37,25 +38,25 @@ Feature: Driving Examiner Completes Terminated Tests for Category B+E
       When I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Mr Dixon Clayton" is "11"
+      And the test result for "Mr Eaton Callahan" is "11"
 
    Scenario: Examiner terminates test as candidate failed eye sight test
-      Given I am logged in as "mobexaminer2" and I have a test for "Miss Jeannette Bender"
-      When I check candidate details for "Miss Jeannette Bender"
-      And I start the test for "Miss Jeannette Bender"
+      Given I am logged in as "mobexaminer2" and I have a test for "Mr Patrick Kamram"
+      When I check candidate details for "Mr Patrick Kamram"
+      And I start the test for "Mr Patrick Kamram"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Declaration - Jeannette Bender" page
+      Then I should see the "Declaration - Patrick Kamram" page
       And the candidate requests to receive results by post
       And I proceed to the car
-      Then I should see the "Jeannette Bender" page
+      Then I should see the "Patrick Kamram" page
       And I fail the eye sight test
       Then I should see the Debrief page with outcome "Unsuccessful"
-     And I should see the "Debrief - Jeannette Bender" page
+     And I should see the "Debrief - Patrick Kamram" page
       When I end the debrief
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
-      Then I should see the "Finalise outcome BE - Jeannette Bender" page
+      Then I should see the "Finalise outcome BE - Patrick Kamram" page
       And the D255 Radio is pre-selected to yes
       When I continue to the back to office page
       Then I am on the back to office page
@@ -68,4 +69,4 @@ Feature: Driving Examiner Completes Terminated Tests for Category B+E
       And I enter a comment for "serious" fault "Eyesight Test"
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Miss Jeannette Bender" is "3"
+      And the test result for "Mr Patrick Kamram" is "3"

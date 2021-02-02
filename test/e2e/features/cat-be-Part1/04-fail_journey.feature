@@ -2,19 +2,20 @@
 Feature: Driving Examiner Completes a Failed Journey on Category B+E
 
   Scenario: Examiner completes a failed test with various faults
-    Given I am logged in as "mobexaminer2" and I have a test for "Mr Dillon Jennings"
-    When I check candidate details for "Mr Dillon Jennings"
-    And I start the test for "Mr Dillon Jennings"
+
+    Given I am logged in as "mobexaminer2" and I have a test for "Mr Jennings Dillon"
+    When I check candidate details for "Mr Jennings Dillon"
+    And I start the test for "Mr Jennings Dillon"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
-    Then I should see the "Declaration - Dillon Jennings" page
+    Then I should see the "Declaration - Jennings Dillon" page
     And the candidate enters a new email address
     And I proceed to the car
-    Then I should see the "Dillon Jennings" page
+    Then I should see the "Jennings Dillon" page
     And I complete the waiting room to car page with the following vehicle checks
       | show_me_1   | show_me_2   | show_me_3   | show_me_4   | show_me_5   |
       | true        | true        | true        | false       | false       |
-    Then I should see the "Test report - Dillon Jennings" page
+    Then I should see the "Test report - Jennings Dillon" page
     And the driver fault count is "3"
     When I end the test
     Then the legal requirements pop up is present
@@ -25,7 +26,7 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     And the required test observation is present "Eco (control and planning)"
     And the required test observation is present "Uncouple / Recouple"
     Then I return to the test report page
-    And I should see the "Test report - Dillon Jennings" page
+    And I should see the "Test report - Jennings Dillon" page
     And I enter the legal requirements
     When I add a "Timed" driver fault
     And the driver fault count is "4"
@@ -58,22 +59,23 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     And I enter a comment for "serious" fault "Clearance"
     And I upload the test
     Then I should see the "Journal" page
-    And the test result for "Mr Dillon Jennings" is "2"
+    And the test result for "Mr Jennings Dillon" is "2"
 
   Scenario: Examiner completes a failed test with multiple faults and search for the test
-    Given I am logged in as "mobexaminer2" and I have a test for "Mr Dillon Jennings"
-    When I check candidate details for "Mr Dillon Jennings"
-    And I start the test for "Mr Dillon Jennings"
+
+    Given I am logged in as "mobexaminer2" and I have a test for "Mr Bender Jeanette"
+    When I check candidate details for "Mr Bender Jeanette"
+    And I start the test for "Mr Bender Jeanette"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
-    Then I should see the "Declaration - Dillon Jennings" page
+    Then I should see the "Declaration - Bender Jeanette" page
     And the candidate enters a new email address
     And I proceed to the car
-    Then I should see the "Dillon Jennings" page
+    Then I should see the "Bender Jeanette" page
     And I complete the waiting room to car page with the following vehicle checks
       | show_me_1   | show_me_2   | show_me_3   | show_me_4   | show_me_5   |
       | true        | true        | true        | true        | false       |
-    Then I should see the "Test report - Dillon Jennings" page
+    Then I should see the "Test report - Bender Jeanette" page
     And the driver fault count is "4"
     When I end the test
     Then the legal requirements pop up is present
@@ -84,7 +86,7 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     And the required test observation is present "Eco (control and planning)"
     And the required test observation is present "Uncouple / Recouple"
     Then I return to the test report page
-    And I should see the "Test report - Dillon Jennings" page
+    And I should see the "Test report - Bender Jeanette" page
     And I enter the legal requirements
     When I add a "Timed" driver fault
     And the driver fault count is "5"
@@ -144,6 +146,6 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     And I enter a comment for "serious" fault "Clearance"
     And I upload the test
     Then I should see the "Journal" page
-    And the test result for "Mr Dillon Jennings" is "2"
+    And the test result for "Mr Bender Jeanette" is "2"
 
 

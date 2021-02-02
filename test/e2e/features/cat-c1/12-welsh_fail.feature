@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Completes a Failed User Journey for Category C1 in Welsh
 
     Scenario: Examiner completes a failed welsh C1 test with various faults
+
         Given I am logged in as "desexaminerw" and I have a test for "Mr Meyers Kennedy"
         When I check candidate details for "Mr Meyers Kennedy"
         When I start the test for "Mr Meyers Kennedy"
