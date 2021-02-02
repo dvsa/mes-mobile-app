@@ -2,12 +2,14 @@
 Feature: Practice mode
 
   Scenario: User can start marking practice test without a driver fault
+
     Given I am on the landing page as "mobexaminer1"
     When I start marking a practice test without a driving fault
     Then I should see the "Test report - Practice Mode" page
     And the driver fault count is "0"
 
   Scenario: User can start marking practice test with a driver fault
+
     Given I am on the landing page as "mobexaminer1"
     When I start marking a practice test with a driving fault
     Then I should see the "Test report - Practice Mode" page
@@ -15,6 +17,7 @@ Feature: Practice mode
     And the competency for Show me and Tell me driver fault count is "1"
 
   Scenario: User completes a full practice test pass
+
     Given I am on the landing page as "mobexaminer1"
     And I start full practice mode
     When I start the test for "Captain Jeremy Craig"
@@ -42,6 +45,7 @@ Feature: Practice mode
     Then I should see the "Journal" page
 
   Scenario: User completes a full practice test fail
+
     Given I am on the landing page as "mobexaminer1"
     And I start full practice mode
     When I start the test for "Captain Jeremy Craig"
@@ -98,6 +102,7 @@ Feature: Practice mode
     Then I should see the "Journal" page
 
   Scenario: User completes a full practice test terminate
+
     Given I am on the landing page as "mobexaminer1"
     And I start full practice mode
     When I start the test for "Captain Jeremy Craig"
@@ -131,6 +136,7 @@ Feature: Practice mode
     Then I should see the "Journal" page
 
   Scenario: Examiner can terminate full practice mode midway through journey
+
     Given I am on the landing page as "mobexaminer1"
     And I start full practice mode
     When I start the test for "Captain Jeremy Craig"

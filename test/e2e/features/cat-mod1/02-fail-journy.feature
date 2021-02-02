@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Completes failed tests
 
   Scenario: Examiner completes failed test with more than 6 faults
+
     Given I am logged in as "desexamineram1" and I have a test for "Mr Right Ford"
     When I start the test for "Mr Right Ford"
     And the candidate completes the declaration page
@@ -66,22 +67,23 @@ Feature: A Driving Examiner Completes failed tests
     And the test result for "Mr Right Ford" is "2"
 
   Scenario: Examiner fail candidate by no meeting emergency stop requirements
-    Given I am logged in as "desexamineram1" and I have a test for "Ms Alisa Garza"
-    When I start the test for "Ms Alisa Garza"
+
+    Given I am logged in as "desexamineram1" and I have a test for "Ms Deanna Wolf"
+    When I start the test for "Ms Deanna Wolf"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
-    Then I should see the "Declaration - Alisa Garza" page
+    Then I should see the "Declaration - Deanna Wolf" page
     When the candidate requests to receive results by post
     And I proceed to the bike
-    Then I should see the "Alisa Garza" page
+    Then I should see the "Deanna Wolf" page
     And I complete the waiting room to bike page with confirmed cat type "A"
-    Then I should see the "Test report - Alisa Garza" page
+    Then I should see the "Test report - Deanna Wolf" page
     And I enter "Emergency Stop" first value "23" and second value "45"
     And I enter "Avoidance Stop" first value "34" and second value "55"
     And I click Emergency Stop Not Met
     When I end the test with the speed requirements not met
     Then I should see the Debrief page with outcome "Unsuccessful"
-    Then I should see the "Debrief - Alisa Garza" page
+    Then I should see the "Debrief - Deanna Wolf" page
     When I end the debrief
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
@@ -94,9 +96,9 @@ Feature: A Driving Examiner Completes failed tests
     And I enter a comment for "serious" fault "Emergency stop - Speed requirement not met"
     And I upload the test
     Then I should see the "Journal" page
-    And the test result for "Ms Alisa Garza" is "4"
+    And the test result for "Ms Deanna Wolf" is "4"
 
-  Scenario: A Driving Examiner Completes a fail test for autosave
+  Scenario: A Driving Examiner Completes a fail test for auto save
 
     Given I am on the "Journal" page
     And  I click the back button
@@ -105,7 +107,7 @@ Feature: A Driving Examiner Completes failed tests
     When I search for a completed test with the application reference of "20123400011 "
     And the search result is clicked
     Then I should see the "Test information" page
-    And the test result outcome is "Unsuccessful"
+    And the test result outcome is "Passed"
     And the test result has the following data present
       | label                             | value                                  |
       | Application reference             | 20123400011                            |

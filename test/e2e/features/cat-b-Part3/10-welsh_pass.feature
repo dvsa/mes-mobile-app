@@ -2,6 +2,7 @@
 Feature: Full Welsh end to end journey
 
    Scenario: Examiner completes a passed welsh test with no faults
+
       Given I am logged in as "desexaminerw" and I have a test for "Dr Lupe Buck"
       When I check candidate details for "Dr Lupe Buck"
       When I start the test for "Dr Lupe Buck"
@@ -18,7 +19,7 @@ Feature: Full Welsh end to end journey
       Then I should see the Debrief page with outcome "Wedi pasio"
       When I end the welsh debrief
       Then I should see the "Test debrief - Lupe Buck" page
-      And I complete the pass details 
+      And I complete the pass details
       Then I should see the "Ôl-drafodaeth y prawf - Lupe Buck" page
       And I complete the health declaration
       Then I am on the back to office page
