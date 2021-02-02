@@ -4,16 +4,17 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
    @smoke
    Scenario: Examiner completes a passed test with driver faults
 
-      Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
-      When I start the test for "Miss Florence Pearson"
+      Given I am logged in as "mobexaminer1" and I have a test for "Mrs Pearson Doris"
+      When I check candidate details for "Mrs Pearson Doris"
+      And I start the test for "Mrs Pearson Doris"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Declaration - Florence Pearson" page
+      Then I should see the "Declaration - Pearson Doris" page
       And the candidate enters a new email address
       And I proceed to the car
-      Then I should see the "Florence Pearson" page
+      Then I should see the "Pearson Doris" page
       And I complete the waiting room to car page
-      Then I should see the "Test report - Florence Pearson" page
+      Then I should see the "Test report - Pearson Doris" page
       When I add a "Accelerator" driver fault
       And I add a "Timed" driver fault
       And I add a "Clearance" driver fault
@@ -23,9 +24,9 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
       And I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
-      And I should see the "Debrief - Florence Pearson" page
+      And I should see the "Debrief - Pearson Doris" page
       When I end the debrief
-      Then I should see the "Test debrief - Florence Pearson" page
+      Then I should see the "Test debrief - Pearson Doris" page
       And I complete the pass details
       And I complete the health declaration
       Then I am on the back to office page
@@ -39,21 +40,21 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
       And I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Miss Florence Pearson" is "1"
+      And the test result for "Mrs Pearson Doris" is "1"
 
    Scenario: Candidate passes a test with 15 driver faults
 
-      Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-      When I check candidate details for "Mrs Jane Doe"
-      And I start the test for "Mrs Jane Doe"
+      Given I am logged in as "mobexaminer1" and I have a test for "Mrs Doe Carly"
+      When I check candidate details for "Mrs Doe Carly"
+      And I start the test for "Mrs Doe Carly"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Declaration - Jane Doe" page
+      Then I should see the "Declaration - Doe Carly" page
       And the candidate enters a new email address
       And I proceed to the car
-      Then I should see the "Jane Doe" page
+      Then I should see the "Doe Carly" page
       And I complete the waiting room to car page
-      Then I should see the "Test report - Jane Doe" page
+      Then I should see the "Test report - Doe Carly" page
       When I add a "Accelerator" driver fault
       And I add a "Safety" driver fault
       And I add a "Safety" driver fault
@@ -81,7 +82,7 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
       And I see a "driving" fault for "Signals - Timed"
       And I see a "driving" fault for "Clearance"
       When I end the debrief
-      Then I should see the "Test debrief - Jane Doe" page
+      Then I should see the "Test debrief - Doe Carly" page
       And I complete the pass details
       And I complete the health declaration
       Then I am on the back to office page
@@ -98,4 +99,4 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
       And I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Mrs Jane Doe" is "1"
+      And the test result for "Mrs Doe Carly" is "1"

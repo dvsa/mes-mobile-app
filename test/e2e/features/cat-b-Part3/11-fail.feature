@@ -4,20 +4,19 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
    @smoke
    Scenario: Examiner completes a failed test with various faults
 
-      Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-      When I check candidate details for "Mrs Jane Doe"
-      And I start the test for "Mrs Jane Doe"
+      Given I am logged in as "mobexaminer1" and I have a test for "Mrs Shaw Theresa"
+      When I check candidate details for "Mrs Shaw Theresa"
+      And I start the test for "Mrs Shaw Theresa"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Declaration - Jane Doe" page
-      And the communication page candidate name should be "Mrs Jane Doe"
-      And the communication page candidate driver number should be "DOEXX 625364 A99HC"
-      And the email "jane.doe@example.com" has been provided and is preselected
+      Then I should see the "Declaration - Shaw Theresa" page
+      And the communication page candidate name should be "Mrs Shaw Theresa"
+      And the communication page candidate driver number should be "COOPE 015220 A99HC"
       When the candidate enters a new email address
       And I proceed to the car
-      Then I should see the "Jane Doe" page
+      Then I should see the "Shaw Theresa" page
       And I complete the waiting room to car page with a tell me driver fault
-      Then I should see the "Test report - Jane Doe" page
+      Then I should see the "Test report - Shaw Theresa" page
       And the driver fault count is "1"
       And the competency for Show me and Tell me driver fault count is "1"
       When I end the test
@@ -87,7 +86,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       When I end the debrief
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
-      Then I should see the "Finalise outcome - Jane Doe" page
+      Then I should see the "Finalise outcome - Shaw Theresa" page
       When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
@@ -103,20 +102,21 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And I enter a comment for "serious" fault "Control - Accelerator"
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Mrs Jane Doe" is "2"
+      And the test result for "Mrs Shaw Theresa" is "2"
 
    Scenario: Candidate fails a test with 16 driver faults
 
-      Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
-      When I start the test for "Miss Florence Pearson"
+      Given I am logged in as "mobexaminer1" and I have a test for "Mr Attano Corvo"
+      When I check candidate details for "Mr Attano Corvo"
+      And I start the test for "Mr Attano Corvo"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Declaration - Florence Pearson" page
+      Then I should see the "Declaration - Attano Corvo" page
       And the candidate enters a new email address
       And I proceed to the car
-      Then I should see the "Florence Pearson" page
+      Then I should see the "Attano Corvo" page
       And I complete the waiting room to car page
-      Then I should see the "Test report - Florence Pearson" page
+      Then I should see the "Test report - Attano Corvo" page
       When I add a "Accelerator" driver fault
       And I add a "Safety" driver fault
       And I add a "Safety" driver fault
@@ -147,7 +147,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       When I end the debrief
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
-      Then I should see the "Finalise outcome - Florence Pearson" page
+      Then I should see the "Finalise outcome - Attano Corvo" page
       When I continue to the back to office page
       And I am on the back to office page
       And I continue to the office write up
@@ -163,21 +163,21 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And I enter a comment for "driving" fault "Clearance"
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Miss Florence Pearson" is "2"
+      And the test result for "Mr Attano Corvo" is "2"
 
    Scenario: Candidate fails a test with a dangerous and 16 driver faults
 
-      Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
-      When I check candidate details for "Miss Theresa Shaw"
-      And I start the test for "Miss Theresa Shaw"
+      Given I am logged in as "mobexaminer1" and I have a test for "Mr Campbell Ali"
+      When I check candidate details for "Mr Campbell Ali"
+      And I start the test for "Mr Campbell Ali"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Declaration - Theresa Shaw" page
+      Then I should see the "Declaration - Campbell Ali" page
       And the candidate requests to receive results by post
       And I proceed to the car
-      Then I should see the "Theresa Shaw" page
+      Then I should see the "Campbell Ali" page
       And I complete the waiting room to car page
-      Then I should see the "Test report - Theresa Shaw" page
+      Then I should see the "Test report - Campbell Ali" page
       When I add a "Accelerator" driver fault
       And I add a "Safety" driver fault
       And I add a "Safety" driver fault
@@ -209,7 +209,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       When I end the debrief
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
-      Then I should see the "Finalise outcome - Theresa Shaw" page
+      Then I should see the "Finalise outcome - Campbell Ali" page
       When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
@@ -226,20 +226,21 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And I enter a comment for "dangerous" fault "Use of speed"
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Miss Theresa Shaw" is "2"
+      And the test result for "Mr Campbell Ali" is "2"
 
  Scenario: Candidate fails a test with a single serious fault
 
-      Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-      When I check candidate details for "Mrs Jane Doe"
-      And I start the test for "Mrs Jane Doe"
+      Given I am logged in as "mobexaminer1" and I have a test for "Mr Brown James"
+      When I check candidate details for "Mr Brown James"
+      And I start the test for "Mr Brown James"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
-      Then I should see the "Declaration - Jane Doe" page
+      Then I should see the "Declaration - Brown James" page
+      And the candidate requests to receive results by post
       And I proceed to the car
-      Then I should see the "Jane Doe" page
+      Then I should see the "Brown James" page
       And I complete the waiting room to car page with a tell me driver fault
-      Then I should see the "Test report - Jane Doe" page
+      Then I should see the "Test report - Brown James" page
       When I add a "Accelerator" serious fault
       When I complete the test
       And I continue to debrief
@@ -247,7 +248,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       When I end the debrief
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
-      Then I should see the "Finalise outcome - Jane Doe" page
+      Then I should see the "Finalise outcome - Brown James" page
       When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
@@ -257,4 +258,4 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       And I enter a comment for "serious" fault "Control - Accelerator"
       And I upload the test
       Then I should see the "Journal" page
-      And the test result for "Mrs Jane Doe" is "2"
+      And the test result for "Mr Brown James" is "2"

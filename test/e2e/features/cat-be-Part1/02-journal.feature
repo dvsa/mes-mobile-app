@@ -10,8 +10,8 @@ Feature: Cat B+E Journal
   Scenario: Examiner has a Cat B + E test with dimensions
 
     Given I am on the journal page as "mobexaminer2"
-    When I view candidate details for "Mr Dillon Jennings"
-    And I should see the "Business name" contains "Savvy"
+    When I view candidate details for "Mr Clayton Dixon"
+    And I should see the "Business name" contains "Steam"
     When I close the candidate test details modal
     Then I should see the "Journal" page
 
