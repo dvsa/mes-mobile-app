@@ -291,11 +291,23 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
   public pullRefreshJournal = (refresher: Refresher) => {
     this.loadJournalManually();
+    this.loadCompletedTestsWithCallThrough();
     this.pageRefresher = refresher;
   }
 
   public refreshJournal = () => {
     this.loadJournalManually();
+    this.loadCompletedTestsWithCallThrough();
+  }
+
+  private loadCompletedTestsWithCallThrough = () => {
+
+    // When manually refreshing the journal we want to check
+    // if any of the tests have already been submitted by another device
+    // So we must make the Load Completed Tests request
+    // And that's why we set the callThrough property to true
+    const callThrough = true;
+    this.store$.dispatch(new journalActions.LoadCompletedTests(callThrough));
   }
 
   async logout() {
