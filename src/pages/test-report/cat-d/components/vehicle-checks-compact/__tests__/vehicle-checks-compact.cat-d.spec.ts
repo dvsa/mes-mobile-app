@@ -17,18 +17,18 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 import {
-  VehicleChecksComponent,
-} from '../vehicle-checks';
+  VehicleChecksCompactCatDComponent,
+} from '../vehicle-checks-compact.cat-d';
 
 describe('VehicleChecksCompactComponent', () => {
-  let fixture: ComponentFixture<VehicleChecksComponent>;
-  let component: VehicleChecksComponent;
+  let fixture: ComponentFixture<VehicleChecksCompactCatDComponent>;
+  let component: VehicleChecksCompactCatDComponent;
   let store$: Store<StoreModel>;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [
-        VehicleChecksComponent,
+        VehicleChecksCompactCatDComponent,
         MockComponent(SeriousFaultBadgeComponent),
         MockComponent(DrivingFaultsBadgeComponent),
       ],
@@ -46,7 +46,7 @@ describe('VehicleChecksCompactComponent', () => {
   });
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(VehicleChecksComponent);
+    fixture = TestBed.createComponent(VehicleChecksCompactCatDComponent);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
     store$.dispatch(new StartTest(105, TestCategory.D));

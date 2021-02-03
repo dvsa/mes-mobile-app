@@ -8,6 +8,7 @@ import { etaReducer } from '../common/eta/eta.reducer';
 import { seriousFaultsReducer } from '../common/serious-faults/serious-faults.reducer';
 import { testRequirementsCatDReducer } from './test-requirements/test-requirements.cat-d.reducer';
 import { vehicleChecksCatDReducer } from './vehicle-checks/vehicle-checks.cat-d.reducer';
+import { safetyQuestionsCatDReducer } from './safety-questions/safety-questions.cat-d.reducer';
 import { manoeuvresReducer } from '../common/manoeuvres/manoeuvres.reducer';
 import { pcvDoorExerciseReducer } from './pcv-door-exercise/pcv-door-exercise.reducer';
 
@@ -23,6 +24,9 @@ export const initialState: CatD1UniqueTypes.TestData = {
     tellMeQuestions: [],
     showMeQuestions: [],
   },
+  safetyQuestions: {
+    questions: [],
+  },
 };
 
 export function testDataCatD1Reducer(
@@ -34,6 +38,7 @@ export function testDataCatD1Reducer(
     dangerousFaults: dangerousFaultsReducer,
     seriousFaults: seriousFaultsReducer,
     vehicleChecks: vehicleChecksCatDReducer,
+    safetyQuestions: safetyQuestionsCatDReducer,
     eco: ecoReducer,
     ETA: etaReducer,
     manoeuvres: manoeuvresReducer,

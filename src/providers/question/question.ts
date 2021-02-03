@@ -11,22 +11,14 @@ import tellMeQuestionsCatBConstants from '../../shared/constants/tell-me-questio
 import showMeQuestionsCatBConstants from '../../shared/constants/show-me-questions/show-me-questions.cat-b.constants';
 import tellMeQuestionsCatBeConstants from '../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
 import showMeQuestionsCatBeConstants from '../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
-import tellMeQuestionsCatCConstants
-  from '../../shared/constants/tell-me-questions/tell-me-questions.cat-c.constants';
-import showMeQuestionsCatCConstants
-  from '../../shared/constants/show-me-questions/show-me-questions.cat-c.constants';
-import tellMeQuestionsCatCeConstants
-  from '../../shared/constants/tell-me-questions/tell-me-questions.cat-ce.constants';
-import showMeQuestionsCatCeConstants
-  from '../../shared/constants/show-me-questions/show-me-questions.cat-ce.constants';
-import tellMeQuestionsCatDConstants
-  from '../../shared/constants/tell-me-questions/tell-me-questions.cat-d.constants';
-import showMeQuestionsCatDConstants
-  from '../../shared/constants/show-me-questions/show-me-questions.cat-d.constants';
-import tellMeQuestionsCatDeConstants
-  from '../../shared/constants/tell-me-questions/tell-me-questions.cat-de.constants';
-import showMeQuestionsCatDeConstants
-  from '../../shared/constants/show-me-questions/show-me-questions.cat-de.constants';
+import tellMeQuestionsVocationalConstants
+  from '../../shared/constants/tell-me-questions/tell-me-questions.vocational.constants';
+import tellMeQuestionsVocationalTrailerConstants
+  from '../../shared/constants/tell-me-questions/tell-me-questions.vocational-trailer.constants';
+import showMeQuestionsVocationalConstants
+  from '../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
+import showMeQuestionsVocationalTrailerConstants
+  from '../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
 import safetyQuestionsCatAMod2Constants from '../../shared/constants/safety-questions.cat-a-mod2.constants';
 import balanceQuestionsCatAMod2Constants from '../../shared/constants/balance-questions.cat-a-mod2.constants';
 import safetyQuestionsCatDConstants from '../../shared/constants/safety-questions.cat-d.constants';
@@ -48,16 +40,14 @@ export class QuestionProvider {
         return tellMeQuestionsCatBeConstants;
       case TestCategory.C:
       case TestCategory.C1:
-        return tellMeQuestionsCatCConstants;
-      case TestCategory.CE:
-      case TestCategory.C1E:
-        return tellMeQuestionsCatCeConstants;
       case TestCategory.D:
       case TestCategory.D1:
-        return tellMeQuestionsCatDConstants;
+        return tellMeQuestionsVocationalConstants;
+      case TestCategory.CE:
+      case TestCategory.C1E:
       case TestCategory.DE:
       case TestCategory.D1E:
-        return tellMeQuestionsCatDeConstants;
+        return tellMeQuestionsVocationalTrailerConstants;
       case TestCategory.K:
       case TestCategory.F:
       case TestCategory.G:
@@ -78,16 +68,14 @@ export class QuestionProvider {
         return showMeQuestionsCatBeConstants;
       case TestCategory.C:
       case TestCategory.C1:
-        return showMeQuestionsCatCConstants;
-      case TestCategory.CE:
-      case TestCategory.C1E:
-        return showMeQuestionsCatCeConstants;
       case TestCategory.D:
       case TestCategory.D1:
-        return showMeQuestionsCatDConstants;
+        return showMeQuestionsVocationalConstants;
+      case TestCategory.CE:
+      case TestCategory.C1E:
       case TestCategory.DE:
       case TestCategory.D1E:
-        return showMeQuestionsCatDeConstants;
+        return showMeQuestionsVocationalTrailerConstants;
       case TestCategory.K:
       case TestCategory.F:
       case TestCategory.G:

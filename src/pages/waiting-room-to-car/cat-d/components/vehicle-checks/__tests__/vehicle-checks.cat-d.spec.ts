@@ -99,13 +99,32 @@ describe('VehicleChecksCatDComponent', () => {
           seriousFaults: 0,
           drivingFaults: 1,
         };
+        component.safetyQuestionsScore = {
+          drivingFaults: 0,
+        };
         expect(component.hasDrivingFault()).toBeTruthy();
       });
 
-      it('should return false if vehicle checks score does not have driving fault', () => {
+      it('should return true if safety questions score has driving fault', () => {
         store$.dispatch(new StartTest(12345, TestCategory.D));
         component.vehicleChecksScore = {
           seriousFaults: 0,
+          drivingFaults: 0,
+        };
+        component.safetyQuestionsScore = {
+          drivingFaults: 1,
+        };
+
+        expect(component.hasDrivingFault()).toBeTruthy();
+      });
+
+      it('should return false if vehicle checks / asfety questions score does not have driving fault', () => {
+        store$.dispatch(new StartTest(12345, TestCategory.D));
+        component.vehicleChecksScore = {
+          seriousFaults: 0,
+          drivingFaults: 0,
+        };
+        component.safetyQuestionsScore = {
           drivingFaults: 0,
         };
 
@@ -114,11 +133,14 @@ describe('VehicleChecksCatDComponent', () => {
     });
 
     describe('everyQuestionHasOutcome', () => {
-      it('should return false when not all show me / tell me have outcome', () => {
+      it('should return false when not all show me / tell me / safety questions have outcome', () => {
         store$.dispatch(new StartTest(12345, TestCategory.D));
         component.vehicleChecks = {
           showMeQuestions: [{}, {}, {}],
           tellMeQuestions: [{}, {}],
+        };
+        component.safetyQuestions = {
+          questions: [{}],
         };
 
         expect(component.everyQuestionHasOutcome()).toBeFalsy();
@@ -144,11 +166,27 @@ describe('VehicleChecksCatDComponent', () => {
         expect(component.everyQuestionHasOutcome()).toBeFalsy();
       });
 
-      it('should return true when all show / tell me have outcome', () => {
+      it('should return false when not all safety questions have outcome', () => {
         store$.dispatch(new StartTest(12345, TestCategory.D));
         component.vehicleChecks = {
           showMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }, { outcome: 'P' }],
           tellMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }],
+        };
+        component.safetyQuestions = {
+          questions: [{}],
+        };
+
+        expect(component.everyQuestionHasOutcome()).toBeFalsy();
+      });
+
+      it('should return true when all show / tell me / safety questions have outcome', () => {
+        store$.dispatch(new StartTest(12345, TestCategory.D));
+        component.vehicleChecks = {
+          showMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }, { outcome: 'P' }],
+          tellMeQuestions: [{ outcome: 'P' }, { outcome: 'DF' }],
+        };
+        component.safetyQuestions = {
+          questions: [{ outcome: 'P' }, { outcome: 'P' }, { outcome: 'P' }],
         };
 
         expect(component.everyQuestionHasOutcome()).toBeTruthy();
