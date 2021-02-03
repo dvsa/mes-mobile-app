@@ -6,9 +6,12 @@ import {
   UnsetError,
   ClearChangedSlot,
   CandidateDetailsSeen,
+  LoadCompletedTestsSuccess,
 } from '../journal.actions';
 import { SlotItem } from '../../../providers/slot-selector/slot-item';
 import { ConnectionStatus } from '../../../providers/network-state/network-state';
+import { searchResultsMock } from '../../../providers/search/__mocks__/search-results.mock';
+import { JournalModel } from '../journal.model';
 
 describe('Journal Reducer', () => {
 
@@ -146,6 +149,22 @@ describe('Journal Reducer', () => {
 
       expect(result.slots[slotDate][0].hasSeenCandidateDetails).toEqual(true);
 
+    });
+  });
+
+  describe('[JournalEffect] Load Completed Tests Success', () => {
+    it('should save competed test details and also set loading state to false', () => {
+      const state: JournalModel = {
+        ...initialState,
+        isLoading: true,
+      };
+
+      const action = new LoadCompletedTestsSuccess(searchResultsMock);
+
+      const result = journalReducer(state, action);
+
+      expect(result.isLoading).toBe(false);
+      expect(result.completedTests).toEqual(searchResultsMock);
     });
   });
 });
