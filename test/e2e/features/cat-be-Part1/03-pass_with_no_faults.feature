@@ -2,6 +2,7 @@
 Feature: Driving Exmainer Completes a Pass Journey With no Faults for Category B+E
 
    Scenario: Examiner completes a passed test with no faults
+
       Given I am logged in as "mobexaminer2" and I have a test for "Mr Callahan Eaton"
       When I check candidate details for "Mr Callahan Eaton"
       And I start the test for "Mr Callahan Eaton"

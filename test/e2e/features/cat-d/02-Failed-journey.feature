@@ -1,18 +1,19 @@
 @catd @full_smoke @regression
 
-  Feature: Driver Examiner failed the test journey for category D with serious fault
+Feature: Driver Examiner failed the test journey for category D with serious fault
 
 Scenario: Examiner completes a passed test with no faults
-  Given I am logged in as "desexaminerd" and I have a test for "Mr Right Ford"
-  When I start the test for "Mr Right Ford"
+
+  Given I am logged in as "desexaminerd" and I have a test for "Ms Deanna Wolf"
+  When I start the test for "Ms Deanna Wolf"
   And the candidate completes the declaration page
   And the candidate confirms their declaration
-  Then I should see the "Declaration - Right Ford" page
+  Then I should see the "Declaration - Deanna Wolf" page
   And the candidate enters a new email address
   And I proceed to the car
-  Then I should see the "Right Ford" page
+  Then I should see the "Deanna Wolf" page
   And I complete the waiting room to car page
-  Then I should see the "Test report - Right Ford" page
+  Then I should see the "Test report - Deanna Wolf" page
   When I open the reversing diagram
   Then I should see the reversing diagram modal
   And I close the reversing diagram modal
@@ -47,20 +48,21 @@ Scenario: Examiner completes a passed test with no faults
   And I enter a comment for "serious" fault "Move off - Control"
   And I upload the test
   Then I should see the "Journal" page
-  And the test result for "Mr Right Ford" is "2"
-    Scenario: A Driving Examiner Completes a pass test for autosave
+  And the test result for "Ms Deanna Wolf" is "2"
+
+    Scenario: A Driving Examiner Completes a pass test for auto save
 
       Given I am on the "Journal" page
       And  I click the back button
       Then I should see the "My dashboard" page
       When I click search completed tests
-      When I search for a completed test with the application reference of "16123400011 "
+      When I search for a completed test with the application reference of "16123411011 "
       And the search result is clicked
       Then I should see the "Test information" page
       And the test result outcome is "Unsuccessful"
       And the test result has the following data present
         | label                             | value                                  |
-        | Application reference             | 16123400011                            |
+        | Application reference             | 16123411011                            |
         | Test category                     | D                                      |
         | Slot type                         | Standard Test                          |
         | Route number                      | None                                   |

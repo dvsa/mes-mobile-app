@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Completes a Failed User Journey in Category C1
 
    Scenario: Examiner completes a failed test with various faults
+
       Given I am logged in as "desexaminerc1" and I have a test for "Mr Bright Wilson"
       When I check candidate details for "Mr Bright Wilson"
       And I start the test for "Mr Bright Wilson"

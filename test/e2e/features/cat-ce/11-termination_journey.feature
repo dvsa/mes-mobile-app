@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Terminates a test in Category CE
 
    Scenario: Examiner terminates a test on the test report due to mechanical failure
+
       Given I am logged in as "desexaminerce" and I have a test for "Mr Bright Wilson"
       When I check candidate details for "Mr Bright Wilson"
       And I start the test for "Mr Bright Wilson"

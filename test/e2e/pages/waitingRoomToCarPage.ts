@@ -192,6 +192,7 @@ class WaitingRoomToCarPage extends Page {
       this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
     } else if (testCategory === 'd') {
       this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
+      this.completeSafetyQuestions();
     } else if (testCategory === 'ce') {
       this.multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
     } else if (testCategory === 'a-mod1') {

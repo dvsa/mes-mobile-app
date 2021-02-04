@@ -2,6 +2,7 @@
 Feature: A Driving Examiner Completes a Passed User Journey in Category C1
 
    Scenario: Examiner completes a passed test with no faults
+
       Given I am logged in as "mobexaminer5" and I have a test for "Ms Deanna Wolf"
       When I start the test for "Ms Deanna Wolf"
       And the candidate completes the declaration page

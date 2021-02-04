@@ -2,17 +2,16 @@
 
 Feature: Driver Examiner complete the pass journey for Home test H
 
-  Background:
+  Scenario: Driving Examiner completes a passed test for category H with wrong vehicle checks answers
+
     Given I am logged in as "desexaminerbe" and I have a test for "Miss Florence Pearson"
     When I start the test for "Miss Florence Pearson"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
     Then I should see the "Declaration - Florence Pearson" page
-    When the candidate requests to receive results by post
+    And the candidate enters a new email address
     And I proceed to the car
-
-  Scenario: Driving Examiner completes a passed test for category H with wrong vehicle checks answers
-    Given I should see the "Florence Pearson" page
+    Then I should see the "Florence Pearson" page
     And I select the Eyesight test result "Pass"
     And I enter the vehicle registration number "AB12CDE"
     And I select the "Vehicle checks - Florence Pearson" page
@@ -35,5 +34,5 @@ Feature: Driver Examiner complete the pass journey for Home test H
     When I complete the office write up
     And I upload the test
     Then I should see the "Journal" page
-    And the test result for "Miss Florence Pearson" is "1"
+    And the test result for "Florence Pearson" is "1"
 

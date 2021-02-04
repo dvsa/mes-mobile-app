@@ -3,6 +3,7 @@
 Feature: A Driving Examiner Rekeys Category cpc tests
 
   Scenario: User can rekey a test pass for the previous day
+
     Given I am logged in as "desexaminerbe" and I have a test for "Miss Jean Shorts"
     When I navigate to 1 day previously
     And I rekey a test for "Miss Jean Shorts"
