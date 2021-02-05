@@ -34,5 +34,5 @@ Feature: Driver Examiner complete the pass journey for Home test H
     When I complete the office write up
     And I upload the test
     Then I should see the "Journal" page
-    And the test result for "Florence Pearson" is "1"
+    And the test result for "Miss Florence Pearson" is "1"
 
