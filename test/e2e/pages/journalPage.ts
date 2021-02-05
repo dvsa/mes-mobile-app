@@ -123,7 +123,7 @@ class JournalPage extends Page {
   }
 
   startTestFor(candidateName) {
-    this.clickElement(this.getStartTestButtonFor(candidateName));
+    this.clickElement(this.getStartTestButtonFor(candidateName, true));
   }
 
   clickContinueWriteupButton(candidateName) {
