@@ -4,8 +4,7 @@ Feature: A Driving Examiner Completes a pass test for category B
   Scenario: Examiner completes a passed test with no faults
 
     Given I am logged in as "mobexaminer1" and I have a test for "Miss Mcclain Misha"
-    When I check candidate details for "Miss Mcclain Misha"
-    And I start the test for "Miss Mcclain Misha"
+    When I start the test for "Miss Mcclain Misha"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
     Then I should see the "Declaration - Mcclain Misha" page
