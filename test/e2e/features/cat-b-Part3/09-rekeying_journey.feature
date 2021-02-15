@@ -94,10 +94,11 @@ Feature: A Driving Examiner Rekeys Category B tests
   Scenario: Driver Examiner rekeys a late test from paper
 
     Given I am logged in as "mobexaminer1" and I have a test for "Mr Cooper Alice"
+    When I check candidate details for "Mr Cooper Alice"
     And I rekey a late test for "Mr Cooper Alice"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
-    Then I should see the "Declaration - Cooper AliceCooper Alice" page
+    Then I should see the "Declaration - Cooper Alice" page
     And the candidate enters a new email address
     And I proceed to the car
     Then I should see the "Cooper Alice" page

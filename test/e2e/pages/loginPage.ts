@@ -75,13 +75,7 @@ class LoginPage extends Page {
             const authCContinue = element(by.xpath(`//XCUIElementTypeButton[@name="Continue"]`));
             return authCContinue.isPresent()
               .then((result) => {
-                if (result) {
-                  return authCContinue.click();
-                }
-                else {
-                  const acceptButton =   element(by.xpath(`//XCUIElementTypeButton[@name="Accept"]`));
-                  return acceptButton.click();
-                }
+                return authCContinue.click();
               });
           });
         // Switch back to WEBVIEW context

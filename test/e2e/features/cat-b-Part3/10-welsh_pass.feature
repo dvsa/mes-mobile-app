@@ -5,7 +5,7 @@ Feature: Full Welsh end to end journey
 
       Given I am logged in as "desexaminerw" and I have a test for "Dr Lupe Buck"
       When I check candidate details for "Dr Lupe Buck"
-      When I start the test for "Dr Lupe Buck"
+      And I start the test for "Dr Lupe Buck"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
       Then I should see the "Datganiad - Lupe Buck" page
