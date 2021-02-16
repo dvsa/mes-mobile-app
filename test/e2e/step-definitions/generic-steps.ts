@@ -10,8 +10,6 @@ import BackToOfficePage from '../pages/backToOfficePage';
 import PageHelper from '../pages/pageHelper';
 import {waitForOverlay} from "../../helpers/interactionHelpers";
 
-
-
 const {
   Given,
   Then,
