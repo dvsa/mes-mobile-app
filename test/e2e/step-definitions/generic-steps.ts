@@ -198,7 +198,7 @@ Then('I should see the {string} page', (pageTitle) => {
 });
 
 Given('I am on the {string} page', (pageTitle) => {
-  PageHelper.waitForOverlay('click-block-active');
+  //PageHelper.waitForOverlay('click-block-active');
   // Wait for the page title to exist
   PageHelper.getPageTitle(pageTitle);
 

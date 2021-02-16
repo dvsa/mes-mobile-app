@@ -30,7 +30,7 @@ Feature: Journal
 
     Given I am on the journal page as "mobexaminer1"
     When I view candidate details for "Mr Ali Campbell"
-    Then I should see the "Slot type" contains "Extended Test"
+    Then I should see the "Slot type" contains "Extended Test Special Needs"
     When I close the candidate test details modal
     Then I should see the "Journal" page
 
@@ -47,7 +47,7 @@ Feature: Journal
     Given I am on the journal page as "mobexaminer1"
     When I navigate to next day
     And I view candidate details for "Mr Bill Pots"
-    Then I should see the "Slot type" contains "Standard Test"
+    Then I should see the "Slot type" contains "Single Slot (Special Needs)"
     When I close the candidate test details modal
     Then I should see the "Journal" page
 

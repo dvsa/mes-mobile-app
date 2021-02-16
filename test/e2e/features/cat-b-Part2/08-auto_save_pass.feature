@@ -37,12 +37,10 @@ Feature: A Driving Examiner Completes a Passed Journey for Category B Using Auto
       | Application reference             | 20654322031                |
       | Vehicle registration number       | AB12CDE                    |
       | Test category                     | B                          |
-      | Slot type                         | Special Needs Extra Time   |
+      | Slot type                         | Standard Test              |
       | ETA                               | None                       |
       | Licence provided                  | Yes                        |
       | Route number                      | None                       |
-      | Physical description of candidate | None                       |
-      | Weather conditions                | None                       |
     And the Debrief has the correct test information, "T1", " - Brakes"
     When I click the close button
     Then I should see the "Search submitted test" page
