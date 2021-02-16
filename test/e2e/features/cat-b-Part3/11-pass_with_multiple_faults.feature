@@ -5,8 +5,7 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
    Scenario: Examiner completes a passed test with driver faults
 
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Pearson Doris"
-      When I check candidate details for "Mrs Pearson Doris"
-      And I start the test for "Mrs Pearson Doris"
+      When I start the test for "Mrs Pearson Doris"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
       Then I should see the "Declaration - Pearson Doris" page

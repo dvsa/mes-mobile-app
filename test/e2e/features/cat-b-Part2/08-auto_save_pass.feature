@@ -4,8 +4,7 @@ Feature: A Driving Examiner Completes a Passed Journey for Category B Using Auto
   Scenario: Examiner completes a passed test for auto save
 
     Given I am logged in as "mobexaminer1" and I have a test for "Miss Pearson Florence"
-    When I check candidate details for "Miss Pearson Florence"
-    And I start the test for "Miss Pearson Florence"
+    When I start the test for "Miss Pearson Florence"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
     Then I should see the "Declaration - Pearson Florence" page
