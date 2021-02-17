@@ -188,8 +188,6 @@ When('I log in to the application as {string}', (username) => {
 });
 
 Then('I should see the {string} page', (pageTitle) => {
-  PageHelper.waitForOverlay('click-block-active');
-  // Wait for the page title to exist
   PageHelper.getPageTitle(pageTitle);
 
   // Check that it is the last page title i.e. the displayed one
@@ -198,8 +196,6 @@ Then('I should see the {string} page', (pageTitle) => {
 });
 
 Given('I am on the {string} page', (pageTitle) => {
-  //PageHelper.waitForOverlay('click-block-active');
-  // Wait for the page title to exist
   PageHelper.getPageTitle(pageTitle);
 
   // Check that it is the last page title i.e. the displayed one

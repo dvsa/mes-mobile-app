@@ -69,9 +69,6 @@ class LoginPage extends Page {
             const signinForOrgAccount = element(by.xpath(`//XCUIElementTypeButton[@name="Sign in"]`));
             return signinForOrgAccount.click();
           })
-          // .then((result) => {
-          //   return browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
-          // })
           .then((result) => {
             const authCContinue = element(by.xpath(`//XCUIElementTypeButton[@name="Continue"]`));
             browser.wait(ExpectedConditions.presenceOf(authCContinue), TEST_CONFIG.Element_Wait);
