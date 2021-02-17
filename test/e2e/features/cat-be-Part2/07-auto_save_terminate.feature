@@ -33,7 +33,7 @@ Feature: Autosave end to end terminate journey for Category B+E
          | label                             | value                       |
          | Application reference             | 11654328011                 |
          | Test category                     | B+E                         |
-         | Slot type                         | Special Needs Extra Time    |
+         | Slot type                         | Standard Test               |
          | ETA                               | None                        |
          | Route number                      | None                        |
          | Physical description of candidate | None                        |

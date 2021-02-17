@@ -4,7 +4,6 @@ Feature: Debrief including Health Declaration
   Scenario: On a pass test debrief the correct candidate details are displayed and validation is enforced
 
     Given I am logged in as "mobexaminer1" and I have a test for "Mr Wolf Base"
-    When I check candidate details for "Mr Wolf Base"
     When I start the test for "Mr Wolf Base"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
@@ -34,8 +33,7 @@ Feature: Debrief including Health Declaration
   Scenario: The transmission value from the WRTC is carried through to the pass test debrief
 
     Given I am logged in as "mobexaminer1" and I have a test for "Mr Miz Kiff"
-    When I check candidate details for "Mr Miz Kiff"
-    And I start the test for "Mr Miz Kiff"
+    When I start the test for "Mr Miz Kiff"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
     Then I should see the "Declaration - Miz Kiff" page
