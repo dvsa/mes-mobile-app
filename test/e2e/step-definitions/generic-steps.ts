@@ -189,7 +189,6 @@ When('I log in to the application as {string}', (username) => {
 
 Then('I should see the {string} page', (pageTitle) => {
   PageHelper.getPageTitle(pageTitle);
-
   // Check that it is the last page title i.e. the displayed one
   return expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
     .to.eventually.equal(pageTitle);
