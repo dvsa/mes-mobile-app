@@ -216,7 +216,6 @@ class WaitingRoomToCarPage extends Page {
 
   selectSafetyAndBalanceQuestions(table, pageTitle) {
     this.openSelectQuestionsOverlay();
-    // PageHelper.waitForOverlay('click-block-active');
     // Wait for the page title to exist
     PageHelper.getPageTitle(pageTitle);
 
