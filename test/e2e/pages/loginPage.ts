@@ -38,10 +38,11 @@ class LoginPage extends Page {
         const microsoftOnlineContinue = element(by.xpath(`//XCUIElementTypeButton[@name="Continue"]`));
         browser.wait(ExpectedConditions.presenceOf(microsoftOnlineContinue));
         microsoftOnlineContinue.click().then((result) => {
-          return browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+          return browser.sleep(TEST_CONFIG.ACTION_WAIT);
         })
           .then((result) => {
             const useAnotherAccountButton = element(by.xpath(`//XCUIElementTypeButton[@name="Use another account, Use another account"]`));
+            browser.wait(ExpectedConditions.presenceOf(useAnotherAccountButton),  TEST_CONFIG.Element_Wait);
             useAnotherAccountButton.isPresent().then((result) => {
               if (result) {
                 return useAnotherAccountButton.click();
@@ -69,10 +70,8 @@ class LoginPage extends Page {
             return signinForOrgAccount.click();
           })
           .then((result) => {
-            return browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
-          })
-          .then((result) => {
             const authCContinue = element(by.xpath(`//XCUIElementTypeButton[@name="Continue"]`));
+            browser.wait(ExpectedConditions.presenceOf(authCContinue), TEST_CONFIG.Element_Wait);
             return authCContinue.isPresent()
               .then((result) => {
                 return authCContinue.click();

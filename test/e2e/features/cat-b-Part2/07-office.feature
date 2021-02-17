@@ -4,7 +4,6 @@ Feature: Office page
   Scenario: Office page validation for pass
 
     Given I am logged in as "mobexaminer1" and I have a test for "Mr Craig Daniel"
-    When I check candidate details for "Mr Craig Daniel"
     When I start the test for "Mr Craig Daniel"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
@@ -41,8 +40,7 @@ Feature: Office page
   Scenario: Office page validation for fail
 
     Given I am logged in as "mobexaminer1" and I have a test for "Mr Daniel Daniels"
-    When I check candidate details for "Mr Daniel Daniels"
-    And I start the test for "Mr Daniel Daniels"
+    When I start the test for "Mr Daniel Daniels"
     And the candidate completes the declaration page
     And the candidate confirms their declaration
     Then I should see the "Declaration - Daniel Daniels" page

@@ -5,8 +5,7 @@ Feature: A Driving Examiner Completes Multiple Terminated Journeys For Category 
    Scenario: Examiner terminates test as candidate failed to attend (No mandatory office fields)
 
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Potts Bill"
-      When I check candidate details for "Mr Potts Bill"
-      And I start the test for "Mr Potts Bill"
+      When I start the test for "Mr Potts Bill"
       Then I should see the "Declaration - Potts Bill" page
       And the waiting room candidate name should be "Mr Potts Bill"
       And the waiting room candidate driver number should be "COOPE 015220 A99HC"

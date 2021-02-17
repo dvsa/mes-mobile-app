@@ -50,7 +50,7 @@ Feature: Autosave end to end failed journey for Category B+E
       | Application reference             | 11654327011                         |
       | Vehicle registration number       | AB12CDE                             |
       | Test category                     | B+E                                 |
-      | Slot type                         | Special Needs Extra Time            |
+      | Slot type                         | Standard Test                       |
       | ETA                               | None                                |
       | Route number                      | None                                |
       | Physical description of candidate | None                                |
