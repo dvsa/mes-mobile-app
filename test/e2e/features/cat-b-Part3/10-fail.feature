@@ -5,8 +5,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
    Scenario: Examiner completes a failed test with various faults
 
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Shaw Theresa"
-      When I check candidate details for "Mrs Shaw Theresa"
-      And I start the test for "Mrs Shaw Theresa"
+      When I start the test for "Mrs Shaw Theresa"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
       Then I should see the "Declaration - Shaw Theresa" page
@@ -107,8 +106,7 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
    Scenario: Candidate fails a test with 16 driver faults
 
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Attano Corvo"
-      When I check candidate details for "Mr Attano Corvo"
-      And I start the test for "Mr Attano Corvo"
+      When I start the test for "Mr Attano Corvo"
       And the candidate completes the declaration page
       And the candidate confirms their declaration
       Then I should see the "Declaration - Attano Corvo" page

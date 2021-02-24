@@ -2,6 +2,8 @@ import JournalPage from '../pages/journalPage';
 import PageHelper from '../pages/pageHelper';
 import LandingPage from '../pages/landingPage';
 import DashboardPage from '../pages/dashboardPage';
+import {browser, ExpectedConditions} from "protractor";
+import {TEST_CONFIG} from "../test.config";
 
 const {
   Given,
@@ -139,6 +141,7 @@ Then('I have a non-test slot for {string} with code {string} at {string}', (desc
 
 Then('the test result for {string} is {string}', (candidateName, testResult) => {
   const testResultElement = JournalPage.getTestResultElementFor(candidateName);
+  browser.wait(ExpectedConditions.presenceOf(testResultElement), TEST_CONFIG.Element_Wait);
   // todo: kc does getTestResultElementFor need this.waitForPresenceOfElement(element)
   //  if it is being used with isPresent()to.eventually.be.true?
   return expect(testResultElement.getText()).to.eventually.equal(testResult);
