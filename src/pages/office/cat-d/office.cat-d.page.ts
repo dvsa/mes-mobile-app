@@ -110,6 +110,9 @@ import {
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-d/test-data.cat-d.selector';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import {
+  AddSafetyQuestionComment,
+} from '../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.action';
+import {
   AddPcvDoorExerciseComment,
 } from '../../../modules/tests/test-data/cat-d/pcv-door-exercise/pcv-door-exercise.actions';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
@@ -691,6 +694,8 @@ export class OfficeCatDPage extends BasePageComponent {
       this.store$.dispatch(new AddUncoupleRecoupleComment(drivingFaultComment.comment));
     } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(drivingFaultComment.comment));
+    } else if (drivingFaultComment.source === CommentSource.SAFETY_QUESTIONS) {
+      this.store$.dispatch(new AddSafetyQuestionComment(drivingFaultComment.comment));
     } else if (drivingFaultComment.source === CommentSource.PCV_DOOR_EXERCISE) {
       this.store$.dispatch(new AddPcvDoorExerciseComment(
         CompetencyOutcome.DF, 'drivingFaultComments', drivingFaultComment.comment));
