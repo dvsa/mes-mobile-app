@@ -218,10 +218,10 @@ export class NonPassFinalisationCatADIPart2Page extends BasePageComponent implem
     );
   }
 
-  continue() {
+  async continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      const testDataIsInvalid = this.activityCodeFinalisationProvider
+      const testDataIsInvalid = await this.activityCodeFinalisationProvider
         .catADIPart2TestDataIsInvalid(this.activityCode.activityCode, this.testData);
 
       if (testDataIsInvalid) {

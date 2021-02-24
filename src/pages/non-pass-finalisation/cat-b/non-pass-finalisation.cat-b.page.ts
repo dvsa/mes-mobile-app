@@ -228,10 +228,10 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
     );
   }
 
-  continue() {
+  async continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      const testDataIsInvalid = this.activityCodeFinalisationProvider
+      const testDataIsInvalid = await this.activityCodeFinalisationProvider
         .catBTestDataIsInvalid(this.activityCode.activityCode, this.testData);
 
       if (testDataIsInvalid) {

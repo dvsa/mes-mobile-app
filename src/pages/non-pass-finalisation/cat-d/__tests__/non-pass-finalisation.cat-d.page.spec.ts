@@ -127,7 +127,7 @@ describe('NonPassFinalisationCatDPage', () => {
       });
     });
     describe('OnContinue', () => {
-      it('should dispatch a change test state to WriteUp action', () => {
+      it('should dispatch a change test state to WriteUp action', async () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.D));
         component.slotId = '123';
@@ -141,13 +141,14 @@ describe('NonPassFinalisationCatDPage', () => {
         };
 
         // Act
-        component.continue();
+        await component.continue();
 
         // Assert
         expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
 
-      it('should create the TestFinalisationInvalidTestDataModal when activityCode is 5 and no S/D faults', () => {
+      // tslint:disable-next-line:max-line-length
+      it('should create the TestFinalisationInvalidTestDataModal when activityCode is 5 and no S/D faults', async () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.D));
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
@@ -164,14 +165,15 @@ describe('NonPassFinalisationCatDPage', () => {
         };
 
         // Act
-        component.continue();
+        await component.continue();
 
         // Assert
         expect(component.openTestDataValidationModal).toHaveBeenCalled();
         expect(component.modalController.create).toHaveBeenCalled();
         expect(store$.dispatch).not.toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
-      it('should create the TestFinalisationInvalidTestDataModal when activityCode is 4 and no S/D faults', () => {
+      // tslint:disable-next-line:max-line-length
+      it('should create the TestFinalisationInvalidTestDataModal when activityCode is 4 and no S/D faults', async () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.D));
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
@@ -188,7 +190,7 @@ describe('NonPassFinalisationCatDPage', () => {
         };
 
         // Act
-        component.continue();
+        await component.continue();
 
         // Assert
         expect(component.openTestDataValidationModal).toHaveBeenCalled();
