@@ -114,7 +114,7 @@ describe('NonPassFinalisationCatAMod1Page', () => {
       });
     });
     describe('OnContinue', () => {
-      it('should dispatch a change test state to WriteUp action', async () => {
+      it('should dispatch a change test state to WriteUp action', () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.EUA1M1));
         component.slotId = '123';
@@ -128,14 +128,13 @@ describe('NonPassFinalisationCatAMod1Page', () => {
         };
 
         // Act
-        await component.continue();
+        component.continue();
 
         // Assert
         expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
 
-      // tslint:disable-next-line:max-line-length
-      it('should create the TestFinalisationInvalidTestDataModal when activityCode is 5 and no S/D faults', async () => {
+      it('should create the TestFinalisationInvalidTestDataModal when activityCode is 5 and no S/D faults', () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.EUA1M1));
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
@@ -149,21 +148,17 @@ describe('NonPassFinalisationCatAMod1Page', () => {
         component.testData = {
           dangerousFaults: {},
           seriousFaults: {},
-          emergencyStop: {
-            outcome: null,
-          },
         };
 
         // Act
-        await component.continue();
+        component.continue();
 
         // Assert
         expect(component.openTestDataValidationModal).toHaveBeenCalled();
         expect(component.modalController.create).toHaveBeenCalled();
         expect(store$.dispatch).not.toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
-      // tslint:disable-next-line:max-line-length
-      it('should create the TestFinalisationInvalidTestDataModal when activityCode is 4 and no S/D faults', async () => {
+      it('should create the TestFinalisationInvalidTestDataModal when activityCode is 4 and no S/D faults', () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.EUA1M1));
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
@@ -177,13 +172,10 @@ describe('NonPassFinalisationCatAMod1Page', () => {
         component.testData = {
           dangerousFaults: {},
           seriousFaults: {},
-          emergencyStop: {
-            outcome: null,
-          },
         };
 
         // Act
-        await component.continue();
+        component.continue();
 
         // Assert
         expect(component.openTestDataValidationModal).toHaveBeenCalled();

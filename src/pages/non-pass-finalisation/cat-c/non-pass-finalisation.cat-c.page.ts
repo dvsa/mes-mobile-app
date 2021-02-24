@@ -260,10 +260,10 @@ export class NonPassFinalisationCatCPage extends BasePageComponent implements On
     );
   }
 
-  async continue() {
+  continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      const testDataIsInvalid = await this.activityCodeFinalisationProvider
+      const testDataIsInvalid = this.activityCodeFinalisationProvider
         .catCTestDataIsInvalid(this.activityCode.activityCode, this.testData);
 
       if (testDataIsInvalid) {

@@ -7,96 +7,90 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { ActivityCodes } from '../../shared/models/activity-codes';
 import { CatCTestData, CatDTestData, CatHomeTestData } from '../../shared/unions/test-schema-unions';
-import { TestResultProvider } from '../test-result/test-result';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { FaultCountAM1Helper } from '../fault-count/cat-a-mod1/fault-count.cat-a-mod1';
+import { FaultCountAM2Helper } from '../fault-count/cat-a-mod2/fault-count.cat-a-mod2';
+import { FaultCountADIPart2Helper } from '../fault-count/cat-adi-part2/fault-count.cat-adi-part2';
+import { FaultCountBHelper } from '../fault-count/cat-b/fault-count.cat-b';
+import { FaultCountBEHelper } from '../fault-count/cat-be/fault-count.cat-be';
+import { FaultCountCHelper } from '../fault-count/cat-c/fault-count.cat-c';
+import { FaultCountDHelper } from '../fault-count/cat-d/fault-count.cat-d';
+import { FaultCountHomeTestHelper } from '../fault-count/cat-home-test/fault-count.cat-home-test';
 
 @Injectable()
 export class ActivityCodeFinalisationProvider {
 
-  constructor(private testResultProvider: TestResultProvider) {}
-
-  async catAMod1TestDataIsInvalid(activityCode: ActivityCode, testData: CatAMod1TestData): Promise<boolean> {
+  catAMod1TestDataIsInvalid(activityCode: ActivityCode, testData: CatAMod1TestData): boolean {
     if (!this.activityCodeIs4or5(activityCode)) {
       return false;
     }
 
-    const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.EUAM1, testData).toPromise()
-    ) === ActivityCodes.PASS;
+    const numberOfSeriousFaults = FaultCountAM1Helper.getSeriousFaultSumCountCatAM1(testData);
+    const numberOfDangerousFaults = FaultCountAM1Helper.getDangerousFaultSumCountCatAM1(testData);
 
-    return isPass;
+    return numberOfSeriousFaults === 0 && numberOfDangerousFaults === 0;
   }
 
-  async catAMod2TestDataIsInvalid(activityCode: ActivityCode, testData: CatAMod2TestData): Promise<boolean> {
+  catAMod2TestDataIsInvalid(activityCode: ActivityCode, testData: CatAMod2TestData): boolean {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
-    const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.EUAM2, testData).toPromise()
-    ) === ActivityCodes.PASS;
+    const numberOfSeriousFaults = FaultCountAM2Helper.getSeriousFaultSumCountCatAM2(testData);
+    const numberOfDangerousFaults = FaultCountAM2Helper.getDangerousFaultSumCountCatAM2(testData);
 
-    return isPass;
+    return numberOfSeriousFaults === 0 && numberOfDangerousFaults === 0;
   }
 
-  async catADIPart2TestDataIsInvalid(
-    activityCode: ActivityCode, testData: CatADI2UniqueTypes.TestData,
-  ): Promise<boolean> {
+  catADIPart2TestDataIsInvalid(activityCode: ActivityCode, testData: CatADI2UniqueTypes.TestData): boolean {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
-    const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.ADI2, testData).toPromise()
-    ) === ActivityCodes.PASS;
+    const numberOfSeriousFaults = FaultCountADIPart2Helper.getSeriousFaultSumCountCatADIPart2(testData);
+    const numberOfDangerousFaults = FaultCountADIPart2Helper.getDangerousFaultSumCountCatADIPart2(testData);
 
-    return isPass;
+    return numberOfSeriousFaults === 0 && numberOfDangerousFaults === 0;
   }
 
-  async catBTestDataIsInvalid(activityCode: ActivityCode, testData: CatBUniqueTypes.TestData): Promise<boolean> {
+  catBTestDataIsInvalid(activityCode: ActivityCode, testData: CatBUniqueTypes.TestData): boolean {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
-    const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.B, testData).toPromise()
-    ) === ActivityCodes.PASS;
+    const numberOfSeriousFaults = FaultCountBHelper.getSeriousFaultSumCountCatB(testData);
+    const numberOfDangerousFaults = FaultCountBHelper.getDangerousFaultSumCountCatB(testData);
 
-    return isPass;
+    return numberOfSeriousFaults === 0 && numberOfDangerousFaults === 0;
   }
 
-  async catBETestDataIsInvalid(activityCode: ActivityCode, testData: CatBEUniqueTypes.TestData): Promise<boolean> {
+  catBETestDataIsInvalid(activityCode: ActivityCode, testData: CatBEUniqueTypes.TestData): boolean {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
-    const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.BE, testData).toPromise()
-    ) === ActivityCodes.PASS;
+    const numberOfSeriousFaults = FaultCountBEHelper.getSeriousFaultSumCountCatBE(testData);
+    const numberOfDangerousFaults = FaultCountBEHelper.getDangerousFaultSumCountCatBE(testData);
 
-    return isPass;
+    return numberOfSeriousFaults === 0 && numberOfDangerousFaults === 0;
   }
 
-  async catCTestDataIsInvalid(activityCode: ActivityCode, testData: CatCTestData): Promise<boolean> {
+  catCTestDataIsInvalid(activityCode: ActivityCode, testData: CatCTestData): boolean {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
-    const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.C, testData).toPromise()
-    ) === ActivityCodes.PASS;
+    const numberOfSeriousFaults = FaultCountCHelper.getSeriousFaultSumCountCatC(testData);
+    const numberOfDangerousFaults = FaultCountCHelper.getDangerousFaultSumCountCatC(testData);
 
-    return isPass;
+    return numberOfSeriousFaults === 0 && numberOfDangerousFaults === 0;
   }
 
-  async catDTestDataIsInvalid(activityCode: ActivityCode, testData: CatDTestData): Promise<boolean> {
+  catDTestDataIsInvalid(activityCode: ActivityCode, testData: CatDTestData): boolean {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
-    const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.D, testData).toPromise()
-    ) === ActivityCodes.PASS;
+    const numberOfSeriousFaults = FaultCountDHelper.getSeriousFaultSumCountCatD(testData);
+    const numberOfDangerousFaults = FaultCountDHelper.getDangerousFaultSumCountCatD(testData);
 
-    return isPass;
+    return numberOfSeriousFaults === 0 && numberOfDangerousFaults === 0;
   }
 
-  async catHomeTestDataIsInvalid(activityCode: ActivityCode, testData: CatHomeTestData): Promise<boolean> {
+  catHomeTestDataIsInvalid(activityCode: ActivityCode, testData: CatHomeTestData): boolean {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
-    const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.F, testData).toPromise()
-    ) === ActivityCodes.PASS;
+    const numberOfSeriousFaults = FaultCountHomeTestHelper.getSeriousFaultSumCountHomeTest(testData);
+    const numberOfDangerousFaults = FaultCountHomeTestHelper.getDangerousFaultSumCountHomeTest(testData);
 
-    return isPass;
+    return numberOfSeriousFaults === 0 && numberOfDangerousFaults === 0;
   }
 
   private activityCodeIs4or5(activityCode: ActivityCode): boolean {

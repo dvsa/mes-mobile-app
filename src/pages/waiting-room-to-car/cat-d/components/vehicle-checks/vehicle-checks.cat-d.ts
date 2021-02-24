@@ -4,6 +4,7 @@ import { CAT_D } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
 import { App } from '../../../../../app/app.component';
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
+import { SafetyQuestionsScore } from '../../../../../shared/models/safety-questions-score.model';
 import { get } from 'lodash';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { StoreModel } from '../../../../../shared/models/store.model';
@@ -24,7 +25,11 @@ export class VehicleChecksCatDComponent implements OnChanges, OnInit {
 
   @Input() vehicleChecksScore: VehicleChecksScore;
 
+  @Input() safetyQuestionsScore: SafetyQuestionsScore;
+
   @Input() vehicleChecks: CatDUniqueTypes.VehicleChecks;
+
+  @Input() safetyQuestions: CatDUniqueTypes.SafetyQuestions;
 
   @Input()
   vehicleChecksSelectQuestions: string;
@@ -73,7 +78,8 @@ export class VehicleChecksCatDComponent implements OnChanges, OnInit {
     };
 
     return this.vehicleChecks.showMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
-      && this.vehicleChecks.tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true);
+      && this.vehicleChecks.tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
+      && this.safetyQuestions.questions.reduce((res, question) => res && hasOutcome(question), true);
   }
 
   hasSeriousFault(): boolean {
@@ -81,7 +87,7 @@ export class VehicleChecksCatDComponent implements OnChanges, OnInit {
   }
 
   hasDrivingFault(): boolean {
-    return this.vehicleChecksScore.drivingFaults > 0;
+    return this.vehicleChecksScore.drivingFaults > 0 || this.safetyQuestionsScore.drivingFaults > 0 ;
   }
 
   incompleteVehicleChecks(): VehicleCheckFormState {
