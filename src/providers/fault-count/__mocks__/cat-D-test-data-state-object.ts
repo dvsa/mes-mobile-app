@@ -39,6 +39,22 @@ export const catDTestDataStateObject: CatDUniqueTypes.TestData = {
     drivingFault: true,
     seriousFault: false,
   },
+  safetyQuestions: {
+    questions: [
+      {
+        description: 'string',
+        outcome: 'P',
+      },
+      {
+        description: 'string',
+        outcome: 'P',
+      },
+      {
+        description: 'string',
+        outcome: 'P',
+      },
+    ],
+  },
 };
 
 export const vehicleChecksNoFaults = {

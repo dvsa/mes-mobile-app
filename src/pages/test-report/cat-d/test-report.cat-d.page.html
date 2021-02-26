@@ -106,8 +106,11 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col>
-            <vehicle-checks [testCategory]="pageState.testCategory$ | async" id="vehicleChecksCatD"></vehicle-checks>
+          <ion-col col-45>
+            <vehicle-checks-compact-cat-d [testCategory]="pageState.testCategory$ | async" id="vehicleChecksCatD"></vehicle-checks-compact-cat-d>
+          </ion-col>
+          <ion-col col-51>
+            <safety-questions-cat-d [testCategory]="pageState.testCategory$ | async"></safety-questions-cat-d>
           </ion-col>
         </ion-row>
         <ion-row>

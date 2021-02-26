@@ -8,19 +8,18 @@ import { FaultCountProvider } from '../../../../../providers/fault-count/fault-c
 import { Observable } from 'rxjs';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { TestDataByCategoryProvider } from '../../../../../providers/test-data-by-category/test-data-by-category';
-import { getVehicleChecksCatD }
-from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
+import  { getSafetyQuestionsCatD,
+} from '../../../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.selector';
 
 interface ComponentState {
-  vehicleChecksDrivingFaultCount$: Observable<number>;
-  vehicleChecksSeriousFaultCount$: Observable<number>;
+  safetyQuestionsDrivingFaultCount$: Observable<number>;
 }
 
 @Component({
-  selector: 'vehicle-checks',
-  templateUrl: 'vehicle-checks.html',
+  selector: 'safety-questions-cat-d',
+  templateUrl: 'safety-questions.cat-d.html',
 })
-export class VehicleChecksComponent implements OnInit {
+export class SafetyQuestionsCatDComponent implements OnInit {
 
   @Input()
   testCategory: TestCategory;
@@ -34,24 +33,15 @@ export class VehicleChecksComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const currentTest$ = this.store$.pipe(
-      select(getTests),
-      select(getCurrentTest),
-    );
 
     this.componentState = {
-      vehicleChecksDrivingFaultCount$: currentTest$.pipe(
+      safetyQuestionsDrivingFaultCount$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
         map(data => this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)(data)),
-        select(getVehicleChecksCatD),
-        map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory, vehicleChecks).drivingFaults;
-        }),
-      ),
-      vehicleChecksSeriousFaultCount$: currentTest$.pipe(
-        map(data => this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)(data)),
-        select(getVehicleChecksCatD),
-        map((vehicleChecks) => {
-          return this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory, vehicleChecks).seriousFaults;
+        select(getSafetyQuestionsCatD),
+        map((safetyQuestions) => {
+          return this.faultCountProvider.getSafetyQuestionsFaultCount(this.testCategory, safetyQuestions).drivingFaults;
         }),
       ),
     };

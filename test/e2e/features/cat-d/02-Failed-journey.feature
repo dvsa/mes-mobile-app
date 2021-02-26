@@ -56,13 +56,13 @@ Scenario: Examiner completes a passed test with no faults
       And  I click the back button
       Then I should see the "My dashboard" page
       When I click search completed tests
-      When I search for a completed test with the application reference of "16123400011 "
+      When I search for a completed test with the application reference of "16123411011 "
       And the search result is clicked
       Then I should see the "Test information" page
       And the test result outcome is "Unsuccessful"
       And the test result has the following data present
         | label                             | value                                  |
-        | Application reference             | 16123400011                            |
+        | Application reference             | 16123411011                            |
         | Test category                     | D                                      |
         | Slot type                         | Standard Test                          |
         | Route number                      | None                                   |

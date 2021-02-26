@@ -42,9 +42,10 @@ import { ReverseLeftPopoverComponent } from '../../components/reverse-left-popov
 import { ReverseLeftComponent } from '../../components/reverse-left/reverse-left';
 import { UncoupleRecoupleComponent } from '../../components/uncouple-recouple/uncouple-recouple';
 import {
-  VehicleChecksComponent,
-} from '../components/vehicle-checks/vehicle-checks';
+  VehicleChecksCompactCatDComponent,
+} from '../components/vehicle-checks-compact/vehicle-checks-compact.cat-d';
 import { MultiLegalRequirementComponent } from '../../components/multi-legal-requirement/multi-legal-requirement';
+import { SafetyQuestionsCatDComponent } from '../components/safety-questions/safety-questions.cat-d';
 import { PcvDoorExerciseComponent } from '../components/pcv-door-exercise/pcv-door-exercise';
 
 describe('TestReportCatDPage', () => {
@@ -67,7 +68,8 @@ describe('TestReportCatDPage', () => {
         MockComponent(UncoupleRecoupleComponent),
         MockComponent(ReverseLeftComponent),
         MockComponent(ReverseLeftPopoverComponent),
-        MockComponent(VehicleChecksComponent),
+        MockComponent(VehicleChecksCompactCatDComponent),
+        MockComponent(SafetyQuestionsCatDComponent),
         MockComponent(PcvDoorExerciseComponent),
       ],
       imports: [
