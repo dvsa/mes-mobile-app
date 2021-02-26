@@ -192,6 +192,7 @@ class WaitingRoomToCarPage extends Page {
       this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
     } else if (testCategory === 'd') {
       this.multiShowAndTell(UI_TEST_DATA.testData.c, questionResult);
+      this.completeSafetyQuestions();
     } else if (testCategory === 'ce') {
       this.multiShowAndTell(UI_TEST_DATA.testData.ce, questionResult);
     } else if (testCategory === 'a-mod1') {
@@ -272,6 +273,7 @@ class WaitingRoomToCarPage extends Page {
     this.clickElementByXPath(`//span[contains(@class, 'bike-code') and
    normalize-space(text()) = '${catType}']`);
   }
+
   completeSafetyQuestions() {
     this.openSelectQuestionsOverlay();
     this.clickElementById('safetyQuestionsCorrect_14');
@@ -279,7 +281,6 @@ class WaitingRoomToCarPage extends Page {
     this.clickElementById('safetyQuestionsCorrect_16');
     this.submitVehicleChecksButton();
   }
-
 
   selectVehicleDetails() {
     this.clickElementById('configuration-rigid');
