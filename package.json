@@ -6,6 +6,7 @@
   "homepage": "https://github.com/dvsa/mes-mobile-app",
   "private": true,
   "scripts": {
+    "postinstall": "node buildScripts/increase-node-allocation.js",
     "remote-devtools-server": "./bin/remote-devtools-server.sh",
     "clean": "ionic-app-scripts clean",
     "bootstrap": "json2ts schema/schemaExaminerSchedule.json > src/shared/models/DJournal.ts",
