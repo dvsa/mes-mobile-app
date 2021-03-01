@@ -8,18 +8,19 @@ import { FaultCountProvider } from '../../../../../providers/fault-count/fault-c
 import { Observable } from 'rxjs';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { TestDataByCategoryProvider } from '../../../../../providers/test-data-by-category/test-data-by-category';
-import  { getSafetyQuestionsCatD,
-} from '../../../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.selector';
+import { getVehicleChecksCatD }
+from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
 
 interface ComponentState {
-  safetyQuestionsDrivingFaultCount$: Observable<number>;
+  vehicleChecksDrivingFaultCount$: Observable<number>;
+  vehicleChecksSeriousFaultCount$: Observable<number>;
 }
 
 @Component({
-  selector: 'safety-questions-cat-d',
-  templateUrl: 'safety-questions.cat-d.html',
+  selector: 'vehicle-checks',
+  templateUrl: 'vehicle-checks.html',
 })
-export class SafetyQuestionsCatDComponent implements OnInit {
+export class VehicleChecksComponent implements OnInit {
 
   @Input()
   testCategory: TestCategory;
@@ -33,15 +34,24 @@ export class SafetyQuestionsCatDComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
 
     this.componentState = {
-      safetyQuestionsDrivingFaultCount$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      vehicleChecksDrivingFaultCount$: currentTest$.pipe(
         map(data => this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)(data)),
-        select(getSafetyQuestionsCatD),
-        map((safetyQuestions) => {
-          return this.faultCountProvider.getSafetyQuestionsFaultCount(this.testCategory, safetyQuestions).drivingFaults;
+        select(getVehicleChecksCatD),
+        map((vehicleChecks) => {
+          return this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory, vehicleChecks).drivingFaults;
+        }),
+      ),
+      vehicleChecksSeriousFaultCount$: currentTest$.pipe(
+        map(data => this.testDataByCategory.getTestDataByCategoryCode(this.testCategory)(data)),
+        select(getVehicleChecksCatD),
+        map((vehicleChecks) => {
+          return this.faultCountProvider.getVehicleChecksFaultCount(this.testCategory, vehicleChecks).seriousFaults;
         }),
       ),
     };

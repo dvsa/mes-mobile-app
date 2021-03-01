@@ -38,15 +38,10 @@ import { CAT_D } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
-import { SafetyQuestionsScore } from '../../../shared/models/safety-questions-score.model';
 
 import {
   getVehicleChecksCatD,
 } from '../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
-import {
-  getSafetyQuestionsCatD,
-} from '../../../modules/tests/test-data/cat-d/safety-questions/safety-questions.cat-d.selector';
-
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
 import { CatDUniqueTypes } from '@dvsa/mes-test-schema/categories/D';
@@ -84,9 +79,7 @@ interface WaitingRoomToCarPageState {
   otherAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
-  safetyQuestionsScore$: Observable<SafetyQuestionsScore>;
   vehicleChecks$: Observable<CatDUniqueTypes.VehicleChecks>;
-  safetyQuestions$: Observable<CatDUniqueTypes.SafetyQuestions>;
   testCategory$: Observable<CategoryCode>;
   delegatedTest$: Observable<boolean>;
   vehicleChecksCompleted$: Observable<boolean>;
@@ -167,23 +160,9 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
            ),
         ),
       ),
-      safetyQuestionsScore$: currentTest$.pipe(
-        select(getTestData),
-        select(getSafetyQuestionsCatD),
-        map((safetyQuestions) => {
-          return this.faultCountProvider.getSafetyQuestionsFaultCount(
-            this.testCategory as TestCategory,
-             safetyQuestions,
-          );
-        }),
-      ),
       vehicleChecks$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecksCatD),
-      ),
-      safetyQuestions$: currentTest$.pipe(
-        select(getTestData),
-        select(getSafetyQuestionsCatD),
       ),
       testCategory$: currentTest$.pipe(
         select(getTestCategory),
