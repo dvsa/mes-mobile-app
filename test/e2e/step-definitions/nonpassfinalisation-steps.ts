@@ -1,6 +1,11 @@
-import { Then, When, Before } from 'cucumber';
-import NonPassFinalisationPage from '../pages/nonPassFinalisationPage';
-import DebriefPage from '../pages/debriefPage';
+import { Before, Then, When } from 'cucumber';
+import { DebriefPage } from '../helper/debriefPage/debriefPage';
+import { NonPassFinalisationPage } from '../helper/nonPassFinalisationPage/nonPassFinalisationPage';
+import { NonPassFinalisationPageObject } from '../helper/nonPassFinalisationPage/nonPassFinalisationPage.po';
+
+const debriefPage : DebriefPage = new DebriefPage();
+const nonPassFinalisationPage : NonPassFinalisationPage = new NonPassFinalisationPage();
+const nonPassFinalisationElement : NonPassFinalisationPageObject = new NonPassFinalisationPageObject();
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -49,40 +54,40 @@ Before({ tags: '@catcpc' }, () => {
   this.testCategory = 'cpc';
 });
 
-When('I continue to the back to office page', () => {
+When('I continue to the back to office page', async () => {
   if (this.testCategory !== 'cpc') {
-    NonPassFinalisationPage.clickD255Yes();
+    await nonPassFinalisationPage.clickD255Yes();
   }
-  DebriefPage.clickDebriefWitnessedYes();
-  NonPassFinalisationPage.clickContinueToBackOfficeButton(this.testCategory);
+  await debriefPage.clickDebriefWitnessedYes();
+  await nonPassFinalisationPage.clickContinueToBackOfficeButton(this.testCategory);
 });
 
-When('I click continue to proceed to the back to office page', () => {
-  NonPassFinalisationPage.clickContinueToBackOfficeButton(this.testCategory);
+When('I click continue to proceed to the back to office page', async () => {
+  await nonPassFinalisationPage.clickContinueToBackOfficeButton(this.testCategory);
 });
 
-When('I complete d255', () => {
-  NonPassFinalisationPage.clickD255Yes();
+When('I complete d255', async () => {
+  await nonPassFinalisationPage.clickD255Yes();
 });
 
-When('I complete debrief witnessed', () => {
-  DebriefPage.clickDebriefWitnessedYes();
+When('I complete debrief witnessed', async () => {
+  await debriefPage.clickDebriefWitnessedYes();
 });
 
-When('I select activity code {string}', (activityCodeDesc) => {
-  NonPassFinalisationPage.selectActivityCode(activityCodeDesc);
+When('I select activity code {string}', async (activityCodeDesc) => {
+  await nonPassFinalisationPage.selectActivityCode(activityCodeDesc);
 });
 
 When('the D255 Radio is pre-selected to yes', () => {
-  const d255PreselectedToYes = NonPassFinalisationPage.getD255Yes();
+  const d255PreselectedToYes = nonPassFinalisationElement.d255Yes;
   expect(d255PreselectedToYes.isSelected()).to.eventually.be.true;
 });
 
 Then('the activity code should be {string}', (activityCode) => {
-  const acitivityCodeField = NonPassFinalisationPage.getActivityCodeSelector();
+  const acitivityCodeField = nonPassFinalisationElement.activityCodeSelector;
   return expect(acitivityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
-Then('the transmission is selected', () => {
-  NonPassFinalisationPage.selectManualTransmission();
+Then('the transmission is selected', async () => {
+  await nonPassFinalisationPage.selectManualTransmission();
 });

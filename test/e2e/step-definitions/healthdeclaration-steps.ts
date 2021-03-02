@@ -1,6 +1,11 @@
 import { When, Then, Before } from 'cucumber';
-import HealthDeclarationPage from '../pages/healthDeclarationPage';
-import PageHelper from '../pages/pageHelper';
+import { HealthDeclarationPage } from '../helper/healthDeclarationPage/healthDeclaration';
+import { HealthDeclarationObject } from '../helper/healthDeclarationPage/healthDeclarationPage.po';
+import { PageHelper } from '../helper/PageHelper/pageHelper';
+
+const healthDeclarationPage : HealthDeclarationPage  = new HealthDeclarationPage();
+const healthDeclarationPageElement : HealthDeclarationObject = new HealthDeclarationObject();
+const pageHelper : PageHelper = new PageHelper();
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -54,22 +59,22 @@ Before({ tags: '@catcpc' }, () => {
 });
 
 Then('the pass certificate number should be {string}', (certificateNumber) => {
-  const passCertificateNumber = HealthDeclarationPage.getPassCertificateNumber();
+  const passCertificateNumber = healthDeclarationPageElement.passCertificateNumber;
   passCertificateNumber.getText().then((textValue) => {
     expect(textValue.trim().endsWith(`: ${certificateNumber}`)).to.be.true;
   });
 });
 
-When('I try to confirm the health declaration', () => {
-  HealthDeclarationPage.confirmHealthDeclaration(this.testCategory);
+When('I try to confirm the health declaration', async () => {
+  await healthDeclarationPage.confirmHealthDeclaration(this.testCategory);
 });
 
-When('I complete the health declaration', () => {
+When('I complete the health declaration', async () => {
   if (this.testCategory !== 'cpc') {
-    HealthDeclarationPage.clickHealthDeclarationCheckbox();
+    await healthDeclarationPage.clickHealthDeclarationCheckbox();
   }
-  HealthDeclarationPage.clickReceiptDeclarationCheckbox();
-  HealthDeclarationPage.clickHealthSignatureField(this.testCategory);
-  HealthDeclarationPage.confirmHealthDeclaration(this.testCategory);
-  PageHelper.enterPasscode();
+  await healthDeclarationPage.clickReceiptDeclarationCheckbox();
+  await healthDeclarationPage.clickHealthSignatureField(this.testCategory);
+  await healthDeclarationPage.confirmHealthDeclaration(this.testCategory);
+  await pageHelper.enterPasscode();
 });
