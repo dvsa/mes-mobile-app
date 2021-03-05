@@ -29,6 +29,8 @@
           (licenseNotReceived)="provisionalLicenseNotReceived()">
         </license-provided>
 
+        <licence-provided-warning-banner [licenceProvided]="pageState.provisionalLicense$ | async"></licence-provided-warning-banner>
+
         <warning-banner *ngIf="shouldShowCandidateDoesntNeedLicenseBanner()" warningText="{{askCandidateLicenseMessage}}">
         </warning-banner>
 
