@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
+import { ActivityCode, CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 import { TestData as CatAMod1TestData } from '@dvsa/mes-test-schema/categories/AM1';
 import { TestData as CatAMod2TestData } from '@dvsa/mes-test-schema/categories/AM2';
 import { CatADI2UniqueTypes } from '@dvsa/mes-test-schema/categories/ADI2';
@@ -69,31 +69,37 @@ export class ActivityCodeFinalisationProvider {
     return isPass;
   }
 
-  async catCTestDataIsInvalid(activityCode: ActivityCode, testData: CatCTestData): Promise<boolean> {
+  async catCTestDataIsInvalid(activityCode: ActivityCode,
+                              testData: CatCTestData,
+                              category: CategoryCode): Promise<boolean> {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
     const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.C, testData).toPromise()
+      this.testResultProvider.calculateTestResult(category, testData).toPromise()
     ) === ActivityCodes.PASS;
 
     return isPass;
   }
 
-  async catDTestDataIsInvalid(activityCode: ActivityCode, testData: CatDTestData): Promise<boolean> {
+  async catDTestDataIsInvalid(activityCode: ActivityCode,
+                              testData: CatDTestData,
+                              category: CategoryCode): Promise<boolean> {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
     const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.D, testData).toPromise()
+      this.testResultProvider.calculateTestResult(category, testData).toPromise()
     ) === ActivityCodes.PASS;
 
     return isPass;
   }
 
-  async catHomeTestDataIsInvalid(activityCode: ActivityCode, testData: CatHomeTestData): Promise<boolean> {
+  async catHomeTestDataIsInvalid(activityCode: ActivityCode,
+                                 testData: CatHomeTestData,
+                                 category: CategoryCode): Promise<boolean> {
     if (!this.activityCodeIs4or5(activityCode)) return false;
 
     const isPass = await (
-      this.testResultProvider.calculateTestResult(TestCategory.F, testData).toPromise()
+      this.testResultProvider.calculateTestResult(category, testData).toPromise()
     ) === ActivityCodes.PASS;
 
     return isPass;
