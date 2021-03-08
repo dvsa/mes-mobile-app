@@ -59,7 +59,7 @@ import {
 } from
   '../../../modules/tests/vehicle-details/common/vehicle-details.selector';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/cat-c/vehicle-details.cat-c.reducer';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
+import { CategoryCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
@@ -68,6 +68,7 @@ import {
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
 import { getTestData } from '../../../modules/tests/test-data/cat-c/test-data.cat-c.reducer';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -86,6 +87,7 @@ interface NonPassFinalisationPageState {
   transmissionManualRadioChecked$: Observable<boolean>;
   testData$: Observable<CatCUniqueTypes.TestData>;
   slotId$: Observable<string>;
+  category$: Observable<CategoryCode>;
 }
 
 @IonicPage()
@@ -103,6 +105,7 @@ export class NonPassFinalisationCatCPage extends BasePageComponent implements On
   activityCode: ActivityCodeModel;
   subscription: Subscription;
   invalidTestDataModal: Modal;
+  category: CategoryCode;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -204,9 +207,12 @@ export class NonPassFinalisationCatCPage extends BasePageComponent implements On
       testData$: currentTest$.pipe(
         select(getTestData),
       ),
+      category$: currentTest$.pipe(
+        select(getTestCategory),
+      ),
     };
 
-    const { testData$, slotId$, activityCode$ } = this.pageState;
+    const { testData$, slotId$, activityCode$, category$ } = this.pageState;
 
     this.subscription = merge(
       slotId$.pipe(map(slotId => this.slotId = slotId)),
@@ -215,6 +221,9 @@ export class NonPassFinalisationCatCPage extends BasePageComponent implements On
       ),
       activityCode$.pipe(
         map(activityCode => this.activityCode = activityCode),
+      ),
+      category$.pipe(
+        map(category => this.category = category),
       ),
     ).subscribe();
   }
@@ -264,7 +273,7 @@ export class NonPassFinalisationCatCPage extends BasePageComponent implements On
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       const testDataIsInvalid = await this.activityCodeFinalisationProvider
-        .catCTestDataIsInvalid(this.activityCode.activityCode, this.testData);
+        .catCTestDataIsInvalid(this.activityCode.activityCode, this.testData, this.category);
 
       if (testDataIsInvalid) {
         this.openTestDataValidationModal();

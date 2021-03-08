@@ -154,6 +154,7 @@ describe('NonPassFinalisationCatCPage', () => {
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
         spyOn(component.modalController, 'create').and.callThrough();
 
+        component.category = 'C';
         component.slotId = '123';
         component.activityCode = {
           activityCode: ActivityCodes.FAIL_CANDIDATE_STOPS_TEST,
@@ -179,6 +180,7 @@ describe('NonPassFinalisationCatCPage', () => {
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
         spyOn(component.modalController, 'create').and.callThrough();
 
+        component.category = 'C';
         component.slotId = '123';
         component.activityCode = {
           activityCode: ActivityCodes.FAIL_PUBLIC_SAFETY,

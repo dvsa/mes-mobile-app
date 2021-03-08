@@ -141,6 +141,7 @@ describe('NonPassFinalisationCatHomeTestPage', () => {
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
         spyOn(component.modalController, 'create').and.callThrough();
 
+        component.category = 'K';
         component.slotId = '123';
         component.activityCode = {
           activityCode: ActivityCodes.FAIL_CANDIDATE_STOPS_TEST,
@@ -166,6 +167,7 @@ describe('NonPassFinalisationCatHomeTestPage', () => {
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
         spyOn(component.modalController, 'create').and.callThrough();
 
+        component.category = 'K';
         component.slotId = '123';
         component.activityCode = {
           activityCode: ActivityCodes.FAIL_PUBLIC_SAFETY,
@@ -199,6 +201,7 @@ describe('NonPassFinalisationCatHomeTestPage', () => {
           dangerousFaults: {},
           seriousFaults: {},
         };
+        component.category = 'K';
 
         component.continue();
         tick();
