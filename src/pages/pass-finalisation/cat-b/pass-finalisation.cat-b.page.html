@@ -31,6 +31,8 @@
           (licenseNotReceived)="provisionalLicenseNotReceived()">
         </license-provided>
 
+        <licence-provided-warning-banner [licenceProvided]="pageState.provisionalLicense$ | async"></licence-provided-warning-banner>
+
         <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission>
 
         <warning-banner *ngIf="displayTransmissionBanner()" warningText="An automatic licence will be issued.">

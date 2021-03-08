@@ -6,12 +6,15 @@ import { IonicModule } from 'ionic-angular';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { Code78Component } from './code-78/code-78';
+import { LicenceProvidedWarningBannerComponent } from
+    './licence-provided-warning-banner/licence-provided-warning-banner';
 
 @NgModule({
   declarations: [
     LicenseProvidedComponent,
     PassCertificateNumberComponent,
     Code78Component,
+    LicenceProvidedWarningBannerComponent,
   ],
   imports: [
     CommonModule,
@@ -23,6 +26,7 @@ import { Code78Component } from './code-78/code-78';
     LicenseProvidedComponent,
     PassCertificateNumberComponent,
     Code78Component,
+    LicenceProvidedWarningBannerComponent,
   ],
 })
 export class PassFinalisationComponentsModule { }
