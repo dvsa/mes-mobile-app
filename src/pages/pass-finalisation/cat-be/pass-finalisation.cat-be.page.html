@@ -30,6 +30,8 @@
           (licenseNotReceived)="provisionalLicenseNotReceived()">
         </license-provided>
 
+        <licence-provided-warning-banner [licenceProvided]="pageState.provisionalLicense$ | async"></licence-provided-warning-banner>
+
         <transmission
           [formGroup]="form"
           [transmission]="pageState.transmission$ | async"

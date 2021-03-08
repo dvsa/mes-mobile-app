@@ -39,6 +39,8 @@ import { PASS_CERTIFICATE_NUMBER_CTRL }
   from '../../components/pass-certificate-number/pass-certificate-number.constants';
 import { configureTestSuite } from 'ng-bullet';
 import { Subscription } from 'rxjs';
+import { LicenceProvidedWarningBannerComponent } from
+    '../../components/licence-provided-warning-banner/licence-provided-warning-banner';
 
 describe('PassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;
@@ -58,6 +60,7 @@ describe('PassFinalisationCatBPage', () => {
         MockComponent(FinalisationHeaderComponent),
         MockComponent(LanguagePreferencesComponent),
         MockComponent(WarningBannerComponent),
+        MockComponent(LicenceProvidedWarningBannerComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [

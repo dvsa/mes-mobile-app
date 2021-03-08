@@ -40,6 +40,8 @@ import { Subscription } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
 import { PopulateTestCategory } from '../../../../modules/tests/category/category.actions';
 import { BikeCategoryTypeComponent } from '../../../../components/common/bike-category-type/bike-category-type';
+import { LicenceProvidedWarningBannerComponent } from
+    '../../components/licence-provided-warning-banner/licence-provided-warning-banner';
 
 describe('PassFinalisationCatAMod2Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatAMod2Page>;
@@ -59,6 +61,7 @@ describe('PassFinalisationCatAMod2Page', () => {
         MockComponent(LanguagePreferencesComponent),
         MockComponent(WarningBannerComponent),
         MockComponent(BikeCategoryTypeComponent),
+        MockComponent(LicenceProvidedWarningBannerComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [

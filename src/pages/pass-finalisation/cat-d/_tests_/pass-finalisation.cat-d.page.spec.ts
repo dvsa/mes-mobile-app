@@ -40,6 +40,8 @@ import { Code78Component } from '../../components/code-78/code-78';
 import { TransmissionType } from '../../../../shared/models/transmission-type';
 import { configureTestSuite } from 'ng-bullet';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { LicenceProvidedWarningBannerComponent } from
+    '../../components/licence-provided-warning-banner/licence-provided-warning-banner';
 
 describe('PassFinalisationCatDPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatDPage>;
@@ -196,6 +198,7 @@ describe('PassFinalisationCatDPage', () => {
         MockComponent(LanguagePreferencesComponent),
         MockComponent(WarningBannerComponent),
         MockComponent(Code78Component),
+        MockComponent(LicenceProvidedWarningBannerComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
