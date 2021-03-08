@@ -60,6 +60,7 @@ import {
 import { TestDataByCategoryProvider } from '../../../providers/test-data-by-category/test-data-by-category';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -92,6 +93,7 @@ export class NonPassFinalisationCatHomeTestPage extends BasePageComponent implem
   activityCode: ActivityCodeModel;
   subscription: Subscription;
   invalidTestDataModal: Modal;
+  category: CategoryCode;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -194,6 +196,9 @@ export class NonPassFinalisationCatHomeTestPage extends BasePageComponent implem
       activityCode$.pipe(
         map(activityCode => this.activityCode = activityCode),
       ),
+      category$.pipe(
+        map(category => this.category = category),
+      ),
     ).subscribe();
   }
 
@@ -228,7 +233,7 @@ export class NonPassFinalisationCatHomeTestPage extends BasePageComponent implem
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       const testDataIsInvalid = await this.activityCodeFinalisationProvider
-        .catHomeTestDataIsInvalid(this.activityCode.activityCode, this.testData);
+        .catHomeTestDataIsInvalid(this.activityCode.activityCode, this.testData, this.category);
 
       if (testDataIsInvalid) {
         this.openTestDataValidationModal();

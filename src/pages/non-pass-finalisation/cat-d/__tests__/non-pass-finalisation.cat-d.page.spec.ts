@@ -130,6 +130,7 @@ describe('NonPassFinalisationCatDPage', () => {
       it('should dispatch a change test state to WriteUp action', async () => {
         // Arrange
         store$.dispatch(new testActions.StartTest(123, TestCategory.D));
+        component.category = 'D';
         component.slotId = '123';
         component.activityCode = {
           activityCode: ActivityCodes.FAIL,
@@ -154,6 +155,7 @@ describe('NonPassFinalisationCatDPage', () => {
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
         spyOn(component.modalController, 'create').and.callThrough();
 
+        component.category = 'D';
         component.slotId = '123';
         component.activityCode = {
           activityCode: ActivityCodes.FAIL_CANDIDATE_STOPS_TEST,
@@ -179,6 +181,7 @@ describe('NonPassFinalisationCatDPage', () => {
         spyOn(component, 'openTestDataValidationModal').and.callThrough();
         spyOn(component.modalController, 'create').and.callThrough();
 
+        component.category = 'D';
         component.slotId = '123';
         component.activityCode = {
           activityCode: ActivityCodes.FAIL_PUBLIC_SAFETY,
