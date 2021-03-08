@@ -40,8 +40,8 @@ import {
 import {
   getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
-import { CAT_C } from '../../page-names.constants';
-import { includes } from 'lodash';
+import { CONFIRM_TEST_DETAILS } from '../../page-names.constants';
+// import { includes } from 'lodash';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 
@@ -242,17 +242,18 @@ export class HealthDeclarationCatCPage extends BasePageComponent {
           this.store$.dispatch(new ProvisionalLicenseNotReceived());
         }
         this.store$.dispatch(new ContinueFromDeclaration());
-        this.navController.push(CAT_C.BACK_TO_OFFICE_PAGE).then(() => {
+        // this.navController.push(CAT_C.BACK_TO_OFFICE_PAGE).then(() => {
+        this.navController.push(CONFIRM_TEST_DETAILS).then(() => {
           this.navController.getViews().forEach((view) => {
-            if (includes([
-              CAT_C.TEST_REPORT_PAGE,
-              CAT_C.DEBRIEF_PAGE,
-              CAT_C.PASS_FINALISATION_PAGE,
-              CAT_C.HEALTH_DECLARATION_PAGE,
-            ],
-              view.id)) {
-              this.navController.removeView(view);
-            }
+            // if (includes([
+            //   CAT_C.TEST_REPORT_PAGE,
+            //   CAT_C.DEBRIEF_PAGE,
+            //   CAT_C.PASS_FINALISATION_PAGE,
+            //   CAT_C.HEALTH_DECLARATION_PAGE,
+            // ],
+            //   view.id)) {
+            //   this.navController.removeView(view);
+            // }
           });
         });
       })
