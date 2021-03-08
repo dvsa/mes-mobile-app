@@ -727,15 +727,15 @@ export class OfficeCatDPage extends BasePageComponent {
 
   showFinishTestModal() {
     const alert = this.alertController.create({
-      title: 'Are you sure you want to upload this test?',
+      title: 'Are you sure you wish to mark the write up for this test as complete?',
       cssClass: 'finish-test-modal',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Back',
           handler: () => { },
         },
         {
-          text: 'Upload',
+          text: 'Continue',
           handler: () => this.completeTest(),
         },
       ],

@@ -137,8 +137,8 @@
       <button float-left id="defer-button" ion-button (click)="defer()">
         <h3>Save and continue later</h3>
       </button>
-      <button float-right class="mes-primary-button padding-x-5" ion-button (click)="onSubmit()">
-        <h3>Upload</h3>
+      <button float-right class="mes-primary-button" ion-button (click)="onSubmit()">
+        <h3>Mark as complete</h3>
       </button>
     </ion-col>
     <ion-col *ngIf="(pageState.isRekey$ | async) && !isDelegated">

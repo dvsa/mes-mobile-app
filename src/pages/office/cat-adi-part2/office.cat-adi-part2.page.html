@@ -29,7 +29,7 @@
             (setIsValidStartDateTime)="setIsValidStartDateTime($event)"
             (dateOfTestChange)="dateOfTestChanged($event)">
           </date-of-test>
-          
+
           <activity-code id="activity-code-card" [formGroup]="form"
             [activityCodeModel]="pageState.activityCode$ | async" [activityCodeOptions]="activityCodeOptions"
             (activityCodeChange)="activityCodeChanged($event)" [disabled]="true">
@@ -185,8 +185,8 @@
       <button float-left id="defer-button" ion-button (click)="defer()">
         <h3>Save and continue later</h3>
       </button>
-      <button float-right class="mes-primary-button padding-x-5" ion-button (click)="onSubmit()">
-        <h3>Upload</h3>
+      <button float-right class="mes-primary-button" ion-button (click)="onSubmit()">
+        <h3>Mark as complete</h3>
       </button>
     </ion-col>
     <ion-col *ngIf="(pageState.isRekey$ | async)">
