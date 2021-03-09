@@ -19,10 +19,7 @@ import {
   getUntitledCandidateName,
 } from '../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { ActivityCodeModel } from '../office/components/activity-code/activity-code.constants';
-import {
-  ActivityCode,
-  GearboxCategory,
-} from '@dvsa/mes-test-schema/categories/common';
+import { ActivityCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { getTestSlotAttributes }
   from '../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.reducer';
 import { getTestStartDateTime }
@@ -35,11 +32,25 @@ import { getGearboxCategory } from '../../modules/tests/vehicle-details/common/v
 import { getTestSummary } from '../../modules/tests/test-summary/common/test-summary.reducer';
 import { getD255 } from '../../modules/tests/test-summary/common/test-summary.selector';
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
-import { ContinueFromDeclaration } from '../health-declaration/health-declaration.actions';
-import { CAT_B } from '../page-names.constants';
-import { CategorySpecificVehicleDetails, VehicleDetailsByCategoryProvider }
-  from '../../providers/vehicle-details-by-category/vehicle-details-by-category';
+import {
+  CAT_A_MOD1,
+  CAT_A_MOD2,
+  CAT_ADI_PART2,
+  CAT_B,
+  CAT_BE,
+  CAT_C,
+  CAT_CPC,
+  CAT_D,
+  CAT_HOME_TEST,
+  CONFIRM_TEST_DETAILS,
+} from '../page-names.constants';
+import {
+  CategorySpecificVehicleDetails,
+  VehicleDetailsByCategoryProvider,
+} from '../../providers/vehicle-details-by-category/vehicle-details-by-category';
 import { TestOutcome } from '../../modules/tests/tests.constants';
+import { includes } from 'lodash';
+import { ConfirmTestDetailsViewDidEnter } from './confirm-test-details.actions';
 
 interface ConfirmTestDetailsPageState {
   candidateUntitledName$: Observable<string>;
@@ -103,6 +114,13 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
     }
 
     return true;
+  }
+
+  ionViewDidEnter(): void {
+    this.store$.dispatch(new ConfirmTestDetailsViewDidEnter());
+    this.navBar.backButtonClick = (e: UIEvent) => {
+      this.clickBack();
+    };
   }
 
   clickBack(): void {
@@ -213,7 +231,8 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
       buttons: [
         {
           text: 'Cancel',
-          handler: () => { },
+          handler: () => {
+          },
         },
         {
           text: 'Submit',
@@ -226,28 +245,63 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
   }
 
   persistAndNavigate() {
-    // const cat: string = `CAT_${this.category}`;
     this.deviceAuthenticationProvider.triggerLockScreen()
       .then(() => {
-        this.store$.dispatch(new ContinueFromDeclaration());
-        this.navController.push(CAT_B.BACK_TO_OFFICE_PAGE).then(() => {
-        //   this.navController.push(`CAT_${this.category}.BACK_TO_OFFICE_PAGE`).then(() => {
-          // this.navController.getViews().forEach((view) => {
-          //   if (includes([
-          //     CAT_B.TEST_REPORT_PAGE,
-          //     CAT_B.DEBRIEF_PAGE,
-          //     CAT_B.PASS_FINALISATION_PAGE,
-          //     CAT_B.HEALTH_DECLARATION_PAGE,
-          //   ],
-          //     view.id)) {
-          //     this.navController.removeView(view);
-          //   }
-          // });
+        this.navController.push(this.pageToNavigate(this.category, 'BACK_TO_OFFICE_PAGE')).then(() => {
+          this.navController.getViews().forEach((view) => {
+            if (includes([
+              this.pageToNavigate(this.category, 'TEST_REPORT_PAGE'),
+              this.pageToNavigate(this.category, 'DEBRIEF_PAGE'),
+              this.pageToNavigate(this.category, 'PASS_FINALISATION_PAGE'),
+              this.pageToNavigate(this.category, 'HEALTH_DECLARATION_PAGE'),
+              CONFIRM_TEST_DETAILS,
+            ], view.id)) {
+              this.navController.removeView(view);
+            }
+          });
         });
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  /**
+   * Return correct page constant based upon category
+   * @param category
+   * @param pageName
+   */
+  pageToNavigate(category, pageName) {
+    switch (category) {
+      case TestCategory.ADI2:
+        return CAT_ADI_PART2[pageName];
+      case TestCategory.B:
+        return CAT_B[pageName];
+      case TestCategory.BE:
+        return CAT_BE[pageName];
+      case TestCategory.C:
+        return CAT_C[pageName];
+      case TestCategory.CCPC:
+      case TestCategory.DCPC:
+        return CAT_CPC[pageName];
+      case TestCategory.D:
+        return CAT_D[pageName];
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K:
+        return CAT_HOME_TEST[pageName];
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAM1:
+      case TestCategory.EUAMM1:
+        return CAT_A_MOD1[pageName];
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAM2:
+      case TestCategory.EUAMM2:
+        return CAT_A_MOD2[pageName];
+    }
   }
 
   ionViewDidLeave(): void {

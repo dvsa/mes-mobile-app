@@ -40,8 +40,7 @@ import {
 import {
   getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
-import { CAT_D } from '../../page-names.constants';
-import { includes } from 'lodash';
+import { CONFIRM_TEST_DETAILS } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 
@@ -243,19 +242,7 @@ export class HealthDeclarationCatDPage extends BasePageComponent {
           this.store$.dispatch(new ProvisionalLicenseNotReceived());
         }
         this.store$.dispatch(new ContinueFromDeclaration());
-        this.navController.push(CAT_D.BACK_TO_OFFICE_PAGE).then(() => {
-          this.navController.getViews().forEach((view) => {
-            if (includes([
-              CAT_D.TEST_REPORT_PAGE,
-              CAT_D.DEBRIEF_PAGE,
-              CAT_D.PASS_FINALISATION_PAGE,
-              CAT_D.HEALTH_DECLARATION_PAGE,
-            ],
-              view.id)) {
-              this.navController.removeView(view);
-            }
-          });
-        });
+        this.navController.push(CONFIRM_TEST_DETAILS);
       })
       .catch((err) => {
         console.log(err);
