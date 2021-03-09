@@ -16,7 +16,9 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
-import { JournalRefreshModes } from '../../providers/analytics/analytics.model';
+import {
+  JournalRefreshModes,
+} from '../../providers/analytics/analytics.model';
 import {
   getSelectedDate, getLastRefreshed, getSlots,
   canNavigateToPreviousDay, canNavigateToNextDay, getCompletedTests,
@@ -194,36 +196,33 @@ export class JournalEffects {
   @Effect()
   loadCompletedTests$ = this.actions$.pipe(
     ofType(journalActions.LOAD_COMPLETED_TESTS),
-
-    withLatestFrom(
-      this.store$.pipe(
-        select(getJournalState),
-        select(getExaminer),
-        select(getStaffNumber),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getJournalState),
+          select(getExaminer),
+          select(getStaffNumber),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(hasStartedTests),
+        ),
+        this.store$.pipe(
+          select(getJournalState),
+          select(getCompletedTests),
+        ),
       ),
-      this.store$.pipe(
-        select(getTests),
-        select(hasStartedTests),
-      ),
-      this.store$.pipe(
-        select(getJournalState),
-        select(getCompletedTests),
-      ),
-    ),
-
+    )),
     filter((
       [action, staffNumber, hasStartedTests, completedTests]:
-      [journalActions.LoadCompletedTests, string, boolean, SearchResultTestSchema[]],
+        [journalActions.LoadCompletedTests, string, boolean, SearchResultTestSchema[]],
     ) => {
-
       // The callThrough property is set to true when doing a manual journal refresh for example
       if (action.callThrough) {
         return true;
       }
-
       return !hasStartedTests && completedTests && completedTests.length === 0;
     }),
-
     switchMap(([action, staffNumber]) => {
       const numberOfDaysToView = this.appConfig.getAppConfig().journal.numberOfDaysToView;
       const advancedSearchParams: AdvancedSearchParams = {
@@ -232,16 +231,13 @@ export class JournalEffects {
         staffNumber: removeLeadingZeros(staffNumber),
         costCode: '',
       };
-
       return this.searchProvider.advancedSearch(advancedSearchParams).pipe(
         map((searchResults) => {
           return new journalActions.LoadCompletedTestsSuccess(searchResults);
         }),
         catchError((err) => {
           return of(new journalActions.LoadCompletedTestsFailure(err));
-        }),
-      );
-
+        }));
     }),
   );
 
