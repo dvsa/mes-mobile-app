@@ -55,7 +55,8 @@
         <!-- D255 -->
         <data-row
           [label]="'D255'"
-          [value]="getD255Text(pageState.d255$ | async)">
+          [value]="getD255Text(pageState.d255$ | async)"
+          [shouldHaveSeperator]="false">
         </data-row>
       </ion-grid>
     </ion-card-content>
