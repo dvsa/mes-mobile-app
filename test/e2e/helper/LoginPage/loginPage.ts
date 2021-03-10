@@ -28,12 +28,12 @@ export class LoginPage extends Page {
     await browser.driver.selectContext('NATIVE_APP');
     await browser.wait(ExpectedConditions.presenceOf(this.loginpageElement.microsoftOnlineContinue));
     await this.loginpageElement.microsoftOnlineContinue.click();
-    // tslint:disable-next-line:max-line-length
     const useAnotherAccountButton = element(by.xpath(`//XCUIElementTypeButton[@name="Use another account, Use another account"]`));
     await browser.wait(ExpectedConditions.presenceOf(useAnotherAccountButton), TEST_CONFIG.Element_Wait);
     await useAnotherAccountButton.click();
 
     // Fill in username and click Next
+
     await browser.wait(ExpectedConditions.presenceOf(getUsernameField));
     await getUsernameField.sendKeys(username);
     await this.loginpageElement.nextButtonElement.click();
@@ -91,9 +91,13 @@ export class LoginPage extends Page {
         // Wait until we are on the login page before proceeding
         await browser.wait(ExpectedConditions.presenceOf(this.loginpageElement.microsoftOnlineContinue));
         await this.loginpageElement.microsoftOnlineContinue.click();
-        await browser.wait(ExpectedConditions.presenceOf(this.loginpageElement.selectUserToSignOut));
-        await this.loginpageElement.selectUserToSignOut.click();
-
+        try {
+          if (this.loginpageElement.selectUserToSignOut.isVisible()) {
+            await browser.wait(ExpectedConditions.presenceOf(this.loginpageElement.selectUserToSignOut));
+            await this.loginpageElement.selectUserToSignOut.click();
+          }
+        } catch {
+        }
         await browser.wait(ExpectedConditions.presenceOf(this.loginpageElement.cancelButton));
         await this.loginpageElement.cancelButton.click();
         await browser.wait(ExpectedConditions.presenceOf(this.loginpageElement.signInLink));
