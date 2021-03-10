@@ -5,7 +5,6 @@ import { PracticeableBasePageComponent } from '../../shared/classes/practiceable
 import { select, Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import { getTests } from '../../modules/tests/tests.reducer';
 import {
   getActivityCode,
@@ -32,18 +31,7 @@ import { getGearboxCategory } from '../../modules/tests/vehicle-details/common/v
 import { getTestSummary } from '../../modules/tests/test-summary/common/test-summary.reducer';
 import { getD255 } from '../../modules/tests/test-summary/common/test-summary.selector';
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
-import {
-  CAT_A_MOD1,
-  CAT_A_MOD2,
-  CAT_ADI_PART2,
-  CAT_B,
-  CAT_BE,
-  CAT_C,
-  CAT_CPC,
-  CAT_D,
-  CAT_HOME_TEST,
-  CONFIRM_TEST_DETAILS,
-} from '../page-names.constants';
+import * as pageConstants from '../page-names.constants';
 import {
   CategorySpecificVehicleDetails,
   VehicleDetailsByCategoryProvider,
@@ -64,17 +52,17 @@ interface ConfirmTestDetailsPageState {
   d255$: Observable<boolean>;
 }
 
-export enum LicenceReceivedText {
+enum LicenceReceivedText {
   TRUE = 'Yes - Please retain the candidates licence',
   FALSE = 'No - Please ensure that the licence is kept by the candidate',
 }
 
-export enum GearBox {
+enum GearBox {
   AUTOMATIC = 'Automatic - An automatic licence will be issued',
   MANUAL = 'Manual',
 }
 
-export enum D255 {
+enum D255 {
   TRUE = 'Yes - Please complete a D255',
   FALSE = 'No',
 }
@@ -101,7 +89,6 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
     public navController: NavController,
     public authenticationProvider: AuthenticationProvider,
     store$: Store<StoreModel>,
-    public deviceAuthenticationProvider: DeviceAuthenticationProvider,
     public alertController: AlertController,
     public vehicleDetailsProvider: VehicleDetailsByCategoryProvider,
   ) {
@@ -123,13 +110,7 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
   }
 
   clickBack(): void {
-    this.deviceAuthenticationProvider.triggerLockScreen()
-      .then(() => {
-        this.navController.pop();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.navController.pop();
   }
 
   ngOnInit(): void {
@@ -143,7 +124,7 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
     let category: TestCategory;
     currentTest$.pipe(select(getTestCategory)).subscribe((value) => {
       category = value as TestCategory;
-      const vehicleDetails = this.vehicleDetailsProvider.getVehicleDetailsOnlyByCategoryCode(category);
+      const vehicleDetails = this.vehicleDetailsProvider.getVehicleDetailsByCategoryCode(category);
       this.pageState = {
         candidateUntitledName$: currentTest$.pipe(
           select(getJournalData),
@@ -243,64 +224,19 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
     await alert.present();
   }
 
-  persistAndNavigate() {
-    this.deviceAuthenticationProvider.triggerLockScreen()
-      .then(() => {
-        this.navController.push(this.pageToNavigate(this.category, 'BACK_TO_OFFICE_PAGE')).then(() => {
-          this.navController.getViews().forEach((view) => {
-            if (includes([
-              this.pageToNavigate(this.category, 'TEST_REPORT_PAGE'),
-              this.pageToNavigate(this.category, 'DEBRIEF_PAGE'),
-              this.pageToNavigate(this.category, 'PASS_FINALISATION_PAGE'),
-              this.pageToNavigate(this.category, 'HEALTH_DECLARATION_PAGE'),
-              CONFIRM_TEST_DETAILS,
-            ], view.id)) {
-              this.navController.removeView(view);
-            }
-          });
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  /**
-   * Return correct page constant based upon category
-   * @param category
-   * @param pageName
-   */
-  pageToNavigate(category, pageName) {
-    switch (category) {
-      case TestCategory.ADI2:
-        return CAT_ADI_PART2[pageName];
-      case TestCategory.B:
-        return CAT_B[pageName];
-      case TestCategory.BE:
-        return CAT_BE[pageName];
-      case TestCategory.C:
-        return CAT_C[pageName];
-      case TestCategory.CCPC:
-      case TestCategory.DCPC:
-        return CAT_CPC[pageName];
-      case TestCategory.D:
-        return CAT_D[pageName];
-      case TestCategory.F:
-      case TestCategory.G:
-      case TestCategory.H:
-      case TestCategory.K:
-        return CAT_HOME_TEST[pageName];
-      case TestCategory.EUA1M1:
-      case TestCategory.EUA2M1:
-      case TestCategory.EUAM1:
-      case TestCategory.EUAMM1:
-        return CAT_A_MOD1[pageName];
-      case TestCategory.EUA1M2:
-      case TestCategory.EUA2M2:
-      case TestCategory.EUAM2:
-      case TestCategory.EUAMM2:
-        return CAT_A_MOD2[pageName];
-    }
+  async persistAndNavigate() {
+    await this.navController.push(pageConstants.pageToNavigate(this.category, 'BACK_TO_OFFICE_PAGE'));
+    this.navController.getViews().forEach((view) => {
+      if (includes([
+        pageConstants.pageToNavigate(this.category, 'TEST_REPORT_PAGE'),
+        pageConstants.pageToNavigate(this.category, 'DEBRIEF_PAGE'),
+        pageConstants.pageToNavigate(this.category, 'PASS_FINALISATION_PAGE'),
+        pageConstants.pageToNavigate(this.category, 'HEALTH_DECLARATION_PAGE'),
+        pageConstants.CONFIRM_TEST_DETAILS,
+      ], view.id)) {
+        this.navController.removeView(view);
+      }
+    });
   }
 
   ionViewDidLeave(): void {

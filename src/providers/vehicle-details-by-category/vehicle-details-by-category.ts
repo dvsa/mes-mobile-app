@@ -35,6 +35,18 @@ export class VehicleDetailsByCategoryProvider {
 
   public getVehicleDetailsByCategoryCode(category: CategoryCode): CategorySpecificVehicleDetails {
     switch (category) {
+      case TestCategory.ADI2:
+        return {
+          vehicleDetails: getVehicleDetailsADI2,
+          vehicleWidth: null,
+          vehicleLength: null,
+        };
+      case TestCategory.B:
+        return {
+          vehicleDetails: getVehicleDetailsB,
+          vehicleWidth: null,
+          vehicleLength: null,
+        };
       case TestCategory.BE:
         return {
           vehicleDetails: getVehicleDetailsBE,
@@ -59,45 +71,14 @@ export class VehicleDetailsByCategoryProvider {
           vehicleWidth: getVehicleWidthD,
           vehicleLength: getVehicleLengthD,
         };
-      default:
-        throw new Error(VehicleDetailsByCategoryProvider.getVehicleDetailsByCategoryCodeErrMsg);
-    }
-  }
-
-  public getVehicleDetailsOnlyByCategoryCode(category: CategoryCode): any {
-    switch (category) {
-      case TestCategory.ADI2:
-        return {
-          vehicleDetails: getVehicleDetailsADI2,
-        };
-      case TestCategory.B:
-        return {
-          vehicleDetails: getVehicleDetailsB,
-        };
-      case TestCategory.BE:
-        return {
-          vehicleDetails: getVehicleDetailsBE,
-        };
-      case TestCategory.C:
-      case TestCategory.C1:
-      case TestCategory.CE:
-      case TestCategory.C1E:
-        return {
-          vehicleDetails: getVehicleDetailsC,
-        };
-      case TestCategory.D:
-      case TestCategory.D1:
-      case TestCategory.DE:
-      case TestCategory.D1E:
-        return {
-          vehicleDetails: getVehicleDetailsD,
-        };
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
       case TestCategory.EUAM1:
       case TestCategory.EUAMM1:
         return {
           vehicleDetails: getVehicleDetailsAM1,
+          vehicleWidth: null,
+          vehicleLength: null,
         };
       case TestCategory.EUA1M2:
       case TestCategory.EUA2M2:
@@ -105,6 +86,8 @@ export class VehicleDetailsByCategoryProvider {
       case TestCategory.EUAMM2:
         return {
           vehicleDetails: getVehicleDetailsAM2,
+          vehicleWidth: null,
+          vehicleLength: null,
         };
       default:
         throw new Error(VehicleDetailsByCategoryProvider.getVehicleDetailsByCategoryCodeErrMsg);

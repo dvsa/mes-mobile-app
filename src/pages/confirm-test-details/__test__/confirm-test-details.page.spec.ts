@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
@@ -12,21 +11,18 @@ import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { NavControllerMock, PlatformMock } from 'ionic-mocks';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { DeviceAuthenticationProviderMock }
-  from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
 import { Subscription } from 'rxjs';
-import { ConfirmTestDetailsPage, D255, GearBox, LicenceReceivedText } from '../confirm-test-details.page';
+import { ConfirmTestDetailsPage } from '../confirm-test-details.page';
 import { ConfirmTestDetailsViewDidEnter } from '../confirm-test-details.actions';
 import { TestOutcome } from '../../../modules/tests/tests.constants';
 import { ActivityCodeModel } from '../../office/components/activity-code/activity-code.constants';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
-import { CAT_B, CAT_C } from '../../page-names.constants';
+import * as pageConstants from '../../page-names.constants';
 
 describe('ConfirmTestDetailsPage', () => {
   let fixture: ComponentFixture<ConfirmTestDetailsPage>;
   let component: ConfirmTestDetailsPage;
   let store$: Store<StoreModel>;
-  let deviceAuthenticationProvider: DeviceAuthenticationProvider;
+  let navController: NavController;
 
   const mockAlertCtrl = {
     create: () => {
@@ -83,7 +79,6 @@ describe('ConfirmTestDetailsPage', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: AlertController, useValue: mockAlertCtrl },
-        { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
       ],
     });
   });
@@ -91,14 +86,14 @@ describe('ConfirmTestDetailsPage', () => {
   beforeEach(async(() => {
     fixture = TestBed.createComponent(ConfirmTestDetailsPage);
     component = fixture.componentInstance;
-    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+    navController = TestBed.get(NavController);
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch').and.callThrough();
     component.subscription = new Subscription();
   }));
 
   describe('ionViewDidEnter', () => {
-    it('should dispatch ConfirmTestDetailsViewDidEnter', () => {
+    it('should dispatch ConfirmTestDetailsViewDidEnter and call backButtonClick', () => {
       component.ionViewDidEnter();
       expect(store$.dispatch).toHaveBeenCalledWith(new ConfirmTestDetailsViewDidEnter());
     });
@@ -106,8 +101,9 @@ describe('ConfirmTestDetailsPage', () => {
 
   describe('clickBack', () => {
     it('should should trigger the lock screen', () => {
+      spyOn(navController, 'pop');
       component.clickBack();
-      expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+      expect(navController.pop).toHaveBeenCalled();
     });
   });
 
@@ -139,29 +135,30 @@ describe('ConfirmTestDetailsPage', () => {
   });
 
   describe('getProvisionalText', () => {
-    it('should return LicenceReceivedText.TRUE if true', () => {
-      expect(component.getProvisionalText(true)).toEqual(LicenceReceivedText.TRUE);
+    it('should return appropriate string if true', () => {
+      expect(component.getProvisionalText(true)).toEqual('Yes - Please retain the candidates licence');
     });
-    it('should return LicenceReceivedText.FALSE if false', () => {
-      expect(component.getProvisionalText(false)).toEqual(LicenceReceivedText.FALSE);
+    it('should return appropriate string if false', () => {
+      // tslint:disable-next-line:max-line-length
+      expect(component.getProvisionalText(false)).toEqual('No - Please ensure that the licence is kept by the candidate');
     });
   });
 
   describe('getTransmissionText', () => {
-    it('should return GearBox.MANUAL if Manual', () => {
-      expect(component.getTransmissionText('Manual')).toEqual(GearBox.MANUAL);
+    it('should return appropriate string if Manual', () => {
+      expect(component.getTransmissionText('Manual')).toEqual('Manual');
     });
-    it('should return GearBox.AUTOMATIC if Automatic', () => {
-      expect(component.getTransmissionText('Automatic')).toEqual(GearBox.AUTOMATIC);
+    it('should return appropriate string if Automatic', () => {
+      expect(component.getTransmissionText('Automatic')).toEqual('Automatic - An automatic licence will be issued');
     });
   });
 
   describe('getD255Text', () => {
-    it('should return D255.TRUE if true', () => {
-      expect(component.getD255Text(true)).toEqual(D255.TRUE);
+    it('should return appropriate string if true', () => {
+      expect(component.getD255Text(true)).toEqual('Yes - Please complete a D255');
     });
-    it('should return D255.FALSE if false', () => {
-      expect(component.getD255Text(false)).toEqual(D255.FALSE);
+    it('should return appropriate string if false', () => {
+      expect(component.getD255Text(false)).toEqual('No');
     });
   });
 
@@ -182,18 +179,10 @@ describe('ConfirmTestDetailsPage', () => {
   });
 
   describe('persistAndNavigate', () => {
-    it('should call device auth provider triggerLockScreen', () => {
-      component.persistAndNavigate();
-      expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
-    });
-  });
-
-  describe('pageToNavigate', () => {
-    it('should return Cat B and TEST_REPORT_PAGE when passed in as values', () => {
-      expect(component.pageToNavigate(TestCategory.B, 'TEST_REPORT_PAGE')).toEqual(CAT_B.TEST_REPORT_PAGE);
-    });
-    it('should return Cat C and PASS_FINALISATION_PAGE when passed in as values', () => {
-      expect(component.pageToNavigate(TestCategory.C, 'PASS_FINALISATION_PAGE')).toEqual(CAT_C.PASS_FINALISATION_PAGE);
+    it('should call device auth provider triggerLockScreen', async () => {
+      spyOn(pageConstants, 'pageToNavigate').and.returnValue(pageConstants.CAT_B.BACK_TO_OFFICE_PAGE);
+      await component.persistAndNavigate();
+      expect(navController.push).toHaveBeenCalledWith(pageConstants.CAT_B.BACK_TO_OFFICE_PAGE);
     });
   });
 
