@@ -101,7 +101,7 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
     public navController: NavController,
     public authenticationProvider: AuthenticationProvider,
     store$: Store<StoreModel>,
-    private deviceAuthenticationProvider: DeviceAuthenticationProvider,
+    public deviceAuthenticationProvider: DeviceAuthenticationProvider,
     public alertController: AlertController,
     public vehicleDetailsProvider: VehicleDetailsByCategoryProvider,
   ) {
@@ -112,7 +112,6 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
     }
-
     return true;
   }
 
@@ -219,11 +218,11 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
     return d255 ? D255.TRUE : D255.FALSE;
   }
 
-  onSubmit() {
-    this.showConfirmTestDetailsModal();
+  async onSubmit() {
+    await this.showConfirmTestDetailsModal();
   }
 
-  showConfirmTestDetailsModal() {
+  async showConfirmTestDetailsModal() {
     const alert = this.alertController.create({
       message: `You are about to submit a Cat ${this.category} ${this.testOutcome} for ${this.candidateName}
                 <br/><br/>Are you sure you want to submit this result?`,
@@ -241,7 +240,7 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
       ],
       enableBackdropDismiss: false,
     });
-    alert.present();
+    await alert.present();
   }
 
   persistAndNavigate() {
