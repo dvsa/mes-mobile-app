@@ -214,11 +214,17 @@ export function getPageNameByCategoryAndKey(category: TestCategory, pageNameKey:
     case TestCategory.BE:
       return CAT_BE[pageNameKey];
     case TestCategory.C:
+    case TestCategory.C1:
+    case TestCategory.CE:
+    case TestCategory.C1E:
       return CAT_C[pageNameKey];
     case TestCategory.CCPC:
     case TestCategory.DCPC:
       return CAT_CPC[pageNameKey];
     case TestCategory.D:
+    case TestCategory.D1:
+    case TestCategory.DE:
+    case TestCategory.D1E:
       return CAT_D[pageNameKey];
     case TestCategory.F:
     case TestCategory.G:
