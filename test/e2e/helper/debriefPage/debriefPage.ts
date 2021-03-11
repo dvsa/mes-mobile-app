@@ -6,11 +6,11 @@ export class DebriefPage extends Page {
   debriefPageElement: debriefPageObject = new debriefPageObject();
 
   async clickEndDebriefButton() {
-    await this.clickElement(this.debriefPageElement.EndDebriefButton);
+    await this.clickElement(this.debriefPageElement.endDebriefButton);
   }
 
   async clickEndDebriefButtonWelsh() {
-    await this.clickElement(this.debriefPageElement.EndDebriefButtonWelsh);
+    await this.clickElement(this.debriefPageElement.endDebriefButtonWelsh);
   }
 
   async completePassdetails(testCategory) {
@@ -46,23 +46,23 @@ export class DebriefPage extends Page {
   }
 
   async clickProvisionalLicenceReceived() {
-    await this.clickElement(this.debriefPageElement.ProvisionalLicenceReceived);
+    await this.clickElement(this.debriefPageElement.provisionalLicenceReceived);
   }
   // todo: kc also on nonPassFinalisationPage
   async clickD255Yes() {
-    await this.clickElement(this.debriefPageElement.D255Yes);
+    await this.clickElement(this.debriefPageElement.d255Yes);
   }
 
   async clickD255No() {
-    await this.clickElement(this.debriefPageElement.D255No);
+    await this.clickElement(this.debriefPageElement.d255No);
   }
 
   async clickDebriefWitnessedYes() {
-    await this.clickElement(this.debriefPageElement.DebriefWitnessedYes);
+    await this.clickElement(this.debriefPageElement.debriefWitnessedYes);
   }
 
   async clickLanguageYes() {
-    await this.clickElement(this.debriefPageElement.LanguageYes);
+    await this.clickElement(this.debriefPageElement.languageYes);
   }
 
   async clickContinueToPassFinalisationButton(testCategory: string) {
@@ -76,14 +76,14 @@ export class DebriefPage extends Page {
   // todo: kc there seem to be 2 continue buttons....why?  Are they on different pages?
   // todo: is it different ways of calling the same button?
   async clickContinueButton2() {
-    await this.clickElement(this.debriefPageElement.ContinueButton2);
+    await this.clickElement(this.debriefPageElement.continueButton2);
   }
 
   async clickCode78NotReceived() {
-    await this.clickElement(this.debriefPageElement.Code78NotReceived);
+    await this.clickElement(this.debriefPageElement.code78NotReceived);
   }
 
   async clickCode78Received() {
-    await this.clickElement(this.debriefPageElement.Code78Received);
+    await this.clickElement(this.debriefPageElement.code78Received);
   }
 }

@@ -11,8 +11,8 @@ import { PageHelper } from '../helper/PageHelper/pageHelper';
 import { PageHelperObject } from '../helper/PageHelper/pageHelper.po';
 import { TestReportPage } from '../helper/testReportPage/testReportPage';
 import { TestReportPageObject } from '../helper/testReportPage/testReportPage.po';
-import { TEST_CONFIG } from '../utilities/test.config';
 import { DashboardPageObject } from '../helper/dashboardPage/dashboardPage.po';
+import { TEST_CONFIG } from '../test.config';
 
 const loginPage: LoginPage = new LoginPage();
 const landingPage: LandingPage = new LandingPage();

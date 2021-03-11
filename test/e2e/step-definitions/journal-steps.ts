@@ -1,11 +1,11 @@
 import { browser, ExpectedConditions } from 'protractor';
-import { TEST_CONFIG } from '../utilities/test.config';
 import { Given, Then, When } from 'cucumber';
 import { DashboardPage } from '../helper/dashboardPage/dashboardPage';
 import { JournalPage } from '../helper/Journal/jounralPage';
 import { JournalPageObjects } from '../helper/Journal/jounralPage.po';
 import { PageHelper } from '../helper/PageHelper/pageHelper';
 import { LandingPage } from '../helper/landingPage/landingPage';
+import { TEST_CONFIG } from '../test.config';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');

@@ -2,37 +2,37 @@ import { Page } from '../../utilities/page';
 
 export class debriefPageObject extends Page {
 
-  EndDebriefButton =
+  endDebriefButton =
     this.getElementByXPath('//button[span[h3[text()="End debrief"]]]');
 
-  EndDebriefButtonWelsh =
+  endDebriefButtonWelsh =
     this.getElementByXPath('//button[span[h3[text()="Diwedd ôl-drafodaeth"]]]');
 
-  ProvisionalLicenceReceived =
+  provisionalLicenceReceived =
     this.getElementById('license-received');
 
-  D255Yes =
+  d255Yes =
     this.getElementById('d255-yes');
 
-  D255No =
+  d255No =
     this.getElementById('d255-no');
 
-  DebriefWitnessedYes =
+  debriefWitnessedYes =
     this.getElementById('debrief-witnessed-yes');
 
-  LanguageYes =
+  languageYes =
     this.getElementById('lang-pref-english');
 
-  ContinueButton2 =
+  continueButton2 =
     this.getElementById('continue-button');
 
-  Code78NotReceived =
+  code78NotReceived =
     this.getElementById('code-78-not-received');
 
-  Code78Received =
+  code78Received =
     this.getElementById('code-78-received');
 
-  ApplicationRefField =
+  applicationRefField =
     this.getElementByXPath('//ion-row[@id="application-reference-card"]/ion-col/span');
 
   ContinueToPassFinalisationButton(testCategory: string) {

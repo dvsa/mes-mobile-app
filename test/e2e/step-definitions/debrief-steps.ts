@@ -126,6 +126,6 @@ Then('I see a vehicle check fault for {string}', async (faultDescription) => {
 
 Then('I should see the application reference {string}', async (applicationRef) => {
   // @ts-ignore
-  const applicationRefField = await debriefPageElement.ApplicationRefField();
+  const applicationRefField = await debriefPageElement.applicationRefField();
   return expect(await applicationRefField.getText()).to.eventually.equal(applicationRef);
 });

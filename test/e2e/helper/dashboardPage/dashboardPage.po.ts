@@ -1,5 +1,6 @@
-import { TEST_CONFIG } from '../../utilities/test.config';
+
 import { Page } from '../../utilities/page';
+import { TEST_CONFIG } from '../../test.config';
 
 export class DashboardPageObject extends Page {
 

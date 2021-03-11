@@ -26,7 +26,7 @@ export class LoginPage extends Page {
     const webviewContext = await browser.driver.getCurrentContext();
     // Switch to NATIVE context
     await browser.driver.selectContext('NATIVE_APP');
-    await browser.wait(ExpectedConditions.visibilityOf(this.loginpageElement.microsoftOnlineContinue), TEST_CONFIG.Element_Wait);
+    await browser.wait(ExpectedConditions.presenceOf(this.loginpageElement.microsoftOnlineContinue), TEST_CONFIG.Element_Wait);
     await this.loginpageElement.microsoftOnlineContinue.click();
     const useAnotherAccountButton = element(by.xpath(`//XCUIElementTypeButton[@name="Use another account, Use another account"]`));
     await browser.wait(ExpectedConditions.visibilityOf(useAnotherAccountButton), TEST_CONFIG.Element_Wait);
