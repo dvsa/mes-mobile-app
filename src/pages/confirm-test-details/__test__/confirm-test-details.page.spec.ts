@@ -178,10 +178,10 @@ describe('ConfirmTestDetailsPage', () => {
     });
   });
 
-  describe('persistAndNavigate', () => {
+  describe('onTestDetailsConfirm', () => {
     it('should call device auth provider triggerLockScreen', async () => {
-      spyOn(pageConstants, 'pageToNavigate').and.returnValue(pageConstants.CAT_B.BACK_TO_OFFICE_PAGE);
-      await component.persistAndNavigate();
+      spyOn(pageConstants, 'getPageNameByCategoryAndKey').and.returnValue(pageConstants.CAT_B.BACK_TO_OFFICE_PAGE);
+      await component.onTestDetailsConfirm();
       expect(navController.push).toHaveBeenCalledWith(pageConstants.CAT_B.BACK_TO_OFFICE_PAGE);
     });
   });

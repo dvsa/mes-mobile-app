@@ -203,9 +203,9 @@ type PageNameKeys =
 /**
  * Return correct page constant based upon category
  * @param category
- * @param pageName
+ * @param pageNameKey
  */
-export function pageToNavigate(category: TestCategory, pageNameKey: PageNameKeys): string {
+export function getPageNameByCategoryAndKey(category: TestCategory, pageNameKey: PageNameKeys): string {
   switch (category) {
     case TestCategory.ADI2:
       return CAT_ADI_PART2[pageNameKey];

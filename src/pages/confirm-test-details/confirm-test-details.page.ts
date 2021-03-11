@@ -203,7 +203,7 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
     await this.showConfirmTestDetailsModal();
   }
 
-  async showConfirmTestDetailsModal() {
+  async showConfirmTestDetailsModal(): Promise<void> {
     const alert = this.alertController.create({
       message: `You are about to submit a Cat ${this.category} ${this.testOutcome} for ${this.candidateName}
                 <br/><br/>Are you sure you want to submit this result?`,
@@ -216,7 +216,7 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
         },
         {
           text: 'Submit',
-          handler: () => this.persistAndNavigate(),
+          handler: () => this.onTestDetailsConfirm(),
         },
       ],
       enableBackdropDismiss: false,
@@ -224,14 +224,14 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
     await alert.present();
   }
 
-  async persistAndNavigate() {
-    await this.navController.push(pageConstants.pageToNavigate(this.category, 'BACK_TO_OFFICE_PAGE'));
+  async onTestDetailsConfirm(): Promise<void> {
+    await this.navController.push(pageConstants.getPageNameByCategoryAndKey(this.category, 'BACK_TO_OFFICE_PAGE'));
     this.navController.getViews().forEach((view) => {
       if (includes([
-        pageConstants.pageToNavigate(this.category, 'TEST_REPORT_PAGE'),
-        pageConstants.pageToNavigate(this.category, 'DEBRIEF_PAGE'),
-        pageConstants.pageToNavigate(this.category, 'PASS_FINALISATION_PAGE'),
-        pageConstants.pageToNavigate(this.category, 'HEALTH_DECLARATION_PAGE'),
+        pageConstants.getPageNameByCategoryAndKey(this.category, 'TEST_REPORT_PAGE'),
+        pageConstants.getPageNameByCategoryAndKey(this.category, 'DEBRIEF_PAGE'),
+        pageConstants.getPageNameByCategoryAndKey(this.category, 'PASS_FINALISATION_PAGE'),
+        pageConstants.getPageNameByCategoryAndKey(this.category, 'HEALTH_DECLARATION_PAGE'),
         pageConstants.CONFIRM_TEST_DETAILS,
       ], view.id)) {
         this.navController.removeView(view);
