@@ -1,6 +1,7 @@
 <ion-row [ngClass]="shouldHaveSeperator ? 'mes-data-row-with-separator': 'mes-data-row'">
     <ion-col col-40>
     <label>{{ label }}</label>
+    <label *ngIf="label2"><br>{{ label2 }}</label>
     <img
       alt="Exclamation Indicator"
       src="assets/imgs/journal/exclamation-indicator.png"

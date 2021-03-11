@@ -39,8 +39,7 @@ import {
 import {
   getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
-import { CAT_HOME_TEST } from '../../page-names.constants';
-import { includes } from 'lodash';
+import { CONFIRM_TEST_DETAILS } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { getCandidate } from '../../../modules/tests/journal-data/cat-home/candidate/candidate.cat-home.reducer';
@@ -242,19 +241,7 @@ export class HealthDeclarationCatHomeTestPage extends BasePageComponent {
           this.store$.dispatch(new ProvisionalLicenseNotReceived());
         }
         this.store$.dispatch(new ContinueFromDeclaration());
-        this.navController.push(CAT_HOME_TEST.BACK_TO_OFFICE_PAGE).then(() => {
-          this.navController.getViews().forEach((view) => {
-            if (includes([
-              CAT_HOME_TEST.TEST_REPORT_PAGE,
-              CAT_HOME_TEST.DEBRIEF_PAGE,
-              CAT_HOME_TEST.PASS_FINALISATION_PAGE,
-              CAT_HOME_TEST.HEALTH_DECLARATION_PAGE,
-            ],
-              view.id)) {
-              this.navController.removeView(view);
-            }
-          });
-        });
+        this.navController.push(CONFIRM_TEST_DETAILS);
       })
       .catch((err) => {
         console.log(err);

@@ -6,6 +6,14 @@ import { getVehicleDetails as getVehicleDetailsD }
   from '../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.reducer';
 import { getVehicleDetails as getVehicleDetailsBE }
   from '../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
+import { getVehicleDetails as getVehicleDetailsB }
+  from '../../modules/tests/vehicle-details/cat-b/vehicle-details.cat-b.reducer';
+import { getVehicleDetails as getVehicleDetailsADI2 }
+  from '../../modules/tests/vehicle-details/cat-adi-part2/vehicle-details.cat-adi-part2.reducer';
+import { getVehicleDetails as getVehicleDetailsAM1 }
+  from '../../modules/tests/vehicle-details/cat-a-mod1/vehicle-details.cat-a-mod1.reducer';
+import { getVehicleDetails as getVehicleDetailsAM2 }
+  from '../../modules/tests/vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.reducer';
 import { getVehicleWidth as getVehicleWidthBE, getVehicleLength as getVehicleLengthBE }
   from '../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.selector';
 import { getVehicleWidth as getVehicleWidthC, getVehicleLength as getVehicleLengthC }
@@ -27,6 +35,18 @@ export class VehicleDetailsByCategoryProvider {
 
   public getVehicleDetailsByCategoryCode(category: CategoryCode): CategorySpecificVehicleDetails {
     switch (category) {
+      case TestCategory.ADI2:
+        return {
+          vehicleDetails: getVehicleDetailsADI2,
+          vehicleWidth: null,
+          vehicleLength: null,
+        };
+      case TestCategory.B:
+        return {
+          vehicleDetails: getVehicleDetailsB,
+          vehicleWidth: null,
+          vehicleLength: null,
+        };
       case TestCategory.BE:
         return {
           vehicleDetails: getVehicleDetailsBE,
@@ -50,6 +70,24 @@ export class VehicleDetailsByCategoryProvider {
           vehicleDetails: getVehicleDetailsD,
           vehicleWidth: getVehicleWidthD,
           vehicleLength: getVehicleLengthD,
+        };
+      case TestCategory.EUA1M1:
+      case TestCategory.EUA2M1:
+      case TestCategory.EUAM1:
+      case TestCategory.EUAMM1:
+        return {
+          vehicleDetails: getVehicleDetailsAM1,
+          vehicleWidth: null,
+          vehicleLength: null,
+        };
+      case TestCategory.EUA1M2:
+      case TestCategory.EUA2M2:
+      case TestCategory.EUAM2:
+      case TestCategory.EUAMM2:
+        return {
+          vehicleDetails: getVehicleDetailsAM2,
+          vehicleWidth: null,
+          vehicleLength: null,
         };
       default:
         throw new Error(VehicleDetailsByCategoryProvider.getVehicleDetailsByCategoryCodeErrMsg);
