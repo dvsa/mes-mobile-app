@@ -30,6 +30,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { configureTestSuite } from 'ng-bullet';
 import { SearchProviderMock } from '../../../providers/search/__mocks__/search.mock';
 import { SearchProvider } from '../../../providers/search/search';
+import { CompletedTestPersistenceProvider } from
+    '../../../providers/completed-test-persistence/completed-test-persistence';
+import { CompletedTestPersistenceProviderMock } from
+    '../../../providers/completed-test-persistence/__mocks__/completed-test-persistence.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -75,6 +79,7 @@ describe('Journal Effects', () => {
         SlotProvider,
         { provide: LogHelper, useClass: LogHelperMock },
         Device,
+        { provide: CompletedTestPersistenceProvider, useClass: CompletedTestPersistenceProviderMock },
       ],
     });
   });

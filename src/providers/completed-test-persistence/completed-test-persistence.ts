@@ -19,7 +19,7 @@ export class CompletedTestPersistenceProvider {
     await this.dataStoreProvider.setItem(this.completedTestKeychainKey, JSON.stringify(completedTests));
   }
 
-  async loadPersistedTests(): Promise<void> {
+  async loadCompletedPersistedTests(): Promise<void> {
     let completedTests: SearchResultTestSchema[] | null = null;
     try {
       const persistedTestJson = await this.dataStoreProvider.getItem(this.completedTestKeychainKey);
