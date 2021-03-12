@@ -161,7 +161,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     super.ionViewWillEnter();
     this.loadJournalManually();
     this.setupPolling();
-    await this.completedTestPersistenceProvider.loadPersistedTests();
+    await this.completedTestPersistenceProvider.loadCompletedPersistedTests();
 
     this.store$.dispatch(new journalActions.LoadCompletedTests());
 

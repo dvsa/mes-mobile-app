@@ -49,6 +49,10 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { SlotProvider } from '../../../providers/slot/slot';
 import { configureTestSuite } from 'ng-bullet';
+import { CompletedTestPersistenceProviderMock } from
+    '../../../providers/completed-test-persistence/__mocks__/completed-test-persistence.mock';
+import { CompletedTestPersistenceProvider } from
+    '../../../providers/completed-test-persistence/completed-test-persistence';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -90,6 +94,7 @@ describe('JournalPage', () => {
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: SlotProvider, useClass: SlotProvider },
+        { provide: CompletedTestPersistenceProvider, useClass: CompletedTestPersistenceProviderMock },
       ],
     });
   });
