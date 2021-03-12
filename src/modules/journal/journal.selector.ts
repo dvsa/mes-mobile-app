@@ -4,6 +4,9 @@ import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
+import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
+import { TestSlot } from '@dvsa/mes-journal-schema';
+import { formatApplicationReference } from '../../shared/helpers/formatters';
 
 export const getSlots = (journal: JournalModel) => journal.slots;
 
@@ -60,14 +63,35 @@ export const getAllSlots = (journal: JournalModel): SlotItem[] => {
 };
 
 export const getPermittedSlotIdsBeforeToday = (
-  journal: JournalModel, today: DateTime, slotProvider: SlotProvider): number[] => {
+  journal: JournalModel,
+  today: DateTime,
+  slotProvider: SlotProvider,
+): number[] => {
   const slots = getSlots(journal);
   const arrayOfDateStrings = Object.keys(slots).filter((date: string) => {
     const thisDate = new DateTime(date);
     return thisDate.isBefore(today.format('YYYY-MM-DD'));
   });
-  return flatten((arrayOfDateStrings.map(date => slots[date].filter(slot => slotProvider.canStartTest(slot.slotData))
-    .map(slot => slot.slotData.slotDetail.slotId))));
+  return flatten(
+    (arrayOfDateStrings.map(
+      (date: string) => slots[date]
+        .filter((slotItem: SlotItem) => slotProvider.canStartTest(slotItem.slotData))
+        .filter((slotItem: SlotItem) => {
+          if (!('booking' in slotItem.slotData)) { // NonTestActivity
+            return false;
+          }
+          const testSlot = slotItem.slotData as TestSlot;
+          const applicationReference = formatApplicationReference({
+            applicationId: testSlot.booking.application.applicationId,
+            bookingSequence: testSlot.booking.application.bookingSequence,
+            checkDigit: testSlot.booking.application.checkDigit,
+          } as ApplicationReference);
+          // allow through if appRef is not already in completedTest list
+          return !journal.completedTests
+            .map((testResult: SearchResultTestSchema) => testResult.applicationReference)
+            .includes(Number(applicationReference));
+        }))),
+  ).map((slot: SlotItem) => slot.slotData.slotDetail.slotId);
 };
 
 export const getCompletedTests = (journalModel: JournalModel): SearchResultTestSchema[] => {
