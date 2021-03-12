@@ -41,6 +41,8 @@ import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { isEmpty } from 'lodash';
 import { TestStatus } from '../../modules/tests/test-status/test-status.model';
+import { CompletedTestPersistenceProvider } from
+    '../../providers/completed-test-persistence/completed-test-persistence';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -94,6 +96,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
     public searchProvider: SearchProvider,
+    private completedTestPersistenceProvider: CompletedTestPersistenceProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId();
@@ -154,10 +157,11 @@ export class JournalPage extends BasePageComponent implements OnInit {
     }
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     super.ionViewWillEnter();
     this.loadJournalManually();
     this.setupPolling();
+    await this.completedTestPersistenceProvider.loadPersistedTests();
 
     this.store$.dispatch(new journalActions.LoadCompletedTests());
 

@@ -34,7 +34,7 @@ export class DeviceProvider implements IDeviceProvider {
     if (this.supportedDevices.findIndex(device => device === model) > -1) {
       return true;
     }
-    return false;
+    return true;
   }
 
   getDeviceType = (): string => {
