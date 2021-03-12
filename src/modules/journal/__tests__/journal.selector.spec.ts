@@ -304,7 +304,7 @@ describe('JournalSelector', () => {
                 },
                 booking: {
                   application: {
-                    applicationId: 1234561,
+                    applicationId: 1234562,
                     bookingSequence: 1,
                     checkDigit: 4,
                     welshTest: false,
@@ -334,7 +334,7 @@ describe('JournalSelector', () => {
                 },
                 booking: {
                   application: {
-                    applicationId: 1234561,
+                    applicationId: 1234563,
                     bookingSequence: 1,
                     checkDigit: 4,
                     welshTest: false,
@@ -356,13 +356,23 @@ describe('JournalSelector', () => {
         },
         selectedDate: '2019-01-14',
         examiner: { staffNumber: '123', individualId: 456 },
-        completedTests: [],
+        completedTests: [
+          {
+            costCode: '1',
+            testDate: '2021-03-12',
+            driverNumber: 'AAAA',
+            candidateName: { firstName: 'Name' },
+            applicationReference: 1234561014,
+            category: 'B',
+            activityCode: '1',
+          },
+        ],
       };
 
       const slotIds = getPermittedSlotIdsBeforeToday(journal, DateTime.at('2019-01-14'), slotProvider);
 
-      expect(slotIds.length).toBe(2);
-      expect(slotIds).toEqual([1001, 2001]);
+      expect(slotIds.length).toBe(1);
+      expect(slotIds).toEqual([2001]);
     });
   });
 
