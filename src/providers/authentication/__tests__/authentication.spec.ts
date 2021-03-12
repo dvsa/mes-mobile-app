@@ -15,6 +15,9 @@ import { AppConfig } from '../../app-config/app-config.model';
 import { configureTestSuite } from 'ng-bullet';
 import { DataStoreProvider } from '../../data-store/data-store';
 import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
+import { CompletedTestPersistenceProvider } from '../../completed-test-persistence/completed-test-persistence';
+import { CompletedTestPersistenceProviderMock } from
+    '../../completed-test-persistence/__mocks__/completed-test-persistence.mock';
 
 describe('Authentication', () => {
   let authenticationProvider: AuthenticationProvider;
@@ -33,6 +36,7 @@ describe('Authentication', () => {
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: TestPersistenceProvider, useClass: TestPersistenceProviderMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
+        { provide: CompletedTestPersistenceProvider, useClass: CompletedTestPersistenceProviderMock },
       ],
     });
   });
