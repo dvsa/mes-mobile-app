@@ -55,6 +55,7 @@ import {
 import { CPCQuestionProvider } from '../providers/cpc-questions/cpc-questions';
 import { SearchProvider } from '../providers/search/search';
 import { TestResultProvider } from '../providers/test-result/test-result';
+import { CompletedTestPersistenceProvider } from '../providers/completed-test-persistence/completed-test-persistence';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -162,6 +163,7 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
     CPCQuestionProvider,
     SearchProvider,
     TestResultProvider,
+    CompletedTestPersistenceProvider,
   ],
 })
 export class AppModule { }
