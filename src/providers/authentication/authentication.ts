@@ -4,6 +4,7 @@ import { NetworkStateProvider, ConnectionStatus } from '../network-state/network
 import { TestPersistenceProvider } from '../test-persistence/test-persistence';
 import { IonicAuth, IonicAuthOptions } from '@ionic-enterprise/auth';
 import { DataStoreProvider } from '../data-store/data-store';
+import { CompletedTestPersistenceProvider } from '../completed-test-persistence/completed-test-persistence';
 
 export enum Token {
   ID = 'idToken',
@@ -25,6 +26,7 @@ export class AuthenticationProvider {
     private networkState: NetworkStateProvider,
     private appConfig: AppConfigProvider,
     private testPersistenceProvider: TestPersistenceProvider,
+    private completedTestPersistenceProvider: CompletedTestPersistenceProvider,
   ) {
   }
 
@@ -158,6 +160,7 @@ export class AuthenticationProvider {
   public async logout(): Promise<void> {
     if (this.appConfig.getAppConfig().logoutClearsTestPersistence) {
       await this.testPersistenceProvider.clearPersistedTests();
+      await this.completedTestPersistenceProvider.clearPersistedCompletedTests();
     }
     await this.clearTokens();
     await this.ionicAuth.logout();

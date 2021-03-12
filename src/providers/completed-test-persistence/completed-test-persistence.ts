@@ -19,6 +19,14 @@ export class CompletedTestPersistenceProvider {
     await this.dataStoreProvider.setItem(this.completedTestKeychainKey, JSON.stringify(completedTests));
   }
 
+  async clearPersistedCompletedTests(): Promise<void> {
+    const items: string[] = await this.dataStoreProvider.getKeys();
+    if (items.indexOf(this.completedTestKeychainKey) >= 0) {
+      await this.dataStoreProvider.removeItem(this.completedTestKeychainKey);
+    }
+    return Promise.resolve();
+  }
+
   async loadCompletedPersistedTests(): Promise<void> {
     let completedTests: SearchResultTestSchema[] | null = null;
     try {

@@ -58,4 +58,12 @@ describe('TestPersistenceProvider', () => {
     });
   });
 
+  describe('clearPersistedCompletedTests', () => {
+    it('should clear persisted tests', async() => {
+      spyOn(dataStoreProvider, 'getKeys').and.returnValue(Promise.resolve(['COMPLETED_TESTS']));
+      await completedTestPersistenceProvider.clearPersistedCompletedTests();
+      expect(dataStoreProvider.removeItem).toHaveBeenCalledWith('COMPLETED_TESTS');
+    });
+  });
+
 });
