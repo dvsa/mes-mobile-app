@@ -45,6 +45,8 @@ import { getStaffNumber } from '../tests/journal-data/common/examiner/examiner.s
 import { hasStartedTests } from '../tests/tests.selector';
 import { getTests } from '../tests/tests.reducer';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
+import { CompletedTestPersistenceProvider } from
+    '../../providers/completed-test-persistence/completed-test-persistence';
 
 @Injectable()
 export class JournalEffects {
@@ -60,6 +62,7 @@ export class JournalEffects {
     public dateTimeProvider: DateTimeProvider,
     public searchProvider: SearchProvider,
     private logHelper: LogHelper,
+    private completedTestPersistenceProvider: CompletedTestPersistenceProvider,
   ) {
   }
 
@@ -232,7 +235,8 @@ export class JournalEffects {
         costCode: '',
       };
       return this.searchProvider.advancedSearch(advancedSearchParams).pipe(
-        map((searchResults) => {
+        map(async(searchResults) => {
+          await this.completedTestPersistenceProvider.persistCompletedTests(searchResults);
           return new journalActions.LoadCompletedTestsSuccess(searchResults);
         }),
         catchError((err) => {
