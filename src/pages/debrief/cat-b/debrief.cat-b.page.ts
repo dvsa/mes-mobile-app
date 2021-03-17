@@ -189,16 +189,7 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
       this.navController.push(CAT_B.PASS_FINALISATION_PAGE);
       return;
     }
-    this.navController.push(CAT_B.POST_DEBRIEF_HOLDING_PAGE).then(() => {
-      const testReportPage = this.navController.getViews().find(view => view.id === CAT_B.TEST_REPORT_PAGE);
-      if (testReportPage) {
-        this.navController.removeView(testReportPage);
-      }
-      const debriefPage = this.navController.getViews().find(view => view.id === CAT_B.DEBRIEF_PAGE);
-      if (debriefPage) {
-        this.navController.removeView(debriefPage);
-      }
-    });
+    this.navController.push(CAT_B.POST_DEBRIEF_HOLDING_PAGE);
   }
 
 }

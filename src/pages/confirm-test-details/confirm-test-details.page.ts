@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, IonicPage, Navbar, NavController, Platform } from 'ionic-angular';
+import { AlertController, IonicPage, Navbar, NavController, Platform, ViewController } from 'ionic-angular';
 import { merge, Observable, Subscription } from 'rxjs';
 import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { select, Store } from '@ngrx/store';
@@ -111,6 +111,12 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
 
   clickBack(): void {
     this.navController.pop();
+  }
+
+  async goBackToDebrief(): Promise<void> {
+    const debriefPage: string = pageConstants.getPageNameByCategoryAndKey(this.category, 'DEBRIEF_PAGE');
+    const debriefView: ViewController = this.navController.getViews().find(view => view.id === debriefPage);
+    await this.navController.popTo(debriefView);
   }
 
   ngOnInit(): void {
