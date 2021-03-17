@@ -147,16 +147,7 @@ export class DebriefCatCPCPage extends BasePageComponent {
       this.navController.push(CAT_CPC.PASS_FINALISATION_PAGE);
       return;
     }
-    this.navController.push(CAT_CPC.POST_DEBRIEF_HOLDING_PAGE).then(() => {
-      const testReportPage = this.navController.getViews().find(view => view.id === CAT_CPC.TEST_REPORT_PAGE);
-      if (testReportPage) {
-        this.navController.removeView(testReportPage);
-      }
-      const debriefPage = this.navController.getViews().find(view => view.id === CAT_CPC.DEBRIEF_PAGE);
-      if (debriefPage) {
-        this.navController.removeView(debriefPage);
-      }
-    });
+    this.navController.push(CAT_CPC.POST_DEBRIEF_HOLDING_PAGE);
   }
 
 }

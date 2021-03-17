@@ -182,7 +182,8 @@ export const CAT_CPC: BasePageNames = {
 type BasePageNames = {
   [key in PageNameKeys]?: string;
 };
-type PageNameKeys =
+
+export type PageNameKeys =
   'REKEY_UPLOAD_OUTCOME_PAGE' |
   'BACK_TO_OFFICE_PAGE' |
   'COMMUNICATION_PAGE' |
