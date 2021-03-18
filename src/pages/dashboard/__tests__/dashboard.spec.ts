@@ -27,6 +27,10 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { journalReducer } from '../../../modules/journal/journal.reducer';
 import { SlotProvider } from '../../../providers/slot/slot';
 import { configureTestSuite } from 'ng-bullet';
+import { CompletedTestPersistenceProvider }
+  from '../../../providers/completed-test-persistence/completed-test-persistence';
+import { CompletedTestPersistenceProviderMock }
+  from '../../../providers/completed-test-persistence/__mocks__/completed-test-persistence.mock';
 
 describe('DashboardPage', () => {
   let fixture: ComponentFixture<DashboardPage>;
@@ -58,6 +62,7 @@ describe('DashboardPage', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: App, useClass: MockAppComponent },
         { provide: SlotProvider, useClass: SlotProvider },
+        { provide: CompletedTestPersistenceProvider, useClass: CompletedTestPersistenceProviderMock },
       ],
     });
   });
