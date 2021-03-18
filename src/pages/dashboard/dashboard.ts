@@ -19,6 +19,8 @@ import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-
 import * as journalActions from './../../modules/journal/journal.actions';
 import { DateTime } from '../../shared/helpers/date-time';
 import { LogoutBasePageComponent } from '../../shared/classes/logout-base-page';
+import { CompletedTestPersistenceProvider } from
+    '../../providers/completed-test-persistence/completed-test-persistence';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
@@ -59,6 +61,7 @@ export class DashboardPage extends LogoutBasePageComponent {
     private deviceProvider: DeviceProvider,
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
+    private completedTestPersistenceProvider: CompletedTestPersistenceProvider,
   ) {
     super(platform, navController, authenticationProvider, alertController);
     this.employeeId = this.authenticationProvider.getEmployeeId() || 'NOT_KNOWN';
@@ -103,13 +106,14 @@ export class DashboardPage extends LogoutBasePageComponent {
     };
   }
 
-  ionViewWillEnter(): boolean {
+  async ionViewWillEnter() {
     super.ionViewWillEnter();
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
     }
     this.todaysDate = this.dateTimeProvider.now();
     this.todaysDateFormatted = this.dateTimeProvider.now().format('dddd Do MMMM YYYY');
+    await this.completedTestPersistenceProvider.loadCompletedPersistedTests();
 
     return true;
   }
