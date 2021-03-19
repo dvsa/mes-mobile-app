@@ -235,8 +235,8 @@ export class JournalEffects {
         costCode: '',
       };
       return this.searchProvider.advancedSearch(advancedSearchParams).pipe(
-        map(async(searchResults) => {
-          await this.completedTestPersistenceProvider.persistCompletedTests(searchResults);
+        tap(searchResults => this.completedTestPersistenceProvider.persistCompletedTests(searchResults)),
+        map((searchResults) => {
           return new journalActions.LoadCompletedTestsSuccess(searchResults);
         }),
         catchError((err) => {
