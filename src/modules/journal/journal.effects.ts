@@ -233,7 +233,7 @@ export class JournalEffects {
         endDate: moment().format('YYYY-MM-DD'),
         staffNumber: removeLeadingZeros(staffNumber),
         costCode: '',
-        excludeAutoSavedTests: '1',
+        excludeAutoSavedTests: 'true',
       };
       return this.searchProvider.advancedSearch(advancedSearchParams).pipe(
         tap(searchResults => this.completedTestPersistenceProvider.persistCompletedTests(searchResults)),
