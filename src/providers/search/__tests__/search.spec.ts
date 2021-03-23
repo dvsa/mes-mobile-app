@@ -52,6 +52,7 @@ describe('SearchProvider', () => {
         endDate: '12-12-12',
         staffNumber: '12345',
         costCode: 'abc',
+        excludeAutoSavedTests: 'true',
       };
 
       searchProvider.advancedSearch(params).subscribe();
