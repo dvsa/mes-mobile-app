@@ -39,6 +39,8 @@ import {
 import { TestOutcome } from '../../modules/tests/tests.constants';
 import { includes } from 'lodash';
 import { ConfirmTestDetailsViewDidEnter } from './confirm-test-details.actions';
+import { SetTestStatusWriteUp } from '../../modules/tests/test-status/test-status.actions';
+import { PersistTests } from '../../modules/tests/tests.actions';
 
 interface ConfirmTestDetailsPageState {
   candidateUntitledName$: Observable<string>;
@@ -50,6 +52,7 @@ interface ConfirmTestDetailsPageState {
   provisionalLicense$: Observable<boolean>;
   transmission$: Observable<GearboxCategory>;
   d255$: Observable<boolean>;
+  slotId$: Observable<string>;
 }
 
 enum LicenceReceivedText {
@@ -83,6 +86,7 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
   subscription: Subscription;
   merged$: Observable<boolean | string>;
   vehicleDetails: CategorySpecificVehicleDetails;
+  slotId: string;
 
   constructor(
     public platform: Platform,
@@ -114,9 +118,10 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
   }
 
   async goBackToDebrief(): Promise<void> {
-    const debriefPage: string = pageConstants.getPageNameByCategoryAndKey(this.category, 'DEBRIEF_PAGE');
-    const debriefView: ViewController = this.navController.getViews().find(view => view.id === debriefPage);
-    await this.navController.popTo(debriefView);
+    const pageToNav = this.isPassed(this.testOutcome) ? 'DEBRIEF_PAGE' : 'NON_PASS_FINALISATION_PAGE';
+    const previousPage: string = pageConstants.getPageNameByCategoryAndKey(this.category, pageToNav);
+    const previousView: ViewController = this.navController.getViews().find(view => view.id === previousPage);
+    await this.navController.popTo(previousView);
   }
 
   ngOnInit(): void {
@@ -132,6 +137,10 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
       category = value as TestCategory;
       const vehicleDetails = this.vehicleDetailsProvider.getVehicleDetailsByCategoryCode(category);
       this.pageState = {
+        slotId$: this.store$.pipe(
+          select(getTests),
+          map(tests => tests.currentTest.slotId),
+        ),
         candidateUntitledName$: currentTest$.pipe(
           select(getJournalData),
           select(getCandidate),
@@ -172,12 +181,13 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
       };
     });
 
-    const { testCategory$, testOutcomeText$, candidateUntitledName$ } = this.pageState;
+    const { testCategory$, testOutcomeText$, candidateUntitledName$, slotId$ } = this.pageState;
 
     this.merged$ = merge(
       testCategory$.pipe(map(value => this.category = value)),
       testOutcomeText$.pipe(map(value => this.testOutcome = value)),
       candidateUntitledName$.pipe(tap(value => this.candidateName = value)),
+      slotId$.pipe(map(slotId => this.slotId = slotId)),
     );
   }
 
@@ -211,7 +221,7 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
 
   async showConfirmTestDetailsModal(): Promise<void> {
     const alert = this.alertController.create({
-      message: `You are about to submit a Cat ${this.category} ${this.testOutcome} for ${this.candidateName}
+      message: `You are about to submit a ${this.testOutcome} Cat ${this.category} test for ${this.candidateName}
                 <br/><br/>Are you sure you want to submit this result?`,
       cssClass: 'confirm-declaration-modal',
       buttons: [
@@ -231,6 +241,11 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
   }
 
   async onTestDetailsConfirm(): Promise<void> {
+
+    if (!this.isPassed(this.testOutcome)) {
+      this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
+      this.store$.dispatch(new PersistTests());
+    }
     await this.navController.push(pageConstants.getPageNameByCategoryAndKey(this.category, 'BACK_TO_OFFICE_PAGE'));
     this.navController.getViews().forEach((view) => {
       if (includes([

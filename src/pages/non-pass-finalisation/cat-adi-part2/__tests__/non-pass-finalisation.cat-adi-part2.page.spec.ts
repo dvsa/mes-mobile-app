@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed, fakeAsync, tick, flushMicrotasks } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, Platform } from 'ionic-angular';
 import { NavControllerMock, PlatformMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
@@ -14,7 +14,6 @@ import {
   NonPassFinalisationValidationError,
 } from '../../non-pass-finalisation.actions';
 import { ActivityCodeComponent } from '../../../office/components/activity-code/activity-code';
-import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
 import * as testActions from '../../../../modules/tests/tests.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { LanguagePreferencesComponent } from
@@ -29,7 +28,6 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
 '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { configureTestSuite } from 'ng-bullet';
-import { CAT_ADI_PART2 } from '../../../page-names.constants';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
 import { ActivityCodeDescription } from '../../../../pages/office/components/activity-code/activity-code.constants';
 import {
@@ -40,7 +38,6 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatADIPart2Page>;
   let component: NonPassFinalisationCatADIPart2Page;
   let store$: Store<StoreModel>;
-  let navController$: NavController;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
@@ -69,7 +66,6 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
     fixture = TestBed.createComponent(NonPassFinalisationCatADIPart2Page);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
-    navController$ = TestBed.get(NavController);
     spyOn(store$, 'dispatch');
   }));
 
@@ -104,56 +100,7 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
         expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });
-    describe('OnContinue', () => {
-
-      it('should remove non pass finalisation from view', fakeAsync(() => {
-        spyOn(navController$, 'push').and.returnValue(Promise.resolve());
-        spyOn(navController$, 'getViews').and.returnValue([
-          { id: CAT_ADI_PART2.TEST_REPORT_PAGE },
-          { id: CAT_ADI_PART2.DEBRIEF_PAGE },
-          { id: CAT_ADI_PART2.NON_PASS_FINALISATION_PAGE },
-        ]);
-        spyOn(navController$, 'removeView');
-        component.activityCode = {
-          activityCode: ActivityCodes.FAIL,
-          description: ActivityCodeDescription.FAIL,
-        },
-        component.testData = {
-          dangerousFaults: {},
-          seriousFaults: {},
-        };
-
-        component.continue();
-        flushMicrotasks();
-        expect(navController$.push).toHaveBeenCalledWith(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE);
-        flushMicrotasks();
-        expect(navController$.getViews).toHaveBeenCalled();
-        flushMicrotasks();
-        expect(navController$.removeView).toHaveBeenCalledWith({ id: 'NonPassFinalisationCatADIPart2Page' });
-        expect(navController$.removeView).toHaveBeenCalledWith({ id: 'TestReportCatADIPart2Page' });
-        expect(navController$.removeView).toHaveBeenCalledWith({ id: 'DebriefCatADIPart2Page' });
-      }));
-
-      it('should dispatch a change test state to WriteUp action', async () => {
-        // Arrange
-        store$.dispatch(new testActions.StartTest(123, TestCategory.ADI2));
-        component.slotId = '123';
-        component.activityCode = {
-          activityCode: ActivityCodes.FAIL,
-          description: ActivityCodeDescription.FAIL,
-        },
-        component.testData = {
-          dangerousFaults: {},
-          seriousFaults: {},
-        };
-
-        // Act
-        await component.continue();
-
-        // Assert
-        expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
-      });
-
+    describe('continue', () => {
       // tslint:disable-next-line:max-line-length
       it('should create the TestFinalisationInvalidTestDataModal when activityCode is 5 and no S/D faults', async () => {
         // Arrange
@@ -177,7 +124,6 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
         // Assert
         expect(component.openTestDataValidationModal).toHaveBeenCalled();
         expect(component.modalController.create).toHaveBeenCalled();
-        expect(store$.dispatch).not.toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
       // tslint:disable-next-line:max-line-length
       it('should create the TestFinalisationInvalidTestDataModal when activityCode is 4 and no S/D faults', async () => {
@@ -202,7 +148,6 @@ describe('NonPassFinalisationCatADIPart2Page', () => {
         // Assert
         expect(component.openTestDataValidationModal).toHaveBeenCalled();
         expect(component.modalController.create).toHaveBeenCalled();
-        expect(store$.dispatch).not.toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
 
       it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {

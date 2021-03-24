@@ -13,7 +13,6 @@ import {
   NonPassFinalisationValidationError,
 } from '../../non-pass-finalisation.actions';
 import { ActivityCodeComponent } from '../../../office/components/activity-code/activity-code';
-import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
 import * as testActions from '../../../../modules/tests/tests.actions';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { D255Component } from '../../../../components/test-finalisation/d255/d255';
@@ -113,27 +112,7 @@ describe('NonPassFinalisationCatHomeTestPage', () => {
         expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });
-    describe('OnContinue', () => {
-      it('should dispatch a change test state to WriteUp action', async () => {
-        // Arrange
-        store$.dispatch(new testActions.StartTest(123, TestCategory.K));
-        component.slotId = '123';
-        component.activityCode = {
-          activityCode: ActivityCodes.FAIL,
-          description: ActivityCodeDescription.FAIL,
-        },
-        component.testData = {
-          dangerousFaults: {},
-          seriousFaults: {},
-        };
-
-        // Act
-        await component.continue();
-
-        // Assert
-        expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
-      });
-
+    describe('continue', () => {
       // tslint:disable-next-line:max-line-length
       it('should create the TestFinalisationInvalidTestDataModal when activityCode is 5 and no S/D faults', async () => {
         // Arrange
@@ -158,7 +137,6 @@ describe('NonPassFinalisationCatHomeTestPage', () => {
         // Assert
         expect(component.openTestDataValidationModal).toHaveBeenCalled();
         expect(component.modalController.create).toHaveBeenCalled();
-        expect(store$.dispatch).not.toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
       // tslint:disable-next-line:max-line-length
       it('should create the TestFinalisationInvalidTestDataModal when activityCode is 4 and no S/D faults', async () => {
@@ -184,7 +162,6 @@ describe('NonPassFinalisationCatHomeTestPage', () => {
         // Assert
         expect(component.openTestDataValidationModal).toHaveBeenCalled();
         expect(component.modalController.create).toHaveBeenCalled();
-        expect(store$.dispatch).not.toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
 
       it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {

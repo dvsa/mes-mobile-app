@@ -3,7 +3,7 @@ import { IonicPage, Modal, ModalController, NavController, Platform } from 'ioni
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { CAT_A_MOD1 } from '../../page-names.constants';
+import { CAT_A_MOD1, CONFIRM_TEST_DETAILS } from '../../page-names.constants';
 import { merge, Observable, Subscription } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
@@ -38,7 +38,6 @@ import {
   activityCodeModelList,
 } from '../../office/components/activity-code/activity-code.constants';
 import { FormGroup } from '@angular/forms';
-import { PersistTests } from '../../../modules/tests/tests.actions';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 import { behaviourMap } from '../../office/office-behaviour-map.cat-a-mod1';
@@ -52,7 +51,6 @@ import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
-import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { TestData } from '@dvsa/mes-test-schema/categories/AM1';
@@ -242,9 +240,7 @@ export class NonPassFinalisationCatAMod1Page extends BasePageComponent implement
         return;
       }
 
-      this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
-      this.store$.dispatch(new PersistTests());
-      this.navController.push(CAT_A_MOD1.BACK_TO_OFFICE_PAGE);
+      await this.navController.push(CONFIRM_TEST_DETAILS);
       return;
     }
     Object.keys(this.form.controls).forEach((controlName) => {
