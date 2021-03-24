@@ -19,7 +19,7 @@
 
       <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
 
-        <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission> 
+        <transmission [formGroup]="form" (transmissionChange)="transmissionChanged($event)"></transmission>
 
         <d255 [display]="pageState.displayD255$ | async" [d255]="pageState.d255$ | async"
           [outcome]="pageState.testOutcome$ | async" [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
@@ -39,7 +39,7 @@
 <ion-footer>
   <div id="footer-background">
     <button ion-button id="continue-button" class="mes-primary-button" (click)="continue()">
-      <h3>Submit</h3>
+      <h3>Continue</h3>
     </button>
   </div>
 </ion-footer>
