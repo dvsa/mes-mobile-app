@@ -13,6 +13,9 @@ import {
   NonPassFinalisationValidationError,
 } from '../../non-pass-finalisation.actions';
 import { ActivityCodeComponent } from '../../../office/components/activity-code/activity-code';
+import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
+import * as testActions from '../../../../modules/tests/tests.actions';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { LanguagePreferencesComponent } from
     '../../../../components/test-finalisation/language-preference/language-preferences';
 import { DebriefWitnessedComponent } from
@@ -93,7 +96,14 @@ describe('NonPassFinalisationCatCPCPage', () => {
         expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });
-    describe('continue', () => {
+    describe('OnContinue', () => {
+      it('should dispatch a change test state to WriteUp action', async () => {
+        store$.dispatch(new testActions.StartTest(123, TestCategory.C));
+        component.slotId = '123';
+        component.continue();
+        expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
+      });
+
       it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
         component.form = new FormGroup({
           requiredControl1: new FormControl(null, [Validators.required]),
