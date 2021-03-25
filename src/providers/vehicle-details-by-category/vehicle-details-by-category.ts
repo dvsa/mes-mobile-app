@@ -21,6 +21,7 @@ import { getVehicleWidth as getVehicleWidthC, getVehicleLength as getVehicleLeng
 import { getVehicleWidth as getVehicleWidthD, getVehicleLength as getVehicleLengthD }
   from '../../modules/tests/vehicle-details/cat-d/vehicle-details.cat-d.selector';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { getVehicleDetails } from '../../modules/tests/vehicle-details/common/vehicle-details.reducer';
 
 export interface CategorySpecificVehicleDetails {
   vehicleDetails: any;
@@ -70,6 +71,15 @@ export class VehicleDetailsByCategoryProvider {
           vehicleDetails: getVehicleDetailsD,
           vehicleWidth: getVehicleWidthD,
           vehicleLength: getVehicleLengthD,
+        };
+      case TestCategory.F:
+      case TestCategory.G:
+      case TestCategory.H:
+      case TestCategory.K:
+        return {
+          vehicleDetails: getVehicleDetails,
+          vehicleWidth: null,
+          vehicleLength: null,
         };
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
