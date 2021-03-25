@@ -1,54 +1,58 @@
-import { Then, When, Before } from 'cucumber';
-import PostDebriefHoldingPage from '../pages/postDebriefHoldingPage';
+import {Before, Then, When} from 'cucumber';
+import {PostDebriefHoldingPage} from '../helper/postDebriefHoldingPage/postDebriefHoldingPage';
+import {PostDebriefHoldingPageObject} from '../helper/postDebriefHoldingPage/postDebriefHoldingPage.po';
+
+let postDebriefHoldingPage: PostDebriefHoldingPage = new PostDebriefHoldingPage();
+let postDebriefHoldingPageElement: PostDebriefHoldingPageObject = new PostDebriefHoldingPageObject;
 
 this.testCategory = 'b';
 
-Before({ tags: '@catbe' }, () => {
+Before({tags: '@catbe'}, () => {
   this.testCategory = 'be';
 });
 
-Before({ tags: '@catc' }, () => {
+Before({tags: '@catc'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catc1' }, () => {
+Before({tags: '@catc1'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catce' }, () => {
+Before({tags: '@catce'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@cata' }, () => {
+Before({tags: '@cata'}, () => {
   this.testCategory = 'a-mod1';
 });
 
-Before({ tags: '@catm2' }, () => {
+Before({tags: '@catm2'}, () => {
   this.testCategory = 'a-mod2';
 });
 
-Before({ tags: '@catd' }, () => {
+Before({tags: '@catd'}, () => {
   this.testCategory = 'd';
 });
 
-Before({ tags: '@catHome' }, () => {
+Before({tags: '@catHome'}, () => {
   this.testCategory = 'home-test';
 });
 
-Before({ tags: '@catADI2' }, () => {
+Before({tags: '@catADI2'}, () => {
   this.testCategory = 'adi-part2';
 });
 
-Before({ tags: '@catcpc' }, () => {
+Before({tags: '@catcpc'}, () => {
   this.testCategory = 'cpc';
 });
 
 
 Then('I am on the post debrief holding page', () => {
   // No page title so need to check something else exists that exists on the page
-  return PostDebriefHoldingPage.isCurrentPage(this.testCategory);
+  return postDebriefHoldingPageElement.isCurrentPage(this.testCategory);
 });
 
-When('I continue to the non pass finalisation page', () => {
-  PostDebriefHoldingPage.clickContinueToNonPassFinalisationButton();
+When('I continue to the non pass finalisation page', async () => {
+  await postDebriefHoldingPage.clickContinueToNonPassFinalisationButton();
 });

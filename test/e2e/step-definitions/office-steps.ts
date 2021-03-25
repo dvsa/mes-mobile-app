@@ -1,6 +1,9 @@
-import {Then, When, Before} from 'cucumber';
-import OfficePage from '../pages/OfficePage';
-import officePage from '../pages/OfficePage';
+import {Before, Then, When} from 'cucumber';
+import {OfficePage} from '../helper/office/office';
+import {OfficePageObject} from '../helper/office/office.po';
+
+let officePage: OfficePage = new OfficePage();
+let officePageObject: OfficePageObject = new OfficePageObject();
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -48,113 +51,112 @@ Before({tags: '@catADI2'}, () => {
   this.testCategory = 'adi-part2';
 });
 
-Before({ tags: '@catcpc' }, () => {
+Before({tags: '@catcpc'}, () => {
   this.testCategory = 'cpc';
 });
 
-
-When('I complete the office write up', () => {
+When('I complete the office write up', async () => {
   if (this.testCategory === 'cpc') {
-    OfficePage.enterCandidateDescription();
+    await officePage.enterCandidateDescription();
   } else {
     if (this.testCategory !== 'home-test') {
       if (!(this.testCategory === 'a-mod1')) {
-        OfficePage.enterRouteNumber('2');
+        await officePage.enterRouteNumber('2');
         if (this.testCategory === 'be' || this.testCategory === 'c' || this.testCategory === 'c1' ||
           this.testCategory === 'ce' || this.testCategory === 'd') {
-          OfficePage.enterIndependentDriving('diagram');
+          await officePage.enterIndependentDriving('diagram');
         } else if (this.testCategory === 'a-mod2') {
-          OfficePage.enterTestConductedOn('cartobike');
-          OfficePage.enterIndependentDriving('diagram');
+          await officePage.enterTestConductedOn('cartobike');
+          await officePage.enterIndependentDriving('diagram');
         } else if (this.testCategory === 'adi-part2') {
-          OfficePage.enterIndependentDriving('satnav');
-          OfficePage.selectShowMeQuestion('1', 'A20 - Front demister');
-          OfficePage.selectShowMeQuestion('2', 'A21 - Side window');
+          await officePage.enterIndependentDriving('satnav');
+          await officePage.selectShowMeQuestion('1', 'A20 - Front demister');
+          await officePage.selectShowMeQuestion('2', 'A21 - Side window');
         } else {
-          OfficePage.enterShowMe('S5 - Horn');
-          OfficePage.enterIndependentDriving('satnav');
-          OfficePage.enterShowMe('S1 - Rear windscreen');
+          await officePage.enterShowMe('S5 - Horn');
+          await officePage.enterIndependentDriving('satnav');
+          await officePage.enterShowMe('S1 - Rear windscreen');
         }
       } else {
-        OfficePage.clickCircuit('left');
+        await officePage.clickCircuit('left');
       }
     }
-    OfficePage.enterCandidateDescription();
-    OfficePage.enterWeatherConditions();
+    await officePage.enterCandidateDescription();
+    await officePage.enterWeatherConditions();
   }
 });
 
-When('I complete the office write up with Not applicable to independent driving and show me question', () => {
-  OfficePage.enterRouteNumber('4');
-  OfficePage.enterIndependentDriving('na');
-  OfficePage.enterCandidateDescription();
-  OfficePage.enterShowMe('N/A - Not applicable');
-  OfficePage.enterWeatherConditions();
+When('I complete the office write up with Not applicable to independent driving and show me question', async () => {
+  await officePage.enterRouteNumber('4');
+  await officePage.enterIndependentDriving('na');
+  await officePage.enterCandidateDescription();
+  await officePage.enterShowMe('N/A - Not applicable');
+  await officePage.enterWeatherConditions();
 });
 
-When('I upload the test', () => {
-  OfficePage.uploadTest();
+When('I upload the test', async () => {
+  await officePage.uploadTest();
 });
 
-When('I try to upload the test', () => {
-  OfficePage.clickUploadButton();
+When('I try to upload the test', async () => {
+  await officePage.clickUploadButton();
 });
 
-When('I enter a candidate description', () => {
-  OfficePage.enterCandidateDescription();
+When('I enter a candidate description', async () => {
+  await officePage.enterCandidateDescription();
 });
 
-When('I enter assessment report description', () => {
-  OfficePage.enterAssessmentReport();
+When('I enter assessment report description', async () => {
+  await officePage.enterAssessmentReport();
 });
 
-When('I complete the weather conditions', () => {
-  OfficePage.enterWeatherConditions();
+When('I complete the weather conditions', async () => {
+  await officePage.enterWeatherConditions();
 });
 
-When('I complete the {string} circuit', (circuitType) => {
-  OfficePage.clickCircuit(circuitType);
+When('I complete the {string} circuit', async (circuitType) => {
+  await officePage.clickCircuit(circuitType);
 });
-When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel) => {
-  const commentsField = OfficePage.getCommentsField(faultSeverity, faultLabel);
-  commentsField.sendKeys(`Comment for ${faultSeverity} fault: ${faultLabel}`);
-});
-
-Then('the office activity code should be {string}', (activityCode) => {
-  const activityCodeField = OfficePage.getActivityCodeField(this.testCategory);
-  return expect(activityCodeField.getText()).to.eventually.equal(activityCode);
+When('I enter a comment for {string} fault {string}', async (faultSeverity, faultLabel) => {
+  const commentsField = officePageObject.CommentsField(faultSeverity, faultLabel);
+  await commentsField.sendKeys(`Comment for ${faultSeverity} fault: ${faultLabel}`);
 });
 
-Then('I have a {string} fault for {string} requiring a comment', (faultSeverity, faultLabel) => {
-  const commentsValidationText = OfficePage.getCommentsValidationText(faultSeverity, faultLabel);
+Then('the office activity code should be {string}', async (activityCode) => {
+  const activityCodeField = officePageObject.ActivityCodeField(this.testCategory);
+  return expect(await activityCodeField.getText()).to.eventually.equal(activityCode);
+});
+
+Then('I have a {string} fault for {string} requiring a comment', async (faultSeverity, faultLabel) => {
+  const commentsValidationText = officePageObject.CommentsValidationText(faultSeverity, faultLabel);
   expect(commentsValidationText.getText()).to.eventually.equal('Provide a comment');
-  return expect(commentsValidationText.getAttribute('class')).to.eventually.contain('ng-invalid');
+  return expect(await commentsValidationText.getAttribute('class')).to.eventually.contain('ng-invalid');
 });
 
-Then('the tell me question should be {string}', (tellMeQuestion: string) => {
-  const tellMeQuestionField = OfficePage.getTellMeQuestionField();
-  return expect(tellMeQuestionField.getText()).to.eventually.equal(tellMeQuestion);
+Then('the tell me question should be {string}', async (tellMeQuestion: string) => {
+  const tellMeQuestionField = officePageObject.getTellMeQuestionField();
+  return expect(await tellMeQuestionField.getText()).to.eventually.equal(tellMeQuestion);
 });
 
-Then('the office page test outcome is {string}', (testOutcome: string) => {
-  const testOutcomeField = OfficePage.getTestOutcomeField();
-  return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
+Then('the office page test outcome is {string}', async (testOutcome: string) => {
+  const testOutcomeField = officePageObject.testOutcomeField();
+  return expect(await testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
 
-Then(/^there (?:is|are) \"(.+)\" driver faults? listed for \"(.+)\"$/, (faultCount: string, faultTest: string) => {
-  const driverFault = OfficePage.getDriverFault(faultCount, faultTest);
-  return expect(driverFault.isPresent()).to.eventually.be.true;
+Then(/^there (?:is|are) \"(.+)\" driver faults? listed for \"(.+)\"$/, async (faultCount: string, faultTest: string) => {
+  const driverFault = officePageObject.DriverFault(faultCount, faultTest);
+  return expect(await driverFault.isPresent()).to.eventually.be.true;
 });
 
-When('I complete the rekey', () => {
-  OfficePage.completeRekey(this.testCategory);
+When('I complete the rekey', async () => {
+  await officePage.completeRekey(this.testCategory);
 });
 
-Then('the rekey is successfully uploaded', () => {
-  const uploadRekeyMessage = OfficePage.getUploadRekeyMessage();
-  return expect(uploadRekeyMessage.getText()).to.eventually.equal('Rekeyed test uploaded successfully');
+Then('the rekey is successfully uploaded', async () => {
+  const uploadRekeyMessage = officePageObject.uploadRekeyMessage();
+  return expect(await uploadRekeyMessage.getText()).to.eventually.equal('Rekeyed test uploaded successfully');
 });
 
-When('I return to the journal', () => {
-  OfficePage.clickReturnToJournalButton();
+When('I return to the journal', async () => {
+  await officePage.clickReturnToJournalButton();
 });

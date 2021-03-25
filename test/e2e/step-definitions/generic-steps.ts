@@ -1,24 +1,31 @@
-import { Before } from 'cucumber';
-import { browser, element, by } from 'protractor';
+import { After, AfterAll, Before, Given, setDefaultTimeout, Status, Then, When } from 'cucumber';
+import { browser, by, element } from 'protractor';
+import { BackToOfficePage } from '../helper/backToOfficePage/backToOfficePage';
+import { DashboardPage } from '../helper/dashboardPage/dashboardPage';
+import { dashboardPageObject } from '../helper/dashboardPage/dashboardPage.po';
+import { JournalPage } from '../helper/Journal/jounralPage';
+import { JournalPageObjects } from '../helper/Journal/jounralPage.po';
+import { LandingPage } from '../helper/landingPage/landingPage';
+import { LoginPage } from '../helper/LoginPage/loginPage';
+import { getToSignInPopUp, getUsernameField } from '../helper/LoginPage/loginPage.po';
+import { PageHelper } from '../helper/PageHelper/pageHelper';
+import { PageHelperObject } from '../helper/PageHelper/pageHelper.po';
+import { TestReportPage } from '../helper/testReportPage/testReportPage';
+import { TestReportPageObject } from '../helper/testReportPage/testReportPage.po';
 import { TEST_CONFIG } from '../test.config';
-import LoginPage from '../pages/loginPage';
-import LandingPage from '../pages/landingPage';
-import DashboardPage from '../pages/dashboardPage';
-import JournalPage from '../pages/journalPage';
-import TestReportPage from '../pages/testReportPage';
-import BackToOfficePage from '../pages/backToOfficePage';
-import PageHelper from '../pages/pageHelper';
-import {waitForOverlay} from "../../helpers/interactionHelpers";
 
-const {
-  Given,
-  Then,
-  When,
-  setDefaultTimeout,
-  After,
-  Status,
-  AfterAll,
-} = require('cucumber');
+let loginPage: LoginPage = new LoginPage();
+let landingPage: LandingPage = new LandingPage();
+let dashboardPage: DashboardPage = new DashboardPage();
+let journalPage: JournalPage = new JournalPage();
+let testReportPage: TestReportPage = new TestReportPage();
+let backToOfficePage: BackToOfficePage = new BackToOfficePage();
+let pageHelper: PageHelper = new PageHelper();
+let pageHelperElement: PageHelperObject = new PageHelperObject();
+let journalPageElement: JournalPageObjects = new JournalPageObjects();
+let dashboardPageElement: dashboardPageObject = new dashboardPageObject();
+let testReportPageElement: TestReportPageObject = new TestReportPageObject();
+
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
@@ -27,50 +34,49 @@ const fs = require('fs');
 
 this.testCategory = 'b';
 
-Before({ tags: '@catbe' }, () => {
-  this.testCategory = 'be'
+Before({tags: '@catbe'}, () => {
+  this.testCategory = 'be';
 });
 
-Before({ tags: '@catc' }, () => {
+Before({tags: '@catc'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catc1' }, () => {
+Before({tags: '@catc1'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catce' }, () => {
+Before({tags: '@catce'}, () => {
   this.testCategory = 'c';
 });
 
-Before({ tags: '@catc1e' }, () => {
+Before({tags: '@catc1e'}, () => {
   this.testCategory = 'ce';
 });
 
-Before({ tags: '@cata' }, () => {
+Before({tags: '@cata'}, () => {
   this.testCategory = 'a-mod1';
 });
 
-Before({ tags: '@catm2' }, () => {
+Before({tags: '@catm2'}, () => {
   this.testCategory = 'a-mod2';
 });
 
-Before({ tags: '@catd' }, () => {
+Before({tags: '@catd'}, () => {
   this.testCategory = 'd';
 });
 
-Before({ tags: '@catHome' }, () => {
+Before({tags: '@catHome'}, () => {
   this.testCategory = 'home-test';
 });
 
-Before({ tags: '@catADI2' }, () => {
+Before({tags: '@catADI2'}, () => {
   this.testCategory = 'adi-part2';
 });
 
-Before({ tags: '@catcpc' }, () => {
+Before({tags: '@catcpc'}, () => {
   this.testCategory = 'cpc';
 });
-
 
 // We need this much timeout for the login process to complete
 setDefaultTimeout(TEST_CONFIG.DEFAULT_TIMEOUT);
@@ -83,59 +89,58 @@ browser.getProcessedConfig().then((config) => {
   screenshotAlways = config.screenshotAlways;
 });
 
-Given('I am not logged in', () => {
+Given('I am not logged in', async () => {
 
   // Wait for app to be ready
   browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
   browser.waitForAngular();
 
   // Log out if we are logged in
-  LoginPage.logout();
+  await loginPage.logout();
 
-  browser.driver.getCurrentContext().then((webviewContext) => {
-    // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP').then(() => {
-      // Wait until we are on the login page before proceeding
-      LoginPage.getToSignInPopUp();
+  var webviewContext = browser.driver.getCurrentContext();
+  // Switch to NATIVE context
+  browser.driver.selectContext('NATIVE_APP').then(async () => {
+    // Wait until we are on the login page before proceeding
+    await getToSignInPopUp;
 
-      // Switch back to WEBVIEW context
-      browser.driver.selectContext(LoginPage.getParentContext(webviewContext));
-    });
+    // Switch back to WEBVIEW context
+    await browser.driver.selectContext(loginPage.getParentContext(webviewContext));
   });
 });
 
 Given('I am logged in as {string} and I have a test for {string}', async (username, candidateName) => {
   // Go to journal page as the user
   // Load the landing page
-  await LandingPage.onLandingPageAsAsync(username);
+  await landingPage.onLandingPageAsAsync(username);
   // Navigate to journal page
-  DashboardPage.clickGoToMyJournalButton();
+  await dashboardPage.clickGoToMyJournalButton();
   // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
-  JournalPage.getRefreshButton();
-  const buttonElement = JournalPage.getStartTestButtonFor(candidateName, false);
-  const hasStartTest = await JournalPage.hasStartTestButtonFor(candidateName);
+  await journalPageElement.getRefreshButton();
+  const buttonElement = await journalPageElement.getStartTestButtonFor(candidateName, false);
+  const hasStartTest = await journalPageElement.hasStartTestButtonFor(candidateName);
 
   if (!hasStartTest) {
-    PageHelper.waitForOverlay('click-block-active');
-    JournalPage.clickBackButton();
+    await pageHelper.waitForOverlay('click-block-active');
+    await journalPage.clickBackButton();
     // Logout
-    LoginPage.logout();
+    await loginPage.logout();
     // Login
-    LoginPage.login(username);
+    await loginPage.login(username);
     // Refresh application
-    LandingPage.loadApplication();
+    await landingPage.loadApplication();
 
-    LandingPage.waitForActionToInitiate();
+    await landingPage.waitForActionToInitiate();
 
     // I should first hit the landing page
     // LandingPage.getEmployeeId(username);
-    LandingPage.isCurrentPage(username);
+    await landingPage.isCurrentPage(username);
 
     // Navigate to journal page
-    DashboardPage.clickGoToMyJournalButton();
+    await dashboardPage.clickGoToMyJournalButton();
 
     // If the journal page is loaded we should have a refresh button
-    const refreshButton = JournalPage.getRefreshButton();
+    const refreshButton = await journalPageElement.getRefreshButton;
     return expect(refreshButton.isPresent()).to.eventually.be.true;
   }
 
@@ -146,77 +151,77 @@ When('I launch the mobile app', () => {
   // Application is already launched by framework
 });
 
-Then('I should see the Microsoft login page', () => {
+Then('I should see the Microsoft login page', async () => {
   // To be able to fill in the Authenticator login we need to switch to NATIVE context then switch back to WEBVIEW after
-  browser.driver.getCurrentContext().then((webviewContext) => {
+  var webviewContext = await browser.driver.getCurrentContext();
 
-    // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP').then(() => {
-      // Check for Microsoft login username field
-      const usernameFld = LoginPage.getUsernameField();
-      expect(usernameFld.isPresent()).to.eventually.be.true;
+  // Switch to NATIVE context
+  browser.driver.selectContext('NATIVE_APP').then(async () => {
+    // Check for Microsoft login username field
+    const usernameFld = getUsernameField;
+    expect(await usernameFld.isPresent()).to.eventually.be.true;
 
-      // Switch back to WEBVIEW context
-      browser.driver.selectContext(PageHelper.getParentContext(webviewContext));
-    });
+    // Switch back to WEBVIEW context
+    await browser.driver.selectContext(pageHelper.getParentContext(webviewContext));
   });
+
 });
 
 Given('I am on the landing page as {string}', async (username) => {
-  await LandingPage.onLandingPageAsAsync(username);
+  await landingPage.onLandingPageAsAsync(username);
 });
 
-When(/^I start marking a practice test (with|without) a driving fault$/, (drivingFault) => {
-  DashboardPage.clickPracticeMarkingATestCatB();
-  DashboardPage.clickStartWithOrWithoutADrivingFault(drivingFault);
+When(/^I start marking a practice test (with|without) a driving fault$/, async (drivingFault) => {
+  await dashboardPage.clickPracticeMarkingATestCatB();
+  await dashboardPage.clickStartWithOrWithoutADrivingFault(drivingFault);
 });
 
-Given(/^I start full practice mode$/, () => {
-  DashboardPage.clickStartFullPracticeMode();
+Given(/^I start full practice mode$/, async () => {
+  await dashboardPage.clickStartFullPracticeMode();
 
-  const practiceModeBanner = TestReportPage.getPracticeModeBanner();
+  const practiceModeBanner = testReportPageElement.practiceModeBanner;
   return expect(practiceModeBanner.isPresent()).to.eventually.be.true;
 });
 
-When('I log in to the application as {string}', (username) => {
-  LoginPage.login(username);
+When('I log in to the application as {string}', async (username) => {
+  await loginPage.login(username);
 
   // If the dashboard has loaded we should see the employee id
   // todo: kc seems we should also see employee id if landing page is loaded (see ln 107) which is right?
-  const employeeId = DashboardPage.getEmployeeId(username);
+  const employeeId = dashboardPageElement.getEmployeeId(username);
   return expect(employeeId.isPresent()).to.eventually.be.true;
 });
 
-Then('I should see the {string} page', (pageTitle) => {
-  PageHelper.getPageTitle(pageTitle);
+Then('I should see the {string} page', async (pageTitle) => {
+  await pageHelper.getPageTitle(pageTitle);
   // Check that it is the last page title i.e. the displayed one
-  return expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
+  return expect(await pageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
     .to.eventually.equal(pageTitle);
 });
 
-Given('I am on the {string} page', (pageTitle) => {
-  PageHelper.getPageTitle(pageTitle);
+Given('I am on the {string} page', async (pageTitle) => {
+  await pageHelper.getPageTitle(pageTitle);
 
   // Check that it is the last page title i.e. the displayed one
-  return expect(PageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
+  return expect(await pageHelper.getDisplayedPageTitle().getText(), `Expected displayedPageTitle to equal ${pageTitle}`)
     .to.eventually.equal(pageTitle);
 });
 
-Then('I should see the {string} contains {string}', (rowName, rowValue) => {
-  JournalPage.rowContains(rowName, rowValue);
+Then('I should see the {string} contains {string}', async (rowName, rowValue) => {
+  await journalPage.rowContains(rowName, rowValue);
 });
 
-When('I click on the {string} button', (buttonId) => {
-  PageHelper.clickButtonByCssId(buttonId);
+When('I click on the {string} button', async (buttonId) => {
+  await pageHelper.getButtonByCssId(buttonId);
 });
 
-Then('validation item {string} should be visible', (validationId: string) => {
-  const validationElement = PageHelper.getElementByCssId(validationId);
+Then('validation item {string} should be visible', async (validationId: string) => {
+  const validationElement = await pageHelper.getElementByCssId(validationId);
   return expect(validationElement.getAttribute('class')).to.eventually.contain('ng-invalid');
 });
 
-Then('validation item {string} should not be visible', (validationId: string) => {
-  const validationElement = PageHelper.getElementByCssId(validationId);
+Then('validation item {string} should not be visible', async (validationId: string) => {
+  const validationElement = await pageHelper.getElementByCssId(validationId);
   return expect(validationElement.getAttribute('class')).to.eventually.not.contain('ng-invalid');
 });
 
@@ -226,56 +231,56 @@ Then('validation item {string} should not exist', (validationId: string) => {
   });
 });
 
-Then('validation item {string} should be {string}', (validationId: string, validationText: string) => {
-  const validationElement = PageHelper.getElementByCssId(validationId);
+Then('validation item {string} should be {string}', async (validationId: string, validationText: string) => {
+  const validationElement = await pageHelper.getElementByCssId(validationId);
   return expect(validationElement.getText()).to.eventually.equal(validationText);
 });
 
-When('I terminate the test', () => {
+When('I terminate the test', async () => {
   if (this.testCategory !== 'cpc') {
-    TestReportPage.clickLastEndTestButton();
+    await testReportPage.clickLastEndTestButton();
   }
-  TestReportPage.waitForTerminateButton();
-  TestReportPage.clickTerminateTestButton();
+  await testReportPage.waitForTerminateButton();
+  await testReportPage.clickTerminateTestButton();
   if (this.testCategory !== 'cpc') {
-    PageHelper.enterPasscode();
+    await pageHelper.enterPasscode();
   }
 });
 
-When('I terminate the test in practice mode', () => {
-  TestReportPage.clickLastEndTestButton();
-  TestReportPage.clickTerminateTestButton();
+When('I terminate the test in practice mode', async () => {
+  await testReportPage.clickLastEndTestButton();
+  await testReportPage.clickTerminateTestButton();
 });
 
-When('I exit practice mode', () => {
-  TestReportPage.clickLastExitPracticeButton();
+When('I exit practice mode', async () => {
+  await testReportPage.clickLastExitPracticeButton();
 });
 
-Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be "(.+)"$/, (
+Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be "(.+)"$/, async (
   pageName: string, candidateName: string) => {
-  const candidateNameElement = PageHelper.getCandidateNameElement(pageName, this.testCategory);
+  const candidateNameElement = await pageHelper.getCandidateNameElement(pageName, this.testCategory);
   return expect(candidateNameElement.getText()).to.eventually.equal(candidateName);
 });
 
-Then(/^the (communication page|waiting room|debrief|health declaration) candidate driver number should be "(.+)"$/, (
+Then(/^the (communication page|waiting room|debrief|health declaration) candidate driver number should be "(.+)"$/, async (
   pageName: string, driverNumber: string) => {
-  const candidateDriverNumberElement = PageHelper.getCandidateDriveNumberElement(pageName, this.testCategory);
+  const candidateDriverNumberElement = await pageHelper.getCandidateDriveNumberElement(pageName, this.testCategory);
   return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
 });
 
-Then('I return to the Journal Page', () => {
-  BackToOfficePage.clickBackToJournalButton();
+Then('I return to the Journal Page', async () => {
+  await backToOfficePage.clickBackToJournalButton();
 });
 
-When('I click the back button', () => {
-  JournalPage.clickBackButton();
+When('I click the back button', async () => {
+  await journalPage.clickBackButton();
 });
 
-When('I click go to my Journal', () => {
-  DashboardPage.clickGoToMyJournalButton();
+When('I click go to my Journal', async () => {
+  await dashboardPage.clickGoToMyJournalButton();
 });
 
-When(/^I wait "([^"]*)" seconds?$/, { timeout: 2 * 5000 }, async (seconds) => {
+When(/^I wait "([^"]*)" seconds?$/, {timeout: 2 * 5000}, async (seconds) => {
   await browser.sleep(seconds * 1000);
 });
 
