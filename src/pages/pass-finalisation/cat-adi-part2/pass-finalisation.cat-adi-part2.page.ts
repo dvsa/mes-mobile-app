@@ -15,7 +15,7 @@ import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../mod
 import { map } from 'rxjs/operators';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import { CAT_ADI_PART2 } from '../../page-names.constants';
+import { CONFIRM_TEST_DETAILS } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/common/test-summary.reducer';
 import { isDebriefWitnessed } from '../../../modules/tests/test-summary/common/test-summary.selector';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
@@ -38,8 +38,6 @@ import {
   DebriefUnwitnessed,
   D255No,
 } from '../../../modules/tests/test-summary/common/test-summary.actions';
-import { includes } from 'lodash';
-import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -135,20 +133,8 @@ export class PassFinalisationCatADIPart2Page extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
-      this.navController.push(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE).then((value) => {
-        this.navController.getViews().forEach((view) => {
-          if (includes([
-            CAT_ADI_PART2.TEST_REPORT_PAGE,
-            CAT_ADI_PART2.DEBRIEF_PAGE,
-            CAT_ADI_PART2.PASS_FINALISATION_PAGE,
-          ],
-            view.id)) {
-            this.navController.removeView(view);
-          }
-        });
-      });
+      this.navController.push(CONFIRM_TEST_DETAILS);
       return;
     }
   }

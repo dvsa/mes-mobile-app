@@ -49,7 +49,7 @@ interface ConfirmTestDetailsPageState {
   testOutcomeText$: Observable<string>;
   activityCode$: Observable<ActivityCodeModel>;
   testCategory$: Observable<TestCategory>;
-  provisionalLicense$: Observable<boolean>;
+  provisionalLicense$?: Observable<boolean>;
   transmission$: Observable<GearboxCategory>;
   d255$: Observable<boolean>;
   slotId$: Observable<string>;
@@ -118,8 +118,7 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
   }
 
   async goBackToDebrief(): Promise<void> {
-    const pageToNav = this.isPassed(this.testOutcome) ? 'DEBRIEF_PAGE' : 'NON_PASS_FINALISATION_PAGE';
-    const previousPage: string = pageConstants.getPageNameByCategoryAndKey(this.category, pageToNav);
+    const previousPage: string = pageConstants.getPageNameByCategoryAndKey(this.category, 'DEBRIEF_PAGE');
     const previousView: ViewController = this.navController.getViews().find(view => view.id === previousPage);
     await this.navController.popTo(previousView);
   }
@@ -166,10 +165,6 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
           select(getTestCategory),
           map(testCategory => testCategory as TestCategory),
         ),
-        provisionalLicense$: currentTest$.pipe(
-          select(getPassCompletion),
-          map(isProvisionalLicenseProvided),
-        ),
         transmission$: currentTest$.pipe(
           select(vehicleDetails.vehicleDetails),
           select(getGearboxCategory),
@@ -179,6 +174,15 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
           select(getD255),
         ),
       };
+      if (category !== TestCategory.ADI2) {
+        this.pageState = {
+          ...this.pageState,
+          provisionalLicense$: currentTest$.pipe(
+            select(getPassCompletion),
+            map(isProvisionalLicenseProvided),
+          ),
+        };
+      }
     });
 
     const { testCategory$, testOutcomeText$, candidateUntitledName$, slotId$ } = this.pageState;

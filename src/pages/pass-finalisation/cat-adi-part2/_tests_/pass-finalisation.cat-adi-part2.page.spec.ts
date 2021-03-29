@@ -28,8 +28,7 @@ import { WarningBannerComponent } from '../../../../components/common/warning-ba
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { configureTestSuite } from 'ng-bullet';
-import { CAT_ADI_PART2 } from '../../../page-names.constants';
-import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
+import { CONFIRM_TEST_DETAILS } from '../../../page-names.constants';
 
 describe('PassFinalisationCatADIPart2Page', () => {
   let fixture: ComponentFixture<PassFinalisationCatADIPart2Page>;
@@ -105,26 +104,13 @@ describe('PassFinalisationCatADIPart2Page', () => {
         component.slotId = '123';
         component.onSubmit();
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
-        expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
       });
 
       it('should remove pass finalisation from view', fakeAsync(() => {
         spyOn(navController, 'push').and.returnValue(Promise.resolve());
-        spyOn(navController, 'getViews').and.returnValue([
-          { id: CAT_ADI_PART2.TEST_REPORT_PAGE },
-          { id: CAT_ADI_PART2.DEBRIEF_PAGE },
-          { id: CAT_ADI_PART2.PASS_FINALISATION_PAGE },
-        ]);
-        spyOn(navController, 'removeView');
         component.onSubmit();
         flushMicrotasks();
-        expect(navController.push).toHaveBeenCalledWith(CAT_ADI_PART2.BACK_TO_OFFICE_PAGE);
-        flushMicrotasks();
-        expect(navController.getViews).toHaveBeenCalled();
-        flushMicrotasks();
-        expect(navController.removeView).toHaveBeenCalledWith({ id: 'PassFinalisationCatADIPart2Page' });
-        expect(navController.removeView).toHaveBeenCalledWith({ id: 'TestReportCatADIPart2Page' });
-        expect(navController.removeView).toHaveBeenCalledWith({ id: 'DebriefCatADIPart2Page' });
+        expect(navController.push).toHaveBeenCalledWith(CONFIRM_TEST_DETAILS);
       }));
 
       it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
