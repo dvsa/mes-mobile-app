@@ -1,5 +1,5 @@
 import { Before } from 'cucumber';
-import { browser, element, by } from 'protractor';
+import { browser, element, by, By, ElementFinder } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
 import LoginPage from '../pages/loginPage';
 import LandingPage from '../pages/landingPage';
@@ -70,7 +70,6 @@ Before({ tags: '@catADI2' }, () => {
 Before({ tags: '@catcpc' }, () => {
   this.testCategory = 'cpc';
 });
-
 
 // We need this much timeout for the login process to complete
 setDefaultTimeout(TEST_CONFIG.DEFAULT_TIMEOUT);
