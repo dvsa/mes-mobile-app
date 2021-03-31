@@ -22,6 +22,8 @@ Feature: Driving Exmainer Completes a Pass Journey With no Faults for Category B
       Then I should see the "Test debrief - Callahan Eaton" page
       And I complete the pass details
       And I complete the health declaration
+      And I should see the "Confirm test details - Callahan Eaton" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page

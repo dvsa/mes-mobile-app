@@ -22,8 +22,7 @@ Feature: A Driving Examiner Completes a pass test for category B
     And I complete the pass details
     And I complete the health declaration
     And I should see the "Confirm test details - Mcclain Misha" page
-    And I click on the "Submit test results" button
-    And I click on the "Submit" button
+    And I complete the Confirmation page
     Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page

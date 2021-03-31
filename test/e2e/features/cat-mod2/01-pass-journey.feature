@@ -28,6 +28,8 @@
         Then I should see the "Test debrief - Fox Farrell" page
         And I complete the pass details
         And I complete the health declaration
+        And I should see the "Confirm test details - Fox Farrell" page
+        And I complete the Confirmation page
         Then I am on the back to office page
         And I continue to the office write up
         Then I should see the "Office" page
@@ -63,6 +65,8 @@
       Then I should see the "Test debrief - Osborne Wolfe" page
       And I complete the pass details
       And I complete the health declaration
+      And I should see the "Confirm test details - Osborne Wolfe" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page

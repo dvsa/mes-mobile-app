@@ -21,6 +21,8 @@ Feature: A Driving Examiner Completes a Passed Journey for Category B Using Auto
     Then I should see the "Test debrief - Pearson Florence" page
     And I complete the pass details with an automatic transmission
     And I complete the health declaration
+    And I should see the "Confirm test details - Pearson Florence" page
+    And I complete the Confirmation page
     Then I am on the back to office page
     Then I return to the Journal Page
     And I should see the "Journal" page
