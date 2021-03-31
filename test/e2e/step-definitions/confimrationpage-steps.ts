@@ -1,5 +1,6 @@
 import { Then, When } from 'cucumber';
-// import ConfrimationPage from '../pages/confirmationPage';
+import confirmationPage from '../pages/confirmationPage';
 
-When('', () => {
+When('I complete the Confirmation page', async () => {
+  confirmationPage.completeConfrimationPage();
 });

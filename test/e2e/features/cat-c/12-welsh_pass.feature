@@ -22,6 +22,8 @@ Feature: A Driving Examiner Completes a Passed User Journey for Category C in We
         And I complete the pass details
         Then I should see the "Ôl-drafodaeth y prawf - Luella Lowery" page
         And I complete the health declaration
+        And I should see the "Confirm test details - Luella Lowery" page
+        And I complete the Confirmation page
         Then I am on the back to office page
         And I continue to the office write up
         Then I should see the "Office" page

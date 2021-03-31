@@ -20,6 +20,8 @@ Feature: A Driving Examiner Completes a Passed User Journey in Category C1
       Then I should see the "Test debrief - Deanna Wolf" page
       And I complete the pass details
       And I complete the health declaration
+      And I should see the "Confirm test details - Deanna Wolf" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page

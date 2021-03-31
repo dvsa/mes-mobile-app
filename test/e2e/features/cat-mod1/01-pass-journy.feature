@@ -37,6 +37,8 @@ Feature: A Driving Examiner Completes pass test's for Mod1
     Then I should see the "Test debrief - Alisa Garza" page
     And I complete the pass details
     And I complete the health declaration
+    And I should see the "Confirm test details - Alisa Garza" page
+    And I complete the Confirmation page
     Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
@@ -82,6 +84,8 @@ Feature: A Driving Examiner Completes pass test's for Mod1
     Then I should see the "Test debrief - Denny Carlson" page
     And I complete the pass details
     And I complete the health declaration
+    And I should see the "Confirm test details - Denny Carlson" page
+    And I complete the Confirmation page
     Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
