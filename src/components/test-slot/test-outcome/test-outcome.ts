@@ -90,7 +90,6 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('cat', this.category);
     const bookedTestSlot$ = this.store$.pipe(
       select(getRekeySearchState),
       map(getBookedTestSlot),
