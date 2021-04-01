@@ -46,11 +46,11 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../../providers/device/device';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
-import { BasePageComponent } from '../../../shared/classes/base-page';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE/index';
 import { isEmpty } from 'lodash';
 import { ErrorTypes } from '../../../shared/models/error-message';
 import { App } from '../../../app/app.component';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -68,7 +68,7 @@ interface WaitingRoomPageState {
   selector: '.waiting-room-cat-be-page',
   templateUrl: 'waiting-room.cat-be.page.html',
 })
-export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
+export class WaitingRoomCatBEPage extends PracticeableBasePageComponent implements OnInit {
 
   @ViewChild(Navbar) navBar: Navbar;
 
@@ -81,7 +81,7 @@ export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
   merged$: Observable<boolean | string | CatBEUniqueTypes.JournalData>;
 
   constructor(
-    public store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -94,7 +94,7 @@ export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
     private modalController: ModalController,
     private app: App,
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, store$);
     this.formGroup = new FormGroup({});
   }
 
@@ -123,6 +123,8 @@ export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
+
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),

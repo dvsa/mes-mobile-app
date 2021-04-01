@@ -90,6 +90,7 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('cat', this.category);
     const bookedTestSlot$ = this.store$.pipe(
       select(getRekeySearchState),
       map(getBookedTestSlot),
@@ -183,7 +184,7 @@ export class TestOutcomeComponent implements OnInit {
 
   startTest() {
     if (this.isE2EPracticeMode()) {
-      this.store$.dispatch(new StartE2EPracticeTest(this.slotDetail.slotId.toString()));
+      this.store$.dispatch(new StartE2EPracticeTest(this.slotDetail.slotId.toString(), this.category));
     } else {
       this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.category, this.startTestAsRekey || this.isRekey));
     }

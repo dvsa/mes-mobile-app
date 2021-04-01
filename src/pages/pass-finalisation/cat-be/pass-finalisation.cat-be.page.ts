@@ -58,10 +58,10 @@ import {
   getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { BasePageComponent } from '../../../shared/classes/base-page';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { TransmissionType } from '../../../shared/models/transmission-type';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -82,7 +82,7 @@ interface PassFinalisationPageState {
   selector: '.pass-finalisation-cat-be-page',
   templateUrl: 'pass-finalisation.cat-be.page.html',
 })
-export class PassFinalisationCatBEPage extends BasePageComponent {
+export class PassFinalisationCatBEPage extends PracticeableBasePageComponent {
   pageState: PassFinalisationPageState;
   passCertificateCtrl: string = PASS_CERTIFICATE_NUMBER_CTRL;
   @ViewChild('passCertificateNumberInput')
@@ -94,20 +94,20 @@ export class PassFinalisationCatBEPage extends BasePageComponent {
   subscription: Subscription;
 
   constructor(
-    public store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 
   ngOnInit(): void {
-
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),

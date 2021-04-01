@@ -72,7 +72,7 @@ describe('Health Declaration Analytics Effects', () => {
     });
     it('should call setCurrentPage with practice mode prefix', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new healthDeclarationActions.HealthDeclarationViewDidEnter());
@@ -105,7 +105,7 @@ describe('Health Declaration Analytics Effects', () => {
 
     it('should call logError with pass, prefixed with practice mode', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
       const practiceScreenName =
         `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.HEALTH_DECLARATION}`;
       // ACT

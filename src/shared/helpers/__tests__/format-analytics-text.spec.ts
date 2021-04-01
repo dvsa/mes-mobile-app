@@ -18,7 +18,7 @@ describe('formatAnalyticsText', () => {
 
   it('should prefix end to end practice tests with the correct text', () => {
     const state: TestsModel = { ...initialState };
-    const action = new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId);
+    const action = new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B);
     const tests: TestsModel = testsReducer(state, action);
 
     const result = formatAnalyticsText(eventString, tests);

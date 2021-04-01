@@ -7,7 +7,6 @@ IonicPage,
   Toast, Keyboard, AlertController,
 } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -152,6 +151,7 @@ import { SetRekeyDate } from '../../../modules/tests/rekey-date/rekey-date.actio
 import { SetStartDate }
   from '../../../modules/tests/journal-data/common/test-slot-attributes/test-slot-attributes.actions';
 import { getNewTestStartTime } from '../../../shared/helpers/test-start-time';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 
 interface OfficePageState {
   applicationNumber$: Observable<string>;
@@ -209,7 +209,7 @@ interface OfficePageState {
   selector: '.office-cat-be-page',
   templateUrl: 'office.cat-be.page.html',
 })
-export class OfficeCatBEPage extends BasePageComponent {
+export class OfficeCatBEPage extends PracticeableBasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
   toast: Toast;
@@ -230,7 +230,7 @@ export class OfficeCatBEPage extends BasePageComponent {
   isValidStartDateTime: boolean = true;
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public toastController: ToastController,
     public navController: NavController,
     public navParams: NavParams,
@@ -245,7 +245,7 @@ export class OfficeCatBEPage extends BasePageComponent {
     private faultSummaryProvider: FaultSummaryProvider,
     public appConfig: AppConfigProvider,
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
@@ -257,6 +257,7 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -549,6 +550,10 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   popToRoot() {
+    if (this.isEndToEndPracticeMode) {
+      this.exitPracticeMode();
+      return;
+    }
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
     this.navController.popTo(journalPage);
   }
@@ -737,14 +742,17 @@ export class OfficeCatBEPage extends BasePageComponent {
   }
 
   completeTest() {
-    if (!this.isDelegated) {
-      this.store$.dispatch(new CompleteTest());
-      this.popToRoot();
-    } else {
-      this.store$.dispatch(new SetRekeyDate());
-      this.store$.dispatch(new SendCurrentTest());
-      this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
+    if (!this.isEndToEndPracticeMode) {
+      if (!this.isDelegated) {
+        this.store$.dispatch(new CompleteTest());
+        this.popToRoot();
+      } else {
+        this.store$.dispatch(new SetRekeyDate());
+        this.store$.dispatch(new SendCurrentTest());
+        this.navController.push(DELEGATED_REKEY_UPLOAD_OUTCOME_PAGE);
+      }
     }
+    this.popToRoot();
   }
 
   shouldDisplayDrivingFaultComments = (data: CatBEUniqueTypes.TestData): boolean => {

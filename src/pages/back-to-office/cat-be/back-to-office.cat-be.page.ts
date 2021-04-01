@@ -13,8 +13,8 @@ import { getCurrentTest } from '../../../modules/tests/tests.selector';
 import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 import { CAT_BE } from '../../../pages/page-names.constants';
-import { BasePageComponent } from '../../../shared/classes/base-page';
 import { DeviceProvider } from '../../../providers/device/device';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 
 interface BackToOfficePageState {
   isRekey$: Observable<boolean>;
@@ -25,11 +25,11 @@ interface BackToOfficePageState {
   selector: '.back-to-office-cat-be-page',
   templateUrl: 'back-to-office.cat-be.page.html',
 })
-export class BackToOfficeCatBEPage extends BasePageComponent {
+export class BackToOfficeCatBEPage extends PracticeableBasePageComponent {
   pageState: BackToOfficePageState;
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -38,10 +38,11 @@ export class BackToOfficeCatBEPage extends BasePageComponent {
     public insomnia: Insomnia,
     public deviceProvider: DeviceProvider,
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, store$);
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this.pageState = {
       isRekey$: this.store$.pipe(
         select(getTests),

@@ -49,7 +49,6 @@ import {
   CandidateChoseToProceedWithTestInEnglish,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
-import { BasePageComponent } from '../../../shared/classes/base-page';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
@@ -57,6 +56,7 @@ import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -79,7 +79,7 @@ interface NonPassFinalisationPageState {
   selector: '.non-pass-finalisation-cat-be-page',
   templateUrl: 'non-pass-finalisation.cat-be.page.html',
 })
-export class NonPassFinalisationCatBEPage extends BasePageComponent implements OnInit {
+export class NonPassFinalisationCatBEPage extends PracticeableBasePageComponent implements OnInit {
 
   pageState: NonPassFinalisationPageState;
   form: FormGroup;
@@ -91,7 +91,7 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
   invalidTestDataModal: Modal;
 
   constructor(
-    public store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navController: NavController,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
@@ -100,14 +100,14 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
     public modalController: ModalController,
     public activityCodeFinalisationProvider: ActivityCodeFinalisationProvider,
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
     this.activityCodeOptions = getActivityCodeOptions(this.appConfig.getAppConfig().role === ExaminerRole.DLG);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 
   ngOnInit() {
-
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),

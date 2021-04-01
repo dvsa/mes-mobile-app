@@ -60,7 +60,6 @@ import {
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_BE } from '../../page-names.constants';
-import { BasePageComponent } from '../../../shared/classes/base-page';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
@@ -92,6 +91,7 @@ import {
 } from '../../../modules/tests/test-data/cat-be/vehicle-checks/vehicle-checks.cat-be.action';
 import { getNextPageDebriefOffice } from '../../../shared/constants/getNextPageDebriefOffice.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -121,7 +121,7 @@ interface WaitingRoomToCarPageState {
   selector: '.waiting-room-to-car-cat-be-page',
   templateUrl: 'waiting-room-to-car.cat-be.page.html',
 })
-export class WaitingRoomToCarCatBEPage extends BasePageComponent {
+export class WaitingRoomToCarCatBEPage extends PracticeableBasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
   testCategory = TestCategory.BE;
@@ -136,7 +136,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
   subscription: Subscription;
 
   constructor(
-    public store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -144,13 +144,13 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
     public faultCountProvider: FaultCountProvider,
     public questionProvider: QuestionProvider,
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, store$);
     this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
     this.form = new FormGroup({});
   }
 
   ngOnInit(): void {
-
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),

@@ -1,4 +1,5 @@
 <ion-header>
+  <practice-mode-banner *ngIf="isEndToEndPracticeMode"></practice-mode-banner>
   <ion-navbar [hideBackButton]="!(pageState.delegatedTest$ | async)">
     <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end>

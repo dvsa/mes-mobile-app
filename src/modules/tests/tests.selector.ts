@@ -83,8 +83,9 @@ export const isPracticeMode = (tests: TestsModel) : boolean =>
 export const isTestReportPracticeTest = (tests: TestsModel): boolean =>
   tests.currentTest.slotId === testReportPracticeSlotId;
 
-export const isEndToEndPracticeTest = (tests: TestsModel) : boolean =>
-  startsWith(tests.currentTest.slotId, end2endPracticeSlotId);
+export const isEndToEndPracticeTest = (tests: TestsModel) : boolean => {
+  return startsWith(tests.currentTest.slotId, end2endPracticeSlotId);
+};
 
 export const isDelegatedTest = (tests: TestsModel): boolean => {
   const test = getCurrentTest(tests);

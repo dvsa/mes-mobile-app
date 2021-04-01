@@ -35,8 +35,8 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { CAT_BE } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
-import { BasePageComponent } from '../../../shared/classes/base-page';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -54,7 +54,7 @@ interface CommunicationPageState {
   selector: '.communication-cat-be-page',
   templateUrl: 'communication.cat-be.page.html',
 })
-export class CommunicationCatBEPage extends BasePageComponent implements OnInit {
+export class CommunicationCatBEPage extends PracticeableBasePageComponent implements OnInit {
 
   static readonly providedEmail: string = 'Provided';
   static readonly updatedEmail: string = 'Updated';
@@ -79,14 +79,14 @@ export class CommunicationCatBEPage extends BasePageComponent implements OnInit 
   merged$: Observable<string | boolean>;
 
   constructor(
-    public store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navController: NavController,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private translate: TranslateService,
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
   }
 
@@ -103,6 +103,7 @@ export class CommunicationCatBEPage extends BasePageComponent implements OnInit 
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),

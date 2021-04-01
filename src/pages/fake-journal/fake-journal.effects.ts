@@ -39,9 +39,9 @@ export class FakeJournalEffects {
 
       return [
         new PopulateExaminer(examiner),
+        new PopulateCandidateDetails(slot.booking.candidate),
         new PopulateTestCategory(slot.booking.application.testCategory as CategoryCode),
         new PopulateApplicationReference(slot.booking.application as Application),
-        new PopulateCandidateDetails(slot.booking.candidate),
         new PopulateTestSlotAttributes(extractTestSlotAttributes(slot)),
         new PopulateTestCentre({ centreId: slot.testCentre.centreId, costCode: slot.testCentre.costCode }),
         new testStatusActions.SetTestStatusBooked(slot.slotDetail.slotId),

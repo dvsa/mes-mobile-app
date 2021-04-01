@@ -82,7 +82,7 @@ describe('Back To Office Analytics Effects', () => {
     });
     it('should call setCurrentPage with practice mode prefix', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new backToOfficeActions.BackToOfficeViewDidEnter());
@@ -148,7 +148,7 @@ describe('Back To Office Analytics Effects', () => {
     });
     it('should call logEvent with pass page, practice mode prefix and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
@@ -172,7 +172,7 @@ describe('Back To Office Analytics Effects', () => {
     });
     it('should call logEvent with fail page, practice mode prefix and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));

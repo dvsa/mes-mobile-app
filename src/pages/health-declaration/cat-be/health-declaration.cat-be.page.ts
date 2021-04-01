@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Navbar, AlertController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { BasePageComponent } from '../../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
@@ -43,6 +42,7 @@ import {
 import { CONFIRM_TEST_DETAILS } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -60,7 +60,7 @@ interface HealthDeclarationPageState {
   selector: '.health-declaration-cat-be-page',
   templateUrl: 'health-declaration.cat-be.page.html',
 })
-export class HealthDeclarationCatBEPage extends BasePageComponent {
+export class HealthDeclarationCatBEPage extends PracticeableBasePageComponent {
 
   @ViewChild(Navbar) navBar: Navbar;
 
@@ -73,7 +73,7 @@ export class HealthDeclarationCatBEPage extends BasePageComponent {
   merged$: Observable<boolean | string>;
 
   constructor(
-    public store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -83,7 +83,7 @@ export class HealthDeclarationCatBEPage extends BasePageComponent {
     public alertController: AlertController,
 
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
   }
 
@@ -105,6 +105,7 @@ export class HealthDeclarationCatBEPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),

@@ -19,7 +19,7 @@ export const fakeJournalTestSlots = [
         testCategory: 'B',
         vehicleGearbox: 'Automatic',
         welshTest: false,
-        meetingPlace: 'At the pub',
+        meetingPlace: 'Meeting Point A',
       },
       candidate: {
         candidateAddress: {
@@ -306,6 +306,52 @@ export const fakeJournalTestSlots = [
       costCode: 'EXTC1',
     },
     vehicleSlotType: 'B57mins',
+    vehicleSlotTypeCode: 7,
+  },
+  {
+    booking: {
+      application: {
+        applicationId: 1234533,
+        bookingSequence: 7,
+        checkDigit: 7,
+        entitlementCheck: false,
+        extendedTest: false,
+        progressiveAccess: false,
+        testCategory: 'B+E',
+        vehicleGearbox: 'Manual',
+        welshTest: false,
+        specialNeedsCode: 'NONE',
+        specialNeedsExtendedTest: false,
+      },
+      candidate: {
+        candidateAddress: {
+          addressLine1: '1 Hangar Lane',
+          addressLine2: 'Someplace',
+          addressLine3: 'Sometown',
+          postcode: 'AB78 9CD',
+        },
+        candidateId: 108,
+        candidateName: {
+          firstName: 'Tim',
+          lastName: 'Burr',
+          title: 'Mr',
+        },
+        driverNumber: 'TIMBR375220A99HC',
+        primaryTelephone: '01234 567890',
+        emailAddress: 'TimBurr@someemail.com',
+      },
+    },
+    slotDetail: {
+      duration: 57,
+      slotId: `${end2endPracticeSlotId}_6`,
+      start: todayAt8Am.add(68, 'minutes').format(),
+    },
+    testCentre: {
+      centreId: 54321,
+      centreName: 'Example Test Centre',
+      costCode: 'EXTC1',
+    },
+    vehicleSlotType: 'B68mins',
     vehicleSlotTypeCode: 7,
   },
 ];

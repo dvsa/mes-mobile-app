@@ -37,7 +37,6 @@ import { hasManoeuvreBeenCompletedCatBE } from '../../../modules/tests/test-data
 import { ModalEvent } from '../test-report.constants';
 import { CAT_BE, LEGAL_REQUIREMENTS_MODAL } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
-import { BasePageComponent } from '../../../shared/classes/base-page';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import {
@@ -49,6 +48,7 @@ import { getTestCategory } from '../../../modules/tests/category/category.reduce
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import { getNextPageDebriefOffice } from '../../../shared/constants/getNextPageDebriefOffice.constants';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -67,7 +67,7 @@ interface TestReportPageState {
   selector: '.test-report-cat-be-page',
   templateUrl: 'test-report.cat-be.page.html',
 })
-export class TestReportCatBEPage extends BasePageComponent {
+export class TestReportCatBEPage extends PracticeableBasePageComponent {
   pageState: TestReportPageState;
   subscription: Subscription;
   competencies = Competencies;
@@ -87,7 +87,7 @@ export class TestReportCatBEPage extends BasePageComponent {
   missingLegalRequirements: legalRequirementsLabels[] = [];
 
   constructor(
-    public store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -95,7 +95,7 @@ export class TestReportCatBEPage extends BasePageComponent {
     private modalController: ModalController,
     public testReportValidatorProvider: TestReportValidatorProvider,
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, store$);
     this.displayOverlay = false;
   }
 
@@ -108,7 +108,7 @@ export class TestReportCatBEPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
-
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
