@@ -25,6 +25,8 @@ Feature: A Driving Examiner Completes a Passed User Journey in Category CE
       And  I select the code 78 no option
       And I complete the pass details
       And I complete the health declaration
+      And I should see the "Confirm test details - Diaz Barber" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page

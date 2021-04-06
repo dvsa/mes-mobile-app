@@ -34,6 +34,8 @@ Feature: Driver Examiner complete the pass journey for Home test cat K
     Then I should see the "Test debrief - James Brown" page
     And I complete the pass details
     And I complete the health declaration
+    And I should see the "Confirm test details - James Brown" page
+    And I complete the Confirmation page
     Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page

@@ -36,6 +36,9 @@ Feature: Driver Examiner complete the pass journey for ADI2
     When I end the debrief
     Then I should see the "Test debrief - Anna Firstlis" page
     And I complete the pass details
+    And I should see the "Confirm test details - Anna Firstlis" page
+    And I complete the Confirmation page
+    Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
     And the office page test outcome is "Passed"

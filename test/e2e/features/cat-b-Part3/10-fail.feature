@@ -86,7 +86,9 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Shaw Theresa" page
-      When I continue to the back to office page
+      And I complete the fail details
+      And I should see the "Confirm test details - Shaw Theresa" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -146,7 +148,9 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Attano Corvo" page
-      When I continue to the back to office page
+      And I complete the fail details
+      And I should see the "Confirm test details - Attano Corvo" page
+      And I complete the Confirmation page
       And I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -208,7 +212,9 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Campbell Ali" page
-      When I continue to the back to office page
+      And I complete the fail details
+      And I should see the "Confirm test details - Campbell Ali" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -247,7 +253,9 @@ Feature: A Driving Examiner Completes Failed journeys for Category B
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Brown James" page
-      When I continue to the back to office page
+      And I complete the fail details
+      And I should see the "Confirm test details - Brown James" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page

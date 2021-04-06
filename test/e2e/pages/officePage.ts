@@ -2,11 +2,11 @@ import Page from './page';
 import {by, element} from 'protractor';
 class OfficePage extends Page {
   clickUploadButton() {
-    this.clickElementByXPath('//button[span[h3[text() = "Upload"]]]');
+    this.clickElementByXPath('//button[span[h3[text() = "Mark as complete"]]]');
   }
 
   clickUploadConfirmationButton() {
-    this.clickElementByXPath('//ion-alert//button/span[text() = "Upload"]');
+    this.clickElementByXPath('//ion-alert//button/span[text() = "Continue"]');
   }
 
   clickContinueButton(testCategory) {

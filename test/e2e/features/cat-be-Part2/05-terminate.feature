@@ -22,6 +22,8 @@ Feature: Driving Examiner Completes Terminated Tests for Category B+E
       Then I should see the "Finalise outcome BE - Eaton Callahan" page
       When I select activity code "11 - Mechanical failure"
       And I continue to the back to office page
+      And I should see the "Confirm test details - Eaton Callahan" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -52,14 +54,15 @@ Feature: Driving Examiner Completes Terminated Tests for Category B+E
       Then I should see the "Patrick Kamram" page
       And I fail the eye sight test
       Then I should see the Debrief page with outcome "Unsuccessful"
-     And I should see the "Debrief - Patrick Kamram" page
+      And I should see the "Debrief - Patrick Kamram" page
       When I end the debrief
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome BE - Patrick Kamram" page
       And the D255 Radio is pre-selected to yes
       When I continue to the back to office page
-      Then I am on the back to office page
+      And I should see the "Confirm test details - Patrick Kamram" page
+      And I complete the Confirmation page
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Unsuccessful"

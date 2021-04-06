@@ -27,6 +27,8 @@ Feature: A Driving Examiner Completes a pass test for category d
     And I select the code 78 yes option
     And I complete the pass details
     And I complete the health declaration
+    And I should see the "Confirm test details - Right Ford" page
+    And I complete the Confirmation page
     Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page

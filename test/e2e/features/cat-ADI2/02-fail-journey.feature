@@ -45,8 +45,13 @@ Feature: Driver Examiner complete the fail journey for ADI2
     Then I should see the Debrief page with outcome "Unsuccessful"
     And I should see the "Debrief - Brendan Money" page
     When I end the debrief
+    Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome ADI Part 2 - Brendan Money" page
     And I complete the fail details
+    And I should see the "Confirm test details - Brendan Money" page
+    And I complete the Confirmation page
+    Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
     And the office page test outcome is "Unsuccessful"

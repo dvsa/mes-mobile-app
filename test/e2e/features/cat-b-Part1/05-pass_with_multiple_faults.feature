@@ -28,6 +28,8 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
       Then I should see the "Test debrief - Pearson Doris" page
       And I complete the pass details
       And I complete the health declaration
+      And I should see the "Confirm test details - Pearson Doris" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -84,6 +86,8 @@ Feature: A Driving Examiner Completes pass test's for Category B with multiple f
       Then I should see the "Test debrief - Doe Carly" page
       And I complete the pass details
       And I complete the health declaration
+      And I should see the "Confirm test details - Doe Carly" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page

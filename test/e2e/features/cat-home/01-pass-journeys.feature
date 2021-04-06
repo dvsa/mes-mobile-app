@@ -27,6 +27,8 @@ Feature: Driver Examiner complete the pass journey for Home test H
     Then I should see the "Test debrief - Florence Pearson" page
     And I complete the pass details
     And I complete the health declaration
+    And I should see the "Confirm test details - Florence Pearson" page
+    And I complete the Confirmation page
     Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page

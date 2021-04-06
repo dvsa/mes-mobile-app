@@ -47,7 +47,10 @@ Feature: A Driving Examiner Completes failed tests
     When I end the debrief
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Right Ford" page
     And I complete the fail details
+    And I should see the "Confirm test details - Right Ford" page
+    And I complete the Confirmation page
     And I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
@@ -87,7 +90,10 @@ Feature: A Driving Examiner Completes failed tests
     When I end the debrief
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Deanna Wolf" page
     And I complete the fail details
+    And I should see the "Confirm test details - Deanna Wolf" page
+    And I complete the Confirmation page
     And I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
