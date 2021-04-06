@@ -21,7 +21,7 @@ export class FakeJournalPage extends BasePageComponent {
 
   dateToDisplay: string;
 
-  slots = fakeJournalTestSlots;
+  fakeSlotData = fakeJournalTestSlots;
 
   constructor(
     public navController: NavController,

@@ -31,7 +31,7 @@ export class FakeJournalEffects {
     ofType(fakeJournalActions.START_E2E_PRACTICE_TEST),
     switchMap((action) => {
       const startTestAction = action as fakeJournalActions.StartE2EPracticeTest;
-      const slot = fakeJournalTestSlots.find(s => s.slotDetail.slotId === startTestAction.slotId);
+      const fakeslot = fakeJournalTestSlots.find(s => s.slot.slotDetail.slotId === startTestAction.slotId);
 
       const examiner: Examiner = {
         staffNumber: '01234567',
@@ -39,12 +39,13 @@ export class FakeJournalEffects {
 
       return [
         new PopulateExaminer(examiner),
-        new PopulateCandidateDetails(slot.booking.candidate),
-        new PopulateTestCategory(slot.booking.application.testCategory as CategoryCode),
-        new PopulateApplicationReference(slot.booking.application as Application),
-        new PopulateTestSlotAttributes(extractTestSlotAttributes(slot)),
-        new PopulateTestCentre({ centreId: slot.testCentre.centreId, costCode: slot.testCentre.costCode }),
-        new testStatusActions.SetTestStatusBooked(slot.slotDetail.slotId),
+        new PopulateCandidateDetails(fakeslot.slot.booking.candidate),
+        new PopulateTestCategory(fakeslot.slot.booking.application.testCategory as CategoryCode),
+        new PopulateApplicationReference(fakeslot.slot.booking.application as Application),
+        new PopulateTestSlotAttributes(extractTestSlotAttributes(fakeslot.slot)),
+        new PopulateTestCentre(
+          { centreId: fakeslot.slot.testCentre.centreId, costCode: fakeslot.slot.testCentre.costCode }),
+        new testStatusActions.SetTestStatusBooked(fakeslot.slot.slotDetail.slotId),
       ];
     }),
   );

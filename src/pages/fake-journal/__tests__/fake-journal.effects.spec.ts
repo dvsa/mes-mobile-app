@@ -59,18 +59,18 @@ describe('Fake Journal Effects', () => {
       actions$.next(new fakeJournalActions.StartE2EPracticeTest(testId, TestCategory.B));
       // ASSERT
       effects.startE2EPracticeTestEffect$.subscribe((result) => {
-        const slot = fakeJournalTestSlots.find(slot => slot.slotDetail.slotId === testId);
+        const fakeslot = fakeJournalTestSlots.find(slot => fakeslot.slot.slotDetail.slotId === testId);
         if (result instanceof PopulateApplicationReference)  {
-          expect(result).toEqual(new PopulateApplicationReference(slot.booking.application as Application));
+          expect(result).toEqual(new PopulateApplicationReference(fakeslot.slot.booking.application as Application));
         }
         if (result instanceof PopulateCandidateDetails) {
-          expect(result).toEqual(new PopulateCandidateDetails(slot.booking.candidate));
+          expect(result).toEqual(new PopulateCandidateDetails(fakeslot.slot.booking.candidate));
         }
         if (result instanceof PopulateTestSlotAttributes) {
           expect(result.payload.slotId).toEqual(testId);
         }
         if (result instanceof PopulateTestCentre) {
-          expect(result.payload.costCode).toEqual(slot.testCentre.costCode);
+          expect(result.payload.costCode).toEqual(fakeslot.slot.testCentre.costCode);
         }
         if (result instanceof SetTestStatusBooked) {
           expect(result).toEqual(new SetTestStatusBooked(testId));
