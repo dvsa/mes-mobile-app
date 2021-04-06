@@ -50,7 +50,10 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     When I end the debrief
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome BE - Jennings Dillon" page
     And I complete the fail details
+    And I should see the "Confirm test details - Jennings Dillon" page
+    And I complete the Confirmation page
     And I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
@@ -137,7 +140,10 @@ Feature: Driving Examiner Completes a Failed Journey on Category B+E
     When I end the debrief
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome BE - Bender Jeanette" page
     And I complete the fail details
+    And I should see the "Confirm test details - Bender Jeanette" page
+    And I complete the Confirmation page
     And I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page

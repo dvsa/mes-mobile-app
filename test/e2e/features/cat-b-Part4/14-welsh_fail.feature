@@ -83,7 +83,9 @@ Feature: A Driving Examiner Completes An Failed Journey for Category B in Welsh
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Bright Wilson" page
-      When I continue to the back to office page
+      And I complete the fail details
+      And I should see the "Confirm test details - Bright Wilson" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page

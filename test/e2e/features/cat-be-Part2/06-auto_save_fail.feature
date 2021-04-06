@@ -35,6 +35,8 @@ Feature: Autosave end to end failed journey for Category B+E
    Then I am on the post debrief holding page
    When I continue to the non pass finalisation page
    And I complete the fail details
+   And I should see the "Confirm test details - Patrick Patricks" page
+   And I complete the Confirmation page
    Then I am on the back to office page
    Then I return to the Journal Page
    And I should see the "Journal" page

@@ -17,6 +17,8 @@ Feature: A Driving Examiner Completes Multiple Terminated Journeys For Category 
       Then I should see the "Finalise outcome - Potts Bill" page
       When I select activity code "51 - Candidate failed to attend at test centre"
       And I click continue to proceed to the back to office page
+      And I should see the "Confirm test details - Potts Bill" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -38,6 +40,8 @@ Feature: A Driving Examiner Completes Multiple Terminated Journeys For Category 
       Then I should see the "Finalise outcome - Base Wolf" page
       When I select activity code "20 - Documents not produced"
       And I click continue to proceed to the back to office page
+      And I should see the "Confirm test details - Base Wolf" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -68,7 +72,9 @@ Feature: A Driving Examiner Completes Multiple Terminated Journeys For Category 
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Doe Jane" page
       And the D255 Radio is pre-selected to yes
-      When I continue to the back to office page
+      And I continue to the back to office page
+      And I should see the "Confirm test details - Doe Jane" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -103,6 +109,8 @@ Feature: A Driving Examiner Completes Multiple Terminated Journeys For Category 
       Then I should see the "Finalise outcome - Corvo Attano" page
       When I select activity code "4 - Fail in the interests of public safety"
       And I continue to the back to office page
+      And I should see the "Confirm test details - Corvo Attano" page
+      And I complete the Confirmation page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page

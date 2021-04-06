@@ -77,7 +77,9 @@ Feature: A Driving Examiner Rekeys Category B tests
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
     Then I should see the "Finalise outcome - Carly Doe" page
-    When I continue to the back to office page
+    And I complete the fail details
+    And I should see the "Confirm test details - Carly Doe" page
+    And I complete the Confirmation page
     Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page

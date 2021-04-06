@@ -1,5 +1,5 @@
 import { Before } from 'cucumber';
-import { browser, element, by, By, ElementFinder } from 'protractor';
+import { browser, Key, $, element, by, By, ExpectedConditions, protractor, until, ElementFinder } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
 import LoginPage from '../pages/loginPage';
 import LandingPage from '../pages/landingPage';

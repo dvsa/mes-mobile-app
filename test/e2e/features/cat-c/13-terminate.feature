@@ -23,6 +23,8 @@ Feature: Driving Examiner Completes Terminated Tests for Category C
     When I select activity code "11 - Mechanical failure"
     Then the transmission is selected
     And I continue to the back to office page
+    And I should see the "Confirm test details - Jorden Tanner" page
+    And I complete the Confirmation page
     Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page

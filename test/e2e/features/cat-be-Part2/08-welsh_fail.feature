@@ -50,7 +50,10 @@ Feature: Driving Examiner Completes a Welsh Failed Test in Category B+E
       When I end the welsh debrief
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
+      Then I should see the "Finalise outcome BE - Hendricks Parsons" page
       And I complete the fail details
+      And I should see the "Confirm test details - Hendricks Parsons" page
+      And I complete the Confirmation page
       And I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page

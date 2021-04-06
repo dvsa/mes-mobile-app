@@ -47,7 +47,10 @@ Feature: Autosave end to end failed journey for Category B+E Mod2
     When I end the debrief
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Sheila Kirk" page
     And I complete the fail details
+    And I should see the "Confirm test details - Sheila Kirk" page
+    And I complete the Confirmation page
     And I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page

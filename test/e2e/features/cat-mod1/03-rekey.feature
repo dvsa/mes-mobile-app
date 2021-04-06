@@ -107,7 +107,10 @@ Feature: A Driving Examiner Rekeys Category Mod1 tests
     When I end the debrief
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Mcdowell Goff" page
     And I complete the fail details
+    And I should see the "Confirm test details - Mcdowell Goff" page
+    And I complete the Confirmation page
     And I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page

@@ -48,7 +48,10 @@ Feature: Driver Examiner complete the fail journey for Mod2
     When I end the debrief
     Then I am on the post debrief holding page
     When I continue to the non pass finalisation page
+    Then I should see the "Finalise outcome - Richard Rhys" page
     And I complete the fail details
+    And I should see the "Confirm test details - Richard Rhys" page
+    And I complete the Confirmation page
     And I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page

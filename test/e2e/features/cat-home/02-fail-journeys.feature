@@ -21,6 +21,8 @@ Feature: Driver Examiner complete the fail journey for Home test H
     When I continue to the non pass finalisation page
     Then I should see the "Finalise outcome - Carly Doe" page
     And I complete the fail details
+    And I should see the "Confirm test details - Carly Doe" page
+    And I complete the Confirmation page
     And I continue to the office write up
     Then I should see the "Office" page
     And the office page test outcome is "Unsuccessful"
@@ -79,6 +81,8 @@ Feature: Driver Examiner complete the fail journey for Home test H
     When I continue to the non pass finalisation page
     Then I should see the "Finalise outcome - Alice Cooper" page
     And I complete the fail details
+    And I should see the "Confirm test details - Alice Cooper" page
+    And I complete the Confirmation page
     And I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
@@ -122,6 +126,8 @@ Feature: Driver Examiner complete the fail journey for Home test H
     When I continue to the non pass finalisation page
     Then I should see the "Finalise outcome - Anna Shaw" page
     And I complete the fail details
+    And I should see the "Confirm test details - Anna Shaw" page
+    And I complete the Confirmation page
     And I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
@@ -160,6 +166,8 @@ Feature: Driver Examiner complete the fail journey for Home test H
     When I continue to the non pass finalisation page
     Then I should see the "Finalise outcome - Buxton Phil" page
     And I complete the fail details
+    And I should see the "Confirm test details - Buxton Phil" page
+    And I complete the Confirmation page
     And I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page

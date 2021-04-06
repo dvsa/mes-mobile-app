@@ -90,6 +90,8 @@ Feature: Practice mode
     When I continue to the non pass finalisation page
     Then I should see the "Finalise outcome - Jeremy Craig" page
     When I continue to the back to office page
+    And I should see the "Confirm test details - Jeremy Craig" page
+    And I complete the Confirmation page
     Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
@@ -123,6 +125,8 @@ Feature: Practice mode
     When I select activity code "21 - Vehicle / gear not suitable or no vehicle for test"
     And I complete d255
     And I click continue to proceed to the back to office page
+    And I should see the "Confirm test details - Jeremy Craig" page
+    And I complete the Confirmation page
     Then I am on the back to office page
     And I continue to the office write up
     Then I should see the "Office" page
