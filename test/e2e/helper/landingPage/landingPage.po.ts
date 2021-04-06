@@ -1,4 +1,4 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import { TEST_CONFIG } from '../../test.config';
 
 export class LandingPageObject extends Page {

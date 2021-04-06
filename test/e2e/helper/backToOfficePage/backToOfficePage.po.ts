@@ -1,4 +1,4 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 
 export class BackToOfficePageObject extends Page {
   isCurrentPage =

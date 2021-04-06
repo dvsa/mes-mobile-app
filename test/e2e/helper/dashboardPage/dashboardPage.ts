@@ -1,5 +1,5 @@
-import Page from '../../utilities/page';
-import {dashboardPageObject} from "./dashboardPage.po";
+import { Page } from '../../utilities/page';
+import {dashboardPageObject} from './dashboardPage.po';
 
 export class DashboardPage extends Page {
   dashboardPageElement: dashboardPageObject = new dashboardPageObject();

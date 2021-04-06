@@ -1,4 +1,4 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import { OfficePageObject } from './office.po';
 
 export class OfficePage extends Page {

@@ -1,4 +1,4 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import { JournalPageObjects } from './jounralPage.po';
 
 const chai = require('chai');

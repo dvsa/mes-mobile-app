@@ -1,5 +1,5 @@
-import Page from '../../utilities/page';
-import {NonPassFinalisationPageObject} from "./nonPassFinalisationPage.po";
+import { Page } from '../../utilities/page';
+import {NonPassFinalisationPageObject} from './nonPassFinalisationPage.po';
 
 export class NonPassFinalisationPage extends Page {
 

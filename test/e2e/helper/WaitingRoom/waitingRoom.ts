@@ -1,4 +1,4 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import { WaitingRoomPageObject } from './waitingRoom.po';
 
 export class WaitingRoomPage extends Page {

@@ -1,5 +1,5 @@
-import {browser, by, element, ExpectedConditions} from 'protractor';
-import {TEST_CONFIG} from '../test.config';
+import { browser, by, element, ElementFinder, ExpectedConditions } from 'protractor';
+import { TEST_CONFIG } from '../test.config';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -9,7 +9,7 @@ const expect = chai.expect;
 const buttonPadding = 30;
 const request = require('request');
 
-export default class Page {
+export class Page {
   /**
    * A framework safe click method.
    * @param fieldElement the element to click

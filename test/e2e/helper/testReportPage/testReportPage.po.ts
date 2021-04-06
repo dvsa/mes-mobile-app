@@ -1,4 +1,4 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import { by, element } from 'protractor';
 
 export class TestReportPageObject extends Page {

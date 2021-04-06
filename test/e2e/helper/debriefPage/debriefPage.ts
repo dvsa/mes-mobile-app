@@ -1,5 +1,5 @@
-import Page from '../../utilities/page';
-import {debriefPageObject} from "./debriefPage.po";
+import { Page } from '../../utilities/page';
+import {debriefPageObject} from './debriefPage.po';
 
 export class DebriefPage extends Page {
 

@@ -1,4 +1,4 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import { HealthDeclarationObject } from './healthDeclarationPage.po';
 
 export class HealthDeclarationPage extends Page {

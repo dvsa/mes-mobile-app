@@ -1,7 +1,7 @@
 import { browser, by, element, ExpectedConditions } from 'protractor';
 import { getUsernameField, LoginPageObject } from './loginPage.po';
 import { TEST_CONFIG } from '../../test.config';
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 
 export class LoginPage extends Page {
   loginpageElement: LoginPageObject = new LoginPageObject();

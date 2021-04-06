@@ -1,7 +1,7 @@
-import Page from '../../utilities/page';
-import {WaitingRoomToCarPageObject} from './waitingRoomToCarPage.po';
-import {PageHelper} from "../PageHelper/pageHelper";
-import {UI_TEST_DATA} from "../../../test_data/ui_test_data";
+import { Page } from '../../utilities/page';
+import { WaitingRoomToCarPageObject } from './waitingRoomToCarPage.po';
+import { PageHelper } from '../PageHelper/pageHelper';
+import { UI_TEST_DATA } from '../../../test_data/ui_test_data';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -281,9 +281,9 @@ export class WaitingRoomToCarPage extends Page {
 
   async selectCombination(value) {
     await this.clickElement(this.waitingRoomToCarPageElement.itemCover);
-    //this.clickElement(`//ion-alert[contains(@class,'single-select-alert')]//div[contains(text(),'${value}')]/../..`);
+    // this.clickElement(`//ion-alert[contains(@class,'single-select-alert')]//div[contains(text(),'${value}')]/../..`);
     await this.clickElement(this.waitingRoomToCarPageElement.alertInput);
-    //ion-alert[contains(@class,'single-select-alert')]//div[contains(text(),'L')]
+    // ion-alert[contains(@class,'single-select-alert')]//div[contains(text(),'L')]
     await this.clickSubmitButton();
   }
 }

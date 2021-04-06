@@ -1,4 +1,4 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import { PostDebriefHoldingPageObject } from './postDebriefHoldingPage.po';
 
 export class PostDebriefHoldingPage extends Page {

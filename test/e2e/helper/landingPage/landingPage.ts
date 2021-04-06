@@ -1,4 +1,4 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import { browser, by, element, ExpectedConditions } from 'protractor';
 import { LandingPageObject } from './landingPage.po';
 import { LoginPage } from '../LoginPage/loginPage';

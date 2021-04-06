@@ -1,5 +1,5 @@
 import { browser, Key } from 'protractor';
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import { PageHelperObject } from './pageHelper.po';
 import { LoginPage } from '../LoginPage/loginPage';
 import { LandingPage } from '../landingPage/landingPage';

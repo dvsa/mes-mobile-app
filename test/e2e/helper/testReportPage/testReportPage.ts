@@ -1,6 +1,6 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import {browser} from 'protractor';
-import {TEST_CONFIG} from '../test.config';
+
 import {
   BikeControlStopsObject,
   CompetencyObject,
@@ -8,8 +8,9 @@ import {
   ETAObject,
   LegalRequirementsObject,
   ReversingDiagramModalObject,
-  TestReportPageObject
-} from "./testReportPage.po";
+  TestReportPageObject,
+} from './testReportPage.po';
+import { TEST_CONFIG } from '../../test.config';
 
 const buttonPadding = 30;
 const request = require('request');

@@ -1,5 +1,5 @@
 import { by, element } from 'protractor';
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 
 export class LoginPageObject extends Page {
   microsoftOnlineContinue =

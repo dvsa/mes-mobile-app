@@ -1,4 +1,4 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import { SearchPageObject } from './searchPage.po';
 
 const chai = require('chai');

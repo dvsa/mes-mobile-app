@@ -1,4 +1,4 @@
-import Page from '../../utilities/page';
+import { Page } from '../../utilities/page';
 import { BackToOfficePageObject } from './backToOfficePage.po';
 
 export class BackToOfficePage extends Page {
