@@ -19,24 +19,24 @@ platform :ios do
   desc "Signs and builds the app with the DVSA production distribution certificate & provisioning profile"
   lane :build do
    upgrade_super_old_xcode_project(
-    path: "platforms/ios/DrivingExaminerService.xcodeproj",
+    path: "platforms/ios/DES 3.xcodeproj",
     team_id: "K84TL26V3P"
   )
-  disable_automatic_code_signing(path: "platforms/ios/DrivingExaminerService.xcodeproj")
+  disable_automatic_code_signing(path: "platforms/ios/DES 3.xcodeproj")
   # Make sure the XCode project is using the VOSA/DVSA team
   update_project_team(
-   path: "platforms/ios/DrivingExaminerService.xcodeproj",
+   path: "platforms/ios/DES 3.xcodeproj",
    teamid: "K84TL26V3P")
 
    # Update the project's provisioning settings to use our distribution cert
    update_project_provisioning(
-    xcodeproj: "platforms/ios/DrivingExaminerService.xcodeproj",
-    profile: "/Users/mes/certs/Mobile_Examiner_App.mobileprovision", 
-    target_filter: ".*DrivingExaminerService.*", # matches name or type of a target, see https://medium.com/@andersongusmao/xcode-targets-with-multiples-build-configuration-90a575ddc687 for an explanation 
+    xcodeproj: "platforms/ios/DES 3.xcodeproj",
+    profile: "/Users/mes/certs/Mobile_Examiner_App.mobileprovision",
+    target_filter: ".*DES 3.*", # matches name or type of a target, see https://medium.com/@andersongusmao/xcode-targets-with-multiples-build-configuration-90a575ddc687 for an explanation
     build_configuration: "Release",
     code_signing_identity: "iPhone Distribution: Vehicle and Operator Services Agency"
   )
-   
+
 
    build_ios_app(
     export_options: {
@@ -44,12 +44,12 @@ platform :ios do
         "uk.gov.dvsa.mobile-examiner-app" => "Mobile Examiner App",
       }
     },
-    project:  "platforms/ios/DrivingExaminerService.xcodeproj",
-        scheme: "DrivingExaminerService",
+    project:  "platforms/ios/DES 3.xcodeproj",
+        scheme: "DES 3",
         configuration: "Release",
         output_directory: "build",
         silent: false,
-        output_name: "DrivingExaminerService.ipa",
+        output_name: "DES 3.ipa",
         export_method: "enterprise",
         codesigning_identity: "iPhone Distribution: Vehicle and Operator Services Agency"
 
