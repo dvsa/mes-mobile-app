@@ -2,7 +2,7 @@ import { TestsModel } from '../../../modules/tests/tests.model';
 import * as fakeJournalActions from '../../../pages/fake-journal/fake-journal.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
+import { end2endPracticeSlotId, testReportPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { formatAnalyticsText } from '../format-analytics-text';
 import { AnalyticsEventCategories } from '../../../providers/analytics/analytics.model';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -28,7 +28,7 @@ describe('formatAnalyticsText', () => {
 
   it('should prefix practice tests with the correct text', () => {
     const state = { ...initialState };
-    const action = new testsActions.StartTestReportPracticeTest(testReportPracticeSlotId);
+    const action = new testsActions.StartTestReportPracticeTest(testReportPracticeSlotId, TestCategory.B);
     const tests: TestsModel = testsReducer(state, action);
 
     const result = formatAnalyticsText(eventString, tests);

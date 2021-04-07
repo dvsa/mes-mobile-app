@@ -60,7 +60,7 @@ export class ActivateTest implements Action {
 
 export class StartTestReportPracticeTest implements Action {
   readonly type = START_TEST_REPORT_PRACTICE_TEST;
-  constructor(public slotId: string, public category: TestCategory = TestCategory.B) { }
+  constructor(public slotId: string, public category: TestCategory) { }
 }
 
 export class StartSendingCompletedTests implements Action {

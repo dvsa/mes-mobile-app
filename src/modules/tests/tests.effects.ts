@@ -273,6 +273,7 @@ export class TestsEffects {
         new PopulateTestCategory(slotData.booking.application.testCategory as CategoryCode),
         new PopulateApplicationReference(slotData.booking.application),
         new PopulateCandidateDetails(slotData.booking.candidate),
+
       ];
     }),
   );

@@ -8,6 +8,7 @@ import { TellMeQuestionDrivingFault, TellMeQuestionCorrect }
 import { ModalEvent } from '../practice-test-modal/practice-test-modal.constants';
 import { testReportPracticeModeSlot } from '../../../../modules/tests/__mocks__/tests.mock';
 import { CAT_B } from '../../../page-names.constants';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'practice-test-report-card',
@@ -33,15 +34,17 @@ export class PracticeTestReportCardComponent {
     this.modal.present();
   }
 
+  // TODO - To expand test report practice mode to other categories the navController push needs to be dynamic.
+  // TODO - Tell me questions not needed for CatBE
   onModalDismiss = (event: ModalEvent): void => {
     switch (event) {
       case ModalEvent.FAULT:
-        this.store$.dispatch(new StartTestReportPracticeTest(this.slotId));
+        this.store$.dispatch(new StartTestReportPracticeTest(this.slotId, TestCategory.B));
         this.store$.dispatch(new TellMeQuestionDrivingFault());
         this.navController.push(CAT_B.TEST_REPORT_PAGE);
         break;
       case ModalEvent.NO_FAULT:
-        this.store$.dispatch(new StartTestReportPracticeTest(this.slotId));
+        this.store$.dispatch(new StartTestReportPracticeTest(this.slotId, TestCategory.B));
         this.store$.dispatch(new TellMeQuestionCorrect());
         this.navController.push(CAT_B.TEST_REPORT_PAGE);
         break;
