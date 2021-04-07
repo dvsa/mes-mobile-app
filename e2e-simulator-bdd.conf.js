@@ -1,4 +1,4 @@
-var appPath = __dirname + '/platforms/ios/build/emulator/DES 3.app';
+var appPath = __dirname + '/platforms/ios/build/emulator/DrivingExaminerService.app';
 
 exports.config = {
   seleniumAddress: 'http://localhost:4723/wd/hub',

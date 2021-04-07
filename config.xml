@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="uk.gov.dvsa.mobile-examiner-app" version="3.11.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>DES 3</name>
+<widget id="uk.gov.dvsa.mobile-examiner-app" version="3.11.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>DrivingExaminerService</name>
     <description>An application for DVSA driving examiners to conduct driving tests</description>
     <author email="mobexaminer@gmail.com">MES Team</author>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
