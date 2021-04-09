@@ -132,6 +132,17 @@ describe('Journal Reducer', () => {
       expect(result.slots[slotDate][0].hasSlotChanged).toEqual(false);
 
     });
+
+    it('should return current state when selectedDate in slots is undefined', () => {
+      const state = {
+        ...initialState,
+        selectedDate: '',
+        slots: {},
+      } as JournalModel;
+      const action = new ClearChangedSlot(1234);
+      const result = journalReducer(state, action);
+      expect(result).toEqual(state);
+    });
   });
 
   describe('[JournalPage] Candidate Details Seen', () => {
@@ -149,6 +160,17 @@ describe('Journal Reducer', () => {
 
       expect(result.slots[slotDate][0].hasSeenCandidateDetails).toEqual(true);
 
+    });
+
+    it('should return current state when selectedDate in slots is undefined', () => {
+      const state = {
+        ...initialState,
+        selectedDate: '',
+        slots: {},
+      } as JournalModel;
+      const action = new CandidateDetailsSeen(1234);
+      const result = journalReducer(state, action);
+      expect(result).toEqual(state);
     });
   });
 
