@@ -23,6 +23,9 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         error: { message: '', status: 0, statusText: '' },
       };
     case journalActions.CANDIDATE_DETAILS_SEEN:
+      if (!state.slots[state.selectedDate]) {
+        return { ...state };
+      }
       return {
         ...state,
         slots: {
@@ -64,7 +67,9 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         ...stateWithoutError,
       };
     case journalActions.CLEAR_CHANGED_SLOT:
-
+      if (!state.slots[state.selectedDate]) {
+        return { ...state };
+      }
       // TODO: This should be moved out to an effect
       const slots = state.slots[state.selectedDate].map((slot) => {
         if (get(slot, 'slotData.slotDetail.slotId') === action.slotId) {
