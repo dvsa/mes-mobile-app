@@ -136,7 +136,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
     });
     it('should call logError, prefixed with practice mode', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
       store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
@@ -176,7 +176,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
     });
     it('should call logError, prefixed with practice mode', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
       store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT

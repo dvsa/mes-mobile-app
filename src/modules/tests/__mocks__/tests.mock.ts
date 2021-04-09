@@ -2,6 +2,7 @@ import { Application, Candidate } from '@dvsa/mes-journal-schema';
 
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
+// TODO - - for test report practice mode category here needs to be dynamic
 export const testApplicationMock: Application = {
   applicationId: 12345692,
   bookingSequence: 1,

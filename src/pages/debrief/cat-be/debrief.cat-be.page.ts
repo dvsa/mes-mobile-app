@@ -24,7 +24,6 @@ import { getConductedLanguage } from
 import { CAT_BE } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
-import { BasePageComponent } from '../../../shared/classes/base-page';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -33,6 +32,7 @@ import { getCandidate } from '../../../modules/tests/journal-data/common/candida
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/common/candidate/candidate.selector';
 import { TestOutcome } from '../../../shared/models/test-outcome';
 import { getVehicleChecks } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -54,7 +54,7 @@ interface DebriefPageState {
   templateUrl: 'debrief.cat-be.page.html',
 })
 
-export class DebriefCatBEPage extends BasePageComponent {
+export class DebriefCatBEPage extends PracticeableBasePageComponent {
 
   pageState: DebriefPageState;
   subscription: Subscription;
@@ -70,7 +70,7 @@ export class DebriefCatBEPage extends BasePageComponent {
   public adviceGivenPlanning: boolean = false;
 
   constructor(
-    public store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -81,10 +81,11 @@ export class DebriefCatBEPage extends BasePageComponent {
     private faultCountProvider: FaultCountProvider,
     private faultSummaryProvider: FaultSummaryProvider,
   ) {
-    super(platform, navController, authenticationProvider);
+    super(platform, navController, authenticationProvider, store$);
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),

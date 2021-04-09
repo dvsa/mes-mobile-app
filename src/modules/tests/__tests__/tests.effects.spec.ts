@@ -9,19 +9,14 @@ import * as testStatusActions from '../test-status/test-status.actions';
 import * as rekeyActions from '../rekey/rekey.actions';
 import * as journalActions from '../../../modules/journal/journal.actions';
 import { TestsModel } from '../tests.model';
-import { PopulateApplicationReference }
-  from '../journal-data/common/application-reference/application-reference.actions';
+import { PopulateApplicationReference } from '../journal-data/common/application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../journal-data/common/candidate/candidate.actions';
-import {
-  testApplicationMock,
-  candidateMock,
-  testReportPracticeModeSlot,
-} from '../__mocks__/tests.mock';
+import { candidateMock, testApplicationMock, testReportPracticeModeSlot } from '../__mocks__/tests.mock';
 import { initialState, testsReducer } from '../tests.reducer';
 import { TestSubmissionProvider } from '../../../providers/test-submission/test-submission';
 import { TestSubmissionProviderMock } from '../../../providers/test-submission/__mocks__/test-submission.mock';
 import { Store, StoreModule } from '@ngrx/store';
-import { NetworkStateProvider, ConnectionStatus } from '../../../providers/network-state/network-state';
+import { ConnectionStatus, NetworkStateProvider } from '../../../providers/network-state/network-state';
 import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
@@ -129,7 +124,7 @@ describe('Tests Effects', () => {
   describe('startPracticeTestEffect', () => {
     it('should dispatch the PopulateApplicationReference and PopulateCandidateDetails action', (done) => {
       // ACT
-      actions$.next(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      actions$.next(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ASSERT
       effects.startPracticeTestEffect$.subscribe((result) => {
         if (result instanceof PopulateApplicationReference)  {
@@ -151,7 +146,7 @@ describe('Tests Effects', () => {
       const currentTestSlotId = '12345'; // Mocked as a 201 http response
       const currentTestSlotId1 = '123456'; // Mocked as a 201 http response
       const currentTestSlotId2 = '1234567'; // Mocked as a 500 http error response
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       store$.dispatch(new testStatusActions.SetTestStatusCompleted(testReportPracticeModeSlot.slotDetail.slotId));
       store$.dispatch(new testsActions.StartTest(Number(currentTestSlotId), TestCategory.B));
       store$.dispatch(new testStatusActions.SetTestStatusCompleted(currentTestSlotId));

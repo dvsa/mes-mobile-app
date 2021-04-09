@@ -89,7 +89,7 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
     });
     it('should call setCurrentPage with practice mode prefix and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       store$.dispatch(new PopulateTestCategory(TestCategory.BE));
@@ -114,7 +114,8 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
   describe('reverseDiagramOpened', () => {
     it('should call logEvent with the correct parameters', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new reverseDiagramModalActions.ReverseDiagramOpened());
       // ASSERT
@@ -133,7 +134,8 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
   describe('reverseDiagramClosed', () => {
     it('should call logEvent with the correct parameters', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new reverseDiagramModalActions.ReverseDiagramClosed());
       // ASSERT
@@ -152,7 +154,8 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
   describe('reverseDiagramLengthChanged', () => {
     it('should call logEvent with the correct parameters', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new reverseDiagramModalActions.ReverseDiagramLengthChanged(100 , 10));
       // ASSERT
@@ -172,7 +175,8 @@ describe('Reverse Diagram Modal Analytics Effects', () => {
   describe('reverseDiagramWidthChanged', () => {
     it('should call logEvent with the correct parameters', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new reverseDiagramModalActions.ReverseDiagramWidthChanged(100, 10));
       // ASSERT

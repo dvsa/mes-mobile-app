@@ -86,7 +86,7 @@ describe('Debrief Analytics Effects', () => {
     });
     it('should call setCurrentPage with pass and practice mode prefix', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
       actions$.next(new debriefActions.DebriefViewDidEnter());
@@ -100,7 +100,7 @@ describe('Debrief Analytics Effects', () => {
     });
     it('should call setCurrentPage with fail and practice mode prefix', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
       actions$.next(new debriefActions.DebriefViewDidEnter());

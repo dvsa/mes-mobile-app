@@ -1,4 +1,5 @@
 <ion-header>
+  <practice-mode-banner *ngIf="isEndToEndPracticeMode"></practice-mode-banner>
   <ion-navbar>
     <ion-title>{{ 'debrief.title' | translate }} - {{pageState.candidateName$ | async}}</ion-title>
   </ion-navbar>

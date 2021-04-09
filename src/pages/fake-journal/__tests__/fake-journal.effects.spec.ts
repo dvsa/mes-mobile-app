@@ -19,6 +19,7 @@ import { SetTestStatusBooked } from '../../../modules/tests/test-status/test-sta
 import { Application } from '@dvsa/mes-journal-schema';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { configureTestSuite } from 'ng-bullet';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('Fake Journal Effects', () => {
   let effects: FakeJournalEffects;
@@ -50,26 +51,26 @@ describe('Fake Journal Effects', () => {
     const testId = `${end2endPracticeSlotId}_1`;
     beforeEach(() => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(testId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(testId, TestCategory.B));
     });
 
     it('should dispatch actions for populating startedTests with mock data', (done) => {
       // ACT
-      actions$.next(new fakeJournalActions.StartE2EPracticeTest(testId));
+      actions$.next(new fakeJournalActions.StartE2EPracticeTest(testId, TestCategory.B));
       // ASSERT
       effects.startE2EPracticeTestEffect$.subscribe((result) => {
-        const slot = fakeJournalTestSlots.find(slot => slot.slotDetail.slotId === testId);
+        const fakeslot = fakeJournalTestSlots.find(slot => fakeslot.slot.slotDetail.slotId === testId);
         if (result instanceof PopulateApplicationReference)  {
-          expect(result).toEqual(new PopulateApplicationReference(slot.booking.application as Application));
+          expect(result).toEqual(new PopulateApplicationReference(fakeslot.slot.booking.application as Application));
         }
         if (result instanceof PopulateCandidateDetails) {
-          expect(result).toEqual(new PopulateCandidateDetails(slot.booking.candidate));
+          expect(result).toEqual(new PopulateCandidateDetails(fakeslot.slot.booking.candidate));
         }
         if (result instanceof PopulateTestSlotAttributes) {
           expect(result.payload.slotId).toEqual(testId);
         }
         if (result instanceof PopulateTestCentre) {
-          expect(result.payload.costCode).toEqual(slot.testCentre.costCode);
+          expect(result.payload.costCode).toEqual(fakeslot.slot.testCentre.costCode);
         }
         if (result instanceof SetTestStatusBooked) {
           expect(result).toEqual(new SetTestStatusBooked(testId));

@@ -41,7 +41,7 @@ describe('testsReducer', () => {
       completedTests: [],
     };
     const slotId = testReportPracticeSlotId;
-    const action = new testsActions.StartTestReportPracticeTest(slotId);
+    const action = new testsActions.StartTestReportPracticeTest(slotId, TestCategory.B);
 
     const output = testsReducer(state, action);
 
@@ -121,7 +121,7 @@ describe('testsReducer', () => {
       testStatus: {},
     };
     const slotId = testReportPracticeSlotId;
-    const action = new testsActions.StartTestReportPracticeTest(slotId);
+    const action = new testsActions.StartTestReportPracticeTest(slotId, TestCategory.B);
 
     const output = testsReducer(state, { ...action, category: TestCategory.B });
 
@@ -153,7 +153,7 @@ describe('testsReducer', () => {
       completedTests: [],
     };
     const slotId = '123';
-    const action = new testsActions.StartTestReportPracticeTest(slotId);
+    const action = new testsActions.StartTestReportPracticeTest(slotId, TestCategory.B);
 
     const output = testsReducer(state, action);
 

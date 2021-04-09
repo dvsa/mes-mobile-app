@@ -67,7 +67,7 @@ describe('Post Debrief Holding Analytics Effects', () => {
     });
     it('should call setCurrentPage with practice mode prefix', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new postDebriefHoldingActions.PostDebriefHoldingViewDidEnter());

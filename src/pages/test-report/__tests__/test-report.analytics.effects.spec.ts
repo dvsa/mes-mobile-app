@@ -139,7 +139,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent when the action is user generated, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new testReportActions.ToggleRemoveFaultMode(true));
       // ASSERT
@@ -186,7 +187,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent when action is user generated, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new testReportActions.ToggleSeriousFaultMode(true));
       // ASSERT
@@ -233,7 +235,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent when action is user generated prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new testReportActions.ToggleDangerousFaultMode(true));
       // ASSERT
@@ -285,7 +288,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new drivingFaultsActions.AddDrivingFault({
         competency: Competencies.controlsGears,
@@ -327,7 +331,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new seriousFaultsActions.AddSeriousFault(Competencies.controlsGears));
       // ASSERT
@@ -366,7 +371,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new dangerousFaultsActions.AddDangerousFault(Competencies.controlsGears));
       // ASSERT
@@ -409,7 +415,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new manoeuvresActions.AddManoeuvreDrivingFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
@@ -483,7 +490,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new manoeuvresActions.AddManoeuvreSeriousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
@@ -557,7 +565,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new manoeuvresActions.AddManoeuvreDangerousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
@@ -627,7 +636,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new controlledStopActions.ControlledStopAddDrivingFault());
       // ASSERT
@@ -666,7 +676,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new controlledStopActions.ControlledStopAddSeriousFault());
       // ASSERT
@@ -705,7 +716,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new controlledStopActions.ControlledStopAddDangerousFault());
       // ASSERT
@@ -744,7 +756,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new vehicleChecksActions.ShowMeQuestionDrivingFault());
       // ASSERT
@@ -783,7 +796,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new vehicleChecksActions.ShowMeQuestionSeriousFault());
       // ASSERT
@@ -822,7 +836,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new vehicleChecksActions.ShowMeQuestionDangerousFault());
       // ASSERT
@@ -864,7 +879,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new drivingFaultsActions.RemoveDrivingFault({
         competency: Competencies.controlsGears,
@@ -906,7 +922,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new seriousFaultsActions.RemoveSeriousFault(Competencies.controlsGears));
       // ASSERT
@@ -945,7 +962,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new dangerousFaultsActions.RemoveDangerousFault(Competencies.controlsGears));
       // ASSERT
@@ -987,7 +1005,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new manoeuvresActions.RemoveManoeuvreFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
@@ -1054,7 +1073,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new controlledStopActions.ControlledStopRemoveFault());
       // ASSERT
@@ -1091,7 +1111,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new vehicleChecksActions.ShowMeQuestionRemoveFault());
       // ASSERT
@@ -1128,7 +1149,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for termination event, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new testReportActions.TerminateTestFromTestReport());
       // ASSERT
@@ -1278,7 +1300,8 @@ describe('Test Report Analytics Effects', () => {
 
     it('should call logEvent for normal start, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       store$.dispatch(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ACT
       actions$.next(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
@@ -1296,7 +1319,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for eco, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       store$.dispatch(new ecoActions.ToggleEco());
       // ACT
       actions$.next(new ecoActions.ToggleEco());
@@ -1376,7 +1400,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new uncoupleRecoupleActions.UncoupleRecoupleAddDrivingFault());
       // ASSERT
@@ -1415,7 +1440,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new uncoupleRecoupleActions.UncoupleRecoupleAddSeriousFault());
       // ASSERT
@@ -1454,7 +1480,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new uncoupleRecoupleActions.UncoupleRecoupleAddDangerousFault());
       // ASSERT
@@ -1475,7 +1502,8 @@ describe('Test Report Analytics Effects', () => {
   describe('reverseLeftPopoverOpened', () => {
     it('should call logEvent with the correct parameters', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new reverseLeftActions.ReverseLeftPopoverOpened());
       // ASSERT
@@ -1494,7 +1522,8 @@ describe('Test Report Analytics Effects', () => {
   describe('reverseLeftPopoverClosed', () => {
     it('should call logEvent with the correct parameters', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new reverseLeftActions.ReverseLeftPopoverClosed());
       // ASSERT
@@ -1962,7 +1991,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseAddDrivingFault());
       // ASSERT
@@ -2000,7 +2030,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseAddSeriousFault());
       // ASSERT
@@ -2037,7 +2068,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseAddDangerousFault());
       // ASSERT
@@ -2074,7 +2106,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseRemoveDrivingFault());
       // ASSERT
@@ -2111,7 +2144,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseRemoveSeriousFault());
       // ASSERT
@@ -2148,7 +2182,8 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(
+        testReportPracticeModeSlot.slotDetail.slotId, TestCategory.B));
       // ACT
       actions$.next(new pcvDoorExerciseActions.PcvDoorExerciseRemoveDangerousFault());
       // ASSERT
