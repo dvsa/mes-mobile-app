@@ -1,0 +1,1 @@
+{"version":3,"file":"question-score.js","sourceRoot":"","sources":["question-score.ts"],"names":[],"mappings":";;;;;;;;;AAAA,OAAO,EAAE,SAAS,EAAE,KAAK,EAAE,MAAM,eAAe,CAAC;AAMjD;IAAA;IAKA,CAAC;IAFC;QADC,KAAK,EAAE;;yDACM;IAHH,sBAAsB;QAJlC,SAAS,CAAC;YACT,QAAQ,EAAE,gBAAgB;YAC1B,WAAW,EAAE,qBAAqB;SACnC,CAAC;OACW,sBAAsB,CAKlC;IAAD,6BAAC;CAAA,AALD,IAKC;SALY,sBAAsB"}

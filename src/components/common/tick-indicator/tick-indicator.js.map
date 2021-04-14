@@ -1,0 +1,1 @@
+{"version":3,"file":"tick-indicator.js","sourceRoot":"","sources":["tick-indicator.ts"],"names":[],"mappings":";;;;;;;;;AAAA,OAAO,EAAE,SAAS,EAAE,KAAK,EAAE,MAAM,eAAe,CAAC;AAMjD;IAAA;IAGA,CAAC;IADC;QADC,KAAK,EAAE;;0DACQ;IAFL,sBAAsB;QAJlC,SAAS,CAAC;YACT,QAAQ,EAAE,gBAAgB;YAC1B,WAAW,EAAE,qBAAqB;SACnC,CAAC;OACW,sBAAsB,CAGlC;IAAD,6BAAC;CAAA,AAHD,IAGC;SAHY,sBAAsB"}

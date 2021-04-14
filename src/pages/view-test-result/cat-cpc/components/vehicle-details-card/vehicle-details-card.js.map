@@ -1,0 +1,1 @@
+{"version":3,"file":"vehicle-details-card.js","sourceRoot":"","sources":["vehicle-details-card.ts"],"names":[],"mappings":";;;;;;;;;AAAA,OAAO,EAAE,SAAS,EAAE,KAAK,EAAE,MAAM,eAAe,CAAC;AAOjD;IAAA;IAIA,CAAC;IADC;QADC,KAAK,EAAE;;0EAC8B;IAH3B,8BAA8B;QAJ1C,SAAS,CAAC;YACT,QAAQ,EAAE,0BAA0B;YACpC,WAAW,EAAE,2BAA2B;SACzC,CAAC;OACW,8BAA8B,CAI1C;IAAD,qCAAC;CAAA,AAJD,IAIC;SAJY,8BAA8B"}

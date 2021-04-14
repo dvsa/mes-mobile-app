@@ -1,0 +1,1 @@
+{"version":3,"file":"dangerous-fault-badge.js","sourceRoot":"","sources":["dangerous-fault-badge.ts"],"names":[],"mappings":";;;;;;;;;AAAA,OAAO,EAAE,SAAS,EAAE,KAAK,EAAE,MAAM,eAAe,CAAC;AAMjD;IAAA;IAIA,CAAC;IADC;QADC,KAAK,EAAE;;mEACW;IAHR,4BAA4B;QAJxC,SAAS,CAAC;YACT,QAAQ,EAAE,uBAAuB;YACjC,WAAW,EAAE,4BAA4B;SAC1C,CAAC;OACW,4BAA4B,CAIxC;IAAD,mCAAC;CAAA,AAJD,IAIC;SAJY,4BAA4B"}

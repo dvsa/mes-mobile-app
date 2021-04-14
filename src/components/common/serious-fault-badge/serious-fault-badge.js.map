@@ -1,0 +1,1 @@
+{"version":3,"file":"serious-fault-badge.js","sourceRoot":"","sources":["serious-fault-badge.ts"],"names":[],"mappings":";;;;;;;;;AAAA,OAAO,EAAE,SAAS,EAAE,KAAK,EAAE,MAAM,eAAe,CAAC;AAMjD;IAAA;IAIA,CAAC;IADC;QADC,KAAK,EAAE;;iEACW;IAHR,0BAA0B;QAJtC,SAAS,CAAC;YACT,QAAQ,EAAE,qBAAqB;YAC/B,WAAW,EAAE,0BAA0B;SACxC,CAAC;OACW,0BAA0B,CAItC;IAAD,iCAAC;CAAA,AAJD,IAIC;SAJY,0BAA0B"}

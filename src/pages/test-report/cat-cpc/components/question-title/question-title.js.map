@@ -1,0 +1,1 @@
+{"version":3,"file":"question-title.js","sourceRoot":"","sources":["question-title.ts"],"names":[],"mappings":";;;;;;;;;AAAA,OAAO,EAAE,SAAS,EAAE,KAAK,EAAE,MAAM,eAAe,CAAC;AAOjD;IAAA;IAKA,CAAC;IAFC;QADC,KAAK,EAAE;;4DACW;IAHR,sBAAsB;QAJlC,SAAS,CAAC;YACT,QAAQ,EAAE,gBAAgB;YAC1B,WAAW,EAAE,qBAAqB;SACnC,CAAC;OACW,sBAAsB,CAKlC;IAAD,6BAAC;CAAA,AALD,IAKC;SALY,sBAAsB"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"examiner-details.js","sourceRoot":"","sources":["examiner-details.ts"],"names":[],"mappings":";;;;;;;;;AAAA,OAAO,EAAE,SAAS,EAAE,KAAK,EAAE,MAAM,eAAe,CAAC;AAOjD;IAKE;IAAe,CAAC;IAFhB;QADC,KAAK,EAAE;;8DACmB;IAHhB,4BAA4B;QAJxC,SAAS,CAAC;YACT,QAAQ,EAAE,uBAAuB;YACjC,WAAW,EAAE,4BAA4B;SAC1C,CAAC;;OACW,4BAA4B,CAOxC;IAAD,mCAAC;CAAA,AAPD,IAOC;SAPY,4BAA4B"}

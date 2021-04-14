@@ -1,0 +1,1 @@
+{"version":3,"file":"journal.module.mock.js","sourceRoot":"","sources":["journal.module.mock.ts"],"names":[],"mappings":";;;;;;AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,eAAe,CAAC;AACzC,OAAO,EAAE,WAAW,EAAE,MAAM,eAAe,CAAC;AAO5C;IAAA;IAAkC,CAAC;IAAtB,mBAAmB;QAN/B,QAAQ,CAAC;YACR,YAAY,EAAE,EAAE;YAChB,OAAO,EAAE;gBACP,WAAW;aACZ;SACF,CAAC;OACW,mBAAmB,CAAG;IAAD,0BAAC;CAAA,AAAnC,IAAmC;SAAtB,mBAAmB"}

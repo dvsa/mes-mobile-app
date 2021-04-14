@@ -1,0 +1,62 @@
+import { async, TestBed } from '@angular/core/testing';
+import { ActivityCode4Modal } from '../activity-code-4-modal';
+import { configureTestSuite } from 'ng-bullet';
+import { AppModule } from '../../../../../../app/app.module';
+import { IonicModule, NavParams, ViewController } from 'ionic-angular';
+import { ComponentsModule } from '../../../../../../components/common/common-components.module';
+import { ViewControllerMock } from 'ionic-mocks';
+import { ModalReason } from '../activity-code-4-modal.constants';
+import { NavParamsMock } from '../../../../../journal/components/journal-early-start-modal/__mocks__/nav-params.mock';
+import { By } from '@angular/platform-browser';
+describe('ActivityCode4Modal', function () {
+    var fixture;
+    var component;
+    var navMock = new NavParamsMock();
+    configureTestSuite(function () {
+        TestBed.configureTestingModule({
+            declarations: [
+                ActivityCode4Modal,
+            ],
+            imports: [
+                AppModule,
+                IonicModule,
+                ComponentsModule,
+            ],
+            providers: [
+                { provide: NavParams, useFactory: function () { return navMock; } },
+                { provide: ViewController, useFactory: function () { return ViewControllerMock.instance(); } },
+            ],
+        });
+    });
+    beforeEach(async(function () {
+        fixture = TestBed.createComponent(ActivityCode4Modal);
+        component = fixture.componentInstance;
+    }));
+    describe('Class', function () {
+        it('should set modalReason from navParams', function () {
+            spyOn(navMock, 'get').and.returnValue(ModalReason.SPEED_REQUIREMENTS);
+            component.ngOnInit();
+            expect(navMock.get).toHaveBeenCalledWith('modalReason');
+            expect(component.modalReason).toEqual(ModalReason.SPEED_REQUIREMENTS);
+        });
+    });
+    describe('DOM', function () {
+        it('should call onCancel when the return to journal button is clicked', function () {
+            fixture.detectChanges();
+            spyOn(component, 'onCancel');
+            var button = fixture.debugElement.query(By.css('button.return-button'));
+            button.triggerEventHandler('click', null);
+            fixture.detectChanges();
+            expect(component.onCancel).toHaveBeenCalled();
+        });
+        it('should call onEndTest when the return to journal button is clicked', function () {
+            fixture.detectChanges();
+            spyOn(component, 'onEndTest');
+            var button = fixture.debugElement.query(By.css('button.end-test-button'));
+            button.triggerEventHandler('click', null);
+            fixture.detectChanges();
+            expect(component.onEndTest).toHaveBeenCalled();
+        });
+    });
+});
+//# sourceMappingURL=activity-code-4-modal.spec.js.map

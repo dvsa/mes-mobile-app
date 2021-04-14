@@ -1,0 +1,1 @@
+{"version":3,"file":"warning-banner.js","sourceRoot":"","sources":["warning-banner.ts"],"names":[],"mappings":";;;;;;;;;AAAA,OAAO,EAAE,SAAS,EAAE,KAAK,EAAE,MAAM,eAAe,CAAC;AAOjD;IAIE;IAEA,CAAC;IAJD;QADC,KAAK,EAAE;;+DACY;IAFT,sBAAsB;QALlC,SAAS,CAAC;YACT,QAAQ,EAAE,gBAAgB;YAC1B,WAAW,EAAE,qBAAqB;SACnC,CAAC;;OAEW,sBAAsB,CAQlC;IAAD,6BAAC;CAAA,AARD,IAQC;SARY,sBAAsB"}

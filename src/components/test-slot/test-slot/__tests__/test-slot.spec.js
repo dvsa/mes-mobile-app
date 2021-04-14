@@ -1,0 +1,412 @@
+import { MockComponent } from 'ng-mocks';
+import { TestBed, async } from '@angular/core/testing';
+import { TestSlotComponent } from '../test-slot';
+import { IonicModule, Config } from 'ionic-angular';
+import { By } from '@angular/platform-browser';
+import { ConfigMock } from 'ionic-mocks';
+import { cloneDeep } from 'lodash';
+import { IndicatorsComponent } from '../../indicators/indicators';
+import { TimeComponent } from '../../time/time';
+import { TestOutcomeComponent } from '../../test-outcome/test-outcome';
+import { CandidateLinkComponent } from '../../candidate-link/candidate-link';
+import { TestCategoryComponent } from '../../test-category/test-category';
+import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details';
+import { AdditionalCandidateDetailsComponent } from '../../additional-candidate-details/additional-candidate-details';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
+import { LanguageComponent } from '../../language/language';
+import { AppConfigProvider } from '../../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
+import { StoreModule, Store } from '@ngrx/store';
+import { testsReducer } from '../../../../modules/tests/tests.reducer';
+import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
+import { SetTestStatusDecided } from '../../../../modules/tests/test-status/test-status.actions';
+import { of } from 'rxjs';
+import { StartTest } from '../../../../modules/tests/tests.actions';
+import { SubmissionStatusComponent } from '../../submission-status/submission-status';
+import { ProgressiveAccessComponent } from '../../progressive-access/progressive-access';
+import { ActivityCodes } from '../../../../shared/models/activity-codes';
+import { SpecialNeedsCode } from '../../../../shared/helpers/get-slot-type';
+import { LocationComponent } from '../../location/location';
+import { SlotProvider } from '../../../../providers/slot/slot';
+import { configureTestSuite } from 'ng-bullet';
+import moment from 'moment';
+import { DateComponent } from '../../date/date';
+describe('TestSlotComponent', function () {
+    var fixture;
+    var component;
+    var startTime = '2019-02-01T11:22:33+00:00';
+    var store$;
+    var mockSlot = {
+        slotDetail: {
+            slotId: 1001,
+            start: startTime,
+            duration: 57,
+        },
+        vehicleSlotTypeCode: 57,
+        testCentre: {
+            centreId: 54321,
+            centreName: 'Example Test Centre',
+            costCode: 'EXTC1',
+        },
+        booking: {
+            candidate: {
+                candidateId: 101,
+                candidateName: {
+                    title: 'Miss',
+                    firstName: 'Florence',
+                    lastName: 'Pearson',
+                },
+                driverNumber: 'PEARS015220A99HC',
+                gender: 'F',
+                candidateAddress: {
+                    addressLine1: '1 Station Street',
+                    addressLine2: 'Someplace',
+                    addressLine3: 'Sometown',
+                    addressLine4: '',
+                    addressLine5: '',
+                    postcode: 'AB12 3CD',
+                },
+                primaryTelephone: '01234 567890',
+                secondaryTelephone: '04321 098765',
+                mobileTelephone: '07654 123456',
+                prn: 123456,
+                previousADITests: 2,
+            },
+            application: {
+                applicationId: 1234567,
+                bookingSequence: 3,
+                checkDigit: 1,
+                welshTest: false,
+                extendedTest: false,
+                meetingPlace: '',
+                progressiveAccess: false,
+                specialNeeds: 'Candidate has dyslexia',
+                specialNeedsCode: SpecialNeedsCode.NONE,
+                entitlementCheck: false,
+                vehicleSeats: 5,
+                vehicleHeight: 4,
+                vehicleWidth: 3,
+                vehicleLength: 2,
+                testCategory: 'B',
+                vehicleGearbox: 'Manual',
+            },
+            previousCancellation: [
+                'Act of nature',
+            ],
+        },
+    };
+    configureTestSuite(function () {
+        TestBed.configureTestingModule({
+            declarations: [
+                TestSlotComponent,
+                MockComponent(LanguageComponent),
+                MockComponent(IndicatorsComponent),
+                MockComponent(LocationComponent),
+                MockComponent(TimeComponent),
+                MockComponent(DateComponent),
+                MockComponent(TestCategoryComponent),
+                MockComponent(TestOutcomeComponent),
+                MockComponent(VehicleDetailsComponent),
+                MockComponent(AdditionalCandidateDetailsComponent),
+                MockComponent(CandidateLinkComponent),
+                MockComponent(SubmissionStatusComponent),
+                MockComponent(ProgressiveAccessComponent),
+            ],
+            imports: [
+                IonicModule,
+                StoreModule.forRoot({
+                    tests: testsReducer,
+                }),
+            ],
+            providers: [
+                { provide: Config, useFactory: function () { return ConfigMock.instance(); } },
+                { provide: ScreenOrientation, useClass: ScreenOrientationMock },
+                { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+                { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+                { provide: SlotProvider, useClass: SlotProvider },
+            ],
+        });
+    });
+    beforeEach(async(function () {
+        fixture = TestBed.createComponent(TestSlotComponent);
+        component = fixture.componentInstance;
+        component.slot = cloneDeep(mockSlot);
+        component.showLocation = true;
+        store$ = TestBed.get(Store);
+    }));
+    afterAll(function () {
+        if (jasmine.clock) {
+            jasmine.clock().uninstall();
+        }
+    });
+    describe('Class', function () {
+        describe('isIndicatorNeededForSlot', function () {
+            it('should return true if specialNeeds is a non-blank string', function () {
+                expect(component.isIndicatorNeededForSlot()).toBe(true);
+            });
+            it('should return false if specialNeeds is blank (entitlementCheck is false, slotType is Standard)', function () {
+                component.slot.booking.application.specialNeeds = '';
+                component.slot.booking.application.entitlementCheck = false;
+                component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.NONE;
+                expect(component.isIndicatorNeededForSlot()).toBe(false);
+            });
+            it('should return false if specialNeeds is missing', function () {
+                delete component.slot.booking.application;
+                expect(component.isSpecialNeedsSlot()).toBe(false);
+            });
+            it('should return true if entitlementCheck is true (specialNeeds is blank, slotType is Standard)', function () {
+                component.slot.booking.application.specialNeeds = '';
+                component.slot.booking.application.entitlementCheck = true;
+                component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.NONE;
+                expect(component.isIndicatorNeededForSlot()).toBe(true);
+            });
+            it('should return false if entitlementCheck is missing (specialNeeds is blank, slotType is Standard)', function () {
+                component.slot.booking.application.specialNeeds = '';
+                delete component.slot.booking.application.entitlementCheck;
+                component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.NONE;
+                expect(component.isIndicatorNeededForSlot()).toBe(false);
+            });
+            it('should return false if entitlementCheck is false (specialNeeds is blank, slotType is Standard)', function () {
+                component.slot.booking.application.specialNeeds = '';
+                component.slot.booking.application.entitlementCheck = false;
+                component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.NONE;
+                expect(component.isIndicatorNeededForSlot()).toBe(false);
+            });
+            it('should return true if slotType is not Standard (specialNeeds is blank, entitlementCheck is false)', function () {
+                component.slot.booking.application.specialNeeds = '';
+                component.slot.booking.application.entitlementCheck = false;
+                component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.EXTRA;
+                expect(component.isIndicatorNeededForSlot()).toBe(true);
+            });
+            it('should return false if slotType is Standard (specialNeeds is blank, entitlementCheck is false )', function () {
+                component.slot.booking.application.specialNeeds = '';
+                component.slot.booking.application.entitlementCheck = false;
+                component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.NONE;
+                expect(component.isIndicatorNeededForSlot()).toBe(false);
+            });
+            it('should return correct value for showing vehicle details', function () {
+                component.slot.booking.application.testCategory = 'ADI2';
+                expect(component.showVehicleDetails()).toEqual(false);
+                component.slot.booking.application.testCategory = 'A';
+                expect(component.showVehicleDetails()).toEqual(false);
+                component.slot.booking.application.testCategory = 'A1';
+                expect(component.showVehicleDetails()).toEqual(false);
+                component.slot.booking.application.testCategory = 'A2';
+                expect(component.showVehicleDetails()).toEqual(false);
+                component.slot.booking.application.testCategory = 'AM';
+                expect(component.showVehicleDetails()).toEqual(false);
+                component.slot.booking.application.testCategory = 'B';
+                expect(component.showVehicleDetails()).toEqual(false);
+                component.slot.booking.application.testCategory = 'B1';
+                expect(component.showVehicleDetails()).toEqual(false);
+                component.slot.booking.application.testCategory = 'B+E';
+                expect(component.showVehicleDetails()).toEqual(true);
+                component.slot.booking.application.testCategory = 'C';
+                expect(component.showVehicleDetails()).toEqual(true);
+                component.slot.booking.application.testCategory = 'C1';
+                expect(component.showVehicleDetails()).toEqual(true);
+                component.slot.booking.application.testCategory = 'C1+E';
+                expect(component.showVehicleDetails()).toEqual(true);
+                component.slot.booking.application.testCategory = 'C+E';
+                expect(component.showVehicleDetails()).toEqual(true);
+                component.slot.booking.application.testCategory = 'D';
+                expect(component.showVehicleDetails()).toEqual(true);
+                component.slot.booking.application.testCategory = 'D1';
+                expect(component.showVehicleDetails()).toEqual(true);
+                component.slot.booking.application.testCategory = 'D+E';
+                expect(component.showVehicleDetails()).toEqual(true);
+                component.slot.booking.application.testCategory = 'D1+E';
+                expect(component.showVehicleDetails()).toEqual(true);
+            });
+            it('should return true for isPortrait() if device is portrait', function () {
+                component.screenOrientation.type = component.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY;
+                expect(component.isPortrait()).toEqual(true);
+                component.screenOrientation.type = component.screenOrientation.ORIENTATIONS.PORTRAIT;
+                expect(component.isPortrait()).toEqual(true);
+            });
+            it('should return false for isPortrait() if device is landscape', function () {
+                component.screenOrientation.type = component.screenOrientation.ORIENTATIONS.LANDSCAPE_PRIMARY;
+                expect(component.isPortrait()).toEqual(false);
+                component.screenOrientation.type = component.screenOrientation.ORIENTATIONS.LANDSCAPE;
+                expect(component.isPortrait()).toEqual(false);
+            });
+        });
+        describe('isSpecialNeedsSlot', function () {
+            it('should return true if there is a non-empty special needs string', function () {
+                component.slot.booking.application.specialNeeds = 'something';
+                expect(component.isSpecialNeedsSlot()).toBe(true);
+            });
+            it('should return false if special needs is an empty string', function () {
+                component.slot.booking.application.specialNeeds = '';
+                expect(component.isSpecialNeedsSlot()).toBe(false);
+            });
+            it('should return false if special needs is null', function () {
+                component.slot.booking.application.specialNeeds = null;
+                expect(component.isSpecialNeedsSlot()).toBe(false);
+            });
+        });
+        describe('getLatestViewableSlotDateTime()', function () {
+            it('should return the next day if current day is not friday or saturday', function () {
+                jasmine.clock().mockDate(new Date('2020-07-23')); // thursday
+                var nextDay = component.getLatestViewableSlotDateTime();
+                expect(nextDay).toEqual(moment('2020-07-24').toDate());
+            });
+            it('should return start of the following monday if friday', function () {
+                jasmine.clock().mockDate(new Date('2020-07-24')); // friday
+                var nextDay = component.getLatestViewableSlotDateTime();
+                expect(nextDay).toEqual(moment('2020-07-27').toDate());
+            });
+            it('should return start of the following monday if saturday', function () {
+                jasmine.clock().mockDate(new Date('2020-07-25')); // friday
+                var nextDay = component.getLatestViewableSlotDateTime();
+                expect(nextDay).toEqual(moment('2020-07-27').toDate());
+            });
+        });
+        describe('canViewCandidateDetails()', function () {
+            it('should return false if slot date is after latest viewable date and user NOT whitelisted for ADI', function () {
+                spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(function () { return moment('2020-07-24').toDate(); });
+                component.slot.slotDetail.start = '2020-07-25T08:10:00';
+                var canViewCandidateDetails = component.canViewCandidateDetails();
+                expect(canViewCandidateDetails).toEqual(false);
+            });
+            it('should return true if slot date is after latest viewable date and user IS whitelisted for ADI', function () {
+                jasmine.clock().mockDate(new Date('2020-07-25'));
+                spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(function () { return moment('2020-07-24').toDate(); });
+                spyOn(component.appConfig, 'getAppConfig').and.returnValue({
+                    journal: {
+                        testPermissionPeriods: [{
+                                testCategory: "ADI3" /* ADI3 */,
+                                from: '2020-01-01',
+                                to: null,
+                            }],
+                    },
+                });
+                component.slot.slotDetail.start = '2020-07-25T08:10:00';
+                var canViewCandidateDetails = component.canViewCandidateDetails();
+                expect(canViewCandidateDetails).toEqual(true);
+            });
+            it('should return true if slot date is after latest viewable date and user IS whitelisted for ADI', function () {
+                var now = new Date();
+                var mockDate = new Date('2020-07-25');
+                mockDate.setTime(now.getTime());
+                jasmine.clock().mockDate(mockDate);
+                spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(function () { return moment('2020-07-24').toDate(); });
+                spyOn(component.appConfig, 'getAppConfig').and.returnValue({
+                    journal: {
+                        testPermissionPeriods: [{
+                                testCategory: "ADI2" /* ADI2 */,
+                                from: '2020-01-01',
+                                to: '2020-07-25',
+                            }],
+                    },
+                });
+                component.slot.slotDetail.start = '2020-07-25T08:10:00';
+                var canViewCandidateDetails = component.canViewCandidateDetails();
+                expect(canViewCandidateDetails).toEqual(true);
+            });
+            it('should return false if slot date is after latest viewable date and user IS NOT whitelisted for ADI', function () {
+                jasmine.clock().mockDate(new Date('2020-07-25'));
+                spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(function () { return moment('2020-07-24').toDate(); });
+                spyOn(component.appConfig, 'getAppConfig').and.returnValue({
+                    journal: {
+                        testPermissionPeriods: [{
+                                testCategory: "B" /* B */,
+                                from: '2020-01-01',
+                                to: null,
+                            }],
+                    },
+                });
+                component.slot.slotDetail.start = '2020-07-25T08:10:00';
+                var canViewCandidateDetails = component.canViewCandidateDetails();
+                expect(canViewCandidateDetails).toEqual(false);
+            });
+            it('should return true if slot date is equal to latest viewable date', function () {
+                spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(function () { return moment('2020-07-24').toDate(); });
+                component.slot.slotDetail.start = '2020-07-24T08:10:00';
+                var canViewCandidateDetails = component.canViewCandidateDetails();
+                expect(canViewCandidateDetails).toEqual(true);
+            });
+            it('should return true if slot date is less than latest viewable date', function () {
+                spyOn(component, 'getLatestViewableSlotDateTime').and.callFake(function () { return moment('2020-07-24').toDate(); });
+                component.slot.slotDetail.start = '2020-07-22T08:10:00';
+                var canViewCandidateDetails = component.canViewCandidateDetails();
+                expect(canViewCandidateDetails).toEqual(true);
+            });
+        });
+    });
+    describe('DOM', function () {
+        describe('Component Interaction', function () {
+            it('should pass the special needs status to a indicator component', function () {
+                component.slot.booking.application.specialNeeds = '';
+                fixture.detectChanges();
+                var indicatorComponent = fixture.debugElement.query(By.directive(MockComponent(IndicatorsComponent))).componentInstance;
+                expect(indicatorComponent).toBeDefined();
+                expect(indicatorComponent.showExclamationIndicator).toEqual(false);
+            });
+            it('should pass something to sub-component time input', function () {
+                fixture.detectChanges();
+                var subByDirective = fixture.debugElement.query(By.directive(MockComponent(TimeComponent))).componentInstance;
+                expect(subByDirective.time).toBe(startTime);
+            });
+            it('should pass something to sub-component candidate input', function () {
+                fixture.detectChanges();
+                var subByDirective = fixture.debugElement.query(By.directive(MockComponent(CandidateLinkComponent))).componentInstance;
+                expect(subByDirective.name.title).toBe('Miss');
+                expect(subByDirective.name.firstName).toBe('Florence');
+                expect(subByDirective.name.lastName).toBe('Pearson');
+                expect(subByDirective.isPortrait).toEqual(false);
+            });
+            it('should pass something to sub-component test-category input', function () {
+                fixture.detectChanges();
+                var subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestCategoryComponent))).componentInstance;
+                expect(subByDirective.category).toBe('B');
+            });
+            it('should pass something to sub-component test-outcome input', function () {
+                fixture.detectChanges();
+                component.componentState = {
+                    testStatus$: of(TestStatus.Booked),
+                    testActivityCode$: of(ActivityCodes.PASS),
+                    isRekey$: of(false),
+                };
+                fixture.detectChanges();
+                var subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestOutcomeComponent))).componentInstance;
+                expect(subByDirective.slotDetail.slotId).toEqual(mockSlot.slotDetail.slotId);
+                expect(subByDirective.canStartTest).toEqual(true);
+                expect(subByDirective.testStatus).toBe(TestStatus.Booked);
+            });
+            it('should pass test status decided to the test-outcome component when the outcome observable changes', function () {
+                fixture.detectChanges();
+                store$.dispatch(new StartTest(mockSlot.slotDetail.slotId, mockSlot.booking.application.testCategory));
+                store$.dispatch(new SetTestStatusDecided(mockSlot.slotDetail.slotId.toString()));
+                fixture.detectChanges();
+                var testOutcomeSubComponent = fixture.debugElement.query(By.directive(MockComponent(TestOutcomeComponent))).componentInstance;
+                expect(testOutcomeSubComponent.testStatus).toBe(TestStatus.Decided);
+            });
+            it('should pass something to sub-component vehicle-details input', function () {
+                spyOn(component, 'showVehicleDetails').and.returnValue(true);
+                fixture.detectChanges();
+                var subByDirective = fixture.debugElement.query(By.directive(MockComponent(VehicleDetailsComponent))).componentInstance;
+                expect(subByDirective.height).toBe(4);
+                expect(subByDirective.width).toBe(3);
+                expect(subByDirective.length).toBe(2);
+                expect(subByDirective.seats).toBe(5);
+                expect(subByDirective.transmission).toBe('Manual');
+                expect(subByDirective.showVehicleDetails).toBeFalsy();
+            });
+            it('should pass something to sub-component language input', function () {
+                fixture.detectChanges();
+                var subByDirective = fixture.debugElement.query(By.directive(MockComponent(LanguageComponent))).componentInstance;
+                expect(subByDirective.welshLanguage).toEqual(false);
+            });
+            it('should pass something to sub-component location input', function () {
+                fixture.detectChanges();
+                var subByDirective = fixture.debugElement.query(By.directive(MockComponent(LocationComponent))).componentInstance;
+                expect(subByDirective.location).toBe('Example Test Centre');
+            });
+        });
+    });
+});
+//# sourceMappingURL=test-slot.spec.js.map

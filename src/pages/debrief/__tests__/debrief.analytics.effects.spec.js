@@ -1,0 +1,107 @@
+import { DebriefAnalyticsEffects } from '../debrief.analytics.effects';
+import { TestBed } from '@angular/core/testing';
+import { ReplaySubject } from 'rxjs';
+import { StoreModule, Store } from '@ngrx/store';
+import { provideMockActions } from '@ngrx/effects/testing';
+import * as debriefActions from '../debrief.actions';
+import { AnalyticsProvider } from '../../../providers/analytics/analytics';
+import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
+import { AnalyticsScreenNames, AnalyticsEventCategories, } from '../../../providers/analytics/analytics.model';
+import { testsReducer } from '../../../modules/tests/tests.reducer';
+import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
+import * as testsActions from '../../../modules/tests/tests.actions';
+import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
+import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
+import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { configureTestSuite } from 'ng-bullet';
+describe('Debrief Analytics Effects', function () {
+    var effects;
+    var analyticsProviderMock;
+    var actions$;
+    var store$;
+    var screenNamePass = AnalyticsScreenNames.PASS_DEBRIEF;
+    var screenNameFail = AnalyticsScreenNames.FAIL_DEBRIEF;
+    var screenNamePracticeModePass = AnalyticsEventCategories.PRACTICE_MODE + " - " + AnalyticsScreenNames.PASS_DEBRIEF;
+    var screenNamePracticeModeFail = AnalyticsEventCategories.PRACTICE_MODE + " - " + AnalyticsScreenNames.FAIL_DEBRIEF;
+    configureTestSuite(function () {
+        TestBed.configureTestingModule({
+            imports: [
+                StoreModule.forRoot({
+                    tests: testsReducer,
+                }),
+            ],
+            providers: [
+                DebriefAnalyticsEffects,
+                { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
+                provideMockActions(function () { return actions$; }),
+                Store,
+            ],
+        });
+    });
+    beforeEach(function () {
+        actions$ = new ReplaySubject(1);
+        effects = TestBed.get(DebriefAnalyticsEffects);
+        analyticsProviderMock = TestBed.get(AnalyticsProvider);
+        store$ = TestBed.get(Store);
+    });
+    describe('debriefViewDidEnter', function () {
+        it('should call setCurrentPage with pass page', function (done) {
+            // ARRANGE
+            store$.dispatch(new testsActions.StartTest(123, "B" /* B */));
+            store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
+            // ACT
+            actions$.next(new debriefActions.DebriefViewDidEnter());
+            // ASSERT
+            effects.debriefViewDidEnter$.subscribe(function (result) {
+                expect(result instanceof AnalyticRecorded).toBe(true);
+                expect(analyticsProviderMock.setCurrentPage)
+                    .toHaveBeenCalledWith(screenNamePass);
+                done();
+            });
+        });
+        it('should call setCurrentPage with fail page', function (done) {
+            // ARRANGE
+            store$.dispatch(new testsActions.StartTest(123, "B" /* B */));
+            store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
+            // ACT
+            actions$.next(new debriefActions.DebriefViewDidEnter());
+            // ASSERT
+            effects.debriefViewDidEnter$.subscribe(function (result) {
+                expect(result instanceof AnalyticRecorded).toBe(true);
+                expect(analyticsProviderMock.setCurrentPage)
+                    .toHaveBeenCalledWith(screenNameFail);
+                done();
+            });
+        });
+        it('should call setCurrentPage with pass and practice mode prefix', function (done) {
+            // ARRANGE
+            store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+            store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
+            // ACT
+            actions$.next(new debriefActions.DebriefViewDidEnter());
+            // ASSERT
+            effects.debriefViewDidEnter$.subscribe(function (result) {
+                expect(result instanceof AnalyticRecorded).toBe(true);
+                expect(analyticsProviderMock.setCurrentPage)
+                    .toHaveBeenCalledWith(screenNamePracticeModePass);
+                done();
+            });
+        });
+        it('should call setCurrentPage with fail and practice mode prefix', function (done) {
+            // ARRANGE
+            store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+            store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
+            // ACT
+            actions$.next(new debriefActions.DebriefViewDidEnter());
+            // ASSERT
+            effects.debriefViewDidEnter$.subscribe(function (result) {
+                expect(result instanceof AnalyticRecorded).toBe(true);
+                expect(analyticsProviderMock.setCurrentPage)
+                    .toHaveBeenCalledWith(screenNamePracticeModeFail);
+                done();
+            });
+        });
+    });
+});
+//# sourceMappingURL=debrief.analytics.effects.spec.js.map

@@ -1,18 +1,14 @@
-import Page from './page';
+import Page from '../utilities/page';
+import { BackToOfficePageObject } from './backToOfficePage.po';
 
-class BackToOfficePage extends Page {
-  isCurrentPage() {
-    // No page title so need to check something else exists that exists on the page
-    this.getElementById('back-to-office-page');
+export class BackToOfficePage extends Page {
+  backToOfficePageElement: BackToOfficePageObject = new BackToOfficePageObject();
+
+  async clickContinueToWriteUpButton() {
+    await this.clickElement(this.backToOfficePageElement.continueToWriteUpButton);
   }
 
-  clickContinueToWriteUpButton() {
-    this.clickElementById('continue-to-write-up');
-  }
-
-  clickBackToJournalButton() {
-    this.clickElementByXPath('//*[@id="back-to-office-page"]//div[3]/button/span');
+  async clickBackToJournalButton() {
+    await this.clickElement(this.backToOfficePageElement.backToJournalButton);
   }
 }
-
-export default new BackToOfficePage();

@@ -1,0 +1,64 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TransmissionType } from '../../../shared/models/transmission-type';
+var TransmissionComponent = /** @class */ (function () {
+    function TransmissionComponent() {
+        this.hideTransmissionLabel = false;
+        this.hideConfirmTransmissionLabel = true;
+        this.transmissionChange = new EventEmitter();
+    }
+    TransmissionComponent_1 = TransmissionComponent;
+    TransmissionComponent.prototype.ngOnChanges = function () {
+        if (!this.formControl) {
+            this.formControl = new FormControl('Transmission', [Validators.required]);
+            this.formGroup.addControl(TransmissionComponent_1.fieldName, this.formControl);
+        }
+        this.formControl.patchValue(this.transmission);
+    };
+    TransmissionComponent.prototype.transmissionChanged = function (transmission) {
+        this.transmissionChange.emit(transmission);
+    };
+    TransmissionComponent.prototype.isInvalid = function () {
+        return !this.formControl.valid && this.formControl.dirty;
+    };
+    var TransmissionComponent_1;
+    TransmissionComponent.fieldName = 'transmissionCtrl';
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TransmissionComponent.prototype, "transmission", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], TransmissionComponent.prototype, "hideTransmissionLabel", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], TransmissionComponent.prototype, "hideConfirmTransmissionLabel", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", FormGroup)
+    ], TransmissionComponent.prototype, "formGroup", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], TransmissionComponent.prototype, "transmissionChange", void 0);
+    TransmissionComponent = TransmissionComponent_1 = __decorate([
+        Component({
+            selector: 'transmission',
+            templateUrl: 'transmission.html',
+        })
+    ], TransmissionComponent);
+    return TransmissionComponent;
+}());
+export { TransmissionComponent };
+//# sourceMappingURL=transmission.js.map

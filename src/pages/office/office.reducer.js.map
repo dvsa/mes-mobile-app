@@ -1,0 +1,1 @@
+{"version":3,"file":"office.reducer.js","sourceRoot":"","sources":["office.reducer.ts"],"names":[],"mappings":"AAGA,MAAM,CAAC,IAAM,YAAY,GAAgB;IACvC,sBAAsB,EAAE,EAAE;IAC1B,oBAAoB,EAAE,EAAE;IACxB,oBAAoB,EAAE,EAAE;CACzB,CAAC;AAEF,MAAM,UAAU,aAAa,CAAC,KAAoB,EAAE,MAAuC;IAA7D,sBAAA,EAAA,oBAAoB;IAChD,QAAQ,MAAM,CAAC,IAAI,EAAE;QACnB;YACE,OAAO,KAAK,CAAC;KAChB;AAEH,CAAC"}

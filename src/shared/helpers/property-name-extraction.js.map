@@ -1,0 +1,1 @@
+{"version":3,"file":"property-name-extraction.js","sourceRoot":"","sources":["property-name-extraction.ts"],"names":[],"mappings":"AAAA,MAAM,UAAU,yBAAyB,CAAC,EAAO;IAC/C,IAAM,QAAQ,GAAG,EAAE,CAAC,OAAO,CAAC,GAAG,CAAC,CAAC;IACjC,IAAM,YAAY,GAAG,EAAE,CAAC,SAAS,CAAC,QAAQ,GAAG,CAAC,CAAC,CAAC;IAChD,OAAO,YAAY,CAAC;AACtB,CAAC"}

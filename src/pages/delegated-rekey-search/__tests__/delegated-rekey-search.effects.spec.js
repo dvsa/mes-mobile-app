@@ -1,0 +1,114 @@
+import { DelegatedRekeySearchEffects } from '../delegated-rekey-search.effects';
+import { defer, of, ReplaySubject } from 'rxjs';
+import { async, TestBed } from '@angular/core/testing';
+import { HttpErrorResponse } from '@angular/common/http';
+import { delegatedSearchReducer } from '../delegated-rekey-search.reducer';
+import { Store, StoreModule } from '@ngrx/store';
+import { provideMockActions } from '@ngrx/effects/testing';
+import * as delegatedRekeySearchActions from '../delegated-rekey-search.actions';
+import { configureTestSuite } from 'ng-bullet';
+import { DelegatedRekeySearchProvider } from '../../../providers/delegated-rekey-search/delegated-rekey-search';
+import { SearchProvider } from '../../../providers/search/search';
+import { HttpStatusCodes } from '../../../shared/models/http-status-codes';
+import { SearchProviderMock } from '../../../providers/search/__mocks__/search.mock';
+import { DelegatedRekeySearchErrorMessages } from '../delegated-rekey-search-error-model';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { UrlProvider } from '../../../providers/url/url';
+import { UrlProviderMock } from '../../../providers/url/__mocks__/url.mock';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
+import { mockGetDelegatedBooking } from '../../../providers/delegated-rekey-search/mock-data/delegated-mock-data';
+describe('Delegated Rekey Search Effects', function () {
+    var effects;
+    var actions$;
+    var delegatedRekeySearchProvider;
+    var searchProvider;
+    var getTestResultHttpErrorResponse = function (status) {
+        if (status === void 0) { status = 400; }
+        return new HttpErrorResponse({
+            status: status,
+            error: 'Error message',
+            statusText: 'Bad request',
+        });
+    };
+    var appRef = '123456';
+    configureTestSuite(function () {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientTestingModule,
+                StoreModule.forRoot({
+                    delegatedRekeySearch: delegatedSearchReducer,
+                }),
+            ],
+            providers: [
+                DelegatedRekeySearchEffects,
+                provideMockActions(function () { return actions$; }),
+                Store,
+                DelegatedRekeySearchProvider,
+                { provide: UrlProvider, useClass: UrlProviderMock },
+                { provide: SearchProvider, useClass: SearchProviderMock },
+                { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+            ],
+        });
+    });
+    beforeEach(async(function () {
+        actions$ = new ReplaySubject(1);
+        effects = TestBed.get(DelegatedRekeySearchEffects);
+        delegatedRekeySearchProvider = TestBed.get(DelegatedRekeySearchProvider);
+        searchProvider = TestBed.get(SearchProvider);
+    }));
+    it('should dispatch the SearchBookedTestSuccess action when searched with success', function (done) {
+        spyOn(delegatedRekeySearchProvider, 'getDelegatedExaminerBookingByAppRef')
+            .and.returnValue(of(mockGetDelegatedBooking()));
+        spyOn(searchProvider, 'getTestResult')
+            .and.returnValue(asyncError(getTestResultHttpErrorResponse(HttpStatusCodes.BAD_REQUEST)));
+        actions$.next(new delegatedRekeySearchActions.SearchBookedDelegatedTest('12345678910'));
+        effects.getBooking$.subscribe(function (result) {
+            expect(result instanceof delegatedRekeySearchActions.SearchBookedDelegatedTestSuccess).toBeTruthy();
+            done();
+        });
+    });
+    it('should dispatch the SearchBookedTestFailure action when searched with failure', function (done) {
+        spyOn(searchProvider, 'getTestResult')
+            .and.returnValue(asyncError(getTestResultHttpErrorResponse(HttpStatusCodes.BAD_REQUEST)));
+        spyOn(delegatedRekeySearchProvider, 'getDelegatedExaminerBookingByAppRef')
+            .and.returnValue(asyncError(new HttpErrorResponse({
+            error: 'Error message',
+            status: 403,
+            statusText: 'Forbidden',
+        })));
+        actions$.next(new delegatedRekeySearchActions.SearchBookedDelegatedTest('12345678911'));
+        effects.getBooking$.subscribe(function (result) {
+            expect(result instanceof delegatedRekeySearchActions.SearchBookedDelegatedTestFailure).toBeTruthy();
+            done();
+        });
+    });
+    it('should call getDelegatedExaminerBookingByAppRef on the test search provider', function (done) {
+        spyOn(searchProvider, 'getTestResult')
+            .and.returnValue(asyncError(getTestResultHttpErrorResponse(HttpStatusCodes.BAD_REQUEST)));
+        spyOn(delegatedRekeySearchProvider, 'getDelegatedExaminerBookingByAppRef')
+            .and.returnValue(of(mockGetDelegatedBooking()));
+        actions$.next(new delegatedRekeySearchActions.SearchBookedDelegatedTest(appRef));
+        effects.getBooking$.subscribe(function (result) {
+            expect(delegatedRekeySearchProvider.getDelegatedExaminerBookingByAppRef).toHaveBeenCalledWith(appRef);
+            done();
+        });
+    });
+    it('should not call getBooking if getTestResult succeeds', function (done) {
+        spyOn(delegatedRekeySearchProvider, 'getDelegatedExaminerBookingByAppRef')
+            .and.returnValue(of(mockGetDelegatedBooking()));
+        var expectedFailureAction = new delegatedRekeySearchActions.SearchBookedDelegatedTestFailure({
+            message: DelegatedRekeySearchErrorMessages.BookingAlreadyCompleted,
+        });
+        actions$.next(new delegatedRekeySearchActions.SearchBookedDelegatedTest(appRef));
+        effects.getBooking$.subscribe(function (result) {
+            expect(delegatedRekeySearchProvider.getDelegatedExaminerBookingByAppRef).not.toHaveBeenCalled();
+            expect(result).toEqual(expectedFailureAction);
+            done();
+        });
+    });
+});
+function asyncError(errorObject) {
+    return defer(function () { return Promise.reject(errorObject); });
+}
+//# sourceMappingURL=delegated-rekey-search.effects.spec.js.map
