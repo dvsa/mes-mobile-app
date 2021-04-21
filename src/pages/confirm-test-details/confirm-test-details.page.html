@@ -50,7 +50,7 @@
         <data-row
           *ngIf="isPassed(pageState.testOutcomeText$ | async)"
           [label]="'Transmission'"
-          [value]="getTransmissionText(pageState.transmission$ | async)">
+          [value]="getTransmissionText(pageState.transmission$ | async, pageState.code78$ | async)">
         </data-row>
         <!-- D255 -->
         <data-row

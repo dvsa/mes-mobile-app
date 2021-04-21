@@ -41,6 +41,7 @@ import { includes } from 'lodash';
 import { ConfirmTestDetailsViewDidEnter } from './confirm-test-details.actions';
 import { SetTestStatusWriteUp } from '../../modules/tests/test-status/test-status.actions';
 import { PersistTests } from '../../modules/tests/tests.actions';
+import { getCode78 } from '../../modules/tests/pass-completion/cat-d/pass-completion.cat-d.selector';
 
 interface ConfirmTestDetailsPageState {
   candidateUntitledName$: Observable<string>;
@@ -51,6 +52,7 @@ interface ConfirmTestDetailsPageState {
   testCategory$: Observable<TestCategory>;
   provisionalLicense$?: Observable<boolean>;
   transmission$: Observable<GearboxCategory>;
+  code78$: Observable<boolean>;
   d255$: Observable<boolean>;
   slotId$: Observable<string>;
 }
@@ -63,6 +65,7 @@ enum LicenceReceivedText {
 enum GearBox {
   AUTOMATIC = 'Automatic - An automatic licence will be issued',
   MANUAL = 'Manual',
+  CODE78 = 'Automatic - No code 78 - A manual licence will be issued',
 }
 
 enum D255 {
@@ -169,6 +172,10 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
           select(vehicleDetails.vehicleDetails),
           select(getGearboxCategory),
         ),
+        code78$: currentTest$.pipe(
+          select(getPassCompletion),
+          select(getCode78),
+        ),
         d255$: currentTest$.pipe(
           select(getTestSummary),
           select(getD255),
@@ -211,8 +218,16 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
     return received ? LicenceReceivedText.TRUE : LicenceReceivedText.FALSE;
   }
 
-  getTransmissionText(gearbox: GearboxCategory): GearBox {
-    return gearbox === GearBox.MANUAL ? GearBox.MANUAL : GearBox.AUTOMATIC;
+  getTransmissionText(gearbox: GearboxCategory, code78:boolean): GearBox {
+    switch (this.category) {
+      case TestCategory.C:
+      case TestCategory.CE:
+      case TestCategory.D:
+      case TestCategory.DE:
+        return gearbox === GearBox.MANUAL ? GearBox.MANUAL : !code78 ? GearBox.CODE78 : GearBox.AUTOMATIC;
+      default:
+        return gearbox === GearBox.MANUAL ? GearBox.MANUAL : GearBox.AUTOMATIC;
+    }
   }
 
   getD255Text(d255: boolean): D255 {

@@ -19,6 +19,7 @@ import { ActivityCodeModel } from '../../office/components/activity-code/activit
 import * as pageConstants from '../../page-names.constants';
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { PersistTests } from '../../../modules/tests/tests.actions';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('ConfirmTestDetailsPage', () => {
   let fixture: ComponentFixture<ConfirmTestDetailsPage>;
@@ -148,10 +149,31 @@ describe('ConfirmTestDetailsPage', () => {
 
   describe('getTransmissionText', () => {
     it('should return appropriate string if Manual', () => {
-      expect(component.getTransmissionText('Manual')).toEqual('Manual');
+      component.category = TestCategory.B;
+      expect(component.getTransmissionText('Manual', false)).toEqual('Manual');
     });
     it('should return appropriate string if Automatic', () => {
-      expect(component.getTransmissionText('Automatic')).toEqual('Automatic - An automatic licence will be issued');
+      component.category = TestCategory.B;
+      expect(component.getTransmissionText('Automatic', false))
+        .toEqual('Automatic - An automatic licence will be issued');
+    });
+    it('should return appropriate string if Manual and no code78', () => {
+      component.category = TestCategory.C;
+      expect(component.getTransmissionText('Manual', false)).toEqual('Manual');
+    });
+    it('should return appropriate string if Manual and code78', () => {
+      component.category = TestCategory.C;
+      expect(component.getTransmissionText('Manual', true)).toEqual('Manual');
+    });
+    it('should return appropriate string if Automatic and code78', () => {
+      component.category = TestCategory.C;
+      expect(component.getTransmissionText('Automatic', true))
+        .toEqual('Automatic - An automatic licence will be issued');
+    });
+    it('should return appropriate string if Automatic no code78', () => {
+      component.category = TestCategory.C;
+      expect(component.getTransmissionText('Automatic', false))
+        .toEqual('Automatic - No code 78 - A manual licence will be issued');
     });
   });
 
