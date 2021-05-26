@@ -111,7 +111,7 @@
     "lodash": "4.17.21",
     "moment": "^2.23.0",
     "phonegap-plugin-mobile-accessibility": "^1.0.5",
-    "rxjs": "^6.5.4",
+    "rxjs": "^6.6.7",
     "rxjs-compat": "^6.5.4",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.26"
