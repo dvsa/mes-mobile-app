@@ -30,7 +30,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 })
 export class VehicleCheckComponent implements OnInit, OnDestroy {
 
-  selectedShowMeQuestion: boolean = false;
+  selectedShowMeQuestion: boolean;
   showMeQuestionFaultCount: number;
   tellMeQuestionFaultCount: number;
 
