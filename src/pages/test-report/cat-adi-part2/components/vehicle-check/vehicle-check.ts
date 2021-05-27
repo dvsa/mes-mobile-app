@@ -90,12 +90,14 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
           { showMeQuestions: vehicleChecks.showMeQuestions },
         ).drivingFaults;
       })),
-      vehicleChecksCompleted$.pipe(map(toggle => this.vehicleChecksCompleted = toggle)),
+      vehicleChecksCompleted$.pipe(map((toggle) => {
+        this.vehicleChecksCompleted = toggle;
+        this.selectedShowMeQuestion = toggle;
+      })),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
     ).subscribe();
-
   }
 
   ngOnDestroy(): void {
