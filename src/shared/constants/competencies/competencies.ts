@@ -70,7 +70,7 @@ export enum fullCompetencyLabels {
 
 export enum competencyLabels  {
   controlsAccelerator = 'Accelerator',
-  controlsBalanceSlowControl = 'Balance / Slow control',
+  controlsBalanceSlowControl = 'Bal / Slow control',
   controlsClutch = 'Clutch',
   controlsGears = 'Gears',
   controlsFootbrake = 'Footbrake',
