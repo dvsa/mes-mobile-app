@@ -30,7 +30,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 })
 export class VehicleCheckComponent implements OnInit, OnDestroy {
 
-  selectedShowMeQuestion: boolean = false;
+  selectedShowMeQuestion: boolean;
   showMeQuestionFaultCount: number;
   tellMeQuestionFaultCount: number;
 
@@ -90,12 +90,14 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
           { showMeQuestions: vehicleChecks.showMeQuestions },
         ).drivingFaults;
       })),
-      vehicleChecksCompleted$.pipe(map(toggle => this.vehicleChecksCompleted = toggle)),
+      vehicleChecksCompleted$.pipe(map((toggle) => {
+        this.vehicleChecksCompleted = toggle;
+        this.selectedShowMeQuestion = toggle;
+      })),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
     ).subscribe();
-
   }
 
   ngOnDestroy(): void {
