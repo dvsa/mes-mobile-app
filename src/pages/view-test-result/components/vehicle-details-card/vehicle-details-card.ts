@@ -6,6 +6,7 @@ import { CatCEUniqueTypes } from '@dvsa/mes-test-schema/categories/CE';
 import { CatC1UniqueTypes } from '@dvsa/mes-test-schema/categories/C1';
 import { CatC1EUniqueTypes } from '@dvsa/mes-test-schema/categories/C1E';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import PassCompletion = CatCUniqueTypes.PassCompletion;
 
 export type VehicleDetailsWithDimensions =
   | CatBEUniqueTypes.VehicleDetails
@@ -25,6 +26,9 @@ export class VehicleDetailsCardComponent {
 
   @Input()
   category: TestCategory;
+
+  @Input()
+  passCompletion: PassCompletion;
 
   constructor() {}
 

@@ -1,7 +1,10 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons ion-buttons start navPop>
-      <button ion-button center class="nav-close"><ion-icon name="md-close"></ion-icon>Close</button>
+      <button ion-button center class="nav-close">
+        <ion-icon name="md-close"></ion-icon>
+        Close
+      </button>
     </ion-buttons>
     <ion-title>
       Test information
@@ -25,13 +28,16 @@
       <rekey-reason-card [data]='testResult.rekeyReason'></rekey-reason-card>
     </div>
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
-    <vehicle-details-card [data]='testResult.vehicleDetails'></vehicle-details-card>
+    <vehicle-details-card
+      [data]='testResult.vehicleDetails'
+      [category]="testResult.category"
+      [passCompletion]='testResult.passCompletion'></vehicle-details-card>
     <debrief-card [data]='testResult.testData' [category]="testResult.category"></debrief-card>
     <test-summary-card
       [accompaniment]='testResult.accompaniment'
       [passCompletion]='testResult.passCompletion'
       [testSummary]='testResult.testSummary'
       [communicationPreferences]='testResult.communicationPreferences'
-      ></test-summary-card>
+    ></test-summary-card>
   </div>
 </ion-content>
