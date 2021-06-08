@@ -29,7 +29,7 @@ import { CPCDebriefCardComponent } from './cpc-debrief-card/cpc-debrief-card';
 import { PipesModule } from '../../shared/pipes/pipes.module';
 import { HealthDeclarationSignedComponent } from './health-declaration-signed/health-declaration-signed';
 import { BikeCategoryTypeComponent } from './bike-category-type/bike-category-type';
-import {TransmissionDisplayComponent} from './transmission-display/transmission-display';
+import { TransmissionDisplayComponent } from './transmission-display/transmission-display';
 
 @NgModule({
   declarations: [

@@ -1,4 +1,8 @@
-<data-row
-  [label]="'Transmission'"
-  [value]="getTransmissionText(transmission, code78, category)">
-</data-row>
+<ion-row class="mes-data-row">
+  <ion-col col-40>
+    <label>Transmission</label>
+  </ion-col>
+  <ion-col col-56>
+    <span class="mes-data">{{getTransmissionText(transmission, code78, category)}}</span>
+  </ion-col>
+</ion-row>
