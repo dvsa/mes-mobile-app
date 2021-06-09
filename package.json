@@ -114,7 +114,7 @@
     "rxjs": "^6.5.4",
     "rxjs-compat": "^6.5.4",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.26"
+    "zone.js": "0.11.4"
   },
   "devDependencies": {
     "@angular/cli": "1.4.8",
