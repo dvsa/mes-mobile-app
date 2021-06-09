@@ -30,7 +30,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 })
 export class VehicleCheckComponent implements OnInit, OnDestroy {
 
-  selectedShowMeQuestion: boolean;
+  selectedShowMeQuestion: boolean = false;
   showMeQuestionFaultCount: number;
   tellMeQuestionFaultCount: number;
 
@@ -115,8 +115,8 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
   }
 
   toggleShowMeQuestion = (): void => {
-    this.store$.dispatch(new VehicleChecksCompletedToggle());
     this.selectedShowMeQuestion = !this.selectedShowMeQuestion;
+    this.store$.dispatch(new VehicleChecksCompletedToggle());
   }
 
   canButtonRipple = () => {
