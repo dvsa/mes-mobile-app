@@ -26,6 +26,9 @@ export class VehicleDetailsCardComponent {
   @Input()
   category: TestCategory;
 
+  @Input()
+  passCompletion?: CatCUniqueTypes.PassCompletion = null;
+
   constructor() {}
 
   public shouldHideCard() : boolean {

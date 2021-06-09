@@ -47,11 +47,12 @@
           [value]="getProvisionalText(pageState.provisionalLicense$ | async)">
         </data-row>
         <!-- Transmission -->
-        <data-row
+        <transmission-display
           *ngIf="isPassed(pageState.testOutcomeText$ | async)"
-          [label]="'Transmission'"
-          [value]="getTransmissionText(pageState.transmission$ | async, pageState.code78$ | async)">
-        </data-row>
+          [category]="category"
+          [transmission]="pageState.transmission$ | async"
+          [code78]="pageState.code78$ | async">
+        </transmission-display>
         <!-- D255 -->
         <data-row
           [label]="'D255'"

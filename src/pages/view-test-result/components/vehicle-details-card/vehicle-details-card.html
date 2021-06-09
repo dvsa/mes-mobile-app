@@ -4,20 +4,25 @@
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
-      <data-row [label]="'Transmission'" [value]="getTransmission()" *ngIf="getTransmission()"></data-row>
+      <transmission-display
+        *ngIf="getTransmission()"
+        [category]="category"
+        [transmission]="data.gearboxCategory"
+        [code78]="passCompletion?.code78Present">
+      </transmission-display>
       <data-row
         [label]="'Vehicle registration number'"
         [value]="getRegistrationNumber()"
         *ngIf="getRegistrationNumber()">
       </data-row>
-      <data-row-custom *ngIf="!shouldHideDimensions()" [label]="'Vehicle dimensions'" >
+      <data-row-custom *ngIf="!shouldHideDimensions()" [label]="'Vehicle dimensions'">
         <ion-grid>
           <ion-row>
             <ion-col col-32>
               <span class="mes-data"><span class="mes-data bold">L:</span> {{ getVehicleLength() }}</span>
             </ion-col>
             <ion-col col-32>
-                <span class="mes-data"><span class="mes-data bold">W:</span> {{ getVehicleWidth() }}</span>
+              <span class="mes-data"><span class="mes-data bold">W:</span> {{ getVehicleWidth() }}</span>
             </ion-col>
           </ion-row>
         </ion-grid>

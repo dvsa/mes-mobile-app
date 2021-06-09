@@ -7,6 +7,8 @@ import { VehicleDetails } from '@dvsa/mes-test-schema/categories/common';
 import { configureTestSuite } from 'ng-bullet';
 import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
 import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
+import { TransmissionDisplayComponent }
+  from '../../../../../components/common/transmission-display/transmission-display';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('VehicleDetailsCardComponent', () => {
@@ -19,6 +21,7 @@ describe('VehicleDetailsCardComponent', () => {
         VehicleDetailsCardComponent,
         MockComponent(DataRowComponent),
         MockComponent(DataRowCustomComponent),
+        MockComponent(TransmissionDisplayComponent),
       ],
       imports: [
         IonicModule,

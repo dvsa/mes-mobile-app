@@ -62,12 +62,6 @@ enum LicenceReceivedText {
   FALSE = 'No - Please ensure that the licence is kept by the candidate',
 }
 
-enum GearBox {
-  AUTOMATIC = 'Automatic - An automatic licence will be issued',
-  MANUAL = 'Manual',
-  CODE78 = 'Automatic - No code 78 - A manual licence will be issued',
-}
-
 enum D255 {
   TRUE = 'Yes - Please complete a D255',
   FALSE = 'No',
@@ -216,18 +210,6 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
 
   getProvisionalText(received: boolean): LicenceReceivedText {
     return received ? LicenceReceivedText.TRUE : LicenceReceivedText.FALSE;
-  }
-
-  getTransmissionText(gearbox: GearboxCategory, code78:boolean): GearBox {
-    switch (this.category) {
-      case TestCategory.C:
-      case TestCategory.CE:
-      case TestCategory.D:
-      case TestCategory.DE:
-        return gearbox === GearBox.MANUAL ? GearBox.MANUAL : !code78 ? GearBox.CODE78 : GearBox.AUTOMATIC;
-      default:
-        return gearbox === GearBox.MANUAL ? GearBox.MANUAL : GearBox.AUTOMATIC;
-    }
   }
 
   getD255Text(d255: boolean): D255 {
