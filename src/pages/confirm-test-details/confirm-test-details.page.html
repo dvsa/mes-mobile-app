@@ -47,11 +47,6 @@
           [value]="getProvisionalText(pageState.provisionalLicense$ | async)">
         </data-row>
         <!-- Transmission -->
-<!--        <data-row-->
-<!--          *ngIf="isPassed(pageState.testOutcomeText$ | async)"-->
-<!--          [label]="'Transmission'"-->
-<!--          [value]="getTransmissionText(pageState.transmission$ | async, pageState.code78$ | async)">-->
-<!--        </data-row>-->
         <transmission-display
           *ngIf="isPassed(pageState.testOutcomeText$ | async)"
           [category]="category"
