@@ -3,9 +3,9 @@ import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 enum GearBox {
-  AUTOMATIC = 'Automatic - An automatic licence will be issued',
+  AUTOMATIC = 'Automatic - An automatic licence issued',
   MANUAL = 'Manual',
-  CODE78 = 'Automatic - No code 78 - A manual licence will be issued',
+  CODE78 = 'Automatic - No code 78 - A manual licence issued',
 }
 
 @Component({

@@ -30,7 +30,7 @@ describe('TransmissionDisplayComponent', () => {
     });
     it('should return appropriate string if Automatic', () => {
       expect(component.getTransmissionText('Automatic', false, TestCategory.B))
-        .toEqual('Automatic - An automatic licence will be issued');
+        .toEqual('Automatic - An automatic licence issued');
     });
     it('should return appropriate string if Manual and no code78', () => {
       expect(component.getTransmissionText('Manual', false, TestCategory.C)).toEqual('Manual');
@@ -40,11 +40,11 @@ describe('TransmissionDisplayComponent', () => {
     });
     it('should return appropriate string if Automatic and code78', () => {
       expect(component.getTransmissionText('Automatic', true, TestCategory.C))
-        .toEqual('Automatic - An automatic licence will be issued');
+        .toEqual('Automatic - An automatic licence issued');
     });
     it('should return appropriate string if Automatic no code78', () => {
       expect(component.getTransmissionText('Automatic', false, TestCategory.C))
-        .toEqual('Automatic - No code 78 - A manual licence will be issued');
+        .toEqual('Automatic - No code 78 - A manual licence issued');
     });
   });
 });
