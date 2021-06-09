@@ -109,7 +109,7 @@
     "joi-browser": "^13.4.0",
     "jwt-decode": "^2.2.0",
     "lodash": "4.17.21",
-    "moment": "^2.23.0",
+    "moment": "^2.29.1",
     "phonegap-plugin-mobile-accessibility": "^1.0.5",
     "rxjs": "^6.5.4",
     "rxjs-compat": "^6.5.4",
