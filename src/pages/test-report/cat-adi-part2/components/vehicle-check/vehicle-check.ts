@@ -115,8 +115,8 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
   }
 
   toggleShowMeQuestion = (): void => {
-    this.store$.dispatch(new VehicleChecksCompletedToggle());
     this.selectedShowMeQuestion = !this.selectedShowMeQuestion;
+    this.store$.dispatch(new VehicleChecksCompletedToggle());
   }
 
   canButtonRipple = () => {
