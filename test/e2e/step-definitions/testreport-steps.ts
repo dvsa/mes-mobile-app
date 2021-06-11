@@ -266,7 +266,7 @@ Then('the competency {string} driver fault count is {string}', (competency, driv
 });
 
 Then('the competency for Show me and Tell me driver fault count is {string}', (driverFaultCount) => {
-  const competencyCountField = TestReportPage.driverFaults.getCompetencyCountFieldForSMTM('Show me / Tell me');
+  const competencyCountField = TestReportPage.driverFaults.getCompetencyCountFieldForSMTM('Show / Tell');
   return expect(competencyCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
