@@ -1,9 +1,19 @@
-<div class="practice-mode-top-banner" (click)="exitPracticeMode()">
-  <span class="exit-text">
-    <ion-icon name="play"></ion-icon>
-    EXIT
-  </span>
-  <span class="title">
-    You're in practice mode
-  </span>
+<div class="practice-mode-top-banner">
+  <ion-grid class="practice-mode-row">
+    <ion-row no-padding>
+      <ion-col no-padding>
+        <div class="exit-text" (click)="exitPracticeMode()">
+          <ion-icon name="play"></ion-icon>
+          EXIT
+        </div>
+      </ion-col>
+      <ion-col no-padding>
+        <div class="title">
+          You're in practice mode
+        </div>
+      </ion-col>
+      <ion-col no-padding>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </div>
