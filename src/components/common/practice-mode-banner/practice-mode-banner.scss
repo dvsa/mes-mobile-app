@@ -1,4 +1,8 @@
 practice-mode-banner {
+  .practice-mode-row {
+    height: 24px;
+    padding: 0;
+  }
   .practice-mode-top-banner {
     height: 24px;
     background: map-get($colors, secondary-button);
