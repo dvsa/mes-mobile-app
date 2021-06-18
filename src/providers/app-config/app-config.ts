@@ -156,9 +156,11 @@ export class AppConfigProvider {
         return;
       }
 
+      /* Commenting out so that this can be deployed to training iPads which don't have remote config
       if (!this.isDebugMode) {
         throw AppConfigError.MISSING_REMOTE_CONFIG_URL_ERROR;
       }
+      */
     }
   }
 

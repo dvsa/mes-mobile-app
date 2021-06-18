@@ -31,6 +31,8 @@ export class DeviceProvider implements IDeviceProvider {
   validDeviceType = (): boolean => {
     const model = this.getDeviceType();
     this.supportedDevices = this.appConfig.getAppConfig().approvedDeviceIdentifiers;
+    // Manually add in iPad Air 2019 Wifi only
+    this.supportedDevices.push('iPad11,3');
     if (this.supportedDevices.findIndex(device => device === model) > -1) {
       return true;
     }

@@ -48,20 +48,7 @@ class PageHelper extends Page {
     * Note: This will not work on the physical device but the simulator will accept any code.
     */
   enterPasscode() {
-     // To be able to fill in the passcode we need to switch to NATIVE context then switch back to WEBVIEW after
-    browser.driver.getCurrentContext().then((webviewContext) => {
-       // Switch to NATIVE context
-      browser.driver.selectContext('NATIVE_APP').then(() => {
-         // Get the passcode field
-        this.getPassCodeField();
-        this.sendFakePasscode();
-
-         // Switch back to WEBVIEW context
-        browser.driver.selectContext(this.getParentContext(webviewContext)).then(() => {
-          browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
-        });
-      });
-    });
+    return;
   }
 }
 

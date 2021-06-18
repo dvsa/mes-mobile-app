@@ -1,19 +1,20 @@
-var appPath = __dirname + '/platforms/ios/build/emulator/DES 3.app';
-
 exports.config = {
-  seleniumAddress: 'http://localhost:4723/wd/hub',
-  allScriptsTimeout: 30000,
+  seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
+  allScriptsTimeout: 60000,
   capabilities: {
-    platformName: 'iOS',
-    platformVersion: '12.1',
-    deviceName: 'iPad Pro (10.5-inch)',
-    browserName: '',
+    'browserstack.user' : '<BROWSER_STACK_USER>',
+    'browserstack.key' : '<BROWSER_STACK_KEY>',
+    'project' : 'DES',
+    'build' : 'DES Build',
+    'name': 'DES Test',
+    app: '<BROWSER_STACK_FILE_ID>',
+    os_version: '12',
+    device: 'iPad Air 2019',
+    browserName: 'iPad',
     autoWebview: true,
-    fullReset: true,
-    app: appPath,
     automationName: 'XCUITest',
-    isHeadless: false,
-    newCommandTimeout: 180
+    realMobile: true,
+    'browserstack.appium_version': '1.17.0'
   },
   specs: ['./test/e2e/features/*/*.feature'],
   framework: 'custom',
