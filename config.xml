@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="uk.gov.dvsa.mobile-examiner-app" version="3.11.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>DrivingExaminerService</name>
+    <name>DES 3</name>
     <description>An application for DVSA driving examiners to conduct driving tests</description>
     <author email="mobexaminer@gmail.com">MES Team</author>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -97,5 +97,5 @@
     <plugin name="cordova-plugin-appconfig" spec="1.1.4" />
     <hook src="scripts/editPlist.js" type="before_build" />
     <plugin name="cordova-plugin-is-debug" spec="1.0.0" />
-    <engine name="ios" spec="^4.5.5" />
+    <engine name="ios" spec="^5.1.1" />
 </widget>
