@@ -25,6 +25,9 @@ export class D255Component implements OnChanges {
   d255: boolean;
 
   @Input()
+  eyeSight: boolean;
+
+  @Input()
   formGroup: FormGroup;
 
   @Output()
@@ -56,7 +59,7 @@ export class D255Component implements OnChanges {
     }
   }
 
-  getD255OrDefault(): string | null {
+  getD255OrDefault(): string | null | boolean {
     if (this.d255 !== null) {
       return this.d255 ? ValidD255Values.YES : ValidD255Values.NO;
     }
@@ -65,7 +68,9 @@ export class D255Component implements OnChanges {
       this.d255Changed(defaultValue);
       return defaultValue;
     }
-    return null;
+    //set default to false unless eyesight test failed
+    this.d255 = this.eyeSight ? true : false;
+    return this.d255;
   }
 
   get invalid(): boolean {
