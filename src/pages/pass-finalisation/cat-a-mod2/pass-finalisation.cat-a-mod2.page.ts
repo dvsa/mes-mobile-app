@@ -67,6 +67,9 @@ import { TransmissionType } from '../../../shared/models/transmission-type';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { getTestData } from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.reducer';
+import { hasEyesightTestGotSeriousFault }
+  from '../../../modules/tests/test-data/cat-a-mod2/test-data.cat-a-mod2.selector';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -81,6 +84,7 @@ interface PassFinalisationPageState {
   debriefWitnessed$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
   testCategory$: Observable<CategoryCode>;
+  eyesightTestFailed$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -171,6 +175,10 @@ export class PassFinalisationCatAMod2Page extends BasePageComponent {
       ),
       testCategory$: currentTest$.pipe(
         select(getTestCategory),
+      ),
+      eyesightTestFailed$: currentTest$.pipe(
+        select(getTestData),
+        select(hasEyesightTestGotSeriousFault),
       ),
     };
     const { transmission$, testCategory$ } = this.pageState;

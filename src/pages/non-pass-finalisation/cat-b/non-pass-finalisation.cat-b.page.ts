@@ -56,6 +56,7 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
+import { hasEyesightTestGotSeriousFault } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -71,6 +72,7 @@ interface NonPassFinalisationPageState {
   isWelshTest$: Observable<boolean>;
   testData$: Observable<CatBUniqueTypes.TestData>;
   slotId$: Observable<string>;
+  eyesightTestFailed$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -169,6 +171,10 @@ export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
       ),
       testData$: currentTest$.pipe(
         select(getTestData),
+      ),
+      eyesightTestFailed$: currentTest$.pipe(
+        select(getTestData),
+        select(hasEyesightTestGotSeriousFault),
       ),
     };
 

@@ -53,9 +53,16 @@
           (passCertificateNumberChange)="passCertificateNumberChanged($event)">
         </pass-certificate-number>
 
-        <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
-          (d255Change)="d255Changed($event)"></d255>
-        <warning-banner *ngIf="pageState.d255$ | async" warningText="By selecting Yes you are confirming a D255 is required."></warning-banner>
+        <d255 [display]=true
+              [d255]="pageState.d255$ | async"
+              [eyesightTestFailed]="pageState.eyesightTestFailed$ | async"
+              [outcome]="testOutcome"
+              [formGroup]="form"
+              (d255Change)="d255Changed($event)">
+        </d255>
+        <warning-banner *ngIf="pageState.d255$ | async"
+                        warningText="DVLA will not process the result until a D255 is received">
+        </warning-banner>
 
         <language-preferences [formGroup]="form" [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"
           (welshChanged)="isWelshChanged($event)"></language-preferences>

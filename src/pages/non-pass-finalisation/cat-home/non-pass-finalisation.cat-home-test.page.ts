@@ -59,6 +59,8 @@ import { TestDataByCategoryProvider } from '../../../providers/test-data-by-cate
 import { getTestCategory } from '../../../modules/tests/category/category.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { CategoryCode } from '@dvsa/mes-test-schema/categories/common';
+import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { hasEyesightTestGotSeriousFault } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -74,6 +76,7 @@ interface NonPassFinalisationPageState {
   isWelshTest$: Observable<boolean>;
   testData$: Observable<CatHomeTestData>;
   slotId$: Observable<string>;
+  eyesightTestFailed$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -181,6 +184,10 @@ export class NonPassFinalisationCatHomeTestPage extends BasePageComponent implem
       testData$: currentTest$.pipe(
         withLatestFrom(category$),
         map(([data , category]) => this.testDataByCategory.getTestDataByCategoryCode(category)(data)),
+      ),
+      eyesightTestFailed$: currentTest$.pipe(
+        select(getTestData),
+        select(hasEyesightTestGotSeriousFault),
       ),
     };
 

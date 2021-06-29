@@ -13,6 +13,8 @@ export const getSafetyAndBalanceQuestions = (
 
 export const getEyesightTest = (data: TestData) => data.eyesightTest;
 
+export const hasEyesightTestGotSeriousFault = (data: TestData) => data.eyesightTest.seriousFault;
+
 export const haveSafetyAndBalanceQuestionsBeenCompleted = (data: SafetyAndBalanceQuestions): boolean => {
   let safetyQuestionComplete = true;
   let balanceQuestionComplete = true;

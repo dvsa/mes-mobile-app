@@ -31,6 +31,10 @@
           [outcome]="pageState.testOutcome$ | async"
           (d255Change)="d255Changed($event)"
         ></d255>
+        <warning-banner *ngIf="pageState.d255$ | async"
+                        warningText="DVLA will not process the result until a D255 is received">
+        </warning-banner>
+
         <language-preferences
           [formGroup]="form"
           [isWelsh]="pageState.isWelshTest$ | async"

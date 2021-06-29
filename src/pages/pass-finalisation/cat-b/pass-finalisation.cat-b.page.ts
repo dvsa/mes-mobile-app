@@ -66,6 +66,8 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
 import { TransmissionType } from '../../../shared/models/transmission-type';
+import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { hasEyesightTestGotSeriousFault } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -81,6 +83,7 @@ interface PassFinalisationPageState {
   d255$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
+  eyesightTestFailed$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -97,6 +100,7 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
   form: FormGroup;
   merged$: Observable<string>;
   transmission: GearboxCategory;
+  eyesightTestFailed: boolean;
   subscription: Subscription;
 
   constructor(
@@ -181,6 +185,10 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
       conductedLanguage$: currentTest$.pipe(
         select(getCommunicationPreference),
         select(getConductedLanguage),
+      ),
+      eyesightTestFailed$: currentTest$.pipe(
+        select(getTestData),
+        select(hasEyesightTestGotSeriousFault),
       ),
     };
     const { transmission$ } = this.pageState;
