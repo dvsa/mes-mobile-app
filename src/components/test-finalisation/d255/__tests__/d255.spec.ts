@@ -83,14 +83,14 @@ describe('D255Component', () => {
       expect(outcomeBehaviourMapProvider.getDefault).toHaveBeenCalled();
       expect(component.d255Changed).toHaveBeenCalledWith(ValidD255Values.YES);
     });
-    it('should return false if there as a default if eyesight test passes' , () => {
+    it('should return false as default if eyesight test passes' , () => {
       component.d255 = null;
       component.eyesightTestFailed = false;
       spyOn(outcomeBehaviourMapProvider, 'hasDefault').and.returnValue(false);
       fixture.detectChanges();
       expect(component.getD255OrDefault()).toEqual(false);
     });
-    it('should return true if there as a default if eyesight test fails' , () => {
+    it('should return true as default if eyesight test fails' , () => {
       component.d255 = null;
       component.eyesightTestFailed = true;
       spyOn(outcomeBehaviourMapProvider, 'hasDefault').and.returnValue(false);

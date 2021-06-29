@@ -59,7 +59,7 @@ export class D255Component implements OnChanges {
     }
   }
 
-  getD255OrDefault(): string | null | boolean {
+  getD255OrDefault(): string | boolean {
     if (this.d255 !== null) {
       return this.d255 ? ValidD255Values.YES : ValidD255Values.NO;
     }
