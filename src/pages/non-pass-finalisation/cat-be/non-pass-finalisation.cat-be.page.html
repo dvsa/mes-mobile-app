@@ -19,8 +19,16 @@
 
       <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
 
-        <d255 [display]="pageState.displayD255$ | async" [d255]="pageState.d255$ | async"
-          [outcome]="pageState.testOutcome$ | async" [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
+        <d255 [display]="pageState.displayD255$ | async"
+              [d255]="pageState.d255$ | async"
+              [eyesightTestFailed]="pageState.eyesightTestFailed$ | async"
+              [outcome]="pageState.testOutcome$ | async"
+              [formGroup]="form"
+              (d255Change)="d255Changed($event)">
+        </d255>
+        <warning-banner *ngIf="pageState.d255$ | async"
+                        warningText="DVLA will not process the result until a D255 is received">
+        </warning-banner>
 
         <language-preferences [formGroup]="form" [isWelsh]="pageState.isWelshTest$ | async"
           (welshChanged)="isWelshChanged($event)"></language-preferences>

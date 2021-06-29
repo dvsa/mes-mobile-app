@@ -57,6 +57,8 @@ import {
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { PASS_CERTIFICATE_NUMBER_CTRL } from '../components/pass-certificate-number/pass-certificate-number.constants';
+import { getTestData } from '../../../modules/tests/test-data/cat-b/test-data.reducer';
+import { hasEyesightTestGotSeriousFault } from '../../../modules/tests/test-data/cat-b/test-data.cat-b.selector';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -69,6 +71,7 @@ interface PassFinalisationPageState {
   d255$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
+  eyesightTestFailed$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -150,6 +153,10 @@ export class PassFinalisationCatHomeTestPage extends BasePageComponent {
       conductedLanguage$: currentTest$.pipe(
         select(getCommunicationPreference),
         select(getConductedLanguage),
+      ),
+      eyesightTestFailed$: currentTest$.pipe(
+        select(getTestData),
+        select(hasEyesightTestGotSeriousFault),
       ),
     };
   }

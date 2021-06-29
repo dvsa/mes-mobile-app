@@ -34,6 +34,7 @@ import { ActivityCodeDescription } from '../../../../pages/office/components/act
 import {
   ActivityCodeFinalisationProvider,
 } from '../../../../providers/activity-code-finalisation/activity-code-finalisation';
+import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 
 describe('NonPassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatBPage>;
@@ -49,6 +50,7 @@ describe('NonPassFinalisationCatBPage', () => {
         MockComponent(D255Component),
         MockComponent(LanguagePreferencesComponent),
         MockComponent(DebriefWitnessedComponent),
+        MockComponent(WarningBannerComponent),
         MockComponent(FinalisationHeaderComponent),
       ],
       imports: [

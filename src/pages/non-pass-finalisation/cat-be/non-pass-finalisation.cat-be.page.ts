@@ -57,6 +57,7 @@ import {
   ActivityCodeFinalisationProvider,
 } from '../../../providers/activity-code-finalisation/activity-code-finalisation';
 import { getTestData } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.reducer';
+import { hasEyesightTestGotSeriousFault } from '../../../modules/tests/test-data/cat-be/test-data.cat-be.selector';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -72,6 +73,7 @@ interface NonPassFinalisationPageState {
   isWelshTest$: Observable<boolean>;
   testData$: Observable<CatBEUniqueTypes.TestData>;
   slotId$: Observable<string>;
+  eyesightTestFailed$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -171,6 +173,10 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
       ),
       testData$: currentTest$.pipe(
         select(getTestData),
+      ),
+      eyesightTestFailed$: currentTest$.pipe(
+        select(getTestData),
+        select(hasEyesightTestGotSeriousFault),
       ),
     };
 
