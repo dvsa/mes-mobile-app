@@ -79,7 +79,8 @@ module.exports = function(config) {
         ]
       }
     },
-    browserNoActivityTimeout: 120000
+    browserNoActivityTimeout: 120000,
+    browserSocketTimeout: 60000
   };
 
   config.set(_config);
