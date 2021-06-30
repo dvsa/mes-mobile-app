@@ -16,7 +16,6 @@
                value="Yes"
                [class.ng-invalid]="invalid"
                [checked]="d255 === true"
-               [attr.disabled]="eyesightTestFailed ? '' : null"
                (change)="d255Changed($event.target.value)">
         <label for="d255-yes"
                class="radio-label">Yes
@@ -31,7 +30,6 @@
                value="No"
                [class.ng-invalid]="invalid"
                [checked]="d255 === false"
-               [attr.disabled]="eyesightTestFailed ? '' : null"
                (change)="d255Changed($event.target.value)">
         <label for="d255-no"
                class="radio-label">No
