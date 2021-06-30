@@ -15,13 +15,11 @@
                formControlName="d255"
                value="Yes"
                [class.ng-invalid]="invalid"
-               [ngClass]="{inputDisabled : eyesightTestFailed}"
                [checked]="d255 === true"
                [attr.disabled]="eyesightTestFailed ? '' : null"
                (change)="d255Changed($event.target.value)">
         <label for="d255-yes"
-               class="radio-label"
-               [ngClass]="{labelDisabled : eyesightTestFailed}">Yes
+               class="radio-label">Yes
         </label>
       </ion-col>
       <ion-col>
@@ -32,13 +30,11 @@
                formControlName="d255"
                value="No"
                [class.ng-invalid]="invalid"
-               [ngClass]="{inputDisabled : eyesightTestFailed}"
                [checked]="d255 === false"
                [attr.disabled]="eyesightTestFailed ? '' : null"
                (change)="d255Changed($event.target.value)">
         <label for="d255-no"
-               class="radio-label"
-               [ngClass]="{labelDisabled : eyesightTestFailed}">No
+               class="radio-label">No
         </label>
       </ion-col>
     </ion-row>
