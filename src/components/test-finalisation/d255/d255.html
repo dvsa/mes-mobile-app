@@ -35,7 +35,6 @@
                [ngClass]="{inputDisabled : eyesightTestFailed}"
                [checked]="d255 === false"
                [attr.disabled]="eyesightTestFailed ? '' : null"
-               [class.input-disabled]="eyesightTestFailed"
                (change)="d255Changed($event.target.value)">
         <label for="d255-no"
                class="radio-label"
