@@ -75,7 +75,7 @@ export class D255Component implements OnChanges {
   }
 
   get invalid(): boolean {
-    return !this.formControl.valid && this.formControl.dirty;
+    return this.formControl.invalid && this.formControl.dirty;
   }
 
 }
