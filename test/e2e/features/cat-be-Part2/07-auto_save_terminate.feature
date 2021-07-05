@@ -18,7 +18,6 @@ Feature: Autosave end to end terminate journey for Category B+E
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome BE - Cucumber Water" page
-      And the D255 Radio is pre-selected to yes
       When I continue to the back to office page
       And I should see the "Confirm test details - Cucumber Water" page
       And I complete the Confirmation page

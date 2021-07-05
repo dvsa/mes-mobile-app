@@ -50,9 +50,6 @@ Before({ tags: '@catcpc' }, () => {
 });
 
 When('I continue to the back to office page', () => {
-  if (this.testCategory !== 'cpc') {
-    NonPassFinalisationPage.clickD255Yes();
-  }
   DebriefPage.clickDebriefWitnessedYes();
   NonPassFinalisationPage.clickContinueToBackOfficeButton(this.testCategory);
 });
