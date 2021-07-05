@@ -59,7 +59,6 @@ Feature: Driving Examiner Completes Terminated Tests for Category B+E
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome BE - Patrick Kamram" page
-      And the D255 Radio is pre-selected to yes
       When I continue to the back to office page
       And I should see the "Confirm test details - Patrick Kamram" page
       And I complete the Confirmation page
