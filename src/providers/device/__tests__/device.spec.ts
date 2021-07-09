@@ -11,7 +11,7 @@ import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogType } from '../../../shared/models/log.model';
 import { configureTestSuite } from 'ng-bullet';
 
-fdescribe('Device Provider', () => {
+describe('Device Provider', () => {
 
   let deviceProvider: DeviceProvider;
   let store$: Store<any>;
