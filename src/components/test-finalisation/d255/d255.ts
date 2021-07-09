@@ -60,18 +60,14 @@ export class D255Component implements OnChanges {
     }
   }
 
-  getD255OrDefault(): string | boolean {
+  getD255OrDefault(): string {
     if (this.d255 !== null) {
       return this.d255 ? ValidD255Values.YES : ValidD255Values.NO;
     }
-    if (this.outcomeBehaviourProvider.hasDefault(this.outcome, D255Component.fieldName)) {
-      const defaultValue = this.outcomeBehaviourProvider.getDefault(this.outcome, D255Component.fieldName);
-      this.d255Changed(defaultValue);
-      return defaultValue;
-    }
     // set default to false unless eyesight test failed
-    this.d255 = this.eyesightTestFailed ? true : false;
-    return this.d255;
+    const d255 = this.eyesightTestFailed ? ValidD255Values.YES : ValidD255Values.NO;
+    this.d255Changed(d255);
+    return d255;
   }
 
   get invalid(): boolean {

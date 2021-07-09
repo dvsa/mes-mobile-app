@@ -63,39 +63,21 @@ describe('D255Component', () => {
   });
   describe('getD255OrDefault', () => {
     it('should return YES if D255 is set to true', () => {
-      component.d255 = true;
-      fixture.detectChanges();
-      expect(component.getD255OrDefault()).toEqual(ValidD255Values.YES);
-    });
-    it('should return NO if D255 is set to false', () => {
-      component.d255 = false;
-      fixture.detectChanges();
-      expect(component.getD255OrDefault()).toEqual(ValidD255Values.NO);
-    });
-    it('should set the default value for the field if one exists and not other value has been set', () => {
-      component.d255 = null;
-      spyOn(outcomeBehaviourMapProvider, 'hasDefault').and.returnValue(true);
-      spyOn(outcomeBehaviourMapProvider, 'getDefault').and.returnValue(ValidD255Values.YES);
       spyOn(component, 'd255Changed');
-      fixture.detectChanges;
+      component.d255 = true;
       expect(component.getD255OrDefault()).toEqual(ValidD255Values.YES);
-      expect(outcomeBehaviourMapProvider.hasDefault).toHaveBeenCalled();
-      expect(outcomeBehaviourMapProvider.getDefault).toHaveBeenCalled();
-      expect(component.d255Changed).toHaveBeenCalledWith(ValidD255Values.YES);
     });
     it('should return false as default if eyesight test passes' , () => {
+      spyOn(component, 'd255Changed');
       component.d255 = null;
       component.eyesightTestFailed = false;
-      spyOn(outcomeBehaviourMapProvider, 'hasDefault').and.returnValue(false);
-      fixture.detectChanges();
-      expect(component.getD255OrDefault()).toEqual(false);
+      expect(component.getD255OrDefault()).toEqual(ValidD255Values.NO);
     });
     it('should return true as default if eyesight test fails' , () => {
+      spyOn(component, 'd255Changed');
       component.d255 = null;
       component.eyesightTestFailed = true;
-      spyOn(outcomeBehaviourMapProvider, 'hasDefault').and.returnValue(false);
-      fixture.detectChanges();
-      expect(component.getD255OrDefault()).toEqual(true);
+      expect(component.getD255OrDefault()).toEqual(ValidD255Values.YES);
     });
   });
 });
