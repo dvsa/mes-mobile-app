@@ -7,16 +7,18 @@ import { LogType } from '../../shared/models/log.model';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { LogHelper } from '../logs/logsHelper';
-import { timeout, retry, map } from 'rxjs/operators';
+import { timeout, map } from 'rxjs/operators';
 import { defer, Observable } from 'rxjs';
 import { ExaminerRole } from '../app-config/constants/examiner-role.constants';
+import { retryWithDelay } from 'rxjs-boost/lib/operators';
 
 declare let cordova: any;
 
 @Injectable()
 export class DeviceProvider implements IDeviceProvider {
   private supportedDevices: string[] = [];
-  private enableASAMRetryLimit: number = 3;
+  private enableASAMRetryLimit: number = 4;
+  private enableASAMRetryInternal: number = 750;
   private enableASAMTimeout: number = 10000;
   private enableASAMRetryFailureMessage: string =  `All retries to enable ASAM failed`;
 
@@ -68,9 +70,9 @@ export class DeviceProvider implements IDeviceProvider {
           if (!didSucceed) throw new Error('Call to enable ASAM failed');
           return didSucceed;
         }),
-        retry(this.enableASAMRetryLimit),
-        timeout(this.enableASAMTimeout),
-      );
+      retryWithDelay(this.enableASAMRetryInternal, this.enableASAMRetryLimit),
+      timeout(this.enableASAMTimeout),
+    );
 
     const promisifiedEnableAsamWithRetriesAndTimeout = enableAsamWithRetriesAndTimeout$.toPromise()
       .catch(() => {
