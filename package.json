@@ -19,7 +19,7 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "serve:local": "run-s update-mock-data copy-mock-data schema-version config:local ionic:serve",
-    "serve:emulator": "npm run config:dev-tools && ionic cordova emulate ios --address=localhost --l --c -- --buildFlag='-UseModernBuildSystem=0' -lc --target='iPad-Pro--10-5-inch-,com.apple.CoreSimulator.SimRuntime.iOS-12-4'",
+    "serve:emulator": "npm run config:dev-tools && ionic cordova emulate ios --address=localhost --l --c -- --buildFlag='-UseModernBuildSystem=0' -lc --target='iPad--8th-generation-, 14.5'",
     "serve:ipad": "npm run config:dev && npm run schema-version && ionic cordova run ios -- --buildFlag='-UseModernBuildSystem=0 -allowProvisioningUpdates' --codeSignIdentity='iPhone Developer' --developmentTeam='K84TL26V3P' --packageType='development'",
     "serve:ipad-prod": "npm run config:dev && npm run schema-version && ionic cordova run ios -- --prod --buildFlag='-UseModernBuildSystem=0 -allowProvisioningUpdates' --codeSignIdentity='iPhone Developer' --developmentTeam='K84TL26V3P' --packageType='development'",
     "ionic:deploy": "git push ionic master",
