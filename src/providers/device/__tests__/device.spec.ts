@@ -11,7 +11,7 @@ import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogType } from '../../../shared/models/log.model';
 import { configureTestSuite } from 'ng-bullet';
 
-describe('Device Provider', () => {
+fdescribe('Device Provider', () => {
 
   let deviceProvider: DeviceProvider;
   let store$: Store<any>;
@@ -92,7 +92,7 @@ describe('Device Provider', () => {
 
       await deviceProvider.enableSingleAppMode();
 
-      expect(deviceProvider.setSingleAppMode).toHaveBeenCalledTimes(4);
+      expect(deviceProvider.setSingleAppMode).toHaveBeenCalledTimes(5);
       expect(store$.dispatch).toHaveBeenCalledWith(asamFailureLog);
     });
 
