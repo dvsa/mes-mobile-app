@@ -8,7 +8,8 @@
         *ngIf="getTransmission()"
         [category]="category"
         [transmission]="data.gearboxCategory"
-        [code78]="passCompletion?.code78Present">
+        [code78]="passCompletion?.code78Present"
+        [isTestSubmitted]="true">
       </transmission-display>
       <data-row
         [label]="'Vehicle registration number'"
