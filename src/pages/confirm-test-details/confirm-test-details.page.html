@@ -51,7 +51,8 @@
           *ngIf="isPassed(pageState.testOutcomeText$ | async)"
           [category]="category"
           [transmission]="pageState.transmission$ | async"
-          [code78]="pageState.code78$ | async">
+          [code78]="pageState.code78$ | async"
+          [isTestSubmitted]="false">
         </transmission-display>
         <!-- D255 -->
         <data-row

@@ -1,8 +1,15 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { configureTestSuite } from 'ng-bullet';
 import { TransmissionDisplayComponent } from '../transmission-display';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { IonicModule } from 'ionic-angular';
+
+enum GearBox {
+  AUTOMATIC_NOT_SUBMITTED = 'Automatic - An automatic licence issued',
+  AUTOMATIC_SUBMITTED = 'Automatic',
+  MANUAL = 'Manual',
+  CODE78 = 'Automatic - No code 78 - A manual licence issued',
+}
 
 describe('TransmissionDisplayComponent', () => {
   let fixture: ComponentFixture<TransmissionDisplayComponent>;
@@ -26,25 +33,49 @@ describe('TransmissionDisplayComponent', () => {
 
   describe('getTransmissionText', () => {
     it('should return appropriate string if Manual', () => {
-      expect(component.getTransmissionText('Manual', false, TestCategory.B)).toEqual('Manual');
+      component.transmission = 'Manual';
+      component.code78 = false;
+      component.category = TestCategory.B;
+      expect(component.getTransmissionText()).toEqual(GearBox.MANUAL);
     });
     it('should return appropriate string if Automatic', () => {
-      expect(component.getTransmissionText('Automatic', false, TestCategory.B))
-        .toEqual('Automatic - An automatic licence issued');
+      component.transmission = 'Automatic';
+      component.code78 = false;
+      component.category = TestCategory.B;
+      expect(component.getTransmissionText())
+        .toEqual(GearBox.AUTOMATIC_NOT_SUBMITTED);
     });
     it('should return appropriate string if Manual and no code78', () => {
-      expect(component.getTransmissionText('Manual', false, TestCategory.C)).toEqual('Manual');
+      component.transmission = 'Manual';
+      component.code78 = false;
+      component.category = TestCategory.C;
+      expect(component.getTransmissionText()).toEqual(GearBox.MANUAL);
     });
     it('should return appropriate string if Manual and code78', () => {
-      expect(component.getTransmissionText('Manual', true, TestCategory.C)).toEqual('Manual');
+      component.transmission = 'Manual';
+      component.code78 = true;
+      component.category = TestCategory.C;
+      expect(component.getTransmissionText()).toEqual(GearBox.MANUAL);
     });
     it('should return appropriate string if Automatic and code78', () => {
-      expect(component.getTransmissionText('Automatic', true, TestCategory.C))
-        .toEqual('Automatic - An automatic licence issued');
+      component.transmission = 'Automatic';
+      component.code78 = true;
+      component.category = TestCategory.C;
+      expect(component.getTransmissionText())
+        .toEqual(GearBox.AUTOMATIC_NOT_SUBMITTED);
     });
     it('should return appropriate string if Automatic no code78', () => {
-      expect(component.getTransmissionText('Automatic', false, TestCategory.C))
-        .toEqual('Automatic - No code 78 - A manual licence issued');
+      component.transmission = 'Automatic';
+      component.code78 = false;
+      component.category = TestCategory.C;
+      expect(component.getTransmissionText())
+        .toEqual(GearBox.CODE78);
+    });
+    it('should return appropriate string if Automatic anf Fail (missing code 78)', () => {
+      component.transmission = 'Automatic';
+      component.category = TestCategory.C;
+      expect(component.getTransmissionText())
+        .toEqual(GearBox.AUTOMATIC_NOT_SUBMITTED);
     });
   });
 });
