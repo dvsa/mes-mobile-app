@@ -3,7 +3,8 @@ import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 enum GearBox {
-  AUTOMATIC = 'Automatic - An automatic licence issued',
+  AUTOMATIC_NOT_SUBMITTED = 'Automatic - An automatic licence issued',
+  AUTOMATIC_SUBMITTED = 'Automatic',
   MANUAL = 'Manual',
   CODE78 = 'Automatic - No code 78 - A manual licence issued',
 }
@@ -23,18 +24,27 @@ export class TransmissionDisplayComponent {
   @Input()
   category: TestCategory;
 
+  @Input()
+  isTestSubmitted: boolean = false;
+
   constructor() {
   }
 
-  getTransmissionText(gearbox: GearboxCategory, code78: boolean, category: TestCategory): GearBox {
-    switch (category) {
-      case TestCategory.C:
-      case TestCategory.CE:
-      case TestCategory.D:
-      case TestCategory.DE:
-        return gearbox === GearBox.MANUAL ? GearBox.MANUAL : !code78 ? GearBox.CODE78 : GearBox.AUTOMATIC;
-      default:
-        return gearbox === GearBox.MANUAL ? GearBox.MANUAL : GearBox.AUTOMATIC;
+  getTransmissionText(): GearBox {
+    const code78Categories: TestCategory[] = [TestCategory.C, TestCategory.CE, TestCategory.D, TestCategory.DE];
+    if (this.transmission === GearBox.MANUAL) {
+      return GearBox.MANUAL;
     }
+    if (
+      code78Categories.includes(this.category) &&
+      this.transmission !== GearBox.MANUAL &&
+      !this.code78 &&
+      typeof this.code78 !== 'undefined'
+    ) {
+      return GearBox.CODE78;
+    }
+    return this.transmission === 'Automatic' && this.isTestSubmitted ?
+      GearBox.AUTOMATIC_SUBMITTED :
+      GearBox.AUTOMATIC_NOT_SUBMITTED;
   }
 }
