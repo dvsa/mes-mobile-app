@@ -38,8 +38,8 @@ export class TransmissionDisplayComponent {
     if (
       code78Categories.includes(this.category) &&
       this.transmission !== GearBox.MANUAL &&
-      !this.code78 &&
-      typeof this.code78 !== 'undefined'
+      // tslint:disable-next-line
+      this.code78 === false
     ) {
       return GearBox.CODE78;
     }
