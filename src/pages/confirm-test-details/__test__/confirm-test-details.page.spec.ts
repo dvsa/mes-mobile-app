@@ -19,6 +19,7 @@ import { ActivityCodeModel } from '../../office/components/activity-code/activit
 import * as pageConstants from '../../page-names.constants';
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { PersistTests } from '../../../modules/tests/tests.actions';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('ConfirmTestDetailsPage', () => {
   let fixture: ComponentFixture<ConfirmTestDetailsPage>;
@@ -205,6 +206,15 @@ describe('ConfirmTestDetailsPage', () => {
       spyOn(component.subscription, 'unsubscribe');
       component.ionViewDidLeave();
       expect(component.subscription.unsubscribe).toHaveBeenCalled();
+    });
+  });
+
+  describe('isADI2', () => {
+    it('should return true if test outcome is Passed', () => {
+      expect(component.isADI2(TestCategory.ADI2)).toEqual(true);
+    });
+    it('should return false if test outcome is not Passed', () => {
+      expect(component.isADI2(TestCategory.B)).toEqual(false);
     });
   });
 
