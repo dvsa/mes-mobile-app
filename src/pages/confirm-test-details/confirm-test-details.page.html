@@ -41,14 +41,14 @@
         </data-row>
         <!-- Provisional licence received -->
         <data-row
-          *ngIf="isPassed(pageState.testOutcomeText$ | async)"
+          *ngIf="isPassed(pageState.testOutcomeText$ | async) && !isADI2(category)"
           [label]="'Provisional licence'"
           [label2]="'received'"
-          [value]="getProvisionalText(pageState.provisionalLicense$ | async)">
+          [value]="getProvisionalText(pageState.provisionalLicense$ | async) ">
         </data-row>
         <!-- Transmission -->
         <transmission-display
-          *ngIf="isPassed(pageState.testOutcomeText$ | async)"
+          *ngIf="isPassed(pageState.testOutcomeText$ | async)  && !isADI2(category)"
           [category]="category"
           [transmission]="pageState.transmission$ | async"
           [code78]="pageState.code78$ | async"

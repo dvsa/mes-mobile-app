@@ -103,6 +103,10 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
     return true;
   }
 
+  isADI2(category: TestCategory): boolean {
+    return category === TestCategory.ADI2;
+  }
+
   ionViewDidEnter(): void {
     this.store$.dispatch(new ConfirmTestDetailsViewDidEnter());
     this.navBar.backButtonClick = (e: UIEvent) => {
