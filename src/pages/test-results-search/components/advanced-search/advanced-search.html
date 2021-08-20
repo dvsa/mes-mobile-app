@@ -22,16 +22,14 @@
     </ion-col>
     <ion-col col-28>
       <ion-item no-padding no-lines>
-        <ion-input
+        <input
           placeholder="DE number"
-          type="number"
+          type="text"
           id="staff-number"
           class="staff-number"
           clearInput
-          numbersOnly
           [class.ng-invalid]="invalid"
-          [value]="staffNumber"
-          (ionChange)="staffNumberChanged($event.value)"></ion-input>
+          (input)="staffNumberChanged($event)">
       </ion-item>
     </ion-col>
   </ion-row>
