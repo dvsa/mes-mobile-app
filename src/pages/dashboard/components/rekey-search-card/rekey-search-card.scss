@@ -35,11 +35,6 @@ rekey-search-card {
 
       h3 {
         color: map-get($colors-gds, gds-blue);
-        .text-zoom-large & {
-          line-height: 1.4em;
-          white-space: normal;
-          margin-bottom: 4px;
-        }
         .text-zoom-x-large & {
           line-height: 1.5em;
           white-space: normal;

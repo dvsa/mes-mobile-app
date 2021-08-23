@@ -7,7 +7,7 @@
       </button>
       <h6 *ngIf="!isLogoutEnabled()" class="version-number">Version {{pageState.appVersion$
         | async}}</h6>
-      <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}" />
+      <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}"/>
     </ion-buttons>
     <ion-title>My dashboard</ion-title>
   </ion-navbar>
@@ -31,7 +31,8 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <hr *ngIf="(showEndToEndPracticeMode() || showTestReportPracticeMode())" />
-  <practice-test-report-card id="testReportPracticeMode" *ngIf="showTestReportPracticeMode()"></practice-test-report-card>
+  <hr *ngIf="(showEndToEndPracticeMode() || showTestReportPracticeMode())"/>
+  <practice-test-report-card id="testReportPracticeMode"
+                             *ngIf="showTestReportPracticeMode()"></practice-test-report-card>
   <practice-end-to-end-card id="endToendPracticeMode" *ngIf="showEndToEndPracticeMode()"></practice-end-to-end-card>
 </ion-content>
