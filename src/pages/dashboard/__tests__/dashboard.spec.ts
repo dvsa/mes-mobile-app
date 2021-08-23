@@ -92,10 +92,10 @@ describe('DashboardPage', () => {
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#testReportPracticeMode'))).toBeNull();
       });
-      it('should not show test report practice mode banner when showDelegatedExaminerRekey returns true', () => {
+      it('should show test report practice mode banner when showDelegatedExaminerRekey returns true', () => {
         spyOn(component, 'showDelegatedExaminerRekey').and.returnValue(true);
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('practice-test-report-card'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('practice-test-report-card'))).not.toBeNull();
       });
     });
 
@@ -117,10 +117,10 @@ describe('DashboardPage', () => {
         expect(fixture.debugElement.query(By.css('#endToendPracticeMode'))).toBeNull();
       });
 
-      it('should not show the end to end practice mode banner when showDelegatedExaminerRekey returns true', () => {
+      it('should show the end to end practice mode banner when showDelegatedExaminerRekey returns true', () => {
         spyOn(component, 'showDelegatedExaminerRekey').and.returnValue(true);
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('practice-end-to-end-card'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('practice-end-to-end-card'))).not.toBeNull();
       });
     });
     describe('goToJournalCard', () => {
@@ -143,10 +143,10 @@ describe('DashboardPage', () => {
       });
     });
     describe('rekeySearchCard', () => {
-      it('should hide the rekey search card when showDelegatedExaminerRekey returns true', () => {
+      it('should NOT hide the rekey search card when showDelegatedExaminerRekey returns true', () => {
         spyOn(component, 'showDelegatedExaminerRekey').and.returnValue(true);
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('rekey-search-card'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('rekey-search-card'))).not.toBeNull();
       });
     });
   });

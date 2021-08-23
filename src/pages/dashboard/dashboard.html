@@ -7,7 +7,7 @@
       </button>
       <h6 *ngIf="!isLogoutEnabled()" class="version-number">Version {{pageState.appVersion$
         | async}}</h6>
-      <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}" />
+      <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}"/>
     </ion-buttons>
     <ion-title>My dashboard</ion-title>
   </ion-navbar>
@@ -23,18 +23,16 @@
         <go-to-journal-card *ngIf="!showDelegatedExaminerRekey()"></go-to-journal-card>
         <delegated-examiner-rekey *ngIf="showDelegatedExaminerRekey()"></delegated-examiner-rekey>
       </ion-col>
-      <ion-col no-padding col-48 col-lg-32 *ngIf="!showDelegatedExaminerRekey()">
-        <test-results-search-card></test-results-search-card>
-      </ion-col>
-      <ion-col no-padding col-96 col-lg-32 *ngIf="showDelegatedExaminerRekey()">
+      <ion-col no-padding col-48 col-lg-32>
         <test-results-search-card></test-results-search-card>
       </ion-col>
       <ion-col no-padding col-48 col-lg-32>
-        <rekey-search-card *ngIf="!showDelegatedExaminerRekey()"></rekey-search-card>
+        <rekey-search-card></rekey-search-card>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <hr *ngIf="!showDelegatedExaminerRekey() && (showEndToEndPracticeMode() || showTestReportPracticeMode())" />
-  <practice-test-report-card id="testReportPracticeMode" *ngIf="showTestReportPracticeMode() && !showDelegatedExaminerRekey()"></practice-test-report-card>
-  <practice-end-to-end-card id="endToendPracticeMode" *ngIf="showEndToEndPracticeMode() && !showDelegatedExaminerRekey()"></practice-end-to-end-card>
+  <hr *ngIf="(showEndToEndPracticeMode() || showTestReportPracticeMode())"/>
+  <practice-test-report-card id="testReportPracticeMode"
+                             *ngIf="showTestReportPracticeMode()"></practice-test-report-card>
+  <practice-end-to-end-card id="endToendPracticeMode" *ngIf="showEndToEndPracticeMode()"></practice-end-to-end-card>
 </ion-content>
