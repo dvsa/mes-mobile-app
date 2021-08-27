@@ -41,38 +41,10 @@ export class DelegatedRekeySearchEffects {
               switchMap((response: any): Observable<any> => {
                 let delegatedExaminerTestSlot: DelegatedExaminerTestSlot;
                 try {
-                  delegatedExaminerTestSlot = {
-                    testCentre: {
-                      centreId: response.testSlot.testCentre.centreId,
-                      centreName: response.testSlot.testCentre.centreName,
-                      costCode: response.testSlot.testCentre.costCode,
-                    },
-                    booking: {
-                      application: {
-                        applicationId: response.testSlot.booking.application.applicationId,
-                        bookingSequence: response.testSlot.booking.application.bookingSequence,
-                        checkDigit: response.testSlot.booking.application.checkDigit,
-                        testCategory: response.testSlot.booking.application.testCategory,
-                        welshTest: false,
-                        extendedTest: false,
-                      },
-                      candidate: {
-                        candidateId: response.testSlot.booking.candidate.candidateId,
-                        candidateName: {
-                          firstName: response.testSlot.booking.candidate.candidateName.firstName,
-                          lastName: response.testSlot.booking.candidate.candidateName.lastName,
-                        },
-                        driverNumber: response.testSlot.booking.candidate.driverNumber,
-                        dateOfBirth: response.testSlot.booking.candidate.dateOfBirth,
-                      },
-                    },
-                    slotDetail: {
-                      slotId: response.testSlot.slotDetail.slotId,
-                      start: response.testSlot.slotDetail.start,
-                    },
-                    vehicleTypeCode: response.testSlot.vehicleTypeCode,
+                  delegatedExaminerTestSlot = !!response ? {
+                    ...response.testSlot,
                     examinerId: response.examinerId,
-                  };
+                  } : null;
                   return of(new SearchBookedDelegatedTestSuccess(delegatedExaminerTestSlot));
                 } catch (err) {
                   return of(
