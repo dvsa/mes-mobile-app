@@ -468,7 +468,6 @@ export const validTestCatK: CatKUniqueTypes.TestData = {
 
 export const legalRequirementsAMod2 = [
   legalRequirementsLabels.normalStart1,
-  legalRequirementsLabels.normalStart2,
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.hillStart,
   legalRequirementsLabels.safetyAndBalanceQuestions,
@@ -477,7 +476,6 @@ export const legalRequirementsAMod2 = [
 
 export const legalRequirementsADIPart2 = [
   legalRequirementsLabels.normalStart1,
-  legalRequirementsLabels.normalStart2,
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.uphillStart,
   legalRequirementsLabels.downhillStart,
@@ -488,7 +486,6 @@ export const legalRequirementsADIPart2 = [
 
 export const legalRequirementsB = [
   legalRequirementsLabels.normalStart1,
-  legalRequirementsLabels.normalStart2,
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.hillStart,
   legalRequirementsLabels.manoeuvre,
