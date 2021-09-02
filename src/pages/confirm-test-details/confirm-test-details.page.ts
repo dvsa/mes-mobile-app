@@ -247,10 +247,8 @@ export class ConfirmTestDetailsPage extends PracticeableBasePageComponent {
 
   async onTestDetailsConfirm(): Promise<void> {
 
-    if (!this.isPassed(this.testOutcome)) {
-      this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
-      this.store$.dispatch(new PersistTests());
-    }
+    this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
+    this.store$.dispatch(new PersistTests());
     await this.navController.push(pageConstants.getPageNameByCategoryAndKey(this.category, 'BACK_TO_OFFICE_PAGE'));
     this.navController.getViews().forEach((view) => {
       if (includes([

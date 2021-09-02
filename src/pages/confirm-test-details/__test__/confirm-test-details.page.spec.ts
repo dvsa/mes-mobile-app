@@ -181,18 +181,9 @@ describe('ConfirmTestDetailsPage', () => {
       expect(navController.push).toHaveBeenCalledWith(pageConstants.CAT_B.BACK_TO_OFFICE_PAGE);
     });
 
-    it('should not call dispatch for SetTestStatusWriteUp and PersistTests if test outcome is passed', async () => {
+    it('should call dispatch for SetTestStatusWriteUp and PersistTests', async () => {
       spyOn(pageConstants, 'getPageNameByCategoryAndKey').and.returnValue(pageConstants.CAT_B.BACK_TO_OFFICE_PAGE);
       component.testOutcome = TestOutcome.Passed;
-      component.slotId = '123';
-      await component.onTestDetailsConfirm();
-      expect(store$.dispatch).not.toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
-      expect(store$.dispatch).not.toHaveBeenCalledWith(new PersistTests);
-    });
-
-    it('should call dispatch for SetTestStatusWriteUp and PersistTests if test outcome is not passed', async () => {
-      spyOn(pageConstants, 'getPageNameByCategoryAndKey').and.returnValue(pageConstants.CAT_B.BACK_TO_OFFICE_PAGE);
-      component.testOutcome = TestOutcome.Terminated;
       component.slotId = '123';
       await component.onTestDetailsConfirm();
       expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
