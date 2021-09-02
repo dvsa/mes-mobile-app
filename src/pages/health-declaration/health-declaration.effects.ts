@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { concatMap, withLatestFrom } from 'rxjs/operators';
 
-import * as testStatusActions from '../../modules/tests/test-status/test-status.actions';
 import * as testsActions from '../../modules/tests/tests.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -31,7 +30,6 @@ export class HealthDeclarationEffects {
     )),
     concatMap(([action, slotId]) => {
       return [
-        new testStatusActions.SetTestStatusWriteUp(slotId),
         new testsActions.PersistTests(),
       ];
     }),
