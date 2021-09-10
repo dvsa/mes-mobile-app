@@ -128,7 +128,7 @@ export const validTestCatB: CatBUniqueTypes.TestData = {
 export const validTestCatBE: CatBEUniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
-    normalStart2: true,
+    normalStart1: true,
     uphillStart: true,
   },
   manoeuvres: {
@@ -147,7 +147,7 @@ export const validTestCatBE: CatBEUniqueTypes.TestData = {
 export const validDelegatedTestCatBE: CatBEUniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
-    normalStart2: false,
+    normalStart1: false,
     uphillStart: false,
   },
   manoeuvres: {
@@ -166,7 +166,7 @@ export const validDelegatedTestCatBE: CatBEUniqueTypes.TestData = {
 export const validTestCatC: CatCUniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
-    normalStart2: true,
+    normalStart1: true,
     uphillStart: true,
   },
   manoeuvres: {
@@ -198,7 +198,7 @@ export const validDelegatedTestCatCAndC1: CatCUniqueTypes.TestData = {
 export const validTestCatC1: CatC1UniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
-    normalStart2: true,
+    normalStart1: true,
     uphillStart: true,
   },
   manoeuvres: {
@@ -233,7 +233,7 @@ export const validDelegatedTestCatCEAndC1E: CatCEUniqueTypes.TestData | CatCEUni
 export const validTestCatCE: CatCEUniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
-    normalStart2: true,
+    normalStart1: true,
     uphillStart: true,
   },
   manoeuvres: {
@@ -252,7 +252,7 @@ export const validTestCatCE: CatCEUniqueTypes.TestData = {
 export const validTestCatC1E: CatC1EUniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
-    normalStart2: true,
+    normalStart1: true,
     uphillStart: true,
   },
   manoeuvres: {
@@ -429,7 +429,6 @@ export const validTestCatH: CatHUniqueTypes.TestData = {
   testRequirements: {
     angledStart: true,
     normalStart1: true,
-    normalStart2: true,
     uphillStartDesignatedStart: true,
   },
   eco: {
@@ -452,7 +451,6 @@ export const validTestCatK: CatKUniqueTypes.TestData = {
   testRequirements: {
     angledStart: true,
     normalStart1: true,
-    normalStart2: true,
     uphillStartDesignatedStart: true,
   },
   eco: {
@@ -592,7 +590,6 @@ export const legalRequirementsCatD1E = [
 
 export const legalRequirementsCatF = [
   legalRequirementsLabels.normalStart1,
-  legalRequirementsLabels.normalStart2,
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.uphillStartDesignatedStart,
   legalRequirementsLabels.manoeuvre,
@@ -603,7 +600,6 @@ export const legalRequirementsCatF = [
 
 export const legalRequirementsCatG = [
   legalRequirementsLabels.normalStart1,
-  legalRequirementsLabels.normalStart2,
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.uphillStartDesignatedStart,
   legalRequirementsLabels.manoeuvre,
@@ -614,7 +610,6 @@ export const legalRequirementsCatG = [
 
 export const legalRequirementsCatH = [
   legalRequirementsLabels.normalStart1,
-  legalRequirementsLabels.normalStart2,
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.uphillStartDesignatedStart,
   legalRequirementsLabels.manoeuvre,
@@ -625,7 +620,6 @@ export const legalRequirementsCatH = [
 
 export const legalRequirementsCatK = [
   legalRequirementsLabels.normalStart1,
-  legalRequirementsLabels.normalStart2,
   legalRequirementsLabels.angledStart,
   legalRequirementsLabels.uphillStartDesignatedStart,
   legalRequirementsLabels.highwayCodeSafety,
