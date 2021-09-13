@@ -21,15 +21,13 @@
       <ion-col col-32 >
         <ion-row class="padding-top-10 only-top-padding">
           <ion-col col-46>
-            <multi-legal-requirement
-              [legalRequirement1]="legalRequirements.normalStart1"
-              [legalRequirement2]="legalRequirements.normalStart2"
-              [requirement1Ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart1]"
-              [requirement2Ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart2]"
+            <legal-requirement
+              [legalRequirement]="legalRequirements.normalStart1"
+              [ticked]="(pageState.testRequirements$ | async)[legalRequirements.normalStart1]"
               label="NS"
               [disabled]="(pageState.delegatedTest$ | async)"
             >
-            </multi-legal-requirement>
+            </legal-requirement>
           </ion-col>
           <ion-col col-4></ion-col>
           <ion-col col-46>
