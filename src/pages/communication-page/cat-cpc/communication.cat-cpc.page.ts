@@ -1,4 +1,4 @@
-import { IonicPage, Navbar, Platform, NavController } from 'ionic-angular';
+import { IonicPage, Navbar, Platform, NavController, Keyboard } from 'ionic-angular';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, merge, Subscription } from 'rxjs';
@@ -86,6 +86,7 @@ export class CommunicationCatCPCPage extends BasePageComponent implements OnInit
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private translate: TranslateService,
+    public keyboard: Keyboard,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
