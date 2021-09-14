@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Address, CategoryCode, CommunicationMethod, ConductedLanguage } from '@dvsa/mes-test-schema/categories/common';
-import { IonicPage, Navbar, NavController, Platform } from 'ionic-angular';
+import { IonicPage, Keyboard, Navbar, NavController, Platform } from 'ionic-angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -89,6 +89,7 @@ export class CommunicationCatHomeTestPage extends BasePageComponent implements O
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private translate: TranslateService,
+    public keyboard: Keyboard,
   ) {
     super(platform, navController, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());

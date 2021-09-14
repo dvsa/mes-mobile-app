@@ -1,4 +1,4 @@
-import { IonicPage, Navbar, Platform, NavController } from 'ionic-angular';
+import { IonicPage, Navbar, Platform, NavController, Keyboard } from 'ionic-angular';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -85,6 +85,7 @@ export class CommunicationCatBPage extends PracticeableBasePageComponent impleme
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private translate: TranslateService,
+    public keyboard: Keyboard,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
