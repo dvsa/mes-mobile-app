@@ -33,8 +33,8 @@ class WaitingRoomPage extends Page {
       `//div[contains(@class, '${pageType}')]//button[@id = 'continue-button']`);
   }
 
-  checkInsuranceDeclaration() {
-    this.clickElementById('insurance-declaration-checkbox');
+  async checkInsuranceDeclaration() {
+    await this.clickElementById('insurance-declaration-checkbox');
   }
 
   checkResidencyDeclaration() {

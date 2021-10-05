@@ -49,11 +49,16 @@ Before({ tags: '@catcpc' }, () => {
   this.testCategory = 'cpc';
 });
 
-When('I continue to the back to office page', () => {
-  if (this.testCategory !== 'cpc') {
-    NonPassFinalisationPage.clickD255Yes();
+When(/^I continue to the back to office page( from a eyesight fail)?/, (eyesightStatus) => {
+  if (eyesightStatus === ' from a eyesight fail') {
+    DebriefPage.clickDebriefWitnessedYes();
   }
-  DebriefPage.clickDebriefWitnessedYes();
+  if (eyesightStatus !== ' from a eyesight fail') {
+    if (this.testCategory !== 'cpc') {
+      NonPassFinalisationPage.clickD255Yes();
+    }
+    DebriefPage.clickDebriefWitnessedYes();
+  }
   NonPassFinalisationPage.clickContinueToBackOfficeButton(this.testCategory);
 });
 

@@ -1,5 +1,6 @@
 import { Then, When, Before } from 'cucumber';
 import DebriefPage from '../pages/debriefPage';
+import {getActivityCode} from '../../../src/modules/tests/tests.selector';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -82,18 +83,21 @@ When('I complete the pass details with an automatic transmission', () => {
   DebriefPage.continuePassFinalisation(this.testCategory);
 });
 
-When('I complete the fail details', () => {
-  if (this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'd') {
-    DebriefPage.selectTransmission('manual');
+When(/^I complete the( eyesight)? fail details/, (eyesightStatus?) => {
+  if (eyesightStatus === 'eyesight') {
+    DebriefPage.clickDebriefWitnessedYes();
   }
-  if (this.testCategory !== 'adi-part2') {
-    DebriefPage.clickD255No();
+  if (eyesightStatus !== 'eyesight') {
+    if (this.testCategory === 'c' || this.testCategory === 'c1' || this.testCategory === 'd') {
+      DebriefPage.selectTransmission('manual');
+    }
+    if (this.testCategory !== 'adi-part2') {
+      DebriefPage.clickD255No();
+    }
+    DebriefPage.clickDebriefWitnessedYes();
   }
-  DebriefPage.clickDebriefWitnessedYes();
   // TODO: There seem to be 2 continue buttons...are they on different pages?
   DebriefPage.clickContinueButton2();
-  // const submitButton = TempPage.getElement(by.id('continue-button'));
-  // TempPage.clickElement(submitButton);
 });
 
 When('I try to confirm the pass certificate details', () => {

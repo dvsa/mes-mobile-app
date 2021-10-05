@@ -62,7 +62,7 @@ Feature: Driving Examiner Completes Terminated Tests for Category B+E
       And the D255 Radio is pre-selected to yes
       When I continue to the back to office page
       And I should see the "Confirm test details - Patrick Kamram" page
-      And I complete the Confirmation page
+      And I complete the eyesight fail details
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Unsuccessful"

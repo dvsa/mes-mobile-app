@@ -5,7 +5,7 @@ exports.config = {
   allScriptsTimeout: 30000,
   capabilities: {
     platformName: 'iOS',
-    platformVersion: '12.1',
+    platformVersion: '12.4',
     deviceName: 'iPad Pro (10.5-inch)',
     browserName: '',
     autoWebview: true,

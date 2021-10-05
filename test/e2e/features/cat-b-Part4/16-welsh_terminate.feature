@@ -19,7 +19,7 @@ Feature: A Driving Examiner Completes a Terminated Journey For Category B in Wel
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Vance English" page
-      When I continue to the back to office page
+      When I continue to the back to office page from a eyesight fail
       And I should see the "Confirm test details - Vance English" page
       And I complete the Confirmation page
       Then I am on the back to office page
