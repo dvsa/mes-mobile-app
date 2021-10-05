@@ -6,8 +6,8 @@ class BackToOfficePage extends Page {
     this.getElementById('back-to-office-page');
   }
 
-  clickContinueToWriteUpButton() {
-    this.clickElementById('continue-to-write-up');
+  async clickContinueToWriteUpButton() {
+    await this.clickElementById('continue-to-write-up');
   }
 
   clickBackToJournalButton() {

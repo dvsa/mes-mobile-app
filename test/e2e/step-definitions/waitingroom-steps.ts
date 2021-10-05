@@ -67,8 +67,8 @@ When(/^the candidate confirms their declaration$/, () => {
   WaitingRoomPage.candidateConfirmsDeclaration(this.testCategory);
 });
 
-When(/^the candidate confirms their communication preference$/, () => {
-  WaitingRoomPage.candidateConfirmsCommunicationPreference(this.testCategory);
+When(/^the candidate confirms their communication preference$/, async () => {
+  await WaitingRoomPage.candidateConfirmsCommunicationPreference(this.testCategory);
 });
 
 When('the candidate completes the declaration page', () => {

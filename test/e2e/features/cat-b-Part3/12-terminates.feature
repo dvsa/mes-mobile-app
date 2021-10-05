@@ -72,7 +72,7 @@ Feature: A Driving Examiner Completes Multiple Terminated Journeys For Category 
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Doe Jane" page
       And the D255 Radio is pre-selected to yes
-      And I continue to the back to office page
+      And I continue to the back to office page from a eyesight fail
       And I should see the "Confirm test details - Doe Jane" page
       And I complete the Confirmation page
       Then I am on the back to office page
