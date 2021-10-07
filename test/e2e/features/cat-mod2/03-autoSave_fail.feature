@@ -62,13 +62,13 @@ Feature: Autosave end to end failed journey for Category B+E Mod2
     When I click the back button
     Then I should see the "My dashboard" page
     When I click search completed tests
-    When I search for a completed test with the application reference of "20123000011"
+    When I search for a completed test with the application reference of "20123444011"
     And the search result is clicked
     Then I should see the "Test information" page
     And the test result outcome is "Unsuccessful"
     And the test result has the following data present
       | label                             | value                         |
-      | Application reference             | 20123000011                   |
+      | Application reference             | 20123444011                   |
       | Test category                     | EUA2M2                         |
       | Slot type                         | Standard Test                 |
       | Examiner number                   | 10000011                      |
