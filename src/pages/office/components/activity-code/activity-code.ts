@@ -21,6 +21,9 @@ export class ActivityCodeComponent implements OnChanges {
   @Input()
   disabled: boolean;
 
+  @Input()
+  allowAllCodes: boolean = false;
+
   @Output()
   activityCodeChange = new EventEmitter<ActivityCodeModel>();
 
@@ -50,10 +53,17 @@ export class ActivityCodeComponent implements OnChanges {
   }
 
   isSelectDisabled(): boolean {
+    if (this.allowAllCodes) {
+      return false;
+    }
     return this.disabled || (this.activityCodeModel && parseInt(this.activityCodeModel.activityCode, 10) < 4);
   }
 
   isOptionDisabled(activityCode: ActivityCode): boolean {
+    if (this.allowAllCodes) {
+      return false;
+    }
+
     if (parseInt(activityCode, 10) < 4) {
       return true;
     }

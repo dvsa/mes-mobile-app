@@ -21,6 +21,14 @@ export const createPopulateCandidateDetailsAction = (testCategory: string, booki
     case TestCategory.EUAM2:
     case TestCategory.CCPC:
     case TestCategory.DCPC:
+    case TestCategory.C1EM:
+    case TestCategory.C1M:
+    case TestCategory.CEM:
+    case TestCategory.CM:
+    case TestCategory.D1EM:
+    case TestCategory.D1M:
+    case TestCategory.DEM:
+    case TestCategory.DM:
       return new PopulateCandidateDetails(booking.candidate);
     case TestCategory.BE:
       return new PopulateCandidateDetailsCatBE({

@@ -20,6 +20,7 @@ import {
   CAT_ADI_PART2,
   CAT_HOME_TEST,
   CAT_CPC,
+  MANOEUVRES_PAGE,
 } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import {
@@ -413,6 +414,15 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.G:
       case TestCategory.F:
         return CAT_HOME_TEST.WAITING_ROOM_PAGE;
+      case TestCategory.C1EM:
+      case TestCategory.C1M:
+      case TestCategory.CEM:
+      case TestCategory.CM:
+      case TestCategory.D1EM:
+      case TestCategory.D1M:
+      case TestCategory.DEM:
+      case TestCategory.DM:
+        return MANOEUVRES_PAGE;
     }
   }
 

@@ -1,0 +1,75 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Manoeuvres - {{pageState.candidateUntitledName$ | async}}</ion-title>
+        <ion-buttons end>
+            <!--            <end-test-link category="B"></end-test-link>-->
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <candidate-section
+            [candidateName]="pageState.candidateName$ | async"
+            [candidateDriverNumber]="pageState.candidateDriverNumber$ | async"
+            [showContinue]="false"
+            (continueClickEvent)="candidateButton()">
+    </candidate-section>
+
+    <ion-card>
+        <ion-card-content class="card-content-ios" no-bounce no-padding>
+            <ion-grid class="grid">
+
+                <ion-row padding>
+                    <ion-col col-80>
+                        <div>
+                            <b id="complete-following-exercises-label">Please complete the following exercises:</b>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row justify-content-center>
+                    <ion-col col-80 no-padding class="decrease-spacing">
+                        <div>
+                            <ul>
+                                <li *ngFor="let exercise of exercises; index as i;">
+                                    <p id="exercise-text-{{i}}">{{exercise}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <activity-code
+                        [formGroup]="form"
+                        [activityCodeModel]="pageState.activityCode$ | async"
+                        [activityCodeOptions]="activityCodeOptions"
+                        (activityCodeChange)="activityCodeChanged($event)"
+                        [allowAllCodes]="true"
+                        [disabled]="false">
+                </activity-code>
+
+                <div *ngIf="(pageState.activityCode$ | async)?.activityCode === passCode">
+                    <transmission
+                            [formGroup]="form"
+                            [transmission]="pageState.transmission$ | async"
+                            (transmissionChange)="transmissionChanged($event)">
+                    </transmission>
+
+                    <pass-certificate-number
+                            [form]="form"
+                            [passCertificateNumberInput]="pageState.passCertificateNumber$ | async"
+                            (passCertificateNumberChange)="passCertificateNumberChanged($event)">
+                    </pass-certificate-number>
+                </div>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+</ion-content>
+
+<ion-footer>
+    <ion-row class="mes-full-width-card box-shadow">
+        <button type="submit" class="mes-primary-button" id="submit-manoeuvres-btn" ion-button (click)="onSubmit()">
+            <h3>Submit</h3>
+        </button>
+    </ion-row>
+</ion-footer>

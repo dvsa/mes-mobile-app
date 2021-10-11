@@ -99,6 +99,19 @@ export class VehicleDetailsByCategoryProvider {
           vehicleWidth: null,
           vehicleLength: null,
         };
+      case TestCategory.C1EM:
+      case TestCategory.C1M:
+      case TestCategory.CEM:
+      case TestCategory.CM:
+      case TestCategory.D1EM:
+      case TestCategory.D1M:
+      case TestCategory.DEM:
+      case TestCategory.DM:
+        return {
+          vehicleDetails: null,
+          vehicleWidth: null,
+          vehicleLength: null,
+        };
       default:
         throw new Error(VehicleDetailsByCategoryProvider.getVehicleDetailsByCategoryCodeErrMsg);
     }
