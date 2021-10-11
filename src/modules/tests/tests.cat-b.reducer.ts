@@ -1,4 +1,3 @@
-
 import { Action, combineReducers } from '@ngrx/store';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
@@ -22,11 +21,13 @@ import { instructorDetailsReducer } from './instructor-details/instructor-detail
 import { testDataReducer } from './test-data/cat-b/test-data.reducer';
 import { journalDataReducer } from './journal-data/cat-b/journal-data.reducer';
 import { delegatedTestReducer } from './delegated-test/delegated-test.reducer';
+import { nullReducer } from '../../shared/classes/null.reducer';
 
 export function testsCatBReducer(
   action: Action, state: CatBUniqueTypes.TestResult): Required<CatBUniqueTypes.TestResult> {
   return combineReducers(
     {
+      appVersion: nullReducer,
       version: schemaVersionReducer,
       category: categoryReducer,
       activityCode: activityCodeReducer,
@@ -49,7 +50,7 @@ export function testsCatBReducer(
       examinerKeyed: examinerKeyedReducer,
       changeMarker: changeMarkerReducer,
     })(
-      state as Required<CatBUniqueTypes.TestResult>,
-      action,
-    );
+    state as Required<CatBUniqueTypes.TestResult>,
+    action,
+  );
 }

@@ -5,8 +5,9 @@ import { RekeyDetailsCardComponent } from '../rekey-details';
 import { ConfigMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
-import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
 import { configureTestSuite } from 'ng-bullet';
+import { NeverType } from '../../../../test-report/test-report.effects';
+import { TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/common';
 
 describe('ExaminerDetailsCardComponent', () => {
   let fixture: ComponentFixture<RekeyDetailsCardComponent>;
@@ -38,7 +39,7 @@ describe('ExaminerDetailsCardComponent', () => {
         const data = {
           examinerBooked: 123456,
         };
-        component.data = data as TestResultSchemasUnion;
+        component.data = data as NeverType<TestResultCommonSchema>;
         fixture.detectChanges();
         expect(component.getScheduledStaffNumber()).toEqual(123456);
       });
@@ -51,7 +52,7 @@ describe('ExaminerDetailsCardComponent', () => {
         const data = {
           examinerConducted: 123456,
         };
-        component.data = data as TestResultSchemasUnion;
+        component.data = data as NeverType<TestResultCommonSchema>;
         fixture.detectChanges();
         expect(component.getConductedStaffNumber()).toEqual(123456);
       });
@@ -64,7 +65,7 @@ describe('ExaminerDetailsCardComponent', () => {
         const data = {
           examinerKeyed: 123456,
         };
-        component.data = data as TestResultSchemasUnion;
+        component.data = data as NeverType<TestResultCommonSchema>;
         fixture.detectChanges();
         expect(component.getRekeyedStaffNumber()).toEqual(123456);
       });
@@ -81,7 +82,7 @@ describe('ExaminerDetailsCardComponent', () => {
             },
           },
         };
-        component.data = data as TestResultSchemasUnion;
+        component.data = data as NeverType<TestResultCommonSchema>;
         fixture.detectChanges();
         expect(component.getTestDate()).toEqual('Saturday 12th January 2019');
       });
@@ -91,7 +92,7 @@ describe('ExaminerDetailsCardComponent', () => {
         const data = {
           rekeyDate: '2019-01-12T09:14:00',
         };
-        component.data = data as TestResultSchemasUnion;
+        component.data = data as NeverType<TestResultCommonSchema>;
         fixture.detectChanges();
         expect(component.getRekeyDate()).toEqual('Saturday 12th January 2019');
       });

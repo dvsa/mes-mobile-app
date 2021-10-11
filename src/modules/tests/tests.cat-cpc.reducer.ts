@@ -21,12 +21,14 @@ import { vehicleDetailsCatCPCReducer } from './vehicle-details/cat-cpc/vehicle-d
 import { passCompletionCatCPCReducer } from './pass-completion/cat-cpc/pass-completion.cat-cpc.reducer';
 import { testSummaryCPCReducer } from './test-summary/cat-cpc/test-summary.cat-cpc.reducer';
 import { delegatedTestReducer } from './delegated-test/delegated-test.reducer';
+import { nullReducer } from '../../shared/classes/null.reducer';
 
 export function testsCatCPCReducer(
   action: Action,
   state: TestResultCatCPCSchema): Required<TestResultCatCPCSchema> {
   return combineReducers(
     {
+      appVersion: nullReducer,
       version: schemaVersionReducer,
       category: categoryReducer,
       journalData: journalDataCatCPCReducer,

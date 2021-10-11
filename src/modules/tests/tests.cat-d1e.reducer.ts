@@ -1,4 +1,3 @@
-
 import { Action, combineReducers } from '@ngrx/store';
 import { CatD1EUniqueTypes } from '@dvsa/mes-test-schema/categories/D1E';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
@@ -21,11 +20,13 @@ import { vehicleDetailsCatDReducer } from './vehicle-details/cat-d/vehicle-detai
 import { testDataCatD1EReducer } from './test-data/cat-d/test-data.cat-d1e.reducer';
 import { passCompletionCatDReducer } from './pass-completion/cat-d/pass-completion.cat-d.reducer';
 import { delegatedTestReducer } from './delegated-test/delegated-test.reducer';
+import { nullReducer } from '../../shared/classes/null.reducer';
 
 export function testsCatD1EReducer(
   action: Action, state: CatD1EUniqueTypes.TestResult): Required<CatD1EUniqueTypes.TestResult> {
   return combineReducers(
     {
+      appVersion: nullReducer,
       version: schemaVersionReducer,
       category: categoryReducer,
       activityCode: activityCodeReducer,
@@ -47,7 +48,7 @@ export function testsCatD1EReducer(
       examinerKeyed: examinerKeyedReducer,
       changeMarker: changeMarkerReducer,
     })(
-      state as Required<CatD1EUniqueTypes.TestResult>,
-      action,
-    );
+    state as Required<CatD1EUniqueTypes.TestResult>,
+    action,
+  );
 }
