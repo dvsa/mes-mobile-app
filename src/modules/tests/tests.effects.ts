@@ -50,7 +50,10 @@ import {
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
 import { JournalModel } from '../journal/journal.model';
-import { PopulateConductedLanguage } from './communication-preferences/communication-preferences.actions';
+import {
+  CandidateChoseToProceedWithTestInEnglish,
+  PopulateConductedLanguage,
+} from './communication-preferences/communication-preferences.actions';
 import { Language } from './communication-preferences/communication-preferences.model';
 import { version } from '../../environment/test-schema-version';
 import { createPopulateCandidateDetailsAction } from './journal-data/common/candidate/candidate.action-creator';
@@ -63,7 +66,7 @@ import {
   InitializeVehicleChecks as InitializeVehicleChecksCatD,
 }
 from './test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
-import { IndependentDrivingTypeChanged, RouteNumberChanged } from './test-summary/common/test-summary.actions';
+import { D255No, IndependentDrivingTypeChanged, RouteNumberChanged } from './test-summary/common/test-summary.actions';
 import { StartDelegatedTest } from './delegated-test/delegated-test.actions';
 import {
   DelegatedRekeySearchModel,
@@ -244,6 +247,20 @@ export class TestsEffects {
         arrayOfActions.push(new GearboxCategoryChanged('Manual'));
         arrayOfActions.push(new RouteNumberChanged(88));
         arrayOfActions.push(new IndependentDrivingTypeChanged('N/A'));
+      }
+
+      if (
+        startTestAction.category === TestCategory.CM ||
+        startTestAction.category === TestCategory.CEM ||
+        startTestAction.category === TestCategory.C1EM ||
+        startTestAction.category === TestCategory.C1M ||
+        startTestAction.category === TestCategory.DM ||
+        startTestAction.category === TestCategory.D1M ||
+        startTestAction.category === TestCategory.D1EM ||
+        startTestAction.category === TestCategory.DEM
+      ) {
+        arrayOfActions.push(new D255No());
+        arrayOfActions.push(new CandidateChoseToProceedWithTestInEnglish('English'));
       }
       return arrayOfActions;
     }),

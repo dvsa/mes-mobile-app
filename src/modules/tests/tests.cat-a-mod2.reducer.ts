@@ -20,11 +20,13 @@ import { testDataCatAMod2Reducer } from './test-data/cat-a-mod2/test-data.cat-a-
 import { vehicleDetailsCatAMod2Reducer } from './vehicle-details/cat-a-mod2/vehicle-details.cat-a-mod2.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { testSummaryMod2Reducer } from './test-summary/cat-a-mod2/test-summary.cat-a-mod2.reducer';
+import { nullReducer } from '../../shared/classes/null.reducer';
 
 export function testsCatAMod2Reducer(
   action: Action, state: TestResultCatAM2Schema): Required<TestResultCatAM2Schema> {
   return combineReducers(
     {
+      appVersion: nullReducer,
       version: schemaVersionReducer,
       category: categoryReducer,
       activityCode: activityCodeReducer,

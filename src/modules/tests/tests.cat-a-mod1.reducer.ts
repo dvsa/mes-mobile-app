@@ -16,15 +16,18 @@ import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatAMod1Reducer } from './journal-data/cat-a-mod1/journal-data.cat-a-mod1.reducer';
 import { testDataCatAMod1Reducer } from './test-data/cat-a-mod1/test-data.cat-a-mod1.reducer';
 import { vehicleDetailsCatAMod1Reducer } from './vehicle-details/cat-a-mod1/vehicle-details.cat-a-mod1.reducer';
-import { preTestDeclarationsCatAMod1Reducer } from
-'./pre-test-declarations/cat-a-mod1/pre-test-declarations.cat-a-mod1.reducer';
+import {
+    preTestDeclarationsCatAMod1Reducer,
+} from './pre-test-declarations/cat-a-mod1/pre-test-declarations.cat-a-mod1.reducer';
 import { passCompletionCatAMod1Reducer } from './pass-completion/cat-a-mod1/pass-completion.cat-a-mod1.reducer';
 import { testSummaryMod1Reducer } from './test-summary/cat-a-mod1/test-summary.cat-a-mod1.reducer';
+import { nullReducer } from '../../shared/classes/null.reducer';
 
 export function testsCatAMod1Reducer(
   action: Action, state: TestResultCatAM1Schema): Required<TestResultCatAM1Schema> {
   return combineReducers(
     {
+      appVersion: nullReducer,
       version: schemaVersionReducer,
       category: categoryReducer,
       activityCode: activityCodeReducer,
@@ -45,7 +48,7 @@ export function testsCatAMod1Reducer(
       examinerKeyed: examinerKeyedReducer,
       changeMarker: changeMarkerReducer,
     })(
-      state as Required<TestResultCatAM1Schema>,
-      action,
-    );
+    state as Required<TestResultCatAM1Schema>,
+    action,
+  );
 }

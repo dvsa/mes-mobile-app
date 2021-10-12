@@ -21,11 +21,13 @@ import { testDataCatFReducer } from './test-data/cat-home-test/test-data.cat-f.r
 import { vehicleDetailsReducer } from './vehicle-details/common/vehicle-details.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { delegatedTestReducer } from './delegated-test/delegated-test.reducer';
+import { nullReducer } from '../../shared/classes/null.reducer';
 
 export function testsCatFReducer(
   action: Action, state: CatFUniqueTypes.TestResult): Required<CatFUniqueTypes.TestResult> {
   return combineReducers(
     {
+      appVersion: nullReducer,
       version: schemaVersionReducer,
       category: categoryReducer,
       activityCode: activityCodeReducer,
