@@ -1,9 +1,8 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Manoeuvres - {{pageState.candidateUntitledName$ | async}}</ion-title>
-        <ion-buttons end>
-            <!--            <end-test-link category="B"></end-test-link>-->
-        </ion-buttons>
+        <ion-title id="manoeuvre-page-title">
+            Manoeuvres - {{pageState.candidateUntitledName$ | async}}
+        </ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -15,14 +14,15 @@
             (continueClickEvent)="candidateButton()">
     </candidate-section>
 
-    <ion-card>
-        <ion-card-content class="card-content-ios" no-bounce no-padding>
-            <ion-grid class="grid">
-
+    <ion-card id="manoeuvre-card">
+        <ion-card-content id="manoeuvre-card-content" class="card-content-ios" no-bounce no-padding>
+            <ion-grid id="manoeuvre-grid" class="grid">
                 <ion-row padding>
                     <ion-col col-80>
                         <div>
-                            <b id="complete-following-exercises-label">Please complete the following exercises:</b>
+                            <b id="complete-following-exercises-label">
+                                Please complete the following exercises:
+                            </b>
                         </div>
                     </ion-col>
                 </ion-row>
@@ -48,7 +48,7 @@
                         [disabled]="false">
                 </activity-code>
 
-                <div *ngIf="(pageState.activityCode$ | async)?.activityCode === passCode">
+                <div id="manoeuvre-pass-section" *ngIf="(pageState.activityCode$ | async)?.activityCode === passCode">
                     <transmission
                             [formGroup]="form"
                             [transmission]="pageState.transmission$ | async"
@@ -66,10 +66,14 @@
     </ion-card>
 </ion-content>
 
-<ion-footer>
+<ion-footer id="manoeuvre-footer">
     <ion-row class="mes-full-width-card box-shadow">
-        <button type="submit" class="mes-primary-button" id="submit-manoeuvres-btn" ion-button (click)="onSubmit()">
-            <h3>Submit</h3>
+        <button type="submit"
+                class="mes-primary-button"
+                id="manoeuvre-submit-btn"
+                ion-button
+                (click)="onSubmit()">
+            <h3 id="manoeuvre-submit-btn-text">Submit</h3>
         </button>
     </ion-row>
 </ion-footer>

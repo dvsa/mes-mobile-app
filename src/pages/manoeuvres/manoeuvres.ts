@@ -1,12 +1,14 @@
 import { AlertController, IonicPage, Navbar, NavController } from 'ionic-angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { merge, Observable, Subscription } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
+import { merge, Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ActivityCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
-import { FormGroup } from '@angular/forms';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
+import { JOURNAL_PAGE } from '../page-names.constants';
+import { TransmissionType } from '../../shared/models/transmission-type';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
 import {
@@ -27,16 +29,14 @@ import { getPassCertificateNumber } from '../../modules/tests/pass-completion/pa
 import { PassCertificateNumberChanged } from '../../modules/tests/pass-completion/pass-completion.actions';
 import { getVehicleDetails } from '../../modules/tests/vehicle-details/cat-be/vehicle-details.cat-be.reducer';
 import { getGearboxCategory } from '../../modules/tests/vehicle-details/common/vehicle-details.selector';
-import { TransmissionType } from '../../shared/models/transmission-type';
 import {
   ClearGearboxCategory,
   GearboxCategoryChanged,
 } from '../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { getTestCategory } from '../../modules/tests/category/category.reducer';
-import { CompleteTest } from '../office/office.actions';
-import { JOURNAL_PAGE } from '../page-names.constants';
-import { ActivityCodeModel, activityCodeModelList } from '../office/components/activity-code/activity-code.constants';
 import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
+import { CompleteTest } from '../office/office.actions';
+import { ActivityCodeModel, activityCodeModelList } from '../office/components/activity-code/activity-code.constants';
 import { ManoeuvresPageValidationError, ManoeuvresViewDidEnter } from './manoeuvres.actions';
 
 interface ManoeuvresPageState {
@@ -58,23 +58,23 @@ interface ManoeuvresPageState {
 export class ManoeuvresPage implements OnInit {
 
   @ViewChild(Navbar) navBar: Navbar;
-  pageState: ManoeuvresPageState;
-  form: FormGroup;
-  merged$: Observable<string | ActivityCodeModel>;
-  subscription: Subscription;
-  category: TestCategory;
-  testOutcome: string;
-  candidateName: string;
-  activityCodeOptions: ActivityCodeModel[];
-  passCode: ActivityCode = '1';
-  activityCodeSelected: ActivityCodeModel;
-  exercises: string[] = ['Manoeuvre'];
+  public exercises: string[] = ['Manoeuvre'];
+  public passCode: ActivityCode = '1';
+  public pageState: ManoeuvresPageState;
+  public form: FormGroup;
+  public merged$: Observable<string | ActivityCodeModel>;
+  public subscription: Subscription;
+  public category: TestCategory;
+  public activityCodeOptions: ActivityCodeModel[];
+  public activityCodeSelected: ActivityCodeModel;
+  private testOutcome: string;
+  private candidateName: string;
   candidateButton = (): void => {};
 
   constructor(
     private store$: Store<StoreModel>,
-    public navController: NavController,
-    public alertController: AlertController,
+    private navController: NavController,
+    private alertController: AlertController,
   ) {
     this.form = new FormGroup({});
     this.activityCodeOptions = activityCodeModelList;
@@ -177,11 +177,11 @@ export class ManoeuvresPage implements OnInit {
 
   async onSubmit(): Promise<void> {
     if (this.isFormValid()) {
-      await this.showConfirmTestDetailsModal();
+      await this.showCompleteModal();
     }
   }
 
-  async showConfirmTestDetailsModal(): Promise<void> {
+  async showCompleteModal(): Promise<void> {
     const alert = this.alertController.create({
       message: `You are about to submit a ${this.testOutcome} Cat ${this.category} test for ${this.candidateName}
                 <br/><br/>Do you want to continue?`,
