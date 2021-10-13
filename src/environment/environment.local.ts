@@ -163,6 +163,11 @@ export const environment: LocalEnvironmentFile = {
         from: '2019-01-01',
         to: null,
       },
+      {
+        testCategory: 'CM',
+        from: '2019-01-01',
+        to: null,
+      },
     ],
   },
   tests: {

@@ -1,0 +1,40 @@
+page-manoeuvres {
+  ion-content {
+    ion-select {
+      max-width: initial;
+      width: 100%;
+      margin-right: 48px;
+    }
+  }
+
+  .mes-primary-button {
+    min-width: 150px;
+  }
+
+  .mes-full-width-card {
+    height: 120px;
+
+    #submit-manoeuvres-btn {
+      width: 100%;
+      height: 56px;
+    }
+  }
+
+  .card-content-ios {
+    padding: 0;
+  }
+
+  .grid {
+    padding: 0;
+  }
+
+  .mes-full-width-card {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .decrease-spacing {
+    margin-top: -20px;
+  }
+}

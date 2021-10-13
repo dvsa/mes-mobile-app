@@ -12,6 +12,9 @@ export class CandidateSectionComponent {
   @Input()
   candidateDriverNumber: string;
 
+  @Input()
+  showContinue: boolean = true;
+
   @Output()
   continueClickEvent = new EventEmitter<boolean>();
 

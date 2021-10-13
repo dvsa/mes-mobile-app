@@ -42,6 +42,7 @@ export enum AnalyticsScreenNames {
   DASHBOARD = 'dashboard screen',
   VEHICLE_CHECKS = 'vehicle checks screen',
   REVERSE_DIAGRAM = 'reverse diagram screen',
+  MANOEUVRES = 'manoeuvres screen',
 }
 
 export enum AnalyticsEventCategories {
