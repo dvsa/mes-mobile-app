@@ -183,8 +183,12 @@ export class ManoeuvresPage implements OnInit {
 
   async showCompleteModal(): Promise<void> {
     const alert = this.alertController.create({
-      message: `You are about to submit a ${this.testOutcome} Cat ${this.category} test for ${this.candidateName}
-                <br/><br/>Do you want to continue?`,
+      message: `<br/>
+                <b>Submit outcome?</b>
+                <br/><br/>
+                You are about to submit a ${this.testOutcome} Cat ${this.category} test for ${this.candidateName}
+                <br/><br/>
+                Do you want to continue?`,
       cssClass: 'confirm-declaration-modal',
       buttons: [
         {
