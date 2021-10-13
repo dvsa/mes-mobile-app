@@ -35,9 +35,9 @@ import {
 } from '../../modules/tests/vehicle-details/common/vehicle-details.actions';
 import { getTestCategory } from '../../modules/tests/category/category.reducer';
 import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
-import { CompleteTest } from '../office/office.actions';
 import { ActivityCodeModel, activityCodeModelList } from '../office/components/activity-code/activity-code.constants';
 import { ManoeuvresPageValidationError, ManoeuvresViewDidEnter } from './manoeuvres.actions';
+import { SendCurrentTest } from '../../modules/tests/tests.actions';
 
 interface ManoeuvresPageState {
   candidateName$: Observable<string>;
@@ -222,7 +222,7 @@ export class ManoeuvresPage implements OnInit {
       this.store$.dispatch(new PassCertificateNumberChanged(null));
       this.store$.dispatch(new ClearGearboxCategory());
     }
-    this.store$.dispatch(new CompleteTest());
+    this.store$.dispatch(new SendCurrentTest());
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
     await this.navController.popTo(journalPage);
   }

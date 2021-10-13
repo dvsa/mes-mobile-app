@@ -29,7 +29,7 @@ import { ActivityCodeModel } from '../../office/components/activity-code/activit
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ManoeuvresPageValidationError } from '../manoeuvres.actions';
-import { CompleteTest } from '../../office/office.actions';
+import { SendCurrentTest } from '../../../modules/tests/tests.actions';
 import { JOURNAL_PAGE } from '../../page-names.constants';
 
 describe('ManoeuvresPage', () => {
@@ -210,7 +210,7 @@ describe('ManoeuvresPage', () => {
       it('should dispatch the complete test action and pop to journal', async () => {
         component.activityCodeSelected = { activityCode: '1' } as ActivityCodeModel;
         await component.onTestDetailsConfirm();
-        expect(store$.dispatch).toHaveBeenCalledWith(new CompleteTest());
+        expect(store$.dispatch).toHaveBeenCalledWith(new SendCurrentTest());
         expect(navController.getViews).toHaveBeenCalled();
         expect(navController.popTo).toHaveBeenCalled();
       });
@@ -219,7 +219,7 @@ describe('ManoeuvresPage', () => {
         await component.onTestDetailsConfirm();
         expect(store$.dispatch).toHaveBeenCalledWith(new PassCertificateNumberChanged(null));
         expect(store$.dispatch).toHaveBeenCalledWith(new ClearGearboxCategory());
-        expect(store$.dispatch).toHaveBeenCalledWith(new CompleteTest());
+        expect(store$.dispatch).toHaveBeenCalledWith(new SendCurrentTest());
         expect(navController.getViews).toHaveBeenCalled();
         expect(navController.popTo).toHaveBeenCalled();
       });
