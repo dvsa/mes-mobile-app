@@ -32,11 +32,11 @@ import {
 } from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational.constants';
 
 import {
-  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_TRAILER,
+  NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_TRAILER, NUMBER_OF_TELL_ME_QUESTIONS_FULL,
 } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.vocational-trailer.constants';
 
 import {
-  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER,
+  NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER, NUMBER_OF_SHOW_ME_QUESTIONS_FULL,
 } from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
 
 import { VehicleChecksScore } from '../../../../../shared/models/vehicle-checks-score.model';
@@ -76,6 +76,9 @@ export class VehicleChecksCatCModal {
   vehicleChecksScore: VehicleChecksScore;
 
   subscription: Subscription;
+  public vehicleToggleValue: boolean;
+  public show: boolean = false;
+  public showRadioButtons : boolean = false;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -86,6 +89,7 @@ export class VehicleChecksCatCModal {
   ) {
     this.category = params.get('category');
     this.setNumberOfShowMeTellMeQuestions();
+    this.doShow();
     this.formGroup = new FormGroup({});
 
     this.showMeQuestions = questionProvider.getShowMeQuestions(this.category);
@@ -104,8 +108,13 @@ export class VehicleChecksCatCModal {
         break;
       case TestCategory.CE:
       case TestCategory.C1E:
-        numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER;
-        numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_TRAILER;
+        if (this.vehicleToggleValue) {
+          numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER;
+          numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_TRAILER;
+        }else {
+          numberOfShowMeQuestions =  NUMBER_OF_SHOW_ME_QUESTIONS_FULL;
+          numberOfTellMeQuestions =  NUMBER_OF_TELL_ME_QUESTIONS_FULL;
+        }
     }
     this.showMeQuestionsNumberArray = Array(numberOfShowMeQuestions);
     this.tellMeQuestionsNumberArray = Array(numberOfTellMeQuestions);
@@ -201,5 +210,17 @@ export class VehicleChecksCatCModal {
 
   shouldDisplayBanner = (): boolean => {
     return this.isTrailerBanner() || this.isNonTrailerBanner();
+  }
+
+  vehicleCheckToggle(value: boolean) {
+    this.setNumberOfShowMeTellMeQuestions();
+    this.vehicleToggleValue = value;
+    this.show = true;
+  }
+  doShow () {
+    let show :boolean;
+    show = this.category !== (TestCategory.CE || TestCategory.C1E);
+    this.show = show;
+    this.showRadioButtons = !show;
   }
 }

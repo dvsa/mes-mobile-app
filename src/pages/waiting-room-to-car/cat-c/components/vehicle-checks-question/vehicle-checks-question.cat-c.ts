@@ -33,7 +33,7 @@ export class VehicleChecksQuestionCatCComponent implements OnChanges {
 
   private questionFormControl: FormControl;
   private questionOutcomeFormControl: FormControl;
-
+  public vehicleToggleValue: boolean;
   readonly questionId: string = uniqueId();
   readonly questionOutcomeFieldName: string = `vehicleChecksQuestionOutcome_${this.questionId}`;
   readonly questionFieldName: string = `vehicleChecksQuestion_${this.questionId}`;
@@ -91,5 +91,8 @@ export class VehicleChecksQuestionCatCComponent implements OnChanges {
       return true;
     }
     return false;
+  }
+  vehicleCheckToggle(value: boolean) {
+    this.vehicleToggleValue = value;
   }
 }

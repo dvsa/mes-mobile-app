@@ -3,10 +3,10 @@
     class="mes-validated-row" id="vehicle-checks-question-row" [formGroup]="formGroup" nowrap>
     <ion-col col-40>
       <ion-row>
-        <ion-select id="vehicle-checks-question-selector" 
-                    placeholder="Select a question" 
+        <ion-select id="vehicle-checks-question-selector"
+                    placeholder="Select a question"
                     okText="Submit"
-                    cancelText="Cancel" 
+                    cancelText="Cancel"
                     [formControlName]="questionFieldName"
                     (ionChange)="vehicleChecksQuestionChanged($event)"
                     [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}">

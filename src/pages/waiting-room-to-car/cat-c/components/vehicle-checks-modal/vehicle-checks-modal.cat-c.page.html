@@ -12,6 +12,38 @@
 </ion-header>
 
 <ion-content padding>
+  <form *ngIf="this.showRadioButtons">
+    <ion-card>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+          <ion-col class="component-label">
+            <label>Full Cat C Held?</label>
+          </ion-col>
+          <ion-col>
+            <input type="radio"
+                   [attr.name]="'toggleValue'"
+                   class="gds-radio-button"
+                   id="vehicleCheckToggleTrue"
+                   (change)="vehicleCheckToggle(true)">
+            <label [for]="'vehicleCheckToggleTrue'" class="radio-label">Yes</label>
+
+          </ion-col>
+          <ion-col>
+            <input type="radio"
+                   [attr.name]="'toggleValue'"
+                   class="gds-radio-button"
+                   id="vehicleCheckToggleFalse"
+                   (change)="vehicleCheckToggle(false)">
+            <label [for]="'vehicleCheckToggleFalse'" class="radio-label">No</label>
+
+          </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </form>
+  <div *ngIf="this.show">
   <ion-card>
     <ion-card-header>
       <ion-card-title>
@@ -51,8 +83,6 @@
     </ion-card-content>
   </ion-card>
   <warning-banner warningText="This will result in {{vehicleChecksScore.drivingFaults}} driving faults and {{vehicleChecksScore.seriousFaults}} serious fault" *ngIf="shouldDisplayBanner()"></warning-banner>
-</ion-content>
-
 <ion-footer>
   <ion-row class="mes-full-width-card box-shadow">
     <button type="submit" class="mes-primary-button" id="submit-vehicle-checks" ion-button (click)="onSubmit()">
@@ -60,3 +90,5 @@
     </button>
   </ion-row>
 </ion-footer>
+</div>
+</ion-content>
