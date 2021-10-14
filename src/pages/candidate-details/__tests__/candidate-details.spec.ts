@@ -13,6 +13,7 @@ import { DisplayAddressComponent } from '../../../components/common/display-addr
 import { DataRowComponent } from '../../../components/common/data-row/data-row';
 import { DataRowCustomComponent } from '../../../components/common/data-row-custom/data-row-custom';
 import { configureTestSuite } from 'ng-bullet';
+import { InappropriateUseBannerComponent } from '../components/inappropriate-use-banner/inappropriate-use-banner';
 
 describe('CandidateDetailsPage', () => {
   let fixture: ComponentFixture<CandidateDetailsPage>;
@@ -25,6 +26,7 @@ describe('CandidateDetailsPage', () => {
         MockComponent(DisplayAddressComponent),
         MockComponent(DataRowComponent),
         MockComponent(DataRowCustomComponent),
+        MockComponent(InappropriateUseBannerComponent),
       ],
       imports: [
         IonicModule,
