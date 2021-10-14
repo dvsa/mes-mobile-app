@@ -28,7 +28,12 @@ import {
 import { ActivityCodeModel } from '../../office/components/activity-code/activity-code.constants';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ManoeuvresPageValidationError } from '../manoeuvres.actions';
+import {
+  ManoeuvresActivityCodeModalOpened,
+  ManoeuvresActivityCodeSelected,
+  ManoeuvresPageValidationError,
+  ManoeuvresViewPageSubmission,
+} from '../manoeuvres.actions';
 import { SendCurrentTest } from '../../../modules/tests/tests.actions';
 import { JOURNAL_PAGE } from '../../page-names.constants';
 
@@ -156,9 +161,16 @@ describe('ManoeuvresPage', () => {
       });
     });
     describe('activityCodeChanged', () => {
-      it('should dispatch SetActivityCode with input', () => {
+      it('should dispatch SetActivityCode and ManoeuvresActivityCodeSelected with input', () => {
         component.activityCodeChanged({ activityCode: '1' } as ActivityCodeModel);
+        expect(store$.dispatch).toHaveBeenCalledWith(new ManoeuvresActivityCodeSelected('1'));
         expect(store$.dispatch).toHaveBeenCalledWith(new SetActivityCode('1'));
+      });
+    });
+    describe('activityCodeModalOpened', () => {
+      it('should dispatch ManoeuvresActivityCodeModalOpened', () => {
+        component.activityCodeModalOpened();
+        expect(store$.dispatch).toHaveBeenCalledWith(new ManoeuvresActivityCodeModalOpened());
       });
     });
     describe('onSubmit', () => {
@@ -179,7 +191,7 @@ describe('ManoeuvresPage', () => {
     describe('showCompleteModal', () => {
       it('should call alertController.create', async () => {
         spyOn(alertController, 'create').and.returnValue({
-          present: async () => {},
+          present: async () => { },
         } as Alert);
         await component.showCompleteModal();
         expect(alertController.create).toHaveBeenCalled();
@@ -210,6 +222,7 @@ describe('ManoeuvresPage', () => {
       it('should dispatch the complete test action and pop to journal', async () => {
         component.activityCodeSelected = { activityCode: '1' } as ActivityCodeModel;
         await component.onTestDetailsConfirm();
+        expect(store$.dispatch).toHaveBeenCalledWith(new ManoeuvresViewPageSubmission());
         expect(store$.dispatch).toHaveBeenCalledWith(new SendCurrentTest());
         expect(navController.getViews).toHaveBeenCalled();
         expect(navController.popTo).toHaveBeenCalled();
@@ -217,6 +230,7 @@ describe('ManoeuvresPage', () => {
       it('should remove previously selected value if changed from pass and pop to journal', async () => {
         component.activityCodeSelected = { activityCode: '2' } as ActivityCodeModel;
         await component.onTestDetailsConfirm();
+        expect(store$.dispatch).toHaveBeenCalledWith(new ManoeuvresViewPageSubmission());
         expect(store$.dispatch).toHaveBeenCalledWith(new PassCertificateNumberChanged(null));
         expect(store$.dispatch).toHaveBeenCalledWith(new ClearGearboxCategory());
         expect(store$.dispatch).toHaveBeenCalledWith(new SendCurrentTest());
