@@ -1,0 +1,29 @@
+inappropriate-use-banner {
+    .alert-icon {
+        color: map-get($colors-gds, "gds-black");
+        font-size: 50px;
+    }
+
+  .border-and-background {
+        background: map-get($colors-gds, "gds-grey-4");
+        border-left: 10px solid map-get($colors-gds, "gds-black");
+    }
+
+    .center-icon {
+        text-align: center;
+    }
+
+    .modal-alert-header {
+        margin: 0 0 24px;
+    }
+
+    .warning-centre {
+        display: flex;
+        align-items: center;
+    }
+
+    .warning-text {
+        color: map-get($colors-gds, "gds-black");
+    }
+}
+

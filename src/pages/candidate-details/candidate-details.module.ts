@@ -4,6 +4,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { CandidateDetailsPage } from './candidate-details';
 import { CandidateDetailsAnalyticsEffects } from './candidate-details.analytics.effects';
 import { ComponentsModule } from '../../components/common/common-components.module';
+import { CandidateDetailsComponentsModule } from './components/candidate-details-components.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ComponentsModule } from '../../components/common/common-components.modu
       CandidateDetailsAnalyticsEffects,
     ]),
     ComponentsModule,
+    CandidateDetailsComponentsModule,
   ],
 })
 export class CandidateDetailsPageModule { }
