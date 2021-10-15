@@ -109,11 +109,11 @@ export class VehicleChecksCatCModal {
       case TestCategory.CE:
       case TestCategory.C1E:
         if (this.vehicleToggleValue) {
-          numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER;
-          numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_TRAILER;
-        }else {
           numberOfShowMeQuestions =  NUMBER_OF_SHOW_ME_QUESTIONS_FULL;
           numberOfTellMeQuestions =  NUMBER_OF_TELL_ME_QUESTIONS_FULL;
+        }else {
+          numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER;
+          numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_TRAILER;
         }
     }
     this.showMeQuestionsNumberArray = Array(numberOfShowMeQuestions);
