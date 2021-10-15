@@ -11,7 +11,7 @@ export const getSlotId = (attributes: TestSlotAttributes) => attributes.slotId;
 export const isWelshTest = (attributes: TestSlotAttributes) => attributes.welshTest;
 
 export const extractTestSlotAttributes = (slotData): TestSlotAttributes => ({
-  welshTest: slotData.booking.application.welshTest,
+  welshTest: slotData.booking.application.welshTest || false,
   slotId: slotData.slotDetail.slotId,
   start: slotData.slotDetail.start,
   specialNeeds: slotData.booking.application.specialNeeds ? true : false,
@@ -19,7 +19,7 @@ export const extractTestSlotAttributes = (slotData): TestSlotAttributes => ({
   specialNeedsArray:
     slotData.booking.application.specialNeeds ? slotData.booking.application.specialNeeds.split(';') : ['None'],
   vehicleTypeCode: slotData.vehicleTypeCode,
-  extendedTest: slotData.booking.application.extendedTest,
+  extendedTest: slotData.booking.application.extendedTest || false,
   examinerVisiting: slotData.examinerVisiting,
   previousCancellation: slotData.booking.previousCancellation,
   entitlementCheck: slotData.booking.application.entitlementCheck,
