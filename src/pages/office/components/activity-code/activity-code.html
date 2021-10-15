@@ -11,6 +11,7 @@
                     okText="Submit"
                     cancelText="Cancel"
                     formControlName="activityCode"
+                    (click)="activitySelectOpened()"
                     (ionChange)="activityCodeChanged($event)"
                     [selectOptions]="{cssClass:'mes-select activity-code-select', enableBackdropDismiss:false}"
                     [disabled]="isSelectDisabled()">

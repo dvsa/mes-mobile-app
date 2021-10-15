@@ -65,6 +65,7 @@ export enum AnalyticsEventCategories {
   WAITING_ROOM_TO_CAR = 'waiting room to car',
   OFFICE = 'office',
   DELEGATED_TEST = 'DelExRk',
+  MANOEUVRES = 'manoeuvres',
 }
 
 export enum AnalyticsEvents {
@@ -168,6 +169,9 @@ export enum AnalyticsEvents {
   START_TIMER = 'start timer',
 
   DATE_OF_TEST_CHANGED = 'date of test changed',
+  SET_ACTIVITY_CODE = 'set activity code',
+  OPEN_MODAL = 'open modal',
+  ACTIVITY_CODE_MODAL_OPENED = 'activity code modal opened',
 }
 
 export enum AnalyticsLabels {

@@ -27,6 +27,9 @@ export class ActivityCodeComponent implements OnChanges {
   @Output()
   activityCodeChange = new EventEmitter<ActivityCodeModel>();
 
+  @Output()
+  activityCodeSelectOpened = new EventEmitter();
+
   private formControl: FormControl;
   static readonly fieldName: string = 'activityCode';
 
@@ -46,6 +49,10 @@ export class ActivityCodeComponent implements OnChanges {
     if (this.formControl.valid) {
       this.activityCodeChange.emit(activityCode);
     }
+  }
+
+  activitySelectOpened(): void {
+    this.activityCodeSelectOpened.emit();
   }
 
   get invalid(): boolean {

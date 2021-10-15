@@ -13,6 +13,8 @@ import {
   AnalyticsDimensionIndices,
   AnalyticsScreenNames,
   AnalyticsErrorTypes,
+  AnalyticsEventCategories,
+  AnalyticsEvents,
 } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -27,7 +29,7 @@ import { ManoeuvresPageAnalyticsEffects } from '../manoeuvres.analytics.effects'
 
 describe('ManoeuvresPageAnalyticsEffects', () => {
   let effects: ManoeuvresPageAnalyticsEffects;
-  let analyticsProviderMock;
+  let analyticsProviderMock: AnalyticsProvider;
   let actions$: ReplaySubject<{}>;
   let store$: Store<StoreModel>;
   const screenName = AnalyticsScreenNames.MANOEUVRES;
@@ -98,6 +100,66 @@ describe('ManoeuvresPageAnalyticsEffects', () => {
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'CM');
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`, 'formControl1');
+        done();
+      });
+    });
+  });
+  describe('manoeuvresPageSubmit$', () => {
+    it('should call logEvent on submission', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.CM));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new PopulateTestCategory(TestCategory.CM));
+      // ACT
+      actions$.next(new manoeuvresActions.ManoeuvresViewPageSubmission());
+      // ASSERT
+      effects.manoeuvresPageSubmit$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.MANOEUVRES,
+          AnalyticsEvents.SUBMIT_TEST,
+          AnalyticsEvents.TEST_SUBMITTED,
+        );
+        done();
+      });
+    });
+  });
+  describe('manoeuvresPageActivityCodeSelected$', () => {
+    it('should call logEvent on selecting an activity code', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.CM));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new PopulateTestCategory(TestCategory.CM));
+      // ACT
+      actions$.next(new manoeuvresActions.ManoeuvresActivityCodeSelected('1'));
+      // ASSERT
+      effects.manoeuvresPageActivityCodeSelected$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.MANOEUVRES,
+          AnalyticsEvents.SET_ACTIVITY_CODE,
+          '1',
+        );
+        done();
+      });
+    });
+  });
+  describe('manoeuvresPageOpenActivityCodeSelect$', () => {
+    it('should call logEvent on opening the activity code ion-select', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.CM));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new PopulateTestCategory(TestCategory.CM));
+      // ACT
+      actions$.next(new manoeuvresActions.ManoeuvresActivityCodeModalOpened());
+      // ASSERT
+      effects.manoeuvresPageOpenActivityCodeSelect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.MANOEUVRES,
+          AnalyticsEvents.OPEN_MODAL,
+          AnalyticsEvents.ACTIVITY_CODE_MODAL_OPENED,
+        );
         done();
       });
     });

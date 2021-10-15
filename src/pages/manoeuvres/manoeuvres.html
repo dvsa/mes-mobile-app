@@ -44,6 +44,7 @@
                         [activityCodeModel]="pageState.activityCode$ | async"
                         [activityCodeOptions]="activityCodeOptions"
                         (activityCodeChange)="activityCodeChanged($event)"
+                        (activityCodeSelectOpened)="activityCodeModalOpened()"
                         [allowAllCodes]="true"
                         [disabled]="false">
                 </activity-code>

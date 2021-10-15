@@ -8,6 +8,8 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsDimensionIndices,
   AnalyticsErrorTypes,
+  AnalyticsEventCategories,
+  AnalyticsEvents,
   AnalyticsScreenNames,
 } from '../../providers/analytics/analytics.model';
 import { StoreModel } from '../../shared/models/store.model';
@@ -30,6 +32,10 @@ import {
   MANOEUVRES_VIEW_DID_ENTER,
   ManoeuvresPageValidationError,
   ManoeuvresViewDidEnter,
+  MANOEUVRES_OPEN_ACTIVITY_CODE_MODAL,
+  MANOEUVRES_ACTIVITY_CODE_SELECTED,
+  ManoeuvresActivityCodeSelected,
+  MANOEUVRES_PAGE_SUBMISSION,
 } from './manoeuvres.actions';
 
 @Injectable()
@@ -102,6 +108,45 @@ export class ManoeuvresPageAnalyticsEffects {
       const screenName = formatAnalyticsText(AnalyticsScreenNames.MANOEUVRES, tests);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`, action.errorMessage);
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  manoeuvresPageSubmit$ = this.actions$.pipe(
+    ofType(MANOEUVRES_PAGE_SUBMISSION),
+    switchMap(() => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.MANOEUVRES,
+        AnalyticsEvents.SUBMIT_TEST,
+        AnalyticsEvents.TEST_SUBMITTED,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  manoeuvresPageActivityCodeSelected$ = this.actions$.pipe(
+    ofType(MANOEUVRES_ACTIVITY_CODE_SELECTED),
+    switchMap(({ activityCode }: ManoeuvresActivityCodeSelected) => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.MANOEUVRES,
+        AnalyticsEvents.SET_ACTIVITY_CODE,
+        activityCode,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  manoeuvresPageOpenActivityCodeSelect$ = this.actions$.pipe(
+    ofType(MANOEUVRES_OPEN_ACTIVITY_CODE_MODAL),
+    switchMap(() => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.MANOEUVRES,
+        AnalyticsEvents.OPEN_MODAL,
+        AnalyticsEvents.ACTIVITY_CODE_MODAL_OPENED,
+      );
       return of(new AnalyticRecorded());
     }),
   );

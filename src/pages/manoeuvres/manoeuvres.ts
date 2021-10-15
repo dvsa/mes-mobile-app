@@ -36,7 +36,14 @@ import {
 import { getTestCategory } from '../../modules/tests/category/category.reducer';
 import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
 import { ActivityCodeModel, activityCodeModelList } from '../office/components/activity-code/activity-code.constants';
-import { ManoeuvresPageValidationError, ManoeuvresViewDidEnter } from './manoeuvres.actions';
+import {
+  ManoeuvresActivityCodeModalOpened,
+  ManoeuvresActivityCodeSelected,
+  ManoeuvresPageValidationError,
+  ManoeuvresViewDidEnter,
+  ManoeuvresViewPageCancelSubmission,
+  ManoeuvresViewPageSubmission,
+} from './manoeuvres.actions';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
 
 interface ManoeuvresPageState {
@@ -129,7 +136,7 @@ export class ManoeuvresPage implements OnInit {
     this.merged$ = merge(
       testCategory$.pipe(
         map(value => this.category = value),
-        tap((category) => {
+        tap((category: TestCategory) => {
           if (category && category.includes('E')) this.exercises.push('Uncouple/Recouple');
         }),
       ),
@@ -172,7 +179,12 @@ export class ManoeuvresPage implements OnInit {
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel): void {
+    this.store$.dispatch(new ManoeuvresActivityCodeSelected(activityCodeModel.activityCode));
     this.store$.dispatch(new SetActivityCode(activityCodeModel.activityCode));
+  }
+
+  activityCodeModalOpened(): void {
+    this.store$.dispatch(new ManoeuvresActivityCodeModalOpened());
   }
 
   async onSubmit(): Promise<void> {
@@ -192,7 +204,9 @@ export class ManoeuvresPage implements OnInit {
       cssClass: 'confirm-declaration-modal',
       buttons: [
         {
-          text: 'Cancel', handler: () => {
+          text: 'Cancel',
+          handler: () => {
+            this.store$.dispatch(new ManoeuvresViewPageCancelSubmission());
           },
         },
         { text: 'Submit', handler: async () => this.onTestDetailsConfirm() },
@@ -216,6 +230,8 @@ export class ManoeuvresPage implements OnInit {
   }
 
   async onTestDetailsConfirm(): Promise<void> {
+    this.store$.dispatch(new ManoeuvresViewPageSubmission());
+
     if (this.activityCodeSelected.activityCode !== this.passCode) {
       // if user selected '1 - Pass' and then changed to fail, reset fields as we do not capture info
       // except in the case of a pass
