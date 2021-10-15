@@ -144,4 +144,32 @@ describe('VehicleChecksCatCModal', () => {
   describe('DOM', () => {
 
   });
+
+  describe('Should Show radio button for CE and C1E', () => {
+    it('should show radio buttons', () => {
+      component.category = TestCategory.CE;
+      component.doShow();
+      expect(component.showRadioButtons).toEqual(true);
+    });
+    it('should hide radio buttons', () => {
+      component.category = TestCategory.C1;
+      component.doShow();
+      expect(component.showRadioButtons).toEqual(false);
+    });
+    it('Show me tell me question when test category is C1E is present', () => {
+      component.category = TestCategory.C1E;
+      component.vehicleCheckToggle(true);
+      expect(component.show).toEqual(true);
+    });
+    it('Full CAT C held', () => {
+      component.category = TestCategory.C1;
+      component.vehicleCheckToggle(true);
+      expect(component.vehicleToggleValue).toEqual(true);
+    });
+    it('Full CAT C not held', () => {
+      component.category = TestCategory.C1;
+      component.vehicleCheckToggle(false);
+      expect(component.vehicleToggleValue).toEqual(false);
+    });
+  });
 });
