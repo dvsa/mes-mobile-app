@@ -45,6 +45,8 @@ import {
   ManoeuvresViewPageSubmission,
 } from './manoeuvres.actions';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
+import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
+import { isRekey } from '../../modules/tests/rekey/rekey.selector';
 
 interface ManoeuvresPageState {
   candidateName$: Observable<string>;
@@ -55,6 +57,7 @@ interface ManoeuvresPageState {
   testCategory$: Observable<TestCategory>;
   testOutcomeText$: Observable<string>;
   activityCode$: Observable<ActivityCodeModel>;
+  isRekey$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -76,6 +79,7 @@ export class ManoeuvresPage implements OnInit {
   public activityCodeSelected: ActivityCodeModel;
   private testOutcome: string;
   private candidateName: string;
+  private isRekey: boolean;
   candidateButton = (): void => {};
 
   constructor(
@@ -94,6 +98,10 @@ export class ManoeuvresPage implements OnInit {
     );
 
     this.pageState = {
+      isRekey$: currentTest$.pipe(
+        select(getRekeyIndicator),
+        select(isRekey),
+      ),
       candidateName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
@@ -131,7 +139,7 @@ export class ManoeuvresPage implements OnInit {
       ),
     };
 
-    const { activityCode$, testCategory$, testOutcomeText$, candidateUntitledName$ } = this.pageState;
+    const { isRekey$, activityCode$, testCategory$, testOutcomeText$, candidateUntitledName$ } = this.pageState;
 
     this.merged$ = merge(
       testCategory$.pipe(
@@ -144,6 +152,7 @@ export class ManoeuvresPage implements OnInit {
       candidateUntitledName$.pipe(tap(value => this.candidateName = value)),
       activityCode$.pipe(tap(value => this.activityCodeSelected = value)),
     );
+    isRekey$.pipe(tap(value => this.isRekey = value));
   }
 
   ionViewDidEnter(): void {
@@ -188,6 +197,7 @@ export class ManoeuvresPage implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
+    console.log('rekey', this.isRekey);
     if (this.isFormValid()) {
       await this.showCompleteModal();
     }
