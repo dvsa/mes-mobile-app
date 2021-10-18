@@ -205,6 +205,14 @@ describe('ManoeuvresPage', () => {
         component.isFormValid();
         expect(store$.dispatch).toHaveBeenCalledWith(new ManoeuvresPageValidationError('ctrl is blank'));
       });
+      it('should intercept the call to validate full form when not a pass', () => {
+        component.form = new FormGroup({
+          ctrl: new FormControl(null, [Validators.required]),
+        });
+        component.activityCodeSelected = { activityCode: '2' } as ActivityCodeModel;
+        component.isFormValid();
+        expect(component.isFormValid()).toEqual(true);
+      });
       it('should recognise no invalid controls and return true', () => {
         component.form = new FormGroup({
           ctrl: new FormControl(null),

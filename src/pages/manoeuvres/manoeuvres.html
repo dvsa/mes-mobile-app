@@ -49,7 +49,7 @@
                         [disabled]="false">
                 </activity-code>
 
-                <div id="manoeuvre-pass-section" *ngIf="(pageState.activityCode$ | async)?.activityCode === passCode">
+                <div id="manoeuvre-pass-section" [hidden]="(pageState.activityCode$ | async)?.activityCode !== passCode">
                     <transmission
                             [formGroup]="form"
                             [transmission]="pageState.transmission$ | async"
