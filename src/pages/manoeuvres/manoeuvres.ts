@@ -221,6 +221,10 @@ export class ManoeuvresPage implements OnInit {
     if (this.form.valid) {
       return true;
     }
+    // if selected activity code, which was a non-pass, then we don't need to validate the PassCertNumber/Transmission
+    if (this.activityCodeSelected && (this.activityCodeSelected.activityCode !== this.passCode)) {
+      return true;
+    }
     Object.keys(this.form.controls).forEach((controlName) => {
       if (this.form.controls[controlName].invalid) {
         this.store$.dispatch(new ManoeuvresPageValidationError(`${controlName} is blank`));
