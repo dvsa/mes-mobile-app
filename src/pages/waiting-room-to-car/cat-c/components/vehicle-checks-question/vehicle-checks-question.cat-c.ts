@@ -92,7 +92,4 @@ export class VehicleChecksQuestionCatCComponent implements OnChanges {
     }
     return false;
   }
-  vehicleCheckToggle(value: boolean) {
-    this.vehicleToggleValue = value;
-  }
 }

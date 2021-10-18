@@ -213,9 +213,9 @@ export class VehicleChecksCatCModal {
   }
 
   vehicleCheckToggle(value: boolean) {
-    this.setNumberOfShowMeTellMeQuestions();
     this.vehicleToggleValue = value;
     this.show = true;
+    this.setNumberOfShowMeTellMeQuestions();
   }
   doShow () {
     let show :boolean;
