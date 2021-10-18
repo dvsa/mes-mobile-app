@@ -31,9 +31,12 @@
                     <ion-col col-80 no-padding class="decrease-spacing">
                         <div>
                             <ul>
-                                <li *ngFor="let exercise of exercises; index as i;">
-                                    <p id="exercise-text-{{i}}">{{exercise}}</p>
+                                <li>
+                                    <p id="exercise-text-manoeuvre">Manoeuvre</p>
                                 </li>
+                              <li *ngIf="displayUncouple">
+                                <p id="exercise-text-uncouple">Uncouple/Recouple</p>
+                              </li>
                             </ul>
                         </div>
                     </ion-col>

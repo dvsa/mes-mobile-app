@@ -7,7 +7,7 @@ import { map, tap } from 'rxjs/operators';
 import { ActivityCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-import { JOURNAL_PAGE } from '../page-names.constants';
+import { CAT_MANOEUVRERS, JOURNAL_PAGE } from '../page-names.constants';
 import { TransmissionType } from '../../shared/models/transmission-type';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -68,11 +68,11 @@ interface ManoeuvresPageState {
 export class ManoeuvresPage implements OnInit {
 
   @ViewChild(Navbar) navBar: Navbar;
-  public exercises: string[] = ['Manoeuvre'];
+  public displayUncouple: boolean = false;
   public passCode: ActivityCode = '1';
   public pageState: ManoeuvresPageState;
   public form: FormGroup;
-  public merged$: Observable<string | ActivityCodeModel>;
+  public merged$: Observable<string | ActivityCodeModel | boolean>;
   public subscription: Subscription;
   public category: TestCategory;
   public activityCodeOptions: ActivityCodeModel[];
@@ -144,15 +144,15 @@ export class ManoeuvresPage implements OnInit {
     this.merged$ = merge(
       testCategory$.pipe(
         map(value => this.category = value),
-        tap((category: TestCategory) => {
-          if (category && category.includes('E')) this.exercises.push('Uncouple/Recouple');
+        tap((category) => {
+          if (category && category.includes('E')) this.displayUncouple = true;
         }),
       ),
       testOutcomeText$.pipe(map(value => this.testOutcome = value)),
       candidateUntitledName$.pipe(tap(value => this.candidateName = value)),
       activityCode$.pipe(tap(value => this.activityCodeSelected = value)),
+      isRekey$.pipe(tap(value => this.isRekey = value)),
     );
-    isRekey$.pipe(tap(value => this.isRekey = value));
   }
 
   ionViewDidEnter(): void {
@@ -197,7 +197,6 @@ export class ManoeuvresPage implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    console.log('rekey', this.isRekey);
     if (this.isFormValid()) {
       await this.showCompleteModal();
     }
@@ -252,9 +251,12 @@ export class ManoeuvresPage implements OnInit {
       this.store$.dispatch(new PassCertificateNumberChanged(null));
       this.store$.dispatch(new ClearGearboxCategory());
     }
-    this.store$.dispatch(new SendCurrentTest());
-    const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
-    await this.navController.popTo(journalPage);
+    if (!this.isRekey) {
+      this.store$.dispatch(new SendCurrentTest());
+      const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
+      await this.navController.popTo(journalPage);
+    }
+    else await this.navController.push(CAT_MANOEUVRERS.REKEY_REASON_PAGE);
   }
 
 }

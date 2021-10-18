@@ -180,6 +180,11 @@ export const CAT_CPC: BasePageNames = {
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatCPCPage',
 };
 
+export const CAT_MANOEUVRERS: BasePageNames = {
+  REKEY_UPLOAD_OUTCOME_PAGE,
+  REKEY_REASON_PAGE: 'RekeyReasonCatManoeuvresPage',
+};
+
 type BasePageNames = {
   [key in PageNameKeys]?: string;
 };
