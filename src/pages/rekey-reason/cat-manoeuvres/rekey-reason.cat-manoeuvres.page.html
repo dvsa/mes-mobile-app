@@ -16,8 +16,8 @@
     </ion-card-header>
     <div [formGroup]="formGroup">
       <ion-grid no-padding>
-        
-        <ipad-issue [formGroup]="formGroup" [selected]="(pageState.ipadIssue$ | async).selected" 
+
+        <ipad-issue [formGroup]="formGroup" [selected]="(pageState.ipadIssue$ | async).selected"
           [technicalFault]="(pageState.ipadIssue$ | async).technicalFault"
           [lost]="(pageState.ipadIssue$ | async).lost"
           [stolen]="(pageState.ipadIssue$ | async).stolen"
@@ -29,7 +29,7 @@
           (brokenChange)="ipadIssueBrokenChanged($event)"></ipad-issue>
 
         <transfer [formGroup]="formGroup" [selected]="(pageState.transfer$ | async).selected"
-          [staffNumber]="examinerConducted" [isStaffNumberInvalid]="isStaffNumberInvalid" 
+          [staffNumber]="examinerConducted" [isStaffNumberInvalid]="isStaffNumberInvalid"
           (selectedChange)="transferSelected($event)" (staffNumberChange)="staffNumberChanged($event)"></transfer>
 
         <other-reason [formGroup]="formGroup" [selected]="(pageState.other$ | async).selected" [reason]="(pageState.other$ | async).reason"
