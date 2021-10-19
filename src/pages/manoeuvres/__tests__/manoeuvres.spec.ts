@@ -35,7 +35,7 @@ import {
   ManoeuvresViewPageSubmission,
 } from '../manoeuvres.actions';
 import { SendCurrentTest } from '../../../modules/tests/tests.actions';
-import { JOURNAL_PAGE } from '../../page-names.constants';
+import { CAT_MANOEUVRERS, JOURNAL_PAGE } from '../../page-names.constants';
 
 describe('ManoeuvresPage', () => {
   let fixture: ComponentFixture<ManoeuvresPage>;
@@ -228,6 +228,7 @@ describe('ManoeuvresPage', () => {
         component.passCode = '1';
       });
       it('should dispatch the complete test action and pop to journal', async () => {
+        component.isRekey = false;
         component.activityCodeSelected = { activityCode: '1' } as ActivityCodeModel;
         await component.onTestDetailsConfirm();
         expect(store$.dispatch).toHaveBeenCalledWith(new ManoeuvresViewPageSubmission());
@@ -236,6 +237,7 @@ describe('ManoeuvresPage', () => {
         expect(navController.popTo).toHaveBeenCalled();
       });
       it('should remove previously selected value if changed from pass and pop to journal', async () => {
+        component.isRekey = false;
         component.activityCodeSelected = { activityCode: '2' } as ActivityCodeModel;
         await component.onTestDetailsConfirm();
         expect(store$.dispatch).toHaveBeenCalledWith(new ManoeuvresViewPageSubmission());
@@ -244,6 +246,15 @@ describe('ManoeuvresPage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new SendCurrentTest());
         expect(navController.getViews).toHaveBeenCalled();
         expect(navController.popTo).toHaveBeenCalled();
+      });
+      it('should not submit results if rekey and should nav to rekey-reason screen', async () => {
+        component.isRekey = true;
+        component.activityCodeSelected = { activityCode: '2' } as ActivityCodeModel;
+        await component.onTestDetailsConfirm();
+        expect(store$.dispatch).toHaveBeenCalledWith(new PassCertificateNumberChanged(null));
+        expect(store$.dispatch).toHaveBeenCalledWith(new ClearGearboxCategory());
+        expect(store$.dispatch).not.toHaveBeenCalledWith(new SendCurrentTest());
+        expect(navController.push).toHaveBeenCalledWith(CAT_MANOEUVRERS.REKEY_REASON_PAGE);
       });
     });
   });

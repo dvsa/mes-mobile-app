@@ -79,7 +79,7 @@ export class ManoeuvresPage implements OnInit {
   public activityCodeSelected: ActivityCodeModel;
   private testOutcome: string;
   private candidateName: string;
-  private isRekey: boolean;
+  isRekey: boolean;
   candidateButton = (): void => {};
 
   constructor(
