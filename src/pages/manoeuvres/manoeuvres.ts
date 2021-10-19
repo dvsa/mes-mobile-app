@@ -7,7 +7,7 @@ import { map, tap } from 'rxjs/operators';
 import { ActivityCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-import { JOURNAL_PAGE } from '../page-names.constants';
+import { CAT_MANOEUVRERS, JOURNAL_PAGE } from '../page-names.constants';
 import { TransmissionType } from '../../shared/models/transmission-type';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -45,6 +45,8 @@ import {
   ManoeuvresViewPageSubmission,
 } from './manoeuvres.actions';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
+import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
+import { isRekey } from '../../modules/tests/rekey/rekey.selector';
 
 interface ManoeuvresPageState {
   candidateName$: Observable<string>;
@@ -55,6 +57,7 @@ interface ManoeuvresPageState {
   testCategory$: Observable<TestCategory>;
   testOutcomeText$: Observable<string>;
   activityCode$: Observable<ActivityCodeModel>;
+  isRekey$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -65,17 +68,18 @@ interface ManoeuvresPageState {
 export class ManoeuvresPage implements OnInit {
 
   @ViewChild(Navbar) navBar: Navbar;
-  public exercises: string[] = ['Manoeuvre'];
+  public displayUncouple: boolean = false;
   public passCode: ActivityCode = '1';
   public pageState: ManoeuvresPageState;
   public form: FormGroup;
-  public merged$: Observable<string | ActivityCodeModel>;
+  public merged$: Observable<string | ActivityCodeModel | boolean>;
   public subscription: Subscription;
   public category: TestCategory;
   public activityCodeOptions: ActivityCodeModel[];
   public activityCodeSelected: ActivityCodeModel;
   private testOutcome: string;
   private candidateName: string;
+  isRekey: boolean;
   candidateButton = (): void => {};
 
   constructor(
@@ -94,6 +98,10 @@ export class ManoeuvresPage implements OnInit {
     );
 
     this.pageState = {
+      isRekey$: currentTest$.pipe(
+        select(getRekeyIndicator),
+        select(isRekey),
+      ),
       candidateName$: currentTest$.pipe(
         select(getJournalData),
         select(getCandidate),
@@ -131,18 +139,19 @@ export class ManoeuvresPage implements OnInit {
       ),
     };
 
-    const { activityCode$, testCategory$, testOutcomeText$, candidateUntitledName$ } = this.pageState;
+    const { isRekey$, activityCode$, testCategory$, testOutcomeText$, candidateUntitledName$ } = this.pageState;
 
     this.merged$ = merge(
       testCategory$.pipe(
         map(value => this.category = value),
-        tap((category: TestCategory) => {
-          if (category && category.includes('E')) this.exercises.push('Uncouple/Recouple');
+        tap((category) => {
+          if (category && category.includes('E')) this.displayUncouple = true;
         }),
       ),
       testOutcomeText$.pipe(map(value => this.testOutcome = value)),
       candidateUntitledName$.pipe(tap(value => this.candidateName = value)),
       activityCode$.pipe(tap(value => this.activityCodeSelected = value)),
+      isRekey$.pipe(tap(value => this.isRekey = value)),
     );
   }
 
@@ -242,9 +251,12 @@ export class ManoeuvresPage implements OnInit {
       this.store$.dispatch(new PassCertificateNumberChanged(null));
       this.store$.dispatch(new ClearGearboxCategory());
     }
-    this.store$.dispatch(new SendCurrentTest());
-    const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
-    await this.navController.popTo(journalPage);
+    if (!this.isRekey) {
+      this.store$.dispatch(new SendCurrentTest());
+      const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
+      await this.navController.popTo(journalPage);
+    }
+    else await this.navController.push(CAT_MANOEUVRERS.REKEY_REASON_PAGE);
   }
 
 }
