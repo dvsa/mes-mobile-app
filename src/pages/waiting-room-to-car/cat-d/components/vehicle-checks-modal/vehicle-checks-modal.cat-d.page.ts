@@ -108,7 +108,6 @@ export class VehicleChecksCatDModal {
     params: NavParams,
   ) {
     this.category = params.get('category');
-    console.log(params.get('fullLicenceHeld'));
     this.fullLicenceHeldSelected = this.hasFullLicenceHeldBeenSelected(params.get('fullLicenceHeld'));
     this.setNumberOfShowMeTellMeQuestions(this.fullLicenceHeldSelected === 'Y');
     this.safetyQuestionsNumberArray = Array(NUMBER_OF_SAFETY_QUESTIONS);
