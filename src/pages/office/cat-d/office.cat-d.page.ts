@@ -222,7 +222,7 @@ export class OfficeCatDPage extends BasePageComponent {
   drivingFaultCtrl: string = 'drivingFaultCtrl';
   seriousFaultCtrl: string = 'seriousFaultCtrl';
   dangerousFaultCtrl: string = 'dangerousFaultCtrl';
-  static readonly maxFaultCount = 15;
+  static readonly maxFaultCount = 12;
 
   weatherConditions: WeatherConditionSelection[];
   activityCodeOptions: ActivityCodeModel[];
