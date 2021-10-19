@@ -1,9 +1,8 @@
-
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, Config, NavController, NavParams } from 'ionic-angular';
+import { IonicModule, Config, NavParams, ViewController } from 'ionic-angular';
 import { VehicleChecksCatDModal } from '../vehicle-checks-modal.cat-d.page';
 import { Store, StoreModule } from '@ngrx/store';
-import { ConfigMock, NavControllerMock, NavParamsMock } from 'ionic-mocks';
+import { ConfigMock, NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../../app/app.module';
 import { MockComponent } from 'ng-mocks';
 import { VehicleChecksQuestionCatDComponent } from '../../vehicle-checks-question/vehicle-checks-question.cat-d';
@@ -26,6 +25,7 @@ import {
 import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 import { configureTestSuite } from 'ng-bullet';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { FullLicenceHeldComponent } from '../../../../components/full-licence-held-toggle/full-licence-held-toggle';
 
 describe('VehicleChecksCatDModal', () => {
   let fixture: ComponentFixture<VehicleChecksCatDModal>;
@@ -53,6 +53,7 @@ describe('VehicleChecksCatDModal', () => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksCatDModal,
+        MockComponent(FullLicenceHeldComponent),
         MockComponent(VehicleChecksQuestionCatDComponent),
         MockComponent(SafetyQuestionComponent),
         WarningBannerComponent,
@@ -64,7 +65,7 @@ describe('VehicleChecksCatDModal', () => {
       ],
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
-        { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
       ],
     });
@@ -153,6 +154,31 @@ describe('VehicleChecksCatDModal', () => {
           expect(component.shouldDisplayBanner()).toBe(bannerLogic.showBanner);
         });
 
+      });
+    });
+
+    describe('fullLicenceHeldChange()', () => {
+      it('should convert input to a boolean and pass into setNumberOfShowMeTellMeQuestions', () => {
+        spyOn(component, 'setNumberOfShowMeTellMeQuestions');
+        component.fullLicenceHeldChange('Y');
+        expect(component.fullLicenceHeldSelected).toEqual('Y');
+        expect(component.setNumberOfShowMeTellMeQuestions).toHaveBeenCalledWith(true);
+      });
+    });
+
+    describe('showFullLicenceHeld()', () => {
+      [TestCategory.D, TestCategory.D1].forEach((category: TestCategory) => {
+        it(`should return false for category ${category} and set fullLicenceHeldSelected to Y`, () => {
+          component.category = category;
+          expect(component.showFullLicenceHeld()).toEqual(false);
+          expect(component.fullLicenceHeldSelected).toEqual('Y');
+        });
+      });
+      [TestCategory.DE, TestCategory.D1E].forEach((category: TestCategory) => {
+        it(`should return true for category ${category}`, () => {
+          component.category = category;
+          expect(component.showFullLicenceHeld()).toEqual(true);
+        });
       });
     });
   });

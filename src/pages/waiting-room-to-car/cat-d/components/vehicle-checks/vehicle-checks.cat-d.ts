@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CAT_D } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
@@ -37,9 +37,15 @@ export class VehicleChecksCatDComponent implements OnChanges, OnInit {
   @Input()
   formGroup: FormGroup;
 
+  @Input()
+  fullLicenceHeld: boolean = null;
+
   formControl: FormControl;
 
   category: TestCategory;
+
+  @Output()
+  fullLicenceHeldChange = new EventEmitter<boolean>();
 
   constructor(
     private modalController: ModalController,
@@ -62,11 +68,12 @@ export class VehicleChecksCatDComponent implements OnChanges, OnInit {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const modal = this.modalController.create(
       CAT_D.VEHICLE_CHECKS_MODAL,
-      { category: this.category },
+      { category: this.category, fullLicenceHeld: this.fullLicenceHeld },
       { cssClass: zoomClass },
     );
-    modal.onDidDismiss(() => {
+    modal.onDidDismiss((licenceHeld: string) => {
       this.onCloseVehicleChecksModal();
+      this.fullLicenceHeldChange.emit(licenceHeld === 'Y');
     });
     modal.present();
   }

@@ -34,6 +34,7 @@ import {
 } from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import { VehicleChecksToggleComponent } from '../../components/vehicle-checks-completed/vehicle-checks-completed';
 import { CandidateDeclarationSignedComponent } from '../../components/candidate-declaration/candidate-declaration';
+import { FullLicenceHeldComponent } from '../../components/full-licence-held-toggle/full-licence-held-toggle';
 
 describe('WaitingRoomToCarCatDPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatDPage>;
@@ -54,6 +55,7 @@ describe('WaitingRoomToCarCatDPage', () => {
         MockComponent(WarningBannerComponent),
         MockComponent(VehicleChecksToggleComponent),
         MockComponent(CandidateDeclarationSignedComponent),
+        MockComponent(FullLicenceHeldComponent),
       ],
       imports: [
         IonicModule,
@@ -159,6 +161,14 @@ describe('WaitingRoomToCarCatDPage', () => {
       component.candidateDeclarationOutcomeChanged(false);
       expect(store$.dispatch).toHaveBeenCalledWith(new SetDeclarationStatus(false));
       expect(store$.dispatch).toHaveBeenCalledWith(new CandidateDeclarationSigned());
+    });
+  });
+
+  describe('fullLicenceHeldChange', () => {
+    it('should set the value of fullLicenceHeld to whatever is passed in', () => {
+      component.fullLicenceHeld = false;
+      component.fullLicenceHeldChange(true);
+      expect(component.fullLicenceHeld).toEqual(true);
     });
   });
 });
