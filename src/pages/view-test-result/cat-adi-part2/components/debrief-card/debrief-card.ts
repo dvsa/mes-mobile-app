@@ -37,6 +37,10 @@ export class DebriefCardComponent {
         checked: get(this.data, 'testRequirements.normalStart1', false),
       },
       {
+        label: TestRequirementsLabels.normalStart2,
+        checked: get(this.data, 'testRequirements.normalStart2', false),
+      },
+      {
         label: TestRequirementsLabels.uphillStart,
         checked: get(this.data, 'testRequirements.uphillStart', false),
       },
