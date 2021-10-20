@@ -68,7 +68,9 @@ import {
   getResidencyDeclarationStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
 import {
-  VehicleChecksCompletedToggled, VehicleChecksDrivingFaultsNumberChanged,
+  DropExtraVehicleChecks,
+  VehicleChecksCompletedToggled,
+  VehicleChecksDrivingFaultsNumberChanged,
 } from '../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 import {
   CandidateDeclarationSigned,
@@ -110,6 +112,7 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
   showEyesightFailureConfirmation: boolean = false;
   testCategory: CategoryCode;
   isDelegated: boolean;
+  fullLicenceHeld: boolean = null;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -126,7 +129,6 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
-
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -241,6 +243,7 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
   vehicleRegistrationChanged(vehicleRegistration: string) {
     this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
   }
+
   ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -289,6 +292,11 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
+      // if user selected they dont hold full licence, but then changes decision to already has a full licence
+      // remove the extra vehicle checks
+      if (this.fullLicenceHeld) {
+        this.store$.dispatch(new DropExtraVehicleChecks());
+      }
       this.navController.push(CAT_D.TEST_REPORT_PAGE).then(() => {
         const view = this.navController.getViews().find(view => view.id === CAT_D.WAITING_ROOM_TO_CAR_PAGE);
         if (view && !this.isDelegated) {
@@ -305,6 +313,7 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
       });
     }
   }
+
   updateForm(ctrl: string, value: any) {
     this.form.patchValue({
       [ctrl]: value,
@@ -319,6 +328,9 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
     return CAT_D.DEBRIEF_PAGE;
   }
 
-  displayLoadSecured = (): boolean => this.testCategory === TestCategory.DE ||
-                                      this.testCategory === TestCategory.D1E
+  displayLoadSecured = (): boolean => this.testCategory === TestCategory.DE || this.testCategory === TestCategory.D1E;
+
+  fullLicenceHeldChange = (licenceHeld: boolean): void => {
+    this.fullLicenceHeld = licenceHeld;
+  }
 }

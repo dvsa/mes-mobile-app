@@ -11,6 +11,8 @@ export const ADD_SHOW_ME_TELL_ME_COMMENT = '[Vehicle Checks] [CatD] Add Show me 
 export const VEHICLE_CHECKS_COMPLETED = '[Vehicle Checks] [CatD] Vehicle Checks Completed';
 export const VEHICLE_CHECKS_DRIVING_FAULTS_NUMBER_CHANGED =
   '[Vehicle Checks] [CatD] Vehicle Checks Driving Faults Number Changed';
+export const VEHICLE_CHECKS_DROP_EXTRA_VEHICLE_CHECKS =
+  '[Vehicle Checks] [CatD] Vehicle Checks dropping extra vehicle checks as full licence held';
 
 export class InitializeVehicleChecks implements Action {
   constructor(public category: TestCategory) { }
@@ -51,6 +53,10 @@ export class VehicleChecksDrivingFaultsNumberChanged implements Action {
   readonly type = VEHICLE_CHECKS_DRIVING_FAULTS_NUMBER_CHANGED;
 }
 
+export class DropExtraVehicleChecks implements Action {
+  readonly type = VEHICLE_CHECKS_DROP_EXTRA_VEHICLE_CHECKS;
+}
+
 export type Types =
   | VehicleChecksCompletedToggled
   | InitializeVehicleChecks
@@ -59,4 +65,5 @@ export type Types =
   | TellMeQuestionSelected
   | TellMeQuestionOutcomeChanged
   | AddShowMeTellMeComment
+  | DropExtraVehicleChecks
   | VehicleChecksDrivingFaultsNumberChanged;

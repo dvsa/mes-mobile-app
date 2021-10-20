@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CAT_D } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
@@ -37,9 +37,15 @@ export class VehicleChecksCatDComponent implements OnChanges, OnInit {
   @Input()
   formGroup: FormGroup;
 
+  @Input()
+  fullLicenceHeld: boolean = null;
+
   formControl: FormControl;
 
   category: TestCategory;
+
+  @Output()
+  fullLicenceHeldChange = new EventEmitter<boolean>();
 
   constructor(
     private modalController: ModalController,
@@ -62,11 +68,12 @@ export class VehicleChecksCatDComponent implements OnChanges, OnInit {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const modal = this.modalController.create(
       CAT_D.VEHICLE_CHECKS_MODAL,
-      { category: this.category },
+      { category: this.category, fullLicenceHeld: this.fullLicenceHeld },
       { cssClass: zoomClass },
     );
-    modal.onDidDismiss(() => {
+    modal.onDidDismiss((licenceHeld: string) => {
       this.onCloseVehicleChecksModal();
+      this.fullLicenceHeldChange.emit(licenceHeld === 'Y');
     });
     modal.present();
   }
@@ -77,8 +84,13 @@ export class VehicleChecksCatDComponent implements OnChanges, OnInit {
       return outcome !== undefined;
     };
 
-    return this.vehicleChecks.showMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
-      && this.vehicleChecks.tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
+    const showMeQuestions = (
+      this.fullLicenceHeld ? [this.vehicleChecks.showMeQuestions[0]] : this.vehicleChecks.showMeQuestions);
+    const tellMeQuestions =
+      this.fullLicenceHeld ? [this.vehicleChecks.tellMeQuestions[0]] : this.vehicleChecks.tellMeQuestions;
+
+    return showMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
+      && tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
       && this.safetyQuestions.questions.reduce((res, question) => res && hasOutcome(question), true);
   }
 

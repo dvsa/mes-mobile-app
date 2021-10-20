@@ -1,4 +1,4 @@
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
@@ -38,10 +38,12 @@ import {
 
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_TRAILER,
+  NUMBER_OF_TELL_ME_QUESTIONS_EXTRA as NUMBER_OF_TELL_ME_QUESTIONS_TRAILER_EXTRA,
 } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.vocational-trailer.constants';
 
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS as NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER,
+  NUMBER_OF_SHOW_ME_QUESTIONS_EXTRA as NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER_EXTRA,
 } from '../../../../../shared/constants/show-me-questions/show-me-questions.vocational-trailer.constants';
 
 import {
@@ -85,7 +87,7 @@ export class VehicleChecksCatDModal {
   tellMeQuestions: VehicleChecksQuestion[];
   safetyQuestions: SafetyQuestion[];
 
-  category : TestCategory;
+  category: TestCategory;
 
   showMeQuestionsNumberArray: number[];
   tellMeQuestionsNumberArray: number[];
@@ -96,15 +98,18 @@ export class VehicleChecksCatDModal {
 
   subscription: Subscription;
 
+  fullLicenceHeldSelected: string = null;
+
   constructor(
     public store$: Store<StoreModel>,
-    private navController: NavController,
+    private viewCtrl: ViewController,
     private faultCountProvider: FaultCountProvider,
     questionProvider: QuestionProvider,
     params: NavParams,
   ) {
     this.category = params.get('category');
-    this.setNumberOfShowMeTellMeQuestions();
+    this.fullLicenceHeldSelected = this.hasFullLicenceHeldBeenSelected(params.get('fullLicenceHeld'));
+    this.setNumberOfShowMeTellMeQuestions(this.fullLicenceHeldSelected === 'Y');
     this.safetyQuestionsNumberArray = Array(NUMBER_OF_SAFETY_QUESTIONS);
     this.formGroup = new FormGroup({});
 
@@ -113,7 +118,7 @@ export class VehicleChecksCatDModal {
     this.safetyQuestions = questionProvider.getVocationalSafetyQuestions(this.category);
   }
 
-  setNumberOfShowMeTellMeQuestions() {
+  setNumberOfShowMeTellMeQuestions(fullLicenceHeld?: boolean) {
     let numberOfShowMeQuestions: number;
     let numberOfTellMeQuestions: number;
 
@@ -125,8 +130,9 @@ export class VehicleChecksCatDModal {
         break;
       case TestCategory.DE:
       case TestCategory.D1E:
-        numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER;
-        numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_TRAILER;
+        numberOfShowMeQuestions = this.getNumberOfShowMeQuestions(fullLicenceHeld);
+        numberOfTellMeQuestions = this.getNumberOfTellMeQuestions(fullLicenceHeld);
+        break;
     }
     this.showMeQuestionsNumberArray = Array(numberOfShowMeQuestions);
     this.tellMeQuestionsNumberArray = Array(numberOfTellMeQuestions);
@@ -191,7 +197,7 @@ export class VehicleChecksCatDModal {
   }
 
   onSubmit() {
-    this.navController.pop();
+    this.viewCtrl.dismiss(this.fullLicenceHeldSelected);
   }
 
   ionViewDidEnter() {
@@ -239,4 +245,29 @@ export class VehicleChecksCatDModal {
   shouldDisplayBanner = (): boolean => {
     return this.isTrailerBanner() || this.isNonTrailerBanner();
   }
+
+  fullLicenceHeldChange = (licenceHeld: 'Y' | 'N'): void => {
+    this.fullLicenceHeldSelected = licenceHeld;
+    this.setNumberOfShowMeTellMeQuestions(licenceHeld === 'Y');
+  }
+
+  showFullLicenceHeld = (): boolean => {
+    if (this.category === TestCategory.D || this.category === TestCategory.D1) {
+      this.fullLicenceHeldSelected = 'Y';
+      return false;
+    }
+    return true;
+  }
+
+  private hasFullLicenceHeldBeenSelected = (
+    fullLicenceHeld: boolean,
+  ): string => (fullLicenceHeld === null) ? null : fullLicenceHeld ? 'Y' : 'N'
+
+  private getNumberOfShowMeQuestions = (
+    fullLicenceHeld: boolean,
+  ): number => fullLicenceHeld ? NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER : NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER_EXTRA
+
+  private getNumberOfTellMeQuestions = (
+    fullLicenceHeld: boolean,
+  ): number => fullLicenceHeld ? NUMBER_OF_TELL_ME_QUESTIONS_TRAILER : NUMBER_OF_TELL_ME_QUESTIONS_TRAILER_EXTRA
 }
