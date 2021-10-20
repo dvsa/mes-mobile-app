@@ -99,7 +99,6 @@ export class VehicleChecksCatCModal {
   setNumberOfShowMeTellMeQuestions() {
     let numberOfShowMeQuestions: number;
     let numberOfTellMeQuestions: number;
-
     switch (this.category as TestCategory) {
       case TestCategory.C:
       case TestCategory.C1:
