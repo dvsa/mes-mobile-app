@@ -19,18 +19,12 @@ export class LegalRequirementComponent {
   ticked: boolean;
   @Input()
   disabled: boolean = false;
-  @Input()
-  isFullWidthButton: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
   ) {}
 
-  getLabel = (): string => {
-    return this.legalRequirement === LegalRequirements.normalStart1 &&
-    this.isFullWidthButton ?
-      'Normal Stop' : legalRequirementLabels[this.legalRequirement];
-  }
+  getLabel = (): string => legalRequirementLabels[this.legalRequirement];
 
   toggleLegalRequirement = (): void => {
     this.store$.dispatch(new ToggleLegalRequirement(this.legalRequirement));
