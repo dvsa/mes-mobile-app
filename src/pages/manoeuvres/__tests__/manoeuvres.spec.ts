@@ -35,7 +35,7 @@ import {
   ManoeuvresViewPageSubmission,
 } from '../manoeuvres.actions';
 import { SendCurrentTest } from '../../../modules/tests/tests.actions';
-import { CAT_MANOEUVRERS, JOURNAL_PAGE } from '../../page-names.constants';
+import { CAT_MANOEUVRES, JOURNAL_PAGE } from '../../page-names.constants';
 
 describe('ManoeuvresPage', () => {
   let fixture: ComponentFixture<ManoeuvresPage>;
@@ -254,7 +254,7 @@ describe('ManoeuvresPage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new PassCertificateNumberChanged(null));
         expect(store$.dispatch).toHaveBeenCalledWith(new ClearGearboxCategory());
         expect(store$.dispatch).not.toHaveBeenCalledWith(new SendCurrentTest());
-        expect(navController.push).toHaveBeenCalledWith(CAT_MANOEUVRERS.REKEY_REASON_PAGE);
+        expect(navController.push).toHaveBeenCalledWith(CAT_MANOEUVRES.REKEY_REASON_PAGE);
       });
     });
   });

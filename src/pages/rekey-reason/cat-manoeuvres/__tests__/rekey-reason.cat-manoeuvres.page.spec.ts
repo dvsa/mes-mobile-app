@@ -33,7 +33,7 @@ import { OtherReasonComponent } from '../../components/other-reason/other-reason
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { configureTestSuite } from 'ng-bullet';
-import { CAT_MANOEUVRERS } from '../../../page-names.constants';
+import { CAT_MANOEUVRES } from '../../../page-names.constants';
 
 describe('RekeyReasonCatManoeuvresPage', () => {
   let fixture: ComponentFixture<RekeyReasonCatManoeuvresPage>;
@@ -198,7 +198,7 @@ describe('RekeyReasonCatManoeuvresPage', () => {
         component.handleUploadOutcome(uploadStatus);
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
-        expect(navContoller.push).toHaveBeenCalledWith(CAT_MANOEUVRERS.REKEY_UPLOAD_OUTCOME_PAGE);
+        expect(navContoller.push).toHaveBeenCalledWith(CAT_MANOEUVRES.REKEY_UPLOAD_OUTCOME_PAGE);
         expect(component.onShowUploadRekeyModal).not.toHaveBeenCalled();
 
       });
@@ -210,7 +210,7 @@ describe('RekeyReasonCatManoeuvresPage', () => {
         component.handleUploadOutcome(uploadStatus);
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
-        expect(navContoller.push).toHaveBeenCalledWith(CAT_MANOEUVRERS.REKEY_UPLOAD_OUTCOME_PAGE);
+        expect(navContoller.push).toHaveBeenCalledWith(CAT_MANOEUVRES.REKEY_UPLOAD_OUTCOME_PAGE);
         expect(component.onShowUploadRekeyModal).not.toHaveBeenCalled();
       });
     });

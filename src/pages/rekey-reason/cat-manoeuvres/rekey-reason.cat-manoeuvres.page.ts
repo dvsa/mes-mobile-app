@@ -29,7 +29,7 @@ import {
   OtherReasonUpdated,
   TransferSelected,
 } from '../../../modules/tests/rekey-reason/rekey-reason.actions';
-import { REKEY_SEARCH_PAGE, JOURNAL_PAGE, CAT_MANOEUVRERS } from '../../page-names.constants';
+import { REKEY_SEARCH_PAGE, JOURNAL_PAGE, CAT_MANOEUVRES } from '../../page-names.constants';
 import { getRekeyReasonState } from '../rekey-reason.reducer';
 import { map } from 'rxjs/operators';
 import { SendCurrentTest } from '../../../modules/tests/tests.actions';
@@ -182,7 +182,7 @@ export class RekeyReasonCatManoeuvresPage extends BasePageComponent {
     this.isStaffNumberInvalid = uploadStatus.hasStaffNumberFailedValidation;
 
     if (uploadStatus.hasUploadSucceeded || uploadStatus.isDuplicate) {
-      this.navController.push(CAT_MANOEUVRERS.REKEY_UPLOAD_OUTCOME_PAGE);
+      this.navController.push(CAT_MANOEUVRES.REKEY_UPLOAD_OUTCOME_PAGE);
       return;
     }
     if (uploadStatus.hasUploadFailed) {
