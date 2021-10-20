@@ -38,7 +38,7 @@ import {
 
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as NUMBER_OF_TELL_ME_QUESTIONS_TRAILER,
-  NUMBER_OF_SHOW_ME_QUESTIONS_EXTRA as NUMBER_OF_TELL_ME_QUESTIONS_TRAILER_EXTRA,
+  NUMBER_OF_TELL_ME_QUESTIONS_EXTRA as NUMBER_OF_TELL_ME_QUESTIONS_TRAILER_EXTRA,
 } from '../../../../../shared/constants/tell-me-questions/tell-me-questions.vocational-trailer.constants';
 
 import {

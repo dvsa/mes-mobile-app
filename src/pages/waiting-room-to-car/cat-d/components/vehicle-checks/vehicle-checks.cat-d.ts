@@ -84,8 +84,13 @@ export class VehicleChecksCatDComponent implements OnChanges, OnInit {
       return outcome !== undefined;
     };
 
-    return this.vehicleChecks.showMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
-      && this.vehicleChecks.tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
+    const showMeQuestions = (
+      this.fullLicenceHeld ? [this.vehicleChecks.showMeQuestions[0]] : this.vehicleChecks.showMeQuestions);
+    const tellMeQuestions =
+      this.fullLicenceHeld ? [this.vehicleChecks.tellMeQuestions[0]] : this.vehicleChecks.tellMeQuestions;
+
+    return showMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
+      && tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
       && this.safetyQuestions.questions.reduce((res, question) => res && hasOutcome(question), true);
   }
 
