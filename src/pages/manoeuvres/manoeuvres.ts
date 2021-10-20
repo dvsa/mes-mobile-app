@@ -7,7 +7,7 @@ import { map, tap } from 'rxjs/operators';
 import { ActivityCode, GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
-import { CAT_MANOEUVRERS, JOURNAL_PAGE } from '../page-names.constants';
+import { CAT_MANOEUVRES, JOURNAL_PAGE } from '../page-names.constants';
 import { TransmissionType } from '../../shared/models/transmission-type';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -256,7 +256,7 @@ export class ManoeuvresPage implements OnInit {
       const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
       await this.navController.popTo(journalPage);
     }
-    else await this.navController.push(CAT_MANOEUVRERS.REKEY_REASON_PAGE);
+    else await this.navController.push(CAT_MANOEUVRES.REKEY_REASON_PAGE);
   }
 
 }

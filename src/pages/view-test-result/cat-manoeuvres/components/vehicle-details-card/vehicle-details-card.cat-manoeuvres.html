@@ -1,0 +1,15 @@
+<ion-card *ngIf="!shouldHideCard()">
+  <ion-card-header>
+    <h4>Vehicle details</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <data-row
+        [label]="'Transmission'"
+        [value]="data.transmission"
+        *ngIf="data.transmission"
+        [shouldHaveSeperator]="!!(data.registrationNumber || data.vehicleDetails || data.instructorRegistrationNumber)">
+      </data-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

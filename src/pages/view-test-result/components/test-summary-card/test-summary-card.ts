@@ -1,13 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
-import { flattenArray, convertBooleanToString } from '../../view-test-result-helpers';
+import { convertBooleanToString, flattenArray } from '../../view-test-result-helpers';
 import {
   Accompaniment,
-  TestSummary,
-  PassCompletion,
   CommunicationPreferences,
+  PassCompletion,
+  TestSummary,
 } from '@dvsa/mes-test-schema/categories/common';
 import { TestSummary as CatAMod2TestSummary } from '@dvsa/mes-test-schema/categories/AM2';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'test-summary-card',
@@ -26,6 +27,9 @@ export class TestSummaryCardComponent {
 
   @Input()
   communicationPreferences: CommunicationPreferences;
+
+  @Input()
+  testCategory: TestCategory;
 
   constructor() {}
 
@@ -106,5 +110,21 @@ export class TestSummaryCardComponent {
 
   public getConductedLanguage(): string {
     return get(this.communicationPreferences, 'conductedLanguage', 'None');
+  }
+
+  public isManoeuvreCategory(): boolean {
+    switch (this.testCategory) {
+      case TestCategory.CM:
+      case TestCategory.C1M:
+      case TestCategory.CEM:
+      case TestCategory.C1EM:
+      case TestCategory.DM:
+      case TestCategory.D1M:
+      case TestCategory.DEM:
+      case TestCategory.D1EM:
+        return true;
+      default:
+        return false;
+    }
   }
 }
