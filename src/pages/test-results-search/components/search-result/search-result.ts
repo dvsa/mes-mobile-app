@@ -101,6 +101,7 @@ export class SearchResultComponent {
       case TestCategory.DEM:
       case TestCategory.D1EM:
         pageToOpen = CAT_MANOEUVRES.VIEW_TEST_RESULT_PAGE;
+        break;
     }
 
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;

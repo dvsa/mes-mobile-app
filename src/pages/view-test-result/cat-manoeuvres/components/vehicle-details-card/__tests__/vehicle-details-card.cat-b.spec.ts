@@ -43,8 +43,4 @@ describe('VehicleDetailsCardCatManoeuvresComponent', () => {
     });
   });
 
-  describe('DOM', () => {
-
-  });
-
 });
