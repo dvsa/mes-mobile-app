@@ -37,6 +37,8 @@ export class UncoupleRecoupleComponent implements OnInit, OnDestroy {
 
   @Input()
   category: CategoryCode;
+  @Input()
+  disableDrivingFaults?: boolean = false;
 
   componentState: UncoupleRecoupleComponentState;
   subscription: Subscription;
@@ -164,7 +166,7 @@ export class UncoupleRecoupleComponent implements OnInit, OnDestroy {
     }
 
     if (wasPress) {
-      this.store$.dispatch(new UncoupleRecoupleAddDrivingFault());
+      if (!this.disableDrivingFaults) this.store$.dispatch(new UncoupleRecoupleAddDrivingFault());
     }
   }
 
