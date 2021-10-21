@@ -213,11 +213,11 @@ export class VehicleChecksCatCModal {
   }
 
   showFullLicenceHeld = (): boolean => {
-    if (this.category === TestCategory.D || this.category === TestCategory.D1) {
+    if (this.category === TestCategory.CE || this.category === TestCategory.C1E) {
       this.fullLicenceHeldSelected = 'Y';
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   private hasFullLicenceHeldBeenSelected = (

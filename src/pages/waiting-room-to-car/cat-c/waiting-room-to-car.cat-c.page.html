@@ -32,8 +32,8 @@
               [vehicleChecks]="pageState.vehicleChecks$ | async"
               [onCloseVehicleChecksModal]="closeVehicleChecksModal"
               [fullLicenceHeld]="fullLicenceHeld"
-              (fullLicenceHeldChange)="fullLicenceHeldChange($event)
-            ></vehicle-checks-cat-c>
+              (fullLicenceHeldChange)="fullLicenceHeldChange($event)">
+            </vehicle-checks-cat-c>
 
             <vehicle-checks-completed
             *ngIf="pageState.delegatedTest$ | async"
