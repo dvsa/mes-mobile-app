@@ -5,6 +5,7 @@ import { VehicleChecksQuestionCatCComponent } from '../vehicle-checks-question/v
 import { ComponentsModule } from '../../../../../components/common/common-components.module';
 import { EffectsModule } from '@ngrx/effects';
 import { VehicleChecksModalCatCAnalyticsEffects } from './vehicle-checks-modal.cat-c.analytics.effects';
+import { WaitingRoomToCarComponentsModule } from '../../../components/waiting-room-to-car.components.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { VehicleChecksModalCatCAnalyticsEffects } from './vehicle-checks-modal.c
     ]),
     IonicModule,
     ComponentsModule,
+    WaitingRoomToCarComponentsModule,
   ],
 })
 export class VehicleChecksModalCatCModule { }

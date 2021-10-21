@@ -10,7 +10,18 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
+<ion-content padding>
+  <ion-card>
+    <full-licence-held-toggle
+      *ngIf="showFullLicenceHeld()"
+      [fullLicenceHeld]="fullLicenceHeldSelected"
+      [testCategory]="category"
+      [formGroup]="formGroup"
+      (fullLicenceHeldChange)="fullLicenceHeldChange($event)">
+    </full-licence-held-toggle>
+  </ion-card>
 
+  <div *ngIf="fullLicenceHeldSelected">
 <ion-content padding>
   <ion-card>
     <ion-card-header>
@@ -21,7 +32,8 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <vehicle-checks-question-cat-c *ngFor="let question of showMeQuestionsNumberArray; let i = index; let l = last" [formGroup]="formGroup"
+      <vehicle-checks-question-cat-c *ngFor="let question of showMeQuestionsNumberArray; let i = index; let l = last"
+        [formGroup]="formGroup"
         [questionResult]="(pageState.showMeQuestions$ | async)[i]"
         [questions]="showMeQuestions"
         [questionsToDisable]="pageState.showMeQuestions$ | async"
@@ -39,8 +51,10 @@
         </h4>
       </ion-card-title>
     </ion-card-header>
+
     <ion-card-content>
-      <vehicle-checks-question-cat-c *ngFor="let question of tellMeQuestionsNumberArray; let i = index; let l = last" [formGroup]="formGroup"
+      <vehicle-checks-question-cat-c *ngFor="let question of tellMeQuestionsNumberArray; let i = index; let l = last"
+        [formGroup]="formGroup"
         [questionResult]="(pageState.tellMeQuestions$ | async)[i]"
         [questions]="tellMeQuestions"
         [questionsToDisable]="pageState.tellMeQuestions$ | async"
@@ -52,7 +66,7 @@
   </ion-card>
   <warning-banner warningText="This will result in {{vehicleChecksScore.drivingFaults}} driving faults and {{vehicleChecksScore.seriousFaults}} serious fault" *ngIf="shouldDisplayBanner()"></warning-banner>
 </ion-content>
-
+  </div>
 <ion-footer>
   <ion-row class="mes-full-width-card box-shadow">
     <button type="submit" class="mes-primary-button" id="submit-vehicle-checks" ion-button (click)="onSubmit()">

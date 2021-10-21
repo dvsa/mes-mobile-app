@@ -50,6 +50,7 @@ import { CategoryCode, QuestionResult } from '@dvsa/mes-test-schema/categories/c
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import {
+  DropExtraVehicleChecks,
   VehicleChecksCompletedToggled,
   VehicleChecksDrivingFaultsNumberChanged,
 } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
@@ -100,6 +101,7 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
 
   testCategory: CategoryCode;
   isDelegated: boolean;
+  fullLicenceHeld: boolean = null;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -262,6 +264,9 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
+      if (this.fullLicenceHeld) {
+        this.store$.dispatch(new DropExtraVehicleChecks());
+      }
       this.navController.push(CAT_C.TEST_REPORT_PAGE).then(() => {
         // remove Waiting Room To Car Page
         const view = this.navController.getViews().find(view => view.id === CAT_C.WAITING_ROOM_TO_CAR_PAGE);
@@ -296,4 +301,7 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
   displayLoadSecured = (): boolean => this.testCategory === TestCategory.C ||
                                       this.testCategory === TestCategory.CE ||
                                       this.testCategory === TestCategory.C1E
+  fullLicenceHeldChange = (licenceHeld: boolean): void => {
+    this.fullLicenceHeld = licenceHeld;
+  }
 }

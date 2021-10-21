@@ -10,7 +10,6 @@ import {
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
 import { cloneDeep } from 'lodash';
-import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 describe('Vehicle Checks Cat C Reducer', () => {
 
@@ -20,7 +19,7 @@ describe('Vehicle Checks Cat C Reducer', () => {
         code: 'S1',
         description: 'desc',
       };
-      const state: CatCUniqueTypes.VehicleChecks = cloneDeep(generateInitialState(TestCategory.C));
+      const state: CatCUniqueTypes.VehicleChecks = cloneDeep(generateInitialState());
       const result = vehicleChecksCatCReducer(state, new ShowMeQuestionSelected(newQuestionPayload, 1));
       expect(result.showMeQuestions[1].code).toEqual('S1');
       expect(result.showMeQuestions[1].description).toEqual('desc');
@@ -29,7 +28,7 @@ describe('Vehicle Checks Cat C Reducer', () => {
 
   describe('SHOW_ME_QUESTION_OUTCOME_CHANGED', () => {
     it('should update the outcome property for the object at the specified index', () => {
-      const state: CatCUniqueTypes.VehicleChecks = cloneDeep(generateInitialState(TestCategory.C));
+      const state: CatCUniqueTypes.VehicleChecks = cloneDeep(generateInitialState());
       state.showMeQuestions[1] = {
         code: 'S1',
         description: 'desc',
@@ -46,7 +45,7 @@ describe('Vehicle Checks Cat C Reducer', () => {
         code: 'T01',
         description: 'desc',
       };
-      const state: CatCUniqueTypes.VehicleChecks = cloneDeep(generateInitialState(TestCategory.C));
+      const state: CatCUniqueTypes.VehicleChecks = cloneDeep(generateInitialState());
       const result = vehicleChecksCatCReducer(state, new TellMeQuestionSelected(newQuestionPayload, 1));
       expect(result.tellMeQuestions[1].code).toEqual('T01');
       expect(result.tellMeQuestions[1].description).toEqual('desc');
@@ -55,7 +54,7 @@ describe('Vehicle Checks Cat C Reducer', () => {
 
   describe('TELL_ME_QUESTION_OUTCOME_CHANGED' , () => {
     it('should update the outcome property for the object at the specified index', () => {
-      const state: CatCUniqueTypes.VehicleChecks = cloneDeep(generateInitialState(TestCategory.C));
+      const state: CatCUniqueTypes.VehicleChecks = cloneDeep(generateInitialState());
       state.tellMeQuestions[1] = {
         code: 'T01',
         description: 'desc',
