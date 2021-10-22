@@ -88,7 +88,7 @@ describe('VehicleChecksCatCModal', () => {
       it(`should return false for category ${category} and set fullLicenceHeldSelected to Y`, () => {
         component.category = category;
         expect(component.showFullLicenceHeld()).toEqual(true);
-        expect(component.fullLicenceHeldSelected).toEqual('Y');
+        expect(component.fullLicenceHeldSelected).toEqual('N');
       });
     });
     [TestCategory.CE , TestCategory.C1E].forEach((category: TestCategory) => {
