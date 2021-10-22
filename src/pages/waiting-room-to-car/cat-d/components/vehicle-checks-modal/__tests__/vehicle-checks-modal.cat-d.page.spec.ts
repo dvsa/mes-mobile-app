@@ -1,5 +1,5 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, Config, NavParams, ViewController } from 'ionic-angular';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Config, IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { VehicleChecksCatDModal } from '../vehicle-checks-modal.cat-d.page';
 import { Store, StoreModule } from '@ngrx/store';
 import { ConfigMock, NavParamsMock, ViewControllerMock } from 'ionic-mocks';
@@ -7,17 +7,14 @@ import { AppModule } from '../../../../../../app/app.module';
 import { MockComponent } from 'ng-mocks';
 import { VehicleChecksQuestionCatDComponent } from '../../vehicle-checks-question/vehicle-checks-question.cat-d';
 import { SafetyQuestionComponent } from '../../safety-question/safety-question';
-import {
-  QuestionOutcome,
-  QuestionResult,
-} from '@dvsa/mes-test-schema/categories/common';
+import { QuestionOutcome, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 
 import {
   ShowMeQuestionOutcomeChanged,
   ShowMeQuestionSelected,
-  TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
+  TellMeQuestionSelected,
 } from '../../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 import {
   SafetyQuestionOutcomeChanged,
@@ -26,11 +23,14 @@ import { WarningBannerComponent } from '../../../../../../components/common/warn
 import { configureTestSuite } from 'ng-bullet';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FullLicenceHeldComponent } from '../../../../components/full-licence-held-toggle/full-licence-held-toggle';
+import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
+import { VehicleChecksScore } from '../../../../../../shared/models/vehicle-checks-score.model';
 
 describe('VehicleChecksCatDModal', () => {
   let fixture: ComponentFixture<VehicleChecksCatDModal>;
   let component: VehicleChecksCatDModal;
   let store$: Store<StoreModel>;
+  let faultCountProvider: FaultCountProvider;
 
   const bannerDisplayLogic = [
     { category: TestCategory.D, drivingFaults: 0, seriousFaults: 0, showBanner: false },
@@ -75,6 +75,7 @@ describe('VehicleChecksCatDModal', () => {
     fixture = TestBed.createComponent(VehicleChecksCatDModal);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
+    faultCountProvider = TestBed.get(FaultCountProvider);
     spyOn(store$, 'dispatch');
   }));
 
@@ -150,6 +151,7 @@ describe('VehicleChecksCatDModal', () => {
             drivingFaults: bannerLogic.drivingFaults,
             seriousFaults: bannerLogic.seriousFaults,
           };
+          component.fullLicenceHeldSelected = 'Y';
           component.category = bannerLogic.category;
           expect(component.shouldDisplayBanner()).toBe(bannerLogic.showBanner);
         });
@@ -160,9 +162,13 @@ describe('VehicleChecksCatDModal', () => {
     describe('fullLicenceHeldChange()', () => {
       it('should convert input to a boolean and pass into setNumberOfShowMeTellMeQuestions', () => {
         spyOn(component, 'setNumberOfShowMeTellMeQuestions');
+        spyOn(faultCountProvider, 'getVehicleChecksFaultCount').and.returnValue({} as VehicleChecksScore);
+        component.category = TestCategory.D1E;
+        component.vehicleChecks = {};
         component.fullLicenceHeldChange('Y');
         expect(component.fullLicenceHeldSelected).toEqual('Y');
         expect(component.setNumberOfShowMeTellMeQuestions).toHaveBeenCalledWith(true);
+        expect(faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalledWith(TestCategory.D1E, {}, true);
       });
     });
 

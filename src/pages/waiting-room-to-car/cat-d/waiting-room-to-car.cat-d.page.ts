@@ -294,7 +294,7 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
     if (this.form.valid) {
       // if user selected they dont hold full licence, but then changes decision to already has a full licence
       // remove the extra vehicle checks
-      if (this.fullLicenceHeld) {
+      if (this.fullLicenceHeld && (this.testCategory === TestCategory.DE || this.testCategory === TestCategory.D1E)) {
         this.store$.dispatch(new DropExtraVehicleChecks());
       }
       this.navController.push(CAT_D.TEST_REPORT_PAGE).then(() => {

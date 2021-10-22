@@ -59,6 +59,7 @@ import {
   getVehicleChecksCatD,
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
+  CatDVehicleChecks,
 } from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
 import {
   getSafetyQuestionsCatD,
@@ -71,6 +72,7 @@ interface VehicleChecksModalCatDState {
   tellMeQuestions$: Observable<QuestionResult[]>;
   safetyQuestions$: Observable<SafetyQuestionResult[]>;
   vehicleChecksScore$: Observable<VehicleChecksScore>;
+  vehicleChecks$: Observable<CatDVehicleChecks>;
   safetyQuestionsScore$: Observable<SafetyQuestionsScore>;
 }
 
@@ -94,6 +96,7 @@ export class VehicleChecksCatDModal {
   safetyQuestionsNumberArray: number[];
 
   vehicleChecksScore: VehicleChecksScore;
+  vehicleChecks: CatDVehicleChecks;
   safetyQuestionsScore: SafetyQuestionsScore;
 
   subscription: Subscription;
@@ -171,6 +174,10 @@ export class VehicleChecksCatDModal {
           return this.faultCountProvider.getVehicleChecksFaultCount(this.category, vehicleChecks);
         }),
       ),
+      vehicleChecks$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatD),
+      ),
       safetyQuestionsScore$: currentTest$.pipe(
         select(getTestData),
         select(getSafetyQuestionsCatD),
@@ -180,11 +187,12 @@ export class VehicleChecksCatDModal {
       ),
     };
 
-    const { vehicleChecksScore$, safetyQuestionsScore$ } = this.pageState;
+    const { vehicleChecksScore$, safetyQuestionsScore$, vehicleChecks$ } = this.pageState;
 
     const merged$ = merge(
       vehicleChecksScore$.pipe(map(score => (this.vehicleChecksScore = score))),
       safetyQuestionsScore$.pipe(map(score => (this.safetyQuestionsScore = score))),
+      vehicleChecks$.pipe(map(score => (this.vehicleChecks = score))),
     );
 
     this.subscription = merged$.subscribe();
@@ -226,29 +234,32 @@ export class VehicleChecksCatDModal {
     this.store$.dispatch(new SafetyQuestionOutcomeChanged(result, index));
   }
 
+  shouldDisplayBanner = (): boolean => {
+    if (this.category === TestCategory.D || this.category === TestCategory.D1) {
+      return this.isNonTrailerBanner();
+    }
+    return (
+      this.vehicleChecksScore.drivingFaults === (this.fullLicenceHeldSelected === 'Y' ? 1 : 4) &&
+      this.vehicleChecksScore.seriousFaults === 1
+    );
+  }
+
   isNonTrailerBanner(): boolean {
     return (
       this.vehicleChecksScore.drivingFaults === 4 &&
-      this.vehicleChecksScore.seriousFaults === 1 &&
-      (this.category === TestCategory.D || this.category === TestCategory.D1)
+      this.vehicleChecksScore.seriousFaults === 1
     );
-  }
-
-  isTrailerBanner(): boolean {
-    return (
-      this.vehicleChecksScore.drivingFaults === 1 &&
-      this.vehicleChecksScore.seriousFaults === 1 &&
-      (this.category === TestCategory.DE || this.category === TestCategory.D1E)
-    );
-  }
-
-  shouldDisplayBanner = (): boolean => {
-    return this.isTrailerBanner() || this.isNonTrailerBanner();
   }
 
   fullLicenceHeldChange = (licenceHeld: 'Y' | 'N'): void => {
     this.fullLicenceHeldSelected = licenceHeld;
     this.setNumberOfShowMeTellMeQuestions(licenceHeld === 'Y');
+
+    // on licence held toggle change, we need to re-evaluate the vehicleChecksScore to control the banner display
+    this.vehicleChecksScore = this.faultCountProvider.getVehicleChecksFaultCount(
+      this.category,
+      this.vehicleChecks,
+    );
   }
 
   showFullLicenceHeld = (): boolean => {

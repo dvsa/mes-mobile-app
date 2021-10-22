@@ -10,7 +10,13 @@ import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.
 import { SafetyQuestionsScore } from '../../../shared/models/safety-questions-score.model';
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 
-export class  FaultCountDHelper {
+type CatDVehicleCheckUnion =
+  CatDUniqueTypes.VehicleChecks |
+  CatD1UniqueTypes.VehicleChecks |
+  CatDEUniqueTypes.VehicleChecks |
+  CatD1EUniqueTypes.VehicleChecks;
+
+export class FaultCountDHelper {
 
   public static getDangerousFaultSumCountCatD = (data: CatDUniqueTypes.TestData): number => {
     return FaultCountDHelper.getDangerousFaultSumCountNonTrailer(data);
@@ -100,6 +106,19 @@ export class  FaultCountDHelper {
     vehicleChecks: CatD1EUniqueTypes.VehicleChecks,
   ): VehicleChecksScore => {
     return FaultCountDHelper.getVehicleChecksFaultCountTrailer(vehicleChecks);
+  }
+
+  static getVehicleChecksFaultCount = (
+    vehicleChecks: CatDVehicleCheckUnion,
+  ): VehicleChecksScore => {
+    const fullLicenceHeld: boolean = (
+      get(vehicleChecks, 'showMeQuestions') || []
+    ).filter(check => check.outcome !== undefined).length === 1;
+
+    if (fullLicenceHeld) {
+      return FaultCountDHelper.getVehicleChecksFaultCountTrailer(vehicleChecks);
+    }
+    return FaultCountDHelper.getVehicleChecksFaultCountNonTrailer(vehicleChecks);
   }
 
   private static getVehicleChecksFaultCountNonTrailer = (

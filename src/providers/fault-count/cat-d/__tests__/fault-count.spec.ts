@@ -59,4 +59,15 @@ describe('FaultCountDHelper', () => {
     });
   });
 
+  describe('getVehicleChecksFaultCountCatD1E', () => {
+    it('should return 1 serious 1 DF, when full licence held and 2 DF are set', () => {
+      const result = FaultCountDHelper.getVehicleChecksFaultCount(vehicleChecksTwoFaults);
+      expect(result).toEqual({ drivingFaults: 1, seriousFaults: 1 });
+    });
+    it('should return 0 serious 2 DF, when full licence not held and 2 DF are set', () => {
+      const result = FaultCountDHelper.getVehicleChecksFaultCount(vehicleChecksTwoFaults);
+      expect(result).toEqual({ drivingFaults: 2, seriousFaults: 0 });
+    });
+  });
+
 });

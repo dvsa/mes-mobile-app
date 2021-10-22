@@ -15,7 +15,7 @@ import { showMe2DFTellMe3DF, showMe2DFTellMe2DF, showMe1DFTellMe1DF, showMe0DFTe
 import { configureTestSuite } from 'ng-bullet';
 import { FaultSummaryCatAM1Helper } from '../cat-a-mod1/fault-summary.cat-a-mod1';
 
-describe('faultSummaryProvider', () => {
+fdescribe('faultSummaryProvider', () => {
   const categoryC = [
     {
       category: TestCategory.C,

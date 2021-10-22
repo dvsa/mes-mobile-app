@@ -211,7 +211,11 @@ export class FaultSummaryCatDHelper {
     const showMeFaults = showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
     const tellMeFaults = tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
 
-    const seriousFaultCount = showMeFaults.length + tellMeFaults.length === 2 ? 1 : 0;
+    // const seriousFaultCount = showMeFaults.length + tellMeFaults.length === 2 ? 1 : 0;
+    const seriousFaultCount = (
+      (showMeFaults.length + tellMeFaults.length) === (showMeQuestions.length + tellMeQuestions.length) ? 1 : 0
+    );
+
     const competency: FaultSummary = {
       comment: vehicleChecks.showMeTellMeComments || '',
       competencyIdentifier: CommentSource.VEHICLE_CHECKS,
