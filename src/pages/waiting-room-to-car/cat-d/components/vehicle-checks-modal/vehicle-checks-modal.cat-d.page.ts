@@ -22,6 +22,7 @@ import {
   ShowMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
+  SetFullLicenceHeld,
 } from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 
 import {
@@ -60,6 +61,7 @@ import {
   getSelectedShowMeQuestions,
   getSelectedTellMeQuestions,
   CatDVehicleChecks,
+  getFullLicenceHeld,
 } from '../../../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
 import {
   getSafetyQuestionsCatD,
@@ -74,6 +76,8 @@ interface VehicleChecksModalCatDState {
   vehicleChecksScore$: Observable<VehicleChecksScore>;
   vehicleChecks$: Observable<CatDVehicleChecks>;
   safetyQuestionsScore$: Observable<SafetyQuestionsScore>;
+  fullLicenceHeld$: Observable<boolean>;
+  fullLicenceHeldSelection$: Observable<string>;
 }
 
 @IonicPage()
@@ -102,6 +106,7 @@ export class VehicleChecksCatDModal {
   subscription: Subscription;
 
   fullLicenceHeldSelected: string = null;
+  fullLicenceHeld: boolean = null;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -111,34 +116,11 @@ export class VehicleChecksCatDModal {
     params: NavParams,
   ) {
     this.category = params.get('category');
-    this.fullLicenceHeldSelected = this.hasFullLicenceHeldBeenSelected(params.get('fullLicenceHeld'));
-    this.setNumberOfShowMeTellMeQuestions(this.fullLicenceHeldSelected === 'Y');
     this.safetyQuestionsNumberArray = Array(NUMBER_OF_SAFETY_QUESTIONS);
     this.formGroup = new FormGroup({});
-
     this.showMeQuestions = questionProvider.getShowMeQuestions(this.category);
     this.tellMeQuestions = questionProvider.getTellMeQuestions(this.category);
     this.safetyQuestions = questionProvider.getVocationalSafetyQuestions(this.category);
-  }
-
-  setNumberOfShowMeTellMeQuestions(fullLicenceHeld?: boolean) {
-    let numberOfShowMeQuestions: number;
-    let numberOfTellMeQuestions: number;
-
-    switch (this.category) {
-      case TestCategory.D:
-      case TestCategory.D1:
-        numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER;
-        numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER;
-        break;
-      case TestCategory.DE:
-      case TestCategory.D1E:
-        numberOfShowMeQuestions = this.getNumberOfShowMeQuestions(fullLicenceHeld);
-        numberOfTellMeQuestions = this.getNumberOfTellMeQuestions(fullLicenceHeld);
-        break;
-    }
-    this.showMeQuestionsNumberArray = Array(numberOfShowMeQuestions);
-    this.tellMeQuestionsNumberArray = Array(numberOfTellMeQuestions);
   }
 
   ngOnInit(): void {
@@ -185,17 +167,52 @@ export class VehicleChecksCatDModal {
           return this.faultCountProvider.getSafetyQuestionsFaultCount(this.category, safetyQuestions);
         }),
       ),
+      fullLicenceHeld$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatD),
+        select(getFullLicenceHeld),
+      ),
+      fullLicenceHeldSelection$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatD),
+        select(getFullLicenceHeld),
+        map(licenceHeld => this.hasFullLicenceHeldBeenSelected(licenceHeld)),
+      ),
     };
 
-    const { vehicleChecksScore$, safetyQuestionsScore$, vehicleChecks$ } = this.pageState;
+    const {
+      vehicleChecksScore$, safetyQuestionsScore$, vehicleChecks$, fullLicenceHeld$,
+    } = this.pageState;
 
     const merged$ = merge(
       vehicleChecksScore$.pipe(map(score => (this.vehicleChecksScore = score))),
       safetyQuestionsScore$.pipe(map(score => (this.safetyQuestionsScore = score))),
-      vehicleChecks$.pipe(map(score => (this.vehicleChecks = score))),
+      vehicleChecks$.pipe(map(checks => (this.vehicleChecks = checks))),
+      fullLicenceHeld$.pipe(map(held => (this.fullLicenceHeld = held))),
     );
-
     this.subscription = merged$.subscribe();
+
+    this.setNumberOfShowMeTellMeQuestions(this.fullLicenceHeld);
+  }
+
+  setNumberOfShowMeTellMeQuestions(fullLicenceHeld?: boolean) {
+    let numberOfShowMeQuestions: number;
+    let numberOfTellMeQuestions: number;
+
+    switch (this.category) {
+      case TestCategory.D:
+      case TestCategory.D1:
+        numberOfShowMeQuestions = NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER;
+        numberOfTellMeQuestions = NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER;
+        break;
+      case TestCategory.DE:
+      case TestCategory.D1E:
+        numberOfShowMeQuestions = this.getNumberOfShowMeQuestions(fullLicenceHeld);
+        numberOfTellMeQuestions = this.getNumberOfTellMeQuestions(fullLicenceHeld);
+        break;
+    }
+    this.showMeQuestionsNumberArray = Array(numberOfShowMeQuestions);
+    this.tellMeQuestionsNumberArray = Array(numberOfTellMeQuestions);
   }
 
   ionViewDidLeave(): void {
@@ -205,7 +222,7 @@ export class VehicleChecksCatDModal {
   }
 
   onSubmit() {
-    this.viewCtrl.dismiss(this.fullLicenceHeldSelected);
+    this.viewCtrl.dismiss();
   }
 
   ionViewDidEnter() {
@@ -239,7 +256,7 @@ export class VehicleChecksCatDModal {
       return this.isNonTrailerBanner();
     }
     return (
-      this.vehicleChecksScore.drivingFaults === (this.fullLicenceHeldSelected === 'Y' ? 1 : 4) &&
+      this.vehicleChecksScore.drivingFaults === (this.fullLicenceHeld ? 1 : 4) &&
       this.vehicleChecksScore.seriousFaults === 1
     );
   }
@@ -251,9 +268,10 @@ export class VehicleChecksCatDModal {
     );
   }
 
-  fullLicenceHeldChange = (licenceHeld: 'Y' | 'N'): void => {
-    this.fullLicenceHeldSelected = licenceHeld;
-    this.setNumberOfShowMeTellMeQuestions(licenceHeld === 'Y');
+  fullLicenceHeldChange = (licenceHeld: boolean): void => {
+    this.fullLicenceHeld = licenceHeld;
+    this.store$.dispatch(new SetFullLicenceHeld(licenceHeld));
+    this.setNumberOfShowMeTellMeQuestions(licenceHeld);
 
     // on licence held toggle change, we need to re-evaluate the vehicleChecksScore to control the banner display
     this.vehicleChecksScore = this.faultCountProvider.getVehicleChecksFaultCount(
@@ -262,13 +280,7 @@ export class VehicleChecksCatDModal {
     );
   }
 
-  showFullLicenceHeld = (): boolean => {
-    if (this.category === TestCategory.D || this.category === TestCategory.D1) {
-      this.fullLicenceHeldSelected = 'Y';
-      return false;
-    }
-    return true;
-  }
+  showFullLicenceHeld = (): boolean => this.category === TestCategory.DE || this.category === TestCategory.D1E;
 
   private hasFullLicenceHeldBeenSelected = (
     fullLicenceHeld: boolean,

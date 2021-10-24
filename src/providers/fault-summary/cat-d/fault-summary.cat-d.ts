@@ -87,7 +87,11 @@ export class FaultSummaryCatDHelper {
       ...getCompetencyFaults(data.seriousFaults),
       ...this.getManoeuvreFaultsCatD(data.manoeuvres, CompetencyOutcome.S),
       ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.S),
-      ...this.getVehicleCheckSeriousFaultsTrailer(data.vehicleChecks),
+      ...(
+        data.vehicleChecks.fullLicenceHeld ?
+          this.getVehicleCheckSeriousFaultsTrailer(data.vehicleChecks) :
+          this.getVehicleCheckSeriousFaultsNonTrailer(data.vehicleChecks)
+      ),
       ...this.getPCVDoorExerciseSeriousFault(data.pcvDoorExercise),
     ];
   }
@@ -211,11 +215,7 @@ export class FaultSummaryCatDHelper {
     const showMeFaults = showMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
     const tellMeFaults = tellMeQuestions.filter(fault => fault.outcome === CompetencyOutcome.DF);
 
-    // const seriousFaultCount = showMeFaults.length + tellMeFaults.length === 2 ? 1 : 0;
-    const seriousFaultCount = (
-      (showMeFaults.length + tellMeFaults.length) === (showMeQuestions.length + tellMeQuestions.length) ? 1 : 0
-    );
-
+    const seriousFaultCount = showMeFaults.length + tellMeFaults.length === 2 ? 1 : 0;
     const competency: FaultSummary = {
       comment: vehicleChecks.showMeTellMeComments || '',
       competencyIdentifier: CommentSource.VEHICLE_CHECKS,

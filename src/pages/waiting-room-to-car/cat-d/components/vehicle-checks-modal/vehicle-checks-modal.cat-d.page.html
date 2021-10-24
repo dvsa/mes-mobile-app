@@ -15,14 +15,14 @@
   <ion-card>
     <full-licence-held-toggle
       *ngIf="showFullLicenceHeld()"
-      [fullLicenceHeld]="fullLicenceHeldSelected"
+      [fullLicenceHeld]="pageState.fullLicenceHeldSelection$ | async"
       [testCategory]="category"
       [formGroup]="formGroup"
       (fullLicenceHeldChange)="fullLicenceHeldChange($event)">
     </full-licence-held-toggle>
   </ion-card>
 
-  <div *ngIf="fullLicenceHeldSelected">
+  <div *ngIf="(pageState.fullLicenceHeld$ | async) !== null">
     <ion-card>
       <ion-card-header>
         <ion-card-title>

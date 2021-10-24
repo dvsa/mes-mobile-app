@@ -111,11 +111,7 @@ export class FaultCountDHelper {
   static getVehicleChecksFaultCount = (
     vehicleChecks: CatDVehicleCheckUnion,
   ): VehicleChecksScore => {
-    const fullLicenceHeld: boolean = (
-      get(vehicleChecks, 'showMeQuestions') || []
-    ).filter(check => check.outcome !== undefined).length === 1;
-
-    if (fullLicenceHeld) {
+    if (vehicleChecks.fullLicenceHeld) {
       return FaultCountDHelper.getVehicleChecksFaultCountTrailer(vehicleChecks);
     }
     return FaultCountDHelper.getVehicleChecksFaultCountNonTrailer(vehicleChecks);
@@ -161,8 +157,8 @@ export class FaultCountDHelper {
       return { seriousFaults: 0, drivingFaults: 0 };
     }
 
-    const showMeQuestions: QuestionResult[] = get(vehicleChecks, 'showMeQuestions', []);
-    const tellMeQuestions: QuestionResult[] = get(vehicleChecks, 'tellMeQuestions', []);
+    const showMeQuestions: QuestionResult[] = [get(vehicleChecks, 'showMeQuestions[0]', [])];
+    const tellMeQuestions: QuestionResult[] = [get(vehicleChecks, 'tellMeQuestions[0]', [])];
 
     const numberOfShowMeFaults: number = showMeQuestions.filter((showMeQuestion) => {
       return showMeQuestion.outcome === CompetencyOutcome.DF;
