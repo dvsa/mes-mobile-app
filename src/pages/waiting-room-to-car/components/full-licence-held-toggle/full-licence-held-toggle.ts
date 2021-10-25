@@ -18,7 +18,7 @@ export class FullLicenceHeldComponent implements OnChanges {
   formGroup: FormGroup;
 
   @Output()
-  fullLicenceHeldChange = new EventEmitter<'Y' | 'N'>();
+  fullLicenceHeldChange = new EventEmitter<boolean>();
 
   static formControlName: string = 'fullLicenceHeldCtrl';
 
@@ -33,6 +33,6 @@ export class FullLicenceHeldComponent implements OnChanges {
   }
 
   fullLicenceHeldChanged(licenceHeld: 'Y' | 'N'): void {
-    this.fullLicenceHeldChange.emit(licenceHeld);
+    this.fullLicenceHeldChange.emit(licenceHeld === 'Y');
   }
 }

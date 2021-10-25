@@ -87,7 +87,11 @@ export class FaultSummaryCatDHelper {
       ...getCompetencyFaults(data.seriousFaults),
       ...this.getManoeuvreFaultsCatD(data.manoeuvres, CompetencyOutcome.S),
       ...this.getUncoupleRecoupleFault(data.uncoupleRecouple, CompetencyOutcome.S),
-      ...this.getVehicleCheckSeriousFaultsTrailer(data.vehicleChecks),
+      ...(
+        get(data, 'vehicleChecks.fullLicenceHeld') ?
+          this.getVehicleCheckSeriousFaultsTrailer(data.vehicleChecks) :
+          this.getVehicleCheckSeriousFaultsNonTrailer(data.vehicleChecks)
+      ),
       ...this.getPCVDoorExerciseSeriousFault(data.pcvDoorExercise),
     ];
   }

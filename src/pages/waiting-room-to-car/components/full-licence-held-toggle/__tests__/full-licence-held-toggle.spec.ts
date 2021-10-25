@@ -33,10 +33,10 @@ describe('FullLicenceHeldComponent', () => {
 
   describe('Class', () => {
     describe('fullLicenceHeldChanged', () => {
-      it('should emit the value passed in', () => {
+      it('should convert value passed in to a boolean and emit', () => {
         spyOn(component.fullLicenceHeldChange, 'emit');
         component.fullLicenceHeldChanged('Y');
-        expect(component.fullLicenceHeldChange.emit).toHaveBeenCalledWith('Y');
+        expect(component.fullLicenceHeldChange.emit).toHaveBeenCalledWith(true);
       });
     });
   });

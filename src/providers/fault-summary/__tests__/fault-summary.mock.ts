@@ -39,6 +39,7 @@ export const showMe1DFTellMe1DF =
   {
     testData: {
       vehicleChecks: {
+        fullLicenceHeld: false,
         tellMeQuestions: [
         { outcome: 'DF' },
         ],

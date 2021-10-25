@@ -84,6 +84,9 @@ describe('DebriefCardComponent', () => {
             busStop1: true,
             busStop2: true,
           },
+          vehicleChecks: {
+            fullLicenceHeld: false,
+          },
         };
         component.data = data;
         component.category = TestCategory.D;
@@ -112,6 +115,9 @@ describe('DebriefCardComponent', () => {
           uncoupleRecouple: {
             selected: true,
           },
+          vehicleChecks: {
+            fullLicenceHeld: false,
+          },
         };
         component.data = data;
         component.category = TestCategory.DE;
@@ -138,6 +144,9 @@ describe('DebriefCardComponent', () => {
             busStop1: true,
             busStop2: true,
           },
+          vehicleChecks: {
+            fullLicenceHeld: false,
+          },
         };
         component.data = data;
         component.category = TestCategory.D1;
@@ -162,6 +171,9 @@ describe('DebriefCardComponent', () => {
             normalStart2: false,
             busStop1: true,
             busStop2: true,
+          },
+          vehicleChecks: {
+            fullLicenceHeld: false,
           },
         };
         component.data = data;

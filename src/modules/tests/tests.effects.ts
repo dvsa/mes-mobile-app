@@ -63,9 +63,9 @@ import {
   InitializeVehicleChecks as InitializeVehicleChecksCatC,
 } from './test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 import {
-  InitializeVehicleChecks as InitializeVehicleChecksCatD,
+  InitializeVehicleChecks as InitializeVehicleChecksCatD, SetFullLicenceHeld,
 }
-from './test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
+  from './test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
 import { D255No, IndependentDrivingTypeChanged, RouteNumberChanged } from './test-summary/common/test-summary.actions';
 import { StartDelegatedTest } from './delegated-test/delegated-test.actions';
 import {
@@ -239,6 +239,13 @@ export class TestsEffects {
         startTestAction.category === TestCategory.DE) {
         arrayOfActions.push(new InitializeVehicleChecksCatD(startTestAction.category));
       }
+
+      if (
+        startTestAction.category === TestCategory.D ||
+        startTestAction.category === TestCategory.D1) {
+        arrayOfActions.push(new SetFullLicenceHeld(false));
+      }
+
       if (
         startTestAction.category === TestCategory.F ||
         startTestAction.category === TestCategory.G ||

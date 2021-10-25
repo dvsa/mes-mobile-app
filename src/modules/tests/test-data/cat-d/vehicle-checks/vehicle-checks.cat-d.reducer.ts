@@ -8,6 +8,7 @@ export const generateInitialState = (): CatDUniqueTypes.VehicleChecks => ({
   tellMeQuestions: Array(2).fill({}),
   showMeQuestions: Array(3).fill({}),
   vehicleChecksCompleted: null,
+  fullLicenceHeld: null,
 });
 
 export function vehicleChecksCatDReducer(
@@ -66,6 +67,11 @@ export function vehicleChecksCatDReducer(
         ...state,
         showMeQuestions: dropRight(state.showMeQuestions, state.showMeQuestions.length - 1),
         tellMeQuestions: dropRight(state.tellMeQuestions, state.tellMeQuestions.length - 1),
+      };
+    case vehicleChecksCatDActionTypes.VEHICLE_CHECKS_FULL_LICENCE_HELD:
+      return {
+        ...state,
+        fullLicenceHeld: action.payload,
       };
     default:
       return state;

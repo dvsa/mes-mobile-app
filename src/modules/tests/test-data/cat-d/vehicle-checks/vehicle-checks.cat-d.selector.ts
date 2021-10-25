@@ -24,10 +24,13 @@ export const getSelectedTellMeQuestions = (
   return vehicleChecksCatDReducer.tellMeQuestions;
 };
 
+export const getFullLicenceHeld = (
+  vehicleChecksCatDReducer: CatDVehicleChecks,
+): boolean => vehicleChecksCatDReducer.fullLicenceHeld;
+
 export const vehicleChecksExist = (vehicleChecks: CatDVehicleChecks): boolean => {
   const questions = [...vehicleChecks.showMeQuestions, ... vehicleChecks.tellMeQuestions];
   return some(questions, fault => fault.outcome != null);
 };
 
-export const getVehicleChecksCatD =
-  createFeatureSelector<CatDVehicleChecks>('vehicleChecks');
+export const getVehicleChecksCatD = createFeatureSelector<CatDVehicleChecks>('vehicleChecks');
