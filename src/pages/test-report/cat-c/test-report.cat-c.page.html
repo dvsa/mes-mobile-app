@@ -76,7 +76,10 @@
           <ion-col>
             <reverse-left [completed]="manoeuvresCompleted" [controlLabel]="'Reverse Left'"
               [clickCallback]="getCallback()" [testCategory]="pageState.testCategory$ | async">
-              <reverse-left-popover [testCategory]="pageState.testCategory$ | async"></reverse-left-popover>
+              <reverse-left-popover
+                [testCategory]="pageState.testCategory$ | async"
+                [disableDrivingFaults]="true">
+              </reverse-left-popover>
             </reverse-left>
           </ion-col>
         </ion-row>
@@ -112,7 +115,10 @@
         </ion-row>
         <ion-row [ngStyle]="{'visibility': showUncoupleRecouple() ? 'visible' : 'hidden' }">
           <ion-col>
-           <uncouple-recouple [category]="pageState.testCategory$ | async"></uncouple-recouple>
+           <uncouple-recouple
+             [category]="pageState.testCategory$ | async"
+             [disableDrivingFaults]="true">
+           </uncouple-recouple>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="showUncoupleRecouple()">
