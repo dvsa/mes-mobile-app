@@ -7,8 +7,7 @@ import { concatMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsDimensionIndices,
-  AnalyticsErrorTypes,
-  AnalyticsEventCategories,
+  AnalyticsErrorTypes, AnalyticsEventCategories,
   AnalyticsEvents,
   AnalyticsScreenNames,
 } from '../../providers/analytics/analytics.model';
@@ -35,8 +34,10 @@ import {
   MANOEUVRES_OPEN_ACTIVITY_CODE_MODAL,
   MANOEUVRES_ACTIVITY_CODE_SELECTED,
   ManoeuvresActivityCodeSelected,
-  MANOEUVRES_PAGE_SUBMISSION,
+  MANOEUVRES_PAGE_SUBMISSION, ManoeuvresViewPageSubmission, ManoeuvresActivityCodeModalOpened,
 } from './manoeuvres.actions';
+import { ActivityCodes } from '../../shared/models/activity-codes';
+import { getEnumKeyByValue } from '../../shared/helpers/enum-keys';
 
 @Injectable()
 export class ManoeuvresPageAnalyticsEffects {
@@ -115,9 +116,12 @@ export class ManoeuvresPageAnalyticsEffects {
   @Effect()
   manoeuvresPageSubmit$ = this.actions$.pipe(
     ofType(MANOEUVRES_PAGE_SUBMISSION),
-    switchMap(() => {
+    concatMap(action => of(action).pipe(
+      withLatestFrom(this.store$.pipe(select(getTests))),
+    )),
+    switchMap(([, tests]: [ManoeuvresViewPageSubmission, TestsModel]) => {
       this.analytics.logEvent(
-        AnalyticsEventCategories.MANOEUVRES,
+        formatAnalyticsText(AnalyticsEventCategories.MANOEUVRES, tests),
         AnalyticsEvents.SUBMIT_TEST,
         AnalyticsEvents.TEST_SUBMITTED,
       );
@@ -128,11 +132,16 @@ export class ManoeuvresPageAnalyticsEffects {
   @Effect()
   manoeuvresPageActivityCodeSelected$ = this.actions$.pipe(
     ofType(MANOEUVRES_ACTIVITY_CODE_SELECTED),
-    switchMap(({ activityCode }: ManoeuvresActivityCodeSelected) => {
+    concatMap(action => of(action).pipe(
+      withLatestFrom(this.store$.pipe(select(getTests))),
+    )),
+    switchMap(([{ activityCode }, tests]: [ManoeuvresActivityCodeSelected, TestsModel]) => {
+      const [description, code] = getEnumKeyByValue(ActivityCodes, activityCode);
+
       this.analytics.logEvent(
-        AnalyticsEventCategories.MANOEUVRES,
+        formatAnalyticsText(AnalyticsEventCategories.MANOEUVRES, tests),
         AnalyticsEvents.SET_ACTIVITY_CODE,
-        activityCode,
+        `${code} - ${description}`,
       );
       return of(new AnalyticRecorded());
     }),
@@ -141,9 +150,12 @@ export class ManoeuvresPageAnalyticsEffects {
   @Effect()
   manoeuvresPageOpenActivityCodeSelect$ = this.actions$.pipe(
     ofType(MANOEUVRES_OPEN_ACTIVITY_CODE_MODAL),
-    switchMap(() => {
+    concatMap(action => of(action).pipe(
+      withLatestFrom(this.store$.pipe(select(getTests))),
+    )),
+    switchMap(([, tests]: [ManoeuvresActivityCodeModalOpened, TestsModel]) => {
       this.analytics.logEvent(
-        AnalyticsEventCategories.MANOEUVRES,
+        formatAnalyticsText(AnalyticsEventCategories.MANOEUVRES, tests),
         AnalyticsEvents.OPEN_MODAL,
         AnalyticsEvents.ACTIVITY_CODE_MODAL_OPENED,
       );

@@ -13,6 +13,7 @@ import {
   CAT_D,
   CAT_HOME_TEST,
   CAT_CPC,
+  CAT_MANOEUVRES,
 } from '../../../page-names.constants';
 import { App } from '../../../../app/app.component';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
@@ -90,6 +91,16 @@ export class SearchResultComponent {
       case TestCategory.CCPC:
       case TestCategory.DCPC:
         pageToOpen = CAT_CPC.VIEW_TEST_RESULT_PAGE;
+        break;
+      case TestCategory.CM:
+      case TestCategory.C1M:
+      case TestCategory.CEM:
+      case TestCategory.C1EM:
+      case TestCategory.DM:
+      case TestCategory.D1M:
+      case TestCategory.DEM:
+      case TestCategory.D1EM:
+        pageToOpen = CAT_MANOEUVRES.VIEW_TEST_RESULT_PAGE;
         break;
     }
 

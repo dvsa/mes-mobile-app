@@ -20,7 +20,7 @@ import {
   CAT_ADI_PART2,
   CAT_HOME_TEST,
   CAT_CPC,
-  CAT_MANOEUVRERS,
+  CAT_MANOEUVRES,
 } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import {
@@ -249,7 +249,7 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.D1M:
       case TestCategory.DEM:
       case TestCategory.DM:
-        this.navController.push(CAT_MANOEUVRERS.MANOEUVRES_PAGE);
+        this.navController.push(CAT_MANOEUVRES.MANOEUVRES_PAGE);
         break;
     }
   }
@@ -432,7 +432,7 @@ export class TestOutcomeComponent implements OnInit {
       case TestCategory.D1M:
       case TestCategory.DEM:
       case TestCategory.DM:
-        return CAT_MANOEUVRERS.MANOEUVRES_PAGE;
+        return CAT_MANOEUVRES.MANOEUVRES_PAGE;
     }
   }
 

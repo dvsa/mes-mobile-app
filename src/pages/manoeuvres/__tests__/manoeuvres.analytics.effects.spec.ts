@@ -138,7 +138,7 @@ describe('ManoeuvresPageAnalyticsEffects', () => {
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.MANOEUVRES,
           AnalyticsEvents.SET_ACTIVITY_CODE,
-          '1',
+          '1 - PASS',
         );
         done();
       });
