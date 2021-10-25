@@ -111,7 +111,7 @@ export class FaultCountDHelper {
   static getVehicleChecksFaultCount = (
     vehicleChecks: CatDVehicleCheckUnion,
   ): VehicleChecksScore => {
-    if (vehicleChecks.fullLicenceHeld) {
+    if (get(vehicleChecks, 'fullLicenceHeld')) {
       return FaultCountDHelper.getVehicleChecksFaultCountTrailer(vehicleChecks);
     }
     return FaultCountDHelper.getVehicleChecksFaultCountNonTrailer(vehicleChecks);

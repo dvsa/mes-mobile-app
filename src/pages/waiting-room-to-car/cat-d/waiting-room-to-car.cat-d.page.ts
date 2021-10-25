@@ -69,7 +69,7 @@ import {
   getResidencyDeclarationStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
 import {
-  DropExtraVehicleChecks, SetFullLicenceHeld,
+  DropExtraVehicleChecks,
   VehicleChecksCompletedToggled,
   VehicleChecksDrivingFaultsNumberChanged,
 } from '../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
@@ -255,11 +255,6 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
-
-  fullLicenceHeldChange = (licenceHeld: boolean): void => {
-    console.log('licenceHeld', licenceHeld);
-    this.store$.dispatch(new SetFullLicenceHeld(licenceHeld));
   }
 
   closeVehicleChecksModal = () => {

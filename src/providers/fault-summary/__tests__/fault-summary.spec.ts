@@ -15,7 +15,7 @@ import { showMe2DFTellMe3DF, showMe2DFTellMe2DF, showMe1DFTellMe1DF, showMe0DFTe
 import { configureTestSuite } from 'ng-bullet';
 import { FaultSummaryCatAM1Helper } from '../cat-a-mod1/fault-summary.cat-a-mod1';
 
-fdescribe('faultSummaryProvider', () => {
+describe('faultSummaryProvider', () => {
   const categoryC = [
     {
       category: TestCategory.C,
@@ -49,12 +49,30 @@ fdescribe('faultSummaryProvider', () => {
     },
     {
       category: TestCategory.D1E,
-      showMeTellMeAllFaults: showMe1DFTellMe1DF,
+      showMeTellMeAllFaults: {
+        ...showMe1DFTellMe1DF,
+        testData: {
+          ...showMe1DFTellMe1DF.testData,
+          vehicleChecks: {
+            ...showMe1DFTellMe1DF.testData.vehicleChecks,
+            fullLicenceHeld: true,
+          },
+        },
+      },
       showMeTellMeSemiFaults: showMe0DFTellMe1DF,
     },
     {
       category: TestCategory.DE,
-      showMeTellMeAllFaults: showMe1DFTellMe1DF,
+      showMeTellMeAllFaults: {
+        ...showMe1DFTellMe1DF,
+        testData: {
+          ...showMe1DFTellMe1DF.testData,
+          vehicleChecks: {
+            ...showMe1DFTellMe1DF.testData.vehicleChecks,
+            fullLicenceHeld: true,
+          },
+        },
+      },
       showMeTellMeSemiFaults: showMe0DFTellMe1DF,
     },
   ];
@@ -331,7 +349,7 @@ fdescribe('faultSummaryProvider', () => {
           expect(result.length).toEqual(1);
           expect(result[0].faultCount).toEqual(cat.showMeTellMeSemiFaults.drivingFaults);
         });
-        it('should correctly return 4 driving faults as the fault count when there are 5', () => {
+        it(`should correctly return 4 driving faults as the fault count when there are 5 - ${cat.category}`, () => {
           const result = faultSummaryProvider.getDrivingFaultsList(cat.showMeTellMeAllFaults.testData, cat.category);
           expect(result.length).toEqual(1);
           expect(result[0].faultCount).toEqual(cat.showMeTellMeAllFaults.drivingFaults);

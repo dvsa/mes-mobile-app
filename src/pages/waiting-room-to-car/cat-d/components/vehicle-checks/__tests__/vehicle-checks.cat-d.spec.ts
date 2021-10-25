@@ -60,12 +60,11 @@ describe('VehicleChecksCatDComponent', () => {
     describe('openVehicleChecksModal', () => {
       it('should create the correct model', () => {
         component.category = TestCategory.D;
-        component.fullLicenceHeld = true;
         component.openVehicleChecksModal();
         expect(modalController.create).toHaveBeenCalledTimes(1);
         expect(modalController.create).toHaveBeenCalledWith(
           CAT_D.VEHICLE_CHECKS_MODAL,
-          { category: TestCategory.D, fullLicenceHeld: true },
+          { category: TestCategory.D },
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );
       });

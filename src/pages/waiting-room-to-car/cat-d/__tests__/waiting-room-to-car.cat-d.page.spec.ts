@@ -163,12 +163,4 @@ describe('WaitingRoomToCarCatDPage', () => {
       expect(store$.dispatch).toHaveBeenCalledWith(new CandidateDeclarationSigned());
     });
   });
-
-  describe('fullLicenceHeldChange', () => {
-    it('should set the value of fullLicenceHeld to whatever is passed in', () => {
-      component.fullLicenceHeld = false;
-      component.fullLicenceHeldChange(true);
-      expect(component.fullLicenceHeld).toEqual(true);
-    });
-  });
 });

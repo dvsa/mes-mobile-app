@@ -77,6 +77,7 @@ interface VehicleChecksModalCatDState {
   vehicleChecks$: Observable<CatDVehicleChecks>;
   safetyQuestionsScore$: Observable<SafetyQuestionsScore>;
   fullLicenceHeld$: Observable<boolean>;
+  showFullLicenceHeld$: Observable<boolean>;
   fullLicenceHeldSelection$: Observable<string>;
 }
 
@@ -171,6 +172,12 @@ export class VehicleChecksCatDModal {
         select(getTestData),
         select(getVehicleChecksCatD),
         select(getFullLicenceHeld),
+      ),
+      showFullLicenceHeld$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatD),
+        select(getFullLicenceHeld),
+        map((licenceHeld: boolean) => licenceHeld !== null),
       ),
       fullLicenceHeldSelection$: currentTest$.pipe(
         select(getTestData),

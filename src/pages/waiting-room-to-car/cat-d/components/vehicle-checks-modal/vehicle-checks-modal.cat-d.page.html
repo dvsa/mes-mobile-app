@@ -22,7 +22,7 @@
     </full-licence-held-toggle>
   </ion-card>
 
-  <div *ngIf="(pageState.fullLicenceHeld$ | async) !== null">
+  <div *ngIf="pageState.showFullLicenceHeld$ | async">
     <ion-card>
       <ion-card-header>
         <ion-card-title>

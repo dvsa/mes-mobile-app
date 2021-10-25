@@ -7,8 +7,7 @@ import { vehicleChecksTwoFaults, vehicleChecksFiveFaults } from '../../__mocks__
 describe('FaultCountDHelper', () => {
 
   configureTestSuite(() => {
-    TestBed.configureTestingModule({
-    });
+    TestBed.configureTestingModule({});
   });
 
   describe('getVehicleChecksFaultCountCatD', () => {
@@ -61,7 +60,10 @@ describe('FaultCountDHelper', () => {
 
   describe('getVehicleChecksFaultCountCatD1E', () => {
     it('should return 1 serious 1 DF, when full licence held and 2 DF are set', () => {
-      const result = FaultCountDHelper.getVehicleChecksFaultCount(vehicleChecksTwoFaults);
+      const result = FaultCountDHelper.getVehicleChecksFaultCount({
+        ...vehicleChecksTwoFaults,
+        fullLicenceHeld: true,
+      });
       expect(result).toEqual({ drivingFaults: 1, seriousFaults: 1 });
     });
     it('should return 0 serious 2 DF, when full licence not held and 2 DF are set', () => {
