@@ -134,7 +134,7 @@ export class TestResultProvider {
       return of(ActivityCodes.FAIL);
     }
 
-    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) > 15) {
+    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) > 12) {
       return of(ActivityCodes.FAIL);
     }
 
@@ -193,7 +193,7 @@ export class TestResultProvider {
       return of(ActivityCodes.FAIL);
     }
 
-    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) > 15) {
+    if (this.faultCountProvider.getDrivingFaultSumCount(category, testData) > 12) {
       return of(ActivityCodes.FAIL);
     }
 

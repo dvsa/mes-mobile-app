@@ -8,9 +8,16 @@ import * as mocks from '../__mocks__/test-result-data.mock';
 
 describe('TestResultCalculatorProvider', () => {
 
-  const categories: TestCategory[] = [
+  const fifteenCategories: TestCategory[] = [
     TestCategory.B,
     TestCategory.BE,
+    TestCategory.F,
+    TestCategory.G,
+    TestCategory.H,
+    TestCategory.K,
+  ];
+
+  const twelveCategories: TestCategory[] = [
     TestCategory.C,
     TestCategory.C1,
     TestCategory.C1E,
@@ -19,11 +26,6 @@ describe('TestResultCalculatorProvider', () => {
     TestCategory.D1,
     TestCategory.DE,
     TestCategory.D1E,
-    TestCategory.F,
-    TestCategory.G,
-    TestCategory.H,
-    TestCategory.K,
-
   ];
 
   const adiCategories: TestCategory[] = [
@@ -31,7 +33,8 @@ describe('TestResultCalculatorProvider', () => {
   ];
 
   const allCategories: TestCategory[] = [
-    ...categories,
+    ...fifteenCategories,
+    ...twelveCategories,
     ...adiCategories,
   ];
 
@@ -52,7 +55,7 @@ describe('TestResultCalculatorProvider', () => {
 
   describe('calculateTestResult', () => {
     describe(`${allCategories.join(', ')}`, () => {
-      categories.forEach((cat) => {
+      allCategories.forEach((cat) => {
         it(`should return a Pass when there are no driving faults for a Cat ${cat} test`, (done) => {
           testResultProvider.calculateTestResult(cat, mocks.noFaultsMock).subscribe((result) => {
             expect(result).toBe(ActivityCodes.PASS);
@@ -127,8 +130,8 @@ describe('TestResultCalculatorProvider', () => {
       });
     });
 
-    describe(`${categories.join(', ')}`, () => {
-      categories.forEach((cat) => {
+    describe(`${fifteenCategories.join(', ')}`, () => {
+      fifteenCategories.forEach((cat) => {
         it(`should return a Fail when there are 16 driving faults for a Cat ${cat} test`, (done) => {
           testResultProvider.calculateTestResult(cat, mocks.sixteenDrivingFaultsMock).subscribe((result) => {
             expect(result).toBe(ActivityCodes.FAIL);
@@ -167,6 +170,53 @@ describe('TestResultCalculatorProvider', () => {
         });
         it(`should return a Pass when there are 15 driving faults for a Cat ${cat} test`, (done) => {
           testResultProvider.calculateTestResult(cat, mocks.fifteenDrivingFaultsMock).subscribe((result) => {
+            expect(result).toBe(ActivityCodes.PASS);
+            done();
+          });
+        });
+      });
+    });
+
+    describe(`${twelveCategories.join(', ')}`, () => {
+      twelveCategories.forEach((cat) => {
+        it(`should return a Fail when there are 13 driving faults for a Cat ${cat} test`, (done) => {
+          testResultProvider.calculateTestResult(cat, mocks.thirteenDrivingFaultsMock).subscribe((result) => {
+            expect(result).toBe(ActivityCodes.FAIL);
+            done();
+          });
+        });
+        it(`should return a Fail when there are 13 driving faults and a dangerous for a Cat ${cat} test`, (done) => {
+          testResultProvider.calculateTestResult(cat, mocks.thirteenDrivingFaultsWithDangerousMock)
+            .subscribe((result) => {
+              expect(result).toBe(ActivityCodes.FAIL);
+              done();
+            });
+        });
+        it(`should return a Fail when there are 13 driving faults and a serious fault for a Cat ${cat} test`,
+          (done) => {
+            testResultProvider.calculateTestResult(cat, mocks.thirteenDrivingFaultsWithSeriousMock)
+              .subscribe((result) => {
+                expect(result).toBe(ActivityCodes.FAIL);
+                done();
+              });
+          });
+        it(`should return a Fail when there are 12 driving faults and a dangerous for a Cat ${cat} test`, (done) => {
+          testResultProvider.calculateTestResult(cat, mocks.twelveDrivingFaultsWithDangerousMock)
+            .subscribe((result) => {
+              expect(result).toBe(ActivityCodes.FAIL);
+              done();
+            });
+        });
+        it(`should return a Fail when there are 12 driving faults and a serious fault for a Cat ${cat} test`,
+          (done) => {
+            testResultProvider.calculateTestResult(cat, mocks.twelveDrivingFaultsWithSeriousMock)
+              .subscribe((result) => {
+                expect(result).toBe(ActivityCodes.FAIL);
+                done();
+              });
+          });
+        it(`should return a Pass when there are 12 driving faults for a Cat ${cat} test`, (done) => {
+          testResultProvider.calculateTestResult(cat, mocks.twelveDrivingFaultsMock).subscribe((result) => {
             expect(result).toBe(ActivityCodes.PASS);
             done();
           });
