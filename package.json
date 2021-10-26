@@ -98,7 +98,7 @@
     "cordova-plugin-statusbar": "^2.4.2",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordovax-edit-ats": "^1.1.0",
-    "core-js": "^3.11.2",
+    "core-js": "^3.18.1",
     "deep-diff": "^1.0.2",
     "enjoi-browser": "^1.2.0",
     "event-stream": "3.3.4",
