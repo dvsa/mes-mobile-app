@@ -1,19 +1,16 @@
-
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, Config,  NavParams, ViewController } from 'ionic-angular';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Config, IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { VehicleChecksCatCModal } from '../vehicle-checks-modal.cat-c.page';
 import { Store, StoreModule } from '@ngrx/store';
 import { ConfigMock, NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../../app/app.module';
 import { MockComponent } from 'ng-mocks';
 import { VehicleChecksQuestionCatCComponent } from '../../vehicle-checks-question/vehicle-checks-question.cat-c';
-import {
-  QuestionOutcome,
-  QuestionResult,
-} from '@dvsa/mes-test-schema/categories/common';
+import { QuestionOutcome, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { StoreModel } from '../../../../../../shared/models/store.model';
 
 import {
+  SetFullLicenceHeld,
   ShowMeQuestionOutcomeChanged,
   ShowMeQuestionSelected,
   TellMeQuestionSelected,
@@ -23,13 +20,16 @@ import { WarningBannerComponent } from '../../../../../../components/common/warn
 import { configureTestSuite } from 'ng-bullet';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { FullLicenceHeldComponent } from '../../../../components/full-licence-held-toggle/full-licence-held-toggle';
+import { FaultCountProvider } from '../../../../../../providers/fault-count/fault-count';
+import { VehicleChecksScore } from '../../../../../../shared/models/vehicle-checks-score.model';
 
 describe('VehicleChecksCatCModal', () => {
   let fixture: ComponentFixture<VehicleChecksCatCModal>;
   let component: VehicleChecksCatCModal;
   let store$: Store<StoreModel>;
+  let faultCountProvider: FaultCountProvider;
 
-  const bannerDisplayLogic = [
+  const bannerDisplayLogicNonTrailer = [
     { category: TestCategory.C, drivingFaults: 0, seriousFaults: 0, showBanner: false },
     { category: TestCategory.C, drivingFaults: 1, seriousFaults: 0, showBanner: false },
     { category: TestCategory.C, drivingFaults: 4, seriousFaults: 1, showBanner: true },
@@ -38,12 +38,6 @@ describe('VehicleChecksCatCModal', () => {
     { category: TestCategory.C1, drivingFaults: 1, seriousFaults: 0, showBanner: false },
     { category: TestCategory.C1, drivingFaults: 4, seriousFaults: 1, showBanner: true },
     { category: TestCategory.C1, drivingFaults: 3, seriousFaults: 0, showBanner: false },
-    { category: TestCategory.CE, drivingFaults: 0, seriousFaults: 0, showBanner: false },
-    { category: TestCategory.CE, drivingFaults: 1, seriousFaults: 0, showBanner: false },
-    { category: TestCategory.CE, drivingFaults: 1, seriousFaults: 1, showBanner: true },
-    { category: TestCategory.C1E, drivingFaults: 0, seriousFaults: 0, showBanner: false },
-    { category: TestCategory.C1E, drivingFaults: 1, seriousFaults: 0, showBanner: false },
-    { category: TestCategory.C1E, drivingFaults: 1, seriousFaults: 1, showBanner: true },
   ];
 
   configureTestSuite(() => {
@@ -71,22 +65,15 @@ describe('VehicleChecksCatCModal', () => {
     fixture = TestBed.createComponent(VehicleChecksCatCModal);
     component = fixture.componentInstance;
     store$ = TestBed.get(Store);
+    faultCountProvider = TestBed.get(FaultCountProvider);
     spyOn(store$, 'dispatch');
   }));
-
-  describe('fullLicenceHeldChange()', () => {
-    it('should convert input to a boolean and pass into setNumberOfShowMeTellMeQuestions', () => {
-      spyOn(component, 'setNumberOfShowMeTellMeQuestions');
-      component.fullLicenceHeldChange(true);
-      expect(component.fullLicenceHeldSelected).toEqual('Y');
-      expect(component.setNumberOfShowMeTellMeQuestions).toHaveBeenCalledWith(true);
-    });
-  });
 
   describe('showFullLicenceHeld()', () => {
     [TestCategory.CE , TestCategory.C1E].forEach((category: TestCategory) => {
       it(`should return false for category ${category} and set fullLicenceHeldSelected to Y`, () => {
         component.category = category;
+        component.fullLicenceHeldSelected = 'N';
         expect(component.showFullLicenceHeld()).toEqual(true);
         expect(component.fullLicenceHeldSelected).toEqual('N');
       });
@@ -152,7 +139,7 @@ describe('VehicleChecksCatCModal', () => {
       });
     });
     describe('shouldDisplayBanner', () => {
-      bannerDisplayLogic.forEach((bannerLogic) => {
+      bannerDisplayLogicNonTrailer.forEach((bannerLogic) => {
 
         it(`Cat ${bannerLogic.category} should return ${bannerLogic.showBanner} if
  there are ${bannerLogic.drivingFaults} driving faults and ${bannerLogic.seriousFaults} serious`, () => {
@@ -160,15 +147,44 @@ describe('VehicleChecksCatCModal', () => {
             drivingFaults: bannerLogic.drivingFaults,
             seriousFaults: bannerLogic.seriousFaults,
           };
+          component.fullLicenceHeldSelected = 'Y';
           component.category = bannerLogic.category;
           expect(component.shouldDisplayBanner()).toBe(bannerLogic.showBanner);
         });
+      });
+      [TestCategory.CE, TestCategory.C1E].forEach((category) => {
+        it('should show when 1 DF and 1 S for full licence', () => {
+          component.vehicleChecksScore = { drivingFaults: 1, seriousFaults: 1 };
+          component.category = category;
+          component.fullLicenceHeld = true;
+          expect(component.shouldDisplayBanner()).toBe(true);
+        });
+        it('should hide when 1 DF and 1S for non full licence', () => {
+          component.vehicleChecksScore = { drivingFaults: 1, seriousFaults: 1 };
+          component.category = category;
+          component.fullLicenceHeld = false;
+          expect(component.shouldDisplayBanner()).toBe(false);
+        });
+        it('should hide when 4 DF and 0S for non full licence', () => {
+          component.vehicleChecksScore = { drivingFaults: 4, seriousFaults: 0 };
+          component.category = category;
+          component.fullLicenceHeld = false;
+          expect(component.shouldDisplayBanner()).toBe(false);
+        });
+      });
 
+      describe('fullLicenceHeldChange()', () => {
+        it('should convert input to a boolean and pass into setNumberOfShowMeTellMeQuestions', () => {
+          spyOn(component, 'setNumberOfShowMeTellMeQuestions');
+          spyOn(faultCountProvider, 'getVehicleChecksFaultCount').and.returnValue({} as VehicleChecksScore);
+          component.category = TestCategory.C1E;
+          component.vehicleChecks = {};
+          component.fullLicenceHeldChange(true);
+          expect(store$.dispatch).toHaveBeenCalledWith(new SetFullLicenceHeld(true));
+          expect(component.setNumberOfShowMeTellMeQuestions).toHaveBeenCalledWith(true);
+          expect(faultCountProvider.getVehicleChecksFaultCount).toHaveBeenCalledWith(TestCategory.C1E, {});
+        });
       });
     });
-  });
-
-  describe('DOM', () => {
-
   });
 });
