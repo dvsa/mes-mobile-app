@@ -9,6 +9,7 @@ export const TELL_ME_QUESTION_SELECTED = '[VehicleChecksPage] [CatD] Tell Me Que
 export const TELL_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] [CatD] Tell Me Question Outcome Changed';
 export const ADD_SHOW_ME_TELL_ME_COMMENT = '[Vehicle Checks] [CatD] Add Show me Tell me comment';
 export const VEHICLE_CHECKS_COMPLETED = '[Vehicle Checks] [CatD] Vehicle Checks Completed';
+export const VEHICLE_CHECKS_FULL_LICENCE_HELD = '[Vehicle Checks] [CatD] Full Licence Held toggled';
 export const VEHICLE_CHECKS_DRIVING_FAULTS_NUMBER_CHANGED =
   '[Vehicle Checks] [CatD] Vehicle Checks Driving Faults Number Changed';
 export const VEHICLE_CHECKS_DROP_EXTRA_VEHICLE_CHECKS =
@@ -57,6 +58,11 @@ export class DropExtraVehicleChecks implements Action {
   readonly type = VEHICLE_CHECKS_DROP_EXTRA_VEHICLE_CHECKS;
 }
 
+export class SetFullLicenceHeld implements Action {
+  constructor(public payload: boolean) { }
+  readonly type = VEHICLE_CHECKS_FULL_LICENCE_HELD;
+}
+
 export type Types =
   | VehicleChecksCompletedToggled
   | InitializeVehicleChecks
@@ -66,4 +72,5 @@ export type Types =
   | TellMeQuestionOutcomeChanged
   | AddShowMeTellMeComment
   | DropExtraVehicleChecks
+  | SetFullLicenceHeld
   | VehicleChecksDrivingFaultsNumberChanged;

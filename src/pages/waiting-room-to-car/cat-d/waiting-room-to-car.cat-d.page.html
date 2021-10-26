@@ -33,8 +33,7 @@
                     [vehicleChecks]="pageState.vehicleChecks$ | async"
                     [safetyQuestions]="pageState.safetyQuestions$ | async"
                     [onCloseVehicleChecksModal]="closeVehicleChecksModal"
-                    [fullLicenceHeld]="fullLicenceHeld"
-                    (fullLicenceHeldChange)="fullLicenceHeldChange($event)">
+                    [fullLicenceHeld]="pageState.fullLicenceHeld$ | async">
             </vehicle-checks-cat-d>
 
             <vehicle-checks-completed

@@ -15,14 +15,14 @@
   <ion-card>
     <full-licence-held-toggle
       *ngIf="showFullLicenceHeld()"
-      [fullLicenceHeld]="fullLicenceHeldSelected"
+      [fullLicenceHeld]="pageState.fullLicenceHeldSelection$ | async"
       [testCategory]="category"
       [formGroup]="formGroup"
       (fullLicenceHeldChange)="fullLicenceHeldChange($event)">
     </full-licence-held-toggle>
   </ion-card>
 
-  <div *ngIf="fullLicenceHeldSelected">
+  <div *ngIf="pageState.showFullLicenceHeld$ | async">
     <ion-card>
       <ion-card-header>
         <ion-card-title>
@@ -94,7 +94,7 @@
 <ion-footer>
   <ion-row class="mes-full-width-card box-shadow">
     <button type="submit" class="mes-primary-button" id="submit-vehicle-checks" ion-button (click)="onSubmit()">
-      <h3>Continue</h3>
+      <h3>Submit vehicle checks</h3>
     </button>
   </ion-row>
 </ion-footer>

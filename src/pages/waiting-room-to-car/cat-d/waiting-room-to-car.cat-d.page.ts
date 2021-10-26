@@ -41,6 +41,7 @@ import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.
 import { SafetyQuestionsScore } from '../../../shared/models/safety-questions-score.model';
 
 import {
+  getFullLicenceHeld,
   getVehicleChecksCatD,
 } from '../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.selector';
 import {
@@ -95,6 +96,7 @@ interface WaitingRoomToCarPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
   residencyDeclarationAccepted$: Observable<boolean>;
   candidateDeclarationSigned$: Observable<boolean>;
+  fullLicenceHeld$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -212,6 +214,11 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
         select(getPreTestDeclarations),
         select(getCandidateDeclarationSignedStatus),
       ),
+      fullLicenceHeld$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatD),
+        select(getFullLicenceHeld),
+      ),
     };
     this.setupSubscription();
   }
@@ -281,11 +288,13 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
     const {
       testCategory$,
       delegatedTest$,
+      fullLicenceHeld$,
     } = this.pageState;
 
     this.subscription = merge(
       testCategory$.pipe(map(result => this.testCategory = result)),
       delegatedTest$.pipe(map(result => this.isDelegated = result)),
+      fullLicenceHeld$.pipe(map(result => this.fullLicenceHeld = result)),
     ).subscribe();
   }
 
@@ -294,7 +303,7 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
     if (this.form.valid) {
       // if user selected they dont hold full licence, but then changes decision to already has a full licence
       // remove the extra vehicle checks
-      if (this.fullLicenceHeld) {
+      if (this.fullLicenceHeld && (this.testCategory === TestCategory.DE || this.testCategory === TestCategory.D1E)) {
         this.store$.dispatch(new DropExtraVehicleChecks());
       }
       this.navController.push(CAT_D.TEST_REPORT_PAGE).then(() => {
@@ -329,8 +338,4 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
   }
 
   displayLoadSecured = (): boolean => this.testCategory === TestCategory.DE || this.testCategory === TestCategory.D1E;
-
-  fullLicenceHeldChange = (licenceHeld: boolean): void => {
-    this.fullLicenceHeld = licenceHeld;
-  }
 }
