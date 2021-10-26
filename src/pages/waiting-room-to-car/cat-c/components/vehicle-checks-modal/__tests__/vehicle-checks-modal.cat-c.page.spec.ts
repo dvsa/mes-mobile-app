@@ -77,7 +77,7 @@ describe('VehicleChecksCatCModal', () => {
   describe('fullLicenceHeldChange()', () => {
     it('should convert input to a boolean and pass into setNumberOfShowMeTellMeQuestions', () => {
       spyOn(component, 'setNumberOfShowMeTellMeQuestions');
-      component.fullLicenceHeldChange('Y');
+      component.fullLicenceHeldChange(true);
       expect(component.fullLicenceHeldSelected).toEqual('Y');
       expect(component.setNumberOfShowMeTellMeQuestions).toHaveBeenCalledWith(true);
     });
