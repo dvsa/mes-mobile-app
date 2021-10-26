@@ -57,12 +57,12 @@
               {{specialNeed}}</div>
           </div>
         </data-row-custom>
-        <data-row
-          [label]="'Entitlement check'"
-          [value]="'Entitlement check is required.'"
-          [shouldShowIndicator]="true"
-          *ngIf="pageState.details.entitlementCheck.show">
-        </data-row>
+        <data-row-custom [label]="'Entitlement check'"
+                         [shouldShowIndicator]="true"
+                         *ngIf="pageState.candidateEntitlementCheck || pageState.categoryEntitlementCheck">
+            <div class="mes-data" *ngIf="pageState.candidateEntitlementCheck">- Entitlement check is required.</div>
+            <div class="mes-data" *ngIf="pageState.categoryEntitlementCheck">- {{ pageState.categoryEntitlementCheckText }}</div>
+        </data-row-custom>
         <data-row-custom [label]="'Additional information'" [shouldHaveSeperator]="false">
           <div class="mes-data" *ngIf="pageState.details.candidateComments.isSectionEmpty">
             None

@@ -15,6 +15,7 @@ import {
   getTime,
   getDetails,
   getBusiness,
+  isCategoryEntitlementChecked, getCategoryEntitlementCheckText, isCandidateCheckNeeded,
 } from './candidate-details.selector';
 import {
   CandidateDetailsViewDidEnter,
@@ -27,6 +28,9 @@ interface CandidateDetailsPageState {
   time: string;
   details: Details;
   business: Business;
+  candidateEntitlementCheck: boolean;
+  categoryEntitlementCheck: boolean;
+  categoryEntitlementCheckText: string;
 }
 
 @IonicPage()
@@ -55,11 +59,16 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
   ngOnInit(): void {
     this.store$.dispatch(new ClearChangedSlot(this.slot.slotDetail.slotId));
 
+    console.log('slot:', this.slot);
+
     this.pageState = {
       name: getCandidateName(this.slot),
       time: getTime(this.slot),
       details: getDetails(this.slot),
       business: getBusiness(this.slot),
+      candidateEntitlementCheck: isCandidateCheckNeeded(this.slot),
+      categoryEntitlementCheck: isCategoryEntitlementChecked(this.slot),
+      categoryEntitlementCheckText: getCategoryEntitlementCheckText(this.slot),
     };
 
     this.testCategory = this.pageState.details.testCategory as TestCategory;
