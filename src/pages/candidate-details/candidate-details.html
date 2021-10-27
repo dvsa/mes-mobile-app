@@ -60,8 +60,18 @@
         <data-row-custom [label]="'Entitlement check'"
                          [shouldShowIndicator]="true"
                          *ngIf="pageState.candidateEntitlementCheck || pageState.categoryEntitlementCheck">
-            <div class="mes-data" *ngIf="pageState.candidateEntitlementCheck">- Entitlement check is required.</div>
-            <div class="mes-data" *ngIf="pageState.categoryEntitlementCheck">- {{ pageState.categoryEntitlementCheckText }}</div>
+          <div class="mes-data" *ngIf="pageState.candidateEntitlementCheck">
+            <ion-row>
+              <ion-col col-3>-</ion-col>
+              <ion-col col-85>Entitlement check is required.</ion-col>
+            </ion-row>
+          </div>
+          <div class="mes-data" *ngIf="pageState.categoryEntitlementCheck">
+            <ion-row>
+              <ion-col col-3>-</ion-col>
+              <ion-col col-85>{{ pageState.categoryEntitlementCheckText }}</ion-col>
+            </ion-row>
+          </div>
         </data-row-custom>
         <data-row-custom [label]="'Additional information'" [shouldHaveSeperator]="false">
           <div class="mes-data" *ngIf="pageState.details.candidateComments.isSectionEmpty">

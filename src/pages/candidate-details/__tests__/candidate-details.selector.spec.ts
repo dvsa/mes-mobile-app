@@ -8,7 +8,7 @@ import {
   isCandidateCheckNeeded,
   getSlotChanged,
   processSpecialNeeds,
-  getBusiness,
+  getBusiness, isCategoryEntitlementChecked, getCategoryEntitlementCheckText,
 } from '../candidate-details.selector';
 import { SlotTypes } from '../../../shared/models/slot-types';
 import { SpecialNeedsCode, getSlotType } from '../../../shared/helpers/get-slot-type';
@@ -390,6 +390,37 @@ describe('Candidate Details Selector', () => {
       };
       const result = isCandidateCheckNeeded(slot);
       expect(result).toEqual(true);
+    });
+  });
+
+  describe('isCategoryEntitlementChecked', () => {
+    it('returns true if category entitlement check needed', () => {
+      const slot = {
+        booking: {
+          application: {
+            categoryEntitlementCheck: true,
+          },
+          previousCancellation: [],
+        },
+      };
+      const result = isCategoryEntitlementChecked(slot);
+      expect(result).toEqual(true);
+    });
+  });
+
+  describe('getCategoryEntitlementCheckText', () => {
+    it('should return the category entitlement warning text containing the current category', () => {
+      const slot = {
+        booking: {
+          application: {
+            testCategory: 'CM',
+          },
+        },
+      };
+      const result = getCategoryEntitlementCheckText(slot);
+      // tslint:disable-next-line:prefer-template
+      expect(result).toEqual('Check DVLA email confirming entitlement for Cat CM test.\n' +
+        '   Contact deployment if unable to confirm');
     });
   });
 
