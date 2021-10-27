@@ -59,8 +59,6 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
   ngOnInit(): void {
     this.store$.dispatch(new ClearChangedSlot(this.slot.slotDetail.slotId));
 
-    console.log('slot:', this.slot);
-
     this.pageState = {
       name: getCandidateName(this.slot),
       time: getTime(this.slot),
