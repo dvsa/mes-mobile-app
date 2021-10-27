@@ -64,7 +64,7 @@ describe('VehicleChecksCatCComponent', () => {
         expect(modalController.create).toHaveBeenCalledTimes(1);
         expect(modalController.create).toHaveBeenCalledWith(
           CAT_C.VEHICLE_CHECKS_MODAL,
-         { category: TestCategory.C1E, fullLicenceHeld: null },
+         { category: TestCategory.C1E },
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );
       });

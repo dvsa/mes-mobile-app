@@ -38,6 +38,7 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import {
+  getFullLicenceHeld,
   getVehicleChecksCatC, getVehicleChecksCompleted,
 } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
@@ -83,6 +84,7 @@ interface WaitingRoomToCarPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
   residencyDeclarationAccepted$: Observable<boolean>;
   candidateDeclarationSigned$: Observable<boolean>;
+  fullLicenceHeld$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -184,6 +186,11 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
         select(getPreTestDeclarations),
         select(getCandidateDeclarationSignedStatus),
       ),
+      fullLicenceHeld$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatC),
+        select(getFullLicenceHeld),
+      ),
     };
     this.setupSubscription();
   }
@@ -253,18 +260,20 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
     const {
       testCategory$,
       delegatedTest$,
+      fullLicenceHeld$,
     } = this.pageState;
 
     this.subscription = merge(
       testCategory$.pipe(map(result => this.testCategory = result)),
       delegatedTest$.pipe(map(result => this.isDelegated = result)),
+      fullLicenceHeld$.pipe(map(result => this.fullLicenceHeld = result)),
     ).subscribe();
   }
 
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      if (this.fullLicenceHeld) {
+      if (this.fullLicenceHeld && (this.testCategory === TestCategory.CE || this.testCategory === TestCategory.C1E)) {
         this.store$.dispatch(new DropExtraVehicleChecks());
       }
       this.navController.push(CAT_C.TEST_REPORT_PAGE).then(() => {
@@ -298,10 +307,8 @@ export class WaitingRoomToCarCatCPage extends BasePageComponent {
     return CAT_C.DEBRIEF_PAGE;
   }
   displayCabLockDown = (): boolean => this.testCategory === TestCategory.C || this.testCategory === TestCategory.CE;
+
   displayLoadSecured = (): boolean => this.testCategory === TestCategory.C ||
                                       this.testCategory === TestCategory.CE ||
                                       this.testCategory === TestCategory.C1E
-  fullLicenceHeldChange = (licenceHeld: boolean): void => {
-    this.fullLicenceHeld = licenceHeld;
-  }
 }

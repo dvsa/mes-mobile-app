@@ -60,12 +60,11 @@ export class VehicleChecksCatCComponent implements OnChanges, OnInit {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const modal = this.modalController.create(
       CAT_C.VEHICLE_CHECKS_MODAL,
-      { category: this.category, fullLicenceHeld: this.fullLicenceHeld },
+      { category: this.category },
       { cssClass: zoomClass },
     );
-    modal.onDidDismiss((licenceHeld: string) => {
+    modal.onDidDismiss(() => {
       this.onCloseVehicleChecksModal();
-      this.fullLicenceHeldChange.emit(licenceHeld === 'Y');
     });
     modal.present();
   }
@@ -82,8 +81,7 @@ export class VehicleChecksCatCComponent implements OnChanges, OnInit {
       this.fullLicenceHeld ? [this.vehicleChecks.tellMeQuestions[0]] : this.vehicleChecks.tellMeQuestions;
 
     return showMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
-      && tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
-      && this.vehicleChecks.tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true);
+      && tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true);
   }
 
   hasSeriousFault(): boolean {

@@ -73,9 +73,7 @@ describe('VehicleChecksCatCModal', () => {
     [TestCategory.CE , TestCategory.C1E].forEach((category: TestCategory) => {
       it(`should return false for category ${category} and set fullLicenceHeldSelected to Y`, () => {
         component.category = category;
-        component.fullLicenceHeldSelected = 'N';
         expect(component.showFullLicenceHeld()).toEqual(true);
-        expect(component.fullLicenceHeldSelected).toEqual('N');
       });
     });
     [TestCategory.CE , TestCategory.C1E].forEach((category: TestCategory) => {
@@ -147,7 +145,6 @@ describe('VehicleChecksCatCModal', () => {
             drivingFaults: bannerLogic.drivingFaults,
             seriousFaults: bannerLogic.seriousFaults,
           };
-          component.fullLicenceHeldSelected = 'Y';
           component.category = bannerLogic.category;
           expect(component.shouldDisplayBanner()).toBe(bannerLogic.showBanner);
         });

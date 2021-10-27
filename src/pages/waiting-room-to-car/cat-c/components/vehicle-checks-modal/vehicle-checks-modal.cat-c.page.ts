@@ -84,7 +84,6 @@ export class VehicleChecksCatCModal {
 
   vehicleChecksScore: VehicleChecksScore;
   vehicleChecks: CatCVehicleChecks;
-  fullLicenceHeldSelected: string = null;
   subscription: Subscription;
 
   constructor(
@@ -95,9 +94,7 @@ export class VehicleChecksCatCModal {
     private viewCtrl: ViewController,
   ) {
     this.category = params.get('category');
-    this.setNumberOfShowMeTellMeQuestions();
     this.formGroup = new FormGroup({});
-
     this.showMeQuestions = questionProvider.getShowMeQuestions(this.category);
     this.tellMeQuestions = questionProvider.getTellMeQuestions(this.category);
   }
