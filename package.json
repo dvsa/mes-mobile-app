@@ -72,7 +72,7 @@
     "@ionic-native/secure-storage": "^4.20.0",
     "@ionic-native/splash-screen": "~4.17.0",
     "@ionic-native/status-bar": "~4.17.0",
-    "@ionic/storage": "2.2.0",
+    "@ionic/storage": "2.3.1",
     "@ngrx/effects": "^5.2.0",
     "@ngrx/store": "^5.2.0",
     "@ngx-translate/core": "^9.1.1",
