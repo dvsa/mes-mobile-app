@@ -258,8 +258,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
     // Clear any dynamically created slots before adding the latest
     this.slotContainer.clear();
 
-    console.log(emission);
-
     if (!Array.isArray(emission)) return;
 
     if (emission.length === 0) return;
