@@ -9,6 +9,12 @@ import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { VehicleChecksScore } from '../../../shared/models/vehicle-checks-score.model';
 import { getCompetencyFaults } from '../../../shared/helpers/get-competency-faults';
 
+type CatCVehicleCheckUnion =
+  CatCUniqueTypes.VehicleChecks |
+  CatC1UniqueTypes.VehicleChecks |
+  CatCEUniqueTypes.VehicleChecks |
+  CatC1EUniqueTypes.VehicleChecks;
+
 export class FaultCountCHelper {
 
   public static getDangerousFaultSumCountCatC = (data: CatCUniqueTypes.TestData): number => {
@@ -99,8 +105,8 @@ export class FaultCountCHelper {
       return { seriousFaults: 0, drivingFaults: 0 };
     }
 
-    const showMeQuestions: QuestionResult[] = get(vehicleChecks, 'showMeQuestions', []);
-    const tellMeQuestions: QuestionResult[] = get(vehicleChecks, 'tellMeQuestions', []);
+    const showMeQuestions: QuestionResult[] = [get(vehicleChecks, 'showMeQuestions[0]', [])];
+    const tellMeQuestions: QuestionResult[] = [get(vehicleChecks, 'tellMeQuestions[0]', [])];
 
     const numberOfShowMeFaults: number = showMeQuestions.filter((showMeQuestion) => {
       return showMeQuestion.outcome === CompetencyOutcome.DF;
@@ -242,6 +248,15 @@ export class FaultCountCHelper {
       uncoupleRecoupleDangerousFaults;
 
     return result;
+  }
+
+  static getVehicleChecksFaultCount = (
+    vehicleChecks: CatCVehicleCheckUnion,
+  ): VehicleChecksScore => {
+    if (get(vehicleChecks, 'fullLicenceHeld')) {
+      return FaultCountCHelper.getVehicleChecksFaultCountTrailer(vehicleChecks);
+    }
+    return FaultCountCHelper.getVehicleChecksFaultCountNonTrailer(vehicleChecks);
   }
 
   public static getVehicleChecksFaultCountCatC = (

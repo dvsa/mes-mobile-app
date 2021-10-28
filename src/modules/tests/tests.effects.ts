@@ -241,8 +241,11 @@ export class TestsEffects {
       }
 
       if (
+        startTestAction.category === TestCategory.C ||
+        startTestAction.category === TestCategory.C1 ||
         startTestAction.category === TestCategory.D ||
-        startTestAction.category === TestCategory.D1) {
+        startTestAction.category === TestCategory.D1
+      ) {
         arrayOfActions.push(new SetFullLicenceHeld(false));
       }
 

@@ -34,6 +34,7 @@ import {
 } from '../../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import { VehicleChecksToggleComponent } from '../../components/vehicle-checks-completed/vehicle-checks-completed';
 import { CandidateDeclarationSignedComponent } from '../../components/candidate-declaration/candidate-declaration';
+import { FullLicenceHeldComponent } from '../../components/full-licence-held-toggle/full-licence-held-toggle';
 
 describe('WaitingRoomToCarCatCPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatCPage>;
@@ -54,6 +55,7 @@ describe('WaitingRoomToCarCatCPage', () => {
         MockComponent(WarningBannerComponent),
         MockComponent(VehicleChecksToggleComponent),
         MockComponent(CandidateDeclarationSignedComponent),
+        MockComponent(FullLicenceHeldComponent),
       ],
       imports: [
         IonicModule,

@@ -59,12 +59,12 @@ describe('VehicleChecksCatCComponent', () => {
   describe('Class', () => {
     describe('openVehicleChecksModal', () => {
       it('should create the correct model', () => {
-        component.category = TestCategory.C;
+        component.category = TestCategory.C1E;
         component.openVehicleChecksModal();
         expect(modalController.create).toHaveBeenCalledTimes(1);
         expect(modalController.create).toHaveBeenCalledWith(
           CAT_C.VEHICLE_CHECKS_MODAL,
-          { category: TestCategory.C },
+         { category: TestCategory.C1E },
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );
       });

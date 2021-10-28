@@ -151,10 +151,10 @@ export class FaultCountProvider {
     switch (category) {
       case TestCategory.ADI2: return FaultCountADIPart2Helper.getVehicleChecksFaultCountCatADIPart2(data);
       case TestCategory.BE: return FaultCountBEHelper.getVehicleChecksFaultCountCatBE(data);
-      case TestCategory.C1: return FaultCountCHelper.getVehicleChecksFaultCountCatC1(data);
-      case TestCategory.C1E: return FaultCountCHelper.getVehicleChecksFaultCountCatC1E(data);
-      case TestCategory.CE: return FaultCountCHelper.getVehicleChecksFaultCountCatCE(data);
       case TestCategory.C: return FaultCountCHelper.getVehicleChecksFaultCountCatC(data);
+      case TestCategory.C1: return FaultCountCHelper.getVehicleChecksFaultCountCatC1(data);
+      case TestCategory.C1E:
+      case TestCategory.CE: return FaultCountCHelper.getVehicleChecksFaultCount(data);
       case TestCategory.D: return FaultCountDHelper.getVehicleChecksFaultCountCatD(data);
       case TestCategory.D1: return FaultCountDHelper.getVehicleChecksFaultCountCatD1(data);
       case TestCategory.D1E:

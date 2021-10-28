@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CAT_C } from '../../../../page-names.constants';
 import { ModalController } from 'ionic-angular';
@@ -19,6 +19,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
   templateUrl: 'vehicle-checks.cat-c.html',
 })
 export class VehicleChecksCatCComponent implements OnChanges, OnInit {
+  @Input() fullLicenceHeld: boolean = null;
 
   @Input() onCloseVehicleChecksModal: () => {};
 
@@ -35,6 +36,8 @@ export class VehicleChecksCatCComponent implements OnChanges, OnInit {
   formControl: FormControl;
 
   category: TestCategory;
+
+  @Output() fullLicenceHeldChange = new EventEmitter<boolean>();
 
   constructor(
     private modalController: ModalController,
@@ -72,8 +75,13 @@ export class VehicleChecksCatCComponent implements OnChanges, OnInit {
       return outcome !== undefined;
     };
 
-    return this.vehicleChecks.showMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
-      && this.vehicleChecks.tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true);
+    const showMeQuestions = (
+      this.fullLicenceHeld ? [this.vehicleChecks.showMeQuestions[0]] : this.vehicleChecks.showMeQuestions);
+    const tellMeQuestions =
+      this.fullLicenceHeld ? [this.vehicleChecks.tellMeQuestions[0]] : this.vehicleChecks.tellMeQuestions;
+
+    return showMeQuestions.reduce((res, question) => res && hasOutcome(question), true)
+      && tellMeQuestions.reduce((res, question) => res && hasOutcome(question), true);
   }
 
   hasSeriousFault(): boolean {

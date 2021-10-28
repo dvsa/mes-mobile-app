@@ -27,11 +27,29 @@ describe('faultSummaryProvider', () => {
       showMeTellMeSemiFaults: showMe2DFTellMe2DF,
     },
     { category: TestCategory.C1E,
-      showMeTellMeAllFaults: showMe1DFTellMe1DF,
+      showMeTellMeAllFaults: {
+        ...showMe1DFTellMe1DF,
+        testData: {
+          ...showMe1DFTellMe1DF.testData,
+          vehicleChecks: {
+            ...showMe1DFTellMe1DF.testData.vehicleChecks,
+            fullLicenceHeld: true,
+          },
+        },
+      },
       showMeTellMeSemiFaults: showMe0DFTellMe1DF,
     },
     { category: TestCategory.CE,
-      showMeTellMeAllFaults: showMe1DFTellMe1DF,
+      showMeTellMeAllFaults: {
+        ...showMe1DFTellMe1DF,
+        testData: {
+          ...showMe1DFTellMe1DF.testData,
+          vehicleChecks: {
+            ...showMe1DFTellMe1DF.testData.vehicleChecks,
+            fullLicenceHeld: true,
+          },
+        },
+      },
       showMeTellMeSemiFaults: showMe0DFTellMe1DF,
     },
   ];
