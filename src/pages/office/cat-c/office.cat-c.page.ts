@@ -767,7 +767,7 @@ export class OfficeCatCPage extends BasePageComponent {
     const dangerousFaultCount: number =
       this.faultCountProvider.getDangerousFaultSumCount(this.testCategory as TestCategory, data);
 
-    return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 15;
+    return dangerousFaultCount === 0 && seriousFaultCount === 0 && drivingFaultCount > 12;
   }
 
   provisionalLicenseReceived(): void {
