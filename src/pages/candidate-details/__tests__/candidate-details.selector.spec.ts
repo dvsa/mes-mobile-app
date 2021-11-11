@@ -418,9 +418,7 @@ describe('Candidate Details Selector', () => {
         },
       };
       const result = getCategoryEntitlementCheckText(slot);
-      // tslint:disable-next-line:prefer-template
-      expect(result).toEqual('Check DVLA email confirming entitlement for Cat CM test.\n' +
-        '   Contact deployment if unable to confirm');
+      expect(result).toEqual('Check DVLA email confirming entitlement for Cat CM test');
     });
   });
 
