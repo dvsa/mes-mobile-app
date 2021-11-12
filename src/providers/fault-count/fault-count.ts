@@ -29,10 +29,10 @@ export class FaultCountProvider {
       case TestCategory.ADI2: return FaultCountADIPart2Helper.getDrivingFaultSumCountCatADIPart2(data);
       case TestCategory.B: return FaultCountBHelper.getDrivingFaultSumCountCatB(data);
       case TestCategory.BE: return FaultCountBEHelper.getDrivingFaultSumCountCatBE(data);
+      case TestCategory.C: return FaultCountCHelper.getDrivingFaultSumCountCatC(data);
       case TestCategory.C1: return FaultCountCHelper.getDrivingFaultSumCountCatC1(data);
       case TestCategory.C1E: return FaultCountCHelper.getDrivingFaultSumCountCatC1E(data);
       case TestCategory.CE: return FaultCountCHelper.getDrivingFaultSumCountCatCE(data);
-      case TestCategory.C: return FaultCountCHelper.getDrivingFaultSumCountCatC(data);
       case TestCategory.EUAM1:
       case TestCategory.EUA1M1:
       case TestCategory.EUA2M1:
