@@ -220,7 +220,7 @@ export class FaultCountDHelper {
     const result =
       faultTotal +
       sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-      FaultCountDHelper.getVehicleChecksFaultCountTrailer(vehicleChecks).drivingFaults +
+      FaultCountDHelper.getVehicleChecksFaultCount(vehicleChecks).drivingFaults +
       uncoupleRecoupleHasDrivingFault +
       pcvDoorExerciseFaultCount +
       FaultCountDHelper.getSafetyQuestionsFaultCount(safetyQuestions).drivingFaults;

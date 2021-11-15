@@ -67,7 +67,7 @@ export class FaultCountCHelper {
 
   private static getVehicleChecksFaultCountNonTrailer = (
     vehicleChecks: CatCUniqueTypes.VehicleChecks | CatC1EUniqueTypes.VehicleChecks,
-    ): VehicleChecksScore => {
+  ): VehicleChecksScore => {
 
     if (!vehicleChecks) {
       return { seriousFaults: 0, drivingFaults: 0 };
@@ -164,7 +164,7 @@ export class FaultCountCHelper {
     const result =
       faultTotal +
       sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
-      FaultCountCHelper.getVehicleChecksFaultCountTrailer(vehicleChecks).drivingFaults +
+      FaultCountCHelper.getVehicleChecksFaultCount(vehicleChecks).drivingFaults +
       uncoupleRecoupleHasDrivingFault;
 
     return result;
@@ -192,7 +192,7 @@ export class FaultCountCHelper {
 
   private static getSeriousFaultSumCountTrailer = (
     data: CatCEUniqueTypes.TestData | CatC1EUniqueTypes.TestData,
-    ): number => {
+  ): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -232,7 +232,7 @@ export class FaultCountCHelper {
 
   private static getDangerousFaultSumCountTrailer = (
     data: CatCEUniqueTypes.TestData | CatC1EUniqueTypes.TestData,
-    ): number => {
+  ): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
