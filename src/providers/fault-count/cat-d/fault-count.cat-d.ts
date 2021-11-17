@@ -260,7 +260,7 @@ export class FaultCountDHelper {
 
     const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
     const vehicleCheckSeriousFaults =
-      vehicleChecks ? FaultCountDHelper.getVehicleChecksFaultCountTrailer(vehicleChecks).seriousFaults : 0;
+      vehicleChecks ? FaultCountDHelper.getVehicleChecksFaultCount(vehicleChecks).seriousFaults : 0;
     const uncoupleRecoupleSeriousFaults =
       (uncoupleRecouple && uncoupleRecouple.fault === CompetencyOutcome.S) ? 1 : 0;
     const pcvDoorExerciseFaultCount: number = get(pcvDoorExercise, 'seriousFault') ? 1 : 0;
