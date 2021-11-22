@@ -32,10 +32,6 @@ export class DebriefCardComponent {
         checked: this.data.legalRequirements.normalStart1,
       },
       {
-        label: TestRequirementsLabels.normalStart2,
-        checked: this.data.legalRequirements.normalStart2,
-      },
-      {
         label: TestRequirementsLabels.angledStart,
         checked: this.data.legalRequirements.angledStart,
       },

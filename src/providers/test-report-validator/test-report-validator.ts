@@ -231,7 +231,6 @@ export class TestReportValidatorProvider {
     const result: legalRequirementsLabels[] = [];
 
     !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
-    !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);
     !get(data, 'testRequirements.angledStart', false) && result.push(legalRequirementsLabels.angledStart);
     !get(data, 'testRequirements.hillStart', false) && result.push(legalRequirementsLabels.hillStart);
     !hasManoeuvreBeenCompletedCatB(data) && result.push(legalRequirementsLabels.manoeuvre);
@@ -269,8 +268,7 @@ export class TestReportValidatorProvider {
   ): legalRequirementsLabels[] {
     const result: legalRequirementsLabels[] = [];
     if (!isDelegated) {
-      !get(data, 'testRequirements.normalStart1', false) && !get(data, 'testRequirements.normalStart2', false)
-        && result.push(legalRequirementsLabels.normalStart1);
+      !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
       !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
     }
     !get(data, 'testRequirements.angledStartControlledStop', false)
@@ -311,8 +309,7 @@ export class TestReportValidatorProvider {
     ): legalRequirementsLabels[] {
     const result: legalRequirementsLabels[] = [];
     if (!isDelegated) {
-      (!get(data, 'testRequirements.normalStart1', false))
-        && result.push(legalRequirementsLabels.normalStart1);
+      (!get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1));
       !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
     }
     !get(data, 'testRequirements.angledStartControlledStop', false)
@@ -356,8 +353,7 @@ export class TestReportValidatorProvider {
     const result: legalRequirementsLabels[] = [];
 
     if (!isDelegated) {
-      (!get(data, 'testRequirements.normalStart1', false))
-        && result.push(legalRequirementsLabels.normalStart1);
+      (!get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1));
       !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
     }
     !get(data, 'testRequirements.angledStartControlledStop', false)
@@ -543,14 +539,13 @@ export class TestReportValidatorProvider {
 
   private validateLegalRequirementsCatEUAM2(data: CatAMod2TestData): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
-    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const angledStart: boolean = get(data, 'testRequirements.angledStart', false);
     const hillStart: boolean = get(data, 'testRequirements.hillStart', false);
     const safteyAndBalanceQuestions: boolean =
       haveSafetyAndBalanceQuestionsBeenCompleted(data.safetyAndBalanceQuestions);
     const eco: boolean = get(data, 'eco.completed', false);
 
-    return normalStart1 && normalStart2 && angledStart && hillStart && safteyAndBalanceQuestions && eco;
+    return normalStart1 && angledStart && hillStart && safteyAndBalanceQuestions && eco;
   }
 
   private getMissingLegalRequirementsCatD1E(
@@ -581,7 +576,6 @@ export class TestReportValidatorProvider {
     const result: legalRequirementsLabels[] = [];
 
     !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
-    !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);
     !get(data, 'testRequirements.angledStart', false) && result.push(legalRequirementsLabels.angledStart);
     !get(data, 'testRequirements.hillStart', false) && result.push(legalRequirementsLabels.hillStart);
     !haveSafetyAndBalanceQuestionsBeenCompleted(data.safetyAndBalanceQuestions)

@@ -182,7 +182,7 @@ export const validTestCatC: CatCUniqueTypes.TestData = {
 export const validDelegatedTestCatCAndC1: CatCUniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
-    normalStart1: false,
+    normalStart2: false,
     uphillStart: false,
   },
   manoeuvres: {
@@ -214,7 +214,7 @@ export const validTestCatC1: CatC1UniqueTypes.TestData = {
 export const validDelegatedTestCatCEAndC1E: CatCEUniqueTypes.TestData | CatC1EUniqueTypes.TestData = {
   testRequirements: {
     angledStartControlledStop: true,
-    normalStart1: false,
+    normalStart2: false,
     uphillStart: false,
   },
   manoeuvres: {
