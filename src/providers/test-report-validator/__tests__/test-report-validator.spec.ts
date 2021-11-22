@@ -84,6 +84,11 @@ describe('TestReportValidator', () => {
         expect(result).toEqual([]);
       });
       it(`should return any missing legal requirements for a Cat ${cat.category} test`, () => {
+        if (cat.category === 'EUAM2') {
+          console.log('====================================================================================');
+          console.log('category:', cat);
+          console.log('====================================================================================');
+        }
         const result = testReportValidatorProvider.getMissingLegalRequirements({}, cat.category);
         expect(result).toEqual(cat.legalReqs);
       });

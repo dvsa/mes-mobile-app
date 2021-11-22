@@ -184,7 +184,6 @@ export class TestReportValidatorProvider {
 
   private validateLegalRequirementsCatAdiPart2(data: CatADI2UniqueTypes.TestData): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
-    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const angledStart: boolean = get(data, 'testRequirements.angledStart', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
     const downhillStart: boolean = get(data, 'testRequirements.downhillStart', false);
@@ -194,7 +193,6 @@ export class TestReportValidatorProvider {
 
     return (
       normalStart1 &&
-      normalStart2 &&
       angledStart &&
       uphillStart &&
       downhillStart &&
@@ -208,7 +206,6 @@ export class TestReportValidatorProvider {
     const result: legalRequirementsLabels[] = [];
 
     !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
-    !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);
     !get(data, 'testRequirements.angledStart', false) && result.push(legalRequirementsLabels.angledStart);
     !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
     !get(data, 'testRequirements.downhillStart', false) && result.push(legalRequirementsLabels.downhillStart);
@@ -221,14 +218,13 @@ export class TestReportValidatorProvider {
 
   private validateLegalRequirementsCatB(data: CatBUniqueTypes.TestData): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
-    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const angledStart: boolean = get(data, 'testRequirements.angledStart', false);
     const hillStart: boolean = get(data, 'testRequirements.hillStart', false);
     const manoeuvre: boolean = hasManoeuvreBeenCompletedCatB(data) || false;
     const vehicleChecks: boolean = hasVehicleChecksBeenCompletedCatB(data) || false;
     const eco: boolean = get(data, 'eco.completed', false);
 
-    return normalStart1 && normalStart2 && angledStart && hillStart && manoeuvre && vehicleChecks && eco;
+    return normalStart1 && angledStart && hillStart && manoeuvre && vehicleChecks && eco;
   }
 
   private getMissingLegalRequirementsCatB(data: CatBUniqueTypes.TestData): legalRequirementsLabels[] {
@@ -247,7 +243,6 @@ export class TestReportValidatorProvider {
 
   private validateLegalRequirementsCatBE(data: CatBEUniqueTypes.TestData, isDelegated: boolean): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
-    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
     const angledStartControlledStop: boolean = get(data, 'testRequirements.angledStartControlledStop', false);
     const manoeuvre: boolean = hasManoeuvreBeenCompletedCatBE(data) || false;
@@ -255,7 +250,7 @@ export class TestReportValidatorProvider {
     const uncoupleRecouple: boolean = get(data, 'uncoupleRecouple.selected', false);
 
     return !isDelegated ? (
-      (normalStart1 || normalStart2) &&
+      normalStart1 &&
       uphillStart &&
       angledStartControlledStop &&
       manoeuvre &&
@@ -292,14 +287,13 @@ export class TestReportValidatorProvider {
     isDelegated: boolean,
     ): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
-    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
     const angledStartControlledStop: boolean = get(data, 'testRequirements.angledStartControlledStop', false);
     const manoeuvre: boolean = hasManoeuvreBeenCompletedCatC(data) || false;
     const eco: boolean = get(data, 'eco.completed', false);
 
     return !isDelegated ? (
-      (normalStart1 || normalStart2) &&
+      normalStart1 &&
       uphillStart &&
       angledStartControlledStop &&
       manoeuvre &&
@@ -317,7 +311,7 @@ export class TestReportValidatorProvider {
     ): legalRequirementsLabels[] {
     const result: legalRequirementsLabels[] = [];
     if (!isDelegated) {
-      (!get(data, 'testRequirements.normalStart1', false) && !get(data, 'testRequirements.normalStart2', false))
+      (!get(data, 'testRequirements.normalStart1', false))
         && result.push(legalRequirementsLabels.normalStart1);
       !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
     }
@@ -334,7 +328,6 @@ export class TestReportValidatorProvider {
     isDelegated: boolean,
     ): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
-    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
     const angledStartControlledStop: boolean = get(data, 'testRequirements.angledStartControlledStop', false);
     const manoeuvre: boolean = hasManoeuvreBeenCompletedCatC(data) || false;
@@ -342,7 +335,7 @@ export class TestReportValidatorProvider {
     const uncoupleRecouple: boolean = get(data, 'uncoupleRecouple.selected', false);
 
     return !isDelegated ? (
-      (normalStart1 || normalStart2) &&
+      normalStart1 &&
       uphillStart &&
       angledStartControlledStop &&
       manoeuvre &&
@@ -363,7 +356,7 @@ export class TestReportValidatorProvider {
     const result: legalRequirementsLabels[] = [];
 
     if (!isDelegated) {
-      (!get(data, 'testRequirements.normalStart1', false) && !get(data, 'testRequirements.normalStart2', false))
+      (!get(data, 'testRequirements.normalStart1', false))
         && result.push(legalRequirementsLabels.normalStart1);
       !get(data, 'testRequirements.uphillStart', false) && result.push(legalRequirementsLabels.uphillStart);
     }
@@ -376,6 +369,7 @@ export class TestReportValidatorProvider {
   }
 
   private validateLegalRequirementsCatD(data: CatDUniqueTypes.TestData, isDelegated: boolean): boolean {
+    const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
     const busStop1: boolean = get(data, 'testRequirements.busStop1', false);
     const busStop2: boolean = get(data, 'testRequirements.busStop2', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
@@ -384,6 +378,7 @@ export class TestReportValidatorProvider {
     const eco: boolean = get(data, 'eco.completed', false);
 
     return !isDelegated ? (
+      normalStart1 &&
       busStop1 &&
       busStop2 &&
       uphillStart &&
@@ -404,6 +399,8 @@ export class TestReportValidatorProvider {
     const result: legalRequirementsLabels[] = [];
 
     if (!isDelegated) {
+      !get(data, 'testRequirements.normalStart1', false)
+        && result.push(legalRequirementsLabels.normalStart1);
       !get(data, 'testRequirements.busStop1', false)
         && result.push(legalRequirementsLabels.busStop1);
       !get(data, 'testRequirements.busStop2', false)
@@ -423,7 +420,6 @@ export class TestReportValidatorProvider {
 
   private validateLegalRequirementsCatD1(data: CatD1UniqueTypes.TestData, isDelegated: boolean): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
-    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
     const angledStartControlledStop: boolean = get(data, 'testRequirements.angledStartControlledStop', false);
     const manoeuvre: boolean = get(data, 'manoeuvres.reverseLeft.selected', false);
@@ -431,7 +427,6 @@ export class TestReportValidatorProvider {
 
     return !isDelegated ? (
       normalStart1 &&
-      normalStart2 &&
       uphillStart &&
       angledStartControlledStop &&
       manoeuvre &&
@@ -452,8 +447,6 @@ export class TestReportValidatorProvider {
     if (!isDelegated) {
       !get(data, 'testRequirements.normalStart1', false)
         && result.push(legalRequirementsLabels.normalStart1);
-      !get(data, 'testRequirements.normalStart2', false)
-        && result.push(legalRequirementsLabels.normalStart2);
       !get(data, 'testRequirements.uphillStart', false)
         && result.push(legalRequirementsLabels.uphillStart);
     }
@@ -468,6 +461,7 @@ export class TestReportValidatorProvider {
   }
 
   private validateLegalRequirementsCatDE(data: CatDEUniqueTypes.TestData, isDelegated: boolean): boolean {
+    const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
     const busStop1: boolean = get(data, 'testRequirements.busStop1', false);
     const busStop2: boolean = get(data, 'testRequirements.busStop2', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
@@ -477,6 +471,7 @@ export class TestReportValidatorProvider {
     const uncoupleRecouple = get(data, 'uncoupleRecouple.selected' , false);
 
     return !isDelegated ? (
+      normalStart1 &&
       busStop1 &&
       busStop2 &&
       uphillStart &&
@@ -499,6 +494,8 @@ export class TestReportValidatorProvider {
     const result: legalRequirementsLabels[] = [];
 
     if (!isDelegated) {
+      !get(data, 'testRequirements.normalStart1', false)
+        && result.push(legalRequirementsLabels.normalStart1);
       !get(data, 'testRequirements.busStop1', false)
         && result.push(legalRequirementsLabels.busStop1);
       !get(data, 'testRequirements.busStop2', false)
@@ -523,7 +520,6 @@ export class TestReportValidatorProvider {
     isDelegated: boolean,
     ): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
-    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const uphillStart: boolean = get(data, 'testRequirements.uphillStart', false);
     const angledStartControlledStop: boolean = get(data, 'testRequirements.angledStartControlledStop', false);
     const manoeuvre: boolean = get(data, 'manoeuvres.reverseLeft.selected', false);
@@ -532,7 +528,6 @@ export class TestReportValidatorProvider {
 
     return !isDelegated ? (
       normalStart1 &&
-      normalStart2 &&
       uphillStart &&
       angledStartControlledStop &&
       manoeuvre &&
@@ -567,8 +562,6 @@ export class TestReportValidatorProvider {
     if (!isDelegated) {
       !get(data, 'testRequirements.normalStart1', false)
         && result.push(legalRequirementsLabels.normalStart1);
-      !get(data, 'testRequirements.normalStart2', false)
-        && result.push(legalRequirementsLabels.normalStart2);
       !get(data, 'testRequirements.uphillStart', false)
         && result.push(legalRequirementsLabels.uphillStart);
     }
@@ -600,7 +593,6 @@ export class TestReportValidatorProvider {
 
   private validateLegalRequirementsCatHomeTest(data: HomeTestData): boolean {
     const normalStart1: boolean = get(data, 'testRequirements.normalStart1', false);
-    const normalStart2: boolean = get(data, 'testRequirements.normalStart2', false);
     const angledStart: boolean = get(data, 'testRequirements.angledStart', false);
     const controlledStop: boolean = get(data, 'controlledStop.selected', false);
     const uphillStartDesignatedStart: boolean = get(data, 'testRequirements.uphillStartDesignatedStart', false);
@@ -609,7 +601,7 @@ export class TestReportValidatorProvider {
 
     const eco: boolean = get(data, 'eco.completed', false);
 
-    return normalStart1 && normalStart2 && angledStart &&
+    return normalStart1 && angledStart &&
       uphillStartDesignatedStart && hCodeSafetyQuestions && eco && controlledStop;
   }
 
@@ -617,7 +609,6 @@ export class TestReportValidatorProvider {
     const result: legalRequirementsLabels[] = [];
 
     !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
-    !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);
     !get(data, 'testRequirements.angledStart', false) && result.push(legalRequirementsLabels.angledStart);
     !get(data, 'testRequirements.uphillStartDesignatedStart', false)
       && result.push(legalRequirementsLabels.uphillStartDesignatedStart);
@@ -638,7 +629,6 @@ export class TestReportValidatorProvider {
     const result: legalRequirementsLabels[] = [];
 
     !get(data, 'testRequirements.normalStart1', false) && result.push(legalRequirementsLabels.normalStart1);
-    !get(data, 'testRequirements.normalStart2', false) && result.push(legalRequirementsLabels.normalStart2);
     !get(data, 'testRequirements.angledStart', false) && result.push(legalRequirementsLabels.angledStart);
     !get(data, 'testRequirements.uphillStartDesignatedStart', false)
       && result.push(legalRequirementsLabels.uphillStartDesignatedStart);

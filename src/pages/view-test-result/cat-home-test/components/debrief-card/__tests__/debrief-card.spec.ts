@@ -76,7 +76,6 @@ describe('DebriefCardComponent', () => {
         const data: HomeTestData = {
           testRequirements: {
             normalStart1: true,
-            normalStart2: false,
             angledStart: true,
             uphillStartDesignatedStart: false,
           },
@@ -86,9 +85,8 @@ describe('DebriefCardComponent', () => {
         fixture.detectChanges();
         const result: DataRowListItem[] = component.getTestRequirements();
 
-        expect(result.length).toEqual(6);
+        expect(result.length).toEqual(5);
         expect(result).toContain({ label: TestRequirementsLabels.normalStart1, checked: true });
-        expect(result).toContain({ label: TestRequirementsLabels.normalStart2, checked: true });
         expect(result).toContain({ label: TestRequirementsLabels.uphillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.downhillStart, checked: false });
         expect(result).toContain({ label: TestRequirementsLabels.angledStartControlledStop, checked: true });
