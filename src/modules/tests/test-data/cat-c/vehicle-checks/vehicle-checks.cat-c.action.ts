@@ -12,8 +12,10 @@ export const VEHICLE_CHECKS_COMPLETED = '[Vehicle Checks] [CatC] Vehicle Checks 
 export const VEHICLE_CHECKS_FULL_LICENCE_HELD = '[Vehicle Checks] [CatD] Full Licence Held toggled';
 export const VEHICLE_CHECKS_DRIVING_FAULTS_NUMBER_CHANGED =
   '[Vehicle Checks] [CatC] Vehicle Checks Driving Faults Number Changed';
-export const VEHICLE_CHECKS_DROP_EXTRA_VEHICLE_CHECKS =
-  '[Vehicle Checks] [CatC] Vehicle Checks dropping extra vehicle checks as full licence held';
+export const VEHICLE_CHECKS_DROP_EXTRA =
+  '[Vehicle Checks] [CatC] Vehicle Checks dropping extra as full licence held selected';
+export const VEHICLE_CHECKS_DROP_EXTRA_DLG =
+  '[Vehicle Checks] [CatC] Vehicle Checks dropping extra as full licence held selected for DLG';
 
 export class InitializeVehicleChecks implements Action {
   constructor(public category: TestCategory) { }
@@ -59,7 +61,11 @@ export class VehicleChecksDrivingFaultsNumberChanged implements Action {
 }
 
 export class DropExtraVehicleChecks implements Action {
-  readonly type = VEHICLE_CHECKS_DROP_EXTRA_VEHICLE_CHECKS;
+  readonly type = VEHICLE_CHECKS_DROP_EXTRA;
+}
+
+export class DropExtraVehicleChecksDelegated implements Action {
+  readonly type = VEHICLE_CHECKS_DROP_EXTRA_DLG;
 }
 
 export type Types =
@@ -72,4 +78,5 @@ export type Types =
   | VehicleChecksCompletedToggled
   | VehicleChecksDrivingFaultsNumberChanged
   | SetFullLicenceHeld
-  | DropExtraVehicleChecks;
+  | DropExtraVehicleChecks
+  | DropExtraVehicleChecksDelegated;

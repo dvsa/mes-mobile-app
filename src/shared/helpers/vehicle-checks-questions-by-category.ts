@@ -37,3 +37,10 @@ export const vehicleChecksQuestionsByCategory = (category: TestCategory): number
       return NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER + NUMBER_OF_TELL_ME_QUESTIONS_TRAILER;
   }
 };
+
+export const vehicleChecksQuestionsByLicenceHeld = (fullLicenceHeld: boolean): number => {
+  if (fullLicenceHeld) {
+    return NUMBER_OF_SHOW_ME_QUESTIONS_TRAILER + NUMBER_OF_TELL_ME_QUESTIONS_TRAILER;
+  }
+  return NUMBER_OF_SHOW_ME_QUESTIONS_NON_TRAILER + NUMBER_OF_TELL_ME_QUESTIONS_NON_TRAILER;
+};

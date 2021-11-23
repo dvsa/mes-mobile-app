@@ -5,7 +5,7 @@ import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
-  TellMeQuestionOutcomeChanged,
+  TellMeQuestionOutcomeChanged, DropExtraVehicleChecksDelegated,
 } from '../vehicle-checks.cat-c.action';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatCUniqueTypes } from '@dvsa/mes-test-schema/categories/C';
@@ -62,6 +62,23 @@ describe('Vehicle Checks Cat C Reducer', () => {
       };
       const result = vehicleChecksCatCReducer(state, new TellMeQuestionOutcomeChanged('DF', 1));
       expect(result.tellMeQuestions[1].outcome).toEqual('DF');
+    });
+  });
+
+  describe('VEHICLE_CHECKS_DROP_EXTRA_DLG' , () => {
+    it('should move the first showMeQuestions to the tellMeQuestions', () => {
+      let state: CatCUniqueTypes.VehicleChecks = cloneDeep(generateInitialState());
+      state = {
+        ...state,
+        tellMeQuestions: [],
+        showMeQuestions: [
+          { code: 'T01', description: 'desc', outcome: 'P' },
+          { code: 'T02', description: 'desc 2', outcome: 'P' },
+        ],
+      };
+      const result = vehicleChecksCatCReducer(state, new DropExtraVehicleChecksDelegated());
+      expect(result.showMeQuestions.length).toEqual(1);
+      expect(result.tellMeQuestions.length).toEqual(1);
     });
   });
 });

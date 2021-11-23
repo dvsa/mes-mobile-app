@@ -42,18 +42,26 @@
             <ion-col col-48>
                 <ion-select id="vehicle-checks-driving-fault-selector"
                             class="vehicle-checks-fault-selector"
-                            placeholder="Driving faults" 
+                            placeholder="Driving faults"
                             okText="Submit"
                             cancelText="Cancel"
                             formControlName="vehicleChecksDrivingFaultsNumber"
+                            [class.ng-invalid]="invalidDropdown"
+                            [disabled]="(componentState.fullLicenceHeldSelection$ | async) === null"
                             (ionChange)="vehicleChecksDrivingFaultsNumberChanged($event)"
-                            [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}"
-                >
-                    <ion-option *ngFor="let number of drivingFaultsNumberOptions" [value]="number">
+                            [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}">
+                    <ion-option *ngFor="let number of (componentState.drivingFaultsNumberOptions$ | async)" [value]="number">
                         {{number}} {{number === 1 ? 'driving fault' : 'driving faults'}}
                     </ion-option>
                 </ion-select>
             </ion-col>
         </ion-row>
+      <ion-row class="validation-message-row" align-items-center>
+        <div class="validation-text"
+             [class.ng-invalid]="invalidDropdown"
+             id="wrtc-checks-toggle-validation-text">
+          Select the number of driving faults
+        </div>
+      </ion-row>
     </ion-col>
 </ion-row>

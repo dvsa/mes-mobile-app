@@ -36,13 +36,22 @@
                     [fullLicenceHeld]="pageState.fullLicenceHeld$ | async">
             </vehicle-checks-cat-d>
 
+            <full-licence-held-toggle
+              *ngIf="(pageState.delegatedTest$ | async) && showFullLicenceHeld()"
+              [fullLicenceHeld]="pageState.fullLicenceHeldSelection$ | async"
+              [required]="true"
+              [testCategory]="testCategory"
+              [formGroup]="form"
+              (fullLicenceHeldChange)="fullLicenceHeldChange($event)">
+            </full-licence-held-toggle>
+
             <vehicle-checks-completed
-                    *ngIf="pageState.delegatedTest$ | async"
-                    [formGroup]="form"
-                    [testCategory]="testCategory"
-                    [vehicleChecksCompleted]="pageState.vehicleChecksCompleted$ | async"
-                    (vehicleChecksCompletedOutcomeChange)="vehicleChecksCompletedOutcomeChanged($event)"
-                    (vehicleChecksDrivingFaultsNumberChange)="vehicleChecksDrivingFaultsNumberChanged($event)"
+              *ngIf="pageState.delegatedTest$ | async"
+              [formGroup]="form"
+              [testCategory]="testCategory"
+              [vehicleChecksCompleted]="pageState.vehicleChecksCompleted$ | async"
+              (vehicleChecksCompletedOutcomeChange)="vehicleChecksCompletedOutcomeChanged($event)"
+              (vehicleChecksDrivingFaultsNumberChange)="vehicleChecksDrivingFaultsNumberChanged($event)"
             ></vehicle-checks-completed>
 
             <accompaniment-card [formGroup]="form" [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"

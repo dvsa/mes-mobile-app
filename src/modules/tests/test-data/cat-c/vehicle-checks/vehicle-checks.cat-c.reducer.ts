@@ -58,13 +58,21 @@ export function vehicleChecksCatCReducer(
     case vehicleChecksCatCActionTypes.VEHICLE_CHECKS_DRIVING_FAULTS_NUMBER_CHANGED:
       return {
         ...state,
+        tellMeQuestions: [],
         showMeQuestions: [...action.payload],
       };
-    case vehicleChecksCatCActionTypes.VEHICLE_CHECKS_DROP_EXTRA_VEHICLE_CHECKS:
+    case vehicleChecksCatCActionTypes.VEHICLE_CHECKS_DROP_EXTRA:
       return {
         ...state,
         showMeQuestions: dropRight(state.showMeQuestions, state.showMeQuestions.length - 1),
         tellMeQuestions: dropRight(state.tellMeQuestions, state.tellMeQuestions.length - 1),
+      };
+    case vehicleChecksCatCActionTypes.VEHICLE_CHECKS_DROP_EXTRA_DLG:
+      const showMeQuestion1 = state.showMeQuestions.shift();
+      return {
+        ...state,
+        tellMeQuestions: showMeQuestion1 ? [showMeQuestion1] : [],
+        showMeQuestions: state.showMeQuestions || [],
       };
     case vehicleChecksCatCActionTypes.VEHICLE_CHECKS_FULL_LICENCE_HELD:
       return {
