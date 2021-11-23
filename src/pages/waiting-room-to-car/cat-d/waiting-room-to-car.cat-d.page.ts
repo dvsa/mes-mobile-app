@@ -58,7 +58,7 @@ import { CategoryCode, QuestionResult } from '@dvsa/mes-test-schema/categories/c
 import { getDelegatedTestIndicator } from '../../../modules/tests/delegated-test/delegated-test.reducer';
 import { isDelegatedTest } from '../../../modules/tests/delegated-test/delegated-test.selector';
 import {
-  getVehicleChecksCompleted,
+  getVehicleChecksCompleted, hasFullLicenceHeldBeenSelected,
 } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.selector';
 import {
   getPreTestDeclarations,
@@ -69,7 +69,7 @@ import {
   getResidencyDeclarationStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.selector';
 import {
-  DropExtraVehicleChecks,
+  DropExtraVehicleChecks, DropExtraVehicleChecksDelegated,
   VehicleChecksCompletedToggled,
   VehicleChecksDrivingFaultsNumberChanged,
 } from '../../../modules/tests/test-data/cat-d/vehicle-checks/vehicle-checks.cat-d.action';
@@ -78,6 +78,7 @@ import {
   SetDeclarationStatus,
 } from '../../../modules/tests/pre-test-declarations/common/pre-test-declarations.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
+import { SetFullLicenceHeld } from '../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -97,6 +98,7 @@ interface WaitingRoomToCarPageState {
   residencyDeclarationAccepted$: Observable<boolean>;
   candidateDeclarationSigned$: Observable<boolean>;
   fullLicenceHeld$: Observable<boolean>;
+  fullLicenceHeldSelection$: Observable<string>;
 }
 
 @IonicPage()
@@ -219,6 +221,12 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
         select(getVehicleChecksCatD),
         select(getFullLicenceHeld),
       ),
+      fullLicenceHeldSelection$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecksCatD),
+        select(getFullLicenceHeld),
+        map(licenceHeld => hasFullLicenceHeldBeenSelected(licenceHeld)),
+      ),
     };
     this.setupSubscription();
   }
@@ -265,6 +273,11 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
     this.store$.dispatch(new VehicleChecksCompletedToggled(toggled));
   }
 
+  fullLicenceHeldChange = (licenceHeld: boolean): void => {
+    this.fullLicenceHeld = licenceHeld;
+    this.store$.dispatch(new SetFullLicenceHeld(licenceHeld));
+  }
+
   generateDelegatedQuestionResults(number: number, outcome: CompetencyOutcome): QuestionResult[] {
     return Array(number).fill(null).map(() => {
       return this.createDelegatedQuestionResult(outcome);
@@ -304,7 +317,11 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
       // if user selected they dont hold full licence, but then changes decision to already has a full licence
       // remove the extra vehicle checks
       if (this.fullLicenceHeld && (this.testCategory === TestCategory.DE || this.testCategory === TestCategory.D1E)) {
-        this.store$.dispatch(new DropExtraVehicleChecks());
+        if (this.isDelegated) {
+          this.store$.dispatch(new DropExtraVehicleChecksDelegated());
+        } else {
+          this.store$.dispatch(new DropExtraVehicleChecks());
+        }
       }
       this.navController.push(CAT_D.TEST_REPORT_PAGE).then(() => {
         const view = this.navController.getViews().find(view => view.id === CAT_D.WAITING_ROOM_TO_CAR_PAGE);
@@ -338,4 +355,6 @@ export class WaitingRoomToCarCatDPage extends BasePageComponent {
   }
 
   displayLoadSecured = (): boolean => this.testCategory === TestCategory.DE || this.testCategory === TestCategory.D1E;
+
+  showFullLicenceHeld = (): boolean => this.testCategory === TestCategory.DE || this.testCategory === TestCategory.D1E;
 }

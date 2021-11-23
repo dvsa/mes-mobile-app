@@ -26,6 +26,7 @@ import { WarningBannerComponent } from '../../../../components/common/warning-ba
 import { VehicleChecksCatCComponent } from '../components/vehicle-checks/vehicle-checks.cat-c';
 import { configureTestSuite } from 'ng-bullet';
 import {
+  SetFullLicenceHeld,
   VehicleChecksCompletedToggled,
 } from '../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 import {
@@ -162,6 +163,15 @@ describe('WaitingRoomToCarCatCPage', () => {
       component.candidateDeclarationOutcomeChanged(false);
       expect(store$.dispatch).toHaveBeenCalledWith(new SetDeclarationStatus(false));
       expect(store$.dispatch).toHaveBeenCalledWith(new CandidateDeclarationSigned());
+    });
+  });
+
+  describe('fullLicenceHeldChange', () => {
+    it('should dispatch a SetFullLicenceHeld action with the value passed in', () => {
+      const licenceHeld = true;
+      component.fullLicenceHeldChange(licenceHeld);
+      expect(component.fullLicenceHeld).toEqual(licenceHeld);
+      expect(store$.dispatch).toHaveBeenCalledWith(new SetFullLicenceHeld(licenceHeld));
     });
   });
 });

@@ -33,6 +33,10 @@ export const vehicleChecksExist = (vehicleChecks: CatCVehicleChecks): boolean =>
   return some(questions, fault => fault.outcome != null);
 };
 
+export const hasFullLicenceHeldBeenSelected = (
+  fullLicenceHeld: boolean,
+): string => (fullLicenceHeld === null) ? null : fullLicenceHeld ? 'Y' : 'N';
+
 export const getVehicleChecksCompleted = (vehicleChecks: CatCVehicleChecks) => vehicleChecks.vehicleChecksCompleted;
 
 export const getVehicleChecksCatC = createFeatureSelector<CatCVehicleChecks>('vehicleChecks');

@@ -35,6 +35,9 @@ import {
 import { VehicleChecksToggleComponent } from '../../components/vehicle-checks-completed/vehicle-checks-completed';
 import { CandidateDeclarationSignedComponent } from '../../components/candidate-declaration/candidate-declaration';
 import { FullLicenceHeldComponent } from '../../components/full-licence-held-toggle/full-licence-held-toggle';
+import {
+  SetFullLicenceHeld,
+} from '../../../../modules/tests/test-data/cat-c/vehicle-checks/vehicle-checks.cat-c.action';
 
 describe('WaitingRoomToCarCatDPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatDPage>;
@@ -161,6 +164,15 @@ describe('WaitingRoomToCarCatDPage', () => {
       component.candidateDeclarationOutcomeChanged(false);
       expect(store$.dispatch).toHaveBeenCalledWith(new SetDeclarationStatus(false));
       expect(store$.dispatch).toHaveBeenCalledWith(new CandidateDeclarationSigned());
+    });
+  });
+
+  describe('fullLicenceHeldChange', () => {
+    it('should dispatch a SetFullLicenceHeld action with the value passed in', () => {
+      const licenceHeld = true;
+      component.fullLicenceHeldChange(licenceHeld);
+      expect(component.fullLicenceHeld).toEqual(licenceHeld);
+      expect(store$.dispatch).toHaveBeenCalledWith(new SetFullLicenceHeld(licenceHeld));
     });
   });
 });
