@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TestDetailsModel } from './test-details-card.model';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'test-details-card',
@@ -17,7 +18,7 @@ export class TestDetailsCardComponent {
   }
 
   showFullCatHeld(): boolean {
-    return this.data.category.includes('+E');
+    return [TestCategory.CE, TestCategory.C1E, TestCategory.DE, TestCategory.D1E].includes(this.data.category);
   }
 
 }
