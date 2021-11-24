@@ -132,6 +132,7 @@ export class ViewTestResultCatDPage extends BasePageComponent implements OnInit 
       entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
       slotType: this.testResult.journalData.testSlotAttributes.slotType,
       previousCancellations: get(this.testResult, 'journalData.testSlotAttributes.previousCancellation', []),
+      fullLicenceHeld: this.testResult.testData.vehicleChecks.fullLicenceHeld,
     };
   }
 

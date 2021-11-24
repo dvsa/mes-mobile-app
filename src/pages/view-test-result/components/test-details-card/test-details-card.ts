@@ -16,4 +16,8 @@ export class TestDetailsCardComponent {
     return specialNeedsArray.length > 0 && specialNeedsArray[0] !== 'None';
   }
 
+  showFullCatHeld(): boolean {
+    return this.data.category.includes('+E');
+  }
+
 }

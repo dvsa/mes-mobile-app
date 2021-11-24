@@ -1,12 +1,13 @@
-
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, Config } from 'ionic-angular';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Config, IonicModule } from 'ionic-angular';
 import { TestDetailsCardComponent } from '../test-details-card';
 import { ConfigMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 import { DataRowCustomComponent } from '../../../../../components/common/data-row-custom/data-row-custom';
 import { DataRowComponent } from '../../../../../components/common/data-row/data-row';
 import { configureTestSuite } from 'ng-bullet';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
+import { TestDetailsModel } from '../test-details-card.model';
 
 describe('TestDetailsCardComponent', () => {
   let fixture: ComponentFixture<TestDetailsCardComponent>;
@@ -53,6 +54,22 @@ describe('TestDetailsCardComponent', () => {
       it('should return true for a populated array', () => {
         const specialNeedsArray = ['special need 1', 'special need 2'];
         expect(component.specialNeedsIsPopulated(specialNeedsArray)).toBeTruthy();
+      });
+    });
+
+    describe('showFullCatHeld', () => {
+      it('should return true if it is a +E category', () => {
+        component.data = {
+          category: TestCategory.CE,
+        } as TestDetailsModel;
+        expect(component.showFullCatHeld()).toBeTruthy();
+      });
+
+      it('should return false if it is not a +E category', () => {
+        component.data = {
+          category: TestCategory.C,
+        } as TestDetailsModel;
+        expect(component.showFullCatHeld()).toBeFalsy();
       });
     });
 

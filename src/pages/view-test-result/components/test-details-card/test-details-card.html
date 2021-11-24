@@ -8,6 +8,7 @@
       <data-row [label]="'Time'" [value]="data.time"></data-row>
       <data-row [label]="'Application reference'" [value]="data.applicationReference"></data-row>
       <data-row [label]="'Test category'" [value]="data.category"></data-row>
+      <data-row *ngIf="showFullCatHeld()" [label]="'Full Cat [cat-E] held?'" [value]="data?.fullLicenceHeld ? 'Yes' : 'No'"></data-row>
       <data-row
         [label]="'Slot type'"
         [value]="data.slotType"
