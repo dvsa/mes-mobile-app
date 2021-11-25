@@ -9,4 +9,5 @@ export interface TestDetailsModel {
   specialNeeds: string[];
   previousCancellations: string[];
   entitlementCheck: boolean;
+  fullLicenceHeld?: boolean;
 }

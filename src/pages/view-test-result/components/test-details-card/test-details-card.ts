@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TestDetailsModel } from './test-details-card.model';
+import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 
 @Component({
   selector: 'test-details-card',
@@ -14,6 +15,10 @@ export class TestDetailsCardComponent {
 
   specialNeedsIsPopulated(specialNeedsArray: string[]): boolean {
     return specialNeedsArray.length > 0 && specialNeedsArray[0] !== 'None';
+  }
+
+  showFullCatHeld(): boolean {
+    return [TestCategory.CE, TestCategory.C1E, TestCategory.DE, TestCategory.D1E].includes(this.data.category);
   }
 
 }
