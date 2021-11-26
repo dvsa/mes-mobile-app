@@ -59,7 +59,7 @@
     "@ionic-enterprise/auth": "3.1.4",
     "@ionic-native-mocks/network": "^2.0.12",
     "@ionic-native/app-version": "^4.20.0",
-    "@ionic-native/core": "~4.17.0",
+    "@ionic-native/core": "~4.20.0",
     "@ionic-native/device": "^4.18.0",
     "@ionic-native/google-analytics": "^4.20.0",
     "@ionic-native/in-app-browser": "^4.18.0",
