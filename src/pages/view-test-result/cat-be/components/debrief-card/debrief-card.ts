@@ -23,6 +23,9 @@ export class DebriefCardComponent {
   @Input()
   data: CatBEUniqueTypes.TestData;
 
+  @Input()
+  delegatedTest: boolean = false;
+
   constructor(
     private faultSummaryProvider: FaultSummaryProvider,
     private faultCountProvider: FaultCountProvider,
