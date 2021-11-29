@@ -16,10 +16,12 @@
     </faults-data-row>
       <data-row [label]="'ETA'" [value]="getETA()"></data-row>
       <vehicle-checks-data-row
+        *ngIf="!delegatedTest"
         [label]="'Tell me question(s)'"
         [data]="getTellMeQuestions()">
       </vehicle-checks-data-row>
       <vehicle-checks-data-row
+        *ngIf="!delegatedTest"
         [label]="'Show me question(s)'"
         [data]="getShowMeQuestions()"
         [shouldHaveSeperator]="false">
