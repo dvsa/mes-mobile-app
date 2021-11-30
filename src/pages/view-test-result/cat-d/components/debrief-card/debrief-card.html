@@ -9,6 +9,7 @@
       <data-row-with-list [label]="'ECO'" [data]="getEco()"></data-row-with-list>
       <faults-data-row
         [label]="'Fault descriptions'"
+        [minDrivingFaultCount]="12"
         [drivingFaults]="getDrivingFaults()"
         [seriousFaults]="getSeriousFaults()"
         [dangerousFaults]="getDangerousFaults()"
