@@ -103,6 +103,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.isUnauthenticated = this.authenticationProvider.isInUnAuthenticatedMode();
     this.store$.dispatch(new journalActions.SetSelectedDate(this.dateTimeProvider.now().format('YYYY-MM-DD')));
     this.todaysDate = this.dateTimeProvider.now();
+    this.appResumedListener();
   }
 
   ngOnInit(): void {
@@ -163,7 +164,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.setupPolling();
     await this.completedTestPersistenceProvider.loadCompletedPersistedTests();
 
-    this.store$.dispatch(new journalActions.LoadCompletedTests());
+    this.store$.dispatch(new journalActions.LoadCompletedTests(true));
 
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
@@ -317,5 +318,14 @@ export class JournalPage extends BasePageComponent implements OnInit {
   async logout() {
     this.store$.dispatch(new journalActions.UnloadJournal());
     await super.logout();
+  }
+
+  /**
+   * Listen to the DOM event and trigger if app resumed from backgrounding
+   */
+  appResumedListener() {
+    document.addEventListener('resume', async () => {
+      await this.refreshJournal();
+    });
   }
 }
