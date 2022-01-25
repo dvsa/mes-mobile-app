@@ -1,29 +1,41 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, catchError, startWith, tap, concatMap }
-  from 'rxjs/operators';
-import { of, interval } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  filter,
+  map,
+  mapTo,
+  startWith,
+  switchMap,
+  takeUntil,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators';
+import { interval, of } from 'rxjs';
 
 import { groupBy } from 'lodash';
 
 import * as journalActions from './journal.actions';
 import { JournalProvider } from '../../providers/journal/journal';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getJournalState } from './journal.reducer';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
+import { JournalRefreshModes } from '../../providers/analytics/analytics.model';
 import {
-  JournalRefreshModes,
-} from '../../providers/analytics/analytics.model';
-import {
-  getSelectedDate, getLastRefreshed, getSlots,
-  canNavigateToPreviousDay, canNavigateToNextDay, getCompletedTests,
+  canNavigateToNextDay,
+  canNavigateToPreviousDay,
+  getCompletedTests,
+  getLastRefreshed,
+  getSelectedDate,
+  getSlots,
 } from './journal.selector';
-import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
+import { ConnectionStatus, NetworkStateProvider } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -39,14 +51,13 @@ import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { SearchProvider } from '../../providers/search/search';
 import { AdvancedSearchParams } from '../../providers/search/search.models';
 import moment from 'moment';
-import { removeLeadingZeros } from '../../shared/helpers/formatters';
+import { formatApplicationReference, removeLeadingZeros } from '../../shared/helpers/formatters';
 import { getExaminer } from '../tests/journal-data/common/examiner/examiner.reducer';
 import { getStaffNumber } from '../tests/journal-data/common/examiner/examiner.selector';
-import { hasStartedTests } from '../tests/tests.selector';
+import { getAllIncompleteTests, hasStartedTests } from '../tests/tests.selector';
 import { getTests } from '../tests/tests.reducer';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
-import { CompletedTestPersistenceProvider } from
-    '../../providers/completed-test-persistence/completed-test-persistence';
+import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
 
 @Injectable()
 export class JournalEffects {
@@ -62,7 +73,6 @@ export class JournalEffects {
     public dateTimeProvider: DateTimeProvider,
     public searchProvider: SearchProvider,
     private logHelper: LogHelper,
-    private completedTestPersistenceProvider: CompletedTestPersistenceProvider,
   ) {
   }
 
@@ -214,11 +224,15 @@ export class JournalEffects {
           select(getJournalState),
           select(getCompletedTests),
         ),
+        this.store$.pipe(
+          select(getTests),
+          select(getAllIncompleteTests),
+        ),
       ),
     )),
     filter((
       [action, staffNumber, hasStartedTests, completedTests]:
-        [journalActions.LoadCompletedTests, string, boolean, SearchResultTestSchema[]],
+        [journalActions.LoadCompletedTests, string, boolean, SearchResultTestSchema[], TestResultSchemasUnion[]],
     ) => {
       // The callThrough property is set to true when doing a manual journal refresh for example
       if (action.callThrough) {
@@ -226,19 +240,25 @@ export class JournalEffects {
       }
       return !hasStartedTests && completedTests && completedTests.length === 0;
     }),
-    switchMap(([action, staffNumber]) => {
+    switchMap(([action, staffNumber, , , unSubmittedTestsOnDevice]) => {
       const numberOfDaysToView = this.appConfig.getAppConfig().journal.numberOfDaysToView;
       const advancedSearchParams: AdvancedSearchParams = {
         startDate: moment().subtract(numberOfDaysToView, 'days').format('YYYY-MM-DD'),
         endDate: moment().format('YYYY-MM-DD'),
         staffNumber: removeLeadingZeros(staffNumber),
         costCode: '',
-        excludeAutoSavedTests: 'true',
+        excludeAutoSavedTests: 'false',
       };
       return this.searchProvider.advancedSearch(advancedSearchParams).pipe(
-        tap(searchResults => this.completedTestPersistenceProvider.persistCompletedTests(searchResults)),
-        map((searchResults) => {
-          return new journalActions.LoadCompletedTestsSuccess(searchResults);
+        map((searchResults: SearchResultTestSchema[]) => {
+
+          const unSubmittedAppRefs: string[] = unSubmittedTestsOnDevice
+            .map(({ journalData }) => formatApplicationReference(journalData.applicationReference));
+
+          const remoteSearchResultsNotOnDevice: SearchResultTestSchema[] = searchResults
+            .filter(({ applicationReference }) => !unSubmittedAppRefs.includes(String(applicationReference)));
+
+          return new journalActions.LoadCompletedTestsSuccess(remoteSearchResultsNotOnDevice);
         }),
         catchError((err) => {
           return of(new journalActions.LoadCompletedTestsFailure(err));

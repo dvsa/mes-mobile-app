@@ -1,12 +1,12 @@
 import { TestStatus } from './test-status/test-status.model';
-import { JournalData, ActivityCode, TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/common';
+import { ActivityCode, JournalData, TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/common';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories/index';
 import { TestsModel } from './tests.model';
 import {
   activityCodeModelList,
   activityCodeModelListDelegatedExaminer,
 } from '../../pages/office/components/activity-code/activity-code.constants';
-import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
+import { end2endPracticeSlotId, testReportPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { startsWith } from 'lodash';
 import { TestOutcome } from './tests.constants';
 import { ActivityCodes } from '../../shared/models/activity-codes';
@@ -118,6 +118,17 @@ export const getActivityCodeBySlotId = (testsModel: TestsModel, id: number): Act
     return testsModel.startedTests[id].activityCode;
   }
   return null;
+};
+
+export const getAllIncompleteTestsSlotIds = (tests: TestsModel): string[] => {
+  return Object.keys(tests.testStatus)
+    .filter(slotId =>
+      tests.testStatus[slotId] !== TestStatus.Submitted && tests.testStatus[slotId] !== TestStatus.Completed);
+};
+
+export const getAllIncompleteTests = (tests: TestsModel): TestResultSchemasUnion[] => {
+  const allTestsSlotIds: string[] = getAllIncompleteTestsSlotIds(tests);
+  return allTestsSlotIds.map((slotId: string) => tests.startedTests[slotId]);
 };
 
 export const getIncompleteTestsSlotIds = (tests: TestsModel): string[] => {
