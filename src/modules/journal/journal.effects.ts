@@ -57,6 +57,9 @@ import { getStaffNumber } from '../tests/journal-data/common/examiner/examiner.s
 import { getAllIncompleteTests, hasStartedTests } from '../tests/tests.selector';
 import { getTests } from '../tests/tests.reducer';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
+import {
+  CompletedTestPersistenceProvider,
+} from '../../providers/completed-test-persistence/completed-test-persistence';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
 
 @Injectable()
@@ -73,6 +76,7 @@ export class JournalEffects {
     public dateTimeProvider: DateTimeProvider,
     public searchProvider: SearchProvider,
     private logHelper: LogHelper,
+    private completedTestPersistenceProvider: CompletedTestPersistenceProvider,
   ) {
   }
 
@@ -255,14 +259,13 @@ export class JournalEffects {
           const unSubmittedAppRefs: string[] = unSubmittedTestsOnDevice
             .map(({ journalData }) => formatApplicationReference(journalData.applicationReference));
 
-          const remoteSearchResultsNotOnDevice: SearchResultTestSchema[] = searchResults
+          return searchResults
             .filter(({ applicationReference }) => !unSubmittedAppRefs.includes(String(applicationReference)));
-
-          return new journalActions.LoadCompletedTestsSuccess(remoteSearchResultsNotOnDevice);
         }),
-        catchError((err) => {
-          return of(new journalActions.LoadCompletedTestsFailure(err));
-        }));
+        tap(searchResults => this.completedTestPersistenceProvider.persistCompletedTests(searchResults)),
+        map((searchResults: SearchResultTestSchema[]) => new journalActions.LoadCompletedTestsSuccess(searchResults)),
+        catchError(err => of(new journalActions.LoadCompletedTestsFailure(err))),
+      );
     }),
   );
 
