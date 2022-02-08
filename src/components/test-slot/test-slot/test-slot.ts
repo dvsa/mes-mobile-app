@@ -6,13 +6,13 @@ import { vehicleDetails } from './test-slot.constants';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { Observable } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { getTestStatus, getActivityCodeBySlotId, getTestById } from '../../../modules/tests/tests.selector';
+import { getActivityCodeBySlotId, getTestById, getTestStatus } from '../../../modules/tests/tests.selector';
 import { SlotTypes } from '../../../shared/models/slot-types';
-import { map, filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import { getSlotType } from '../../../shared/helpers/get-slot-type';
@@ -42,6 +42,9 @@ export class TestSlotComponent implements SlotComponent, OnInit {
 
   @Input()
   hasSeenCandidateDetails: boolean;
+
+  @Input()
+  slotAccessed: boolean;
 
   @Input()
   showLocation: boolean;

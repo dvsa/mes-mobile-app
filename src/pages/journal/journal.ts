@@ -1,10 +1,16 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import {
-  IonicPage, Loading, LoadingController, NavController,
-  NavParams, Platform, Refresher, ModalController,
+  IonicPage,
+  Loading,
+  LoadingController,
+  ModalController,
+  NavController,
+  NavParams,
+  Platform,
+  Refresher,
 } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subscription, merge } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { BasePageComponent } from '../../shared/classes/base-page';
@@ -12,8 +18,13 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import * as journalActions from './../../modules/journal/journal.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import {
-  getError, getIsLoading, getSelectedDate, getLastRefreshed,
-  getLastRefreshedTime, getSlotsOnSelectedDate, getCompletedTests,
+  getCompletedTests,
+  getError,
+  getIsLoading,
+  getLastRefreshed,
+  getLastRefreshedTime,
+  getSelectedDate,
+  getSlotsOnSelectedDate,
 } from './../../modules/journal/journal.selector';
 import { getJournalState } from './../../modules/journal/journal.reducer';
 import { MesError } from '../../shared/models/mes-error.model';
@@ -41,8 +52,9 @@ import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { isEmpty } from 'lodash';
 import { TestStatus } from '../../modules/tests/test-status/test-status.model';
-import { CompletedTestPersistenceProvider } from
-    '../../providers/completed-test-persistence/completed-test-persistence';
+import {
+  CompletedTestPersistenceProvider,
+} from '../../providers/completed-test-persistence/completed-test-persistence';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -288,8 +300,9 @@ export class JournalPage extends BasePageComponent implements OnInit {
           (<TestSlotComponent>componentRef.instance).derivedTestStatus = TestStatus.Submitted;
         }
 
-        // if this is a test slot assign hasSeenCandidateDetails separately
+        // if this is a test slot assign hasSeenCandidateDetails and slotAccessed separately
         (<TestSlotComponent>componentRef.instance).hasSeenCandidateDetails = slot.hasSeenCandidateDetails;
+        (<TestSlotComponent>componentRef.instance).slotAccessed = slot.slotAccessed;
       }
     }
   }
