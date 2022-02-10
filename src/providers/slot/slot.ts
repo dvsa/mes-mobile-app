@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DeepDiff } from 'deep-diff';
-import { flatten, times, isEmpty, get } from 'lodash';
+import { flatten, get, isEmpty, times } from 'lodash';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { SlotItem } from '../slot-selector/slot-item';
@@ -40,9 +40,11 @@ export class SlotProvider {
 
       let differenceFound = false;
       let hasSeenCandidateDetails = false;
+      let slotAccessed = false;
       if (replacedJournalSlot) {
         differenceFound = replacedJournalSlot.hasSlotChanged;
         hasSeenCandidateDetails = replacedJournalSlot.hasSeenCandidateDetails;
+        slotAccessed = replacedJournalSlot.slotAccessed;
         const differenceToSlot = DeepDiff(replacedJournalSlot.slotData, newSlot);
         if (Array.isArray(differenceToSlot) && differenceToSlot.some(change => change.kind === 'E')) {
           this.store$.dispatch(new SlotHasChanged(newSlotId));
@@ -58,7 +60,8 @@ export class SlotProvider {
 
       // add personalCommitment information to SlotItem, component and activityCode set to null
       // as they are not constructed at this stage.
-      return new SlotItem(newSlot, differenceFound, hasSeenCandidateDetails, null, null, personalCommitment);
+      return new SlotItem(
+        newSlot, differenceFound, hasSeenCandidateDetails, slotAccessed, null, null, personalCommitment);
     });
   }
 

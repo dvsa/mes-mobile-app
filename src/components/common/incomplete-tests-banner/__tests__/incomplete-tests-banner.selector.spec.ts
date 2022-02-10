@@ -44,6 +44,7 @@ describe('IncompleteTestsBannerSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {
                 slotDetail: {
                   slotId: 1001,
@@ -72,6 +73,7 @@ describe('IncompleteTestsBannerSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: true,
+              slotAccessed: false,
               slotData: {
                 slotDetail: {
                   slotId: 1003,
@@ -102,6 +104,7 @@ describe('IncompleteTestsBannerSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {
                 slotDetail: {
                   slotId: 2001,
@@ -132,6 +135,7 @@ describe('IncompleteTestsBannerSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {
                 slotDetail: {
                   slotId: 3001,

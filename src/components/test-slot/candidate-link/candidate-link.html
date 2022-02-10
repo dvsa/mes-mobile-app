@@ -1,5 +1,5 @@
 <div>
-  <button class="mes-transparent-button" ion-button (click)="openCandidateDetailsModal()">
+  <button class="mes-transparent-button" [disabled]=catDisabled ion-button (click)="openCandidateDetailsModal()">
     <h3 class="candidate-name" [ngClass]="{
       'candidate-name-short': isPortrait,
       'candidate-name-long': !isPortrait

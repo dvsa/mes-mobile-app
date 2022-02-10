@@ -4,7 +4,7 @@ import { TestSlotComponent } from '../../../components/test-slot/test-slot/test-
 import { SlotItem } from '../slot-item';
 import { ActivitySlotComponent } from '../../../pages/journal/components/activity-slot/activity-slot';
 import { EmptySlotComponent } from '../../../pages/journal/components/empty-slot/empty-slot';
-import { TestSlot, NonTestActivity } from '@dvsa/mes-journal-schema';
+import { NonTestActivity, TestSlot } from '@dvsa/mes-journal-schema';
 import { Slot } from '../../../modules/journal/journal.model';
 import { configureTestSuite } from 'ng-bullet';
 
@@ -28,7 +28,7 @@ describe('Slot Selector', () => {
       activityCode: code,
     };
     const journalSlots = [
-      new SlotItem(travelSlot, false, false),
+      new SlotItem(travelSlot, false, false, false),
     ];
     return journalSlots;
   };
@@ -51,7 +51,7 @@ describe('Slot Selector', () => {
       },
     };
     const journalSlots = [
-      new SlotItem(slot, false, false),
+      new SlotItem(slot, false, false, false),
     ];
     return journalSlots;
   };
@@ -110,7 +110,7 @@ describe('Slot Selector', () => {
       it('should provide the EmptySlotComponent for slots that have no booking or activity code', () => {
         const slot = {};
         const journalSlots = [
-          new SlotItem(slot, false, false),
+          new SlotItem(slot, false, false, false),
         ];
         const response = slotSelector.getSlotTypes(journalSlots);
 

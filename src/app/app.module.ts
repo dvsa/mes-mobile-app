@@ -9,10 +9,10 @@ import { AppVersion } from '@ionic-native/app-version';
 import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
 
 import { App } from './app.component';
-import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
-import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
+import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { EffectsModule } from '@ngrx/effects';
@@ -39,7 +39,7 @@ import { IonicGestureConfig } from '../gestures/ionic-gesture-config';
 import { WeatherConditionProvider } from '../providers/weather-conditions/weather-condition';
 import { OutcomeBehaviourMapProvider } from '../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { LogHelper } from '../providers/logs/logsHelper';
 import { environment } from '../environment/environment';
 import { AnalyticsProvider } from '../providers/analytics/analytics';
@@ -49,13 +49,12 @@ import {
   PassCertificateValidationProvider,
 } from '../providers/pass-certificate-validation/pass-certificate-validation';
 import { RemoteDevToolsProxy } from '../../ngrx-devtool-proxy/remote-devtools-proxy';
-import {
-  BikeCategoryDetailProvider,
-} from '../providers/bike-category-detail/bike-category-detail';
+import { BikeCategoryDetailProvider } from '../providers/bike-category-detail/bike-category-detail';
 import { CPCQuestionProvider } from '../providers/cpc-questions/cpc-questions';
 import { SearchProvider } from '../providers/search/search';
 import { TestResultProvider } from '../providers/test-result/test-result';
 import { CompletedTestPersistenceProvider } from '../providers/completed-test-persistence/completed-test-persistence';
+import { CategoryBlackListProvider } from '../providers/category-blacklist/__test__/category-blacklist';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -164,6 +163,7 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
     SearchProvider,
     TestResultProvider,
     CompletedTestPersistenceProvider,
+    CategoryBlackListProvider,
   ],
 })
 export class AppModule { }

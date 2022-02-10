@@ -9,6 +9,7 @@ const localJournalJson = require('../../../../mock/local-journal.json');
 const slotItems: SlotItem[] = localJournalJson.testSlots.map((testSlot) => {
   return {
     hasSlotChanged: false,
+    slotAccessed: false,
     slotData: testSlot,
   };
 });
@@ -21,6 +22,7 @@ export const baseJournalData: JournalModel = {
       {
         hasSlotChanged: false,
         hasSeenCandidateDetails: false,
+        slotAccessed: false,
         slotData: {
           slotDetail: {
             slotId: 1001,
@@ -51,6 +53,7 @@ export const baseJournalData: JournalModel = {
       {
         hasSlotChanged: false,
         hasSeenCandidateDetails: false,
+        slotAccessed: false,
         slotData: {
           slotDetail: {
             slotId: 2001,
@@ -81,6 +84,7 @@ export const baseJournalData: JournalModel = {
       {
         hasSlotChanged: false,
         hasSeenCandidateDetails: false,
+        slotAccessed: false,
         slotData: {
           slotDetail: {
             slotId: 3001,

@@ -26,6 +26,9 @@ export class CandidateLinkComponent {
   @Input()
   isPortrait: boolean;
 
+  @Input()
+  catDisabled: boolean;
+
   constructor(public modalController: ModalController, private app: App) {
   }
 

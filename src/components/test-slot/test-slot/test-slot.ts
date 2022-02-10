@@ -22,6 +22,8 @@ import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import * as moment from 'moment';
 import { DelegatedExaminerTestSlot } from '../../../providers/delegated-rekey-search/mock-data/delegated-mock-data';
+import { SlotAccessed } from '../../../modules/journal/journal.actions';
+import { CategoryBlackListProvider } from '../../../providers/category-blacklist/__test__/category-blacklist';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
@@ -66,6 +68,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     public dateTimeProvider: DateTimeProvider,
     public store$: Store<StoreModel>,
     private slotProvider: SlotProvider,
+    public categoryBlacklist: CategoryBlackListProvider,
   ) { }
 
   ngOnInit(): void {
@@ -147,5 +150,13 @@ export class TestSlotComponent implements SlotComponent, OnInit {
       returnValue =  slot.examinerId;
     }
     return returnValue;
+  }
+
+  getCatBlackListed(): boolean {
+    return this.categoryBlacklist.isBlackListed(this.slot.booking.application.testCategory as TestCategory);
+  }
+
+  accessSlot():void {
+    this.store$.dispatch(new SlotAccessed(this.slot.slotDetail.slotId));
   }
 }
