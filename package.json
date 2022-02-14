@@ -33,7 +33,6 @@
     "test:e2e-simulator-bdd-extended": "protractor e2e-simulator-bdd.conf.js --specs='test/e2e/extended/*.feature'",
     "test:generate-report": "node generateTestReport.js",
     "gitSecrets": "git secrets --scan",
-    "scanRepo": "git log -p -n 15 | scanrepo",
     "stylelint": "stylelint 'src/**/*.scss' fix --config stylelint.json",
     "config:dev-tools": "cp src/environment/environment.dev.dev-tools.ts src/environment/environment.ts",
     "config:dev": "cp src/environment/environment.dev.ts src/environment/environment.ts",
@@ -220,7 +219,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged && npm run compile-no-emit",
-      "pre-push": "run-s lint config:dev test gitSecrets scanRepo"
+      "pre-push": "run-s lint config:dev test gitSecrets"
     }
   },
   "lint-staged": {
