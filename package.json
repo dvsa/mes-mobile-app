@@ -220,7 +220,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged && npm run compile-no-emit",
-      "pre-push": "run-s lint config:dev test gitSecrets scanRepo"
+      "pre-push": "run-s lint config:dev test gitSecrets"
     }
   },
   "lint-staged": {
