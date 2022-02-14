@@ -172,7 +172,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
   async ionViewWillEnter() {
     super.ionViewWillEnter();
-    this.loadJournalManually();
+    await this.loadJournalManually();
     this.setupPolling();
     await this.completedTestPersistenceProvider.loadCompletedPersistedTests();
 
@@ -200,7 +200,9 @@ export class JournalPage extends BasePageComponent implements OnInit {
     }
   }
 
-  loadJournalManually() {
+  async loadJournalManually() {
+    await this.appConfigProvider.initialiseAppConfig();
+    await this.appConfigProvider.loadRemoteConfig();
     this.store$.dispatch(new journalActions.LoadJournal());
   }
 
@@ -307,14 +309,14 @@ export class JournalPage extends BasePageComponent implements OnInit {
     }
   }
 
-  public pullRefreshJournal = (refresher: Refresher) => {
-    this.loadJournalManually();
+  public pullRefreshJournal = async(refresher: Refresher) => {
+    await this.loadJournalManually();
     this.loadCompletedTestsWithCallThrough();
     this.pageRefresher = refresher;
   }
 
-  public refreshJournal = () => {
-    this.loadJournalManually();
+  public refreshJournal = async() => {
+    await this.loadJournalManually();
     this.loadCompletedTestsWithCallThrough();
   }
 

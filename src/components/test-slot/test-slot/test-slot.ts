@@ -23,7 +23,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import * as moment from 'moment';
 import { DelegatedExaminerTestSlot } from '../../../providers/delegated-rekey-search/mock-data/delegated-mock-data';
 import { SlotAccessed } from '../../../modules/journal/journal.actions';
-import { CategoryBlackListProvider } from '../../../providers/category-blacklist/__test__/category-blacklist';
+import { CategoryWhiteListProvider } from '../../../providers/category-whitelist/category-whitelist';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
@@ -60,6 +60,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   @Input()
   derivedActivityCode: ActivityCode | null = null;
 
+  isBlackListed: boolean;
   componentState: TestSlotComponentState;
 
   constructor(
@@ -68,11 +69,12 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     public dateTimeProvider: DateTimeProvider,
     public store$: Store<StoreModel>,
     private slotProvider: SlotProvider,
-    public categoryBlacklist: CategoryBlackListProvider,
+    public categoryWhitelist: CategoryWhiteListProvider,
   ) { }
 
   ngOnInit(): void {
     const { slotId } = this.slot.slotDetail;
+    this.isBlackListed = this.getCatBlackListed();
     this.componentState = {
       testStatus$: this.store$.pipe(
         select(getTests),
@@ -153,7 +155,9 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   }
 
   getCatBlackListed(): boolean {
-    return this.categoryBlacklist.isBlackListed(this.slot.booking.application.testCategory as TestCategory);
+    return !this.categoryWhitelist.isWhiteListed(
+      this.slot.booking.application.testCategory as TestCategory,
+      this.appConfig.getAppConfig().journal.allowedTestCategories as TestCategory[]);
   }
 
   accessSlot():void {

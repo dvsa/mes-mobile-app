@@ -1,7 +1,7 @@
 <location *ngIf="showLocation" [location]="slot.testCentre.centreName">
 </location>
   <ion-card [ngClass]="{'test-slot-portrait-mode': isPortrait()}" (click)="accessSlot()">
-    <ion-row class="slot-row" [ngClass]="{'blackListedOpacity': getCatBlackListed()}" align-items-center nowrap>
+    <ion-row class="slot-row" [ngClass]="{'blackListedOpacity': isBlackListed}" align-items-center nowrap>
       <div class="slot-changed-indicator" [ngClass]="{ 'slot-changed': hasSlotChanged }"></div>
       <ion-grid>
         <ion-row class="slot-header" [ngClass]="{'vehicle-details-displayed': showVehicleDetails()}" align-items-center>
@@ -54,7 +54,7 @@
               [hasSeenCandidateDetails]="hasSeenCandidateDetails"
               [isRekey]="componentState.isRekey$ | async"
               [category]="slot.booking.application.testCategory"
-              [catDisabled]="getCatBlackListed()">
+              [catDisabled]="isBlackListed">
             </test-outcome>
           </ion-col>
         </ion-row>
@@ -89,7 +89,7 @@
       </ion-grid>
     </ion-row>
     <blacklisted-category
-      [slotAccessed]="slotAccessed && getCatBlackListed()"
+      [slotAccessed]="slotAccessed && isBlackListed"
     ></blacklisted-category>
   </ion-card>
 <ng-template #candidateLink>
@@ -98,7 +98,7 @@
                   [slotChanged]="hasSlotChanged"
                   [name]="slot.booking.candidate.candidateName"
                   [isPortrait]="isPortrait()"
-                  [catDisabled]="getCatBlackListed()">
+                  [catDisabled]="isBlackListed">
   </candidate-link>
   <button *ngIf="!canViewCandidateDetails()" class="mes-transparent-button" ion-button disabled>
     <h3 class="candidate-name">Candidate details unavailable</h3>

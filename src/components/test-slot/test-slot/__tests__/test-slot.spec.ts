@@ -37,7 +37,7 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { configureTestSuite } from 'ng-bullet';
 import moment from 'moment';
 import { DateComponent } from '../../date/date';
-import { CategoryBlackListProvider } from '../../../../providers/category-blacklist/__test__/category-blacklist';
+import { CategoryWhiteListProvider } from '../../../../providers/category-whitelist/category-whitelist';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -120,7 +120,7 @@ describe('TestSlotComponent', () => {
         MockComponent(CandidateLinkComponent),
         MockComponent(SubmissionStatusComponent),
         MockComponent(ProgressiveAccessComponent),
-        MockComponent(CategoryBlackListProvider),
+        MockComponent(CategoryWhiteListProvider),
       ],
       imports: [
         IonicModule,
@@ -134,7 +134,7 @@ describe('TestSlotComponent', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: SlotProvider, useClass: SlotProvider },
-        CategoryBlackListProvider,
+        CategoryWhiteListProvider,
       ],
     });
   });
