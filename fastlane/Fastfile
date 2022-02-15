@@ -31,7 +31,7 @@ platform :ios do
    # Update the project's provisioning settings to use our distribution cert
    update_project_provisioning(
     xcodeproj: "platforms/ios/DES 3.xcodeproj",
-    profile: "/Users/mes/certs/Mobile_Examiner_App.mobileprovision",
+    profile: "/Users/mes/certs/Driving_Examiner_Services.mobileprovision",
     target_filter: ".*DES 3.*", # matches name or type of a target, see https://medium.com/@andersongusmao/xcode-targets-with-multiples-build-configuration-90a575ddc687 for an explanation
     build_configuration: "Release",
     code_signing_identity: "iPhone Distribution: Vehicle and Operator Services Agency"
@@ -41,7 +41,7 @@ platform :ios do
    build_ios_app(
     export_options: {
       provisioningProfiles: {
-        "uk.gov.dvsa.mobile-examiner-app" => "Mobile Examiner App 2021",
+        "uk.gov.dvsa.drivingexaminerservices" => "DrivingExaminerServices",
       }
     },
     project:  "platforms/ios/DES 3.xcodeproj",
