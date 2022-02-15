@@ -6,13 +6,13 @@ import { vehicleDetails } from './test-slot.constants';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { Observable } from 'rxjs';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { getTestStatus, getActivityCodeBySlotId, getTestById } from '../../../modules/tests/tests.selector';
+import { getActivityCodeBySlotId, getTestById, getTestStatus } from '../../../modules/tests/tests.selector';
 import { SlotTypes } from '../../../shared/models/slot-types';
-import { map, filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/common';
 import { getSlotType } from '../../../shared/helpers/get-slot-type';
@@ -22,6 +22,8 @@ import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import * as moment from 'moment';
 import { DelegatedExaminerTestSlot } from '../../../providers/delegated-rekey-search/mock-data/delegated-mock-data';
+import { SlotAccessed } from '../../../modules/journal/journal.actions';
+import { CategoryWhiteListProvider } from '../../../providers/category-whitelist/category-whitelist';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
@@ -44,6 +46,9 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   hasSeenCandidateDetails: boolean;
 
   @Input()
+  slotAccessed: boolean;
+
+  @Input()
   showLocation: boolean;
 
   @Input()
@@ -55,6 +60,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   @Input()
   derivedActivityCode: ActivityCode | null = null;
 
+  isBlackListed: boolean;
   componentState: TestSlotComponentState;
 
   constructor(
@@ -63,10 +69,12 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     public dateTimeProvider: DateTimeProvider,
     public store$: Store<StoreModel>,
     private slotProvider: SlotProvider,
+    public categoryWhitelist: CategoryWhiteListProvider,
   ) { }
 
   ngOnInit(): void {
     const { slotId } = this.slot.slotDetail;
+    this.isBlackListed = this.getCatBlackListed();
     this.componentState = {
       testStatus$: this.store$.pipe(
         select(getTests),
@@ -144,5 +152,15 @@ export class TestSlotComponent implements SlotComponent, OnInit {
       returnValue =  slot.examinerId;
     }
     return returnValue;
+  }
+
+  getCatBlackListed(): boolean {
+    return !this.categoryWhitelist.isWhiteListed(
+      this.slot.booking.application.testCategory as TestCategory,
+      this.appConfig.getAppConfig().journal.allowedTestCategories as TestCategory[]);
+  }
+
+  accessSlot():void {
+    this.store$.dispatch(new SlotAccessed(this.slot.slotDetail.slotId));
   }
 }

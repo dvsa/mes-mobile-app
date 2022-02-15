@@ -1,15 +1,15 @@
 import { JournalModel } from '../journal.model';
 import {
-  getSlotsOnSelectedDate,
-  getLastRefreshed,
-  getIsLoading,
-  getError,
-  getLastRefreshedTime,
   canNavigateToNextDay,
   canNavigateToPreviousDay,
-  getPermittedSlotIdsBeforeToday,
-  hasSlotsAfterSelectedDate,
   getCompletedTests,
+  getError,
+  getIsLoading,
+  getLastRefreshed,
+  getLastRefreshedTime,
+  getPermittedSlotIdsBeforeToday,
+  getSlotsOnSelectedDate,
+  hasSlotsAfterSelectedDate,
 } from '../journal.selector';
 import { MesError } from '../../../shared/models/mes-error.model';
 import { DateTime } from '../../../shared/helpers/date-time';
@@ -53,6 +53,7 @@ describe('JournalSelector', () => {
         {
           hasSlotChanged: false,
           hasSeenCandidateDetails: false,
+          slotAccessed: false,
           slotData: {},
         },
       ],
@@ -120,6 +121,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {},
             },
           ],
@@ -127,6 +129,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {},
             },
           ],
@@ -150,6 +153,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {},
             },
           ],
@@ -157,6 +161,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {},
             },
           ],
@@ -180,6 +185,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {},
             },
           ],
@@ -187,6 +193,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {},
             },
           ],
@@ -212,6 +219,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {},
             },
           ],
@@ -235,6 +243,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {},
             },
           ],
@@ -242,6 +251,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {},
             },
           ],
@@ -267,6 +277,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {
                 slotDetail: {
                   slotId: 1001,
@@ -297,6 +308,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {
                 slotDetail: {
                   slotId: 2001,
@@ -327,6 +339,7 @@ describe('JournalSelector', () => {
             {
               hasSlotChanged: false,
               hasSeenCandidateDetails: false,
+              slotAccessed: false,
               slotData: {
                 slotDetail: {
                   slotId: 3001,

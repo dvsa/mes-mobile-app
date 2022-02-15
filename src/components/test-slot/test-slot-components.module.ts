@@ -14,10 +14,12 @@ import { DateComponent } from './date/date';
 import { VehicleDetailsComponent } from './vehicle-details/vehicle-details';
 import { LocationComponent } from './location/location';
 import { AdditionalCandidateDetailsComponent } from './additional-candidate-details/additional-candidate-details';
+import { BlacklistedCategoryComponent } from './blacklisted-category/blacklisted-category';
 
 @NgModule({
   declarations: [
     AdditionalCandidateDetailsComponent,
+    BlacklistedCategoryComponent,
     CandidateLinkComponent,
     IndicatorsComponent,
     LanguageComponent,
@@ -40,6 +42,7 @@ import { AdditionalCandidateDetailsComponent } from './additional-candidate-deta
   ],
   exports: [
     AdditionalCandidateDetailsComponent,
+    BlacklistedCategoryComponent,
     CandidateLinkComponent,
     IndicatorsComponent,
     LanguageComponent,

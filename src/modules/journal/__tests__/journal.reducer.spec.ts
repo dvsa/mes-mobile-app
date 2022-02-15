@@ -1,12 +1,12 @@
 import { initialState, journalReducer } from '../journal.reducer';
 import {
+  CandidateDetailsSeen,
+  ClearChangedSlot,
+  LoadCompletedTestsSuccess,
   LoadJournal,
   LoadJournalSuccess,
   UnloadJournal,
   UnsetError,
-  ClearChangedSlot,
-  CandidateDetailsSeen,
-  LoadCompletedTestsSuccess,
 } from '../journal.actions';
 import { SlotItem } from '../../../providers/slot-selector/slot-item';
 import { ConnectionStatus } from '../../../providers/network-state/network-state';
@@ -45,6 +45,7 @@ describe('Journal Reducer', () => {
           ['2019-01-13']: [{
             hasSlotChanged: false,
             hasSeenCandidateDetails: false,
+            slotAccessed: false,
             slotData: {},
           },
           ],
@@ -73,6 +74,7 @@ describe('Journal Reducer', () => {
           ['2019-01-13']: [{
             hasSlotChanged: false,
             hasSeenCandidateDetails: false,
+            slotAccessed: false,
             slotData: {},
           },
           ],
@@ -84,7 +86,7 @@ describe('Journal Reducer', () => {
 
   describe('[JournalPage] Unload Journal', () => {
     it('should clear the journal slots', () => {
-      const stateWithJournals = { ...initialState, slots: { ['2019-01-13']: [new SlotItem({}, false, false)] } };
+      const stateWithJournals = { ...initialState, slots: { ['2019-01-13']: [new SlotItem({}, false, false, false)] } };
       const action = new UnloadJournal();
       const result = journalReducer(stateWithJournals, action);
       expect(result.slots).toEqual({});
@@ -94,7 +96,7 @@ describe('Journal Reducer', () => {
         isLoading: true,
         lastRefreshed: new Date(),
         selectedDate: 'dummy',
-        slots: { ['2019-01-13']: [new SlotItem({}, false, false)] },
+        slots: { ['2019-01-13']: [new SlotItem({}, false, false, false)] },
         examiner: { staffNumber: '123', individualId: 456 },
         checkComplete: [],
         completedTests: [],
@@ -124,7 +126,7 @@ describe('Journal Reducer', () => {
         ...initialState,
         selectedDate: slotDate,
         slots: {
-          [`${slotDate}`]: [new SlotItem({ slotDetail: { slotId: 1234 } }, true, false)],
+          [`${slotDate}`]: [new SlotItem({ slotDetail: { slotId: 1234 } }, true, false, false)],
         },
       };
       const action = new ClearChangedSlot(1234);
@@ -152,7 +154,7 @@ describe('Journal Reducer', () => {
         ...initialState,
         selectedDate: slotDate,
         slots: {
-          [`${slotDate}`]: [new SlotItem({ slotDetail: { slotId: 1234 } }, true, false)],
+          [`${slotDate}`]: [new SlotItem({ slotDetail: { slotId: 1234 } }, true, false, false)],
         },
       };
       const action = new CandidateDetailsSeen(1234);

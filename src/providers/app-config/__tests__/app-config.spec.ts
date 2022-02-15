@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { AppConfigProvider } from '../app-config';
@@ -11,7 +11,7 @@ import { DataStoreProvider } from '../../data-store/data-store';
 import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
 import { Platform } from 'ionic-angular';
 import { PlatformMock } from 'ionic-mocks';
-import { StoreModule, Store } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { LogHelper } from '../../logs/logsHelper';
 import { Device } from '@ionic-native/device';
 import { LogHelperMock } from '../../logs/__mocks__/logsHelper.mock';
@@ -91,7 +91,7 @@ describe('App Config Provider', () => {
       appConfig.loadRemoteConfig();
       tick();
 
-      const request = httpMock.expectOne(`${remoteEnvironmentMock.configUrl}?app_version=1`);
+      const request = httpMock.expectOne(`${remoteEnvironmentMock.configUrl}?app_version=1.0.0.0`);
       expect(request.request.method).toBe('GET');
       request.flush(environmentResponseMock);
     }));

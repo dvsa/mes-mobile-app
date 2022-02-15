@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import { TestSlot, NonTestActivity, PersonalCommitment } from '@dvsa/mes-journal-schema';
+import { NonTestActivity, PersonalCommitment, TestSlot } from '@dvsa/mes-journal-schema';
 import { SlotComponent } from '../../components/test-slot/slot/slot';
 
 export class SlotItem {
@@ -7,6 +7,7 @@ export class SlotItem {
     public slotData: TestSlot | NonTestActivity,
     public hasSlotChanged: boolean,
     public hasSeenCandidateDetails: boolean,
+    public slotAccessed: boolean,
     public component?: Type<SlotComponent>,
     public activityCode?: string,
     public personalCommitment?: PersonalCommitment[],

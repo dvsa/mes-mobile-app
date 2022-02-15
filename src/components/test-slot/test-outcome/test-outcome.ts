@@ -1,26 +1,26 @@
-import { Subscription, Observable, merge } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
-import { NavController, ModalController, Modal } from 'ionic-angular';
-import { Store, select } from '@ngrx/store';
-import { StartTest, ActivateTest } from '../../../modules/tests/tests.actions';
+import { Modal, ModalController, NavController } from 'ionic-angular';
+import { select, Store } from '@ngrx/store';
+import { ActivateTest, StartTest } from '../../../modules/tests/tests.actions';
 import { EarlyStartModalDidEnter, ResumingWriteUp } from '../../../modules/journal/journal.actions';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
 import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
 import { isEmpty, startsWith } from 'lodash';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import {
-  JOURNAL_EARLY_START_MODAL,
-  JOURNAL_FORCE_CHECK_MODAL,
+  CAT_A_MOD1,
+  CAT_A_MOD2,
+  CAT_ADI_PART2,
   CAT_B,
   CAT_BE,
   CAT_C,
-  CAT_A_MOD1,
-  CAT_A_MOD2,
-  CAT_D,
-  CAT_ADI_PART2,
-  CAT_HOME_TEST,
   CAT_CPC,
+  CAT_D,
+  CAT_HOME_TEST,
   CAT_MANOEUVRES,
+  JOURNAL_EARLY_START_MODAL,
+  JOURNAL_FORCE_CHECK_MODAL,
 } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import {
@@ -74,6 +74,9 @@ export class TestOutcomeComponent implements OnInit {
 
   @Input()
   category: TestCategory;
+
+  @Input()
+  catDisabled: boolean;
 
   modal: Modal;
   startTestAsRekey: boolean = false;

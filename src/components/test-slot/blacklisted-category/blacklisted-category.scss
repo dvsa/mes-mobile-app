@@ -1,0 +1,9 @@
+blacklisted-category {
+  .div-background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: map-get($colors-gds, gds-yellow);
+  }
+}

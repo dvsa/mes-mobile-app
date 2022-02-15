@@ -1,7 +1,7 @@
 import { MockComponent } from 'ng-mocks';
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestSlotComponent } from '../test-slot';
-import { IonicModule, Config } from 'ionic-angular';
+import { Config, IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
 import { cloneDeep } from 'lodash';
@@ -19,7 +19,7 @@ import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
-import { StoreModule, Store } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { testsReducer } from '../../../../modules/tests/tests.reducer';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { StoreModel } from '../../../../shared/models/store.model';
@@ -37,6 +37,8 @@ import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/
 import { configureTestSuite } from 'ng-bullet';
 import moment from 'moment';
 import { DateComponent } from '../../date/date';
+import { CategoryWhiteListProvider } from '../../../../providers/category-whitelist/category-whitelist';
+import { BlacklistedCategoryComponent } from '../../blacklisted-category/blacklisted-category';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -119,6 +121,7 @@ describe('TestSlotComponent', () => {
         MockComponent(CandidateLinkComponent),
         MockComponent(SubmissionStatusComponent),
         MockComponent(ProgressiveAccessComponent),
+        MockComponent(BlacklistedCategoryComponent),
       ],
       imports: [
         IonicModule,
@@ -132,6 +135,7 @@ describe('TestSlotComponent', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: SlotProvider, useClass: SlotProvider },
+        CategoryWhiteListProvider,
       ],
     });
   });

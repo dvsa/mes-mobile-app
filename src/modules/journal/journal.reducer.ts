@@ -41,6 +41,25 @@ export function journalReducer(state = initialState, action: journalActions.Jour
           }),
         },
       };
+    case journalActions.SLOT_ACCESSED:
+      if (!state.slots[state.selectedDate]) {
+        return { ...state };
+      }
+      return {
+        ...state,
+        slots: {
+          ...state.slots,
+          [state.selectedDate]: state.slots[state.selectedDate].map((slot) => {
+            if (get(slot, 'slotData.slotDetail.slotId') === action.slotId) {
+              return {
+                ...slot,
+                slotAccessed: true,
+              };
+            }
+            return slot;
+          }),
+        },
+      };
     case journalActions.LOAD_JOURNAL_SUCCESS:
       return {
         ...state,

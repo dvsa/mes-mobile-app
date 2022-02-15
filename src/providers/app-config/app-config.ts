@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { merge, get } from 'lodash';
+import { get, merge } from 'lodash';
 
 import { AppConfig } from './app-config.model';
 import { environment } from '../../environment/environment';
 import { EnvironmentFile } from '../../environment/models/environment.model';
 import { DataStoreProvider } from '../data-store/data-store';
-import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
+import { ConnectionStatus, NetworkStateProvider } from '../network-state/network-state';
 import { AppConfigError } from './app-config.constants';
 import { AuthenticationError } from './../authentication/authentication.constants';
 import { Platform } from 'ionic-angular';
@@ -18,7 +18,7 @@ import { Store } from '@ngrx/store';
 import { LogHelper } from '../logs/logsHelper';
 import { AppInfoProvider } from '../app-info/app-info';
 import { SchemaValidatorProvider } from '../schema-validator/schema-validator';
-import { ValidationResult, ValidationError } from '@hapi/joi';
+import { ValidationError, ValidationResult } from '@hapi/joi';
 
 declare let cordova: any;
 
@@ -165,7 +165,8 @@ export class AppConfigProvider {
   private getRemoteData = (): Promise<any> =>
     new Promise((resolve, reject) => {
       if (this.networkState.getNetworkState() === ConnectionStatus.ONLINE) {
-        this.appInfoProvider.getMajorAndMinorVersionNumber()
+        // getVersionNumber
+        this.appInfoProvider.getFullVersionNumber()
         .then((version:string) => {
           const url = `${this.environmentFile.configUrl}?app_version=${version}`;
           this.httpClient.get<any>(url)
