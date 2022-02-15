@@ -54,7 +54,7 @@ import { CPCQuestionProvider } from '../providers/cpc-questions/cpc-questions';
 import { SearchProvider } from '../providers/search/search';
 import { TestResultProvider } from '../providers/test-result/test-result';
 import { CompletedTestPersistenceProvider } from '../providers/completed-test-persistence/completed-test-persistence';
-import { CategoryBlackListProvider } from '../providers/category-blacklist/__test__/category-blacklist';
+import { CategoryWhiteListProvider } from '../providers/category-whitelist/category-whitelist';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -163,7 +163,7 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__']
     SearchProvider,
     TestResultProvider,
     CompletedTestPersistenceProvider,
-    CategoryBlackListProvider,
+    CategoryWhiteListProvider,
   ],
 })
 export class AppModule { }

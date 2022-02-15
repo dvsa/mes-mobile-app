@@ -1,13 +1,24 @@
 import { MockAppComponent } from './../../../app/__mocks__/app.component.mock';
 import { App } from './../../../app/app.component';
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
-  Config, Platform,
-  LoadingController, ToastController, IonicModule, ModalController, NavController, NavParams,
+  Config,
+  IonicModule,
+  LoadingController,
+  ModalController,
+  NavController,
+  NavParams,
+  Platform,
+  ToastController,
 } from 'ionic-angular';
 import {
-  NavControllerMock, NavParamsMock, ConfigMock,
-  PlatformMock, LoadingControllerMock, ModalControllerMock, ToastControllerMock,
+  ConfigMock,
+  LoadingControllerMock,
+  ModalControllerMock,
+  NavControllerMock,
+  NavParamsMock,
+  PlatformMock,
+  ToastControllerMock,
 } from 'ionic-mocks';
 import { JournalComponentsModule } from './../components/journal-components.module';
 import { AppModule } from '../../../app/app.module';
@@ -15,16 +26,16 @@ import { JournalPage } from '../journal';
 import { DebugElement } from '@angular/core';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { StoreModule, Store } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { journalReducer } from '../../../modules/journal/journal.reducer';
 import { Subscription } from 'rxjs';
 import { SlotSelectorProvider } from '../../../providers/slot-selector/slot-selector';
 import { MockedJournalModule } from '../../../modules/journal/__mocks__/journal.module.mock';
 import {
-  UnloadJournal,
   LoadJournal,
   LoadJournalSuccess,
   SetupPolling,
+  UnloadJournal,
 } from '../../../modules/journal/journal.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -49,10 +60,12 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { SlotProvider } from '../../../providers/slot/slot';
 import { configureTestSuite } from 'ng-bullet';
-import { CompletedTestPersistenceProviderMock } from
-    '../../../providers/completed-test-persistence/__mocks__/completed-test-persistence.mock';
-import { CompletedTestPersistenceProvider } from
-    '../../../providers/completed-test-persistence/completed-test-persistence';
+import {
+  CompletedTestPersistenceProviderMock,
+} from '../../../providers/completed-test-persistence/__mocks__/completed-test-persistence.mock';
+import {
+  CompletedTestPersistenceProvider,
+} from '../../../providers/completed-test-persistence/completed-test-persistence';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -121,8 +134,8 @@ describe('JournalPage', () => {
     });
 
     describe('loadJournalManually', () => {
-      it('should dispatch a LoadJournal action', () => {
-        component.loadJournalManually();
+      it('should dispatch a LoadJournal action', async () => {
+        await component.loadJournalManually();
         expect(store$.dispatch).toHaveBeenCalledWith(new LoadJournal());
       });
     });
