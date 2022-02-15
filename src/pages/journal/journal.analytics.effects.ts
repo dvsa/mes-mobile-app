@@ -16,6 +16,7 @@ import {
   EARLY_START_MODAL_DID_ENTER,
   EARLY_START_MODAL_CONTINUE_TO_TEST,
   EARLY_START_MODAL_RETURN_TO_JOURNAL,
+  SLOT_ACCESSED,
 } from '../../modules/journal/journal.actions';
 import {
     AnalyticsDimensionIndices,
@@ -165,6 +166,19 @@ export class JournalAnalyticsEffects {
       this.analytics.addCustomDimension(
         AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
 
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  journalSlotAccessed$ = this.actions$.pipe(
+    ofType(SLOT_ACCESSED),
+    switchMap(() => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.JOURNAL,
+        AnalyticsEvents.SELECT_DISABLED_CATEGORY,
+        'Disabled category selected',
+      );
       return of(new AnalyticRecorded());
     }),
   );
