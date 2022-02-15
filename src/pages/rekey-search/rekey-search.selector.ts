@@ -24,42 +24,5 @@ export const getBookedTestSlot = (rekeySearch: RekeySearchModel): TestSlot => {
     return null;
   }
 
-  return {
-    slotDetail: {
-      slotId: 123,
-      start: '2021-01-20',
-      duration: 42,
-    },
-    vehicleTypeCode: 'C',
-    vehicleSlotTypeCode: 1,
-    testCentre: {
-      centreId: 123,
-      costCode: '213',
-      centreName: 'name',
-    },
-    booking: {
-      candidate: {
-        candidateAddress: {
-          addressLine1: 'a',
-          addressLine2: 'a',
-          addressLine3: 'a',
-          postcode: 'asdds',
-        },
-        candidateName: {
-          title: 'Mr',
-          firstName: 'matt',
-          lastName: 'bell',
-        },
-      },
-      application: {
-        applicationId: 12332,
-        progressiveAccess: false,
-        checkDigit: 1,
-        bookingSequence: 123,
-      },
-      previousCancellation: {},
-      business: null,
-    },
-    examinerVisiting: false,
-  } as TestSlot;
+  return rekeySearch.bookedTestSlot;
 };
