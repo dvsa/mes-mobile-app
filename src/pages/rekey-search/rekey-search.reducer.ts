@@ -4,12 +4,14 @@ import { createFeatureSelector } from '@ngrx/store';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { RekeySearchError, RekeySearchErrorMessages } from './rekey-search-error-model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SLOT_ACCESSED } from '../../modules/journal/journal.actions';
 
 export type RekeySearchModel = {
   isLoading: boolean,
   hasSearched: boolean,
   staffNumber: string,
   bookedTestSlot: TestSlot,
+  accessedSlot: boolean;
   err: RekeySearchError | HttpErrorResponse,
 };
 
@@ -18,6 +20,7 @@ export const initialState: RekeySearchModel = {
   hasSearched: false,
   staffNumber: '',
   bookedTestSlot: {},
+  accessedSlot: false,
   err: {
     message: '' as RekeySearchErrorMessages,
   },
@@ -48,6 +51,11 @@ export function rekeySearchReducer(state = initialState, action: rekeySearchActi
         err: action.err,
         isLoading: false,
         hasSearched: true,
+      };
+    case SLOT_ACCESSED:
+      return {
+        ...state,
+        accessedSlot: true,
       };
     default:
       return state;

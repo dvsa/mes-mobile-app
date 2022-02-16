@@ -172,6 +172,7 @@ export enum AnalyticsEvents {
   SET_ACTIVITY_CODE = 'set activity code',
   OPEN_MODAL = 'open modal',
   ACTIVITY_CODE_MODAL_OPENED = 'activity code modal opened',
+  SELECT_DISABLED_CATEGORY = 'Select disabled category',
 }
 
 export enum AnalyticsLabels {

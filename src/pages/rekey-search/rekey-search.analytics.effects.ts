@@ -13,6 +13,7 @@ import {
 import {
   AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents,
 } from '../../providers/analytics/analytics.model';
+import { SLOT_ACCESSED } from '../../modules/journal/journal.actions';
 
 @Injectable()
 export class RekeySearchAnalyticsEffects {
@@ -39,6 +40,19 @@ export class RekeySearchAnalyticsEffects {
       this.analytics.logEvent(
         AnalyticsEventCategories.REKEY_SEARCH,
         AnalyticsEvents.TEST_BOOKING_SEARCH,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  rekeySlotAccessed$ = this.actions$.pipe(
+    ofType(SLOT_ACCESSED),
+    switchMap(() => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.REKEY_SEARCH,
+        AnalyticsEvents.SELECT_DISABLED_CATEGORY,
+        'Disabled category selected',
       );
       return of(new AnalyticRecorded());
     }),

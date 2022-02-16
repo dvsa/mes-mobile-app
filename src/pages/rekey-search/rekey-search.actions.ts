@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RekeySearchError } from './rekey-search-error-model';
+import { SlotAccessed } from '../../modules/journal/journal.actions';
 
 export const REKEY_SEARCH_VIEW_DID_ENTER = '[RekeySearch] Rekey Search Did Enter';
 export const REKEY_SEARCH_CLEAR_STATE = '[RekeySearch] Rekey Search Clear State';
@@ -34,6 +35,7 @@ export class RekeySearchClearState implements Action {
 }
 
 export type RekeySearchActionTypes =
+  | SlotAccessed
   | RekeySearchViewDidEnter
   | RekeySearchClearState
   | SearchBookedTest

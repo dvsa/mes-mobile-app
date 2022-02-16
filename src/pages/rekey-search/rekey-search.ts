@@ -7,7 +7,13 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { RekeySearchViewDidEnter, SearchBookedTest, RekeySearchClearState } from './rekey-search.actions';
 import { map } from 'rxjs/operators';
-import { getIsLoading, getHasSearched, getBookedTestSlot, getRekeySearchError } from './rekey-search.selector';
+import {
+  getIsLoading,
+  getHasSearched,
+  getBookedTestSlot,
+  getRekeySearchError,
+  getSlotAccessed,
+} from './rekey-search.selector';
 import { getRekeySearchState } from './rekey-search.reducer';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { isEmpty } from 'lodash';
@@ -18,6 +24,7 @@ interface RekeySearchPageState {
   isLoading$: Observable<boolean>;
   hasSearched$: Observable<boolean>;
   bookedTestSlot$: Observable<TestSlot>;
+  accessedSlot$: Observable<boolean>;
   rekeySearchErr$: Observable<RekeySearchError | HttpErrorResponse>;
 }
 
@@ -60,6 +67,9 @@ export class RekeySearchPage extends BasePageComponent implements OnInit {
       ),
       bookedTestSlot$: rekeySearch$.pipe(
         map(getBookedTestSlot),
+      ),
+      accessedSlot$: rekeySearch$.pipe(
+        select(getSlotAccessed),
       ),
       rekeySearchErr$: rekeySearch$.pipe(
         map(getRekeySearchError),
