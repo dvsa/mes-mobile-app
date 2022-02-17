@@ -6,6 +6,7 @@ import { EmptySlotComponent } from '../components/empty-slot/empty-slot';
 import { JournalNavigationComponent } from '../components/journal-navigation/journal-navigation';
 import { TestSlotComponentsModule } from '../../../components/test-slot/test-slot-components.module';
 import { PersonalCommitmentSlotComponent } from '../personal-commitment/personal-commitment';
+import { JournalSlotComponent } from './journal-slot/journal-slot';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { PersonalCommitmentSlotComponent } from '../personal-commitment/personal
     EmptySlotComponent,
     JournalNavigationComponent,
     PersonalCommitmentSlotComponent,
+    JournalSlotComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +29,7 @@ import { PersonalCommitmentSlotComponent } from '../personal-commitment/personal
     EmptySlotComponent,
     JournalNavigationComponent,
     PersonalCommitmentSlotComponent,
+    JournalSlotComponent,
   ],
 })
 export class JournalComponentsModule { }
