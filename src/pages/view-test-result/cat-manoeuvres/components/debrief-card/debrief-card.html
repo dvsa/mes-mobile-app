@@ -1,0 +1,23 @@
+<ion-card>
+  <ion-card-header>
+    <h4>Debrief</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <data-row-with-list
+        [label]="'Test Requirements'"
+        [data]="getTestRequirements()">
+      </data-row-with-list>
+
+      <data-row [label]="'Manoeuvre(s)'" [value]="getFlattenArray(getManoeuvre())"></data-row>
+
+      <faults-data-row
+        [label]="'Fault descriptions'"
+        [drivingFaults]="getDrivingFaults()"
+        [seriousFaults]="getSeriousFaults()"
+        [dangerousFaults]="getDangerousFaults()"
+        [drivingFaultCount]="getDrivingFaultCount()">
+      </faults-data-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

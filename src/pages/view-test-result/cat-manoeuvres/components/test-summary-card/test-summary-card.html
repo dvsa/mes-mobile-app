@@ -5,9 +5,45 @@
   <ion-card-content>
     <ion-grid>
       <data-row
+        *ngIf="testResult?.accompaniment !== undefined"
+        [label]="'Accompanied by'"
+        [value]="getAccompaniedBy()">
+      </data-row>
+      <data-row
+        *ngIf="getPassCertificateNumber()"
         [label]="'Certificate number'"
-        [value]="getPassCertificateNumber()"
-      ></data-row>
+        [value]="getPassCertificateNumber()">
+      </data-row>
+      <data-row
+        *ngIf="testSummary?.candidateDescription !== undefined"
+        [label]="'Physical description of candidate'"
+        [value]="getCandidateDescription()">
+      </data-row>
+      <data-row
+        *ngIf="testSummary?.debriefWitnessed !== undefined"
+        [label]="'Debrief witnessed'"
+        [value]="getDebriefWitnessed()">
+      </data-row>
+      <data-row
+        *ngIf="testSummary?.weatherConditions !== undefined"
+        [label]="'Weather conditions'"
+        [value]="getWeatherConditions()">
+      </data-row>
+      <data-row
+        *ngIf="testSummary?.D255 !== undefined"
+        [label]="'D255'"
+        [value]="getD255()">
+      </data-row>
+      <data-row
+        *ngIf="communicationPreferences?.conductedLanguage !== undefined"
+        [label]="'Conducted Language'"
+        [value]="getConductedLanguage()">
+      </data-row>
+      <data-row
+        *ngIf="testSummary?.additionalInformation !== undefined"
+        [label]="'Additional information'"
+        [value]="getAdditionalInformation()">
+      </data-row>
     </ion-grid>
   </ion-card-content>
 </ion-card>

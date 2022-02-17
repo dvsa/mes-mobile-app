@@ -25,12 +25,18 @@
     </div>
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
     <vehicle-details-cat-manoeuvres-card
-      *ngIf="testResult.activityCode === '1'"
       [data]='getVehicleDetails()'
     ></vehicle-details-cat-manoeuvres-card>
+    <debrief-card-manoeuvre
+      *ngIf="testResult?.testData"
+      [testResult]="testResult"
+    ></debrief-card-manoeuvre>
     <test-summary-card-cat-manoeuvre
-      *ngIf="testResult.activityCode === '1'"
-      [passCompletion]='testResult?.passCompletion'
+      [testResult]='testResult'
+      [accompaniment]='testResult.accompaniment'
+      [passCompletion]='testResult.passCompletion'
+      [testSummary]='testResult.testSummary'
+      [communicationPreferences]='testResult.communicationPreferences'
     ></test-summary-card-cat-manoeuvre>
   </div>
 </ion-content>

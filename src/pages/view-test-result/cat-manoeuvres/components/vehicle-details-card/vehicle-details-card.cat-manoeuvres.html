@@ -5,11 +5,44 @@
   <ion-card-content>
     <ion-grid>
       <data-row
-        [label]="'Transmission'"
-        [value]="data.transmission"
-        *ngIf="data.transmission"
-        [shouldHaveSeperator]="!!(data.registrationNumber || data.vehicleDetails || data.instructorRegistrationNumber)">
+        [label]="'Vehicle registration number'"
+        [value]="data.vehicleRegistration"
+        *ngIf="data.vehicleRegistration">
       </data-row>
+
+      <ion-row class="mes-data-row" *ngIf="showDimensions()">
+        <ion-col col-34>
+          <label>Dimensions</label>
+        </ion-col>
+        <ion-col col-6></ion-col>
+        <ion-col col-56>
+          <ion-row>
+                <span class="mes-data">
+                    <span class="mes-data bold">L:</span>
+                  {{ data.dimensions?.vehicleLength }}
+                </span>
+          </ion-row>
+          <ion-row>
+                <span class="mes-data">
+                    <span class="mes-data bold">W:</span>
+                  {{ data.dimensions?.vehicleWidth }}
+                </span>
+          </ion-row>
+          <ion-row>
+                <span class="mes-data">
+                    <span class="mes-data bold">H:</span>
+                  {{ data.dimensions?.vehicleHeight }}
+                </span>
+          </ion-row>
+          <ion-row>
+                <span class="mes-data">
+                    <span class="mes-data bold">Seats:</span>
+                  {{ data.dimensions?.numberOfSeats }}
+                </span>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
     </ion-grid>
   </ion-card-content>
 </ion-card>
