@@ -238,6 +238,10 @@ export class JournalEffects {
       [action, staffNumber, hasStartedTests, completedTests]:
         [journalActions.LoadCompletedTests, string, boolean, SearchResultTestSchema[], TestResultSchemasUnion[]],
     ) => {
+      if (this.networkStateProvider.getNetworkState() === ConnectionStatus.OFFLINE) {
+        this.store$.dispatch(new journalActions.LoadCompletedTestsSuccess(completedTests));
+        return false;
+      }
       // The callThrough property is set to true when doing a manual journal refresh for example
       if (action.callThrough) {
         return true;
