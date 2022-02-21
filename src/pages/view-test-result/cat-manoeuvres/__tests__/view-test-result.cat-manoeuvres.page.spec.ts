@@ -40,6 +40,7 @@ import {
   VehicleDetailsCardCatManoeuvresComponent,
 } from '../components/vehicle-details-card/vehicle-details-card.cat-manoeuvres';
 import { TestSummaryCardCatManoeuvreComponent } from '../components/test-summary-card/test-summary-card';
+import { DebriefCardManoeuvreComponent } from '../components/debrief-card/debrief-card';
 
 describe('ViewTestResultCatManoeuvresPage', () => {
   let fixture: ComponentFixture<ViewTestResultCatManoeuvresPage>;
@@ -54,6 +55,7 @@ describe('ViewTestResultCatManoeuvresPage', () => {
         MockComponent(RekeyDetailsCardComponent),
         MockComponent(RekeyReasonCardComponent),
         MockComponent(ExaminerDetailsCardComponent),
+        MockComponent(DebriefCardManoeuvreComponent),
         MockComponent(ViewTestHeaderComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(ContactDetailsCardComponent),
@@ -146,7 +148,7 @@ describe('ViewTestResultCatManoeuvresPage', () => {
 
         const result: VehicleDetailsModel = component.getVehicleDetails();
 
-        expect(result.transmission).toBe('Manual');
+        expect(result.vehicleRegistration).toBe('mock-vehicle-registration-number');
       });
       it('should return null when there is no test result', () => {
         const result: VehicleDetailsModel = component.getVehicleDetails();

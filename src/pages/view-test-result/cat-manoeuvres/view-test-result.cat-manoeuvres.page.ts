@@ -171,7 +171,13 @@ export class ViewTestResultCatManoeuvresPage extends BasePageComponent implement
     }
 
     return {
-      transmission: get(this.testResult, 'vehicleDetails.gearboxCategory'),
+      vehicleRegistration: get(this.testResult, 'vehicleDetails.registrationNumber'),
+      dimensions: {
+        vehicleLength: get(this.testResult, 'vehicleDetails.vehicleLength', '-'),
+        vehicleWidth: get(this.testResult, 'vehicleDetails.vehicleWidth', '-'),
+        vehicleHeight: get(this.testResult, 'vehicleDetails.vehicleHeight', '-'),
+        numberOfSeats: get(this.testResult, 'vehicleDetails.numberOfSeats', '-'),
+      },
     };
   }
 
