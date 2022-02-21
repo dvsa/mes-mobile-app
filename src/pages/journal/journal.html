@@ -34,7 +34,10 @@
   <journal-navigation></journal-navigation>
 
   <ion-list>
-    <ng-template #slotContainer></ng-template>
+    <journal-slots
+      [slots]="pageState.slots$ | async"
+      [completedTests]="pageState.completedTests$ | async">
+    </journal-slots>
   </ion-list>
 
 </ion-content>
