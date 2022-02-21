@@ -215,15 +215,4 @@ describe('JournalPage', () => {
       expect(slotsList.children.every(child => child.name === 'test-slot')).toEqual(true);
     });
   });
-
-  describe('appResumedListener', () => {
-    it('Should call component.addEventListener', () => {
-      spyOn(document, 'addEventListener').and.callFake((str, functionToRun) => {
-        functionToRun();
-      });
-
-      component.appResumedListener();
-      expect(document.addEventListener).toHaveBeenCalled();
-    });
-  });
 });

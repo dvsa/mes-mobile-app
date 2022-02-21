@@ -11,7 +11,7 @@ import {
 } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
 import { merge, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -81,6 +81,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
   merged$: Observable<void | number>;
   todaysDate: DateTime;
   completedTests: SearchResultTestSchema[];
+  platformSubscription: Subscription;
 
   constructor(
     public modalController: ModalController,
@@ -104,7 +105,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.isUnauthenticated = this.authenticationProvider.isInUnAuthenticatedMode();
     this.store$.dispatch(new journalActions.SetSelectedDate(this.dateTimeProvider.now().format('YYYY-MM-DD')));
     this.todaysDate = this.dateTimeProvider.now();
-    this.appResumedListener();
   }
 
   ngOnInit(): void {
@@ -162,6 +162,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     super.ionViewWillEnter();
     await this.loadJournalManually();
     this.setupPolling();
+    this.configurePlatformSubscriptions();
     await this.completedTestPersistenceProvider.loadCompletedPersistedTests();
 
     this.store$.dispatch(new journalActions.LoadCompletedTests(true));
@@ -174,8 +175,12 @@ export class JournalPage extends BasePageComponent implements OnInit {
     return true;
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave(): void {
     this.store$.dispatch(new journalActions.StopPolling());
+
+    if (this.platformSubscription) {
+      this.platformSubscription.unsubscribe();
+    }
   }
 
   ionViewDidEnter(): void {
@@ -189,13 +194,28 @@ export class JournalPage extends BasePageComponent implements OnInit {
   }
 
   async loadJournalManually() {
-    await this.appConfigProvider.initialiseAppConfig();
-    await this.appConfigProvider.loadRemoteConfig();
+    if (super.isIos()) {
+      try {
+        await this.appConfigProvider.initialiseAppConfig();
+        await this.appConfigProvider.loadRemoteConfig();
+      } catch (err) {
+        console.error(err);
+      }
+    }
     this.store$.dispatch(new journalActions.LoadJournal());
   }
 
   setupPolling() {
     this.store$.dispatch(new journalActions.SetupPolling());
+  }
+
+  configurePlatformSubscriptions(): void {
+    if (super.isIos()) {
+      const merged$ = merge(
+        this.platform.resume.pipe(switchMap(async () => this.refreshJournal())),
+      );
+      this.platformSubscription = merged$.subscribe();
+    }
   }
 
   setSelectedDate = (selectedDate: string): void => {
@@ -207,7 +227,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
-    if (isLoading) {
+    if (isLoading && !this.loadingSpinner) {
       this.loadingSpinner = this.loadingController.create({
         dismissOnPageChange: true,
         spinner: 'circles',
@@ -216,8 +236,9 @@ export class JournalPage extends BasePageComponent implements OnInit {
       return;
     }
     this.pageRefresher ? this.pageRefresher.complete() : null;
-    if (this.loadingSpinner) {
-      this.loadingSpinner.dismiss();
+
+    if (!isLoading && this.loadingSpinner) {
+      this.loadingSpinner.dismissAll();
       this.loadingSpinner = null;
     }
   }
@@ -259,14 +280,5 @@ export class JournalPage extends BasePageComponent implements OnInit {
   async logout() {
     this.store$.dispatch(new journalActions.UnloadJournal());
     await super.logout();
-  }
-
-  /**
-   * Listen to the DOM event and trigger if app resumed from backgrounding
-   */
-  appResumedListener() {
-    document.addEventListener('resume', async () => {
-      await this.refreshJournal();
-    });
   }
 }
