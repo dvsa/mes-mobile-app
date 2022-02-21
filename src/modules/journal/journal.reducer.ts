@@ -112,11 +112,21 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         ...state,
         selectedDate: action.payload,
       };
+    case journalActions.LOAD_COMPLETED_TESTS:
+      return {
+        ...state,
+        isLoading: true,
+      };
     case journalActions.LOAD_COMPLETED_TESTS_SUCCESS:
       return {
         ...state,
         isLoading: false,
         completedTests: action.payload,
+      };
+    case journalActions.LOAD_COMPLETED_TESTS_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
       };
     default:
       return state;
