@@ -194,14 +194,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
   }
 
   async loadJournalManually() {
-    if (super.isIos()) {
-      try {
-        await this.appConfigProvider.initialiseAppConfig();
-        await this.appConfigProvider.loadRemoteConfig();
-      } catch (err) {
-        console.error(err);
-      }
-    }
     this.store$.dispatch(new journalActions.LoadJournal());
   }
 
