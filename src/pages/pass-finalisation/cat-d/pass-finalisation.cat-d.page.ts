@@ -274,7 +274,7 @@ export class PassFinalisationCatDPage extends BasePageComponent {
   }
 
   shouldShowCode78Banner(): boolean {
-    return this.code78Present !== null && this.transmission !== null && this.shouldShowCode78();
+    return this.code78Present !== null && this.transmission !== null;
   }
 
   shouldShowManualBanner(): boolean {
@@ -303,9 +303,5 @@ export class PassFinalisationCatDPage extends BasePageComponent {
 
   shouldShowCandidateDoesntNeedLicenseBanner(): boolean {
     return this.provisionalLicenseIsReceived;
-  }
-
-  shouldShowCode78(): boolean {
-    return this.testCategory === TestCategory.D || this.testCategory === TestCategory.DE;
   }
 }
