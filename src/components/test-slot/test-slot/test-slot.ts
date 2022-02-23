@@ -155,9 +155,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   }
 
   getCatBlackListed(): boolean {
-    return !this.categoryWhitelist.isWhiteListed(
-      this.slot.booking.application.testCategory as TestCategory,
-      this.appConfig.getAppConfig().journal.allowedTestCategories as TestCategory[]);
+    return !this.categoryWhitelist.isWhiteListed(this.slot.booking.application.testCategory as TestCategory);
   }
 
   accessSlot():void {
