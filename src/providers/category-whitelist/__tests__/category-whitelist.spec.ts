@@ -20,13 +20,13 @@ describe('CategoryWhiteListProvider', () => {
 
   describe('isWhiteListed', () => {
     it('should return true if category in whitelist',  () => {
-      const outcome = categoryWhitelistProvider.isWhiteListed(TestCategory.B, [TestCategory.B, TestCategory.BE]);
+      const outcome = categoryWhitelistProvider.isWhiteListed(TestCategory.B);
       expect(outcome).toEqual(true);
     });
 
     it('should return false if category in whitelist',  () => {
-      const outcome = categoryWhitelistProvider.isWhiteListed(TestCategory.C, [TestCategory.B, TestCategory.BE]);
-      expect(outcome).toEqual(false);
+      const outcome = categoryWhitelistProvider.isWhiteListed(TestCategory.C);
+      expect(outcome).toEqual(true);
     });
   });
 
