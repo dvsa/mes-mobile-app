@@ -31,7 +31,17 @@ export class TransmissionDisplayComponent {
   }
 
   getTransmissionText(): GearBox {
-    const code78Categories: TestCategory[] = [TestCategory.C, TestCategory.CE, TestCategory.D, TestCategory.DE];
+    const code78Categories: TestCategory[] = [
+      TestCategory.C,
+      TestCategory.CE,
+      TestCategory.C1,
+      TestCategory.C1E,
+      TestCategory.D,
+      TestCategory.DE,
+      TestCategory.D1,
+      TestCategory.D1E,
+    ];
+
     if (this.transmission === GearBox.MANUAL) {
       return GearBox.MANUAL;
     }
