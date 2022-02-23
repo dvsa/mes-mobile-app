@@ -18,9 +18,9 @@ import { activityCodeReducer } from './activity-code/activity-code.reducer';
 import { journalDataCatCReducer } from './journal-data/cat-c/journal-data.cat-c.reducer';
 import { vehicleDetailsCatCReducer } from './vehicle-details/cat-c/vehicle-details.cat-c.reducer';
 import { testDataCatC1Reducer } from './test-data/cat-c/test-data.cat-c1.reducer';
-import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { delegatedTestReducer } from './delegated-test/delegated-test.reducer';
 import { nullReducer } from '../../shared/classes/null.reducer';
+import { passCompletionCatCReducer } from './pass-completion/cat-c/pass-completion.cat-c.reducer';
 
 export function testsCatC1Reducer(
   action: Action, state: CatC1UniqueTypes.TestResult): Required<CatC1UniqueTypes.TestResult> {
@@ -35,7 +35,7 @@ export function testsCatC1Reducer(
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsCatCReducer,
       testData: testDataCatC1Reducer,
-      passCompletion: passCompletionReducer,
+      passCompletion: passCompletionCatCReducer,
       postTestDeclarations: postTestDeclarationsReducer,
       testSummary: testSummaryReducer,
       communicationPreferences: communicationPreferencesReducer,
