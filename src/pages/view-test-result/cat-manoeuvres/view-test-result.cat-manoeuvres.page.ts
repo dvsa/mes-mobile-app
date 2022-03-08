@@ -150,6 +150,7 @@ export class ViewTestResultCatManoeuvresPage extends BasePageComponent implement
       entitlementCheck: get(this.testResult, 'journalData.testSlotAttributes.entitlementCheck'),
       slotType: get(this.testResult, 'journalData.testSlotAttributes.slotType'),
       previousCancellations: get(this.testResult, 'journalData.testSlotAttributes.previousCancellation', []),
+      driverNumber: get(this.testResult, 'journalData.candidate.driverNumber'),
     };
   }
 

@@ -5,6 +5,7 @@
   <ion-card-content>
     <ion-grid>
       <data-row-with-list
+        *ngIf="showUncoupleRecoupleTestRequirement()"
         [label]="'Test Requirements'"
         [data]="getTestRequirements()">
       </data-row-with-list>

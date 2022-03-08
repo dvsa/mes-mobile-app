@@ -4,6 +4,7 @@
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
+      <ion-row><inappropriate-use-banner></inappropriate-use-banner></ion-row>
       <data-row [label]="'Date'" [value]="data.date"></data-row>
       <data-row [label]="'Time'" [value]="data.time"></data-row>
       <data-row [label]="'Application reference'" [value]="data.applicationReference"></data-row>
@@ -26,12 +27,22 @@
         [shouldShowIndicator]="true">
       </data-row>
       <data-row-custom [label]="'Additional information'">
-          <div class="mes-data" *ngIf="data.previousCancellations.length === 0">- None</div>
+        <div class="mes-data" *ngIf="data.previousCancellations.length === 0">- None</div>
         <div class="mes-data" *ngIf="data.previousCancellations.length > 0">- Previous cancellations</div>
         <div *ngFor="let previousCancellation of data.previousCancellations" class="mes-data">
           - {{previousCancellation}}
         </div>
       </data-row-custom>
+      <data-row
+        *ngIf="data.driverNumber"
+        [label]="'Driver number'"
+        [value]="data.driverNumber"
+      ></data-row>
+      <data-row
+        *ngIf="data.entitlementCheck !== undefined"
+        [label]="'Entitlement check'"
+        [value]="data.entitlementCheck ? 'Yes' : 'No'"
+      ></data-row>
     </ion-grid>
   </ion-card-content>
 </ion-card>

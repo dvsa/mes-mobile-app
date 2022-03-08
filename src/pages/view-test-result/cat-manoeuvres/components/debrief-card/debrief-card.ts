@@ -27,6 +27,18 @@ export class DebriefCardManoeuvreComponent {
 
   getFlattenArray = (data: string[]): string => flattenArray(data);
 
+  showUncoupleRecoupleTestRequirement = () => {
+    switch (this.testResult.category) {
+      case TestCategory.CEM:
+      case TestCategory.C1EM:
+      case TestCategory.DEM:
+      case TestCategory.D1EM:
+        return true;
+      default:
+        return false;
+    }
+  }
+
   getTestRequirements = (): DataRowListItem[] => {
     return [
       {
@@ -37,28 +49,28 @@ export class DebriefCardManoeuvreComponent {
   }
 
   public getManoeuvre(): string[] {
-    const isReverseLeftSelected = get(this.testResult, 'testData.manoeuvres.reverseLeft.selected', false);
-    return isReverseLeftSelected ? ['Reverse Manoeuvre'] : ['None'];
+    const isReverseSelected = get(this.testResult, 'testData.manoeuvres.reverseManoeuvre.selected', false);
+    return isReverseSelected ? ['Reverse Manoeuvre'] : ['None'];
   }
 
   public getDrivingFaults(): FaultSummary[] {
     const data = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getDrivingFaultsList(data, TestCategory.CM);
+    return this.faultSummaryProvider.getDrivingFaultsList(data, this.testResult.category as TestCategory);
   }
 
   public getSeriousFaults(): FaultSummary[] {
     const data = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getSeriousFaultsList(data, TestCategory.CM);
+    return this.faultSummaryProvider.getSeriousFaultsList(data, this.testResult.category as TestCategory);
   }
 
   public getDangerousFaults(): FaultSummary[] {
     const data = get(this.testResult, 'testData');
-    return this.faultSummaryProvider.getDangerousFaultsList(data, TestCategory.CM);
+    return this.faultSummaryProvider.getDangerousFaultsList(data, this.testResult.category as TestCategory);
   }
 
   public getDrivingFaultCount(): number {
     const data = get(this.testResult, 'testData');
-    return this.faultCountProvider.getDrivingFaultSumCount(TestCategory.CM, data);
+    return this.faultCountProvider.getDrivingFaultSumCount(this.testResult.category as TestCategory, data);
   }
 
 }

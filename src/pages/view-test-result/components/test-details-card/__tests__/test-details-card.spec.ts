@@ -8,6 +8,9 @@ import { DataRowComponent } from '../../../../../components/common/data-row/data
 import { configureTestSuite } from 'ng-bullet';
 import { TestCategory } from '@dvsa/mes-test-schema/category-definitions/common/test-category';
 import { TestDetailsModel } from '../test-details-card.model';
+import {
+  InappropriateUseBannerComponent,
+} from '../../../../candidate-details/components/inappropriate-use-banner/inappropriate-use-banner';
 
 describe('TestDetailsCardComponent', () => {
   let fixture: ComponentFixture<TestDetailsCardComponent>;
@@ -19,6 +22,7 @@ describe('TestDetailsCardComponent', () => {
         TestDetailsCardComponent,
         MockComponent(DataRowComponent),
         MockComponent(DataRowCustomComponent),
+        MockComponent(InappropriateUseBannerComponent),
       ],
       imports: [
         IonicModule,
