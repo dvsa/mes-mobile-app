@@ -41,6 +41,7 @@ import {
 } from '../components/vehicle-details-card/vehicle-details-card.cat-manoeuvres';
 import { TestSummaryCardCatManoeuvreComponent } from '../components/test-summary-card/test-summary-card';
 import { DebriefCardManoeuvreComponent } from '../components/debrief-card/debrief-card';
+import { BusinessDetailsCardComponent } from '../../components/business-details-card/business-details-card';
 
 describe('ViewTestResultCatManoeuvresPage', () => {
   let fixture: ComponentFixture<ViewTestResultCatManoeuvresPage>;
@@ -61,6 +62,7 @@ describe('ViewTestResultCatManoeuvresPage', () => {
         MockComponent(ContactDetailsCardComponent),
         MockComponent(VehicleDetailsCardCatManoeuvresComponent),
         MockComponent(TestSummaryCardCatManoeuvreComponent),
+        MockComponent(BusinessDetailsCardComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [

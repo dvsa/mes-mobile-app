@@ -16,6 +16,9 @@ import { BusinessDetailsCardComponent } from './business-details-card/business-d
 import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
 import { VehicleDetailsCardCatAComponent } from './vehicle-details-card-cat-a/vehicle-details-card-cat-a';
 import { SafetyAndBalanceDataRowComponent } from './safety-and-balance-data-row/safety-and-balance-data-row';
+import {
+  CandidateDetailsComponentsModule,
+} from '../../candidate-details/components/candidate-details-components.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { SafetyAndBalanceDataRowComponent } from './safety-and-balance-data-row/
     CommonModule,
     IonicModule,
     ComponentsModule,
+    CandidateDetailsComponentsModule,
   ],
   exports: [
     DataRowWithListComponent,

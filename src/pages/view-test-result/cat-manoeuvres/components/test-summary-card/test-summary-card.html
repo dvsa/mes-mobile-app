@@ -30,11 +30,6 @@
         [value]="getWeatherConditions()">
       </data-row>
       <data-row
-        *ngIf="testSummary?.D255 !== undefined"
-        [label]="'D255'"
-        [value]="getD255()">
-      </data-row>
-      <data-row
         *ngIf="communicationPreferences?.conductedLanguage !== undefined"
         [label]="'Conducted Language'"
         [value]="getConductedLanguage()">
