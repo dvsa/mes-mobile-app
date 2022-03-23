@@ -24,6 +24,7 @@ import * as moment from 'moment';
 import { DelegatedExaminerTestSlot } from '../../../providers/delegated-rekey-search/mock-data/delegated-mock-data';
 import { SlotAccessed } from '../../../modules/journal/journal.actions';
 import { CategoryWhiteListProvider } from '../../../providers/category-whitelist/category-whitelist';
+import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
@@ -155,6 +156,9 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   }
 
   getCatBlackListed(): boolean {
+    if (this.appConfig.getAppConfig().role === ExaminerRole.DLG) {
+      return false;
+    }
     return !this.categoryWhitelist.isWhiteListed(this.slot.booking.application.testCategory as TestCategory);
   }
 

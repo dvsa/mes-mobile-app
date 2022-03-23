@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { REKEY_SEARCH_PAGE } from '../../../page-names.constants';
 
@@ -8,6 +8,9 @@ import { REKEY_SEARCH_PAGE } from '../../../page-names.constants';
 })
 
 export class RekeySearchCardComponent {
+
+  @Input()
+  isDelegated: boolean = false;
 
   constructor(private navController: NavController) { }
 
