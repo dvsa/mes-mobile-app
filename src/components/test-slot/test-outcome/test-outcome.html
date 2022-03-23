@@ -1,4 +1,4 @@
-<div float-right *ngIf="!catDisabled">
+<div float-right *ngIf="!catDisabled; else blacklistedCat;">
   <ion-grid no-padding>
     <ion-row align-items-right>
       <ion-col *ngIf="showOutcome()">
@@ -46,3 +46,15 @@
     </ion-row>
   </ion-grid>
 </div>
+
+<ng-template #blacklistedCat>
+  <ion-grid no-padding>
+    <ion-row align-items-right>
+      <ion-col *ngIf="showOutcome()">
+        <span class="outcome">
+          <h2>{{activityCode}}</h2>
+        </span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ng-template>
