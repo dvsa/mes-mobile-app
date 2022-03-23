@@ -1,4 +1,4 @@
-<button clear (click)="navigateToRekeySearch()">
+<button clear (click)="navigateToRekeySearch()" [disabled]="isDelegated">
   <ion-card class="rekey-search-card">
     <div id="card-content-wrapper">
       <ion-grid>
@@ -6,7 +6,7 @@
           <img src="assets/imgs/dashboard/search-rekey.png" alt="Search test bookings to rekey" class="icon-search-rekey-tests"/>
         </ion-row>
         <ion-row>
-          <button class="mes-neutral-button" ion-button >
+          <button class="mes-neutral-button" ion-button>
             <h3>Rekey DVSA test</h3>
           </button>
         </ion-row>
