@@ -8,7 +8,8 @@
       </ion-col>
       <ion-col *ngIf="showRekeyButton(); else nonRekey">
         <span>
-          <button class="mes-secondary-button mes-rekey-button" ion-button (click)="rekeyTest()" [disabled]="!canStartTest">
+          <button class="mes-secondary-button mes-rekey-button" ion-button (click)="rekeyTest()"
+                  [disabled]="!canStartTest">
             <h3 class="write-up-label">Rekey</h3>
           </button>
         </span>
@@ -48,13 +49,15 @@
 </div>
 
 <ng-template #blacklistedCat>
-  <ion-grid no-padding>
-    <ion-row align-items-right>
-      <ion-col *ngIf="showOutcome()">
+  <div float-right>
+    <ion-grid no-padding>
+      <ion-row align-items-right>
+        <ion-col *ngIf="showOutcome()">
         <span class="outcome">
           <h2>{{activityCode}}</h2>
         </span>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ng-template>

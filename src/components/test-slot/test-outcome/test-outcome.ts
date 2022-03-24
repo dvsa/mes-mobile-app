@@ -115,6 +115,7 @@ export class TestOutcomeComponent implements OnInit {
     );
 
     this.subscription = merged$.subscribe();
+    console.log(this.catDisabled);
   }
 
   ionViewDidLeave(): void {
