@@ -28,15 +28,23 @@ platform :ios do
    path: "platforms/ios/DES 3.xcodeproj",
    teamid: "K84TL26V3P")
 
-   # Update the project's provisioning settings to use our distribution cert
-   update_project_provisioning(
-    xcodeproj: "platforms/ios/DES 3.xcodeproj",
-    profile: "/Users/mes/certs/Mobile_Examiner_App.mobileprovision",
-    target_filter: ".*DES 3.*", # matches name or type of a target, see https://medium.com/@andersongusmao/xcode-targets-with-multiples-build-configuration-90a575ddc687 for an explanation
-    build_configuration: "Release",
-    code_signing_identity: "iPhone Distribution: Vehicle and Operator Services Agency"
-  )
+#    # Update the project's provisioning settings to use our distribution cert
+#    update_project_provisioning(
+#     xcodeproj: "platforms/ios/DES 3.xcodeproj",
+#     profile: "/Users/mes/certs/Mobile_Examiner_App.mobileprovision",
+#     target_filter: ".*DES 3.*", # matches name or type of a target, see https://medium.com/@andersongusmao/xcode-targets-with-multiples-build-configuration-90a575ddc687 for an explanation
+#     build_configuration: "Release",
+#     code_signing_identity: "iPhone Distribution: Vehicle and Operator Services Agency"
+#   )
 
+   update_code_signing_settings(
+       path: "platforms/ios/DES 3.xcodeproj",
+       use_automatic_signing: false,
+       team_id: "K84TL26V3P",
+       code_sign_identity: "iPhone Distribution: Vehicle and Operator Services Agency",
+       profile_name: "Mobile Examiner App 2022",
+       targets: ".*DES 3.*"
+     )
 
    build_ios_app(
     export_options: {
