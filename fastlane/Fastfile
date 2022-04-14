@@ -36,7 +36,7 @@ platform :ios do
 #     build_configuration: "Release",
 #     code_signing_identity: "iPhone Distribution: Vehicle and Operator Services Agency"
 #   )
-   install_provisioning_profile(path: "/Users/mes/certs/Mobile_Examiner_App.mobileprovision")
+
    update_code_signing_settings(
        path: "platforms/ios/DES 3.xcodeproj",
        use_automatic_signing: false,
