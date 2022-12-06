@@ -1,4 +1,4 @@
-#*****  THIS REPOSITORY HAS BEEN ARCHIVED AND IS NO LONGER MAINTAINED *****
+# *****  THIS REPOSITORY HAS BEEN ARCHIVED AND IS NO LONGER MAINTAINED *****
 
 All code has been migrated to [this repository](https://github.com/dvsa/des-mobile-app)
 
